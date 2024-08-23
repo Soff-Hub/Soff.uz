@@ -16,9 +16,9 @@ const Selection = () => {
         <Page404 />
     ) : (
         <PageContainer>
-            <div className="ps-checkout ps-section--shopping" style={{ height: '70vh' }} >
+            <div className="ps-checkout ps-section--shopping d-flex align-items-center" style={{ height: '70vh' }} >
                 <div className="container">
-                    <div className="ps-form--account selection-user d-flex justify-content-around register-choose-button-parent ">
+                    <div className="ps-form--account_selection selection-user d-flex justify-content-around register-choose-button-parent ">
                         <div className='register-choose-button-parent_div' >
                             <Link
 

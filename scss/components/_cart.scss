@@ -96,6 +96,7 @@
         &:last-child {
             border-bottom: none;
         }
+
         .products-image1 {
             width: 90px;
             height: 80px;
@@ -155,14 +156,18 @@
     display: flex;
     justify-content: center;
     gap: 10px;
+
     & span:first-child {
-        width: 160px;
+        max-width: 240px;
+        width: 100%;
         border: 1px solid $color-1st;
         margin-top: 10px;
         height: 0;
     }
+
     & span:last-child {
-        width: 160px;
+        max-width: 240px;
+        width: 100%;
         border: 1px solid $color-1st;
         margin-top: 10px;
         height: 0;
@@ -171,8 +176,8 @@
 
 .google_account {
     width: 100%;
-    background-color: #fff;
-    padding: 20px 15px 15px 15px;
+    padding: 20px 0;
+
     & div {
         height: 50px !important;
         padding: 0 !important;

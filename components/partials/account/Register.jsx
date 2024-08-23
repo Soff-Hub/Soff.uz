@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import Link from 'next/link';
 import Router from 'next/router';
-import { Form, Input, Modal, Tooltip } from 'antd';
+import { Form, Input, Modal, Segmented, Tooltip } from 'antd';
 import { connect } from 'react-redux';
 import useAuth from '~/hooks/useAuth';
 import { BeatLoader } from 'react-spinners';
 import ModalTanishuv from './modules/Modal-tanishuv';
 import { withRouter } from 'next/router';
 import { begin } from '~/store/auth/action';
+import { LockOutlined, MailOutlined, PhoneOutlined } from '@ant-design/icons';
+import { formatPhoneNumber } from './Login';
 
 class Register extends Component {
     constructor(props) {
@@ -20,8 +22,17 @@ class Register extends Component {
             inputType: 'text',
             inputLength: '',
             role: '',
+            segmentValue: 'phone',
+            phone: ''
         };
     }
+
+    handleChange = (e) => {
+        const value = e.target.value;
+        // Telefon raqamini formatlash
+        const formattedValue = formatPhoneNumber(value);
+        this.setState({ phone: formattedValue });
+    };
 
     handleGoogleClick = async (e) => {
         this.setState({ reportGoogle: false });
@@ -83,12 +94,19 @@ class Register extends Component {
     };
 
     handleSubmit = async (e) => {
+        const data = {
+            phone_or_email: e.phone || e.email,
+            password: e.password,
+            password2: e.password2
+        }
+
+
         this.setState({ report: false });
         const url = this.props.url;
         const { registerUser } = useAuth();
 
         if (this.props.router.query.pid || localStorage.getItem('referal')) {
-            const user = await registerUser(`auth/seller-register/${this.props.router.query.pid ? this.props.router.query.pid : localStorage.getItem('referal')}/`, e);
+            const user = await registerUser(`auth/seller-register/${this.props.router.query.pid ? this.props.router.query.pid : localStorage.getItem('referal')}/`, data);
             if (user) {
                 if (user.status >= 400 && user.status !== 500) {
                     this.setState({ report: true });
@@ -103,7 +121,7 @@ class Register extends Component {
                     localStorage.setItem('token', user.data.access);
                     localStorage.setItem('tour', true);
                     localStorage.setItem('via_', user?.data?.via_);
-                    localStorage.setItem('data', JSON.stringify(e));
+                    localStorage.setItem('data', JSON.stringify(data));
                     localStorage.removeItem("referal")
                     if (this.props.router.query.id) {
                         Router.push(
@@ -116,14 +134,14 @@ class Register extends Component {
                 }
             }
         } else {
-            const user = await registerUser(url, e);
+            const user = await registerUser(url, data);
             if (user) {
                 if (user.status >= 400 && user.status !== 500) {
                     this.setState({ report: true });
                     const modal = Modal.error({
                         centered: true,
                         title: 'Xatolik',
-                        content: user?.data?.msg[0],
+                        content: user?.data?.msg?.[0] || "Nimadir xato ketdi qaytadan urinib ko'ring",
                     });
                     modal.update;
                 } else if (user.status == 200 || user.status == 201) {
@@ -131,7 +149,7 @@ class Register extends Component {
                     localStorage.setItem('token', user.data.access);
                     localStorage.setItem('tour', true);
                     localStorage.setItem('via_', user?.data?.via_);
-                    localStorage.setItem('data', JSON.stringify(e));
+                    localStorage.setItem('data', JSON.stringify(data));
                     if (this.props.router.query.id) {
                         Router.push(
                             `/account/Message?id=${this.props.router.query.id}`
@@ -208,181 +226,229 @@ class Register extends Component {
 
     render() {
         const { router } = this.props;
-        const { deal,  id } = this.props?.router?.query;
+        const { deal, id } = this.props?.router?.query;
         // referal
         const { pid } = router.query;
 
 
 
         return (
-            <div className="ps-my-account">
-                <div className="container">
+            <div style={{ backgroundColor: '#f1f1f1', padding: "50px 20px" }}>
+                <div className="container p-0">
                     <div className="ps-form--account">
                         <Form onFinish={this.handleSubmit}>
-                            <ul className="ps-tab-list">
-                                <li>
-                                    <Link href={
+
+                            <div className="d-flex justify-content-center align-items-center flex-column mb-4">
+                                <Link href={
+                                    (id) ? `/account/register?id=${id}` :
+                                        (deal) ? `/account/register?deal=${deal}` :
+                                            "/account/register"
+                                }>
+                                    <a style={{ fontSize: "28px", fontWeight: 700 }}>Ro'yxatdan o'tish</a>
+                                </Link>
+
+                                <div className='d-flex gap-3 align-items-center'>
+                                    <span className='register_title' style={{ fontSize: "16px", fontWeight: 500 }}>Hisobingiz bormi?</span>
+
+                                    <Link style={{ fontSize: "12px" }} href={
                                         (id) ? `/account/login?id=${id}` :
                                             (deal) ? `/account/login?deal=${deal}` :
                                                 "/account/login"
-                                    }>
-                                        <a>Kirish</a>
-                                    </Link>
-                                </li>
-                                <li className="active">
-                                    <Link href={
-                                        (id) ? `/account/register?id=${id}` :
-                                            (deal) ? `/account/register?deal=${deal}` :
-                                                "/account/register"
                                     }
                                     >
-                                        <a>Ro'yxatdan o'tish</a>
+
+
+                                        <a className='register_title' style={{ fontSize: "16px", fontWeight: 500, color: "#00A44F" }}>Kirish</a>
                                     </Link>
-                                </li>
-                            </ul>
-                            <div className="ps-tab active" id="register">
-                                <div className="ps-form__content">
-                                    <h5>Ro'yxatdan o'tish</h5>
-                                    <div className="form-group">
-                                        <p>Telefon raqam yoki email</p>
-                                        <Form.Item
-                                            name="phone_or_email"
-                                            rules={[
-                                                {
-                                                    required: 'true',
-                                                    message:
-                                                        'Iltimos telefon raqam yoki emailingizni  kiriting!',
-                                                },
-                                            ]}>
-                                            <Input
-                                                className="form-control"
-                                                type={this.state.inputType}
-                                                placeholder="Telefon raqam yoki email"
-                                                onKeyDown={
-                                                    this.handleEnterKeyPress
-                                                }
-                                                onChange={this.handleChangeType}
-                                                maxLength={
-                                                    this.state.inputLength
-                                                }
-                                            />
-                                        </Form.Item>
-                                    </div>
-                                    <div className="form-group form-forgot">
-                                        <p>Parol</p>
-                                        <Form.Item
-                                            name="password"
-                                            rules={[
-                                                {
-                                                    required: true,
-                                                    message:
-                                                        'Parolni kiriting!',
-                                                },
-                                            ]}>
-                                            <Input
-                                                className="form-control"
-                                                type="password"
-                                                placeholder="Parol"
-                                                ref={(input) =>
-                                                    (this.passwordInput = input)
-                                                }
-                                                onKeyDown={
-                                                    this.handleEnterKeyPress2
-                                                }
-                                            />
-                                        </Form.Item>
-                                    </div>
+                                </div>
 
-                                    <div className="form-group form-forgot">
-                                        <p>Parolni takrorlash</p>
-                                        <Form.Item
-                                            name="password2"
-                                            rules={[
-                                                {
-                                                    required: true,
-                                                    message:
-                                                        'Parolni qayta kiriting!',
-                                                },
-                                            ]}>
-                                            <Input
-                                                className="form-control"
-                                                type="password"
-                                                placeholder="Parolni takrorlash"
-                                                ref={(input) =>
-                                                (this.password2Input =
-                                                    input)
-                                                }
-                                            />
-                                        </Form.Item>
 
-                                        <div className="tanishuv-chekbox">
-                                            <label className="chekboxx">
-                                                <input
-                                                    required
-                                                    type="checkbox"
-                                                    onChange={
-                                                        this.handleChekked
-                                                    }
-                                                />
-                                            </label>
-                                            <Link href="#">
-                                                <a
-                                                    data-bs-target="#exampleModalToggleEditCategory2"
-                                                    data-bs-toggle="modal"
-                                                    className=" p-0 ms-lg-2 m-0 tanishuv-sharti-title">
-                                                    Tanishib chiqdim,
-                                                    shartlariga roziman!
-                                                </a>
-                                            </Link>
-                                        </div>
-                                    </div>
-                                    <div className="form-group submit">
-                                        {this.state.report ? (
-                                            this.state.chekked ? (
-                                                <button
-                                                    type="submit"
-                                                    className="ps-btn ps-btn--fullwidth">
-                                                    Ro'yxatdan o'tish
-                                                </button>
-                                            ) : (
-                                                <Tooltip
-                                                    className="ps-btn ps-btn--fullwidth"
-                                                    title="Ro'yxatdan o'tishingiz uchun tanishuv shartlariga rozilik bildirishingiz zarur">
-                                                    <button
-                                                        disabled={true}
-                                                        style={{
-                                                            cursor: 'not-allowed',
-                                                            color: '#fff',
-                                                            backgroundColor:"#00a44f",
-                                                            border:"none"
-                                                        }}
-                                                        className="ps-btn ps-btn--fullwidth"
+                            </div>
+                            <Segmented
+                                onChange={(value) => this.setState({ segmentValue: value })}
 
-                                                    >
-                                                        Ro'yxatdan o'tish
-                                                    </button>
-                                                </Tooltip>
-                                            )
-                                        ) : (
+                                options={[{
+                                    label: 'Telefon raqam',
+                                    value: 'phone',
+                                    icon: <PhoneOutlined   />,
+                                },
+                                {
+                                    label: 'Elektron pochta',
+                                    value: 'email',
+                                    icon: <MailOutlined />,
+                                },]}
+                                block className='mb-5 ' style={{ height: "50px" }} />
+
+
+                            {this.state.segmentValue === "email" ?
+                                <Form.Item
+                                    name="email"
+                                    className='mb-4'
+
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message:
+                                                'Elektron pochta kiritish majburiy',
+                                        },
+                                    ]}>
+                                    <Input
+                                        style={{ height: "50px", fontSize: "16px" }}
+                                        autoComplete='off'
+                                        prefix={<MailOutlined style={{ fontSize: "20px", padding: "0 10px" }} />}
+                                        type="email"
+                                        placeholder="Elektron pochta"
+                                        onKeyDown={
+                                            this.handleEnterKeyPress
+                                        }
+                                    />
+                                </Form.Item> :
+                                <Form.Item
+                                    name="phone"
+                                    className='mb-4'
+
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message:
+                                                'Telefon raqam kiritish majburiy',
+                                        },
+                                    ]}>
+                                    <Input
+                                        style={{ height: "50px", fontSize: "16px" }}
+                                        type='text'
+                                        prefix={<PhoneOutlined style={{ fontSize: "20px", padding: "0 10px" }} />}
+                                        value={this.state.phone}
+                                        onChange={this.handleChange}
+                                        placeholder="Telefon raqam"
+                                        maxLength={13} // 13 belgidan ortiq kiritishni cheklash
+                                        onKeyDown={(e) => {
+                                            // Har qanday notog'ri belgilarni bloklash
+                                            if (!/[0-9+\s]/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Delete') {
+                                                e.preventDefault();
+                                            }
+                                        }}
+                                    />
+                                </Form.Item>
+
+                            }
+
+
+                            <Form.Item
+                                name="password"
+                                className='mb-4'
+                                rules={[
+                                    {
+                                        required: true,
+                                        message:
+                                            'Parolni kiriting!',
+                                    },
+                                ]}>
+                                <Input.Password
+
+                                    style={{ height: "50px", fontSize: "16px" }}
+                                    prefix={<LockOutlined style={{ fontSize: "20px", padding: "0 10px" }} />}
+                                    type="password"
+                                    placeholder="Parol"
+                                    ref={(input) =>
+                                        (this.passwordInput = input)
+                                    }
+                                    onKeyDown={
+                                        this.handleEnterKeyPress2
+                                    }
+                                />
+                            </Form.Item>
+
+                            <Form.Item
+                                name="password2"
+                                className='mb-4'
+                                rules={[
+                                    {
+                                        required: true,
+                                        message:
+                                            'Parolni qayta kiriting!',
+                                    },
+                                ]}>
+                                <Input.Password
+                                    style={{ height: "50px", fontSize: "16px" }}
+                                    prefix={<LockOutlined style={{ fontSize: "20px", padding: "0 10px" }} />}
+                                    type="password"
+                                    placeholder="Parolni takrorlash"
+                                    ref={(input) =>
+                                    (this.password2Input =
+                                        input)
+                                    }
+                                />
+                            </Form.Item>
+
+                            <div className="tanishuv-chekbox d-flex align-items-center mb-4">
+                                <label className="chekboxx m-0 ">
+                                    <input
+                                        required
+                                        type="checkbox"
+                                        onChange={
+                                            this.handleChekked
+                                        }
+                                    />
+                                </label>
+                                <Link href="#">
+                                    <a
+                                        data-bs-target="#exampleModalToggleEditCategory2"
+                                        data-bs-toggle="modal"
+                                        className=" p-0 ms-lg-2 m-0 fs-4 mb-2 tanishuv-sharti-title">
+                                        Tanishib chiqdim,
+                                        shartlariga roziman!
+                                    </a>
+                                </Link>
+                            </div>
+
+                            <div className="form-group submit">
+                                {this.state.report ? (
+                                    this.state.chekked ? (
+                                        <button
+                                            type="submit"
+                                            className="ps-btn ps-btn--fullwidth">
+                                            Ro'yxatdan o'tish
+                                        </button>
+
+                                    ) : (
+                                        <Tooltip
+                                            className="ps-btn ps-btn--fullwidth"
+                                            title="Ro'yxatdan o'tishingiz uchun tanishuv shartlariga rozilik bildirishingiz zarur">
                                             <button
                                                 disabled={true}
-                                                type="submit"
-                                                className="ps-btn ps-btn--fullwidth">
-                                                <BeatLoader color="#fff" />
+                                                style={{
+                                                    cursor: 'not-allowed',
+                                                    color: '#fff',
+                                                    backgroundColor: "#00a44f",
+                                                    border: "none"
+                                                }}
+                                                className="ps-btn ps-btn--fullwidth"
+
+                                            >
+                                                Ro'yxatdan o'tish
                                             </button>
-                                        )}
-                                    </div>
-                                </div>
-                                {pid ? (
-                                    ''
+                                        </Tooltip>
+                                    )
                                 ) : (
-                                    <div className="or_google">
-                                        <span></span>
-                                        <span>yoki</span>
-                                        <span></span>
-                                    </div>
+                                    <button
+                                        disabled={true}
+                                        type="submit"
+                                        className="ps-btn ps-btn--fullwidth">
+                                        <BeatLoader color="#fff" />
+                                    </button>
                                 )}
                             </div>
+                            {pid ? (
+                                ''
+                            ) : (
+                                <div className="or_google">
+                                    <span></span>
+                                    <span>yoki</span>
+                                    <span></span>
+                                </div>
+                            )}
+
                         </Form>
 
                         {pid ? (
