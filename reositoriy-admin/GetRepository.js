@@ -26,6 +26,27 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
+
+    async getSellerDashbordBirja(token) {
+        const endPoint = `auctions/auction-dashboard/`;
+        const reponse = await Repository({
+            url: baseUrlCustomer + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+
     async getSellerDashbordYearch(token, id) {
         const endPoint = `get-dates/?seller=${id || ''}`;
         const reponse = await Repository({
@@ -698,6 +719,7 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
+
     async getOrdersListsDashbord(page, token) {
         const endPoint = `admin/order-list/?page=${page}`;
         const reponse = await Repository({
@@ -717,6 +739,27 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
+
+    async getOrdersListsDashbordBirja(page, token) {
+        const endPoint = `auctions/doc_exchange_sellers/?page=${page}`;
+        const reponse = await Repository({
+            url: baseUrlCustomer + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+
 
     async getOrdersDealLists(
         page,

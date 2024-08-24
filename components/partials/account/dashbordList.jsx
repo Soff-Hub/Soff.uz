@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
 import GetRepository from '~/reositoriy-admin/GetRepository';
-import { Select, Table } from 'antd';
+import { Segmented, Select, Table } from 'antd';
 import CalculateTimeDifference from './DateFormatter';
 import { useSelector } from 'react-redux';
 import PartialDescription from '~/components/elements/detail/description/PartialDescription';
@@ -68,7 +68,7 @@ function DashbordList({ setOpen }) {
         }
         setOrderLoading(false)
     }
-    
+
     async function handleClickView(item) {
         setLoading(true);
         const ItemsData = await GetRepository.getPopularProductsView(
@@ -86,7 +86,7 @@ function DashbordList({ setOpen }) {
         setMonth(value);
     };
 
-    
+
 
     async function GetItemsSeller_Yearch() {
         const ItemsData = await GetRepository.getSellerDashbordYearch(
@@ -584,8 +584,9 @@ function DashbordList({ setOpen }) {
 
 
 
+
     return (
-        <section className="ps-my-account ps-page--account ">
+        <section className="ps-my-account ps-page--account pt-0 pb-5 ">
             <p className="step-0 m-0"></p>
             <div className="container">
                 {user?.role != 'admin' && window.innerWidth > 1000 && (
@@ -599,6 +600,8 @@ function DashbordList({ setOpen }) {
                         </p>
                     </div>
                 )}
+          
+
 
                 {user?.role === 'admin' ? (
                     <div className="pb-4  d-flex gap-3 overflow-x-scroll">
@@ -960,6 +963,7 @@ function DashbordList({ setOpen }) {
                         </div>
                     </div>
                 )}
+
                 <div
                     className="row pb-5 mt-5"
                     style={{ alignItems: 'flex-start' }}>
