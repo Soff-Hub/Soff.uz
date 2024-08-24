@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import BreadCrumb from '~/components/elements/BreadCrumb';
-import DashbordList from '~/components/partials/account/dashbordList';
+import DashbordList from '~/components/partials/account/DashbordList';
 import PageContainer from '~/components/layouts/PageContainer';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
 import { useSelector } from 'react-redux';
@@ -8,7 +8,8 @@ import Page404 from '../page/page-404';
 import Selection from './selection';
 import Meta from '~/components/shared/headers/Meta';
 import Joyride from 'react-joyride';
-import { Modal } from 'antd';
+import { Modal, Segmented } from 'antd';
+import BirjaDashbordList from '~/components/partials/account/BirjaDashbordList';
 
 const MyAccountPage = () => {
     const breadCrumb = [
@@ -25,6 +26,7 @@ const MyAccountPage = () => {
     const [run, setRun] = useState(false)
     const [step, setStep] = useState(null)
     const [open, setOpen] = useState(false)
+    const [segmentValue, setSegmentValue] = useState('soff');
 
     const steps = [
         {
@@ -141,6 +143,11 @@ const MyAccountPage = () => {
     }, [])
 
 
+    const handleSegmentChange = (value) => {
+        setSegmentValue(value)
+    };
+
+
     return (
         (user?.role === 'admin' || user?.role === 'seller') ? <PageContainer footer={<FooterDefault />} title="Address">
             <div className="ps-page--my-account">
@@ -227,8 +234,32 @@ const MyAccountPage = () => {
                     </div>
                 </Modal>
 
+                {user?.role === "admin" &&
+                    <div className="py-5" style={{ backgroundColor: "#f1f1f1" }} >
+                        <div className='container'>
+                            {user?.role === "admin" && <Segmented
+                                options={[
+                                    {
+                                        label: 'Soff.uz statistikasi',
+                                        value: 'soff',
+                                    },
+                                    {
+                                        label: 'Birja statistikasi',
+                                        value: 'birja',
+                                    },
+                                ]}
+                                block
+                                style={{ height: "50px", backgroundColor: "#dedede" }}
+                                onChange={handleSegmentChange} // OnChange qo'shilgan
+                            />}
+                        </div>
+                    </div>
+                }
 
-                <DashbordList setOpen={setOpen} />
+                {
+                    segmentValue === "birja" ? <BirjaDashbordList /> :
+                        <DashbordList setOpen={setOpen} />
+                }
             </div>
         </PageContainer> : user?.access ? <Page404 /> : <Selection />
     );
