@@ -298,7 +298,7 @@ const PostsMyProducts = () => {
                         </h4>
                         <div
                             className="col-md-4 m-0  d-flex justify-content-between p-0 "
-                            style={{ maxWidth: '370px' }}>
+                            style={{ maxWidth: '360px' }}>
                             <h4>Sotuvdagi ko'rinishi : </h4>
                             <Button
                                 className="btn-success "
@@ -602,7 +602,7 @@ const PostsMyProducts = () => {
                         </form>
                         <div
                             className="card rounded-3 col-md-4 p-3 cardResponsive "
-                            style={{ maxWidth: '370px' }}>
+                            style={{ maxWidth: '360px' }}>
                             <div className="image rounded mb-3">
                                 <img
                                     src={
