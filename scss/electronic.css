@@ -47,9 +47,7 @@
 .header--electronic .header__top .header__top-links .ps-dropdown > a {
   color: #ffffff;
 }
-.header--electronic .header__content {
-  background-color: .header--electronic .header__content color-2st;
-}
+
 .header--electronic .header__content .menu--product-categories {
   display: block;
 }
