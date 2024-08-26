@@ -21,12 +21,16 @@ const MobileHeaderActions = ({ auth }) => {
                 <Link href={
                     (id) ? `/account/login?id=${id}` :
                         (deal) ? `/account/login?deal=${deal}` :
-                            "/account/selection"
+                            "/account/login"
                 }>
                     <a>Kirish</a>
                 </Link>
 
-                <Link href="/account/selection">
+                <Link href={
+                    (id) ? `/account/register?id=${id}` :
+                        (deal) ? `/account/register?deal=${deal}` :
+                            "/account/selection"
+                }>
                     <a>Ro'yxatdan o'tish</a>
                 </Link>
             </div>
