@@ -14,6 +14,7 @@ import Example from './Chart';
 import { addPeriodToThousands } from './ProductsLists';
 
 function DashbordList({ setOpen }) {
+    
     const [data, setData] = useState([]);
     const [dataOrders, setDataOrders] = useState([]);
     const [orderLoading, setOrderLoading] = useState(false);

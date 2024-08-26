@@ -37,11 +37,11 @@ export let accountAdminLinks = [
         url: '/account/products?page=1',
         icon: 'fa-solid fa-cube',
     },
-    {
-        text: 'Sotib olingan mahsulotlar',
-        url: '/account/selling',
-        icon: 'fa-brands fa-shopify',
-    },
+    // {
+    //     text: 'Sotib olingan mahsulotlar',
+    //     url: '/account/selling',
+    //     icon: 'fa-brands fa-shopify',
+    // },
     {
         text: 'Kategoriyalar',
         url: '/account/category',
@@ -84,6 +84,7 @@ export let accountAdminLinks = [
     },
 
 ];
+
 export let accountSellerLink = [
     {
         text: 'Boshqaruv paneli',
@@ -95,11 +96,11 @@ export let accountSellerLink = [
         url: '/account/myproducts',
         icon: 'fa-solid fa-shop-lock',
     },
-    {
-        text: 'Mahsulotlarni birjaga chiqarish',
-        url: '/account/selling',
-        icon: 'fa-brands fa-shopify',
-    },
+    // {
+    //     text: 'Mahsulotlarni birjaga chiqarish',
+    //     url: '/account/selling',
+    //     icon: 'fa-brands fa-shopify',
+    // },
     {
         text: 'Sotib olinganlar',
         url: '/account/sellerproducts',
