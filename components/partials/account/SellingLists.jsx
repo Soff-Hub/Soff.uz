@@ -23,10 +23,10 @@ import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 
 dayjs.extend(customParseFormat);
-const dateFormat = 'DD-MM-YYYY';
+const dateFormat = 'YYYY-MM-DD HH:mm';
 
-export const startDate = dayjs().add(2, 'day').format(dateFormat);
-export const endDate = dayjs().add(10, 'day').format(dateFormat);
+export const startDate = dayjs().add(2, 'day').hour(9).minute(0).format('YYYY-MM-DD HH:mm');
+export const endDate = dayjs().add(10, 'day').hour(18).minute(0).format(dateFormat);
 
 const disabledDate = (current) => {
     return current && (current < dayjs(startDate, dateFormat) || current > dayjs(endDate, dateFormat));
@@ -62,7 +62,9 @@ function SellingsLists() {
     const [form] = Form.useForm();
     const [price, setPrice] = useState('')
     const [sellMethod, setSellMethod] = useState('simple')
-    const [auctionDate, setAuctionDate] = useState('')
+    const [auctionDate, setAuctionDate] = useState(startDate)
+    console.log(startDate);
+    
 
 
     // Sotilgan mahsulotlar listi
@@ -691,6 +693,8 @@ function SellingsLists() {
             setAuctionDate('')
             setPrice('')
             setSellMethod('simple')
+        } else {
+            setAuctionDate(startDate)
         }
     }, [evaluation])
 
@@ -1015,7 +1019,7 @@ function SellingsLists() {
                                                 </div>
                                                 <DatePicker
                                                     showNow={false}
-                                                    showTime
+                                                    showTime={{ format: 'HH:mm', defaultValue: dayjs('09:00', 'HH:mm') }}
                                                     placeholder={`${sellMethod === 'simple' ? 'Sotuv' : 'Auksion'} tugash sanasini kiriting`}
                                                     size='large'
                                                     className='w-100'
@@ -1025,14 +1029,6 @@ function SellingsLists() {
                                                     onChange={(e, v) => setAuctionDate(v)}
                                                     disabledDate={disabledDate}
                                                 />
-
-                                                {/* <Select value={`${auctionDate} kun`} onChange={(e) => setAuctionDate(Number(e.split(' ')[0]))} style={{ height: "40px" }} className='mt-3 w-100'>
-                                                    {
-                                                        [2, 3, 4, 5, 6, 7, 8, 9, 10].map(el => (
-                                                            <Option key={el} value={`${el} kun`} label={`${el} kun`} />
-                                                        ))
-                                                    }
-                                                </Select> */}
                                             </div>
                                         </Radio.Group>
 
@@ -1083,16 +1079,16 @@ function SellingsLists() {
                                         </div>
                                     )) :
 
-                                    <div className='text-center w-100'>
-                                    <p className='fw-medium fs-4'>Ayni paytda sizning muallifligingiz ostida hech qanday mahsulot mavjud emas!</p>
-                                    <a className='text-success' style={{ textDecoration: 'underline' }} href={`/account/myproducts/product-selection`}>
-                                        Yangi mahsulut yuklash uchun shuyerga bosing
-                                    </a>
-                                    {/* <div className='d-flex flex-column gap-1 pt-1 pl-3'>
+                                        <div className='text-center w-100'>
+                                            <p className='fw-medium fs-4'>Ayni paytda sizning muallifligingiz ostida hech qanday mahsulot mavjud emas!</p>
+                                            <a className='text-success' style={{ textDecoration: 'underline' }} href={`/account/myproducts/product-selection`}>
+                                                Yangi mahsulut yuklash uchun shuyerga bosing
+                                            </a>
+                                            {/* <div className='d-flex flex-column gap-1 pt-1 pl-3'>
                                 <p className='fs-4 m-0'>- mahsulotingiz tasdiqlanganiga 20 kundan oshgan bo'lishi</p>
                                 <p className='fs-4 m-0'>- mahsulotingiz kamida 2 marta sotilgan bo'lishi</p>
                             </div> */}
-                                </div>
+                                        </div>
 
                                 }
                             </div>
