@@ -727,7 +727,7 @@ function SellingsLists() {
                                             <i className="fa-solid fa-search px-4 "></i>
 
                                         </label>
-                                        {user?.role === "seller" && <button className='btn btn-success py-2  rounded-3'
+                                        {user?.role === "seller" && <button className='btn btn-success py-2 px-0  rounded-3'
                                             style={{ height: "43px" }}
                                             onClick={() => setIsModalOpen(true)} >
                                             <span>Mahsulot tanlash</span>
@@ -1083,7 +1083,16 @@ function SellingsLists() {
                                         </div>
                                     )) :
 
-                                        <p className='fw-bold fs-3'>Ma'lumot topilmadi</p>
+                                    <div className='text-center w-100'>
+                                    <p className='fw-medium fs-4'>Ayni paytda sizning muallifligingiz ostida hech qanday mahsulot mavjud emas!</p>
+                                    <a className='text-success' style={{ textDecoration: 'underline' }} href={`/account/myproducts/product-selection`}>
+                                        Yangi mahsulut yuklash uchun shuyerga bosing
+                                    </a>
+                                    {/* <div className='d-flex flex-column gap-1 pt-1 pl-3'>
+                                <p className='fs-4 m-0'>- mahsulotingiz tasdiqlanganiga 20 kundan oshgan bo'lishi</p>
+                                <p className='fs-4 m-0'>- mahsulotingiz kamida 2 marta sotilgan bo'lishi</p>
+                            </div> */}
+                                </div>
 
                                 }
                             </div>

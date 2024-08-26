@@ -1,14 +1,4 @@
-.label-before {
-    margin-bottom: 10px;
-    width: 100%;
-    font-size: 18px;
-    &::before {
-        position: absolute;
-        content: '+998';
-        top: 99px;
-        left: 15px !important;
-    }
-}
+
 
 .raqam-input {
     padding: 0 10px;
@@ -153,6 +143,3 @@ input[type='number']::-webkit-outer-spin-button {
     margin: 0;
 }
 
-.detail-card {
-    max-width: 250px;
-}
