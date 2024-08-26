@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import BreadCrumb from '~/components/elements/BreadCrumb';
-import DashbordList from '~/components/partials/account/DashbordList';
+import DashbordList from '~/components/partials/account/dashbordList';
 import PageContainer from '~/components/layouts/PageContainer';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
 import { useSelector } from 'react-redux';
