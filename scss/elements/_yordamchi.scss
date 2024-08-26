@@ -58,29 +58,6 @@
 }
 
 
-.banner-left-one {
-    height: min-content;
-
-    a {
-        width: 100%;
-
-        span {
-            width: 100% !important;
-        }
-
-        img {
-            width: 100%;
-            height: 370px;
-        }
-    }
-}
-
-// banner mobile uchun
-
-.banner-right {
-    display: flex;
-    flex-direction: column;
-}
 
 .ps-product {
     margin: 5px 0 !important;
@@ -106,9 +83,7 @@
     }
 }
 
-.carosusel-cards {
-    gap: 15px;
-}
+
 
 .ps-product--cart-mobile {
     margin-bottom: 10px;
@@ -139,37 +114,14 @@
     }
 }
 
-.ps-product--search-result {
-    .ps-product__content {
-        margin: auto 0;
 
-    }
-}
 
 .tanishuv-chekbox {
     display: flex;
     gap: 10px;
 }
 
-.banner-placholder {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
 
-    #banner-placholder-item {
-        width: 100%;
-        height: 170px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-}
-
-.dropdown-toggle {
-    &::after {
-        margin-top: 10px;
-    }
-}
 
 .tanishuv-sharti-title {
     color: $color-1st;
@@ -184,11 +136,6 @@
     padding: 6px;
 }
 
-.ck-toolbar__items {
-    .ck-file-dialog-button {
-        display: none !important;
-    }
-}
 
 .accordion-button {
     font-weight: 400;
@@ -201,17 +148,13 @@
     }
 }
 
-.ck-editor__editable_inline {
-    min-height: 150px;
-}
+
 
 .ant-select-selection-overflow {
     min-height: 40px;
 }
 
-.live-card_title {
-    padding: 40px 0;
-}
+
 
 .mahsulotingiz {
     display: none;
@@ -229,10 +172,7 @@
     }
 }
 
-.ps-product__content--search {
-    max-width: 420px;
-    width: 100%;
-}
+
 
 .fixed-btn {
     display: flex;
@@ -249,16 +189,7 @@
     padding: 0 10px !important;
 }
 
-// .ant-select {
-//     max-height: 70px !important;
-// }
 
-.live-card-image {
-    max-height: 200px;
-    width: 100%;
-    background-size: cover;
-    background-position: center;
-}
 
 .image {
     width: 100%;
@@ -282,9 +213,6 @@
     }
 }
 
-.hujjat-detail-full-image {
-    height: 370px;
-}
 
 .category-search-label {
     position: relative;
@@ -308,15 +236,7 @@
     }
 }
 
-.ps-product--search-result {
-    .ps-product__thumbnail {
-        a {
-            .products-image1 {
-                width: 90px;
-            }
-        }
-    }
-}
+
 
 .cart-product {
     .ps-product--cart {
@@ -340,14 +260,7 @@
     }
 }
 
-.chegirma-xato {
-    border: 1px solid red !important;
-}
 
-// .ps-product:hover {
-//     height: 150px;
-//     // text-align: center;
-// }
 
 #homepage-7 .ps-product-list {
     margin-bottom: 80px;
@@ -363,9 +276,7 @@
     }
 }
 
-#acc-li-xl {
-    padding: 3px 10px;
-}
+
 
 .accordion-button {
     padding: 10px 7px;
@@ -419,9 +330,7 @@
     z-index: 9999999999 !important;
 }
 
-#heart-danger {
-    color: red !important;
-}
+
 
 .ps-wrapper {
     background-color: #fff;
@@ -463,6 +372,8 @@
 .home-card {
     margin-bottom: 20px;
 }
+
+
 
 @include media('<lg') {
     .responsive-image-card {
@@ -508,17 +419,7 @@
         display: none;
     }
 
-    .carosusel-cards {
-        justify-content: space-around;
-    }
 
-    // .home-car{
-    //     max-width: 230px;
-    //     min-width: 150px;
-    //     width: 100%;
-    //     min-height: 200px;
-    //     max-height: 200px;
-    // }
 
     .products-image1 {
         height: 100px;
@@ -529,50 +430,10 @@
         padding-top: 250px;
     }
 
-    .banner-right {
-        display: flex;
-        flex-direction: row !important;
 
-        a {
-            display: block;
-        }
 
-        .ps-collection {
-            display: block;
 
-            img {
-                width: 100%;
-                max-width: 441px;
-                min-width: 441px;
-                max-height: 191px;
-                min-height: 191px;
-                object-fit: cover;
-            }
-        }
-    }
 
-    .banner-left-one {
-        height: min-content;
-    }
-
-    .banner-placholder {
-        display: flex;
-        flex-direction: row;
-        gap: 30px;
-
-        #banner-placholder-item {
-            width: 450px;
-            height: 170px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-    }
-
-    .top-category-items {
-        // min-height: 173px;
-        //    max-height: 160px;
-    }
 
     .yaxshi-categoriyalar-image {
         // min-height: 100px;
@@ -654,18 +515,7 @@
         }
     }
 
-    .ps-product--search-result {
-        .ps-product__thumbnail {
-            max-width: 125px;
-            width: 100%;
-        }
 
-        margin: 10px;
-
-        .ps-product__content {
-            margin: auto 0;
-        }
-    }
 
     .ps-product--cart {
         .ps-product__thumbnail {
@@ -700,9 +550,7 @@
         }
     }
 
-    .hujjat-detail-full-image {
-        height: 350px;
-    }
+
 }
 
 @include media('>lg') {
@@ -714,11 +562,7 @@
     }
 }
 
-@media screen and (max-width: 1060px) {
-    .detail-card {
-        max-width: 230px;
-    }
-}
+
 
 @include media('<md') {
     .cardResponsive {
@@ -744,9 +588,7 @@
         width: 100px;
     }
 
-    .carosusel-cards {
-        gap: 0px;
-    }
+
 
     .ps-product--cart {
         .ps-product__content {
@@ -756,41 +598,9 @@
         }
     }
 
-    .banner-placholder {
-        display: flex;
-        flex-direction: row;
-        gap: 30px;
 
-        #banner-placholder-item {
-            width: 327px;
-            height: 170px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-    }
 
-    .banner-right {
-        display: flex;
-        flex-direction: row !important;
 
-        a {
-            display: block;
-        }
-
-        .ps-collection {
-            display: block;
-
-            img {
-                width: 100%;
-                max-width: 323px;
-                min-width: 323px;
-                max-height: 151px;
-                min-height: 151px;
-                object-fit: cover;
-            }
-        }
-    }
 
     .ps-btn {
         padding: 7px 6px;
@@ -860,58 +670,20 @@
     }
 }
 
-@media screen and (max-width: 719px) {
-    .detail-card {
-        max-width: 200px;
-    }
-}
 
-@media screen and (max-width: 629px) {
-    .detail-card {
-        max-width: 150px;
-    }
-}
+
+
 
 @include media('<sm') {
-    // .ps-product {
-    //     height: 140px;
-    // }
 
-    .banner-placholder {
-        display: flex;
-        flex-direction: row;
-        gap: 30px;
 
-        #banner-placholder-item {
-            width: 240px;
-            height: 170px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-    }
 
     .products-image1 {
         height: 75px;
         width: 90px;
     }
 
-    .banner-right {
-        display: flex;
-        flex-direction: row !important;
 
-        .ps-collection {
-            display: block;
-
-            img {
-                width: 100%;
-                min-width: 250px;
-                max-height: 191px;
-                min-height: 191px;
-                object-fit: cover;
-            }
-        }
-    }
 
     .ps-product__thumbnail {
         a {
@@ -962,15 +734,11 @@
         }
     }
 
-    .hujjat-detail-full-image {
-        height: 300px;
-    }
+
 }
 
 @include media('<xs') {
-    .hujjat-detail-full-image {
-        height: 200px;
-    }
+
 
     #homepage-7 .ps-product-list {
         margin-bottom: 60px;
@@ -981,60 +749,15 @@
     }
 }
 
-@media screen and (max-width: 544px) {
-    .banner-placholder {
-        display: flex;
-        flex-direction: row;
-        gap: 30px;
 
-        #banner-placholder-item {
-            // max-width: 200px;
-            width: 240px;
-            height: 100px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-    }
-}
 
 @media screen and (max-width: 524px) {
     .ps-product-list .ps-section__content {
         padding-top: 0;
     }
 
-    .banner-right {
-        display: flex;
-        flex-direction: row !important;
 
-        .ps-collection {
-            display: block;
 
-            img {
-                width: 100%;
-                max-width: 213px;
-                min-width: 213px;
-                max-height: 191px;
-                min-height: 191px;
-                object-fit: cover;
-            }
-        }
-    }
-
-    .banner-placholder {
-        display: flex;
-        flex-direction: row;
-        gap: 30px;
-
-        #banner-placholder-item {
-            max-width: 230px;
-            width: 100%;
-            height: 191px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-    }
 
     .ps-block--category-2 .ps-block__content {
         padding: 0;
@@ -1091,54 +814,11 @@
     }
 }
 
-@media screen and (max-width: 520px) {
-    .banner-placholder {
-        display: flex;
-        flex-direction: row;
-        gap: 10px;
 
-        #banner-placholder-item {
-            width: 220px;
-            height: 100px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-    }
-}
 
 @media screen and (max-width: 494px) {
-    .banner-right {
-        display: flex;
-        flex-direction: row !important;
 
-        .ps-collection {
-            display: block;
 
-            img {
-                width: 100%;
-                min-width: 107px;
-                object-fit: cover;
-            }
-
-            div {
-                height: 93px !important;
-            }
-        }
-    }
-
-    .banner-left-one {
-        height: min-content;
-
-        a {
-            width: 100%;
-
-            img {
-                width: 100%;
-                max-height: 164px;
-            }
-        }
-    }
 
     .ps-product__thumbnail {
         min-height: 80px;
@@ -1161,21 +841,7 @@
         text-align: center;
     }
 
-    // .ps-product-list {
-    //     .ps-section__content {
-    //         padding-top: 25px;
-    //     }
-    // }
 
-    .carosusel-cards {
-        flex-wrap: wrap !important;
-    }
-
-    // .home-car{
-    //     padding: 15px 0;
-    //     min-width: 170px;
-    //     max-width: 170px;
-    // }
 
     .ps-product__actions {
         a {
@@ -1190,19 +856,6 @@
         justify-content: center;
     }
 
-    .banner-placholder {
-        display: flex;
-        flex-direction: row;
-        gap: 10px;
-
-        #banner-placholder-item {
-            width: 200px;
-            height: 100px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-    }
 }
 
 @media screen and (max-width: 441px) {
@@ -1210,20 +863,7 @@
         justify-content: center;
     }
 
-    .banner-placholder {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-        gap: 10px;
 
-        #banner-placholder-item {
-            width: 150px;
-            height: 100px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-    }
 
     .ps-form--account .ps-tab-list li.active a {
         font-size: 22px !important;
@@ -1383,49 +1023,7 @@
     width: 415px;
 }
 
-.BackImg {
-    background-image: url('../../public/static/CardCredit/humoca.gif');
-    background-size: 100%;
-    background-position: center;
-    border-radius: 10px;
-}
 
-.BackImg4 {
-    background-image: url('../../public/static/CardCredit/moster.gif');
-    background-size: 100%;
-    background-position: center;
-    border-radius: 10px;
-}
-
-.BackImg3 {
-    background-image: url('../../public/static/CardCredit/ei-flex-elite-550x347.png');
-    background-size: 100%;
-    background-position: center;
-    border-radius: 10px;
-}
-
-.BackImg1 {
-    background-image: url('../../public/static/CardCredit/defaukt6.jpg');
-    background-size: 100%;
-    border-radius: 10px;
-}
-
-.BackImg2 {
-    background-image: url('../../public/static/CardCredit/Uzcard.jpg');
-    background-size: 100%;
-    background-position: center;
-    border-radius: 10px;
-}
-
-.cardText {
-    font-family: monospace;
-    color: #bcb4b4;
-    font-size: 17px;
-}
-
-.cardColorHumo {
-    color: #f1f1f1;
-}
 
 .add-product-user-image {
     input {

@@ -355,45 +355,7 @@
     }
 }
 
-.header--product {
-    /*  @include hidden;
-    height: 0;*/
 
-    .navigation--product {
-        transition: transform 0.25s ease;
-        transform: translateY(-50%);
-        @include hidden();
-        height: 0;
-    }
-
-    &.header--sticky {
-        @include show;
-        height: auto;
-
-        .header__top {
-            display: none;
-        }
-
-        .navigation {
-            height: 0;
-        }
-
-        .navigation--product {
-            padding: 10px 0;
-            background-color: #fff;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 9999;
-            height: auto;
-            border-bottom: 1px solid #eaeaea;
-            transform: translateY(0);
-            height: auto;
-            @include show;
-        }
-    }
-}
 
 .header--mobile {
     position: relative;
@@ -785,103 +747,7 @@
     }
 }
 
-.header--mobile-categories {
-    .header__back {
-        vertical-align: middle;
-        text-align: left;
 
-        strong {
-            font-size: 18px;
-            vertical-align: middle;
-        }
-
-        i {
-            vertical-align: middle;
-            margin-right: 16px;
-            font-size: 24px;
-            color: $color-heading;
-        }
-    }
-
-    .navigation--mobile {
-        .navigation__left {
-            justify-content: flex-start;
-        }
-    }
-
-    .header__filter {
-        padding: 10px 15px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background-color: #f5f5f5;
-
-        > * {
-            flex-basis: 100%;
-            max-width: 50%;
-        }
-
-        button {
-            border: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 30px;
-            background-color: transparent;
-            font-size: 14px;
-
-            &:after {
-                content: '\e93a';
-                font-family: Linearicons;
-                margin-left: 20px;
-            }
-
-            i {
-                margin-right: 10px;
-                font-size: 16px;
-                font-size: 20px;
-                color: $color-text;
-            }
-        }
-
-        .header__sort {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 10px;
-
-            i {
-                margin-right: 10px;
-                font-size: 16px;
-                font-size: 20px;
-                color: $color-text;
-            }
-
-            .select2 {
-                .select2-selection {
-                    border: none;
-                    background-color: transparent;
-
-                    .select2-selection__rendered {
-                        background-color: transparent;
-                        text-align: left;
-                    }
-
-                    .select2-selection__arrow {
-                        &:before {
-                            content: '\e93a';
-                            font-family: Linearicons;
-                        }
-                    }
-                }
-            }
-        }
-
-        > button {
-            border-right: 1px solid #ccc;
-        }
-    }
-}
 
 
 .searchFilterSelect{
