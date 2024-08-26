@@ -266,10 +266,11 @@ const Posts = () => {
                 <Meta title={'Yangi mahsulot yaratish'} />
                 <BreadCrumb breacrumb={breadCrumb} />
 
-                <div className="d-flex container justify-content-center ">
+                <div className="d-flex container justify-content-center pb-5 ">
                     <div
                         className="row  w-100 gap-3 pt-5"
                         style={{ alignItems: 'flex-start' }}>
+
                         <h5 className="p-0  col-md-8 fs-4  text-warning fw-semibold lh-base">
                             {' '}
                             <i className="fa-solid fa-triangle-exclamation"></i>{' '}
@@ -282,7 +283,7 @@ const Posts = () => {
 
                         <div
                             className="col-md-4 m-0  d-flex justify-content-between p-0 "
-                            style={{ maxWidth: '370px' }}>
+                            style={{ maxWidth: '360px' }}>
                             <h4> Sotuvdagi ko'rinishi : </h4>
                             <Button
                                 className="btn-success "
@@ -494,9 +495,10 @@ const Posts = () => {
                                 </span>
                             </div>
                         </form>
+
                         <div
                             className="col-md-4 rounded-3  p-3 cardResponsive  card mt-3"
-                            style={{ maxWidth: '370px' }}>
+                            style={{ maxWidth: '360px' }}>
                             <div className="image w-full rounded mb-3 "
                                 style={{
                                     display: "flex",
@@ -605,6 +607,7 @@ const Posts = () => {
                                 </p>
                             </div>
                         </div>
+
                     </div>
                     <div
                         className="offcanvas offcanvas-end"
@@ -733,6 +736,7 @@ const Posts = () => {
                         </div>
                     </div>
                 </div>
+
                 <div
                     className="modal fade "
                     id="staticBackdrop"

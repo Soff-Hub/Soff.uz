@@ -281,14 +281,14 @@ const PostsProductsEdit = () => {
 
                     (products && <div className="d-flex container justify-content-center">
                         <div
-                            className="row w-100 gap-3 mt-5 "
+                            className="row w-100 gap-3 mt-5 mb-5 "
                             style={{ alignItems: 'flex-start' }}>
                             <h4 className="col-md-8 m-0 p-0">
                                 Mahsulotni tahrirlash
                             </h4>
                             <div
                                 className="col-md-4 m-0  d-flex justify-content-between p-0 "
-                                style={{ maxWidth: '370px' }}>
+                                style={{ maxWidth: '360px' }}>
                                 <h4>Sotuvdagi ko'rinishi : </h4>
                                 <Button
                                     className="btn-success "
@@ -541,7 +541,7 @@ const PostsProductsEdit = () => {
                             </form>
                             <div
                                 className="card rounded-3 col-md-4 p-3 cardResponsive "
-                                style={{ maxWidth: '370px' }}>
+                                style={{ maxWidth: '360px' }}>
                                 <div className="image rounded ">
                                     <div className="image rounded ">
                                         {!products.poster_url ? (
