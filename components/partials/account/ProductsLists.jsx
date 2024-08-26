@@ -543,6 +543,7 @@ function ProductsLists() {
         },
     ];
 
+    
 
 
     return (
@@ -1167,7 +1168,7 @@ function ProductsLists() {
 
                     <Select
                         onChange={(e) => handleFilterStatus(e)}
-                        defaultValue={router.query.status}
+                        defaultValue={router.query.status ? router.query.status : ''}
                         style={{ height: "45px" }}
                     >
                         <Option key={''}><i className="fa-solid fa-list mr-2"></i> Barchasi holatlar</Option>
