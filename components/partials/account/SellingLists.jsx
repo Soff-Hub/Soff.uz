@@ -63,8 +63,6 @@ function SellingsLists() {
     const [price, setPrice] = useState('')
     const [sellMethod, setSellMethod] = useState('simple')
     const [auctionDate, setAuctionDate] = useState(startDate)
-    console.log(startDate);
-    
 
 
     // Sotilgan mahsulotlar listi
@@ -186,7 +184,7 @@ function SellingsLists() {
                             Mahsulotingiz birja savdosiga chiqarildi
                         </p>
 
-                        <a className='text-success' style={{ textDecoration: 'underline' }} href={`http://localhost:3000/product/${openApplicationID?.id}`} target='_blank'>
+                        <a className='text-success' style={{ textDecoration: 'underline' }} href={`https://birja.soff.uz/product/${openApplicationID?.slug}`} target='_blank'>
                             Mahsulotingizni birjada ko'rish uchun bosing.
                         </a>
                     </div>,
@@ -310,9 +308,9 @@ function SellingsLists() {
             key: 'image',
             render: (document_data) => (
                 <div>
-                    {document_data?.poster ? (
+                    {document_data?.image ? (
                         <NextImageCard
-                            url={document_data?.poster}
+                            url={document_data?.image?.poster_url}
                             clasS="rounded-3 mb-2"
                             width="54px"
                             height="54px"
@@ -372,54 +370,6 @@ function SellingsLists() {
                 </span>
             ),
         },
-        {
-            title: 'Holat',
-            dataIndex: 'active',
-            key: 'address',
-            render: (status) => {
-                return <span>
-                    {status ? 'Faol' : "No faol"}
-                </span>
-
-            }
-        },
-        {
-            title: 'Harakatlar',
-            dataIndex: 'id',
-            key: 'address',
-            render: (id, record) => (
-                <div className='d-flex gap-2'>
-                    <span style={{ cursor: "pointer" }} onClick={() => handleClickView(id)}>
-                        <i
-                            className="fa-solid fa-eye text-success-emphasis mx-2"
-                        ></i>
-                    </span>
-
-                    {(user?.role === "admin" || record?.status === 'offer') && <span style={{ cursor: "pointer" }}
-                    >
-                        <i
-                            onClick={() => handleClickViewUpdates(record)}
-                            className="fa-solid fa-pen-to-square mx-3  text-success-emphasis"
-                        ></i>
-                    </span>}
-
-                    {(record?.status === "moderation" && user?.role === "seller") && <a
-
-                        data-bs-target="#exampleModalToggle"
-                        data-bs-toggle="modal">
-                        <i
-                            className="fa-solid fa-trash-can text-danger mx-2"
-                            onClick={() =>
-                                setDeleteId(record?.id)
-                            }
-                        ></i>
-                    </a>
-
-                    }
-                </div>
-            ),
-        },
-
     ];
 
 
