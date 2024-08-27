@@ -370,6 +370,18 @@ function SellingsLists() {
                 </span>
             ),
         },
+        {
+            title: 'Holati',
+            dataIndex: 'active',
+            key: 'active',
+            render: (created_at) => (
+                <span key={created_at}>
+                    {' '}
+                    {created_at ? <i className="fa-solid fa-check"></i> : <i className="fa-solid fa-warning"></i>}{' '}
+                    {created_at ? "Aktiv" : "Aktiv emas"}
+                </span>
+            ),
+        },
     ];
 
 
