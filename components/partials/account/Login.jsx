@@ -188,7 +188,7 @@ class Login extends Component {
                                     <Link style={{ fontSize: "12px" }} href={
                                         (id) ? `/account/register?id=${id}` :
                                             (deal) ? `/account/register?deal=${deal}` :
-                                                "/account/register"
+                                                "/account/selection"
                                     }
                                     >
 

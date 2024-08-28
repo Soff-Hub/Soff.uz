@@ -8,6 +8,7 @@ const SearchPage = () => {
     const [keyword, setKeyword] = useState('');
     const [loading, setLoading] = useState(false);
     const debouncedSearchTerm = useDebounce(keyword, 1000);
+    
     function handleClearKeyword() {
         setKeyword('');
         setLoading(false);
@@ -19,6 +20,7 @@ const SearchPage = () => {
             Router.push(`/search-page?keyword=${keyword}`);
         }
     }
+
 
 
     useEffect(() => {
