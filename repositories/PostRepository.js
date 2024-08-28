@@ -16,16 +16,7 @@ class PostRepository {
         return reponse;
     }
 
-    async postSearchFilter(payload, file, full_data) {
-        const reponse = await Repository.get(
-            `${baseUrl}customer/search-documents/?search=${payload ? payload : ''}&type=${file ? file : ''}&full_data=${full_data ? full_data : ''}`
-        )
-            .then((response) => {
-                return response.data;
-            })
-            .catch((error) => ({ error: JSON.stringify(error) }));
-        return reponse;
-    }
+
 
     async postSearchFilterNews(payload, file) {
         const reponse = await Repository.get(

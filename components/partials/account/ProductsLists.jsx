@@ -1192,7 +1192,7 @@ function ProductsLists() {
                         defaultValue={filterType}
                         style={{ height: "45px" }}
                     >
-                        <Option key={''}><i className="fa-solid fa-list mr-2"></i> Barchasi turlar</Option>
+                        <Option key={''}><i className="fa-solid fa-list mr-2"></i> Barcha turlar</Option>
                         <Option key={"file"}><i className='text-success fa-solid fa-file mr-2 '></i> Fayl</Option>
                         <Option key={"audio"}> <i className='mr-2 fa-solid fa-music text-success'></i>
                             Audio</Option>

@@ -59,8 +59,9 @@ const ModulePaymentOrderSummaryOne = () => {
     useEffect(() => {
         getOneProductData();
         getPercentage();
-    }, [slug]);
+    }, [slug, id]);
 
+    
 
     const hisob = addPeriodToThousands(data?.discount_price + data?.discount_price * percentage);
     const hisobb = addPeriodToThousands(data?.discount_price * percentage);

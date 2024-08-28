@@ -179,7 +179,6 @@ function ApplicationLists() {
             });
             modal.update
             getItemsSeller(1, dataCat);
-            setProfile(null)
         } else if (Items?.status >= 400) {
             const modal = Modal.error({
                 centered: true,
@@ -652,7 +651,7 @@ function ApplicationLists() {
                                                         </span>
                                                     </label>
                                                 </div>
-                                                <Table scroll={{ x: 1700 }} dataSource={dataAdmin} columns={columnsAdmin}
+                                                <Table scroll={{ x: 1800 }} dataSource={dataAdmin} columns={columnsAdmin}
                                                     loading={loadingData}
                                                     pagination={false} />
                                                 <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount}

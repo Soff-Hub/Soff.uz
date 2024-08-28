@@ -89,7 +89,6 @@ const HomeElectronicsPage = () => {
     const memoizedBanner = useMemo(() => {
         return (
             <>
-                <HeaderMobileBottom />
                 <ElectronicBanner />
             </>
         );

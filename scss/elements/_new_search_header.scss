@@ -221,7 +221,6 @@
             color: #202124;
             padding: 0;
             margin: 0;
-            margin-bottom: 5px;
         }
 
         .title_elh4 {
@@ -237,16 +236,16 @@
         }
 
         .title_elh44 {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 400;
-
+            margin: 0;
             text-align: left;
-            color: #022335;
-            font-weight: 600;
+            color: #00a44f;
+            font-weight: 500;
             display: -webkit-box;
             -webkit-box-orient: vertical;
             overflow: hidden;
-            -webkit-line-clamp: 2;
+            -webkit-line-clamp: 1;
         }
 
         .descripton_title {

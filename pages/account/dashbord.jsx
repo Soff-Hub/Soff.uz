@@ -131,7 +131,7 @@ const MyAccountPage = () => {
     const setSingleStep = (step) => {
         setOpen(false)
         const doc = document.querySelector('.headerSticky')
-        doc.id = ""
+        // doc.id = ""
         const item = steps.findIndex(el => el.target === step.target)
         setStep(item)
     };
