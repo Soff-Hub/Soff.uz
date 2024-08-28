@@ -1037,7 +1037,7 @@ function SellingsLists() {
                                             </span>
 
 
-                                            <span ><i className="fa-solid fa-coins text-warning mr-1"></i> {addPeriodToThousands(item.price)} so'm </span>
+                                            <span ><i className="fa-solid fa-coins text-warning mr-1"></i> {addPeriodToThousands(item.discount_price)} so'm </span>
                                         </div>
                                     )) :
 
