@@ -242,7 +242,7 @@ class Register extends Component {
                                 <Link href={
                                     (id) ? `/account/register?id=${id}` :
                                         (deal) ? `/account/register?deal=${deal}` :
-                                            "/account/register"
+                                            "/account/selection"
                                 }>
                                     <a style={{ fontSize: "28px", fontWeight: 700 }}>Ro'yxatdan o'tish</a>
                                 </Link>

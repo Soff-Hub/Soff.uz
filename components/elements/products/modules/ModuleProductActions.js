@@ -208,7 +208,7 @@ const ModuleProductActions = ({ product, audio }) => {
                                 href={`${
                                     user?.access === undefined ||
                                     user?.access === ''
-                                        ? `account/register-user?id=${product?.id}`
+                                        ? `account/register?id=${product?.id}`
                                         : `account/checkout-one?id=${product?.id}`
                                 } `}
                                 data-toggle="tooltip"
