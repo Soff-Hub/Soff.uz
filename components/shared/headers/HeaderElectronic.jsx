@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
-
 import Link from 'next/link';
 import ElectronicHeaderActions from '~/components/shared/headers/modules/ElectronicHeaderActions';
 import { stickyHeader } from '~/utilities/common-helpers';
 import NextImageCard from '~/components/nextImagecard';
+import SearchHeader from './modules/SearchHeader';
+import { useRouter } from 'next/router';
 
 const HeaderElectronic = () => {
+    const { asPath } = useRouter();
+    const [run, setRun] = useState(false);
 
-    const [run, setRun] = useState(false)
 
     useEffect(() => {
         if (process.browser) {
@@ -40,13 +42,16 @@ const HeaderElectronic = () => {
                         </Link>
 
                     </div>
-        
+                    {asPath !== "/" && <div className="header__content-center">
+                        <SearchHeader />
+                    </div>}
+
                     <div className="header__content-right">
                         <ElectronicHeaderActions />
                     </div>
                 </div>
             </div>
- 
+
         </header>
     );
 };
