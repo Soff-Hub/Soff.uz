@@ -701,7 +701,7 @@ function ProductsLists() {
                                                             Tezkor
                                                             teglar
                                                         </p>
-                                                        <div className=" d-flex justify-content-start align-content-center flex-wrap">
+                                                        <div className=" d-flex justify-content-start gap-3 align-content-center flex-wrap">
                                                             {deleteIdView
                                                                 ?.tag
                                                                 ?.length >
@@ -962,11 +962,11 @@ function ProductsLists() {
                                                     </a>
                                                 </div>
                                             </div>
-                                            <div className=" mt-5 d-flex justify-content-start align-content-center flex-wrap">
+                                            <div className=" mt-5 d-flex justify-content-start align-content-center flex-wrap ">
                                                 {deleteIdView
                                                     ?.active_tag
                                                     ?.length > 0 ? (
-                                                    <p>
+                                                    <p className='d-flex gap-3 align-items-center'>
                                                         {' '}
                                                         <strong>
                                                             Aktiv
@@ -1004,7 +1004,7 @@ function ProductsLists() {
                                                 {deleteIdView
                                                     ?.deactive_tag
                                                     ?.length > 0 ? (
-                                                    <p>
+                                                    <p className='d-flex gap-3 align-items-center'>
                                                         {' '}
                                                         <strong>
                                                             Aktiv
