@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import NavigationListSeller from '../shared/navigation/NavigationListSeller';
 import NavigationListCustomer from '../shared/navigation/NavigationListCustomer';
 import Backtop from '../elements/backTop';
+import InlinePlayer from '../elements/InlinePlayer';
 
 const MasterLayout = ({ children }) => {
     const { accountLinks, user } = useSelector((state) => state.auth);
@@ -52,6 +53,12 @@ const MasterLayout = ({ children }) => {
             <div
                 onClick={() => setBackground(!background)}
                 className={background ? 'backgound-black' : ''}></div>
+
+            <div className='inline-player'>
+                <div className="container">
+                    <InlinePlayer />
+                </div>
+            </div>
         </>
     );
 };
