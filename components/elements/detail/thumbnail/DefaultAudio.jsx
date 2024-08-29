@@ -9,7 +9,6 @@ export default function DefaultAudio({ product }) {
     const [playing, setPlaying] = useState(true);
     const [volume, setVolume] = useState(1);
 
-    // create the waveform inside the correct component
     useEffect(() => {
         if (wavesurferRef.current && !wavesurferObj) {
             setWavesurferObj(
@@ -74,8 +73,8 @@ export default function DefaultAudio({ product }) {
                         className="audio__poster"
                         style={{
                             backgroundImage: `url( ${product?.poster_url
-                                    ? product?.poster_url
-                                    : 'https://png.pngtree.com/background/20230612/original/pngtree-colorful-musical-notes-and-music-notes-picture-image_3176403.jpg'
+                                ? product?.poster_url
+                                : 'https://png.pngtree.com/background/20230612/original/pngtree-colorful-musical-notes-and-music-notes-picture-image_3176403.jpg'
                                 } )`,
                             borderRadius: '5px',
                             backgroundPositionX: 'center',
