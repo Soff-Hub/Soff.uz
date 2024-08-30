@@ -195,15 +195,13 @@ const PageContainer = ({
                 <meta property="og:title" content={title} />
             </Head>
             {header}
-            {(user?.role === "seller" && query === "/") && <div className={style}>
+
+            {/* {(user?.role === "seller" && query === "/") && <div className={style}>
                 <div className='container d-flex align-items-center justify-content-between'>
 
                     <Link href={"https://birja.soff.uz/"}>
                         <a className='d-flex align-items-center'>
-                            {/* <img src="/static/img/soffbirja-dark-logo.png" alt="birjalogo"
-                                width={140}
-                                height={30}
-                            /> */}
+                       
 
                             <span className='fw-medium text-white d-flex gap-2 align-items-center ' style={{ fontSize: "16px" }}>
 
@@ -219,7 +217,7 @@ const PageContainer = ({
                     <a className='iconsmar ' onClick={() => setStyle("bag_none")}><i className="fa-solid fa-xmark fs-2 p-0"></i></a>
                 </div>
 
-            </div>}
+            </div>} */}
 
             <div className='bg-soff' >
                 <div
