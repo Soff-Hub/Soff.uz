@@ -70,7 +70,7 @@ function MyProductsLists() {
     const [openDetails, setOpenDetails] = useState(false);
     const [lifeTime, setLifetime] = useState('');
     const [lifeTime1, setLifetime2] = useState('');
-
+    const [style, setStyle] = useState('flex')
 
     const handleChangeDate = (date) => {
 
@@ -744,6 +744,8 @@ function MyProductsLists() {
         },
     ];
 
+    console.log(style);
+
 
     return (
         <section className="ps-my-account ps-page--account ">
@@ -758,7 +760,39 @@ function MyProductsLists() {
                     <div className="col-lg-8 pb-5">
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
+                                <div className={` mb-2  p-4 d-${style} flex-column justify-content-between mobileImage `}
+                                    style={{
+                                        borderRadius: "20px",
+                                        backgroundSize: "cover",
+                                        backgroundRepeat: "no-repeat",
+                                        backgroundImage: "url(/static/img/bagImage.avif)"
+
+                                    }} >
+
+                                    <div className="d-flex justify-content-between text-white fw-bold " >
+                                        <Link href={"https://birja.soff.uz/"}>
+                                            <a className='iconsmar'> <img src="/static/img/soffbirja-dark-logo.png" alt="birjalogo"
+                                                width={140}
+                                                height={30}
+                                            />
+                                            </a></Link>
+                                        <a className='iconsmar ' style={{ cursor: "pointer" }} onClick={() => setStyle("none")}><i className="fa-solid fa-xmark fs-2 p-0"></i></a>
+                                    </div>
+                                    <a className='btn  fs-4 text-white fw-medium '
+                                        style={{
+                                            borderRadius: "30px", padding: "6px 0", width: "190px",
+                                            opacity:"0.9",
+                                            backgroundColor: "#151526"
+                                        }} >
+                                        Birjada savdo qilish
+                                        <i className="fa-solid fa-angle-right ml-2"></i></a>
+
+                                </div>
+
+
+
                                 <div className="ps-section__content">
+
 
                                     {user?.role === 'seller' ? (
                                         <div className="d-flex flex-column gap-2">
@@ -1116,12 +1150,12 @@ function MyProductsLists() {
                                                                         i
                                                                     ) => (
                                                                         <div
-                                                                        style={{
-                                                                            borderRadius: "20px",
-                                                                            padding: "5px 16px",
-                                                                            border: "1px solid #999",
-                                                                            fontSize: "15px"
-                                                                        }}
+                                                                            style={{
+                                                                                borderRadius: "20px",
+                                                                                padding: "5px 16px",
+                                                                                border: "1px solid #999",
+                                                                                fontSize: "15px"
+                                                                            }}
 
                                                                             key={
                                                                                 i

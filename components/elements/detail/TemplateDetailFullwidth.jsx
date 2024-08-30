@@ -52,9 +52,7 @@ const TemplateDetailFullwidth = ({ product, views }) => {
     };
 
 
-
-
-
+    
 
     return (
 
@@ -103,7 +101,7 @@ const TemplateDetailFullwidth = ({ product, views }) => {
                             <i className="fa-solid fa-eye"></i> <span>{product?.views}</span>
                         </div>
 
-                        {hoverImg && <div className='rounded-3' style={{
+                        {hoverImg && product?.demo_link && <div className='rounded-3' style={{
                             position: "absolute",
                             inset: 0,
                             backgroundColor: "#333",
@@ -114,8 +112,8 @@ const TemplateDetailFullwidth = ({ product, views }) => {
                         >
 
                         </div>}
-                        {hoverImg && <button
-                            onClick={() => Router.push("https://soff.uz/")}
+                        {hoverImg && product?.demo_link && <button
+                            onClick={() => Router.push(product?.demo_link)}
                             onMouseEnter={() => setHoverImgButton(true)}
                             onMouseLeave={() => setHoverImgButton(false)}
                             style={{

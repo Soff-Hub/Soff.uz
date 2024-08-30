@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 
 import HeaderElectronic from '../shared/headers/HeaderElectronic';
@@ -9,6 +9,7 @@ import { accountLinksReducers, isLoginning } from '~/store/auth/action';
 import FaqSaidbar from '../partials/faqs/faqSaidbar';
 import { useRouter } from 'next/router';
 import HeaderMobileBottom from '../shared/headers/HeaderMobilebottom';
+import Link from 'next/link';
 
 const initHeaders = (
     <>
@@ -162,6 +163,7 @@ const PageContainer = ({
     const dispatch = useDispatch();
     const Router = useRouter();
     const query = Router.route;
+    const [style, setStyle] = useState('notication_contnet')
 
     useEffect(() => {
         if (user?.role === 'admin') {
@@ -184,6 +186,8 @@ const PageContainer = ({
         defaultRoutePage();
     }, []);
 
+
+
     return (
         <>
             <Head>
@@ -191,6 +195,32 @@ const PageContainer = ({
                 <meta property="og:title" content={title} />
             </Head>
             {header}
+            {(user?.role === "seller" && query === "/") && <div className={style}>
+                <div className='container d-flex align-items-center justify-content-between'>
+
+                    <Link href={"https://birja.soff.uz/"}>
+                        <a className='d-flex align-items-center'>
+                            {/* <img src="/static/img/soffbirja-dark-logo.png" alt="birjalogo"
+                                width={140}
+                                height={30}
+                            /> */}
+
+                            <span className='fw-medium text-white d-flex gap-2 align-items-center ' style={{ fontSize: "16px" }}>
+
+                                <div class="scrolling-text ">
+                                    <span>Mahsulotlaringizni birjada soting</span>
+                                </div>
+                                <Link href={"https://birja.soff.uz/"}>
+                                    <a className='iconsmar'><i className="fa-solid fa-arrow-right"></i></a></Link>
+
+                            </span>
+                        </a></Link>
+
+                    <a className='iconsmar ' onClick={() => setStyle("bag_none")}><i className="fa-solid fa-xmark fs-2 p-0"></i></a>
+                </div>
+
+            </div>}
+
             <div className='bg-soff' >
                 <div
                     className={`${query === '/page/form'
