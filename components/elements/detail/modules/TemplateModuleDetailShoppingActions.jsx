@@ -97,7 +97,7 @@ const TemplateModuleDetailShoppingActions = ({ product }) => {
                                             fontSize: "14px"
 
                                         }}
-                                        className="ps-btn ps-btn--black py-3 "
+                                        className="ps-btn text-center ps-btn--black py-3 "
                                         href="#"
                                         onClick={async (e) => {
                                             e.preventDefault();
@@ -129,14 +129,14 @@ const TemplateModuleDetailShoppingActions = ({ product }) => {
                                 ) : (
                                     <>
                                         <a
-                                            className="ps-btn ps-btn--black  buystep-1 m-0 w-100"
+                                            className="ps-btn ps-btn--black text-center  buystep-1 m-0 w-100"
                                             href="#"
                                             style={{ fontSize: "16px" }}
                                             onClick={(e) => handleAddItemToCart(e)}>
                                             Savatga qo'shish
                                         </a>
                                         <a
-                                            className="ps-btn  buystep-2 m-0 w-100"
+                                            className="ps-btn text-center  buystep-2 m-0 w-100"
                                             href="#"
                                             style={{ fontSize: "16px" }}
                                             onClick={(e) => handleBuynow(e)}>
