@@ -9,7 +9,7 @@ import ModalTanishuv from './modules/Modal-tanishuv';
 import { withRouter } from 'next/router';
 import { begin } from '~/store/auth/action';
 import { LockOutlined, MailOutlined, PhoneOutlined } from '@ant-design/icons';
-import { formatPhoneNumber } from './Login';
+
 
 class Register extends Component {
     constructor(props) {
@@ -29,9 +29,8 @@ class Register extends Component {
 
     handleChange = (e) => {
         const value = e.target.value;
-        // Telefon raqamini formatlash
-        const formattedValue = formatPhoneNumber(value);
-        this.setState({ phone: formattedValue });
+  
+        this.setState({ phone: value });
     };
 
     handleGoogleClick = async (e) => {
@@ -95,7 +94,7 @@ class Register extends Component {
 
     handleSubmit = async (e) => {
         const data = {
-            phone_or_email: e.phone || e.email,
+            phone_or_email: '+998' + e.phone || e.email,
             password: e.password,
             password2: e.password2
         }
@@ -203,6 +202,20 @@ class Register extends Component {
         }
     };
 
+    handleKeyDown = (e) => {
+        // Block incorrect characters
+        if (!/[0-9\s]/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Delete' && e.key !== 'Enter') {
+            e.preventDefault();
+        }
+
+        // Handle Enter key
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            this.passwordInput.focus(); // Change `this.passwordInput` to the actual reference to your next input field
+        }
+    };
+
+
     componentDidMount() {
 
         if (this.props.router.query.pid) {
@@ -270,7 +283,7 @@ class Register extends Component {
                                 options={[{
                                     label: 'Telefon raqam',
                                     value: 'phone',
-                                    icon: <PhoneOutlined   />,
+                                    icon: <PhoneOutlined />,
                                 },
                                 {
                                     label: 'Elektron pochta',
@@ -283,29 +296,28 @@ class Register extends Component {
                             {this.state.segmentValue === "email" ?
                                 <Form.Item
                                     name="email"
-                                    className='mb-4'
-
+                                    className="mb-4"
                                     rules={[
                                         {
                                             required: true,
-                                            message:
-                                                'Elektron pochta kiritish majburiy',
+                                            message: 'Elektron pochta kiritish majburiy',
                                         },
-                                    ]}>
+                                        {
+                                            type: 'email',
+                                            message: 'Iltimos, haqiqiy elektron pochta kiriting',
+                                        },
+                                    ]}
+                                >
                                     <Input
-                                        style={{ height: "50px", fontSize: "16px" }}
-                                        autoComplete='off'
-                                        prefix={<MailOutlined style={{ fontSize: "20px", padding: "0 10px" }} />}
+                                        style={{ height: '50px', fontSize: '16px' }}
+                                        prefix={<MailOutlined style={{ fontSize: '20px', padding: '0 10px' }} />}
                                         type="email"
                                         placeholder="Elektron pochta"
-                                        onKeyDown={
-                                            this.handleEnterKeyPress
-                                        }
+                                        onKeyDown={this.handleEnterKeyPress}
                                     />
                                 </Form.Item> :
                                 <Form.Item
                                     name="phone"
-                                    className='mb-4'
 
                                     rules={[
                                         {
@@ -313,21 +325,24 @@ class Register extends Component {
                                             message:
                                                 'Telefon raqam kiritish majburiy',
                                         },
+                                        {
+                                            pattern: /^\d{9}$/,
+                                            message: 'Iltimos, haqiqiy telefon raqam kiriting',
+                                        },
+
                                     ]}>
                                     <Input
+                                        autoComplete="off"
                                         style={{ height: "50px", fontSize: "16px" }}
                                         type='text'
-                                        prefix={<PhoneOutlined style={{ fontSize: "20px", padding: "0 10px" }} />}
                                         value={this.state.phone}
                                         onChange={this.handleChange}
                                         placeholder="Telefon raqam"
-                                        maxLength={13} // 13 belgidan ortiq kiritishni cheklash
-                                        onKeyDown={(e) => {
-                                            // Har qanday notog'ri belgilarni bloklash
-                                            if (!/[0-9+\s]/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Delete') {
-                                                e.preventDefault();
-                                            }
-                                        }}
+                                        maxLength={9} // 9 belgidan ortiq kiritishni cheklash
+                                        onKeyDown={this.handleKeyDown}
+                                        addonBefore="+998" // Prefiksni qo'shish
+
+
                                     />
                                 </Form.Item>
 
@@ -343,7 +358,9 @@ class Register extends Component {
                                         message:
                                             'Parolni kiriting!',
                                     },
-                                ]}>
+                                ]}
+                                hasFeedback
+                            >
                                 <Input.Password
 
                                     style={{ height: "50px", fontSize: "16px" }}
@@ -360,15 +377,26 @@ class Register extends Component {
                             </Form.Item>
 
                             <Form.Item
+                                dependencies={['password']}
+                                hasFeedback
                                 name="password2"
                                 className='mb-4'
                                 rules={[
                                     {
                                         required: true,
-                                        message:
-                                            'Parolni qayta kiriting!',
+                                        message: 'Iltimos, parolingizni tasdiqlang!',
                                     },
-                                ]}>
+                                    ({ getFieldValue }) => ({
+                                        validator(_, value) {
+                                            if (!value || getFieldValue('password') === value) {
+                                                return Promise.resolve();
+                                            }
+                                            return Promise.reject(new Error('Siz kiritgan yangi parol mos emas!'));
+                                        },
+                                    }),
+                                ]}
+
+                            >
                                 <Input.Password
                                     style={{ height: "50px", fontSize: "16px" }}
                                     prefix={<LockOutlined style={{ fontSize: "20px", padding: "0 10px" }} />}
