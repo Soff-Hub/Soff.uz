@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import PageLoader from '~/components/elements/common/PageLoader';
 import NavigationList from '~/components/shared/navigation/NavigationList';
@@ -8,12 +8,14 @@ import NavigationListSeller from '../shared/navigation/NavigationListSeller';
 import NavigationListCustomer from '../shared/navigation/NavigationListCustomer';
 import Backtop from '../elements/backTop';
 import InlinePlayer from '../elements/InlinePlayer';
+import { AudioContext } from '~/hooks/AudioContext';
 
 const MasterLayout = ({ children }) => {
     const { accountLinks, user } = useSelector((state) => state.auth);
     const router = useRouter();
     const { pathname } = router;
     const [background, setBackground] = useState(false);
+    const { playerVisible } = useContext(AudioContext)
 
     function initEcomerceValues() {
         // if (cookies) {
@@ -54,11 +56,11 @@ const MasterLayout = ({ children }) => {
                 onClick={() => setBackground(!background)}
                 className={background ? 'backgound-black' : ''}></div>
 
-            <div className='inline-player'>
+            {playerVisible ? <div className='inline-player'>
                 <div className="container">
                     <InlinePlayer />
                 </div>
-            </div>
+            </div> : ''}
         </>
     );
 };
