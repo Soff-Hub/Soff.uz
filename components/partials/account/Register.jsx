@@ -94,7 +94,7 @@ class Register extends Component {
 
     handleSubmit = async (e) => {
         const data = {
-            phone_or_email: '+998' + e.phone || e.email,
+            phone_or_email: e.phone ? '+998' + e.phone : e.email,
             password: e.password,
             password2: e.password2
         }
