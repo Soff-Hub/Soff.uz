@@ -21,7 +21,7 @@ const { Option } = Select;
 const { TextArea } = Input;
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import 'dayjs/locale/uz';
+// import 'dayjs/locale/uz';
 
 dayjs.extend(customParseFormat);
 // dayjs.locale('uz');
