@@ -1,16 +1,18 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/router';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import wavesurfer from 'wavesurfer.js';
+import { AudioContext } from '~/hooks/AudioContext';
+import PlayButtonIcon from '../../PlayButtonIcon';
 
 export default function DefaultAudio({ product }) {
     const wavesurferRef = useRef(null);
-
-    const [wavesurferObj, setWavesurferObj] = useState();
-
-    const [playing, setPlaying] = useState(true);
-    const [volume, setVolume] = useState(1);
+    const { wavesurferObj, setWavesurferObjFn: setWavesurferObj, playing, setPlaying, setPlayerVisible, setAudioData, audioData } = useContext(AudioContext)
+    const { asPath, push } = useRouter()
+    const [url, setUrl] = useState('')
 
     useEffect(() => {
         if (wavesurferRef.current && !wavesurferObj) {
+            setPlaying(false)
             setWavesurferObj(
                 wavesurfer.create({
                     container: wavesurferRef.current,
@@ -21,37 +23,69 @@ export default function DefaultAudio({ product }) {
                     waveColor: '#00A44F',
                     progressColor: '#ccc',
                     responsive: true,
-                    height: 40,
+                    height: 30,
+                    width: '500px'
                 })
             );
         }
-    }, [wavesurferObj]);
+    }, [wavesurferObj, asPath]);
 
-
-    useEffect(() => {
-        if (!product?.document?.file_url) {
-            if (wavesurferObj && product?.document?.short_content_url) {
-                wavesurferObj.load(product?.document?.short_content_url);
-            }
-        } else {
-            if (wavesurferObj && product?.document?.file_url) {
-                wavesurferObj.load(product?.document?.file_url);
+    const setAudioUrl = async () => {
+        if (wavesurferObj && product?.document) {
+            if (product?.document?.file_url) {
+                if (wavesurferObj && product?.document?.file_url) {
+                    await wavesurferObj.load(product?.document?.file_url);
+                    setUrl(product?.document?.file_url)
+                }
+            } else {
+                if (wavesurferObj && product?.document?.short_content_url) {
+                    await wavesurferObj.load(product?.document?.short_content_url);
+                    setUrl(product?.document?.short_content_url)
+                }
             }
         }
+    }
+
+    useEffect(() => {
+        setAudioUrl()
     }, [
-        product?.document?.file_url,
-        product?.document?.short_content_url,
+        product?.document,
         wavesurferObj,
     ]);
 
     useEffect(() => {
-        if (wavesurferObj) wavesurferObj.setVolume(volume);
-    }, [volume, wavesurferObj]);
+        if (wavesurferObj) wavesurferObj.setVolume(1);
+    }, [wavesurferObj]);
 
     const handlePlayPause = (e) => {
+        if (!playing) {
+            setPlayerVisible(null)
+        }
         wavesurferObj.playPause();
         setPlaying(!playing);
     };
+
+    useEffect(() => {
+        if (wavesurferObj) {
+            setPlaying(false)
+            wavesurferObj?.seekTo(0)
+        }
+    }, [asPath, wavesurferObj])
+
+    const handleToBottom = async () => {
+        setAudioData(product)
+        setPlaying(false)
+        wavesurferObj.playPause()
+        setPlayerVisible({ time: wavesurferObj.getCurrentTime() / wavesurferObj.getDuration(), url })
+        push('/category/audio')
+    }
+
+    useEffect(() => {
+
+        return () => {
+            setWavesurferObj(null)
+        }
+    }, [])
 
     return (
         <>
@@ -68,6 +102,9 @@ export default function DefaultAudio({ product }) {
                     borderRadius: '25px',
                 }}
                 className="row audio--container">
+                <div className='handle-to-bottom' onClick={handleToBottom}>
+                    <PlayButtonIcon />
+                </div>
                 <div className="col-xxl-3 col-xl-3 col-lg-3  col-sm-5 col-md-4 col-12 audio_poster text-start">
                     <div
                         className="audio__poster"
@@ -107,57 +144,28 @@ export default function DefaultAudio({ product }) {
                         )}
                     </div>
 
-                    {!product?.document?.file_url ? (
-                        <div className="row audio-style">
+                    <div className="row audio-style">
 
-                            <div className="audio-none">
-                                <span></span>
-                            </div>
-                            <div
-                                className="col-1 audio-play"
-                                onClick={handlePlayPause}>
-                                {!playing ? (
-                                    <>
-                                        <i class="fa-solid fa-circle-pause"></i>
-                                    </>
-                                ) : (
-                                    <>
-                                        <i class="fa-solid fa-circle-play"></i>
-                                    </>
-                                )}
-                            </div>
-                            <div className="col-12 col-xxl-11 col-xl-11 col-lg-11 col-md-11 col-sm-11 pl-0">
-                                <div ref={wavesurferRef} id="waveform"></div>
-                            </div>
+                        <div className="audio-none">
+                            <span></span>
                         </div>
-                    ) : (
-                        <div className="row  audio-style">
-
-
-                            <div
-                                className="col-1 audio-play"
-                                onClick={handlePlayPause}>
-                                {!playing ? (
-                                    <>
-                                        <i class="fa-solid fa-circle-pause"></i>
-                                    </>
-                                ) : (
-                                    <>
-                                        <i class="fa-solid fa-circle-play"></i>
-                                    </>
-                                )}
-                            </div>
-                            <div className="col-12 col-xxl-11 col-xl-11 col-lg-11 col-md-11 col-sm-11 pl-0">
-                                {product?.document?.file_url ? (
-                                    <div
-                                        ref={wavesurferRef}
-                                        id="waveform"></div>
-                                ) : (
-                                    'Loading...'
-                                )}
-                            </div>
+                        <div
+                            className="col-1 audio-play"
+                            onClick={handlePlayPause}>
+                            {playing ? (
+                                <>
+                                    <i class="fa-solid fa-circle-pause"></i>
+                                </>
+                            ) : (
+                                <>
+                                    <i class="fa-solid fa-circle-play"></i>
+                                </>
+                            )}
                         </div>
-                    )}
+                        <div className="col-12 col-xxl-11 col-xl-11 col-lg-11 col-md-11 col-sm-11 pl-0">
+                            <div ref={wavesurferRef} id="waveform"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </>

@@ -10,6 +10,7 @@ import '~/scss/style.scss';
 import '~/scss/electronic.scss';
 import Head from 'next/head';
 import NextProgress from 'next-progress';
+import { AudioProvider } from '~/hooks/AudioContext';
 
 
 function App({ Component, pageProps }) {
@@ -22,7 +23,7 @@ function App({ Component, pageProps }) {
             e.preventDefault();
         });
 
-    },[]);
+    }, []);
 
     useEffect(() => {
         const handleKeyDown = (e) => {
@@ -35,7 +36,7 @@ function App({ Component, pageProps }) {
                 (e.metaKey && e.key === 'U') || // Prevent Command+U (macOS)
                 (e.ctrlKey && e.key === 'S') || // Prevent Ctrl+S (Windows)
                 (e.metaKey && e.key === 'S') || // Prevent Command+S (macOS)
-                (e.key === 'F12') 
+                (e.key === 'F12')
             ) {
                 e.preventDefault();
             }
@@ -68,9 +69,11 @@ function App({ Component, pageProps }) {
                 color="#00A44F"
             />
             <CookiesProvider>
-                <MasterLayout>
-                    <Component {...pageProps} />
-                </MasterLayout>
+                <AudioProvider>
+                    <MasterLayout>
+                        <Component {...pageProps} />
+                    </MasterLayout>
+                </AudioProvider>
             </CookiesProvider>
         </>
     );

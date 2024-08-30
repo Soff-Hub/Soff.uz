@@ -1,13 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import wavesurfer from 'wavesurfer.js';
 import Link from 'next/link';
 import ModuleProductActions from './modules/ModuleProductActions';
 import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
+import { AudioContext } from '~/hooks/AudioContext';
 
 const AudioWaveform = ({ product, inCategory }) => {
     const wavesurferRef = useRef(null);
     const [wavesurferObj, setWavesurferObj] = useState(null);
     const [playing, setPlaying] = useState(false);
+    const { setPlayerVisible } = useContext(AudioContext)
 
 
 
@@ -41,6 +43,7 @@ const AudioWaveform = ({ product, inCategory }) => {
     }, [wavesurferObj]);
 
     const handlePlayPause = () => {
+        setPlayerVisible(null)
         document
             .querySelectorAll('.audio-cart-content .fa-circle-pause')
             .forEach((el) => {
@@ -140,10 +143,12 @@ const AudioWaveform = ({ product, inCategory }) => {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-xl-7 col-lg-9">
-                            <div ref={wavesurferRef} id="waveform"></div>
+                        <div className="col-xl-7 col-lg-9 d-flex align-items-center w-100">
+                            <div className='w-100'>
+                                <div ref={wavesurferRef} id="waveform"></div>
+                            </div>
                         </div>
-                        <div className="col-xl-2 col-lg-9 d-flex align-content-center justify-content-start justify-content-xl-center pl-xl-0 pl-5 p pt-2">
+                        <div className="d-flex align-items-center justify-content-center col-xl-2 col-lg-9 d-flex align-content-center justify-content-start justify-content-xl-center pl-xl-0 pl-5 p pt-2">
                             <ModuleProductActions
                                 product={product}
                                 audio={true}

@@ -2136,7 +2136,17 @@
     }
 }
 
+@keyframes visit {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
 .inline-player {
+    opacity: 0;
     position: fixed;
     // height: 50px;
     max-width: 100%;
@@ -2152,6 +2162,8 @@
     border-top: 1px solid #00a44f;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     display: flex;
+    animation: visit 0.5s ease;
+    opacity: 1;
 }
 
 .inline-player .playerrr {
@@ -2195,4 +2207,13 @@
 
 .playerrr .fa-close {
     margin-left: auto;
+}
+
+.handle-to-bottom {
+    position: absolute;
+    top: 8px;
+    right: 25px;
+    display: flex;
+    width: auto;
+    cursor: pointer;
 }
