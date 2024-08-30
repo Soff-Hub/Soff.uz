@@ -42,6 +42,7 @@ const Posts = () => {
     const [document, setDocument] = useState(null)
     const [customePoster, setCustomePoster] = useState([]);
     const [customeFile, setCustomeFile] = useState(null);
+    const [demoLink, setDemoLink] = useState(null);
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
     const breadCrumb = [
@@ -191,6 +192,9 @@ const Posts = () => {
                 formData.append('price', 0);
             } else {
                 formData.append('price', narx);
+            }
+            if (demoLink) {
+                formData.append('demo_link', demoLink)
             }
             formData.append('description', Fulldata);
             formData.append('tags', tagSearchResult);
@@ -518,6 +522,20 @@ const Posts = () => {
                                     style={{ height: "45px" }}
                                 />
                             </div>
+                            <div className="  row mt-3">
+                                <div className="col-md-4 d-flex justify-content-between p-0">
+                                    <p>Shablon demo link: </p>{' '}
+                                    <Tooltip title="Mijozlarga mahsulotingizni to'liq ko'rishi uchun. Bu mijozlaringiz mahsulotni sotib olishda ularning ishonchini yanada oshirish uchun xizmat qiladi.">
+                                        <i
+                                            style={{ cursor: 'pointer' }}
+                                            className="fa-regular fa-circle-question px-4 mt-2"></i>
+                                    </Tooltip>
+                                </div>
+                                <div className=" p-0 rounded-3 col-md-8">
+                                    <input type='url' className='form-control  rounded-3  bg-white' onChange={(e) => setDemoLink(e.target.value)} />
+                                </div>
+                            </div>
+
 
                             <div className="  row mt-3">
                                 <div className="col-md-4 d-flex justify-content-between p-0">
