@@ -36,20 +36,20 @@ const disabledDate = (current) => {
 
 
 function SellingsLists() {
-    const locale = require('antd/es/date-picker/locale/uz_UZ')
-    const uzLotinLocale = {
-        ...locale,
-        lang: {
-            ...locale.lang,
-            locale: 'uz',
-            months: [
-                'Yanvar', 'Fevral', 'Mart', 'Aprel', 'May', 'Iyun',
-                'Iyul', 'Avgust', 'Sentabr', 'Oktabr', 'Noyabr', 'Dekabr',
-            ],
-            weekdays: ['Dushanba', 'Seshanba', 'Chorshanba', 'Payshanba', 'Juma', 'Shanba', 'Yakshanba'],
-            shortWeekdays: ['Du', 'Se', 'Cho', 'Pa', 'Ju', 'Sha', 'Yak'],
-        },
-    };
+    // const locale = require('antd/es/date-picker/locale/uz_UZ')
+    // const uzLotinLocale = {
+    //     ...locale,
+    //     lang: {
+    //         ...locale.lang,
+    //         locale: 'uz',
+    //         months: [
+    //             'Yanvar', 'Fevral', 'Mart', 'Aprel', 'May', 'Iyun',
+    //             'Iyul', 'Avgust', 'Sentabr', 'Oktabr', 'Noyabr', 'Dekabr',
+    //         ],
+    //         weekdays: ['Dushanba', 'Seshanba', 'Chorshanba', 'Payshanba', 'Juma', 'Shanba', 'Yakshanba'],
+    //         shortWeekdays: ['Du', 'Se', 'Cho', 'Pa', 'Ju', 'Sha', 'Yak'],
+    //     },
+    // };
 
 
 
