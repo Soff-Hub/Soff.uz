@@ -2285,22 +2285,29 @@
 
 .notication_contnet {
     background-image: url(https://www.shutterstock.com/image-illustration/abstract-background-blue-gradient-circle-260nw-1662861217.jpg);
-  
-    padding: 6px 0;
+
+    padding: 12px 0;
     background-repeat: no-repeat;
     background-size: cover;
+    position: relative;
 
     .iconsmar {
         padding: 5px 12px 4px 12px;
         border-radius: 5px;
         color: #fff;
         cursor: pointer;
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
     }
 
     .iconsmar:hover {
         background-color: #fff;
         color: rgb(47, 160, 226);
     }
+
+
 }
 
 .bag_none {
@@ -2314,12 +2321,16 @@
     overflow: hidden;
     white-space: nowrap;
     box-sizing: border-box;
+    margin-right: 40px;
+ 
+  
 }
 
 .scrolling-text span {
     display: inline-block;
     padding-left: 100%;
     animation: scroll 10s linear infinite;
+
 }
 
 @keyframes scroll {

@@ -33,6 +33,7 @@ var parse = require('html-react-parser');
 
 function MyProductsLists() {
     const [data, setData] = useState([]);
+    const { profile } = useSelector((state) => state.ecomerce);
     const [products2, setProducts2] = useState({});
     const [dataCategory, setDataCategory] = useState([]);
     const [dataPlayLists, setDataPlayLists] = useState([]);
@@ -744,7 +745,7 @@ function MyProductsLists() {
         },
     ];
 
-    console.log(style);
+
 
 
     return (
@@ -760,34 +761,35 @@ function MyProductsLists() {
                     <div className="col-lg-8 pb-5">
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
-                                {/* <div className={` mb-2  p-4 d-${style} flex-column justify-content-between mobileImage `}
-                                    style={{
-                                        borderRadius: "20px",
-                                        backgroundSize: "cover",
-                                        backgroundRepeat: "no-repeat",
-                                        backgroundImage: "url(/static/img/bagImage.avif)"
-
-                                    }} >
-
-                                    <div className="d-flex justify-content-between text-white fw-bold " >
-                                        <Link href={"https://birja.soff.uz/"}>
-                                            <a className='iconsmar'> <img src="/static/img/soffbirja-dark-logo.png" alt="birjalogo"
-                                                width={140}
-                                                height={30}
-                                            />
-                                            </a></Link>
-                                        <a className='iconsmar ' style={{ cursor: "pointer" }} onClick={() => setStyle("none")}><i className="fa-solid fa-xmark fs-2 p-0"></i></a>
-                                    </div>
-                                    <a className='btn  fs-4 text-white fw-medium '
+                                {profile?.can_advertise &&
+                                    <div className={` mb-2  p-4 d-${style} flex-column justify-content-between mobileImage `}
                                         style={{
-                                            borderRadius: "30px", padding: "6px 0", width: "190px",
-                                            opacity:"0.9",
-                                            backgroundColor: "#151526"
-                                        }} >
-                                        Birjada savdo qilish
-                                        <i className="fa-solid fa-angle-right ml-2"></i></a>
+                                            borderRadius: "20px",
+                                            backgroundSize: "cover",
+                                            backgroundRepeat: "no-repeat",
+                                            backgroundImage: "url(/static/img/bagImage.avif)"
 
-                                </div> */}
+                                        }} >
+
+                                        <div className="d-flex justify-content-between text-white fw-bold " >
+                                            <Link href={"https://birja.soff.uz/"}>
+                                                <a className='iconsmar'> <img src="/static/img/soffbirja-dark-logo.png" alt="birjalogo"
+                                                    width={140}
+                                                    height={30}
+                                                />
+                                                </a></Link>
+                                            <a className='iconsmar ' style={{ cursor: "pointer" }} onClick={() => setStyle("none")}><i className="fa-solid fa-xmark fs-2 p-0"></i></a>
+                                        </div>
+                                        <a className='btn  fs-4 text-white fw-medium '
+                                            style={{
+                                                borderRadius: "30px", padding: "6px 0", width: "190px",
+                                                opacity: "0.9",
+                                                backgroundColor: "#151526"
+                                            }} >
+                                            Birjada savdo qilish
+                                            <i className="fa-solid fa-angle-right ml-2"></i></a>
+
+                                    </div>}
 
 
 
