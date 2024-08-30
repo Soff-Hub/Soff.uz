@@ -292,7 +292,7 @@ const AudioPosts = () => {
 
                         <div
                             className="col-md-4 m-0  d-flex justify-content-between p-0 "
-                            style={{ maxWidth: '370px' }}>
+                            style={{ maxWidth: '360px' }}>
                             <h4> Sotuvdagi ko'rinishi : </h4>
                             <Button
                                 className="btn-success "
@@ -556,7 +556,7 @@ const AudioPosts = () => {
                         </div>
                         <div
                             className="col-md-4 rounded-3  p-3 cardResponsive  card mt-3"
-                            style={{ maxWidth: '370px' }}>
+                            style={{ maxWidth: '360px' }}>
                             <div className={` ${'image_audio mb-3'} `}>
                                 <>
                                     {!liveFile ? (

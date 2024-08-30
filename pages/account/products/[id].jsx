@@ -36,7 +36,8 @@ const PostsProductsEdit = () => {
     const [category_id, setCategory_ID] = useState(null)
     const routerId = Router.query?.id
     const [products, setProducts] = useState(null)
-    const [page_count, setPageCount] = useState(0)
+    const [page_count, setPageCount] = useState(0);
+    const [demoLink, setDemoLink] = useState(null);
 
 
 
@@ -214,6 +215,11 @@ const PostsProductsEdit = () => {
             if (category_id) {
                 Object.assign(data, { category: category_id });
             }
+            if (demoLink) {
+                Object.assign(data, { demo_link: demoLink })
+            }
+
+
             if (dataCatStatus) {
                 Object.assign(data, { status: dataCatStatus });
             }
@@ -268,7 +274,7 @@ const PostsProductsEdit = () => {
 
 
 
-    
+
 
     return user?.role === 'admin' ? (
         <PageContainer
@@ -492,6 +498,26 @@ const PostsProductsEdit = () => {
                                         defaultValue={products?.document?.page_count}
                                     />
                                 </div>
+
+                                {
+                                    products?.document?.content_type === "template" && (
+                                        <div className="  row mt-3">
+                                            <div className="col-md-4 d-flex justify-content-between p-0">
+                                                <p>Shablon demo link: </p>{' '}
+                                                <Tooltip title="Mijozlarga mahsulotingizni to'liq ko'rishi uchun. Bu mijozlaringiz mahsulotni sotib olishda ularning ishonchini yanada oshirish uchun xizmat qiladi.">
+                                                    <i
+                                                        style={{ cursor: 'pointer' }}
+                                                        className="fa-regular fa-circle-question px-4 mt-2"></i>
+                                                </Tooltip>
+                                            </div>
+                                            <div className=" p-0 rounded-3 col-md-8">
+                                                <input type='url' defaultValue={products?.demo_link} className='form-control  rounded-3  bg-white' onChange={(e) => setDemoLink(e.target.value)} />
+                                            </div>
+                                        </div>
+                                    )
+                                }
+
+
 
                                 <div className="row">
                                     <div className="col-md-4 d-flex justify-content-between p-0">

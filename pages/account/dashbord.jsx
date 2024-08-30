@@ -153,7 +153,7 @@ const MyAccountPage = () => {
             <div className="ps-page--my-account">
                 <Meta
                     title={"Bosh panel"}
-                />
+                />  
                 <BreadCrumb breacrumb={breadCrumb} />
                 {user?.role === 'seller' && <Joyride
                     steps={steps}

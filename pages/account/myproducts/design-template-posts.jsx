@@ -42,6 +42,7 @@ const Posts = () => {
     const [document, setDocument] = useState(null)
     const [customePoster, setCustomePoster] = useState([]);
     const [customeFile, setCustomeFile] = useState(null);
+    const [demoLink, setDemoLink] = useState(null);
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
     const breadCrumb = [
@@ -192,6 +193,9 @@ const Posts = () => {
             } else {
                 formData.append('price', narx);
             }
+            if (demoLink) {
+                formData.append('demo_link', demoLink)
+            }
             formData.append('description', Fulldata);
             formData.append('tags', tagSearchResult);
 
@@ -293,7 +297,7 @@ const Posts = () => {
 
                         <div
                             className="col-md-4 m-0  d-flex justify-content-between p-0 "
-                            style={{ maxWidth: '370px' }}>
+                            style={{ maxWidth: '360px' }}>
                             <h4> Sotuvdagi ko'rinishi : </h4>
                             <Button
                                 className="btn-success "
@@ -518,6 +522,20 @@ const Posts = () => {
                                     style={{ height: "45px" }}
                                 />
                             </div>
+                            <div className="  row mt-3">
+                                <div className="col-md-4 d-flex justify-content-between p-0">
+                                    <p>Shablon demo link: </p>{' '}
+                                    <Tooltip title="Mijozlarga mahsulotingizni to'liq ko'rishi uchun. Bu mijozlaringiz mahsulotni sotib olishda ularning ishonchini yanada oshirish uchun xizmat qiladi.">
+                                        <i
+                                            style={{ cursor: 'pointer' }}
+                                            className="fa-regular fa-circle-question px-4 mt-2"></i>
+                                    </Tooltip>
+                                </div>
+                                <div className=" p-0 rounded-3 col-md-8">
+                                    <input type='url' className='form-control  rounded-3  bg-white' onChange={(e) => setDemoLink(e.target.value)} />
+                                </div>
+                            </div>
+
 
                             <div className="  row mt-3">
                                 <div className="col-md-4 d-flex justify-content-between p-0">
@@ -582,7 +600,7 @@ const Posts = () => {
 
                         <div
                             className="col-md-4 rounded-3  p-3 cardResponsive  card mt-3"
-                            style={{ maxWidth: '370px' }}>
+                            style={{ maxWidth: '360px' }}>
                             <div className="image rounded mb-3">
                                 <div className="d-flex justify-content-center">
                                     <img
