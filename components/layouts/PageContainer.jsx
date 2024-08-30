@@ -40,11 +40,11 @@ export let accountAdminLinks = [
         url: '/account/products?page=1',
         icon: 'fa-solid fa-cube',
     },
-    // {
-    //     text: 'Sotib olingan mahsulotlar',
-    //     url: '/account/selling',
-    //     icon: 'fa-brands fa-shopify',
-    // },
+    {
+        text: 'Sotib olingan mahsulotlar',
+        url: '/account/selling',
+        icon: 'fa-brands fa-shopify',
+    },
     {
         text: 'Kategoriyalar',
         url: '/account/category',
@@ -99,11 +99,11 @@ export let accountSellerLink = [
         url: '/account/myproducts',
         icon: 'fa-solid fa-shop-lock',
     },
-    // {
-    //     text: 'Mahsulotlarni birjaga chiqarish',
-    //     url: '/account/selling',
-    //     icon: 'fa-brands fa-shopify',
-    // },
+    {
+        text: 'Mahsulotlarni birjaga chiqarish',
+        url: '/account/selling',
+        icon: 'fa-brands fa-shopify',
+    },
     {
         text: 'Sotib olinganlar',
         url: '/account/sellerproducts',
@@ -160,6 +160,8 @@ const PageContainer = ({
     title
 }) => {
     const { user } = useSelector((state) => state.auth);
+    const { profile } = useSelector((state) => state.ecomerce);
+
     const dispatch = useDispatch();
     const Router = useRouter();
     const query = Router.route;
@@ -188,6 +190,7 @@ const PageContainer = ({
 
 
 
+
     return (
         <>
             <Head>
@@ -196,28 +199,33 @@ const PageContainer = ({
             </Head>
             {header}
 
-            {/* {(user?.role === "seller" && query === "/") && <div className={style}>
-                <div className='container d-flex align-items-center justify-content-between'>
+            {(user?.role === "seller" && query === "/" && profile?.can_advertise) && <div className={style}>
 
-                    <Link href={"https://birja.soff.uz/"}>
-                        <a className='d-flex align-items-center'>
-                       
 
-                            <span className='fw-medium text-white d-flex gap-2 align-items-center ' style={{ fontSize: "16px" }}>
+                <Link href={"https://birja.soff.uz/"}>
+                    <a className='d-flex align-items-center  container '>
 
-                                <div class="scrolling-text ">
-                                    <span>Mahsulotlaringizni birjada soting</span>
-                                </div>
-                                <Link href={"https://birja.soff.uz/"}>
-                                    <a className='iconsmar'><i className="fa-solid fa-arrow-right"></i></a></Link>
 
+
+
+                        <div class="scrolling-text w-100">
+                            <span>
+                                <p className='d-flex align-items-center gap-5 text-white fw-medium m-0' style={{ fontSize: "16px" }}>
+                                    <img src="/static/img/soffbirja-dark-logo.png" alt="birjalogo"
+                                        width={140}
+                                        height={30}
+                                    /> Mahsulotlaringizni birjada soting</p>
                             </span>
-                        </a></Link>
+                        </div>
+                        <Link href={"https://birja.soff.uz/"}>
+                            <a className='iconsmar mr-4'><i className="fa-solid fa-arrow-right"></i></a></Link>
 
-                    <a className='iconsmar ' onClick={() => setStyle("bag_none")}><i className="fa-solid fa-xmark fs-2 p-0"></i></a>
-                </div>
+                    </a></Link>
 
-            </div>} */}
+                <a className='iconsmar ml-5' onClick={() => setStyle("bag_none")}><i className="fa-solid fa-xmark fs-4 p-0"></i></a>
+
+
+            </div>}
 
             <div className='bg-soff' >
                 <div
