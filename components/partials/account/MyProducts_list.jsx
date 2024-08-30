@@ -760,7 +760,7 @@ function MyProductsLists() {
                     <div className="col-lg-8 pb-5">
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
-                                <div className={` mb-2  p-4 d-${style} flex-column justify-content-between mobileImage `}
+                                {/* <div className={` mb-2  p-4 d-${style} flex-column justify-content-between mobileImage `}
                                     style={{
                                         borderRadius: "20px",
                                         backgroundSize: "cover",
@@ -787,7 +787,7 @@ function MyProductsLists() {
                                         Birjada savdo qilish
                                         <i className="fa-solid fa-angle-right ml-2"></i></a>
 
-                                </div>
+                                </div> */}
 
 
 
