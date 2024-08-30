@@ -40,7 +40,8 @@ const PostsMyProducts = () => {
     const [loading, setLoading] = useState(false);
     const [customePoster, setCustomePoster] = useState([]);
     const [customeFile, setCustomeFile] = useState(null);
-    const [page_count, setPageCount] = useState(0)
+    const [page_count, setPageCount] = useState(0);
+    const [demoLink, setDemoLink] = useState(null);
 
 
 
@@ -147,6 +148,10 @@ const PostsMyProducts = () => {
             if (tagSearchResult) {
                 formData.append('tags', tagSearchResult);
             }
+            if (demoLink) {
+                formData.append('demo_link', demoLink)
+            }
+
             if (page_count) {
                 formData.append('page_count', page_count ? page_count : products?.document?.page_count);
             }
@@ -277,7 +282,6 @@ const PostsMyProducts = () => {
         setCategory_ID(products?.category?.id)
     }, [products?.category?.id])
 
-    console.log(products);
 
 
     return user?.role === 'seller' || user?.role === 'customer' ? (
@@ -509,6 +513,7 @@ const PostsMyProducts = () => {
                                 ''
                             )}
 
+
                             <div className="row">
                                 <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
                                     <p>Mahsulot sotish narxi: *</p>{' '}
@@ -527,7 +532,7 @@ const PostsMyProducts = () => {
 
 
                                 <InputNumber
-                                    disabled={products?.discount_price === 0} 
+                                    disabled={products?.discount_price === 0}
                                     className="col-md-6 p-2 post-price"
                                     onValueChange={(e) => setTaxminiyNarx(e.target.value)}
                                     value={products?.discount_price}
@@ -554,6 +559,23 @@ const PostsMyProducts = () => {
                                     defaultValue={products?.document?.page_count}
                                 />
                             </div>
+                            {
+                                products?.document?.content_type === "template" && (
+                                    <div className="  row mt-3">
+                                        <div className="col-md-4 d-flex justify-content-between p-0">
+                                            <p>Shablon demo link: </p>{' '}
+                                            <Tooltip title="Mijozlarga mahsulotingizni to'liq ko'rishi uchun. Bu mijozlaringiz mahsulotni sotib olishda ularning ishonchini yanada oshirish uchun xizmat qiladi.">
+                                                <i
+                                                    style={{ cursor: 'pointer' }}
+                                                    className="fa-regular fa-circle-question px-4 mt-2"></i>
+                                            </Tooltip>
+                                        </div>
+                                        <div className=" p-0 rounded-3 col-md-8">
+                                            <input type='url' defaultValue={products?.demo_link} className='form-control  rounded-3  bg-white' onChange={(e) => setDemoLink(e.target.value)} />
+                                        </div>
+                                    </div>
+                                )
+                            }
 
                             <div className="row">
                                 <div className="col-md-4 d-flex justify-content-between p-0">
