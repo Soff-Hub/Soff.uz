@@ -18,6 +18,7 @@ const InlinePlayer = () => {
     const wavesurferRef = useRef(null);
     const [timer, setTimer] = useState(formatTime(0))
     const { wavesurferObj2, playing2, setWavesurferObj2, setPlaying2, setPlayerVisible, playerVisible, audioData } = useContext(AudioContext)
+    const [isEnd, setIsEnd] = useState(false)
 
     const poster_url = 'https://eu2.contabostorage.com/20ddac7ab90d4d188d1ca104120b91ed:soffuz/media/poster/%D0%A2%D0%B5%D0%BA%D1%81%D1%82_%D0%B0%D0%B1%D0%B7%D0%B0%D1%86%D0%B0.png'
 
@@ -49,6 +50,7 @@ const InlinePlayer = () => {
 
     const loadMusic = () => {
         if (wavesurferObj2) {
+            setIsEnd(false)
 
             wavesurferObj2.load(playerVisible?.url)
             wavesurferObj2.on('ready', () => {
@@ -63,45 +65,48 @@ const InlinePlayer = () => {
 
 
             wavesurferObj2.on('finish', () => {
-                setPlayerVisible(false)
+                // setIsEnd(true)
+                wavesurferObj2?.seekTo(0)
+                wavesurferObj2?.play()
+                setPlaying2(true)
             });
         }
     }
 
     useEffect(() => {
         loadMusic()
-    }, [wavesurferObj2])
+    }, [wavesurferObj2, playerVisible?.url])
 
 
     useEffect(() => {
 
-        // return () => {
-        //     setWavesurferObj2(null)
-        //     setPlaying2(false)
-        // }
+        return () => {
+            setWavesurferObj2(null)
+            setPlaying2(false)
+        }
     }, [])
 
 
     return (
         <div className="w-100 playerrr">
             <div className='play-img' onClick={handlePlayPause}>
-                <img src={poster_url} height={45} width={45} style={{ borderRadius: '3px', objectFit: 'cover', maxWidth: '45px' }} />
+                <img src={poster_url} height={60} width={60} style={{ borderRadius: '3px', objectFit: 'cover', maxWidth: '60px' }} />
+            </div>
+            <div className="wafe-line">
                 {playing2 ? (
                     <>
-                        <i class="fa-solid fa-circle-pause"></i>
+                        <i onClick={handlePlayPause} class="fa-solid fa-circle-pause"></i>
                     </>
                 ) : (
                     <>
-                        <i class="fa-solid fa-circle-play"></i>
+                        <i onClick={handlePlayPause} class="fa-solid fa-circle-play"></i>
                     </>
                 )}
-            </div>
-            <div className="wafe-line">
                 <p className='m-0' style={{ width: '57px' }}>{timer}</p>
                 <div ref={wavesurferRef} id="waveform-2"></div>
                 <p className='m-0'>{wavesurferObj2 ? formatTime(wavesurferObj2.getDuration()) : timer}</p>
             </div>
-            {audioData?.title ? <p className="w-100 text-truncate fs-4 m-0" style={{ maxWidth: '100%' }}>
+            {audioData?.title ? <p className="text-truncate fs-4 m-0" style={{ maxWidth: '100%' }}>
                 {audioData?.title}.mp3
             </p> : ''}
 

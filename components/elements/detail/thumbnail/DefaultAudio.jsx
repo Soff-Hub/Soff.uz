@@ -6,9 +6,10 @@ import PlayButtonIcon from '../../PlayButtonIcon';
 
 export default function DefaultAudio({ product }) {
     const wavesurferRef = useRef(null);
-    const { wavesurferObj, setWavesurferObjFn: setWavesurferObj, playing, setPlaying, setPlayerVisible, setAudioData, audioData } = useContext(AudioContext)
+    const { wavesurferObj, setWavesurferObjFn: setWavesurferObj, playing, setPlaying, setPlayerVisible, setAudioData, audioData, setWavesurferObj2 } = useContext(AudioContext)
     const { asPath, push } = useRouter()
     const [url, setUrl] = useState('')
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         if (wavesurferRef.current && !wavesurferObj) {
@@ -34,7 +35,9 @@ export default function DefaultAudio({ product }) {
         if (wavesurferObj && product?.document) {
             if (product?.document?.file_url) {
                 if (wavesurferObj && product?.document?.file_url) {
+                    setLoading(true)
                     await wavesurferObj.load(product?.document?.file_url);
+                    setLoading(false)
                     setUrl(product?.document?.file_url)
                 }
             } else {
@@ -59,6 +62,7 @@ export default function DefaultAudio({ product }) {
 
     const handlePlayPause = (e) => {
         if (!playing) {
+            setWavesurferObj2(null)
             setPlayerVisible(null)
         }
         wavesurferObj.playPause();
@@ -162,7 +166,8 @@ export default function DefaultAudio({ product }) {
                                 </>
                             )}
                         </div>
-                        <div className="col-12 col-xxl-11 col-xl-11 col-lg-11 col-md-11 col-sm-11 pl-0">
+                        <div className="col-12 col-xxl-11 col-xl-11 col-lg-11 col-md-11 col-sm-11 pl-0" style={{ position: 'relative' }}>
+                            {loading ? <div style={{ position: 'absolute', zIndex: 1000, top: '50%', transform: 'translateY(-50%)', width: '75%', height: '2px', backgroundColor: '#00A44F' }} id="loading"></div> : ''}
                             <div ref={wavesurferRef} id="waveform"></div>
                         </div>
                     </div>

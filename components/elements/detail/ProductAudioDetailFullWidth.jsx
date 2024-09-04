@@ -25,7 +25,7 @@ const ProductAudioDetailFullWidth = ({
             <div className="ps-product--detail ">
                 <div className="row">
                     <div className="col-12">
-                        <DefaultAudio  product={product} /> 
+                        <DefaultAudio product={product} />
                         <ModuleAudioDetailTopInformation
                             product={product}
                             views={views}
@@ -64,9 +64,9 @@ const ProductAudioDetailFullWidth = ({
                         )}
                     </>
                 </div>
-        
-                    <DefaultDescription product={product} />
-            
+
+                <DefaultDescription product={product} />
+
             </div>
         </>
     );
