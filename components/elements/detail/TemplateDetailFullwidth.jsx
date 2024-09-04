@@ -181,6 +181,7 @@ const TemplateDetailFullwidth = ({ product, views }) => {
                     />
                     <TemplateModuleDetailShoppingActions
                         product={product}
+                        demo={product?.demo_link}
                     />
 
                 </div>
