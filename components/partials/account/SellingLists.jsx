@@ -21,6 +21,7 @@ const { Option } = Select;
 const { TextArea } = Input;
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
+import Link from 'next/link';
 // import 'dayjs/locale/uz';
 
 dayjs.extend(customParseFormat);
@@ -685,6 +686,38 @@ function SellingsLists() {
     return (
         <section className="ps-my-account ps-page--account ">
             <div className="container">
+                <div className={`col-12 mb-4  p-4 d-flex flex-column justify-content-between mobileImage `}
+                    style={{
+                        borderRadius: "10px",
+                        backgroundSize: "cover",
+                        backgroundRepeat: "no-repeat",
+                        backgroundImage: "url(/static/img/bagImage.avif)",
+                        backgroundPosition: 'center'
+                    }} >
+
+                    <div className="d-flex justify-content-between text-white fw-bold " >
+                        <Link href={"https://birja.soff.uz/"}>
+                            <a className='iconsmar' target='_blank'>
+                                <img src="/static/img/soffbirja-dark-logo.png" alt="birjalogo"
+                                    width={140}
+                                    height={30}
+                                />
+                            </a>
+                        </Link>
+                    </div>
+                    <Link href={"https://birja.soff.uz/"}>
+                        <a className='btn  fs-4 text-white fw-medium '
+                            target='_blank'
+                            style={{
+                                borderRadius: "30px", padding: "6px 0", width: "190px",
+                                opacity: "0.9",
+                                backgroundColor: "#151526"
+                            }} >
+                            Birjada savdo qilish
+                            <i className="fa-solid fa-angle-right ml-2"></i></a>
+                    </Link>
+
+                </div>
                 <div className="row " style={{ alignItems: 'flex-start' }}>
                     <div className="col-lg-4">
                         <div className="ps-page__left">
