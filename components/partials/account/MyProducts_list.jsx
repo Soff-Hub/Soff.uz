@@ -744,8 +744,6 @@ function MyProductsLists() {
         },
     ];
 
-    console.log(style);
-
 
     return (
         <section className="ps-my-account ps-page--account ">

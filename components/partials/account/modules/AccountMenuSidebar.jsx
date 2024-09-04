@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import  { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import { Badge, Card, Modal, Tooltip } from 'antd';
@@ -379,7 +379,25 @@ const AccountMenuSidebar = ({ data }) => {
                 <ul>
                     {data.map((link, index) => (
                         <>
-                            {
+                            {link?.url === '/account/selling' ? (
+                                <Badge.Ribbon
+                                    key={link?.url}
+                                    text="Yangi funksiya"
+                                    color="blue">
+                                    <Card size="small">
+                                        <li>
+                                            <Link href={link.url}>
+                                                <a
+                                                    className={`d-flex align-items-center`}>
+                                                    <img src='/static/img/birja-icon.png' height={20} width={20} className='me-2' />
+                                                    {link.text}
+                                                </a>
+                                            </Link>
+                                        </li>
+                                    </Card>
+                                </Badge.Ribbon>
+
+                            ) :
                                 link?.url === 'b' ? (
                                     <Badge.Ribbon
                                         key={link?.url}
