@@ -744,7 +744,7 @@ function MyProductsLists() {
         },
     ];
 
-    console.log(style);
+
 
 
     return (
