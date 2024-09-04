@@ -9,7 +9,7 @@ import { audioDownloaderSale } from '~/utilities/common-helpers';
 import { EyeFilled } from '@ant-design/icons';
 
 
-const TemplateModuleDetailShoppingActions = ({ product }) => {
+const TemplateModuleDetailShoppingActions = ({ product, demo }) => {
 
     const { setCartOneItem } = useCart();
     const { addSavedItem, wishlist, removeSavedItem } = useWishlist();
@@ -170,7 +170,7 @@ const TemplateModuleDetailShoppingActions = ({ product }) => {
                             </a>
 
                         )}
-                        <button
+                        {demo && <button
                             className='w-100'
                             onClick={() => Router.push("https://soff.uz/")}
                             style={{
@@ -185,7 +185,7 @@ const TemplateModuleDetailShoppingActions = ({ product }) => {
                             <strong
                                 className='d-flex align-items-center justify-content-center gap-1'>
                                 <EyeFilled style={{ fontSize: "17px" }} />Demoni ko'rish</strong>
-                        </button>
+                        </button>}
 
                         <div className='d-flex gap-4 '>
 

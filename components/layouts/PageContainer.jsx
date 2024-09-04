@@ -199,7 +199,12 @@ const PageContainer = ({
             </Head>
             {header}
 
-            {(user?.role === "seller" && query === "/" && profile?.can_advertise) && <div className={style}>
+            {/* {(user?.role === "seller" && query === "/") && <div className={style}>
+                <div className='container d-flex align-items-center justify-content-between'>
+
+                    <Link href={"https://birja.soff.uz/"}>
+                        <a className='d-flex align-items-center'>
+
 
 
                 <Link href={"https://birja.soff.uz/"}>
@@ -225,7 +230,7 @@ const PageContainer = ({
                 <a className='iconsmar ml-5' onClick={() => setStyle("bag_none")}><i className="fa-solid fa-xmark fs-4 p-0"></i></a>
 
 
-            </div>}
+            </div>} */}
 
             <div className='bg-soff' >
                 <div
