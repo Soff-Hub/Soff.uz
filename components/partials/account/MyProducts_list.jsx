@@ -746,8 +746,6 @@ function MyProductsLists() {
     ];
 
 
-
-
     return (
         <section className="ps-my-account ps-page--account ">
             <div className="container">
