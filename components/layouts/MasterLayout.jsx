@@ -57,9 +57,7 @@ const MasterLayout = ({ children }) => {
                 className={background ? 'backgound-black' : ''}></div>
 
             {playerVisible ? <div className='inline-player'>
-                <div className="container">
-                    <InlinePlayer />
-                </div>
+                <InlinePlayer />
             </div> : ''}
         </>
     );

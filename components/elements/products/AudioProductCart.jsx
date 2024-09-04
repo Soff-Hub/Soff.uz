@@ -8,8 +8,10 @@ import { AudioContext } from '~/hooks/AudioContext';
 const AudioWaveform = ({ product, inCategory }) => {
     const wavesurferRef = useRef(null);
     const [wavesurferObj, setWavesurferObj] = useState(null);
+    const { wavesurferObj2, setWavesurferObj2 } = useContext(AudioContext)
     const [playing, setPlaying] = useState(false);
-    const { setPlayerVisible } = useContext(AudioContext)
+    const { setPlayerVisible, setPlaying2 } = useContext(AudioContext)
+    const [url, setUrl] = useState('')
 
 
 
@@ -34,6 +36,7 @@ const AudioWaveform = ({ product, inCategory }) => {
     useEffect(() => {
         if (wavesurferObj && product?.document?.short_content_url) {
             wavesurferObj?.load(product?.document?.short_content_url);
+            setUrl(product?.document?.short_content_url)
         }
     }, [product?.document?.short_content_url, wavesurferObj]);
 
@@ -44,6 +47,11 @@ const AudioWaveform = ({ product, inCategory }) => {
 
     const handlePlayPause = () => {
         setPlayerVisible(null)
+        setPlayerVisible({
+            url: product?.document?.short_content_url,
+            time: 0
+        })
+        setPlaying2(true)
         document
             .querySelectorAll('.audio-cart-content .fa-circle-pause')
             .forEach((el) => {
@@ -53,10 +61,26 @@ const AudioWaveform = ({ product, inCategory }) => {
 
 
         setPlaying(!playing);
+        setPlaying2(!playing);
         if (!playing) {
-            wavesurferObj.play();
+            // wavesurferObj.play();
+            // setWavesurferObj2(
+            //     wavesurfer.create({
+            //         container: wavesurferRef.current,
+            //         scrollParent: true,
+            //         autoCenter: true,
+            //         loopSelection: true,
+            //         cursorColor: '#00A44F',
+            //         waveColor: '#00A44F',
+            //         progressColor: '#ccc',
+            //         responsive: true,
+            //         height: 40,
+            //     })
+            // );
+            // setWavesurferObj2(null)
         } else {
             wavesurferObj.pause();
+            // setPlayerVisible(null)
         }
     };
 
@@ -145,7 +169,7 @@ const AudioWaveform = ({ product, inCategory }) => {
                         </div>
                         <div className="col-xl-7 col-lg-9 d-flex align-items-center w-100">
                             <div className='w-100'>
-                                <div ref={wavesurferRef} id="waveform"></div>
+                                <div ref={wavesurferRef} id="waveform-2"></div>
                             </div>
                         </div>
                         <div className="d-flex align-items-center justify-content-center col-xl-2 col-lg-9 d-flex align-content-center justify-content-start justify-content-xl-center pl-xl-0 pl-5 p pt-2">

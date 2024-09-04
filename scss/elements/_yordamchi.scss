@@ -2158,7 +2158,7 @@
     background-color: white;
     border-radius: 14px;
     padding: 10px 15px;
-    justify-content: center;
+    justify-content: space-between;
     border-top: 1px solid #00a44f;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     display: flex;
@@ -2170,17 +2170,23 @@
     display: flex;
     align-items: center;
     gap: 5px;
-    // justify-content: space-between;
     gap: 20px;
     width: 100%;
+    padding: 0 30px;
 }
 
 .playerrr .wafe-line {
-    // flex-grow: 1;
+    flex-grow: 1;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 5px;
+
+    & i {
+        color: black;
+        font-size: 30px;
+        cursor: pointer;
+    }
 }
 
 .playerrr {
@@ -2194,15 +2200,6 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-
-    & i {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        color: white;
-        font-size: 30px;
-    }
 }
 
 .playerrr .fa-close {
