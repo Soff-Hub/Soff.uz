@@ -40,7 +40,22 @@ function AccountQuickLinks() {
         <Menu>
             {accountLinks.map((link) => (
                 <div className="order">
-                    {link?.url == '/account/deals' ? (
+                    {link?.url == '/account/selling' ? <Badge.Ribbon key={link?.url} text="Yangi funksiya" color='blue'>
+                        <Card size="small">
+                            <li  >
+                                <Link
+                                    href={link?.url}
+                                    style={{
+                                        cursor: 'pointer',
+                                    }}>
+                                    <a className="d-flex align-items-center">
+                                    <img src='/static/img/birja-icon.png' height={20} width={20} className='me-2' />
+                                        {link.text}
+                                    </a>
+                                </Link>
+                            </li >
+                        </Card>
+                    </Badge.Ribbon> : link?.url == '/account/deals' ? (
                         <Badge.Ribbon text="Tez kunda" color="volcano">
                             <Card size="small">
                                 <Menu.Item key={link.url}>
