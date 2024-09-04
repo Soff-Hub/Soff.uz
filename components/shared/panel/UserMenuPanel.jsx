@@ -424,7 +424,22 @@ const AccountMenuSidebar = ({ setMenuDrawer, setCategoriesDrawer }) => {
                     {accountLinks.map((link, index) => (
                         <>
                             {
-                                link?.url === 'b' ? (
+                                link?.url == '/account/selling' ? <Badge.Ribbon key={link?.url} text="Yangi funksiya" color='blue'>
+                                    <Card size="small">
+                                        <li  >
+                                            <Link
+                                                href={link?.url}
+                                                style={{
+                                                    cursor: 'pointer',
+                                                }}>
+                                                <a className="d-flex align-items-center">
+                                                    <img src='/static/img/birja-icon.png' height={20} width={20} className='me-2' />
+                                                    {link.text}
+                                                </a>
+                                            </Link>
+                                        </li >
+                                    </Card>
+                                </Badge.Ribbon> : link?.url === 'b' ? (
                                     <Badge.Ribbon
                                         key={link?.url}
                                         text="Yangi funksiya"

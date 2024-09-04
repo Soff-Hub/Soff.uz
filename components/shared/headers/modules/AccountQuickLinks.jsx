@@ -74,7 +74,24 @@ const AccountQuickLinks = (props) => {
     // View
     const linksView = accountLinks.map((item) => (
         <>
-            {item?.url === 'b' ? (
+            {item?.url === '/account/selling' ? (
+                <Badge.Ribbon key={item?.url} text="Yangi funksiya" color='blue'>
+                    <Card size="small">
+                        <li  >
+                            <Link
+                                href={item?.url}
+                                style={{
+                                    cursor: 'pointer',
+                                }}>
+                                <a className="d-flex align-items-center">
+                                <img src='/static/img/birja-icon.png' height={20} width={20} className='me-2' />
+                                    {item.text}
+                                </a>
+                            </Link>
+                        </li >
+                    </Card>
+                </Badge.Ribbon>
+            ) : item?.url === 'b' ? (
                 <Badge.Ribbon key={item?.url} text="Tez kunda" color="volcano">
                     <Card size="small">
                         <li  >

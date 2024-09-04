@@ -99,11 +99,11 @@ export let accountSellerLink = [
         url: '/account/myproducts',
         icon: 'fa-solid fa-shop-lock',
     },
-    // {
-    //     text: 'Mahsulotlarni birjaga chiqarish',
-    //     url: '/account/selling',
-    //     icon: 'fa-brands fa-shopify',
-    // },
+    {
+        text: 'Birjaga chiqarish',
+        url: '/account/selling',
+        icon: 'fa-brands fa-shopify',
+    },
     {
         text: 'Sotib olinganlar',
         url: '/account/sellerproducts',
