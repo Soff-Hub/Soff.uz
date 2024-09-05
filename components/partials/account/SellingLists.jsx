@@ -22,6 +22,7 @@ const { TextArea } = Input;
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import Link from 'next/link';
+import Router, { useRouter } from 'next/router';
 // import 'dayjs/locale/uz';
 
 dayjs.extend(customParseFormat);
@@ -51,8 +52,6 @@ function SellingsLists() {
     //         shortWeekdays: ['Du', 'Se', 'Cho', 'Pa', 'Ju', 'Sha', 'Yak'],
     //     },
     // };
-
-
 
     const { accountLinks, user } = useSelector((state) => state.auth);
     const [data, setData] = useState([]);
@@ -85,6 +84,7 @@ function SellingsLists() {
     const [auctionDate, setAuctionDate] = useState(startDate)
     const [confirm, setConfirm] = useState(false)
     const [accept, setAccept] = useState(false)
+    const { query } = useRouter()
 
 
     // Sotilgan mahsulotlar listi
@@ -210,6 +210,9 @@ function SellingsLists() {
                             Mahsulotingizni birjada ko'rish uchun bosing.
                         </a>
                     </div>,
+                    onOk: () => Router.push('/account/selling'),
+                    onClose: () => Router.push('/account/selling'),
+                    onCancel: () => Router.push('/account/selling'),
                 });
                 GetItems();
                 setIsModalOpen(false)
@@ -681,6 +684,13 @@ function SellingsLists() {
             setAuctionDate(startDate)
         }
     }, [evaluation])
+
+    useEffect(() => {
+        setSearch(query?.title)
+        if (query?.title) {
+            setIsModalOpen(true)
+        }
+    }, [query?.title])
 
 
     return (
