@@ -10,7 +10,7 @@ const AudioWaveform = ({ product, inCategory }) => {
     const [wavesurferObj, setWavesurferObj] = useState(null);
     const { wavesurferObj2, setWavesurferObj2 } = useContext(AudioContext)
     const [playing, setPlaying] = useState(false);
-    const { setPlayerVisible, setPlaying2 } = useContext(AudioContext)
+    const { setPlayerVisible, setPlaying2, playing2, playerVisible } = useContext(AudioContext)
     const [url, setUrl] = useState('')
 
 
@@ -46,12 +46,10 @@ const AudioWaveform = ({ product, inCategory }) => {
     }, [wavesurferObj]);
 
     const handlePlayPause = () => {
-        setPlayerVisible(null)
         setPlayerVisible({
             url: product?.document?.short_content_url,
             time: 0
         })
-        setPlaying2(true)
         document
             .querySelectorAll('.audio-cart-content .fa-circle-pause')
             .forEach((el) => {
@@ -61,8 +59,9 @@ const AudioWaveform = ({ product, inCategory }) => {
 
 
         setPlaying(!playing);
-        setPlaying2(!playing);
         if (!playing) {
+            wavesurferObj2?.play()
+            setPlaying2(true);
             // wavesurferObj.play();
             // setWavesurferObj2(
             //     wavesurfer.create({
@@ -79,7 +78,9 @@ const AudioWaveform = ({ product, inCategory }) => {
             // );
             // setWavesurferObj2(null)
         } else {
-            wavesurferObj.pause();
+            wavesurferObj2?.pause()
+            // wavesurferObj.pause();
+            setPlaying2(false);
             // setPlayerVisible(null)
         }
     };
@@ -89,6 +90,14 @@ const AudioWaveform = ({ product, inCategory }) => {
             wavesurferObj.on('finish', handleAudioFinish);
         }
     }, [wavesurferObj]);
+
+    useEffect(() => {
+        if (playerVisible?.url === product?.document?.short_content_url) {
+            setPlaying(playing2)
+        }else {
+            setPlaying(false)
+        }
+    }, [playing2])
 
     const handleAudioFinish = () => {
         setPlaying(false);
