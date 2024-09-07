@@ -191,7 +191,7 @@ function SellingsLists() {
                     'document': openApplicationID.id,
                     price,
                     type: sellMethod,
-                    deadline: auctionDate
+                    deadline: sellMethod === 'simple' ? `` : auctionDate
                 }, {
                     headers: {
                         'Authorization': `Bearer ${user?.access}`,
@@ -1028,7 +1028,7 @@ function SellingsLists() {
                                                 </Tooltip>
                                             </div>
 
-                                            <div className='mt-3'>
+                                            {sellMethod !== 'simple' ? <div className='mt-3'>
                                                 <div className='d-flex align-items-center'>
                                                     <p className='m-0 fs-4'>{`${sellMethod === 'simple' ? 'Sotuv' : 'Auksion'} tugash sanasini kiriting`}</p>
                                                     <Tooltip
@@ -1055,7 +1055,7 @@ function SellingsLists() {
                                                     onChange={(e, v) => setAuctionDate(v)}
                                                     disabledDate={disabledDate}
                                                 />
-                                            </div>
+                                            </div> : ''}
                                         </Radio.Group>
 
                                         <div className=''>
