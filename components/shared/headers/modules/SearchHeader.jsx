@@ -30,7 +30,7 @@ const SearchHeader = () => {
         if (debouncedSearchTerm) {
             setLoading(true);
             if (keyword || selectFile) {
-                const products = PostRepository.postSearchFilterNews(keyword, selectFile);
+                const products = PostRepository.postSearchFilterNews(1, keyword, selectFile);
 
                 products.then((result) => {
                     setLoading(false);
