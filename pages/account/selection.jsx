@@ -24,7 +24,7 @@ const Selection = () => {
 
                                 href={id ? `/account/login?role=customer&id=${id}` :
                                     deal ? `/account/login?role=customer&deal=${deal}` :
-                                        `/account/register`}>
+                                        `/account/register?role=customer`}>
                                 <a className="register-choose-button">
                                     <div>
                                         <i className="fa-solid fa-user-tie fa-2xl"></i>
@@ -37,7 +37,7 @@ const Selection = () => {
                             <Link
                                 href={id ? `/account/login?role=seller&id=${id}` :
                                     deal ? `/account/login?role=seller&deal=${deal}` :
-                                        `/account/register`}>
+                                        `/account/register?role=seller`}>
 
                                 <a className="register-choose-button">
                                     <div>

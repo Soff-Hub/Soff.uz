@@ -7,6 +7,7 @@ import FooterDefault from '~/components/shared/footers/FooterDefault';
 import { useSelector } from 'react-redux';
 import Page404 from '../page/page-404';
 import Meta from '~/components/shared/headers/Meta';
+import { useRouter } from 'next/router';
 
 const RegisterPage = () => {
     const breadCrumb = [
@@ -18,8 +19,9 @@ const RegisterPage = () => {
             text: "Ro'yxatdan o'tish",
         },
     ];
+    const { query } = useRouter()
     const { user } = useSelector(state => state.auth)
-    const sallerEndPoint = 'auth/seller-register/';
+    const sallerEndPoint = query?.role === 'customer' ? 'auth/register/' : 'auth/seller-register/';
 
     return (
         //   user?.access ?

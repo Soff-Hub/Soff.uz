@@ -21,7 +21,7 @@ class Register extends Component {
             passwordFocused: false,
             inputType: 'text',
             inputLength: '',
-            role: '',
+            role: 'seller',
             segmentValue: 'phone',
             phone: ''
         };
@@ -29,7 +29,7 @@ class Register extends Component {
 
     handleChange = (e) => {
         const value = e.target.value;
-  
+
         this.setState({ phone: value });
     };
 
@@ -39,7 +39,7 @@ class Register extends Component {
         const url = this.props.url;
         if (this.props.url === 'auth/register/') {
             window.location = 'http://api.soff.uz/auth/social/login/customer';
-            const user = await registerGoogleUser(url, 'customer');
+            const user = await registerGoogleUser(url, this.state.role);
             if (user) {
                 if (user.status >= 400 && user.status !== 500) {
                     this.setState({ reportGoogle: true });
@@ -96,7 +96,8 @@ class Register extends Component {
         const data = {
             phone_or_email: e.phone ? '+998' + e.phone : e.email,
             password: e.password,
-            password2: e.password2
+            password2: e.password2,
+            role: this.state.role
         }
 
 
