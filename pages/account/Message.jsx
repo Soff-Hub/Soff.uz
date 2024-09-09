@@ -32,6 +32,7 @@ const Xabar = (e) => {
                 const { verifyCode } = useAuth();
                 const user = await verifyCode(data);
 
+                console.log(user);
                 if (user.status === 200 || user.status === 201) {
                     setLoader(false);
                     if (id) {
@@ -41,11 +42,12 @@ const Xabar = (e) => {
                             `/account/all-orders`
                         );
                     }
+                    
                     else {
-                        if (user.roli === 'seller' || user.roli === 'admin') {
+                        if (user?.role === 'seller' || user.role === 'admin') {
                             Router.push('/account/dashbord');
                         } else {
-                            Router.push('/account/dashbord');
+                            Router.push('/account/sellerproducts');
                         }
                     }
                     dispatch(login({ user: user.data, data: e }));
