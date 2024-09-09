@@ -122,6 +122,9 @@ function SellingsLists() {
         }
     }
 
+    const nextYear = new Date();
+    nextYear.setFullYear(nextYear.getFullYear() + 1);
+
     useEffect(() => {
         if (isModalOpen) {
             GetProductsSearch()
@@ -185,13 +188,14 @@ function SellingsLists() {
 
     const seelingApplication = async () => {
         if (openApplicationID && price) {
+            setLoading(true)
             try {
                 const endPoint = "auctions/doc_sale_applications/create/";
                 await orginalApi.post(orginalUrl + endPoint, {
                     'document': openApplicationID.id,
                     price,
                     type: sellMethod,
-                    deadline: sellMethod === 'simple' ? `` : auctionDate
+                    deadline: sellMethod === 'simple' ? nextYear.toISOString() : auctionDate
                 }, {
                     headers: {
                         'Authorization': `Bearer ${user?.access}`,
@@ -227,6 +231,7 @@ function SellingsLists() {
                 });
 
             }
+            setLoading(false)
         } else {
             throw Modal.error({
                 centered: true,
@@ -1174,6 +1179,7 @@ function SellingsLists() {
                         <span className="fs-3">Yopish</span>
                     </button>
                     <button
+                        disabled={loading}
                         onClick={seelingApplication}
                         className="btn btn-success d-block px-4 py-2">
                         <span className="fs-3">Tasdiqlash</span>
