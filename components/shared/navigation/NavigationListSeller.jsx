@@ -1,15 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { connect } from 'react-redux';
 import { Drawer } from 'antd';
 import PanelMenu from '../panel/PanelMenu';
 import { useState } from 'react';
 import UserMenuPanel from '../panel/UserMenuPanel';
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
+import { AudioContext } from '~/hooks/AudioContext';
 
 function NavigationListSeller() {
 
     const [menuDrawer, setMenuDrawer] = useState(false);
     const [categoriesDrawer, setCategoriesDrawer] = useState(false);
+    const { pathname } = useRouter()
+    const { playerVisible } = useContext(AudioContext)
 
     const handleDrawerClose = () => {
         setMenuDrawer(false);
@@ -38,7 +41,7 @@ function NavigationListSeller() {
     };
 
     return (
-        <div className="navigation--list">
+        <div className={`navigation--list ${pathname.startsWith('/account') && playerVisible ? 'navigation--list__mobile' : ''}`}>
             <Drawer
                 className="ps-panel--mobile"
                 placement="right"

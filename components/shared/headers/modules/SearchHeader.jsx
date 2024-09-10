@@ -17,7 +17,6 @@ const SearchHeader = () => {
     const [selectFile, setSelectFile] = useState('all')
 
 
-
     function handleSubmit(e) {
         e.preventDefault();
         if (keyword && keyword.trim()) {

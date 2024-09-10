@@ -1,13 +1,17 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import wavesurfer from 'wavesurfer.js';
 import Link from 'next/link';
 import ModuleProductActions from './modules/ModuleProductActions';
 import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
+import { AudioContext } from '~/hooks/AudioContext';
 
 const AudioWaveform = ({ product, inCategory }) => {
     const wavesurferRef = useRef(null);
     const [wavesurferObj, setWavesurferObj] = useState(null);
+    const { wavesurferObj2 } = useContext(AudioContext)
     const [playing, setPlaying] = useState(false);
+    const { setPlayerVisible, setPlaying2, playing2, playerVisible, setAudioData } = useContext(AudioContext)
+    const [url, setUrl] = useState('')
 
 
 
@@ -32,6 +36,7 @@ const AudioWaveform = ({ product, inCategory }) => {
     useEffect(() => {
         if (wavesurferObj && product?.document?.short_content_url) {
             wavesurferObj?.load(product?.document?.short_content_url);
+            setUrl(product?.document?.short_content_url)
         }
     }, [product?.document?.short_content_url, wavesurferObj]);
 
@@ -41,20 +46,28 @@ const AudioWaveform = ({ product, inCategory }) => {
     }, [wavesurferObj]);
 
     const handlePlayPause = () => {
-        document
-            .querySelectorAll('.audio-cart-content .fa-circle-pause')
-            .forEach((el) => {
-                el.click();
-            });
+        setAudioData(product)
+        setPlaying(c => {
+            if (c) {
+                wavesurferObj2?.pause()
+            } else {
+                wavesurferObj2?.play()
+            }
+            setPlaying2(!c)
 
+            return !c
+        })
 
-
-        setPlaying(!playing);
-        if (!playing) {
-            wavesurferObj.play();
-        } else {
-            wavesurferObj.pause();
-        }
+        setPlayerVisible({
+            url: product?.document?.short_content_url,
+            time: 0,
+            id: product?.id
+        })
+        // document
+        //     .querySelectorAll('.audio-cart-content .fa-circle-pause')
+        //     .forEach((el) => {
+        //         el.click();
+        //     });
     };
 
     useEffect(() => {
@@ -63,10 +76,21 @@ const AudioWaveform = ({ product, inCategory }) => {
         }
     }, [wavesurferObj]);
 
+    useEffect(() => {
+        if (playerVisible?.id !== product?.id) {
+            setPlaying(false)
+        }
+    }, [playerVisible])
+
+    useEffect(() => {
+        if (playerVisible?.id === product?.id) {
+            setPlaying(playing2)
+        }
+    }, [playing2])
+
     const handleAudioFinish = () => {
         setPlaying(false);
     };
-
 
 
     return (
@@ -140,10 +164,12 @@ const AudioWaveform = ({ product, inCategory }) => {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-xl-7 col-lg-9">
-                            <div ref={wavesurferRef} id="waveform"></div>
+                        <div className="col-xl-7 col-lg-9 d-flex align-items-center w-100">
+                            <div className='w-100'>
+                                <div ref={wavesurferRef} id="waveform-2"></div>
+                            </div>
                         </div>
-                        <div className="col-xl-2 col-lg-9 d-flex align-content-center justify-content-start justify-content-xl-center pl-xl-0 pl-5 p pt-2">
+                        <div className="d-flex align-items-center justify-content-center col-xl-2 col-lg-9 d-flex align-content-center justify-content-start justify-content-xl-center pl-xl-0 pl-5 p pt-2">
                             <ModuleProductActions
                                 product={product}
                                 audio={true}
