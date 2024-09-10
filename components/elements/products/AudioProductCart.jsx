@@ -8,7 +8,7 @@ import { AudioContext } from '~/hooks/AudioContext';
 const AudioWaveform = ({ product, inCategory }) => {
     const wavesurferRef = useRef(null);
     const [wavesurferObj, setWavesurferObj] = useState(null);
-    const { wavesurferObj2, setWavesurferObj2 } = useContext(AudioContext)
+    const { wavesurferObj2 } = useContext(AudioContext)
     const [playing, setPlaying] = useState(false);
     const { setPlayerVisible, setPlaying2, playing2, playerVisible } = useContext(AudioContext)
     const [url, setUrl] = useState('')
@@ -46,38 +46,27 @@ const AudioWaveform = ({ product, inCategory }) => {
     }, [wavesurferObj]);
 
     const handlePlayPause = () => {
+        setPlaying(c => {
+            if (c) {
+                wavesurferObj2?.pause()
+            } else {
+                wavesurferObj2?.play()
+            }
+            setPlaying2(!c)
+
+            return !c
+        })
+
         setPlayerVisible({
             url: product?.document?.short_content_url,
-            time: 0
+            time: 0,
+            id: product?.id
         })
         // document
         //     .querySelectorAll('.audio-cart-content .fa-circle-pause')
         //     .forEach((el) => {
         //         el.click();
         //     });
-
-        if (playing2) {
-            wavesurferObj.pause();
-            wavesurferObj2?.pause()
-            console.log(playerVisible?.url , 3, product?.document?.short_content_url);
-            
-            if (playerVisible?.url === product?.document?.short_content_url) {
-                setPlaying(true)
-            } else {
-                setPlaying(false)
-            }
-        } else {
-            wavesurferObj.pause();
-            wavesurferObj2?.pause()
-            setPlaying(false)
-        }
-        // if (playing) {
-        //     wavesurferObj.pause();
-        //     wavesurferObj2?.pause()
-        // } else {
-        //     wavesurferObj.pause();
-        //     wavesurferObj2?.pause()
-        // }
     };
 
     useEffect(() => {
@@ -87,17 +76,20 @@ const AudioWaveform = ({ product, inCategory }) => {
     }, [wavesurferObj]);
 
     useEffect(() => {
-        // if (playerVisible?.url === product?.document?.short_content_url) {
-        //     setPlaying(playing2)
-        // } else {
-        //     setPlaying(false)
-        // }
+        if (playerVisible?.id !== product?.id) {
+            setPlaying(false)
+        }
+    }, [playerVisible])
+
+    useEffect(() => {
+        if (playerVisible?.id === product?.id) {
+            setPlaying(playing2)
+        }
     }, [playing2])
 
     const handleAudioFinish = () => {
         setPlaying(false);
     };
-
 
 
     return (
