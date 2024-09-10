@@ -23,8 +23,6 @@ const InlinePlayer = () => {
     const [isEnd, setIsEnd] = useState(false)
     const [replay, setReplay] = useState(false)
     const { isMobile } = useResponsive()
-    console.log(audioData);
-    
 
     const poster_url = audioData?.poster_url
 

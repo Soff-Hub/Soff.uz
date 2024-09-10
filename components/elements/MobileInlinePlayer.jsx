@@ -24,7 +24,7 @@ const MobileInlinePlayer = () => {
     const [replay, setReplay] = useState(false)
     const { isMobile } = useResponsive()
 
-    const poster_url = 'https://eu2.contabostorage.com/20ddac7ab90d4d188d1ca104120b91ed:soffuz/media/poster/%D0%A2%D0%B5%D0%BA%D1%81%D1%82_%D0%B0%D0%B1%D0%B7%D0%B0%D1%86%D0%B0.png'
+    const poster_url =  audioData?.poster_url
 
     const handlePlayPause = (e) => {
         wavesurferObj2.playPause();
