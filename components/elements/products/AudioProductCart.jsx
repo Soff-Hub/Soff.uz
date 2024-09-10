@@ -10,7 +10,7 @@ const AudioWaveform = ({ product, inCategory }) => {
     const [wavesurferObj, setWavesurferObj] = useState(null);
     const { wavesurferObj2 } = useContext(AudioContext)
     const [playing, setPlaying] = useState(false);
-    const { setPlayerVisible, setPlaying2, playing2, playerVisible } = useContext(AudioContext)
+    const { setPlayerVisible, setPlaying2, playing2, playerVisible, setAudioData } = useContext(AudioContext)
     const [url, setUrl] = useState('')
 
 
@@ -46,6 +46,7 @@ const AudioWaveform = ({ product, inCategory }) => {
     }, [wavesurferObj]);
 
     const handlePlayPause = () => {
+        setAudioData(product)
         setPlaying(c => {
             if (c) {
                 wavesurferObj2?.pause()

@@ -1,9 +1,9 @@
 const PlayButtonIcon = () => (
     <svg
-        height="32px"
+        height="42px"
         version="1.1"
         viewBox="0 0 36 36"
-        width="32px"
+        width="42px"
         xmlns="http://www.w3.org/2000/svg"
     >
         <use className="ytp-svg-shadow" xlinkHref="#ytp-id-20"></use>

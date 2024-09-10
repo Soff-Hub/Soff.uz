@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import wavesurfer from 'wavesurfer.js';
 import { AudioContext } from '~/hooks/AudioContext';
 import PlayButtonIcon from '../../PlayButtonIcon';
+import useResponsive from '~/utilities/useResponsive';
 
 export default function DefaultAudio({ product }) {
     const wavesurferRef = useRef(null);
@@ -10,6 +11,11 @@ export default function DefaultAudio({ product }) {
     const { asPath, push } = useRouter()
     const [url, setUrl] = useState('')
     const [loading, setLoading] = useState(false)
+    const { isMobile } = useResponsive()
+
+    async function withFunction() {
+        return isMobile ? 240 : 500
+    }
 
     useEffect(() => {
         if (wavesurferRef.current && !wavesurferObj) {
@@ -25,11 +31,11 @@ export default function DefaultAudio({ product }) {
                     progressColor: '#ccc',
                     responsive: true,
                     height: 30,
-                    width: '500px'
+                    width: withFunction()
                 })
             );
         }
-    }, [wavesurferObj, asPath]);
+    }, [wavesurferObj, asPath, isMobile]);
 
     const setAudioUrl = async () => {
         if (wavesurferObj && product?.document) {
