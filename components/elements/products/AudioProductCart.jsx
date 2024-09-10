@@ -50,39 +50,34 @@ const AudioWaveform = ({ product, inCategory }) => {
             url: product?.document?.short_content_url,
             time: 0
         })
-        document
-            .querySelectorAll('.audio-cart-content .fa-circle-pause')
-            .forEach((el) => {
-                el.click();
-            });
+        // document
+        //     .querySelectorAll('.audio-cart-content .fa-circle-pause')
+        //     .forEach((el) => {
+        //         el.click();
+        //     });
 
-
-
-        setPlaying(!playing);
-        if (!playing) {
-            wavesurferObj2?.play()
-            setPlaying2(true);
-            // wavesurferObj.play();
-            // setWavesurferObj2(
-            //     wavesurfer.create({
-            //         container: wavesurferRef.current,
-            //         scrollParent: true,
-            //         autoCenter: true,
-            //         loopSelection: true,
-            //         cursorColor: '#00A44F',
-            //         waveColor: '#00A44F',
-            //         progressColor: '#ccc',
-            //         responsive: true,
-            //         height: 40,
-            //     })
-            // );
-            // setWavesurferObj2(null)
-        } else {
+        if (playing2) {
+            wavesurferObj.pause();
             wavesurferObj2?.pause()
-            // wavesurferObj.pause();
-            setPlaying2(false);
-            // setPlayerVisible(null)
+            console.log(playerVisible?.url , 3, product?.document?.short_content_url);
+            
+            if (playerVisible?.url === product?.document?.short_content_url) {
+                setPlaying(true)
+            } else {
+                setPlaying(false)
+            }
+        } else {
+            wavesurferObj.pause();
+            wavesurferObj2?.pause()
+            setPlaying(false)
         }
+        // if (playing) {
+        //     wavesurferObj.pause();
+        //     wavesurferObj2?.pause()
+        // } else {
+        //     wavesurferObj.pause();
+        //     wavesurferObj2?.pause()
+        // }
     };
 
     useEffect(() => {
@@ -92,11 +87,11 @@ const AudioWaveform = ({ product, inCategory }) => {
     }, [wavesurferObj]);
 
     useEffect(() => {
-        if (playerVisible?.url === product?.document?.short_content_url) {
-            setPlaying(playing2)
-        }else {
-            setPlaying(false)
-        }
+        // if (playerVisible?.url === product?.document?.short_content_url) {
+        //     setPlaying(playing2)
+        // } else {
+        //     setPlaying(false)
+        // }
     }, [playing2])
 
     const handleAudioFinish = () => {
