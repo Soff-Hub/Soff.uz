@@ -7,7 +7,7 @@ import useResponsive from '~/utilities/useResponsive';
 
 export default function DefaultAudio({ product }) {
     const wavesurferRef = useRef(null);
-    const { wavesurferObj, setWavesurferObjFn: setWavesurferObj, playing, setPlaying, setPlayerVisible, setAudioData, audioData, setWavesurferObj2 } = useContext(AudioContext)
+    const { wavesurferObj, setWavesurferObjFn: setWavesurferObj, playing, setPlaying, setPlayerVisible, setAudioData, setPlaying2, setWavesurferObj2 } = useContext(AudioContext)
     const { asPath, push } = useRouter()
     const [url, setUrl] = useState('')
     const [loading, setLoading] = useState(false)
@@ -86,8 +86,9 @@ export default function DefaultAudio({ product }) {
         setAudioData(product)
         setPlaying(false)
         wavesurferObj.playPause()
-        setPlayerVisible({ time: wavesurferObj.getCurrentTime() / wavesurferObj.getDuration(), url })
+        setPlayerVisible({ time: wavesurferObj.getCurrentTime() / wavesurferObj.getDuration(), url, id: product?.id })
         push('/category/audio')
+        setPlaying2(true)
     }
 
     useEffect(() => {
