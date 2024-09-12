@@ -1028,8 +1028,8 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-    async getNotificationList() {
-        const endPoint = `admin/notification-list`;
+    async getNotificationList(p) {
+        const endPoint = `admin/notification-list?page=${p}`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',
