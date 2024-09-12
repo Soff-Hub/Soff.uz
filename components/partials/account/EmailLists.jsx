@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
 import { useSelector } from 'react-redux';
-import { Button, Form, Modal, Select, Input, DatePicker, Table } from 'antd';
+import { Button, Form, Modal, Select, Input, DatePicker, Table, Pagination } from 'antd';
 import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import CKEditor from './CKeditor';
 import GetRepository from '~/reositoriy-admin/GetRepository';
@@ -21,6 +21,8 @@ const EmailLists = () => {
     const [userRole, setUserRole] = useState(null);
     const [title, setSubject] = useState(null);
     const [notification, setNotification] = useState(null);
+    const [notificationPage, setNotificationPage] = useState(1)
+    const [notificationCount, setNotificationCount] = useState(0)
 
     const OnChangeSelect = (event) => {
         setEmail(event);
@@ -208,9 +210,12 @@ const EmailLists = () => {
         }
     }
 
-    const getNotifications = async () => {
+    const getNotifications = async (page) => {
+        setNotificationPage(page)
         setLoadingData(true)
-        const ItemsData = await GetRepository.getNotificationList();
+        const ItemsData = await GetRepository.getNotificationList(page);
+        setNotificationCount(ItemsData?.count)
+
         if (ItemsData) {
             setNotification(ItemsData.results);
         }
@@ -218,7 +223,7 @@ const EmailLists = () => {
     };
 
     useEffect(() => {
-        getNotifications();
+        getNotifications(1);
         setEditorLoaded(true);
         if (user?.access) {
             GetAllUsers();
@@ -395,6 +400,13 @@ const EmailLists = () => {
                             columns={columns}
                             pagination={false}
                             loading={loadingData}
+                        />
+                        <Pagination
+                            className="mt-3"
+                            total={notificationCount}
+                            pageSize={10}
+                            defaultCurrent={notificationPage}
+                            onChange={p => getNotifications(p)}
                         />
                     </div>
                 </div>
