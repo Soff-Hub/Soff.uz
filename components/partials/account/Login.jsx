@@ -185,7 +185,7 @@ class Login extends Component {
                                     <span className='register_title' style={{ fontSize: "16px", fontWeight: 500 }}>Hisobingiz yo'qmi?</span>
 
                                     <Link style={{ fontSize: "12px" }} href={
-                                        (id) ? `/account/register?id=${id}` :
+                                        (id) ? `/account/register?id=${id}&role=customer` :
                                             (deal) ? `/account/register?deal=${deal}` :
                                                 "/account/selection"
                                     }

@@ -43,7 +43,7 @@ const ModuleAudioDetailShoppingActions = ({ product, admin }) => {
             dispatch(OneShopDoc(product));
             Router.push(`/account/checkout-one?id=${product?.id}`);
         } else {
-            Router.push(`/account/register?id=${product?.id}`);
+            Router.push(`/account/register?id=${product?.id}&role=customer`);
         }
     }
 

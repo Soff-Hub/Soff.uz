@@ -254,7 +254,7 @@ class Register extends Component {
 
                             <div className="d-flex justify-content-center align-items-center flex-column mb-4">
                                 <Link href={
-                                    (id) ? `/account/register?id=${id}` :
+                                    (id) ? `/account/register?id=${id}&role=customer` :
                                         (deal) ? `/account/register?deal=${deal}` :
                                             "/account/selection"
                                 }>

@@ -105,6 +105,7 @@ const SearchHeader = () => {
                     value={keyword}
                     placeholder="Qidiruv..."
                     onChange={(e) => setKeyword(e.target.value)}
+                    onFocus={() => setIsSearch(true)}
                 />
                 {clearTextView}
                 {loadingView}
@@ -122,7 +123,7 @@ const SearchHeader = () => {
                                         Qidiruv natijasida topilgan ma'lumotlar soni {resultItems.count} ta
                                     </p>
                                     {resultItems?.map((product) => (
-                                        <ProductSearchResult product={product} key={product.id} />
+                                        <ProductSearchResult close={() => setIsSearch(false)} product={product} key={product.id} />
                                     ))}
                                 </>
                             ) : (
