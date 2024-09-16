@@ -28,9 +28,7 @@ export const generateTempArray = (maxItems) => {
 };
 
 export const audioDownloaderSale = async (file, product) => {
-    const filee = file?.document?.file_url.includes('?AWSAccessKeyId=')
-        ? file?.document?.file_url.split('?')[0]
-        : file?.document?.file_url;
+    const filee = file?.document?.file_url;
     try {
         const response = await Axios.get(filee, {
             responseType: 'blob',
@@ -54,7 +52,6 @@ export const audioDownloaderSale = async (file, product) => {
 
         return true;
     } catch (error) {
-    
         console.error('Error downloading file: ', error);
         return Promise.reject(error);
     }

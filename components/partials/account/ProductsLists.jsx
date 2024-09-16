@@ -346,9 +346,9 @@ function ProductsLists() {
             title: 'Rasm',
             dataIndex: 'poster_data',
             key: 'name',
-            render: (poster_data) => (
+            render: (poster_data, item) => (
                 <div>
-                    {poster_data?.poster_url ? (
+                    {item?.data_status?.status === 'deleted' ? '' : poster_data?.poster_url ? (
                         <NextImageCard
                             url={poster_data?.poster_url}
                             clasS="rounded-3 mb-2"
@@ -356,7 +356,6 @@ function ProductsLists() {
                             height="54px"
                         />
                     ) : (
-
                         <span style={{ cursor: "pointer" }} onClick={() => getImageGeneration(poster_data?.id)}>
                             {
                                 poster_data?.id == imageID ?
@@ -364,8 +363,6 @@ function ProductsLists() {
                                     :
                                     <i class="fa-solid fa-arrows-rotate fs-1"></i>
                             }
-
-
                         </span>
 
                     )}
@@ -543,7 +540,7 @@ function ProductsLists() {
         },
     ];
 
-    
+
 
 
     return (

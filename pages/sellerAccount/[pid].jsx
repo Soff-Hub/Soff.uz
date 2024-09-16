@@ -10,14 +10,17 @@ import { useRouter } from 'next/router';
 import ChartSeller from '~/components/partials/account/ChartSeller';
 import NextImageCard from '~/components/nextImagecard';
 import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
+import axios from 'axios';
+import { orginalUrl } from '~/reositoriy-admin/Repository';
 
-const SellerAccount = ({ seller }) => {
+const SellerAccount = ({ pid }) => {
     const [data, setData] = useState([]);
     const [dashboardData, setDashboardData] = useState([]);
     const [tableData, setTableData] = useState([]);
     const [tableDataOffer, setTableDataOffer] = useState([]);
+    const [transactions, setRtansactions] = useState([])
+    const [donates, setDonates] = useState([])
     const router = useRouter();
-    const { pid } = router.query;
 
     const { user } = useSelector((state) => state.auth);
 
@@ -73,16 +76,34 @@ const SellerAccount = ({ seller }) => {
         }
     }
 
+    const getTransactions = async () => {
+        const resp = await axios.get(orginalUrl + `auctions/payment_transfer_history/${pid}`, {
+            headers: {
+                Authorization: `Bearer ${user?.access}`
+            }
+        })
+        setRtansactions(resp.data?.results);
+    }
 
+    const getDonates = async () => {
+        const resp = await axios.get(orginalUrl + `seller/admin/donates/${pid}`, {
+            headers: {
+                Authorization: `Bearer ${user?.access}`
+            }
+        })
+        setDonates(resp.data?.results);
+    }
 
     useEffect(() => {
-        if (user?.access && pid) {
+        if (user?.access) {
             GetSellerList(pid, user?.access);
             getDashboardData(pid, user?.access);
             GetItemsSeller_Yearch()
+            getTransactions()
+            getDonates()
         }
-    }, [pid]);
 
+    }, [user?.access]);
 
 
     const columns = [
@@ -208,6 +229,62 @@ const SellerAccount = ({ seller }) => {
         },
     ];
 
+    const columnsDonate = [
+        {
+            title: 'Summa',
+            dataIndex: 'amount_paid',
+            key: 'address',
+            render: (price) => (
+                <span><i className="fa-solid fa-coins text-warning"></i>  {addPeriodToThousands(+price)} so'm</span>
+            )
+        },
+        {
+            title: 'Ism',
+            dataIndex: 'user',
+            key: 'address',
+        },
+        {
+            title: 'Izoh',
+            dataIndex: 'description',
+            key: 'address',
+            width: 350,
+        },
+        {
+            title: 'Sana',
+            dataIndex: 'created_at',
+            key: 'created_at',
+            render: (created_at) => <span key={created_at}> <i className="fa-solid fa-clock text-info-emphasis"></i> <CalculateTimeDifference targetDate={created_at} /></span>
+        }
+    ];
+
+    const columnsTransactions = [
+        {
+            title: 'Izoh',
+            dataIndex: 'description',
+            key: 'address',
+            width: 350
+        },
+        {
+            title: 'Summa',
+            dataIndex: 'amount',
+            key: 'address',
+            render: (amount, item) => (
+                <div style={{ color: item?.type === 'income' ? 'green' : 'red' }} className='d-flex align-items-center'>
+                    <div>
+                        <i class={`fa-solid fa-angles-${item?.type === 'income' ? 'down' : 'up'} m-0 p-0 fs-6`}></i>
+                    </div>
+                    <div className='ms-2 d-flex'>{addPeriodToThousands(amount)} so'm</div>
+                </div>
+            )
+        },
+        {
+            title: 'Sana',
+            dataIndex: 'created_at',
+            key: 'created_at',
+            render: (created_at) => <span key={created_at}> <i className="fa-solid fa-clock text-info-emphasis"></i> <CalculateTimeDifference targetDate={created_at} /></span>
+        }
+    ];
+
     const items = [
         {
             key: '1',
@@ -234,7 +311,30 @@ const SellerAccount = ({ seller }) => {
                     pagination={false}
                 />
             </div>,
-
+        },
+        {
+            key: '3',
+            label: <span style={{ marginRight: "30px", fontSize: "16px", fontWeight: "600" }} >Donatlar ro'yxati</span>,
+            children: <div>
+                <Table
+                    dataSource={donates}
+                    columns={columnsDonate}
+                    className="pb-5"
+                    pagination={false}
+                />
+            </div>,
+        },
+        {
+            key: '4',
+            label: <span style={{ marginRight: "30px", fontSize: "16px", fontWeight: "400" }} >Tranzaksiyalar</span>,
+            children: <div>
+                <Table
+                    dataSource={transactions}
+                    columns={columnsTransactions}
+                    className="pb-5"
+                    pagination={false}
+                />
+            </div>,
         },
     ]
 
@@ -536,5 +636,15 @@ const SellerAccount = ({ seller }) => {
         </PageContainer>
     );
 };
+
+export async function getServerSideProps(context) {
+    const { params } = context;
+
+    return {
+        props: {
+            pid: params?.pid
+        },
+    };
+}
 
 export default SellerAccount;

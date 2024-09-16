@@ -83,10 +83,10 @@ function ChartSeller({ year, month }) {
     }
 
     useEffect(() => {
-        if (pid) {
+        if (user?.access) {
             getChartItems(pid);
         }
-    }, [year, month, pid]);
+    }, [year, month, user?.access]);
 
 
     useEffect(() => {
