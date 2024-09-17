@@ -4,11 +4,10 @@ import PageContainer from '~/components/layouts/PageContainer';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
 import { useSelector } from 'react-redux';
 import Meta from '~/components/shared/headers/Meta';
-import MarketingMain from '~/components/partials/account/marketing/MarketingMain';
 import Page404 from '~/pages/page/page-404';
 import Selection from '../selection';
 import AccountMenuSidebar from '~/components/partials/account/modules/AccountMenuSidebar';
-import MerketingFormStopOne from '~/components/partials/account/marketing/MerketingFormStopOne';
+import MarketingDashboard from '~/components/partials/account/marketing/MarketingDashboard';
 
 const Application = () => {
 
@@ -36,14 +35,14 @@ const Application = () => {
                     <section className="ps-my-account ps-page--account pb-5">
                         <div className="container">
                             <div className="row" style={{ alignItems: "flex-start" }}>
-                                <div className="col-lg-4">
+                                {/* <div className="col-lg-4">
                                     <div className="ps-page__left">
                                         <AccountMenuSidebar data={accountLinks} />
                                     </div>
-                                </div>
-                                <div className="col-lg-8">
+                                </div> */}
+                                <div className="col-lg-12">
                                     <div className='ps-page__content bg-white p-4'>
-                                        <MerketingFormStopOne />
+                                        <MarketingDashboard />
                                     </div>
                                 </div>
                             </div>
