@@ -58,7 +58,7 @@ export default function MarketingCategoryAnalyzeChart({ config }) {
             data: seriesData
           }]}
             type="area"
-            width={'700px'}
+            width={'600px'}
           />
           : "Ma'lumot mavjud emas"}
       </div>

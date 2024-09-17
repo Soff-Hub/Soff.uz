@@ -1,5 +1,6 @@
 import React from 'react'
 import MarketingCategoryAnalyzeChart from './MarketingCategoryAnalitcsChart'
+import MaketingTopProductsByCategory from './MaketingTopProductsByCategory'
 
 export default function MarketingCategoryAnalyzeBox() {
     return (
@@ -8,7 +9,10 @@ export default function MarketingCategoryAnalyzeBox() {
                 <h3 className='fw-medium mb-3'>Sohaning daromad grafigi</h3>
             </div>
 
-            <MarketingCategoryAnalyzeChart />
+            <div className='d-flex gap-2'>
+                <MarketingCategoryAnalyzeChart />
+                <MaketingTopProductsByCategory />
+            </div>
         </div>
     )
 }
