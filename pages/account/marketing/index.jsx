@@ -23,6 +23,7 @@ const Application = () => {
     ];
 
     const { user, accountLinks } = useSelector(state => state.auth)
+
     return (
         user?.role === 'seller' ?
             <PageContainer footer={<FooterDefault />} title="Notifications">
