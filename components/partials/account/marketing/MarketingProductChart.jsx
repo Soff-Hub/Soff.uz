@@ -64,7 +64,7 @@ export default function MarketingProductChart() {
     ]
 
     return (
-        <div className='d-flex'>
+        <div className='d-flex justify-content-between'>
             {
                 config.map((el, i) => <MarketingChartProduct key={i} config={el} />)
             }

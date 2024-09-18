@@ -18,7 +18,7 @@ export default function MarketingSellingHistoryChart({ config }) {
         series: config?.series,
         options: {
             chart: {
-                width: 300,
+                width: '500px',
                 type: 'polarArea',
             },
             labels: config?.labels,
@@ -68,7 +68,7 @@ export default function MarketingSellingHistoryChart({ config }) {
         <div>
             <div id="chart-circle">
                 {props?.series?.some((el) => Number(el) > 0)
-                    ? <ReactApexcharts options={props.options} series={props.series} type="polarArea" width={400} />
+                    ? <ReactApexcharts options={props.options} series={props.series} type="polarArea" width={'500px'} />
                     : "Ma'lumot mavjud emas"}
             </div>
             <div id="html-dist"></div>

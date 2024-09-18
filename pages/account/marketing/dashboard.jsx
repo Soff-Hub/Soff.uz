@@ -33,7 +33,7 @@ const Application = () => {
                     <BreadCrumb breacrumb={breadCrumb} />
 
                     <section className="ps-my-account ps-page--account pb-5">
-                        <div className="container">
+                        <div className="container" style={{ maxWidth: '1400px' }}>
                             <div className="row" style={{ alignItems: "flex-start" }}>
                                 {/* <div className="col-lg-4">
                                     <div className="ps-page__left">
@@ -41,7 +41,7 @@ const Application = () => {
                                     </div>
                                 </div> */}
                                 <div className="col-lg-12">
-                                    <div className='ps-page__content bg-white p-4'>
+                                    <div className='ps-page__content p-0'>
                                         <MarketingDashboard />
                                     </div>
                                 </div>
