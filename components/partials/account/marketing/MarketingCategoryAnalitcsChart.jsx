@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 const seriesData = [6, 4, 12, 6, 7, 3, 2, 9];
 
 
-export default function MarketingCategoryAnalyzeChart({ config }) {
+export default function MarketingCategoryAnalyzeChart({ labels, series }) {
   const [isClient, setIsClient] = useState(false);
   const [ReactApexcharts, setReactApexcharts] = useState(null);
 
@@ -17,13 +17,12 @@ export default function MarketingCategoryAnalyzeChart({ config }) {
   }, []);
 
   const props = {
-    series: config?.series,
     options: {
       chart: {
         width: 300,
         type: 'donut',
       },
-      labels: seriesData.map(el => `ser-${el}`),
+      labels,
       responsive: [{
         breakpoint: 576,
         options: {
@@ -34,15 +33,7 @@ export default function MarketingCategoryAnalyzeChart({ config }) {
             position: 'bottom',
           },
         },
-      }],
-      title: {
-        text: config?.title,
-        style: {
-          fontSize: '20px',
-          fontWeight: 500,
-          opacity: 0.6,
-        },
-      },
+      }]
     },
   };
 
@@ -55,7 +46,7 @@ export default function MarketingCategoryAnalyzeChart({ config }) {
       <div id="chart-circle">
         {seriesData.some((el) => Number(el) > 0)
           ? <ReactApexcharts options={props.options} series={[{
-            data: seriesData
+            data: series
           }]}
             type="area"
             width={'600px'}
@@ -65,4 +56,4 @@ export default function MarketingCategoryAnalyzeChart({ config }) {
       <div id="html-dist"></div>
     </div>
   );
-}0
+} 0

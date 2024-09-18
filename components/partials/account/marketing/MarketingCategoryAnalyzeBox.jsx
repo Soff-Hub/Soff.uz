@@ -1,28 +1,67 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import MarketingCategoryAnalyzeChart from './MarketingCategoryAnalitcsChart'
-import MarketingSellingHistoryChart from './MarketingSellingHistoryChart'
+import MarketingSelledProducts from './MarketingSelledProducts'
+import { useSelector } from 'react-redux'
+import Axios from 'axios'
+import { orginalUrl } from '~/reositoriy-admin/Repository'
 
 export default function MarketingCategoryAnalyzeBox() {
-    const config = {
-        title: 'Mahsulotlar',
-        series: [56, 78, 103],
-        labels: [
-            '0 - 10,000 UZS',
-            '10,000 - 15,000 UZS',
-            '15,000 - 20,000 UZS',
-        ]
+
+    const { user } = useSelector(state => state.auth)
+    const [data, setData] = useState([])
+    const [history, setHistory] = useState([])
+
+    const getData = async () => {
+        try {
+            const resp = await Axios.get(orginalUrl + `seller/marketing/top-documents/`, {
+                headers: {
+                    Authorization: `Bearer ${user?.access}`
+                }
+            })
+            setData(resp.data);
+        } catch (err) {
+            console.log(err);
+        }
     }
+
+    const getHistory = async () => {
+        try {
+            const resp = await Axios.get(orginalUrl + `seller/marketing/area-chart/`, {
+                headers: {
+                    Authorization: `Bearer ${user?.access}`
+                }
+            })
+            setHistory(resp.data);
+        } catch (err) {
+            console.log(err)
+        }
+    }
+    console.log(history);
+
+
+    useEffect(() => {
+        getData()
+        getHistory()
+    }, [])
+
 
 
     return (
-        <div className='mt-5 bg-white py-5'>
-            <div>
-                <h3 className='fw-medium mb-3 text-center'>Sohaning daromad grafigi</h3>
-            </div>
+        <div className='mt-5 d-flex gap-5 justify-content-between'>
+            <div className='py-5 bg-white w-50'>
+                <div>
+                    <h3 className='fw-medium mb-3 text-center'>Sohaning daromad grafigi</h3>
+                </div>
 
-            <div className='d-flex gap-2 justify-content-evenly'>
-                <MarketingCategoryAnalyzeChart />
-                <MarketingSellingHistoryChart config={config} />
+                <div>
+                    <MarketingCategoryAnalyzeChart series={history.map(el => Math.ceil(el.percentage))} labels={history.map(el => el.month)} />
+                </div>
+            </div>
+            <div className='py-5 bg-white w-50 px-5'>
+                <div>
+                    <h3 className='fw-medium mb-5 text-center'>Soha bo'yicha eng ko'p sotilgan mahsulotlar</h3>
+                </div>
+                <MarketingSelledProducts data={data} />
             </div>
         </div>
     )

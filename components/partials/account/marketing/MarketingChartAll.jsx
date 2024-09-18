@@ -5,8 +5,7 @@ export default function MarketingChartProduct({ config }) {
   const [ReactApexcharts, setReactApexcharts] = useState(null);
 
   useEffect(() => {
-    setIsClient(true);  // Brauzerda ekanligini belgilaydi
-    // Dinamik ravishda yuklash
+    setIsClient(true);
     const loadApexcharts = async () => {
       const module = await import('react-apexcharts');
       setReactApexcharts(() => module.default);
@@ -53,7 +52,7 @@ export default function MarketingChartProduct({ config }) {
           const value = series[seriesIndex];
           const label = w.globals.labels[seriesIndex];
           return `<div class="arrow_box">
-                    <span>${label}: ${value} ta</span>
+                    <span>${label}: ${value} %</span>
                   </div>`;
         },
       },
