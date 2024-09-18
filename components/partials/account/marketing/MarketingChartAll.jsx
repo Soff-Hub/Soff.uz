@@ -19,7 +19,7 @@ export default function MarketingChartProduct({ config }) {
     options: {
       chart: {
         width: 300,
-        type: 'donut',
+        type: 'pie',
       },
       labels: config?.labels,
       responsive: [{
@@ -68,7 +68,7 @@ export default function MarketingChartProduct({ config }) {
     <div>
       <div id="chart-circle">
         {props?.series?.some((el) => Number(el) > 0)
-          ? <ReactApexcharts options={props.options} series={props.series} type="donut" width={350} />
+          ? <ReactApexcharts options={props.options} series={props.series} type="pie" width={350} />
           : "Ma'lumot mavjud emas"}
       </div>
       <div id="html-dist"></div>

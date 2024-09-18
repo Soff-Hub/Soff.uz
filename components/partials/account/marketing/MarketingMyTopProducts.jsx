@@ -15,7 +15,7 @@ const data = Array.from({
 const MarketingMyTopProducts = () => {
 
     return (
-        <div className='mt-5'>
+        <div className='mt-5 bg-white py-5'>
             <div>
                 <h3 className='fw-medium mb-3 text-center'>Mahsulotlar sotuvini oshirish uchun takliflar</h3>
             </div>
@@ -25,7 +25,7 @@ const MarketingMyTopProducts = () => {
                 size="large"
                 pagination={false}
                 dataSource={data}
-                footer="Agar takliflarimiz ni qabul qilsangiz mahsulotlaringiz sotuvi va daromadingiz oshishi ehtimoli katta"
+                footer={<div className='px-5'>Agar takliflarimiz ni qabul qilsangiz mahsulotlaringiz sotuvi va daromadingiz oshishi ehtimoli katta</div>}
                 renderItem={(item) => (
                     <List.Item
                         key={item.title}

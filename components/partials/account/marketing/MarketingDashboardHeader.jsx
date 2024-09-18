@@ -8,7 +8,7 @@ export default function MarketingDashboardHeader() {
     const { push } = useRouter()
 
     return (
-        <div className='d-flex justify-content-between gap-2'>
+        <div className='d-flex justify-content-between gap-2 bg-white p-3'>
             <div style={{ display: 'flex', gap: '5px' }}>
                 {profile?.fields ?
                     profile.fields.map(el => (
