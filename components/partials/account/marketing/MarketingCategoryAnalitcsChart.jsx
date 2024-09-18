@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react';
 
-const seriesData = [6, 4, 12, 6, 7, 3, 2, 9];
-
-
 export default function MarketingCategoryAnalyzeChart({ labels, series }) {
   const [isClient, setIsClient] = useState(false);
   const [ReactApexcharts, setReactApexcharts] = useState(null);
@@ -33,7 +30,12 @@ export default function MarketingCategoryAnalyzeChart({ labels, series }) {
             position: 'bottom',
           },
         },
-      }]
+      }],
+      tooltip: {
+        y: {
+          formatter: (value) => `${value} %`,  // Example: you can add any format here
+        }
+      }
     },
   };
 
@@ -44,9 +46,10 @@ export default function MarketingCategoryAnalyzeChart({ labels, series }) {
   return (
     <div>
       <div id="chart-circle">
-        {seriesData.some((el) => Number(el) > 0)
+        {series.some((el) => Number(el) > 0)
           ? <ReactApexcharts options={props.options} series={[{
-            data: series
+            data: series,
+            name: "Sotuv statistikasi"
           }]}
             type="area"
             width={'600px'}

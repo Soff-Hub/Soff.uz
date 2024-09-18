@@ -36,8 +36,6 @@ export default function MarketingCategoryAnalyzeBox() {
             console.log(err)
         }
     }
-    console.log(history);
-
 
     useEffect(() => {
         getData()
