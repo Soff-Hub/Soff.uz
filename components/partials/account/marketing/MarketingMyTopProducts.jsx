@@ -5,20 +5,16 @@ import { useSelector } from 'react-redux';
 import Axios from 'axios';
 import { orginalUrl } from '~/reositoriy-admin/Repository';
 import MarketingSellingHistoryChart from './MarketingSellingHistoryChart';
+import { formatCurrency } from '~/utilities/product-helper';
 
 const MarketingMyTopProducts = () => {
-    const config = {
-        title: 'Mahsulotlar',
-        series: [56, 78, 103],
-        labels: [
-            '0 - 10,000 UZS',
-            '10,000 - 15,000 UZS',
-            '15,000 - 20,000 UZS',
-        ]
-    }
-
     const { user } = useSelector(state => state.auth)
     const [data, setData] = useState([])
+    const [price, setPrice] = useState({
+        title: 'Mahsulotlar',
+        series: [],
+        labels: []
+    })
 
     const getData = async () => {
         const resp = await Axios.get(orginalUrl + `seller/marketing/top-documents/`, {
@@ -29,8 +25,24 @@ const MarketingMyTopProducts = () => {
         setData(resp.data?.slice(0, 3));
     }
 
+    const getPrice = async () => {
+        const resp = await Axios.get(orginalUrl + `seller/marketing/price-chart/`, {
+            headers: {
+                Authorization: `Bearer ${user?.access}`
+            }
+        })
+        let series = resp.data?.map(el => Math.floor(el.percentage))
+        let labels = resp.data?.map(el => `${formatCurrency(el?.min_price)}${el?.max_price >= 1000000 ? ' va undan yuqori' : ' - ' + formatCurrency(el?.max_price)}`)
+        setPrice({
+            title: price.title,
+            series,
+            labels
+        });
+    }
+
     useEffect(() => {
         getData()
+        getPrice()
     }, [])
 
     return (
@@ -75,7 +87,7 @@ const MarketingMyTopProducts = () => {
                     <div>
                         <h3 className='fw-medium mb-5'>Sotilgan Mahsulotlarning o'rtacha narxi</h3>
                     </div>
-                    <MarketingSellingHistoryChart config={config} />
+                    <MarketingSellingHistoryChart config={price} />
                 </div>
             </div>
         </div>

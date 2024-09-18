@@ -23,7 +23,8 @@ const MarketingSelledProducts = ({ data }) => (
                     <IconText icon={DollarOutlined} text={`${formatCurrency(item?.discount_price)} UZS`} key="list-vertical-like-o" />,
                     <IconText icon={CheckCircleOutlined} text={`${item?.sold_count_last_month} marta sotilgan`} key="list-vertical-like-o" />,
                 ]}
-                className='px-0 py-3'
+                className='px-3 py-3 mb-3'
+                style={{ border: '1px solid #f1f1f1', borderRadius: '5px' }}
             >
                 {item.title}
             </List.Item>
