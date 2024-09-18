@@ -12,7 +12,7 @@ const PanelSearch = ({
     function handleSubmit(e) {
         e.preventDefault();
         if (keyword !== '') {
-            Router.push(`/search?keyword=${keyword}`);
+            Router.push(`/search-page?keyword=${keyword}`);
         }
     }
 

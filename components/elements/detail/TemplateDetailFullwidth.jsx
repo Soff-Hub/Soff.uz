@@ -202,7 +202,7 @@ const TemplateDetailFullwidth = ({ product, views }) => {
                                 border: "1px solid #999",
                                 fontSize: "15px"
                             }}>
-                                <Link href={`/search?keyword=${item?.name?.replace(/^#/, '')}`}>
+                                <Link href={`/search-page?keyword=${item?.name?.replace(/^#/, '')}`}>
                                     <a
                                     >
                                         {' '}
