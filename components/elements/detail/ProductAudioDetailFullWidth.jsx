@@ -50,7 +50,7 @@ const ProductAudioDetailFullWidth = ({
                                             <div
                                                 key={i}
                                                 className="m-2 tag-product">
-                                                <Link href={`/search?keyword=${item?.name?.replace(/^#/, '')}`}>
+                                                <Link href={`/search-page?keyword=${item?.name?.replace(/^#/, '')}`}>
                                                     <a
                                                     >
                                                         {' '}

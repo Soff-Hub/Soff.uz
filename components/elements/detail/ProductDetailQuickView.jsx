@@ -24,7 +24,7 @@ const ProductDetailQuickView = ({ product }) => {
     const [views, setViews] = useState(null);
 
     const searchTag = (e) => {
-        Router.push(`/search?keyword=${e}`);
+        Router.push(`/search-page?keyword=${e}`);
     };
 
     const getImage = async () => {
