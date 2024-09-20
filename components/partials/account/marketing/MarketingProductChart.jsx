@@ -5,10 +5,13 @@ import axios from 'axios'
 import { orginalUrl } from '~/reositoriy-admin/Repository'
 import { Skeleton } from 'antd'
 import { DotChartOutlined } from '@ant-design/icons';
+import { useRouter } from 'next/router'
 
 
 export default function MarketingProductChart() {
     const { user } = useSelector(state => state.auth)
+    const { query } = useRouter()
+
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(false)
 
@@ -17,7 +20,8 @@ export default function MarketingProductChart() {
         const resp = await axios.get(orginalUrl + `seller/marketing/chart/`, {
             headers: {
                 Authorization: `Bearer ${user?.access}`
-            }
+            },
+            params: { ...query }
         })
         let result = []
         const names = ['Mahsulotlar', "Ko'rishlar", "Sotuvlar"]
@@ -47,10 +51,10 @@ export default function MarketingProductChart() {
 
     useEffect(() => {
         getData()
-    }, [])
+    }, [query])
 
     return (
-        <div className='d-flex justify-content-around'>
+        <div className='d-flex justify-content-between'>
             {
                 loading ? [1, 2, 3].map(el => (
                     <div className='d-flex pt-2 justify-content-between' key={el}>

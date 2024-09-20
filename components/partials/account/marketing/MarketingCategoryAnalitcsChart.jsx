@@ -18,6 +18,12 @@ export default function MarketingCategoryAnalyzeChart({ labels, series }) {
       chart: {
         width: 300,
         type: 'donut',
+        toolbar: {
+          tools: {
+            zoomin: false,
+            zoomout: false
+          }
+        }
       },
       labels,
       responsive: [{
@@ -44,8 +50,8 @@ export default function MarketingCategoryAnalyzeChart({ labels, series }) {
   }
 
   return (
-    <div>
-      <div id="chart-circle">
+    <div className='h-100'>
+      <div id="chart-circle" className='h-100'>
         {series.some((el) => Number(el) > 0)
           ? <ReactApexcharts options={props.options} series={[{
             data: series,
@@ -54,7 +60,18 @@ export default function MarketingCategoryAnalyzeChart({ labels, series }) {
             type="area"
             width={'600px'}
           />
-          : "Ma'lumot mavjud emas"}
+          : <div style={{ position: 'relative' }} className='h-100'>
+            <ReactApexcharts options={props.options} series={[{
+              data: [4, 1, 6, 8, 2, 10, 4],
+              name: "Sotuv statistikasi"
+            }]}
+              type="area"
+              width={'600px'}
+            />
+            <div className='chart-blur'>
+              <p>Statistikani shakllantirish uchun ma'lumot yetarli emas</p>
+            </div>
+          </div>}
       </div>
       <div id="html-dist"></div>
     </div>

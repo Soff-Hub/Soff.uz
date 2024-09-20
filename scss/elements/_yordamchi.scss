@@ -2362,3 +2362,26 @@
     display: flex;
     align-items: center;
 }
+
+.chart-blur {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin: auto;
+    backdrop-filter: blur(10px);
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.chart-blur p {
+    font-size: 18px;
+    text-align: center;
+    color: #2a2929;
+    line-height: 25px;
+}
