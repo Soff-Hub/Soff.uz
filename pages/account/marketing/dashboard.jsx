@@ -54,4 +54,15 @@ const Application = () => {
     );
 };
 
+export async function getServerSideProps(context) {
+    const { query } = context;
+
+    return {
+        props: {
+            month: query?.month || new Date().getMonth() + 1 > 9 ? query?.month || new Date().getMonth() + 1 : `0${query?.month || new Date().getMonth() + 1}`,
+            year: query?.year || new Date().getFullYear(),
+        },
+    };
+}
+
 export default Application;
