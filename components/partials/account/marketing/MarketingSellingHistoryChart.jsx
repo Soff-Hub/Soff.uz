@@ -65,7 +65,7 @@ export default function MarketingSellingHistoryChart({ config }) {
     }
 
     return (
-        <div style={{ position: 'relative', flex: 1 }} className='d-flex align-items-center justify-content-center'>
+        <div style={{ position: 'relative', flex: 1 }} className='d-flex justify-content-center'>
             <div id="chart-circle">
                 {props?.series?.some((el) => Number(el) > 0)
                     ? <ReactApexcharts options={props.options} series={props.series} type="polarArea" width={'500px'} />

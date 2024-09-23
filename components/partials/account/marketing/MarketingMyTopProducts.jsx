@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Avatar, List } from 'antd';
+import { Avatar, List, Modal, Space } from 'antd';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import Axios from 'axios';
@@ -7,10 +7,24 @@ import { orginalUrl } from '~/reositoriy-admin/Repository';
 import MarketingSellingHistoryChart from './MarketingSellingHistoryChart';
 import { formatCurrency } from '~/utilities/product-helper';
 import { useRouter } from 'next/router';
+import { DollarOutlined, EyeOutlined, CheckCircleOutlined } from '@ant-design/icons';
+import ModalDeletePostEdit from '../ModalPostEdit';
+import PatchRepository from '~/reositoriy-admin/PatchRepository';
+import RejectOfferModal from '../RejectOfferModal';
+
+const IconText = ({ icon, text }) => (
+    <Space className='view-count'>
+        {React.createElement(icon)}
+        {text}
+    </Space>
+);
 
 const MarketingMyTopProducts = () => {
     const { user } = useSelector(state => state.auth)
     const { query } = useRouter()
+    const [viewPriceDiscount, setViewPriceDiscount] = useState(0);
+    const [id, setId] = useState(null);
+
 
     const [data, setData] = useState([])
     const [price, setPrice] = useState({
@@ -20,12 +34,12 @@ const MarketingMyTopProducts = () => {
     })
 
     const getData = async () => {
-        const resp = await Axios.get(orginalUrl + `seller/marketing/?limit=3`, {
+        const resp = await Axios.get(orginalUrl + `seller/marketing/`, {
             headers: {
                 Authorization: `Bearer ${user?.access}`
             }
         })
-        setData(resp.data?.results);
+        setData(resp.data);
     }
 
     const getPrice = async () => {
@@ -42,6 +56,37 @@ const MarketingMyTopProducts = () => {
             series,
             labels
         });
+    }
+
+    const handleHide = async () => {
+        try {
+            await Axios.patch(orginalUrl + `seller/marketing/update/${id}/`, {}, {
+                headers: {
+                    Authorization: `Bearer ${user?.access}`
+                }
+            })
+            await getData()
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    const updatePrice = async () => {
+        const formData = new FormData();
+        formData.append('price', viewPriceDiscount);
+
+        await PatchRepository.getMyProductsPatch(
+            formData,
+            id,
+            user?.access
+        );
+        const modal = Modal.success({
+            centered: true,
+            title: 'Muvaffaqqiyatli!',
+            content: 'Mahsulotingiz narxi yangilandi',
+        });
+        await getData()
+        setViewPriceDiscount(0)
     }
 
     useEffect(() => {
@@ -65,21 +110,40 @@ const MarketingMyTopProducts = () => {
                             renderItem={(item) => (
                                 <List.Item
                                     key={item.title}
-                                    className='px-0'
-                                    style={{ position: 'relative' }}
+                                    className='px-0 mb-4'
+                                    style={{ position: 'relative', backgroundColor: '#F8EDE3', border: 'none', }}
                                 >
                                     <List.Item.Meta
-                                        className='mb-3 p-4'
+                                        className='mb-3 px-4 pt-3'
                                         avatar={<Avatar style={{ border: '1px solid gray', padding: '5px' }} src={'/static/img/soff logo.png'} />}
-                                        title={<Link href={`/product/${item.slug}`}>{item.title}</Link>}
-                                        description="Bu mahsulotingiz ko'p marta xaridorlar tomonidan ko'rilgan lekin sotuvlar soni nisbatan kam, bunga narxning balandligi sabab bo'lishi mumkin"
-                                        // style={{ border: '1px solid #f1f1f1', borderRadius: '8px', boxShadow: 'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px', borderBlockEnd: 'none' }}
-                                        style={{ backgroundColor: '#F8EDE3', border: 'none', borderBlock: 'none' }}
+                                        title={<Link href={`/product/${item.slug}`}>{item.doc_title}</Link>}
+                                        description={item?.title}
+                                        style={{ borderBlock: 'none' }}
                                     />
-                                    <span className='offer-close' style={{ position: 'absolute', top: 20, right: 7 }}>
+                                    <a
+                                        data-bs-target='#exampleModalMyProductsPrice'
+                                        data-bs-toggle="modal"
+                                        className='offer-close'
+                                        style={{ position: 'absolute', top: 5, right: 32, cursor: 'pointer' }}
+                                        onClick={() => (setId(item?.id), setViewPriceDiscount(item?.price))}
+                                    >
+                                        <i class="fa-regular fa-pen-to-square"></i>
+                                    </a>
+                                    <a
+                                        data-bs-target='#rejectOfferModal'
+                                        data-bs-toggle="modal"
+                                        onClick={() => setId(item?.id)}
+                                        className='offer-close'
+                                        style={{ position: 'absolute', top: 7, right: 9, cursor: 'pointer' }}
+                                    >
                                         <i class="fa-solid fa-xmark fs-3"></i>
-                                    </span>
+                                    </a>
                                     {item.content}
+                                    <div className='px-4 w-100 d-flex justify-content-end gap-3 text-secondary'>
+                                        <IconText icon={EyeOutlined} text={item?.view_count} key="list-vertical-star-o" />
+                                        <IconText icon={DollarOutlined} text={`${item?.sold_count} ta sotuv`} key="list-vertical-like-o" />
+                                        <IconText icon={CheckCircleOutlined} text={`har ${item?.view_per_sold} ta ko'rishda bitta sotuv`} key="list-vertical-like-o" />
+                                    </div>
                                 </List.Item>
                             )}
                         />
@@ -94,6 +158,32 @@ const MarketingMyTopProducts = () => {
                     </div>
                     <MarketingSellingHistoryChart config={price} />
                 </div>
+
+                <ModalDeletePostEdit
+                    dataBsTarget="exampleModalMyProductsPrice"
+                    onSubmited={updatePrice}
+                    formID="products-edit_price">
+                    <label htmlFor="discount" className="form-label">
+                        Hujjatingizni narxi
+                        <input
+                            id="discount"
+                            onChange={(e) =>
+                                setViewPriceDiscount(e.target.value)
+                            }
+                            value={viewPriceDiscount}
+                            type="number"
+                            className="form-control rounded-3"
+                            placeholder="Hujjatingizni narxi"
+                        />
+                    </label>
+                </ModalDeletePostEdit>
+
+                <RejectOfferModal
+                    dataBsTarget="rejectOfferModal"
+                    onSubmited={handleHide}
+                    formID="products-edit_price">
+                    <p className='text-center fs-2'>Taklifni rad etmoqchimisiz?</p>
+                </RejectOfferModal>
             </div>
         </div>
     )
