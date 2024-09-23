@@ -1,6 +1,7 @@
+import { Card } from 'antd';
 import React, { useEffect, useState } from 'react';
 
-export default function MarketingChartProduct({ config }) {
+export default function MarketingChartProduct({ config, colors }) {
   const [isClient, setIsClient] = useState(false);
   const [ReactApexcharts, setReactApexcharts] = useState(null);
 
@@ -18,6 +19,7 @@ export default function MarketingChartProduct({ config }) {
     options: {
       chart: {
         width: 300,
+        heigt: 300,
         type: 'pie',
       },
       labels: config?.labels,
@@ -56,6 +58,15 @@ export default function MarketingChartProduct({ config }) {
                   </div>`;
         },
       },
+      colors,
+      plotOptions: {
+        pie: {
+          expandOnClick: false
+        }
+      },
+      legend: {
+        show: false
+      }
     },
   };
 
@@ -63,11 +74,15 @@ export default function MarketingChartProduct({ config }) {
     return <div>Loading...</div>;
   }
 
+  if (props) {
+
+  }
+
   return (
-    <div>
+    <div style={{ position: 'relative' }}>
       <div id="chart-circle">
         {props?.series?.some((el) => Number(el) > 0)
-          ? <ReactApexcharts options={props.options} series={props.series} type="pie" width={350} />
+          ? <ReactApexcharts options={props.options} series={props.series} type="pie" width={300} />
           : <div style={{ position: 'relative' }}>
             <ReactApexcharts options={props.options} series={[2, 4, 3, 5, 1]} type="pie" width={350} />
             <div className='chart-blur'>
