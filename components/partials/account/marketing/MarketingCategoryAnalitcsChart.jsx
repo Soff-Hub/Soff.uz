@@ -66,7 +66,7 @@ export default function MarketingCategoryAnalyzeChart({ labels, series }) {
               name: "Sotuv statistikasi"
             }]}
               type="area"
-              width={'100%'}
+              width={'420px'}
             />
             <div className='chart-blur'>
               <p>Statistikani shakllantirish uchun ma'lumot yetarli emas</p>
