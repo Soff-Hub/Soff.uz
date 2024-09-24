@@ -7,6 +7,7 @@ import Link from 'next/link';
 import CalculateTimeDifference from './DateFormatter';
 import DealOrderEdit from './dealUpdate';
 import { addPeriodToThousands } from './ProductsLists';
+import SidebarLayout from '../SidebarLayout';
 
 export default function DealOrderList() {
     const { accountLinks, user } = useSelector((state) => state.auth);
@@ -184,12 +185,7 @@ export default function DealOrderList() {
         <section className="ps-my-account ps-page--account">
             <div className="container">
                 <div className="row pb-5" style={{ alignItems: 'flex-start' }}>
-                    <div className="col-lg-4">
-                        <div className="ps-page__left">
-                            <AccountMenuSidebar data={accountLinks} />
-                        </div>
-                    </div>
-                    <div className="col-lg-8 pb-5">
+                    <SidebarLayout accountLinks={accountLinks}>
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
                                 <div className="bg-white p-3">
@@ -386,7 +382,7 @@ export default function DealOrderList() {
 
                             </div>
                         </div>
-                    </div>
+                    </SidebarLayout>
                 </div>
             </div>
         </section>

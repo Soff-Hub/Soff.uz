@@ -10,6 +10,7 @@ import NextImageCard from '~/components/nextImagecard';
 import { DatePicker } from 'antd';
 import { formatCurrency } from '~/utilities/product-helper';
 import { addPeriodToThousands } from './ProductsLists';
+import SidebarLayout from '../SidebarLayout';
 const { TextArea } = Input;
 const { Option } = Select;
 
@@ -556,12 +557,7 @@ function ApplicationLists() {
         <section className="ps-my-account ps-page--account pb-5">
             <div className="container">
                 <div className="row" style={{ alignItems: "flex-start" }}>
-                    <div className="col-lg-4">
-                        <div className="ps-page__left">
-                            <AccountMenuSidebar data={accountLinks} data1={data1} />
-                        </div>
-                    </div>
-                    <div className="col-lg-8">
+                    <SidebarLayout accountLinks={accountLinks}>
                         <div className="ps-page__content ">
                             <div className="ps-section--account-setting ">
                                 <div className="ps-section__content ">
@@ -663,7 +659,7 @@ function ApplicationLists() {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </SidebarLayout>
                     {
                         user?.role === "admin" ?
                             <div className='px-4'>

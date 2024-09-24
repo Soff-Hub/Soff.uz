@@ -2304,3 +2304,92 @@
         background-color: transparent;
     }
 }
+
+@keyframes vibrate {
+    0% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(6px);
+    }
+    50% {
+        transform: translateX(0);
+    }
+    75% {
+        transform: translateX(-6px);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.vibrate {
+    position: relative; /* absolute emas, relative yaxshiroq bo'ladi */
+    animation: vibrate 200ms ease; /* animatsiyani takrorlash uchun infinite */
+}
+
+.vibrate-overlay {
+    position: absolute;
+    display: block;
+    height: 50px;
+    background: #ffffff;
+    background: -webkit-linear-gradient(
+        0deg,
+        #ffffff 0%,
+        rgba(254, 254, 254, 0) 100%
+    );
+    background: linear-gradient(0deg, #ffffff 0%, rgba(254, 254, 254, 0) 100%);
+    width: 100%;
+    bottom: 60px;
+    z-index: 999999999;
+}
+
+@media only screen and (max-width: 576px) {
+    .stepperff {
+        flex-direction: column;
+    }
+
+    .ant-steps-item-tail::after {
+        display: none !important;
+    }
+
+    .ant-steps-item-icon {
+        margin-right: 3px !important;
+    }
+}
+
+.view-count .ant-space-item {
+    display: flex;
+    align-items: center;
+}
+
+.chart-blur {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin: auto;
+    backdrop-filter: blur(10px);
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.chart-blur p {
+    font-size: 18px;
+    text-align: center;
+    color: #2a2929;
+    line-height: 25px;
+}
+
+// .apexcharts-legend {
+//     display: none !important;
+// }
+
+.animate-manu {
+    transition: all 0.1s ease;
+}

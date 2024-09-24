@@ -23,6 +23,7 @@ import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import Link from 'next/link';
 import Router, { useRouter } from 'next/router';
+import SidebarLayout from '../SidebarLayout';
 // import 'dayjs/locale/uz';
 
 dayjs.extend(customParseFormat);
@@ -702,13 +703,7 @@ function SellingsLists() {
         <section className="ps-my-account ps-page--account ">
             <div className="container">
                 <div className="row " style={{ alignItems: 'flex-start' }}>
-                    <div className="col-lg-4">
-                        <div className="ps-page__left">
-                            <AccountMenuSidebar data={accountLinks} />
-
-                        </div>
-                    </div>
-                    <div className="col-lg-8 pb-5">
+                    <SidebarLayout accountLinks={accountLinks}>
                         <div className={`col-12 mb-4  p-4 d-flex flex-column justify-content-between mobileImage `}
                             style={{
                                 borderRadius: "10px",
@@ -792,7 +787,7 @@ function SellingsLists() {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </SidebarLayout>
                 </div>
 
             </div>
