@@ -8,7 +8,7 @@ import { formatCurrency } from '~/utilities/product-helper';
 import { addPeriodToThousands } from '../ProductsLists';
 import CalculateTimeDifference from '../DateFormatter';
 
-const AccountMenuSidebar = ({ data }) => {
+const AccountMenuSidebar = ({ data, menuOpen }) => {
 
     const { asPath } = useRouter();
     const { user } = useSelector((state) => state.auth);
@@ -166,182 +166,184 @@ const AccountMenuSidebar = ({ data }) => {
 
     return (
         <aside className="ps-widget--account-dashboard">
-            <div className="ps-widget__header  p-2 pb-4 step-2">
-                {profile?.image ? (
-                    <img src={`${profile?.image}`} className="profile__image" />
-                ) : (
-                    <i className=" fa-3x text-info fa-solid fa-circle-user"></i>
-                )}
-                <figure>
-                    <>
-                        <h4 className="m-0 " style={{ maxWidth: '280px' }}>
-                            {' '}
-                            {profile?.first_name && profile?.last_name ? (
-                                <>
-                                    <span>{profile?.first_name}</span>{' '}
-                                    <span> {profile?.last_name}</span>
-                                </>
-                            ) : user?.role === 'seller' ? (
-                                <span>
-                                    {profile?.role
-                                        ? 'Sotuvchi'
-                                        : "ma'lumot yo'q"}
-                                </span>
-                            ) : user?.role === 'admin' ? (
-                                <span>
-                                    {profile?.role
-                                        ? 'Admin'
-                                        : "malumot yo'q"}
-                                </span>
-                            ) : user?.role === 'customer' ? (
-                                <span>
-                                    {profile?.role
-                                        ? 'Foydalanuvchi'
-                                        : "malumot yo'q"}
-                                </span>
-                            ) : (
-                                <></>
-                            )}{' '}
-                        </h4>
-                        <p
-                            className="text-truncate"
-                            style={{ maxWidth: '280px' }}>
-                            {profile?.phone || profile?.email}
-                        </p>
-                    </>
-                </figure>
-            </div>
-            {user?.role === 'seller' ? (
-                <div className="pb-3 step-3">
-                    <div className="w-100   border m-0 p-3 rounded-3  text-truncate mb-2">
-
+            <div>
+                <div className="ps-widget__header  p-2 pb-4 step-2 justify-content-center">
+                    {profile?.image ? (
+                        <img src={`${profile?.image}`} className="profile__image" style={{ maxWidth: '40px' }} />
+                    ) : (
+                        <i className=" fa-3x text-info fa-solid fa-circle-user"></i>
+                    )}
+                    {menuOpen && <figure>
                         <>
-                            {
-                                dataBlock?.has_blocked && <>
-                                    <div>
-                                        <Tooltip
-                                            color='red'
-                                            overlayStyle={{
-                                                minWidth: '350px',
-                                            }} title={
-                                                <div className='d-flex flex-column '>
-                                                    <div className='d-flex gap-1'>
-                                                        <span>Bloklab qo'yilgan sana:</span>
-                                                        <CalculateTimeDifference targetDate={dataBlock?.created_at} />
-                                                    </div>
-                                                    <div className='d-flex gap-1'>
-                                                        <span>Blokdan chiqish sanasi:</span>
-                                                        <CalculateTimeDifference targetDate={dataBlock?.to_date} />
-                                                    </div>
-
-
-                                                    <span>{dataBlock?.reason}</span>
-                                                </div>
-
-                                            }>
-                                            <span style={{ cursor: 'pointer' }}>
-                                                <i className="fa-solid fa-circle-question text-danger"></i>{' '}
-                                            </span>
-                                        </Tooltip>
-                                        <strong style={{ whiteSpace: 'wrap' }} className='text-danger'>Siz Bloklangansiz.
-                                            Bu davr mobaynida pul yechish uchun ariza yubora olmaysiz va yangi mahsulot qo'sha olmaysiz</strong>
-                                    </div>
-                                    <div className='d-flex flex-column '>
-                                        <div className='d-flex gap-1'>
-                                            <span className='fs-5'>Blokdan chiqish sanasi:</span>
-                                            <CalculateTimeDifference className={"fs-5"} targetDate={dataBlock?.to_date} />
-                                        </div>
-                                    </div>
-                                </>
-                            }
-                        </>
-
-
-                        <strong
-                            className={`fs-3 text-${profile?.is_payment === false
-                                ? 'danger'
-                                : 'success'
-                                }`}>
-                            <i className="fa-solid fa-wallet mx-2"></i> Balans:{' '}
-                            {addPeriodToThousands(profile?.wallet)} so'm
-                        </strong>
-                    </div>
-                    <h5 className="w-100  border m-0 p-3 rounded-3  text-truncate">
-                        <p
-                            className="m-0"
-                            style={{ fontWeight: 600, color: 'black' }}>
-                            Taklif qilingan foydalanuvchilar:{' '}
-                            <span className="text-success">
-                                {profile?.invited_users}
-                            </span>{' '}
-                            ta
-                        </p>
-                        <p
-                            className="m-0"
-                            style={{ fontWeight: 600, color: 'black' }}>
-                            Taklif orqali daromadingiz:{' '}
-                            <span className="text-success">
-                                {formatCurrency(profile?.inviter_wallet)}
-                            </span>{' '}
-                            so'm
-                        </p>
-                        <p
-                            className="m-0"
-                            style={{ fontWeight: 600, color: 'black' }}>
-                            Sotilgan mahsulotlar daromadi:{' '}
-                            <span className="text-success">
-                                {formatCurrency(profile?.total_doc_selling_price)}
-                            </span>{' '}
-                            so'm
-                        </p>
-                        <p
-                            className="m-0 mt-3"
-                            style={{
-                                display: 'flex',
-                                alignItems: 'flex-start',
-                                gap: 10,
-                            }}>
-                            <Tooltip
-                                title={`Sizning taklif havolangiz orqali ro'yxatdan o'tgan har bir sotuvchining daromadidan, ${+profile?.inviter_percentage} % qismi sizga tushadigan daromad`}>
-                                <i
-                                    style={{ cursor: 'pointer' }}
-                                    className="fa-regular fa-circle-question mt-2"></i>
-                            </Tooltip>
-                            <span style={{ overflow: 'hidden' }}>
-                                Taklif havolani olish{' '}
-                                {profile?.code ? (
+                            <h4 className="m-0 " style={{ maxWidth: '280px' }}>
+                                {' '}
+                                {profile?.first_name && profile?.last_name ? (
                                     <>
-                                        {copy ? (
-                                            <i className="fa-solid fa-check"></i>
-                                        ) : (
-                                            <i
-                                                style={{ cursor: 'pointer' }}
-                                                onClick={copyToClipboard}
-                                                className="fa-solid fa-copy"></i>
-                                        )}
+                                        <span>{profile?.first_name}</span>{' '}
+                                        <span> {profile?.last_name}</span>
                                     </>
+                                ) : user?.role === 'seller' ? (
+                                    <span>
+                                        {profile?.role
+                                            ? 'Sotuvchi'
+                                            : "ma'lumot yo'q"}
+                                    </span>
+                                ) : user?.role === 'admin' ? (
+                                    <span>
+                                        {profile?.role
+                                            ? 'Admin'
+                                            : "malumot yo'q"}
+                                    </span>
+                                ) : user?.role === 'customer' ? (
+                                    <span>
+                                        {profile?.role
+                                            ? 'Foydalanuvchi'
+                                            : "malumot yo'q"}
+                                    </span>
                                 ) : (
-                                    <a
-                                        href="https://t.me/soff_uz_bot"
-                                        target="_blank">
-                                        <i
-                                            className="fa-brands fa-telegram fa-beat fa-xl mt-4 mt-lg-3 mt-md-3 mt-sm-3"
-                                            style={{
-                                                color: '#6492e3',
-                                                fontSize: '16px',
-                                            }}></i>
-                                    </a>
-                                )}
-                            </span>
-                        </p>
-                    </h5>
-                    <p></p>
+                                    <></>
+                                )}{' '}
+                            </h4>
+                            <p
+                                className="text-truncate"
+                                style={{ maxWidth: '280px' }}>
+                                {profile?.phone || profile?.email}
+                            </p>
+                        </>
+                    </figure>}
                 </div>
-            ) : (
-                <></>
-            )}
+                {user?.role === 'seller' && menuOpen ? (
+                    <div className="pb-3 step-3">
+                        <div className="w-100   border m-0 p-3 rounded-3  text-truncate mb-2">
 
-            <div className="ps-widget__content">
+                            <>
+                                {
+                                    dataBlock?.has_blocked && <>
+                                        <div>
+                                            <Tooltip
+                                                color='red'
+                                                overlayStyle={{
+                                                    minWidth: '350px',
+                                                }} title={
+                                                    <div className='d-flex flex-column '>
+                                                        <div className='d-flex gap-1'>
+                                                            <span>Bloklab qo'yilgan sana:</span>
+                                                            <CalculateTimeDifference targetDate={dataBlock?.created_at} />
+                                                        </div>
+                                                        <div className='d-flex gap-1'>
+                                                            <span>Blokdan chiqish sanasi:</span>
+                                                            <CalculateTimeDifference targetDate={dataBlock?.to_date} />
+                                                        </div>
+
+
+                                                        <span>{dataBlock?.reason}</span>
+                                                    </div>
+
+                                                }>
+                                                <span style={{ cursor: 'pointer' }}>
+                                                    <i className="fa-solid fa-circle-question text-danger"></i>{' '}
+                                                </span>
+                                            </Tooltip>
+                                            <strong style={{ whiteSpace: 'wrap' }} className='text-danger'>Siz Bloklangansiz.
+                                                Bu davr mobaynida pul yechish uchun ariza yubora olmaysiz va yangi mahsulot qo'sha olmaysiz</strong>
+                                        </div>
+                                        <div className='d-flex flex-column '>
+                                            <div className='d-flex gap-1'>
+                                                <span className='fs-5'>Blokdan chiqish sanasi:</span>
+                                                <CalculateTimeDifference className={"fs-5"} targetDate={dataBlock?.to_date} />
+                                            </div>
+                                        </div>
+                                    </>
+                                }
+                            </>
+
+
+                            <strong
+                                className={`fs-3 text-${profile?.is_payment === false
+                                    ? 'danger'
+                                    : 'success'
+                                    }`}>
+                                <i className="fa-solid fa-wallet mx-2"></i> Balans:{' '}
+                                {addPeriodToThousands(profile?.wallet)} so'm
+                            </strong>
+                        </div>
+                        <h5 className="w-100  border m-0 p-3 rounded-3  text-truncate">
+                            <p
+                                className="m-0"
+                                style={{ fontWeight: 600, color: 'black' }}>
+                                Taklif qilingan foydalanuvchilar:{' '}
+                                <span className="text-success">
+                                    {profile?.invited_users}
+                                </span>{' '}
+                                ta
+                            </p>
+                            <p
+                                className="m-0"
+                                style={{ fontWeight: 600, color: 'black' }}>
+                                Taklif orqali daromadingiz:{' '}
+                                <span className="text-success">
+                                    {formatCurrency(profile?.inviter_wallet)}
+                                </span>{' '}
+                                so'm
+                            </p>
+                            <p
+                                className="m-0"
+                                style={{ fontWeight: 600, color: 'black' }}>
+                                Sotilgan mahsulotlar daromadi:{' '}
+                                <span className="text-success">
+                                    {formatCurrency(profile?.total_doc_selling_price)}
+                                </span>{' '}
+                                so'm
+                            </p>
+                            <p
+                                className="m-0 mt-3"
+                                style={{
+                                    display: 'flex',
+                                    alignItems: 'flex-start',
+                                    gap: 10,
+                                }}>
+                                <Tooltip
+                                    title={`Sizning taklif havolangiz orqali ro'yxatdan o'tgan har bir sotuvchining daromadidan, ${+profile?.inviter_percentage} % qismi sizga tushadigan daromad`}>
+                                    <i
+                                        style={{ cursor: 'pointer' }}
+                                        className="fa-regular fa-circle-question mt-2"></i>
+                                </Tooltip>
+                                <span style={{ overflow: 'hidden' }}>
+                                    Taklif havolani olish{' '}
+                                    {profile?.code ? (
+                                        <>
+                                            {copy ? (
+                                                <i className="fa-solid fa-check"></i>
+                                            ) : (
+                                                <i
+                                                    style={{ cursor: 'pointer' }}
+                                                    onClick={copyToClipboard}
+                                                    className="fa-solid fa-copy"></i>
+                                            )}
+                                        </>
+                                    ) : (
+                                        <a
+                                            href="https://t.me/soff_uz_bot"
+                                            target="_blank">
+                                            <i
+                                                className="fa-brands fa-telegram fa-beat fa-xl mt-4 mt-lg-3 mt-md-3 mt-sm-3"
+                                                style={{
+                                                    color: '#6492e3',
+                                                    fontSize: '16px',
+                                                }}></i>
+                                        </a>
+                                    )}
+                                </span>
+                            </p>
+                        </h5>
+                        <p></p>
+                    </div>
+                ) : (
+                    <></>
+                )}
+            </div>
+
+            <div className={`ps-widget__content ps-widget__content-${menuOpen}`}>
 
                 <Modal
                     footer={null}
@@ -379,25 +381,26 @@ const AccountMenuSidebar = ({ data }) => {
                 <ul>
                     {data.map((link, index) => (
                         <>
-                            {link?.url === '/account/selling' ? (
-                                <Badge.Ribbon
-                                    key={link?.url}
-                                    text="Yangi funksiya"
-                                    color="blue">
-                                    <Card size="small">
-                                        <li>
-                                            <Link href={link.url}>
-                                                <a
-                                                    className={`d-flex align-items-center`}>
-                                                    <img src='/static/img/birja-icon.png' height={20} width={20} className='me-2' />
-                                                    {link.text}
-                                                </a>
-                                            </Link>
-                                        </li>
-                                    </Card>
-                                </Badge.Ribbon>
+                            {
+                                // link?.url === '/account/selling' ? (
+                                //     <Badge.Ribbon
+                                //         key={link?.url}
+                                //         text="Yangi funksiya"
+                                //         color="blue">
+                                //         <Card size="small">
+                                //             <li>
+                                //                 <Link href={link.url}>
+                                //                     <a
+                                //                         className={`d-flex align-items-center`}>
+                                //                         <img src='/static/img/birja-icon.png' height={20} width={20} className='me-2' />
+                                //                         {menuOpen ? link.text : ''}
+                                //                     </a>
+                                //                 </Link>
+                                //             </li>
+                                //         </Card>
+                                //     </Badge.Ribbon>
 
-                            ) :
+                                // ) :
                                 link?.url === 'b' ? (
                                     <Badge.Ribbon
                                         key={link?.url}
@@ -421,15 +424,17 @@ const AccountMenuSidebar = ({ data }) => {
                                 ) : (dataBlock?.has_blocked && link?.url === '/account/myproducts/product-selection') ? (
 
                                     <li onClick={handleOk}>
-                                        <span
-                                            style={{
-                                                cursor: 'pointer',
-                                            }}>
-                                            <a className="d-flex align-items-center">
-                                                <i className="fa-solid fa-circle-plus"></i>
-                                                Yangi Mahsulot
-                                            </a>
-                                        </span>
+                                        <Tooltip placement="right" title={'Yangi Mahsulot'}>
+                                            <span
+                                                style={{
+                                                    cursor: 'pointer',
+                                                }}>
+                                                <a className="d-flex align-items-center">
+                                                    <i className="fa-solid fa-circle-plus"></i>
+                                                    Yangi Mahsulot
+                                                </a>
+                                            </span>
+                                        </Tooltip>
                                     </li>
 
                                 ) :
@@ -440,79 +445,73 @@ const AccountMenuSidebar = ({ data }) => {
                                             className={`${link.url === asPath ? 'active' : ''
                                                 } step-${index + 4}`}>
                                             <Link href={link.url}>
-                                                <a
-                                                    className={`d-flex align-items-center`}>
-                                                    <i className={link.icon}></i>
-                                                    {link.text}{' '}
+                                                <span style={{ cursor: 'pointer' }}>
+                                                    <Tooltip placement="right" title={menuOpen ? '' : link.text}>
+                                                        <a
+                                                            className={`d-flex align-items-center`}>
+                                                            <i className={link.icon}></i>
+                                                            {menuOpen ? link.text : ''}{' '}
 
-                                                    {user?.role === 'admin' ? (
-                                                        link?.url ===
-                                                            '/account/application' &&
-                                                            (applicationData?.count > 0 ||
-                                                                webdata?.count > 0) ? (
-                                                            <strong
-                                                                className="text-white bg-warning  border px-3 py-2  fs-5 rounded-circle"
-                                                                style={{
-                                                                    marginLeft: '11rem',
-                                                                }}>
-                                                                {Number(
-                                                                    applicationData?.count
-                                                                ) +
-                                                                    Number(
-                                                                        webdata?.count
-                                                                    )}
-                                                            </strong>
-                                                        ) : (
-                                                            ''
-                                                        )
-                                                    ) : (
-                                                        ''
-                                                    )}
+                                                            {user?.role === 'admin' ? (
+                                                                link?.url ===
+                                                                    '/account/application' &&
+                                                                    (applicationData?.count > 0 ||
+                                                                        webdata?.count > 0) ? (
+                                                                    <strong
+                                                                        className={`text-white bg-warning  border px-3 py-2  fs-5 rounded-circle notif-badge ${!menuOpen && 'notif-badge-mobile'}`}>
+                                                                        {Number(
+                                                                            applicationData?.count
+                                                                        ) +
+                                                                            Number(
+                                                                                webdata?.count
+                                                                            )}
+                                                                    </strong>
+                                                                ) : (
+                                                                    ''
+                                                                )
+                                                            ) : (
+                                                                ''
+                                                            )}
 
-                                                    {user?.role === 'admin' && link?.url === '/account/products?page=1' && webdata1?.count > 0 && (
-                                                        <strong
-                                                            className="text-white bg-warning border px-3 py-2 fs-5 rounded-circle"
-                                                            style={{ marginLeft: '12rem' }}
-                                                        >
-                                                            {webdata1?.count}
-                                                        </strong>
-                                                    )}
+                                                            {user?.role === 'admin' && link?.url === '/account/products?page=1' && webdata1?.count > 0 && (
+                                                                <strong
+                                                                    className={`text-white bg-warning  border px-3 py-2  fs-5 rounded-circle notif-badge ${!menuOpen && 'notif-badge-mobile'}`}
+                                                                >
+                                                                    {webdata1?.count}
+                                                                </strong>
+                                                            )}
 
 
-                                                    {user?.role === 'seller' && link?.url === '/account/myproducts' && webdata2?.count > 0 && (
-                                                        <strong
-                                                            className="text-white bg-warning  border px-3 py-2  fs-5 rounded-circle"
-                                                            style={{
-                                                                marginLeft: '4rem',
-                                                            }}>
-                                                            {webdata2?.count}
-                                                        </strong>)
-                                                    }
+                                                            {user?.role === 'seller' && link?.url === '/account/myproducts' && webdata2?.count > 0 && (
+                                                                <strong
+                                                                    className={`text-white bg-warning  border px-3 py-2  fs-5 rounded-circle notif-badge ${!menuOpen && 'notif-badge-mobile'}`}>
+                                                                    {webdata2?.count}
+                                                                </strong>)
+                                                            }
 
-                                                    {user?.role === 'seller' ? (
-                                                        link?.url ===
-                                                            '/account/application' &&
-                                                            (applicationData?.count > 0 ||
-                                                                webdata?.count > 0) ? (
-                                                            <strong
-                                                                className="text-white bg-warning  border px-3 py-2  fs-5 rounded-circle"
-                                                                style={{
-                                                                    marginLeft: '11rem',
-                                                                }}>
-                                                                {Number(
-                                                                    applicationData?.count
-                                                                ) +
-                                                                    Number(
-                                                                        webdata?.count
-                                                                    )}
-                                                            </strong>
-                                                        ) : (
-                                                            ''
-                                                        )
-                                                    ) : (
-                                                        ''
-                                                    )}
-                                                </a>
+                                                            {user?.role === 'seller' ? (
+                                                                link?.url ===
+                                                                    '/account/application' &&
+                                                                    (applicationData?.count > 0 ||
+                                                                        webdata?.count > 0) ? (
+                                                                    <strong
+                                                                        className={`text-white bg-warning  border px-3 py-2  fs-5 rounded-circle notif-badge ${!menuOpen && 'notif-badge-mobile'}`}>
+                                                                        {Number(
+                                                                            applicationData?.count
+                                                                        ) +
+                                                                            Number(
+                                                                                webdata?.count
+                                                                            )}
+                                                                    </strong>
+                                                                ) : (
+                                                                    ''
+                                                                )
+                                                            ) : (
+                                                                ''
+                                                            )}
+                                                        </a>
+                                                    </Tooltip>
+                                                </span>
                                             </Link>
                                         </li>
                                     )}

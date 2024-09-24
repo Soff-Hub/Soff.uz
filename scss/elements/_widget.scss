@@ -12,7 +12,6 @@
     }
 }
 
-
 .widget_shop {
     padding: 25px 20px;
     background-color: #fff;
@@ -158,7 +157,6 @@
     }
 }
 
-
 .widget_shop--brand {
     .ant-radio-group {
         .ant-radio-wrapper {
@@ -167,8 +165,6 @@
         }
     }
 }
-
-
 
 .widget_footer {
     @extend %list-reset;
@@ -179,7 +175,6 @@
         color: $color-heading;
         font-weight: 600;
     }
-
 }
 
 .widget_contact-us {
@@ -193,8 +188,6 @@
         }
     }
 }
-
-
 
 .ps-widget--account-dashboard {
     .ps-widget__header {
@@ -272,4 +265,80 @@
             }
         }
     }
+
+    .ps-widget__content-false {
+        padding: 5px;
+        ul {
+            border: none;
+
+            li {
+                border-bottom: 1px solid #eaeaea;
+
+                a {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 15px 8px;
+                    line-height: 20px;
+                    font-size: 16px;
+                    font-weight: 500;
+                    color: $color-heading;
+                    text-transform: capitalize;
+
+                    i {
+                        margin-right: 0;
+                    }
+
+                    &:hover {
+                        background-color: $color-1st;
+                        color: #fff;
+                    }
+                }
+
+                &:last-child {
+                    border-bottom: none;
+                }
+
+                &.active {
+                    background-color: $color-1st;
+
+                    a {
+                        color: #fff;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.burger-btn {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    font-size: 22px;
+    margin-left: auto;
+    display: block;
+}
+
+.burger-btn-false {
+    margin: 0 auto;
+}
+
+.notif-badge {
+    display: flex;
+    width: 30px;
+    height: 30px;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 5px;
+    // top: ;
+}
+
+.notif-badge-mobile {
+    width: 25px;
+    height: 25px;
+    font-size: 12px;
+    top: 0;
+    right: 0;
 }

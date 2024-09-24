@@ -5,6 +5,7 @@ import GetRepository from '~/reositoriy-admin/GetRepository';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import { Modal, Table } from 'antd';
 import NextImageCard from '~/components/nextImagecard';
+import SidebarLayout from '../SidebarLayout';
 
 
 
@@ -113,12 +114,7 @@ function ContextLists() {
         <section className="ps-my-account ps-page--account p-0">
             <div className="container pb-5">
                 <div className="row">
-                    <div className="col-lg-4">
-                        <div className="ps-page__left">
-                            <AccountMenuSidebar data={accountLinks} />
-                        </div>
-                    </div>
-                    <div className="col-lg-8">
+                    <SidebarLayout accountLinks={accountLinks}>
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
                                 <div>
@@ -126,7 +122,7 @@ function ContextLists() {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </SidebarLayout>
                 </div>
             </div>
         </section>

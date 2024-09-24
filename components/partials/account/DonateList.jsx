@@ -4,11 +4,12 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import GetRepository from '~/reositoriy-admin/GetRepository';
+import SidebarLayout from '../SidebarLayout';
 var parse = require('html-react-parser');
 
 export default function DonateList() {
     const [donate, setDonate] = useState(null);
-    const { user } = useSelector((state) => state.auth);
+    const { user, accountLinks } = useSelector((state) => state.auth);
 
     const getDonate = async (token) => {
         const respons = await GetRepository.getDonateList(token);
@@ -22,8 +23,6 @@ export default function DonateList() {
             getDonate(user?.access);
         }
     }, [user?.access]);
-
-    console.log('donate list', donate);
 
     const columnsDonate = [
         {
@@ -77,32 +76,37 @@ export default function DonateList() {
     ];
 
     return (
-        <div className="ps-section--shopping ps-whishlist">
-            <div className="container">
-                <div className="ps-section__header m-0 p-0 mb-5">
-                    <h2>Qo'llab quvvatlaganlar</h2>
-                    <p>
-                        <Alert type='info' message="Bu yerda siz ulashgan ishlaringizni ko'rgan Soff.uz foydalanuvchilari, qo'llab quvvatlash maqsadida pul o'tkazmalarini amalga oshirganliklarini ko'rishingiz mumkin" >
-                            Bu yerda siz ulashgan ishlaringizni ko'rgan Soff.uz foydalanuvchilari, qo'llab quvvatlash maqsadida pul o'tkazmalarini amalga oshirganliklarini ko'rishingiz mumkin
-                        </Alert>
-                    </p>
+        <div className="ps-section--shopping ps-whishlist pt-0">
+            <section className="ps-my-account ps-page--account pb-5 p-0 pt-5">
+                <div className="container">
+                    <div className="row" style={{ alignItems: 'flex-start' }}>
+                        <SidebarLayout accountLinks={accountLinks}>
+                            <div className="ps-section__header m-0 p-0 mb-5">
+                                <h3 className='text-start'>Qo'llab quvvatlaganlar</h3>
+                                <p>
+                                    <Alert className='text-start' type='info' message="Bu yerda siz ulashgan ishlaringizni ko'rgan Soff.uz foydalanuvchilari, qo'llab quvvatlash maqsadida pul o'tkazmalarini amalga oshirganliklarini ko'rishingiz mumkin" >
+                                        Bu yerda siz ulashgan ishlaringizni ko'rgan Soff.uz foydalanuvchilari, qo'llab quvvatlash maqsadida pul o'tkazmalarini amalga oshirganliklarini ko'rishingiz mumkin
+                                    </Alert>
+                                </p>
+                            </div>
+                            <div className="ps-section__content">
+                                {donate?.length > 0 ? (
+                                    <Table
+                                        scroll={{ x: 576 }}
+                                        dataSource={donate}
+                                        columns={columnsDonate}
+                                        pagination={false}
+                                    />
+                                ) : (
+                                    <div className="alert alert-danger text-center" role="alert">
+                                        Qo'llab quvvatlaganlar hozircha yo'q!
+                                    </div>
+                                )}
+                            </div>
+                        </SidebarLayout>
+                    </div>
                 </div>
-
-                <div className="ps-section__content">
-                    {donate?.length > 0 ? (
-                        <Table
-                            scroll={{ x: 1150 }}
-                            dataSource={donate}
-                            columns={columnsDonate}
-                            pagination={false}
-                        />
-                    ) : (
-                        <div className="alert alert-danger text-center" role="alert">
-                            Qo'llab quvvatlaganlar hozircha yo'q!
-                        </div>
-                    )}
-                </div>
-            </div>
+            </section>
         </div>
     );
 }

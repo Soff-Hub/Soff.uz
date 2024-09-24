@@ -10,6 +10,7 @@ import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import { BeatLoader } from 'react-spinners';
 import { setSavedPrfileData } from '~/store/ecomerce/action';
 import GetRepository from '~/reositoriy-admin/GetRepository';
+import SidebarLayout from '../SidebarLayout';
 
 function Notifications() {
     const { accountLinks, user } = useSelector((state) => state.auth);
@@ -156,16 +157,7 @@ function Notifications() {
         <section className="ps-my-account ps-page--account ">
             <div className="container">
                 <div className="row pb-5" style={{ alignItems: 'flex-start' }}>
-                    <div className="col-lg-4">
-                        <div className="ps-page__left">
-                            <AccountMenuSidebar
-                                data={accountLinks}
-
-                            />
-                        </div>
-                    </div>
-
-                    <div className="col-lg-8">
+                    <SidebarLayout accountLinks={accountLinks}>
                         <div className="user_profile_container">
                             <div className="user_profile_card" style={{ backgroundImage: `url(${loading2 ? "/static/img/orqafon1.avif" : (profile?.background_image ? profile?.background_image : "/static/img/orqafon1.avif")})` }}>
                                 {loading2 ? <h2 className='text-center text-white loading_h2'>Yuklanmoqda...</h2> : <></>}
@@ -259,7 +251,7 @@ function Notifications() {
 
                             </div>
                         </div>
-                    </div>
+                    </SidebarLayout>
                 </div>
 
                 <Modal
