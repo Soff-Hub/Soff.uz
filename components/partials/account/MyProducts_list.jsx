@@ -25,6 +25,7 @@ import ModuleAudioDetailTopInformationLive from '~/components/elements/detail/mo
 import ModuleAudioDetailShoppingActionsLive from '~/components/elements/detail/modules/ModuleAudioDetailShoppingActionsLive';
 import DefaultVideoAdmin from '~/components/elements/detail/thumbnail/DefaultVideoAdmin';
 import { addPeriodToThousands } from './ProductsLists';
+import SidebarLayout from '../SidebarLayout';
 const { TabPane } = Tabs;
 var parse = require('html-react-parser');
 
@@ -750,13 +751,7 @@ function MyProductsLists() {
         <section className="ps-my-account ps-page--account ">
             <div className="container">
                 <div className="row " style={{ alignItems: 'flex-start' }}>
-                    <div className="col-lg-4">
-                        <div className="ps-page__left">
-                            <AccountMenuSidebar data={accountLinks} />
-
-                        </div>
-                    </div>
-                    <div className="col-lg-8 pb-5">
+                    <SidebarLayout accountLinks={accountLinks}>
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
                                 {profile?.can_advertise &&
@@ -959,7 +954,7 @@ function MyProductsLists() {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </SidebarLayout>
                 </div>
 
                 <ModalDelete onSuccess={DeleteItemsProducts} />

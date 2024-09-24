@@ -8,6 +8,7 @@ import MarketingMain from '~/components/partials/account/marketing/MarketingMain
 import Page404 from '~/pages/page/page-404';
 import Selection from '../selection';
 import AccountMenuSidebar from '~/components/partials/account/modules/AccountMenuSidebar';
+import SidebarLayout from '~/components/partials/SidebarLayout';
 
 const Application = () => {
 
@@ -36,16 +37,11 @@ const Application = () => {
                     <section className="ps-my-account ps-page--account pb-5">
                         <div className="container">
                             <div className="row">
-                                <div className="col-lg-4">
-                                    <div className="ps-page__left">
-                                        <AccountMenuSidebar data={accountLinks} />
-                                    </div>
-                                </div>
-                                <div className="col-lg-8">
+                                <SidebarLayout accountLinks={accountLinks}>
                                     <div className='ps-page__content bg-white p-4'>
                                         <MarketingMain />
                                     </div>
-                                </div>
+                                </SidebarLayout>
                             </div>
                         </div>
                     </section>
