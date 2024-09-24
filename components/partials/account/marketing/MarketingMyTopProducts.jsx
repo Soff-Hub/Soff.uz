@@ -142,7 +142,7 @@ const MarketingMyTopProducts = () => {
                                     <div className='px-4 w-100 d-flex justify-content-end gap-3 text-secondary'>
                                         <IconText icon={EyeOutlined} text={item?.view_count} key="list-vertical-star-o" />
                                         <IconText icon={DollarOutlined} text={`${item?.sold_count} ta sotuv`} key="list-vertical-like-o" />
-                                        <IconText icon={CheckCircleOutlined} text={`har ${Math.ceil(item?.view_per_sold)} ta ko'rishda bitta sotuv`} key="list-vertical-like-o" />
+                                        {/* <IconText icon={CheckCircleOutlined} text={`har ${Math.ceil(item?.view_per_sold)} ta ko'rishda bitta sotuv`} key="list-vertical-like-o" /> */}
                                     </div>
                                 </List.Item>
                             )}

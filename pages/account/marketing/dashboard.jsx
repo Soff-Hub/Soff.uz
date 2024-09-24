@@ -34,7 +34,9 @@ const Application = () => {
                     <BreadCrumb breacrumb={breadCrumb} />
 
                     <section className="ps-my-account ps-page--account pb-5">
-                        <div className="container">
+                        <div className="container"
+                            // style={{ maxWidth: '100%' }}
+                        >
                             <div className="row" style={{ alignItems: "flex-start" }}>
                                 <SidebarLayout accountLinks={accountLinks}>
                                     <div className='ps-page__content'>

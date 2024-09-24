@@ -82,7 +82,7 @@ export default function MarketingChartProduct({ config, colors }) {
     <div style={{ position: 'relative' }}>
       <div id="chart-circle">
         {props?.series?.some((el) => Number(el) > 0)
-          ? <ReactApexcharts options={props.options} series={props.series} type="pie" width={300} />
+          ? <ReactApexcharts options={props.options} series={props.series} type="pie" width={'100%'} />
           : <div style={{ position: 'relative' }}>
             <ReactApexcharts options={props.options} series={[2, 4, 3, 5, 1]} type="pie" width={350} />
             <div className='chart-blur'>
