@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import AccountMenuSidebar from './modules/AccountMenuSidebar';
 import GetRepository from '~/reositoriy-admin/GetRepository';
-import { Segmented, Select, Table } from 'antd';
+import { Select, Table } from 'antd';
 import CalculateTimeDifference from './DateFormatter';
 import { useSelector } from 'react-redux';
 import PartialDescription from '~/components/elements/detail/description/PartialDescription';
@@ -13,6 +12,7 @@ import Link from 'next/link';
 import Example from './Chart';
 import { addPeriodToThousands } from './ProductsLists';
 import SidebarLayout from '../SidebarLayout';
+import AdminStats from './AdminStats';
 
 function DashbordList({ setOpen }) {
 
@@ -1016,6 +1016,10 @@ function DashbordList({ setOpen }) {
                                     />
                                 </div>
                             )}
+
+                        {
+                            user?.role === 'admin' ? <AdminStats /> : ''
+                        }
 
                         {(user?.role === 'admin' ||
                             user?.role === 'seller') && (
