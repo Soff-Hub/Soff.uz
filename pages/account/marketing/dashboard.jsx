@@ -8,6 +8,7 @@ import Page404 from '~/pages/page/page-404';
 import Selection from '../selection';
 import AccountMenuSidebar from '~/components/partials/account/modules/AccountMenuSidebar';
 import MarketingDashboard from '~/components/partials/account/marketing/MarketingDashboard';
+import SidebarLayout from '~/components/partials/SidebarLayout';
 
 const Application = () => {
 
@@ -33,18 +34,13 @@ const Application = () => {
                     <BreadCrumb breacrumb={breadCrumb} />
 
                     <section className="ps-my-account ps-page--account pb-5">
-                        <div className="container" style={{ maxWidth: '1400px' }}>
+                        <div className="container">
                             <div className="row" style={{ alignItems: "flex-start" }}>
-                                {/* <div className="col-lg-4">
-                                    <div className="ps-page__left">
-                                        <AccountMenuSidebar data={accountLinks} />
-                                    </div>
-                                </div> */}
-                                <div className="col-lg-12">
-                                    <div className='ps-page__content p-0'>
+                                <SidebarLayout accountLinks={accountLinks}>
+                                    <div className='ps-page__content'>
                                         <MarketingDashboard />
                                     </div>
-                                </div>
+                                </SidebarLayout>
                             </div>
                         </div>
                     </section>

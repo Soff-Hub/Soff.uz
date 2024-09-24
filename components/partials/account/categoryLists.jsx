@@ -13,6 +13,7 @@ import { useSelector } from 'react-redux';
 import NextImageCard from '~/components/nextImagecard';
 import useDebounce from '~/hooks/useDebounce';
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
+import SidebarLayout from '../SidebarLayout';
 
 function CategoryLists() {
     const [search, setSerach] = useState('');
@@ -101,7 +102,7 @@ function CategoryLists() {
                 title: 'Muvaffaqqiyatli!',
                 content: `Siz  malumotlarni o'chirdingiz`,
             });
-        }else{
+        } else {
             const modal = Modal.error({
                 centered: true,
                 title: 'Muvaffaqqiyatsiz!',
@@ -279,11 +280,11 @@ function CategoryLists() {
                             <a
                                 data-bs-target="#exampleModalToggleEditCategory"
                                 data-bs-toggle="modal">
-                                
+
                                 <i
                                     className="fa-solid fa-pen-to-square mx-4 text-success-emphasis"
                                     onClick={() =>
-                                       ( GetItemsProductsEdit(el?.id), setTagName(e?.id))
+                                        (GetItemsProductsEdit(el?.id), setTagName(e?.id))
                                     }></i>
                             </a>
                         </div>
@@ -306,12 +307,7 @@ function CategoryLists() {
         <section className="ps-my-account ps-page--account p-0">
             <div className="container">
                 <div className="row " style={{ alignItems: 'flex-start' }}>
-                    <div className="col-lg-4">
-                        <div className="ps-page__left">
-                            <AccountMenuSidebar data={accountLinks} />
-                        </div>
-                    </div>
-                    <div className="col-lg-8 pb-5">
+                    <SidebarLayout accountLinks={accountLinks}>
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
                                 <div>
@@ -360,7 +356,7 @@ function CategoryLists() {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </SidebarLayout>
                 </div>
 
                 <ModalDelete onSuccess={deleteItemsId} />

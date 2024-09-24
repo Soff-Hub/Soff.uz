@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 import Link from 'next/link';
 import useDebounce from '~/hooks/useDebounce';
 import { addPeriodToThousands } from './ProductsLists';
+import SidebarLayout from '../SidebarLayout';
 
 function OrdersLists() {
     const { accountLinks, user } = useSelector((state) => state.auth);
@@ -47,7 +48,7 @@ function OrdersLists() {
 
     async function GetItemsProducts(page, status, date, searchVal, userRole) {
         -
-        setLoading(true)
+            setLoading(true)
         const ItemsData = await GetRepository.getOrdersLists(
             page,
             status,
@@ -349,12 +350,7 @@ function OrdersLists() {
         <section className="ps-my-account ps-page--account ">
             <div className="container">
                 <div className="row pb-5 " style={{ alignItems: 'flex-start' }}>
-                    <div className="col-lg-4">
-                        <div className="ps-page__left">
-                            <AccountMenuSidebar data={accountLinks} />
-                        </div>
-                    </div>
-                    <div className="col-lg-8 pb-5">
+                    <SidebarLayout accountLinks={accountLinks}>
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
                                 <div className="ps-section__content">
@@ -431,7 +427,7 @@ function OrdersLists() {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </SidebarLayout>
                 </div>
             </div>
         </section>

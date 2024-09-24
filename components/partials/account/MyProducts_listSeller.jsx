@@ -12,6 +12,7 @@ import useDebounce from '~/hooks/useDebounce';
 import Link from "next/link"
 import { baseUrl } from '~/repositories/Repository';
 import { addPeriodToThousands } from './ProductsLists';
+import SidebarLayout from '../SidebarLayout';
 
 function MyProductsListsSeller() {
     const [data, setData] = useState([]);
@@ -436,12 +437,7 @@ function MyProductsListsSeller() {
         <section className="ps-my-account ps-page--account ">
             <div className="container">
                 <div className="row " style={{ alignItems: 'flex-start' }}>
-                    <div className="col-lg-4">
-                        <div className="ps-page__left">
-                            <AccountMenuSidebar data={accountLinks} />
-                        </div>
-                    </div>
-                    <div className="col-lg-8 pb-5">
+                    <SidebarLayout accountLinks={accountLinks}>
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
                                 <div className="ps-section__content">
@@ -481,7 +477,7 @@ function MyProductsListsSeller() {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </SidebarLayout>
                 </div>
 
                 <Modal

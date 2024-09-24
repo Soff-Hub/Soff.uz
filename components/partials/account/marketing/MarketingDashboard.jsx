@@ -6,7 +6,7 @@ import MarketingMyTopProducts from './MarketingMyTopProducts'
 export default function MarketingDashboard() {
 
     return (
-        <div className='mt-3'>
+        <div>
             <MarketingDashboardHeader />
             <MarketingProductAllList />
             <MarketingCategoryAnalyzeBox />

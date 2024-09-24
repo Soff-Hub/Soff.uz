@@ -12,9 +12,10 @@ import ModuleProductDetailDescription from '~/components/elements/detail/modules
 import Link from 'next/link';
 import Example from './Chart';
 import { addPeriodToThousands } from './ProductsLists';
+import SidebarLayout from '../SidebarLayout';
 
 function DashbordList({ setOpen }) {
-    
+
     const [data, setData] = useState([]);
     const [dataOrders, setDataOrders] = useState([]);
     const [orderLoading, setOrderLoading] = useState(false);
@@ -587,7 +588,7 @@ function DashbordList({ setOpen }) {
 
 
     return (
-        <section className="ps-my-account ps-page--account pt-0 pb-5 ">
+        <section className="ps-my-account ps-page--account pt-0">
             <p className="step-0 m-0"></p>
             <div className="container">
                 {user?.role != 'admin' && window.innerWidth > 1000 && (
@@ -601,7 +602,7 @@ function DashbordList({ setOpen }) {
                         </p>
                     </div>
                 )}
-          
+
 
 
                 {user?.role === 'admin' ? (
@@ -803,7 +804,7 @@ function DashbordList({ setOpen }) {
                         </div>
                     </div>
                 ) : (
-                    <div className="pb-4  d-flex gap-3 overflow-x-scroll step-1">
+                    <div className="pb-0 d-flex gap-3 overflow-x-scroll step-1">
                         <div>
                             <div
                                 className=" bg-white py-5 px-4"
@@ -966,15 +967,9 @@ function DashbordList({ setOpen }) {
                 )}
 
                 <div
-                    className="row pb-5 mt-5"
+                    className="row pb-5"
                     style={{ alignItems: 'flex-start' }}>
-                    <div className="col-lg-4" id="panel">
-                        <div className="ps-page__left">
-                            <AccountMenuSidebar data={accountLinks} />
-                        </div>
-                    </div>
-
-                    <div className="col-lg-8 pb-5">
+                    <SidebarLayout accountLinks={accountLinks}>
                         {(user?.role === 'admin' ||
                             user?.role === 'seller') && (
                                 <div className="dashboard-div mb-2">
@@ -1039,7 +1034,7 @@ function DashbordList({ setOpen }) {
                             />
 
                         </div>
-                    </div>
+                    </SidebarLayout>
                 </div>
 
 

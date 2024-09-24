@@ -10,6 +10,7 @@ import Link from 'next/link';
 import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import ModalSellerBlock from './ModalBlock';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
+import SidebarLayout from '../SidebarLayout';
 const { TextArea } = Input;
 const { Option } = Select;
 
@@ -300,12 +301,7 @@ function Notifications() {
                 <div
                     className="row flex pb-5"
                     style={{ alignItems: 'flex-start' }}>
-                    <div className="col-lg-4">
-                        <div className="ps-page__left">
-                            <AccountMenuSidebar data={accountLinks} />
-                        </div>
-                    </div>
-                    <div className="col-lg-8 pb-5">
+                    <SidebarLayout accountLinks={accountLinks}>
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
                                 <div className="bg-white p-3">
@@ -361,7 +357,7 @@ function Notifications() {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </SidebarLayout>
                 </div>
                 <Modal
                     title="Bloklash"

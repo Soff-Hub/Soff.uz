@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import Link from 'next/link';
 import Example from './Chart';
 import { addPeriodToThousands } from './ProductsLists';
+import SidebarLayout from '../SidebarLayout';
 
 function BirjaDashbordList() {
     const [data, setData] = useState([]);
@@ -183,7 +184,7 @@ function BirjaDashbordList() {
         },
     ];
 
-  
+
 
     return (
         <section className="ps-my-account ps-page--account pb-5 pt-0 ">
@@ -596,13 +597,7 @@ function BirjaDashbordList() {
                 <div
                     className="row pb-5 mt-5"
                     style={{ alignItems: 'flex-start' }}>
-                    <div className="col-lg-4" id="panel">
-                        <div className="ps-page__left">
-                            <AccountMenuSidebar data={accountLinks} />
-                        </div>
-                    </div>
-
-                    <div className="col-lg-8 pb-5">
+                    <SidebarLayout accountLinks={accountLinks}>
                         <h4 className='text-center bg-white p-4 m-0 '>Sotilgan mahsulotlar</h4>
                         <Table
                             scroll={{ x: 1350 }}
@@ -617,8 +612,7 @@ function BirjaDashbordList() {
                             defaultCurrent={currPage}
                             onChange={handlePagination}
                         />}
-
-                    </div>
+                    </SidebarLayout>
                 </div>
             </div>
         </section>

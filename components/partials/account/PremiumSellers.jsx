@@ -9,6 +9,7 @@ import ModalDeletePostEdit from './ModalPostEdit';
 import ModalDelete from './Modal';
 import DebounceSelect from './SearchPMSellers';
 import useDebounce from '~/hooks/useDebounce';
+import SidebarLayout from '../SidebarLayout';
 
 function Notifications() {
     const { accountLinks, user } = useSelector(state => state.auth)
@@ -170,12 +171,7 @@ function Notifications() {
         <section className="ps-my-account ps-page--account p-0">
             <div className="container">
                 <div className="row flex pb-5" style={{ alignItems: "flex-start" }}>
-                    <div className="col-lg-4" >
-                        <div className="ps-page__left">
-                            <AccountMenuSidebar data={accountLinks} />
-                        </div>
-                    </div>
-                    <div className="col-lg-8 pb-5">
+                    <SidebarLayout accountLinks={accountLinks}>
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
                                 <div className='bg-white p-3'>
@@ -199,7 +195,7 @@ function Notifications() {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </SidebarLayout>
                 </div>
                 <ModalDeletePostEdit dataBsTarget="exampleModalMyProductsPrice" onSubmited={() => handleItemsEditProductsPosts(isPremium)} formID="products-edit_price" >
                     <label htmlFor="discount" className='form-label'>Ustamasi (%)

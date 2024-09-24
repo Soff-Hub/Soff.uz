@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 import CalculateTimeDifference from './DateFormatter';
 import useDebounce from '~/hooks/useDebounce';
 import Link from 'next/link';
+import SidebarLayout from '../SidebarLayout';
 
 function AccountUserPages() {
     const { accountLinks, user } = useSelector(state => state.auth)
@@ -133,12 +134,7 @@ function AccountUserPages() {
         <section className="ps-my-account ps-page--account p-0">
             <div className="container">
                 <div className="row " style={{ alignItems: "flex-start" }}>
-                    <div className="col-lg-4">
-                        <div className="ps-page__left">
-                            <AccountMenuSidebar data={accountLinks} />
-                        </div>
-                    </div>
-                    <div className="col-lg-8 pb-5">
+                    <SidebarLayout accountLinks={accountLinks}>
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
                                 <div className="ps-section__content">
@@ -163,7 +159,7 @@ function AccountUserPages() {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </SidebarLayout>
                 </div>
 
                 <ModalDeletePostEdit dataBsTarget="addUsersPosts" onSubmited={handleItemsPost} formID={'post-form'}>

@@ -5,6 +5,7 @@ import { Button, Form, Modal, Select, Input, DatePicker, Table, Pagination } fro
 import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import CKEditor from './CKeditor';
 import GetRepository from '~/reositoriy-admin/GetRepository';
+import SidebarLayout from '../SidebarLayout';
 var parse = require('html-react-parser');
 
 const EmailLists = () => {
@@ -301,14 +302,7 @@ const EmailLists = () => {
         <section className="ps-my-account ps-page--account pb-5 p-0">
             <div className="container">
                 <div className="row" style={{ alignItems: 'flex-start' }}>
-                    <div className="col-lg-4">
-                        <div className="ps-page__left">
-                            <AccountMenuSidebar data={accountLinks} />
-                        </div>
-                    </div>
-                    <div
-                        className="col-lg-8 bg-white"
-                        style={{ padding: '20px' }}>
+                    <SidebarLayout accountLinks={accountLinks}>
                         <Form
                             form={form}
                             onFinish={GetItemsEmail}
@@ -408,7 +402,7 @@ const EmailLists = () => {
                             defaultCurrent={notificationPage}
                             onChange={p => getNotifications(p)}
                         />
-                    </div>
+                    </SidebarLayout>
                 </div>
             </div>
         </section>
