@@ -22,7 +22,7 @@ export default function TopSellersTable() {
     const getTopSeller = async () => {
         const ItemsData = await PostRepository.getTopSeller('');
         if (ItemsData) {
-            setSellerData(ItemsData?.data?.results);
+            setSellerData(ItemsData?.data);
         }
     };
     const options = [];
@@ -117,7 +117,7 @@ export default function TopSellersTable() {
         setSearch(e);
         const ItemsData = await PostRepository.getTopSeller(e, select);
         if (ItemsData) {
-            setSellerData(ItemsData?.data?.results);
+            setSellerData(ItemsData?.data);
         }
     };
 

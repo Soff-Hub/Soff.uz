@@ -26,7 +26,7 @@ export default function SidebarLayout({ children, accountLinks }) {
 
     return (
         <>
-            <div className={`mt-3 ${animate && 'animate-manu'} ${menuOpen ? 'col-lg-4' : 'col-lg-1'}`} style={{ flex: 1 }}>
+            <div className={`mt-3 ${animate && 'animate-manu'} ${menuOpen ? 'col-lg-4' : 'col-lg-1'} fixed-sidebar`} style={{ flex: 1 }}>
                 <div className={`${animate && 'animate-manu'} ps-page__left ${!menuOpen && 'px-1'} justify-content-center pt-3`}>
                     <button className={`burger-btn burger-btn-${menuOpen}`} onClick={handleCollapse}>
                         {menuOpen ? <i class="fa-solid fa-angles-left"></i> : <i class="fa-solid fa-angles-right"></i>}

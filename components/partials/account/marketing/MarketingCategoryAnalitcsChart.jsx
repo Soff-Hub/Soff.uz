@@ -16,7 +16,7 @@ export default function MarketingCategoryAnalyzeChart({ labels, series }) {
   const props = {
     options: {
       chart: {
-        width: 300,
+        width: 400,
         type: 'donut',
         toolbar: {
           tools: {
@@ -39,9 +39,12 @@ export default function MarketingCategoryAnalyzeChart({ labels, series }) {
       }],
       tooltip: {
         y: {
-          formatter: (value) => `${value} %`,  // Example: you can add any format here
+          formatter: (value) => `${value} %`,
         }
-      }
+      },
+      dataLabels: {
+        formatter: (value) => `${value} %`
+      },
     },
   };
 
@@ -50,15 +53,15 @@ export default function MarketingCategoryAnalyzeChart({ labels, series }) {
   }
 
   return (
-    <div className='h-100'>
-      <div id="chart-circle" className='h-100'>
+    <div className='h-100 w-100'>
+      <div id="chart-circle" className='h-100 w-100'>
         {series.some((el) => Number(el) > 0)
           ? <ReactApexcharts options={props.options} series={[{
             data: series,
             name: "Sotuv statistikasi"
           }]}
             type="area"
-            width={'600px'}
+            width={'100%'}
           />
           : <div style={{ position: 'relative' }} className='h-100'>
             <ReactApexcharts options={props.options} series={[{
@@ -66,7 +69,7 @@ export default function MarketingCategoryAnalyzeChart({ labels, series }) {
               name: "Sotuv statistikasi"
             }]}
               type="area"
-              width={'420px'}
+              width={'100%'}
             />
             <div className='chart-blur'>
               <p>Statistikani shakllantirish uchun ma'lumot yetarli emas</p>

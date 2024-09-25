@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-export default function UserDashboardsChart({ data }) {
+export default function UserDashboardProductChart({ data }) {
     const [isClient, setIsClient] = useState(false);
     const [ReactApexcharts, setReactApexcharts] = useState(null);
 
@@ -28,7 +28,7 @@ export default function UserDashboardsChart({ data }) {
             stroke: {
                 width: 1,
             },
-            labels: data?.map(el => el?.month),
+            labels: data?.map(el => el.month),
             responsive: [{
                 breakpoint: 576,
                 options: {
@@ -61,22 +61,28 @@ export default function UserDashboardsChart({ data }) {
     return (
         <div className='h-100 w-100'>
             <div id="chart-circle" className='h-100 w-100'>
-                <ReactApexcharts options={props.options} series={[{
-                    data: data?.map(el => el?.all_count),
-                    name: "Yangi foydalanuvchilar"
-                }, {
-                    data: data?.map(el => el?.active_seller_count),
-                    name: "Aktiv sotuvchilar"
-                }, {
-                    data: data?.map(el => el?.active_customer_count),
-                    name: "Aktiv xaridorlar"
-                }, {
-                    data: data?.map(el => el?.deactive_seller_count),
-                    name: "Aktivmas sotuvchilar"
-                }, {
-                    data: data?.map(el => el?.deactive_customer_count),
-                    name: "Aktivmas xaridorlar"
-                }]}
+                <ReactApexcharts options={props.options} series={[
+                    {
+                        data: data?.map(el => el?.all_doc_count),
+                        name: "Yuklangan mahsulotlar"
+                    },
+                    {
+                        data: data?.map(el => el?.approved_doc_count),
+                        name: "Aktiv"
+                    },
+                    {
+                        data: data?.map(el => el?.moderation_doc_count),
+                        name: "Moderatsiyada"
+                    },
+                    {
+                        data: data?.map(el => el?.deleted_doc_count),
+                        name: "O'chirilgan"
+                    },
+                    {
+                        data: data?.map(el => el?.cancelled_doc_count),
+                        name: "Bekor qilingan"
+                    }
+                ]}
                     type="area"
                     width={'100%'}
                     height={320}

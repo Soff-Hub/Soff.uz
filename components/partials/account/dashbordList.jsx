@@ -1018,7 +1018,7 @@ function DashbordList({ setOpen }) {
                             )}
 
                         {
-                            user?.role === 'admin' ? <AdminStats /> : ''
+                            user?.role === 'admin' ? <AdminStats year={year} month={month} /> : ''
                         }
 
                         {(user?.role === 'admin' ||

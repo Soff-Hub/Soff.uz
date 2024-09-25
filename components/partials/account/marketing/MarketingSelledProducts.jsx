@@ -2,6 +2,7 @@ import React from 'react';
 import { DollarOutlined, EyeOutlined, CheckCircleOutlined } from '@ant-design/icons';
 import { List, Space } from 'antd';
 import { formatCurrency } from '~/utilities/product-helper';
+import Link from 'next/link';
 
 
 const IconText = ({ icon, text }) => (
@@ -25,9 +26,11 @@ const MarketingSelledProducts = ({ data }) => (
                         <IconText icon={CheckCircleOutlined} text={`${item?.sold_count_last_month} marta sotilgan`} key="list-vertical-like-o" />,
                     ]}
                     className='px-3 pb-3 mb-3'
-                    style={{ border: '1px solid #f1f1f1', borderRadius: '5px' }}
+                    style={{ border: '1px solid #f1f1f1', borderRadius: '5px', fontSize: '16px' }}
                 >
-                    {item.title}
+                    <Link href={`/product/${item?.slug}`}>
+                        {item.title}
+                    </Link>
                 </List.Item>
             )}
         />

@@ -35,7 +35,7 @@ export default function MarketingChartProduct({ config, colors }) {
         },
       }],
       title: {
-        text: config?.title,
+        // text: config?.title,
         style: {
           fontSize: '20px',
           fontWeight: 500,
