@@ -59,9 +59,8 @@ function MarketingMain() {
 
     return (
         <div style={{ position: 'relative' }}>
-            <p className='fs-3 mb-4'>
-                Marketing bo'limidan to'liq foydalanmoqchi
-                bo'lsangiz avval sizga qaysi soha bo'yicha ma'lumot kerakligini tanlang (maksimal 4 ta)
+            <p className='fs-2 mb-4'>
+                Marketing qismini shakllantirishimiz uchun o'z sohangizni tanlang (keyinchalik o'zgartirishingiz mumkin)
             </p>
 
             <div className={divclass}>

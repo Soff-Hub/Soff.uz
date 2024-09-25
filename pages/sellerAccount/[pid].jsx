@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import BreadCrumb from '~/components/elements/BreadCrumb';
 import PageContainer from '~/components/layouts/PageContainer';
 import Meta from '~/components/shared/headers/Meta';
-import { Select, Table, Tabs, Tooltip } from 'antd';
+import { Pagination, Select, Table, Tabs, Tooltip } from 'antd';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import { useSelector } from 'react-redux';
 import CalculateTimeDifference from '~/components/partials/account/DateFormatter';
@@ -27,6 +27,8 @@ const SellerAccount = ({ pid }) => {
     const [year, setYear] = useState(new Date().getFullYear());
     const [month, setMonth] = useState(null);
     const [yearGet, setYearGet] = useState([]);
+    const [pageCount, setPageCount] = useState(0)
+    const [activePage, setActivePage] = useState(1)
 
 
 
@@ -62,11 +64,20 @@ const SellerAccount = ({ pid }) => {
                 pid,
                 user?.access
             );
-            // setPageCount(ItemsData.count);
             setData(ItemsData);
-            setTableData(ItemsData.documents);
             setTableDataOffer(ItemsData.offer_list);
         }
+    }
+
+    const getDocuments = async (page) => {
+        setActivePage(page)
+        const resp = await axios.get(orginalUrl + `seller/admin/seller-detail/${pid}/docs/?page=${page}`, {
+            headers: {
+                Authorization: `Bearer ${user?.access}`
+            }
+        })
+        setTableData(resp.data?.results);
+        setPageCount(resp.data?.count);
     }
 
     async function GetItemsSeller_Yearch() {
@@ -77,7 +88,7 @@ const SellerAccount = ({ pid }) => {
     }
 
     const getTransactions = async () => {
-        const resp = await axios.get(orginalUrl + `auctions/payment_transfer_history/${pid}`, {
+        const resp = await axios.get(orginalUrl + `auctions/payment_transfer_history/${pid}/`, {
             headers: {
                 Authorization: `Bearer ${user?.access}`
             }
@@ -86,7 +97,7 @@ const SellerAccount = ({ pid }) => {
     }
 
     const getDonates = async () => {
-        const resp = await axios.get(orginalUrl + `seller/admin/donates/${pid}`, {
+        const resp = await axios.get(orginalUrl + `seller/admin/donates/${pid}/`, {
             headers: {
                 Authorization: `Bearer ${user?.access}`
             }
@@ -101,6 +112,7 @@ const SellerAccount = ({ pid }) => {
             GetItemsSeller_Yearch()
             getTransactions()
             getDonates()
+            getDocuments(activePage)
         }
 
     }, [user?.access]);
@@ -289,12 +301,24 @@ const SellerAccount = ({ pid }) => {
         {
             key: '1',
             label: <span style={{ marginRight: "30px", fontSize: "16px", fontWeight: "600" }} >Sotuvchi mahsulotlari</span>,
-            children: <Table
-                dataSource={tableData}
-                scroll={{ x: 800 }}
-                columns={columns}
-                pagination={false}
-            />,
+            children: <div>
+                <Table
+                    dataSource={tableData}
+                    scroll={{ x: 800 }}
+                    columns={columns}
+                    pagination={false}
+                    className='mb-5'
+                />
+                <Pagination
+                    total={pageCount}
+                    pageSize={50}
+                    // current={activePage}
+                    onChange={(p) => {
+                        getDocuments(p)
+                        scrollTo(0, 600)
+                    }}
+                />
+            </div>
 
 
         },

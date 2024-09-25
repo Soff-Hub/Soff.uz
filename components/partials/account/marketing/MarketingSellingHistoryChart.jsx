@@ -57,6 +57,9 @@ export default function MarketingSellingHistoryChart({ config }) {
                   </div>`;
                 },
             },
+            legend: {
+                position: 'bottom'
+            }
         },
     };
 
@@ -65,10 +68,10 @@ export default function MarketingSellingHistoryChart({ config }) {
     }
 
     return (
-        <div style={{ position: 'relative', flex: 1 }} className='d-flex justify-content-center'>
+        <div style={{ position: 'relative', flex: 1, maxWidth: '100%' }} className='d-flex justify-content-center'>
             <div id="chart-circle">
                 {props?.series?.some((el) => Number(el) > 0)
-                    ? <ReactApexcharts options={props.options} series={props.series} type="polarArea" width={'500px'} />
+                    ? <ReactApexcharts options={props.options} series={props.series} type="polarArea" width={'400px'} />
                     : <div className='chart-blur'>
                         <p>Statistikani shakllantirish uchun ma'lumot yetarli emas</p>
                     </div>}

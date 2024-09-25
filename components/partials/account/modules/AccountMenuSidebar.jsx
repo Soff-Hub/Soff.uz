@@ -167,7 +167,7 @@ const AccountMenuSidebar = ({ data, menuOpen }) => {
     return (
         <aside className="ps-widget--account-dashboard">
             <div>
-                <div className="ps-widget__header  p-2 pb-4 step-2 justify-content-center">
+                <div className="ps-widget__header  p-2 pb-4 step-2">
                     {profile?.image ? (
                         <img src={`${profile?.image}`} className="profile__image" style={{ maxWidth: '40px' }} />
                     ) : (

@@ -34,11 +34,11 @@ export default function MarketingProductChart() {
             for (let j = 0; j < resp?.data.length; j++) {
                 labels.push(resp?.data[j]?.category)
                 if (i === 0) {
-                    series.push(Math.floor(resp?.data[j]?.doc_percentage))
+                    series.push(resp?.data[j]?.doc_percentage)
                 } else if (i === 1) {
-                    series.push(Math.floor(resp?.data[j]?.sale_percentage))
+                    series.push(resp?.data[j]?.sale_percentage)
                 } else {
-                    series.push(Math.floor(resp?.data[j]?.views_percentage))
+                    series.push(resp?.data[j]?.views_percentage)
                 }
             }
 
@@ -75,11 +75,6 @@ export default function MarketingProductChart() {
                                         }}
                                     />
                                 </Skeleton.Node>
-                            </div>
-                            <div className='d-flex flex-column gap-3 ms-5 pt-5'>
-                                <Skeleton.Input active={true} size='small' />
-                                <Skeleton.Input active={true} size='small' />
-                                <Skeleton.Input active={true} size='small' />
                             </div>
                         </div>
                     )) : ''

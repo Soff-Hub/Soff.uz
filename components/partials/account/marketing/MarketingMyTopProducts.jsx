@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Avatar, List, Modal, Space } from 'antd';
+import { Avatar, List, Modal, Skeleton, Space } from 'antd';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import Axios from 'axios';
 import { orginalUrl } from '~/reositoriy-admin/Repository';
-import MarketingSellingHistoryChart from './MarketingSellingHistoryChart';
-import { formatCurrency } from '~/utilities/product-helper';
 import { useRouter } from 'next/router';
-import { DollarOutlined, EyeOutlined, CheckCircleOutlined } from '@ant-design/icons';
+import { DollarOutlined, EyeOutlined } from '@ant-design/icons';
 import ModalDeletePostEdit from '../ModalPostEdit';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import RejectOfferModal from '../RejectOfferModal';
+import MarketingSelledProducts from './MarketingSelledProducts';
+import { DotChartOutlined } from '@ant-design/icons';
 
 const IconText = ({ icon, text }) => (
     <Space className='view-count'>
@@ -24,14 +24,11 @@ const MarketingMyTopProducts = () => {
     const { query } = useRouter()
     const [viewPriceDiscount, setViewPriceDiscount] = useState(0);
     const [id, setId] = useState(null);
+    const [loading, setLoading] = useState(false)
 
 
+    const [documents, setDocuments] = useState([])
     const [data, setData] = useState([])
-    const [price, setPrice] = useState({
-        title: 'Mahsulotlar',
-        series: [],
-        labels: []
-    })
 
     const getData = async () => {
         const resp = await Axios.get(orginalUrl + `seller/marketing/`, {
@@ -42,20 +39,20 @@ const MarketingMyTopProducts = () => {
         setData(resp.data);
     }
 
-    const getPrice = async () => {
-        const resp = await Axios.get(orginalUrl + `seller/marketing/price-chart/`, {
-            headers: {
-                Authorization: `Bearer ${user?.access}`
-            },
-            params: { ...query }
-        })
-        let series = resp.data?.map(el => Math.floor(el.percentage))
-        let labels = resp.data?.map(el => `${formatCurrency(el?.min_price)}${el?.max_price >= 1000000 ? ' va undan yuqori' : ' - ' + formatCurrency(el?.max_price)}`)
-        setPrice({
-            title: price.title,
-            series,
-            labels
-        });
+    const getDocuments = async () => {
+        setLoading(true)
+        try {
+            const resp = await Axios.get(orginalUrl + `seller/marketing/top-documents/`, {
+                headers: {
+                    Authorization: `Bearer ${user?.access}`
+                },
+                params: { ...query }
+            })
+            setDocuments(resp.data);
+        } catch (err) {
+            console.log(err);
+        }
+        setLoading(false)
     }
 
     const handleHide = async () => {
@@ -90,16 +87,16 @@ const MarketingMyTopProducts = () => {
     }
 
     useEffect(() => {
-        getData()
-        getPrice()
+        getData(),
+            getDocuments()
     }, [query])
 
     return (
         <div className='mt-5'>
-            <div className='d-flex gap-5'>
-                <div className='p-5 bg-white w-50' style={{ border: '1px solid gold' }}>
+            <div className='d-flex gap-5 justify-content-between'>
+                <div className='w-50 p-3 bg-white' style={{ border: '1px solid gold' }}>
                     <div>
-                        <h3 className='fw-medium mb-5'>Mahsulotingiz sotuvi oshishi uchun Soff.uz taklifi</h3>
+                        <h4 className='fw-medium mb-5 text-center'>Mahsulotingiz narxini o'zgartirish bo'yicha taklif</h4>
                     </div>
                     <div style={{ position: 'relative' }}>
                         <List
@@ -118,7 +115,7 @@ const MarketingMyTopProducts = () => {
                                         avatar={<Avatar style={{ border: '1px solid gray', padding: '5px' }} src={'/static/img/soff logo.png'} />}
                                         title={<Link href={`/product/${item.slug}`}>{item.doc_title}</Link>}
                                         description={item?.title}
-                                        style={{ borderBlock: 'none' }}
+                                        style={{ borderBlock: 'none', fontSize: '12px' }}
                                     />
                                     <a
                                         data-bs-target='#exampleModalMyProductsPrice'
@@ -148,15 +145,29 @@ const MarketingMyTopProducts = () => {
                             )}
                         />
                         {data?.length ? '' : <div className='chart-blur'>
-                            <p>Statistikani shakllantirish uchun ma'lumot yetarli emas</p>
+                            <p>Hozircha sizga hech qanday takliflarimiz yo'q</p>
                         </div>}
                     </div>
                 </div>
-                <div className='w-50 p-5 bg-white d-flex flex-column'>
+                <div className='w-50 py-4 px-3 bg-white d-flex flex-column'>
                     <div>
-                        <h3 className='fw-medium mb-5'>Sotilgan Mahsulotlarning o'rtacha narxi</h3>
+                        <h4 className='fw-medium mb-5 text-center'>Soha bo'yicha eng ko'p sotilgan mahsulotlar</h4>
                     </div>
-                    <MarketingSellingHistoryChart config={price} />
+                    {loading ? (
+                        <div className='d-flex flex-column gap-4 h-100'>
+                            <Skeleton.Node
+                                style={{ width: '100%', height: '340px' }}
+                                className='mt-2'
+                                active={true}>
+                                <DotChartOutlined
+                                    style={{
+                                        fontSize: 40,
+                                        color: '#bfbfbf',
+                                    }}
+                                />
+                            </Skeleton.Node>
+                        </div>
+                    ) : <MarketingSelledProducts data={documents} />}
                 </div>
 
                 <ModalDeletePostEdit
