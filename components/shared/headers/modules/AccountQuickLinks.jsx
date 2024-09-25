@@ -84,7 +84,7 @@ const AccountQuickLinks = (props) => {
                                     cursor: 'pointer',
                                 }}>
                                 <a className="d-flex align-items-center">
-                                <img src='/static/img/birja-icon.png' height={20} width={20} className='me-2' />
+                                    <img src='/static/img/birja-icon.png' height={20} width={20} className='me-2' />
                                     {item.text}
                                 </a>
                             </Link>
@@ -185,23 +185,23 @@ const AccountQuickLinks = (props) => {
         return (
             <div className="ps-block--user-header">
                 <div className="ps-block__left">
-                    <i className="icon-user"></i>
+                    <i className="icon-user fs-2"></i>
                 </div>
-                <div className="ps-block__right">
-                    <Link href={
+                <div className="ps-block__right d-flex align-items-center">
+                    {/* <Link href={
                         (id) ? `/account/login?id=${id}` :
                             (deal) ? `/account/login?deal=${deal}` :
                                 "/account/login"
                     }>
                         <a>Kirish</a>
-                    </Link>
+                    </Link> */}
 
                     <Link href={
                         (id) ? `/account/register?id=${id}&role=customer` :
                             (deal) ? `/account/register?deal=${deal}` :
-                                "/account/selection"
+                                "/account/register?role=customer"
                     } >
-                        <a>Ro'yxatdan o'tish</a>
+                        <a className='fs-3'>Kirish</a>
                     </Link>
                 </div>
             </div>
