@@ -32,7 +32,6 @@ const Xabar = (e) => {
                 const { verifyCode } = useAuth();
                 const user = await verifyCode(data);
 
-                console.log(user);
                 if (user.status === 200 || user.status === 201) {
                     setLoader(false);
                     if (id) {

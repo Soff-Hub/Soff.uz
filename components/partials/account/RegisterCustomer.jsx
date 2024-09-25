@@ -143,7 +143,7 @@ class RegisterCustomer extends Component {
                     modal.update;
                 } else if (user.status == 200 || user.status == 201) {
                     this.props.dispatch(begin({ id: user.data.first }));
-                    localStorage.setItem('token', user.data.access);
+                    localStorage.setItem('token', user.data.user);
                     localStorage.setItem('tour', true);
                     localStorage.setItem('via_', user?.data?.via_);
                     localStorage.setItem('data', JSON.stringify(data));
