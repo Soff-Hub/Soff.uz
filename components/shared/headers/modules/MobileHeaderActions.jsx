@@ -18,20 +18,20 @@ const MobileHeaderActions = ({ auth }) => {
     const menu = (
         <Menu>
             <div className="d-flex flex-column p-2">
-                <Link href={
+                {/* <Link href={
                     (id) ? `/account/login?id=${id}` :
                         (deal) ? `/account/login?deal=${deal}` :
                             "/account/login"
                 }>
                     <a>Kirish</a>
-                </Link>
+                </Link> */}
 
                 <Link href={
                     (id) ? `/account/register?id=${id}&role=customer` :
                         (deal) ? `/account/register?deal=${deal}` :
-                            "/account/selection"
+                            "/account/register?role=customer"
                 }>
-                    <a>Ro'yxatdan o'tish</a>
+                    <a>Kirish</a>
                 </Link>
             </div>
         </Menu >
@@ -146,11 +146,25 @@ const MobileHeaderActions = ({ auth }) => {
             {auth.isLoggedIn && Boolean(auth.isLoggedIn) === true ? (
                 <AccountQuickLinksMobile />
             ) : (
-                <Dropdown overlay={menu} placement="bottomLeft">
-                    <a href="#" className="header__extra ps-user--mobile">
-                        <i className="icon-user"></i>
+                // <Dropdown overlay={menu} placement="bottomLeft">
+                //     <a href="#" className="header__extra ps-user--mobile">
+                //         <i className="icon-user"></i>
+                //     </a>
+                // </Dropdown>
+                <Link href={
+                    (id) ? `/account/register?id=${id}&role=customer` :
+                        (deal) ? `/account/register?deal=${deal}` :
+                            "/account/register?role=customer"
+                }>
+                    <a className='d-flex align-items-center'>
+                        <a href="#" className="header__extra ps-user--mobile m-0">
+                            <i className="icon-user fs-1"></i>
+                        </a>
+                        <div className='text-white fs-2 d-flex align-items-center'>
+                            Kirish
+                        </div>
                     </a>
-                </Dropdown>
+                </Link>
             )}
         </div>
     );

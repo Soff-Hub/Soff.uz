@@ -141,11 +141,11 @@ export let cutomerAccountLink = [
         url: '/account/sellerproducts',
         icon: 'fa-solid fa-bag-shopping',
     },
-    {
-        text: 'Buyurtma berish',
-        url: 'b',
-        icon: 'fa-regular fa-handshake',
-    },
+    // {
+    //     text: 'Buyurtma berish',
+    //     url: 'b',
+    //     icon: 'fa-regular fa-handshake',
+    // },
     {
         text: 'Profil',
         url: '/account/settings',

@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import Page404 from '../page/page-404';
 import Meta from '~/components/shared/headers/Meta';
 import { useRouter } from 'next/router';
+import RegisterCustomer from '~/components/partials/account/RegisterCustomer';
 
 const RegisterPage = () => {
     const breadCrumb = [
@@ -16,12 +17,12 @@ const RegisterPage = () => {
             url: '/',
         },
         {
-            text: "Ro'yxatdan o'tish",
+            text: "Kirish",
         },
     ];
     const { query } = useRouter()
     const { user } = useSelector(state => state.auth)
-    const sallerEndPoint = query?.role === 'customer' ? 'auth/register/' : 'auth/seller-register/';
+    const sallerEndPoint = query?.role === 'customer' ? 'auth/new-register/' : 'auth/seller-register/';
 
     return (
         //   user?.access ?
@@ -34,7 +35,7 @@ const RegisterPage = () => {
                     description="Soff.uz - Saytidan hoziroq ro'yxatdan o'ting va o'z mahsulatlaringizni soting"
                 />
                 <BreadCrumb breacrumb={breadCrumb} />
-                <Register url={sallerEndPoint} />
+                <RegisterCustomer url={sallerEndPoint} />
             </div>
         </PageContainer>
     );
