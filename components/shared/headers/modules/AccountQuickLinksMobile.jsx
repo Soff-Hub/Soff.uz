@@ -29,7 +29,7 @@ function AccountQuickLinks() {
                 title: 'Muvaffaqqiyatli!',
                 content: `Siz muvaffaqqiyatli chiqdingiz`,
             });
-            Router.push('/account/selection');
+            Router.push('/account/login');
             dispatch(logOut());
             dispatch(setSavedPrfileData(null))
         }

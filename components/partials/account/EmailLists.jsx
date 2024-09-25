@@ -389,7 +389,7 @@ const EmailLists = () => {
                         </Form>
                         <Table
                             className="my-5"
-                            scroll={{ x: 1300 }}
+                            scroll={{ x: 570 }}
                             dataSource={notification}
                             columns={columns}
                             pagination={false}

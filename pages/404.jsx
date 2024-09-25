@@ -1,11 +1,12 @@
 import React from 'react';
 import Link from 'next/link';
 import FooterDefault from '../components/shared/footers/FooterDefault';
+import HeaderElectronic from '~/components/shared/headers/HeaderElectronic';
 
 function Error() {
     return (
         <div className="site-content pb-5">
-            {/* <HeaderDefault /> */}
+            <HeaderElectronic />
             <div className="ps-page--404">
                 <div className="container">
                     <div className="ps-section__content">

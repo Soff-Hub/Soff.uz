@@ -2396,9 +2396,14 @@
 
 .fixed-sidebar {
     position: sticky;
-    top: 100px;
+    top: 80px;
 }
 
 .ps-page--account {
-    padding: 50px;
+    padding: 10px;
+}
+
+.headerSticky .header__content {
+    position: absolute;
+    z-index: -1;
 }

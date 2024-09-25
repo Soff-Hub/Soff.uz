@@ -33,7 +33,7 @@ const RegisterPage = () => {
                     title={"Ro'yxatdan o'tish"}
                     description="Soff.uz - Saytidan hoziroq ro'yxatdan o'ting va o'z mahsulatlaringizni soting"
                 />
-                <BreadCrumb breacrumb={breadCrumb} />
+                {/* <BreadCrumb breacrumb={breadCrumb} /> */}
                 <Register url={sallerEndPoint} />
             </div>
         </PageContainer>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Head from 'next/head';
 
 import HeaderElectronic from '../shared/headers/HeaderElectronic';
@@ -160,12 +160,10 @@ const PageContainer = ({
     title
 }) => {
     const { user } = useSelector((state) => state.auth);
-    const { profile } = useSelector((state) => state.ecomerce);
 
     const dispatch = useDispatch();
     const Router = useRouter();
     const query = Router.route;
-    const [style, setStyle] = useState('notication_contnet')
 
     useEffect(() => {
         if (user?.role === 'admin') {
@@ -194,43 +192,9 @@ const PageContainer = ({
     return (
         <>
             <Head>
-                <title>Soff - barcha ma'lumotlar bazasi </title>
-                <meta property="og:title" content={title} />
+                <title>Soff Seller Dashboard </title>
             </Head>
             {header}
-
-            {/* {(user?.role === "seller" && query === "/") && <div className={style}>
-                <div className='container d-flex align-items-center justify-content-between'>
-
-                    <Link href={"https://birja.soff.uz/"}>
-                        <a className='d-flex align-items-center'>
-
-
-
-                <Link href={"https://birja.soff.uz/"}>
-                    <a className='d-flex align-items-center  container '>
-
-
-
-
-                        <div class="scrolling-text w-100">
-                            <span>
-                                <p className='d-flex align-items-center gap-5 text-white fw-medium m-0' style={{ fontSize: "16px" }}>
-                                    <img src="/static/img/soffbirja-dark-logo.png" alt="birjalogo"
-                                        width={140}
-                                        height={30}
-                                    /> Mahsulotlaringizni birjada soting</p>
-                            </span>
-                        </div>
-                        <Link href={"https://birja.soff.uz/"}>
-                            <a className='iconsmar mr-4'><i className="fa-solid fa-arrow-right"></i></a></Link>
-
-                    </a></Link>
-
-                <a className='iconsmar ml-5' onClick={() => setStyle("bag_none")}><i className="fa-solid fa-xmark fs-4 p-0"></i></a>
-
-
-            </div>} */}
 
             <div className='bg-soff' >
                 <div

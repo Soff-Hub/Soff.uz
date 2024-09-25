@@ -1,6 +1,6 @@
 import React from 'react';
 
-import BreadCrumb from '~/components/elements/BreadCrumb';
+// import BreadCrumb from '~/components/elements/BreadCrumb';
 import Login from '~/components/partials/account/Login';
 import PageContainer from '~/components/layouts/PageContainer';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
@@ -11,15 +11,15 @@ import Meta from '~/components/shared/headers/Meta';
 
 const LoginPage = () => {
     const { user } = useSelector((state) => state.auth);
-    const breadCrumb = [
-        {
-            text: 'Asosiy sahifa',
-            url: '/',
-        },
-        {
-            text: 'Kirish',
-        },
-    ];
+    // const breadCrumb = [
+    //     {
+    //         text: 'Asosiy sahifa',
+    //         url: '/',
+    //     },
+    //     {
+    //         text: 'Kirish',
+    //     },
+    // ];
     return user ? (
         <div
             style={{
@@ -39,7 +39,7 @@ const LoginPage = () => {
                             title={"Kirish"}
                             description="Soff.uz - Saytiga hoziroq kiring va o'z mahsulatlaringizni soting"
                         />
-                        <BreadCrumb breacrumb={breadCrumb} />
+                        {/* <BreadCrumb breacrumb={breadCrumb} /> */}
                         <Login />
                     </div>
                 </PageContainer>

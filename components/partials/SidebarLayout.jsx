@@ -34,7 +34,7 @@ export default function SidebarLayout({ children, accountLinks }) {
                     <AccountMenuSidebar menuOpen={menuOpen} data={accountLinks} />
                 </div>
             </div>
-            <div className={`mt-3 ${animate && 'animate-manu'} pb-5 ${menuOpen ? 'col-lg-8' : 'col-lg-11'}`}>
+            <div className={`mt-3 ${animate && 'animate-manu'} ${menuOpen ? 'col-lg-8' : 'col-lg-11'}`}>
                 {children}
             </div>
         </>

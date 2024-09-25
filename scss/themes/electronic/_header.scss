@@ -125,6 +125,7 @@
 
     &.header--sticky {
         .header__content {
+            transition: all 200ms ease;
             background-color: #022335;
 
             .menu--product-categories {

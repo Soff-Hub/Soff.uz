@@ -8,7 +8,6 @@ import '~/public/static/css/bootstrap.min.css';
 import '~/public/static/css/slick.min.css';
 import '~/scss/style.scss';
 import '~/scss/electronic.scss';
-import Head from 'next/head';
 import NextProgress from 'next-progress';
 import { AudioProvider } from '~/hooks/AudioContext';
 
@@ -52,17 +51,6 @@ function App({ Component, pageProps }) {
 
     return (
         <>
-            <Head>
-                <title>Soff</title>
-                <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-                <meta
-                    name="viewport"
-                    content="width=device-width, initial-scale=1.0"
-                />
-                <meta name="format-detection" content="telephone=no" />
-                <meta name="apple-mobile-web-app-capable" content="yes" />
-            </Head>
-
             <NextProgress
                 delay={300}
                 options={{ showSpinner: false }}

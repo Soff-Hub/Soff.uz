@@ -294,18 +294,19 @@ function DashbordList({ setOpen }) {
                 dataIndex: 'seller_info',
                 key: 'age',
                 render: (seller_info) => (
-                    <a
-                        href={`/sellerAccount/${seller_info?.id}`}
-                        className="d-flex flex-column">
-                        <span className="truncate whitespace-nowrap">
-                            {' '}
-                            {seller_info.name}
-                        </span>
-                        <span className="truncate whitespace-nowrap">
-                            {' '}
-                            {seller_info.email_or_phone}
-                        </span>
-                    </a>
+                    <Link href={`/sellerAccount/${seller_info?.id}`}>
+                        <a
+                            className="d-flex flex-column">
+                            <span className="truncate whitespace-nowrap">
+                                {' '}
+                                {seller_info.name}
+                            </span>
+                            <span className="truncate whitespace-nowrap">
+                                {' '}
+                                {seller_info.email_or_phone}
+                            </span>
+                        </a>
+                    </Link>
                 ),
 
             }
@@ -590,7 +591,7 @@ function DashbordList({ setOpen }) {
     return (
         <section className="ps-my-account ps-page--account pt-0">
             <p className="step-0 m-0"></p>
-            <div className="container">
+            <div className="container py-3">
                 {user?.role != 'admin' && window.innerWidth > 1000 && (
                     <div style={{ textAlign: 'end', marginBottom: '6px' }}>
                         <p
@@ -1028,7 +1029,7 @@ function DashbordList({ setOpen }) {
                                 </div>
                             )}
 
-                        <div className="pb-5 mt-4">
+                        <div className="mt-4">
                             <Tabs
                                 type='card'
                                 centered
@@ -1036,31 +1037,30 @@ function DashbordList({ setOpen }) {
                                 items={itemsOrder}
                                 className="bg-white "
                             />
-
                         </div>
+
+                        {(user?.role === 'admin') ? (
+                            <div className="tabs_select">
+                                <Tabs
+                                    centered
+                                    defaultActiveKey="1"
+                                    items={items}
+                                    className="bg-white "
+                                />
+                            </div>
+                        ) : (user?.role === 'seller') ? (
+                            <div className="tabs_select">
+                                <Tabs
+                                    centered
+                                    defaultActiveKey="1"
+                                    items={itemsSeller}
+                                    className="bg-white "
+                                />
+                            </div>
+                        ) : < ></>}
+
                     </SidebarLayout>
                 </div>
-
-
-                {(user?.role === 'admin') ? (
-                    <div className="tabs_select">
-                        <Tabs
-                            centered
-                            defaultActiveKey="1"
-                            items={items}
-                            className="bg-white "
-                        />
-                    </div>
-                ) : (user?.role === 'seller') ? (
-                    <div className="tabs_select">
-                        <Tabs
-                            centered
-                            defaultActiveKey="1"
-                            items={itemsSeller}
-                            className="bg-white "
-                        />
-                    </div>
-                ) : < ></>}
                 <div
                     className="modal fade "
                     id="staticBackdropViewPopular"

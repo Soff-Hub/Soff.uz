@@ -1,22 +1,21 @@
 
-import React from 'react';
+import { useRouter } from 'next/router';
+import React, { useEffect } from 'react';
 import PageContainer from '~/components/layouts/PageContainer';
-import Meta from '~/components/shared/headers/Meta';
-import { useMemo } from 'react';
-import HomeElectronicsPage from '~/pages/home_pages/electronic';
+import Register from '~/components/partials/account/Register';
 
 const HomepageDefaultPage = () => {
+    const { push } = useRouter()
 
-    const memoValue = useMemo(() => {
-        return (
-            <HomeElectronicsPage />
-        )
+    useEffect(() => {
+        push('/account/register')
     }, [])
 
     return (
-        <PageContainer title="Soff - barcha ma'lumotlar bazasi">
-            <Meta title="Soff - barcha ma'lumotlar bazasi" image="/static/img/soff/soff_green_white.png" />
-            {memoValue}
+        <PageContainer title="Soff Seller">
+            <div className="ps-page--my-account">
+                <Register url={'auth/seller-register/'} />
+            </div>
         </PageContainer>
     );
 };

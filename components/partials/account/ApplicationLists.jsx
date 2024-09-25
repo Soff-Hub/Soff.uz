@@ -659,54 +659,57 @@ function ApplicationLists() {
                                 </div>
                             </div>
                         </div>
-                    </SidebarLayout>
-                    {
-                        user?.role === "admin" ?
-                            <div className='px-4'>
-                                <div className='my-5 bg-white mx-auto p-4 container'>
-                                    <h4 className='text-center mb-4'>Kelib tushgan takliflar   </h4>
-                                    <RangePicker className='py-3 col-md-4 mb-4 shadow-sm rounded-3' onChange={handleChangeDate} />
-                                    <Table scroll={{ x: 1500 }} dataSource={data1} columns={columnsTextArea}
-                                        loading={loadingOffer}
-                                        pagination={false} />
-                                    <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount1}
-                                        onChange={ProfileUsersTextItems} />
-                                </div>
-                            </div>
-                            : <></>
-                    }
-                </div>
-                {
-                    user?.role === "seller" ?
-                        <div className='p-0'>
-                            <form className='border mt-5 rounded bg-white p-4' onSubmit={getItemsTextItmes} >
-                                <h4>Taklif berish <i className="fa-solid fa-file-signature"></i></h4>
-                                <textarea onChange={(e) => setTextItems(e.target.value)} required className='w-100 p-3 border border-success rounded' rows={4} placeholder="Bu qismga takliflaringizni yuboring"></textarea>
-                                <div className='w-100 d-flex justify-content-end'>
-                                    <button className="btn-success btn mt-3" type='submit' style={{ height: "40px", width: "120px" }}><span className='fs-4'>
-                                        {
-                                            loading?.loadingButton ?
-                                                "Yuborish"
-                                                :
-                                                <div className="spinner-border mx-2 " role="status" style={{ cursor: "not-allowed" }}>
-                                                    <span className="visually-hidden">Loading...</span>
-                                                </div>
-                                        }
-                                    </span></button>
-                                </div>
-                            </form>
 
-                            <div className='mb-5 mt-3 bg-white  p-4 '>
-                                <h4 className='text-center mb-4'>Yuborilgan takliflar </h4>
-                                <Table scroll={{ x: 800 }} dataSource={dataAdmintaklif} columns={columnsTextAreaseller}
-                                    loading={loadingOfferSeller}
-                                    pagination={false} />
-                                <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount2}
-                                    onChange={getItemsSellerTaklif} />
-                            </div>
-                        </div>
-                        : <></>
-                }
+                        {
+                            user?.role === "admin" ?
+                                <div className=''>
+                                    <div className='my-5 bg-white mx-auto p-4 container'>
+                                        <h4 className='text-center mb-4'>Kelib tushgan takliflar   </h4>
+                                        <RangePicker className='py-3 col-md-4 mb-4 shadow-sm rounded-3' onChange={handleChangeDate} />
+                                        <Table scroll={{ x: 1500 }} dataSource={data1} columns={columnsTextArea}
+                                            loading={loadingOffer}
+                                            pagination={false} />
+                                        <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount1}
+                                            onChange={ProfileUsersTextItems} />
+                                    </div>
+                                </div>
+                                : <></>
+                        }
+
+                        {
+                            user?.role === "seller" ?
+                                <div className='p-0'>
+                                    <form className='border mt-5 rounded bg-white p-4' onSubmit={getItemsTextItmes} >
+                                        <h4>Taklif berish <i className="fa-solid fa-file-signature"></i></h4>
+                                        <textarea onChange={(e) => setTextItems(e.target.value)} required className='w-100 p-3 border border-success rounded' rows={4} placeholder="Bu qismga takliflaringizni yuboring"></textarea>
+                                        <div className='w-100 d-flex justify-content-end'>
+                                            <button className="btn-success btn mt-3" type='submit' style={{ height: "40px", width: "120px" }}><span className='fs-4'>
+                                                {
+                                                    loading?.loadingButton ?
+                                                        "Yuborish"
+                                                        :
+                                                        <div className="spinner-border mx-2 " role="status" style={{ cursor: "not-allowed" }}>
+                                                            <span className="visually-hidden">Loading...</span>
+                                                        </div>
+                                                }
+                                            </span></button>
+                                        </div>
+                                    </form>
+
+                                    <div className='mb-5 mt-3 bg-white  p-4 '>
+                                        <h4 className='text-center mb-4'>Yuborilgan takliflar </h4>
+                                        <Table scroll={{ x: 800 }} dataSource={dataAdmintaklif} columns={columnsTextAreaseller}
+                                            loading={loadingOfferSeller}
+                                            pagination={false} />
+                                        <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount2}
+                                            onChange={getItemsSellerTaklif} />
+                                    </div>
+                                </div>
+                                : <></>
+                        }
+
+                    </SidebarLayout>
+                </div>
 
                 <Modal
                     title="Arizani tasdiqlash"

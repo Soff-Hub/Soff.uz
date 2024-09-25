@@ -31,19 +31,19 @@ const AccountQuickLinks = (props) => {
                 content: `Siz muvaffaqqiyatli chiqdingiz`,
             });
             if (asPath == '/account/dashbord') {
-                Router.push('/account/selection')
+                Router.push('/account/login')
             } else if ('/account/myproducts') {
-                Router.push('/account/selection')
+                Router.push('/account/login')
             } else if ('/account/sellerproducts') {
-                Router.push('/account/selection')
+                Router.push('/account/login')
             } else if ('/account/myproducts/product-selection') {
-                Router.push('/account/selection')
+                Router.push('/account/login')
             } else if ('/account/orders') {
-                Router.push('/account/selection')
+                Router.push('/account/login')
             } else if ('/account/settings') {
-                Router.push('/account/selection')
+                Router.push('/account/login')
             } else if ('/account/application') {
-                Router.push('/account/selection')
+                Router.push('/account/login')
             }
             dispatch(logOut());
             dispatch(setSavedPrfileData(null))
@@ -199,7 +199,7 @@ const AccountQuickLinks = (props) => {
                     <Link href={
                         (id) ? `/account/register?id=${id}&role=customer` :
                             (deal) ? `/account/register?deal=${deal}` :
-                                "/account/selection"
+                                "/account/register"
                     } >
                         <a>Ro'yxatdan o'tish</a>
                     </Link>

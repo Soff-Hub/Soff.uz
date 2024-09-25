@@ -1,6 +1,5 @@
 import React from 'react';
 
-import BreadCrumb from '~/components/elements/BreadCrumb';
 import MyProducts_list from '~/components/partials/account/MyProducts_list';
 import PageContainer from '~/components/layouts/PageContainer';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
@@ -8,17 +7,9 @@ import { useSelector } from 'react-redux';
 import Page404 from '../page/page-404';
 import Selection from './selection';
 import Meta from '~/components/shared/headers/Meta';
+import { BdCrumb } from '~/components/elements/BreadCrumb';
 
 const MyProducts = () => {
-    const breadCrumb = [
-        {
-            text: 'Asosiy sahifa',
-            url: '/',
-        },
-        {
-            text: 'Mening mahsulotlarim',
-        },
-    ];
     const { user } = useSelector(state => state.auth)
     return (
         user?.role === 'seller' ?
@@ -29,7 +20,7 @@ const MyProducts = () => {
                     <Meta
                         title={"Mening mahsulotlarim"}
                     />
-                    <BreadCrumb breacrumb={breadCrumb} />
+                    <BdCrumb title={'Mening mahsulotlarim'} />
                     <MyProducts_list />
                 </div>
             </PageContainer> : user?.access ? <Page404 /> : <Selection />

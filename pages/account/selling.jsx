@@ -1,6 +1,5 @@
 import React from 'react';
 
-import BreadCrumb from '~/components/elements/BreadCrumb';
 import PageContainer from '~/components/layouts/PageContainer';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
 import { useSelector } from 'react-redux';
@@ -8,17 +7,9 @@ import Page404 from '../page/page-404';
 import Selection from './selection';
 import Meta from '~/components/shared/headers/Meta';
 import SellingsLists from '~/components/partials/account/SellingLists';
+import { BdCrumb } from '~/components/elements/BreadCrumb';
 
 const Sellings = () => {
-    const breadCrumb = [
-        {
-            text: 'Asosiy sahifa',
-            url: '/',
-        },
-        {
-            text: 'Joyida sotish',
-        },
-    ];
     const { user } = useSelector(state => state.auth)
     return (
         user?.role === 'admin' || user?.role === 'seller' ?
@@ -29,7 +20,7 @@ const Sellings = () => {
                     <Meta
                         title={"Joyida sotish"}
                     />
-                    <BreadCrumb breacrumb={breadCrumb} />
+                    <BdCrumb title={'Sotib olingan mahsulotlar'} />
                     <SellingsLists />
                 </div>
             </PageContainer> : user?.access ? <Page404 /> : <Selection />

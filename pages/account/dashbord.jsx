@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import BreadCrumb from '~/components/elements/BreadCrumb';
 import DashbordList from '~/components/partials/account/dashbordList';
 import PageContainer from '~/components/layouts/PageContainer';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
@@ -10,17 +9,9 @@ import Meta from '~/components/shared/headers/Meta';
 import Joyride from 'react-joyride';
 import { Modal, Segmented } from 'antd';
 import BirjaDashbordList from '~/components/partials/account/BirjaDashbordList';
+import { BdCrumb } from '~/components/elements/BreadCrumb';
 
 const MyAccountPage = () => {
-    const breadCrumb = [
-        {
-            text: 'Asosiy sahifa',
-            url: '/',
-        },
-        {
-            text: 'Bosh panel',
-        },
-    ];
 
     const { user } = useSelector(state => state.auth)
     const [run, setRun] = useState(false)
@@ -153,8 +144,8 @@ const MyAccountPage = () => {
             <div className="ps-page--my-account">
                 <Meta
                     title={"Bosh panel"}
-                />  
-                <BreadCrumb breacrumb={breadCrumb} />
+                />
+                <BdCrumb title={'Boshqaruv paneli'} />
                 {user?.role === 'seller' && <Joyride
                     steps={steps}
                     run={run}

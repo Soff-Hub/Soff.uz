@@ -29,7 +29,7 @@ const MobileHeaderActions = ({ auth }) => {
                 <Link href={
                     (id) ? `/account/register?id=${id}&role=customer` :
                         (deal) ? `/account/register?deal=${deal}` :
-                            "/account/selection"
+                            "/account/register"
                 }>
                     <a>Ro'yxatdan o'tish</a>
                 </Link>
