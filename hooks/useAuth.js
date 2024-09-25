@@ -63,14 +63,11 @@ export default function useAuth() {
     };
 
     const verifyCode = (e) => {
-        const endPoint = 'auth/verify/';
-
-        let config = {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')} `,
-            },
-        };
-        let user = Repository.post(baseUrlAuth + endPoint, e, config)
+        const endPoint = 'auth/new-verify/';
+        let user = Repository.post(baseUrlAuth + endPoint, {
+            ...e,
+            user: localStorage.getItem('token'),
+        })
             .then((ress) => {
                 return ress;
             })
@@ -116,7 +113,8 @@ export default function useAuth() {
     };
 
     const qaytaKodYuborish = (data) => {
-        let endPoint = 'auth/get-new-code/';
+        let endPoint = 'auth/new-get-new-code/';
+        // let endPoint = 'auth/get-new-code/';
         let config = {
             Authorization: `Bearer ${localStorage.getItem('token')} `,
         };
@@ -144,7 +142,8 @@ export default function useAuth() {
         return user;
     };
     const qaytaKodYuborishParol = (data) => {
-        let endPoint = 'auth/get-new-code/';
+        let endPoint = 'auth/new-get-new-code/';
+        // let endPoint = 'auth/get-new-code/';
         let config = {
             Authorization: `Bearer ${localStorage.getItem('qayta_token')} `,
         };
@@ -247,7 +246,7 @@ export default function useAuth() {
 
     const feedbackPost = (e) => {
         let endPoint = 'customer/feedback-create/';
-       
+
         let user = Repository.post(baseUrl + endPoint, e)
             .then((ress) => {
                 return ress;
@@ -278,6 +277,6 @@ export default function useAuth() {
         logOutAuth,
         qaytaKodYuborishParol,
         feedbackPost,
-        registerGoogleUser
+        registerGoogleUser,
     };
 }
