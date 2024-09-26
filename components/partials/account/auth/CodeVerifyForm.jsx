@@ -32,7 +32,7 @@ export default function CodeVerifyForm() {
         try {
             const resp = await Axios.post(baseUrlAuth + 'auth/verify/', data)
             dispatch(login({
-                user: resp.data,
+                user: { ...resp.data, role: 'customer' },
                 data: JSON.parse(localStorage.getItem('data'))
             }));
 
@@ -65,7 +65,7 @@ export default function CodeVerifyForm() {
         const data = JSON.parse(localStorage.getItem('data'))
 
         try {
-            await Axios.post(baseUrlAuth + 'auth/get-new-code/', {...data, user: router?.query?.user,})
+            await Axios.post(baseUrlAuth + 'auth/get-new-code/', { ...data, user: router?.query?.user, })
             const modal = Modal.success({
                 centered: true,
                 title: 'Yuborildi',
