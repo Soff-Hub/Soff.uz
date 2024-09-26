@@ -17,6 +17,7 @@ export const formatTime = (seconds) => {
 export default function CodeVerifyForm() {
     const [loading, setLoading] = useState(false)
     const [secondsRemaining, setSecondsRemaining] = useState(120);
+    const [via, setVia] = useState(null)
 
     const router = useRouter()
     const dispatch = useDispatch()
@@ -58,7 +59,46 @@ export default function CodeVerifyForm() {
         }
     }
 
+    const getRecode = async () => {
+        setLoading(true)
+
+        const data = JSON.parse(localStorage.getItem('data'))
+
+        try {
+            await Axios.post(baseUrlAuth + 'auth/new-get-new-code/', {...data, user: router?.query?.user,})
+            const modal = Modal.success({
+                centered: true,
+                title: 'Yuborildi',
+                content: 'Tasdiqlash kodi qayta yuborildi',
+            });
+            modal.update;
+            setSecondsRemaining(120)
+
+            const interval = setInterval(() => {
+                setSecondsRemaining(prevSeconds => {
+                    if (prevSeconds > 0) {
+                        return prevSeconds - 1;
+                    } else {
+                        clearInterval(interval);
+                        return 0;
+                    }
+                });
+            }, 1000);
+
+        } catch (err) {
+            const modal = Modal.error({
+                centered: true,
+                title: 'Xatolik',
+                content: err?.response?.data?.msg,
+            });
+            modal.update;
+        }
+        setLoading(false)
+    }
+
     useEffect(() => {
+        setVia(localStorage.getItem('via_'))
+
         const interval = setInterval(() => {
             setSecondsRemaining(prevSeconds => {
                 if (prevSeconds > 0) {
@@ -77,7 +117,7 @@ export default function CodeVerifyForm() {
             <div className="container p-0">
                 <div className="ps-form--account">
                     <Form onFinish={handleSubmit}>
-                        <p className='text-center fs-2 mb-4'>Telefon raqamingizga yuborilgan sms kodni kiriting</p>
+                        <p className='text-center fs-2 mb-4'>{via === 'phone' ? 'Telefon raqamingizga' : 'Elektron pochtangizga'} yuborilgan tasdiqlash kodini kiriting</p>
 
                         <Form.Item
                             name="code"
@@ -95,7 +135,7 @@ export default function CodeVerifyForm() {
                             />
                         </Form.Item>
 
-                        {secondsRemaining === 0 ? <p className="text-xs cursor-pointer text-center mb-4" style={{ color: 'red' }}>
+                        {secondsRemaining === 0 ? <p className="text-xs cursor-pointer text-center mb-4" style={{ color: 'red', cursor: 'pointer' }} onClick={getRecode} >
                             Qayta kod yuborish
                         </p> : <p className="text-xs cursor-pointer text-center mb-4">
                             Qayta kod olish uchun {formatTime(secondsRemaining)}
