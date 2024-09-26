@@ -1,0 +1,138 @@
+import React, { useState } from 'react'
+import { Form, Input, Segmented } from 'antd';
+import { MailOutlined, PhoneOutlined } from '@ant-design/icons';
+import GoogleBox from './GoogleBox';
+import { BeatLoader } from 'react-spinners';
+import Axios from 'axios';
+import { useRouter } from 'next/router';
+import { baseUrlAuth } from '~/repositories/Repository';
+
+
+export default function LoginForm() {
+    const [type, setType] = useState('t') // t, e
+    const [loading, setLoading] = useState(false)
+
+    const router = useRouter()
+
+    const handleSubmit = async ({ phone, email }) => {
+        setLoading(true)
+
+        const data = {
+            phone_or_email: type === 't' ? '+998' + phone : email,
+            role: 'customer'
+        }
+
+        try {
+            const resp = await Axios.post(baseUrlAuth + 'auth/new-register/', data)
+            localStorage.setItem('via_', resp?.data?.via_);
+            localStorage.setItem('data', JSON.stringify(data));
+            router.push(`/auth/code-verify?user=${resp.data?.user}`)
+        } catch (err) {
+            console.log('err ', err);
+        }
+        setLoading(false)
+    }
+
+
+    return (
+        <div style={{ backgroundColor: '#f1f1f1', padding: "50px 20px" }}>
+            <div className="container p-0">
+                <div className="ps-form--account">
+                    <Form onFinish={handleSubmit}>
+                        <div className="d-flex justify-content-center align-items-center flex-column mb-4">
+                            <span style={{ fontSize: "28px", fontWeight: 700 }}>Kirish</span>
+                        </div>
+                        <Segmented
+                            onChange={(value) => setType(value)}
+                            options={[{
+                                label: 'Telefon raqam',
+                                value: 't',
+                                icon: <PhoneOutlined />,
+                            },
+                            {
+                                label: 'Elektron pochta',
+                                value: 'e',
+                                icon: <MailOutlined />,
+                            },]}
+                            block
+                            className='mb-5'
+                            style={{ height: "48px" }}
+                            value={type}
+                        />
+
+
+                        {type === "e" ?
+                            <Form.Item
+                                name="email"
+                                className="mb-4"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Elektron pochta kiritish majburiy',
+                                    },
+                                    {
+                                        type: 'email',
+                                        message: 'Iltimos, haqiqiy elektron pochta kiriting',
+                                    },
+                                ]}
+                            >
+                                <Input
+                                    style={{ height: '50px', fontSize: '16px' }}
+                                    addonBefore={<MailOutlined style={{ fontSize: '16px', padding: '0 8px' }} />}
+                                    type="email"
+                                    placeholder="Elektron pochta"
+                                />
+                            </Form.Item> :
+                            <Form.Item
+                                name="phone"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message:
+                                            'Telefon raqam kiritish majburiy',
+                                    },
+                                    {
+                                        pattern: /^\d{9}$/,
+                                        message: 'Iltimos, haqiqiy telefon raqam kiriting',
+                                    },
+
+                                ]}>
+                                <Input
+                                    autoComplete="off"
+                                    style={{ height: '50px', fontSize: '16px' }}
+                                    type='text'
+                                    placeholder="Telefon raqam"
+                                    maxLength={9}
+                                    addonBefore="+998"
+                                />
+                            </Form.Item>
+                        }
+
+                        <div className="form-group submit mt-5">
+                            {loading ? <button
+                                disabled={true}
+                                type="submit"
+                                className="ps-btn ps-btn--fullwidth">
+                                <BeatLoader color="#fff" />
+                            </button> : (
+                                <button
+                                    type="submit"
+                                    className="ps-btn ps-btn--fullwidth">
+                                    Davom etish
+                                </button>
+                            )}
+                        </div>
+
+                        <div className="or_google">
+                            <span></span>
+                            <span>yoki</span>
+                            <span></span>
+                        </div>
+                    </Form>
+
+                    <GoogleBox />
+                </div>
+            </div>
+        </div>
+    )
+}

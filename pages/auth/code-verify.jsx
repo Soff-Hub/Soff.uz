@@ -1,12 +1,13 @@
 import React from 'react';
 
+import Meta from '~/components/shared/headers/Meta';
 import BreadCrumb from '~/components/elements/BreadCrumb';
+
 import PageContainer from '~/components/layouts/PageContainer';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
-import Meta from '~/components/shared/headers/Meta';
-import RegisterCustomer from '~/components/partials/account/RegisterCustomer';
+import CodeVerifyForm from '~/components/partials/account/auth/CodeVerifyForm';
 
-const RegisterPage = () => {
+const CodeVerifyPage = () => {
     const breadCrumb = [
         {
             text: 'Asosiy sahifa',
@@ -14,15 +15,14 @@ const RegisterPage = () => {
         },
         {
             text: "Kirish",
+            url: '/auth/login'
+        },
+        {
+            text: "Tasdiqlash",
         },
     ];
-    // const sallerEndPoint = query?.role === 'customer' ? 'auth/new-register/' : 'auth/seller-register/';
-    const sallerEndPoint = 'auth/new-register/'
 
     return (
-        //   user?.access ?
-        //   <Page404/>
-        //   :
         <PageContainer footer={<FooterDefault />} title="Register">
             <div className="ps-page--my-account">
                 <Meta
@@ -30,10 +30,10 @@ const RegisterPage = () => {
                     description="Soff.uz - Saytidan hoziroq ro'yxatdan o'ting va o'z mahsulatlaringizni soting"
                 />
                 <BreadCrumb breacrumb={breadCrumb} />
-                <RegisterCustomer url={sallerEndPoint} />
+                <CodeVerifyForm />
             </div>
         </PageContainer>
     );
 };
 
-export default RegisterPage;
+export default CodeVerifyPage;

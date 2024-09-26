@@ -1,10 +1,11 @@
 import React from 'react';
 
+import Meta from '~/components/shared/headers/Meta';
 import BreadCrumb from '~/components/elements/BreadCrumb';
+
 import PageContainer from '~/components/layouts/PageContainer';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
-import Meta from '~/components/shared/headers/Meta';
-import RegisterCustomer from '~/components/partials/account/RegisterCustomer';
+import LoginForm from '~/components/partials/account/auth/LoginForm';
 
 const RegisterPage = () => {
     const breadCrumb = [
@@ -16,13 +17,8 @@ const RegisterPage = () => {
             text: "Kirish",
         },
     ];
-    // const sallerEndPoint = query?.role === 'customer' ? 'auth/new-register/' : 'auth/seller-register/';
-    const sallerEndPoint = 'auth/new-register/'
 
     return (
-        //   user?.access ?
-        //   <Page404/>
-        //   :
         <PageContainer footer={<FooterDefault />} title="Register">
             <div className="ps-page--my-account">
                 <Meta
@@ -30,7 +26,7 @@ const RegisterPage = () => {
                     description="Soff.uz - Saytidan hoziroq ro'yxatdan o'ting va o'z mahsulatlaringizni soting"
                 />
                 <BreadCrumb breacrumb={breadCrumb} />
-                <RegisterCustomer url={sallerEndPoint} />
+                <LoginForm />
             </div>
         </PageContainer>
     );
