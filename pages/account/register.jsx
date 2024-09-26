@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import BreadCrumb from '~/components/elements/BreadCrumb';
 import Register from '~/components/partials/account/Register';
@@ -19,24 +19,30 @@ const RegisterPage = () => {
             text: "Ro'yxatdan o'tish",
         },
     ];
-    const { query } = useRouter()
+    const { push } = useRouter()
     const { user } = useSelector(state => state.auth)
-    const sallerEndPoint = query?.role === 'customer' ? 'auth/register/' : 'auth/seller-register/';
+    const sallerEndPoint = 'auth/seller-register/'
+
+    useEffect(() => {
+        if (user) {
+            push('/account/dashbord')
+        }
+    }, [user])
 
     return (
-        //   user?.access ?
-        //   <Page404/>
-        //   :
-        <PageContainer footer={<FooterDefault />} title="Register">
-            <div className="ps-page--my-account">
-                <Meta
-                    title={"Ro'yxatdan o'tish"}
-                    description="Soff.uz - Saytidan hoziroq ro'yxatdan o'ting va o'z mahsulatlaringizni soting"
-                />
-                {/* <BreadCrumb breacrumb={breadCrumb} /> */}
-                <Register url={sallerEndPoint} />
-            </div>
-        </PageContainer>
+        user?.access ?
+            <Page404 />
+            :
+            <PageContainer footer={<FooterDefault />} title="Register">
+                <div className="ps-page--my-account">
+                    <Meta
+                        title={"Ro'yxatdan o'tish"}
+                        description="Soff.uz - Saytidan hoziroq ro'yxatdan o'ting va o'z mahsulatlaringizni soting"
+                    />
+                    {/* <BreadCrumb breacrumb={breadCrumb} /> */}
+                    <Register url={sallerEndPoint} />
+                </div>
+            </PageContainer>
     );
 };
 

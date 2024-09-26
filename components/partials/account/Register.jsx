@@ -39,7 +39,7 @@ class Register extends Component {
         const url = this.props.url;
         if (this.props.url === 'auth/register/') {
             window.location = 'http://api.soff.uz/auth/social/login/customer';
-            const user = await registerGoogleUser(url, this.state.role);
+            const user = await registerGoogleUser(url, 'seller');
             if (user) {
                 if (user.status >= 400 && user.status !== 500) {
                     this.setState({ reportGoogle: true });
@@ -102,11 +102,11 @@ class Register extends Component {
 
 
         this.setState({ report: false });
-        const url = this.props.url;
+        const url = 'auth/new-seller-register/';
         const { registerUser } = useAuth();
 
         if (this.props.router.query.pid || localStorage.getItem('referal')) {
-            const user = await registerUser(`auth/seller-register/${this.props.router.query.pid ? this.props.router.query.pid : localStorage.getItem('referal')}/`, data);
+            const user = await registerUser(`auth/new-seller-register/${this.props.router.query.pid ? this.props.router.query.pid : localStorage.getItem('referal')}/`, data);
             if (user) {
                 if (user.status >= 400 && user.status !== 500) {
                     this.setState({ report: true });
@@ -118,7 +118,7 @@ class Register extends Component {
                     modal.update;
                 } else if (user.status == 200 || user.status == 201) {
                     this.props.dispatch(begin({ id: user.data.first }));
-                    localStorage.setItem('token', user.data.access);
+                    localStorage.setItem('verify_user', user.data.user);
                     localStorage.setItem('tour', true);
                     localStorage.setItem('via_', user?.data?.via_);
                     localStorage.setItem('data', JSON.stringify(data));
@@ -146,7 +146,7 @@ class Register extends Component {
                     modal.update;
                 } else if (user.status == 200 || user.status == 201) {
                     this.props.dispatch(begin({ id: user.data.first }));
-                    localStorage.setItem('token', user.data.access);
+                    localStorage.setItem('verify_user', user.data.user);
                     localStorage.setItem('tour', true);
                     localStorage.setItem('via_', user?.data?.via_);
                     localStorage.setItem('data', JSON.stringify(data));
@@ -163,10 +163,7 @@ class Register extends Component {
                     this.setState({ report: true });
                 }
             }
-
         }
-
-
     };
 
     handleChekked = () => {

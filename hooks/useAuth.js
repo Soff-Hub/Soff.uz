@@ -65,12 +65,10 @@ export default function useAuth() {
     const verifyCode = (e) => {
         const endPoint = 'auth/verify/';
 
-        let config = {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')} `,
-            },
-        };
-        let user = Repository.post(baseUrlAuth + endPoint, e, config)
+        let user = Repository.post(baseUrlAuth + endPoint, {
+            ...e,
+            user: localStorage.getItem('verify_user'),
+        })
             .then((ress) => {
                 return ress;
             })
@@ -91,12 +89,10 @@ export default function useAuth() {
 
     const NewVerifyCode = (e) => {
         const endPoint = 'auth/reset-password-verify/';
-        let config = {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('qayta_token')} `,
-            },
-        };
-        let user = Repository.post(baseUrlAuth + endPoint, e, config)
+        let user = Repository.post(baseUrlAuth + endPoint, {
+            ...e,
+            user: localStorage.getItem('verify_user'),
+        })
             .then((ress) => {
                 return ress;
             })
@@ -117,14 +113,13 @@ export default function useAuth() {
 
     const qaytaKodYuborish = (data) => {
         let endPoint = 'auth/get-new-code/';
-        let config = {
-            Authorization: `Bearer ${localStorage.getItem('token')} `,
-        };
         let user = Repository({
             url: baseUrlAuth + endPoint,
             method: 'POST',
-            headers: config,
-            data: data,
+            data: {
+                ...data,
+                user: localStorage.getItem('verify_user'),
+            },
         })
             .then((ress) => {
                 return ress;
@@ -145,14 +140,13 @@ export default function useAuth() {
     };
     const qaytaKodYuborishParol = (data) => {
         let endPoint = 'auth/get-new-code/';
-        let config = {
-            Authorization: `Bearer ${localStorage.getItem('qayta_token')} `,
-        };
         let user = Repository({
             url: baseUrlAuth + endPoint,
             method: 'POST',
-            headers: config,
-            data: data,
+            data: {
+                ...data,
+                user: localStorage.getItem('verify_user'),
+            },
         })
             .then((ress) => {
                 return ress;
@@ -175,7 +169,10 @@ export default function useAuth() {
     const qaytaRaqamYuborishAuth = (e) => {
         let endPoint = 'auth/reset-password/';
 
-        let user = Repository.post(baseUrlAuth + endPoint, e)
+        let user = Repository.post(baseUrlAuth + endPoint, {
+            ...e,
+            user: localStorage.getItem('verify_user'),
+        })
             .then((ress) => {
                 return ress;
             })
@@ -196,12 +193,7 @@ export default function useAuth() {
 
     const qaytaParolYuborishAuth = (e) => {
         let endPoint = 'auth/reset-password-confirm/';
-        let config = {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('qayta_token')} `,
-            },
-        };
-        let user = Repository.post(baseUrlAuth + endPoint, e, config)
+        let user = Repository.post(baseUrlAuth + endPoint, e)
             .then((ress) => {
                 return ress;
             })
@@ -247,7 +239,7 @@ export default function useAuth() {
 
     const feedbackPost = (e) => {
         let endPoint = 'customer/feedback-create/';
-       
+
         let user = Repository.post(baseUrl + endPoint, e)
             .then((ress) => {
                 return ress;
@@ -278,6 +270,6 @@ export default function useAuth() {
         logOutAuth,
         qaytaKodYuborishParol,
         feedbackPost,
-        registerGoogleUser
+        registerGoogleUser,
     };
 }
