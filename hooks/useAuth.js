@@ -21,7 +21,7 @@ export default function useAuth() {
         return user;
     };
     const registerGoogleUser = (url, e) => {
-        let user = Repository.get(baseUrlAuth + `auth/new-social/login/${e}`)
+        let user = Repository.get(baseUrlAuth + `auth/social/login/${e}`)
             .then((ress) => {
                 return ress;
             })
@@ -56,7 +56,7 @@ export default function useAuth() {
     };
 
     const verifyCode = (e) => {
-        const endPoint = 'auth/new-verify/';
+        const endPoint = 'auth/verify/';
         let user = Repository.post(baseUrlAuth + endPoint, {
             ...e,
             user: localStorage.getItem('token'),
@@ -106,7 +106,7 @@ export default function useAuth() {
     };
 
     const qaytaKodYuborish = (data) => {
-        let endPoint = 'auth/new-get-new-code/';
+        let endPoint = 'auth/get-new-code/';
         // let endPoint = 'auth/get-new-code/';
         let config = {
             Authorization: `Bearer ${localStorage.getItem('token')} `,
@@ -135,7 +135,7 @@ export default function useAuth() {
         return user;
     };
     const qaytaKodYuborishParol = (data) => {
-        let endPoint = 'auth/new-get-new-code/';
+        let endPoint = 'auth/get-new-code/';
         // let endPoint = 'auth/get-new-code/';
         let config = {
             Authorization: `Bearer ${localStorage.getItem('qayta_token')} `,

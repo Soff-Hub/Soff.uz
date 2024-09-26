@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import BreadCrumb from '~/components/elements/BreadCrumb';
 import PageContainer from '~/components/layouts/PageContainer';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
 import Meta from '~/components/shared/headers/Meta';
 import RegisterCustomer from '~/components/partials/account/RegisterCustomer';
+import Router from 'next/router';
 
 const RegisterPage = () => {
     const breadCrumb = [
@@ -17,7 +18,11 @@ const RegisterPage = () => {
         },
     ];
     // const sallerEndPoint = query?.role === 'customer' ? 'auth/new-register/' : 'auth/seller-register/';
-    const sallerEndPoint = 'auth/new-register/'
+    const sallerEndPoint = 'auth/register/'
+
+    useEffect(() => {
+        Router.push('/auth/login')
+    }, [])
 
     return (
         //   user?.access ?
