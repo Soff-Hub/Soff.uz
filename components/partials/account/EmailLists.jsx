@@ -66,7 +66,7 @@ const EmailLists = () => {
                         <div>
                             <ul style="list-style-type: none; display: flex; align-items: center; gap: 15px; font-size: 14px;">
                                 <li style="display: inline-block; margin-right: 10px;"><a href="https://soff.uz" target="_blank" style="text-decoration: none; color: #fff;">Bosh sahifa</a></li>
-                                <li style="display: inline-block;"><a href="https://soff.uz/account/dashbord" target="_blank" style="text-decoration: none; color: #fff;">Profil</a></li>
+                                <li style="display: inline-block;"><a href="https://seller.soff.uz/account/dashbord" target="_blank" style="text-decoration: none; color: #fff;">Profil</a></li>
                             </ul>
                         </div>
                     </div>
@@ -123,7 +123,7 @@ const EmailLists = () => {
                         <div>
                             <ul style="list-style-type: none; display: flex; align-items: center; gap: 15px; font-size: 14px;">
                                 <li style="display: inline-block; margin-right: 10px;"><a href="https://soff.uz" target="_blank" style="text-decoration: none; color: #fff;">Bosh sahifa</a></li>
-                                <li style="display: inline-block;"><a href="https://soff.uz/account/dashbord" target="_blank" style="text-decoration: none; color: #fff;">Profil</a></li>
+                                <li style="display: inline-block;"><a href="https://seller.soff.uz/account/dashbord" target="_blank" style="text-decoration: none; color: #fff;">Profil</a></li>
                             </ul>
                         </div>
                     </div>
