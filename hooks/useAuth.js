@@ -21,19 +21,12 @@ export default function useAuth() {
         return user;
     };
     const registerGoogleUser = (url, e) => {
-        let user = Repository.get(baseUrlAuth + `auth/social/login/${e}`)
+        let user = Repository.get(baseUrlAuth + `auth/new-social/login/${e}`)
             .then((ress) => {
                 return ress;
             })
             .catch((error) => {
-                if (error.response) {
-                    return error.response;
-                } else if (error.request) {
-                    console.log(error.request);
-                } else {
-                    console.log('Error', error.message);
-                }
-                console.log(error.config);
+                return Promise.reject(error)
             });
 
         return user;
