@@ -38,7 +38,7 @@ const VideoDetailShoppingActions = ({ product }) => {
             dispatch(OneShopDoc(product));
             Router.push(`/account/checkout-one?id=${product?.id}`);
         } else {
-            Router.push(`/account/login?id=${product?.id}`);
+            Router.push(`/auth/login?id=${product?.id}`);
         }
     }
 

@@ -13,7 +13,7 @@ const Tanishish = () => {
     },
     {
       text: 'Ro\'yxatdan o\'tish',
-      url: '/account/register'
+      url: '/auth/login'
     },
     {
       text: 'Shartlar bilan tanishish'
