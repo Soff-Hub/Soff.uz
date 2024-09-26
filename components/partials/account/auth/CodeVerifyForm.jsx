@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Form, Input } from 'antd';
+import { Form, Input, Modal } from 'antd';
 import { BeatLoader } from 'react-spinners';
 import Axios from 'axios';
 import { useRouter } from 'next/router';
@@ -23,7 +23,6 @@ export default function CodeVerifyForm() {
 
     const handleSubmit = async ({ code }) => {
         setLoading(true)
-
         const data = {
             user: router?.query?.user,
             code
@@ -31,41 +30,33 @@ export default function CodeVerifyForm() {
 
         try {
             const resp = await Axios.post(baseUrlAuth + 'auth/new-verify/', data)
-
             dispatch(login({
-                user: resp.data, data: {
-                    role: 'customer',
-                    email: ''
-                }
+                user: resp.data,
+                data: JSON.parse(localStorage.getItem('data'))
             }));
-            // if (id) {
-            //     router.push(`/account/checkout-one?id=${id}`);
-            // } else if (deal) {
-            //     router.push(
-            //         `/account/all-orders`
-            //     );
-            // }
 
-            // else {
-            //     if (user?.role === 'seller' || user.role === 'admin') {
-            //         router.push('/account/dashbord');
-            //     } else {
-            //         router.push('/account/sellerproducts');
-            //     }
-            // }
-            router.push('/account/sellerproducts');
+            if (router?.query?.returnUrl) {
+                router.push(router?.query?.returnUrl)
+            }
+            else if (router?.query?.id) {
+                router.push(`/account/checkout-one?id=${router?.query?.id}`);
+            } else if (router?.query?.deal) {
+                router.push(
+                    `/account/all-orders`
+                );
+            } else {
+                router.push('/account/sellerproducts');
+            }
         } catch (err) {
-            console.log('err ', err);
+            setLoading(false)
+            const modal = Modal.error({
+                centered: true,
+                title: 'Xatolik',
+                content: err?.response?.data?.msg,
+            });
+            modal.update
         }
-        setLoading(false)
     }
-
-    const onChange = (text) => {
-        return Number(text)
-    };
-    const sharedProps = {
-        onChange,
-    };
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -101,7 +92,6 @@ export default function CodeVerifyForm() {
                             <Input.OTP
                                 size='large'
                                 length={4}
-                                {...sharedProps}
                             />
                         </Form.Item>
 
