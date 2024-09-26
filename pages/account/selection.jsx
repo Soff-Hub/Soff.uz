@@ -22,9 +22,9 @@ const Selection = () => {
                         <div className='register-choose-button-parent_div' >
                             <Link
 
-                                href={id ? `/account/login?role=customer&id=${id}` :
-                                    deal ? `/account/login?role=customer&deal=${deal}` :
-                                        `/account/register?role=customer`}>
+                                href={id ? `/auth/login?id=${id}` :
+                                    deal ? `/auth/login?deal=${deal}` :
+                                        `/auth/login`}>
                                 <a className="register-choose-button">
                                     <div>
                                         <i className="fa-solid fa-user-tie fa-2xl"></i>
@@ -35,9 +35,9 @@ const Selection = () => {
                         </div>
                         <div className='register-choose-button-parent_div' >
                             <Link
-                                href={id ? `/account/login?role=seller&id=${id}` :
-                                    deal ? `/account/login?role=seller&deal=${deal}` :
-                                        `/account/register?role=seller`}>
+                                href={id ? `/auth/login?id=${id}` :
+                                    deal ? `/auth/login?deal=${deal}` :
+                                        `/auth/login`}>
 
                                 <a className="register-choose-button">
                                     <div>

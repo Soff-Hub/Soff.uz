@@ -27,9 +27,9 @@ const MobileHeaderActions = ({ auth }) => {
                 </Link> */}
 
                 <Link href={
-                    (id) ? `/account/register?id=${id}&role=customer` :
-                        (deal) ? `/account/register?deal=${deal}` :
-                            "/account/register?role=customer"
+                    (id) ? `/auth/login?id=${id}` :
+                        (deal) ? `/auth/login?deal=${deal}` :
+                            "/auth/login"
                 }>
                     <a>Kirish</a>
                 </Link>
@@ -152,9 +152,9 @@ const MobileHeaderActions = ({ auth }) => {
                 //     </a>
                 // </Dropdown>
                 <Link href={
-                    (id) ? `/account/register?id=${id}&role=customer` :
-                        (deal) ? `/account/register?deal=${deal}` :
-                            "/account/register?role=customer"
+                    (id) ? `/auth/login?id=${id}` :
+                        (deal) ? `/auth/login?deal=${deal}` :
+                            "/auth/login"
                 }>
                     <a className='d-flex align-items-center'>
                         <a href="#" className="header__extra ps-user--mobile m-0">

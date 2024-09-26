@@ -175,7 +175,7 @@ const AccountMenuSidebar = ({ setMenuDrawer, setCategoriesDrawer }) => {
     }, [user?.access]);
 
     function copyToClipboard() {
-        const textToCopy = `https://soff.uz/account/register/${profile?.code}`;
+        const textToCopy = `https://soff.uz/auth/login/${profile?.code}`;
         const textArea = document.createElement('textarea');
         textArea.value = textToCopy;
         document.body.appendChild(textArea);

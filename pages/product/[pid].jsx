@@ -143,7 +143,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                 dispatch(OneShopDoc(product));
                 router.push(`/account/checkout-one?id=${product?.id}`);
             } else {
-                router.push(`/account/login?id=${product?.id}`);
+                router.push(`/auth/login?id=${product?.id}`);
             }
         }
     };

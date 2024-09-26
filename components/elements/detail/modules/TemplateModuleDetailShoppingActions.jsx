@@ -43,7 +43,7 @@ const TemplateModuleDetailShoppingActions = ({ product, demo }) => {
             dispatch(OneShopDoc(product));
             Router.push(`/account/checkout-one?id=${product?.id}`);
         } else {
-            Router.push(`/account/register?id=${product?.id}&role=customer`);
+            Router.push(`/auth/login?id=${product?.id}`);
         }
     }
 

@@ -254,9 +254,9 @@ class Register extends Component {
 
                             <div className="d-flex justify-content-center align-items-center flex-column mb-4">
                                 <Link href={
-                                    (id) ? `/account/register?id=${id}&role=customer` :
-                                        (deal) ? `/account/register?deal=${deal}` :
-                                            "/account/selection"
+                                    (id) ? `/auth/login/?id=${id}` :
+                                        (deal) ? `/auth/login/?deal=${deal}` :
+                                            "/auth/login"
                                 }>
                                     <a style={{ fontSize: "28px", fontWeight: 700 }}>Ro'yxatdan o'tish</a>
                                 </Link>
@@ -265,9 +265,9 @@ class Register extends Component {
                                     <span className='register_title' style={{ fontSize: "16px", fontWeight: 500 }}>Hisobingiz bormi?</span>
 
                                     <Link style={{ fontSize: "12px" }} href={
-                                        (id) ? `/account/login?id=${id}` :
-                                            (deal) ? `/account/login?deal=${deal}` :
-                                                "/account/login"
+                                        (id) ? `/auth/login?id=${id}` :
+                                            (deal) ? `/auth/login?deal=${deal}` :
+                                                "/auth/login"
                                     }
                                     >
 
