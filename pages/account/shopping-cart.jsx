@@ -74,7 +74,7 @@ const ShoppingCartScreen = () => {
                                     </Link>
 
                                 ) : (
-                                    <Link href="/auth/login">
+                                    <Link href="/auth/login?returnUrl=/account/shopping-cart">
                                         <a className="ps-btn ps-btn--fullwidth btn_color ">
                                             Sotib olish
                                         </a>

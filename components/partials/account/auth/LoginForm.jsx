@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Form, Input, Segmented } from 'antd';
+import { Form, Input, Modal, Segmented } from 'antd';
 import { MailOutlined, PhoneOutlined } from '@ant-design/icons';
 import GoogleBox from './GoogleBox';
 import { BeatLoader } from 'react-spinners';
@@ -26,11 +26,19 @@ export default function LoginForm() {
             const resp = await Axios.post(baseUrlAuth + 'auth/new-register/', data)
             localStorage.setItem('via_', resp?.data?.via_);
             localStorage.setItem('data', JSON.stringify(data));
-            router.push(`/auth/code-verify?user=${resp.data?.user}`)
+            router.push({
+                query: { ...router.query, user: resp.data?.user },
+                pathname: '/auth/code-verify'
+            })
         } catch (err) {
-            console.log('err ', err);
+            setLoading(false)
+            const modal = Modal.error({
+                centered: true,
+                title: 'Xatolik',
+                content: err?.response?.data?.msg,
+            });
+            modal.update;
         }
-        setLoading(false)
     }
 
 
