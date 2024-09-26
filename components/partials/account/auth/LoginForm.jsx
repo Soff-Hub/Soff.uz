@@ -23,7 +23,7 @@ export default function LoginForm() {
         }
 
         try {
-            const resp = await Axios.post(baseUrlAuth + 'auth/new-register/', data)
+            const resp = await Axios.post(baseUrlAuth + 'auth/register/', data)
             localStorage.setItem('via_', resp?.data?.via_);
             localStorage.setItem('data', JSON.stringify(data));
             router.push({

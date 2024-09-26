@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import BreadCrumb from '~/components/elements/BreadCrumb';
 import Login from '~/components/partials/account/Login';
@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import Page404 from '../page/page-404';
 import { PacmanLoader } from 'react-spinners';
 import Meta from '~/components/shared/headers/Meta';
+import Router from 'next/router';
 
 const LoginPage = () => {
     const { user } = useSelector((state) => state.auth);
@@ -20,6 +21,11 @@ const LoginPage = () => {
             text: 'Kirish',
         },
     ];
+
+    useEffect(() => {
+        Router.push('/auth/login')
+    }, [])
+
     return user ? (
         <div
             style={{
