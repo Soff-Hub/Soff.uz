@@ -1,4 +1,4 @@
-import { Card } from 'antd';
+import { Card, Tooltip } from 'antd';
 import React, { useEffect, useState } from 'react';
 
 export default function MarketingChartProduct({ config, colors }) {
@@ -74,12 +74,14 @@ export default function MarketingChartProduct({ config, colors }) {
     return <div>Loading...</div>;
   }
 
-  if (props) {
-
-  }
-
   return (
     <div style={{ position: 'relative' }}>
+      <Tooltip title={config.title?.description} color={'#00A44F'} key={'#00A44F'}>
+        <p className='d-flex gap-2 align-items-center justify-content-center' style={{ cursor: 'pointer' }}>
+          <span>{config.title?.title}</span>
+          <i className='fa-regular fa-circle-question text-black'></i>
+        </p>
+      </Tooltip>
       <div id="chart-circle">
         {props?.series?.some((el) => Number(el) > 0)
           ? <ReactApexcharts options={props.options} series={props.series} type="pie" width={'100%'} />
