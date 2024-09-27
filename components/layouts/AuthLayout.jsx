@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, EffectFade } from 'swiper/modules';
@@ -7,12 +7,22 @@ import 'swiper/css';
 import 'swiper/css/effect-fade';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
 
 export default function AuthLayout({ children }) {
 
     const images = ['1', '4', '6', '8', '10', '12', '13', '14', '16', '18']
     const router = useRouter();
     const { deal, id } = router?.query
+
+
+    const { user } = useSelector(state => state.auth)
+
+    useEffect(() => {
+        if (user) {
+            router.push('/account/dashbord')
+        }
+    }, [user])
 
     return (
         <div className='row bg-white' style={{ height: '100vh', overflow: 'hidden' }} >

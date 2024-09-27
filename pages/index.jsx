@@ -1,18 +1,24 @@
 
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
-import Register from '~/components/partials/account/Register';
+import { useSelector } from 'react-redux';
+import PageLoader from '~/components/elements/common/PageLoader';
 
 const HomepageDefaultPage = () => {
     const { push } = useRouter()
+    const { user } = useSelector(state => state.auth)
 
     useEffect(() => {
-        push('/account/register')
-    }, [])
+        if (user) {
+            push('/account/dashbord')
+        } else {
+            push('/account/register')
+        }
+    }, [user])
 
     return (
         <div className="ps-page--my-account">
-            <Register url={'auth/seller-register/'} />
+            <PageLoader />
         </div>
     );
 };
