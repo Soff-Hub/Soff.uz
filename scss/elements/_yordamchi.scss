@@ -2402,3 +2402,40 @@
 .ps-page--account {
     padding: 50px;
 }
+
+.sotuvchi-boling {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    cursor: pointer;
+    width: auto !important;
+
+    p {
+        margin: 0 !important;
+        color: white;
+    }
+    a {
+        margin: 0 !important;
+        color: white !important;
+        display: flex;
+        align-items: center;
+    }
+    i {
+        color: white;
+    }
+}
+
+.sotuvchi-boling-2 {
+    gap: 20px;
+}
+
+.header-topsection {
+    background-color: #1b3a4a;
+    padding: 3px 0;
+
+    .container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+}

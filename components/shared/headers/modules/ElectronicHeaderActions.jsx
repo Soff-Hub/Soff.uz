@@ -126,11 +126,11 @@ const ElectronicHeaderActions = ({ auth }) => {
                 </a>
             </Link> */}
 
-            <Link href="/page/about-us">
+            {/* <Link href="/page/about-us">
                 <a className="header__extra">
                     <i className="fa-regular fa-circle-question"></i>
                 </a>
-            </Link>
+            </Link> */}
             {user?.access ? (
                 <Link href={`/account/notification`}>
                     <a className="header__extra" style={{ cursor: 'pointer' }}>
