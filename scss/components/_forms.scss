@@ -1,11 +1,9 @@
-
-
 .ps-form--quick-search {
     display: flex;
     flex-flow: row nowrap;
     position: relative;
 
-    >* {
+    > * {
         flex-basis: 100%;
     }
 
@@ -35,7 +33,7 @@
         width: 100%;
         position: relative;
 
-        >.ps-form__action {
+        > .ps-form__action {
             @include vertical-align();
             right: 0;
             display: flex;
@@ -141,8 +139,6 @@
     }
 }
 
-
-
 .ps-form--contact-us {
     .form-control {
         background-color: #ffffff;
@@ -162,19 +158,12 @@
     max-width: 430px;
     margin: 0 auto !important;
     display: flex;
-
 }
-
-
 
 .ps-form--account {
     max-width: 500px;
-    margin: 0 auto !important;
-    background-color: #fff;
-    padding: 30px 40px 20px 40px;
-    border-radius: 30px;
-    box-shadow: 0 20px 30px rgba(4, 18, 38, .08);
-
+    padding: 30px 50px;
+    margin-top: 45px;
 
     @extend %list-reset;
 
@@ -207,7 +196,7 @@
             padding-right: 100px;
         }
 
-        >a {
+        > a {
             @include vertical-align();
             right: 10px;
             color: #06c;
@@ -219,7 +208,7 @@
     }
 
     .ps-checkbox {
-        >label {
+        > label {
             color: $color-heading;
         }
     }
@@ -278,11 +267,7 @@
     .ps-form__footer {
         padding: 30px 30px;
     }
-
-
 }
-
-
 
 .ps-form--search-mobile {
     input {
@@ -304,8 +289,6 @@
     }
 }
 
-
-
 .ps-form--checkout {
     .ps-form__heading {
         margin-bottom: 20px;
@@ -322,12 +305,18 @@
     }
 }
 
+@media (max-width: 768px) {
+    .auth-img {
+        display: none;
+    }
+}
 
-@media (max-width:520px) {
+
+@media (max-width: 520px) {
     .ps-form--account {
         padding: 20px;
         border-radius: 20px;
-        .register_title{
+        .register_title {
             font-size: 14px !important;
         }
     }

@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react';
 
-// import BreadCrumb from '~/components/elements/BreadCrumb';
 import Login from '~/components/partials/account/Login';
-import PageContainer from '~/components/layouts/PageContainer';
-import FooterDefault from '~/components/shared/footers/FooterDefault';
 import { useSelector } from 'react-redux';
 import Page404 from '../page/page-404';
 import { PacmanLoader } from 'react-spinners';
 import Meta from '~/components/shared/headers/Meta';
 import { useRouter } from 'next/router';
+import AuthLayout from '~/components/layouts/AuthLayout';
+import Head from 'next/head';
 
 const LoginPage = () => {
     const { user } = useSelector((state) => state.auth);
@@ -44,7 +43,10 @@ const LoginPage = () => {
         user?.access ?
             <Page404 /> :
             (
-                <PageContainer footer={<FooterDefault />} title="Login">
+                <AuthLayout>
+                    <Head>
+                        <title>Soff.uz da sotuvchi bo'ling </title>
+                    </Head>
                     <div className="ps-page--my-account">
                         <Meta
                             title={"Kirish"}
@@ -53,7 +55,7 @@ const LoginPage = () => {
                         {/* <BreadCrumb breacrumb={breadCrumb} /> */}
                         <Login />
                     </div>
-                </PageContainer>
+                </AuthLayout>
             )
 };
 

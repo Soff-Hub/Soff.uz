@@ -1,8 +1,6 @@
 
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import PageContainer from '~/components/layouts/PageContainer';
 import Register from '~/components/partials/account/Register';
 
 const HomepageDefaultPage = () => {
@@ -13,11 +11,9 @@ const HomepageDefaultPage = () => {
     }, [])
 
     return (
-        <PageContainer title="Soff Seller">
-            <div className="ps-page--my-account">
-                <Register url={'auth/seller-register/'} />
-            </div>
-        </PageContainer>
+        <div className="ps-page--my-account">
+            <Register url={'auth/seller-register/'} />
+        </div>
     );
 };
 
