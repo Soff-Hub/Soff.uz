@@ -27,7 +27,16 @@ export default function MarketingProductChart() {
             params: { ...query }
         })
         let result = []
-        const names = ['Mahsulotlar', "Ko'rishlar", "Sotuvlar"]
+        const names = [{
+            title: "Mahsulotlar",
+            description: "Saytdagi barcha mahsulotlar quyidagi sohalarga ajratilgan va mahsulotlar soni foizlarda (%) berilgan"
+        }, {
+            title: "Ko'rishlar",
+            description: "Saytdagi barcha mahsulotlar quyidagi sohalarga ajratilgan va mahsulotlarning ko'rishlar soni foizlarda (%) berilgan"
+        }, {
+            title: "Sotuvlar",
+            description: "Saytdagi barcha mahsulotlar quyidagi sohalarga ajratilgan va mahsulotlarning sotuvlar soni foizlarda (%) berilgan"
+        }]
         for (let i = 0; i < 3; i++) {
             let series = []
             let labels = []
@@ -59,7 +68,7 @@ export default function MarketingProductChart() {
 
     return (
         <div className=''>
-            <div className='d-flex justify-content-between flex-wrap'>
+            <div className='d-flex justify-content-between'>
                 {
                     loading ? [1, 2, 3].map(el => (
                         <div className='d-flex pt-2 justify-content-between' key={el}>

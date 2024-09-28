@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { SidebarContext } from '~/hooks/SidebarContext';
 
 export default function MarketingCategoryAnalyzeChart({ labels, series }) {
   const [isClient, setIsClient] = useState(false);
   const [ReactApexcharts, setReactApexcharts] = useState(null);
+  const { collapse } = useContext(SidebarContext)
 
   useEffect(() => {
     setIsClient(true);
@@ -61,7 +63,7 @@ export default function MarketingCategoryAnalyzeChart({ labels, series }) {
             name: "Sotuv statistikasi"
           }]}
             type="area"
-            width={'100%'}
+            width={collapse ? 340 : 470}
           />
           : <div style={{ position: 'relative' }} className='h-100'>
             <ReactApexcharts options={props.options} series={[{
@@ -69,7 +71,7 @@ export default function MarketingCategoryAnalyzeChart({ labels, series }) {
               name: "Sotuv statistikasi"
             }]}
               type="area"
-              width={'100%'}
+              width={collapse ? 300 : 400}
             />
             <div className='chart-blur'>
               <p>Statistikani shakllantirish uchun ma'lumot yetarli emas</p>

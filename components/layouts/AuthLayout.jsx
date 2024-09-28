@@ -7,22 +7,23 @@ import 'swiper/css';
 import 'swiper/css/effect-fade';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { isLoginning } from '~/store/auth/action';
 
 export default function AuthLayout({ children }) {
 
     const images = ['1', '4', '6', '8', '10', '12', '13', '14', '16', '18']
     const router = useRouter();
     const { deal, id } = router?.query
+    const dispatch = useDispatch()
 
-
-    const { user } = useSelector(state => state.auth)
+    const defaultRoutePage = () => {
+        dispatch(isLoginning());
+    };
 
     useEffect(() => {
-        if (user) {
-            router.push('/account/dashbord')
-        }
-    }, [user])
+        defaultRoutePage();
+    }, []);
 
     return (
         <div className='row bg-white' style={{ height: '100vh', overflow: 'hidden', width: '100%' }} >

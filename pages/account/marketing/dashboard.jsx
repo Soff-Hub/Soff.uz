@@ -6,7 +6,6 @@ import { useSelector } from 'react-redux';
 import Meta from '~/components/shared/headers/Meta';
 import Page404 from '~/pages/page/page-404';
 import Selection from '../selection';
-import AccountMenuSidebar from '~/components/partials/account/modules/AccountMenuSidebar';
 import MarketingDashboard from '~/components/partials/account/marketing/MarketingDashboard';
 import SidebarLayout from '~/components/partials/SidebarLayout';
 
@@ -34,9 +33,7 @@ const Application = () => {
                     <BreadCrumb breacrumb={breadCrumb} />
 
                     <section className="ps-my-account ps-page--account pb-5">
-                        <div className="container"
-                            // style={{ maxWidth: '100%' }}
-                        >
+                        <div className="container">
                             <div className="row" style={{ alignItems: "flex-start" }}>
                                 <SidebarLayout accountLinks={accountLinks}>
                                     <div className='ps-page__content'>
