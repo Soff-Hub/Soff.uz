@@ -552,7 +552,10 @@ const Posts = () => {
                                                 onSearch={onSearch}>
                                                 {
                                                     dataCategory?.length > 0 && dataCategory?.map(item => (
-                                                        <Option key={item?.name}  >{item?.name}</Option>
+                                                        <Option key={item.name} style={{ lineHeight: '18px' }}>
+                                                            <span>{item.name}</span>
+                                                            <p className='m-0 fs-6' style={{ color: '#333' }}>{item?.field}</p>
+                                                        </Option>
                                                     ))
                                                 }
                                             </Select>

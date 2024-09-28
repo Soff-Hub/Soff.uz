@@ -62,7 +62,7 @@ const AudioPosts = () => {
         },
     ];
 
- 
+
 
     async function GetItemsCategoryLists() {
         const ItemsData = await GetRepository.getAllCategoryListsAudio();
@@ -142,7 +142,10 @@ const AudioPosts = () => {
     }
     for (let i = 0; i < dataCategory?.length; i++) {
         options.push(
-            <Option key={dataCategory[i].name}>{dataCategory[i].name}</Option>
+            <Option key={dataCategory[i].name} style={{ lineHeight: '18px' }}>
+                <span>{dataCategory[i].name}</span>
+                <p className='m-0 fs-6' style={{ color: '#333' }}>{dataCategory[i]?.field}</p>
+            </Option>
         );
     }
 

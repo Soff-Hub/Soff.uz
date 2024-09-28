@@ -63,6 +63,7 @@ const Posts = () => {
     const onChange = async (e) => {
         category_id.length = 0;
         setCategoryName(e);
+
         for (let j = 0; j < dataCategory.length; j++) {
             if (dataCategory[j].name === e) {
                 category_id.push(dataCategory[j].id);
@@ -136,7 +137,10 @@ const Posts = () => {
 
     for (let i = 0; i < dataCategory?.length; i++) {
         options.push(
-            <Option key={dataCategory[i].name}>{dataCategory[i].name}</Option>
+            <Option key={dataCategory[i].name} style={{ lineHeight: '18px' }}>
+                <span>{dataCategory[i].name}</span>
+                <p className='m-0 fs-6' style={{ color: '#333' }}>{dataCategory[i].field}</p>
+            </Option>
         );
     }
 
@@ -255,10 +259,7 @@ const Posts = () => {
 
     }
 
-
-
-
-    return user?.role === 'seller'  ? (
+    return user?.role === 'seller' ? (
         <PageContainer
             footer={<FooterDefault />}
             title="Recent Viewed Products">
@@ -397,7 +398,7 @@ const Posts = () => {
                                         }}
                                         onChange={onChange}
                                         onSearch={onSearch}
-
+                                    // value={categoryName}
                                     >
                                         {options}
                                     </Select>
