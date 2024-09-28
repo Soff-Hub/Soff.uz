@@ -14,12 +14,8 @@ const CodeVerifyPage = () => {
             url: '/',
         },
         {
-            text: "Kirish",
-            url: '/auth/login'
-        },
-        {
-            text: "Tasdiqlash",
-        },
+            text: "Kod tasdiqlash",
+        }
     ];
 
     return (
