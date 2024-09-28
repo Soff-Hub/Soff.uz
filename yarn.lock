@@ -3226,7 +3226,7 @@ antd-tools@^7.7.1:
     webpack-merge "^4.2.1"
     webpackbar "^3.2.0"
 
-antd@^5.8.4, antd@>=4.0.0:
+antd@^5.21.1, antd@>=4.0.0:
   version "5.21.1"
   resolved "https://registry.npmjs.org/antd/-/antd-5.21.1.tgz"
   integrity sha512-JBNv11RmZj5npBp77eyHPVp+ona1YcqCNxJF4kJ1CTXvCittqyMyXL+PLN3dXRIIDFQ8NYlf+v/Yn2pHZXXknA==
