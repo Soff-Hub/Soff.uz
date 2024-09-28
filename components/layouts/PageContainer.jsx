@@ -100,6 +100,11 @@ export let accountSellerLink = [
         icon: 'fa-solid fa-shop-lock',
     },
     {
+        text: 'Marketing',
+        url: '/account/marketing',
+        icon: 'fa-solid fa-chart-simple',
+    },
+    {
         text: 'Birjaga chiqarish',
         url: '/account/selling',
         icon: 'fa-brands fa-shopify',
