@@ -234,6 +234,7 @@ class Login extends Component {
                                 type="email"
                                 placeholder="Elektron pochta"
                                 onKeyDown={this.handleEnterKeyPress}
+                                autoComplete='email'
                             />
                         </Form.Item> :
 
@@ -253,7 +254,7 @@ class Login extends Component {
 
                             ]}>
                             <Input
-                                autoComplete="off"
+                                autoComplete='phone'
                                 style={{ height: "50px", fontSize: "16px" }}
                                 type='text'
                                 value={this.state.phone}

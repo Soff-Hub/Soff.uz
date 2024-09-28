@@ -305,6 +305,7 @@ class Register extends Component {
                                 type="email"
                                 placeholder="Elektron pochta"
                                 onKeyDown={this.handleEnterKeyPress}
+                                autoComplete='email'
                             />
                         </Form.Item> :
                         <Form.Item
@@ -323,7 +324,7 @@ class Register extends Component {
 
                             ]}>
                             <Input
-                                autoComplete="off"
+                                autoComplete="phone"
                                 style={{ height: "50px", fontSize: "16px" }}
                                 type='text'
                                 value={this.state.phone}
@@ -332,7 +333,6 @@ class Register extends Component {
                                 maxLength={9} // 9 belgidan ortiq kiritishni cheklash
                                 onKeyDown={this.handleKeyDown}
                                 addonBefore="+998" // Prefiksni qo'shish
-
 
                             />
                         </Form.Item>
