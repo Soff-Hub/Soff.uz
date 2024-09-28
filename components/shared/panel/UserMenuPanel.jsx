@@ -424,20 +424,20 @@ const AccountMenuSidebar = ({ setMenuDrawer, setCategoriesDrawer }) => {
                     {accountLinks.map((link, index) => (
                         <>
                             {
-                                link?.url == '/account/selling' ? <Badge.Ribbon key={link?.url} text="Yangi funksiya" color='blue'>
-                                    <Card size="small">
-                                        <li  >
-                                            <Link
-                                                href={link?.url}
-                                                style={{
-                                                    cursor: 'pointer',
-                                                }}>
-                                                <a className="d-flex align-items-center">
-                                                    <img src='/static/img/birja-icon.png' height={20} width={20} className='me-2' />
-                                                    {link.text}
+                                link?.url == '/account/marketing' ? <Badge.Ribbon key={link?.url} text="Yangi funksiya" color='blue'>
+                                    <Card size="small" style={{ backgroundColor: 'rgba(0, 0, 0, 0.04)', borderRadius: 0 }}>
+                                        <li key={link.text}>
+                                            <Link href={link.url}>
+                                                <a>
+                                                    {' '}
+                                                    <span>
+                                                        <i
+                                                            className={` text-dark fs-4 me-2  ${link.icon}`}></i>{' '}
+                                                    </span>{' '}
+                                                    {link.text}{' '}
                                                 </a>
                                             </Link>
-                                        </li >
+                                        </li>
                                     </Card>
                                 </Badge.Ribbon> : link?.url === 'b' ? (
                                     <Badge.Ribbon

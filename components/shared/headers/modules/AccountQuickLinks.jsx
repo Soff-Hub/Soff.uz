@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import { logOut } from '~/store/auth/action';
@@ -7,6 +7,7 @@ import useAuth from '~/hooks/useAuth';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import Router, { useRouter } from 'next/router';
 import { setSavedPrfileData } from '~/store/ecomerce/action';
+import { SidebarContext } from '~/hooks/SidebarContext';
 
 const AccountQuickLinks = (props) => {
     const dispatch = useDispatch();
@@ -16,6 +17,7 @@ const AccountQuickLinks = (props) => {
     const { asPath } = useRouter();
     const router = useRouter();
     const { id, deal } = router?.query
+    const { collapse } = useContext(SidebarContext)
 
     const handleLogout = () => {
         const data = {
@@ -74,73 +76,76 @@ const AccountQuickLinks = (props) => {
     // View
     const linksView = accountLinks.map((item) => (
         <>
-            {item?.url === '/account/selling' ? (
-                <Badge.Ribbon key={item?.url} text="Yangi funksiya" color='blue'>
-                    <Card size="small">
-                        <li  >
-                            <Link
-                                href={item?.url}
-                                style={{
-                                    cursor: 'pointer',
-                                }}>
-                                <a className="d-flex align-items-center">
-                                <img src='/static/img/birja-icon.png' height={20} width={20} className='me-2' />
-                                    {item.text}
+            {
+                item?.url === '/account/marketing' ? (
+                    <Badge.Ribbon
+                        key={item?.url}
+                        text={'Yangi funksiya'}
+                        style={{ top: '0' }}
+                        color="blue">
+                        <li key={item.text}>
+                            <Link href={item.url}>
+                                <a>
+                                    {' '}
+                                    <span>
+                                        <i
+                                            className={` text-dark fs-4 me-2  ${item.icon}`}></i>{' '}
+                                    </span>{' '}
+                                    {item.text}{' '}
                                 </a>
                             </Link>
-                        </li >
-                    </Card>
-                </Badge.Ribbon>
-            ) : item?.url === 'b' ? (
-                <Badge.Ribbon key={item?.url} text="Tez kunda" color="volcano">
-                    <Card size="small">
-                        <li  >
-                            <span
-                                style={{
-                                    cursor: 'pointer',
-                                }}>
-                                <a className="d-flex align-items-center">
-                                    <i className="fa-regular fa-handshake text-dark fs-4 me-2 "></i>
-                                    Buyurtma berish
-                                </a>
-                            </span>
-                        </li >
-                    </Card>
-                </Badge.Ribbon>
-            ) : item?.url == '/account/deals' ? (
-                <Badge.Ribbon key={item?.url} text="Yangi funksiya" color="primary">
-                    <Card size="small">
-                        <li>
-                            <Link href={item.url}>
-
-                                <a
+                        </li>
+                    </Badge.Ribbon>
+                ) : item?.url === 'b' ? (
+                    <Badge.Ribbon key={item?.url} text="Tez kunda" color="volcano">
+                        <Card size="small">
+                            <li  >
+                                <span
                                     style={{
                                         cursor: 'pointer',
                                     }}>
                                     <a className="d-flex align-items-center">
-                                        <i className={` text-dark fs-4 me-2  ${item.icon}`}></i>
-                                        Mening bitimlarim
+                                        <i className="fa-regular fa-handshake text-dark fs-4 me-2 "></i>
+                                        Buyurtma berish
                                     </a>
-                                </a>
+                                </span>
+                            </li >
+                        </Card>
+                    </Badge.Ribbon>
+                ) : item?.url == '/account/deals' ? (
+                    <Badge.Ribbon key={item?.url} text="Yangi funksiya" color="primary">
+                        <Card size="small">
+                            <li>
+                                <Link href={item.url}>
 
-                            </Link>
-                        </li>
-                    </Card>
-                </Badge.Ribbon>
-            ) : (
-                <li key={item.text}>
-                    <Link href={item.url}>
-                        <a>
-                            {' '}
-                            <span>
-                                <i
-                                    className={` text-dark fs-4 me-2  ${item.icon}`}></i>{' '}
-                            </span>{' '}
-                            {item.text}{' '}
-                        </a>
-                    </Link>
-                </li>
-            )}
+                                    <a
+                                        style={{
+                                            cursor: 'pointer',
+                                        }}>
+                                        <a className="d-flex align-items-center">
+                                            <i className={` text-dark fs-4 me-2  ${item.icon}`}></i>
+                                            Mening bitimlarim
+                                        </a>
+                                    </a>
+
+                                </Link>
+                            </li>
+                        </Card>
+                    </Badge.Ribbon>
+                ) : (
+                    <li key={item.text}>
+                        <Link href={item.url}>
+                            <a>
+                                {' '}
+                                <span>
+                                    <i
+                                        className={` text-dark fs-4 me-2  ${item.icon}`}></i>{' '}
+                                </span>{' '}
+                                {item.text}{' '}
+                            </a>
+                        </Link>
+                    </li>
+                )}
         </>
     ));
 

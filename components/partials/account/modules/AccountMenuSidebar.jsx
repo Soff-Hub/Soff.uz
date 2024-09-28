@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
@@ -7,6 +7,7 @@ import { Badge, Card, Modal, Tooltip } from 'antd';
 import { formatCurrency } from '~/utilities/product-helper';
 import { addPeriodToThousands } from '../ProductsLists';
 import CalculateTimeDifference from '../DateFormatter';
+import { SidebarContext } from '~/hooks/SidebarContext';
 
 const AccountMenuSidebar = ({ data, menuOpen }) => {
 
@@ -25,6 +26,8 @@ const AccountMenuSidebar = ({ data, menuOpen }) => {
     const [applicationData, setApplicationData] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalOpenCustomer, setIsModalOpenCustomer] = useState(false);
+
+    const { collapse } = useContext(SidebarContext)
 
 
     const showModalCustomer = () => {
