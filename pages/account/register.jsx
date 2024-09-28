@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Register from '~/components/partials/account/Register';
 import { useSelector } from 'react-redux';
@@ -7,6 +7,8 @@ import Meta from '~/components/shared/headers/Meta';
 import { useRouter } from 'next/router';
 import AuthLayout from '~/components/layouts/AuthLayout';
 import Head from 'next/head';
+import PageLoader from '~/components/elements/common/PageLoader';
+import Loader from '../loader';
 
 const RegisterPage = () => {
     const breadCrumb = [
@@ -21,16 +23,15 @@ const RegisterPage = () => {
     const { push } = useRouter()
     const { user } = useSelector(state => state.auth)
     const sallerEndPoint = 'auth/seller-register/'
+    const [loading, setLoading] = useState(true)
 
-    useEffect(() => {
-        if (user) {
-            push('/account/dashbord')
-        }
-    }, [user])
+
+    console.log(user);
+
 
     return (
         user?.access ?
-            <Page404 />
+            <Loader />
             :
             <AuthLayout>
                 <Head>
