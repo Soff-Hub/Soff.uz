@@ -10,6 +10,7 @@ import '~/scss/style.scss';
 import '~/scss/electronic.scss';
 import NextProgress from 'next-progress';
 import { AudioProvider } from '~/hooks/AudioContext';
+import { SidebarProvider } from '~/hooks/SidebarContext';
 
 
 function App({ Component, pageProps }) {
@@ -58,9 +59,11 @@ function App({ Component, pageProps }) {
             />
             <CookiesProvider>
                 <AudioProvider>
-                    <MasterLayout>
-                        <Component {...pageProps} />
-                    </MasterLayout>
+                    <SidebarProvider>
+                        <MasterLayout>
+                            <Component {...pageProps} />
+                        </MasterLayout>
+                    </SidebarProvider>
                 </AudioProvider>
             </CookiesProvider>
         </>

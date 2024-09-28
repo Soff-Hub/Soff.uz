@@ -68,7 +68,7 @@ export default function MarketingProductChart() {
 
     return (
         <div className=''>
-            <div className='d-flex justify-content-between flex-wrap'>
+            <div className='d-flex justify-content-between'>
                 {
                     loading ? [1, 2, 3].map(el => (
                         <div className='d-flex pt-2 justify-content-between' key={el}>

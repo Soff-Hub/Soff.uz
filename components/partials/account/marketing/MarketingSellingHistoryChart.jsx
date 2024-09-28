@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { SidebarContext } from '~/hooks/SidebarContext';
 
 export default function MarketingSellingHistoryChart({ config }) {
     const [isClient, setIsClient] = useState(false);
     const [ReactApexcharts, setReactApexcharts] = useState(null);
+    const { collapse } = useContext(SidebarContext)
 
     useEffect(() => {
         setIsClient(true);  // Brauzerda ekanligini belgilaydi
@@ -71,7 +73,7 @@ export default function MarketingSellingHistoryChart({ config }) {
         <div style={{ position: 'relative', flex: 1, maxWidth: '100%' }} className='d-flex justify-content-center'>
             <div id="chart-circle">
                 {props?.series?.some((el) => Number(el) > 0)
-                    ? <ReactApexcharts options={props.options} series={props.series} type="polarArea" width={'400px'} />
+                    ? <ReactApexcharts options={props.options} series={props.series} type="polarArea" width={collapse ? 350 : 400} />
                     : <div className='chart-blur'>
                         <p>Statistikani shakllantirish uchun ma'lumot yetarli emas</p>
                     </div>}

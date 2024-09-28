@@ -1,9 +1,11 @@
 import { Card, Tooltip } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { SidebarContext } from '~/hooks/SidebarContext';
 
 export default function MarketingChartProduct({ config, colors }) {
   const [isClient, setIsClient] = useState(false);
   const [ReactApexcharts, setReactApexcharts] = useState(null);
+  const { collapse } = useContext(SidebarContext)
 
   useEffect(() => {
     setIsClient(true);
@@ -84,7 +86,7 @@ export default function MarketingChartProduct({ config, colors }) {
       </Tooltip>
       <div id="chart-circle">
         {props?.series?.some((el) => Number(el) > 0)
-          ? <ReactApexcharts options={props.options} series={props.series} type="pie" width={'100%'} />
+          ? <ReactApexcharts options={props.options} series={props.series} type="pie" width={collapse ? 230 : 300} />
           : <div style={{ position: 'relative' }}>
             <ReactApexcharts options={props.options} series={[2, 4, 3, 5, 1]} type="pie" width={350} />
             <div className='chart-blur'>

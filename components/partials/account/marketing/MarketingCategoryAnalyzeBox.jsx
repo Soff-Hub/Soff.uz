@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 import Axios from 'axios'
 import { orginalUrl } from '~/reositoriy-admin/Repository'
 import { useRouter } from 'next/router'
-import { Skeleton } from 'antd'
+import { Skeleton, Tooltip } from 'antd'
 import { DotChartOutlined } from '@ant-design/icons';
 import MarketingSellingHistoryChart from './MarketingSellingHistoryChart'
 import { formatCurrency } from '~/utilities/product-helper'
@@ -72,7 +72,12 @@ export default function MarketingCategoryAnalyzeBox() {
         <div className='mt-5 d-flex gap-5'>
             <div className='py-4 bg-white w-50 px-2 d-flex flex-column' style={{ width: '400px !important' }}>
                 <div>
-                    <h4 className='fw-medium mb-3 text-center'>Sohaning daromad grafigi</h4>
+                    <Tooltip title={'Tanlangan sohaning umumiy daromadi butun vaqt bo\'yicha taqsimlanish grafigi'} color={'#00A44F'} key={'#00A44F'}>
+                        <div className='d-flex gap-2 align-items-center justify-content-center  mb-2' style={{ cursor: 'pointer' }}>
+                            <h4 className='fw-medium m-0 text-center'>Sohaning daromad grafigi</h4>
+                            <i className='fa-regular fa-circle-question text-black'></i>
+                        </div>
+                    </Tooltip>
                 </div>
 
                 <div style={{ flex: 1 }}>
@@ -95,7 +100,12 @@ export default function MarketingCategoryAnalyzeBox() {
             </div>
             <div className='py-4 bg-white w-50 px-2 d-flex flex-column' >
                 <div>
-                    <h4 className='fw-medium mb-2 text-center'>Sotilgan Mahsulotlarning o'rtacha narxi</h4>
+                    <Tooltip title={'Tanlangan sohaga tegishli bo\'lgan sotilgan mahsulotlarning narxlari taqsimlanishi'} color={'#00A44F'} key={'#00A44F'}>
+                        <div className='d-flex gap-2 align-items-center justify-content-center  mb-3' style={{ cursor: 'pointer' }}>
+                            <h4 className='fw-medium mb-0 text-center'>Sotilgan mahsulotlarning narxi</h4>
+                            <i className='fa-regular fa-circle-question text-black'></i>
+                        </div>
+                    </Tooltip>
                 </div>
                 <MarketingSellingHistoryChart config={price} />
             </div>

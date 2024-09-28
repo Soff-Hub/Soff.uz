@@ -12,7 +12,7 @@ const HomepageDefaultPage = () => {
 
     return (
         <div className="ps-page--my-account">
-            <Register url={'auth/seller-register/'} />
+            {/* <Register url={'auth/seller-register/'} /> */}
         </div>
     );
 };
