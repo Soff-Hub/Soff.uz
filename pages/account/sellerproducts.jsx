@@ -20,19 +20,20 @@ const SellerProducts = () => {
         },
     ];
     const { user } = useSelector(state => state.auth)
+    console.log(user);
+
     return (
-        user?.role === 'seller' || user?.role === 'customer' ?
-            <PageContainer
-                footer={<FooterDefault />}
-                title="Recent Viewed Products">
-                <div className="ps-page--my-account ">
-                    <Meta
-                        title={"Sotib olinganlar"}
-                    />
-                    <BreadCrumb breacrumb={breadCrumb} />
-                    <MyProducts_listSeller />
-                </div>
-            </PageContainer> : user?.access ? <Page404 /> : <Selection />
+        <PageContainer
+            footer={<FooterDefault />}
+            title="Recent Viewed Products">
+            <div className="ps-page--my-account ">
+                <Meta
+                    title={"Sotib olinganlar"}
+                />
+                <BreadCrumb breacrumb={breadCrumb} />
+                <MyProducts_listSeller />
+            </div>
+        </PageContainer> 
 
     );
 };
