@@ -460,7 +460,7 @@ function MyProductsListsSeller() {
                                     <div className="d-flex justify-content-between text-white fw-bold " >
                                         <Link href={"https://seller.soff.uz/account/login"}>
                                             <a className='iconsmar d-flex align-items-end gap-2' target='_blank'>
-                                                <img src="https://seller.soff.uz/static/img/auth/logo-dark.jpg" alt="birjalogo"
+                                                <img src="/static/img/seller-logo.png" alt="birjalogo"
                                                     height={30}
                                                 />
                                             </a></Link>
