@@ -133,7 +133,7 @@ const Loader = () => {
                 access: tokenText,
                 role: 'customer'
             }
-            // dispatch(login({ user: data, data: data }));
+            dispatch(login({ user: data, data: data }));
             dispatch(begin({ id: roleBegin }))
         }
 
