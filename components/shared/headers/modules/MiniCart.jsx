@@ -65,7 +65,7 @@ const MiniCart = () => {
                                     <a className="ps-btn">Sotib olish</a>
                                 </Link>
                             ) : (
-                                <Link href="/auth/login/">
+                                <Link href="/auth/login?returnUrl=/account/checkout">
                                     <a className="ps-btn">Sotib olish</a>
                                 </Link>
                             )}
