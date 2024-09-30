@@ -137,9 +137,9 @@ const Loader = () => {
             dispatch(begin({ id: roleBegin }))
         }
 
-        // if (user?.role === 'admin') {
-        //     dispatch(accountLinksReducers(accountAdminLinks));
-        // }
+        if (user?.role === 'admin') {
+            localStorage.setItem('is_seller', '1')
+        }
         // if (user?.role === 'seller') {
         //     dispatch(accountLinksReducers(accountSellerLink));
         // }
@@ -153,7 +153,7 @@ const Loader = () => {
         // ) {
         // Router.push('/account/dashbord');
         // } else if (user?.role === 'customer') {
-        Router.push('/account/myproducts');
+        Router.push('/account/sellerproducts');
         // }
 
     }, [user?.role]);

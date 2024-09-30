@@ -34,6 +34,7 @@ function MyProductsListsSeller() {
     const [openFilter, setOpenFilter] = useState(false);
     const [lifeTime, setLifetime] = useState('');
     const [lifeTime1, setLifetime2] = useState('');
+    const [isSeller, setIsSeller] = useState(false)
 
 
     const handleChangeDate = (date) => {
@@ -167,6 +168,11 @@ function MyProductsListsSeller() {
 
     useEffect(() => {
         GetItemsCategory();
+
+        setTimeout(() => {
+            const s = localStorage.getItem('is_seller')
+            setIsSeller(s === '1')
+        }, 1000);
     }, []);
 
 
@@ -439,6 +445,46 @@ function MyProductsListsSeller() {
                 <div className="row " style={{ alignItems: 'flex-start' }}>
                     <SidebarLayout accountLinks={accountLinks}>
                         <div className="ps-page__content">
+                            {isSeller &&
+                                <div className={`mb-2  p-4 d-flex flex-column justify-content-between mobileImage`}
+                                    style={{
+                                        borderRadius: "10px",
+                                        backgroundSize: "cover",
+                                        backgroundRepeat: "no-repeat",
+                                        backgroundImage: "url(/static/img/img7.png)",
+                                        backgroundSize: 'contain',
+                                        backgroundColor: 'white',
+                                        backgroundPosition: 'center right'
+                                    }} >
+
+                                    <div className="d-flex justify-content-between text-white fw-bold " >
+                                        <Link href={"https://seller.soff.uz/account/login"}>
+                                            <a className='iconsmar d-flex align-items-end gap-2' target='_blank'>
+                                                <img src="https://seller.soff.uz/static/img/auth/logo-dark.jpg" alt="birjalogo"
+                                                    height={30}
+                                                />
+                                            </a></Link>
+                                        {/* <a className='iconsmar' style={{ cursor: "pointer", color: 'black' }} onClick={() => setStyle("none")}><i className="fa-solid fa-xmark fs-2 p-0"></i></a> */}
+                                    </div>
+                                    <div style={{ maxWidth: '500px' }}>
+                                        <p className='py-3 fs-3' style={{ color: '#00A44F' }}>Endilikda siz sotuvchilik faoliyatingizni, SELLER.SOFF.UZ saytimizda davom ettirishingiz mumkin!</p>
+                                    </div>
+                                    <Link href={"https://seller.soff.uz/account/login/"}>
+                                        <a className='btn  fs-4 text-white fw-medium '
+                                            href='https://seller.soff.uz/account/login/'
+                                            target='_blank'
+                                            style={{
+                                                borderRadius: "30px",
+                                                padding: "6px 0",
+                                                width: "190px",
+                                                opacity: "0.9",
+                                                backgroundColor: "#151526"
+                                            }} >
+                                            Saytga o'tish
+                                            <i className="fa-solid fa-angle-right ml-2"></i></a>
+                                    </Link>
+
+                                </div>}
                             <div className="ps-section--account-setting">
                                 <div className="ps-section__content">
                                     <div className="row mx-auto gap-4  pt-5">

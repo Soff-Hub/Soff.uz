@@ -35,6 +35,9 @@ export default function CodeVerifyForm() {
                 user: { ...resp.data, role: 'customer' },
                 data: JSON.parse(localStorage.getItem('data'))
             }));
+            if (resp.data?.role === 'seller') {
+                localStorage.setItem('is_seller', '1')
+            }
 
             if (router?.query?.returnUrl) {
                 router.push(router?.query?.returnUrl)

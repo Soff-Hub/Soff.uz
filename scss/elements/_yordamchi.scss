@@ -2114,8 +2114,8 @@
 }
 
 .mobileImage {
-    height: 200px;
-    background-position-y: -120px;
+    // height: 200px;
+    // background-position-y: -120px;
 }
 
 @media (max-width: 520px) {
@@ -2146,10 +2146,20 @@
         }
     }
 
-    .ps-section--account-setting {
-        .mobileImage {
-            height: 200px;
-            background-position-y: 0px;
+    .mobileImage {
+        background-size: 40% !important;
+        background-position: calc(100% + 10px) calc(0% + 10px) !important;
+        padding: 10px !important;
+        gap: 4px !important;
+
+        & img {
+            height: 20px;
+        }
+
+        & p {
+            padding: 5px 5px !important;
+            max-width: 250px;
+            font-size: 14px !important;
         }
     }
 }
@@ -2400,7 +2410,7 @@
 }
 
 .ps-page--account {
-    padding: 50px;
+    // padding: 50px;
 }
 
 .sotuvchi-boling {
