@@ -38,7 +38,7 @@ class Register extends Component {
         const { registerGoogleUser } = useAuth();
         const url = this.props.url;
         if (this.props.url === 'auth/register/') {
-            window.location = 'http://api.soff.uz/auth/social/login/customer';
+            window.location = 'https://api.soff.uz/auth/social/login/customer';
             const user = await registerGoogleUser(url, this.state.role);
             if (user) {
                 if (user.status >= 400 && user.status !== 500) {
@@ -64,7 +64,7 @@ class Register extends Component {
                 }
             }
         } else if (this.props.url === 'auth/seller-register/') {
-            window.location = 'http://api.soff.uz/auth/social/login/seller';
+            window.location = 'https://api.soff.uz/auth/social/login/seller';
             const user = await registerGoogleUser(url, 'seller');
             if (user) {
                 if (user.status >= 400 && user.status !== 500) {

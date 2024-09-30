@@ -113,7 +113,7 @@ class Login extends Component {
         this.setState({ reportGoogle: false });
         const { registerGoogleUser } = useAuth();
         const url = this.props.url;
-        window.location = 'http://api.soff.uz/auth/social/login/customer';
+        window.location = 'https://api.soff.uz/auth/social/login/customer';
         const user = await registerGoogleUser(url, this.state.role);
         if (user) {
             if (user.status >= 400 && user.status !== 500) {
