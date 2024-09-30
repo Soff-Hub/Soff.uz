@@ -20,14 +20,16 @@ const RegisterPage = () => {
             text: "Ro'yxatdan o'tish",
         },
     ];
-    const { push } = useRouter()
+    const { push, query } = useRouter()
     const { user } = useSelector(state => state.auth)
     const sallerEndPoint = 'auth/seller-register/'
     const [loading, setLoading] = useState(true)
 
-
-    console.log(user);
-
+    useEffect(() => {
+        if (query?.birja) {
+            localStorage.setItem('birja', '1')
+        }
+    }, [query])
 
     return (
         user?.access ?

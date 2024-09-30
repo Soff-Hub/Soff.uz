@@ -32,17 +32,19 @@ const Xabar = (e) => {
                 const { verifyCode } = useAuth();
                 const user = await verifyCode(data);
 
-                console.log(user);
                 if (user.status === 200 || user.status === 201) {
                     setLoader(false);
-                    if (id) {
+                    if (localStorage.getItem('birja') === '1') {
+                        localStorage.removeItem('birja')
+                        window.location.replace('https://birja.soff.uz/login')
+                    } else if (id) {
                         Router.push(`/account/checkout-one?id=${id}`);
                     } else if (deal) {
                         Router.push(
                             `/account/all-orders`
                         );
                     }
-                    
+
                     else {
                         if (user?.role === 'seller' || user.role === 'admin') {
                             Router.push('/account/dashbord');
