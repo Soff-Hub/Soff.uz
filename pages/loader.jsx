@@ -114,7 +114,7 @@ export let cutomerAccountLink = [
 
 
 
- const Loader = () => {
+const Loader = () => {
     const { user } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     const Router = useRouter();
@@ -122,47 +122,39 @@ export let cutomerAccountLink = [
     const { asPath } = Router;
     useEffect(() => {
         if (asPath.split('').length > 10) {
-            const roleBegin =  asPath.slice(-1)
+            const roleBegin = asPath.slice(-1)
             const role = asPath.slice(-20).split('&')[0];
             const tokenArr = asPath.split('token=');
             const token = tokenArr[1]?.split('');
             const list = token?.reverse()?.splice(0, 20);
             const tokenText = token?.reverse()?.join('');
             localStorage.setItem('token', tokenText);
-            if (role === '38a443b1144e') {
-                const data = {
-                    access: tokenText,
-                    role : 'seller'
-                }
-                dispatch(login({ user: data, data: data})); 
-            }else if (role === '3a373fb190f8'){
-                const data = {
-                    access: tokenText,
-                    role : 'customer'
-                }
-                dispatch(login({ user: data, data: data})); 
+            const data = {
+                access: tokenText,
+                role: 'customer'
             }
-            dispatch(begin({id: roleBegin}))
+            dispatch(login({ user: data, data: data }));
+            dispatch(begin({ id: roleBegin }))
         }
 
-        if (user?.role === 'admin') {
-            dispatch(accountLinksReducers(accountAdminLinks));
-        }
-        if (user?.role === 'seller') {
-            dispatch(accountLinksReducers(accountSellerLink));
-        }
-        if (user?.role === 'customer') {
-            dispatch(accountLinksReducers(cutomerAccountLink));
-        }
+        // if (user?.role === 'admin') {
+        //     dispatch(accountLinksReducers(accountAdminLinks));
+        // }
+        // if (user?.role === 'seller') {
+        //     dispatch(accountLinksReducers(accountSellerLink));
+        // }
+        // if (user?.role === 'customer') {
+        dispatch(accountLinksReducers(cutomerAccountLink));
+        // }
 
-        if (
-            user?.role === 'seller' ||
-            user?.role === 'admin'
-        ) {
-            Router.push('/account/dashbord');
-        } else if (user?.role === 'customer') {
-            Router.push('/account/myproducts');
-        }
+        // if (
+        // user?.role === 'seller' ||
+        // user?.role === 'admin'
+        // ) {
+        // Router.push('/account/dashbord');
+        // } else if (user?.role === 'customer') {
+        Router.push('/account/myproducts');
+        // }
 
     }, [user?.role]);
     return (
