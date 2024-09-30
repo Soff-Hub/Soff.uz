@@ -29,7 +29,7 @@ export default function AuthLayout({ children }) {
         <div className='row bg-white' style={{ height: '100vh', overflow: 'hidden', width: '100%' }} >
             <div className='col-md-5 auth-img'>
                 <div className="auth-header p-4">
-                    <img src={`/static/img/auth/logo-dark.jpg`} alt="soff.uz logo" style={{ marginLeft: '100px' }} width={140} />
+                    <img src={`/static/img/seller-logo.jpg`} alt="soff.uz logo" style={{ marginLeft: '100px' }} width={140} />
                 </div>
                 <div className="auth-body px-5">
                     <Swiper
