@@ -38,7 +38,7 @@ class Register extends Component {
         const { registerGoogleUser } = useAuth();
         const url = this.props.url;
         if (this.props.url === 'auth/register/') {
-            window.location = 'http://api.soff.uz/auth/social/login/customer';
+            window.location = 'http://api.soff.uz/auth/social/login/seller?seller_page=true';
             const user = await registerGoogleUser(url, 'seller');
             if (user) {
                 if (user.status >= 400 && user.status !== 500) {
@@ -64,7 +64,7 @@ class Register extends Component {
                 }
             }
         } else if (this.props.url === 'auth/seller-register/') {
-            window.location = 'http://api.soff.uz/auth/social/login/seller';
+            window.location = 'http://api.soff.uz/auth/social/login/seller?seller_page=true';
             const user = await registerGoogleUser(url, 'seller');
             if (user) {
                 if (user.status >= 400 && user.status !== 500) {
@@ -287,7 +287,7 @@ class Register extends Component {
                     {this.state.segmentValue === "email" ?
                         <Form.Item
                             name="email"
-                            className="mb-4"
+                            // className="mb-4"
                             rules={[
                                 {
                                     required: true,
@@ -301,7 +301,7 @@ class Register extends Component {
                         >
                             <Input
                                 style={{ height: '50px', fontSize: '16px' }}
-                                prefix={<MailOutlined style={{ fontSize: '20px', padding: '0 10px' }} />}
+                                addonBefore={<MailOutlined style={{ fontSize: '20px', padding: '0 10px' }} />}
                                 type="email"
                                 placeholder="Elektron pochta"
                                 onKeyDown={this.handleEnterKeyPress}

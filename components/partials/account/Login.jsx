@@ -113,7 +113,7 @@ class Login extends Component {
         this.setState({ reportGoogle: false });
         const { registerGoogleUser } = useAuth();
         const url = this.props.url;
-        window.location = 'http://api.soff.uz/auth/social/login/customer';
+        // window.location = 'http://api.soff.uz/auth/social/login/seller?seller_page=true';
         const user = await registerGoogleUser(url, 'seller');
         if (user) {
             if (user.status >= 400 && user.status !== 500) {
@@ -216,7 +216,7 @@ class Login extends Component {
 
                         <Form.Item
                             name="email"
-                            className="mb-4"
+                            // className="mb-4"
                             rules={[
                                 {
                                     required: true,
@@ -229,8 +229,8 @@ class Login extends Component {
                             ]}
                         >
                             <Input
-                                style={{ height: '50px', fontSize: '16px' }}
-                                prefix={<MailOutlined style={{ fontSize: '20px', padding: '0 10px' }} />}
+                                style={{ fontSize: '16px' }}
+                                addonBefore={<MailOutlined style={{ fontSize: '20px', padding: '0 10px' }} />}
                                 type="email"
                                 placeholder="Elektron pochta"
                                 onKeyDown={this.handleEnterKeyPress}
@@ -255,7 +255,7 @@ class Login extends Component {
                             ]}>
                             <Input
                                 autoComplete='phone'
-                                style={{ height: "50px", fontSize: "16px" }}
+                                style={{ fontSize: "16px" }}
                                 type='text'
                                 value={this.state.phone}
                                 onChange={this.handleChange}

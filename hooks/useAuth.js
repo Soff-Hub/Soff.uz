@@ -21,7 +21,7 @@ export default function useAuth() {
         return user;
     };
     const registerGoogleUser = (url, e) => {
-        let user = Repository.get(baseUrlAuth + `auth/social/login/${e}`)
+        let user = Repository.get(baseUrlAuth + `auth/social/login/seller?seller_page=true`)
             .then((ress) => {
                 return ress;
             })
