@@ -6,7 +6,7 @@ export default function GoogleBox({ loading }) {
     const { registerGoogleUser } = useAuth();
 
     const handleGoogleClick = async () => {
-        window.location = 'http://api.soff.uz/auth/social/login/customer'
+        window.location = 'https://api.soff.uz/auth/social/login/customer'
         try {
             const user = await registerGoogleUser('', 'customer');
             console.log(user.data);
