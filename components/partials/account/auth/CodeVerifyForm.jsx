@@ -117,7 +117,7 @@ export default function CodeVerifyForm() {
             <div className="container p-0">
                 <div className="ps-form--account">
                     <Form onFinish={handleSubmit}>
-                        <p className='text-center fs-2 mb-4'>{via === 'phone' ? 'Telefon raqamingizga' : 'Elektron pochtangizga'} yuborilgan tasdiqlash kodini kiriting</p>
+                        <p className='text-center fs-2 mb-4'>{via === 'via_phone' ? 'Telefon raqamingizga' : 'Elektron pochtangizga'} yuborilgan tasdiqlash kodini kiriting</p>
 
                         <Form.Item
                             name="code"
