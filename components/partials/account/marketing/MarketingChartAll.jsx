@@ -29,7 +29,7 @@ export default function MarketingChartProduct({ config, colors }) {
         breakpoint: 576,
         options: {
           chart: {
-            width: 200
+            width: 300
           },
           legend: {
             position: 'bottom',

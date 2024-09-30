@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { SidebarContext } from '~/hooks/SidebarContext';
-
 export default function MarketingSellingHistoryChart({ config }) {
     const [isClient, setIsClient] = useState(false);
     const [ReactApexcharts, setReactApexcharts] = useState(null);
@@ -28,7 +27,7 @@ export default function MarketingSellingHistoryChart({ config }) {
                 breakpoint: 576,
                 options: {
                     chart: {
-                        width: 200
+                        width: 300
                     },
                     legend: {
                         position: 'bottom',

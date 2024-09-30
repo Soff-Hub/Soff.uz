@@ -6,6 +6,7 @@ import { orginalUrl } from '~/reositoriy-admin/Repository'
 import { Card, Skeleton } from 'antd'
 import { DotChartOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router'
+import useResponsive from '~/utilities/useResponsive'
 
 
 export default function MarketingProductChart() {
@@ -16,6 +17,7 @@ export default function MarketingProductChart() {
     const [loading, setLoading] = useState(false)
     const [labels, setLabels] = useState([])
     const colors = ['#624E88', '#CB80AB', '#E6D9A2', '#FFB200', '#EB5B00', '#B60071', '#610C9F', '#1230AE', '#C68FE6', '#6A9C89', '#CCC8AA', '#77E4C8', '#E5D9F2', '#0F0F0F', '#FF885B', '#FF4191']
+    const { isMobile } = useResponsive()
 
 
     const getData = async () => {
@@ -68,7 +70,7 @@ export default function MarketingProductChart() {
 
     return (
         <div className=''>
-            <div className='d-flex justify-content-between'>
+            <div className={`d-flex justify-content-${isMobile ? 'center' : 'between'} flex-wrap`}>
                 {
                     loading ? [1, 2, 3].map(el => (
                         <div className='d-flex pt-2 justify-content-between' key={el}>

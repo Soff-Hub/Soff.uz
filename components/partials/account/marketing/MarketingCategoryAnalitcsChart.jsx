@@ -32,7 +32,7 @@ export default function MarketingCategoryAnalyzeChart({ labels, series }) {
         breakpoint: 576,
         options: {
           chart: {
-            width: 200
+            width: '100%'
           },
           legend: {
             position: 'bottom',

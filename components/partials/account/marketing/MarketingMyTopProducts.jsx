@@ -11,6 +11,7 @@ import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import RejectOfferModal from '../RejectOfferModal';
 import MarketingSelledProducts from './MarketingSelledProducts';
 import { DotChartOutlined } from '@ant-design/icons';
+import useResponsive from '~/utilities/useResponsive';
 
 const IconText = ({ icon, text }) => (
     <Space className='view-count'>
@@ -25,6 +26,7 @@ const MarketingMyTopProducts = () => {
     const [viewPriceDiscount, setViewPriceDiscount] = useState(0);
     const [id, setId] = useState(null);
     const [loading, setLoading] = useState(false)
+    const { isMobile } = useResponsive()
 
 
     const [documents, setDocuments] = useState([])
@@ -93,8 +95,8 @@ const MarketingMyTopProducts = () => {
 
     return (
         <div className='mt-5'>
-            <div className='d-flex gap-5 justify-content-between'>
-                <div className='w-50 p-3 bg-white' style={{ border: '1px solid gold' }}>
+            <div className={`d-flex gap-5 justify-content-between flex-${isMobile ? 'column' : 'row'}`}>
+                <div className={`w-${isMobile ? '100' : '50'} p-3 bg-white`} style={{ border: '1px solid gold' }}>
                     <div>
                         <h4 className='fw-medium mb-5 text-center'>Mahsulotingiz narxini o'zgartirish bo'yicha taklif</h4>
                     </div>
@@ -149,7 +151,7 @@ const MarketingMyTopProducts = () => {
                         </div>}
                     </div>
                 </div>
-                <div className='w-50 py-4 px-3 bg-white d-flex flex-column'>
+                <div className={`w-${isMobile ? '100' : '50'} py-4 px-3 bg-white d-flex flex-column`}>
                     <div>
                         <h4 className='fw-medium mb-5 text-center'>Soha bo'yicha eng ko'p sotilgan mahsulotlar</h4>
                     </div>

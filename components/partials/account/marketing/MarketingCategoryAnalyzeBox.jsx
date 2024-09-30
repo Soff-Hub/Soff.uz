@@ -9,12 +9,14 @@ import { Skeleton, Tooltip } from 'antd'
 import { DotChartOutlined } from '@ant-design/icons';
 import MarketingSellingHistoryChart from './MarketingSellingHistoryChart'
 import { formatCurrency } from '~/utilities/product-helper'
+import useResponsive from '~/utilities/useResponsive'
 
 
 export default function MarketingCategoryAnalyzeBox() {
 
     const { user } = useSelector(state => state.auth)
     const { query } = useRouter()
+    const { isMobile } = useResponsive()
 
     const [history, setHistory] = useState([])
     const [loading, setLoading] = useState(false)
@@ -69,8 +71,8 @@ export default function MarketingCategoryAnalyzeBox() {
 
 
     return (
-        <div className='mt-5 d-flex gap-5'>
-            <div className='py-4 bg-white w-50 px-2 d-flex flex-column' style={{ width: '400px !important' }}>
+        <div className={`mt-5 d-flex gap-5 flex-${isMobile ? 'column' : 'row'}`}>
+            <div className={`py-4 bg-white w-${isMobile ? '100' : '50'} px-2 d-flex flex-column`} style={{ width: '400px !important' }}>
                 <div>
                     <Tooltip title={'Tanlangan sohaning umumiy daromadi butun vaqt bo\'yicha taqsimlanish grafigi'} color={'#00A44F'} key={'#00A44F'}>
                         <div className='d-flex gap-2 align-items-center justify-content-center  mb-2' style={{ cursor: 'pointer' }}>
@@ -98,7 +100,7 @@ export default function MarketingCategoryAnalyzeBox() {
                     ) : <MarketingCategoryAnalyzeChart series={history.map(el => el.percentage)} labels={history.map(el => el.month)} />}
                 </div>
             </div>
-            <div className='py-4 bg-white w-50 px-2 d-flex flex-column' >
+            <div className={`py-4 bg-white w-${isMobile ? '100' : '50'} px-2 d-flex flex-column`} >
                 <div>
                     <Tooltip title={'Tanlangan sohaga tegishli bo\'lgan sotilgan mahsulotlarning narxlari taqsimlanishi'} color={'#00A44F'} key={'#00A44F'}>
                         <div className='d-flex gap-2 align-items-center justify-content-center  mb-3' style={{ cursor: 'pointer' }}>
