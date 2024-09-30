@@ -1,15 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
 import PageContainer from '~/components/layouts/PageContainer';
 import { useSelector } from 'react-redux';
 import Page404 from '../page/page-404';
 import { useRouter } from 'next/router';
+import PageLoader from '~/components/elements/common/PageLoader';
+import Loader from '../loader';
 
 const Selection = () => {
     const { user } = useSelector((state) => state.auth);
     const router = useRouter()
     const { deal, id } = router?.query
 
+    useEffect(() => {
+        router.push({
+            pathname: '/',
+            query: { ...router.query }
+        })
+    }, [])
+
+    return <div>
+        <PageLoader />
+        <Loader />
+    </div>
 
 
     return user?.access ? (
