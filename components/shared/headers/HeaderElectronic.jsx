@@ -40,6 +40,14 @@ const HeaderElectronic = () => {
                             <a href='https://t.me/soff_uz' target='_blank' >
                                 <i class="fa-brands fa-telegram me-2"></i>
                             </a>
+
+                            <a href='https://www.instagram.com/soffuz_/' target='_blank' >
+                                <i class="fa-brands fa-instagram me-2"></i>
+                            </a>
+
+                            {/* <a href='https://www.instagram.com/soffuz_/' target='_blank' >
+                                <i class="fa-brands fa-telegram me-2"></i>
+                            </a> */}
                         </div>
                         <div className='sotuvchi-boling'>
                             <a href='https://seller.soff.uz' target='_blank'>Sotuvchi bo'lish</a>
