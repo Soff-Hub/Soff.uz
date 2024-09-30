@@ -21,7 +21,9 @@ export default function useAuth() {
         return user;
     };
     const registerGoogleUser = (url, e) => {
-        let user = Repository.get(baseUrlAuth + `auth/social/login/seller?seller_page=true`)
+        let user = Repository.get(
+            baseUrlAuth + `auth/social/login/seller?seller_page=true`
+        )
             .then((ress) => {
                 return ress;
             })
@@ -94,6 +96,7 @@ export default function useAuth() {
             user: localStorage.getItem('verify_user'),
         })
             .then((ress) => {
+                localStorage.setItem('verify_token', ress.data?.access);
                 return ress;
             })
             .catch((error) => {
@@ -167,13 +170,13 @@ export default function useAuth() {
     };
 
     const qaytaRaqamYuborishAuth = (e) => {
-        let endPoint = 'auth/reset-password/';
+        let endPoint = 'auth/reset-password/?for_web=true';
 
         let user = Repository.post(baseUrlAuth + endPoint, {
             ...e,
-            user: localStorage.getItem('verify_user'),
         })
             .then((ress) => {
+                localStorage.setItem('verify_user', ress.data?.user);
                 return ress;
             })
             .catch((error) => {
@@ -193,7 +196,11 @@ export default function useAuth() {
 
     const qaytaParolYuborishAuth = (e) => {
         let endPoint = 'auth/reset-password-confirm/';
-        let user = Repository.post(baseUrlAuth + endPoint, e)
+        let user = Repository.post(baseUrlAuth + endPoint, e, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('verify_token')}`
+            }
+        })
             .then((ress) => {
                 return ress;
             })
