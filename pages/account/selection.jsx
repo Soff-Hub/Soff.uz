@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 import Page404 from '../page/page-404';
 import { useRouter } from 'next/router';
 import PageLoader from '~/components/elements/common/PageLoader';
-import Loader from '../loader';
 
 const Selection = () => {
     const { user } = useSelector((state) => state.auth);
@@ -21,7 +20,6 @@ const Selection = () => {
 
     return <div>
         <PageLoader />
-        <Loader />
     </div>
 
 
