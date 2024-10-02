@@ -1,4 +1,4 @@
-import React  from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import PageContainer from '~/components/layouts/PageContainer';
 import SiteDonateForm from '~/components/partials/seller/SiteDonateForm';
@@ -9,19 +9,16 @@ const Donat = () => {
     const { user } = useSelector(state => state.auth)
 
 
-    return ((user?.role === 'admin' || user?.role === 'seller') ?
-        <PageContainer>
-            <div className="container my-5 ">
-                <h2 className="text-center mb-5">
-                    Loyiha  rivoji uchun o'z hissangizni qo'shing
-                </h2>
+    return <PageContainer>
+        <div className="container my-5 ">
+            <h2 className="text-center mb-5">
+                Loyiha  rivoji uchun o'z hissangizni qo'shing
+            </h2>
 
-                <SiteDonateForm/>
+            <SiteDonateForm />
 
-            </div>
-        </PageContainer> 
-        : user?.access ? <Page404 /> : <Selection />
-    );
+        </div>
+    </PageContainer>
 };
 
 export default Donat;
