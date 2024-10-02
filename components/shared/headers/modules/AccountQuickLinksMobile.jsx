@@ -40,9 +40,9 @@ function AccountQuickLinks() {
         <Menu>
             {accountLinks.map((link) => (
                 <div className="order">
-                    {link?.url == '/account/marketing' ? <Badge.Ribbon key={link?.url} text="Yangi funksiya" color='blue'>
+                    {link?.url == '/account/marketing' ? <Badge.Ribbon key={link?.url} text="Yangi funksiya" color='blue' style={{ top: '0' }}>
                         <Card size="small" style={{ backgroundColor: 'rgba(0, 0, 0, 0.04)', borderRadius: 0 }}>
-                            <li key={link.text}>
+                            <li key={link.text} className='ps-4'>
                                 <Link href={link.url}>
                                     <a>
                                         {' '}
