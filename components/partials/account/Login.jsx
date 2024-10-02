@@ -234,12 +234,12 @@ class Login extends Component {
                                 placeholder="Elektron pochta"
                                 onKeyDown={this.handleEnterKeyPress}
                                 autoComplete='email'
+                                name='email'
                             />
                         </Form.Item> :
 
                         <Form.Item
                             name="phone"
-
                             rules={[
                                 {
                                     required: true,
@@ -250,10 +250,8 @@ class Login extends Component {
                                     pattern: /^\d{9}$/,
                                     message: 'Iltimos, haqiqiy telefon raqam kiriting',
                                 },
-
                             ]}>
                             <Input
-                                autoComplete='phone'
                                 style={{ fontSize: "16px" }}
                                 type='text'
                                 value={this.state.phone}
@@ -262,8 +260,8 @@ class Login extends Component {
                                 maxLength={9} // 9 belgidan ortiq kiritishni cheklash
                                 onKeyDown={this.handleKeyDown}
                                 addonBefore="+998" // Prefiksni qo'shish
-
-
+                                autoComplete='phone'
+                                name="phone"
                             />
                         </Form.Item>
 
