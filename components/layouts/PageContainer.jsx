@@ -8,14 +8,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { accountLinksReducers, isLoginning } from '~/store/auth/action';
 import FaqSaidbar from '../partials/faqs/faqSaidbar';
 import { useRouter } from 'next/router';
-import HeaderMobileBottom from '../shared/headers/HeaderMobilebottom';
-import Link from 'next/link';
+// import HeaderMobileBottom from '../shared/headers/HeaderMobilebottom';
 
 const initHeaders = (
     <>
         <HeaderElectronic />
         <HeaderMobileElectronic />
-        <HeaderMobileBottom />
+        {/* <HeaderMobileBottom /> */}
     </>
 );
 const initFooters = (

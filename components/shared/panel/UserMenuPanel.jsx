@@ -425,7 +425,7 @@ const AccountMenuSidebar = ({ setMenuDrawer, setCategoriesDrawer }) => {
                         <>
                             {
                                 link?.url == '/account/marketing' ? <Badge.Ribbon key={link?.url} text="Yangi funksiya" color='blue'>
-                                    <Card size="small" style={{ backgroundColor: 'rgba(0, 0, 0, 0.04)', borderRadius: 0 }}>
+                                    <Card onClick={handleDrawerClose} size="small" style={{ backgroundColor: 'rgba(0, 0, 0, 0.04)', borderRadius: 0 }}>
                                         <li key={link.text}>
                                             <Link href={link.url}>
                                                 <a>
