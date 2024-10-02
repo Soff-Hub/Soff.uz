@@ -17,7 +17,7 @@ class Login extends Component {
             report: true,
             reportGoogle: true,
             value: '',
-            segmentValue: 'phone',
+            segmentValue: 'email',
             phone: ''
         };
     }
@@ -200,15 +200,14 @@ class Login extends Component {
                         onChange={(value) => this.setState({ segmentValue: value })}
 
                         options={[{
-                            label: 'Telefon raqam',
-                            value: 'phone',
-                            icon: <PhoneOutlined />,
-                        },
-                        {
                             label: 'Elektron pochta',
                             value: 'email',
                             icon: <MailOutlined />,
-                        },]}
+                        }, {
+                            label: 'Telefon raqam',
+                            value: 'phone',
+                            icon: <PhoneOutlined />,
+                        }]}
                         block className='mb-5 ' style={{ height: "50px" }} />
 
 

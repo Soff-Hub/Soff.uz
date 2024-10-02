@@ -22,7 +22,7 @@ class Register extends Component {
             inputType: 'text',
             inputLength: '',
             role: 'seller',
-            segmentValue: 'phone',
+            segmentValue: 'email',
             phone: ''
         };
     }
@@ -272,15 +272,14 @@ class Register extends Component {
                         onChange={(value) => this.setState({ segmentValue: value })}
 
                         options={[{
-                            label: 'Telefon raqam',
-                            value: 'phone',
-                            icon: <PhoneOutlined />,
-                        },
-                        {
                             label: 'Elektron pochta',
                             value: 'email',
                             icon: <MailOutlined />,
-                        },]}
+                        }, {
+                            label: 'Telefon raqam',
+                            value: 'phone',
+                            icon: <PhoneOutlined />,
+                        }]}
                         block className='mb-5 ' style={{ height: "50px" }} />
 
 
@@ -324,16 +323,15 @@ class Register extends Component {
 
                             ]}>
                             <Input
-                                autoComplete="phone"
                                 style={{ height: "50px", fontSize: "16px" }}
-                                type='text'
+                                type='tel'
                                 value={this.state.phone}
                                 onChange={this.handleChange}
                                 placeholder="Telefon raqam"
                                 maxLength={9} // 9 belgidan ortiq kiritishni cheklash
                                 onKeyDown={this.handleKeyDown}
                                 addonBefore="+998" // Prefiksni qo'shish
-
+                                autoComplete="phone"
                             />
                         </Form.Item>
 

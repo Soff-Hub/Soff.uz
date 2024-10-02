@@ -7,7 +7,6 @@ import Meta from '~/components/shared/headers/Meta';
 import MarketingMain from '~/components/partials/account/marketing/MarketingMain';
 import Page404 from '~/pages/page/page-404';
 import Selection from '../selection';
-import AccountMenuSidebar from '~/components/partials/account/modules/AccountMenuSidebar';
 import SidebarLayout from '~/components/partials/SidebarLayout';
 
 const Application = () => {
