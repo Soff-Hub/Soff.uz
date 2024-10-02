@@ -33,7 +33,7 @@ export default function UserDashboardProductChart({ data }) {
                 breakpoint: 576,
                 options: {
                     chart: {
-                        width: 200
+                        width: 300
                     },
                     legend: {
                         position: 'bottom',
