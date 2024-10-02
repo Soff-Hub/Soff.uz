@@ -89,8 +89,8 @@ const MarketingMyTopProducts = () => {
     }
 
     useEffect(() => {
-        getData(),
-            getDocuments()
+        getData()
+        getDocuments()
     }, [query])
 
     return (
@@ -115,7 +115,11 @@ const MarketingMyTopProducts = () => {
                                     <List.Item.Meta
                                         className='mb-3 px-4 pt-3'
                                         avatar={<Avatar style={{ border: '1px solid gray', padding: '5px' }} src={'/static/img/soff logo.png'} />}
-                                        title={<Link href={`/product/${item.slug}`}>{item.doc_title}</Link>}
+                                        title={<Link href={`https://soff.uz/product/${item.slug}`}>
+                                            <a target='black'>
+                                                {item.doc_title}
+                                            </a>
+                                        </Link>}
                                         description={item?.title}
                                         style={{ borderBlock: 'none', fontSize: '12px' }}
                                     />

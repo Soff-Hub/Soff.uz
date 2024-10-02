@@ -122,18 +122,19 @@ function OrdersLists() {
                 dataIndex: 'seller_info',
                 key: 'age',
                 render: (seller_info) => (
-                    <a
-                        href={`/sellerAccount/${seller_info?.id}`}
-                        className="d-flex flex-column">
-                        <span className="truncate whitespace-nowrap">
-                            {' '}
-                            {seller_info.name}
-                        </span>
-                        <span className="truncate whitespace-nowrap">
-                            {' '}
-                            {seller_info.email_or_phone}
-                        </span>
-                    </a>
+                    <Link href={`/sellerAccount/${seller_info?.id}`}>
+                        <a
+                            className="d-flex flex-column">
+                            <span className="truncate whitespace-nowrap">
+                                {' '}
+                                {seller_info.name}
+                            </span>
+                            <span className="truncate whitespace-nowrap">
+                                {' '}
+                                {seller_info.email_or_phone}
+                            </span>
+                        </a>
+                    </Link>
                 ),
             }
         ) : (
@@ -145,8 +146,8 @@ function OrdersLists() {
             key: 'age',
             width: 300,
             render: (document) => (
-                <Link href={`/product/${document.slug}`}>
-                    <a>{document.title}</a>
+                <Link href={`https://soff.uz/product/${document.slug}`}>
+                    <a target='blank'>{document.title}</a>
                 </Link>
             ),
         },
@@ -231,8 +232,8 @@ function OrdersLists() {
             key: 'age',
             width: 400,
             render: (document) => (
-                <Link href={`/product/${document.slug}`}>
-                    <a>{document.title}</a>
+                <Link href={`https://soff.uz/product/${document.slug}`}>
+                    <a target='blank'>{document.title}</a>
                 </Link>
             ),
         },

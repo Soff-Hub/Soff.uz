@@ -11,6 +11,7 @@ import { DatePicker } from 'antd';
 import { formatCurrency } from '~/utilities/product-helper';
 import { addPeriodToThousands } from './ProductsLists';
 import SidebarLayout from '../SidebarLayout';
+import Link from 'next/link';
 const { TextArea } = Input;
 const { Option } = Select;
 
@@ -333,13 +334,16 @@ function ApplicationLists() {
             dataIndex: 'seller_info',
             key: 'address',
             render: (seller_info) => (
-                <a href={`/sellerAccount/${seller_info?.id}`} className="d-flex flex-column">
-                    <span className="truncate whitespace-nowrap">
-                        {' '}
-                        {seller_info.name}
-                    </span>
-                    <span>{seller_info.email_or_phone}</span>
-                </a>),
+                <Link href={`/sellerAccount/${seller_info?.id}`}>
+                    <a className="d-flex flex-column">
+                        <span className="truncate whitespace-nowrap">
+                            {' '}
+                            {seller_info.name}
+                        </span>
+                        <span>{seller_info.email_or_phone}</span>
+                    </a>
+                </Link>
+            ),
         },
         {
             title: 'Tavsif',

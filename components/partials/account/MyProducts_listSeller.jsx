@@ -209,8 +209,8 @@ function MyProductsListsSeller() {
             render: (image) => (
                 <div>
                     {image?.poster_url ? (
-                        <Link href={image?.slug === "/account/sellerproducts" ? "/account/sellerproducts" : `/product/${image?.slug}`} className='cursor-pointer'>
-                            <a>
+                        <Link href={image?.slug === "/account/sellerproducts" ? "/account/sellerproducts" : `https://soff.uz/product/${image?.slug}`} className='cursor-pointer'>
+                            <a target='blank'>
                                 <NextImageCard
                                     url={image?.poster_url}
                                     clasS="rounded-3 mb-2"
@@ -232,9 +232,9 @@ function MyProductsListsSeller() {
             width: 300,
             render: (name) => (
 
-                <Link href={name?.slug === "/account/sellerproducts" ? "/account/sellerproducts" : `/product/${name?.slug}`} >
+                <Link href={name?.slug === "/account/sellerproducts" ? "/account/sellerproducts" : `https://soff.uz/product/${name?.slug}`} >
 
-                    <a>
+                    <a target='blank'>
                         <span className="truncate whitespace-nowrap"> {name?.title}</span>
                     </a>
                 </Link>

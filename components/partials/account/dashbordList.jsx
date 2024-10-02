@@ -319,8 +319,8 @@ function DashbordList({ setOpen }) {
             key: 'age',
             width: 300,
             render: (document) => (
-                <Link href={`/product/${document.slug}`}>
-                    <a>{document.title}</a>
+                <Link href={`https://soff.uz/product/${document.slug}`}>
+                    <a target='blank'>{document.title}</a>
                 </Link>
             ),
         },
@@ -405,8 +405,8 @@ function DashbordList({ setOpen }) {
             key: 'age',
             width: 400,
             render: (document) => (
-                <Link href={`/product/${document.slug}`}>
-                    <a>{document.title}</a>
+                <Link href={`https://soff.uz/product/${document.slug}`}>
+                    <a target='blank'>{document.title}</a>
                 </Link>
             ),
         },

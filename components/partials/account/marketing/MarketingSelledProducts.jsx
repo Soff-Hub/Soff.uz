@@ -28,8 +28,10 @@ const MarketingSelledProducts = ({ data }) => (
                     className='px-3 pb-3 mb-3'
                     style={{ border: '1px solid #f1f1f1', borderRadius: '5px', fontSize: '16px' }}
                 >
-                    <Link href={`/product/${item?.slug}`}>
-                        {item.title}
+                    <Link href={`https://soff.uz/product/${item?.slug}`}>
+                        <a target='black'>
+                            {item.title}
+                        </a>
                     </Link>
                 </List.Item>
             )}

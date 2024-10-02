@@ -102,18 +102,20 @@ function BirjaDashbordList() {
                         )}
                     </div>
 
-                    <a
-                        href={`/sellerAccount/${seller?.id}`}
-                        className="d-flex flex-column">
-                        <span className="truncate whitespace-nowrap">
-                            {' '}
-                            {seller.last_name}
-                        </span>
-                        <span className="truncate whitespace-nowrap">
-                            {' '}
-                            {seller.phone_or_email}
-                        </span>
-                    </a>
+                    <Link href={`/sellerAccount/${seller?.id}`}>
+                        <a
+                            className="d-flex flex-column">
+                            <span className="truncate whitespace-nowrap">
+                                {' '}
+                                {seller.last_name}
+                            </span>
+                            <span className="truncate whitespace-nowrap">
+                                {' '}
+                                {seller.phone_or_email}
+                            </span>
+                        </a>
+                    </Link>
+
                 </div>
 
 
@@ -126,8 +128,8 @@ function BirjaDashbordList() {
             key: 'age',
             width: 300,
             render: (document) => (
-                <Link href={`/product/${document.slug}`}>
-                    <a>{document.title}</a>
+                <Link href={`https://soff.uz/product/${document.slug}`}>
+                    <a target='_blank'>{document.title}</a>
                 </Link>
             ),
         },
