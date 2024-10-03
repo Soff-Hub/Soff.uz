@@ -10,6 +10,10 @@ import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import { isLoginning } from '~/store/auth/action';
 
+function randomSortArray(arr) {
+    return arr.sort(() => Math.random() - 0.5);
+}
+
 export default function AuthLayout({ children }) {
 
     const images = ['1', '4', '6', '8', '10', '12', '13', '14', '16', '18']
@@ -38,7 +42,7 @@ export default function AuthLayout({ children }) {
                         effect={'fade'}
                         loop={true}
                         autoplay={{
-                            delay: 2500,
+                            delay: 2000,
                             disableOnInteraction: false,
                         }}
                         speed={2000}
@@ -46,7 +50,7 @@ export default function AuthLayout({ children }) {
                         navigation={false}
                     >
                         {
-                            images.map(el => (
+                            randomSortArray(images).map(el => (
                                 <SwiperSlide style={{ height: '100%', backgroundColor: 'white', width: '100%', display: 'flex', alignItems: 'flex-start', justifyContent: 'center' }}>
                                     <img key={el} src={`/static/img/auth/img${el}.png`} alt="" />
                                 </SwiperSlide>
