@@ -50,7 +50,7 @@ const ElectronicHeaderActions = ({ auth }) => {
         if (user?.access) {
             // Agar user?.access mavjud bo'lsa
             const newSocket = new WebSocket(
-                `${process.env.NEXT_PUBLIC_WS_BASE_URL}ws/user-notification/?token=${user?.access}`
+                `wss://api.soff.uz/ws/user-notification/?token=${user?.access}`
             );
 
             // Yangi WebSocket ulanishini yaratish
@@ -65,7 +65,7 @@ const ElectronicHeaderActions = ({ auth }) => {
 
             // WebSocket ulanishida xatolik bo'lganida ishlaydigan funksiya
             newSocket.onerror = function (error) {
-                console.error('WebSocket xatosi:', error);
+
             };
 
             // useEffect funksiyasiga qaytariladigan cleanup funksiya
@@ -75,11 +75,6 @@ const ElectronicHeaderActions = ({ auth }) => {
             };
         }
     }, [user?.access]);
-
-    useEffect(() => {
-        socket?.count > 0 && openNotification();
-    }, [socket?.count]);
-
 
     useEffect(() => {
         const token = user?.access;
@@ -96,8 +91,6 @@ const ElectronicHeaderActions = ({ auth }) => {
                 };
             }
 
-
-            // Clean up on unmount
             return () => {
                 ws.close();
             };

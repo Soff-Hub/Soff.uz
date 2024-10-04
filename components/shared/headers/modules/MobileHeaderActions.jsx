@@ -72,29 +72,23 @@ const MobileHeaderActions = ({ auth }) => {
 
     useEffect(() => {
         if (user?.access) {
-            // Agar user?.access mavjud bo'lsa
             const newSocket = new WebSocket(
                 `wss://api.soff.uz/ws/user-notification/?token=${user?.access}`
             );
 
-            // Yangi WebSocket ulanishini yaratish
             newSocket.onopen = function () { };
 
-            // Xabarlarni qabul qilish uchun funksiya
             if (newSocket) {
                 newSocket.onmessage = function (event) {
                     setSocket(JSON.parse(event.data));
                 };
             }
 
-            // WebSocket ulanishida xatolik bo'lganida ishlaydigan funksiya
             newSocket.onerror = function (error) {
 
             };
 
-            // useEffect funksiyasiga qaytariladigan cleanup funksiya
             return () => {
-                // WebSocket ulanishini yopish
                 newSocket.close();
             };
         }
@@ -105,7 +99,7 @@ const MobileHeaderActions = ({ auth }) => {
         if (socket?.count > 0) {
             openNotification();
         }
-    }, []);
+    }, [socket]);
 
 
     return (
