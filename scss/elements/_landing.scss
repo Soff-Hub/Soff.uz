@@ -342,27 +342,27 @@
 
 .l-app {
     background-color: white;
+
+    background-image: url('/static/img/web-app.png');
+    background-size: 70%;
+    background-repeat: no-repeat;
+    background-position: calc(70% + 300px) calc(50% - 0px);
+    padding: 200px 30px;
 }
 
 .l-app-inner {
     display: flex;
-    padding: 100px 30px;
-
-    background-image: url('/static/img/pana.png');
-    background-size: 800px;
-    background-repeat: no-repeat;
-    background-position: calc(0% - 120px) calc(0% - 0px);
+    justify-content: flex-start;
     // background-position: top left;
 }
 
 .l-app-inner .frame-2 {
-    max-width: 500px;
-    margin-left: auto;
+    max-width: 400px;
 }
 
 .l-app-title {
     font-weight: 500;
-    line-height: 32px;
+    line-height: 40px;
 }
 
 .l-app-desc {

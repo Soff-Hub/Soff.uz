@@ -118,28 +118,8 @@ const HomepageDefaultPage = () => {
                     <div className="container">
                         <div className="l-app-inner">
                             <div className="frame-2">
-                                <h3 className="l-app-title">Agar sizda mobil telefonda ishlash qulay bo'lsa unda bizning SOFF SELLER mobil ilovamizdan foydalanishingiz mumkin</h3>
-                                <p className="l-app-desc">Ilovamizda ham barcha imkoniyatlar qulay va yaxshi ishlab chiqilgan</p>
-                                <div className="d-flex gap-2">
-                                    <Link href="https://play.google.com/store/apps/details?id=com.SoffUz&pcampaignid=web_share">
-                                        <a target='_blank' className="l-app-btn google">.</a>
-                                    </Link>
-                                    <Link href="https://apps.apple.com/tr/app/soff-seller/id6502236741">
-                                        <a target='_blank' className="l-app-btn apple">.</a>
-                                    </Link>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div className="l-app">
-                    <div className="container">
-                        <div className="l-app-inner">
-                            <div className="frame-2">
-                                <h3 className="l-app-title">Agar sizda mobil telefonda ishlash qulay bo'lsa unda bizning SOFF SELLER mobil ilovamizdan foydalanishingiz mumkin</h3>
-                                <p className="l-app-desc">Ilovamizda ham barcha imkoniyatlar qulay va yaxshi ishlab chiqilgan</p>
+                                <h2 className="l-app-title">Istalgan joydan ishlang</h2>
+                                <p className="l-app-desc">Sotuvingizni masofadan boshqaring — sotuvchilar uchun qulay veb-sayt yoki mobil ilova orqali</p>
                                 <div className="d-flex gap-2">
                                     <Link href="https://play.google.com/store/apps/details?id=com.SoffUz&pcampaignid=web_share">
                                         <a target='_blank' className="l-app-btn google">.</a>
