@@ -1,17 +1,10 @@
-
-import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
-import PageLoader from '~/components/elements/common/PageLoader';
-import Loader from './loader';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Head from 'next/head';
+import { baseUrl } from '~/repositories/Repository';
 
-const HomepageDefaultPage = () => {
-    const { push } = useRouter()
-
-    // useEffect(() => {
-    //     push('/account/register')
-    // }, []);
+const HomepageDefaultPage = ({ faq }) => {
+    const [acc, setAcc] = useState(1)
 
     return (
         <div className="ps-page--my-account">
@@ -202,6 +195,53 @@ const HomepageDefaultPage = () => {
                 </div>
 
 
+                <div className="l-faq">
+                    <div className="container">
+                        <div className="l-faq-inner">
+                            <h3 className='l-faq-title'>Soff dan sotuvchi bo'lib foydalanish bo'yicha eng ko'p beriladigan savollar</h3>
+
+                            <div className="l-faq-list">
+                                <div className="l-faq-item" onClick={() => setAcc(0)}>
+                                    <div className="l-faq-accordion-header">
+                                        <h4 className='l-faq-accordion-title m-0' aria-label='Soff.uz nima?'>
+                                            Soff.uz nima?
+                                        </h4>
+
+                                        <i class={`fa-solid fa-${acc === 0 ? 'minus' : 'plus'}`}></i>
+                                    </div>
+
+                                    <div className={`l-faq-content ${acc === 0 ? 'active' : ''}`}>
+                                        <p>Soff.uz - Intellektual mulk marketi, Intellektual mahsulotlarini soting va xarid qiling.</p>
+
+                                        <p>Intellektual mulk - ijodiy aqliy faoliyat mahsuli. Ixtirochilik va mualliflik obʼyekti huquqi majmuiga kiruvchi, fan, adabiyot, sanʼat va ishlab chiqarish sohasida ijodiy faoliyatning boshqa turlari, adabiy, badiiy, ilmiy asarlar, ijrochi aktyorlik sanʼati, jumladan ovoz yozish, radio, televideniye asarlari, kashfiyotlar, ixtirolar, ratsionalizatorlik takliflari, sanoat namunalari, kompyuterlar uchun dasturlar, maʼlumotlar bazasi, nou-xauning ekspert tizimlari, tovar belgilari, firma atamalari va boshqa aqliy mulk obʼyektlariga kiradi.</p>
+
+                                        <p>Endilikda siz Soff Marketi orqali o'z intellektual mulklaringizni joylab daromad topishingiz mumkin.</p>
+                                    </div>
+                                </div>
+
+                                {
+                                    faq?.map(el => (
+                                        <div className="l-faq-item" onClick={() => setAcc(el?.id)}>
+                                            <div className="l-faq-accordion-header">
+                                                <h4 className='l-faq-accordion-title m-0' aria-label='Soff.uz nima?'>
+                                                    {el?.title}
+                                                </h4>
+
+                                                <i class={`fa-solid fa-${acc === el?.id ? 'minus' : 'plus'}`}></i>
+                                            </div>
+
+                                            <div className={`l-faq-content ${acc === el?.id ? 'active' : ''}`}>
+                                                <p>{el?.description}</p>
+                                            </div>
+                                        </div>
+                                    ))
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
                 <div className="l-text">
                     <div className="container">
                         <div className="l-text-inner">
@@ -210,7 +250,7 @@ const HomepageDefaultPage = () => {
                                 <span className='top-sellersss'>
                                     sotuvchilarimiz
 
-                                    <svg
+                                    {/* <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         width="200"
                                         height="32"
@@ -223,7 +263,7 @@ const HomepageDefaultPage = () => {
                                             strokeWidth="3"
                                             d="M1 19q30.672-15.051 16.143 0Q2.54 34.204 33.286 19q30.67-15.204 16.143 0-23.51 34 16.142 0 30.672-34 16.143 0-11.076 17.841 16.143 0Q128.53 1.159 114 19q-20.673 32.931 16.143 0 30.67-32.931 16.143 0-11.538 19.368 16.143 0 30.67-19.368 16.142 0-8.969 4.545 16.143 0 30.672-4.545 16.143 0Q162.693 44.596 227 19"
                                         />
-                                    </svg>
+                                    </svg> */}
                                 </span>
                                 qanday fikrda?
                             </h2>
@@ -346,6 +386,17 @@ const HomepageDefaultPage = () => {
         </div>
     );
 };
+
+export async function getServerSideProps() {
+    const resquest = await fetch(baseUrl + `customer/faq/`);
+    const faq = await resquest.json();
+
+    return {
+        props: {
+            faq: faq?.results,
+        },
+    };
+}
 
 export default HomepageDefaultPage;
 
