@@ -73,7 +73,7 @@ const MobileHeaderActions = ({ auth }) => {
     useEffect(() => {
         if (user?.access) {
             const newSocket = new WebSocket(
-                `wss://api.soff.uz/ws/user-notification/?token=${user?.access}`
+                `${process.env.NEXT_PUBLIC_WS_BASE_URL}ws/user-notification/?token=${user?.access}`
             );
 
             newSocket.onopen = function () { };

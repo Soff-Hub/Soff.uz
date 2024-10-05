@@ -118,13 +118,13 @@
     font-weight: 500;
     line-height: 1.5rem;
 }
+
 .footer-frame-2 {
     display: flex;
     padding: 2.5rem 10.3125rem;
     align-items: flex-start;
     justify-content: space-between;
     gap: 18.8125rem;
-    background: var(--neutral-black, #263238);
     /* align-self: stretch; */
     width: 100%;
     height: auto;
@@ -266,7 +266,7 @@
 
 .l-how-title {
     font-weight: 500;
-    font-size: 24px;
+    font-size: 30px;
     text-align: center;
 }
 
@@ -344,16 +344,15 @@
     background-color: white;
 
     background-image: url('/static/img/web-app.png');
-    background-size: 70%;
+    background-size: 1200px;
     background-repeat: no-repeat;
-    background-position: calc(70% + 300px) calc(50% - 0px);
-    padding: 200px 30px;
+    background-position: calc(70% + 350px) calc(50% - 0px);
+    padding: 240px 20px;
 }
 
 .l-app-inner {
     display: flex;
     justify-content: flex-start;
-    // background-position: top left;
 }
 
 .l-app-inner .frame-2 {
@@ -384,111 +383,103 @@
     background-image: url('/static/img/appstore.png');
 }
 
-@media (max-width: 700px) {
-    .l-navbar {
-        justify-content: center;
-        align-items: center;
-    }
-    .l-navbar-logo {
-        gap: 0.1rem;
-        padding: 0rem 2rem;
-    }
-    .l-navbar-links {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 0.7rem;
-        list-style: none;
-        flex-wrap: wrap;
-        margin-bottom: 0.2rem;
-    }
-    .l-hero {
-        display: flex;
-        padding: 6rem 4rem;
-        align-items: center;
-        gap: 4rem;
-    }
-    .Clients {
-        padding: 0rem 4rem;
-    }
-    .client-logos {
-        width: auto;
-        height: 8rem;
-    }
-    .Community {
-        width: none;
-    }
-    .community-header {
-        width: 18rem;
-    }
-    .unlock-details {
-        padding: 0rem 1rem;
-    }
-    .unlock-details img {
-        max-width: 85%;
-    }
-    .achievements {
-        padding: 0rem 4rem;
-    }
-    .counts {
-        gap: 1.5rem;
-    }
-    .row-1,
-    .row-2 {
-        gap: 1rem;
-    }
-    .details-head {
-        font-size: 1rem;
+.l-about-inner {
+    display: flex;
+    flex-direction: column;
+    padding: 80px 10px;
+    gap: 170px;
+}
+
+.l-about-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.l-about-img {
+    width: 400px;
+    border-radius: 20px;
+}
+
+.l-about-content {
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.l-text-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.l-text-title {
+    font-weight: 500;
+    font-size: 30px;
+    text-align: center;
+}
+
+.l-text {
+    padding: 50px 0 60px;
+}
+
+.l-text-content {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.l-text-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 15px;
+    background-color: var(--neutral-silver);
+    cursor: pointer;
+    border-radius: 8px;
+    max-width: 320px;
+    text-align: center;
+
+    h4 {
+        color: var(--brand-primary);
         font-weight: 600;
-        line-height: 0rem;
-        width: 7rem;
+        margin-bottom: 0;
     }
-    .calendar-details {
-        padding: 1rem 1rem;
+
+    img {
+        margin-bottom: 15px;
+        border-radius: 50%;
     }
-    .calendar-details img {
-        max-width: 85%;
+}
+
+.l-text {
+    background-color: white;
+}
+
+.top-sellersss {
+    position: relative;
+    padding: 0 15px;
+    font-weight: 500;
+
+    &::before {
+        content: 'top sotuvchilarimiz';
+        position: absolute;
+        top: -25px;
+        left: 10px;
+        display: block;
+        width: 240px;
+        color: #4caf4f;
+        // background-color: #4caf4f;
+        font-size: 24px;
     }
-    .frame-calendar-inner {
-        width: 18rem;
-    }
-    .frame-calendar-outer {
-        width: 20rem;
-    }
-    .review {
-        padding: 2rem 1rem;
-    }
-    .review img {
-        max-width: 89%;
-    }
-    .update-details {
-        width: 18rem;
-    }
-    .update-text {
-        width: 18rem;
-    }
-    .footer-frame-1-text {
-        width: 18rem;
-        font-size: 2.5rem;
-        line-height: 3rem;
-    }
-    .footer-frame-2 {
-        padding: 2.5rem 4rem;
-        gap: 5rem;
-    }
-    .company-info {
-        gap: 1rem;
-    }
-    .column {
-        gap: 0.5rem;
-    }
-    .list-items {
-        gap: 0.2rem;
-    }
-    .email-box #email {
-        width: 10rem;
-    }
-    .email-box #email::placeholder {
-        font-size: 0.7rem;
+
+    svg {
+        position: absolute;
+        left: 15px;
+        top: 5px;
     }
 }

@@ -50,7 +50,7 @@ const ElectronicHeaderActions = ({ auth }) => {
         if (user?.access) {
             // Agar user?.access mavjud bo'lsa
             const newSocket = new WebSocket(
-                `wss://api.soff.uz/ws/user-notification/?token=${user?.access}`
+                `${process.env.NEXT_PUBLIC_WS_BASE_URL}ws/user-notification/?token=${user?.access}`
             );
 
             // Yangi WebSocket ulanishini yaratish
