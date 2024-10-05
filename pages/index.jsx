@@ -10,7 +10,9 @@ const HomepageDefaultPage = ({ faq }) => {
         <div className="ps-page--my-account">
 
             <Head>
-                <title>Soffda Intelektuall mulklaringizni soting va daromad qiling</title>
+                <title aria-label='Sell ​​your Intellectual Property on Soff and earn' aria-level={1}>Soffda Intelektuall mulklaringizni soting va daromad qiling</title>
+                <meta name="description" content="Intelektuall mulkaringizni soff da oson soting va daromadingizni oshiring" />
+                <meta name="keywords" content="soff seller, seller soff, soff sotuvchi, seller, seffuzda sotish, sotuvch bo'lish, soffuz da sotivchi bolish, intelektuall mulk sotish, video sotish, audio sotish, shablon sotish" />
             </Head>
             <div className="l-navbar">
                 <div className="container">
@@ -21,12 +23,12 @@ const HomepageDefaultPage = ({ faq }) => {
 
                         <div className="l-navbar-buttons">
                             <Link href={'/account/login'}>
-                                <a className='l-navbar-login-button'>
+                                <a className='l-navbar-login-button' aria-label='sign in'>
                                     Kirish
                                 </a>
                             </Link>
                             <Link href={'/account/register'}>
-                                <a className='l-navbar-signup-button'>
+                                <a className='l-navbar-signup-button' aria-label={'register or become a seller'}>
                                     Sotuvchi bo'lish
                                 </a>
                             </Link>
@@ -40,10 +42,10 @@ const HomepageDefaultPage = ({ faq }) => {
                     <div className="container">
                         <div className="l-hero-inner">
                             <div className="frame-1">
-                                <p className="text-1">Hoziroq daromad qilishni<br />boshlang</p>
-                                <p className="text-2">Intelektuall mulkaringizni soff da oson soting va daromadingizni oshiring</p>
+                                <p className="text-1" aria-label='Start earning now'>Hoziroq daromad qilishni<br />boshlang</p>
+                                <p className="text-2" aria-label='Sell ​​your intellectual property easily on soff and increase your income'>Intelektuall mulkaringizni soff da oson soting va daromadingizni oshiring</p>
                                 <Link href={'/account/register'}>
-                                    <a className='l-navbar-signup-button'>
+                                    <a className='l-navbar-signup-button' aria-label='become a seller'>
                                         Sotuvchi bo'lish
                                     </a>
                                 </Link>
@@ -58,52 +60,52 @@ const HomepageDefaultPage = ({ faq }) => {
                 <div className="l-how">
                     <div className="container">
                         <div className="l-how-inner">
-                            <h2 className="l-how-title">
+                            <h2 className="l-how-title" aria-label='You can sell the following types of intellectual property on the platform'>
                                 Platformada quyidagi turdagi intelektuall mulklaringizni <br /> sotishingiz mumkin
                             </h2>
 
                             <div className="l-how-content">
                                 <div className="l-how-list">
                                     <img height={50} src="/static/img/document.png" alt="" />
-                                    <h4>Ishlanmalar</h4>
+                                    <h4 aria-label='developments'>Ishlanmalar</h4>
 
                                     <ul>
-                                        <li>Biznes g'oyalar</li>
-                                        <li>Ijodiy ishlanmalar</li>
-                                        <li>Taqdimotlar</li>
+                                        <li aria-label='bussines ideas'>Biznes g'oyalar</li>
+                                        <li aria-label='creative works'>Ijodiy ishlanmalar</li>
+                                        <li aria-label='cours work and, slides'>Taqdimotlar</li>
                                     </ul>
                                 </div>
 
                                 <div className="l-how-list">
                                     <img height={50} src="/static/img/programming-course.png" alt="" />
-                                    <h4>Video materiallar</h4>
+                                    <h4 aria-label='video contents'>Video materiallar</h4>
 
                                     <ul>
-                                        <li>Videodarslar</li>
-                                        <li>Video ma'lumotlar</li>
-                                        <li>Playlistlar</li>
+                                        <li aria-label='video lessons'>Videodarslar</li>
+                                        <li aria-label='video data'>Video ma'lumotlar</li>
+                                        <li aria-label='playlists'>Playlistlar</li>
                                     </ul>
                                 </div>
 
                                 <div className="l-how-list">
                                     <img height={50} src="/static/img/voice-message.png" alt="" />
-                                    <h4>Audio materiallar</h4>
+                                    <h4 aria-label='audio contents'>Audio materiallar</h4>
 
                                     <ul>
-                                        <li>Audo hikoyalar</li>
-                                        <li>Audio darslar</li>
-                                        <li>Musiqalar</li>
+                                        <li aria-label='audio stories'>Audo hikoyalar</li>
+                                        <li aria-label='audio lessons'>Audio darslar</li>
+                                        <li aria-label='musics'>Musiqalar</li>
                                     </ul>
                                 </div>
 
                                 <div className="l-how-list">
                                     <img height={50} src="/static/img/layout.png" alt="" />
-                                    <h4>Shablonlar</h4>
+                                    <h4 aria-label='multi type templates'>Shablonlar</h4>
 
                                     <ul>
-                                        <li>Dizayn shablonlari</li>
-                                        <li>Sayt shablonlari</li>
-                                        <li>Video shablonlar</li>
+                                        <li aria-label='design templates'>Dizayn shablonlari</li>
+                                        <li aria-label='website templates'>Sayt shablonlari</li>
+                                        <li aria-label='video templates and etc.'>Video shablonlar</li>
                                     </ul>
                                 </div>
                             </div>
@@ -116,14 +118,14 @@ const HomepageDefaultPage = ({ faq }) => {
                     <div className="container">
                         <div className="l-app-inner">
                             <div className="frame-2">
-                                <h2 className="l-app-title mb-4">Istalgan joydan ishlang</h2>
-                                <p className="l-app-desc mb-5">Sotuvingizni masofadan boshqaring — sotuvchilar uchun qulay veb-sayt yoki mobil ilova orqali</p>
+                                <h2 className="l-app-title mb-4" aria-label='Work from anywhere'>Istalgan joydan ishlang</h2>
+                                <p className="l-app-desc mb-5" aria-label='Manage your sales remotely — with a seller-friendly website or mobile app'>Sotuvingizni masofadan boshqaring — sotuvchilar uchun qulay veb-sayt yoki mobil ilova orqali</p>
                                 <div className="d-flex gap-2">
                                     <Link href="https://play.google.com/store/apps/details?id=com.SoffUz&pcampaignid=web_share">
-                                        <a target='_blank' className="l-app-btn google">.</a>
+                                        <a target='_blank' className="l-app-btn google" aria-label='download mobile app for android free'>.</a>
                                     </Link>
                                     <Link href="https://apps.apple.com/tr/app/soff-seller/id6502236741">
-                                        <a target='_blank' className="l-app-btn apple">.</a>
+                                        <a target='_blank' className="l-app-btn apple" aria-label='download mobile app for ios free'>.</a>
                                     </Link>
                                 </div>
                             </div>
@@ -210,7 +212,7 @@ const HomepageDefaultPage = ({ faq }) => {
                                         <i class={`fa-solid fa-${acc === 0 ? 'minus' : 'plus'}`}></i>
                                     </div>
 
-                                    <div className={`l-faq-content ${acc === 0 ? 'active' : ''}`}>
+                                    <div className={`l-faq-content ${acc === 0 ? 'active' : ''}`} aria-description="Soff.uz - Intellektual mulk marketi, Intellektual mahsulotlarini soting va xarid qiling. Intellektual mulk - ijodiy aqliy faoliyat mahsuli. Ixtirochilik va mualliflik obʼyekti huquqi majmuiga kiruvchi, fan, adabiyot, sanʼat va ishlab chiqarish sohasida ijodiy faoliyatning boshqa turlari, adabiy, badiiy, ilmiy asarlar, ijrochi aktyorlik sanʼati, jumladan ovoz yozish, radio, televideniye asarlari, kashfiyotlar, ixtirolar, ratsionalizatorlik takliflari, sanoat namunalari, kompyuterlar uchun dasturlar, maʼlumotlar bazasi, nou-xauning ekspert tizimlari, tovar belgilari, firma atamalari va boshqa aqliy mulk obʼyektlariga kiradi. Endilikda siz Soff Marketi orqali o'z intellektual mulklaringizni joylab daromad topishingiz mumkin.">
                                         <p>Soff.uz - Intellektual mulk marketi, Intellektual mahsulotlarini soting va xarid qiling.</p>
 
                                         <p>Intellektual mulk - ijodiy aqliy faoliyat mahsuli. Ixtirochilik va mualliflik obʼyekti huquqi majmuiga kiruvchi, fan, adabiyot, sanʼat va ishlab chiqarish sohasida ijodiy faoliyatning boshqa turlari, adabiy, badiiy, ilmiy asarlar, ijrochi aktyorlik sanʼati, jumladan ovoz yozish, radio, televideniye asarlari, kashfiyotlar, ixtirolar, ratsionalizatorlik takliflari, sanoat namunalari, kompyuterlar uchun dasturlar, maʼlumotlar bazasi, nou-xauning ekspert tizimlari, tovar belgilari, firma atamalari va boshqa aqliy mulk obʼyektlariga kiradi.</p>
@@ -223,14 +225,14 @@ const HomepageDefaultPage = ({ faq }) => {
                                     faq?.map(el => (
                                         <div className="l-faq-item" onClick={() => setAcc(el?.id)}>
                                             <div className="l-faq-accordion-header">
-                                                <h4 className='l-faq-accordion-title m-0' aria-label='Soff.uz nima?'>
+                                                <h4 className='l-faq-accordion-title m-0' aria-label={el?.title}>
                                                     {el?.title}
                                                 </h4>
 
                                                 <i class={`fa-solid fa-${acc === el?.id ? 'minus' : 'plus'}`}></i>
                                             </div>
 
-                                            <div className={`l-faq-content ${acc === el?.id ? 'active' : ''}`}>
+                                            <div className={`l-faq-content ${acc === el?.id ? 'active' : ''}`} aria-description={el?.description}>
                                                 <p>{el?.description}</p>
                                             </div>
                                         </div>
