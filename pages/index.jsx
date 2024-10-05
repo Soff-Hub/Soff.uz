@@ -12,8 +12,24 @@ const HomepageDefaultPage = ({ faq }) => {
             <Head>
                 <title aria-label='Sell ​​your Intellectual Property on Soff and earn' aria-level={1}>Soffda Intelektuall mulklaringizni soting va daromad qiling</title>
                 <meta name="description" content="Intelektuall mulkaringizni soff da oson soting va daromadingizni oshiring" />
-                <meta name="keywords" content="soff seller, seller soff, soff sotuvchi, seller, seffuzda sotish, sotuvch bo'lish, soffuz da sotivchi bolish, intelektuall mulk sotish, video sotish, audio sotish, shablon sotish" />
+                <meta name="keywords" content="soff seller, seller soff, soff sotuvchi, seller, soffda sotish, seffuzda sotish, sotuvch bo'lish, soffuz da sotivchi bolish, intelektuall mulk sotish, video sotish, audio sotish, shablon sotish" />
             </Head>
+
+            {/* <div className="area" >
+                <ul className="circles">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </div > */}
+
             <div className="l-navbar">
                 <div className="container">
                     <div className="l-navbar-inner py-4">
@@ -21,7 +37,7 @@ const HomepageDefaultPage = ({ faq }) => {
                             <img src="./static/img/seller-logo.jpg" height={30} alt="soff seller logo" />
                         </div>
 
-                        <div className="l-navbar-buttons">
+                        <nav className="l-navbar-buttons">
                             <Link href={'/account/login'}>
                                 <a className='l-navbar-login-button' aria-label='sign in'>
                                     Kirish
@@ -32,7 +48,7 @@ const HomepageDefaultPage = ({ faq }) => {
                                     Sotuvchi bo'lish
                                 </a>
                             </Link>
-                        </div>
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -42,7 +58,7 @@ const HomepageDefaultPage = ({ faq }) => {
                     <div className="container">
                         <div className="l-hero-inner">
                             <div className="frame-1">
-                                <p className="text-1" aria-label='Start earning now'>Hoziroq daromad qilishni<br />boshlang</p>
+                                <h1 className="text-1" aria-label='Start earning now'>Hoziroq daromad qilishni<br />boshlang</h1>
                                 <p className="text-2" aria-label='Sell ​​your intellectual property easily on soff and increase your income'>Intelektuall mulkaringizni soff da oson soting va daromadingizni oshiring</p>
                                 <Link href={'/account/register'}>
                                     <a className='l-navbar-signup-button' aria-label='become a seller'>
@@ -50,9 +66,15 @@ const HomepageDefaultPage = ({ faq }) => {
                                     </a>
                                 </Link>
                             </div>
-                            <div className="frame-2">
-                                <img src="./static/img/auth/img18.png" alt="" height={400} />
-                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div className="l-first">
+                    <div className="container">
+                        <div className="l-first-inner">
+                            <h2 className="text-1" aria-label='Soff da sotishning afzalliklari'>Soff da sotishning afzalliklari</h2>
                         </div>
                     </div>
                 </div>
