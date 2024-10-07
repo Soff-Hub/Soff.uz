@@ -2,9 +2,26 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Head from 'next/head';
 import { baseUrl } from '~/repositories/Repository';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
+
+
 
 const HomepageDefaultPage = ({ faq }) => {
     const [acc, setAcc] = useState(0)
+
+
+    var settings = {
+        infinite: true,
+        speed: 300,
+        centerMode: true,
+        variableWidth: true,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 5000,
+    };
 
     return (
         <div className="ps-page--my-account">
@@ -61,85 +78,82 @@ const HomepageDefaultPage = ({ faq }) => {
 
 
                 <div className="l-first">
-                    <div>
-                        <div className="l-first-inner">
-                            <h2 className="text-1" aria-label='Soff da sotishning afzalliklari'>Soff da sotishning afzalliklari</h2>
-                            <ul className="circles row px-4 m-0">
-                                <li className='col-md-3 col-sm-4 col-12'>
-                                    <div className="l-first-item">
-                                        <span>01</span>
-                                        <p>
-                                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laudantium animi nostrum commodi.
-                                        </p>
-                                    </div>
-                                </li>
-                                <li className='col-md-3 col-sm-4 col-12'>
-                                    <div className="l-first-item">
-                                        <span>01</span>
-                                        <p>
-                                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laudantium animi nostrum commodi.
-                                        </p>
-                                    </div>
-                                </li>
-                                <li className='col-md-3 col-sm-4 col-12'>
-                                    <div className="l-first-item">
-                                        <span>01</span>
-                                        <p>
-                                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laudantium animi nostrum commodi.
-                                        </p>
-                                    </div>
-                                </li>
-                                <li className='col-md-3 col-sm-4 col-12'>
-                                    <div className="l-first-item">
-                                        <span>01</span>
-                                        <p>
-                                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laudantium animi nostrum commodi.
-                                        </p>
-                                    </div>
-                                </li>
-                                <li className='col-md-3 col-sm-4 col-12'>
-                                    <div className="l-first-item">
-                                        <span>01</span>
-                                        <p>
-                                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laudantium animi nostrum commodi.
-                                        </p>
-                                    </div>
-                                </li>
-                                <li className='col-md-3 col-sm-4 col-12'>
-                                    <div className="l-first-item">
-                                        <span>01</span>
-                                        <p>
-                                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laudantium animi nostrum commodi.
-                                        </p>
-                                    </div>
-                                </li>
-                                <li className='col-md-3 col-sm-4 col-12'>
-                                    <div className="l-first-item">
-                                        <span>01</span>
-                                        <p>
-                                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laudantium animi nostrum commodi.
-                                        </p>
-                                    </div>
-                                </li>
-                                <li className='col-md-3 col-sm-4 col-12'>
-                                    <div className="l-first-item">
-                                        <span>01</span>
-                                        <p>
-                                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laudantium animi nostrum commodi.
-                                        </p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
+                    <div className="l-first-inner">
+                        <h2 className="text-1" aria-label='Soff da sotishning afzalliklari'>Soff da sotishning afzalliklari</h2>
+                        <ul className="circles row px-4 m-0">
+                            <li className='col-md-3 col-sm-4 col-12'>
+                                <div className="l-first-item">
+                                    <span>01</span>
+                                    <p>
+                                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laudantium animi nostrum commodi.
+                                    </p>
+                                </div>
+                            </li>
+                            <li className='col-md-3 col-sm-4 col-12'>
+                                <div className="l-first-item">
+                                    <span>01</span>
+                                    <p>
+                                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laudantium animi nostrum commodi.
+                                    </p>
+                                </div>
+                            </li>
+                            <li className='col-md-3 col-sm-4 col-12'>
+                                <div className="l-first-item">
+                                    <span>01</span>
+                                    <p>
+                                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laudantium animi nostrum commodi.
+                                    </p>
+                                </div>
+                            </li>
+                            <li className='col-md-3 col-sm-4 col-12'>
+                                <div className="l-first-item">
+                                    <span>01</span>
+                                    <p>
+                                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laudantium animi nostrum commodi.
+                                    </p>
+                                </div>
+                            </li>
+                            <li className='col-md-3 col-sm-4 col-12'>
+                                <div className="l-first-item">
+                                    <span>01</span>
+                                    <p>
+                                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laudantium animi nostrum commodi.
+                                    </p>
+                                </div>
+                            </li>
+                            <li className='col-md-3 col-sm-4 col-12'>
+                                <div className="l-first-item">
+                                    <span>01</span>
+                                    <p>
+                                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laudantium animi nostrum commodi.
+                                    </p>
+                                </div>
+                            </li>
+                            <li className='col-md-3 col-sm-4 col-12'>
+                                <div className="l-first-item">
+                                    <span>01</span>
+                                    <p>
+                                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laudantium animi nostrum commodi.
+                                    </p>
+                                </div>
+                            </li>
+                            <li className='col-md-3 col-sm-4 col-12'>
+                                <div className="l-first-item">
+                                    <span>01</span>
+                                    <p>
+                                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laudantium animi nostrum commodi.
+                                    </p>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
-
                 </div>
 
                 <div className="l-how">
                     <div className="container">
                         <div className="l-how-inner">
                             <h2 className="l-how-title" aria-label='You can sell the following types of intellectual property on the platform'>
-                                Platformada quyidagi turdagi intelektuall mulklaringizni <br /> sotishingiz mumkin
+                                Platformada <span className='har-xil-turdagi'>har xil turdagi</span> intelektuall mulklaringizni <br /> sotish imkoniyatiga egasiz
                             </h2>
 
                             <div className="l-how-content">
@@ -196,8 +210,8 @@ const HomepageDefaultPage = ({ faq }) => {
                     <div className="container">
                         <div className="l-app-inner">
                             <div className="frame-2">
-                                <h2 className="l-app-title mb-4" aria-label='Work from anywhere'>Istalgan joydan ishlang</h2>
-                                <p className="l-app-desc mb-5" aria-label='Manage your sales remotely — with a seller-friendly website or mobile app'>Sotuvingizni masofadan boshqaring — sotuvchilar uchun qulay veb-sayt yoki mobil ilova orqali</p>
+                                <h2 className="l-app-title mb-4" aria-label='Work from anywhere'>Qulay boshqaruv paneli</h2>
+                                <p className="l-app-desc mb-5" aria-label='Manage your sales remotely — with a seller-friendly website or mobile app'>Mobil ilova yoki vebsayt orqali o'zingizga qulay joyda ishlang</p>
                                 <div className="d-flex gap-2">
                                     <Link href="https://play.google.com/store/apps/details?id=com.SoffUz&pcampaignid=web_share">
                                         <a target='_blank' className="l-app-btn google" aria-label='download mobile app for android free'>.</a>
@@ -211,15 +225,114 @@ const HomepageDefaultPage = ({ faq }) => {
                     </div>
                 </div>
 
+                <div class="wrap">
+                    <div class="content content--sticky bg-1">
+                        <div className="l-about">
+                            <div className="container">
+                                <div className="l-about-inner">
+                                    <div className="l-about-item">
+                                        <img className='l-about-img' src="https://assets.entrepreneur.com/content/3x2/2000/20180109204555-GettyImages-658621130.jpeg" alt="" />
+                                        <div className="l-about-content">
+                                            <h2 className='l-about-title'>
+                                                <u className='mark-video'>Video</u> materiallaringizni sotish yoki keng auditoriyaga ulashish imkoniyati
+                                            </h2>
+                                            <p className='mb-4'>
+                                                Video kurslar, video shanblonlaringizni qanday sotishni bilmayapsizmi? soff.uz siz uchun eng oqiona va xavfsiz yechim! Soff.uz ga yuklagan videolaringiz google qidiruvida birinchilardan bo'lib chiqishini ta'minlaydi.
+                                            </p>
 
-                <div className="l-about">
+                                            <Link href={'/account/register'}>
+                                                <a className='l-navbar-signup-button'>
+                                                    Sotuvchi bo'lish
+                                                </a>
+                                            </Link>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content content--sticky bg-2">
+                        <div className="l-about">
+                            <div className="container">
+                                <div className="l-about-inner">
+                                    <div className="l-about-item">
+                                        <div className="l-about-content">
+                                            <h2 className='l-about-title'><u className='mark-video white'>Audio</u> materiallaringizni Soff.uz da soting yoki tekinga ulashing</h2>
+                                            <p className='mb-4'>
+                                                Siz havaskor qo'shiqchimisiz yoki audio kitob yoki ertaklar yaratuvchisimisiz, o'zingizga keng auditoriya izlayapsizmi? unda sizga Soff Seller bo'lishni tavsiya qilamiz
+                                            </p>
+
+                                            <Link href={'/account/register'}>
+                                                <a className='l-navbar-signup-button'>
+                                                    Sotuvchi bo'lish
+                                                </a>
+                                            </Link>
+                                        </div>
+                                        <img className='l-about-img' src="https://images.ctfassets.net/qr8kennq1pom/5zceNjV1u1YFuD5UshOdXB/c9cc297b3a34314718cab112f0d7dfe1/Top_companies_to_intern_in_Germany.jpg" alt="" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content content--sticky bg-1">
+                        <div className="l-about">
+                            <div className="container">
+                                <div className="l-about-inner">
+                                    <div className="l-about-item">
+                                        <img className='l-about-img' src="https://i.pinimg.com/originals/15/eb/ba/15ebba8d38d5030034cdf1d7c6db2759.jpg" alt="" />
+                                        <div className="l-about-content">
+                                            <h2 className='l-about-title'>Tayyor <u className='mark-video'>shablonlaringiz</u>orqali online daromad qiling</h2>
+                                            <p className='mb-4'>Sizda qayta foydalanish uchun tayyor websayt, blankalar, dizayn, excel va boshqa turdagi shablonlar bormi? Soff.uz imkoniyatlaridan foydalaning va bu yo'nalishda top <br /> Soff Sellerlardan biri bo'ling
+                                            </p>
+
+                                            <Link href={'/account/register'}>
+                                                <a className='l-navbar-signup-button'>
+                                                    Sotuvchi bo'lish
+                                                </a>
+                                            </Link>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content content--sticky bg-2">
+                        <div className="l-about">
+                            <div className="container">
+                                <div className="l-about-inner">
+                                    <div className="l-about-item">
+                                        <div className="l-about-content">
+                                            <h2 className='l-about-title'>Turli mavzularga oid <u className='mark-video white'>hujjat va fayllarni</u> soting yoki bepul ulashing</h2>
+                                            <p className='mb-4'>
+                                                Sizda turli xil qo'lyozmalar, taqdimotlar, muhim mavzudagi hujjatlar bor va bularni kimdirlar shu mavzularda izlanish qilmoqda, ularga ko'proq ma'lumot topishda yordam berish va ularni vaqtini tejash orqali daromad qiling
+                                            </p>
+
+                                            <Link href={'/account/register'}>
+                                                <a className='l-navbar-signup-button'>
+                                                    Sotuvchi bo'lish
+                                                </a>
+                                            </Link>
+                                        </div>
+                                        <img className='l-about-img' src="https://www.sostav.ru/app/public/images/news/2013/10/23/pirat.JPG" alt="" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* <div className="l-about">
                     <div className="container">
                         <div className="l-about-inner">
                             <div className="l-about-item">
                                 <img className='l-about-img' src="https://assets.entrepreneur.com/content/3x2/2000/20180109204555-GettyImages-658621130.jpeg" alt="" />
                                 <div className="l-about-content">
-                                    <h2 className='l-about-title'>Qanday qilib video materiallarni sotuvini oshirish mumkin?</h2>
-                                    <p className='mb-4'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt sed suscipit doloremque explicabo ipsam minus!</p>
+                                    <h2 className='l-about-title'>
+                                        <u>Video</u> materiallaringizni sotish yoki keng auditoriyaga ulashish imkoniyati
+                                    </h2>
+                                    <p className='mb-4'>
+                                        Video kurslar, video shanblonlaringizni qanday sotishni bilmayapsizmi? soff.uz siz uchun eng oqiona va xavfsiz yechim! Soff.uz ga yuklagan videolaringiz google qidiruvida birinchilardan bo'lib chiqishini ta'minlaydi.
+                                    </p>
 
                                     <Link href={'/account/register'}>
                                         <a className='l-navbar-signup-button'>
@@ -231,8 +344,10 @@ const HomepageDefaultPage = ({ faq }) => {
 
                             <div className="l-about-item">
                                 <div className="l-about-content">
-                                    <h2 className='l-about-title'>Qanday qilib video materiallarni sotuvini oshirish mumkin?</h2>
-                                    <p className='mb-4'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt sed suscipit doloremque explicabo ipsam minus!</p>
+                                    <h2 className='l-about-title'><u>Audio</u> materiallaringizni Soff.uz da soting yoki tekinga ulashing</h2>
+                                    <p className='mb-4'>
+                                        Siz havaskor qo'shiqchimisiz yoki audio kitob yoki ertaklar yaratuvchisimisiz, o'zingizga keng auditoriya izlayapsizmi? unda sizga Soff Seller bo'lishni tavsiya qilamiz
+                                    </p>
 
                                     <Link href={'/account/register'}>
                                         <a className='l-navbar-signup-button'>
@@ -246,8 +361,9 @@ const HomepageDefaultPage = ({ faq }) => {
                             <div className="l-about-item">
                                 <img className='l-about-img' src="https://i.pinimg.com/originals/15/eb/ba/15ebba8d38d5030034cdf1d7c6db2759.jpg" alt="" />
                                 <div className="l-about-content">
-                                    <h2 className='l-about-title'>Qanday qilib video materiallarni sotuvini oshirish mumkin?</h2>
-                                    <p className='mb-4'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt sed suscipit doloremque explicabo ipsam minus!</p>
+                                    <h2 className='l-about-title'>Tayyor shablonlaringiz orqali online daromad qiling</h2>
+                                    <p className='mb-4'>Sizda qayta foydalanish uchun tayyor websayt, blankalar, dizayn, excel va boshqa turdagi shablonlar bormi? Soff.uz imkoniyatlaridan foydalaning va bu yo'nalishda top <br /> Soff Sellerlardan biri bo'ling
+                                    </p>
 
                                     <Link href={'/account/register'}>
                                         <a className='l-navbar-signup-button'>
@@ -259,8 +375,10 @@ const HomepageDefaultPage = ({ faq }) => {
 
                             <div className="l-about-item">
                                 <div className="l-about-content">
-                                    <h2 className='l-about-title'>Qanday qilib video materiallarni sotuvini oshirish mumkin?</h2>
-                                    <p className='mb-4'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt sed suscipit doloremque explicabo ipsam minus!</p>
+                                    <h2 className='l-about-title'>Turli mavzularga oid hujjat va fayllarni soting yoki bepul ulashing</h2>
+                                    <p className='mb-4'>
+                                        Sizda turli xil qo'lyozmalar, taqdimotlar, muhim mavzudagi hujjatlar bor va bularni kimdirlar shu mavzularda izlanish qilmoqda, ularga ko'proq ma'lumot topishda yordam berish va ularni vaqtini tejash orqali daromad qiling
+                                    </p>
 
                                     <Link href={'/account/register'}>
                                         <a className='l-navbar-signup-button'>
@@ -272,7 +390,7 @@ const HomepageDefaultPage = ({ faq }) => {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> */}
 
 
                 <div className="l-faq">
@@ -323,59 +441,42 @@ const HomepageDefaultPage = ({ faq }) => {
 
 
                 <div className="l-text">
-                    <div className="container">
+                    <div className="">
                         <div className="l-text-inner">
                             <h2 className="l-text-title mb-5">
                                 Biz haqimizda sotuvchilarimiz qanday fikrda?
-                                {/* <span className='top-sellersss'>
-                                    sotuvchilarimiz
-
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="200"
-                                        height="32"
-                                        fill="none"
-                                        viewBox="0 0 228 38"
-                                        className="img-crossed"
-                                    >
-                                        <path
-                                            stroke="#4caf4f"
-                                            strokeWidth="3"
-                                            d="M1 19q30.672-15.051 16.143 0Q2.54 34.204 33.286 19q30.67-15.204 16.143 0-23.51 34 16.142 0 30.672-34 16.143 0-11.076 17.841 16.143 0Q128.53 1.159 114 19q-20.673 32.931 16.143 0 30.67-32.931 16.143 0-11.538 19.368 16.143 0 30.67-19.368 16.142 0-8.969 4.545 16.143 0 30.672-4.545 16.143 0Q162.693 44.596 227 19"
-                                        />
-                                    </svg>
-                                </span> */}
                             </h2>
 
-                            <div className="l-text-content mt-3">
-                                <div className="l-text-list">
-                                    <img height={50} src="/static/img/userava-1.png" alt="" />
-                                    <h4>Doniyor Eshmamatov</h4>
+                            <Slider {...settings} className='slider-container_section'>
+                                {
+                                    [1, 2, 4]?.map(item => (
+                                        <div key={item.id}>
+                                            <div className="card_carseol p-8 ml-3 cursor-pointer ">
+                                                {/* <div className='flex items-center gap-6 card_text'>
+                                                        <div className='images_carddd'>
+                                                            <Image src={'https://eu2.contabostorage.com/20ddac7ab90d4d188d1ca104120b91ed:soffuz/media/Images/The_mount_rushmore_rrvnj.pptx_page-1_generate.jpg'} className='images' alt="images_res" width={100} height={100} />
+                                                        </div>
+                                                        <div className='pb-3 text_bodyh4'>
+                                                            <h4 className='elh4l'>{item.full_name}</h4>
+                                                            <p>{item.position}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div className='card_text_lorem'>
+                                                        <p className='textp'>{item.comment}</p>
+                                                    </div> */}
+                                                <div className="l-text-list">
+                                                    <img height={50} src="/static/img/userava-1.png" alt="" />
+                                                    <h4>Doniyor Eshmamatov</h4>
 
-                                    <p>
-                                        Assalomu alaykum saytni yorvoripsila vashe gapyo, har kuni soqa oqib kelyapti
-                                    </p>
-                                </div>
-
-                                <div className="l-text-list">
-                                    <img height={50} src="/static/img/userava-1.png" alt="" />
-                                    <h4>Doniyor Eshmamatov</h4>
-
-                                    <p>
-                                        Assalomu alaykum saytni yorvoripsila vashe gapyo, har kuni soqa oqib kelyapti
-                                    </p>
-                                </div>
-
-                                <div className="l-text-list">
-                                    <img height={50} src="/static/img/userava-1.png" alt="" />
-                                    <h4>Doniyor Eshmamatov</h4>
-
-                                    <p>
-                                        Assalomu alaykum saytni yorvoripsila vashe gapyo, har kuni soqa oqib kelyapti
-                                    </p>
-                                </div>
-                            </div>
-
+                                                    <p>
+                                                        Assalomu alaykum saytni yorvoripsila vashe gapyo, har kuni soqa oqib kelyapti
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))
+                                }
+                            </Slider>
                         </div>
                     </div>
                 </div>
