@@ -127,7 +127,7 @@ export default function TopSellersTable() {
             value.target.value
         );
         if (ItemsData) {
-            setSellerData(ItemsData?.data?.results);
+            setSellerData(ItemsData?.data);
         }
     };
 
