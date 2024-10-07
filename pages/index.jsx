@@ -4,7 +4,7 @@ import Head from 'next/head';
 import { baseUrl } from '~/repositories/Repository';
 
 const HomepageDefaultPage = ({ faq }) => {
-    const [acc, setAcc] = useState(1)
+    const [acc, setAcc] = useState(0)
 
     return (
         <div className="ps-page--my-account">
@@ -15,26 +15,11 @@ const HomepageDefaultPage = ({ faq }) => {
                 <meta name="keywords" content="soff seller, seller soff, soff sotuvchi, seller, soffda sotish, seffuzda sotish, sotuvch bo'lish, soffuz da sotivchi bolish, intelektuall mulk sotish, video sotish, audio sotish, shablon sotish" />
             </Head>
 
-            {/* <div className="area" >
-                <ul className="circles">
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                </ul>
-            </div > */}
-
             <div className="l-navbar">
                 <div className="container">
                     <div className="l-navbar-inner py-4">
                         <div className="l-navbar-logo">
-                            <img src="./static/img/seller-logo.jpg" height={30} alt="soff seller logo" />
+                            <img src="./static/img/seller-logo.jpg" alt="soff seller logo" />
                         </div>
 
                         <nav className="l-navbar-buttons">
@@ -66,17 +51,88 @@ const HomepageDefaultPage = ({ faq }) => {
                                     </a>
                                 </Link>
                             </div>
+
+                            <div className="frame-2">
+                                <img src="./static/img/auth/img18.png" alt="" height={400} />
+                            </div>
                         </div>
                     </div>
                 </div>
 
 
                 <div className="l-first">
-                    <div className="container">
+                    <div>
                         <div className="l-first-inner">
                             <h2 className="text-1" aria-label='Soff da sotishning afzalliklari'>Soff da sotishning afzalliklari</h2>
+                            <ul className="circles row px-4 m-0">
+                                <li className='col-md-3 col-sm-4 col-12'>
+                                    <div className="l-first-item">
+                                        <span>01</span>
+                                        <p>
+                                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laudantium animi nostrum commodi.
+                                        </p>
+                                    </div>
+                                </li>
+                                <li className='col-md-3 col-sm-4 col-12'>
+                                    <div className="l-first-item">
+                                        <span>01</span>
+                                        <p>
+                                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laudantium animi nostrum commodi.
+                                        </p>
+                                    </div>
+                                </li>
+                                <li className='col-md-3 col-sm-4 col-12'>
+                                    <div className="l-first-item">
+                                        <span>01</span>
+                                        <p>
+                                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laudantium animi nostrum commodi.
+                                        </p>
+                                    </div>
+                                </li>
+                                <li className='col-md-3 col-sm-4 col-12'>
+                                    <div className="l-first-item">
+                                        <span>01</span>
+                                        <p>
+                                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laudantium animi nostrum commodi.
+                                        </p>
+                                    </div>
+                                </li>
+                                <li className='col-md-3 col-sm-4 col-12'>
+                                    <div className="l-first-item">
+                                        <span>01</span>
+                                        <p>
+                                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laudantium animi nostrum commodi.
+                                        </p>
+                                    </div>
+                                </li>
+                                <li className='col-md-3 col-sm-4 col-12'>
+                                    <div className="l-first-item">
+                                        <span>01</span>
+                                        <p>
+                                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laudantium animi nostrum commodi.
+                                        </p>
+                                    </div>
+                                </li>
+                                <li className='col-md-3 col-sm-4 col-12'>
+                                    <div className="l-first-item">
+                                        <span>01</span>
+                                        <p>
+                                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laudantium animi nostrum commodi.
+                                        </p>
+                                    </div>
+                                </li>
+                                <li className='col-md-3 col-sm-4 col-12'>
+                                    <div className="l-first-item">
+                                        <span>01</span>
+                                        <p>
+                                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laudantium animi nostrum commodi.
+                                        </p>
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
                     </div>
+
                 </div>
 
                 <div className="l-how">
@@ -270,11 +326,11 @@ const HomepageDefaultPage = ({ faq }) => {
                     <div className="container">
                         <div className="l-text-inner">
                             <h2 className="l-text-title mb-5">
-                                Biz haqimizda
-                                <span className='top-sellersss'>
+                                Biz haqimizda sotuvchilarimiz qanday fikrda?
+                                {/* <span className='top-sellersss'>
                                     sotuvchilarimiz
 
-                                    {/* <svg
+                                    <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         width="200"
                                         height="32"
@@ -287,9 +343,8 @@ const HomepageDefaultPage = ({ faq }) => {
                                             strokeWidth="3"
                                             d="M1 19q30.672-15.051 16.143 0Q2.54 34.204 33.286 19q30.67-15.204 16.143 0-23.51 34 16.142 0 30.672-34 16.143 0-11.076 17.841 16.143 0Q128.53 1.159 114 19q-20.673 32.931 16.143 0 30.67-32.931 16.143 0-11.538 19.368 16.143 0 30.67-19.368 16.142 0-8.969 4.545 16.143 0 30.672-4.545 16.143 0Q162.693 44.596 227 19"
                                         />
-                                    </svg> */}
-                                </span>
-                                qanday fikrda?
+                                    </svg>
+                                </span> */}
                             </h2>
 
                             <div className="l-text-content mt-3">
