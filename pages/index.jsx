@@ -30,6 +30,7 @@ const HomepageDefaultPage = ({ faq, advantages }) => {
 
     return (
         <div className="ps-page--my-account">
+            <div style={{ height: '0', overflow: 'hidden', position: 'relative', zIndex: -2 }}><PageContainer /></div>
             <Head>
                 <title aria-label='Sell ​​your Intellectual Property on Soff and earn' aria-level={1}>Soffda Intelektuall mulklaringizni soting va daromad qiling</title>
                 <meta name="description" content="Intelektuall mulkaringizni soff da oson soting va daromadingizni oshiring" />
@@ -37,8 +38,6 @@ const HomepageDefaultPage = ({ faq, advantages }) => {
             </Head>
 
             <div className="l-navbar">
-
-                <div style={{ height: '0', overflow: 'hidden', position: 'relative', zIndex: -2 }}><PageContainer /></div>
                 <div className="container">
                     <div className="l-navbar-inner py-4">
                         <div className="l-navbar-logo">
