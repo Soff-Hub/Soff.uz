@@ -5,10 +5,11 @@ import { baseUrl } from '~/repositories/Repository';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
+import Image from 'next/image';
 
 
 
-const HomepageDefaultPage = ({ faq }) => {
+const HomepageDefaultPage = ({ faq, advantages }) => {
     const [acc, setAcc] = useState(0)
 
 
@@ -21,6 +22,7 @@ const HomepageDefaultPage = ({ faq }) => {
         slidesToScroll: 1,
         autoplay: true,
         autoplaySpeed: 5000,
+        arrows: false
     };
 
     return (
@@ -59,18 +61,32 @@ const HomepageDefaultPage = ({ faq }) => {
                 <div className="l-hero">
                     <div className="container">
                         <div className="l-hero-inner">
-                            <div className="frame-1">
-                                <h1 className="text-1" aria-label='Start earning now'>Hoziroq daromad qilishni<br />boshlang</h1>
-                                <p className="text-2" aria-label='Sell ​​your intellectual property easily on soff and increase your income'>Intelektuall mulkaringizni soff da oson soting va daromadingizni oshiring</p>
+                            <div className="frame-1 l-hero-content">
+                                <h1 className="text-1 l-hero-title" aria-label='Start earning now'>Hoziroq daromad <br /> qilishni boshlang</h1>
+                                <p className="text-2 l-hero-desc" aria-label='Sell ​​your intellectual property easily on soff and increase your income'>Intelektuall mulkaringizni soff da oson soting va daromadingizni oshiring</p>
                                 <Link href={'/account/register'}>
-                                    <a className='l-navbar-signup-button' aria-label='become a seller'>
-                                        Sotuvchi bo'lish
+                                    <a className='hero-btn' aria-label='become a seller'>
+                                        <span className='btn-inner'>Sotuvchi bo'lish</span>
+
+                                        <svg className='gooo'>
+                                            <filter id="goo">
+                                                <feGaussianBlur in="SourceGraphic" stdDeviation="10" result='blur' />
+                                                <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
+                                                <feBlend in="SourceGraphic" in2="goo" />
+                                            </filter>
+                                        </svg>
+
+                                        <span className='right-up-icon'>
+                                        </span>
                                     </a>
                                 </Link>
                             </div>
 
-                            <div className="frame-2">
-                                <img src="./static/img/auth/img18.png" alt="" height={400} />
+                            <div className="frame-2 hero-img">
+                                <img src="./static/img/man.png" alt="" height={450} />
+                                <div class="circle-ripple"></div>
+                                <span className='daromad'>Daromad</span>
+                                <span className='foyda'>foyda</span>
                             </div>
                         </div>
                     </div>
@@ -81,70 +97,33 @@ const HomepageDefaultPage = ({ faq }) => {
                     <div className="l-first-inner">
                         <h2 className="text-1" aria-label='Soff da sotishning afzalliklari'>Soff da sotishning afzalliklari</h2>
                         <ul className="circles row px-4 m-0">
-                            <li className='col-md-3 col-sm-4 col-12'>
-                                <div className="l-first-item">
-                                    <span>01</span>
-                                    <p>
-                                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laudantium animi nostrum commodi.
-                                    </p>
-                                </div>
-                            </li>
-                            <li className='col-md-3 col-sm-4 col-12'>
-                                <div className="l-first-item">
-                                    <span>01</span>
-                                    <p>
-                                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laudantium animi nostrum commodi.
-                                    </p>
-                                </div>
-                            </li>
-                            <li className='col-md-3 col-sm-4 col-12'>
-                                <div className="l-first-item">
-                                    <span>01</span>
-                                    <p>
-                                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laudantium animi nostrum commodi.
-                                    </p>
-                                </div>
-                            </li>
-                            <li className='col-md-3 col-sm-4 col-12'>
-                                <div className="l-first-item">
-                                    <span>01</span>
-                                    <p>
-                                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laudantium animi nostrum commodi.
-                                    </p>
-                                </div>
-                            </li>
-                            <li className='col-md-3 col-sm-4 col-12'>
-                                <div className="l-first-item">
-                                    <span>01</span>
-                                    <p>
-                                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laudantium animi nostrum commodi.
-                                    </p>
-                                </div>
-                            </li>
-                            <li className='col-md-3 col-sm-4 col-12'>
-                                <div className="l-first-item">
-                                    <span>01</span>
-                                    <p>
-                                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laudantium animi nostrum commodi.
-                                    </p>
-                                </div>
-                            </li>
-                            <li className='col-md-3 col-sm-4 col-12'>
-                                <div className="l-first-item">
-                                    <span>01</span>
-                                    <p>
-                                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laudantium animi nostrum commodi.
-                                    </p>
-                                </div>
-                            </li>
-                            <li className='col-md-3 col-sm-4 col-12'>
-                                <div className="l-first-item">
-                                    <span>01</span>
-                                    <p>
-                                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laudantium animi nostrum commodi.
-                                    </p>
-                                </div>
-                            </li>
+                            {
+                                advantages.map((el, i) => (
+                                    <li className='col-md-3 col-sm-4 col-12 p-0' key={i}>
+                                        <div className="l-first-item">
+                                            <div>
+                                                {el?.last ? '' : <Image src={el?.icon} alt={el.title} height={36} width={36} className='mb-3' />}
+                                                <h4>{el.title}</h4>
+                                                <p className='m-0'>
+                                                    {el.description}
+                                                </p>
+                                                {
+                                                    el?.last && (
+                                                        <Link href={'/account/register'}>
+                                                            <a className='hero-btn' aria-label='become a seller'>
+                                                                <span className='btn-inner'>Sotuvchi bo'lish</span>
+
+                                                                <span className='right-up-icon'>
+                                                                </span>
+                                                            </a>
+                                                        </Link>
+                                                    )
+                                                }
+                                            </div>
+                                        </div>
+                                    </li>
+                                ))
+                            }
                         </ul>
                     </div>
                 </div>
@@ -231,7 +210,7 @@ const HomepageDefaultPage = ({ faq }) => {
                             <div className="container">
                                 <div className="l-about-inner">
                                     <div className="l-about-item">
-                                        <img className='l-about-img' src="https://assets.entrepreneur.com/content/3x2/2000/20180109204555-GettyImages-658621130.jpeg" alt="" />
+                                        <img className='l-about-img' src="https://nktechwork.com/wp-content/uploads/2020/04/creating_video-1-min.gif" alt="" />
                                         <div className="l-about-content">
                                             <h2 className='l-about-title'>
                                                 <u className='mark-video'>Video</u> materiallaringizni sotish yoki keng auditoriyaga ulashish imkoniyati
@@ -268,7 +247,7 @@ const HomepageDefaultPage = ({ faq }) => {
                                                 </a>
                                             </Link>
                                         </div>
-                                        <img className='l-about-img' src="https://images.ctfassets.net/qr8kennq1pom/5zceNjV1u1YFuD5UshOdXB/c9cc297b3a34314718cab112f0d7dfe1/Top_companies_to_intern_in_Germany.jpg" alt="" />
+                                        <img className='l-about-img' src="https://images.squarespace-cdn.com/content/v1/61f30f2d94a2222a9c7f5389/50a318a3-4043-475e-936e-1fdc56b4568a/giphy+%2830%29.gif" alt="" />
                                     </div>
                                 </div>
                             </div>
@@ -279,7 +258,7 @@ const HomepageDefaultPage = ({ faq }) => {
                             <div className="container">
                                 <div className="l-about-inner">
                                     <div className="l-about-item">
-                                        <img className='l-about-img' src="https://i.pinimg.com/originals/15/eb/ba/15ebba8d38d5030034cdf1d7c6db2759.jpg" alt="" />
+                                        <img className='l-about-img' src="https://pixel77.com/wp-content/uploads/2016/05/graphic-design-gifs-2-1.gif" alt="" />
                                         <div className="l-about-content">
                                             <h2 className='l-about-title'>Tayyor <u className='mark-video'>shablonlaringiz</u>orqali online daromad qiling</h2>
                                             <p className='mb-4'>Sizda qayta foydalanish uchun tayyor websayt, blankalar, dizayn, excel va boshqa turdagi shablonlar bormi? Soff.uz imkoniyatlaridan foydalaning va bu yo'nalishda top <br /> Soff Sellerlardan biri bo'ling
@@ -313,85 +292,13 @@ const HomepageDefaultPage = ({ faq }) => {
                                                 </a>
                                             </Link>
                                         </div>
-                                        <img className='l-about-img' src="https://www.sostav.ru/app/public/images/news/2013/10/23/pirat.JPG" alt="" />
+                                        <img className='l-about-img' src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExMWxwNTN6Zjk3eGdoNWxwNW1rbXE0OXlsOGc5NGV1djFtZ29pcHlnYiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/1BhF7T0Sp9IIqZHoGr/giphy.webp" alt="" />
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                {/* <div className="l-about">
-                    <div className="container">
-                        <div className="l-about-inner">
-                            <div className="l-about-item">
-                                <img className='l-about-img' src="https://assets.entrepreneur.com/content/3x2/2000/20180109204555-GettyImages-658621130.jpeg" alt="" />
-                                <div className="l-about-content">
-                                    <h2 className='l-about-title'>
-                                        <u>Video</u> materiallaringizni sotish yoki keng auditoriyaga ulashish imkoniyati
-                                    </h2>
-                                    <p className='mb-4'>
-                                        Video kurslar, video shanblonlaringizni qanday sotishni bilmayapsizmi? soff.uz siz uchun eng oqiona va xavfsiz yechim! Soff.uz ga yuklagan videolaringiz google qidiruvida birinchilardan bo'lib chiqishini ta'minlaydi.
-                                    </p>
-
-                                    <Link href={'/account/register'}>
-                                        <a className='l-navbar-signup-button'>
-                                            Sotuvchi bo'lish
-                                        </a>
-                                    </Link>
-                                </div>
-                            </div>
-
-                            <div className="l-about-item">
-                                <div className="l-about-content">
-                                    <h2 className='l-about-title'><u>Audio</u> materiallaringizni Soff.uz da soting yoki tekinga ulashing</h2>
-                                    <p className='mb-4'>
-                                        Siz havaskor qo'shiqchimisiz yoki audio kitob yoki ertaklar yaratuvchisimisiz, o'zingizga keng auditoriya izlayapsizmi? unda sizga Soff Seller bo'lishni tavsiya qilamiz
-                                    </p>
-
-                                    <Link href={'/account/register'}>
-                                        <a className='l-navbar-signup-button'>
-                                            Sotuvchi bo'lish
-                                        </a>
-                                    </Link>
-                                </div>
-                                <img className='l-about-img' src="https://images.ctfassets.net/qr8kennq1pom/5zceNjV1u1YFuD5UshOdXB/c9cc297b3a34314718cab112f0d7dfe1/Top_companies_to_intern_in_Germany.jpg" alt="" />
-                            </div>
-
-                            <div className="l-about-item">
-                                <img className='l-about-img' src="https://i.pinimg.com/originals/15/eb/ba/15ebba8d38d5030034cdf1d7c6db2759.jpg" alt="" />
-                                <div className="l-about-content">
-                                    <h2 className='l-about-title'>Tayyor shablonlaringiz orqali online daromad qiling</h2>
-                                    <p className='mb-4'>Sizda qayta foydalanish uchun tayyor websayt, blankalar, dizayn, excel va boshqa turdagi shablonlar bormi? Soff.uz imkoniyatlaridan foydalaning va bu yo'nalishda top <br /> Soff Sellerlardan biri bo'ling
-                                    </p>
-
-                                    <Link href={'/account/register'}>
-                                        <a className='l-navbar-signup-button'>
-                                            Sotuvchi bo'lish
-                                        </a>
-                                    </Link>
-                                </div>
-                            </div>
-
-                            <div className="l-about-item">
-                                <div className="l-about-content">
-                                    <h2 className='l-about-title'>Turli mavzularga oid hujjat va fayllarni soting yoki bepul ulashing</h2>
-                                    <p className='mb-4'>
-                                        Sizda turli xil qo'lyozmalar, taqdimotlar, muhim mavzudagi hujjatlar bor va bularni kimdirlar shu mavzularda izlanish qilmoqda, ularga ko'proq ma'lumot topishda yordam berish va ularni vaqtini tejash orqali daromad qiling
-                                    </p>
-
-                                    <Link href={'/account/register'}>
-                                        <a className='l-navbar-signup-button'>
-                                            Sotuvchi bo'lish
-                                        </a>
-                                    </Link>
-                                </div>
-                                <img className='l-about-img' src="https://www.sostav.ru/app/public/images/news/2013/10/23/pirat.JPG" alt="" />
-                            </div>
-                        </div>
-                    </div>
-                </div> */}
-
 
                 <div className="l-faq">
                     <div className="container">
@@ -571,9 +478,43 @@ export async function getServerSideProps() {
     const resquest = await fetch(baseUrl + `customer/faq/`);
     const faq = await resquest.json();
 
+    const advantages = [
+        {
+            title: 'Har xil turdagi intelektuall mulklarni sotish',
+            description: 'Siz istalgan turdagi: videolar, audiolar, shablonlar, ilmiy ishlanmalarni sotishingiz mumkin bo\'ladi',
+            icon: '/static/img/ai.png'
+        },
+        {
+            title: "Qidiruvda birinchilardan bo'ling",
+            description: 'Mahsulotlaringiz tasdiqlanganidan keyin 3-5 kun ichida qidiruvda birinchilarda ko\'rinishni boshlaydi',
+            icon: '/static/img/search-ic.png'
+        },
+        {
+            title: "Taklif evaziga daromad qiling",
+            description: "Referal havola orqali do'stingizni taklif qiling va do'stingizning har bir daromadidan 5% miqdorda bonus oling",
+            icon: '/static/img/refer-ic.png'
+        },
+        {
+            title: 'Birjada savdo qiling',
+            description: 'birja.soff.uz saytimizda mahsulotlaringizni egalik huquqlarini sotish va daromadingizni oshirish imkoniyati',
+            icon: '/static/img/stock-ic.png'
+        },
+        {
+            title: 'Frilanserlik qilish imkoniyati',
+            description: 'Buyurtmalarni qabul qilish va istalgan joydan online daromad qilish imkoniyati',
+            icon: '/static/img/order-ic.png'
+        },
+        {
+            title: '',
+            description: 'Soff Seller bo\'lish orqali bu imkoniyatlarning barchasidan foydalaning',
+            last: true
+        }
+    ]
+
     return {
         props: {
             faq: faq?.results,
+            advantages
         },
     };
 }

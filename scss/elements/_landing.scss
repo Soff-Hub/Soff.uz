@@ -257,13 +257,10 @@
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        padding: 60px 0 0;
-        max-width: 550px;
         gap: 10px;
 
         .text-1 {
             font-size: 42px;
-            color: black;
             font-weight: 600;
             line-height: 44px;
             margin: 0;
@@ -618,17 +615,13 @@
 .l-first-item {
     display: flex;
     flex-direction: column;
-    color: #4caf4f;
-}
-
-.l-first-item span {
-    font-size: 36px;
-    font-weight: 200;
 }
 
 .l-first-item p {
     font-size: 16px;
     font-weight: 200;
+    position: relative;
+    z-index: 3;
 }
 
 .l-navbar-logo {
@@ -641,15 +634,59 @@
 
 .har-xil-turdagi {
     font-weight: 500;
-    background-color: #4caf4f;
-    color: white;
+    // background-color: #4caf4f;
+    color: #4caf4f;
     padding: 0 8px;
+    word-break: keep-all;
+}
+
+.har-xil-turdagi {
+    position: relative;
+}
+
+.har-xil-turdagi:before {
+    content: '';
+    z-index: -1;
+    left: 0em;
+    top: 0.1em;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #4caf4f;
+    position: absolute;
+    border-right-color: transparent;
+    width: 100%;
+    height: 1em;
+    transform: rotate(1deg);
+    opacity: 0.7;
+    border-radius: 50%;
+    padding: 0.1em 0.25em;
+}
+
+.har-xil-turdagi:after {
+    content: '';
+    z-index: -1;
+    left: 0em;
+    top: 0.3em;
+    padding: 0.1em 0.25em;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #4caf4f;
+    border-left-color: transparent;
+    border-top-color: transparent;
+    position: absolute;
+    width: 100%;
+    height: 1em;
+    transform: rotate(-1deg);
+    opacity: 0.7;
+    border-radius: 50%;
 }
 
 .mark-video {
     font-weight: 600;
     text-decoration-color: #4caf4f;
     padding-right: 6px;
+    text-decoration: none;
+    color: #4caf4f;
 }
 
 .mark-video.white {
@@ -754,10 +791,16 @@
         align-items: flex-start;
     }
 
+    .bg-2 .l-about-item {
+        flex-direction: column-reverse;
+    }
+
     .l-about-img {
-        width: 100px;
         border-radius: 8px;
         margin-bottom: 5px;
+        height: 200px;
+        object-fit: cover;
+        object-position: center;
     }
 
     .l-about-title {
@@ -1134,4 +1177,208 @@
 .slick-current {
     filter: none;
     transition: all 0.1s ease;
+}
+
+.l-hero-inner {
+    background-color: #00ba3f;
+    padding: 50px 50px 0 50px;
+    border-radius: 14px;
+}
+
+.l-hero-title {
+    text-transform: uppercase;
+    color: white;
+}
+
+.l-hero-content {
+    max-width: 500px;
+    padding: 30px 0 30px;
+}
+
+.l-hero-desc {
+    color: white;
+}
+
+.hero-btn {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 5px;
+}
+
+.hero-btn .btn-inner {
+    display: block;
+    position: relative;
+    text-transform: uppercase;
+    font-weight: 500;
+    background-color: white;
+    padding: 12px;
+    border-radius: 30px;
+    background: #fff;
+}
+
+.hero-btn .right-up-icon {
+    background-color: white;
+    height: 45px;
+    width: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+
+    background-image: url('/static/img/up-right.png');
+    background-size: 60%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.gooo {
+    display: none;
+}
+
+.l-hero {
+    position: relative;
+}
+
+.offer-box {
+    position: absolute;
+    padding: 16px 16px 0 0;
+    background-color: white;
+    bottom: 0;
+}
+
+.offer-box-inner {
+    border-radius: 14px;
+    display: block;
+    background-color: black;
+    color: white;
+    width: 240px;
+    min-height: 160px;
+}
+
+.offer-box-inner::after {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    bottom: 176px;
+    background-color: white;
+}
+
+.hero-img {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+}
+
+.circle-ripple {
+    border-radius: 100%;
+    animation: ripple 0.9s linear infinite;
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-54%);
+    z-index: 0;
+}
+
+.hero-img img {
+    position: relative;
+    z-index: 10;
+}
+
+@keyframes ripple {
+    0% {
+        box-shadow: 0 0 0 0 rgba(#65ff78, 0.3), 0 0 0 1em rgba(#65ff78, 0.3),
+            0 0 0 3em rgba(#65ff78, 0.3), 0 0 0 5em rgba(#65ff78, 0.3);
+    }
+    100% {
+        box-shadow: 0 0 0 1em rgba(#65ff78, 0.3), 0 0 0 3em rgba(#65ff78, 0.3),
+            0 0 0 5em rgba(#65ff78, 0.3), 0 0 0 8em rgba(#65ff78, 0);
+    }
+}
+
+.daromad {
+    background-color: #ffd93d;
+    position: absolute;
+    padding: 5px 15px;
+    border-radius: 20px;
+    text-transform: lowercase;
+    font-size: 18px;
+    left: calc(50% + 80px);
+    top: calc(50% - 130px);
+    transform: rotateZ(-15deg);
+}
+
+.foyda {
+    position: absolute;
+    padding: 5px 15px;
+    border-radius: 20px;
+    text-transform: lowercase;
+    font-size: 18px;
+    background-color: white;
+    left: calc(50% + 40px);
+    top: calc(50% - 60px);
+    transform: rotateZ(24deg);
+}
+
+@media only screen and (max-width: 576px) {
+    .l-hero-inner {
+        padding: 0;
+        flex-direction: column;
+        background-image: url('/static/img/man.png');
+        background-position: center;
+        background-size: cover;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .l-hero-content {
+        backdrop-filter: blur(4px);
+        padding: 60px 20px;
+    }
+
+    .l-hero-title {
+        font-size: 24px;
+    }
+
+    .hero-img {
+        display: none;
+    }
+
+    .l-hero {
+        margin-bottom: 30px;
+    }
+}
+
+.l-first-item {
+    padding: 30px 20px;
+}
+
+.circles li {
+    position: relative;
+}
+
+.l-first-item h4 {
+    color: #4caf4f;
+    font-size: 20px;
+}
+
+.l-first-item .hero-btn {
+    margin-top: 35px;
+    flex-direction: row;
+    justify-content: flex-end;
+
+    .btn-inner {
+        background-color: #00ba3f;
+        flex: 1;
+        text-align: center;
+    }
+
+    .right-up-icon {
+        background-color: #00ba3f;
+    }
 }
