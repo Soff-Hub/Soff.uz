@@ -30,7 +30,7 @@ const HomepageDefaultPage = ({ faq, advantages }) => {
 
     return (
         <div className="ps-page--my-account">
-            <div style={{ height: '0', overflow: 'hidden', position: 'relative', zIndex: -2 }}><PageContainer /></div>
+            <div style={{ height: '0', overflow: 'hidden', position: 'relative', zIndex: -6, opacity: 0 }}><PageContainer /></div>
             <Head>
                 <title aria-label='Sell ​​your Intellectual Property on Soff and earn' aria-level={1}>Soffda Intelektuall mulklaringizni soting va daromad qiling</title>
                 <meta name="description" content="Intelektuall mulkaringizni soff da oson soting va daromadingizni oshiring" />
