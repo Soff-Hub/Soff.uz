@@ -4,8 +4,9 @@ import Head from 'next/head';
 import { baseUrl } from '~/repositories/Repository';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Slider from "react-slick";
+// import Slider from "react-slick";
 import Image from 'next/image';
+import FooterDefault from '~/components/shared/footers/FooterDefault';
 
 
 
@@ -104,9 +105,7 @@ const HomepageDefaultPage = ({ faq, advantages }) => {
                                             <div>
                                                 {el?.last ? '' : <Image src={el?.icon} alt={el.title} height={36} width={36} className='mb-3' />}
                                                 <h4>{el.title}</h4>
-                                                <p className='m-0'>
-                                                    {el.description}
-                                                </p>
+                                                <p className='m-0'>{el.description}</p>
                                                 {
                                                     el?.last && (
                                                         <Link href={'/account/register'}>
@@ -132,7 +131,7 @@ const HomepageDefaultPage = ({ faq, advantages }) => {
                     <div className="container">
                         <div className="l-how-inner">
                             <h2 className="l-how-title" aria-label='You can sell the following types of intellectual property on the platform'>
-                                Platformada <span className='har-xil-turdagi'>har xil turdagi</span> intelektuall mulklaringizni <br /> sotish imkoniyatiga egasiz
+                                Platformada <span className='har-xil-turdagi'><div>har</div> <div>xil</div> <div>turdagi</div></span> intelektuall mulklaringizni <br /> sotish imkoniyatiga egasiz
                             </h2>
 
                             <div className="l-how-content">
@@ -210,7 +209,7 @@ const HomepageDefaultPage = ({ faq, advantages }) => {
                             <div className="container">
                                 <div className="l-about-inner">
                                     <div className="l-about-item">
-                                        <img className='l-about-img' src="https://nktechwork.com/wp-content/uploads/2020/04/creating_video-1-min.gif" alt="" />
+                                        <img className='l-about-img' src="/static/gif/video.gif" alt="" />
                                         <div className="l-about-content">
                                             <h2 className='l-about-title'>
                                                 <u className='mark-video'>Video</u> materiallaringizni sotish yoki keng auditoriyaga ulashish imkoniyati
@@ -247,7 +246,7 @@ const HomepageDefaultPage = ({ faq, advantages }) => {
                                                 </a>
                                             </Link>
                                         </div>
-                                        <img className='l-about-img' src="https://images.squarespace-cdn.com/content/v1/61f30f2d94a2222a9c7f5389/50a318a3-4043-475e-936e-1fdc56b4568a/giphy+%2830%29.gif" alt="" />
+                                        <img className='l-about-img' src="/static/gif/audio.gif" alt="" />
                                     </div>
                                 </div>
                             </div>
@@ -258,7 +257,7 @@ const HomepageDefaultPage = ({ faq, advantages }) => {
                             <div className="container">
                                 <div className="l-about-inner">
                                     <div className="l-about-item">
-                                        <img className='l-about-img' src="https://pixel77.com/wp-content/uploads/2016/05/graphic-design-gifs-2-1.gif" alt="" />
+                                        <img className='l-about-img' src="/static/gif/template.gif" alt="" />
                                         <div className="l-about-content">
                                             <h2 className='l-about-title'>Tayyor <u className='mark-video'>shablonlaringiz</u>orqali online daromad qiling</h2>
                                             <p className='mb-4'>Sizda qayta foydalanish uchun tayyor websayt, blankalar, dizayn, excel va boshqa turdagi shablonlar bormi? Soff.uz imkoniyatlaridan foydalaning va bu yo'nalishda top <br /> Soff Sellerlardan biri bo'ling
@@ -292,7 +291,7 @@ const HomepageDefaultPage = ({ faq, advantages }) => {
                                                 </a>
                                             </Link>
                                         </div>
-                                        <img className='l-about-img' src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExMWxwNTN6Zjk3eGdoNWxwNW1rbXE0OXlsOGc5NGV1djFtZ29pcHlnYiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/1BhF7T0Sp9IIqZHoGr/giphy.webp" alt="" />
+                                        <img className='l-about-img' src="/static/gif/work.gif" alt="" />
                                     </div>
                                 </div>
                             </div>
@@ -347,7 +346,7 @@ const HomepageDefaultPage = ({ faq, advantages }) => {
                 </div>
 
 
-                <div className="l-text">
+                {/* <div className="l-text">
                     <div className="">
                         <div className="l-text-inner">
                             <h2 className="l-text-title mb-5">
@@ -359,18 +358,6 @@ const HomepageDefaultPage = ({ faq, advantages }) => {
                                     [1, 2, 4]?.map(item => (
                                         <div key={item.id}>
                                             <div className="card_carseol p-8 ml-3 cursor-pointer ">
-                                                {/* <div className='flex items-center gap-6 card_text'>
-                                                        <div className='images_carddd'>
-                                                            <Image src={'https://eu2.contabostorage.com/20ddac7ab90d4d188d1ca104120b91ed:soffuz/media/Images/The_mount_rushmore_rrvnj.pptx_page-1_generate.jpg'} className='images' alt="images_res" width={100} height={100} />
-                                                        </div>
-                                                        <div className='pb-3 text_bodyh4'>
-                                                            <h4 className='elh4l'>{item.full_name}</h4>
-                                                            <p>{item.position}</p>
-                                                        </div>
-                                                    </div>
-                                                    <div className='card_text_lorem'>
-                                                        <p className='textp'>{item.comment}</p>
-                                                    </div> */}
                                                 <div className="l-text-list">
                                                     <img height={50} src="/static/img/userava-1.png" alt="" />
                                                     <h4>Doniyor Eshmamatov</h4>
@@ -386,11 +373,13 @@ const HomepageDefaultPage = ({ faq, advantages }) => {
                             </Slider>
                         </div>
                     </div>
-                </div>
+                </div> */}
             </main>
 
             <div>
-                <footer className='l-footer'>
+
+                <FooterDefault />
+                {/* <footer className='l-footer'>
                     <div className="container">
                         <div className="footer-frame-2">
                             <div className="company-info">
@@ -468,7 +457,7 @@ const HomepageDefaultPage = ({ faq, advantages }) => {
                             </div>
                         </div>
                     </div>
-                </footer>
+                </footer> */}
             </div>
         </div>
     );

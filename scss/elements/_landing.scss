@@ -1382,3 +1382,18 @@
         background-color: #00ba3f;
     }
 }
+
+.l-how-title {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.har-xil-turdagi {
+    display: flex;
+    gap: 7px;
+}
+
+.hero-btn:hover {
+    color: black;
+}
