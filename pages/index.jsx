@@ -7,12 +7,14 @@ import "slick-carousel/slick/slick-theme.css";
 // import Slider from "react-slick";
 import Image from 'next/image';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
+import { useSelector } from 'react-redux';
+import PageContainer from '~/components/layouts/PageContainer';
 
 
 
 const HomepageDefaultPage = ({ faq, advantages }) => {
     const [acc, setAcc] = useState(0)
-
+    const { user } = useSelector(state => state.auth)
 
     var settings = {
         infinite: true,
@@ -28,7 +30,6 @@ const HomepageDefaultPage = ({ faq, advantages }) => {
 
     return (
         <div className="ps-page--my-account">
-
             <Head>
                 <title aria-label='Sell ​​your Intellectual Property on Soff and earn' aria-level={1}>Soffda Intelektuall mulklaringizni soting va daromad qiling</title>
                 <meta name="description" content="Intelektuall mulkaringizni soff da oson soting va daromadingizni oshiring" />
@@ -36,6 +37,8 @@ const HomepageDefaultPage = ({ faq, advantages }) => {
             </Head>
 
             <div className="l-navbar">
+
+                <div style={{ height: '0', overflow: 'hidden', position: 'relative', zIndex: -2 }}><PageContainer /></div>
                 <div className="container">
                     <div className="l-navbar-inner py-4">
                         <div className="l-navbar-logo">
@@ -43,16 +46,28 @@ const HomepageDefaultPage = ({ faq, advantages }) => {
                         </div>
 
                         <nav className="l-navbar-buttons">
-                            <Link href={'/account/login'}>
-                                <a className='l-navbar-login-button' aria-label='sign in'>
-                                    Kirish
-                                </a>
-                            </Link>
-                            <Link href={'/account/register'}>
-                                <a className='l-navbar-signup-button' aria-label={'register or become a seller'}>
-                                    Sotuvchi bo'lish
-                                </a>
-                            </Link>
+                            {
+                                user?.access ? (
+                                    <Link href={'/account/dashbord'}>
+                                        <a className='l-navbar-signup-button' aria-label={'register or become a seller'}>
+                                            Profilga o'tish
+                                        </a>
+                                    </Link>
+                                ) : (
+                                    <>
+                                        <Link href={'/account/login'}>
+                                            <a className='l-navbar-login-button' aria-label='sign in'>
+                                                Kirish
+                                            </a>
+                                        </Link>
+                                        <Link href={'/account/register'}>
+                                            <a className='l-navbar-signup-button' aria-label={'register or become a seller'}>
+                                                Sotuvchi bo'lish
+                                            </a>
+                                        </Link>
+                                    </>
+                                )
+                            }
                         </nav>
                     </div>
                 </div>
@@ -100,11 +115,11 @@ const HomepageDefaultPage = ({ faq, advantages }) => {
                         <ul className="circles row px-4 m-0">
                             {
                                 advantages.map((el, i) => (
-                                    <li className='col-md-3 col-sm-4 col-12 p-0' key={i}>
+                                    <li className='col-md-3 col-sm-4 col-12 p-0 l-first-item-last' key={i}>
                                         <div className="l-first-item">
                                             <div>
-                                                {el?.last ? '' : <Image src={el?.icon} alt={el.title} height={36} width={36} className='mb-3' />}
-                                                <h4>{el.title}</h4>
+                                                <img src={el?.icon} alt={el.title} />
+                                                <h4 className='mt-3'>{el.title}</h4>
                                                 <p className='m-0'>{el.description}</p>
                                                 {
                                                     el?.last && (
@@ -496,7 +511,8 @@ export async function getServerSideProps() {
         {
             title: '',
             description: 'Soff Seller bo\'lish orqali bu imkoniyatlarning barchasidan foydalaning',
-            last: true
+            last: true,
+            icon: '/static/img/seller-logo.jpg'
         }
     ]
 

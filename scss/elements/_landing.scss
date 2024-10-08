@@ -56,7 +56,7 @@
     text-align: center;
     font-family: Inter;
     font-weight: 500;
-    border-radius: 0.4rem;
+    border-radius: 14px;
     border: none;
     background-color: var(--neutral-silver);
     border: 1px solid transparent;
@@ -72,10 +72,9 @@
     align-items: center;
     gap: 0.625rem;
     background-color: var(--brand-primary);
-    border-radius: 0.4rem;
+    border-radius: 14px;
     border: none;
     text-align: center;
-    font-family: Inter;
     font-weight: 500;
     color: white;
     border: 1px solid transparent;
@@ -84,9 +83,7 @@
 .l-navbar-signup-button:hover {
     color: var(--brand-primary) !important;
     text-align: center;
-    font-family: Inter;
     font-weight: 500;
-    border-radius: 0.4rem;
     border: none;
     background-color: var(--neutral-silver);
     border: 1px solid var(--brand-primary);
@@ -615,6 +612,14 @@
 .l-first-item {
     display: flex;
     flex-direction: column;
+}
+
+.l-first-item img {
+    height: 34px !important;
+}
+
+.l-first-item-last:last-child img {
+    height: 26px !important;
 }
 
 .l-first-item p {
@@ -1197,6 +1202,7 @@
 
 .l-hero-desc {
     color: white;
+    margin-bottom: 140px;
 }
 
 .hero-btn {
@@ -1338,7 +1344,7 @@
 
     .l-hero-content {
         backdrop-filter: blur(4px);
-        padding: 60px 20px;
+        padding: 60px 20px 30px;
     }
 
     .l-hero-title {
@@ -1351,6 +1357,19 @@
 
     .l-hero {
         margin-bottom: 30px;
+    }
+
+    .l-hero-desc {
+        margin-bottom: 30px;
+    }
+
+    .hero-btn {
+        width: 100%;
+        flex-direction: row;
+    }
+    .btn-inner {
+        flex: 1;
+        text-align: center;
     }
 }
 
