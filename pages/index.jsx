@@ -145,7 +145,7 @@ const HomepageDefaultPage = ({ faq, advantages }) => {
                     <div className="container">
                         <div className="l-how-inner">
                             <h2 className="l-how-title" aria-label='You can sell the following types of intellectual property on the platform'>
-                                Platformada <span className='har-xil-turdagi'><div>har</div> <div>xil</div> <div>turdagi</div></span> intelektuall mulklaringizni <br /> sotish imkoniyatiga egasiz
+                                Platformada <span className='har-xil-turdagi'><div>har</div> <div>xil</div> <div>turdagi</div></span> intelektuall mulklaringizni sotish imkoniyatiga egasiz
                             </h2>
 
                             <div className="l-how-content">
@@ -229,7 +229,7 @@ const HomepageDefaultPage = ({ faq, advantages }) => {
                                                 <u className='mark-video'>Video</u> materiallaringizni sotish yoki keng auditoriyaga ulashish imkoniyati
                                             </h2>
                                             <p className='mb-4'>
-                                                Video kurslar, video shanblonlaringizni qanday sotishni bilmayapsizmi? soff.uz siz uchun eng oqiona va xavfsiz yechim! Soff.uz ga yuklagan videolaringiz google qidiruvida birinchilardan bo'lib chiqishini ta'minlaydi.
+                                                Video kurslar, video shanblonlaringizni qanday sotishni bilmayapsizmi? soff.uz siz uchun eng oqilona va xavfsiz yechim! Soff.uz ga yuklagan videolaringiz google qidiruvida birinchilardan bo'lib chiqishini ta'minlaydi.
                                             </p>
 
                                             <Link href={'/account/register'}>
