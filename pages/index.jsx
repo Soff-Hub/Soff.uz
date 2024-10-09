@@ -12,7 +12,7 @@ import PageContainer from '~/components/layouts/PageContainer';
 
 
 
-const HomepageDefaultPage = ({ faq, advantages }) => {
+const HomepageDefaultPage = ({ faq, advantages, projecs }) => {
     const [acc, setAcc] = useState(0)
     const { user } = useSelector(state => state.auth)
 
@@ -34,7 +34,7 @@ const HomepageDefaultPage = ({ faq, advantages }) => {
             <Head>
                 <title aria-label='Sell ​​your Intellectual Property on Soff and earn' aria-level={1}>Soffda Intelektuall mulklaringizni soting va daromad qiling</title>
                 <meta name="description" content="Intelektuall mulkaringizni soff da oson soting va daromadingizni oshiring" />
-                <meta name="keywords" content="soff seller, seller soff, soff sotuvchi, seller, soffda sotish, seffuzda sotish, sotuvch bo'lish, soffuz da sotivchi bolish, intelektuall mulk sotish, video sotish, audio sotish, shablon sotish" />
+                <meta name="keywords" content="soff seller, sof seller, seller soff, soff sotuvchi, seller, soffda sotish, seffuzda sotish, sotuvch bo'lish, soffuz da sotivchi bolish, intelektuall mulk sotish, video sotish, audio sotish, shablon sotish, sofda dokument sotish, sofda sotuvchi bo'lish" />
             </Head>
 
             <div className="l-navbar">
@@ -393,12 +393,17 @@ const HomepageDefaultPage = ({ faq, advantages }) => {
                 <div className="system">
                     <div className="container">
                         <div className="system-inner">
-                            <div>soff.uz</div>
-                            <div>soffcrm.uz</div>
-                            <div>soffstudy.uz</div>
-                            <div>birja.soff.uz</div>
-                            <div>seller.soff.uz</div>
-                            <div>soff.uz</div>
+                            {
+                                projecs.map(el => (
+                                    <div className='system-card'>
+                                        <div className="system-card-inner">
+                                            {el?.last ? <h2 className='sdsdsd'>{el?.title}</h2> : <img src={el?.logo} alt='' height={40} />}
+                                            <span className='system-text'>{el?.linkMask}</span>
+                                            <a className='system-link' href={el?.link} target={el?.last ? '' : '_blank'}>.</a>
+                                        </div>
+                                    </div>
+                                ))
+                            }
                         </div>
                     </div>
                 </div>
@@ -407,7 +412,7 @@ const HomepageDefaultPage = ({ faq, advantages }) => {
             <div>
 
                 <FooterDefault />
-                <footer className='l-footer'>
+                {/* <footer className='l-footer'>
                     <div className="container">
                         <div className="footer-frame-2">
                             <div className="company-info">
@@ -485,7 +490,7 @@ const HomepageDefaultPage = ({ faq, advantages }) => {
                             </div>
                         </div>
                     </div>
-                </footer>
+                </footer> */}
             </div>
         </div>
     );
@@ -529,10 +534,46 @@ export async function getServerSideProps() {
         }
     ]
 
+    const projecs = [
+        {
+            logo: '/static/img/soff/soff_green-old.png',
+            link: 'https://soff.uz',
+            linkMask: 'SOFF.UZ - Intelektuall mulk marketi',
+        },
+        {
+            logo: 'https://soffstudy.uz/assets/imgs/page/logo/Soff%20Study%20dark%20logo.png',
+            link: 'https://soffstudy.uz',
+            linkMask: 'SOFF STUDY - Zamonaviy kasblarni o\'qtish markazi',
+        },
+        {
+            logo: 'https://soffhub.uz/assets/imgs/page/about/soffhub-removebg-preview.png',
+            link: 'https://soffhub.uz',
+            linkMask: 'SOFFHUB - Biznes uchun raqamli yechimlar',
+        },
+        {
+            logo: 'https://birja.soff.uz/images/soffbirja-dark-logo.png',
+            link: 'https://birja.soff.uz',
+            linkMask: 'SOFF BIRJA - Intelektuall mulk birjasi',
+        },
+        {
+            logo: 'https://soffcrm.uz/_next/image?url=%2Fassets%2Fimages%2Flogo.jpg&w=256&q=75',
+            link: 'https://soffcrm.uz',
+            linkMask: 'SOFFCRM - O\'quv markazlar uchun crm tizim',
+        },
+        {
+            logo: '',
+            link: '#',
+            linkMask: 'Biz rivoyjalishda davom etamiz!',
+            title: "SOFF Jamoasi",
+            last: true
+        }
+    ]
+
     return {
         props: {
             faq: faq?.results,
-            advantages
+            advantages,
+            projecs
         },
     };
 }
