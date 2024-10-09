@@ -30,7 +30,7 @@ const HomepageDefaultPage = ({ faq, advantages }) => {
 
     return (
         <div className="ps-page--my-account">
-            <div style={{ height: '0', overflow: 'hidden', position: 'relative', zIndex: -6, opacity: 0 }}><PageContainer /></div>
+            <div style={{ height: '0', overflow: 'hidden', position: 'relative', zIndex: -6, opacity: 0 }}><PageContainer title={'none'} /></div>
             <Head>
                 <title aria-label='Sell ​​your Intellectual Property on Soff and earn' aria-level={1}>Soffda Intelektuall mulklaringizni soting va daromad qiling</title>
                 <meta name="description" content="Intelektuall mulkaringizni soff da oson soting va daromadingizni oshiring" />
@@ -388,12 +388,26 @@ const HomepageDefaultPage = ({ faq, advantages }) => {
                         </div>
                     </div>
                 </div> */}
+
+
+                <div className="system">
+                    <div className="container">
+                        <div className="system-inner">
+                            <div>soff.uz</div>
+                            <div>soffcrm.uz</div>
+                            <div>soffstudy.uz</div>
+                            <div>birja.soff.uz</div>
+                            <div>seller.soff.uz</div>
+                            <div>soff.uz</div>
+                        </div>
+                    </div>
+                </div>
             </main>
 
             <div>
 
                 <FooterDefault />
-                {/* <footer className='l-footer'>
+                <footer className='l-footer'>
                     <div className="container">
                         <div className="footer-frame-2">
                             <div className="company-info">
@@ -471,7 +485,7 @@ const HomepageDefaultPage = ({ faq, advantages }) => {
                             </div>
                         </div>
                     </div>
-                </footer> */}
+                </footer>
             </div>
         </div>
     );

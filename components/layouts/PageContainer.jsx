@@ -195,9 +195,9 @@ const PageContainer = ({
 
     return (
         <>
-            <Head>
+            {title === 'none' ? '' : <Head>
                 <title>Soff Seller Dashboard </title>
-            </Head>
+            </Head>}
             {header}
 
             <div className='bg-soff' >
