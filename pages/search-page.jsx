@@ -6,6 +6,7 @@ import Link from 'next/link';
 import NextImageCard from '~/components/nextImagecard';
 import ProductSearchGoogle from '~/components/elements/products/ProductSearchGoogle';
 import useDebounce from '~/hooks/useDebounce';
+import Head from 'next/head';
 
 
 
@@ -89,6 +90,11 @@ const Products_Search_Results = () => {
 
     return (
         <div className='global_search_results'>
+            <Head>
+                <title>Soff.uz - Qidiruv natijalar</title>
+                <meta name="robots" content="index, follow" />
+                <meta name="description" content="Soff.uz qidiruv tizimi orqali o'zingizga kerakli bo'lgan istalgan turdagi intellektual mulklaringizni toping" />
+            </Head>
             <nav className='global_navbar'>
                 <div className='container d-flex align-items-center'>
                     <div className='d-flex align-items-center gap-5 width_full_screen'>
