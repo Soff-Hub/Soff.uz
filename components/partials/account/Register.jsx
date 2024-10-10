@@ -46,7 +46,7 @@ class Register extends Component {
                     const modal = Modal.error({
                         centered: true,
                         title: 'Xatolik',
-                        content: user?.data?.msg[0],
+                        content: user?.data?.msg,
                     });
                     modal.update;
                 } else if (user.status == 200 || user.status == 201) {
@@ -72,7 +72,7 @@ class Register extends Component {
                     const modal = Modal.error({
                         centered: true,
                         title: 'Xatolik',
-                        content: user?.data?.msg[0],
+                        content: user?.data?.msg,
                     });
                     modal.update;
                 } else if (user.status == 200 || user.status == 201) {
@@ -113,7 +113,7 @@ class Register extends Component {
                     const modal = Modal.error({
                         centered: true,
                         title: 'Xatolik',
-                        content: user?.data?.msg[0],
+                        content: user?.data?.msg,
                     });
                     modal.update;
                 } else if (user.status == 200 || user.status == 201) {
@@ -141,7 +141,7 @@ class Register extends Component {
                     const modal = Modal.error({
                         centered: true,
                         title: 'Xatolik',
-                        content: user?.data?.msg?.[0] || "Nimadir xato ketdi qaytadan urinib ko'ring",
+                        content: user?.data?.msg || "Nimadir xato ketdi qaytadan urinib ko'ring",
                     });
                     modal.update;
                 } else if (user.status == 200 || user.status == 201) {
