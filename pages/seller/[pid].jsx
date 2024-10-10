@@ -373,19 +373,20 @@ const SellerPage = ({ seller, sellerr }) => {
 };
 
 export async function getServerSideProps({ query }) {
-    const resquest_boolen = await fetch(
-        baseUrl + `customer/documents/?seller__id=${query.pid}`
-    );
+    // const resquest_boolen = await fetch(
+    //     baseUrl + `customer/documents/?seller__id=${query.pid}`
+    // );
+
     const resquest = await fetch(
         baseUrl + `customer/top-sellers/${query.pid}`
     );
-    const seller = await resquest_boolen?.json();
+    // const seller = await resquest_boolen?.json();
 
     const sellerr = await resquest.json();
 
     return {
         props: {
-            seller,
+            seller: {},
             sellerr
         },
     };
