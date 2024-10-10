@@ -32,9 +32,9 @@ const HomepageDefaultPage = ({ faq, advantages, projecs }) => {
         <div className="ps-page--my-account">
             <div style={{ height: '0', overflow: 'hidden', position: 'relative', zIndex: -6, opacity: 0 }}><PageContainer title={'none'} /></div>
             <Head>
-                <title aria-label='Sell ​​your Intellectual Property on Soff and earn' aria-level={1}>Soffda Intelektuall mulklaringizni soting va daromad qiling</title>
-                <meta name="description" content="Intelektuall mulkaringizni soff da oson soting va daromadingizni oshiring" />
-                <meta name="keywords" content="soff seller, sof seller, seller soff, soff sotuvchi, seller, soffda sotish, seffuzda sotish, sotuvch bo'lish, soffuz da sotivchi bolish, intelektuall mulk sotish, video sotish, audio sotish, shablon sotish, sofda dokument sotish, sofda sotuvchi bo'lish" />
+                <title aria-label='Sell ​​your Intellectual Property on Soff and earn' aria-level={1}>Soffda Intellektual mulklaringizni soting va daromad qiling</title>
+                <meta name="description" content="Intellektual mulkaringizni soff da oson soting va daromadingizni oshiring" />
+                <meta name="keywords" content="soff seller, sof seller, seller soff, soff sotuvchi, seller, soffda sotish, seffuzda sotish, sotuvch bo'lish, soffuz da sotivchi bolish, intellektual mulk sotish, video sotish, audio sotish, shablon sotish, sofda dokument sotish, sofda sotuvchi bo'lish" />
             </Head>
 
             <div className="l-navbar">
@@ -78,7 +78,7 @@ const HomepageDefaultPage = ({ faq, advantages, projecs }) => {
                         <div className="l-hero-inner">
                             <div className="frame-1 l-hero-content">
                                 <h1 className="text-1 l-hero-title" aria-label='Start earning now'>Hoziroq daromad <br /> qilishni boshlang</h1>
-                                <p className="text-2 l-hero-desc" aria-label='Sell ​​your intellectual property easily on soff and increase your income'>Intelektuall mulkaringizni soff da oson soting va daromadingizni oshiring</p>
+                                <p className="text-2 l-hero-desc" aria-label='Sell ​​your intellectual property easily on soff and increase your income'>Intellektual mulkaringizni soff da oson soting va daromadingizni oshiring</p>
                                 <Link href={'/account/register'}>
                                     <a className='hero-btn' aria-label='become a seller'>
                                         <span className='btn-inner'>Sotuvchi bo'lish</span>
@@ -145,7 +145,7 @@ const HomepageDefaultPage = ({ faq, advantages, projecs }) => {
                     <div className="container">
                         <div className="l-how-inner">
                             <h2 className="l-how-title" aria-label='You can sell the following types of intellectual property on the platform'>
-                                Platformada <span className='har-xil-turdagi'><div>har</div> <div>xil</div> <div>turdagi</div></span> intelektuall mulklaringizni sotish imkoniyatiga egasiz
+                                Platformada <span className='har-xil-turdagi'><div>har</div> <div>xil</div> <div>turdagi</div></span> intellektual mulklaringizni sotish imkoniyatiga egasiz
                             </h2>
 
                             <div className="l-how-content">
@@ -502,7 +502,7 @@ export async function getServerSideProps() {
 
     const advantages = [
         {
-            title: 'Har xil turdagi intelektuall mulklarni sotish',
+            title: 'Har xil turdagi intellektual mulklarni sotish',
             description: 'Siz istalgan turdagi: videolar, audiolar, shablonlar, ilmiy ishlanmalarni sotishingiz mumkin bo\'ladi',
             icon: '/static/img/ai.png'
         },
@@ -538,12 +538,12 @@ export async function getServerSideProps() {
         {
             logo: '/static/img/soff/soff_green-old.png',
             link: 'https://soff.uz',
-            linkMask: 'SOFF.UZ - Intelektuall mulk marketi',
+            linkMask: 'SOFF.UZ - Intellektual mulk marketi',
         },
         {
             logo: 'https://soffstudy.uz/assets/imgs/page/logo/Soff%20Study%20dark%20logo.png',
             link: 'https://soffstudy.uz',
-            linkMask: 'SOFF STUDY - Zamonaviy kasblarni o\'qtish markazi',
+            linkMask: 'SOFF STUDY - Zamonaviy kasblarni o\'qitish markazi',
         },
         {
             logo: 'https://soffhub.uz/assets/imgs/page/about/soffhub-removebg-preview.png',
@@ -553,7 +553,7 @@ export async function getServerSideProps() {
         {
             logo: 'https://birja.soff.uz/images/soffbirja-dark-logo.png',
             link: 'https://birja.soff.uz',
-            linkMask: 'SOFF BIRJA - Intelektuall mulk birjasi',
+            linkMask: 'SOFF BIRJA - Intellektual mulk birjasi',
         },
         {
             logo: 'https://soffcrm.uz/_next/image?url=%2Fassets%2Fimages%2Flogo.jpg&w=256&q=75',
@@ -563,7 +563,7 @@ export async function getServerSideProps() {
         {
             logo: '',
             link: '#',
-            linkMask: 'Biz rivoyjalishda davom etamiz!',
+            linkMask: 'Biz rivojalishda davom etamiz!',
             title: "SOFF Jamoasi",
             last: true
         }
