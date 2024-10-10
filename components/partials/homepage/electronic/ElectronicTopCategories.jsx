@@ -60,7 +60,7 @@ function ElectronicTopCategories() {
                             </div>
                             <div className="ps-block__content d-flex justify-content-center align-items-center my-1">
                                 <h4 className="text-truncate text-uppercase">
-                                    {category?.name} 
+                                    {category?.name}
                                 </h4>
                             </div>
                         </div>
@@ -84,16 +84,18 @@ function ElectronicTopCategories() {
                     {category?.length > 0 ? (
                         memoizedCategory
                     ) : (
-                        <div className="yaxshi-categ-placholder-box">
+                        <div className="yaxshi-categ-placholder-box row mx-0 gap-0 w-100">
                             {[1, 2, 3, 4, 5, 6].map((item, i) => (
-                                <div className="card" aria-hidden="true" key={i}>
-                                    <div className="card-img-top placeholder" alt="..." />
-                                    <div className="card-body">
-                                        <p className="card-text placeholder-glow">
-                                            <span className="placeholder col-7"></span>
-                                            <span className="placeholder col-6"></span>
-                                            <span className="placeholder col-6"></span>
-                                        </p>
+                                <div className="col-6 col-md-2 col-lg-2 p-1">
+                                    <div className="card w-100" aria-hidden="true" key={i}>
+                                        <div className="card-img-top placeholder" style={{ minWidth: 0 }} alt="..." />
+                                        <div className="card-body">
+                                            <p className="card-text placeholder-glow">
+                                                <span className="placeholder col-7"></span>
+                                                <span className="placeholder col-6"></span>
+                                                <span className="placeholder col-6"></span>
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
                             ))}

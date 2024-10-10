@@ -195,14 +195,12 @@ const HomeElectronicsPage = () => {
                         )
                 )
             ) : (
-                // Kategoriya yuklanishi kutilayotgan payt Progress bar ko'rsatiladi
                 <div
                     style={{
                         display: 'flex',
                         justifyContent: 'center',
                         alignContent: 'center',
                     }}>
-                    <PropagateLoader className="progres-color" />
                 </div>
             )}
 
