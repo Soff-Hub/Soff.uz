@@ -52,7 +52,7 @@ class Register extends Component {
                 } else if (user.status == 200 || user.status == 201) {
                     localStorage.setItem('token', user.data.access);
                     localStorage.setItem('via_', user?.data?.via_);
-                    localStorage.setItem('data', JSON.stringify(e));
+                    localStorage.setItem('data', JSON.stringify({ ...e, password: null }));
                     if (this.props.router.query.id) {
                         Router.push(
                             `/account/Message?id=${this.props.router.query.id}`
@@ -78,7 +78,7 @@ class Register extends Component {
                 } else if (user.status == 200 || user.status == 201) {
                     localStorage.setItem('token', user.data.access);
                     localStorage.setItem('via_', user?.data?.via_);
-                    localStorage.setItem('data', JSON.stringify(e));
+                    localStorage.setItem('data', JSON.stringify({ ...e, password: null }));
                     if (this.props.router.query.id) {
                         Router.push(
                             `/account/Message?id=${this.props.router.query.id}`
@@ -121,7 +121,7 @@ class Register extends Component {
                     localStorage.setItem('verify_user', user.data.user);
                     localStorage.setItem('tour', true);
                     localStorage.setItem('via_', user?.data?.via_);
-                    localStorage.setItem('data', JSON.stringify(data));
+                    localStorage.setItem('data', JSON.stringify({ ...data, password: null }));
                     localStorage.removeItem("referal")
                     if (this.props.router.query.id) {
                         Router.push(
@@ -149,7 +149,7 @@ class Register extends Component {
                     localStorage.setItem('verify_user', user.data.user);
                     localStorage.setItem('tour', true);
                     localStorage.setItem('via_', user?.data?.via_);
-                    localStorage.setItem('data', JSON.stringify(data));
+                    localStorage.setItem('data', JSON.stringify({ ...data, password: null }));
                     if (this.props.router.query.id) {
                         Router.push(
                             `/account/Message?id=${this.props.router.query.id}`

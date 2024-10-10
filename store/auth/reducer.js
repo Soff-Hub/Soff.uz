@@ -11,19 +11,22 @@ export const initState = {
     top_category_lists: [],
     category: true,
     categorySlug: [],
-    id: null
+    id: null,
 };
 
 function reducer(state = initState, actions) {
     switch (actions.type) {
         case actionTypes.LOGIN_REQUEST:
             localStorage.setItem('user', JSON.stringify(actions.user));
-            localStorage.setItem('data', JSON.stringify(actions.data));
+            localStorage.setItem(
+                'data',
+                JSON.stringify({ ...actions.data, password: null })
+            );
             return {
                 ...state,
                 ...{ isLoggedIn: true },
                 ...{ user: actions.user },
-                ...{ data: actions.data },
+                ...{ data: actions.data, password: null },
             };
         case actionTypes.LOGOUT_SUCCESS:
             localStorage.removeItem('user');
@@ -38,7 +41,9 @@ function reducer(state = initState, actions) {
                 ...{ user: null },
             };
         case actionTypes.ISLOGINNING:
-            const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : ''
+            const user = localStorage.getItem('user')
+                ? JSON.parse(localStorage.getItem('user'))
+                : '';
 
             return user?.access
                 ? { ...state, ...{ isLoggedIn: true }, ...{ user: user } }
@@ -51,7 +56,10 @@ function reducer(state = initState, actions) {
             return { ...state, ...{ products: actions.payload } };
 
         case actionTypes.DATA:
-            localStorage.setItem('data', JSON.stringify(actions.data));
+            localStorage.setItem(
+                'data',
+                JSON.stringify({ ...actions.data, password: null })
+            );
             return {
                 ...state,
                 ...{ isLoggedIn: true },
@@ -65,8 +73,8 @@ function reducer(state = initState, actions) {
             };
 
         case actionTypes.IMAGE:
-            // console.log('reducer ishladi', actions.payload);
-            
+        // console.log('reducer ishladi', actions.payload);
+
         case actionTypes.CATEGORY_LISTS:
             return { ...state, ...{ category_lists: actions.payload } };
 

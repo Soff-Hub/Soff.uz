@@ -18,6 +18,8 @@ const MyAccountPage = () => {
     const [step, setStep] = useState(null)
     const [open, setOpen] = useState(false)
     const [segmentValue, setSegmentValue] = useState('soff');
+    console.log(user);
+    
 
     const steps = [
         {
