@@ -135,6 +135,9 @@ export default function CodeVerifyForm() {
                             <Input.OTP
                                 size='large'
                                 length={4}
+                                type='number'
+                                style={{ maxWidth: '200px' }}
+                                className='mx-auto'
                             />
                         </Form.Item>
 
