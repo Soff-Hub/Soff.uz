@@ -392,6 +392,7 @@ const HomepageDefaultPage = ({ faq, advantages, projecs }) => {
 
                 <div className="system">
                     <div className="container">
+                        <h3 className='text-center mb-5 system-title'>Soff — faqatgina intellektual mulk bozori emas</h3>
                         <div className="system-inner">
                             {
                                 projecs.map(el => (
