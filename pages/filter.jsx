@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Search() {
+function Filter() {
     return (
         <div>Search</div>
     )
@@ -16,4 +16,4 @@ export async function getServerSideProps({ query }) {
 }
 
 
-export default Search
+export default Filter
