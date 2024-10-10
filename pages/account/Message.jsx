@@ -47,7 +47,10 @@ const Xabar = (e) => {
 
                     else {
                         if (user?.role === 'seller' || user.role === 'admin') {
-                            Router.push('/account/dashbord');
+                            if (user?.is_superuser || user?.role === 'seller') {
+                                Router.push('/account/dashbord')
+                            } else Router.push('/account/shops')
+
                         } else {
                             Router.push('/account/sellerproducts');
                         }

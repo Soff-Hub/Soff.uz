@@ -24,7 +24,9 @@ const LoginPage = () => {
 
     useEffect(() => {
         if (user) {
-            push('/account/dashbord')
+            if (user?.is_superuser || user?.role === 'seller') {
+                push('/account/dashbord')
+            } else push('/account/shops')
         }
     }, [user])
 

@@ -3,6 +3,7 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { PacmanLoader } from 'react-spinners';
+import { accountModeratorLinks } from '~/components/layouts/PageContainer';
 import { accountLinksReducers, begin, login } from '~/store/auth/action';
 
 export let accountAdminLinks = [
@@ -114,7 +115,7 @@ export let cutomerAccountLink = [
 
 
 
- const Loader = () => {
+const Loader = () => {
     const { user } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     const Router = useRouter();
@@ -122,7 +123,7 @@ export let cutomerAccountLink = [
     const { asPath } = Router;
     useEffect(() => {
         if (asPath.split('').length > 10) {
-            const roleBegin =  asPath.slice(-1)
+            const roleBegin = asPath.slice(-1)
             const role = asPath.slice(-20).split('&')[0];
             const tokenArr = asPath.split('token=');
             const token = tokenArr[1]?.split('');
@@ -132,21 +133,25 @@ export let cutomerAccountLink = [
             if (role === '38a443b1144e') {
                 const data = {
                     access: tokenText,
-                    role : 'seller'
+                    role: 'seller'
                 }
-                dispatch(login({ user: data, data: data})); 
-            }else if (role === '3a373fb190f8'){
+                dispatch(login({ user: data, data: data }));
+            } else if (role === '3a373fb190f8') {
                 const data = {
                     access: tokenText,
-                    role : 'customer'
+                    role: 'customer'
                 }
-                dispatch(login({ user: data, data: data})); 
+                dispatch(login({ user: data, data: data }));
             }
-            dispatch(begin({id: roleBegin}))
+            dispatch(begin({ id: roleBegin }))
         }
 
         if (user?.role === 'admin') {
-            dispatch(accountLinksReducers(accountAdminLinks));
+            if (user?.is_superuser) {
+                dispatch(accountLinksReducers(accountAdminLinks));
+            } else {
+                dispatch(accountLinksReducers(accountModeratorLinks));
+            }
         }
         if (user?.role === 'seller') {
             dispatch(accountLinksReducers(accountSellerLink));
@@ -159,7 +164,10 @@ export let cutomerAccountLink = [
             user?.role === 'seller' ||
             user?.role === 'admin'
         ) {
-            Router.push('/account/dashbord');
+            if (user?.is_superuser || user?.role === 'seller') {
+                Router.push('/account/dashbord');
+            } else Router.push('/account/shops');
+            
         } else if (user?.role === 'customer') {
             Router.push('/account/myproducts');
         }

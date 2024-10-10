@@ -100,7 +100,11 @@ class Login extends Component {
                         user?.data?.role === 'seller' ||
                         user?.data?.role === 'admin'
                     ) {
-                        Router.push('/account/dashbord');
+
+                        // if (user?.data?.is_superuser || user?.data?.role === 'seller') {
+                        //     Router.push('/account/dashbord')
+                        // } else Router.push('/account/shops')
+
                     } else if (user?.data?.role === 'customer') {
                         Router.push('/account/sellerproducts');
                     }

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { Drawer } from 'antd';
 import PanelMenu from '../panel/PanelMenu';
 import { useState } from 'react';
@@ -13,6 +13,7 @@ function NavigationListSeller() {
     const [categoriesDrawer, setCategoriesDrawer] = useState(false);
     const { pathname } = useRouter()
     const { playerVisible } = useContext(AudioContext)
+    const { user } = useSelector(state => state.auth)
 
     const handleDrawerClose = () => {
         setMenuDrawer(false);
@@ -22,7 +23,9 @@ function NavigationListSeller() {
 
     const handleShowSettingsDrawer = () => {
         setMenuDrawer(false);
-        Router.push('/account/dashbord')
+        if (user?.is_superuser || user?.role === 'seller') {
+            Router.push('/account/dashbord')
+        } else Router.push('/account/shops')
     };
 
     const handleShowOrderDrawer = () => {

@@ -60,7 +60,7 @@ const AccountMenuSidebar = ({ setMenuDrawer, setCategoriesDrawer }) => {
         const res = logOutAuth(data);
 
         if (res) {
-            Router.push('/account/dashbord');
+            Router.push('/');
             dispatch(logOut());
         }
     };

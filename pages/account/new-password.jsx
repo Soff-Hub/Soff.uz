@@ -21,10 +21,14 @@ export default function NewPassword() {
         const { qaytaParolYuborishAuth } = useAuth();
         const user = await qaytaParolYuborishAuth(data);
         if (user.status === 200 || user.status === 201) {
-            
+
 
             if (user?.data?.role === 'seller' || user?.data?.role === 'admin') {
-                Router.push('/account/dashbord');
+
+                if (user?.is_superuser || user?.role === 'seller') {
+                    Router.push('/account/dashbord')
+                } else Router.push('/account/shops')
+
             } else if (user?.data?.role === 'customer') {
                 Router.push('/account/myproducts');
             }
@@ -32,7 +36,7 @@ export default function NewPassword() {
             setParol2('');
             setReport(true);
         } else {
-           
+
             const modal = Modal.error({
                 centered: true,
                 title: 'Xatolik!',

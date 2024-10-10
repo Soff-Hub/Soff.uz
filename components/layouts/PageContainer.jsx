@@ -40,7 +40,7 @@ export let accountAdminLinks = [
         icon: 'fa-solid fa-cube',
     },
     {
-        text: 'Sotib olingan mahsulotlar',
+        text: 'Birjaga chiqarilganlar',
         url: '/account/selling',
         icon: 'fa-brands fa-shopify',
     },
@@ -85,6 +85,39 @@ export let accountAdminLinks = [
         icon: 'fa-solid fa-star',
     },
 
+];
+
+export let accountModeratorLinks = [
+    {
+        text: 'Sotuvchilar',
+        url: '/account/shops',
+        icon: 'fa-solid fa-shop',
+    },
+    {
+        text: 'Mahsulotlar',
+        url: '/account/products?page=1',
+        icon: 'fa-solid fa-cube',
+    },
+    {
+        text: 'Kategoriyalar',
+        url: '/account/category',
+        icon: 'fa-solid fa-layer-group',
+    },
+    {
+        text: 'Taglar',
+        url: '/account/tegs',
+        icon: 'fa-solid fa-tags',
+    },
+    {
+        text: "Ariza va Takliflar",
+        url: '/account/application',
+        icon: 'fa-solid fa-file-signature',
+    },
+    {
+        text: "Bildirishnomalar yuborish",
+        url: '/account/email',
+        icon: 'fa-solid fa-envelope',
+    },
 ];
 
 export let accountSellerLink = [
@@ -171,7 +204,11 @@ const PageContainer = ({
 
     useEffect(() => {
         if (user?.role === 'admin') {
-            dispatch(accountLinksReducers(accountAdminLinks));
+            if (user?.is_superuser) {
+                dispatch(accountLinksReducers(accountAdminLinks));
+            } else {
+                dispatch(accountLinksReducers(accountModeratorLinks));
+            }
         }
         if (user?.role === 'seller') {
             dispatch(accountLinksReducers(accountSellerLink));

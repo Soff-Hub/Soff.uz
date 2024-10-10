@@ -47,7 +47,7 @@ const HomepageDefaultPage = ({ faq, advantages, projecs }) => {
                         <nav className="l-navbar-buttons">
                             {
                                 user?.access ? (
-                                    <Link href={'/account/dashbord'}>
+                                    <Link href={user?.role === 'seller' || user?.is_superuser ? '/account/dashbord' : '/account/shops'}>
                                         <a className='l-navbar-signup-button' aria-label={'register or become a seller'}>
                                             Profilga o'tish
                                         </a>
