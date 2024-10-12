@@ -8,6 +8,8 @@ import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import Mistake from '../mistake';
 import Meta from '~/components/shared/headers/Meta';
+import AuthLayout from '~/components/layouts/AuthLayout';
+import Head from 'next/head';
 
 const RegisterPage = () => {
     const Router = useRouter()
@@ -27,18 +29,21 @@ const RegisterPage = () => {
 
     return (
         user?.access ?
-            <Mistake />
+            <Loader />
             :
-            <PageContainer footer={<FooterDefault />} title="Register">
+            <AuthLayout>
+                <Head>
+                    <title>Soff.uz da sotuvchi bo'ling</title>
+                </Head>
+
                 <div className="ps-page--my-account">
                     <Meta
                         title={"Ro'yxatdan o'tish"}
-                        description="Soff.uz - O'z hisobingizga kiring va mahsulotlaringizni soting"
+                        description="Soff.uz - Saytidan hoziroq ro'yxatdan o'ting va o'z mahsulatlaringizni soting"
                     />
-                    <BreadCrumb breacrumb={breadCrumb} />
                     <Register url={sallerEndPoint} />
                 </div>
-            </PageContainer>
+            </AuthLayout>
     );
 };
 
