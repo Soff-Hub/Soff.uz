@@ -8,6 +8,8 @@ import MarketingMain from '~/components/partials/account/marketing/MarketingMain
 import Page404 from '~/pages/page/page-404';
 import Selection from '../selection';
 import SidebarLayout from '~/components/partials/SidebarLayout';
+import PageLoader from '~/components/elements/common/PageLoader';
+import Router from 'next/router';
 
 const Application = () => {
 
@@ -23,31 +25,23 @@ const Application = () => {
     ];
 
     const { user, accountLinks } = useSelector(state => state.auth)
+    const { profile } = useSelector(state => state.ecomerce)
+    console.log(profile);
+
+
+    if (profile) {
+        if (profile?.fields?.length) {
+            Router.push('/account/marketing/dashboard')
+        } else {
+            Router.push('/account/marketing/select-category')
+        }
+    }
 
     return (
-        user?.role === 'seller' ?
-            <PageContainer footer={<FooterDefault />} title="Notifications">
-                <div className="ps-page--my-account">
-                    <Meta
-                        title={"Marketing"}
-                    />
-                    <BreadCrumb breacrumb={breadCrumb} />
-
-                    <section className="ps-my-account ps-page--account pb-5">
-                        <div className="container">
-                            <div className="row">
-                                <SidebarLayout accountLinks={accountLinks}>
-                                    <div className='ps-page__content bg-white p-4'>
-                                        <MarketingMain />
-                                    </div>
-                                </SidebarLayout>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-            </PageContainer> : user?.access ? <Page404 /> : <Selection />
-
-    );
+        <div style={{ opacity: 0 }}>
+            <PageContainer><PageLoader /></PageContainer>
+        </div>
+    )
 };
 
 export default Application;

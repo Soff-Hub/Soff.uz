@@ -1,0 +1,131 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap');
+$primaryFont: 'Fredoka', sans-serif;
+$backgroundColor: #eceff1;
+$primaryColor: #28a745;
+
+.new-card {
+    background-color: #fff;
+    border-radius: 14px;
+    text-align: center;
+    padding: 20px 10px;
+    max-width: 100%;
+    box-shadow: 10px 10px 10px darken($backgroundColor, 2%),
+        -10px -10px 10px lighten($backgroundColor, 2%);
+    cursor: pointer;
+
+    img {
+        width: 40%;
+        border-radius: 100%;
+        overflow: hidden;
+        margin: 0 auto;
+        box-shadow: 10px 10px 10px darken($backgroundColor, 2%),
+            -10px -10px 10px lighten($backgroundColor, 2%);
+        filter: grayscale(90%);
+        transition: all 0.3s ease;
+    }
+
+    img:hover {
+        filter: none;
+        transition: all 0.3s ease;
+    }
+
+    h3 {
+        font-family: $primaryFont;
+        color: darken($backgroundColor, 80%);
+        font-weight: bold;
+        margin: 0;
+        margin-top: 10px;
+        font-size: 22px;
+    }
+
+    button {
+        font-family: $primaryFont;
+        font-size: 18px;
+        font-weight: bold;
+        padding: 5px 10px;
+        width: 80%;
+        border-radius: 25px;
+        color: white;
+        border: 0;
+        margin: 0;
+        outline: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        margin: 20px auto;
+        background-color: $primaryColor;
+        box-shadow: 8px 8px 8px
+                darken(
+                    rgba(
+                        red($primaryColor),
+                        green($primaryColor),
+                        blue($primaryColor),
+                        0.2
+                    ),
+                    2%
+                ),
+            -10px -10px 10px
+                lighten(
+                    rgba(
+                        red($primaryColor),
+                        green($primaryColor),
+                        blue($primaryColor),
+                        0.2
+                    ),
+                    2%
+                );
+        transition: ease all 0.3s;
+        cursor: pointer;
+        border: 1px solid #28a745;
+    }
+}
+
+.new-card:hover {
+    img {
+        filter: none;
+        transition: all 0.3s ease;
+    }
+
+    button {
+        box-shadow: unset;
+        background-color: white;
+        border: 1px solid #28a745;
+        color: #28a745;
+    }
+}
+
+.new-card-container {
+    width: 50%;
+    padding: 20px;
+}
+
+.new-card-title {
+    padding: 0 20px;
+    margin: 0;
+}
+
+@media only screen and (max-width: 576px) {
+    .new-card-container {
+        padding: 5px;
+    }
+
+    .new-card-title {
+        padding: 0 5px;
+        font-size: 20px;
+        font-weight: 500;
+        margin-bottom: 10px;
+    }
+
+    .new-card button {
+        padding: 3px 0;
+        margin-bottom: 0;
+    }
+}
+
+@media only screen and (max-width: 369px) {
+    .new-card-container {
+        padding: 5px;
+        width: 100%;
+    }
+}

@@ -564,103 +564,90 @@ function ApplicationLists() {
                     <SidebarLayout accountLinks={accountLinks}>
                         <div className="ps-page__content ">
                             <div className="ps-section--account-setting ">
-                                <div className="ps-section__content ">
-                                    {
-                                        user?.role === "seller" ?
-                                            (<>
 
-                                                <div className='border py-4 rounded '>
-                                                    {dataBlock?.has_blocked ? <div className=' px-4'>
-                                                        <span className='text-danger fw-bold '>
-                                                            <i className="fa-solid fa-lock"></i> Siz Bloklangansiz. Bu davr mobaynida Pul yechib olish uchun ariza yuborishni imkoni yo'q.</span>
-                                                    </div> :
-                                                        <form className='row row-gap-3 px-4 gap-4 mx-auto'>
-                                                            <label className='h4 p-0 ' style={{ color: "orange" }} >
-                                                                Balansdagi pulingizni yechib olishingiz uchun ariza yuboring. Sizga 24 soat ichida arizangizda ko’rsatilgan summa bo’yicha pul o’tkaziladi va bu bo’yicha xabar yuboriladi. <br />
-                                                                <strong>!Eslatma: Xisobingizda kamida {alertMess ? formatCurrency(alertMess) : '10 000'} so’m bo’lishi kerak.</strong>
-                                                            </label>
-                                                            <input required id='count' type="number" defaultValue={profile?.wallet} placeholder='Narx' className='form-control rounded-3 col-md-4' onChange={(e) => (setDataPrice(e.target.value))} />
-                                                            <select className='form-select rounded-3 col-md-5 fs-3  ' style={{ height: "50px" }} onChange={(e) => setDataCard(e.target.value)} >
-                                                                <option className='fs-3' value='' selected disabled >Kartalaringiz</option>
+                                {user?.role === "seller" && profile?.have_sale ? <div className="ps-section__content ">
+                                    <div className='border py-4 rounded '>
+                                        {dataBlock?.has_blocked ? <div className=' px-4'>
+                                            <span className='text-danger fw-bold '>
+                                                <i className="fa-solid fa-lock"></i> Siz Bloklangansiz. Bu davr mobaynida Pul yechib olish uchun ariza yuborishni imkoni yo'q.</span>
+                                        </div> :
+                                            <form className='row row-gap-3 px-4 gap-4 mx-auto'>
+                                                <label className='h4 p-0 ' style={{ color: "orange" }} >
+                                                    Balansdagi pulingizni yechib olishingiz uchun ariza yuboring. Sizga 24 soat ichida arizangizda ko’rsatilgan summa bo’yicha pul o’tkaziladi va bu bo’yicha xabar yuboriladi. <br />
+                                                    <strong>!Eslatma: Xisobingizda kamida {alertMess ? formatCurrency(alertMess) : '10 000'} so’m bo’lishi kerak.</strong>
+                                                </label>
+                                                <input required id='count' type="number" defaultValue={profile?.wallet} placeholder='Narx' className='form-control rounded-3 col-md-4' onChange={(e) => (setDataPrice(e.target.value))} />
+                                                <select className='form-select rounded-3 col-md-5 fs-3  ' style={{ height: "50px" }} onChange={(e) => setDataCard(e.target.value)} >
+                                                    <option className='fs-3' value='' selected disabled >Kartalaringiz</option>
 
-                                                                {
-                                                                    profileCard?.length > 0 && (
-                                                                        profileCard?.map(item => (
-                                                                            <option key={item.id} value={item.credit_card}>{item.credit_card} </option>
-                                                                        ))
-                                                                    )
-                                                                }
+                                                    {
+                                                        profileCard?.length > 0 && (
+                                                            profileCard?.map(item => (
+                                                                <option key={item.id} value={item.credit_card}>{item.credit_card} </option>
+                                                            ))
+                                                        )
+                                                    }
 
-                                                            </select>
-                                                            {
-                                                                profile?.is_application === true && profile?.is_payment === true ?
-                                                                    <Button onClick={getItemsSellerPost} className='bg-success text-light col-md-2' style={{
-                                                                        height: "50px",
-                                                                    }}><span className='fs-4'>Yuborish</span></Button>
-                                                                    :
-                                                                    <Button onClick={getItemsSellerPost} disabled className='bg-success text-light col-md-2' style={{
-                                                                        height: "50px",
-                                                                    }}>
-
-                                                                        <span className='fs-4'>Yuborish</span>
-                                                                    </Button>
-                                                            }
-
-                                                        </form>}
-
-                                                    <h4 className='py-4 px-4'>Yuborilgan Arizalar</h4>
-                                                    <Table scroll={{ x: 1250 }} dataSource={data} columns={columns} pagination={false} loading={loadingSeller} />
-                                                    <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount}
-                                                        onChange={handlePagination} />
-                                                </div>
-
-
-                                            </>
-                                            ) :
-                                            <></>
-                                    }
-                                    {
-                                        user?.role === "admin" ?
-                                            (<>
-                                                <div className='row g-3 mx-auto'>
-                                                    <h4 className='py-3 col-md-6'>{user?.role === "seller" ? "Arizalar" : `Arizalar Bo'limi - ${addPeriodToThousands(allPrice)} so'm `}</h4>
-                                                    <select className='form-select col-md-5  fs-3 py-3 rounded-3' onChange={(e) => setDataCat(e.target.value)}  >
-                                                        <option className='fs-3' selected value="">Holatlar</option>
-                                                        <option className='fs-3' value="moderation">Moderatsiya</option>
-                                                        <option className='fs-3' value="approved">Tasdiqlangan</option>
-                                                        <option className='fs-3' value="cancelled">Bekor qilingan</option>
-                                                    </select>
-                                                    <label
-                                                        className={`form-label border col-md-12 p-0 d-flex justify-content-between align-items-center`}
-                                                        style={{
-                                                            backgroundColor: '#F1F1F1',
+                                                </select>
+                                                {
+                                                    profile?.is_application === true && profile?.is_payment === true ?
+                                                        <Button onClick={getItemsSellerPost} className='bg-success text-light col-md-2' style={{
+                                                            height: "50px",
+                                                        }}><span className='fs-4'>Yuborish</span></Button>
+                                                        :
+                                                        <Button onClick={getItemsSellerPost} disabled className='bg-success text-light col-md-2' style={{
+                                                            height: "50px",
                                                         }}>
-                                                        <input
-                                                            type="search"
-                                                            className="form-control"
-                                                            style={{ border: 'none' }}
-                                                            placeholder="Qidiruv"
-                                                            onInput={(e) =>
-                                                                setSellerSearch(
-                                                                    e.target.value
-                                                                )
-                                                            }
-                                                        />
-                                                        <span className="px-4">
-                                                            <i className="fa-solid fa-search "></i>
-                                                        </span>
-                                                    </label>
-                                                </div>
-                                                <Table scroll={{ x: 1800 }} dataSource={dataAdmin} columns={columnsAdmin}
-                                                    loading={loadingData}
-                                                    pagination={false} />
-                                                <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount}
-                                                    onChange={getItemsSellerAdmin} />
-                                            </>) :
-                                            <></>
 
-                                    }
-                                </div>
+                                                            <span className='fs-4'>Yuborish</span>
+                                                        </Button>
+                                                }
+
+                                            </form>}
+
+                                        <h4 className='py-4 px-4'>Yuborilgan Arizalar</h4>
+                                        <Table scroll={{ x: 1250 }} dataSource={data} columns={columns} pagination={false} loading={loadingSeller} />
+                                        <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount}
+                                            onChange={handlePagination} />
+                                    </div>
+                                </div> : ''}
+
+                                {user?.role === "admin" ? <div className="ps-section__content ">
+                                    <div className='row g-3 mx-auto'>
+                                        <h4 className='py-3 col-md-6'>{user?.role === "seller" ? "Arizalar" : `Arizalar Bo'limi - ${addPeriodToThousands(allPrice)} so'm `}</h4>
+                                        <select className='form-select col-md-5  fs-3 py-3 rounded-3' onChange={(e) => setDataCat(e.target.value)}  >
+                                            <option className='fs-3' selected value="">Holatlar</option>
+                                            <option className='fs-3' value="moderation">Moderatsiya</option>
+                                            <option className='fs-3' value="approved">Tasdiqlangan</option>
+                                            <option className='fs-3' value="cancelled">Bekor qilingan</option>
+                                        </select>
+                                        <label
+                                            className={`form-label border col-md-12 p-0 d-flex justify-content-between align-items-center`}
+                                            style={{
+                                                backgroundColor: '#F1F1F1',
+                                            }}>
+                                            <input
+                                                type="search"
+                                                className="form-control"
+                                                style={{ border: 'none' }}
+                                                placeholder="Qidiruv"
+                                                onInput={(e) =>
+                                                    setSellerSearch(
+                                                        e.target.value
+                                                    )
+                                                }
+                                            />
+                                            <span className="px-4">
+                                                <i className="fa-solid fa-search "></i>
+                                            </span>
+                                        </label>
+                                    </div>
+                                    <Table scroll={{ x: 1800 }} dataSource={dataAdmin} columns={columnsAdmin}
+                                        loading={loadingData}
+                                        pagination={false} />
+                                    <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount}
+                                        onChange={getItemsSellerAdmin} />
+                                </div> : ''}
                             </div>
                         </div>
 

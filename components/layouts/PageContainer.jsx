@@ -157,12 +157,12 @@ export let accountSellerLink = [
         icon: 'fa-solid fa-truck',
     },
     {
-        text: 'Donatlar ro\'yxati',
+        text: 'Sizga donat qilganlar',
         url: '/account/donate-page',
         icon: 'fa-solid fa-hand-holding-dollar',
     },
     {
-        text: "Ariza va Takliflar",
+        text: "Ariza va takliflar",
         url: '/account/application',
         icon: 'fa-solid fa-file-signature',
     },
@@ -197,26 +197,42 @@ const PageContainer = ({
     title
 }) => {
     const { user } = useSelector((state) => state.auth);
+    const { profile } = useSelector((state) => state.ecomerce);
 
     const dispatch = useDispatch();
     const Router = useRouter();
     const query = Router.route;
 
-    useEffect(() => {
+    function initNav() {
         if (user?.role === 'admin') {
             if (user?.is_superuser) {
-                dispatch(accountLinksReducers(accountAdminLinks));
+                return dispatch(accountLinksReducers(accountAdminLinks));
             } else {
-                dispatch(accountLinksReducers(accountModeratorLinks));
+                return dispatch(accountLinksReducers(accountModeratorLinks));
             }
         }
-        if (user?.role === 'seller') {
-            dispatch(accountLinksReducers(accountSellerLink));
+        if (profile?.role === 'seller') {
+            if (!profile?.have_sale && !profile?.have_document) {
+                return dispatch(accountLinksReducers(accountSellerLink.filter(el => el.url !== '/account/selling' && el.url !== '/account/orders')));
+            } else if (!profile?.have_sale) {
+                return dispatch(accountLinksReducers(accountSellerLink.filter(el => el.url !== '/account/orders')));
+            } else if (!profile?.have_document) {
+                return dispatch(accountLinksReducers(accountSellerLink.filter(el => el.url !== '/account/selling')));
+            } else {
+                return dispatch(accountLinksReducers(accountSellerLink));
+            }
         }
         if (user?.role === 'customer') {
             dispatch(accountLinksReducers(cutomerAccountLink));
         }
-    }, [user?.role]);
+    }
+
+
+    useEffect(() => {
+        if (user && profile) {
+            initNav()
+        }
+    }, [user, profile]);
 
 
     const defaultRoutePage = () => {

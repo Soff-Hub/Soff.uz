@@ -13,6 +13,7 @@ import Example from './Chart';
 import { addPeriodToThousands } from './ProductsLists';
 import SidebarLayout from '../SidebarLayout';
 import AdminStats from './AdminStats';
+import SellerStart from './SellerStart';
 
 function DashbordList({ setOpen }) {
 
@@ -32,6 +33,7 @@ function DashbordList({ setOpen }) {
     const [month, setMonth] = useState(null);
 
     const { accountLinks, user } = useSelector((state) => state.auth);
+    const { profile } = useSelector((state) => state.ecomerce);
 
 
     async function GetItemsProductsPlayLists() {
@@ -109,6 +111,8 @@ function DashbordList({ setOpen }) {
         }
         setDataLoadingDonat(false)
     }
+
+    const isNew = true
 
     useEffect(() => {
 
@@ -971,65 +975,65 @@ function DashbordList({ setOpen }) {
                     className="row pb-5"
                     style={{ alignItems: 'flex-start' }}>
                     <SidebarLayout accountLinks={accountLinks}>
-                        {(user?.role === 'admin' ||
-                            user?.role === 'seller') && (
-                                <div className="dashboard-div mb-2">
-                                    <Select
-                                        defaultValue={{
-                                            value: +year,
-                                            label: `${+year}-yil bo'yicha hisobotlar`,
-                                        }}
-                                        style={{
-                                            width: 300,
-                                        }}
-                                        onChange={handleChangeYear}
-                                        options={yearGet?.map((el) => ({
-                                            value: +el?.year,
-                                            label: `${+el?.year}-yil bo'yicha hisobotlar`,
-                                        }))}
-                                        className="me-2"
-                                    />
-                                    <Select
-                                        defaultValue={{
-                                            label: `Barcha oy ma'lumotlari`,
-                                            value: null,
-                                        }}
-                                        style={{
-                                            width: 300,
-                                        }}
-                                        onChange={handleChangeMonth}
-                                        options={[
-                                            {
-                                                label: `Barcha oy ma'lumotlari`,
-                                                value: null,
-                                            },
-                                            ...(yearGet
-                                                ?.filter(
-                                                    (item) => item?.year === year
-                                                )
-                                                .map((item) =>
-                                                    item?.months?.map((el) => ({
-                                                        label: `${el.name} oyi ma'lumotlari`,
-                                                        value: el.value,
-                                                    }))
-                                                )[0] || []),
-                                        ]}
-                                    />
-                                </div>
-                            )}
+                        {!profile?.have_document ? '' : <div className="dashboard-div mb-2">
+                            <Select
+                                defaultValue={{
+                                    value: +year,
+                                    label: `${+year}-yil bo'yicha hisobotlar`,
+                                }}
+                                style={{
+                                    width: 300,
+                                }}
+                                onChange={handleChangeYear}
+                                options={yearGet?.map((el) => ({
+                                    value: +el?.year,
+                                    label: `${+el?.year}-yil bo'yicha hisobotlar`,
+                                }))}
+                                className="me-2"
+                            />
+                            <Select
+                                defaultValue={{
+                                    label: `Barcha oy ma'lumotlari`,
+                                    value: null,
+                                }}
+                                style={{
+                                    width: 300,
+                                }}
+                                onChange={handleChangeMonth}
+                                options={[
+                                    {
+                                        label: `Barcha oy ma'lumotlari`,
+                                        value: null,
+                                    },
+                                    ...(yearGet
+                                        ?.filter(
+                                            (item) => item?.year === year
+                                        )
+                                        .map((item) =>
+                                            item?.months?.map((el) => ({
+                                                label: `${el.name} oyi ma'lumotlari`,
+                                                value: el.value,
+                                            }))
+                                        )[0] || []),
+                                ]}
+                            />
+                        </div>}
 
                         {
                             user?.role === 'admin' ? <AdminStats year={year} month={month} /> : ''
                         }
 
-                        {(user?.role === 'admin' ||
-                            user?.role === 'seller') && (
-                                <div className="dashboard-div">
-                                    <Example year={year} month={month} />
-                                </div>
-                            )}
+                        {(!profile?.have_document && profile?.role === 'seller') ? '' : (
+                            <div className="dashboard-div">
+                                <Example year={year} month={month} />
+                            </div>
+                        )}
 
-                        <div className="mt-4">
+                        {
+                            (!profile?.have_document  && profile?.role === 'seller') ? <SellerStart /> : ''
+                        }
+
+                        {!profile?.have_document ? '' : <div className="mt-4">
                             <Tabs
                                 type='card'
                                 centered
@@ -1037,7 +1041,7 @@ function DashbordList({ setOpen }) {
                                 items={itemsOrder}
                                 className="bg-white "
                             />
-                        </div>
+                        </div>}
 
                         {(user?.role === 'admin') ? (
                             <div className="tabs_select">
