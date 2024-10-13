@@ -589,6 +589,7 @@ function DashbordList({ setOpen }) {
         }] : []),
     ];
 
+    console.log(!profile?.have_document || !profile?.is_superuser);
 
 
 
@@ -975,7 +976,7 @@ function DashbordList({ setOpen }) {
                     className="row pb-5"
                     style={{ alignItems: 'flex-start' }}>
                     <SidebarLayout accountLinks={accountLinks}>
-                        {!profile?.have_document ? '' : <div className="dashboard-div mb-2">
+                        {profile?.have_document || profile?.is_superuser ? <div className="dashboard-div mb-2">
                             <Select
                                 defaultValue={{
                                     value: +year,
@@ -1017,7 +1018,7 @@ function DashbordList({ setOpen }) {
                                         )[0] || []),
                                 ]}
                             />
-                        </div>}
+                        </div> : ''}
 
                         {
                             user?.role === 'admin' ? <AdminStats year={year} month={month} /> : ''
@@ -1030,7 +1031,7 @@ function DashbordList({ setOpen }) {
                         )}
 
                         {
-                            (!profile?.have_document  && profile?.role === 'seller') ? <SellerStart /> : ''
+                            (!profile?.have_document && profile?.role === 'seller') ? <SellerStart /> : ''
                         }
 
                         {!profile?.have_document ? '' : <div className="mt-4">
