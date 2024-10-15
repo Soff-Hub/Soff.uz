@@ -150,7 +150,7 @@ const ProductVideoDetailFullWidth = ({
                 </div>
 
 
-                <BuyBtnScroll />
+                <BuyBtnScroll product={product} />
 
             </div>
         </>
