@@ -268,7 +268,7 @@ export default function MyDealCart() {
 
                     <button className='col-md-3  btn btn-success rounded-3 fs-4 py-3'
                         onClick={() => setOpen(true)} >
-                        <i class="fa-solid fa-plus"></i>   Buyurtma yaratish
+                        <i className="fa-solid fa-plus"></i>   Buyurtma yaratish
                     </button>
 
                 </div>
@@ -533,7 +533,7 @@ export default function MyDealCart() {
                                         :
                                         <div className='d-flex justify-content-center align-items-center' style={{ height: "50vh" }} >
                                             <span className='d-flex flex-column align-items-center gap-3'>
-                                                <i class="fa-brands fa-dropbox fa-4x text-secondary"></i>
+                                                <i className="fa-brands fa-dropbox fa-4x text-secondary"></i>
                                                 Ma'luot topilmadi
                                             </span>
                                         </div>

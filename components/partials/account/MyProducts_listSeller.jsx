@@ -219,7 +219,7 @@ function MyProductsListsSeller() {
                             <a>
                                 <NextImageCard
                                     url={image?.poster_url}
-                                    clasS="rounded-3 mb-2"
+                                    className="rounded-3 mb-2"
                                     width="54px"
                                     height="54px"
                                 />
@@ -297,7 +297,7 @@ function MyProductsListsSeller() {
                             <a>
                                 <NextImageCard
                                     url={record?.image}
-                                    clasS="rounded-3 mb-2"
+                                    className="rounded-3 mb-2"
                                     width="54px"
                                     height="54px"
                                 />

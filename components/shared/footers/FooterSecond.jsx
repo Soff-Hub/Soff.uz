@@ -108,7 +108,7 @@ const FooterSecond = ({ classes }) => {
                         <p style={{
                             marginBottom: '0'
                         }} >Sayt ishlab chiqaruvchi : </p> <a href='https://soffhub.uz/'>
-                            <NextImageCard url="/static/img/soffhub.png" clasS='footer-company-logo d-block ps-2 rounded' width='80px' height='60px' />
+                            <NextImageCard url="/static/img/soffhub.png" className='footer-company-logo d-block ps-2 rounded' width='80px' height='60px' />
                         </a>
                     </aside>
                 </div>

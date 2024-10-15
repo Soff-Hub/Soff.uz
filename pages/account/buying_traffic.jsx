@@ -128,7 +128,7 @@ function BuyingTraffic() {
                                                         }}
                                                         onClick={() => remove(el.id)}
                                                     >
-                                                        <i class="fa-solid fa-minus"></i>
+                                                        <i className="fa-solid fa-minus"></i>
                                                     </button>
                                                     <button
                                                         style={{
@@ -150,7 +150,7 @@ function BuyingTraffic() {
                                                         }}
                                                         onClick={() => add(el.id)}
                                                     >
-                                                        <i class="fa-solid fa-plus"></i>
+                                                        <i className="fa-solid fa-plus"></i>
                                                     </button>
                                                 </>
                                             ) : <button
@@ -175,24 +175,24 @@ function BuyingTraffic() {
 
                             )) :
                             Array(4).fill(0).map((_, index) => (
-                                <div key={index} class="card" aria-hidden="true" style={{
+                                <div key={index} className="card" aria-hidden="true" style={{
                                     boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
                                     borderRadius: '12px',
                                     padding: '30px 20px 20px',
                                     flex: 0.25,
                                     textAlign: 'center'
                                 }}>
-                                    <div class="card-body">
-                                    <p class="card-text placeholder-glow">
-                                            <span class="placeholder col-4"></span>
+                                    <div className="card-body">
+                                    <p className="card-text placeholder-glow">
+                                            <span className="placeholder col-4"></span>
 
                                         </p>
-                                        <a class="btn btn-secondary py-1 disabled placeholder col-10 mb-2" aria-disabled="true"></a>
-                                        <p class="card-text placeholder-glow">
-                                            <span class="placeholder col-8"></span>
+                                        <a className="btn btn-secondary py-1 disabled placeholder col-10 mb-2" aria-disabled="true"></a>
+                                        <p className="card-text placeholder-glow">
+                                            <span className="placeholder col-8"></span>
 
                                         </p>
-                                        <a class="btn btn-secondary py-2 disabled placeholder col-12" aria-disabled="true"></a>
+                                        <a className="btn btn-secondary py-2 disabled placeholder col-12" aria-disabled="true"></a>
                                     </div>
                                 </div>
                             ))

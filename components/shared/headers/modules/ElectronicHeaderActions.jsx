@@ -115,7 +115,7 @@ const ElectronicHeaderActions = ({ auth }) => {
             {contextHolder}
             {/* <Link href="/account/all-orders" className='mx-2'>
                 <a className="header__extra">
-                    <i class="fa-solid fa-handshake fa-fade" ></i>
+                    <i className="fa-solid fa-handshake fa-fade" ></i>
                     {(socketCount?.sent_applications || socketCount?.received_applications) ? (
                         <span className="socket_navbar">
                             {socketCount?.sent_applications + socketCount?.received_applications}

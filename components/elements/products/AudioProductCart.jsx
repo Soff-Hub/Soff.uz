@@ -107,11 +107,11 @@ const AudioWaveform = ({ product, inCategory }) => {
                                     onClick={handlePlayPause}>
                                     {playing ? (
                                         <>
-                                            <i class="fa-solid fa-circle-pause"></i>
+                                            <i className="fa-solid fa-circle-pause"></i>
                                         </>
                                     ) : (
                                         <>
-                                            <i class="fa-solid fa-circle-play"></i>
+                                            <i className="fa-solid fa-circle-play"></i>
                                         </>
                                     )}
                                 </div>

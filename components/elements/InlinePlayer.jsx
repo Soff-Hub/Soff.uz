@@ -134,11 +134,11 @@ const InlinePlayer = () => {
                 </div>
                 {playing2 ? (
                     <>
-                        <i onClick={handlePlayPause} class="fa-solid fa-circle-pause"></i>
+                        <i onClick={handlePlayPause} className="fa-solid fa-circle-pause"></i>
                     </>
                 ) : (
                     <>
-                        <i onClick={handlePlayPause} class="fa-solid fa-circle-play"></i>
+                        <i onClick={handlePlayPause} className="fa-solid fa-circle-play"></i>
                     </>
                 )}
                 <p className='m-0' style={{ width: '57px' }}>{timer}</p>
@@ -170,7 +170,7 @@ const InlinePlayer = () => {
                     </g>
                 </svg>
             </div>
-            <i class="fa-solid fa-close" style={{ cursor: 'pointer' }} onClick={() => setPlayerVisible(false)}></i>
+            <i className="fa-solid fa-close" style={{ cursor: 'pointer' }} onClick={() => setPlayerVisible(false)}></i>
         </div>
 
     );

@@ -14,7 +14,7 @@ const SearchHeadersPages = () => {
                             <a className="ps-logo">
                                 <NextImageCard
                                     url="/static/img/soff/logo-1.png"
-                                    clasS="logoo"
+                                    className="logoo"
                                     width="150px"
                                     height="50px"
                                 />

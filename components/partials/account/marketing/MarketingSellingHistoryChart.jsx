@@ -52,7 +52,7 @@ export default function MarketingSellingHistoryChart({ config }) {
                 custom: ({ series, seriesIndex, w }) => {
                     const value = series[seriesIndex];
                     const label = w.globals.labels[seriesIndex];
-                    return `<div class="arrow_box px-2">
+                    return `<div className="arrow_box px-2">
                     <span>${label}: ${value} %</span>
                   </div>`;
                 },
