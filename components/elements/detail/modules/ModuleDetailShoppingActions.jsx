@@ -118,91 +118,91 @@ const ModuleDetailShoppingActions = ({ product }) => {
                     {contextHolder}
                     <div className='d-flex  align-items-center gap-4  m-0 w-100 flex-wrap ' >
 
-                            {product?.discount_price > 0 ? (
-                                <>
-                                    {product?.document?.file_url ? (
-                                        <a
-                                            style={{
-                                                cursor: 'pointer',
-                                                minWidth: "150px",
-                                                fontSize: "14px"
+                        {product?.discount_price > 0 ? (
+                            <>
+                                {product?.document?.file_url ? (
+                                    <a
+                                        style={{
+                                            cursor: 'pointer',
+                                            minWidth: "150px",
+                                            fontSize: "14px"
 
-                                            }}
-                                            className="ps-btn ps-btn--black py-3 "
-                                            href="#"
-                                            onClick={async (e) => {
-                                                e.preventDefault();
-                                                setLoading(true);
-                                                console.log('Loading state set to true');
-                                                try {
-                                                    await audioDownloaderSale(product, product);
-                                                } catch (error) {
-                                                    console.error('Error in audioDownloaderSale:', error);
-                                                } finally {
-                                                    setLoading(false);
-                                                    console.log('Loading state set to false');
-                                                }
-                                            }}
-                                        >
-                                            {!loading ?
-                                                "Yuklab olish" :
-                                                <div>
-                                                    <div
-                                                        className="spinner-border"
-                                                        role="status">
-                                                        <span className="visually-hidden">
-                                                            Loading...
-                                                        </span>
-                                                    </div>
-                                                </div>
+                                        }}
+                                        className="ps-btn ps-btn--black py-3 "
+                                        href="#"
+                                        onClick={async (e) => {
+                                            e.preventDefault();
+                                            setLoading(true);
+                                            console.log('Loading state set to true');
+                                            try {
+                                                await audioDownloaderSale(product, product);
+                                            } catch (error) {
+                                                console.error('Error in audioDownloaderSale:', error);
+                                            } finally {
+                                                setLoading(false);
+                                                console.log('Loading state set to false');
                                             }
-                                        </a>
-                                    ) : (
-                                        <>
-                                            <a
-                                                className="ps-btn ps-btn--black py-3 buystep-1 m-0"
-                                                href="#"
-                                                style={{ fontSize: "14px" }}
-                                                onClick={(e) => handleAddItemToCart(e)}>
-                                                Savatga qo'shish
-                                            </a>
-                                            <a
-                                                className="ps-btn py-3 buystep-2 m-0"
-                                                href="#"
-                                                style={{ fontSize: "14px" }}
-                                                onClick={(e) => handleBuynow(e)}>
-                                                Hoziroq xarid qilish
-                                            </a>
-                                        </>
-                                    )}
-                                </>
-                            ) : (
-                                <a
-                                    style={{ cursor: loading ? 'not-allowed' : 'pointer', minWidth: "212px", height: "40px", fontSize:"14px" }}
-                                    className="ps-btn py-3 buystep-2 ml-2 ps-btn--black "
-                                    href="#"
-                                    onClick={async (e) => {
-                                        e.preventDefault();
-                                        setLoading(true)
-                                        await audioDownloaderSale(product, product);
-                                        setLoading(false)
-                                    }}>
-                                    {!loading ? 'Bepul yuklab olish' :
-                                        <div>
-                                            <div
-                                                className="spinner-border"
-                                                role="status">
-                                                <span className="visually-hidden">
-                                                    Loading...
-                                                </span>
+                                        }}
+                                    >
+                                        {!loading ?
+                                            "Yuklab olish" :
+                                            <div>
+                                                <div
+                                                    className="spinner-border"
+                                                    role="status">
+                                                    <span className="visually-hidden">
+                                                        Loading...
+                                                    </span>
+                                                </div>
                                             </div>
+                                        }
+                                    </a>
+                                ) : (
+                                    <>
+                                        <a
+                                            className="ps-btn py-3 buystep-2 m-0"
+                                            href="#"
+                                            style={{ fontSize: "14px" }}
+                                            onClick={(e) => handleBuynow(e)}>
+                                            Hoziroq xarid qilish
+                                        </a>
+                                        <a
+                                            className="ps-btn ps-btn--black py-3 buystep-1 m-0"
+                                            href="#"
+                                            style={{ fontSize: "14px" }}
+                                            onClick={(e) => handleAddItemToCart(e)}>
+                                            Savatga qo'shish
+                                        </a>
+                                    </>
+                                )}
+                            </>
+                        ) : (
+                            <a
+                                style={{ cursor: loading ? 'not-allowed' : 'pointer', minWidth: "212px", height: "40px", fontSize: "14px" }}
+                                className="ps-btn py-3 buystep-2 ml-2 ps-btn--black "
+                                href="#"
+                                onClick={async (e) => {
+                                    e.preventDefault();
+                                    setLoading(true)
+                                    await audioDownloaderSale(product, product);
+                                    setLoading(false)
+                                }}>
+                                {!loading ? 'Bepul yuklab olish' :
+                                    <div>
+                                        <div
+                                            className="spinner-border"
+                                            role="status">
+                                            <span className="visually-hidden">
+                                                Loading...
+                                            </span>
                                         </div>
-                                    }
-                                </a>
+                                    </div>
+                                }
+                            </a>
 
-                            )}
-                       
-                        <div className="p-3 px-5 rounded-3 col-md-3 " style={{ backgroundColor: "#fff", width:"100%" }} onClick={() => copyVideoUrl()}>
+                        )}
+
+                        <div className="p-3 px-5 rounded-3 col-md-3 " style={{ backgroundColor: "#fff", width: "100%" }} onClick={() => copyVideoUrl()}>
                             {copy ? (
                                 <div className='text-center'>
                                     <i className="fa-solid fa-check mr-3"></i> nusxalandi

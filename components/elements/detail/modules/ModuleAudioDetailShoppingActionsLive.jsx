@@ -10,34 +10,31 @@ const ModuleAudioDetailShoppingActionsLive = ({ admin, free }) => {
                             <>
                                 <a
                                     style={{
-                                        cursor: `${
-                                            admin ? 'not-allowed' : 'pointer'
-                                        }`,
-                                        color: '#fff',
-                                        backgroundColor:'#000'
-                                    }}
-                                    className="ps-btn  max-class"
-                                    href="#">
-                                    Savatga qo'shish
-                                </a>
-                                <a
-                                    style={{
-                                        cursor: `${
-                                            admin ? 'not-allowed' : 'pointer'
-                                        }`,
+                                        cursor: `${admin ? 'not-allowed' : 'pointer'
+                                            }`,
                                         color: '#fff',
                                     }}
                                     className="ps-btn max-class"
                                     href="#">
                                     Hoziroq xarid qilish
                                 </a>
+                                <a
+                                    style={{
+                                        cursor: `${admin ? 'not-allowed' : 'pointer'
+                                            }`,
+                                        color: '#fff',
+                                        backgroundColor: '#000'
+                                    }}
+                                    className="ps-btn  max-class"
+                                    href="#">
+                                    Savatga qo'shish
+                                </a>
                             </>
                         ) : (
                             <a
                                 style={{
-                                    cursor: `${
-                                        admin ? 'not-allowed' : 'pointer'
-                                    }`,
+                                    cursor: `${admin ? 'not-allowed' : 'pointer'
+                                        }`,
                                     color: '#fff',
                                 }}
                                 className="ps-btn ps-btn--black max-class"

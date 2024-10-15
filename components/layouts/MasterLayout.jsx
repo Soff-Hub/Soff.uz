@@ -52,9 +52,9 @@ const MasterLayout = ({ children }) => {
             ) : (
                 <NavigationList />
             )}
-            {/* <div className="ant-back-top">
+            {!pathname.startsWith('/product/') && <div className="ant-back-top">
                 <Backtop setBackground={setBackground} backtop={background} />
-            </div> */}
+            </div>}
             <div
                 onClick={() => setBackground(!background)}
                 className={background ? 'backgound-black' : ''}></div>
