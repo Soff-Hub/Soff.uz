@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import { EyeFilled } from '@ant-design/icons';
 import Image from 'next/image';
 import { message } from 'antd';
+import BuyBtnScroll from './BuyBtnScroll';
 
 const TemplateDetailFullwidth = ({ product, views }) => {
     const Router = useRouter();
@@ -52,7 +53,7 @@ const TemplateDetailFullwidth = ({ product, views }) => {
     };
 
 
-    
+
 
     return (
 
@@ -62,15 +63,13 @@ const TemplateDetailFullwidth = ({ product, views }) => {
 
                 <h4
                     className='col-md-8'
-
                     style={{
                         fontFamily: " PolySans, 'Inter', -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Fira Sans', 'Helvetica Neue', 'Arial', sans-serif ",
                         fontSize: "24px", marginBottom: "22px"
                     }}>
                     {product?.title !== undefined ? product?.title : ''}
                 </h4>
-                <div className='col-md-8 '>
-
+                <div className='col-md-8 ' id='get-buy'>
                     <div
                         onMouseEnter={() => setHoverImg(true)}
                         onMouseLeave={() => setHoverImg(false)}
@@ -106,8 +105,6 @@ const TemplateDetailFullwidth = ({ product, views }) => {
                             inset: 0,
                             backgroundColor: "#333",
                             opacity: "0.7",
-
-
                         }}
                         >
 
@@ -138,9 +135,6 @@ const TemplateDetailFullwidth = ({ product, views }) => {
 
                     </div>
 
-
-
-
                     <button
                         onMouseEnter={() => setHoverImgButton(true)}
                         onMouseLeave={() => setHoverImgButton(false)}
@@ -164,11 +158,6 @@ const TemplateDetailFullwidth = ({ product, views }) => {
                             </div>
                         )}
                     </button>
-
-
-
-
-
                 </div>
 
                 <div className="ps-product__info col-md-4 d-flex flex-column gap-3  ">
@@ -218,6 +207,8 @@ const TemplateDetailFullwidth = ({ product, views }) => {
 
             <DefaultDescription product={product} />
 
+
+            <BuyBtnScroll />
         </div >
 
     );

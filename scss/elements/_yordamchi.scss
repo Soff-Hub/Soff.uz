@@ -2466,18 +2466,26 @@
 
 .scroll-buy-btn {
     position: fixed;
+    height: 55px;
+    z-index: 999;
     bottom: 0px;
     left: 0;
     width: 100%;
     display: flex;
     justify-content: center;
-    padding: 20px 20px;
+    padding: 0 20px 15px;
     text-align: center;
+    transition: all 0.3s ease;
+    opacity: 1;
 
     & a {
-        animation: zoom 1s linear infinite;
         width: 90%;
+        background-color: #00A44F;
     }
+}
+.scroll-buy-btn-no-active {
+    transition: all 0.3s ease;
+    opacity: 0;
 }
 
 @keyframes zoom {

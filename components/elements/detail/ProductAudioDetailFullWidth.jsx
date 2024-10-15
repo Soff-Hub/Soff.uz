@@ -5,6 +5,7 @@ import DefaultAudio from './thumbnail/DefaultAudio';
 import ModuleAudioDetailTopInformation from './modules/ModuleAudioDetailTopInformation';
 import ModuleAudioDetailShoppingActions from './modules/ModuleAudioDetailShoppingActions';
 import Link from 'next/link';
+import BuyBtnScroll from './BuyBtnScroll';
 
 
 
@@ -26,6 +27,7 @@ const ProductAudioDetailFullWidth = ({
                 <div className="row">
                     <div className="col-12">
                         <DefaultAudio product={product} />
+                        <span id='get-buy'></span>
                         <ModuleAudioDetailTopInformation
                             product={product}
                             views={views}
@@ -67,6 +69,7 @@ const ProductAudioDetailFullWidth = ({
 
                 <DefaultDescription product={product} />
 
+                <BuyBtnScroll />
             </div>
         </>
     );

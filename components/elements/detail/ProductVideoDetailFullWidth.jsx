@@ -7,6 +7,7 @@ import { baseUrl } from '~/repositories/Repository';
 import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
 import VideoPlayDetails from './VideoPlayDetails';
 import { Modal } from 'antd';
+import BuyBtnScroll from './BuyBtnScroll';
 
 const ProductVideoDetailFullWidth = ({
     product,
@@ -88,7 +89,6 @@ const ProductVideoDetailFullWidth = ({
                             </div>
 
                             <div className='p-0' style={{ overflowY: "auto", margin: '10px 0', maxHeight: '450px' }}>
-
                                 {
                                     data?.playlist_document?.map((item, ind) => (
                                         <div
@@ -150,7 +150,7 @@ const ProductVideoDetailFullWidth = ({
                 </div>
 
 
-
+                <BuyBtnScroll />
 
             </div>
         </>
