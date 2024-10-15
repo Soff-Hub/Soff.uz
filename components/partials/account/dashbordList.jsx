@@ -1031,10 +1031,10 @@ function DashbordList({ setOpen }) {
                         )}
 
                         {
-                            (!profile?.have_document && profile?.role === 'seller') ? <SellerStart /> : ''
+                            (!profile?.have_sale && profile?.role === 'seller') ? <SellerStart /> : ''
                         }
 
-                        {!profile?.have_document ? '' : <div className="mt-4">
+                        {profile?.have_document || profile?.role === 'admin' ? <div className="mt-4">
                             <Tabs
                                 type='card'
                                 centered
@@ -1042,7 +1042,7 @@ function DashbordList({ setOpen }) {
                                 items={itemsOrder}
                                 className="bg-white "
                             />
-                        </div>}
+                        </div> : ''}
 
                         {(user?.role === 'admin') ? (
                             <div className="tabs_select">
