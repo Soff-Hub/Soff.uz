@@ -5,6 +5,7 @@ import ModuleProductDetailDescription from '~/components/elements/detail/modules
 import ModuleDetailShoppingActions from '~/components/elements/detail/modules/ModuleDetailShoppingActions';
 import ModuleDetailTopInformation from '~/components/elements/detail/modules/ModuleDetailTopInformation';
 import Link from 'next/link';
+import BuyBtnScroll from './BuyBtnScroll';
 
 const ProductDetailFullwidth = ({ product, views }) => {
 
@@ -50,6 +51,7 @@ const ProductDetailFullwidth = ({ product, views }) => {
 
                 <DefaultDescription product={product} />
 
+                <BuyBtnScroll />
             </div >
         </>
     );

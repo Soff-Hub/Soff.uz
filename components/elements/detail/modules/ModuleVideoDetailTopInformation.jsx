@@ -115,7 +115,7 @@ const ModuleVideoDetailTopInformation = ({ product, views, admin }) => {
                     gap: '15px',
                     margin: '8px 5px',
                 }}>
-                <h1 style={{ margin: '0' }} className="product__name">
+                <h1 style={{ margin: '0' }} className="product__name" id='get-buy'>
                     {product?.title !== undefined ? product?.title : ''}
                 </h1>
             </div>

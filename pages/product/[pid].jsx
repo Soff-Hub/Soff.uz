@@ -158,8 +158,6 @@ const ProductDefaultPage = ({ defaultProducts }) => {
     }
 
 
-
-
     return (
         <>
             <PageContainer
@@ -293,15 +291,6 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                                 ''
                             )}
                         </div>
-                    </div>
-
-                    <div className="scroll-buy-btn">
-                        <a
-                            className="ps-btn py-3 m-0"
-                            href="#get-buy"
-                        >
-                            Hoziroq xarid qilish
-                        </a>
                     </div>
                 </div>
             </PageContainer>
