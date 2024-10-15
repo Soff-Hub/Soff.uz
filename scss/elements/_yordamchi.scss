@@ -2476,16 +2476,19 @@
     padding: 0 20px 15px;
     text-align: center;
     transition: all 0.3s ease;
-    opacity: 1;
 
     & a {
         width: 90%;
-        background-color: #00A44F;
+        background-color: #00a44f;
+    }
+
+    & a:hover {
+        background-color: #00a44f;
     }
 }
 .scroll-buy-btn-no-active {
     transition: all 0.3s ease;
-    opacity: 0;
+    bottom: -55px;
 }
 
 @keyframes zoom {
@@ -2497,5 +2500,15 @@
     }
     100% {
         width: 90%;
+    }
+}
+
+.scroll-buy-btn {
+    display: none;
+}
+
+@media only screen and (max-width: 576px) {
+    .scroll-buy-btn {
+        display: flex;
     }
 }
