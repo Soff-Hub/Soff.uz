@@ -138,12 +138,10 @@ const ModuleAudioDetailShoppingActions = ({ product, admin }) => {
                                                     : 'pointer'
                                                     }`,
                                             }}
-                                            className="ps-btn ps-btn--black max-clas buystep-1"
+                                            className="ps-btn max-clas buystep-2"
                                             href="#"
-                                            onClick={(e) =>
-                                                handleAddItemToCart(e)
-                                            }>
-                                            Savatga qo'shish
+                                            onClick={(e) => handleBuynow(e)}>
+                                            Hoziroq xarid qilish
                                         </a>
                                         <a
                                             style={{
@@ -152,10 +150,12 @@ const ModuleAudioDetailShoppingActions = ({ product, admin }) => {
                                                     : 'pointer'
                                                     }`,
                                             }}
-                                            className="ps-btn max-clas buystep-2"
+                                            className="ps-btn ps-btn--black max-clas buystep-1"
                                             href="#"
-                                            onClick={(e) => handleBuynow(e)}>
-                                            Hoziroq xarid qilish
+                                            onClick={(e) =>
+                                                handleAddItemToCart(e)
+                                            }>
+                                            Savatga qo'shish
                                         </a>
                                     </>
                                 )}

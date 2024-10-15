@@ -129,18 +129,18 @@ const TemplateModuleDetailShoppingActions = ({ product, demo }) => {
                                 ) : (
                                     <>
                                         <a
-                                            className="ps-btn ps-btn--black text-center  buystep-1 m-0 w-100"
-                                            href="#"
-                                            style={{ fontSize: "16px" }}
-                                            onClick={(e) => handleAddItemToCart(e)}>
-                                            Savatga qo'shish
-                                        </a>
-                                        <a
                                             className="ps-btn text-center  buystep-2 m-0 w-100"
                                             href="#"
                                             style={{ fontSize: "16px" }}
                                             onClick={(e) => handleBuynow(e)}>
                                             Hoziroq xarid qilish
+                                        </a>
+                                        <a
+                                            className="ps-btn ps-btn--black text-center  buystep-1 m-0 w-100"
+                                            href="#"
+                                            style={{ fontSize: "16px" }}
+                                            onClick={(e) => handleAddItemToCart(e)}>
+                                            Savatga qo'shish
                                         </a>
                                     </>
                                 )}
