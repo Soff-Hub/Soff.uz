@@ -280,7 +280,7 @@ function ApplicationLists() {
                     {
                         image ?
                             <a href={image} download target='_blank'>
-                                <NextImageCard url={image} clasS=' rounded-3 mb-2' width='74px' height='46px' />
+                                <NextImageCard url={image} className=' rounded-3 mb-2' width='74px' height='46px' />
                             </a>
                             :
                             <i className="fa-solid fa-file fa-2x"></i>
@@ -357,7 +357,7 @@ function ApplicationLists() {
                     {
                         image ?
                             <a href={image} download target='_blank'>
-                                <NextImageCard url={image} clasS='rounded-3 mb-2' width='74px' height='46px' />
+                                <NextImageCard url={image} className='rounded-3 mb-2' width='74px' height='46px' />
                             </a>
                             :
                             <i className="fa-solid fa-file fa-2x"></i>

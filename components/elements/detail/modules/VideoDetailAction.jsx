@@ -164,7 +164,7 @@ const VideoDetailShoppingActions = ({ product }) => {
                                         
                                         >
                                         {!loading ? (
-                                            <i class="fa-solid fa-download"></i>
+                                            <i className="fa-solid fa-download"></i>
                                         ) : (
 
                                             <div

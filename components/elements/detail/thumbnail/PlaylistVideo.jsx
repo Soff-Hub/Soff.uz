@@ -23,7 +23,7 @@ export default function PlaylistVideo({
                 fontWeight: 'bold',
                 color: 'white',
             }}>
-                <i class="fa-solid fa-list-check"></i>
+                <i className="fa-solid fa-list-check"></i>
                 {product?.video_count} ta video
             </div>
 

@@ -15,17 +15,17 @@ class HeaderMobileElectronic extends Component {
                     <div className="container">
                         <div className='sotuvchi-boling sotuvchi-boling-2'>
                             <a href='tel:+998910086789'>
-                                <i class="fa-solid fa-phone mr-2"></i>
+                                <i className="fa-solid fa-phone mr-2"></i>
                                 <span>{'+998 (91) 008 67 89'}</span>
                             </a>
 
                             <a href='https://t.me/soff_uz' target='_blank' >
-                                <i class="fa-brands fa-telegram me-2"></i>
+                                <i className="fa-brands fa-telegram me-2"></i>
                             </a>
                         </div>
                         <div className='sotuvchi-boling'>
                             <a href='https://seller.soff.uz' target='_blank'>Sotuvchi bo'lish</a>
-                            <i class="fa-solid fa-user-check"></i>
+                            <i className="fa-solid fa-user-check"></i>
                         </div>
                     </div>
                 </div>
@@ -36,7 +36,7 @@ class HeaderMobileElectronic extends Component {
                             <a className="ps-logo">
                                 <NextImageCard
                                     url="/static/img/soff/soff_green_white.png"
-                                    clasS="logoo"
+                                    className="logoo"
                                     width="100px"
                                     height="40px"
                                 />

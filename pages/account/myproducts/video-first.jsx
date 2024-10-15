@@ -167,7 +167,7 @@ const VideoFirstPosts = ({
                         >
 
                             <span>
-                                <i class="fa-solid fa-upload fa-4x text-success"></i>
+                                <i className="fa-solid fa-upload fa-4x text-success"></i>
                             </span>
                             <Input
                                 accept="video/*"

@@ -183,7 +183,7 @@ const ModuleVideoDetailTopInformation = ({ product, views, admin }) => {
                     </div>
                     <div className="views_video mt-1">
                         {' '}
-                        <i class="fa-solid fa-eye"></i>{' '}
+                        <i className="fa-solid fa-eye"></i>{' '}
                         <span>
                             {views?.view_count}
                         </span>
@@ -192,11 +192,11 @@ const ModuleVideoDetailTopInformation = ({ product, views, admin }) => {
                         {
                             copy ?
                                 <>
-                                    <i class="fa-solid fa-check"></i> nusxalandi
+                                    <i className="fa-solid fa-check"></i> nusxalandi
                                 </>
                                 :
                                 <>
-                                    <i class="fa-solid fa-share-nodes mr-2"></i>
+                                    <i className="fa-solid fa-share-nodes mr-2"></i>
                                     ulashish
                                 </>
                         }

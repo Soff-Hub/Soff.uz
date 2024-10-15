@@ -346,7 +346,7 @@ export default function SiteDonateForm() {
                                         </circle>
                                         <g></g>
                                     </g>
-                                </svg> : <i class="fa-solid fa-gift"></i>
+                                </svg> : <i className="fa-solid fa-gift"></i>
                             }
                             {' '}
                             <span>Davom etish</span>

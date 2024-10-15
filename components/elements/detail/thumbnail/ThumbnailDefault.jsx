@@ -14,7 +14,7 @@ const ThumbnailDefault = ({ product, vertical = true, views }) => {
                         ? product?.document?.images?.map((item, i) => (
                               <NextImageCard
                                   url={item?.image_url}
-                                  clasS="border mb-3"
+                                  className="border mb-3"
                                   width="270px"
                                   height="350px"
                                   style={{ objectFit: 'contain' }}

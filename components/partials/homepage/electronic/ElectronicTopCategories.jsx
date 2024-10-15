@@ -53,7 +53,7 @@ function ElectronicTopCategories() {
                             >
                                 <NextImageCard
                                     url={category?.image}
-                                    clasS='yaxshi-categoriyalar-image'
+                                    className='yaxshi-categoriyalar-image'
                                     width='100px'
                                     height='70px'
                                 />

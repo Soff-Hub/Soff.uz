@@ -102,7 +102,7 @@ const Products_Search_Results = () => {
                             <a className="ps-logo">
                                 <NextImageCard
                                     url="/static/img/soff/logo-dark.png"
-                                    clasS="logoo"
+                                    className="logoo"
                                     width="120px"
                                     height="50px"
                                 />

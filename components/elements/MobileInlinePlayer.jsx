@@ -132,15 +132,15 @@ const MobileInlinePlayer = () => {
                 </div>
                 {playing2 ? (
                     <>
-                        <i onClick={handlePlayPause} class="fa-solid fa-circle-pause"></i>
+                        <i onClick={handlePlayPause} className="fa-solid fa-circle-pause"></i>
                     </>
                 ) : (
                     <>
-                        <i onClick={handlePlayPause} class="fa-solid fa-circle-play"></i>
+                        <i onClick={handlePlayPause} className="fa-solid fa-circle-play"></i>
                     </>
                 )}
                 <div>
-                    <i class="fa-solid fa-close" style={{ cursor: 'pointer' }} onClick={() => setPlayerVisible(false)}></i>
+                    <i className="fa-solid fa-close" style={{ cursor: 'pointer' }} onClick={() => setPlayerVisible(false)}></i>
                 </div>
                 <div onClick={() => Router.push(`/product/${audioData?.slug}`)}>
                     <svg

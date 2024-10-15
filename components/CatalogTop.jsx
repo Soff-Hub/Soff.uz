@@ -38,7 +38,7 @@ const CatalogTop = () => {
                                             {category?.image ? (
                                                 <NextImageCard
                                                     url={category?.image}
-                                                    clasS="category-image"
+                                                    className="category-image"
                                                     width="280px"
                                                     height="280px"
                                                 />

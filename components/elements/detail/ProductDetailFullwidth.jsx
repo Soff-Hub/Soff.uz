@@ -15,7 +15,7 @@ const ProductDetailFullwidth = ({ product, views }) => {
             <div className="ps-product--detail ps-product--fullwidth">
                 <div className="ps-product__header ">
                     <ThumbnailDefault product={product} views={views?.view_count} />
-                    <div className="ps-product__info">
+                    <div className="ps-product__info" id='get-buy'>
                         <ModuleDetailTopInformation product={product} />
 
                         <ModuleProductDetailDescription
@@ -33,7 +33,7 @@ const ProductDetailFullwidth = ({ product, views }) => {
                                         borderRadius: "20px",
                                         padding: "8px 16px",
                                         border: "1px solid #999",
-                                        fontSize:"15px"
+                                        fontSize: "15px"
                                     }}>
                                         <Link href={`/search-page?keyword=${item?.name?.replace(/^#/, '')}`}>
                                             <a

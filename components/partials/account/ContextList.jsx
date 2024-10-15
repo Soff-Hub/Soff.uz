@@ -71,7 +71,7 @@ function ContextLists() {
                 <div>
                     {
                         image ?
-                            <NextImageCard url={image} clasS='rounded-3 mb-2' width='74px' height='46px' />
+                            <NextImageCard url={image} className='rounded-3 mb-2' width='74px' height='46px' />
                             :
                             <i className="fa-solid fa-image fa-2x"></i>
                     }

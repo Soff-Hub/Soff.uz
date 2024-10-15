@@ -266,7 +266,7 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
             </div>
             {asPath === "/account/all-orders" && <div className="p-3 bg-white">
                 <span className="d-block px-2 text-success fw-bold ">
-                    <i class="fa-solid fa-sliders"></i> Filterlash
+                    <i className="fa-solid fa-sliders"></i> Filterlash
                 </span>
 
                 <span className="d-block p-2  fw-bold ">
