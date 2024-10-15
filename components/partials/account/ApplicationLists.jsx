@@ -565,7 +565,7 @@ function ApplicationLists() {
                         <div className="ps-page__content ">
                             <div className="ps-section--account-setting ">
 
-                                {user?.role === "seller" && profile?.have_sale ? <div className="ps-section__content ">
+                                {true ? <div className="ps-section__content ">
                                     <div className='border py-4 rounded '>
                                         {dataBlock?.has_blocked ? <div className=' px-4'>
                                             <span className='text-danger fw-bold '>

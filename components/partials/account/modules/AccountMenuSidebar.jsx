@@ -269,6 +269,11 @@ const AccountMenuSidebar = ({ data, menuOpen }) => {
                                 <i className="fa-solid fa-wallet mx-2"></i> Balans:{' '}
                                 {addPeriodToThousands(profile?.wallet)} so'm
                             </strong>
+                            <Link href={'$'}>
+                                <a className='text-success ml-auto d-inline-block'>
+                                    Yechib olish
+                                </a>
+                            </Link>
                         </div>
                         <h5 className="w-100  border m-0 p-3 rounded-3  text-truncate">
                             <p
