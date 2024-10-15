@@ -217,7 +217,7 @@ const AccountMenuSidebar = ({ data, menuOpen }) => {
                 </div>
                 {user?.role === 'seller' && menuOpen ? (
                     <div className="pb-3 step-3">
-                        <div className="w-100   border m-0 p-3 rounded-3  text-truncate mb-2">
+                        <div className="w-100   border m-0 p-3 rounded-3  text-truncate mb-2 d-flex align-items-center">
 
                             <>
                                 {
@@ -269,11 +269,19 @@ const AccountMenuSidebar = ({ data, menuOpen }) => {
                                 <i className="fa-solid fa-wallet mx-2"></i> Balans:{' '}
                                 {addPeriodToThousands(profile?.wallet)} so'm
                             </strong>
-                            <Link href={'$'}>
-                                <a className='text-success ml-auto d-inline-block'>
-                                    Yechib olish
+                            {profile?.wallet > 0 && <Link href={'/account/application'}>
+                                <a className='text-success text-end' style={{ display: 'flex', marginLeft: 'auto' }}>
+                                    <Tooltip
+                                        color='green'
+                                        overlayStyle={{
+                                            minWidth: '350px',
+                                        }} title="Balansdagi pulni kartangizga yechib oling">
+                                        <span style={{ cursor: 'pointer' }}>
+                                            <i class="fa-solid fa-money-bill-transfer text-success fs-2"></i>
+                                        </span>
+                                    </Tooltip>
                                 </a>
-                            </Link>
+                            </Link>}
                         </div>
                         <h5 className="w-100  border m-0 p-3 rounded-3  text-truncate">
                             <p
