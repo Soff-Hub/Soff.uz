@@ -1,4 +1,3 @@
-import Axios from 'axios';
 import axios from 'axios';
 import { baseUrl } from '~/repositories/Repository';
 
@@ -28,9 +27,9 @@ export const generateTempArray = (maxItems) => {
 };
 
 export const audioDownloaderSale = async (file, product) => {
-    const filee = file?.document?.file_url;
+    const filee = file?.document?.file_url || file?.document?.short_content_url;
     try {
-        const response = await Axios.get(filee, {
+        const response = await axios.get(filee, {
             responseType: 'blob',
         });
 
@@ -46,9 +45,7 @@ export const audioDownloaderSale = async (file, product) => {
         a.click();
         window.URL.revokeObjectURL(url);
 
-        const apiResponse = await Axios.post(
-            baseUrl + `seller/upload-count/${product.id}`
-        );
+        axios.post(baseUrl + `seller/upload-count/${product.id}`);
 
         return true;
     } catch (error) {

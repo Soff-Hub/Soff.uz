@@ -177,25 +177,29 @@ function MyProductsListsSeller() {
 
 
     useEffect(() => {
-        GetItemsProducts(currPage, dataValCat, dataFormat);
-    }, [dataValCat, dataFormat, searchDebounce]);
+        if (user?.access) {
+            GetItemsProducts(currPage, dataValCat, dataFormat);
+        }
+    }, [dataValCat, dataFormat, searchDebounce, user]);
 
     const columns = [
         {
             title: 'Yuklab olish',
             dataIndex: 'content_type_id',
             key: 'content_type_id',
-            render: (content_type_id) => (
+            render: (content_type_id, item) => (
                 content_type_id?.content_type === 'video' ?
                     <></>
                     :
                     <>
                         {
                             content_type_id?.id !== loading2 ?
-                                <a>
+                                <a href={item?.file}>
                                     <i
                                         className="fa-solid fa-file-arrow-down text-success-emphasis mx-3 fs-3"
-                                        onClick={() => handleButtonClick(content_type_id?.id)}></i>
+                                        // onClick={() => handleButtonClick(content_type_id?.id)}
+                                    >
+                                    </i>
                                 </a>
                                 :
                                 <div className="spinner-border" role="status">
