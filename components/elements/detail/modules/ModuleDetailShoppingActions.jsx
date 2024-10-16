@@ -129,20 +129,21 @@ const ModuleDetailShoppingActions = ({ product }) => {
 
                                         }}
                                         className="ps-btn ps-btn--black py-3 "
-                                        href="#"
-                                        onClick={async (e) => {
-                                            e.preventDefault();
-                                            setLoading(true);
-                                            console.log('Loading state set to true');
-                                            try {
-                                                await audioDownloaderSale(product, product);
-                                            } catch (error) {
-                                                console.error('Error in audioDownloaderSale:', error);
-                                            } finally {
-                                                setLoading(false);
-                                                console.log('Loading state set to false');
-                                            }
-                                        }}
+                                        target='_blank'
+                                        href={product?.document?.file_url}
+                                    // onClick={async (e) => {
+                                    //     e.preventDefault();
+                                    //     setLoading(true);
+                                    //     console.log('Loading state set to true');
+                                    //     try {
+                                    //         await audioDownloaderSale(product, product);
+                                    //     } catch (error) {
+                                    //         console.error('Error in audioDownloaderSale:', error);
+                                    //     } finally {
+                                    //         setLoading(false);
+                                    //         console.log('Loading state set to false');
+                                    //     }
+                                    // }}
                                     >
                                         {!loading ?
                                             "Yuklab olish" :
@@ -180,13 +181,15 @@ const ModuleDetailShoppingActions = ({ product }) => {
                             <a
                                 style={{ cursor: loading ? 'not-allowed' : 'pointer', minWidth: "212px", height: "40px", fontSize: "14px" }}
                                 className="ps-btn py-3 buystep-2 ml-2 ps-btn--black "
-                                href="#"
-                                onClick={async (e) => {
-                                    e.preventDefault();
-                                    setLoading(true)
-                                    await audioDownloaderSale(product, product);
-                                    setLoading(false)
-                                }}>
+                                href={product?.document?.short_content_url}
+                            // target='blank'
+                            // onClick={async (e) => {
+                            //     e.preventDefault();
+                            //     setLoading(true)
+                            //     await audioDownloaderSale(product, product);
+                            //     setLoading(false)
+                            // }}
+                            >
                                 {!loading ? 'Bepul yuklab olish' :
                                     <div>
                                         <div
