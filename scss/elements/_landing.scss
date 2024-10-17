@@ -1436,6 +1436,8 @@
     gap: 25px;
     flex-wrap: wrap;
     justify-content: center;
+    position: relative;
+    transition: all 0.3s ease;
 }
 
 .l-top-sellers-item {
@@ -1558,5 +1560,53 @@
 
     .seller-card-body {
         justify-content: flex-start;
+    }
+}
+
+.l-top-sellerlist-nav {
+    height: 60px;
+    width: 100%;
+    position: absolute;
+    background-color: rgba(160, 89, 89, 0.466);
+    bottom: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    border-top-right-radius: 30px;
+    border-top-left-radius: 30px;
+    font-size: 18px;
+    color: #00ba3f;
+    background: #ffffff;
+    background: -webkit-linear-gradient(
+        0deg,
+        #ffffff 0%,
+        rgba(255, 255, 255, 0.26) 100%
+    );
+    background: linear-gradient(
+        0deg,
+        #ffffff 0%,
+        rgba(255, 255, 255, 0.26) 100%
+    );
+}
+
+.l-top-sellerlist-nav {
+    display: none;
+}
+
+@media only screen and (max-width: 576px) {
+    .l-top-sellers-full {
+        max-height: 480px;
+        padding: 30px 0;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .l-top-sellerlist-nav {
+        display: flex;
+        cursor: pointer;
+    }
+
+    .l-top-sellers-title {
+        margin-bottom: 20px;
     }
 }

@@ -7,6 +7,7 @@ import { formatCurrencyWithSpace } from '~/utilities/product-helper'
 export default function TopSellersHome() {
     const [sellers, setSellers] = useState([])
     const [self, setSelf] = useState(null)
+    const [full, setFull] = useState(false)
 
     const getSellers = async () => {
         const token = localStorage.getItem('user')
@@ -15,13 +16,9 @@ export default function TopSellersHome() {
                 Authorization: token ? `Bearer ${JSON.parse(token)?.access}` : ''
             }
         })).data
-        setSellers(resp?.slice(0, 9));
-        // setSelf(resp[9])
-        // setSellers(resp);
+        setSellers(resp?.data);
+        setSelf(resp?.user_data)
     }
-
-    console.log(self);
-
 
     useEffect(() => {
         getSellers()
@@ -30,7 +27,7 @@ export default function TopSellersHome() {
     return (
         <div>
             <h3 className='l-top-sellers-title'>Top sotuvchilar</h3>
-            <div className='l-top-sellers-list'>
+            <div className={`l-top-sellers-list ${full ? '' : 'l-top-sellers-full'}`}>
                 {
                     sellers.map((el, i) => (
                         <div className="l-top-sellers-item seller-card" key={el.id}>
@@ -59,9 +56,13 @@ export default function TopSellersHome() {
                         </div>
                     ))
                 }
+
+                {!full && <div className="l-top-sellerlist-nav " onClick={() => setFull(true)}>
+                    Top 9talikni to'liq ko'rish
+                </div>}
             </div>
             <div className="self-seller">
-                {self ? <div className="l-top-sellers-item seller-card">
+                {self?.seller ? <div className="l-top-sellers-item seller-card">
                     <div className="seller-card-header">
                         <img className='seller-card-img' src={self?.seller?.image || 'https://soff.uz/static/img/ozodbek.png'} alt="top seller" />
                         <div className="seller-card-info">
@@ -76,13 +77,13 @@ export default function TopSellersHome() {
                         </div>
 
                         <div className="seller-card-line"></div>
-                        <span className='score-of-seller'>{222}</span>
+                        <span className='score-of-seller'>{self?.order}</span>
                     </div>
                 </div> : ''}
 
-                {!self ? <div className="l-top-sellers-item seller-card">
+                {!self?.seller ? <div className="l-top-sellers-item seller-card">
                     <div className="seller-card-header">
-                        <img className='seller-card-img' src={'https://soff.uz/static/img/ozodbek.png'} alt="top seller" />
+                        <img className='seller-card-img' src={self?.seller?.image || 'https://soff.uz/static/img/ozodbek.png'} alt="top seller" />
                         <div className="seller-card-info">
                             <h4 className='seller-card-name text-truncate'>Buyerda siz bo'ling</h4>
                             <p className='seller-card-text'>{formatCurrencyWithSpace(1200000)} uzs/oy</p>
