@@ -3,7 +3,6 @@ import ElectronicProductGroupWithCarousel from '~/components/partials/homepage/e
 import ElectronicBanner from '~/components/partials/homepage/electronic/ElectronicBanner';
 import ElectronicTopCategories from '~/components/partials/homepage/electronic/ElectronicTopCategories';
 import SiteFeatures from '~/components/partials/homepage/autopart/SiteFeatures';
-import { PropagateLoader } from 'react-spinners';
 import useCart from '~/hooks/useCart';
 import useWishlist from '~/hooks/useWishlist';
 import { useSelector } from 'react-redux';
@@ -12,8 +11,6 @@ import Meta from '~/components/shared/headers/Meta';
 import Link from 'next/link';
 import { baseUrl } from '~/repositories/Repository';
 import axios from 'axios';
-import ElectronicTopSellersGroupWithCarousel from '~/components/partials/homepage/electronic/ElectronicTopSellersGroupWithCarousel';
-import HeaderMobileBottom from '~/components/shared/headers/HeaderMobilebottom';
 
 
 const HomeElectronicsPage = () => {
@@ -65,7 +62,7 @@ const HomeElectronicsPage = () => {
     useEffect(() => {
         getProducts();
         getFreeDocuments();
-        getTopSellers();
+        // getTopSellers();
     }, []);
 
     useEffect(() => {
@@ -162,13 +159,13 @@ const HomeElectronicsPage = () => {
             <VedioPage /> 
             {memoizedCard}
 
-            <ElectronicTopSellersGroupWithCarousel
+            {/* <ElectronicTopSellersGroupWithCarousel
                 collectionSlug="electronics-top-sellers"
                 title={topSellers.name}
                 data={topSellers}
                 id={topSellers.id}
                 slug={topSellers.slug}
-            />
+            /> */}
 
             <ElectronicProductGroupWithCarousel
                 collectionSlug="electronics-best-sellers"
