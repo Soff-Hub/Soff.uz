@@ -9,6 +9,7 @@ import Image from 'next/image';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
 import { useSelector } from 'react-redux';
 import PageContainer from '~/components/layouts/PageContainer';
+import TopSellersHome from '~/components/TopSellersHome';
 
 
 
@@ -138,6 +139,12 @@ const HomepageDefaultPage = ({ faq, advantages, projecs }) => {
                                 ))
                             }
                         </ul>
+                    </div>
+                </div>
+
+                <div className="l-top-sellers">
+                    <div className="container-">
+                        <TopSellersHome />
                     </div>
                 </div>
 

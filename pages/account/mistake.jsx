@@ -11,9 +11,9 @@ export default function Mistake() {
                     <div className="container">
                         <div className="ps-section__content">
                             <figure>
-                                <img style={{maxWidth:'300px', width:'100%'}} src="/static/img/9787138.png" alt="" />
-                                <h3>
-                                    Afsuski siz o'zingizni taklif qilolmaysiz
+                                <img style={{ maxWidth: '300px', width: '100%' }} src="/static/img/9787138.png" alt="" />
+                                <h3 style={{ lineHeight: '48px', fontWeight: 500 }}>
+                                    Afsuski siz o'zingizni taklif qilolmaysiz <br /> yoki siz allaqachon ro'yxatdan o'tgansiz
                                 </h3>
                                 <p>
                                     <Link href="/">

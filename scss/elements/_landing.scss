@@ -1416,3 +1416,147 @@
 .hero-btn:hover {
     color: black;
 }
+
+.l-top-sellers {
+    // background-color: #F0F4FC;
+    background-color: white;
+    padding: 40px 0 100px;
+}
+
+.l-top-sellers-title {
+    margin-bottom: 50px;
+    text-align: center;
+    font-size: 32px;
+    font-weight: 500;
+}
+
+.l-top-sellers-list {
+    display: flex;
+    align-items: stretch;
+    gap: 25px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.l-top-sellers-item {
+    background-color: #f0f4fc;
+    padding: 16px;
+    border-radius: 24px;
+    // min-width: 220px;
+    width: 320px;
+    // width: 100%;
+    position: relative;
+}
+
+.seller-card-header {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 10px;
+    padding-left: 70px;
+    // padding-top: 30px;
+}
+
+.seller-card-img {
+    border-radius: 50%;
+    overflow: hidden;
+    object-fit: cover;
+    height: 80px;
+    min-width: 80px;
+    position: absolute;
+    top: -18px;
+    left: -18px;
+    border: 5px solid white;
+    box-sizing: content-box;
+}
+
+.seller-card-name {
+    margin: 0;
+    font-weight: 500;
+    color: #1f242f;
+    max-width: 210px;
+    font-size: 16px;
+}
+
+.seller-card-text {
+    margin: 0;
+    color: #4caf4f;
+    font-weight: 500;
+    font-size: 12px;
+}
+
+.seller-card-body {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin-top: 25px;
+}
+
+.seller-card-subitem {
+    display: flex;
+    flex-direction: column;
+}
+
+.seller-card-line {
+    border-left: 1px solid #4caf4f;
+    width: 1px;
+    margin: 2px;
+    display: block;
+}
+
+.seller-card-subtitle {
+    font-size: 11px;
+    margin-bottom: 2px;
+}
+
+.seller-card-subtext {
+    font-weight: 600;
+    font-size: 16px;
+    color: #00ba3f;
+}
+
+.seller-card-subitem:nth-child(1) {
+    align-items: flex-end;
+}
+
+.seller-card-subitem:nth-child(2) {
+    align-items: flex-start;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Covered+By+Your+Grace&family=Londrina+Shadow&family=Pacifico&display=swap');
+
+.score-of-seller {
+    font-size: 72px;
+    position: absolute;
+    color: #0000000d;
+    right: 10px;
+    bottom: -14px;
+    font-weight: 800;
+    font-family: 'Covered By Your Grace', cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.self-seller {
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
+    gap: 25px;
+}
+
+.self-seller {
+    .l-top-sellers-item {
+        background-color: #ffd966;
+    }
+
+    .score-of-seller {
+        color: #00000043;
+        bottom: -10px;
+        right: 30px;
+    }
+
+    .seller-card-body {
+        justify-content: flex-start;
+    }
+}
