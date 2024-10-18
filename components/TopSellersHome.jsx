@@ -89,7 +89,7 @@ export default function TopSellersHome() {
                         </div>
 
                         <div className="seller-card-line"></div>
-                        <span className='score-of-seller'>{self?.order}</span>
+                        <span className='score-of-seller'>{self?.order + 1}</span>
                     </div>
                 </div> : ''}
 
@@ -142,7 +142,7 @@ export default function TopSellersHome() {
                         </div>
 
                         <div className="seller-card-line"></div>
-                        <span className='score-of-seller'>{self?.order}</span>
+                        <span className='score-of-seller'>{self?.order + 1}</span>
                     </div>
                 </div> : ''}
 
