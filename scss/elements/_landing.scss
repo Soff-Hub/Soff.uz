@@ -1547,6 +1547,20 @@
     gap: 25px;
 }
 
+.self-seller-seller-card {
+    background-color: #ffd966;
+    
+    .score-of-seller {
+        color: #00000043;
+        bottom: -10px;
+        right: 30px;
+    }
+
+    .seller-card-body {
+        justify-content: flex-start;
+    }
+}
+
 .self-seller {
     .l-top-sellers-item {
         background-color: #ffd966;
