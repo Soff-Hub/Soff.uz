@@ -35,9 +35,13 @@ export default function TopSellersHome() {
                     sellers.length > 0 ? sellers.map((el, i) => (
                         <div className="l-top-sellers-item seller-card" key={el.id}>
                             <div className="seller-card-header">
-                                <img className='seller-card-img' src={el?.seller?.image || 'https://soff.uz/static/img/ozodbek.png'} alt="top seller" />
+                                <img className='seller-card-img' src={el?.seller?.image || `https://robohash.org/${el?.seller?.id}?bgset=bg1`} alt="top seller" />
                                 <div className="seller-card-info">
-                                    <h4 className='seller-card-name text-truncate'>{el?.seller?.full_name}</h4>
+                                    <h4 className='seller-card-name text-truncate'>
+                                        <Link href={`https://soff.uz/seller/${el?.seller?.id}`}>
+                                            <a target='blank'>{el?.seller?.full_name}</a>
+                                        </Link>
+                                    </h4>
                                     <p className='seller-card-text'>{formatCurrencyWithSpace(el?.top_income)} uzs/oy</p>
                                 </div>
                             </div>
