@@ -35,7 +35,7 @@ export default function TopSellersHome() {
                                 <img className='seller-card-img' src={el?.seller?.image || 'https://soff.uz/static/img/ozodbek.png'} alt="top seller" />
                                 <div className="seller-card-info">
                                     <h4 className='seller-card-name text-truncate'>{el?.seller?.full_name}</h4>
-                                    <p className='seller-card-text'>{formatCurrencyWithSpace(1200000)} uzs/oy</p>
+                                    <p className='seller-card-text'>{formatCurrencyWithSpace(el?.top_income)} uzs/oy</p>
                                 </div>
                             </div>
                             <div className="seller-card-body">
@@ -67,7 +67,7 @@ export default function TopSellersHome() {
                         <img className='seller-card-img' src={self?.seller?.image || 'https://soff.uz/static/img/ozodbek.png'} alt="top seller" />
                         <div className="seller-card-info">
                             <h4 className='seller-card-name text-truncate'>{self?.seller?.full_name}</h4>
-                            <p className='seller-card-text'>{formatCurrencyWithSpace(1200000)} uzs/oy</p>
+                            <p className='seller-card-text'>{formatCurrencyWithSpace(self?.top_income)} uzs/oy</p>
                         </div>
                     </div>
                     <div className="seller-card-body">
@@ -85,8 +85,8 @@ export default function TopSellersHome() {
                     <div className="seller-card-header">
                         <img className='seller-card-img' src={self?.seller?.image || 'https://soff.uz/static/img/ozodbek.png'} alt="top seller" />
                         <div className="seller-card-info">
-                            <h4 className='seller-card-name text-truncate'>Buyerda siz bo'ling</h4>
-                            <p className='seller-card-text'>{formatCurrencyWithSpace(1200000)} uzs/oy</p>
+                            <h4 className='seller-card-name'>Top sotuvchilar qatoriga qo'shiling</h4>
+                            <p className='seller-card-text'>{formatCurrencyWithSpace(2400100)} uzs/oy</p>
                         </div>
                     </div>
                     <div className="seller-card-body">
