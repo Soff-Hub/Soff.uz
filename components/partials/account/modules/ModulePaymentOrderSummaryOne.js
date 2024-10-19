@@ -8,7 +8,6 @@ import { addPeriodToThousands } from '../ProductsLists';
 import axios from 'axios';
 import { baseUrl } from '~/repositories/Repository';
 
-
 const ModulePaymentOrderSummaryOne = () => {
     const Router = useRouter();
     const { type, slug, id } = Router.query;
@@ -22,17 +21,15 @@ const ModulePaymentOrderSummaryOne = () => {
                 setPercentage(responseData?.data?.percentage);
             }
         } else {
-            const endPoint = `customer/playlist/${slug}/`
+            const endPoint = `customer/playlist/${slug}/`;
             try {
                 const response = await axios.get(baseUrl + endPoint, {
                     headers: {
                         // Authorization: `Bearer ${user?.access}`,
-                    }
+                    },
                 });
-                setData(response.data)
-            } catch (error) {
-
-            }
+                setData(response.data);
+            } catch (error) {}
         }
     }
 
@@ -42,17 +39,15 @@ const ModulePaymentOrderSummaryOne = () => {
             setData(res?.data?.data?.[0]);
         }
         if (type === 'playlist') {
-            const endPoint = `customer/playlist/${slug}/`
+            const endPoint = `customer/playlist/${slug}/`;
             try {
                 const response = await axios.get(baseUrl + endPoint, {
                     headers: {
                         // Authorization: `Bearer ${user?.access}`,
-                    }
+                    },
                 });
-                setData(response.data)
-            } catch (error) {
-
-            }
+                setData(response.data);
+            } catch (error) {}
         }
     };
 
@@ -61,16 +56,20 @@ const ModulePaymentOrderSummaryOne = () => {
         getPercentage();
     }, [slug, id]);
 
-    
-
-    const hisob = addPeriodToThousands(data?.discount_price + data?.discount_price * percentage);
-    const hisobb = addPeriodToThousands(data?.discount_price * percentage);
+    const hisob = addPeriodToThousands(
+        data?.discount_price + Math.floor(data?.discount_price * percentage)
+    );
+    const hisobb = addPeriodToThousands(
+        Math.floor(data?.discount_price * percentage)
+    );
 
     return (
-        <div className="ps-block--checkout-order" >
+        <div className="ps-block--checkout-order">
             <h3>Buyurtma mahsulotlari</h3>
             <div className="shot">
-                <div className="ps-block__content checkoutstep-0" style={{backgroundColor:"#f1f1f1"}}>
+                <div
+                    className="ps-block__content checkoutstep-0"
+                    style={{ backgroundColor: 'transparent' }}>
                     {data && type !== 'playlist' ? (
                         <figure>
                             <p>Mahsulot</p>
@@ -92,50 +91,48 @@ const ModulePaymentOrderSummaryOne = () => {
                                     so'm
                                 </strong>
                             </div>
-
+                        </figure>
+                    ) : type === 'playlist' ? (
+                        <figure>
+                            <p>To'plam</p>
+                            <div className="my-2">
+                                <Link
+                                    href={`/product/${data?.playlist_document?.[0]?.slug}`}>
+                                    <a>
+                                        <strong>{data?.title}</strong>
+                                    </a>
+                                </Link>
+                            </div>
+                            <span className="product_type  ">
+                                {data?.playlist_document?.length} ta video
+                            </span>
+                            <div className="product_price_click my-3">
+                                <p>Narxi</p>
+                                <div></div>
+                                <strong>
+                                    {addPeriodToThousands(data?.price)} so'm
+                                </strong>
+                            </div>
                         </figure>
                     ) : (
-                        type === 'playlist' ?
-                            <figure>
-                                <p>To'plam</p>
-                                <div className="my-2">
-                                    <Link href={`/product/${data?.playlist_document?.[0]?.slug}`}>
-                                        <a>
-                                            <strong>{data?.title}</strong>
-                                        </a>
-                                    </Link>
-                                </div>
-                                <span className="product_type  ">
-                                    {data?.playlist_document?.length} ta video
-                                </span>
-                                <div className="product_price_click my-3">
-                                    <p>Narxi</p>
-                                    <div></div>
-                                    <strong>
-                                        {addPeriodToThousands(data?.price)}{' '}
-                                        so'm
-                                    </strong>
-                                </div>
-
-                            </figure> : <figure className="ps-block__total">
-                                <p>Mahsulot yo'q.</p>;
-                            </figure>
+                        <figure className="ps-block__total">
+                            <p>Mahsulot yo'q.</p>;
+                        </figure>
                     )}
                 </div>
                 <div className="checkout_footer">
                     {data && type !== 'playlist' && (
                         <figure>
-                            {
-                                percentage > 0 &&
+                            {percentage > 0 && (
                                 <div className="product_price_click my-3">
-                                    <p>Sayt xizmati uchun</p>
+                                    <p>Xizmat haqi uchun</p>
                                     <div></div>
-                                    <strong>{hisobb}
-                                        {' '}
-                                        so`m {`(${percentage * 100} %)`}
+                                    <strong>
+                                        {hisobb} so`m{' '}
+                                        {`(${percentage * 100} %)`}
                                     </strong>
                                 </div>
-                            }
+                            )}
                             <figcaption className="product_price_click_all">
                                 <strong>Jami narx</strong>
                                 <div></div>

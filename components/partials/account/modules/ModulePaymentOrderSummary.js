@@ -13,13 +13,14 @@ const ModulePaymentOrderSummary = ({ ecomerce }) => {
     async function getPercentage() {
         const responseData = await ProductRepository.getOrderPercentage();
         if (responseData) {
-            setPercentage(responseData?.data?.percentage);
+            setPercentage(Number(responseData?.data?.percentage));
         }
     }
 
- 
-    const hisob = addPeriodToThousands(amount + amount * percentage);
-    const hisobb = addPeriodToThousands(amount * percentage);
+    const hisob = addPeriodToThousands(
+        amount + Math.floor(amount * percentage)
+    );
+    const hisobb = addPeriodToThousands(Math.floor(amount * percentage));
 
     // view
     let listItemsView, totalView;
@@ -69,7 +70,9 @@ const ModulePaymentOrderSummary = ({ ecomerce }) => {
         <div className="ps-block--checkout-order">
             <h3>Buyurtma mahsulotlari</h3>
             <div className="shot">
-                <div className="ps-block__content " style={{backgroundColor:"#f1f1f1"}}>
+                <div
+                    className="ps-block__content "
+                    style={{ backgroundColor: 'transparent' }}>
                     {ecomerce.cartDataItems &&
                     ecomerce.cartDataItems.length > 0 ? (
                         ecomerce.cartDataItems?.map((el, i) => (
@@ -95,7 +98,6 @@ const ModulePaymentOrderSummary = ({ ecomerce }) => {
                                         so'm
                                     </strong>
                                 </div>
-                               
                             </figure>
                         ))
                     ) : (
@@ -108,20 +110,19 @@ const ModulePaymentOrderSummary = ({ ecomerce }) => {
                 <div className="checkout_footer">
                     {ecomerce.cartDataItems &&
                         ecomerce.cartDataItems.length > 0 && (
-                            
                             <figure>
-                                 {percentage > 0 && (
+                                {percentage > 0 && (
                                     <div className="product_price_click my-3">
-                                        <p>Sayt xizmati uchun</p>
+                                        <p>Xizmat haqi uchun</p>
                                         <div></div>
-                                        <strong> {hisobb}
-                                           {' '}
-                                            so`m {`(${percentage * 100} %)`}
+                                        <strong>
+                                            {' '}
+                                            {hisobb} so`m{' '}
+                                            {`(${percentage * 100} %)`}
                                         </strong>
                                     </div>
                                 )}
                                 <figcaption className="product_price_click_all">
-                               
                                     <strong>Jami narx</strong>
                                     <div></div>
                                     <strong>{hisob} so'm </strong>
