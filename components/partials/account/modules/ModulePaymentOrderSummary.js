@@ -5,6 +5,7 @@ import { calculateAmount } from '~/utilities/ecomerce-helpers';
 import ProductRepository from '~/repositories/ProductRepository';
 import { useState } from 'react';
 import { addPeriodToThousands } from '../ProductsLists';
+import { Skeleton } from 'antd';
 
 const ModulePaymentOrderSummary = ({ ecomerce }) => {
     const [percentage, setPercentage] = useState(0);
@@ -102,7 +103,7 @@ const ModulePaymentOrderSummary = ({ ecomerce }) => {
                         ))
                     ) : (
                         <figure className="ps-block__total">
-                            <p>Mahsulot yo'q.</p>
+                            <Skeleton active paragraph={{ rows: 7 }} />
                         </figure>
                     )}
                 </div>

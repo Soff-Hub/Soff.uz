@@ -307,6 +307,7 @@ const CreditCard2 = ({ document, type }) => {
                         open={open}
                         onOk={handleSubmitCode}
                         onCancel={handleCancale}
+                        maskClosable={false}
                         okButtonProps={{
                             style: { backgroundColor: 'green', color: 'white' },
                         }}

@@ -7,11 +7,13 @@ import { useRouter } from 'next/router';
 import { addPeriodToThousands } from '../ProductsLists';
 import axios from 'axios';
 import { baseUrl } from '~/repositories/Repository';
+import { Skeleton } from 'antd';
 
 const ModulePaymentOrderSummaryOne = () => {
     const Router = useRouter();
     const { type, slug, id } = Router.query;
     const [data, setData] = useState(null);
+    const [loading, setLoading] = useState(null);
     const [percentage, setPercentage] = useState(0);
 
     async function getPercentage() {
@@ -34,6 +36,7 @@ const ModulePaymentOrderSummaryOne = () => {
     }
 
     const getOneProductData = async () => {
+        setLoading(true);
         if (type !== 'playlist') {
             const res = await ProductRepository.postCartData([id]);
             setData(res?.data?.data?.[0]);
@@ -49,6 +52,7 @@ const ModulePaymentOrderSummaryOne = () => {
                 setData(response.data);
             } catch (error) {}
         }
+        setLoading(false);
     };
 
     useEffect(() => {
@@ -116,7 +120,7 @@ const ModulePaymentOrderSummaryOne = () => {
                         </figure>
                     ) : (
                         <figure className="ps-block__total">
-                            <p>Mahsulot yo'q.</p>;
+                            <Skeleton active />
                         </figure>
                     )}
                 </div>
