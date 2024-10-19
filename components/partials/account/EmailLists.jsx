@@ -6,6 +6,8 @@ import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import CKEditor from './CKeditor';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import SidebarLayout from '../SidebarLayout';
+import useDebounce from '~/hooks/useDebounce';
+import { baseUrl, orginalApi } from '~/reositoriy-admin/Repository';
 var parse = require('html-react-parser');
 
 const EmailLists = () => {
@@ -16,6 +18,7 @@ const EmailLists = () => {
     const [loading, setLoading] = useState(false);
     const [loadingData, setLoadingData] = useState(false);
     const [text, setText] = useState(null);
+    const [textError, setTextError] = useState(null);
     const [editorLoaded, setEditorLoaded] = useState(false);
     const [data, setData] = useState(null);
     const [option, setOption] = useState([]);
@@ -24,6 +27,8 @@ const EmailLists = () => {
     const [notification, setNotification] = useState(null);
     const [notificationPage, setNotificationPage] = useState(1)
     const [notificationCount, setNotificationCount] = useState(0)
+    const [searchVal, setSearchVal] = useState('')
+    const search = useDebounce(searchVal, 700)
 
     const OnChangeSelect = (event) => {
         setEmail(event);
@@ -171,10 +176,11 @@ const EmailLists = () => {
                 }
             }
         } else {
+            setTextError(true)
             const modal = Modal.error({
                 centered: true,
                 title: 'Xato!',
-                content: `Malumot to'g'ri kiritilmadi`,
+                content: `Xabar yuborish uchun ma'lumot to'liq kiritilmadi`,
             });
             modal.update;
         }
@@ -198,10 +204,15 @@ const EmailLists = () => {
 
     async function GetAllUsers() {
         if (user?.access) {
-            const ItemsData = await GetRepository.getAllUserLists(user?.access);
+            // const ItemsData = await GetRepository.getAllUserLists(user?.access);
+            const ItemsData = await orginalApi.get(`${baseUrl}all-user/?search=${search}`, {
+                headers: {
+                    Authorization: `Bearer ${user?.access}`
+                }
+            })
             const dataArr = [];
-            if (ItemsData) {
-                for (const iterator of ItemsData) {
+            if (ItemsData.data) {
+                for (const iterator of ItemsData?.data?.results) {
                     if (iterator?.data) {
                         dataArr.push(iterator);
                     }
@@ -226,10 +237,14 @@ const EmailLists = () => {
     useEffect(() => {
         getNotifications(1);
         setEditorLoaded(true);
+
+    }, []);
+
+    useEffect(() => {
         if (user?.access) {
             GetAllUsers();
         }
-    }, []);
+    }, [search])
 
     useEffect(() => {
         if (data?.length > 0) {
@@ -326,9 +341,11 @@ const EmailLists = () => {
                                     name="description"
                                     onChange={(data) => {
                                         setText(data);
+                                        setTextError(false)
                                     }}
                                     editorLoaded={editorLoaded}
                                     value={text || ''}
+                                    error={textError}
                                 />
                             </div>
                             <RangePicker
@@ -342,10 +359,6 @@ const EmailLists = () => {
                                     style={{ width: '100%', height: '45px' }}
                                     placeholder="Barchasini tanlash"
                                     options={[
-                                        {
-                                            label: ' Barcha Foydalanuvchilar',
-                                            value: 'all',
-                                        },
                                         {
                                             label: 'Barcha Sotuvchilar',
                                             value: 'seller',
@@ -366,6 +379,7 @@ const EmailLists = () => {
                                     onChange={OnChangeSelect}
                                     style={{ width: '100%' }}
                                     placeholder="Umumiy foydalanuvchilar"
+                                    onSearch={setSearchVal}
                                     mode="multiple"
                                     allowClear
                                     options={option}></Select>

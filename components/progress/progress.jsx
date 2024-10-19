@@ -48,6 +48,7 @@ const Progress = ({
         setInputName(name)
         setLoading2(true)
         setLoading(true)
+        setError(null)
         let xhr = new XMLHttpRequest();
         xhr.open(
             "POST",
@@ -72,8 +73,8 @@ const Progress = ({
                 setDocument(response);
                 setStatus(xhr.status)
             } else {
-                let error = xhr.responseText;
-                setError(error);
+                let err = xhr.responseText;
+                setError(JSON.parse(err)?.msg);
                 setStatus(xhr?.status);
                 setLoading(false);
                 setLoading2(false);
@@ -86,8 +87,6 @@ const Progress = ({
         xhr.send(formData);
         console.log(xhr);
     }
-
-
 
     return (
         <div className="wrapper bg-white">
