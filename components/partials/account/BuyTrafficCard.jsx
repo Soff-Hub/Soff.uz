@@ -329,6 +329,7 @@ const BuyTrafficCard = ({ traffic, quantity }) => {
                         open={open}
                         onOk={handleSubmitCode}
                         onCancel={handleCancale}
+                        maskClosable={false}
                         okButtonProps={{
                             style: { backgroundColor: 'green', color: 'white' },
                         }}

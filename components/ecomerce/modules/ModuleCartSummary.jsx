@@ -68,7 +68,7 @@ const ModuleCartSummary = ({ source }) => {
                     <ul className="ps-block__product">{productItemsView}</ul>
                     {percentage > 0 && (
                         <p className='d-flex justify-content-between' >
-                            Xizmat xabuqi{' '}
+                            Xizmat haqi uchun{' '}
                             <span>
                                 {' '}
                                 {hisobPercentage} so`m{' '}
