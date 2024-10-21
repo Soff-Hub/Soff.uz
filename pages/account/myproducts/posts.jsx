@@ -369,8 +369,18 @@ const Posts = () => {
                                     <Select
                                         mode="tags"
                                         style={{ width: '100%' }}
-                                        onChange={handleChange}
+                                        // onChange={handleChange}
+                                        onChange={(e) => {
+                                            if (e?.at(-1)?.length < 20) {
+                                                console.log(e?.[-1]);
+                                                handleChange(e)
+                                            } else {
+                                                Modal.info({ content: 'Tegning maksimal uzunligi 12 belgidan oshmasligi kerak', okText: "Tushunarli" })
+                                            }
+                                        }}
+                                        value={tagSearchResult}
                                         onSearch={onSearchTegsAktiv}
+                                        maxCount={10}
                                     >
                                         {children}
                                     </Select>
