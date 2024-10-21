@@ -249,7 +249,7 @@ const PageContainer = ({
     return (
         <>
             {title === 'none' ? '' : <Head>
-                <title>Soff Seller Dashboard </title>
+                <title>Soffda Intellektual mulklaringizni soting va daromad qiling</title>
             </Head>}
             {header}
 
