@@ -15,7 +15,7 @@ export default function NextImageCard({
         return src;
     };
 
-    const [up , setUp] = useState(true)
+    const [up, setUp] = useState(true)
 
     const handleUp = () => {
         setUp(false)
@@ -29,11 +29,10 @@ export default function NextImageCard({
 
     return (
         <div
-            className={`${
-                (payload?.document?.content_type === 'video' ||
+            className={`${(payload?.document?.content_type === 'video' ||
                     payload?.document?.content_type === 'audio') &&
                 'video_poster'
-            }`}>
+                }`}>
             {payload?.document?.content_type === 'video' ? (
                 <>
                     <div className="video_poster_fon">
@@ -41,15 +40,15 @@ export default function NextImageCard({
                     </div>
                     {
                         url &&
-                    <Image
-                        src={url}
-                        width={width}
-                        height={height}
-                        alt={url}
-                        loader={loaderProp}
-                        className={clasS}
-                        objectFit="contain"
-                    />
+                        <Image
+                            src={url}
+                            width={width}
+                            height={height}
+                            alt={url}
+                            loader={loaderProp}
+                            className={clasS}
+                            objectFit="contain"
+                        />
                     }
                 </>
             ) : payload?.document?.content_type === 'audio' ? (
@@ -57,53 +56,53 @@ export default function NextImageCard({
                     <div className="video_poster_fon">
                         <i className="fa-solid fa-music"></i>
                     </div>
-                   {
-                    url &&  <Image
-                    src={url}
-                    width={width}
-                    height={height}
-                    alt={url}
-                    loader={loaderProp}
-                    className={clasS}
-                    objectFit="contain"
-                />
-                   }
+                    {
+                        url && <Image
+                            src={url}
+                            width={width}
+                            height={height}
+                            alt={url}
+                            loader={loaderProp}
+                            className={clasS}
+                            objectFit="contain"
+                        />
+                    }
                 </>
             ) : detail ? (
-                <div onClick={() => handleUp()} className={` ${up && 'product_priview' } `}>
-                   {
-                    url &&
-                    <Image
-                    src={url}
-                    width={width}
-                    height={height}
-                    alt={url}
-                    loader={loaderProp}
-                    className={clasS}
-                    objectFit="contain"
-                />
-                   }
+                <div onClick={() => handleUp()} className={` ${up && 'product_priview'} `}>
+                    {
+                        url &&
+                        <Image
+                            src={url}
+                            width={width}
+                            height={height}
+                            alt={url}
+                            loader={loaderProp}
+                            className={clasS}
+                            objectFit="contain"
+                        />
+                    }
                     {
                         up &&
-                    <div className="up_left">
-                        <i className="fa-solid fa-angles-up fa-bounce"></i>
-                    </div>
+                        <div className="up_left">
+                            <i className="fa-solid fa-angles-up fa-bounce"></i>
+                        </div>
                     }
                 </div>
             ) : (
-               <>
-               {
-                url &&  <Image
-                src={url}
-                width={width}
-                height={height}
-                alt={url}
-                loader={loaderProp}
-                className={clasS}
-                objectFit="contain"
-            />
-               }
-               </>
+                <>
+                    {
+                        url && <Image
+                            src={url}
+                            width={width}
+                            height={height}
+                            alt={url}
+                            loader={loaderProp}
+                            className={clasS}
+                            objectFit="contain"
+                        />
+                    }
+                </>
             )}
         </div>
     );
