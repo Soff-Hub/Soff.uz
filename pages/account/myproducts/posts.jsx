@@ -371,16 +371,15 @@ const Posts = () => {
                                         style={{ width: '100%' }}
                                         // onChange={handleChange}
                                         onChange={(e) => {
-                                            if (e?.at(-1)?.length < 20) {
-                                                console.log(e?.[-1]);
-                                                handleChange(e)
-                                            } else {
-                                                Modal.info({ content: 'Tegning maksimal uzunligi 20ta belgidan oshmasligi kerak', okText: "Tushunarli" })
-                                            }
+                                            handleChange(e)
+                                            // if (e?.at(-1)?.length < 20) {
+                                            //     handleChange(e)
+                                            // } else {
+                                            //     Modal.info({ content: 'Tegning maksimal uzunligi 20ta belgidan oshmasligi kerak', okText: "Tushunarli" })
+                                            // }
                                         }}
                                         value={tagSearchResult}
                                         onSearch={onSearchTegsAktiv}
-                                        maxCount={15}
                                     >
                                         {children}
                                     </Select>
