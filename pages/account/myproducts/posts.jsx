@@ -375,12 +375,12 @@ const Posts = () => {
                                                 console.log(e?.[-1]);
                                                 handleChange(e)
                                             } else {
-                                                Modal.info({ content: 'Tegning maksimal uzunligi 12 belgidan oshmasligi kerak', okText: "Tushunarli" })
+                                                Modal.info({ content: 'Tegning maksimal uzunligi 20ta belgidan oshmasligi kerak', okText: "Tushunarli" })
                                             }
                                         }}
                                         value={tagSearchResult}
                                         onSearch={onSearchTegsAktiv}
-                                        maxCount={10}
+                                        maxCount={15}
                                     >
                                         {children}
                                     </Select>
