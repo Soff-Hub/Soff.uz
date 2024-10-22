@@ -18,7 +18,6 @@ const HomeElectronicsPage = () => {
     const { cartDataItems, wishlist } = useSelector((state) => state.ecomerce);
     const [category, setCategory] = useState([]);
     const [freeProducts, setFreeProducts] = useState({});
-    const [topSellers, setTopSellers] = useState({});
 
     const { setAllCartItem } = useCart();
     const { setAllSaved } = useWishlist();
@@ -45,28 +44,12 @@ const HomeElectronicsPage = () => {
         });
     }
 
-    async function getTopSellers() {
-        const responseData = await axios.get(
-            baseUrl + 'customer/free-document/'
-        );
-        setTopSellers({
-            id: 999999999999999,
-            name: 'Top sotuvchilar',
-            icon: null,
-            image: null,
-            slug: 'top-sellers',
-            promotional_sliders: [...responseData.data],
-        });
-    }
-
     useEffect(() => {
         getProducts();
         getFreeDocuments();
-        // getTopSellers();
     }, []);
 
     useEffect(() => {
-        // localStoragedagi ma'lumotlar va redux store o'rtasidagi ma'lumotlar solishtiriladi
         if (
             cartDataItems?.length !== JSON.parse(localStorage.getItem('cart'))
         ) {
@@ -78,7 +61,6 @@ const HomeElectronicsPage = () => {
         }
     }, []);
 
-    // Memoization bilan komponentlarni o'zlashtirish
     const memoizedCard = useMemo(() => {
         return <ElectronicTopCategories />;
     }, []);
@@ -91,63 +73,6 @@ const HomeElectronicsPage = () => {
         );
     }, []);
 
-    
-
-    // useEffect(() => {
-    //     if (window) {
-    //         window.onblur = function (e) {
-    //             //    alert(`Brauzer oynasi yoki Developer Tools ochildi => ${JSON.stringify(e.isTrusted)}`);
-    //             Router.push("/")
-    //                debuger()
-    //             // debugger;
-    //         };
-    //     }
-    // }, []);
-
-    // function debuger() {
-    //     var devtoolsOpen = false;
-
-    //     function detectDevTools() {
-    //         const start = Date.now();
-    //         debugger; // Bu yerda to'xtatiladi agar DevTools ochilgan bo'lsa
-
-
-    //         const duration = Date.now() - start;
-
-    //         if (duration > 100) {
-    //             if (!devtoolsOpen) {
-    //                 devtoolsOpen = true;
-    //                 console.log('Developer Tools ochildi');
-    //             }
-    //         } else {
-    //             if (devtoolsOpen) {
-    //                 devtoolsOpen = false;
-    //                 console.log('Developer Tools yopildi');
-    //             }
-    //         }
-    //     }
-
-    //     setInterval(detectDevTools, 5);
-
-    //     if (typeof window !== 'undefined') {
-    //         window.addEventListener('devtoolschange', (event) => {
-    //             if (event.detail.open) {
-    //                 console.log(
-    //                     'Developer Tools ochildi:',
-    //                     event.detail.orientation
-    //                 );
-    //                 alert("network ochildi")
-    //                 if (event.detail.orientation === 'vertical') {
-    //                     // Network tab ochilganda bajariladigan kod
-    //                     alert("network ochildi")
-    //                 }
-    //             }
-    //         });
-    //     }
-    // }
-
-
-
     return (
         <main id="homepage-7">
             <Meta
@@ -156,16 +81,10 @@ const HomeElectronicsPage = () => {
             />
 
             {memoizedBanner}
-            <VedioPage /> 
-            {memoizedCard}
 
-            {/* <ElectronicTopSellersGroupWithCarousel
-                collectionSlug="electronics-top-sellers"
-                title={topSellers.name}
-                data={topSellers}
-                id={topSellers.id}
-                slug={topSellers.slug}
-            /> */}
+            <VedioPage />
+
+            {memoizedCard}
 
             <ElectronicProductGroupWithCarousel
                 collectionSlug="electronics-best-sellers"
@@ -175,7 +94,7 @@ const HomeElectronicsPage = () => {
                 key={234}
                 slug={freeProducts.slug}
             />
-            
+
 
             {category?.length > 0 ? (
                 category.map(

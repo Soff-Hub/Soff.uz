@@ -8,7 +8,7 @@ import GetRepository from '~/reositoriy-admin/GetRepository';
 import Router, { useRouter } from 'next/router';
 import { setSavedPrfileData } from '~/store/ecomerce/action';
 
-const AccountQuickLinks = (props) => {
+const HeaderUserDropdown = (props) => {
     const dispatch = useDispatch();
     const { accountLinks, user } = useSelector((state) => state.auth);
     const { profile } = useSelector((state) => state.ecomerce);
@@ -202,4 +202,4 @@ const AccountQuickLinks = (props) => {
     }
 };
 
-export default connect((state) => state)(AccountQuickLinks);
+export default connect((state) => state)(HeaderUserDropdown);

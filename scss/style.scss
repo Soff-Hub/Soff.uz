@@ -1,4 +1,3 @@
-
 @import 'vendor/bourbon/bourbon';
 @import 'utils/mixin';
 
@@ -54,9 +53,6 @@
 @import 'elements/faqs-sidebar';
 // 2.18 faq
 
-
-
-
 // 2.18 modal
 @import 'elements/tabs';
 
@@ -80,18 +76,14 @@
 // 4.2 footer
 @import 'modules/footer';
 
-
 /*5. HELPERS */
 @import 'elements/helpers';
 
-
-@import "react/custom";
-
-
+@import 'react/custom';
 
 // Qo'shimcha dizaynlar uchun
 
-@import "./elements/qayta-raqam-kiritish";
+@import './elements/qayta-raqam-kiritish';
 @import './elements/yordamchi';
 @import './elements/new_search_header';
 
@@ -104,4 +96,6 @@
 @import './elements/productVideo';
 @import 'node_modules/react-modal-video/scss/modal-video.scss';
 
-@import './elements/audioProductCart'
+@import './elements/audioProductCart';
+
+@import './blocks/header';
