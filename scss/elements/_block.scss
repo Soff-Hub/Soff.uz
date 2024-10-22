@@ -1,6 +1,3 @@
-
-
-
 .ps-block--category-2 {
     background-color: #fff;
     display: flex;
@@ -283,8 +280,6 @@
         }
     }
 }
-
-
 
 .ps-block--deal-hot {
     padding: 13px 30px 30px;
@@ -2192,7 +2187,7 @@
         left: 0;
         width: 100%;
         padding: 30px 20px;
-        z-index: 30;
+        z-index: 100000;
         transition: all 0.4s ease;
         @include transform(translateY(50px));
         @include hidden;
@@ -2582,8 +2577,6 @@
     }
 }
 
-
-
 .ps-block--user-account {
     position: relative;
 
@@ -2628,7 +2621,7 @@
         position: absolute;
         min-width: 240px;
         right: 0;
-        z-index: 30;
+        z-index: 10000;
         padding-top: 10px;
         transform: translate(0 20px) scale3d(1, 1, 0);
         transition: all 0.4s ease;
@@ -2645,18 +2638,17 @@
     }
 }
 
-
-.checkOut_header{
+.checkOut_header {
     padding-bottom: 20px;
     font-weight: 600;
 }
 
 .ps-block--checkout-order {
-    .checkout_footer{
+    .checkout_footer {
         display: flex;
         flex-direction: column;
         gap: 8px;
-        .prevev_button{
+        .prevev_button {
             background-color: #efefef;
             max-width: 80px;
             width: 100%;
@@ -2761,7 +2753,6 @@
                 font-size: 16px;
                 // text-transform: uppercase;
             }
-
         }
     }
 
@@ -2769,7 +2760,6 @@
         font-weight: 600;
         margin-bottom: 20px;
     }
-    
 
     .ps-block__items {
         a {
@@ -2849,6 +2839,3 @@
         }
     }
 }
-
-
-

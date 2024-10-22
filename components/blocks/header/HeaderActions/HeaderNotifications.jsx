@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react'
 import Link from 'next/link'
 
-import { notification } from 'antd';
+import { Badge, notification } from 'antd';
 import { SmileOutlined } from '@ant-design/icons';
 
 import useCredentials from '~/hooks/useCredentials'
@@ -18,7 +18,7 @@ export default function HeaderNotifications() {
     const { } = useWebSocket(`${wssBaseUrl}ws/user-notification/`, {
         onMessage: (event) => {
             const newNotification = JSON.parse(event.data);
-            setNotificationsCount(0)
+            setNotificationsCount(newNotification?.count)
             setNotifications(newNotification?.notifications);
         },
     });
@@ -64,16 +64,18 @@ export default function HeaderNotifications() {
 
             {token ? (
                 <Link href={`/account/notification`}>
-                    <a className="header__extra fs-2" style={{ cursor: 'pointer' }}>
-                        <i className="fa-regular fa-bell"></i>
-                        {notificationsCount ? (
+                    <Badge count={notificationsCount} color='#00a44f'>
+                        <a className="header__extra fs-1" style={{ cursor: 'pointer' }}>
+                            <i className="fa-regular fa-bell text-white"></i>
+                            {/* {notificationsCount ? (
                             <span className="socket_navbar">
                                 {notificationsCount}
                             </span>
                         ) : (
                             ''
-                        )}
-                    </a>
+                        )} */}
+                        </a>
+                    </Badge>
                 </Link>
             ) : (
                 ''
