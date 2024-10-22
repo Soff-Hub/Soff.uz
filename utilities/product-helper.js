@@ -12,6 +12,15 @@ export function formatCurrency(num) {
     }
 }
 
+export function formatCurrencyWithSpace(num) {
+    if (num !== undefined) {
+        return parseFloat(num)
+            .toString()
+            .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1 ');
+    } else {
+    }
+}
+
 export function getColletionBySlug(collections, slug) {
     if (collections.length > 0) {
         const result = collections.find(

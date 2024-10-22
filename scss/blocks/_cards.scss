@@ -1,0 +1,48 @@
+.file-card {
+    max-width: 260px;
+    width: 100%;
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+.file-card-inner {
+    background-color: white;
+    cursor: pointer;
+}
+
+.file-card-img {
+    max-height: 200px;
+    overflow: hidden;
+    position: relative;
+    object-fit: cover;
+    object-position: top;
+}
+
+.file-card-img img {
+    transition: transform 0.2s ease-in-out;
+}
+
+.file-card:hover img {
+    transform: scale(1.05);
+}
+
+.file-card-content {
+    padding: 10px;
+}
+
+.file-card-title {
+    font-size: 16px;
+    color: #06c;
+    font-weight: 500;
+}
+
+.file-card-price {
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.file-card:hover .file-card-title {
+    transition: all 0.2s ease;
+    color: #00a44f;
+}

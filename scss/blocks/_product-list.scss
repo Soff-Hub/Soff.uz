@@ -1,0 +1,11 @@
+.products {
+    background-color: white;
+    background-color: rgb(245, 246, 247);
+    padding: 0 0 50px;
+}
+
+.product-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}

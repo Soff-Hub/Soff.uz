@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function HeaderTop() {
     return (
-        <div className='header-topsection'>
+        <div className='header-topsection new'>
             <div className="container">
                 <div className='sotuvchi-boling sotuvchi-boling-2'>
                     <a href='tel:+998910086789'>

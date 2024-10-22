@@ -13,17 +13,22 @@ const nextSettings = {
     experimental: {
         serverActions: true,
     },
-    // images: {
-    //     remotePatterns: [
-    //         {
-    //             protocol: 'https',
-    //             hostname: 'api.soff.uz',
-    //             port: '',
-    //             pathname: '/media/banner',
-    //         },
-    //     ],
-    // },
-    presets: [["@babel/preset-env"], ["@babel/preset-react", { runtime: "automatic" }]],
+    images: {
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: '*',
+            },
+            {
+                protocol: 'http',
+                hostname: '*',
+            },
+        ],
+    },
+    presets: [
+        ['@babel/preset-env'],
+        ['@babel/preset-react', { runtime: 'automatic' }],
+    ],
 };
 
 module.exports = nextSettings;
