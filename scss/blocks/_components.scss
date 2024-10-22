@@ -1,0 +1,147 @@
+.search-dropdown {
+    display: inline-block;
+    position: relative;
+}
+
+.dropdown-context {
+    padding: 6px;
+    background-color: #ecf0f1;
+    border-radius: 20px;
+}
+
+.search-dropdown label {
+    display: block;
+    width: 180px;
+    background: #ecf0f1;
+    padding: 10px 18px;
+    padding-left: 26px;
+}
+
+.search-dropdown ul {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    list-style-type: none;
+    gap: 3px;
+    position: absolute;
+}
+
+.search-dropdown li {
+    padding: 8px 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-radius: 14px;
+}
+
+.search-dropdown li:hover {
+    background: #ecf0f1;
+    transition: all 0.2s ease;
+}
+
+.search-dropdown label:hover,
+.search-dropdown ul li:hover {
+    background: #00a44f;
+    color: white;
+    cursor: pointer;
+}
+
+.search-dropdown label {
+    border-radius: 0 5px 0 0;
+    position: relative;
+    z-index: 2;
+    background-color: #e5f9db;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin: 0;
+}
+
+.search-dropdown input {
+    display: none;
+}
+
+.search-dropdown input ~ ul {
+    position: relative;
+    visibility: hidden;
+    opacity: 0;
+    top: 0px;
+    z-index: 1;
+}
+
+.dropdown-context {
+    position: absolute !important;
+    width: 100%;
+}
+
+.search-dropdown input:checked + label {
+    background: #00a44f;
+    color: white;
+}
+
+.search-dropdown input:checked ~ ul {
+    visibility: visible;
+    opacity: 1;
+    top: 45px;
+}
+
+.search-dropdown ul li {
+    .fa {
+        color: #00a44f;
+    }
+    &:hover {
+        background: #00a44f;
+        color: white;
+        .fa {
+            color: white;
+        }
+    }
+}
+
+.animate {
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    transition: all 0.3s;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden; /* Chrome and Safari */
+    -moz-backface-visibility: hidden; /* Firefox */
+    -ms-backface-visibility: hidden; /* Internet Explorer */
+}
+
+.hero-search-box {
+    display: flex;
+    position: relative;
+    padding: 5px;
+    background-color: white;
+    border-radius: 22px;
+    display: flex;
+    align-items: center;
+    max-width: 700px;
+    margin: 0 auto;
+    z-index: 0;
+}
+
+.hero-search-input-loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 15px;
+}
+
+.hero-search-input {
+    background-color: white;
+    padding: 10px 18px;
+    padding-left: 15px;
+    border: none;
+    border-radius: 20px;
+    display: block;
+    width: 100%;
+}
+
+.search-dropdown-box {
+    position: absolute;
+    right: 4px;
+}
