@@ -36,7 +36,7 @@ export default function SearchSelectDropdown() {
                         Shablon
                     </li>
                     <li className="animate" onClick={() => clickItem('file')}>
-                        <i class="fa fa-folder-open"></i>
+                        <i className="fa fa-folder-open"></i>
                         Fayl
                     </li>
                 </ul>
