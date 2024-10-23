@@ -1,12 +1,15 @@
-import React, { useState } from 'react'
+import Axios from 'axios'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import { orginalUrl } from '~/reositoriy-admin/Repository'
 
 export default function CategoryTabs() {
-    const [activeTab, setActiveTab] = useState('file')
+    const [activeTab, setActiveTab] = useState('')
+    const [categories, setCategories] = useState([])
 
     const data = [
         {
             name: "Fayl",
-            slug: 'file',
+            slug: '',
             icon: 'fa fa-folder-open',
         }, {
             name: "Video",
@@ -23,6 +26,20 @@ export default function CategoryTabs() {
         },
     ]
 
+    const getCategories = async (type) => {
+        const resp = await Axios.get(orginalUrl + `customer/categories/?type=${type}`)
+        setCategories(resp.data?.results);
+    }
+
+    function handleTab(type) {
+        setActiveTab(type)
+        getCategories(type)
+    }
+
+    useEffect(() => {
+        getCategories()
+    }, [])
+
     return (
         <div className='category'>
             <div className="container">
@@ -33,7 +50,7 @@ export default function CategoryTabs() {
                                 <div
                                     key={el.slug}
                                     className={`category-tab-item ${el.slug === activeTab ? 'tab-active' : ''}`}
-                                    onClick={() => setActiveTab(el.slug)}
+                                    onClick={() => handleTab(el.slug)}
                                 >
                                     <i className={el.icon}></i>
                                     <span>{el.name}</span>
@@ -44,57 +61,13 @@ export default function CategoryTabs() {
 
                     <div className='sub-category-tabs'>
                         {
-                            data.map((el, i) => (
+                            categories.map((el, i) => (
                                 <div
-                                    key={el.slug}
-                                    className={`sub-category-tab-item ${el.slug === activeTab ? 'tab-active' : ''}`}
-                                    onClick={() => setActiveTab(el.slug)}
+                                    key={el.id}
+                                    className={`sub-category-tab-item ${el.id === activeTab ? 'tab-active' : ''}`}
+                                    onClick={() => setActiveTab(el.id)}
                                 >
-                                    {el.name} ({i + 1})
-                                </div>
-                            ))
-                        }
-                        {
-                            data.map((el, i) => (
-                                <div
-                                    key={el.slug}
-                                    className={`sub-category-tab-item ${el.slug === activeTab ? '' : ''}`}
-                                    onClick={() => setActiveTab(el.slug)}
-                                >
-                                    {el.name} ({i + 1})
-                                </div>
-                            ))
-                        }
-                        {
-                            data.map((el, i) => (
-                                <div
-                                    key={el.slug}
-                                    className={`sub-category-tab-item ${el.slug === activeTab ? '' : ''}`}
-                                    onClick={() => setActiveTab(el.slug)}
-                                >
-                                    {el.name} ({i + 1})
-                                </div>
-                            ))
-                        }
-                        {
-                            data.map((el, i) => (
-                                <div
-                                    key={el.slug}
-                                    className={`sub-category-tab-item ${el.slug === activeTab ? '' : ''}`}
-                                    onClick={() => setActiveTab(el.slug)}
-                                >
-                                    {el.name} ({i + 1})
-                                </div>
-                            ))
-                        }
-                        {
-                            data.map((el, i) => (
-                                <div
-                                    key={el.slug}
-                                    className={`sub-category-tab-item ${el.slug === activeTab ? '' : ''}`}
-                                    onClick={() => setActiveTab(el.slug)}
-                                >
-                                    {el.name} ({i + 1})
+                                    {el.name} ({el?.doc_count})
                                 </div>
                             ))
                         }

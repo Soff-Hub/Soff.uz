@@ -22,7 +22,7 @@ export default function FileCard({ title, discount_price, poster_url }) {
                     </Link>
 
                     <div className="wishlist-item-actions">
-                        <i class="fa-regular fa-heart fs-2 m-0"></i>
+                        <i className="fa-regular fa-heart fs-2 m-0"></i>
                     </div>
                 </div>
                 <div className="file-card-content">
