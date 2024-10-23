@@ -11,11 +11,11 @@ export default function HeaderTop() {
                     </a>
 
                     <a href='https://t.me/soff_uz' target='_blank' >
-                        <i className="fa-brands fa-telegram me-2"></i>
+                        <i className="fa-brands fa-telegram me-2 phone-ic"></i>
                     </a>
 
                     <a href='https://www.instagram.com/soffuz_/' target='_blank' >
-                        <i className="fa-brands fa-instagram me-2"></i>
+                        <i className="fa-brands fa-instagram me-2 phone-ic"></i>
                     </a>
                 </div>
                 <div className='sotuvchi-boling'>

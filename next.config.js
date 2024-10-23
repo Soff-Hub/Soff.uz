@@ -24,6 +24,7 @@ const nextSettings = {
                 hostname: '*',
             },
         ],
+        domains: ['eu2.contabostorage.com'],
     },
     presets: [
         ['@babel/preset-env'],

@@ -13,7 +13,7 @@ const SearchHeadersPages = () => {
                         <Link href="/">
                             <a className="ps-logo">
                                 <NextImageCard
-                                    url="/static/img/soff/logo-1.png"
+                                    url="/static/img/soff/logo-light.png"
                                     className="logoo"
                                     width="150px"
                                     height="50px"
