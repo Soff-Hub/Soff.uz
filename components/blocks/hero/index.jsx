@@ -11,7 +11,7 @@ export default function HeroMain() {
                     <div className="hero-inner">
                         <div className="hero-search-form">
                             <div className="hero-content">
-                                <h1 className='hero-title'>Soff.uz - qidiruv tizimi</h1>
+                                <h1 className='hero-title'>Soff.uz - <span>qidiruv tizimi</span></h1>
                                 <p className='hero-text'>O‘zbek tilida saralanib borilayotgan sifatli ma’lumotlar jamlanmasini, fayllar, tasvirlar, videolar, audiolar ko‘rinishida qidirib topish imkonini beradi.</p>
                             </div>
 

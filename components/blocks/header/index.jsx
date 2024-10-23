@@ -28,11 +28,14 @@ const Header = () => {
             <div className={headerSticky ? 'header-bottom header-bottom--show' : 'header-bottom'}>
                 <div className="container">
                     <div className="header-inner">
-                        <HeaderLogo />
+                        <HeaderLogo mode={headerSticky ? 'dark' : 'light'} />
 
-                        {/* {headerSticky ? <HeaderSearchbar /> : ''} */}
+                        {headerSticky ? <HeaderSearchbar isDark={headerSticky} /> : ''}
 
-                        <HeaderActions />
+                        <HeaderActions isDark={headerSticky} />
+                    </div>
+                    <div className="search-form-mobile">
+                        {headerSticky ? <HeaderSearchbar isDark={headerSticky} /> : ''}
                     </div>
                 </div>
             </div>

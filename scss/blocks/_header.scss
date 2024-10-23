@@ -12,6 +12,7 @@
     top: 24px;
     z-index: 1;
     transition: all 0.2s ease;
+    padding: 6px 0;
 }
 
 .header-bottom--show {
@@ -62,6 +63,16 @@
     z-index: 9999;
 }
 
+.header-search-inner.true {
+    input {
+        background-color: rgb(245, 246, 247);
+    }
+
+    .ant-select-selector {
+        background-color: rgb(245, 246, 247);
+    }
+}
+
 .ps-panel--search-result.active {
     top: 45px;
     padding: 20px 25px;
@@ -74,14 +85,13 @@
     top: 0;
     left: 0;
     right: 0;
-    bottom: 0;
     z-index: -100;
-    // background-color: #16423c97;
     background-color: #1b3a4aa0;
     opacity: 0;
 }
 
 .searchbar-overlay.active {
+    bottom: 0;
     z-index: 4;
     animation: overlay-open 200ms linear;
     opacity: 1;
@@ -102,4 +112,27 @@
 
 .site-header-actions {
     color: white;
+}
+
+.search-form-mobile {
+    display: none;
+}
+
+@media only screen and (max-width: 576px) {
+    .header-inner {
+        gap: 15px;
+
+        .site-header-searchbar {
+            display: none;
+        }
+    }
+
+    .search-form-mobile {
+        display: flex;
+        padding: 6px 0 2px;
+    }
+
+    .phone-ic {
+        display: none;
+    }
 }

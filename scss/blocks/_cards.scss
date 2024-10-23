@@ -11,15 +11,52 @@
 }
 
 .file-card-img {
-    max-height: 200px;
+    height: 160px;
+    width: 100%;
     overflow: hidden;
     position: relative;
-    object-fit: cover;
-    object-position: top;
+    display: flex;
+    align-items: center;
+}
+
+.wishlist-item-actions {
+    position: absolute;
+    background-color: white;
+    padding: 6px 10px 20px;
+    border-radius: 4px;
+    bottom: 4px;
+    right: 20px;
+
+    i {
+        display: flex;
+        align-items: center;
+    }
+}
+
+.wishlist-item-actions {
+    transform: rotateX(90deg);
+    bottom: -20px;
+    transition: all 0.2s ease-in-out;
+}
+
+.file-card:hover {
+    .wishlist-item-actions {
+        transform: rotateX(0deg);
+        bottom: -6px;
+        transition: all 0.2s ease-in-out;
+    }
 }
 
 .file-card-img img {
     transition: transform 0.2s ease-in-out;
+    object-fit: cover;
+    object-position: top;
+    height: auto !important;
+    width: 100% !important;
+}
+
+.file-img-blur {
+    backdrop-filter: blur(15px);
 }
 
 .file-card:hover img {
@@ -27,22 +64,37 @@
 }
 
 .file-card-content {
-    padding: 10px;
+    padding: 4px 12px 14px;
 }
 
 .file-card-title {
     font-size: 16px;
     color: #06c;
     font-weight: 500;
+    height: 40px;
+    overflow: hidden;
+    margin-bottom: 3px;
 }
 
 .file-card-price {
     text-decoration: none;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 500;
 }
 
 .file-card:hover .file-card-title {
     transition: all 0.2s ease;
     color: #00a44f;
+}
+
+.file-card-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.file-card-buy-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
