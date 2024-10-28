@@ -8,10 +8,10 @@ export default function TemplateCard(props) {
         <div className={`file-card ${props?.tab}`}>
             <div className="file-card-inner">
                 <div className="file-card-img">
-                    <Link href={`/product/${props?.props?.slug}`}>
+                    <Link href={`/product/${props?.slug}`}>
                         <a>
                             <img
-                                src={`${props?.poster_url || 'https://eu2.contabostorage.com/20ddac7ab90d4d188d1ca104120b91ed:test/media/poster/IMG_0989.PNG'}`}
+                                src={`${props?.poster_url || 'https://eu2.contabostorage.com/20ddac7ab90d4d188d1ca104120b91ed:soffuz/media/poster/IMG_0989.PNG'}`}
                                 className='file-card-imge'
                                 alt=''
                             />
@@ -23,7 +23,7 @@ export default function TemplateCard(props) {
                     </div>
                 </div>
                 <div className="file-card-content">
-                    <Link href="#">
+                    <Link href={`/product/${props?.slug}`}>
                         <a>
                             <h3 className='file-card-title'>
                                 {props?.title}
