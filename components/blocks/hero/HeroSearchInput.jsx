@@ -1,16 +1,33 @@
-import React from 'react'
+import React, { useState } from 'react'
 import SearchSelectDropdown from '../SearchSelectDropdown'
+import Router from 'next/router';
 
 export default function HeroSearchInput(inputProps) {
+    const [search, setSearch] = useState('')
+    const [value, setValue] = useState({ label: 'Barcha turdagi', icn: 'fa fa-list', value: 'all' })
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        if (search && search.trim()) {
+            Router.push(`/search-page?keyword=${search}&type=${value.value}`);
+        }
+    }
+
+
     return (
-        <div className='hero-search-box'>
+        <form className='hero-search-box' onSubmit={handleSubmit}>
             <div className="hero-search-input-loader">
                 <i className="fa fa-search fs-4"></i>
             </div>
 
-            <input className='hero-search-input' type="text" placeholder='Video, audio, shablon...' {...inputProps} />
+            <input
+                onChange={e => setSearch(e.target.value)}
+                className='hero-search-input'
+                type="text"
+                placeholder="30 000+ ma'lumotlar..." {...inputProps}
+            />
 
-            <SearchSelectDropdown />
-        </div>
+            <SearchSelectDropdown value={value} setValue={setValue} />
+        </form>
     )
 }

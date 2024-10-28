@@ -11,6 +11,7 @@ import '~/scss/electronic.scss';
 import Head from 'next/head';
 import NextProgress from 'next-progress';
 import { AudioProvider } from '~/hooks/AudioContext';
+import { ProductProvider } from '~/context/ProductsContext';
 
 
 function App({ Component, pageProps }) {
@@ -60,7 +61,8 @@ function App({ Component, pageProps }) {
                     content="width=device-width, initial-scale=1.0"
                 />
                 <meta name="format-detection" content="telephone=no" />
-                <meta name="apple-mobile-web-app-capable" content="yes" />
+                {/* <meta name="apple-mobile-web-app-capable" content="yes" /> */}
+                <meta name="mobile-web-app-capable" content="yes"></meta>
             </Head>
 
             <NextProgress
@@ -69,11 +71,13 @@ function App({ Component, pageProps }) {
                 color="#00A44F"
             />
             <CookiesProvider>
-                <AudioProvider>
-                    <MasterLayout>
-                        <Component {...pageProps} />
-                    </MasterLayout>
-                </AudioProvider>
+                <ProductProvider>
+                    <AudioProvider>
+                        <MasterLayout>
+                            <Component {...pageProps} />
+                        </MasterLayout>
+                    </AudioProvider>
+                </ProductProvider>
             </CookiesProvider>
         </>
     );

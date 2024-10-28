@@ -2421,14 +2421,7 @@
     width: auto !important;
 
     p {
-        margin: 0 !important;
         color: white;
-    }
-    a {
-        margin: 0 !important;
-        color: white !important;
-        display: flex;
-        align-items: center;
     }
     i {
         color: white;
@@ -2512,7 +2505,6 @@
         display: flex;
     }
 }
-
 
 .ant-skeleton-paragraph {
     list-style-type: none !important;

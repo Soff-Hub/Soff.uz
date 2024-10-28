@@ -1,43 +1,46 @@
-import Axios from 'axios'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { orginalUrl } from '~/reositoriy-admin/Repository'
+import { useRouter } from 'next/router'
+import React, { useContext, useEffect, useState } from 'react'
+import { ProductContext } from '~/context/ProductsContext'
 
-export default function CategoryTabs() {
-    const [activeTab, setActiveTab] = useState('')
-    const [categories, setCategories] = useState([])
+const data = [
+    {
+        name: "Fayl",
+        slug: '',
+        icon: 'fa fa-folder-open',
+    }, {
+        name: "Video",
+        slug: 'video',
+        icon: 'fa fa-video',
+    }, {
+        name: "Audio",
+        slug: 'audio',
+        icon: 'fa fa-music',
+    }, {
+        name: "Shablon",
+        slug: 'template',
+        icon: 'fa fa-grip-vertical',
+    },
+]
 
-    const data = [
-        {
-            name: "Fayl",
-            slug: '',
-            icon: 'fa fa-folder-open',
-        }, {
-            name: "Video",
-            slug: 'video',
-            icon: 'fa fa-video',
-        }, {
-            name: "Audio",
-            slug: 'audio',
-            icon: 'fa fa-music',
-        }, {
-            name: "Shablon",
-            slug: 'template',
-            icon: 'fa fa-grip-vertical',
-        },
-    ]
+export default function CategoryTabs({ category, tab }) {
+    const [activeTab, setActiveTab] = useState(tab || '')
 
-    const getCategories = async (type) => {
-        const resp = await Axios.get(orginalUrl + `customer/categories/?type=${type}`)
-        setCategories(resp.data?.results);
+    const { getHomeProducts, homeCategories, getHomeProductsByCategory } = useContext(ProductContext)
+    const { push } = useRouter()
+
+    async function handleTab(type) {
+        push(`/?tab=${type}`)
+        setActiveTab(type)
+        getHomeProducts(`type=${type}`)
     }
 
-    function handleTab(type) {
-        setActiveTab(type)
-        getCategories(type)
+    function handleCategory(type) {
+        push(`/new-home?tab=${activeTab}&category=${type}`)
+        getHomeProductsByCategory(`type=${activeTab}&category=${type}`)
     }
 
     useEffect(() => {
-        getCategories()
+        getHomeProducts(`type=${tab || ''}&category=${category || ''}`)
     }, [])
 
     return (
@@ -61,11 +64,11 @@ export default function CategoryTabs() {
 
                     <div className='sub-category-tabs'>
                         {
-                            categories.map((el, i) => (
+                            homeCategories.map((el, i) => (
                                 <div
                                     key={el.id}
-                                    className={`sub-category-tab-item ${el.id === activeTab ? 'tab-active' : ''}`}
-                                    onClick={() => setActiveTab(el.id)}
+                                    className={`sub-category-tab-item ${el.id === Number(category) ? 'tab-active' : ''}`}
+                                    onClick={() => handleCategory(el.id)}
                                 >
                                     {el.name} ({el?.doc_count})
                                 </div>
@@ -76,4 +79,16 @@ export default function CategoryTabs() {
             </div>
         </div>
     )
+}
+
+
+export async function getServerSideProps(context) {
+    const { query } = context;
+
+    return {
+        props: {
+            tab: query?.tab || null,
+            category: query?.category || null,
+        },
+    };
 }
