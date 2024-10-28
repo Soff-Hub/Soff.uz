@@ -11,12 +11,12 @@ const Meta = ({ title, image, description, keywords, author }) => {
             <meta property="og:type" content="website" />
             <meta property="og:title" content={title} />
             <meta
+                property="description"
+                content={description ? removeHTMLTags(description) : `${title}`}
+            />
+            <meta
                 property="og:description"
-                content={
-                    description
-                        ? removeHTMLTags(description)
-                        : `${title}`
-                }
+                content={description ? removeHTMLTags(description) : `${title}`}
             />
             <meta property="og:image" content={image} />
             <meta property="og:url" content="https://soff.uz" />
@@ -25,7 +25,6 @@ const Meta = ({ title, image, description, keywords, author }) => {
                 property="og:keywords"
                 content={keywords ? keywords?.map((e) => e?.name) : title}
             />
-
 
             <meta property="twitter:image" content={image}></meta>
             <meta property="twitter:type" content="website" />

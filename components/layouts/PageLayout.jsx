@@ -1,28 +1,13 @@
 import React, { useEffect } from 'react';
 import Head from 'next/head';
-
-import HeaderElectronic from '../shared/headers/HeaderElectronic';
-import HeaderMobileElectronic from '../shared/headers/HeaderMobileElectronic';
-import FooterSecond from '../shared/footers/FooterSecond';
 import { useDispatch, useSelector } from 'react-redux';
 import { accountLinksReducers, isLoginning } from '~/store/auth/action';
 import FaqSaidbar from '../partials/faqs/faqSaidbar';
 import { useRouter } from 'next/router';
 import HeaderMobileBottom from '../shared/headers/HeaderMobilebottom';
 import Header from '../blocks/header';
+import FooterDefault from '../shared/footers/FooterDefault';
 
-const initHeaders = (
-    <>
-        <HeaderElectronic />
-        <HeaderMobileElectronic />
-        <HeaderMobileBottom />
-    </>
-);
-const initFooters = (
-    <>
-        <FooterSecond />
-    </>
-);
 
 export let accountAdminLinks = [
     {
@@ -193,7 +178,7 @@ const PageLayout = ({
             </Head>
             <Header />
 
-            <div className='bg-soff' >
+            <div className='bg-soff' style={{ paddingTop: Router.pathname === '/' ? '' : '75px' }}>
                 <div className={`${query.startsWith('/page/') ? 'container faq-page-container' : ''}`}>
                     <div
                         className={` ${query.startsWith('/page/form') ? '' : 'd-none'}`}>
@@ -203,7 +188,8 @@ const PageLayout = ({
                 </div>
             </div>
 
-            {/* {footer} */}
+            <HeaderMobileBottom />
+            <FooterDefault />
         </>
     );
 };

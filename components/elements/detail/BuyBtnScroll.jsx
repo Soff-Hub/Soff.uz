@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-export default function BuyBtnScroll({ product }) {
+export default function BuyBtnScroll() {
     const [show, setCollapse] = useState(true)
 
     const handleScroll = () => {
@@ -27,7 +27,7 @@ export default function BuyBtnScroll({ product }) {
                 className="ps-btn py-3 m-0"
                 href="#get-buy"
             >
-                {product?.document?.file_url ? 'Yuklab olish' : 'Hoziroq xarid qilish'}
+                Yuklab olish
             </a>
         </div>
     )
