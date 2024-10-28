@@ -55,6 +55,7 @@ export default function DefaultVideo({
                 onContextMenu={(e) => e.preventDefault()}
                 controls={!(type === 'playlists' || type === 'similler')}
                 controlsList="nodownload"
+                preload='none'
 
                 style={{
                     maxHeight: type === 'playlists' ? '100px' : type === 'similler' ? '120px' : '450px',

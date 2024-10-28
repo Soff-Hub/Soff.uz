@@ -142,6 +142,7 @@ const HeaderSearchForm = ({ isDark }) => {
                         )
                     }
                 </div>
+                {resultItems?.length > 0 ? <div className='view-all-results' onClick={handleSubmit}>Barcha natijalarni ko'rish</div> : ''}
             </div>
 
             <div className={`searchbar-overlay${isSearch ? ' active ' : ''}`} onClick={() => setIsSearch(false)}></div>

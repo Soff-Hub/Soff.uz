@@ -10,20 +10,25 @@
     position: fixed;
     width: 100%;
     top: 24px;
-    z-index: 1;
+    z-index: 1000;
     transition: all 0.2s ease;
     padding: 6px 0;
+    background-color: transparent;
 }
 
 .header-bottom--show {
-    // background-color: #022335;
     background-color: white;
     transition: all 0.3s ease;
     top: 0;
 }
 
+.other-header {
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
+}
+
 .header-topsection.new {
-    background-color: transparent;
+    background-color: white;
     position: absolute;
     width: 100%;
 }
@@ -135,4 +140,17 @@
     .phone-ic {
         display: none;
     }
+}
+
+.view-all-results {
+    padding: 15px 0 0;
+    text-align: center;
+}
+
+.black-link {
+    color: #000 !important;
+}
+
+.white-link {
+    color: white !important;
 }

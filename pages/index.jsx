@@ -1,28 +1,31 @@
+import React from 'react'
+import CategoryTabs from '~/components/blocks/categories'
+import HeroMain from '~/components/blocks/hero'
+import HomeProducts from '~/components/blocks/home-products'
+import PageLayout from '~/components/layouts/PageLayout'
+import Meta from '~/components/shared/headers/Meta'
 
-import React from 'react';
-import PageContainer from '~/components/layouts/PageContainer';
-import Meta from '~/components/shared/headers/Meta';
-import { useMemo } from 'react';
-import HomeElectronicsPage from '~/pages/home_pages/electronic';
-
-const HomepageDefaultPage = () => {
-
-    const memoValue = useMemo(() => {
-        return (
-            <HomeElectronicsPage />
-        )
-    }, [])
+function NewHomePage({ tab, category }) {
 
     return (
-        <PageContainer title="Soff - barcha ma'lumotlar bazasi">
+        <PageLayout>
             <Meta title="Soff - barcha ma'lumotlar bazasi" image="/static/img/soff/soff_green_white.png" />
-            {memoValue}
-        </PageContainer>
-    );
-};
+            <HeroMain />
+            <CategoryTabs tab={tab} category={category} />
+            <HomeProducts tab={tab} />
+        </PageLayout>
+    )
+}
 
-export default HomepageDefaultPage;
+export async function getServerSideProps(context) {
+    const { query } = context;
 
+    return {
+        props: {
+            tab: query?.tab || null,
+            category: query?.category || null,
+        },
+    };
+}
 
-
-
+export default NewHomePage

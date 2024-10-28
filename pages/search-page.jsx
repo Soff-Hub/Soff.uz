@@ -54,7 +54,11 @@ const Products_Search_Results = () => {
             setKeyword(query.keyword);
             setLoading(true); // Set loading true when keyword is set from query
         }
-    }, [query?.keyword]);
+        if (query.type) {
+            setTypeSelect(query.type);
+            setLoading(true); // Set loading true when keyword is set from query
+        }
+    }, [query]);
 
 
     useEffect(() => {

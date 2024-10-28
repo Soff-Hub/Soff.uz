@@ -212,3 +212,28 @@
         font-size: 12px;
     }
 }
+
+.free-downlaod-button {
+    display: flex;
+    background-color: #00a44f;
+    padding: 2px;
+    justify-content: center;
+    border: 1px solid #00a44f;
+    border-radius: 10px;
+    color: white !important;
+}
+
+.free-downlaod-button:hover {
+    background-color: white;
+    color: #00a44f !important;
+}
+
+.view-on-demo-btn {
+    display: flex;
+    background-color: #fff;
+    padding: 2px;
+    justify-content: center;
+    border: 1px solid #00a44f;
+    border-radius: 10px;
+    color: #00a44f;
+}

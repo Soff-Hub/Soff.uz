@@ -23,10 +23,10 @@ export default function Document() {
                     href={'/static/img/soff logo.png'}
                 />
 
-                <link
+                {/* <link
                     href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,500,600,700&amp;amp;subset=latin-ext"
                     rel="stylesheet"
-                />
+                /> */}
 
                 <link
                     rel="stylesheet"
@@ -48,9 +48,9 @@ export default function Document() {
                     href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
                 />
 
-                <script
-                    async
-                    src="https://www.googletagmanager.com/gtag/js?id=G-H60GJQ0WF2"></script>
+                {process.env.NODE_ENV === 'production' && <script
+                    defer
+                    src="https://www.googletagmanager.com/gtag/js?id=G-H60GJQ0WF2"></script>}
                 <noscript>
                     <div>
                         <img
@@ -61,7 +61,8 @@ export default function Document() {
                     </div>
                 </noscript>
 
-                <script
+                {process.env.NODE_ENV === 'production' && <script
+                    defer
                     dangerouslySetInnerHTML={{
                         __html: `
                         window.dataLayer = window.dataLayer || [];
@@ -69,8 +70,9 @@ export default function Document() {
                         gtag('js', new Date());
                         gtag('config', 'G-H60GJQ0WF2');
                     `,
-                    }}></script>
-                <script
+                    }}></script>}
+                {process.env.NODE_ENV === 'production' && <script
+                    defer
                     dangerouslySetInnerHTML={{
                         __html: `
                         (function(h,o,t,j,a,r){
@@ -82,9 +84,11 @@ export default function Document() {
                             a.appendChild(r);
                         })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
                         `,
-                    }}></script>
+                    }}>
+                </script>}
 
-                <script
+                {process.env.NODE_ENV === 'production' && <script
+                    defer
                     dangerouslySetInnerHTML={{
                         __html: `
                         (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
@@ -99,12 +103,12 @@ export default function Document() {
                              accurateTrackBounce:true
                         });
                     `,
-                    }}></script>
+                    }}></script>}
             </Head>
             <body>
                 <Main />
                 <NextScript />
-                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+                <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
             </body>
         </Html>
     );
