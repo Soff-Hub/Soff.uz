@@ -35,7 +35,7 @@ export default function CategoryTabs({ category, tab }) {
     }
 
     function handleCategory(type) {
-        push(`/new-home?tab=${activeTab}&category=${type}`)
+        push(`/?tab=${activeTab}&category=${type}`)
         getHomeProductsByCategory(`type=${activeTab}&category=${type}`)
     }
 
