@@ -30,8 +30,11 @@ const ProductProvider = ({ children }) => {
     };
 
     const getHomeProductsByCategory = async (params) => {
+        setHomeLoading(true)
         const res = await Axios.get(orginalUrl + `customer/products/?${params || ''}`);
-        setHomeProducts(res.data?.results); // To'g'ri funksiyani chaqirish
+        const offset = !res.data?.results?.[0] ? 0 : res.data?.results?.[0]?.content_type === 'file' ? 15 : res.data?.results?.[0]?.content_type === 'video' ? 9 : res.data?.results?.[0]?.content_type === 'audio' ? 18 : 8
+        setHomeProducts(res.data?.results?.slice(0, offset));
+        setHomeLoading(false)
     };
 
     const values = {
