@@ -69,7 +69,7 @@ const ProductAudioDetailFullWidth = ({
 
                 <DefaultDescription product={product} />
 
-                <BuyBtnScroll product={product} />
+                <BuyBtnScroll />
             </div>
         </>
     );
