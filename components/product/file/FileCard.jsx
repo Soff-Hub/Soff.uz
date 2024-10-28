@@ -5,17 +5,17 @@ import FreeBtn from '~/components/elements/FreeBtn'
 import { formatCurrencyWithSpace } from '~/utilities/product-helper'
 
 export default function FileCard(props) {
-    const { title, discount_price, poster_url, document, file_url } = props
+    const { title, discount_price, poster_url, document, file_url, slug } = props
 
     return (
         <div className={`file-card ${document?.content_type}`}>
             <div className="file-card-inner">
                 <div className="file-card-img">
-                    <Link href="#">
+                    <Link href={`/product/${slug}`}>
                         <a>
                             <img
                                 // loading='lazy'
-                                src={`${poster_url || 'https://eu2.contabostorage.com/20ddac7ab90d4d188d1ca104120b91ed:test/media/poster/IMG_0989.PNG'}`}
+                                src={`${poster_url || 'https://eu2.contabostorage.com/20ddac7ab90d4d188d1ca104120b91ed:soffuz/media/Screenshot_from_2023-10-14_20-57-14.png'}`}
                                 // width={500}
                                 // height={300}
                                 // quality={50}
@@ -30,7 +30,7 @@ export default function FileCard(props) {
                     </div>
                 </div>
                 <div className="file-card-content">
-                    <Link href="#">
+                    <Link href={`/product/${slug}`}>
                         <a>
                             <h3 className='file-card-title'>
                                 {title}
