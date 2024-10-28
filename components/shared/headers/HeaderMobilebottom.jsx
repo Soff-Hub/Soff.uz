@@ -34,7 +34,7 @@ function HeaderMobileBottom() {
 
     return (
         <header className={scroll ? "header--mobile2" : "header--mobile"} style={{ borderTop: "0.5px solid grey" }} >
-            <div className='navigation--mobile px-4 d-flex gap-3 align-items-center'>
+            {/* <div className='navigation--mobile px-4 d-flex gap-3 align-items-center'>
 
                 <div className={search === '' ? 'navigation__left' : "d-none"}>
                     <a
@@ -66,7 +66,7 @@ function HeaderMobileBottom() {
                         </div>
                     </div>
                 </Drawer>
-            </div>
+            </div> */}
         </header>
     );
 }

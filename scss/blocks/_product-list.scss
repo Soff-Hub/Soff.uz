@@ -10,3 +10,22 @@
     gap: 15px;
     justify-content: center;
 }
+
+.product-list.video {
+    gap: 0;
+    justify-content: center;
+}
+
+.view-all-products {
+    padding: 25px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.view-all-products-link {
+    padding: 12px 20px;
+    color: #00a44f !important;
+    border-radius: 20px;
+    background-color: white;
+    border: 2px solid #00a44f;
+}

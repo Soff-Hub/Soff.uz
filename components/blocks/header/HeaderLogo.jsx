@@ -1,7 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
-import NextImageCard from '~/components/nextImagecard'
 
 export default function HeaderLogo({ mode }) {
 
@@ -12,6 +11,7 @@ export default function HeaderLogo({ mode }) {
                     src={`/static/img/soff/logo-${mode}.png`}
                     width={140}
                     height={40}
+                    alt='Logo of Soff.uz'
                 />
             </a>
         </Link>

@@ -3,9 +3,11 @@ import HeaderTop from './HeaderTop';
 import HeaderLogo from './HeaderLogo';
 import HeaderActions from './HeaderActions';
 import HeaderSearchbar from './HeaderSearchbar';
+import { useRouter } from 'next/router';
 
 const Header = () => {
     const [headerSticky, setHeaderSticky] = useState(false);
+    const { pathname } = useRouter()
 
     const handleScroll = useCallback(() => {
         const shouldBeSticky = window.scrollY > 30;
@@ -25,17 +27,17 @@ const Header = () => {
     return (
         <header className="site-header">
             <HeaderTop />
-            <div className={headerSticky ? 'header-bottom header-bottom--show' : 'header-bottom'}>
+            <div className={`${headerSticky ? 'header-bottom header-bottom--show' : 'header-bottom'} ${pathname == '/' ? '' : 'other-header'}`}>
                 <div className="container">
                     <div className="header-inner">
-                        <HeaderLogo mode={headerSticky ? 'dark' : 'light'} />
+                        <HeaderLogo mode={headerSticky ? 'dark' : pathname !== '/' ? 'dark' : 'light'} />
 
-                        {headerSticky ? <HeaderSearchbar isDark={headerSticky} /> : ''}
+                        {headerSticky || pathname !== '/' ? <HeaderSearchbar isDark={headerSticky || pathname !== '/'} /> : ''}
 
-                        <HeaderActions isDark={headerSticky} />
+                        <HeaderActions isDark={headerSticky || pathname !== '/'} />
                     </div>
                     <div className="search-form-mobile">
-                        {headerSticky ? <HeaderSearchbar isDark={headerSticky} /> : ''}
+                        {pathname !== '/' ? <HeaderSearchbar isDark={headerSticky || pathname !== '/'} /> : ''}
                     </div>
                 </div>
             </div>

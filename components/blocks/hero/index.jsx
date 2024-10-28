@@ -15,7 +15,7 @@ export default function HeroMain() {
                                 <p className='hero-text'>O‘zbek tilida saralanib borilayotgan sifatli ma’lumotlar jamlanmasini, fayllar, tasvirlar, videolar, audiolar ko‘rinishida qidirib topish imkonini beradi.</p>
                             </div>
 
-                            <form className="hero-search-form">
+                            <div className="hero-search-form">
                                 <HeroSearchInput />
 
                                 {/* <Select
@@ -46,7 +46,7 @@ export default function HeroMain() {
                                     <i className='fa-solid text-success fa-video mr-2'></i> Playlist
                                 </Option>
                             </Select> */}
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>
