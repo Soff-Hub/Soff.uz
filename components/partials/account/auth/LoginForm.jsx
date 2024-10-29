@@ -35,7 +35,7 @@ export default function LoginForm() {
             const modal = Modal.error({
                 centered: true,
                 title: 'Xatolik',
-                content: err?.response?.data?.msg,
+                content: err?.response?.data?.msg || JSON.stringify(err?.response),
             });
             modal.update;
         }
