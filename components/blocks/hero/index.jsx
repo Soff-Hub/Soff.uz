@@ -1,11 +1,12 @@
 import React from 'react'
-import { Select } from 'antd'
 import HeroSearchInput from './HeroSearchInput';
-const Option = Select.Option;
+import { useRouter } from 'next/router';
 
 export default function HeroMain() {
+    const { query } = useRouter()
+
     return (
-        <div className='hero'>
+        <div className={`hero ${query?.tab}`}>
             <div className="hero-bg">
                 <div className="container">
                     <div className="hero-inner">

@@ -165,7 +165,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                 <BreadCrumb breacrumb={breadCrumb} layout="fullwidth" />
 
                 <Head>
-                    <title>{defaultProducts?.title || "soff.uz - Intellektual mulk marketi"}</title>
+                    <title>{defaultProducts?.title || "Soff.uz - Intellektual mulk marketi"}</title>
                     <meta name="title" content={defaultProducts?.title || "soff.uz - Intellektual mulk marketi"} />
                     <meta name="description" content={defaultProducts?.description ? removeHTMLTags(defaultProducts?.description) : `${defaultProducts?.title || "soff.uz - Intellektual mulk marketi"} `} />
                     <meta name="image" content={defaultProducts?.poster_url || '../../static/img/soff/logo-dark.png'} />
