@@ -34,7 +34,7 @@ const Meta = ({ title, image, description, keywords, author }) => {
                 content={
                     description
                         ? removeHTMLTags(description)
-                        : `${title} | Soff | Soff online hujjatlar bazasi`
+                        : `${title} | Soff - Intellektual mulk marketi`
                 }
             />
             <meta property="twitter:url" content="soff.uz" />
