@@ -51,7 +51,7 @@ const ProductDetailFullwidth = ({ product, views }) => {
 
                 <DefaultDescription product={product} />
 
-                <BuyBtnScroll/>
+                <BuyBtnScroll />
             </div >
         </>
     );
