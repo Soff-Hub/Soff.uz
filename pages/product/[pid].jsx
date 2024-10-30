@@ -231,7 +231,6 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                                         <ProductDetailFullwidth
                                             product={product}
                                             views={views}
-
                                         />
                                     </div>
                                 ) :

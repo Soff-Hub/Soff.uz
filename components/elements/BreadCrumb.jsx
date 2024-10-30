@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 const BreadCrumb = ({ breacrumb }) => {
     return (
-        <div className="ps-breadcrumb">
+        <div className="ps-breadcrumb py-3">
             <div
                 >
                <div className="container">
