@@ -190,7 +190,7 @@ const Posts = () => {
                     Modal.warning({
                         centered: true,
                         title: 'Muvaffaqqiyatli!',
-                        content: "Sizning mahsulotingiz muvaffaqqiyatli yuborildi! 24 soat ichida adminlar tomonidan mahsulotingiz 'Tasdiqlangan' dan so'ng sotuvda ko'rishingiz mumkin yoki 'Bekor' qilishinishi ham mumkin",
+                        content: "Sizning mahsulotingiz muvaffaqqiyatli yuborildi! 10 soat ichida adminlar tomonidan mahsulotingiz 'Tasdiqlangan' dan so'ng sotuvda ko'rishingiz mumkin yoki 'Bekor' qilishinishi ham mumkin",
                     });
                 } else {
                     const errorMessage = await response.json();

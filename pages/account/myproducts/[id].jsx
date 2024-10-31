@@ -194,7 +194,7 @@ const PostsMyProducts = () => {
                     centered: true,
                     title: 'Muvaffaqqiyatli!',
                     content:
-                        "Sizning mahsulotingiz muvaffaqqiyatli o'zgartirildi! 24 soat ichida adminlar tomonidan  mahsulotingiz 'Tasdiqlangan' dan so'ng  sotuvda ko'rishingiz mumkin yoki 'Bekor' qilishinishi ham mumkin",
+                        "Sizning mahsulotingiz muvaffaqqiyatli o'zgartirildi! 10 soat ichida adminlar tomonidan  mahsulotingiz 'Tasdiqlangan' dan so'ng  sotuvda ko'rishingiz mumkin yoki 'Bekor' qilishinishi ham mumkin",
                 });
                 setTagSearchResult(null);
                 setTaxminiyNarx(null);
