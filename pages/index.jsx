@@ -22,7 +22,7 @@ export async function getServerSideProps(context) {
 
     return {
         props: {
-            tab: query?.tab || null,
+            tab: query?.tab || 'file',
             category: query?.category || null,
         },
     };
