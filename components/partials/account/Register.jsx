@@ -568,8 +568,6 @@ class Register extends Component {
                             <strong>mahsulot</strong> deb nomlanadi. Ular
                             faqatgina ma’lumotlar hisoblanib,
                             foydalanish, o’qib-o’rganish uchun mo’ljallangan.
-                            Biznes rejalar esa tavsiyaviy harakterga ega bo’lib,
-                            undagi hisob-kitoblar tahminiy olingan
                         </p>
                         <p>
                             1.3. Platformaning «Biznes xizmatlar» bo’limida
@@ -656,7 +654,7 @@ class Register extends Component {
                         <p>
                             4.2.4. Ro’yxatdan o’tish jarayonida amalda
                             mavjud bo’lgan, ishlaydigan elektron manzil
-                            (e-mail) kiritish shart;
+                            (e-mail) yoki telefon raqam kiritish shart;
                         </p>
                         <p>
                             4.2.5. Foydalanuvchi Platformaning foydalanish
@@ -676,7 +674,7 @@ class Register extends Component {
                         <p>
                             5.1.3. Mahsulotlaridan bepulga yoki tijorat
                             hamda foyda olish maqsadida platformada
-                            ulashishlariga ruxsat etiladi (5.1.7. shart
+                            ulashishlariga ruxsat etiladi (5.1.6. shart
                             bajarilgan taqdirda);
                         </p>
                         <p>
@@ -701,12 +699,6 @@ class Register extends Component {
                         <p>5.1.6.
                             Sotuvchi mahsulotlarining muallifi o’zi yoki boshqa bir inson muallifidagi
                             mahsulot bo’lsa uning roziligi bilan olingan mahsulot bo’lishi shart
-                        </p>
-                        <p>
-                            5.1.7. Sotuvchi mahsulotlarining muallifi o’zi
-                            yoki boshqa bir inson muallifidagi mahsulot
-                            bo’lsa uning roziligi bilan olingan mahsulot
-                            bo’lishi shart;
                         </p>
                         <p>
                             5.1.7. Platforma ma’muriyatiga murojaat qilish
@@ -737,7 +729,7 @@ class Register extends Component {
                         <p>
                             5.2.3. Ro’yxatdan o’tish jarayonida amalda
                             mavjud bo’lgan, ishlaydigan elektron manzil
-                            (e-mail) kiritish shart;
+                            (e-mail) yoki telefon raqam kiritish shart;
                         </p>
                         <p>
                             5.2.4. Sotuvchining yig’ilgan summasini
@@ -750,7 +742,7 @@ class Register extends Component {
                             bajarishi shart
                         </p>
                         <p>
-                            5.2.8.  Sotuvchi yuklagan har bir mahsulotning
+                            5.2.7.  Sotuvchi yuklagan har bir mahsulotning
                             sifatli, yaroqli va o'z ijodiy ishi ekanligiga
                             javobgar. Xaridor yoki boshqa shaxslar norozilik
                             bildirsa yoki mualliflik huquqi buzilsa, barcha
@@ -759,7 +751,7 @@ class Register extends Component {
                             e'tibordan chetda qolgan holatlar uchun javobgar emas.
                         </p>
                         <p>
-                            5.2.9. Sotuvchi referal havola orqali o’zini-o’zi
+                            5.2.8. Sotuvchi referal havola orqali o’zini-o’zi
                             taklif qilgan holatlar aniqlansa, platforma ma’muriyati
                             tomonidan ogohlantirish beriladi va ushbu taklif havolasi
                             ro’yxatdan olib tashlanadi.
