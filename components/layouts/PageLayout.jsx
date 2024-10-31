@@ -217,7 +217,6 @@ const PageLayout = ({
 
 
             {/* <GoogleLogin
-                clientId="203103939049-2st34q2uc1io9oaup8gt35tsmucru0.apps.googleusercontent.com"
                 onSuccess={credentialResponse => {
                     handleLogin(jwtDecode(credentialResponse?.credential))
                 }}
