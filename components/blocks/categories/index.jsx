@@ -5,7 +5,7 @@ import { ProductContext } from '~/context/ProductsContext'
 const data = [
     {
         name: "Fayl",
-        slug: '',
+        slug: 'file',
         icon: 'fa fa-folder-open',
     }, {
         name: "Video",
@@ -23,7 +23,7 @@ const data = [
 ]
 
 export default function CategoryTabs({ category, tab }) {
-    const [activeTab, setActiveTab] = useState(tab || '')
+    const [activeTab, setActiveTab] = useState(tab || 'file')
 
     const { getHomeProducts, homeCategories, getHomeProductsByCategory } = useContext(ProductContext)
     const { push } = useRouter()
@@ -40,8 +40,13 @@ export default function CategoryTabs({ category, tab }) {
     }
 
     useEffect(() => {
-        getHomeProducts(`type=${tab || ''}&category=${category || ''}`)
+        getHomeProducts(`type=${tab || 'file'}&category=${category || ''}`)
     }, [])
+    // console.log(tab);
+    
+    // useEffect(() => {
+    //     setActiveTab(tab || 'file')
+    // }, [tab])
 
     return (
         <div className='category'>

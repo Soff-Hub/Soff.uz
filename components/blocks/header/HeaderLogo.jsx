@@ -1,20 +1,20 @@
 import Image from 'next/image'
-import Link from 'next/link'
+import Router from 'next/router'
 import React from 'react'
 
 export default function HeaderLogo({ mode }) {
 
     return (
-        <Link href="/">
-            <a className='site-header-logo'>
+        <div>
+            <div className='site-header-logo' style={{ cursor: 'pointer' }} onClick={() => Router.push('/?tab=')}>
                 <Image
                     src={`/static/img/soff/logo-${mode}.png`}
                     width={140}
                     height={40}
                     alt='Logo of Soff.uz'
                 />
-            </a>
-        </Link>
+            </div>
+        </div>
 
     )
 }
