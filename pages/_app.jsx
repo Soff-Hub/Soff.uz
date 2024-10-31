@@ -12,6 +12,7 @@ import Head from 'next/head';
 import NextProgress from 'next-progress';
 import { AudioProvider } from '~/hooks/AudioContext';
 import { ProductProvider } from '~/context/ProductsContext';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 
 function App({ Component, pageProps }) {
@@ -70,15 +71,17 @@ function App({ Component, pageProps }) {
                 options={{ showSpinner: false }}
                 color="#00A44F"
             />
-            <CookiesProvider>
-                <ProductProvider>
-                    <AudioProvider>
-                        <MasterLayout>
-                            <Component {...pageProps} />
-                        </MasterLayout>
-                    </AudioProvider>
-                </ProductProvider>
-            </CookiesProvider>
+            <GoogleOAuthProvider clientId="203103939049-2ste634q2uc1io9oaup8gt35tsmucru0.apps.googleusercontent.com">
+                <CookiesProvider>
+                    <ProductProvider>
+                        <AudioProvider>
+                            <MasterLayout>
+                                <Component {...pageProps} />
+                            </MasterLayout>
+                        </AudioProvider>
+                    </ProductProvider>
+                </CookiesProvider>
+            </GoogleOAuthProvider>;
         </>
     );
 }
