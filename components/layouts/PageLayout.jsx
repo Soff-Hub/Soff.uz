@@ -205,7 +205,7 @@ const PageLayout = ({
             <div className='bg-soff' style={{ paddingTop: Router.pathname === '/' ? '' : '75px' }}>
                 <div className={`${query.startsWith('/page/') ? 'container faq-page-container' : ''}`}>
                     <div
-                        className={` ${query.startsWith('/page/form') ? '' : 'd-none'}`}>
+                        className={` ${query.startsWith('/page') ? '' : 'd-none'}`}>
                         <FaqSaidbar />
                     </div>
                     {children}
