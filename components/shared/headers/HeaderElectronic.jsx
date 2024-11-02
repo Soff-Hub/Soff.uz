@@ -3,9 +3,11 @@ import Link from 'next/link';
 import ElectronicHeaderActions from '~/components/shared/headers/modules/ElectronicHeaderActions';
 import { stickyHeader } from '~/utilities/common-helpers';
 import NextImageCard from '~/components/nextImagecard';
+import { useRouter } from 'next/router';
 
 const HeaderElectronic = () => {
     const [run, setRun] = useState(false);
+    const { pathname } = useRouter()
 
 
     useEffect(() => {
@@ -50,7 +52,7 @@ const HeaderElectronic = () => {
             <header
                 className="header header--standard header--electronic">
                 <div className="header__content">
-                    <div className="container">
+                    <div className="container" style={pathname.startsWith('/account') ? { maxWidth: '1400px' } : {}}>
                         <div className="header__content-left">
                             <Link href="/">
                                 <a className="ps-logo">

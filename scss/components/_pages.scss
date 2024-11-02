@@ -1,5 +1,3 @@
-
-
 .ps-page--404 {
     position: relative;
     min-height: 100vh;
@@ -54,9 +52,8 @@
     }
 }
 
-
 .ps-page--shop {
-    background-color: #F5F6F7;
+    background-color: #f5f6f7;
     .ps-shop-banner {
         padding: 30px 0 45px;
     }
@@ -94,7 +91,6 @@
     }
 
     @media (max-width: 1199px) {
-
         .ps-shop-banner,
         .ps-shop-brand,
         .ps-shop-categories,
@@ -134,7 +130,7 @@
         flex-flow: row nowrap;
         width: 100%;
 
-        >* {
+        > * {
             width: 100%;
         }
 
@@ -181,6 +177,11 @@
     }
 }
 
+.ps-breadcrumb {
+    .container {
+        max-width: 1400px;
+    }
+}
 
 .ps-page--account {
     padding-top: 50px;
@@ -190,6 +191,10 @@
         padding: 30px 20px;
         border-radius: 4px;
         background-color: #fff;
+    }
+
+    .container {
+        max-width: 1400px;
     }
 
     @media only screen and (max-width: 990px) {
@@ -214,8 +219,6 @@
         }
     }
 }
-
-
 
 .ps-product-list .container .ps-section__header {
     background-color: #00a44f !important;
