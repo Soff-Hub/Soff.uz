@@ -1,6 +1,6 @@
 import React from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
-import { DatePicker, Modal, Pagination, Select, Table, Tooltip } from 'antd';
+import { DatePicker, Input, Modal, Pagination, Select, Table, Tooltip } from 'antd';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
@@ -26,6 +26,7 @@ import ModuleAudioDetailShoppingActionsLive from '~/components/elements/detail/m
 import DefaultVideoAdmin from '~/components/elements/detail/thumbnail/DefaultVideoAdmin';
 import { addPeriodToThousands } from './ProductsLists';
 import SidebarLayout from '../SidebarLayout';
+import { formatCurrencyWithSpace } from '~/utilities/product-helper';
 const { TabPane } = Tabs;
 var parse = require('html-react-parser');
 
@@ -74,6 +75,12 @@ function MyProductsLists() {
     const [lifeTime1, setLifetime2] = useState('');
     const [style, setStyle] = useState('flex')
 
+    const [minPrice, setMinPrice] = useState('')
+    const [maxPrice, setMaxPrice] = useState('')
+
+    const minPriceDebounce = useDebounce(minPrice, 1000)
+    const maxPriceDebounce = useDebounce(maxPrice, 1000)
+
     const handleChangeDate = (date) => {
 
         if (date?.[0]) {
@@ -98,7 +105,9 @@ function MyProductsLists() {
         search,
         filterType,
         viewsAll,
-        dataPlayListsID
+        dataPlayListsID,
+        mnPriceDebounce,
+        mxPriceDebounce
     ) {
         setLoadingData(true)
         const ItemsData = await GetRepository.getMyProducts(
@@ -111,7 +120,9 @@ function MyProductsLists() {
             filterType,
             viewsAll,
             dataPlayListsID,
-            user?.access
+            user?.access,
+            mnPriceDebounce,
+            mxPriceDebounce
         );
         if (ItemsData?.results) {
             setData(ItemsData?.results);
@@ -442,7 +453,9 @@ function MyProductsLists() {
             search,
             filterType,
             viewsAll,
-            dataPlayListsID
+            dataPlayListsID,
+            minPriceDebounce,
+            maxPriceDebounce
         );
     }, [
         dataValCat,
@@ -452,7 +465,9 @@ function MyProductsLists() {
         searchDebounce,
         filterType,
         viewsAll,
-        dataPlayListsID
+        dataPlayListsID,
+        minPriceDebounce,
+        maxPriceDebounce
     ]);
 
     useEffect(() => {
@@ -745,7 +760,6 @@ function MyProductsLists() {
             ),
         },
     ];
-
 
     return (
         <section className="ps-my-account ps-page--account ">
@@ -1479,6 +1493,24 @@ function MyProductsLists() {
                         onChange={handleChangeDate}
                         placeholder={['Boshlanish sanasi', 'Tugash sanasi']}
                     />
+
+                    <div className='d-flex align-items-center gap-3'>
+                        <Input
+                            size='large'
+                            type='number'
+                            value={minPrice}
+                            onChange={(e) => setMinPrice(e.target.value)}
+                            placeholder='Quyi narx'
+                        />
+                        <Input
+                            size='large'
+                            type='number'
+                            value={maxPrice}
+                            min={minPrice}
+                            onChange={(e) => setMaxPrice(e.target.value)}
+                            placeholder='Yuqori narx'
+                        />
+                    </div>
 
 
                     <Select

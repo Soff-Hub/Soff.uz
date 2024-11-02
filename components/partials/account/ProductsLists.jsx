@@ -89,7 +89,7 @@ function ProductsLists() {
         }
     };
 
-    const dataFormat = `${lifeTime}&end_date=${lifeTime1}`;
+    const dataFormat = `${lifeTime}&date_range_before=${lifeTime1}`;
 
 
     async function GetItemsProductsLists(
@@ -1174,11 +1174,12 @@ function ProductsLists() {
 
 
 
-                    <RangePicker
+                    {/* <RangePicker
+                        placeholder={['Boshlanish sanasi', 'Tugash sanasi']}
                         className="w-100 py-3  rounded-3"
                         onChange={handleChange}
                     />
-
+ */}
 
                     <Select
                         onChange={(e) => setFiltertype(e)}
