@@ -38,6 +38,8 @@ const PostsProductsEdit = () => {
     const [products, setProducts] = useState(null)
     const [page_count, setPageCount] = useState(0);
     const [demoLink, setDemoLink] = useState(null);
+    const [posters, setPosters] = useState([])
+    const [poster, setPoster] = useState(null)
 
 
 
@@ -193,6 +195,14 @@ const PostsProductsEdit = () => {
 
     async function handleClickPostsEdit(e) {
         e.preventDefault();
+        // if (!products?.document?.images && !posters.length) {
+        //     const modal = Modal.success({
+        //         centered: true,
+        //         title: 'Xatolik!',
+        //         content: "Kamida bitta rasm kiriting ",
+        //     });
+        //     return
+        // }
         if (
             title ||
             category_id ||
@@ -201,39 +211,58 @@ const PostsProductsEdit = () => {
             textAreaItems
         ) {
             const data = {};
+            const formData = new FormData()
             if (title) {
-                Object.assign(data, { title: title });
+                // Object.assign(data, { title: title });
+                formData.append('title', title)
             }
             if (dataCatStatus == "approved") {
                 if (results) {
-                    Object.assign(data, { tags: results });
+                    // Object.assign(data, { tags: results });
+                    formData.append('tags', results)
                 }
                 if (results3) {
-                    Object.assign(data, { tags: results3 });
+                    // Object.assign(data, { tags: results3 });
+                    formData.append('tags', results3)
                 }
             }
             if (category_id) {
-                Object.assign(data, { category: category_id });
+                // Object.assign(data, { category: category_id });
+                formData.append('category', category_id)
             }
             if (demoLink) {
-                Object.assign(data, { demo_link: demoLink })
+                // Object.assign(data, { demo_link: demoLink })
+                formData.append('demo_link', demoLink)
             }
 
+            if (!products?.document?.images.length) {
+                for (const img of posters) {
+                    formData.append('images', img?.file)
+                }
+                if (poster) {
+                    formData.append('poster', poster?.file)
+                }
+            }
 
             if (dataCatStatus) {
-                Object.assign(data, { status: dataCatStatus });
+                // Object.assign(data, { status: dataCatStatus });
+                formData.append('status', dataCatStatus)
             }
             if (textAreaItems) {
-                Object.assign(data, { reason: textAreaItems });
+                // Object.assign(data, { reason: textAreaItems });
+                formData.append('reason', textAreaItems)
             }
             if (page_count) {
-                Object.assign(data, { page_count: page_count ? page_count : products?.document?.page_count });
+                // Object.assign(data, { page_count: page_count ? page_count : products?.document?.page_count });
+                formData.append('page_count', page_count ? page_count : products?.document?.page_count)
             }
             if (Fulldata) {
-                Object.assign(data, { description: Fulldata });
+                // Object.assign(data, { description: Fulldata });
+                formData.append('description', Fulldata)
             }
             const patchItems = await PatchRepository.getProductsPatch(
-                data,
+                formData,
+                // data,
                 products?.id,
                 user?.access
             );
@@ -272,10 +301,6 @@ const PostsProductsEdit = () => {
         setCategory_ID(products?.category?.id)
     }, [products?.category?.id])
 
-
-
-
-
     return user?.role === 'admin' ? (
         <PageContainer
             footer={<FooterDefault />}
@@ -305,8 +330,6 @@ const PostsProductsEdit = () => {
                             </div>
                             <form
                                 onSubmit={handleClickPostsEdit}
-
-
                                 style={{ position: 'relative' }}
                                 id="FormPostsMyProducts"
                                 className="pb-5 col-md-8">
@@ -377,6 +400,88 @@ const PostsProductsEdit = () => {
                                         )}
                                     </select>
                                 </div>
+
+                                {products?.document?.images.length ? '' : <div className='row mb-3'>
+                                    <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
+                                        <p>Mahsulot rasmi: *</p>
+                                        <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan fayl. Mahsulotingiz rasmi quyidagi turdagi fayl bo’lishi mumkin: .jpeg yoki .jpg, .png, .psd, .svg">
+                                            <i
+                                                style={{ cursor: 'pointer' }}
+                                                className="fa-regular fa-circle-question px-4 mt-2"></i>
+                                        </Tooltip>
+                                    </div>
+
+                                    <div className='col-md-8 p-0'>
+                                        <div
+                                            className="add-product-user-image bg-white d-flex justify-content-between  form-control py-2 rounded-3"
+                                            style={{
+                                                height: '100px',
+                                                backgroundColor: false ? " #fff" : '#F1F1F1',
+                                                border: '1px dashed green',
+                                            }}>
+                                            <label
+                                                style={{
+                                                    width: '50px',
+                                                    cursor: 'pointer',
+                                                }}>
+                                                <i className="fa-solid fa-plus fs-1 mt-5 pt-1 mx-3"></i>
+                                                <input
+                                                    name='image'
+                                                    type="file"
+                                                    onChange={(e) => {
+                                                        const item = { image_url: URL.createObjectURL(e.target.files[0]), file: e.target.files[0] }
+                                                        setPosters(c => ([...c, item]))
+                                                        if (!posters.length) {
+                                                            setPoster(item)
+                                                        }
+                                                    }}
+                                                    style={{ width: '20px' }}
+                                                    accept="image/*"
+                                                />
+                                            </label>
+
+                                            <div
+                                                className="overflow-x-scroll  d-flex  gap-1"
+                                                style={{ width: '430px' }}>
+                                                {
+                                                    !posters.length > 0 ?
+                                                        <span
+                                                            className="d-flex flex-column align-items-center mt-4 mx-5"
+                                                            style={{ cursor: 'pointer' }}>
+                                                            <i className="fa-solid fa-inbox text-primary mt-1"></i>
+                                                            <span className="text-center">
+                                                                Rasmini yuklash uchun ushbu hududga bosing.
+                                                            </span>
+                                                        </span>
+                                                        :
+                                                        posters?.map((item, i) =>
+                                                        (
+                                                            <img
+                                                                className="mx-1 "
+                                                                onClick={() => {
+                                                                    setPoster(
+                                                                        item
+                                                                    );
+                                                                }}
+                                                                src={
+                                                                    item?.image_url
+                                                                }
+                                                                alt=" "
+                                                                key={i}
+                                                                style={{
+                                                                    display:
+                                                                        'block',
+                                                                    cursor: 'pointer',
+                                                                }}
+                                                            />
+                                                        )
+                                                        )
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                }
                                 {dataCatStatus === 'cancelled' ||
                                     products.status === 'cancelled' ? (
                                     <div className="row">
@@ -570,7 +675,14 @@ const PostsProductsEdit = () => {
                                 style={{ maxWidth: '360px' }}>
                                 <div className="image rounded ">
                                     <div className="image rounded ">
-                                        {!products.poster_url ? (
+                                        {poster?.image_url ? (
+                                            <img
+                                                src={poster?.image_url}
+                                                alt="doc"
+                                                className="mb-4 border"
+                                                style={{ objectFit: 'cover' }}
+                                            />
+                                        ) : !products.poster_url ? (
                                             <img
                                                 src="/static/img/docCopy.png"
                                                 alt="doc"
@@ -824,7 +936,7 @@ const PostsProductsEdit = () => {
                     data-bs-keyboard="false"
                     aria-labelledby="staticBackdropLabel"
                     aria-hidden="true">
-                    <div className="modal-dialog container ">
+                    <div className="modal-dialog container" style={{ maxWidth: '1500px' }}>
                         <div className="modal-content">
                             <div className="d-flex justify-content-end p-3">
                                 <button
@@ -835,7 +947,7 @@ const PostsProductsEdit = () => {
                             </div>
                             <div className="ps-container">
                                 <div className="ps-product--detail ps-product--fullwidth">
-                                    <div className="ps-product__header ">
+                                    <div className="ps-product__header">
                                         <div className="ps-product__thumbnail">
                                             <figure>
                                                 <div className="ps-wrapper">

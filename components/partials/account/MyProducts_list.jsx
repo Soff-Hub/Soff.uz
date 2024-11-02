@@ -84,7 +84,7 @@ function MyProductsLists() {
             setLifetime2('');
         }
     };
-    const dataFormat = `${lifeTime}&end_date=${lifeTime1}`;
+    const dataFormat = `${lifeTime}&date_range_before=${lifeTime1}`;
 
 
 
@@ -1475,8 +1475,9 @@ function MyProductsLists() {
 
 
                     <RangePicker
-                        className=" py-3   rounded-3"
+                        className=" py-3 rounded-3"
                         onChange={handleChangeDate}
+                        placeholder={['Boshlanish sanasi', 'Tugash sanasi']}
                     />
 
 
