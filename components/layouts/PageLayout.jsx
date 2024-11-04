@@ -9,10 +9,6 @@ import Header from '../blocks/header';
 import FooterDefault from '../shared/footers/FooterDefault';
 
 import { GoogleLogin } from '@react-oauth/google';
-import { jwtDecode } from 'jwt-decode';
-import Axios from 'axios';
-import { encryptEmail } from '~/utilities/shifr';
-
 
 export let accountAdminLinks = [
     {
@@ -148,28 +144,12 @@ const PageLayout = ({
     title
 }) => {
     const { user } = useSelector((state) => state.auth);
-    const KEYWORD = process.env.NEXT_PUBLIC_KEYWORD
-
     const dispatch = useDispatch();
     const Router = useRouter();
     const query = Router.route;
 
-
     async function handleLogin(googleData) {
-        try {
-            const resp = await Axios.post('/api/oauth2', {
-                email: googleData?.email,
-                first_name: googleData?.given_name,
-                last_name: googleData?.family_name,
-            }, {
-                headers: {
-                    'Content-Origin': encryptEmail(googleData?.email, KEYWORD)
-                }
-            })
-            console.log(resp.data);
-        } catch (err) {
-            console.log('err => ', err);
-        }
+        Router.push(`/oauth/?token=${googleData}&returnUrl=${Router.asPath}`)
     }
 
     useEffect(() => {
@@ -216,17 +196,16 @@ const PageLayout = ({
             <FooterDefault />
 
 
-            {/* <GoogleLogin
+            {user ? '' : <GoogleLogin
                 onSuccess={credentialResponse => {
-                    handleLogin(jwtDecode(credentialResponse?.credential))
+                    handleLogin(credentialResponse?.credential)
                 }}
                 onError={() => {
                     console.log('Login Failed');
                 }}
                 useOneTap
-                auto_select
                 prompt="select_account"
-            />; */}
+            />}
         </>
     );
 };
