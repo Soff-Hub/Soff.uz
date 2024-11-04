@@ -362,7 +362,7 @@ class GetRepository {
             playlist || ''
         }&discount_price_before=${
             mxPrice || ''
-        }&discount_price_after=${mnPrice}`;
+        }&discount_price_after=${mnPrice || ''}`;
 
         const reponse = await Repository({
             url: baseUrl + endPoint,
