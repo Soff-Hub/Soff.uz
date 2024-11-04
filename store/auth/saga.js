@@ -1,26 +1,25 @@
 import { all, put, takeEvery } from 'redux-saga/effects';
-import {notification } from 'antd';
+import { notification } from 'antd';
 
 import { actionTypes, loginSuccess, logOutSuccess } from './action';
 
-const modalSuccess = type => {
+const modalSuccess = (type) => {
     notification[type]({
         message: 'Xush kelibsiz saytimizga!',
         description: 'Siz muvaffaqqiyatli kirdingiz!',
     });
 };
 
-const modalWarning = type => {
+const modalWarning = (type) => {
     notification[type]({
-
         message: 'Xayr!',
         description: 'Siz profilingizdan chiqib kettingiz!',
     });
 };
 
-function* loginSaga() {
+function* loginSaga({ user }) {
     try {
-        yield put(loginSuccess());
+        yield put(loginSuccess({ user }));
         modalSuccess('success');
     } catch (err) {
         console.log(err);
