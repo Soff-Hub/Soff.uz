@@ -22,16 +22,18 @@ function AccountUserPages() {
     const [selectValStatus, setSelectValStatus] = useState("");
     const [customers_count, setCustomers_Count] = useState('');
     const [loading, setLoading] = useState(false)
+    const [orderSort, setOrderSort] = useState('')
 
     const [pageCount, setPageCount] = useState(0)
     const [currPage, setCurrPage] = useState(1)
     const searchDebounce = useDebounce(search, 1000)
 
 
+
     async function GetItemsUsers(page, status, search) {
         setCurrPage(page)
         setLoading(true)
-        const ItemsData = await GetRepository.getUsersLists(page, status, search, user?.access);
+        const ItemsData = await GetRepository.getUsersLists(page, status, search, user?.access, orderSort);
         setPageCount(ItemsData.count)
         setData([...ItemsData.results]);
         setCustomers_Count(ItemsData.count)
@@ -60,7 +62,7 @@ function AccountUserPages() {
 
     useEffect(() => {
         GetItemsUsers(currPage, selectValStatus, search)
-    }, [selectValStatus, searchDebounce])
+    }, [selectValStatus, searchDebounce, orderSort])
     const columns = [
         {
             title: 'Batafsil',
@@ -119,6 +121,11 @@ function AccountUserPages() {
                 <span className="truncate whitespace-nowrap"> {purchased_count === 0 ? 0 : purchased_count + ' ta'}</span>
 
             ),
+            sorter: () => {
+                if (orderSort === '') {
+                    setOrderSort('buy_count')
+                } else setOrderSort('')
+            },
         },
         {
             title: 'Holat',

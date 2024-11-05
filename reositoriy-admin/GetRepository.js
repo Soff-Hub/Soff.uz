@@ -166,10 +166,10 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-    async getShops(page, search, lock, token) {
+    async getShops(page, search, lock, token, referral) {
         const endPoint = `admin/seller-list/?page=${page}&search=${
             search || ''
-        }&lock=${lock || ''}`;
+        }&lock=${lock || ''}&order=${referral || ''}`;
 
         const reponse = await Repository({
             url: baseUrl + endPoint,
@@ -360,9 +360,9 @@ class GetRepository {
             document__content_type || ''
         }&sort=${viewsAll || ''}&playlist=${
             playlist || ''
-        }&discount_price_before=${
-            mxPrice || ''
-        }&discount_price_after=${mnPrice || ''}`;
+        }&discount_price_before=${mxPrice || ''}&discount_price_after=${
+            mnPrice || ''
+        }`;
 
         const reponse = await Repository({
             url: baseUrl + endPoint,
@@ -1014,10 +1014,10 @@ class GetRepository {
         return reponse;
     }
 
-    async getUsersLists(page, status, search, token) {
+    async getUsersLists(page, status, search, token, order) {
         const endPoint = `admin/customer-list/?page=${page}&auth_status=${status}&search=${
             search || ''
-        }`;
+        }&order=${order || ''}`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',
@@ -1074,6 +1074,27 @@ class GetRepository {
 
     async getSellerLists(id, token) {
         const endPoint = `admin/seller-detail/${id}`;
+
+        const reponse = await Repository({
+            url: baseUrl + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+
+    async getSellerOffer(id, token, page) {
+        const endPoint = `admin/seller-detail/${id}/applications/?page=${page}`;
 
         const reponse = await Repository({
             url: baseUrl + endPoint,

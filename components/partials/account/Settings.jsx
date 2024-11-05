@@ -27,6 +27,7 @@ function Notifications() {
     const [open, setOpen] = useState(false);
     const [openViewImage, setOpenViewImage] = useState(false);
     const [openViewTitle, setOpenViewTitle] = useState('mobile');
+    const [nameModal, setNameModal] = useState(false)
 
 
     const LivePosterDesktop = (images) => {
@@ -88,21 +89,34 @@ function Notifications() {
             'last_name',
             profileData?.last_name ? profileData?.last_name : profile?.last_name
         );
-        const ItemsData = await PatchRepository.getPatchProfile(
-            formData,
-            user?.access
-        );
-        if (user?.access) {
-            const ItemsDataProfile = await GetRepository.getProfile(user?.access);
-            dispatch(setSavedPrfileData(ItemsDataProfile))
-        }
-        if (ItemsData) {
+        try {
+            await PatchRepository.getPatchProfile(
+                formData,
+                user?.access
+            );
             const modal = Modal.success({
                 centered: true,
                 title: 'Muvaffaqqiyatli!',
                 content: `Sizning ma'lumotlaringiz o'zgartirildi`,
             });
             modal.update;
+            setNameModal(false)
+        } catch (err) {
+            console.log(err?.msg);
+
+            const modal = Modal.error({
+                centered: true,
+                title: 'Xatolik!',
+                content: err?.msg,
+            });
+            modal.update;
+            return
+        }
+
+
+        if (user?.access) {
+            const ItemsDataProfile = await GetRepository.getProfile(user?.access);
+            dispatch(setSavedPrfileData(ItemsDataProfile))
         }
     }
 
@@ -181,10 +195,9 @@ function Notifications() {
 
                                     <>
                                         <h1>{profile?.first_name}  {profile?.last_name}
-                                            <a style={{ cursor: "pointer" }} data-bs-target="#exampleModalMyProductsUserProfileName"
-                                                data-bs-toggle="modal">
+                                            <span style={{ cursor: "pointer" }} onClick={() => setNameModal(true)} >
                                                 <i class="fa-solid fa-pen fs-4 mx-3 text-primary"></i>
-                                            </a></h1>
+                                            </span></h1>
                                         {
                                             profile?.email &&
                                             <p>{profile?.email}</p>
@@ -263,32 +276,14 @@ function Notifications() {
                     <label htmlFor="files" className='w-100 mt-4'>
                         Profil rasmi
                     </label>
-                    <input type="file"
+                    <input
+                        type="file"
                         className='form-control py-4 rounded'
-                        id='files' name='files' accept='.png, .jpeg, .jpg, .heic'
-                        onChange={(e) => setImage(e.target.files[0])} />
-
-                    <label className='w-100 mt-4 d-flex justify-content-between'>
-                        <span>Orqa fon rasmi (Mobile)
-                        </span>
-                        <span style={{ cursor: "pointer" }} onClick={() => (setOpenViewImage(true), setOpenViewTitle("mobile"))}>
-                            Ko'rish <i className='fa-solid fa-eye'></i>
-                        </span>
-                    </label>
-                    <input type="file" className='form-control py-4 rounded'
-                        id='file' name='file' accept='.png, .jpeg, .jpg, .heic'
-                        onChange={(e) => LivePosterMobile(e.target.files[0])} />
-
-                    <label className='w-100 mt-4 d-flex justify-content-between'>
-                        <span>Orqa fon rasmi (Desktop)
-                        </span>
-                        <span style={{ cursor: "pointer" }} onClick={() => (setOpenViewImage(true), setOpenViewTitle("desktop"))}>
-                            Ko'rish <i className='fa-solid fa-eye'></i>
-                        </span>
-                    </label>
-                    <input type="file" className='form-control py-4 rounded'
-                        id='file' name='file' accept='.png, .jpeg, .jpg, .heic'
-                        onChange={(e) => LivePosterDesktop(e.target.files[0])} />
+                        id='files'
+                        name='files'
+                        accept='.png, .jpeg, .jpg, .heic'
+                        onChange={(e) => setImage(e.target.files[0])}
+                    />
 
                     <div className='d-flex justify-content-end gap-3 mt-3'>
                         <button className='btn btn-secondary fs-4 px-4' onClick={() => setOpen(false)}>Yopish</button>
@@ -319,41 +314,81 @@ function Notifications() {
                 </Modal>
 
 
-                <ModalDeletePostEdit formID={"user-modal-profile-name"}
+                <Modal
+                    title={"Profil ma'lumotlarni tahrirlash"}
+                    open={nameModal}
+                    onCancel={() => setOpenViewImage(false)}
+                    footer={null}
+                    className={openViewTitle === "mobile" ? "" : "container"}
+                >
+                    <form
+                        onSubmit={(e) => {
+                            e.preventDefault()
+                            handleClickEdit()
+                        }}
+                        className='d-flex flex-column gap-3 my-5'
+                        id='edit-profile-form'
+                    >
+                        <input
+                            type="text"
+                            defaultValue={
+                                profile?.first_name
+                            }
+                            required
+                            placeholder="Ismingiz"
+                            className="form-control rounded-3"
+                            onChange={(e) =>
+                                setProfileData((prev) => ({ ...prev, first_name: e.target.value, }))}
+                        />
+                        <input
+                            type="text"
+                            required
+                            defaultValue={
+                                profile?.last_name
+                            }
+                            placeholder="Familiyangiz"
+                            className="form-control rounded-3"
+                            onChange={(e) =>
+                                setProfileData(
+                                    (prev) => ({
+                                        ...prev,
+                                        last_name:
+                                            e.target
+                                                .value,
+                                    })
+                                )
+                            }
+                        />
+
+                        <div className="d-flex justify-content-center gap-5 pb-5 pt-3">
+                            <button
+                                className=" btn btn-secondary d-block w-25 py-2 "
+                                type="button"
+                                onClick={() => {
+                                    document.getElementById('edit-profile-form').reset()
+                                    setNameModal(false)
+                                }}
+                            >
+                                <span className="fs-3">Yopish</span>
+                            </button>
+                            <button
+                                type="submit"
+                                className="btn btn-success d-block w-25 py-2"
+                            >
+                                <span className="fs-3">Saqlash</span>
+                            </button>
+                        </div>
+                    </form>
+                </Modal>
+
+
+                {/* <ModalDeletePostEdit formID={"user-modal-profile-name"}
                     dataBsTarget="exampleModalMyProductsUserProfileName"
                     onSubmited={handleClickEdit}
+                    noCloseOnSubmit={true}
                 >
-                    <input
-                        type="text"
-                        defaultValue={
-                            profile?.first_name
-                        }
-                        required
-                        placeholder="Ismingiz"
-                        className="form-control rounded-3"
-                        onChange={(e) =>
-                            setProfileData((prev) => ({ ...prev, first_name: e.target.value, }))}
-                    />
-                    <input
-                        type="text"
-                        required
-                        defaultValue={
-                            profile?.last_name
-                        }
-                        placeholder="Familiyangiz"
-                        className="form-control rounded-3"
-                        onChange={(e) =>
-                            setProfileData(
-                                (prev) => ({
-                                    ...prev,
-                                    last_name:
-                                        e.target
-                                            .value,
-                                })
-                            )
-                        }
-                    />
-                </ModalDeletePostEdit>
+
+                </ModalDeletePostEdit> */}
 
             </div>
         </section >

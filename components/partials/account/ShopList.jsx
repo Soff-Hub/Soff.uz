@@ -29,6 +29,7 @@ function Notifications() {
     const [sellerID, setSellerID] = useState(null);
     const [filterLock, setFilterLock] = useState('')
     const date = new Date();
+    const [orderSort, setOrderSort] = useState('')
 
 
 
@@ -38,7 +39,8 @@ function Notifications() {
             page,
             search,
             filterLock,
-            user?.access
+            user?.access,
+            orderSort
         );
         if (ItemsData?.results) {
             setData([...ItemsData?.results]);
@@ -55,7 +57,7 @@ function Notifications() {
 
     useEffect(() => {
         GetItems(currPage, search, filterLock);
-    }, [searchDebounce, filterLock]);
+    }, [searchDebounce, filterLock, orderSort]);
 
     async function postOrder(values) {
         form.resetFields();
@@ -242,15 +244,20 @@ function Notifications() {
             ),
         },
         {
-            title: 'Buyurtmalar',
-            dataIndex: 'total_approved',
+            title: 'Taklif qilganlar soni',
+            dataIndex: 'referral_count',
             key: 'address',
-            render: (total_approved) => (
+            render: (referral_count) => (
                 <span>
                     {' '}
-                    <i className="fa-solid fa-box"></i> {total_approved}
+                    <i className="fa-solid fa-box"></i> {referral_count}
                 </span>
             ),
+            sorter: () => {
+                if (orderSort === '') {
+                    setOrderSort('referral')
+                } else setOrderSort('')
+            },
         },
         {
             title: "Ro'yxatdan o'tgan sana",
@@ -294,7 +301,7 @@ function Notifications() {
 
 
 
-    
+
     return (
         <section className="ps-my-account ps-page--account p-0">
             <div className="container">

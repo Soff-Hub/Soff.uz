@@ -12,6 +12,7 @@ import NextImageCard from '~/components/nextImagecard';
 import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
 import axios from 'axios';
 import { orginalUrl } from '~/reositoriy-admin/Repository';
+import { formatCurrency } from '~/utilities/product-helper';
 
 const SellerAccount = ({ pid }) => {
     const [data, setData] = useState([]);
@@ -65,9 +66,20 @@ const SellerAccount = ({ pid }) => {
                 user?.access
             );
             setData(ItemsData);
-            setTableDataOffer(ItemsData.offer_list);
         }
     }
+
+    async function getSellerOffers(page = 1) {
+        if (user?.access) {
+            const ItemsData = await GetRepository.getSellerOffer(
+                pid,
+                user?.access,
+                page
+            );
+            setTableDataOffer(ItemsData);
+        }
+    }
+
 
     const getDocuments = async (page) => {
         setActivePage(page)
@@ -113,6 +125,7 @@ const SellerAccount = ({ pid }) => {
             getTransactions()
             getDonates()
             getDocuments(activePage)
+            getSellerOffers(1)
         }
 
     }, [user?.access]);
@@ -324,15 +337,23 @@ const SellerAccount = ({ pid }) => {
         },
         {
             key: '2',
-            label: <span style={{ marginRight: "30px", fontSize: "16px", fontWeight: "600" }} >Sotuvchi Arizalari</span>,
+            label: <span style={{ marginRight: "30px", fontSize: "16px", fontWeight: "600" }} >Sotuvchi Arizalari {tableDataOffer?.all_sum ? `(${formatCurrency(tableDataOffer?.all_sum)})` : ''}</span>,
             children: <div>
-
                 <Table
                     scroll={{ x: 1250 }}
-                    dataSource={tableDataOffer}
+                    dataSource={tableDataOffer?.results || []}
                     columns={columnsOffer}
                     className="pb-5"
                     pagination={false}
+                />
+                <Pagination
+                    total={tableDataOffer?.count || 0}
+                    pageSize={50}
+                    // current={activePage}
+                    onChange={(p) => {
+                        getSellerOffers(p)
+                        scrollTo(0, 600)
+                    }}
                 />
             </div>,
         },
