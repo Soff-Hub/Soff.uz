@@ -2509,6 +2509,10 @@
     .full-detail-image {
         min-width: 300px;
     }
+
+    .ps-wrapper img {
+        max-width: 100% !important;
+    }
 }
 
 .ant-skeleton-paragraph {
