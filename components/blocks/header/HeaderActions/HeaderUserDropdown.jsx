@@ -50,7 +50,7 @@ const HeaderUserDropdown = (props) => {
         }
     };
 
-    const { isLoggedIn } = props;
+    const { isLoggedIn, color } = props;
 
     async function ProfileUsers(token) {
         const ItemsData = await GetRepository.getProfile(token);
@@ -163,7 +163,7 @@ const HeaderUserDropdown = (props) => {
                                 className="profile__image-client"
                             />
                         ) : (
-                            <i className="icon-user"></i>
+                            <i className={`icon-user ${color}`}></i>
                         )}
                     </a>
                 </Link>
@@ -172,7 +172,7 @@ const HeaderUserDropdown = (props) => {
                         {linksView}
                         <li className="ps-block__footer">
                             <a href="#" onClick={() => handleLogout()}>
-                                <i className="fa-solid fa-right-from-bracket me-3 mx-2 text-dark fs-4"></i>{' '}
+                                <i className={`fa-solid fa-right-from-bracket me-3 mx-2 text-dark fs-4  ${color}`}></i>{' '}
                                 Chiqish
                             </a>
                         </li>
