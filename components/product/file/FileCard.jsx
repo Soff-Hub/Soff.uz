@@ -5,10 +5,10 @@ import FreeBtn from '~/components/elements/FreeBtn'
 import { formatCurrencyWithSpace } from '~/utilities/product-helper'
 
 export default function FileCard(props) {
-    const { title, discount_price, poster_url, document, file_url, slug } = props
+    const { title, discount_price, poster_url, file_url, slug, content_type } = props
 
     return (
-        <div className={`file-card ${document?.content_type}`}>
+        <div className={`file-card ${content_type}`}>
             <div className="file-card-inner">
                 <div className="file-card-img">
                     <Link href={`/product/${slug}`}>

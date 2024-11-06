@@ -12,7 +12,7 @@ export default function HomeProducts({ tab }) {
             <div className="container">
                 {
                     homeLoading ? (
-                        <div className={`product-list ${tab}`}>
+                        <div className={`product-list ${tab} p-loading`}>
                             {
                                 Array(15).fill(0).map((d, i) => <Skeleton.Image
                                     key={i}
@@ -34,7 +34,7 @@ export default function HomeProducts({ tab }) {
                 }
 
                 <div className='view-all-products'>
-                    <Link href={tab ? `/category/${tab}` : 'topCategory/categories'}>
+                    <Link href={tab ? `/category/${tab == '' || tab === 'file' ? 'kurs-ishlari' : tab}` : 'topCategory/categories'}>
                         <a className='view-all-products-link'>
                             Barcha mahsulotlarni ko'rish
                         </a>
