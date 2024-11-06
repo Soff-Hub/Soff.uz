@@ -71,7 +71,7 @@ const MobileHeaderActions = ({ auth }) => {
 
 
     useEffect(() => {
-        if (user?.access) {
+        if (user?.access && user?.role !== 'admin') {
             const newSocket = new WebSocket(
                 `${process.env.NEXT_PUBLIC_WS_BASE_URL}ws/user-notification/?token=${user?.access}`
             );

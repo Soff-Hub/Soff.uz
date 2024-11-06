@@ -589,10 +589,6 @@ function DashbordList({ setOpen }) {
         }] : []),
     ];
 
-    console.log(!profile?.have_document || !profile?.is_superuser);
-
-
-
     return (
         <section className="ps-my-account ps-page--account pt-0">
             <p className="step-0 m-0"></p>
