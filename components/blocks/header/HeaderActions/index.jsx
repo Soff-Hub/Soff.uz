@@ -24,9 +24,9 @@ const HeaderActions = ({ auth, isDark }) => {
             {wishlist?.length > 0 ? (
                 <Link href="/account/wishlist">
                     <a className="header__extra">
-                        <i className="icon-heart"></i>
+                        <i className={`icon-heart ${isDark ? 'text-black' : 'text-white'}`}></i>
                         <span>
-                            <i>{wishlist.length}</i>
+                            <i className={isDark ? 'text-black' : 'text-white'} >{wishlist.length}</i>
                         </span>
                     </a>
                 </Link>
@@ -36,7 +36,7 @@ const HeaderActions = ({ auth, isDark }) => {
 
             {data?.length > 0 && <MiniCart />}
 
-            <HeaderUserDropdown isLoggedIn={auth.isLoggedIn && Boolean(auth.isLoggedIn)} />
+            <HeaderUserDropdown color={isDark ? 'text-black' : 'text-white'}  isLoggedIn={auth.isLoggedIn && Boolean(auth.isLoggedIn)} />
         </div>
     );
 };
