@@ -182,13 +182,17 @@ const PostsProductsEdit = () => {
     }, [routerId, user?.access])
 
     useEffect(() => {
-        GetItemsTag();
-        setEditorLoaded(true);
-    }, []);
+        if (user?.access) {
+            GetItemsTag();
+            setEditorLoaded(true);
+        }
+    }, [user?.access]);
 
     useEffect(() => {
-        GetItemsCategoryLists();
-        GetItemsTagAktivmas();
+        if (user?.access) {
+            GetItemsCategoryLists();
+            GetItemsTagAktivmas();
+        }
     }, [user?.access]);
 
 
@@ -217,14 +221,18 @@ const PostsProductsEdit = () => {
                 formData.append('title', title)
             }
             if (dataCatStatus == "approved") {
-                if (results) {
+                let tags = []
+                if (results?.length) {
                     // Object.assign(data, { tags: results });
-                    formData.append('tags', results)
+                    // formData.append('tags', results?.join(','))
+                    tags = [...results]
                 }
                 if (results3) {
+                    tags = [...tags, ...results3]
                     // Object.assign(data, { tags: results3 });
-                    formData.append('tags', results3)
+                    // formData.append('tags', [...results3, ...results]?.join(','))
                 }
+                formData.append('tags', tags?.join(','))
             }
             if (category_id) {
                 // Object.assign(data, { category: category_id });
