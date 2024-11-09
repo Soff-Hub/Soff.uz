@@ -109,44 +109,6 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
     ]
 
 
-
-    useEffect(() => {
-        const token = user?.access;
-        if (token) {
-            getDealProfile()
-
-            const ws = new WebSocket(
-                `${process.env.NEXT_PUBLIC_WS_BASE_URL}ws/deals?token=${token}`
-            );
-            setSocket(ws);
-
-            ws.onopen = () => {
-                console.log('WebSocket connection established');
-            };
-
-            ws.onmessage = (event) => {
-                setWebData(JSON.parse(event?.data));
-            };
-
-            ws.onclose = () => {
-                console.log('WebSocket connection closed');
-            };
-
-            ws.onerror = (error) => {
-                console.error('WebSocket error:', error);
-            };
-
-            // Clean up on unmount
-            return () => {
-                if (ws.readyState === WebSocket.OPEN) {
-                    ws.close();
-                }
-            };
-        }
-
-    }, [user?.access]);
-
-
     useEffect(() => {
         if (socket) {
             socket.onmessage = (event) => {
