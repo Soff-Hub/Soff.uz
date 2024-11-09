@@ -133,7 +133,7 @@ const AccountMenuSidebar = ({ setMenuDrawer, setCategoriesDrawer }) => {
     }, [socket2]);
 
     useEffect(() => {
-        if (user?.role) {
+        if (user?.role === 'seller') {
             setSocket2(
                 new WebSocket(
                     `${process.env.NEXT_PUBLIC_WS_BASE_URL}ws/seller-document/?token=` +

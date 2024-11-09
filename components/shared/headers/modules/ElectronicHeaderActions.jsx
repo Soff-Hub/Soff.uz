@@ -74,30 +74,7 @@ const ElectronicHeaderActions = ({ auth }) => {
                 newSocket.close();
             };
         }
-    }, [user?.access]);
-
-    useEffect(() => {
-        const token = user?.access;
-        if (token) {
-            const ws = new WebSocket(
-                `${process.env.NEXT_PUBLIC_WS_BASE_URL}ws/deals?token=${token}`
-            );
-
-            ws.onopen = () => { };
-
-            if (ws) {
-                ws.onmessage = function (event) {
-                    setSocketCount(JSON.parse(event.data));
-                };
-            }
-
-            return () => {
-                ws.close();
-            };
-        }
-    }, [user?.access]);
-
-
+    }, [user?.access])
 
     useEffect(() => {
         socketCount > 0 && openNotification();
