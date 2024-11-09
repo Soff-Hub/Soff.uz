@@ -11,7 +11,7 @@ export const initState = {
     top_category_lists: [],
     category: true,
     categorySlug: [],
-    id: null
+    id: null,
 };
 
 function reducer(state = initState, actions) {
@@ -38,10 +38,16 @@ function reducer(state = initState, actions) {
                 ...{ user: null },
             };
         case actionTypes.ISLOGINNING:
-            const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : ''
+            const user = localStorage.getItem('user')
+                ? JSON.parse(localStorage.getItem('user'))
+                : '';
 
             return user?.access
-                ? { ...state, ...{ isLoggedIn: true }, ...{ user: user } }
+                ? {
+                      ...state,
+                      ...{ isLoggedIn: true },
+                      ...{ user: { ...user, role: 'customer' } },
+                  }
                 : { ...state, ...{ isLoggedIn: false }, ...{ user: null } };
 
         case actionTypes.ACCOUNT_LINKS:
@@ -65,8 +71,8 @@ function reducer(state = initState, actions) {
             };
 
         case actionTypes.IMAGE:
-            // console.log('reducer ishladi', actions.payload);
-            
+        // console.log('reducer ishladi', actions.payload);
+
         case actionTypes.CATEGORY_LISTS:
             return { ...state, ...{ category_lists: actions.payload } };
 

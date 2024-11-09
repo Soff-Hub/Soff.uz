@@ -20,7 +20,7 @@ class RegisterCustomer extends Component {
             chekked: false,
             inputType: 'text',
             inputLength: '',
-            role: 'seller',
+            role: 'customer',
             segmentValue: 'phone',
             phone: ''
         };

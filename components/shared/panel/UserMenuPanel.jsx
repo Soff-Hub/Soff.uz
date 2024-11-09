@@ -88,41 +88,12 @@ const AccountMenuSidebar = ({ setMenuDrawer, setCategoriesDrawer }) => {
     }, [socket]);
 
     useEffect(() => {
-        if (user?.access) {
-            if (user?.role === 'admin') {
-                setSocket(
-                    new WebSocket(
-                        `${process.env.NEXT_PUBLIC_WS_BASE_URL}ws/admin-offer/?token=${user?.access}`
-                    )
-                );
-            } else {
-                setSocket(
-                    new WebSocket(
-                        `${process.env.NEXT_PUBLIC_WS_BASE_URL}ws/seller-offer/?token=` +
-                        user?.access
-                    )
-                );
-            }
-        }
-    }, [user]);
-
-    useEffect(() => {
         if (socket1) {
             socket1.addEventListener('message', (event) => {
                 setWebData1(JSON.parse(event.data));
             });
         }
     }, [socket1]);
-
-    useEffect(() => {
-        if (user?.role === 'admin') {
-            setSocket1(
-                new WebSocket(
-                    `${process.env.NEXT_PUBLIC_WS_BASE_URL}ws/admin-document/?token=${user?.access}`
-                )
-            );
-        }
-    }, []);
 
     useEffect(() => {
         if (socket2) {
@@ -133,43 +104,12 @@ const AccountMenuSidebar = ({ setMenuDrawer, setCategoriesDrawer }) => {
     }, [socket2]);
 
     useEffect(() => {
-        if (user?.role) {
-            setSocket2(
-                new WebSocket(
-                    `${process.env.NEXT_PUBLIC_WS_BASE_URL}ws/seller-document/?token=` +
-                    user?.access
-                )
-            );
-        }
-    }, []);
-
-    useEffect(() => {
         if (socketApplication) {
             socketApplication.onmessage = (event) => {
                 setApplicationData(JSON.parse(event.data));
             };
         }
     }, [socketApplication]);
-
-    useEffect(() => {
-        if (user?.access) {
-            if (user?.role === 'admin') {
-                setSocketApplication(
-                    new WebSocket(
-                        `${process.env.NEXT_PUBLIC_WS_BASE_URL}ws/admin-application/?token=${user?.access}`
-                    )
-                );
-            } else {
-                setSocketApplication(
-                    new WebSocket(
-                        `${process.env.NEXT_PUBLIC_WS_BASE_URL}ws/seller-application/?token=` +
-                        user?.access
-                    )
-                );
-            }
-        }
-    }, [user]);
-
 
     useEffect(() => {
         if (user?.access && user?.role === "seller") {
