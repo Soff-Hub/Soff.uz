@@ -88,21 +88,23 @@ const AccountMenuSidebar = ({ setMenuDrawer, setCategoriesDrawer }) => {
     }, [socket]);
 
     useEffect(() => {
-        if (user?.role === 'admin') {
-            setSocket(
-                new WebSocket(
-                    `${process.env.NEXT_PUBLIC_WS_BASE_URL}ws/admin-offer/?token=${user?.access}`
-                )
-            );
-        } else {
-            setSocket(
-                new WebSocket(
-                    `${process.env.NEXT_PUBLIC_WS_BASE_URL}ws/seller-offer/?token=` +
-                    user?.access
-                )
-            );
+        if (user?.access) {
+            if (user?.role === 'admin') {
+                setSocket(
+                    new WebSocket(
+                        `${process.env.NEXT_PUBLIC_WS_BASE_URL}ws/admin-offer/?token=${user?.access}`
+                    )
+                );
+            } else {
+                setSocket(
+                    new WebSocket(
+                        `${process.env.NEXT_PUBLIC_WS_BASE_URL}ws/seller-offer/?token=` +
+                        user?.access
+                    )
+                );
+            }
         }
-    }, []);
+    }, [user]);
 
     useEffect(() => {
         if (socket1) {
@@ -150,21 +152,23 @@ const AccountMenuSidebar = ({ setMenuDrawer, setCategoriesDrawer }) => {
     }, [socketApplication]);
 
     useEffect(() => {
-        if (user?.role === 'admin') {
-            setSocketApplication(
-                new WebSocket(
-                    `${process.env.NEXT_PUBLIC_WS_BASE_URL}ws/admin-application/?token=${user?.access}`
-                )
-            );
-        } else {
-            setSocketApplication(
-                new WebSocket(
-                    `${process.env.NEXT_PUBLIC_WS_BASE_URL}ws/seller-application/?token=` +
-                    user?.access
-                )
-            );
+        if (user?.access) {
+            if (user?.role === 'admin') {
+                setSocketApplication(
+                    new WebSocket(
+                        `${process.env.NEXT_PUBLIC_WS_BASE_URL}ws/admin-application/?token=${user?.access}`
+                    )
+                );
+            } else {
+                setSocketApplication(
+                    new WebSocket(
+                        `${process.env.NEXT_PUBLIC_WS_BASE_URL}ws/seller-application/?token=` +
+                        user?.access
+                    )
+                );
+            }
         }
-    }, []);
+    }, [user]);
 
 
     useEffect(() => {
