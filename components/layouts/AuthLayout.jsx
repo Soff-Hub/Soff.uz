@@ -8,7 +8,7 @@ import 'swiper/css/effect-fade';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
-import { isLoginning } from '~/store/auth/action';
+import { checkAuthorization } from '~/rtk-store/auth';
 
 function randomSortArray(arr) {
     return arr.sort(() => Math.random() - 0.5);
@@ -22,7 +22,7 @@ export default function AuthLayout({ children }) {
     const dispatch = useDispatch()
 
     const defaultRoutePage = () => {
-        dispatch(isLoginning());
+        dispatch(checkAuthorization());
     };
 
     useEffect(() => {

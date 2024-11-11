@@ -4,11 +4,11 @@ import Router, { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import useAuth from '~/hooks/useAuth';
-import { logOut } from '~/store/auth/action';
 import { Badge, Card, Modal, Tooltip } from 'antd';
 import { formatCurrency } from '~/utilities/product-helper';
 import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
 import CalculateTimeDifference from '~/components/partials/account/DateFormatter';
+import { logOut } from '~/rtk-store/auth';
 
 const AccountMenuSidebar = ({ setMenuDrawer, setCategoriesDrawer }) => {
     const dispatch = useDispatch();

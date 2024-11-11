@@ -16,6 +16,7 @@
         "@emotion/styled": "^11.13.0",
         "@mui/icons-material": "^5.14.12",
         "@mui/material": "^5.14.12",
+        "@reduxjs/toolkit": "^2.3.0",
         "@wavesurfer/react": "^1.0.5",
         "ant-design": "^1.0.0",
         "antd": "^5.8.4",

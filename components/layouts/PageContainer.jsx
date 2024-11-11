@@ -5,9 +5,9 @@ import HeaderElectronic from '../shared/headers/HeaderElectronic';
 import HeaderMobileElectronic from '../shared/headers/HeaderMobileElectronic';
 import FooterSecond from '../shared/footers/FooterSecond';
 import { useDispatch, useSelector } from 'react-redux';
-import { accountLinksReducers, isLoginning } from '~/store/auth/action';
 import FaqSaidbar from '../partials/faqs/faqSaidbar';
 import { useRouter } from 'next/router';
+import { checkAuthorization, setAccountLinks } from '~/rtk-store/auth';
 // import HeaderMobileBottom from '../shared/headers/HeaderMobilebottom';
 
 const initHeaders = (
@@ -206,24 +206,24 @@ const PageContainer = ({
     function initNav() {
         if (user?.role === 'admin') {
             if (user?.is_superuser) {
-                return dispatch(accountLinksReducers(accountAdminLinks));
+                return dispatch(setAccountLinks(accountAdminLinks));
             } else {
-                return dispatch(accountLinksReducers(accountModeratorLinks));
+                return dispatch(setAccountLinks(accountModeratorLinks));
             }
         }
         if (profile?.role === 'seller') {
             if (!profile?.have_sale && !profile?.have_document) {
-                return dispatch(accountLinksReducers(accountSellerLink.filter(el => el.url !== '/account/selling' && el.url !== '/account/orders')));
+                return dispatch(setAccountLinks(accountSellerLink.filter(el => el.url !== '/account/selling' && el.url !== '/account/orders')));
             } else if (!profile?.have_sale) {
-                return dispatch(accountLinksReducers(accountSellerLink.filter(el => el.url !== '/account/orders')));
+                return dispatch(setAccountLinks(accountSellerLink.filter(el => el.url !== '/account/orders')));
             } else if (!profile?.have_document) {
-                return dispatch(accountLinksReducers(accountSellerLink.filter(el => el.url !== '/account/selling')));
+                return dispatch(setAccountLinks(accountSellerLink.filter(el => el.url !== '/account/selling')));
             } else {
-                return dispatch(accountLinksReducers(accountSellerLink));
+                return dispatch(setAccountLinks(accountSellerLink));
             }
         }
         if (user?.role === 'customer') {
-            dispatch(accountLinksReducers(cutomerAccountLink));
+            dispatch(setAccountLinks(cutomerAccountLink));
         }
     }
 
@@ -236,7 +236,7 @@ const PageContainer = ({
 
 
     const defaultRoutePage = () => {
-        dispatch(isLoginning());
+        dispatch(checkAuthorization());
     };
 
     useEffect(() => {

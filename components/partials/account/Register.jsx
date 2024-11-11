@@ -7,8 +7,8 @@ import useAuth from '~/hooks/useAuth';
 import { BeatLoader } from 'react-spinners';
 import ModalTanishuv from './modules/Modal-tanishuv';
 import { withRouter } from 'next/router';
-import { begin } from '~/store/auth/action';
 import { LockOutlined, MailOutlined, PhoneOutlined } from '@ant-design/icons';
+import { begin } from '~/rtk-store/auth';
 
 
 class Register extends Component {

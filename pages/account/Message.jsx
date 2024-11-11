@@ -3,9 +3,9 @@ import { Form, Input, Modal } from 'antd';
 import useAuth from '~/hooks/useAuth';
 import PageContainer from '~/components/layouts/PageContainer';
 import { useDispatch, useSelector } from 'react-redux';
-import Router, { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { BeatLoader } from 'react-spinners';
-import { login } from '~/store/auth/action';
+import { login } from '~/rtk-store/auth';
 
 const Xabar = (e) => {
     const tokenn = useSelector((state) => state.auth);
@@ -18,7 +18,6 @@ const Xabar = (e) => {
     const Router = useRouter();
     const { id, deal } = Router.query;
     const dispatch = useDispatch();
-    const { user } = useSelector((state) => state.auth);
 
     const handleSubmitKod = async () => {
         if (kod) {

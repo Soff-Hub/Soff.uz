@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 
-import Login from '~/components/partials/account/Login';
 import { useSelector } from 'react-redux';
 import Page404 from '../page/page-404';
 import { PacmanLoader } from 'react-spinners';
@@ -8,19 +7,11 @@ import Meta from '~/components/shared/headers/Meta';
 import { useRouter } from 'next/router';
 import AuthLayout from '~/components/layouts/AuthLayout';
 import Head from 'next/head';
+import Login from '~/components/partials/account/Login';
 
 const LoginPage = () => {
     const { user } = useSelector((state) => state.auth);
     const { push } = useRouter()
-    // const breadCrumb = [
-    //     {
-    //         text: 'Asosiy sahifa',
-    //         url: '/',
-    //     },
-    //     {
-    //         text: 'Kirish',
-    //     },
-    // ];
 
     useEffect(() => {
         if (user) {
@@ -29,8 +20,6 @@ const LoginPage = () => {
             } else push('/account/shops')
         }
     }, [user])
-
-
 
     return user ? (
         <div
@@ -54,7 +43,6 @@ const LoginPage = () => {
                             title={"Kirish"}
                             description="Soff.uz - Saytiga hoziroq kiring va o'z mahsulatlaringizni soting"
                         />
-                        {/* <BreadCrumb breacrumb={breadCrumb} /> */}
                         <Login />
                     </div>
                 </AuthLayout>

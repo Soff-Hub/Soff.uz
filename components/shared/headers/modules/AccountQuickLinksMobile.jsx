@@ -1,11 +1,11 @@
 import React from 'react';
 import Link from 'next/link';
-import { logOut } from '../../../../store/auth/action';
 import { Badge, Card, Dropdown, Menu, Modal } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import useAuth from '~/hooks/useAuth';
 import Router from 'next/router';
-import { setSavedPrfileData } from '~/store/ecomerce/action';
+import { setSavedPrfileData } from '~/rtk-store/ecomerce';
+import { logOut } from '~/rtk-store/auth';
 
 
 

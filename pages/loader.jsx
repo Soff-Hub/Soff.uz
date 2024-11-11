@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { PacmanLoader } from 'react-spinners';
 import { accountModeratorLinks } from '~/components/layouts/PageContainer';
-import { accountLinksReducers, begin, login } from '~/store/auth/action';
+import { begin, login, setAccountLinks } from '~/rtk-store/auth';
 
 export let accountAdminLinks = [
     {
@@ -148,16 +148,16 @@ const Loader = () => {
 
         if (user?.role === 'admin') {
             if (user?.is_superuser) {
-                dispatch(accountLinksReducers(accountAdminLinks));
+                dispatch(setAccountLinks(accountAdminLinks));
             } else {
-                dispatch(accountLinksReducers(accountModeratorLinks));
+                dispatch(setAccountLinks(accountModeratorLinks));
             }
         }
         if (user?.role === 'seller') {
-            dispatch(accountLinksReducers(accountSellerLink));
+            dispatch(setAccountLinks(accountSellerLink));
         }
         if (user?.role === 'customer') {
-            dispatch(accountLinksReducers(cutomerAccountLink));
+            dispatch(setAccountLinks(cutomerAccountLink));
         }
 
         if (

@@ -6,13 +6,13 @@ import { generateTempArray } from '~/utilities/common-helpers';
 import SkeletonProduct from '~/components/elements/skeletons/SkeletonProduct';
 import ProductRepository from '~/repositories/ProductRepository';
 import { useDispatch } from 'react-redux';
-import { CategorySlug } from '~/store/auth/action';
 import useDebounce from '~/hooks/useDebounce';
 import { baseUrl } from '~/repositories/Repository';
 import axios from 'axios';
 import AudioWaveform from '~/components/elements/products/AudioProductCart';
 import ProductVideo from '~/components/elements/products/ProductVideo';
 import PlaylistCard from '~/components/elements/products/PlaylistCard';
+import { setCategorySlug } from '~/rtk-store/auth';
 
 const ShopItems = ({
     columns = 4,
@@ -56,8 +56,8 @@ const ShopItems = ({
                 () => setLoad(true)
             );
         if (responseData?.length > 0) {
-            dispatch(CategorySlug(responseData?.data?.results));
-          
+            dispatch(setCategorySlug(responseData?.data?.results));
+
         }
     }
 
@@ -357,7 +357,7 @@ const ShopItems = ({
                                     <div
                                         key={index}
                                         className="col-md-4 my-4 mb-4">
-                                        <PlaylistCard product={item}  />{' '}
+                                        <PlaylistCard product={item} />{' '}
                                     </div> : (
                                         <div
                                             className={classes + ' home-card-category mb-3'}

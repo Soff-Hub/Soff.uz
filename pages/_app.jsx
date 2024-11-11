@@ -11,6 +11,8 @@ import '~/scss/electronic.scss';
 import NextProgress from 'next-progress';
 import { AudioProvider } from '~/hooks/AudioContext';
 import { SidebarProvider } from '~/hooks/SidebarContext';
+import { Provider } from 'react-redux';
+import { store } from '~/rtk-store';
 
 
 function App({ Component, pageProps }) {
@@ -58,13 +60,15 @@ function App({ Component, pageProps }) {
                 color="#00A44F"
             />
             <CookiesProvider>
-                <AudioProvider>
-                    <SidebarProvider>
-                        <MasterLayout>
-                            <Component {...pageProps} />
-                        </MasterLayout>
-                    </SidebarProvider>
-                </AudioProvider>
+                <Provider store={store}>
+                    <AudioProvider>
+                        <SidebarProvider>
+                            <MasterLayout>
+                                <Component {...pageProps} />
+                            </MasterLayout>
+                        </SidebarProvider>
+                    </AudioProvider>
+                </Provider>
             </CookiesProvider>
         </>
     );
