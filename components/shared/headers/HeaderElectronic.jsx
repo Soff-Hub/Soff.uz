@@ -34,7 +34,7 @@ const HeaderElectronic = () => {
                                 <a className="ps-logo">
                                     <NextImageCard
                                         url="/static/img/soff/soff_green_white.png"
-                                        clasS="logoo"
+                                        className="logoo"
                                         width="140px"
                                         height="60px"
                                     />
@@ -58,7 +58,7 @@ const HeaderElectronic = () => {
                                 <a className="ps-logo">
                                     <NextImageCard
                                         url="/static/img/soff/soff_green_white.png"
-                                        clasS="logoo"
+                                        className="logoo"
                                         width="140px"
                                         height="60px"
                                     />

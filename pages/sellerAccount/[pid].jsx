@@ -224,7 +224,7 @@ const SellerAccount = ({ pid }) => {
                     {
                         image ?
                             <a href={image} download target='_blank'>
-                                <NextImageCard url={image} clasS=' rounded-3 mb-2' width='74px' height='46px' />
+                                <NextImageCard url={image} className=' rounded-3 mb-2' width='74px' height='46px' />
                             </a>
                             :
                             <i className="fa-solid fa-file fa-2x"></i>
@@ -296,7 +296,7 @@ const SellerAccount = ({ pid }) => {
             render: (amount, item) => (
                 <div style={{ color: item?.type === 'income' ? 'green' : 'red' }} className='d-flex align-items-center'>
                     <div>
-                        <i class={`fa-solid fa-angles-${item?.type === 'income' ? 'down' : 'up'} m-0 p-0 fs-6`}></i>
+                        <i className={`fa-solid fa-angles-${item?.type === 'income' ? 'down' : 'up'} m-0 p-0 fs-6`}></i>
                     </div>
                     <div className='ms-2 d-flex'>{addPeriodToThousands(amount)} so'm</div>
                 </div>

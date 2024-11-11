@@ -113,7 +113,7 @@ const ProductDetailQuickView = ({ product }) => {
                                               <NextImageCard
                                                   key={i}
                                                   url={item?.image_url}
-                                                  clasS="border mb-3 objectFitCover "
+                                                  className="border mb-3 objectFitCover "
                                                   width="380px"
                                                   height="390px"
                                               />
@@ -178,7 +178,7 @@ const ProductDetailQuickView = ({ product }) => {
                                               (item, i) => (
                                                   <NextImageCard
                                                       url={item?.image_url}
-                                                      clasS="border mb-3"
+                                                      className="border mb-3"
                                                       width="270px"
                                                       height="350px"
                                                       style={{

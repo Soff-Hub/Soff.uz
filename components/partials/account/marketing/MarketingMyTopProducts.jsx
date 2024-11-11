@@ -130,7 +130,7 @@ const MarketingMyTopProducts = () => {
                                         style={{ position: 'absolute', top: 5, right: 32, cursor: 'pointer' }}
                                         onClick={() => (setId(item?.id), setViewPriceDiscount(item?.price))}
                                     >
-                                        <i class="fa-regular fa-pen-to-square"></i>
+                                        <i className="fa-regular fa-pen-to-square"></i>
                                     </a>
                                     <a
                                         data-bs-target='#rejectOfferModal'
@@ -139,7 +139,7 @@ const MarketingMyTopProducts = () => {
                                         className='offer-close'
                                         style={{ position: 'absolute', top: 7, right: 9, cursor: 'pointer' }}
                                     >
-                                        <i class="fa-solid fa-xmark fs-3"></i>
+                                        <i className="fa-solid fa-xmark fs-3"></i>
                                     </a>
                                     {item.content}
                                     <div className='px-4 w-100 d-flex justify-content-end gap-3 text-secondary'>

@@ -504,7 +504,7 @@ function MyProductsLists() {
                     {image?.poster_url ? (
                         <NextImageCard
                             url={image?.poster_url}
-                            clasS="rounded-3 mb-2"
+                            className="rounded-3 mb-2"
                             width="54px"
                             height="54px"
                         />
@@ -875,7 +875,7 @@ function MyProductsLists() {
                                                             <div className="btn btn-success px-3 py-2 fs-5 rounded-3" >
                                                                 <span>
                                                                     Xotira qo'shish{' '}
-                                                                    <i class="fa-solid fa-plus"></i>
+                                                                    <i className="fa-solid fa-plus"></i>
                                                                 </span>
                                                             </div>
                                                         </Link>

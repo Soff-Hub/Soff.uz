@@ -96,7 +96,7 @@ export default function DealOrderEdit({ dealItem, setIsModalOpenUpdate }) {
                         <div className=" d-flex align-items-center ">
                             <i
                                 style={{ fontSize: '35px' }}
-                                class="fa-solid fa-circle-user d-block"></i>
+                                className="fa-solid fa-circle-user d-block"></i>
                         </div>
                     )}
                     <div>
@@ -119,7 +119,7 @@ export default function DealOrderEdit({ dealItem, setIsModalOpenUpdate }) {
                             <div className="rounded-3 d-flex justify-content-start align-items-center gap-2 p-1 ">
                                 {' '}
                                 <span className="text-success fs-5 fw-medium d-block">
-                                    <i class="fa-solid fa-circle-check"></i>
+                                    <i className="fa-solid fa-circle-check"></i>
                                 </span>{' '}
                                 <span className="fw-medium text-success  d-block">
                                     tasdiqlangan
@@ -129,7 +129,7 @@ export default function DealOrderEdit({ dealItem, setIsModalOpenUpdate }) {
                             <div className="rounded-3 d-flex justify-content-start align-items-center gap-2 p-1  ">
                                 {' '}
                                 <span className="text-warning fs-5 fw-medium d-block">
-                                    <i class="fa-regular fa-clock"></i>
+                                    <i className="fa-regular fa-clock"></i>
                                 </span>{' '}
                                 <span className="fw-medium text-warning  d-block">
                                     moderatsiya
@@ -139,7 +139,7 @@ export default function DealOrderEdit({ dealItem, setIsModalOpenUpdate }) {
                             <div className="rounded-3 d-flex justify-content-start align-items-center gap-2 px-1  ">
                                 {' '}
                                 <span className="text-danger fs-5 fw-medium d-block">
-                                    <i class="fa-solid fa-circle-xmark"></i>
+                                    <i className="fa-solid fa-circle-xmark"></i>
                                 </span>{' '}
                                 <span className="fw-medium text-danger  d-block">
                                     bekor qilingan

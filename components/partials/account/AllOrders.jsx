@@ -111,7 +111,7 @@ export default function DealCart() {
                         onClick={() =>
                             user?.access ?
                                 setOpen(true) : Router.push("/account/register?deal=deal")} >
-                        <i class="fa-solid fa-plus"></i>   Buyurtma yaratish
+                        <i className="fa-solid fa-plus"></i>   Buyurtma yaratish
                     </button>
                 </div>
                 {user?.access && <div>
@@ -276,7 +276,7 @@ export default function DealCart() {
                                 <>
                                     <div className='d-flex justify-content-center align-items-center' style={{ height: "50vh" }} >
                                         <span className='d-flex flex-column align-items-center gap-3'>
-                                            <i class="fa-brands fa-dropbox fa-4x text-secondary"></i>
+                                            <i className="fa-brands fa-dropbox fa-4x text-secondary"></i>
                                             Ma'luot topilmadi
                                         </span>
                                     </div>

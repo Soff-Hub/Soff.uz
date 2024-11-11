@@ -281,7 +281,7 @@ const AccountMenuSidebar = ({ data, menuOpen }) => {
                                             minWidth: '350px',
                                         }} title="Balansdagi pulni kartangizga yechib oling">
                                         <span style={{ cursor: 'pointer' }}>
-                                            <i class="fa-solid fa-money-bill-transfer text-success fs-2"></i>
+                                            <i className="fa-solid fa-money-bill-transfer text-success fs-2"></i>
                                         </span>
                                     </Tooltip>
                                 </a>
@@ -405,7 +405,7 @@ const AccountMenuSidebar = ({ data, menuOpen }) => {
                                 link?.url === '/account/marketing' ? (
                                     <Badge.Ribbon
                                         key={link?.url}
-                                        text={menuOpen ? 'Yangi funksiya' : <i class="fa-regular fa-lightbulb"></i>}
+                                        text={menuOpen ? 'Yangi funksiya' : <i className="fa-regular fa-lightbulb"></i>}
                                         color="blue">
                                         <Card size="small" style={{ borderRadius: '0' }}>
                                             <Tooltip placement="right" title={menuOpen ? '' : link.text}>

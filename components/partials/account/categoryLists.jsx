@@ -230,7 +230,7 @@ function CategoryLists() {
                                 {' '}
                                 <NextImageCard
                                     url={e?.image}
-                                    clasS="rounded-3 mb-2"
+                                    className="rounded-3 mb-2"
                                     width="54px"
                                     height="54px"
                                 />

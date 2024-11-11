@@ -56,7 +56,7 @@ export default function MarketingDashboardHeader() {
                     className='ps-btn text-white py-1'
                     onClick={() => push('/account/marketing/select-category')}
                 >
-                    <i class="fa-regular fa-pen-to-square"></i>
+                    <i className="fa-regular fa-pen-to-square"></i>
                 </button>
             </div>
 

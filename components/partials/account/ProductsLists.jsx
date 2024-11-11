@@ -352,7 +352,7 @@ function ProductsLists() {
                     {item?.data_status?.status === 'deleted' ? '' : poster_data?.poster_url ? (
                         <NextImageCard
                             url={poster_data?.poster_url}
-                            clasS="rounded-3 mb-2"
+                            className="rounded-3 mb-2"
                             width="54px"
                             height="54px"
                         />
@@ -360,9 +360,9 @@ function ProductsLists() {
                         <span style={{ cursor: "pointer" }} onClick={() => getImageGeneration(poster_data?.id)}>
                             {
                                 poster_data?.id == imageID ?
-                                    <i class="fa-solid fa-arrows-rotate fa-spin-pulse fs-1"></i>
+                                    <i className="fa-solid fa-arrows-rotate fa-spin-pulse fs-1"></i>
                                     :
-                                    <i class="fa-solid fa-arrows-rotate fs-1"></i>
+                                    <i className="fa-solid fa-arrows-rotate fs-1"></i>
                             }
                         </span>
 
@@ -897,9 +897,9 @@ function ProductsLists() {
                                                 <span style={{ cursor: "pointer" }} onClick={() => getImageGeneration(deleteIdView?.id)}>
                                                     {
                                                         deleteIdView?.id == imageID ?
-                                                            <i class="fa-solid fa-arrows-rotate fa-spin-pulse fa-4x text-secondary"></i>
+                                                            <i className="fa-solid fa-arrows-rotate fa-spin-pulse fa-4x text-secondary"></i>
                                                             :
-                                                            <i class="fa-solid fa-arrows-rotate fa-4x text-secondary"></i>
+                                                            <i className="fa-solid fa-arrows-rotate fa-4x text-secondary"></i>
                                                     }
 
 

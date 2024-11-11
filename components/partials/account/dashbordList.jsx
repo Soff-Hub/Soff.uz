@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
-import { Select, Table } from 'antd';
+import { Pagination, Select, Table } from 'antd';
 import CalculateTimeDifference from './DateFormatter';
 import { useSelector } from 'react-redux';
 import PartialDescription from '~/components/elements/detail/description/PartialDescription';
@@ -14,6 +14,7 @@ import { addPeriodToThousands } from './ProductsLists';
 import SidebarLayout from '../SidebarLayout';
 import AdminStats from './AdminStats';
 import SellerStart from './SellerStart';
+import { orginalApi, orginalUrl } from '~/reositoriy-admin/Repository';
 
 function DashbordList({ setOpen }) {
 
@@ -31,6 +32,10 @@ function DashbordList({ setOpen }) {
     const [donats, setDonats] = useState([]);
     const [dataLoadingDonat, setDataLoadingDonat] = useState(false);
     const [month, setMonth] = useState(null);
+    const [comments, setComments] = useState({
+        count: 0,
+        results: []
+    });
 
     const { accountLinks, user } = useSelector((state) => state.auth);
     const { profile } = useSelector((state) => state.ecomerce);
@@ -60,6 +65,14 @@ function DashbordList({ setOpen }) {
         }
         setDataLoading(false)
     }
+
+    async function getComments(pg) {
+        setDataLoading(true)
+        const resp = await orginalApi.get(orginalUrl + `seller/admin/comments/?page=${pg}`, { headers: { Authorization: `Bearer ${user?.access}` } });
+        setComments(resp.data);
+        setDataLoading(false)
+    }
+
 
     async function GetItemsProductsOrders(page) {
         setOrderLoading(true)
@@ -123,6 +136,9 @@ function DashbordList({ setOpen }) {
 
     useEffect(() => {
         GetItemsProducts();
+        if (user?.role === 'admin') {
+            getComments(1)
+        }
         GetItemsProductsOrders(1);
         GetItemsProductsPopular();
         GetItemsSeller_Yearch();
@@ -390,6 +406,49 @@ function DashbordList({ setOpen }) {
         },
     ];
 
+    const commentsColumn = [
+        {
+            title: 'Buyurtmachi',
+            dataIndex: 'user_data',
+            key: 'age',
+            render: (user_data) => (
+                <div className="d-flex flex-column">
+                    <span className="truncate whitespace-nowrap">
+                        {' '}
+                        {user_data.first_name} {user_data.last_name}
+                    </span>
+                    <span className="truncate whitespace-nowrap">
+                        {' '}
+                        {user_data.email_or_phone}
+                    </span>
+                </div>
+            ),
+        },
+        {
+            title: 'Buyurtma nomi',
+            dataIndex: 'document_data',
+            key: 'age',
+            width: 300,
+            render: (document_data) => (
+                <Link href={`https://soff.uz/product/${document_data.slug}`}>
+                    <a target='blank'>{document_data.title}</a>
+                </Link>
+            ),
+        },
+        {
+            title: 'Izoh',
+            dataIndex: 'text',
+            key: 'address',
+            render: (created_at) => (
+                <span>
+                    {' '}
+                    <i className="fa-solid fa-clock text-info-emphasis"></i>{' '}
+                    {created_at}
+                </span>
+            ),
+        },
+    ];
+
     const columnsOrdersSeller = [
         {
             title: 'ID',
@@ -561,6 +620,38 @@ function DashbordList({ setOpen }) {
                     />
             ),
         },
+        user?.role === 'admin' ? {
+            key: '3',
+            label: (
+                <span
+                    style={{
+                        marginRight: '20px',
+                        fontSize: '16px',
+                        fontWeight: '600',
+                    }}
+                >
+                    Komentariyalar
+                </span>
+            ),
+            children: (
+                user?.role === "admin" ?
+                    <div>
+                        <Table
+                            scroll={{ x: 360 }}
+                            dataSource={comments.results}
+                            columns={commentsColumn}
+                            pagination={false}
+                            loading={orderLoading}
+                        />
+                        <Pagination className='mt-4' pageSize={50} onChange={p => {
+                            getComments(p)
+                            setTimeout(() => {
+                                scrollTo(0, 1000)
+                            }, 400);
+                        }} showSizeChanger={false} total={comments.count} />
+                    </div> : ''
+            ),
+        } : {},
         ...(dataPlayLists?.length > 0 ? [{
             key: '2',
             label: (
@@ -586,7 +677,8 @@ function DashbordList({ setOpen }) {
                     />
                 </div>
             ),
-        }] : []),
+        },
+        ] : []),
     ];
 
     return (
@@ -1037,6 +1129,7 @@ function DashbordList({ setOpen }) {
                                 defaultActiveKey="1"
                                 items={itemsOrder}
                                 className="bg-white "
+                                onChange={() => scrollTo(0, 1000)}
                             />
                         </div> : ''}
 
@@ -1059,7 +1152,6 @@ function DashbordList({ setOpen }) {
                                 />
                             </div>
                         ) : < ></>}
-
                     </SidebarLayout>
                 </div>
                 <div

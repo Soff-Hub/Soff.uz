@@ -342,7 +342,7 @@ function SellingsLists() {
                     {document_data?.image ? (
                         <NextImageCard
                             url={document_data?.image?.poster_url}
-                            clasS="rounded-3 mb-2"
+                            className="rounded-3 mb-2"
                             width="54px"
                             height="54px"
                         />
@@ -929,7 +929,7 @@ function SellingsLists() {
             <Modal
                 title={<div className='d-flex align-items-center gap-2'>
                     <div onClick={() => (setEvaluation(null), setPrice(''), setAccept(false), setConfirm(false))} style={{ cursor: 'pointer' }}>
-                        <i class="fa-solid fa-arrow-left mr-2"></i>
+                        <i className="fa-solid fa-arrow-left mr-2"></i>
                     </div>
                     Mahsulotni birjaga sotuvga chiqarish
                 </div>}
@@ -1069,7 +1069,7 @@ function SellingsLists() {
 
                                         <div className='header_table_content'>
                                             {/* <button style={{ height: "40px" }} className='btn btn-warning px-4 fs-4 w-100 d-flex align-items-center justify-content-center'>
-                                                <i class="fa-solid fa-arrow-left mr-2"></i>
+                                                <i className="fa-solid fa-arrow-left mr-2"></i>
                                                 Boshqa mahsulot tanlash
                                             </button> */}
 

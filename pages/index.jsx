@@ -100,7 +100,7 @@ const HomepageDefaultPage = ({ faq, advantages, projecs }) => {
 
                             <div className="frame-2 hero-img">
                                 <img src="./static/img/man.png" alt="" height={450} />
-                                <div class="circle-ripple"></div>
+                                <div className="circle-ripple"></div>
                                 <span className='daromad'>Daromad</span>
                                 <span className='foyda'>foyda</span>
                             </div>
@@ -224,8 +224,8 @@ const HomepageDefaultPage = ({ faq, advantages, projecs }) => {
                     </div>
                 </div>
 
-                <div class="wrap">
-                    <div class="content content--sticky bg-1">
+                <div className="wrap">
+                    <div className="content content--sticky bg-1">
                         <div className="l-about">
                             <div className="container">
                                 <div className="l-about-inner">
@@ -250,7 +250,7 @@ const HomepageDefaultPage = ({ faq, advantages, projecs }) => {
                             </div>
                         </div>
                     </div>
-                    <div class="content content--sticky bg-2">
+                    <div className="content content--sticky bg-2">
                         <div className="l-about">
                             <div className="container">
                                 <div className="l-about-inner">
@@ -273,7 +273,7 @@ const HomepageDefaultPage = ({ faq, advantages, projecs }) => {
                             </div>
                         </div>
                     </div>
-                    <div class="content content--sticky bg-1">
+                    <div className="content content--sticky bg-1">
                         <div className="l-about">
                             <div className="container">
                                 <div className="l-about-inner">
@@ -295,7 +295,7 @@ const HomepageDefaultPage = ({ faq, advantages, projecs }) => {
                             </div>
                         </div>
                     </div>
-                    <div class="content content--sticky bg-2">
+                    <div className="content content--sticky bg-2">
                         <div className="l-about">
                             <div className="container">
                                 <div className="l-about-inner">
@@ -332,7 +332,7 @@ const HomepageDefaultPage = ({ faq, advantages, projecs }) => {
                                             Soff.uz nima?
                                         </h4>
 
-                                        <i class={`fa-solid fa-${acc === 0 ? 'minus' : 'plus'}`}></i>
+                                        <i className={`fa-solid fa-${acc === 0 ? 'minus' : 'plus'}`}></i>
                                     </div>
 
                                     <div className={`l-faq-content ${acc === 0 ? 'active' : ''}`} aria-description="Soff.uz - Intellektual mulk marketi, Intellektual mahsulotlarini soting va xarid qiling. Intellektual mulk - ijodiy aqliy faoliyat mahsuli. Ixtirochilik va mualliflik obʼyekti huquqi majmuiga kiruvchi, fan, adabiyot, sanʼat va ishlab chiqarish sohasida ijodiy faoliyatning boshqa turlari, adabiy, badiiy, ilmiy asarlar, ijrochi aktyorlik sanʼati, jumladan ovoz yozish, radio, televideniye asarlari, kashfiyotlar, ixtirolar, ratsionalizatorlik takliflari, sanoat namunalari, kompyuterlar uchun dasturlar, maʼlumotlar bazasi, nou-xauning ekspert tizimlari, tovar belgilari, firma atamalari va boshqa aqliy mulk obʼyektlariga kiradi. Endilikda siz Soff Marketi orqali o'z intellektual mulklaringizni joylab daromad topishingiz mumkin.">
@@ -352,7 +352,7 @@ const HomepageDefaultPage = ({ faq, advantages, projecs }) => {
                                                     {el?.title}
                                                 </h4>
 
-                                                <i class={`fa-solid fa-${acc === el?.id ? 'minus' : 'plus'}`}></i>
+                                                <i className={`fa-solid fa-${acc === el?.id ? 'minus' : 'plus'}`}></i>
                                             </div>
 
                                             <div className={`l-faq-content ${acc === el?.id ? 'active' : ''}`} aria-description={el?.description}>

@@ -75,12 +75,12 @@ const AccountQuickLinks = (props) => {
 
 
     // View
-    const linksView = accountLinks.map((item) => (
+    const linksView = accountLinks.map((item, i) => (
         <>
             {
                 item?.url === '/account/marketing' ? (
                     <Badge.Ribbon
-                        key={item?.url}
+                        key={i}
                         text={'Yangi funksiya'}
                         style={{ top: '0' }}
                         color="blue">
@@ -98,9 +98,9 @@ const AccountQuickLinks = (props) => {
                         </li>
                     </Badge.Ribbon>
                 ) : item?.url === 'b' ? (
-                    <Badge.Ribbon key={item?.url} text="Tez kunda" color="volcano">
-                        <Card size="small">
-                            <li  >
+                    <Badge.Ribbon key={i} text="Tez kunda" color="volcano">
+                        <Card size="small" key={i} >
+                            <li key={i} >
                                 <span
                                     style={{
                                         cursor: 'pointer',
@@ -114,9 +114,9 @@ const AccountQuickLinks = (props) => {
                         </Card>
                     </Badge.Ribbon>
                 ) : item?.url == '/account/deals' ? (
-                    <Badge.Ribbon key={item?.url} text="Yangi funksiya" color="primary">
-                        <Card size="small">
-                            <li>
+                    <Badge.Ribbon key={i} text="Yangi funksiya" color="primary">
+                        <Card size="small" key={i} >
+                            <li key={i}>
                                 <Link href={item.url}>
 
                                     <a
@@ -134,7 +134,7 @@ const AccountQuickLinks = (props) => {
                         </Card>
                     </Badge.Ribbon>
                 ) : (
-                    <li key={item.text}>
+                    <li key={i}>
                         <Link href={item.url}>
                             <a>
                                 {' '}
@@ -176,7 +176,7 @@ const AccountQuickLinks = (props) => {
                 <div className="ps-block__content">
                     <ul className="ps-list--arrow order">
                         {linksView}
-                        <li className="ps-block__footer">
+                        <li className="ps-block__footer" key={'wqe'}>
                             <a href="#" onClick={() => handleLogout()}>
                                 <i className="fa-solid fa-right-from-bracket me-3 mx-2 text-dark fs-4"></i>{' '}
                                 Chiqish

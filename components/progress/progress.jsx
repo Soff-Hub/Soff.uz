@@ -117,15 +117,15 @@ const Progress = ({
             <section className="progress-area">
                 {
                     (totalLoad !== total && inputName) ?
-                        <li class="row_cols">
-                            <i class="fas fa-file-alt"></i>
-                            <div class="content">
-                                <div class="details">
-                                    <span class="name">{inputName}   <span className='text-primary mx-3'>Yuklanmoqda...</span> </span>
-                                    <span class="percent">{loaded}% </span>
+                        <li className="row_cols">
+                            <i className="fas fa-file-alt"></i>
+                            <div className="content">
+                                <div className="details">
+                                    <span className="name">{inputName}   <span className='text-primary mx-3'>Yuklanmoqda...</span> </span>
+                                    <span className="percent">{loaded}% </span>
                                 </div>
-                                <div class="progress-bar">
-                                    <div class="progress" style={{ width: loaded + "%" }} >
+                                <div className="progress-bar">
+                                    <div className="progress" style={{ width: loaded + "%" }} >
                                     </div>
                                 </div>
                             </div>

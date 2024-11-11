@@ -140,7 +140,7 @@ const MobileHeaderActions = ({ auth }) => {
             {auth.isLoggedIn && Boolean(auth.isLoggedIn) === true ? (
                 <AccountQuickLinksMobile />
             ) : (
-                <Dropdown overlay={menu} placement="bottomLeft">
+                <Dropdown menu={menu} placement="bottomLeft">
                     <a href="#" className="header__extra ps-user--mobile">
                         <i className="icon-user"></i>
                     </a>

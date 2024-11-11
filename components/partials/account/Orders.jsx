@@ -47,8 +47,7 @@ function OrdersLists() {
 
 
     async function GetItemsProducts(page, status, date, searchVal, userRole) {
-        -
-            setLoading(true)
+        setLoading(true)
         const ItemsData = await GetRepository.getOrdersLists(
             page,
             status,

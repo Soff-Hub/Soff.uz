@@ -17,7 +17,7 @@ class HeaderMobileElectronic extends Component {
                             <a className="ps-logo">
                                 <NextImageCard
                                     url="/static/img/soff/soff_green_white.png"
-                                    clasS="logoo"
+                                    className="logoo"
                                     width="100px"
                                     height="40px"
                                 />

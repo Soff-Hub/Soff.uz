@@ -194,7 +194,7 @@ function Notifications() {
                                     <>
                                         <h1>{profile?.first_name}  {profile?.last_name}
                                             <span style={{ cursor: "pointer" }} onClick={() => setNameModal(true)} >
-                                                <i class="fa-solid fa-pen fs-4 mx-3 text-primary"></i>
+                                                <i className="fa-solid fa-pen fs-4 mx-3 text-primary"></i>
                                             </span></h1>
                                         {
                                             profile?.email &&

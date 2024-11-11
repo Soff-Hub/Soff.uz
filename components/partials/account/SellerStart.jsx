@@ -38,8 +38,8 @@ const SellerStart = () => {
                     {
                         items.map(el => (
                             <div className={`new-card-container ${collapse ? '' : 'w-25'}`}>
-                                <div class="new-card" onClick={() => Router.push(el.path)}>
-                                    <div class="ilustration">
+                                <div className="new-card" onClick={() => Router.push(el.path)}>
+                                    <div className="ilustration">
                                         <img src={el.img} alt="" />
                                     </div>
                                     <h3>{el.title}</h3>
