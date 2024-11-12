@@ -18,7 +18,7 @@ export default function GoogleBox({ loading }) {
             // });
             // modal.update
             console.log(err);
-            
+
         }
     };
 
@@ -28,8 +28,9 @@ export default function GoogleBox({ loading }) {
             {!loading ? (
                 <div
                     onClick={handleGoogleClick}
-                    className="ps-btn ps-btn--fullwidth d-flex align-items-center justify-content-center pb-0">
-                    Google orqali kirish
+                    className="ps-btn ps-btn--fullwidth d-flex align-items-center justify-content-center pb-0 gap-2">
+                    <span>Google akkount orqali kirish</span>
+                    <img src="/static/img/google.png" alt="" height={30} />
                 </div>
             ) : (
                 <button
