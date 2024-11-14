@@ -126,8 +126,4 @@ function NavigationListAdmin() {
     );
 }
 
-const mapStateToProps = (state) => {
-    return state.setting;
-};
-
-export default connect(mapStateToProps)(NavigationListAdmin);
+export default NavigationListAdmin

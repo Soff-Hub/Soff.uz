@@ -381,7 +381,7 @@ export default function MyDealCart() {
                                                                 {
                                                                     item?.deal_status_for_applicant !== "new" ? <></> :
                                                                         <Dropdown
-                                                                            menu={(
+                                                                            overlay={(
                                                                                 <Menu>
                                                                                     <Menu.Item key="0">
                                                                                         <span style={{ cursor: "pointer" }} onClick={() => showModalUpdate(item?.id)}>

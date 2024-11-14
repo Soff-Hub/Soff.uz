@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { DotChartOutlined } from '@ant-design/icons';
+import { Skeleton } from 'antd';
 
 export default function UserDashboardsChart({ data }) {
     const [isClient, setIsClient] = useState(false);
@@ -55,7 +57,17 @@ export default function UserDashboardsChart({ data }) {
     };
 
     if (!isClient || !ReactApexcharts) {
-        return <div>Loading...</div>;
+        return <Skeleton.Node
+            style={{ height: '260px' }}
+            className='my-2 w-100 px-3'
+            active={true}>
+            <DotChartOutlined
+                style={{
+                    fontSize: 90,
+                    color: '#bfbfbf',
+                }}
+            />
+        </Skeleton.Node>
     }
 
     return (

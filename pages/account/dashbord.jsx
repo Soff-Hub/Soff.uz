@@ -226,8 +226,8 @@ const MyAccountPage = () => {
                 </Modal>
 
                 {user?.role === "admin" &&
-                    <div className="py-5" style={{ backgroundColor: "#f1f1f1" }} >
-                        <div className='container'>
+                    <div className="pt-4 pb-2" style={{ backgroundColor: "#f1f1f1" }} >
+                        <div className='container' style={{ maxWidth: '1400px' }}>
                             {user?.role === "admin" && <Segmented
                                 options={[
                                     {

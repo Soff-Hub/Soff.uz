@@ -26,7 +26,7 @@ export default function SidebarLayout({ children, accountLinks }) {
                     <AccountMenuSidebar menuOpen={collapse} data={accountLinks} />
                 </div>
             </div>
-            <div className={`mt-3 ${animate && 'animate-manu'} ${collapse ? 'col-lg-8' : 'col-lg-11'}`}>
+            <div className={`mt-3 ${animate && 'animate-manu'} ${collapse ? 'col-lg-8' : 'col-lg-11'} ps-0`}>
                 {children}
             </div>
         </>

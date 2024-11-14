@@ -2,14 +2,16 @@ import { configureStore } from '@reduxjs/toolkit';
 
 import auth from './auth';
 import ecomerce from './ecomerce';
+import dashboard from './dashboard/slice';
+import { dashboardApi } from './dashboard/api';
 
 export const store = configureStore({
     reducer: {
         auth,
-        ecomerce
+        ecomerce,
+        dashboard,
+        [dashboardApi.reducerPath]: dashboardApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware({
-            serializableCheck: false,
-        }),
+        getDefaultMiddleware().concat(dashboardApi.middleware),
 });

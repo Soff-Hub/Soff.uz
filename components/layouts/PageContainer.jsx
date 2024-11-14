@@ -86,7 +86,6 @@ export let accountAdminLinks = [
     },
 
 ];
-
 export let accountModeratorLinks = [
     {
         text: 'Sotuvchilar',

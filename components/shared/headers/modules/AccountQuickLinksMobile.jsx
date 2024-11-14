@@ -40,67 +40,18 @@ function AccountQuickLinks() {
         <Menu>
             {accountLinks.map((link) => (
                 <div className="order">
-                    {link?.url == '/account/marketing' ? <Badge.Ribbon key={link?.url} text="Yangi funksiya" color='blue' style={{ top: '0' }}>
-                        <Card size="small" style={{ backgroundColor: 'rgba(0, 0, 0, 0.04)', borderRadius: 0 }}>
-                            <li key={link.text} className='ps-4'>
-                                <Link href={link.url}>
-                                    <a>
-                                        {' '}
-                                        <span>
-                                            <i
-                                                className={` text-dark fs-4 me-2  ${link.icon}`}></i>{' '}
-                                        </span>{' '}
-                                        {link.text}{' '}
-                                    </a>
-                                </Link>
-                            </li>
-                        </Card>
-                    </Badge.Ribbon> : link?.url == '/account/deals' ? (
-                        <Badge.Ribbon text="Tez kunda" color="volcano">
-                            <Card size="small">
-                                <Menu.Item key={link.url}>
-                                    <Link href={link.url}>
-                                        <a>
-                                            {' '}
-                                            <span>
-                                                <i className={` text-dark fs-4 me-2  ${link.icon}`}></i>{' '}
-                                            </span>{' '}
-                                            Mening bitimlarim
-                                        </a>
-                                    </Link>
-                                </Menu.Item>
-                            </Card>
-                        </Badge.Ribbon>
-                    ) : link?.url == 'b' ? (
-                        <Badge.Ribbon text="Tez kunda" color="volcano">
-                            <Card size="small">
-                                <Menu.Item key={link.url}>
-                                    <Link href="#">
-                                        <a>
-                                            {' '}
-                                            <span>
-                                                <i className="fa-regular fa-handshake"></i>{' '}
-                                            </span>{' '}
-                                            Buyurtma berish
-                                        </a>
-                                    </Link>
-                                </Menu.Item>
-                            </Card>
-                        </Badge.Ribbon>
-                    ) : (
-                        <Menu.Item key={link.url}>
-                            <Link href={link.url}>
-                                <a>
-                                    {' '}
-                                    <span>
-                                        <i
-                                            className={` text-dark fs-4 me-2  ${link.icon}`}></i>{' '}
-                                    </span>{' '}
-                                    {link.text}
-                                </a>
-                            </Link>
-                        </Menu.Item>
-                    )}
+                    <Menu.Item key={link.url}>
+                        <Link href={link.url}>
+                            <a>
+                                {' '}
+                                <span>
+                                    <i
+                                        className={` text-dark fs-4 me-2  ${link.icon}`}></i>{' '}
+                                </span>{' '}
+                                {link.text}
+                            </a>
+                        </Link>
+                    </Menu.Item>
                 </div>
             ))}
             <Menu.Item>
@@ -115,7 +66,7 @@ function AccountQuickLinks() {
 
 
     return (
-        <Dropdown menu={menu} placement="bottomLeft">
+        <Dropdown overlay={menu} placement="bottomLeft">
             <a href="#" className="header__extra ps-user--mobile">
                 {profile?.image ? (
                     <img

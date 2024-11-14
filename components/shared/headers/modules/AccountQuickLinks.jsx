@@ -76,78 +76,18 @@ const AccountQuickLinks = (props) => {
 
     // View
     const linksView = accountLinks.map((item, i) => (
-        <>
-            {
-                item?.url === '/account/marketing' ? (
-                    <Badge.Ribbon
-                        key={i}
-                        text={'Yangi funksiya'}
-                        style={{ top: '0' }}
-                        color="blue">
-                        <li key={item.text}>
-                            <Link href={item.url}>
-                                <a>
-                                    {' '}
-                                    <span>
-                                        <i
-                                            className={` text-dark fs-4 me-2  ${item.icon}`}></i>{' '}
-                                    </span>{' '}
-                                    {item.text}{' '}
-                                </a>
-                            </Link>
-                        </li>
-                    </Badge.Ribbon>
-                ) : item?.url === 'b' ? (
-                    <Badge.Ribbon key={i} text="Tez kunda" color="volcano">
-                        <Card size="small" key={i} >
-                            <li key={i} >
-                                <span
-                                    style={{
-                                        cursor: 'pointer',
-                                    }}>
-                                    <a className="d-flex align-items-center">
-                                        <i className="fa-regular fa-handshake text-dark fs-4 me-2 "></i>
-                                        Buyurtma berish
-                                    </a>
-                                </span>
-                            </li >
-                        </Card>
-                    </Badge.Ribbon>
-                ) : item?.url == '/account/deals' ? (
-                    <Badge.Ribbon key={i} text="Yangi funksiya" color="primary">
-                        <Card size="small" key={i} >
-                            <li key={i}>
-                                <Link href={item.url}>
-
-                                    <a
-                                        style={{
-                                            cursor: 'pointer',
-                                        }}>
-                                        <a className="d-flex align-items-center">
-                                            <i className={` text-dark fs-4 me-2  ${item.icon}`}></i>
-                                            Mening bitimlarim
-                                        </a>
-                                    </a>
-
-                                </Link>
-                            </li>
-                        </Card>
-                    </Badge.Ribbon>
-                ) : (
-                    <li key={i}>
-                        <Link href={item.url}>
-                            <a>
-                                {' '}
-                                <span>
-                                    <i
-                                        className={` text-dark fs-4 me-2  ${item.icon}`}></i>{' '}
-                                </span>{' '}
-                                {item.text}{' '}
-                            </a>
-                        </Link>
-                    </li>
-                )}
-        </>
+        <li key={i}>
+            <Link href={item.url}>
+                <a>
+                    {' '}
+                    <span>
+                        <i
+                            className={` text-dark fs-4 me-2  ${item.icon}`}></i>{' '}
+                    </span>{' '}
+                    {item.text}{' '}
+                </a>
+            </Link>
+        </li>
     ));
 
 
@@ -215,4 +155,4 @@ const AccountQuickLinks = (props) => {
     }
 };
 
-export default connect((state) => state)(AccountQuickLinks);
+export default AccountQuickLinks

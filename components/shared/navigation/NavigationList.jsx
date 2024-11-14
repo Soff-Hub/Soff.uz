@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { connect } from 'react-redux';
 import { Drawer } from 'antd';
 import PanelMenu from '../panel/PanelMenu';
 import PanelCartMobile from '../panel/PanelCartMobile';
@@ -98,8 +97,4 @@ function NavigationList() {
     );
 }
 
-const mapStateToProps = (state) => {
-    return state.setting;
-};
-
-export default connect(mapStateToProps)(NavigationList);
+export default NavigationList

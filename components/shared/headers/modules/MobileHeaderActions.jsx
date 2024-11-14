@@ -8,28 +8,25 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 
-const MobileHeaderActions = ({ auth }) => {
+const MobileHeaderActions = () => {
     const state = useSelector((state) => state.ecomerce.cartDataItems);
+    const auth = useSelector((state) => state.auth);
     const router = useRouter();
-    const { id, deal } = router?.query
-
-
+    const { id } = router?.query
 
     const menu = (
         <Menu>
             <div className="d-flex flex-column p-2">
                 <Link href={
-                    (id) ? `/account/login?id=${id}` :
-                        (deal) ? `/account/login?deal=${deal}` :
-                            "/account/login"
+                    id ? `/account/login?id=${id}` :
+                        "/account/login"
                 }>
                     <a>Kirish</a>
                 </Link>
 
                 <Link href={
-                    (id) ? `/account/register?id=${id}&role=customer` :
-                        (deal) ? `/account/register?deal=${deal}` :
-                            "/account/register"
+                    id ? `/account/register?id=${id}&role=customer` :
+                        "/account/register"
                 }>
                     <a>Ro'yxatdan o'tish</a>
                 </Link>
@@ -104,7 +101,7 @@ const MobileHeaderActions = ({ auth }) => {
 
     return (
         <div className="navigation__right">
-            {contextHolder}
+            {/* {contextHolder} */}
             <Link href="/page/about-us">
                 <a className="header__extra">
                     <i className="fa-regular fa-circle-question"></i>
@@ -140,7 +137,7 @@ const MobileHeaderActions = ({ auth }) => {
             {auth.isLoggedIn && Boolean(auth.isLoggedIn) === true ? (
                 <AccountQuickLinksMobile />
             ) : (
-                <Dropdown menu={menu} placement="bottomLeft">
+                <Dropdown overlay={menu} placement="bottomLeft">
                     <a href="#" className="header__extra ps-user--mobile">
                         <i className="icon-user"></i>
                     </a>
@@ -150,4 +147,4 @@ const MobileHeaderActions = ({ auth }) => {
     );
 };
 
-export default connect((state) => state)(MobileHeaderActions);
+export default MobileHeaderActions

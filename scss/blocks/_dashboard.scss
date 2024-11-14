@@ -1,0 +1,49 @@
+.dashboard-stats {
+    display: flex;
+}
+
+@media only screen and (max-width: 900px) {
+    .dashboard-stats {
+        flex-wrap: wrap;
+
+        .w-100 {
+            width: 48% !important;
+        }
+    }
+}
+
+@media only screen and (max-width: 576px) {
+    .dashboard-stats {
+        flex-wrap: wrap;
+
+        .rounded-circle {
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        i {
+            font-size: 20px !important;
+            margin-bottom: 6px;
+        }
+    }
+
+    .w-100 {
+        width: 100% !important;
+    }
+
+    .stats-price {
+        font-size: 16px;
+        margin: 5px 0;
+    }
+
+    .stats-card-inner {
+        padding: 0px;
+        border-radius: 14px !important;
+
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+        }
+    }
+}

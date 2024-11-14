@@ -1,16 +1,17 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
-import Router, { withRouter } from 'next/router';
+import Router, { useRouter, withRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, Input, Modal, notification, Segmented } from 'antd';
 import useAuth from '~/hooks/useAuth';
 import { BeatLoader } from 'react-spinners';
 import { LockOutlined, MailOutlined, PhoneOutlined } from '@ant-design/icons';
 import { begin, checkAuthorization, login } from '~/rtk-store/auth';
+import { setSavedPrfileData } from '~/rtk-store/ecomerce';
+import GetRepository from '~/reositoriy-admin/GetRepository';
 
-const Login = (props) => {
+const Login = () => {
     const dispatch = useDispatch();
-    const { isLoggedIn } = useSelector((state) => state.auth);
     const { loginUser, registerGoogleUser } = useAuth();
     const [report, setReport] = useState(true);
     const [reportGoogle, setReportGoogle] = useState(true);
@@ -18,6 +19,8 @@ const Login = (props) => {
     const [phone, setPhone] = useState('');
     const [value, setValue] = useState('');
     const passwordInput = useRef();
+
+    const router = useRouter()
 
     useEffect(() => {
         dispatch(checkAuthorization());
@@ -47,6 +50,10 @@ const Login = (props) => {
             } else {
                 dispatch(login({ user: user.data, data }));
                 dispatch(begin({ id: user.data.first }));
+                const profileData = await GetRepository.getProfile(user.data?.access);
+                if (profileData) {
+                    dispatch(setSavedPrfileData(profileData));
+                }
                 setReport(true);
                 notification.open({
                     message: `${user?.data?.msg}`,
@@ -54,15 +61,15 @@ const Login = (props) => {
                     type: 'success',
                 });
 
-                if (props.router.query.id) {
-                    Router.push(`/account/checkout-one?id=${props.router.query.id}`);
-                } else if (props.router.query.deal) {
+                if (router.query.id) {
+                    Router.push(`/account/checkout-one?id=${router.query.id}`);
+                } else if (router.query.deal) {
                     Router.push('/account/all-orders');
                 } else {
                     if (user?.data?.role === 'seller' || user?.data?.role === 'admin') {
-                        Router.push('/account/dashbord');
+                        router.push('/account/dashbord');
                     } else if (user?.data?.role === 'customer') {
-                        Router.push('/account/sellerproducts');
+                        router.push('/account/sellerproducts');
                     }
                 }
             }
@@ -105,7 +112,7 @@ const Login = (props) => {
         }
     };
 
-    const { deal, id } = props?.router?.query;
+    const { deal, id } = router?.query;
 
     return (
         <>
@@ -224,4 +231,4 @@ const Login = (props) => {
     );
 };
 
-export default withRouter(Login);
+export default Login

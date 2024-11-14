@@ -201,7 +201,7 @@ export default function MyOrders() {
                                                             {
                                                                 item?.status !== 'active' ?
                                                                     <Dropdown
-                                                                        menu={(
+                                                                        overlay={(
                                                                             <Menu>
                                                                                 <Menu.Item key="0">
                                                                                     <span style={{ cursor: "pointer" }} onClick={() => handleClickUpdate(item?.id)} >

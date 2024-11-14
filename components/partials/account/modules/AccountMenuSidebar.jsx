@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
@@ -7,7 +7,7 @@ import { Badge, Card, Modal, Tooltip } from 'antd';
 import { formatCurrency } from '~/utilities/product-helper';
 import { addPeriodToThousands } from '../ProductsLists';
 import CalculateTimeDifference from '../DateFormatter';
-import { SidebarContext } from '~/hooks/SidebarContext';
+
 
 const AccountMenuSidebar = ({ data, menuOpen }) => {
 
@@ -26,9 +26,6 @@ const AccountMenuSidebar = ({ data, menuOpen }) => {
     const [applicationData, setApplicationData] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalOpenCustomer, setIsModalOpenCustomer] = useState(false);
-
-    const { collapse } = useContext(SidebarContext)
-
 
     const showModalCustomer = () => {
         setIsModalOpenCustomer(true);
@@ -178,7 +175,7 @@ const AccountMenuSidebar = ({ data, menuOpen }) => {
                     {profile?.image ? (
                         <img src={`${profile?.image}`} className="profile__image" style={{ maxWidth: '40px' }} />
                     ) : (
-                        <i className=" fa-3x text-info fa-solid fa-circle-user"></i>
+                        <i className="mx-auto fa-3x text-info fa-solid fa-circle-user" style={{ maxWidth: '40px' }}></i>
                     )}
                     {menuOpen && <figure>
                         <>
@@ -402,139 +399,120 @@ const AccountMenuSidebar = ({ data, menuOpen }) => {
                     {data.map((link, index) => (
                         <>
                             {
-                                link?.url === '/account/marketing' ? (
+                                link?.url === 'b' ? (
                                     <Badge.Ribbon
                                         key={link?.url}
-                                        text={menuOpen ? 'Yangi funksiya' : <i className="fa-regular fa-lightbulb"></i>}
+                                        text="Yangi funksiya"
                                         color="blue">
-                                        <Card size="small" style={{ borderRadius: '0' }}>
-                                            <Tooltip placement="right" title={menuOpen ? '' : link.text}>
-                                                <li>
-                                                    <Link href={link.url}>
-                                                        <a className={`d-flex align-items-center`}>
-                                                            <i className={link.icon}></i>
-                                                            {menuOpen ? link.text : ''}
-                                                        </a>
-                                                    </Link>
-                                                </li>
-                                            </Tooltip>
-                                        </Card>
-                                    </Badge.Ribbon>
-                                ) :
-                                    link?.url === 'b' ? (
-                                        <Badge.Ribbon
-                                            key={link?.url}
-                                            text="Yangi funksiya"
-                                            color="blue">
-                                            <Card size="small">
-                                                <li onClick={showModalCustomer}>
-                                                    <span
-                                                        style={{
-                                                            cursor: 'pointer',
-                                                        }}>
-                                                        <a className="d-flex align-items-center">
-                                                            <i className="fa-regular fa-handshake"></i>
-                                                            Buyurtma berish
-                                                        </a>
-                                                    </span>
-                                                </li>
-                                            </Card>
-                                        </Badge.Ribbon>
-
-                                    ) : (dataBlock?.has_blocked && link?.url === '/account/myproducts/product-selection') ? (
-
-                                        <li onClick={handleOk}>
-                                            <Tooltip placement="right" title={'Yangi Mahsulot'}>
+                                        <Card size="small">
+                                            <li onClick={showModalCustomer}>
                                                 <span
                                                     style={{
                                                         cursor: 'pointer',
                                                     }}>
                                                     <a className="d-flex align-items-center">
-                                                        <i className="fa-solid fa-circle-plus"></i>
-                                                        Yangi Mahsulot
+                                                        <i className="fa-regular fa-handshake"></i>
+                                                        Buyurtma berish
                                                     </a>
                                                 </span>
-                                            </Tooltip>
-                                        </li>
+                                            </li>
+                                        </Card>
+                                    </Badge.Ribbon>
 
-                                    ) :
-                                        (
+                                ) : (dataBlock?.has_blocked && link?.url === '/account/myproducts/product-selection') ? (
 
-                                            <li
-                                                key={link.text}
-                                                className={`${link.url === asPath ? 'active' : ''
-                                                    } step-${index + 4}`}>
-                                                <Link href={link.url}>
-                                                    <span style={{ cursor: 'pointer' }}>
-                                                        <Tooltip placement="right" title={menuOpen ? '' : link.text}>
-                                                            <a
-                                                                className={`d-flex align-items-center`}>
-                                                                <i className={link.icon}></i>
-                                                                {menuOpen ? link.text : ''}{' '}
+                                    <li onClick={handleOk}>
+                                        <Tooltip placement="right" title={'Yangi Mahsulot'}>
+                                            <span
+                                                style={{
+                                                    cursor: 'pointer',
+                                                }}>
+                                                <a className="d-flex align-items-center">
+                                                    <i className="fa-solid fa-circle-plus"></i>
+                                                    Yangi Mahsulot
+                                                </a>
+                                            </span>
+                                        </Tooltip>
+                                    </li>
 
-                                                                {user?.role === 'admin' ? (
-                                                                    link?.url ===
-                                                                        '/account/application' &&
-                                                                        (applicationData?.count > 0 ||
-                                                                            webdata?.count > 0) ? (
-                                                                        <strong
-                                                                            className={`text-white bg-warning  border px-3 py-2  fs-5 rounded-circle notif-badge ${!menuOpen && 'notif-badge-mobile'}`}>
-                                                                            {Number(
-                                                                                applicationData?.count
-                                                                            ) +
-                                                                                Number(
-                                                                                    webdata?.count
-                                                                                )}
-                                                                        </strong>
-                                                                    ) : (
-                                                                        ''
-                                                                    )
-                                                                ) : (
-                                                                    ''
-                                                                )}
+                                ) :
+                                    (
 
-                                                                {user?.role === 'admin' && link?.url === '/account/products?page=1' && webdata1?.count > 0 && (
-                                                                    <strong
-                                                                        className={`text-white bg-warning  border px-3 py-2  fs-5 rounded-circle notif-badge ${!menuOpen && 'notif-badge-mobile'}`}
-                                                                    >
-                                                                        {webdata1?.count}
-                                                                    </strong>
-                                                                )}
+                                        <li
+                                            key={link.text}
+                                            className={`${link.url === asPath ? 'active' : ''
+                                                } step-${index + 4}`}>
+                                            <Link href={link.url}>
+                                                <span style={{ cursor: 'pointer' }}>
+                                                    <Tooltip placement="right" title={menuOpen ? '' : link.text}>
+                                                        <a
+                                                            className={`d-flex align-items-center`}>
+                                                            <i className={link.icon}></i>
+                                                            {menuOpen ? link.text : ''}{' '}
 
-
-                                                                {user?.role === 'seller' && link?.url === '/account/myproducts' && webdata2?.count > 0 && (
+                                                            {user?.role === 'admin' ? (
+                                                                link?.url ===
+                                                                    '/account/application' &&
+                                                                    (applicationData?.count > 0 ||
+                                                                        webdata?.count > 0) ? (
                                                                     <strong
                                                                         className={`text-white bg-warning  border px-3 py-2  fs-5 rounded-circle notif-badge ${!menuOpen && 'notif-badge-mobile'}`}>
-                                                                        {webdata2?.count}
-                                                                    </strong>)
-                                                                }
-
-                                                                {user?.role === 'seller' ? (
-                                                                    link?.url ===
-                                                                        '/account/application' &&
-                                                                        (applicationData?.count > 0 ||
-                                                                            webdata?.count > 0) ? (
-                                                                        <strong
-                                                                            className={`text-white bg-warning  border px-3 py-2  fs-5 rounded-circle notif-badge ${!menuOpen && 'notif-badge-mobile'}`}>
-                                                                            {Number(
-                                                                                applicationData?.count
-                                                                            ) +
-                                                                                Number(
-                                                                                    webdata?.count
-                                                                                )}
-                                                                        </strong>
-                                                                    ) : (
-                                                                        ''
-                                                                    )
+                                                                        {Number(
+                                                                            applicationData?.count
+                                                                        ) +
+                                                                            Number(
+                                                                                webdata?.count
+                                                                            )}
+                                                                    </strong>
                                                                 ) : (
                                                                     ''
-                                                                )}
-                                                            </a>
-                                                        </Tooltip>
-                                                    </span>
-                                                </Link>
-                                            </li>
-                                        )}
+                                                                )
+                                                            ) : (
+                                                                ''
+                                                            )}
+
+                                                            {user?.role === 'admin' && link?.url === '/account/products?page=1' && webdata1?.count > 0 && (
+                                                                <strong
+                                                                    className={`text-white bg-warning  border px-3 py-2  fs-5 rounded-circle notif-badge ${!menuOpen && 'notif-badge-mobile'}`}
+                                                                >
+                                                                    {webdata1?.count}
+                                                                </strong>
+                                                            )}
+
+
+                                                            {user?.role === 'seller' && link?.url === '/account/myproducts' && webdata2?.count > 0 && (
+                                                                <strong
+                                                                    className={`text-white bg-warning  border px-3 py-2  fs-5 rounded-circle notif-badge ${!menuOpen && 'notif-badge-mobile'}`}>
+                                                                    {webdata2?.count}
+                                                                </strong>)
+                                                            }
+
+                                                            {user?.role === 'seller' ? (
+                                                                link?.url ===
+                                                                    '/account/application' &&
+                                                                    (applicationData?.count > 0 ||
+                                                                        webdata?.count > 0) ? (
+                                                                    <strong
+                                                                        className={`text-white bg-warning  border px-3 py-2  fs-5 rounded-circle notif-badge ${!menuOpen && 'notif-badge-mobile'}`}>
+                                                                        {Number(
+                                                                            applicationData?.count
+                                                                        ) +
+                                                                            Number(
+                                                                                webdata?.count
+                                                                            )}
+                                                                    </strong>
+                                                                ) : (
+                                                                    ''
+                                                                )
+                                                            ) : (
+                                                                ''
+                                                            )}
+                                                        </a>
+                                                    </Tooltip>
+                                                </span>
+                                            </Link>
+                                        </li>
+                                    )}
                         </>
                     ))}
                 </ul>

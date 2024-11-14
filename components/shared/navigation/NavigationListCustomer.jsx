@@ -105,8 +105,4 @@ function NavigationListCustomer() {
     );
 }
 
-const mapStateToProps = (state) => {
-    return state.setting;
-};
-
-export default connect(mapStateToProps)(NavigationListCustomer);
+export default NavigationListCustomer

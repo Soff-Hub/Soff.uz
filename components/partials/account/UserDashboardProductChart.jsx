@@ -1,19 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import { Skeleton } from 'antd';
+import React, { useEffect, useState, useMemo } from 'react';
+import { DotChartOutlined } from '@ant-design/icons';
 
 export default function UserDashboardProductChart({ data }) {
     const [isClient, setIsClient] = useState(false);
     const [ReactApexcharts, setReactApexcharts] = useState(null);
 
     useEffect(() => {
+        let isMounted = true;
         setIsClient(true);
+
         const loadApexcharts = async () => {
             const module = await import('react-apexcharts');
-            setReactApexcharts(() => module.default);
+            if (isMounted) {
+                setReactApexcharts(() => module.default);
+            }
         };
+
         loadApexcharts();
+
+        return () => {
+            isMounted = false;
+        };
     }, []);
 
-    const props = {
+    const props = useMemo(() => ({
         options: {
             chart: {
                 width: 400,
@@ -28,7 +39,7 @@ export default function UserDashboardProductChart({ data }) {
             stroke: {
                 width: 1,
             },
-            labels: data?.map(el => el.month),
+            labels: data?.map(el => el.month) || [], // labels uchun fallback qiymat
             responsive: [{
                 breakpoint: 576,
                 options: {
@@ -52,37 +63,37 @@ export default function UserDashboardProductChart({ data }) {
                 position: 'top'
             }
         },
-    };
+    }), [data]);
 
-    if (!isClient || !ReactApexcharts) {
-        return <div>Loading...</div>;
+    if (!isClient || !ReactApexcharts || !data?.length) {
+        return (
+            <Skeleton.Node
+                style={{ height: '260px' }}
+                className='my-2 w-100 px-3'
+                active={true}>
+                <DotChartOutlined
+                    style={{
+                        fontSize: 90,
+                        color: '#bfbfbf',
+                    }}
+                />
+            </Skeleton.Node>
+        );
     }
 
     return (
         <div className='h-100 w-100'>
             <div id="chart-circle" className='h-100 w-100'>
-                <ReactApexcharts options={props.options} series={[
-                    {
-                        data: data?.map(el => el?.all_doc_count),
-                        name: "Yuklangan mahsulotlar"
-                    },
-                    {
-                        data: data?.map(el => el?.approved_doc_count),
-                        name: "Aktiv"
-                    },
-                    {
-                        data: data?.map(el => el?.moderation_doc_count),
-                        name: "Moderatsiyada"
-                    },
-                    {
-                        data: data?.map(el => el?.deleted_doc_count),
-                        name: "O'chirilgan"
-                    },
-                    {
-                        data: data?.map(el => el?.cancelled_doc_count),
-                        name: "Bekor qilingan"
-                    }
-                ]}
+                <ReactApexcharts
+                    key={JSON.stringify(data)} // key prop qo'shildi
+                    options={props.options}
+                    series={[
+                        { data: data?.map(el => el?.all_doc_count), name: "Yuklangan mahsulotlar" },
+                        { data: data?.map(el => el?.approved_doc_count), name: "Aktiv" },
+                        { data: data?.map(el => el?.moderation_doc_count), name: "Moderatsiyada" },
+                        { data: data?.map(el => el?.deleted_doc_count), name: "O'chirilgan" },
+                        { data: data?.map(el => el?.cancelled_doc_count), name: "Bekor qilingan" }
+                    ]}
                     type="area"
                     width={'100%'}
                     height={320}
