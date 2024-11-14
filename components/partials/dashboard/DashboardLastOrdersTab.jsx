@@ -4,9 +4,11 @@ import DashboardOrderTable from './DashboardOrderTable';
 import DashboardCommentsTable from './DashboardCommentsTable';
 // import DashboardPlaylistTable from './DashboardPlaylistTable';
 import { Tabs } from 'antd';
+import useResponsive from '~/utilities/useResponsive';
 
 export default function DashboardLastOrdersTabs() {
     const { profile } = useSelector(state => state.ecomerce)
+    const { isMobile } = useResponsive()
 
     const tabs = [
         {
@@ -50,7 +52,7 @@ export default function DashboardLastOrdersTabs() {
                 centered
                 defaultActiveKey="1"
                 items={profile?.role === 'admin' ? items : sellerItems}
-                className="bg-white "
+                className={isMobile ? '' : 'bg-white'}
                 onChange={() => scrollTo(0, 1000)}
             />
         </div>
