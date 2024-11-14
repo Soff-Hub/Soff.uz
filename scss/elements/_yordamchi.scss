@@ -2303,6 +2303,27 @@
         width: 100%;
         background-color: transparent;
     }
+
+    .fixed-sidebar {
+        display: none;
+    }
+
+    .ant-tabs-tab {
+        padding: 6px !important;
+
+        span {
+            margin: 0 !important;
+            padding: 2px;
+        }
+    }
+
+    .dashboard-tabs {
+        margin: 0 !important;
+    }
+
+    .dashboard-stats {
+        padding-top: 20px;
+    }
 }
 
 @keyframes vibrate {

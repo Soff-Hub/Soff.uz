@@ -39,7 +39,7 @@ function DashbordList() {
                             (!profile?.have_sale && profile?.role === 'seller') ? <SellerStart /> : ''
                         }
 
-                        {profile?.have_document || profile?.role === 'admin' ? <div className="my-4 py-2">
+                        {profile?.have_document || profile?.role === 'admin' ? <div className="my-4 py-2 dashboard-tabs">
                             <DashboardLastOrdersTabs />
                         </div> : ''}
 
