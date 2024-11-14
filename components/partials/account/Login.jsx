@@ -78,9 +78,8 @@ const Login = () => {
 
     const handleGoogleClick = async () => {
         setReportGoogle(false);
-        const url = props.url;
         window.location = 'http://api.soff.uz/auth/social/login/seller?seller_page=true';
-        const user = await registerGoogleUser(url, 'seller');
+        const user = await registerGoogleUser('/auth/google-login', 'seller');
         if (user) {
             if (user.status >= 400 && user.status !== 500) {
                 setReportGoogle(true);
