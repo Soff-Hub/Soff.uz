@@ -33,7 +33,8 @@ export default function UserDashboardProductChart({ data }) {
                     tools: {
                         zoomin: false,
                         zoomout: false
-                    }
+                    },
+                    show: false
                 }
             },
             stroke: {
@@ -44,7 +45,7 @@ export default function UserDashboardProductChart({ data }) {
                 breakpoint: 576,
                 options: {
                     chart: {
-                        width: 300
+                        width: '100%'
                     },
                     legend: {
                         position: 'bottom',
@@ -82,8 +83,8 @@ export default function UserDashboardProductChart({ data }) {
     }
 
     return (
-        <div className='h-100 w-100'>
-            <div id="chart-circle" className='h-100 w-100'>
+        <div className='h-100 w-100 py-2'>
+            <div id="chart-circle" className='h-100 w-100' style={{borderRadius: '12px'}}>
                 <ReactApexcharts
                     key={JSON.stringify(data)} // key prop qo'shildi
                     options={props.options}

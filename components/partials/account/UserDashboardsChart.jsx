@@ -24,7 +24,8 @@ export default function UserDashboardsChart({ data }) {
                     tools: {
                         zoomin: false,
                         zoomout: false
-                    }
+                    },
+                    show: false
                 }
             },
             stroke: {
@@ -35,7 +36,7 @@ export default function UserDashboardsChart({ data }) {
                 breakpoint: 576,
                 options: {
                     chart: {
-                        width: 300
+                        width: '100%'
                     },
                     legend: {
                         position: 'bottom',
@@ -71,7 +72,7 @@ export default function UserDashboardsChart({ data }) {
     }
 
     return (
-        <div className='h-100 w-100'>
+        <div className='h-100 w-100 py-2'>
             <div id="chart-circle" className='h-100 w-100'>
                 <ReactApexcharts options={props.options} series={[{
                     data: data?.map(el => el?.all_count),
