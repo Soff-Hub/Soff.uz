@@ -10,11 +10,14 @@ import Link from 'next/link';
 import { Tooltip } from 'antd';
 import axios from 'axios';
 import { baseUrl } from '~/repositories/Repository';
+import SellerStart, { productTypeItems } from '~/components/partials/account/SellerStart';
+import useResponsive from '~/utilities/useResponsive';
 
 const Posts = () => {
     const { user } = useSelector((state) => state.auth);
     const [category, setCatgeory] = useState([]);
     const [loading, setLoading] = useState(false);
+    const { isMobile } = useResponsive()
 
     const breadCrumb = [
         {
@@ -76,125 +79,26 @@ const Posts = () => {
                             {' '}
                             Qanday mahsulot yuklamoqchisiz?
                         </h2>
-                        <div className="product-selection">
-                            <div className="select-col  ">
-                                <Link href="/account/myproducts/posts">
-                                    <a>
-                                        <div className="select-card">
-                                            <Tooltip
-                                                className="toltip"
-                                                title={category?.file
-                                                    ?.map((item) => item)
-                                                    .join(', ')}
-                                                overlayStyle={{
-                                                    minWidth: '350px',
-                                                }}
-                                                color="rgb(31 41 55)">
-                                                <i
-                                                    style={{
-                                                        cursor: 'pointer',
-                                                        fontSize: '20px',
-                                                    }}
-                                                    className="fa-regular fa-circle-question px-4 mt-2"></i>
-                                            </Tooltip>
-
-                                            <div className="d-flex flex-column  gap-3">
-                                                <i className="fa-regular fa-folder-open"></i>
-                                                <span>Fayl mahsulotlar</span>
+                        <div className="container">
+                            <div>
+                                <div className="d-flex flex-wrap justify-content-evenly pb-5">
+                                    {
+                                        productTypeItems.map(el => (
+                                            <div className={`new-card-container ${isMobile ? 'w-50' : 'w-25'}`}>
+                                                <div className="new-card" onClick={() => Router.push(el.path)}>
+                                                    <div className="ilustration">
+                                                        <img src={el.img} alt="" />
+                                                    </div>
+                                                    <h3>{el.title}</h3>
+                                                    <button>
+                                                        <span>Yuklash</span>
+                                                        <i className='fa-solid fa-plus'></i>
+                                                    </button>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </a>
-                                </Link>
-                            </div>
-                            <div className="select-col ">
-                                <Link href="/account/myproducts/audio-posts">
-                                    <a>
-                                        <div className="select-card ">
-                                            <Tooltip
-                                                className="toltip"
-                                                title={category?.audio
-                                                    ?.map((item) => item)
-                                                    .join(', ')}
-                                                overlayStyle={{
-                                                    minWidth: '350px',
-                                                }}
-                                                color="rgb(31 41 55)">
-                                                <i
-                                                    style={{
-                                                        cursor: 'pointer',
-                                                        fontSize: '20px',
-                                                    }}
-                                                    className="fa-regular fa-circle-question px-4 mt-2"></i>
-                                            </Tooltip>
-                                            <div className="d-flex flex-column gap-3">
-                                                <i className="fa-solid fa-music"></i>
-                                                <span> Audio materiallar</span>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </Link>
-                            </div>
-                            <div className=" select-col  ">
-                                <Link href="/account/myproducts/design-template-posts">
-                                    <a>
-                                        <div className="select-card">
-                                            <Tooltip
-                                                className="toltip"
-                                                title={category?.shablon
-                                                    ?.map((item) => item)
-                                                    .join(', ')}
-                                                overlayStyle={{
-                                                    minWidth: '350px',
-                                                }}
-                                                color="rgb(31 41 55)">
-                                                <i
-                                                    style={{
-                                                        cursor: 'pointer',
-                                                        fontSize: '20px',
-                                                    }}
-                                                    className="fa-regular fa-circle-question px-4 mt-2"></i>
-                                            </Tooltip>
-                                            <div className="d-flex flex-column gap-3">
-                                                <i className="fa-solid fa-wand-magic-sparkles"></i>
-                                                <span>Tayyor shablonlar</span>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </Link>
-                            </div>
-                            <div className="select-col ">
-                                <Link href="/account/myproducts/upload-video">
-                                    <a style={{ position: "relative" }}>
-
-                                        <div className="select-card ">
-
-                                            <Tooltip
-                                                className="toltip"
-                                                title={category?.video
-                                                    ?.map((item) => item)
-                                                    .join(', ')}
-                                                overlayStyle={{
-                                                    minWidth: '350px',
-                                                }}
-                                                color="rgb(31 41 55)">
-                                                <i
-                                                    style={{
-                                                        cursor: 'pointer',
-                                                        fontSize: '20px',
-                                                    }}
-                                                    className="fa-regular fa-circle-question px-4 mt-2"></i>
-                                            </Tooltip>
-
-                                            <div className="d-flex flex-column gap-3">
-                                                <i className="fa-solid fa-video"></i>
-
-                                                <span>Video materiallar</span>
-
-
-                                            </div>
-                                        </div>
-                                    </a>
-                                </Link>
+                                        ))
+                                    }
+                                </div>
                             </div>
                         </div>
                     </>

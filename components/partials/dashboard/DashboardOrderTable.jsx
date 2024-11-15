@@ -7,13 +7,13 @@ import CalculateTimeDifference from '../account/DateFormatter'
 import useResponsive from '~/utilities/useResponsive'
 
 export default function DashboardOrderTable({ role }) {
-    const { data } = useFetchDashboardOrdersQuery()
+    const { data, isLoading } = useFetchDashboardOrdersQuery()
     const { isMobile } = useResponsive()
 
     const dataOrders = data ? data?.results : []
 
     const columnsOrders = [
-        {
+        role === 'admin' ? ({
             title: 'Buyurtmachi',
             dataIndex: 'customer_info',
             key: 'age',
@@ -29,7 +29,7 @@ export default function DashboardOrderTable({ role }) {
                     </span>
                 </div>
             ),
-        },
+        }) : <></>,
         role === 'admin' ? (
             {
                 title: 'Sotuvchi',
@@ -120,7 +120,6 @@ export default function DashboardOrderTable({ role }) {
             ),
         },
     ]
-    const orderLoading = false
 
     return (
         <div>
@@ -162,7 +161,7 @@ export default function DashboardOrderTable({ role }) {
                         dataSource={dataOrders}
                         columns={columnsOrders}
                         pagination={false}
-                        loading={orderLoading}
+                        loading={isLoading}
                     />
                 )
             }
