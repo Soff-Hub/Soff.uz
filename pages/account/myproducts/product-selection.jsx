@@ -6,11 +6,9 @@ import Meta from '~/components/shared/headers/Meta';
 import Page404 from '~/pages/page/page-404';
 import LoginPage from '../login';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
-import Link from 'next/link';
-import { Tooltip } from 'antd';
 import axios from 'axios';
 import { baseUrl } from '~/repositories/Repository';
-import SellerStart, { productTypeItems } from '~/components/partials/account/SellerStart';
+import { productTypeItems } from '~/components/partials/account/SellerStart';
 import useResponsive from '~/utilities/useResponsive';
 
 const Posts = () => {

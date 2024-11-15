@@ -2,6 +2,29 @@ import React, { useContext } from 'react';
 import { SidebarContext } from '~/hooks/SidebarContext';
 import Router from 'next/router';
 
+export const productTypeItems = [
+    {
+        path: '/account/myproducts/upload-video',
+        img: '/static/img/video-i.jpg',
+        title: 'Videolar'
+    },
+    {
+        path: '/account/myproducts/audio-posts',
+        img: '/static/img/audio-i.jpg',
+        title: 'Audiolar'
+    },
+    {
+        path: '/account/myproducts/posts',
+        img: '/static/img/file-i.webp',
+        title: 'Ishlanmalar'
+    },
+    {
+        path: '/account/myproducts/design-template-posts',
+        img: '/static/img/template-i.jpg',
+        title: 'Shablonlar'
+    }
+]
+
 const SellerStart = () => {
     const { collapse } = useContext(SidebarContext)
 
