@@ -4,6 +4,11 @@ import Router from 'next/router';
 
 export const productTypeItems = [
     {
+        path: '/account/myproducts/posts',
+        img: '/static/img/file-i.webp',
+        title: 'Ishlanmalar'
+    },
+    {
         path: '/account/myproducts/upload-video',
         img: '/static/img/video-i.jpg',
         title: 'Videolar'
@@ -12,11 +17,6 @@ export const productTypeItems = [
         path: '/account/myproducts/audio-posts',
         img: '/static/img/audio-i.jpg',
         title: 'Audiolar'
-    },
-    {
-        path: '/account/myproducts/posts',
-        img: '/static/img/file-i.webp',
-        title: 'Ishlanmalar'
     },
     {
         path: '/account/myproducts/design-template-posts',

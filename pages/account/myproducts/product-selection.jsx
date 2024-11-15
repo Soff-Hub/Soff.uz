@@ -10,6 +10,7 @@ import axios from 'axios';
 import { baseUrl } from '~/repositories/Repository';
 import { productTypeItems } from '~/components/partials/account/SellerStart';
 import useResponsive from '~/utilities/useResponsive';
+import Router from 'next/router';
 
 const Posts = () => {
     const { user } = useSelector((state) => state.auth);
