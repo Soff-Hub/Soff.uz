@@ -54,7 +54,9 @@ export default function DashboardCommentsTable() {
     const { isMobile } = useResponsive()
     const dispatch = useDispatch()
 
-    const { data } = useFetchDashboardCommentsQuery(commentsPage)
+    const { data } = useFetchDashboardCommentsQuery(commentsPage, {
+        refetchOnMountOrArgChange: true
+    })
 
     const comments = data ? data?.results : []
     const orderLoading = false

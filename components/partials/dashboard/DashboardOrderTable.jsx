@@ -5,9 +5,13 @@ import { useFetchDashboardOrdersQuery } from '~/rtk-store/dashboard/api'
 import { addPeriodToThousands } from '../account/ProductsLists'
 import CalculateTimeDifference from '../account/DateFormatter'
 import useResponsive from '~/utilities/useResponsive'
+import { useSelector } from 'react-redux'
 
 export default function DashboardOrderTable({ role }) {
-    const { data, isLoading } = useFetchDashboardOrdersQuery()
+    let user = useSelector(state => state?.ecomerce?.profile)
+    const { data, isLoading } = useFetchDashboardOrdersQuery(user?.id, {
+        skip: !user?.id,
+    })
     const { isMobile } = useResponsive()
 
     const dataOrders = data ? data?.results : []
