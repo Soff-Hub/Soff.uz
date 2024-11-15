@@ -36,6 +36,7 @@ export default function DashboardFilter() {
                             }))}
                             onChange={handleChangeYear}
                             className="me-2"
+                            variant='outlined'
                         />
                         <Select
                             defaultValue={{

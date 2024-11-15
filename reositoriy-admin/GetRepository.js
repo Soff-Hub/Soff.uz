@@ -266,7 +266,8 @@ class GetRepository {
         document__content_type,
         playlist,
         viewsAll,
-        token
+        token,
+        book
     ) {
         const endPoint = `admin/product-list/${
             id ? id + '/' : ''
@@ -276,7 +277,9 @@ class GetRepository {
             search || ''
         }&document__content_type=${document__content_type || ''}&playlist=${
             playlist || ''
-        }&sort=${viewsAll || ''}&offset=${offset || ''}&limit=${limit || ''}`;
+        }&sort=${viewsAll || ''}&offset=${offset || ''}&limit=${
+            limit || ''
+        }&book=${book}`;
 
         const reponse = await Repository({
             url: baseUrl + endPoint,

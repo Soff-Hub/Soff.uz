@@ -1,6 +1,6 @@
 import React from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
-import { Modal, Pagination, Select, Table, Tooltip } from 'antd';
+import { Modal, Pagination, Select, Switch, Table, Tooltip } from 'antd';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
@@ -101,8 +101,8 @@ function ProductsLists() {
         search,
         filterType,
         dataPlayListsID,
-        viewsAll
-
+        viewsAll,
+        book
     ) {
         setLoadingData(true)
         const ItemsData = await GetRepository.getShopsProducts(
@@ -117,7 +117,8 @@ function ProductsLists() {
             filterType,
             dataPlayListsID,
             viewsAll,
-            user?.access
+            user?.access,
+            book
         );
         setPageCount(ItemsData?.count);
         setData([...ItemsData?.results]);
@@ -241,12 +242,12 @@ function ProductsLists() {
     const handlePagination = (pageNum) => {
         setCurrPage(pageNum);
         Router.push(
-            `/account/products?page=${pageNum}&status=${dataValStatus}`
+            `/account/products?page=${pageNum}&status=${dataValStatus}&book=${router?.query?.book || ''}`
         );
     };
 
     const handleFilterStatus = (status) => {
-        Router.push(`/account/products?page=${currPage}&status=${status}`);
+        Router.push(`/account/products?page=${currPage}&status=${status}&book=${router?.query?.book || ''}`);
     };
 
 
@@ -288,6 +289,22 @@ function ProductsLists() {
 
     }
 
+    const handleBook = async (book) => {
+        router.push(`/account/products?page=${router.query?.page || 1}&book=${book}`)
+        await GetItemsProductsLists(
+            router.query.page || 1,
+            category_id,
+            router.query.status || '',
+            dataFormat,
+            null,
+            search,
+            filterType,
+            dataPlayListsID,
+            viewsAll,
+            book || ''
+        )
+    }
+
 
     useEffect(() => {
         GetItemsCategory();
@@ -309,18 +326,20 @@ function ProductsLists() {
 
     }, [router.query.page, router.query.status]);
 
+
     useEffect(() => {
-        if (router.query.page || router.query.status) {
+        if (router.query?.page || router.query?.status) {
             GetItemsProductsLists(
-                router.query.page,
+                router.query.page || 1,
                 category_id,
-                router.query.status,
+                router.query.status || '',
                 dataFormat,
                 null,
                 search,
                 filterType,
                 dataPlayListsID,
-                viewsAll
+                viewsAll,
+                router.query?.book || ''
             );
         }
     }, [
@@ -606,6 +625,10 @@ function ProductsLists() {
                                             </em>
                                         </span>
                                     </div>
+
+                                    {user?.role === 'admin' && data?.length ? <Switch checkedChildren="Kitoblar" unCheckedChildren="Kitoblar" defaultChecked={!!router?.query?.book} onChange={(e) => {
+                                        handleBook(e)
+                                    }} /> : ''}
 
                                     <Table
                                         scroll={{ x: 1850 }}
