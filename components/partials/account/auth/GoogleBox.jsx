@@ -1,14 +1,14 @@
-import { Modal } from 'antd';
 import React from 'react'
 import useAuth from '~/hooks/useAuth';
 
-export default function GoogleBox({ loading }) {
+export default function GoogleBox({ loading, params }) {
     const { registerGoogleUser } = useAuth();
+
 
     const handleGoogleClick = async () => {
         window.location = 'https://api.soff.uz/auth/social/login/customer'
         try {
-            const user = await registerGoogleUser('', 'customer');
+            const user = await registerGoogleUser(params, 'customer');
             console.log(user.data);
         } catch (err) {
             // const modal = Modal.error({

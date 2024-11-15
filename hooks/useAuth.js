@@ -20,13 +20,15 @@ export default function useAuth() {
 
         return user;
     };
-    const registerGoogleUser = (url, e) => {
-        let user = Repository.get(baseUrlAuth + `auth/social/login/${e}`)
+    const registerGoogleUser = (params, e) => {
+        let user = Repository.get(
+            baseUrlAuth + `auth/social/login/${e}/${params}`
+        )
             .then((ress) => {
                 return ress;
             })
             .catch((error) => {
-                return Promise.reject(error)
+                return Promise.reject(error);
             });
 
         return user;

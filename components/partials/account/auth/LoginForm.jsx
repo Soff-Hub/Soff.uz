@@ -138,7 +138,7 @@ export default function LoginForm() {
                         </div>
                     </Form>
 
-                    <GoogleBox />
+                    <GoogleBox params={router.query?.id ? `?id=${router.query.id}` : ''} />
                 </div>
             </div>
         </div>
