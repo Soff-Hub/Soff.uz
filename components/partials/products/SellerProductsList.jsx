@@ -48,7 +48,7 @@ export default function SellerProductsList({ data }) {
                 </div>
               </div>
               <div className='d-flex flex-column' style={{ height: '100% !important', padding: '10px 5px', marginRight: 'auto' }}>
-                <h5 className='fw-medium fs-6 m-0 mb-1' style={{ maxHeight: '45px', overflow: 'hidden' }}>{el?.name?.title}</h5>
+                <h5 className='fw-medium fs-5 m-0 mb-1' style={{ maxHeight: '45px', overflow: 'hidden' }}>{el?.name?.title}</h5>
 
                 <p className='m-0 mb-1 fs-6' >
                   {el?.category?.name}
@@ -60,9 +60,13 @@ export default function SellerProductsList({ data }) {
                 </span>
 
 
-                <div className='d-flex align-items-end' style={{ flex: 1 }}>
+                <div className='d-flex align-items-end gap-2' style={{ flex: 1 }}>
+                  <span className='text-center fs-6 d-flex align-items-center gap-1'>
+                    <i className="fa-solid fa-eye"></i>{' '}
+                    {el?.view_count} ta
+                  </span>
                   <div style={{ fontSize: '10px' }}>
-                    <span>
+                    <span className='d-flex align-items-center gap-1'>
                       <i className={statusMap[el?.status].iconClass}></i> {statusMap[el?.status].text}
                     </span>
                   </div>
