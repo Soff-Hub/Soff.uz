@@ -2115,7 +2115,8 @@
 
 .mobileImage {
     height: 200px;
-    background-position-y: -120px;
+    background-size: cover;
+    background-position: center;
 }
 
 @media (max-width: 520px) {
@@ -2146,10 +2147,14 @@
         }
     }
 
-    .ps-section--account-setting {
-        .mobileImage {
-            height: 200px;
-            background-position-y: 0px;
+    .mobileImage {
+        height: 100px;
+        background-size: cover;
+        background-position: center;
+        padding: 10px !important;
+
+        a {
+            
         }
     }
 }

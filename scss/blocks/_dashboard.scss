@@ -47,3 +47,14 @@
         }
     }
 }
+
+.open-filter {
+    transition: all 0.2s ease;
+}
+
+.close-filter {
+    transition: all 0.2s ease;
+    height: 0;
+    overflow: hidden;
+    margin: 0;
+}

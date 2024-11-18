@@ -4,6 +4,7 @@ import { axiosBaseQuery } from '~/repositories/http';
 export const dashboardApi = createApi({
     reducerPath: 'dashboardApi',
     baseQuery: axiosBaseQuery(),
+    tagTypes: ['dashboard'],
     endpoints: (builder) => ({
         fetchDashboardStats: builder.query({
             query: () => ({ url: '/seller/admin/dashboard/' }),
@@ -35,6 +36,15 @@ export const dashboardApi = createApi({
             query: (page) => ({
                 url: '/seller/admin/comments/?page=' + page,
             }),
+            providesTags: ['products'],
+        }),
+        replyToComment: builder.mutation({
+            query: ({ id, data }) => ({
+                url: '/seller/document-review/' + id,
+                method: 'post',
+                data,
+            }),
+            invalidatesTags: ['products'],
         }),
         fetchPopularProducts: builder.query({
             query: (page) => ({
@@ -60,4 +70,5 @@ export const {
     useFetchDashboardCommentsQuery,
     useFetchPopularProductsQuery,
     useFetchDonatesQuery,
+    useReplyToCommentMutation,
 } = dashboardApi;

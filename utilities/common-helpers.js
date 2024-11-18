@@ -56,3 +56,7 @@ export const audioDownloaderSale = async (file, product) => {
         return Promise.reject(error);
     }
 };
+
+export function formatGb(mb) {
+    return (Number(mb) / 1024).toFixed(3);
+}

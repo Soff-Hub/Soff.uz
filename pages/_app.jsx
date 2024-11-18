@@ -12,7 +12,8 @@ import NextProgress from 'next-progress';
 import { AudioProvider } from '~/hooks/AudioContext';
 import { SidebarProvider } from '~/hooks/SidebarContext';
 import { Provider } from 'react-redux';
-import { store } from '~/rtk-store';
+import { persistor, store } from '~/rtk-store';
+import { PersistGate } from 'redux-persist/integration/react';
 
 
 function App({ Component, pageProps }) {
@@ -61,13 +62,15 @@ function App({ Component, pageProps }) {
             />
             <CookiesProvider>
                 <Provider store={store}>
-                    <AudioProvider>
-                        <SidebarProvider>
-                            <MasterLayout>
-                                <Component {...pageProps} />
-                            </MasterLayout>
-                        </SidebarProvider>
-                    </AudioProvider>
+                    <PersistGate loading={null} persistor={persistor}>
+                        <AudioProvider>
+                            <SidebarProvider>
+                                <MasterLayout>
+                                    <Component {...pageProps} />
+                                </MasterLayout>
+                            </SidebarProvider>
+                        </AudioProvider>
+                    </PersistGate>
                 </Provider>
             </CookiesProvider>
         </>

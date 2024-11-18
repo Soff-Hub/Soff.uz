@@ -1,13 +1,15 @@
-import { Pagination, Table } from 'antd'
+import { Button, Pagination, Table } from 'antd'
 import Link from 'next/link';
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useFetchDashboardCommentsQuery } from '~/rtk-store/dashboard/api';
 import { updateCommentsPage } from '~/rtk-store/dashboard/slice';
 import useResponsive from '~/utilities/useResponsive';
 import CalculateTimeDifference from '../account/DateFormatter';
+import DashboardReplyComment from './DashboardReplyComment';
 
 export default function DashboardCommentsTable() {
+    const [replyId, setReplyId] = useState(null)
     const commentsColumn = [
         {
             title: 'Buyurtmachi',
@@ -49,7 +51,20 @@ export default function DashboardCommentsTable() {
                 </span>
             ),
         },
+        {
+            title: '',
+            dataIndex: 'id',
+            key: 'age',
+            render: (id, src) => (
+                <Button
+                    data-bs-target="#replyToComment" data-bs-toggle="modal"
+                    onClick={() => setReplyId(src)} size='small'>
+                    Javob yozish
+                </Button>
+            ),
+        }
     ];
+
     const { commentsPage } = useSelector(state => state.dashboard)
     const { isMobile } = useResponsive()
     const dispatch = useDispatch()
@@ -128,6 +143,8 @@ export default function DashboardCommentsTable() {
                 total={data?.count}
                 current={commentsPage}
             />
+
+            <DashboardReplyComment item={replyId} setReplyId={setReplyId} />
         </div>
     )
 }

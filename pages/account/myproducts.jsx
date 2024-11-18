@@ -8,6 +8,7 @@ import Page404 from '../page/page-404';
 import Selection from './selection';
 import Meta from '~/components/shared/headers/Meta';
 import { BdCrumb } from '~/components/elements/BreadCrumb';
+import SellerProductsMain from '~/components/partials/products/SellerProductsMain';
 
 const MyProducts = () => {
     const { user } = useSelector(state => state.auth)
@@ -21,7 +22,8 @@ const MyProducts = () => {
                         title={"Mening mahsulotlarim"}
                     />
                     <BdCrumb title={'Mening mahsulotlarim'} />
-                    <MyProducts_list />
+                    {/* <MyProducts_list /> */}
+                    <SellerProductsMain />
                 </div>
             </PageContainer> : user?.access ? <Page404 /> : <Selection />
 
