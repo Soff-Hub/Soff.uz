@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Head from 'next/head';
 import { useDispatch, useSelector } from 'react-redux';
-import { accountLinksReducers, isLoginning } from '~/store/auth/action';
+import { checkAuthorization, setAccountLinks } from '~/store/auth/slice';
 import FaqSaidbar from '../partials/faqs/faqSaidbar';
 import { useRouter } from 'next/router';
 import HeaderMobileBottom from '../shared/headers/HeaderMobilebottom';
@@ -154,19 +154,19 @@ const PageLayout = ({
 
     useEffect(() => {
         if (user?.role === 'admin') {
-            dispatch(accountLinksReducers(accountAdminLinks));
+            dispatch(setAccountLinks(accountAdminLinks));
         }
         if (user?.role === 'seller') {
-            dispatch(accountLinksReducers(accountSellerLink));
+            dispatch(setAccountLinks(accountSellerLink));
         }
         if (user?.role === 'customer') {
-            dispatch(accountLinksReducers(cutomerAccountLink));
+            dispatch(setAccountLinks(cutomerAccountLink));
         }
     }, [user?.role]);
 
 
     const defaultRoutePage = () => {
-        dispatch(isLoginning());
+        dispatch(checkAuthorization());
     };
 
     useEffect(() => {

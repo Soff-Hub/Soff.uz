@@ -3,7 +3,7 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { PacmanLoader } from 'react-spinners';
-import { accountLinksReducers, begin, login } from '~/store/auth/action';
+import { accountLinksReducers, begin, login } from '~/store/auth/slice';
 
 export let accountAdminLinks = [
     {

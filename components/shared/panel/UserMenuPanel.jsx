@@ -4,7 +4,7 @@ import Router, { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import useAuth from '~/hooks/useAuth';
-import { logOut } from '~/store/auth/action';
+import { logOut } from '~/store/auth/slice';
 import { Badge, Card, Modal, Tooltip } from 'antd';
 import { formatCurrency } from '~/utilities/product-helper';
 import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
@@ -147,13 +147,13 @@ const AccountMenuSidebar = ({ setMenuDrawer, setCategoriesDrawer }) => {
         <aside className="ps-widget--account-dashboard">
             <div className="ps-widget__header  p-2 pb-4 step-2">
                 {profile?.image ? (
-                    <img src={`${profile?.image}`} className="profile__image" />
+                    <img src={`${profile?.image}`} className="profile__image mx-auto" />
                 ) : (
                     <i className=" fa-3x text-info fa-solid fa-circle-user"></i>
                 )}
                 <figure>
                     <>
-                        <h4 className="m-0 " style={{ maxWidth: '280px' }}>
+                        <h4 className="m-0" style={{ maxWidth: '280px' }}>
                             {' '}
                             {profile?.first_name && profile?.last_name ? (
                                 <>

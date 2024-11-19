@@ -113,7 +113,7 @@ const FooterSecond = ({ classes }) => {
                                 className='footer-company-logo d-block ps-2 rounded'
                                 width='80px'
                                 height='60px'
-                                loader='unoptimized'
+                                unoptimized
                             />
                         </a>
                     </aside>

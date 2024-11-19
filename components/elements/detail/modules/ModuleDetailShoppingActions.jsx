@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import { OneShopDoc } from '~/store/auth/action';
+import { OneShopDoc } from '~/store/auth/slice';
 import useCart from '~/hooks/useCart';
 import useWishlist from '~/hooks/useWishlist';
 import { Modal } from 'antd';

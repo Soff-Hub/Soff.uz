@@ -86,7 +86,7 @@ function ElectronicTopCategories() {
                     ) : (
                         <div className="yaxshi-categ-placholder-box row mx-0 gap-0 w-100">
                             {[1, 2, 3, 4, 5, 6].map((item, i) => (
-                                <div className="col-6 col-md-2 col-lg-2 p-1">
+                                <div className="col-6 col-md-2 col-lg-2 p-1" key={i}>
                                     <div className="card w-100" aria-hidden="true" key={i}>
                                         <div className="card-img-top placeholder" style={{ minWidth: 0 }} alt="..." />
                                         <div className="card-body">

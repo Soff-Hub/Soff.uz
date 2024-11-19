@@ -5,7 +5,7 @@ import {
     setCartItems,
     setCartDataItems,
     setCartItemDataItems,
-} from '~/store/ecomerce/action';
+} from '~/store/ecomerce/slice';
 export default function useCart() {
     const dispatch = useDispatch();
     const cartItems = useSelector((state) => state.ecomerce.cartDataItems);

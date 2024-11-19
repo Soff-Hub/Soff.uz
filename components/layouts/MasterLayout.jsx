@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import PageLoader from '~/components/elements/common/PageLoader';
 import NavigationList from '~/components/shared/navigation/NavigationList';
 import NavigationListAdmin from '../shared/navigation/NavigationListAdmin';
 import { useRouter } from 'next/router';

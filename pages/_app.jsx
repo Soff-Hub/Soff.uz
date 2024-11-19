@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { wrapper } from '~/store/store';
 import { CookiesProvider } from 'react-cookie';
 import MasterLayout from '~/components/layouts/MasterLayout';
 import '~/public/static/fonts/Linearicons/Font/demo-files/demo.css';
@@ -13,7 +12,8 @@ import NextProgress from 'next-progress';
 import { AudioProvider } from '~/hooks/AudioContext';
 import { ProductProvider } from '~/context/ProductsContext';
 import { GoogleOAuthProvider } from '@react-oauth/google';
-
+import { Provider } from 'react-redux';
+import { store } from '~/store';
 
 function App({ Component, pageProps }) {
 
@@ -71,19 +71,21 @@ function App({ Component, pageProps }) {
                 options={{ showSpinner: false }}
                 color="#00A44F"
             />
-            <GoogleOAuthProvider clientId="203103939049-2ste634q2uc1io9oaup8gt35tsmucru0.apps.googleusercontent.com">
-                <CookiesProvider>
-                    <ProductProvider>
-                        <AudioProvider>
-                            <MasterLayout>
-                                <Component {...pageProps} />
-                            </MasterLayout>
-                        </AudioProvider>
-                    </ProductProvider>
-                </CookiesProvider>
-            </GoogleOAuthProvider>;
+            <Provider store={store}>
+                <GoogleOAuthProvider clientId="203103939049-2ste634q2uc1io9oaup8gt35tsmucru0.apps.googleusercontent.com">
+                    <CookiesProvider>
+                        <ProductProvider>
+                            <AudioProvider>
+                                <MasterLayout>
+                                    <Component {...pageProps} />
+                                </MasterLayout>
+                            </AudioProvider>
+                        </ProductProvider>
+                    </CookiesProvider>
+                </GoogleOAuthProvider>
+            </Provider>
         </>
     );
 }
 
-export default wrapper.withRedux(App);
+export default App

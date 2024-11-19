@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
-import { logOut } from '~/store/auth/action';
+import { logOut } from '~/store/auth/slice';
 import { Badge, Card, Modal } from 'antd';
 import useAuth from '~/hooks/useAuth';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import Router, { useRouter } from 'next/router';
-import { setSavedPrfileData } from '~/store/ecomerce/action';
+import { setSavedPrfileData } from '~/store/ecomerce/slice';
 
 const AccountQuickLinks = (props) => {
     const dispatch = useDispatch();

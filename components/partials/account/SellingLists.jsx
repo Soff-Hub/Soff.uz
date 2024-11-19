@@ -1092,8 +1092,8 @@ function SellingsLists() {
                                 marginTop: "10px",
                             }}>
                                 {
-                                    searchdata?.length > 0 ? searchdata?.map((item) => (
-                                        <div onClick={() => (setEvaluation(item), setOpenApplicationID(item))} className='d-flex
+                                    searchdata?.length > 0 ? searchdata?.map((item, i) => (
+                                        <div key={i} onClick={() => (setEvaluation(item), setOpenApplicationID(item))} className='d-flex
                                  justify-content-between
                                   align-items-center
                                   flex-wrap

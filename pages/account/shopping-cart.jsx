@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import BreadCrumb from '~/components/elements/BreadCrumb';
 import PageContainer from '~/components/layouts/PageContainer';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
@@ -6,24 +6,11 @@ import { connect, useSelector } from 'react-redux';
 import ModuleEcomerceCartItems from '~/components/ecomerce/modules/ModuleEcomerceCartItems';
 import Link from 'next/link';
 import ModuleCartSummary from '~/components/ecomerce/modules/ModuleCartSummary';
-import useCart from '~/hooks/useCart';
 import Meta from '~/components/shared/headers/Meta';
 
 const ShoppingCartScreen = () => {
     const state = useSelector((state) => state.auth.user);
     const cartItems = useSelector(state => state.ecomerce.cartDataItems)
-
-
-    const { setAllCartItem } = useCart()
-
-
-    useEffect(() => {
-        if (cartItems.length !== JSON.parse(localStorage.getItem('cart'))) {
-            setAllCartItem();
-        }
-    }, []);
-
-
 
     const breadCrumb = [
         {
@@ -35,13 +22,6 @@ const ShoppingCartScreen = () => {
         },
     ];
 
-
-
-
-
-
-
-    // View
     let contentView;
     if (cartItems) {
         if (cartItems?.length > 0) {

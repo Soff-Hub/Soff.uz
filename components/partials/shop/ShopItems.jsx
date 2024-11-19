@@ -6,7 +6,7 @@ import { generateTempArray } from '~/utilities/common-helpers';
 import SkeletonProduct from '~/components/elements/skeletons/SkeletonProduct';
 import ProductRepository from '~/repositories/ProductRepository';
 import { useDispatch } from 'react-redux';
-import { CategorySlug } from '~/store/auth/action';
+import { CategorySlug } from '~/store/auth/slice';
 import useDebounce from '~/hooks/useDebounce';
 import { baseUrl } from '~/repositories/Repository';
 import axios from 'axios';
@@ -57,7 +57,7 @@ const ShopItems = ({
             );
         if (responseData?.length > 0) {
             dispatch(CategorySlug(responseData?.data?.results));
-          
+
         }
     }
 
@@ -342,22 +342,26 @@ const ShopItems = ({
                 newData?.map((item, index) => (
                     <>
                         {item?.document?.content_type === 'audio' ? (
-                            <div className="col-12 my-2">
+                            <div className="col-12 my-2" key={index}>
                                 <AudioWaveform product={item} inCategory={true} />
                             </div>
                         ) :
 
                             item?.document?.content_type === 'video' ? (
-                                <div className="col-md-4 px-2  my-2">
-                                    <ProductVideo iscategroy
-                                        isPlay={isPlay} setIsPlay={setIsPlay} product={item} />
+                                <div className="col-md-4 px-2  my-2" key={index}>
+                                    <ProductVideo
+                                        iscategroy
+                                        isPlay={isPlay}
+                                        setIsPlay={setIsPlay}
+                                        product={item}
+                                    />
                                 </div>
                             ) :
                                 item?.type === 'playlist' ?
                                     <div
                                         key={index}
                                         className="col-md-4 my-4 mb-4">
-                                        <PlaylistCard product={item}  />{' '}
+                                        <PlaylistCard product={item} />{' '}
                                     </div> : (
                                         <div
                                             className={classes + ' home-card-category mb-3'}

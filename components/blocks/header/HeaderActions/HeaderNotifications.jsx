@@ -29,7 +29,7 @@ export default function HeaderNotifications({ color }) {
             description: (
                 <div>
                     {notifications?.map((el, i) => (
-                        <h4 key={el?.title}>
+                        <h4 key={i}>
                             {i + 1}. {el.title}
                         </h4>
                     ))}

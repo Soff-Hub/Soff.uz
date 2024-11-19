@@ -112,7 +112,7 @@ const AccountMenuSidebar = ({ data, menuOpen }) => {
             <div>
                 <div className="ps-widget__header  p-2 pb-4 step-2">
                     {profile?.image ? (
-                        <img src={`${profile?.image}`} className="profile__image" style={{ maxWidth: '40px' }} />
+                        <img src={`${profile?.image}`} className="profile__image mx-auto" style={{ maxWidth: '40px' }} />
                     ) : (
                         <i className=" fa-3x text-info fa-solid fa-circle-user"></i>
                     )}
@@ -325,25 +325,6 @@ const AccountMenuSidebar = ({ data, menuOpen }) => {
                     {data.map((link, index) => (
                         <>
                             {
-                                // link?.url === '/account/selling' ? (
-                                //     <Badge.Ribbon
-                                //         key={link?.url}
-                                //         text="Yangi funksiya"
-                                //         color="blue">
-                                //         <Card size="small">
-                                //             <li>
-                                //                 <Link href={link.url}>
-                                //                     <a
-                                //                         className={`d-flex align-items-center`}>
-                                //                         <img src='/static/img/birja-icon.png' height={20} width={20} className='me-2' />
-                                //                         {menuOpen ? link.text : ''}
-                                //                     </a>
-                                //                 </Link>
-                                //             </li>
-                                //         </Card>
-                                //     </Badge.Ribbon>
-
-                                // ) :
                                 link?.url === 'b' ? (
                                     <Badge.Ribbon
                                         key={link?.url}
@@ -366,7 +347,7 @@ const AccountMenuSidebar = ({ data, menuOpen }) => {
 
                                 ) : (dataBlock?.has_blocked && link?.url === '/account/myproducts/product-selection') ? (
 
-                                    <li onClick={handleOk}>
+                                    <li onClick={handleOk} key={index}>
                                         <Tooltip placement="right" title={'Yangi Mahsulot'}>
                                             <span
                                                 style={{

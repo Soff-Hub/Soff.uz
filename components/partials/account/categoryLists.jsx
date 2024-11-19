@@ -260,9 +260,9 @@ function CategoryLists() {
                 </div>
             </div>
         ),
-        children: chaild?.map((el) => {
+        children: chaild?.map((el, i) => {
             return (
-                <div className="row border-bottom py-3">
+                <div className="row border-bottom py-3" key={i}>
                     <div className="col-md-6">{el?.name}</div>
                     <div className="col-md-6 text-end">
                         <div className="d-flex align-items-center justify-content-end">

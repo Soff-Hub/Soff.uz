@@ -17,6 +17,7 @@
         "@mui/icons-material": "^5.14.12",
         "@mui/material": "^5.14.12",
         "@react-oauth/google": "^0.12.1",
+        "@reduxjs/toolkit": "^2.3.0",
         "@wavesurfer/react": "^1.0.5",
         "ant-design": "^1.0.0",
         "antd": "^5.21.1",
