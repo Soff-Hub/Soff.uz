@@ -44,6 +44,7 @@ export default function SellerProductsMain() {
                         <div className="bg-white p-3 mb-3" style={{ borderRadius: '8px' }}>
                             <SellerProductsFilter />
                         </div>
+                        {data?.count ? <p className='fw-medium px-1'>Jami {data?.count} ta mahsulot</p> : ''}
                         {
                             isMobile ? (
                                 <div className="py-2 px-1 mb-2" style={{ borderRadius: '8px' }}>
