@@ -32,7 +32,7 @@ const ProductDetailQuickView = ({ product }) => {
             product?.slug
         );
         if (responsImage) {
-        
+
             setImage(responsImage.images);
             const { page_count, file_type, file_size } = responsImage;
             setDocument({ page_count, file_type, file_size });
@@ -110,14 +110,14 @@ const ProductDetailQuickView = ({ product }) => {
                                 <div className="ps-wrapper">
                                     {img?.length > 0
                                         ? img?.map((item, i) => (
-                                              <NextImageCard
-                                                  key={i}
-                                                  url={item?.image_url}
-                                                  className="border mb-3 objectFitCover "
-                                                  width="380px"
-                                                  height="390px"
-                                              />
-                                          ))
+                                            <NextImageCard
+                                                key={i}
+                                                url={item?.image_url}
+                                                className="border mb-3 objectFitCover "
+                                                width="380px"
+                                                height="390px"
+                                            />
+                                        ))
                                         : ''}
                                 </div>
                                 <div className="views view-quik">
@@ -175,18 +175,19 @@ const ProductDetailQuickView = ({ product }) => {
                                 <div className="ps-wrapper">
                                     {product?.document?.images?.length > 0
                                         ? product?.document?.images?.map(
-                                              (item, i) => (
-                                                  <NextImageCard
-                                                      url={item?.image_url}
-                                                      className="border mb-3"
-                                                      width="270px"
-                                                      height="350px"
-                                                      style={{
-                                                          objectFit: 'contain',
-                                                      }}
-                                                  />
-                                              )
-                                          )
+                                            (item, i) => (
+                                                <NextImageCard
+                                                    key={i}
+                                                    url={item?.image_url}
+                                                    className="border mb-3"
+                                                    width="270px"
+                                                    height="350px"
+                                                    style={{
+                                                        objectFit: 'contain',
+                                                    }}
+                                                />
+                                            )
+                                        )
                                         : ''}
                                 </div>
                                 <div className="views">

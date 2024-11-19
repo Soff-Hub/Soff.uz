@@ -42,7 +42,7 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
     borderTop: '1px solid rgba(0, 0, 0, .125)',
 }));
 
-export default function FaqsAccardion({data}) {
+export default function FaqsAccardion({ data }) {
     const [expanded, setExpanded] = React.useState('panel1');
 
     const handleChange = (panel) => (event, newExpanded) => {
@@ -54,20 +54,20 @@ export default function FaqsAccardion({data}) {
                 data?.map((item) => {
                     return (
                         <Accordion
-                        style={{backgroundColor:'fff'}}
-                        key={item.id}
+                            style={{ backgroundColor: 'fff' }}
+                            key={item.id}
                             expanded={expanded === `panel2 ${item.title}`}
                             onChange={handleChange(`panel2 ${item.title}`)}>
                             <AccordionSummary
                                 aria-controls={`panel2d-content`}
                                 id={`panel2d-header `}>
                                 <Typography className="acc-title">
-                                   {item.title}
+                                    {item.title}
                                 </Typography>
                             </AccordionSummary>
                             <AccordionDetails>
                                 <Typography className="acc-desc">
-                                   {item.description}
+                                    {item.description}
                                 </Typography>
                             </AccordionDetails>
                         </Accordion>

@@ -129,8 +129,8 @@ const Replied = ({
 
                         <>
                             {dataProducts?.length > 0 &&
-                                dataProducts?.map(Items => (
-                                    <div className='pl-5 mt-3'  >
+                                dataProducts?.map((Items, ind) => (
+                                    <div className='pl-5 mt-3' key={ind} >
                                         <div className="d-flex align-items-start gap-3 mb-2">
                                             <img
                                                 src={Items?.user?.image_url}

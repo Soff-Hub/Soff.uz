@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import { OneShopDoc } from '~/store/auth/action';
+import { OneShopDoc } from '~/store/auth/slice';
 import useCart from '~/hooks/useCart';
 import { Modal } from 'antd';
 import Axios from 'axios';
@@ -48,7 +48,7 @@ const VideoDetailShoppingActions = ({ product }) => {
 
 
 
- 
+
 
     const audioDownloaderSale = async (file) => {
         const filee = 'http://192.168.1.14/media/Images/new__Abdurahimov_Ahmad.zip';
@@ -105,7 +105,7 @@ const VideoDetailShoppingActions = ({ product }) => {
                     <div className="w-100 d-flex justify-content-end gap-3 m-0">
                         {product?.discount_price > 0 ? (
                             <>
-                                {product?.document?.file_url  ? (
+                                {product?.document?.file_url ? (
                                     ''
                                 ) : (
                                     <>
@@ -143,10 +143,10 @@ const VideoDetailShoppingActions = ({ product }) => {
                                 className="fw-bold fs-4 rounded-1 border py-2 px-4 hover-extra-file w-full"
                                 style={{ backgroundColor: '#F1F1F1' }}>
                                 Qo'shimcha fayllarni yuklab olish uchun{' '}
-                                {product?.document?.images?.map((e) => (
+                                {product?.document?.images?.map((e, i) => (
                                     <span
                                         className="pl-2"
-
+                                        key={i}
                                         onClick={async (e) => {
                                             e.preventDefault();
                                             setLoading(true);
@@ -160,9 +160,7 @@ const VideoDetailShoppingActions = ({ product }) => {
                                                 console.log('Loading state set to false');
                                             }
                                         }}
-
-                                        
-                                        >
+                                    >
                                         {!loading ? (
                                             <i className="fa-solid fa-download"></i>
                                         ) : (

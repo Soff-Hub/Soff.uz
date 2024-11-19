@@ -5,7 +5,7 @@ import PageContainer from '~/components/layouts/PageContainer';
 import { useDispatch, useSelector } from 'react-redux';
 import Router, { useRouter } from 'next/router';
 import { BeatLoader } from 'react-spinners';
-import { login } from '~/store/auth/action';
+import { login } from '~/store/auth/slice';
 
 const Xabar = (e) => {
     const tokenn = useSelector((state) => state.auth);

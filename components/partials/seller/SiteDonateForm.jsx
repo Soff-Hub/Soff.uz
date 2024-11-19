@@ -177,11 +177,11 @@ export default function SiteDonateForm() {
     };
 
     return (
-        <div className="container"  id='products'>
+        <div className="container" id='products'>
             <div style={{ maxWidth: '800px', margin: '0 auto' }}>
                 <div className="ps-tab active" id="register">
                     <form className="ps-form__content" onSubmit={handleSubmit}>
-                      
+
                         <div className='d-flex align-items-center gap-3'>
                             <div className="form-group flex-grow-1">
                                 <p>Ism yoki nikneym *</p>
@@ -229,6 +229,7 @@ export default function SiteDonateForm() {
                             {
                                 [5000, 10000, 20000, 50000, 100000, 250000].map(el => (
                                     <div
+                                        key={el}
                                         className='amount-item py-1 px-4'
                                         style={{
                                             backgroundColor: Number(amount) === el ? '#00A44F' : '#f1f1f1',
@@ -272,6 +273,7 @@ export default function SiteDonateForm() {
                                     },
                                 ].map(el => (
                                     <div
+                                    key={el.name}
                                         style={{
                                             boxShadow: 'rgba(0, 0, 0, 0.15) 0px 5px 15px 0px',
                                             cursor: 'pointer',

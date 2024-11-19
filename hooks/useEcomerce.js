@@ -6,7 +6,7 @@ import {
     setCompareItems,
     setWishlistTtems,
     setCartItems,
-} from '~/store/ecomerce/action';
+} from '~/store/ecomerce/slice';
 export default function useEcomerce() {
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);

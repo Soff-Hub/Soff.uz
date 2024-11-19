@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
-import { logOut } from '~/store/auth/action';
+import { logOut } from '~/store/auth/slice';
 import { Badge, Card, Modal } from 'antd';
 import useAuth from '~/hooks/useAuth';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import Router, { useRouter } from 'next/router';
-import { setSavedPrfileData } from '~/store/ecomerce/action';
+import { setSavedPrfileData } from '~/store/ecomerce/slice';
 
 const HeaderUserDropdown = (props) => {
     const dispatch = useDispatch();
@@ -72,12 +72,12 @@ const HeaderUserDropdown = (props) => {
 
 
     // View
-    const linksView = accountLinks.map((item) => (
+    const linksView = accountLinks.map((item, index) => (
         <>
             {item?.url === '/account/selling' ? (
-                <Badge.Ribbon key={item?.url} text="Yangi funksiya" color='blue'>
-                    <Card size="small">
-                        <li  >
+                <Badge.Ribbon key={index} text="Yangi funksiya" color='blue'>
+                    <Card size="small" key={index}>
+                        <li  key={index}>
                             <Link
                                 href={item?.url}
                                 style={{
@@ -92,9 +92,9 @@ const HeaderUserDropdown = (props) => {
                     </Card>
                 </Badge.Ribbon>
             ) : item?.url === 'b' ? (
-                <Badge.Ribbon key={item?.url} text="Tez kunda" color="volcano">
-                    <Card size="small">
-                        <li  >
+                <Badge.Ribbon key={index} text="Tez kunda" color="volcano">
+                    <Card size="small" key={index}>
+                        <li  key={index}>
                             <span
                                 style={{
                                     cursor: 'pointer',
@@ -108,8 +108,8 @@ const HeaderUserDropdown = (props) => {
                     </Card>
                 </Badge.Ribbon>
             ) : item?.url == '/account/deals' ? (
-                <Badge.Ribbon key={item?.url} text="Yangi funksiya" color="primary">
-                    <Card size="small">
+                <Badge.Ribbon key={index} text="Yangi funksiya" color="primary">
+                    <Card size="small" key={index}>
                         <li>
                             <Link href={item.url}>
 
@@ -128,7 +128,7 @@ const HeaderUserDropdown = (props) => {
                     </Card>
                 </Badge.Ribbon>
             ) : (
-                <li key={item.text}>
+                <li key={index}>
                     <Link href={item.url}>
                         <a>
                             {' '}

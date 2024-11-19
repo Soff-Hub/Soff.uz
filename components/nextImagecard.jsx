@@ -45,9 +45,9 @@ export default function NextImageCard({
                             width={width}
                             height={height}
                             alt={url}
-                            loader={loaderProp}
                             className={clasS}
                             objectFit="contain"
+                            unoptimized
                         />
                     }
                 </>
@@ -62,9 +62,9 @@ export default function NextImageCard({
                             width={width}
                             height={height}
                             alt={url}
-                            loader={loaderProp}
                             className={clasS}
                             objectFit="contain"
+                            unoptimized
                         />
                     }
                 </>
@@ -77,9 +77,9 @@ export default function NextImageCard({
                             width={width}
                             height={height}
                             alt={url}
-                            loader={loaderProp}
                             className={clasS}
                             objectFit="contain"
+                            unoptimized
                         />
                     }
                     {
@@ -97,9 +97,9 @@ export default function NextImageCard({
                             width={width}
                             height={height}
                             alt={url}
-                            loader={loaderProp}
                             className={clasS}
                             objectFit="contain"
+                            unoptimized
                         />
                     }
                 </>

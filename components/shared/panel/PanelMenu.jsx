@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
 import { Menu } from 'antd';
 import Link from 'next/link';
@@ -108,8 +107,4 @@ class PanelMenu extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return state.setting;
-};
-
-export default connect(mapStateToProps)(PanelMenu);
+export default PanelMenu

@@ -3,7 +3,7 @@ import ProductRepository from '~/repositories/ProductRepository';
 import {
     setSaved,
     setSavedItem,
-} from '~/store/ecomerce/action';
+} from '~/store/ecomerce/slice';
 export default function useWishlist() {
     const dispatch = useDispatch();
     const { wishlist } = useSelector((state) => state.ecomerce);

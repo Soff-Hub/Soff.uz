@@ -16,7 +16,7 @@ import ProductAudioDetailFullWidth from '~/components/elements/detail/ProductAud
 import axios from 'axios';
 import Head from 'next/head';
 import Joyride from 'react-joyride';
-import { OneShopDoc } from '~/store/auth/action';
+import { OneShopDoc } from '~/store/auth/slice';
 import TemplateDetailFullwidth from '~/components/elements/detail/TemplateDetailFullwidth';
 
 const ProductDefaultPage = ({ defaultProducts }) => {

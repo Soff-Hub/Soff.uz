@@ -34,7 +34,7 @@ export default function NotificationList() {
                     {notification?.length ? (
                         <div className="text-start">{
                             notification?.map((el, i) =>
-                             <div key={el?.notification?.title} className='border  mb-3 bg-success-subtle rounded-3 p-4'>
+                             <div key={i} className='border  mb-3 bg-success-subtle rounded-3 p-4'>
                                 <h3 className='fs-2'>{i + 1}. {" "} {el?.notification?.title}  <span style={{ fontSize: '16px', }} > | {el?.notification?.created_at} |  {el?.link && <Link href={`${el?.link}`} ><a className='text-success'>Batafsil <i className="fa-solid fa-hand-point-right mx-2"></i></a></Link>}
 
                                 </span>   </h3>

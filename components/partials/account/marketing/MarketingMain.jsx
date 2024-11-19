@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import useDebounce from '~/hooks/useDebounce';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import { baseUrlProfie, orginalApi, orginalUrl } from '~/reositoriy-admin/Repository';
-import { setSavedPrfileData } from '~/store/ecomerce/action';
+import { setSavedPrfileData } from '~/store/ecomerce/slice';
 const { Search } = Input
 
 function MarketingMain() {

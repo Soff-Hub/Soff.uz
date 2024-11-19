@@ -33,7 +33,7 @@ const ThumbnailDefault = ({ product, vertical = true, views }) => {
                                 // width="100%"
                                 // height={['.docx', '.doc', '.pdf'].includes(type) ? '800px' : '400px'}
                                 // style={{ objectFit: 'contain' }}
-                                key={item?.image_url}
+                                key={i}
                                 detail={true}
                                 style={{ display: 'flex', width: '90%', maxWidth: '60%' }}
                             />

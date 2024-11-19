@@ -1,12 +1,13 @@
 import React from 'react';
 
+import { useSelector } from 'react-redux';
+
 import Meta from '~/components/shared/headers/Meta';
 import BreadCrumb from '~/components/elements/BreadCrumb';
 
 import PageContainer from '~/components/layouts/PageContainer';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
 import LoginForm from '~/components/partials/account/auth/LoginForm';
-import { useSelector } from 'react-redux';
 import Page404 from '../page/page-404';
 
 const RegisterPage = () => {

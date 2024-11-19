@@ -1,11 +1,11 @@
 import React from 'react';
 import Link from 'next/link';
-import { logOut } from '../../../../store/auth/action';
+import { logOut } from '../../../../store/auth/slice';
 import { Badge, Card, Dropdown, Menu, Modal } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import useAuth from '~/hooks/useAuth';
 import Router from 'next/router';
-import { setSavedPrfileData } from '~/store/ecomerce/action';
+import { setSavedPrfileData } from '~/store/ecomerce/slice';
 
 
 
@@ -38,8 +38,8 @@ function AccountQuickLinks() {
 
     const menu = (
         <Menu>
-            {accountLinks.map((link) => (
-                <div className="order">
+            {accountLinks.map((link, index) => (
+                <div className="order" key={index}>
                     {link?.url == '/account/selling' ? <Badge.Ribbon key={link?.url} text="Yangi funksiya" color='blue'>
                         <Card size="small" style={{ backgroundColor: 'rgba(0, 0, 0, 0.04)', borderRadius: 0 }}>
                             <li  >
@@ -56,7 +56,7 @@ function AccountQuickLinks() {
                             </li >
                         </Card>
                     </Badge.Ribbon> : link?.url == '/account/deals' ? (
-                        <Badge.Ribbon text="Tez kunda" color="volcano">
+                        <Badge.Ribbon text="Tez kunda" color="volcano" key={index}>
                             <Card size="small">
                                 <Menu.Item key={link.url}>
                                     <Link href={link.url}>
@@ -72,7 +72,7 @@ function AccountQuickLinks() {
                             </Card>
                         </Badge.Ribbon>
                     ) : link?.url == 'b' ? (
-                        <Badge.Ribbon text="Tez kunda" color="volcano">
+                        <Badge.Ribbon text="Tez kunda" color="volcano" key={index}>
                             <Card size="small">
                                 <Menu.Item key={link.url}>
                                     <Link href="#">

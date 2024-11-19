@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { connect } from 'react-redux';
 import { Drawer } from 'antd';
 import PanelMenu from '../panel/PanelMenu';
 import { useState } from 'react';
@@ -123,8 +122,4 @@ function NavigationListAdmin() {
     );
 }
 
-const mapStateToProps = (state) => {
-    return state.setting;
-};
-
-export default connect(mapStateToProps)(NavigationListAdmin);
+export default NavigationListAdmin

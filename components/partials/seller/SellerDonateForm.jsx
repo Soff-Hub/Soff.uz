@@ -88,14 +88,14 @@ export default function SellerDonateForm() {
 
                 setOrder(resp.data?.order)
                 reverseCountdown(1, 59)
-                
+
             } catch (err) {
                 const modal = Modal.error({
                     centered: true,
                     title: 'Xatolik!',
                     content: err.response.data?.msg,
                 });
-                
+
                 setPaymentStep('card')
             }
 
@@ -232,6 +232,7 @@ export default function SellerDonateForm() {
                             {
                                 [5000, 10000, 20000, 50000, 100000, 250000].map(el => (
                                     <div
+                                        key={el}
                                         className='amount-item py-1 px-4'
                                         style={{
                                             backgroundColor: Number(amount) === el ? '#00A44F' : '#f1f1f1',
@@ -273,8 +274,9 @@ export default function SellerDonateForm() {
                                         name: 'payme',
                                         img: '/static/img/payment-method/payme-logo.png'
                                     },
-                                ].map(el => (
+                                ].map((el, i) => (
                                     <div
+                                        key={i}
                                         style={{
                                             boxShadow: 'rgba(0, 0, 0, 0.15) 0px 5px 15px 0px',
                                             cursor: 'pointer',

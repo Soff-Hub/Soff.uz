@@ -138,7 +138,7 @@ const ProductVideoDetailFullWidth = ({
                                     <ProductVideoCards type={"similler"} product={item} isPlay={isPlay} setIsPlay={setIsPlay} />{' '}
                                 </div>
                             )) :
-                                <div className='d-flex border border-danger rounded-3 justify-content-center align-items-center ' style={{
+                                <div key={item.id} className='d-flex border border-danger rounded-3 justify-content-center align-items-center ' style={{
                                     height: "100vh"
                                 }}>
                                     <p className='text-center fw-bold fs-3 text-danger'>Ma'lumot yo'q</p>

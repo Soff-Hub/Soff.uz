@@ -3,7 +3,7 @@ import { Slider } from 'antd';
 import { useRouter } from 'next/router';
 import ProductRepository from '~/repositories/ProductRepository';
 import { useDispatch } from 'react-redux';
-import { CategorySlug } from '~/store/auth/action';
+import { CategorySlug } from '~/store/auth/slice';
 import axios from 'axios';
 import { baseUrl } from '~/repositories/Repository';
 import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';

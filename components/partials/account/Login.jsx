@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Link from 'next/link';
 import Router from 'next/router';
-import { begin, isLoginning, login } from '../../../store/auth/action';
+import { begin, checkAuthorization, login } from '../../../store/auth/slice';
 import { Form, Input, Modal, notification, Segmented } from 'antd';
 import { connect } from 'react-redux';
 import useAuth from '~/hooks/useAuth';
@@ -54,7 +54,7 @@ class Login extends Component {
     }
 
     defaultRoutePage = async () => {
-        await this.props.dispatch(isLoginning());
+        await this.props.dispatch(checkAuthorization());
     };
 
 

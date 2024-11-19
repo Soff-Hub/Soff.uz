@@ -8,7 +8,7 @@ import { Image } from 'antd';
 import ModalDeletePostEdit from './ModalPostEdit';
 import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import { BeatLoader } from 'react-spinners';
-import { setSavedPrfileData } from '~/store/ecomerce/action';
+import { setSavedPrfileData } from '~/store/ecomerce/slice';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import SidebarLayout from '../SidebarLayout';
 

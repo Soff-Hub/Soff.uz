@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { baseUrlProfie } from '~/reositoriy-admin/Repository';
 import { jwtDecode } from 'jwt-decode';
 import { useDispatch } from 'react-redux';
-import { login } from '~/store/auth/action';
+import { login } from '~/store/auth/slice';
 import PageLoader from '~/components/elements/common/PageLoader';
 import Router from 'next/router';
 

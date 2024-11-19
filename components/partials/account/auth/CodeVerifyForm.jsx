@@ -5,7 +5,7 @@ import Axios from 'axios';
 import { useRouter } from 'next/router';
 import { baseUrlAuth } from '~/repositories/Repository';
 import { useDispatch } from 'react-redux';
-import { login } from '~/store/auth/action';
+import { login } from '~/store/auth/slice';
 
 export const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);

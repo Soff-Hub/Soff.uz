@@ -85,7 +85,7 @@ export default function MyDealCart() {
         setloadingUpdate(false)
     }
 
-  
+
 
     const handlePagination = (pageNum) => {
         setCurrPage(pageNum);
@@ -305,8 +305,8 @@ export default function MyDealCart() {
                                         <>
 
                                             {
-                                                data?.map(item => (
-                                                    <div >
+                                                data?.map((item, index) => (
+                                                    <div key={index} >
                                                         <div
                                                             onClick={() => showModal(item?.id)} style={{ cursor: "pointer" }}
                                                             className={`rounded py-3 px-4 d-flex justify-content-between align-items-center
