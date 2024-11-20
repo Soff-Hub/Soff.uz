@@ -6,9 +6,10 @@ import FaqSaidbar from '../partials/faqs/faqSaidbar';
 import { useRouter } from 'next/router';
 import HeaderMobileBottom from '../shared/headers/HeaderMobilebottom';
 import Header from '../blocks/header';
-import FooterDefault from '../shared/footers/FooterDefault';
+// import FooterDefault from '../shared/footers/FooterDefault';
 
 import { GoogleLogin } from '@react-oauth/google';
+import SiteFooter from '../shared/footers/SiteFooter';
 
 export let accountAdminLinks = [
     {
@@ -193,19 +194,22 @@ const PageLayout = ({
             </div>
 
             <HeaderMobileBottom />
-            <FooterDefault />
+            {/* <FooterDefault /> */}
+            <SiteFooter />
 
 
-            {user ? '' : <GoogleLogin
-                onSuccess={credentialResponse => {
-                    handleLogin(credentialResponse?.credential)
-                }}
-                onError={() => {
-                    console.log('Login Failed');
-                }}
-                useOneTap
-                prompt="select_account"
-            />}
+            {user ? '' : <div style={{ height: 0, overflow: 'hidden' }}>
+                <GoogleLogin
+                    onSuccess={credentialResponse => {
+                        handleLogin(credentialResponse?.credential)
+                    }}
+                    onError={() => {
+                        console.log('Login Failed');
+                    }}
+                    intermediate_iframe_close_callback={(e) => e.preventDefault()}
+                    useOneTap
+                    prompt="select_account"
+                /></div>}
         </>
     );
 };
