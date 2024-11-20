@@ -8,25 +8,25 @@ import SellerProductsFilter from './SellerProductsFilter';
 import { useFetchProductsQuery } from '~/rtk-store/products/api';
 import SellerProductsTable from './SellerProductsTable';
 import { Pagination, Select } from 'antd';
-import { updateProductParams } from '~/rtk-store/products/slice';
+import { updatePageParams } from '~/rtk-store/products/slice';
 import SellerProductsList from './SellerProductsList';
 import useResponsive from '~/utilities/useResponsive';
 
 export default function SellerProductsMain() {
     const { accountLinks } = useSelector((state) => state.auth);
     const { profile } = useSelector((state) => state.ecomerce);
-    const { productParams } = useSelector((state) => state.products);
+    const { productParams, pageParams } = useSelector((state) => state.products);
     const dispatch = useDispatch()
     const { isMobile } = useResponsive()
 
-    const { data, isFetching } = useFetchProductsQuery(productParams, {
+    const { data, isFetching } = useFetchProductsQuery({ ...productParams, ...pageParams }, {
         refetchOnMountOrArgChange: true,
     })
 
     const handlePagination = (page, page_size) => {
-        if (page_size !== Number(productParams?.page_size)) {
-            dispatch(updateProductParams({ page_size, page: 1 }))
-        } else dispatch(updateProductParams({ page }))
+        if (page_size !== Number(pageParams?.page_size)) {
+            dispatch(updatePageParams({ page_size, page: 1 }))
+        } else dispatch(updatePageParams({ page }))
     }
 
     return (
@@ -55,17 +55,17 @@ export default function SellerProductsMain() {
                             </div>
                         }
 
-                        {productParams?.page ? <div className="bg-white py-3 mb-4" style={{ borderRadius: '8px' }}>
+                        {pageParams?.page ? <div className="bg-white py-3 mb-4" style={{ borderRadius: '8px' }}>
                             <div className='d-flex'>
                                 <Pagination
                                     total={data?.count}
-                                    current={productParams?.page}
-                                    pageSize={productParams?.page_size}
+                                    current={pageParams?.page}
+                                    pageSize={pageParams?.page_size}
                                     showSizeChanger={false}
                                     onChange={handlePagination}
                                 />
                                 <Select
-                                    value={productParams?.page_size}
+                                    value={pageParams?.page_size}
                                     style={{
                                         width: 60,
                                     }}

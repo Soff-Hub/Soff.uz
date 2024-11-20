@@ -41,7 +41,7 @@ export default function AdminProductsFilter() {
 
   const searchCategory = async (value) => {
     const ItemsData = await GetRepository.getAllCategoryListsGlobal(value);
-    setCategories(ItemsData.map(el => ({ label: el.name, value: el.id })))
+    setCategories([{ label: "Barcha kategoriyalar", value: '' }, ...ItemsData.map(el => ({ label: el.name, value: el.id }))])
   }
 
   const handleDateChange = (dates) => {
@@ -102,7 +102,7 @@ export default function AdminProductsFilter() {
             optionFilterProp="label"
             showSearch
             className='w-100'
-            value={productParams?.category}
+            value={productParams?.category || ''}
             onSearch={(e) => debounceFunction(e, (v) => searchCategory(v))}
             onChange={(e) => handleFilter('category', e)}
             options={categories}

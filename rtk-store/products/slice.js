@@ -5,7 +5,6 @@ import storage from 'redux-persist/lib/storage';
 const initialState = {
     productParams: {
         status: '',
-        page: 1,
         sort: '',
         document__content_type: '',
         search: '',
@@ -14,6 +13,9 @@ const initialState = {
         discount_price_after: '',
         date_range_after: '',
         date_range_before: '',
+    },
+    pageParams: {
+        page: 1,
         page_size: 10,
     },
     openFilter: false,
@@ -41,8 +43,6 @@ const productsSlice = createSlice({
         resetProductParams: (state) => {
             state.productParams = {
                 status: '',
-                page: 1,
-                page_size: state.productParams.page_size,
                 sort: '',
                 document__content_type: '',
                 search: '',
@@ -52,6 +52,9 @@ const productsSlice = createSlice({
                 date_range_after: '',
                 date_range_before: '',
             };
+        },
+        updatePageParams: (state, action) => {
+            state.pageParams = { ...state.pageParams, ...action.payload };
         },
         setProductData: (state, action) => {
             state.productData = action.payload;
@@ -78,7 +81,7 @@ const productsSlice = createSlice({
 const persistConfig = {
     key: 'products',
     storage,
-    whitelist: ['productParams', 'openFilter'], // Faqat productParams saqlanadi
+    whitelist: ['pageParams', 'openFilter']
 };
 
 export const {
@@ -90,6 +93,7 @@ export const {
     setApprovedProductData,
     resetProductParams,
     setOpenFilter,
+    updatePageParams,
 } = productsSlice.actions;
 
 export const persistedProductsReducer = persistReducer(
