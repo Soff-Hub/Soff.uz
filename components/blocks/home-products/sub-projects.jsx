@@ -4,7 +4,7 @@ export default function SubProjects() {
 
     const projecs = [
         {
-            logo: '/static/img/soff/soff_green-old.png',
+            logo: '/static/img/soff/logo-dark.png',
             link: 'https://soff.uz',
             linkMask: 'SOFF.UZ - Intellektual mulk marketi',
         },

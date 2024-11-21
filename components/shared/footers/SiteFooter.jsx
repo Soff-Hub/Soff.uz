@@ -33,7 +33,7 @@ const SiteFooter = () => {
     }
 
     return (
-        <div className='site-footer mt-5'>
+        <div className='site-footer'>
             <div className="container">
                 <div className="site-footer-inner row m-0">
                     <div className="site-footer-left col-lg-6 col-md-6 col-sm-12">

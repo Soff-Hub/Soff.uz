@@ -34,7 +34,8 @@ export default function HomeProducts({ tab }) {
                 }
 
                 <div className='view-all-products'>
-                    <Link href={tab ? `/category/${tab == '' || tab === 'file' ? 'kurs-ishlari' : tab}` : 'topCategory/categories'}>
+                    <Link href={tab && tab !== '' && tab !== 'file' ? `/category/${tab}` : 'topCategory/categories'}>
+                        {/* <Link href={tab ? `/category/${tab == '' || tab === 'file' ? 'topCategory/categories' : tab}` : 'topCategory/categories'}> */}
                         <a className='view-all-products-link'>
                             Barcha mahsulotlarni ko'rish
                         </a>
