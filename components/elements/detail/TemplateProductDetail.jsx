@@ -146,7 +146,7 @@ const TemplateProductDetail = ({ product, views }) => {
 
                     {/* <TemplateModuleDetailTopInformation product={product} /> */}
                     <ProductShoppingActions />
-                    <TemplateDetails product={product} />
+                    {/* <TemplateDetails product={product} /> */}
 
                     <TemplateModuleProductDetailDescription
                         product={product}
