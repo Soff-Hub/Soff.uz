@@ -18,6 +18,7 @@ import Head from 'next/head';
 import Joyride from 'react-joyride';
 import { OneShopDoc } from '~/store/auth/slice';
 import TemplateDetailFullwidth from '~/components/elements/detail/TemplateDetailFullwidth';
+import TemplateProductDetail from '~/components/elements/detail/TemplateProductDetail';
 
 const ProductDefaultPage = ({ defaultProducts }) => {
     const router = useRouter();
@@ -162,7 +163,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
         <>
             <PageContainer
                 title={defaultProducts ? defaultProducts?.title : 'Loading...'}>
-                <BreadCrumb breacrumb={breadCrumb} layout="fullwidth" />
+                {/* <BreadCrumb breacrumb={breadCrumb} layout="fullwidth" /> */}
 
                 <Head>
                     <title>{defaultProducts?.title || "Soff.uz - Intellektual mulk marketi"}</title>
@@ -188,107 +189,113 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                     <meta property="twitter:keywords" content={defaultProducts?.tag ? defaultProducts?.tag?.map((e) => e?.name)?.join(', ') : "kurs ishi, taqdimotlar, slaydlar, diplom ishi, prezentatsiya"} />
                 </Head>
 
-                <div className="container" style={{ position: 'relative' }}>
-                    <div className='text-end m-0'>
-                        {defaultProducts?.discpunt_price === 0 && <p onClick={handleClickStepper} style={{ cursor: 'pointer', margin: 0 }}>Sotib olish bo'yicha qo'llanma</p>
-                        }
-                    </div>
+                <div style={{ backgroundColor: '#fff' }}>
+                {/* <div style={{ backgroundColor: '#fafdff' }}> */}
+                    <div className="container" style={{ position: 'relative' }}>
+                        <div className='text-end m-0'>
+                            {defaultProducts?.discpunt_price === 0 && <p onClick={handleClickStepper} style={{ cursor: 'pointer', margin: 0 }}>Sotib olish bo'yicha qo'llanma</p>
+                            }
+                        </div>
 
-                    <Joyride
-                        steps={steps}
-                        run={run}
-                        continuous
-                        floaterProps={{
-                            autoOpen: true,
-                            placement: 'right-start',
-                            offset: 0
-                        }}
-                        styles={{
-                            options: {
-                                arrowColor: '#e3ffeb',
-                                primaryColor: '#00A44F',
-                                textColor: '#004a14',
-                                padding: '0 !important',
-                                width: 300,
-                            },
+                        <Joyride
+                            steps={steps}
+                            run={run}
+                            continuous
+                            floaterProps={{
+                                autoOpen: true,
+                                placement: 'right-start',
+                                offset: 0
+                            }}
+                            styles={{
+                                options: {
+                                    arrowColor: '#e3ffeb',
+                                    primaryColor: '#00A44F',
+                                    textColor: '#004a14',
+                                    padding: '0 !important',
+                                    width: 300,
+                                },
 
-                        }}
-                        callback={callbackSingle}
-                        locale={{
-                            back: "Oldingisi",
-                            last: "Tushundim",
-                            close: "Yopish",
-                            next: "Tushundim",
-                            open: "Ochish",
-                        }}
-                    />
+                            }}
+                            callback={callbackSingle}
+                            locale={{
+                                back: "Oldingisi",
+                                last: "Tushundim",
+                                close: "Yopish",
+                                next: "Tushundim",
+                                open: "Ochish",
+                            }}
+                        />
 
-                    <div className={`ps-page--product ${defaultProducts?.price === 0 ? "" : "pt-2"}`}>
-                        <div className="ps-container p-0">
-                            <div className="ps-page__container">
-                                {(product?.document?.content_type === 'file') ? (
-                                    <div className="">
-                                        <ProductDetailFullwidth
-                                            product={product}
-                                            views={views}
-                                        />
-                                    </div>
-                                ) :
-                                    product?.document?.content_type === 'template' ? (
+                        <div className={`ps-page--product ${defaultProducts?.price === 0 ? "" : "pt-2"}`}>
+                            <div className="ps-container p-0">
+                                <div className="ps-page__container">
+                                    {(product?.document?.content_type === 'file') ? (
                                         <div className="">
-                                            <TemplateDetailFullwidth
+                                            <ProductDetailFullwidth
                                                 product={product}
                                                 views={views}
-
                                             />
                                         </div>
                                     ) :
+                                        product?.document?.content_type === 'template' ? (
+                                            <div className="">
+                                                {/* <TemplateDetailFullwidth
+                                                product={product}
+                                                views={views}
+                                            /> */}
+                                                <TemplateProductDetail
+                                                    product={product}
+                                                    views={views}
+                                                />
+                                            </div>
+                                        ) :
 
-                                        product?.document?.content_type ===
-                                            'video' ? (
-                                            <div className="">
-                                                <ProductVideoDetailFullWidth
-                                                    isPlay={isPlay} setIsPlay={setIsPlay}
-                                                    product={product}
-                                                    views={views}
-                                                    similar={similar}
-                                                />
-                                            </div>
-                                        ) : product?.document?.content_type ===
-                                            'audio' ? (
-                                            <div className="">
-                                                <ProductAudioDetailFullWidth
-                                                    product={product}
-                                                    views={views}
-                                                />
-                                            </div>
-                                        ) : product?.document?.content_type ===
-                                            'article' ? (
-                                            <div>
-                                                <ProductAudioDetailFullWidth
-                                                    product={product}
-                                                    document={document}
-                                                    views={views}
-                                                />
-                                            </div>
-                                        ) : (
-                                            <div className="ps-page__left">
-                                                <SkeletonProductDetail />
-                                            </div>
-                                        )}
+                                            product?.document?.content_type ===
+                                                'video' ? (
+                                                <div className="">
+                                                    <ProductVideoDetailFullWidth
+                                                        isPlay={isPlay} setIsPlay={setIsPlay}
+                                                        product={product}
+                                                        views={views}
+                                                        similar={similar}
+                                                    />
+                                                </div>
+                                            ) : product?.document?.content_type ===
+                                                'audio' ? (
+                                                <div className="">
+                                                    <ProductAudioDetailFullWidth
+                                                        product={product}
+                                                        views={views}
+                                                    />
+                                                </div>
+                                            ) : product?.document?.content_type ===
+                                                'article' ? (
+                                                <div>
+                                                    <ProductAudioDetailFullWidth
+                                                        product={product}
+                                                        document={document}
+                                                        views={views}
+                                                    />
+                                                </div>
+                                            ) : (
+                                                <div className="ps-page__left">
+                                                    <SkeletonProductDetail />
+                                                </div>
+                                            )}
+                                </div>
+
+
+                                {(similar?.length > 0 && product?.document?.content_type !==
+                                    'video') ? (
+                                    <RelatedProduct
+                                        isPlay={isPlay} setIsPlay={setIsPlay}
+                                        data={similar}
+                                        collectionSlug="shop-recommend-items"
+                                    />
+                                ) : (
+                                    ''
+                                )}
                             </div>
-
-
-                            {(similar?.length > 0 && product?.document?.content_type !==
-                                'video') ? (
-                                <RelatedProduct
-                                    isPlay={isPlay} setIsPlay={setIsPlay}
-                                    data={similar}
-                                    collectionSlug="shop-recommend-items"
-                                />
-                            ) : (
-                                ''
-                            )}
                         </div>
                     </div>
                 </div>
