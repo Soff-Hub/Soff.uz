@@ -49,14 +49,16 @@ const SiteFooter = () => {
                                 </a>
                             </Link>
                             <p>
-                                <strong>SOFF.UZ</strong> -
-                                Intellektual mulk marketi, Intellektual mahsulotlarini soting va xarid qiling.
+                                <strong>SOFF.UZ</strong> - qidiruv tizimi
                             </p>
-                            <Link href={'/account/donat'}>
+                            <p>
+                                O‘zbek tilida saralanib borilayotgan sifatli ma’lumotlar jamlanmasini, fayllar, tasvirlar, videolar, audiolar ko‘rinishida qidirib topish imkonini beradi.
+                            </p>
+                            {/* <Link href={'/account/donat'}>
                                 <a>
                                     Loyiha rivoji uchun o'z hissangizni qo'shing - Donat
                                 </a>
-                            </Link>
+                            </Link> */}
                         </div>
                     </div>
                     <div className="site-footer-right col-lg-6 col-md-6 col-sm-12">
