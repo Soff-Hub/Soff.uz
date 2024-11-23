@@ -11,7 +11,7 @@ export default function TemplateCard(props) {
                     <Link href={`/product/${props?.slug}`}>
                         <a>
                             <img
-                                src={`${props?.poster_url || 'https://eu2.contabostorage.com/20ddac7ab90d4d188d1ca104120b91ed:soffuz/media/poster/IMG_0989.PNG'}`}
+                                src={`${props?.poster_url || 'https://eu2.contabostorage.com/20ddac7ab90d4d188d1ca104120b91ed:soffuz/media/plan.jpeg'}`}
                                 className='file-card-imge'
                                 alt=''
                             />

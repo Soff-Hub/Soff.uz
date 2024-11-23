@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { OneShopDoc } from '~/store/auth/slice';
 import { audioDownloaderSale } from '~/utilities/common-helpers';
 import { EyeFilled } from '@ant-design/icons';
+import Link from 'next/link';
 
 const ProductShoopping = ({ product, demo }) => {
     const dispatch = useDispatch();
@@ -82,22 +83,25 @@ const ProductShoopping = ({ product, demo }) => {
                     )}
 
                     {demo && (
-                        <button
-                            className="w-100"
-                            style={{
-                                backgroundColor: '#00A3FF',
-                                padding: '10px 60px',
-                                border: 'none',
-                                color: '#fff',
-                                borderRadius: '5px',
-                            }}
-                            onClick={() => router.push('https://soff.uz/')}
-                        >
-                            <strong className="d-flex align-items-center justify-content-center gap-1">
-                                <EyeFilled style={{ fontSize: '17px' }} />
-                                Demoni ko'rish
-                            </strong>
-                        </button>
+                        <Link href={`${demo || "#"}`}>
+                            <a target='_blank'>
+                                <button
+                                    className="w-100"
+                                    style={{
+                                        backgroundColor: '#00A3FF',
+                                        padding: '10px 60px',
+                                        border: 'none',
+                                        color: '#fff',
+                                        borderRadius: '5px',
+                                    }}
+                                >
+                                    <strong className="d-flex align-items-center justify-content-center gap-1">
+                                        <EyeFilled style={{ fontSize: '17px' }} />
+                                        Demoni ko'rish
+                                    </strong>
+                                </button>
+                            </a>
+                        </Link>
                     )}
                 </div>
             </div>
