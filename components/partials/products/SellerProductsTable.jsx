@@ -149,7 +149,7 @@ export default function SellerProductsTable({ data, loading }) {
             title: 'Harakatlar',
             dataIndex: 'content_type_id',
             key: 'address',
-            render: (content_type_id, src) => <SellerProductActions src={src} />,
+            render: (content, src) => <SellerProductActions content={content} src={src} />,
         },
     ];
 

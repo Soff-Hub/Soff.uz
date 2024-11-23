@@ -6,7 +6,7 @@ import { useLazyFetchProductDetailQuery } from '~/rtk-store/products/api';
 import { setApprovedProductData, setDetailLoader, setDetailModal, setProductData, setProductDeleteId } from '~/rtk-store/products/slice';
 
 
-export default function SellerProductActions({ src }) {
+export default function SellerProductActions({ content, src }) {
     const [copy, setCopy] = useState(null)
     const [fetchDetail] = useLazyFetchProductDetailQuery()
     const dispatch = useDispatch()
@@ -42,12 +42,18 @@ export default function SellerProductActions({ src }) {
     }
 
     const handleEdit = () => {
-        if (src?.content_type === 'video') {
+        if (content?.content_type === 'video') {
             Router.push(
-                `/account/myproducts/edit-video/${src?.id}`
+                `/account/myproducts/edit-video/${content?.id}`
             );
-        } else {
-            Router.push(`/account/myproducts/${src?.id}`);
+        }
+        // else if (content?.content_type === 'template') {
+        //     Router.push(
+        //         `/account/upload/template/${content?.id}`
+        //     );
+        // }
+        else {
+            Router.push(`/account/myproducts/${content?.id}`);
         }
     }
 

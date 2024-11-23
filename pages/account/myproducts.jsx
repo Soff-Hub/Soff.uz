@@ -1,6 +1,5 @@
 import React from 'react';
 
-import MyProducts_list from '~/components/partials/account/MyProducts_list';
 import PageContainer from '~/components/layouts/PageContainer';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
 import { useSelector } from 'react-redux';
@@ -22,7 +21,6 @@ const MyProducts = () => {
                         title={"Mening mahsulotlarim"}
                     />
                     <BdCrumb title={'Mening mahsulotlarim'} />
-                    {/* <MyProducts_list /> */}
                     <SellerProductsMain />
                 </div>
             </PageContainer> : user?.access ? <Page404 /> : <Selection />
