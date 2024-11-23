@@ -19,7 +19,7 @@ export const productTypeItems = [
         title: 'Audiolar'
     },
     {
-        path: '/account/myproducts/design-template-posts',
+        path: '/account/upload/template/step-1',
         img: '/static/img/template-i.jpg',
         title: 'Shablonlar'
     }
@@ -45,7 +45,7 @@ const SellerStart = () => {
             title: 'Ishlanmalar'
         },
         {
-            path: '/account/myproducts/design-template-posts',
+            path: '/account/upload/template/step-1',
             img: '/static/img/template-i.jpg',
             title: 'Shablonlar'
         }
