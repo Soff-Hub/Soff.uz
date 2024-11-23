@@ -3,7 +3,6 @@ import DefaultDescription from '~/components/elements/detail/description/Default
 import Link from 'next/link';
 import TemplateModuleProductDetailDescription from './modules/TemplateModuleProductDetailDescription';
 import { useRouter } from 'next/router';
-import { EyeFilled } from '@ant-design/icons';
 import { message } from 'antd';
 import BuyBtnScroll from './BuyBtnScroll';
 import TemplateProductThumbnail from './TemplateProductThumbnail';
@@ -16,7 +15,6 @@ const TemplateProductDetail = ({ product, views }) => {
     const Router = useRouter();
     const [copy, setCopy] = useState(false);
     const [hoverImg, setHoverImg] = useState(false);
-    const [hoverImgButton, setHoverImgButton] = useState(false);
     const [messageApi, contextHolder] = message.useMessage();
     const { isMobile } = useResponsive()
 
@@ -41,12 +39,10 @@ const TemplateProductDetail = ({ product, views }) => {
                     setCopy(false);
                 }, 2500);
                 infoSuccess(videoUrl);
-                //   alert(`Video URL copied to clipboard! ${}`);
             })
             .catch((error) => {
                 infoError(error);
                 console.error('Error copying video URL: ', error);
-                // alert('Error copying video URL!');
             });
     };
 
@@ -103,20 +99,40 @@ const TemplateProductDetail = ({ product, views }) => {
 
                 <div className="ps-product__info col-md-4 d-flex flex-column gap-3  ">
 
-                    {/* <TemplateModuleDetailTopInformation product={product} /> */}
                     <ProductShoppingActions product={product} />
-                    {/* <TemplateDetails product={product} /> */}
 
                     <TemplateModuleProductDetailDescription
                         product={product}
                         views={views}
                     />
-                    {/* <TemplateModuleDetailShoppingActions
-                        product={product}
-                        demo={product?.demo_link}
-                    /> */}
 
                     <ProductShoopping product={product} demo={product?.demo_link} />
+
+                    {product?.technologies_data?.length > 0 ? <>
+                        <p className='fw-medium fs-5 m-0' style={{
+                            fontFamily: "Work Sans, sans-serif",
+                            fontSize: "16px",
+                            color: "black",
+                            maxWidth: "180px",
+                            borderBottom: "2px solid #00A44F"
+                        }}>
+                            Foydalanilgan texnologiyalar
+                        </p>
+
+                        <div className="mb-4 d-flex justify-content-start align-content-center flex-wrap gap-2">
+                            {product?.technologies_data?.length > 0 &&
+                                product?.technologies_data.slice(0, 15).map((item, i) => (
+                                    <div key={i} style={{
+                                        borderRadius: "20px",
+                                        padding: "2px 8px",
+                                        border: "1px solid #00A44F",
+                                        fontSize: "13px"
+                                    }}>
+                                        {item}{' '}
+                                    </div>
+                                ))}
+                        </div>
+                    </> : ''}
 
                     <p className='fw-medium fs-5 m-0' style={{
                         fontFamily: "Work Sans, sans-serif",
@@ -147,12 +163,10 @@ const TemplateProductDetail = ({ product, views }) => {
                                 </div>
                             ))}
                     </div>
-
                 </div>
             </div>
 
             <DefaultDescription product={product} />
-
 
             <BuyBtnScroll />
         </div >
