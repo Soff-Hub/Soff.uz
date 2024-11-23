@@ -1,8 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import ProductRepository from '~/repositories/ProductRepository';
 import {
-    setWishlistTtems,
-    setCartItems,
     setCartDataItems,
     setCartItemDataItems,
 } from '~/store/ecomerce/slice';

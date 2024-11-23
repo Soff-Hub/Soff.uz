@@ -1,16 +1,20 @@
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-export default function TemplateProductThumbnail() {
-    const [thumb, setThumb] = useState(1);
+export default function TemplateProductThumbnail({ data }) {
+    const [poster, setPoster] = useState({})
+
+    useEffect(() => {
+        setPoster(data[0])
+    }, [data])
 
     return (
         <div className=''>
-            <div className='bg-white px-2' style={{ borderRadius: '10px' }}>
+            <div className='px-2' style={{ borderRadius: '10px', backgroundColor: '#F6F5F2', }}>
                 <Image
                     height={600}
                     width={1000}
-                    src={'https://eu2.contabostorage.com/20ddac7ab90d4d188d1ca104120b91ed:soffuz/media/poster/photo_2024-06-09_01-18-42.jpg'}
+                    src={poster?.url}
                     alt={"product?.title"}
                     objectFit='contain'
                     style={{
@@ -26,13 +30,13 @@ export default function TemplateProductThumbnail() {
 
             <div className='d-flex align-items-center gap-2 mt-2 px-2'>
                 {
-                    Array(7).fill(0).map((_, el) => (
-                        <div style={{ cursor: 'pointer', height: '60px', width: '100px', borderRadius: '5px', }} onClick={() => setThumb(el)} className={`${el === thumb ? 'active-thumb' : 'noactive-thumb'}`}>
+                    data.map((_) => (
+                        <div style={{ cursor: 'pointer', height: '60px', width: '100px', borderRadius: '5px', backgroundColor: '#F6F5F2', }} onClick={() => setPoster(_)} className={`${_?.id === poster?.id ? 'active-thumb' : 'noactive-thumb'}`}>
                             <Image
-                                key={el}
+                                key={_?.id}
                                 height={60}
                                 width={100}
-                                src={'https://eu2.contabostorage.com/20ddac7ab90d4d188d1ca104120b91ed:soffuz/media/poster/photo_2024-06-09_01-18-42.jpg'}
+                                src={_?.url}
                                 alt={"product?.title"}
                                 objectFit='contain'
                                 style={{
