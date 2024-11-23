@@ -23,13 +23,18 @@ clientApi.interceptors.request.use(
 
 export const axiosBaseQuery =
     () =>
-    async ({ url, method, data, params }) => {
+    async ({ url, method, data, params, headers }) => {
         try {
             const result = await http({
                 url: baseURL + '/api/v1' + url,
                 method,
                 data,
                 params,
+                headers: headers
+                    ? {
+                          ...headers,
+                      }
+                    : {},
             });
             return { data: result.data };
         } catch (axiosError) {

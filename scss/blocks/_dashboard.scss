@@ -131,3 +131,25 @@
     height: 30px !important;
     margin: 0 !important;
 }
+
+.main-poster {
+    max-width: 220px;
+
+    .ant-row {
+        width: 100% !important;
+        display: block !important;
+        max-width: 200px;
+    }
+
+    .ant-upload-list-picture-card {
+        display: flex;
+        width: 100% !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        min-width: 200px !important;
+    }
+
+    .ant-form-item-row {
+        min-width: 220px;
+    }
+}

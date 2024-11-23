@@ -7,6 +7,8 @@ import dashboard from './dashboard/slice';
 import { dashboardApi } from './dashboard/api';
 import { persistedProductsReducer } from './products/slice';
 import { productsApi } from './products/api';
+import { uploadApi } from './upload/api';
+import { persistedUploadReducer } from './upload/slice';
 
 export const store = configureStore({
     reducer: {
@@ -14,13 +16,16 @@ export const store = configureStore({
         ecomerce,
         dashboard,
         products: persistedProductsReducer,
+        uploads: persistedUploadReducer,
         [dashboardApi.reducerPath]: dashboardApi.reducer,
         [productsApi.reducerPath]: productsApi.reducer,
+        [uploadApi.reducerPath]: uploadApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware()
             .concat(dashboardApi.middleware)
-            .concat(productsApi.middleware),
+            .concat(productsApi.middleware)
+            .concat(uploadApi.middleware),
 });
 
 export const persistor = persistStore(store);
