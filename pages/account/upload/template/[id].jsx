@@ -12,7 +12,7 @@ import {
     message
 } from 'antd';
 import Editor from '~/components/partials/template/Editor';
-import { useFetchProductDetailQuery, useLazyFetchCreateTagsQuery, useLazyFetchTemplateCategoriesQuery, useUpdateTemplateMutation, useUploadTemplateMutation } from '~/rtk-store/upload/api';
+import { useFetchProductDetailQuery, useLazyFetchCreateTagsQuery, useLazyFetchTemplateCategoriesQuery, useUpdateTemplateMutation } from '~/rtk-store/upload/api';
 import { baseDomain } from '~/repositories/NewRepository';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUploadingFile } from '~/rtk-store/upload/slice';
@@ -24,6 +24,8 @@ function Step1({ id }) {
     const [fetchCategories, { data: categories }] = useLazyFetchTemplateCategoriesQuery()
     const [fetchTags, { data: tags }] = useLazyFetchCreateTagsQuery()
     const [uploadSubmit, { isLoading }] = useUpdateTemplateMutation()
+    const [fileList, setFileList] = useState([]);
+    const [poster, setPoster] = useState([]);
 
     const [form] = Form.useForm();
     const [editorLoaded, setEditorLoaded] = useState(false);
@@ -31,13 +33,11 @@ function Step1({ id }) {
     const [newValues, setNewValues] = useState({})
 
     const { user } = useSelector(state => state.auth)
-    const { uploading } = useSelector(state => state.uploads)
     const dispatch = useDispatch()
     const { reload, push } = useRouter()
 
     const handleSubmit = async (values) => {
         const formData = new FormData()
-        let obj = { ...values, description }
         for (const [key, value] of Object.entries(newValues)) {
             if (key === 'images') {
                 for (const img of value) {
@@ -141,6 +141,20 @@ function Step1({ id }) {
                     originFileObj: null
                 }
             }])
+
+            setPoster([{
+                uid: '-1',
+                name: 'poster.png',
+                status: 'done',
+                url: data?.poster_url,
+            }])
+
+            setFileList(data?.document?.images?.map((el, i) => ({
+                uid: -1 * (i + 1),
+                name: 'image.png',
+                status: 'done',
+                url: el?.image_url,
+            })))
         }
     }, [data])
 
@@ -377,6 +391,8 @@ function Step1({ id }) {
                                     accept='image/*'
                                     maxCount={1}
                                     rootClassName='dsawed'
+                                    fileList={poster}
+                                    onChange={(e) => setPoster(e.fileList)}
                                 >
                                     <button
                                         style={{
@@ -427,6 +443,8 @@ function Step1({ id }) {
                                     listType='picture-card'
                                     className='upload-btn'
                                     accept='image/*'
+                                    fileList={fileList}
+                                    onChange={(e) => setFileList(e?.fileList)}
                                 >
                                     <button
                                         style={{
