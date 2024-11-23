@@ -224,6 +224,11 @@ export default function Step1() {
         },
     };
 
+    const posterProps = {
+        name: 'file',
+        action: '/api/upload',
+    };
+
 
     return (
         <PageContainer>
@@ -401,6 +406,7 @@ export default function Step1() {
                                     accept='image/*'
                                     maxCount={1}
                                     rootClassName='dsawed'
+                                    {...posterProps}
                                 >
                                     <button
                                         style={{
@@ -451,6 +457,7 @@ export default function Step1() {
                                     listType='picture-card'
                                     className='upload-btn'
                                     accept='image/*'
+                                    {...posterProps}
                                 >
                                     <button
                                         style={{
