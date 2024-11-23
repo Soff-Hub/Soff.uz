@@ -14,7 +14,6 @@ import ProductShoopping from './ProductShopping';
 const TemplateProductDetail = ({ product, views }) => {
     const Router = useRouter();
     const [copy, setCopy] = useState(false);
-    const [hoverImg, setHoverImg] = useState(false);
     const [messageApi, contextHolder] = message.useMessage();
     const { isMobile } = useResponsive()
 
@@ -66,8 +65,6 @@ const TemplateProductDetail = ({ product, views }) => {
                 </div>
                 <div className='col-md-8 ' id='get-buy'>
                     <div
-                        onMouseEnter={() => setHoverImg(true)}
-                        onMouseLeave={() => setHoverImg(false)}
                         className='w-100 mb-2 p-0'
                         style={{
                             position: "relative",
@@ -93,7 +90,7 @@ const TemplateProductDetail = ({ product, views }) => {
                             </div>
                         </div>
 
-                        <TemplateProductThumbnail data={product?.document?.images?.map((el, i) => ({ id: i + 1, url: el?.image_url }))} />
+                        <TemplateProductThumbnail data={[{ id: 0, url: product?.poster_url },...product?.document?.images?.map((el, i) => ({ id: i + 1, url: el?.image_url }))]} />
                     </div>
                 </div>
 
