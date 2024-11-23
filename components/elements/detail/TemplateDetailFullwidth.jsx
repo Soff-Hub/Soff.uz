@@ -129,9 +129,13 @@ const TemplateDetailFullwidth = ({ product, views }) => {
 
                             }}
 
-                        > <strong
-                            className='d-flex align-items-center justify-content-center gap-1'>
-                                <EyeFilled style={{ fontSize: "17px" }} />Demoni ko'rish</strong></button>}
+                        >
+                            <strong
+                                className='d-flex align-items-center justify-content-center gap-1'>
+                                <EyeFilled style={{ fontSize: "17px" }} />
+                                Demoni ko'rish
+                            </strong>
+                        </button>}
 
                     </div>
 

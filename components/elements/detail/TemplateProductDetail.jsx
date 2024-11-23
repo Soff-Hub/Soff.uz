@@ -98,40 +98,6 @@ const TemplateProductDetail = ({ product, views }) => {
                         </div>
 
                         <TemplateProductThumbnail data={product?.document?.images?.map((el, i) => ({ id: i + 1, url: el?.image_url }))} />
-
-                        {hoverImg && product?.demo_link && <div className='rounded-3' style={{
-                            position: "absolute",
-                            inset: 0,
-                            backgroundColor: "#333",
-                            opacity: "0.7",
-                        }}
-                        >
-
-                        </div>}
-                        {hoverImg && product?.demo_link && <button
-                            onClick={() => Router.push(product?.demo_link)}
-                            onMouseEnter={() => setHoverImgButton(true)}
-                            onMouseLeave={() => setHoverImgButton(false)}
-                            style={{
-                                position: "absolute",
-                                top: "50%",
-                                left: "50%",
-                                transform: "translate(-50%, -50%)",
-                                backgroundColor: !hoverImgButton ? "transparent" : "#fff",
-                                color: !hoverImgButton ? "#fff" : "#000",
-                                border: "2px solid #dde3e6",
-                                padding: "10px 30px",
-                                borderRadius: "5px",
-                                fontWeight: "600",
-
-
-
-                            }}
-
-                        > <strong
-                            className='d-flex align-items-center justify-content-center gap-1'>
-                                <EyeFilled style={{ fontSize: "17px" }} />Demoni ko'rish</strong></button>}
-
                     </div>
                 </div>
 
@@ -150,7 +116,7 @@ const TemplateProductDetail = ({ product, views }) => {
                         demo={product?.demo_link}
                     /> */}
 
-                    <ProductShoopping product={product} />
+                    <ProductShoopping product={product} demo={product?.demo_link} />
 
                     <p className='fw-medium fs-5 m-0' style={{
                         fontFamily: "Work Sans, sans-serif",
