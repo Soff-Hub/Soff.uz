@@ -158,10 +158,6 @@ function Step1({ id }) {
         }
     }, [data])
 
-    const handleBeforeUpload = (file) => {
-        return false; // Fayl yuklashni to'liq bloklash
-    };
-
     const props = {
         name: 'file',
         action: baseDomain + 'seller/product-create-first/',
@@ -189,6 +185,11 @@ function Step1({ id }) {
         },
     };
 
+
+    const posterProps = {
+        name: 'file',
+        action: '/api/upload',
+    };
 
     return (
         <PageContainer>
@@ -397,8 +398,7 @@ function Step1({ id }) {
                                     rootClassName='dsawed'
                                     fileList={poster}
                                     onChange={(e) => setPoster(e.fileList)}
-                                    action={false}
-                                    beforeUpload={handleBeforeUpload}
+                                    {...posterProps}
                                 >
                                     <button
                                         style={{
@@ -451,8 +451,7 @@ function Step1({ id }) {
                                     accept='image/*'
                                     fileList={fileList}
                                     onChange={(e) => setFileList(e?.fileList)}
-                                    action={false}
-                                    beforeUpload={handleBeforeUpload}
+                                    {...posterProps}
                                 >
                                     <button
                                         style={{
