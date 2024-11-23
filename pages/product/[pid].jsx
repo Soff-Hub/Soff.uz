@@ -17,7 +17,6 @@ import axios from 'axios';
 import Head from 'next/head';
 import Joyride from 'react-joyride';
 import { OneShopDoc } from '~/store/auth/slice';
-import TemplateDetailFullwidth from '~/components/elements/detail/TemplateDetailFullwidth';
 import TemplateProductDetail from '~/components/elements/detail/TemplateProductDetail';
 
 const ProductDefaultPage = ({ defaultProducts }) => {
@@ -28,6 +27,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
     const [similar, setSimilar] = useState([]);
     const [isPlay, setIsPlay] = useState(null);
     const [run, setRun] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     const { user } = useSelector((state) => state.auth);
     const dispatch = useDispatch()
@@ -38,6 +38,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
 
     async function getProducts() {
         const token = user?.access;
+        setLoading(true)
         try {
             const response = await axios.get(
                 baseUrl + `customer/documents/${pid}/`,
@@ -52,6 +53,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
         } catch (error) {
             console.error('Error fetching document:', error);
         }
+        setLoading(false)
     }
 
     async function getProductSimiller() {
@@ -190,7 +192,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                 </Head>
 
                 <div style={{ backgroundColor: '#fff' }}>
-                {/* <div style={{ backgroundColor: '#fafdff' }}> */}
+                    {/* <div style={{ backgroundColor: '#fafdff' }}> */}
                     <div className="container" style={{ position: 'relative' }}>
                         <div className='text-end m-0'>
                             {defaultProducts?.discpunt_price === 0 && <p onClick={handleClickStepper} style={{ cursor: 'pointer', margin: 0 }}>Sotib olish bo'yicha qo'llanma</p>
@@ -229,7 +231,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                         <div className={`ps-page--product ${defaultProducts?.price === 0 ? "" : "pt-2"}`}>
                             <div className="ps-container p-0">
                                 <div className="ps-page__container">
-                                    {(product?.document?.content_type === 'file') ? (
+                                    {(!loading && product?.document?.content_type === 'file') ? (
                                         <div className="">
                                             <ProductDetailFullwidth
                                                 product={product}
@@ -237,7 +239,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                                             />
                                         </div>
                                     ) :
-                                        product?.document?.content_type === 'template' ? (
+                                        !loading && product?.document?.content_type === 'template' ? (
                                             <div className="">
                                                 {/* <TemplateDetailFullwidth
                                                 product={product}
@@ -250,7 +252,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                                             </div>
                                         ) :
 
-                                            product?.document?.content_type ===
+                                            !loading && product?.document?.content_type ===
                                                 'video' ? (
                                                 <div className="">
                                                     <ProductVideoDetailFullWidth
@@ -260,7 +262,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                                                         similar={similar}
                                                     />
                                                 </div>
-                                            ) : product?.document?.content_type ===
+                                            ) : !loading && product?.document?.content_type ===
                                                 'audio' ? (
                                                 <div className="">
                                                     <ProductAudioDetailFullWidth
@@ -268,7 +270,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                                                         views={views}
                                                     />
                                                 </div>
-                                            ) : product?.document?.content_type ===
+                                            ) : !loading && product?.document?.content_type ===
                                                 'article' ? (
                                                 <div>
                                                     <ProductAudioDetailFullWidth

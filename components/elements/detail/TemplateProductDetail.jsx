@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import DefaultDescription from '~/components/elements/detail/description/DefaultDescription';
 import Link from 'next/link';
 import TemplateModuleProductDetailDescription from './modules/TemplateModuleProductDetailDescription';
-import TemplateModuleDetailShoppingActions from './modules/TemplateModuleDetailShoppingActions';
 import { useRouter } from 'next/router';
 import { EyeFilled } from '@ant-design/icons';
 import { message } from 'antd';
@@ -11,11 +10,10 @@ import TemplateProductThumbnail from './TemplateProductThumbnail';
 import ProductSellerInfo from './ProductSellerInfo';
 import useResponsive from '~/utilities/useResponsive';
 import ProductShoppingActions from './ProductShoppingActions';
-import TemplateDetails from './TemplateDetails';
+import ProductShoopping from './ProductShopping';
 
 const TemplateProductDetail = ({ product, views }) => {
     const Router = useRouter();
-
     const [copy, setCopy] = useState(false);
     const [hoverImg, setHoverImg] = useState(false);
     const [hoverImgButton, setHoverImgButton] = useState(false);
@@ -67,7 +65,7 @@ const TemplateProductDetail = ({ product, views }) => {
                 </h4>
                 <div className="col-md-4 mb-3">
                     <div className={`d-flex ${isMobile ? 'justify-content-start' : 'justify-content-end'} w-100`}>
-                        <ProductSellerInfo />
+                        <ProductSellerInfo data={product?.seller} />
                     </div>
                 </div>
                 <div className='col-md-8 ' id='get-buy'>
@@ -99,12 +97,7 @@ const TemplateProductDetail = ({ product, views }) => {
                             </div>
                         </div>
 
-                        <TemplateProductThumbnail />
-
-                        {/* <div className="views">
-                            {' '}
-                            <i className="fa-solid fa-eye"></i> <span>{product?.views}</span>
-                        </div> */}
+                        <TemplateProductThumbnail data={product?.document?.images?.map((el, i) => ({ id: i + 1, url: el?.image_url }))} />
 
                         {hoverImg && product?.demo_link && <div className='rounded-3' style={{
                             position: "absolute",
@@ -145,45 +138,50 @@ const TemplateProductDetail = ({ product, views }) => {
                 <div className="ps-product__info col-md-4 d-flex flex-column gap-3  ">
 
                     {/* <TemplateModuleDetailTopInformation product={product} /> */}
-                    <ProductShoppingActions />
+                    <ProductShoppingActions product={product} />
                     {/* <TemplateDetails product={product} /> */}
 
                     <TemplateModuleProductDetailDescription
                         product={product}
                         views={views}
                     />
-                    <TemplateModuleDetailShoppingActions
+                    {/* <TemplateModuleDetailShoppingActions
                         product={product}
                         demo={product?.demo_link}
-                    />
+                    /> */}
 
-                </div>
+                    <ProductShoopping product={product} />
 
-                <p className=' fw-medium  p-0 ml-3 pb-2 mt-4 mt-md-5 ' style={{
-                    fontFamily: "Work Sans, sans-serif",
-                    fontSize: "16px",
-                    color: "black",
-                    maxWidth: "110px",
-                    borderBottom: "2px solid #007bff"
-                }}>Tezkor teglar</p>
-                <div className="mb-4 d-flex justify-content-start align-content-center flex-wrap">
-                    {product?.tag?.length > 0 &&
-                        product?.tag.slice(0, 15).map((item, i) => (
-                            <div key={i} className="m-2 " style={{
-                                borderRadius: "20px",
-                                padding: "8px 16px",
-                                border: "1px solid #999",
-                                fontSize: "15px"
-                            }}>
-                                <Link href={`/search-page?keyword=${item?.name?.replace(/^#/, '')}`}>
-                                    <a
-                                    >
-                                        {' '}
-                                        {item.name}{' '}
-                                    </a>
-                                </Link>
-                            </div>
-                        ))}
+                    <p className='fw-medium fs-5 m-0' style={{
+                        fontFamily: "Work Sans, sans-serif",
+                        fontSize: "16px",
+                        color: "black",
+                        maxWidth: "80px",
+                        borderBottom: "2px solid #007bff"
+                    }}>
+                        Tezkor teglar
+                    </p>
+
+                    <div className="mb-2 d-flex justify-content-start align-content-center flex-wrap gap-2">
+                        {product?.tag?.length > 0 &&
+                            product?.tag.slice(0, 15).map((item, i) => (
+                                <div key={i} style={{
+                                    borderRadius: "20px",
+                                    padding: "2px 8px",
+                                    border: "1px solid #ccc",
+                                    fontSize: "13px"
+                                }}>
+                                    <Link href={`/search-page?keyword=${item?.name?.replace(/^#/, '')}`}>
+                                        <a
+                                        >
+                                            {' '}
+                                            {item.name}{' '}
+                                        </a>
+                                    </Link>
+                                </div>
+                            ))}
+                    </div>
+
                 </div>
             </div>
 

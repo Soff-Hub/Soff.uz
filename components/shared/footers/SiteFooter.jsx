@@ -76,11 +76,11 @@ const SiteFooter = () => {
                                 </div>
                             ))
                         }
-                        <p className='m-0'>Yangiliklarga obuna bo'lish</p>
+                        {/* <p className='m-0'>Yangiliklarga obuna bo'lish</p>
                         <form onSubmit={handleSubmit} className='subscribe-box'>
                             <Input value={email} placeholder='Email' onChange={e => setEmail(e.target.value)} className='subscribe-input' />
                             <Button htmlType='submit'>Obuna bo'lish</Button>
-                        </form>
+                        </form> */}
                     </div>
                 </div>
             </div>
