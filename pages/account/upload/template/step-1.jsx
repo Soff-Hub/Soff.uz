@@ -5,6 +5,7 @@ import {
     Button,
     Form,
     Input,
+    Modal,
     Select,
     Tooltip,
     Upload,
@@ -116,7 +117,7 @@ export default function Step1() {
 
     const [fetchCategories, { data: categories }] = useLazyFetchTemplateCategoriesQuery()
     const [fetchTags, { data: tags }] = useLazyFetchCreateTagsQuery()
-    const [uploadSubmit] = useUploadTemplateMutation()
+    const [uploadSubmit, { isLoading }] = useUploadTemplateMutation()
 
     const handleSubmit = async (values) => {
         const formData = new FormData()
@@ -151,7 +152,11 @@ export default function Step1() {
                 ])
             }
         } else {
-            message.success("Sizning mahsulotingiz muvaffaqqiyatli yuborildi! 10 soat ichida adminlar tomonidan  mahsulotingiz 'Tasdiqlangan' dan so'ng  sotuvda ko'rishingiz mumkin yoki 'Bekor' qilishinishi ham mumkin")
+            await dispatch(updateUploadingFile(null));
+            Modal.success({
+                title: "Muvaffaqiyatli",
+                content: "Sizning mahsulotingiz muvaffaqqiyatli yuborildi! 10 soat ichida adminlar tomonidan  mahsulotingiz 'Tasdiqlangan' dan so'ng  sotuvda ko'rishingiz mumkin yoki 'Bekor' qilishinishi ham mumkin"
+            })
             push('/account/myproducts')
         }
     };
@@ -494,7 +499,7 @@ export default function Step1() {
                             <Form.Item
                                 className='d-flex justify-content-center'
                             >
-                                <Button type="primary" htmlType="submit" style={{ flex: 1 }}>
+                                <Button loading={isLoading} type="primary" htmlType="submit" style={{ flex: 1 }}>
                                     Yuborish
                                 </Button>
                             </Form.Item>
