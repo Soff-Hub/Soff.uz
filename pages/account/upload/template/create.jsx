@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateUploadingFile } from '~/rtk-store/upload/slice';
 import { useRouter } from 'next/router';
 
-const formItemLayout = {
+export const formItemLayout = {
     labelCol: {
         xs: {
             span: 24,
@@ -37,7 +37,7 @@ const formItemLayout = {
     },
 };
 
-const technologies = [
+export const technologies = [
     'Photoshop',
     'Figma',
     'Adobe Illustrator',

@@ -12,124 +12,39 @@ import {
     message
 } from 'antd';
 import Editor from '~/components/partials/template/Editor';
-import { useLazyFetchCreateTagsQuery, useLazyFetchTemplateCategoriesQuery, useUploadTemplateMutation } from '~/rtk-store/upload/api';
+import { useFetchProductDetailQuery, useLazyFetchCreateTagsQuery, useLazyFetchTemplateCategoriesQuery, useUpdateTemplateMutation, useUploadTemplateMutation } from '~/rtk-store/upload/api';
 import { baseDomain } from '~/repositories/NewRepository';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUploadingFile } from '~/rtk-store/upload/slice';
 import { useRouter } from 'next/router';
+import { formItemLayout, technologies } from './create';
 
-const formItemLayout = {
-    labelCol: {
-        xs: {
-            span: 24,
-        },
-        sm: {
-            span: 6,
-        },
-    },
-    wrapperCol: {
-        xs: {
-            span: 24,
-        },
-        sm: {
-            span: 14,
-        },
-    },
-};
+function Step1({ id }) {
+    const { data, isLoading: detailLoading } = useFetchProductDetailQuery(id)
+    const [fetchCategories, { data: categories }] = useLazyFetchTemplateCategoriesQuery()
+    const [fetchTags, { data: tags }] = useLazyFetchCreateTagsQuery()
+    const [uploadSubmit, { isLoading }] = useUpdateTemplateMutation()
 
-const technologies = [
-    'Photoshop',
-    'Figma',
-    'Adobe Illustrator',
-    'Adobe XD',
-    'Canva',
-    'Sketch',
-    'CorelDRAW',
-    "Suniy Intellekt",
-    'HTML',
-    'CSS',
-    'JavaScript',
-    'TypeScript',
-    'React',
-    'Angular',
-    'Vue.js',
-    'Svelte',
-    'Node.js',
-    'Express.js',
-    'Next.js',
-    'Nuxt.js',
-    'Python',
-    'Django',
-    'Flask',
-    'Ruby on Rails',
-    'PHP',
-    'Laravel',
-    'MySQL',
-    'PostgreSQL',
-    'MongoDB',
-    'Firebase',
-    'AWS',
-    'Google Cloud',
-    'Azure',
-    'AI',
-    'Machine Learning',
-    'TensorFlow',
-    'Keras',
-    'PyTorch',
-    'Bootstrap',
-    'Tailwind CSS',
-    'Sass',
-    'LESS',
-    'Webpack',
-    'Babel',
-    'Git',
-    'GitHub',
-    'Docker',
-    'Kubernetes',
-    'Microsoft Word',
-    'Microsoft Excel',
-    'Microsoft PowerPoint',
-    'Microsoft Outlook',
-    'Microsoft Access',
-    'Google Docs',
-    'Google Sheets',
-    'Google Slides',
-    'LibreOffice Writer',
-    'LibreOffice Calc',
-    'LibreOffice Impress',
-    'Zoho Docs',
-    'Notion',
-    'Evernote',
-    'Trello',
-    'Slack',
-    'Asana'
-];
-
-export default function Step1() {
     const [form] = Form.useForm();
     const [editorLoaded, setEditorLoaded] = useState(false);
     const [description, setDescription] = useState('')
+    const [newValues, setNewValues] = useState({})
 
     const { user } = useSelector(state => state.auth)
     const { uploading } = useSelector(state => state.uploads)
     const dispatch = useDispatch()
     const { reload, push } = useRouter()
 
-    const [fetchCategories, { data: categories }] = useLazyFetchTemplateCategoriesQuery()
-    const [fetchTags, { data: tags }] = useLazyFetchCreateTagsQuery()
-    const [uploadSubmit, { isLoading }] = useUploadTemplateMutation()
-
     const handleSubmit = async (values) => {
         const formData = new FormData()
         let obj = { ...values, description }
-
-        for (const [key, value] of Object.entries(obj)) {
+        for (const [key, value] of Object.entries(newValues)) {
             if (key === 'images') {
                 for (const img of value) {
                     formData.append('images', img?.originFileObj)
                 }
             } else if (key === 'document') {
-                formData.append('document', values?.document?.file?.response?.id)
+                formData.append('document', values?.document?.id)
             } else if (key === 'tags') {
                 formData.append('tags', value.join(','))
             } else if (key === 'technologies') {
@@ -140,7 +55,7 @@ export default function Step1() {
                 }
             } else formData.append(key, value)
         }
-        const resp = await uploadSubmit(formData)
+        const resp = await uploadSubmit({ id: data?.id, data: formData })
         if (resp.error) {
             const errors = resp.error.data
             for (const [key, value] of Object.entries(errors)) {
@@ -189,13 +104,45 @@ export default function Step1() {
     }, [])
 
     useEffect(() => {
-        if (uploading) {
+        if (data) {
+            form.setFieldValue('title', data?.title)
+            form.setFieldValue('price', data?.price)
+            setDescription(data?.description)
+            form.setFieldValue('demo_link', data?.demo_link)
+            form.setFieldValue('category', data?.category?.name)
+            form.setFieldValue('tags', data?.tag?.map(el => el.name))
+            form.setFieldValue('technologies', data?.technologies_data)
             form.setFieldValue('document', {
-                file: uploading,
-                fileList: [uploading]
+                file: {
+                    uid: '-1',
+                    name: 'document',
+                    status: 'done',
+                    url: data?.document?.file_url,
+                    originFileObj: null
+                }
             })
+            form.setFieldValue('images', [
+                {
+                    file: {
+                        uid: '-1',
+                        name: 'poster.webp',
+                        status: 'done',
+                        url: data?.document?.file_url,
+                        originFileObj: null
+                    },
+                }
+            ])
+            form.setFieldValue('poster', [{
+                file: {
+                    uid: '-1',
+                    name: 'poster.webp',
+                    status: 'done',
+                    url: data?.poster_url,
+                    originFileObj: null
+                }
+            }])
         }
-    }, [])
+    }, [data])
 
     const props = {
         name: 'file',
@@ -229,8 +176,29 @@ export default function Step1() {
         <PageContainer>
             <div className="bg-white">
                 <div className="container pt-5" style={{ maxWidth: '1400px' }}>
-                    <Form
+                    {detailLoading ? (
+                        <div
+                            className="ps-product--detail ps-product--fullwidth"
+                            style={{
+                                height: '690px',
+                                display: 'grid',
+                                placeContent: 'center',
+                            }}>
+                            <div
+                                className="spinner-border "
+                                role="status"
+                                style={{
+                                    width: '150px',
+                                    height: '150px',
+                                }}>
+                                <span className="visually-hidden">
+                                    Loading...
+                                </span>
+                            </div>
+                        </div>
+                    ) : <Form
                         {...formItemLayout}
+                        onValuesChange={(c) => setNewValues(d => ({ ...d, ...c }))}
                         form={form}
                         variant={'outlined'}
                         onFinish={handleSubmit}
@@ -353,7 +321,15 @@ export default function Step1() {
                                 className='smmb-1'
                             >
                                 <Upload
-                                    defaultFileList={uploading ? [uploading] : null}
+                                    defaultFileList={[
+                                        {
+                                            uid: '-1',
+                                            name: 'file.zip',
+                                            status: 'done',
+                                            url: data?.document?.file_url,
+                                            originFileObj: null
+                                        }
+                                    ]}
                                     accept='.zip'
                                     maxCount={1} {...props}
                                     lassName='main-file-upload'
@@ -486,6 +462,7 @@ export default function Step1() {
                             <div className="p-0 rounded-3 mb-3">
                                 <Editor
                                     name="description"
+                                    value={description}
                                     onChange={(data) => {
                                         setDescription(data);
                                     }}
@@ -504,9 +481,20 @@ export default function Step1() {
                                 </Button>
                             </Form.Item>
                         </div>
-                    </Form>
+                    </Form>}
                 </div>
             </div>
         </PageContainer>
     )
 }
+
+export async function getServerSideProps(context) {
+    const { query } = context;
+
+    return {
+        props: {
+            id: query?.id || null,
+        },
+    };
+}
+export default Step1

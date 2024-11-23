@@ -4,7 +4,6 @@ import { axiosBaseQuery } from '~/repositories/http';
 export const uploadApi = createApi({
     reducerPath: 'uploadApi',
     baseQuery: axiosBaseQuery(),
-    tagTypes: ['upload'],
     endpoints: (builder) => ({
         fetchTemplateCategories: builder.query({
             query: (search = '') => ({
@@ -28,14 +27,21 @@ export const uploadApi = createApi({
                 },
             }),
         }),
-        // replyToComment: builder.mutation({
-        //     query: ({ id, data }) => ({
-        //         url: '/seller/document-review/' + id,
-        //         method: 'post',
-        //         data,
-        //     }),
-        //     invalidatesTags: ['upload'],
-        // }),
+        fetchProductDetail: builder.query({
+            query: (id) => ({
+                url: '/seller/product-list/' + id,
+            }),
+        }),
+        updateTemplate: builder.mutation({
+            query: ({ id, data }) => ({
+                url: '/seller/product-update/' + id,
+                data,
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            }),
+        }),
     }),
 });
 
@@ -43,4 +49,6 @@ export const {
     useLazyFetchTemplateCategoriesQuery,
     useLazyFetchCreateTagsQuery,
     useUploadTemplateMutation,
+    useFetchProductDetailQuery,
+    useUpdateTemplateMutation,
 } = uploadApi;

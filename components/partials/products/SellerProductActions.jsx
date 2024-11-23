@@ -47,11 +47,11 @@ export default function SellerProductActions({ content, src }) {
                 `/account/myproducts/edit-video/${content?.id}`
             );
         }
-        // else if (content?.content_type === 'template') {
-        //     Router.push(
-        //         `/account/upload/template/${content?.id}`
-        //     );
-        // }
+        else if (content?.content_type === 'template') {
+            Router.push(
+                `/account/upload/template/${content?.id}`
+            );
+        }
         else {
             Router.push(`/account/myproducts/${content?.id}`);
         }
