@@ -56,7 +56,7 @@ export default function SellerProductsMain() {
                         }
 
                         {pageParams?.page ? <div className="bg-white py-3 mb-4" style={{ borderRadius: '8px' }}>
-                            <div className='d-flex'>
+                            <div className='d-flex flex-wrap justify-content-center'>
                                 <Pagination
                                     total={data?.count}
                                     current={pageParams?.page}

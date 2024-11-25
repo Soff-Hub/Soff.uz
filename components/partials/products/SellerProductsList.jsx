@@ -1,7 +1,7 @@
 import React from 'react'
 import { addPeriodToThousands } from '../account/ProductsLists'
 import { statusMap } from './SellerProductsTable'
-import { Button, Dropdown } from 'antd'
+import { Button, Dropdown, Tooltip } from 'antd'
 import SellerProductActions from './SellerProductActions';
 import SellerProductView from './SellerProductView';
 import ModalDelete from '../account/Modal';
@@ -66,9 +66,11 @@ export default function SellerProductsList({ data }) {
                     {el?.view_count} ta
                   </span>
                   <div style={{ fontSize: '10px' }}>
-                    <span className='d-flex align-items-center gap-1'>
-                      <i className={statusMap[el?.status].iconClass}></i> {statusMap[el?.status].text}
-                    </span>
+                    <Tooltip title={el?.data_status?.reason}>
+                      <span className='d-flex align-items-center gap-1'>
+                        <i className={statusMap[el?.status].iconClass}></i> {statusMap[el?.status].text}
+                      </span>
+                    </Tooltip>
                   </div>
                 </div>
               </div>
