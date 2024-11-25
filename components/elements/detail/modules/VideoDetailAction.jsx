@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import { OneShopDoc } from '~/store/auth/slice';
 import useCart from '~/hooks/useCart';
 import { Modal } from 'antd';
 import Axios from 'axios';
+import { setOneShopDoc } from '~/store/auth/slice';
 
 const VideoDetailShoppingActions = ({ product }) => {
     const { setCartOneItem } = useCart();
@@ -35,7 +35,7 @@ const VideoDetailShoppingActions = ({ product }) => {
     function handleBuynow(e) {
         e.preventDefault();
         if (state) {
-            dispatch(OneShopDoc(product));
+            dispatch(setOneShopDoc(product));
             Router.push(`/account/checkout-one?id=${product?.id}`);
         } else {
             Router.push(`/auth/login?id=${product?.id}`);

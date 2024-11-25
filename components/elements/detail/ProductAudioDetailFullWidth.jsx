@@ -1,6 +1,5 @@
 import React from 'react';
-import DefaultDescription from '~/components/elements/detail/description/DefaultDescription';
-import Router from 'next/router';
+import DefaultDescription from './description/DefaultDescription';
 import DefaultAudio from './thumbnail/DefaultAudio';
 import ModuleAudioDetailTopInformation from './modules/ModuleAudioDetailTopInformation';
 import ModuleAudioDetailShoppingActions from './modules/ModuleAudioDetailShoppingActions';

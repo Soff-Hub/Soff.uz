@@ -16,8 +16,8 @@ import ProductAudioDetailFullWidth from '~/components/elements/detail/ProductAud
 import axios from 'axios';
 import Head from 'next/head';
 import Joyride from 'react-joyride';
-import { OneShopDoc } from '~/store/auth/slice';
 import TemplateProductDetail from '~/components/elements/detail/TemplateProductDetail';
+import { setOneShopDoc } from '~/store/auth/slice';
 
 const ProductDefaultPage = ({ defaultProducts }) => {
     const router = useRouter();
@@ -143,7 +143,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
             doc.id = "headerSticky"
             setRun(false)
             if (user?.access) {
-                dispatch(OneShopDoc(product));
+                dispatch(setOneShopDoc(product));
                 router.push(`/account/checkout-one?id=${product?.id}`);
             } else {
                 router.push(`/auth/login?id=${product?.id}`);

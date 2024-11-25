@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import { OneShopDoc } from '~/store/auth/slice';
 import useCart from '~/hooks/useCart';
 import useWishlist from '~/hooks/useWishlist';
 import { Modal } from 'antd';
-import { audioDownloaderSale } from '~/utilities/common-helpers';
 import { message } from 'antd';
+import { setOneShopDoc } from '~/store/auth/slice';
 
 const ModuleDetailShoppingActions = ({ product }) => {
 
@@ -40,7 +39,7 @@ const ModuleDetailShoppingActions = ({ product }) => {
     function handleBuynow(e) {
         e.preventDefault();
         if (state) {
-            dispatch(OneShopDoc(product));
+            dispatch(setOneShopDoc(product));
             Router.push(`/account/checkout-one?id=${product?.id}`);
         } else {
             Router.push(`/auth/login?id=${product?.id}`);

@@ -3,10 +3,10 @@ import { Slider } from 'antd';
 import { useRouter } from 'next/router';
 import ProductRepository from '~/repositories/ProductRepository';
 import { useDispatch } from 'react-redux';
-import { CategorySlug } from '~/store/auth/slice';
 import axios from 'axios';
 import { baseUrl } from '~/repositories/Repository';
 import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
+import { setCategorySlug } from '~/store/auth/slice';
 
 const WidgetShopFilterByPriceRange =
     ({
@@ -31,7 +31,7 @@ const WidgetShopFilterByPriceRange =
         async function getCategry() {
             const responseData = await ProductRepository.getCategoryParent();
             if (responseData?.length > 0) {
-                dispatch(CategorySlug(responseData?.data?.results));
+                dispatch(setCategorySlug(responseData?.data?.results));
             }
         }
 
