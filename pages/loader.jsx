@@ -3,7 +3,7 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { PacmanLoader } from 'react-spinners';
-import { accountLinksReducers, begin, login } from '~/store/auth/slice';
+import { accountLinksReducers, begin, login, setAccountLinks } from '~/store/auth/slice';
 
 export let accountAdminLinks = [
     {
@@ -144,7 +144,7 @@ const Loader = () => {
         //     dispatch(accountLinksReducers(accountSellerLink));
         // }
         // if (user?.role === 'customer') {
-        dispatch(accountLinksReducers(cutomerAccountLink));
+        dispatch(setAccountLinks(cutomerAccountLink));
         // }
 
         // if (
