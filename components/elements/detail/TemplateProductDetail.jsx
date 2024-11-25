@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import DefaultDescription from '~/components/elements/detail/description/DefaultDescription';
 import Link from 'next/link';
 import TemplateModuleProductDetailDescription from './modules/TemplateModuleProductDetailDescription';
 import { useRouter } from 'next/router';
@@ -10,6 +9,7 @@ import ProductSellerInfo from './ProductSellerInfo';
 import useResponsive from '~/utilities/useResponsive';
 import ProductShoppingActions from './ProductShoppingActions';
 import ProductShoopping from './ProductShopping';
+import DefaultDescription from './description/DefaultDescription';
 
 const TemplateProductDetail = ({ product, views }) => {
     const Router = useRouter();

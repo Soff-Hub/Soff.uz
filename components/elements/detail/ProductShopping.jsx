@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import { OneShopDoc } from '~/store/auth/slice';
 import { audioDownloaderSale } from '~/utilities/common-helpers';
 import { EyeFilled } from '@ant-design/icons';
 import Link from 'next/link';
+import { setOneShopDoc } from '~/store/auth/slice';
 
 const ProductShoopping = ({ product, demo }) => {
     const dispatch = useDispatch();
@@ -17,7 +17,7 @@ const ProductShoopping = ({ product, demo }) => {
     const handleBuyNow = (e) => {
         e.preventDefault();
         if (userAccess) {
-            dispatch(OneShopDoc(product));
+            dispatch(setOneShopDoc(product));
             router.push(`/account/checkout-one?id=${product?.id}`);
         } else {
             router.push(`/auth/login?id=${product?.id}`);
