@@ -42,7 +42,7 @@ export default function SellerProductsList({ data }) {
                   borderRadius: 10,
                 }}>
                   <img
-                    src={el?.image?.poster_url}
+                    src={el?.poster_data?.poster_url}
                     alt=""
                   />
                 </div>
@@ -83,7 +83,7 @@ export default function SellerProductsList({ data }) {
                     items: [
                       {
                         key: '1',
-                        label: <SellerProductActions src={el} />,
+                        label: <SellerProductActions src={el} content={el} />,
                       }
                     ],
                     // onClick: (c) => console.log(c.key)
