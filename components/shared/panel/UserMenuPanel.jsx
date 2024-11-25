@@ -517,7 +517,7 @@ const AccountMenuSidebar = ({ setMenuDrawer, setCategoriesDrawer }) => {
 
                                                     {user?.role === 'admin' ? (
                                                         link?.url ===
-                                                            '/account/products' &&
+                                                            '/account/admin-products' &&
                                                             webdata1?.count > 0 ? (
                                                             <strong
                                                                 className="text-white bg-warning  border px-3 py-2  fs-5 rounded-circle"

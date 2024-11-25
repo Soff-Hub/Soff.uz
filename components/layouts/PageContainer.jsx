@@ -36,7 +36,7 @@ export let accountAdminLinks = [
     },
     {
         text: 'Mahsulotlar',
-        url: '/account/products?page=1',
+        url: '/account/admin-products',
         icon: 'fa-solid fa-cube',
     },
     {
@@ -94,7 +94,7 @@ export let accountModeratorLinks = [
     },
     {
         text: 'Mahsulotlar',
-        url: '/account/products?page=1',
+        url: '/account/admin-products',
         icon: 'fa-solid fa-cube',
     },
     {

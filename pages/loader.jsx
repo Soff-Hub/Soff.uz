@@ -19,7 +19,7 @@ export let accountAdminLinks = [
     },
     {
         text: 'Mahsulotlar',
-        url: '/account/products',
+        url: '/account/admin-products',
         icon: 'fa-solid fa-cube',
     },
     {

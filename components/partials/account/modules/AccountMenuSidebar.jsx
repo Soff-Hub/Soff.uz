@@ -471,7 +471,7 @@ const AccountMenuSidebar = ({ data, menuOpen }) => {
                                                                 ''
                                                             )}
 
-                                                            {user?.role === 'admin' && link?.url === '/account/products?page=1' && webdata1?.count > 0 && (
+                                                            {user?.role === 'admin' && link?.url === '/account/admin-products' && webdata1?.count > 0 && (
                                                                 <strong
                                                                     className={`text-white bg-warning  border px-3 py-2  fs-5 rounded-circle notif-badge ${!menuOpen && 'notif-badge-mobile'}`}
                                                                 >

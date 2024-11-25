@@ -4,7 +4,7 @@ import { axiosBaseQuery } from '~/repositories/http';
 export const productsApi = createApi({
     reducerPath: 'productsApi',
     baseQuery: axiosBaseQuery(),
-    tagTypes: ['products'],
+    tagTypes: ['products', 'productsAdmin'],
     endpoints: (builder) => ({
         fetchStorage: builder.query({
             query: () => ({ url: '/seller/storage/' }),
@@ -31,6 +31,19 @@ export const productsApi = createApi({
             }),
             invalidatesTags: ['products'],
         }),
+        fetchAdminProducts: builder.query({
+            query: (params) => ({ url: '/seller/admin/product-list/', params }),
+            providesTags: ['productsAdmin'],
+        }),
+        fetchAdminProductDetail: builder.query({
+            query: (id) => ({ url: '/seller/admin/product-list/' + id + '/' }),
+        }),
+        regenrateAdminProduct: builder.query({
+            query: (id) => ({
+                url: `/seller/admin/set-poster/${id}/`,
+                method: 'GET',
+            }),
+        }),
     }),
 });
 
@@ -40,4 +53,8 @@ export const {
     useDeleteProductMutation,
     useLazyFetchProductDetailQuery,
     useUpdateProductPriceMutation,
+    useFetchAdminProductsQuery,
+    useLazyFetchAdminProductDetailQuery,
+    useLazyRegenrateAdminProductQuery,
+    useLazyFetchAdminProductsQuery,
 } = productsApi;

@@ -13,6 +13,7 @@ const initialState = {
         discount_price_after: '',
         date_range_after: '',
         date_range_before: '',
+        book: ''
     },
     pageParams: {
         page: 1,
@@ -31,12 +32,11 @@ const productsSlice = createSlice({
     initialState,
     reducers: {
         updateProductParams: (state, action) => {
-            if (action.payload?.page_size) {
-                localStorage.getItem('page_size', action.payload?.page_size);
+            if (Object.keys(action.payload).includes('search')) {
+                state.pageParams.page = 1;
             }
             state.productParams = {
                 ...state.productParams,
-                page: 1,
                 ...action.payload,
             };
         },
@@ -81,7 +81,7 @@ const productsSlice = createSlice({
 const persistConfig = {
     key: 'products',
     storage,
-    whitelist: ['pageParams', 'openFilter']
+    whitelist: ['pageParams', 'openFilter'],
 };
 
 export const {

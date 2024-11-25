@@ -30,7 +30,7 @@ function NavigationListAdmin() {
 
     const handleShowTagsDrawer = () => {
         setMenuDrawer(false);
-        Router.push('/account/products?page=1')
+        Router.push('/account/admin-products')
     };
 
     const handleShowApplicationDrawer = () => {
