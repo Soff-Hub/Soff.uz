@@ -24,7 +24,7 @@ export default function HeroSearchInput(inputProps) {
                 onChange={e => setSearch(e.target.value)}
                 className='hero-search-input'
                 type="text"
-                placeholder="40 000 dan ortiq ma'lumotlar..." {...inputProps}
+                placeholder="50 000 dan ortiq ma'lumotlar..." {...inputProps}
             />
 
             <SearchSelectDropdown value={value} setValue={setValue} />

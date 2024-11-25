@@ -42,11 +42,6 @@ export default function CategoryTabs({ category, tab }) {
     useEffect(() => {
         getHomeProducts(`type=${tab || 'file'}&category=${category || ''}`)
     }, [])
-    // console.log(tab);
-    
-    // useEffect(() => {
-    //     setActiveTab(tab || 'file')
-    // }, [tab])
 
     return (
         <div className='category'>
@@ -75,7 +70,7 @@ export default function CategoryTabs({ category, tab }) {
                                     className={`sub-category-tab-item ${el.id === Number(category) ? 'tab-active' : ''}`}
                                     onClick={() => handleCategory(el.id)}
                                 >
-                                    {el.name} ({el?.doc_count})
+                                    {el.name}
                                 </div>
                             ))
                         }
