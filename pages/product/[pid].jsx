@@ -1,5 +1,4 @@
 import React from 'react';
-import BreadCrumb from '~/components/elements/BreadCrumb';
 import ProductDetailFullwidth from '~/components/elements/detail/ProductDetailFullwidth';
 import RelatedProduct from '~/components/partials/product/RelatedProduct';
 import PageContainer from '~/components/layouts/PageContainer';
@@ -232,7 +231,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                             <div className="ps-container p-0">
                                 <div className="ps-page__container">
                                     {(!loading && product?.document?.content_type === 'file') ? (
-                                        <div className="">
+                                        <div className="pt-5">
                                             <ProductDetailFullwidth
                                                 product={product}
                                                 views={views}
@@ -241,10 +240,6 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                                     ) :
                                         !loading && product?.document?.content_type === 'template' ? (
                                             <div className="">
-                                                {/* <TemplateDetailFullwidth
-                                                product={product}
-                                                views={views}
-                                            /> */}
                                                 <TemplateProductDetail
                                                     product={product}
                                                     views={views}
@@ -254,7 +249,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
 
                                             !loading && product?.document?.content_type ===
                                                 'video' ? (
-                                                <div className="">
+                                                <div className="pt-3">
                                                     <ProductVideoDetailFullWidth
                                                         isPlay={isPlay} setIsPlay={setIsPlay}
                                                         product={product}
@@ -264,7 +259,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                                                 </div>
                                             ) : !loading && product?.document?.content_type ===
                                                 'audio' ? (
-                                                <div className="">
+                                                <div className="pt-5 mt-2">
                                                     <ProductAudioDetailFullWidth
                                                         product={product}
                                                         views={views}
