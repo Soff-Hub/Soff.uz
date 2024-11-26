@@ -36,18 +36,18 @@ const Header = () => {
 
     return (
         <header className="site-header">
-            <HeaderTop />
-            <div className={`${headerSticky ? 'header-bottom header-bottom--show' : 'header-bottom'} ${pathname == '/' ? '' : 'other-header'}`}>
+            <div className={`header-bottom top-0 bg-white`}>
+                <HeaderTop />
                 <div className="container">
                     <div className="header-inner">
-                        <HeaderLogo mode={headerSticky ? 'dark' : pathname !== '/' ? 'dark' : 'light'} />
+                        <HeaderLogo mode={'dark'} />
 
-                        {headerSticky || pathname !== '/' ? <HeaderSearchbar isDark={headerSticky || pathname !== '/'} /> : ''}
+                        <HeaderSearchbar />
 
-                        <HeaderActions isDark={headerSticky || pathname !== '/'} />
+                        <HeaderActions isDark={true} />
                     </div>
                     <div className="search-form-mobile">
-                        {pathname !== '/' ? <HeaderSearchbar isDark={headerSticky || pathname !== '/'} /> : ''}
+                        {pathname !== '/' ? <HeaderSearchbar /> : ''}
                     </div>
                 </div>
             </div>
