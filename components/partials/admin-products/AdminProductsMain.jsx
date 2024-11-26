@@ -36,7 +36,6 @@ export default function AdminProductsMain() {
             dispatch(updateProductParams({
                 search: '',
             }))
-            // dispatch(updatePageParams({ page: 1 }))
         }
     }, [])
 

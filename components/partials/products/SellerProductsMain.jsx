@@ -40,7 +40,6 @@ export default function SellerProductsMain() {
             dispatch(updateProductParams({
                 search: '',
             }))
-            // dispatch(updatePageParams({ page: 1 }))
         }
     }, [])
 

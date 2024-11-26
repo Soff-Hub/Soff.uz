@@ -13,7 +13,7 @@ const initialState = {
         discount_price_after: '',
         date_range_after: '',
         date_range_before: '',
-        book: ''
+        book: '',
     },
     pageParams: {
         page: 1,
@@ -32,7 +32,10 @@ const productsSlice = createSlice({
     initialState,
     reducers: {
         updateProductParams: (state, action) => {
-            if (Object.keys(action.payload).includes('search')) {
+            if (
+                Object.keys(action.payload).includes('search') &&
+                action.payload.search !== ''
+            ) {
                 state.pageParams.page = 1;
             }
             state.productParams = {
