@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateUploadingFile } from '~/rtk-store/upload/slice';
 import { useRouter } from 'next/router';
 import { formItemLayout, technologies } from './create';
+import TemplateProductDetail from '~/components/elements/detail/TemplateProductDetail';
 
 function Step1({ id }) {
     const { data, isLoading: detailLoading } = useFetchProductDetailQuery(id)
@@ -31,6 +32,9 @@ function Step1({ id }) {
     const [editorLoaded, setEditorLoaded] = useState(false);
     const [description, setDescription] = useState('')
     const [newValues, setNewValues] = useState({})
+    const [open, setOpen] = useState(false)
+    const [product, setProduct] = useState({})
+    const objectUrls = React.useRef([]);
 
     const { user } = useSelector(state => state.auth)
     const dispatch = useDispatch()
@@ -121,21 +125,19 @@ function Step1({ id }) {
                     originFileObj: null
                 }
             })
-            form.setFieldValue('images', [
-                {
-                    file: {
-                        uid: '-1',
-                        name: 'poster.webp',
-                        status: 'done',
-                        url: data?.document?.file_url,
-                        originFileObj: null
-                    },
-                }
-            ])
+            form.setFieldValue('images', data?.document?.images?.map(el => ({
+                file: {
+                    uid: '-1',
+                    name: 'poster.png',
+                    status: 'done',
+                    url: el?.image_url,
+                    originFileObj: null
+                },
+            })))
             form.setFieldValue('poster', [{
                 file: {
                     uid: '-1',
-                    name: 'poster.webp',
+                    name: 'poster.png',
                     status: 'done',
                     url: data?.poster_url,
                     originFileObj: null
@@ -185,16 +187,48 @@ function Step1({ id }) {
         },
     };
 
+    const getPreviewFile = async (file) => {
+        const url = await Promise.resolve(URL.createObjectURL(file))
+        objectUrls.current.push(url);
+        return url
+    };
 
     const posterProps = {
         name: 'file',
         action: '/api/upload',
     };
 
+    const clickView = () => {
+        const values = form.getFieldsValue()
+        const category = values?.category
+        setProduct({
+            ...values,
+            description,
+            category,
+            images: values?.images?.map((el, id) => ({ id, thumbUrl: el?.file?.url || el?.url || el?.thumbUrl })),
+            poster: [{ thumbUrl: values?.poster?.[0]?.file?.url || values?.poster?.[0]?.thumbUrl }]
+        })
+        setOpen(true)
+    }
+
+    useEffect(() => {
+        // Cleanup: Komponent unmount bo'lganda barcha URL'larni tozalash
+        return () => {
+            objectUrls.current.forEach((url) => URL.revokeObjectURL(url)); // Barcha URL'larni tozalash
+            objectUrls.current = []; // Massivni bo'shatish
+        };
+    }, []);
+
     return (
         <PageContainer>
             <div className="bg-white">
                 <div className="container pt-5" style={{ maxWidth: '1400px' }}>
+                    <div className="d-flex justify-content-end">
+                        <Button onClick={clickView} className='d-flex align-items-center'>
+                            <i class="fa-regular fa-eye"></i>
+                            Sotuvdagi holatini ko'rish
+                        </Button>
+                    </div>
                     {detailLoading ? (
                         <div
                             className="ps-product--detail ps-product--fullwidth"
@@ -397,8 +431,11 @@ function Step1({ id }) {
                                     maxCount={1}
                                     rootClassName='dsawed'
                                     fileList={poster}
-                                    onChange={(e) => setPoster(e.fileList)}
+                                    onChange={(e) => {
+                                        setPoster(e.fileList)
+                                    }}
                                     {...posterProps}
+                                    previewFile={getPreviewFile}
                                 >
                                     <button
                                         style={{
@@ -450,8 +487,11 @@ function Step1({ id }) {
                                     className='upload-btn'
                                     accept='image/*'
                                     fileList={fileList}
-                                    onChange={(e) => setFileList(e?.fileList)}
+                                    onChange={(e) => {
+                                        setFileList(e?.fileList)
+                                    }}
                                     {...posterProps}
+                                    previewFile={getPreviewFile}
                                 >
                                     <button
                                         style={{
@@ -506,6 +546,18 @@ function Step1({ id }) {
                                 </Button>
                             </Form.Item>
                         </div>
+
+                        <Modal
+                            okText="Yuklashda davom etish"
+                            cancelText="Yopish"
+                            centered
+                            open={open}
+                            onOk={() => setOpen(false)}
+                            onCancel={() => setOpen(false)}
+                            width={'1200px'}
+                        >
+                            <TemplateProductDetail product={product} />
+                        </Modal>
                     </Form>}
                 </div>
             </div>

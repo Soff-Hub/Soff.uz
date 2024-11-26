@@ -55,7 +55,7 @@ export default function TopSellersHome() {
                             <a>
                                 <div className="l-top-sellers-item seller-card" key={el.id}>
                                     <div className="seller-card-header">
-                                        <img className='seller-card-img' src={el?.seller?.image || `https://robohash.org/${el?.seller?.id}?bgset=bg1`} alt="top seller" />
+                                        <img className='seller-card-img' src={el?.seller?.image || 'https://eu2.contabostorage.com/20ddac7ab90d4d188d1ca104120b91ed:soffuz/media/users/IMG_0175.jpeg'} alt="top seller" />
                                         <div className="seller-card-info">
                                             <h4 className='seller-card-name text-truncate'>
                                                 <Link href={`https://soff.uz/seller/${el?.seller?.id}`}>

@@ -17,6 +17,7 @@ import { baseDomain } from '~/repositories/NewRepository';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUploadingFile } from '~/rtk-store/upload/slice';
 import { useRouter } from 'next/router';
+import TemplateProductDetail from '~/components/elements/detail/TemplateProductDetail';
 
 export const formItemLayout = {
     labelCol: {
@@ -118,6 +119,8 @@ export default function Step1() {
     const [fetchCategories, { data: categories }] = useLazyFetchTemplateCategoriesQuery()
     const [fetchTags, { data: tags }] = useLazyFetchCreateTagsQuery()
     const [uploadSubmit, { isLoading }] = useUploadTemplateMutation()
+    const [product, setProduct] = useState({})
+    const objectUrls = React.useRef([]);
 
     const handleSubmit = async (values) => {
         const formData = new FormData()
@@ -228,12 +231,38 @@ export default function Step1() {
         name: 'file',
         action: '/api/upload',
     };
+    const [open, setOpen] = useState(false)
 
+    const clickView = () => {
+        const values = form.getFieldsValue()
+        const category = categories?.find(el => el.id === values?.category)?.name
+        setProduct({ ...values, description, category })
+        setOpen(true)
+    }
+
+    const getPreviewFile = async (file) => {
+        const url = await Promise.resolve(URL.createObjectURL(file))
+        objectUrls.current.push(url);
+        return url
+    };
+
+    useEffect(() => {
+        return () => {
+            objectUrls.current.forEach((url) => URL.revokeObjectURL(url));
+            objectUrls.current = [];
+        };
+    }, []);
 
     return (
         <PageContainer>
             <div className="bg-white">
                 <div className="container pt-5" style={{ maxWidth: '1400px' }}>
+                    <div className="d-flex justify-content-end">
+                        <Button onClick={clickView} className='d-flex align-items-center'>
+                            <i class="fa-regular fa-eye"></i>
+                            Sotuvdagi holatini ko'rish
+                        </Button>
+                    </div>
                     <Form
                         {...formItemLayout}
                         form={form}
@@ -407,6 +436,7 @@ export default function Step1() {
                                     maxCount={1}
                                     rootClassName='dsawed'
                                     {...posterProps}
+                                    previewFile={getPreviewFile}
                                 >
                                     <button
                                         style={{
@@ -458,6 +488,7 @@ export default function Step1() {
                                     className='upload-btn'
                                     accept='image/*'
                                     {...posterProps}
+                                    previewFile={getPreviewFile}
                                 >
                                     <button
                                         style={{
@@ -494,7 +525,7 @@ export default function Step1() {
                                 <Editor
                                     name="description"
                                     onChange={(data) => {
-                                        setDescription(data);
+                                        setDescription(data)
                                     }}
                                     editorLoaded={editorLoaded}
                                     placeholder={"Shablonning to’liq tavsifini yozing"}
@@ -512,6 +543,17 @@ export default function Step1() {
                             </Form.Item>
                         </div>
                     </Form>
+                    <Modal
+                        okText="Yuklashda davom etish"
+                        cancelText="Yopish"
+                        centered
+                        open={open}
+                        onOk={() => setOpen(false)}
+                        onCancel={() => setOpen(false)}
+                        width={'1200px'}
+                    >
+                        <TemplateProductDetail product={product} />
+                    </Modal>
                 </div>
             </div>
         </PageContainer>

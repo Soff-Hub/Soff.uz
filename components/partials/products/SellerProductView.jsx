@@ -526,7 +526,7 @@ export default function SellerProductView() {
                 maskClosable
                 onClose={handleClose}
                 title={contentType[View?.document?.content_type]}
-                open={!!detailModal}
+                open={!!detailModal && View?.document?.content_type !== 'template' && !!View}
                 onOk={handleClose}
                 onCancel={handleClose}
                 width={1200}

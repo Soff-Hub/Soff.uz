@@ -24,7 +24,7 @@ const contentType = {
     file: "Fayl haqida to’liq ma'lumot"
 }
 
-export default function SellerProductView() {
+export default function TemplatePreview() {
     const { productData: View, detailLoader: loading, detailModal } = useSelector(state => state.products)
     const dispatch = useDispatch()
 
@@ -526,7 +526,7 @@ export default function SellerProductView() {
                 maskClosable
                 onClose={handleClose}
                 title={contentType[View?.document?.content_type]}
-                open={!!detailModal && View?.document?.content_type !== 'template' && !!View}
+                open={!!detailModal}
                 onOk={handleClose}
                 onCancel={handleClose}
                 width={1200}

@@ -1,17 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import SidebarLayout from '../SidebarLayout'
 import { useDispatch, useSelector } from 'react-redux';
 import SellerProductsFilter from './AdminProductsFilter';
 import { useFetchAdminProductsQuery } from '~/rtk-store/products/api';
 import SellerProductsTable from './AdminProductsTable';
-import { Pagination, Select } from 'antd';
-import { updatePageParams } from '~/rtk-store/products/slice';
+import { Modal, Pagination, Select } from 'antd';
+import { setProductData, updatePageParams, updateProductParams } from '~/rtk-store/products/slice';
 import SellerProductsList from './AdminProductsList';
 import useResponsive from '~/utilities/useResponsive';
+import TemplateProductDetail from '~/components/elements/detail/TemplateProductDetail';
 
 export default function AdminProductsMain() {
     const { accountLinks } = useSelector((state) => state.auth);
-    const { productParams, pageParams } = useSelector((state) => state.products);
+    const { productParams, pageParams, productData } = useSelector((state) => state.products);
     const dispatch = useDispatch()
     const { isMobile } = useResponsive()
 
@@ -24,6 +25,20 @@ export default function AdminProductsMain() {
             dispatch(updatePageParams({ page_size, page: 1 }))
         } else dispatch(updatePageParams({ page }))
     }
+
+    const handleClose = () => {
+        dispatch(setProductData(null))
+    }
+
+    useEffect(() => {
+        return () => {
+            dispatch(setProductData(null))
+            dispatch(updateProductParams({
+                search: '',
+            }))
+            dispatch(updatePageParams({ page: 1 }))
+        }
+    }, [])
 
     return (
         <div className='ps-page--account pt-3'>
@@ -81,6 +96,30 @@ export default function AdminProductsMain() {
                                 />
                             </div>
                         </div> : ''}
+
+                        <Modal
+                            okText="Yopish"
+                            cancelText={<a href={productData?.document?.file_url}>
+                                Faylni yuklab olish
+                            </a>}
+                            centered
+                            open={!!productData && productData?.document?.content_type === "template"}
+                            onOk={handleClose}
+                            onCancel={handleClose}
+                            width={'1200px'}
+                        >
+                            <TemplateProductDetail product={{
+                                images: productData?.document?.images?.map((el, i) => ({ thumbUrl: el?.image_url, id: i })),
+                                title: productData?.title,
+                                poster: [{ thumbUrl: productData?.poster_url }],
+                                price: productData?.discount_price,
+                                category: productData?.category?.name,
+                                tags: productData?.active_tag?.map(el => el?.name),
+                                technologies: productData?.technologies_data,
+                                description: productData?.description,
+                                seller: productData?.seller
+                            }} views={productData?.view_count} />
+                        </Modal>
                     </SidebarLayout>
                 </div>
             </div>
