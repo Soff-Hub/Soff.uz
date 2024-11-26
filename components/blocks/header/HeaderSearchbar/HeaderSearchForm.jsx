@@ -7,7 +7,7 @@ import useDebounce from '~/hooks/useDebounce';
 const Option = Select.Option;
 
 
-const HeaderSearchForm = ({ isDark }) => {
+const HeaderSearchForm = () => {
     const inputEl = useRef(null);
     const [isSearch, setIsSearch] = useState(false);
     const [keyword, setKeyword] = useState('');
@@ -69,12 +69,12 @@ const HeaderSearchForm = ({ isDark }) => {
 
     return (
         <form
-            className="ps-form--quick-search header-search-form"
+            className="ps-form--quick-search header-search-form bg-soff"
             method="get"
             action="/"
             onSubmit={handleSubmit}
         >
-            <div className={`header-search-inner ${isDark}`}>
+            <div className={`header-search-inner ${true}`}>
                 <Select
                     onChange={(e) => setSelectFile(e)}
                     defaultValue={selectFile}
