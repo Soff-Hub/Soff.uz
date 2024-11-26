@@ -5,6 +5,8 @@ import { Image as AntImage, Space } from 'antd';
 export default function TemplateProductThumbnail({ data }) {
     const [poster, setPoster] = useState({})
     const [visible, setVisible] = useState(null);
+    const [preview, setPreview] = useState({});
+
 
     const handleHover = () => {
         const overlay = document.querySelector('.thumbnail-overlay')
@@ -17,6 +19,7 @@ export default function TemplateProductThumbnail({ data }) {
 
     useEffect(() => {
         setPoster(data[0])
+        setPreview(data[0])
     }, [data])
 
     return (
@@ -58,10 +61,10 @@ export default function TemplateProductThumbnail({ data }) {
                     style={{
                         display: 'none',
                     }}
-                    src={poster?.url}
+                    src={preview?.url}
                     preview={{
                         visible,
-                        src: poster?.url,
+                        src: preview?.url,
                         onVisibleChange: (value) => {
                             setVisible(value);
                         },
@@ -69,24 +72,23 @@ export default function TemplateProductThumbnail({ data }) {
                             _,
                             {
                                 actions: {
-                                    onActive,
                                     onZoomOut,
                                     onZoomIn,
                                 },
                             },
                         ) => (
-                            <Space size={12} className="toolbar-wrapper">
+                            <Space size={12} className="toolbar-wrapper bg-white p-2">
                                 <div className="p-1" style={{ cursor: 'pointer' }}>
-                                    <i class="fa-solid fa-arrow-left-long fs-1" onClick={() => data?.some(el => el.id === poster?.id - 1) ? setPoster(data[poster?.id - 1]) : setPoster(data[data?.length - 1])} ></i>
+                                    <i class="fa-solid fa-arrow-left-long fs-1 text-black" onClick={() => data?.some(el => el.id === preview?.id - 1) ? setPreview(data[preview?.id - 1]) : setPreview(data[data?.length - 1])} ></i>
                                 </div>
                                 <div className="p-1" style={{ cursor: 'pointer' }}>
-                                    <i class="fa-solid fa-arrow-right-long fs-1" onClick={() => data?.some(el => el.id === poster?.id + 1) ? setPoster(data[poster?.id + 1]) : setPoster(data[0])}></i>
+                                    <i class="fa-solid fa-arrow-right-long fs-1 text-black" onClick={() => data?.some(el => el.id === preview?.id + 1) ? setPreview(data[preview?.id + 1]) : setPreview(data[0])}></i>
                                 </div>
                                 <div className="p-1" style={{ cursor: 'pointer' }}>
-                                    <i class="fa-solid fa-magnifying-glass-minus fs-1" onClick={onZoomOut}></i>
+                                    <i class="fa-solid fa-magnifying-glass-minus fs-1 text-black" onClick={onZoomOut}></i>
                                 </div>
                                 <div className="p-1" style={{ cursor: 'pointer' }}>
-                                    <i class="fa-solid fa-magnifying-glass-plus fs-1" onClick={onZoomIn}></i>
+                                    <i class="fa-solid fa-magnifying-glass-plus fs-1 text-black" onClick={onZoomIn}></i>
                                 </div>
                             </Space>
                         )
@@ -97,13 +99,14 @@ export default function TemplateProductThumbnail({ data }) {
             <div className='d-flex align-items-center gap-2 mt-2 px-2'>
                 {
                     data.map((_) => (
-                        <div style={{ cursor: 'pointer', height: '60px', width: '100px', borderRadius: '5px', backgroundColor: '#F6F5F2', }} onClick={() => setPoster(_)} className={`${_?.id === poster?.id ? 'active-thumb' : 'noactive-thumb'}`}>
+                        <div style={{ cursor: 'pointer', height: '60px', width: '100px', borderRadius: '5px', backgroundColor: '#F6F5F2', }} onClick={() => (setPoster(_), setPreview(_))} className={`${_?.id === poster?.id ? 'active-thumb' : 'noactive-thumb'}`}>
                             <Image
                                 key={_?.id}
                                 height={60}
                                 width={100}
                                 src={_?.url}
-                                alt={"product?.title"}
+                                priority={false}
+                                alt={"slow network"}
                                 objectFit='contain'
                                 style={{
                                     width: "100%",
