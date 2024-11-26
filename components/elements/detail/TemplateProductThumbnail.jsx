@@ -14,7 +14,7 @@ export default function TemplateProductThumbnail({ data, posterUrl }) {
                 <Image
                     height={600}
                     width={1000}
-                    unoptimized
+                    priority={false}
                     src={poster?.url || 'https://placehold.co/600x400'}
                     alt={"product?.title"}
                     objectFit='contain'
@@ -38,6 +38,7 @@ export default function TemplateProductThumbnail({ data, posterUrl }) {
                                     key={_?.id}
                                     height={60}
                                     width={100}
+                                    priority={false}
                                     src={_?.url || 'https://placehold.co/600x400'}
                                     alt={"product?.title"}
                                     objectFit='contain'

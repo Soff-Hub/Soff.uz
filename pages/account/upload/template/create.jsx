@@ -336,7 +336,7 @@ export default function Step1() {
                                 ]}
                                 className='smmb-1'
                             >
-                                <Input />
+                                <Input placeholder='Misol uchun: https://soff.uz' />
                             </Form.Item>
                         </div>
                         <div className="pt-5 col-12 col-md-6 col-lg-6 col-xl-6" style={{ width: '100%' }}>

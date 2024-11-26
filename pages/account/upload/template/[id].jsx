@@ -21,7 +21,9 @@ import { formItemLayout, technologies } from './create';
 import TemplateProductDetail from '~/components/elements/detail/TemplateProductDetail';
 
 function Step1({ id }) {
-    const { data, isLoading: detailLoading } = useFetchProductDetailQuery(id)
+    const { data, isLoading: detailLoading } = useFetchProductDetailQuery(id, {
+        refetchOnMountOrArgChange: true
+    })
     const [fetchCategories, { data: categories }] = useLazyFetchTemplateCategoriesQuery()
     const [fetchTags, { data: tags }] = useLazyFetchCreateTagsQuery()
     const [uploadSubmit, { isLoading }] = useUpdateTemplateMutation()
@@ -35,6 +37,7 @@ function Step1({ id }) {
     const [open, setOpen] = useState(false)
     const [product, setProduct] = useState({})
     const objectUrls = React.useRef([]);
+    const [images_id, setImagesId] = useState([])
 
     const { user } = useSelector(state => state.auth)
     const dispatch = useDispatch()
@@ -45,7 +48,9 @@ function Step1({ id }) {
         for (const [key, value] of Object.entries(newValues)) {
             if (key === 'images') {
                 for (const img of value) {
-                    formData.append('images', img?.originFileObj)
+                    if (img?.originFileObj) {
+                        formData.append('images', img?.originFileObj)
+                    }
                 }
             } else if (key === 'document') {
                 formData.append('document', values?.document?.id)
@@ -59,6 +64,10 @@ function Step1({ id }) {
                 }
             } else formData.append(key, value)
         }
+        if (images_id?.length) {
+            formData.append('images_id', images_id.join(','))
+        }
+
         const resp = await uploadSubmit({ id: data?.id, data: formData })
         if (resp.error) {
             const errors = resp.error.data
@@ -134,6 +143,7 @@ function Step1({ id }) {
                     originFileObj: null
                 },
             })))
+            setImagesId(data?.document?.images?.map(el => el?.id))
             form.setFieldValue('poster', [{
                 file: {
                     uid: '-1',
@@ -152,7 +162,7 @@ function Step1({ id }) {
             }])
 
             setFileList(data?.document?.images?.map((el, i) => ({
-                uid: -1 * (i + 1),
+                uid: el?.id,
                 name: 'image.png',
                 status: 'done',
                 url: el?.image_url,
@@ -323,7 +333,7 @@ function Step1({ id }) {
                                 ]}
                                 className='smmb-1'
                             >
-                                <Input />
+                                <Input placeholder='Misol uchun: https://soff.uz' />
                             </Form.Item>
                         </div>
                         <div className="pt-5 col-12 col-md-6 col-lg-6 col-xl-6" style={{ width: '100%' }}>
@@ -492,6 +502,7 @@ function Step1({ id }) {
                                     }}
                                     {...posterProps}
                                     previewFile={getPreviewFile}
+                                    onRemove={(e) => setImagesId(images_id?.filter(el => el !== e.uid))}
                                 >
                                     <button
                                         style={{
