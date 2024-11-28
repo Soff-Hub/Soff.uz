@@ -10,6 +10,7 @@ import Joyride from 'react-joyride';
 import { Modal, Segmented } from 'antd';
 import BirjaDashbordList from '~/components/partials/account/BirjaDashbordList';
 import { BdCrumb } from '~/components/elements/BreadCrumb';
+import Router from 'next/router';
 
 const MyAccountPage = () => {
 
@@ -132,6 +133,12 @@ const MyAccountPage = () => {
             setRun(true);
         }
     }, [])
+
+    useEffect(() => {
+        if (user?.role === 'admin' && !user?.is_superuser) {
+            Router.push('/account/shops')
+        }
+    }, [user])
 
 
     const handleSegmentChange = (value) => {

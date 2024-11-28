@@ -7,7 +7,6 @@ import Page404 from '../page/page-404';
 import { useSelector } from 'react-redux';
 import Selection from './selection';
 import Meta from '~/components/shared/headers/Meta';
-import Router from 'next/router';
 
 const AccountShopsPage = () => {
     const breadCrumb = [
@@ -21,11 +20,6 @@ const AccountShopsPage = () => {
     ];
     const { user } = useSelector(state => state.auth)
 
-    useEffect(() => {
-        if (user?.role === 'moderator') {
-            Router.push * '/account/shops'
-        }
-    }, [])
 
     return (
         user?.role === 'admin' ?
