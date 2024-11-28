@@ -8,6 +8,7 @@ import ModalDelete from '../account/Modal';
 import SellerProductPrice from './SellerProductPrice';
 import { useDeleteProductMutation } from '~/rtk-store/products/api';
 import { useSelector } from 'react-redux';
+import CalculateTimeDifference from '../account/DateFormatter';
 
 export default function SellerProductsList({ data }) {
   const [deleteFunction] = useDeleteProductMutation()
@@ -62,6 +63,11 @@ export default function SellerProductsList({ data }) {
                 <span style={{ fontSize: '10px' }} className='mt-2'>
                   <i className="fa-solid fa-user text-secondary"></i>{' '}
                   {el?.seller?.first_name} {el?.seller?.last_name} {el?.seller?.phone}
+                </span>
+
+                <span style={{ fontSize: '10px' }} className='mt-2'>
+                  <i className="fa-solid fa-clock text-info-emphasis"></i>{' '}
+                  <CalculateTimeDifference targetDate={el?.created_at} />
                 </span>
 
 

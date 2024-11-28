@@ -556,7 +556,6 @@ function ApplicationLists() {
         }
     }, [open, textItemsId, form]);
 
-
     return (
         <section className="ps-my-account ps-page--account pb-5">
             <div className="container">
@@ -612,7 +611,7 @@ function ApplicationLists() {
                                     </div>
                                 </div> : ''}
 
-                                {user?.role === "admin" ? <div className="ps-section__content ">
+                                {user?.role === "admin" && user?.is_superuser ? <div className="ps-section__content ">
                                     <div className='row g-3 mx-auto'>
                                         <h4 className='py-3 col-md-6'>{user?.role === "seller" ? "Arizalar" : `Arizalar Bo'limi - ${addPeriodToThousands(allPrice)} so'm `}</h4>
                                         <select className='form-select col-md-5  fs-3 py-3 rounded-3' onChange={(e) => setDataCat(e.target.value)}  >
@@ -654,7 +653,7 @@ function ApplicationLists() {
                         {
                             user?.role === "admin" ?
                                 <div className=''>
-                                    <div className='my-5 bg-white mx-auto p-4 container'>
+                                    <div className='mb-5 bg-white mx-auto p-4 container'>
                                         <h4 className='text-center mb-4'>Kelib tushgan takliflar   </h4>
                                         <RangePicker className='py-3 col-md-4 mb-4 shadow-sm rounded-3' onChange={handleChangeDate} />
                                         <Table scroll={{ x: 1500 }} dataSource={data1} columns={columnsTextArea}

@@ -1,3 +1,4 @@
+import { setCookie } from 'nookies';
 import { actionTypes } from './action';
 
 export const initState = {
@@ -22,6 +23,10 @@ function reducer(state = initState, actions) {
                 'data',
                 JSON.stringify({ ...actions.data, password: null })
             );
+            setCookie(null, 'token', actions.user?.access, {
+                maxAge: 30 * 24 * 60 * 60,
+                path: '/',
+            });
             return {
                 ...state,
                 ...{ isLoggedIn: true },

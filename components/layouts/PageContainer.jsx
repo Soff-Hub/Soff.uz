@@ -98,6 +98,11 @@ export let accountModeratorLinks = [
         icon: 'fa-solid fa-cube',
     },
     {
+        text: 'Tezkor tadiqlash',
+        url: '/account/fast-approve',
+        icon: 'fa-solid fa-check-double',
+    },
+    {
         text: 'Kategoriyalar',
         url: '/account/category',
         icon: 'fa-solid fa-layer-group',

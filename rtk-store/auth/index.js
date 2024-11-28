@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { setCookie } from 'nookies';
 
 // Boshlang'ich holat
 const initialState = {
@@ -28,6 +29,10 @@ export const login = createAsyncThunk(
                 'data',
                 JSON.stringify({ ...data, password: null })
             );
+            setCookie(null, 'token', user?.access, {
+                maxAge: 30 * 24 * 60 * 60,
+                path: '/',
+            });
             return { user, data: { ...data, password: null } };
         } catch (error) {
             return rejectWithValue(error.message);
