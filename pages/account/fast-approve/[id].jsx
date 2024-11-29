@@ -14,35 +14,53 @@ var parse = require('html-react-parser');
 import { useRouter } from 'next/router';
 import Meta from '~/components/shared/headers/Meta';
 import { useLazyRegenrateAdminProductQuery } from '~/rtk-store/products/api';
-
-
+import { useFastApprove } from '~/hooks/useFastApprove';
 
 const PostsProductsEdit = () => {
     const Router = useRouter();
-    const [tagSearchResult, setTagSearchResult] = useState(null);
-    const [tagSearchResult1, setTagSearchResult2] = useState(null);
-    const [dataCategory, setDataCategory] = useState([]);
-    const [tagItems, setTagItems] = useState([]);
     const { user } = useSelector((state) => state.auth);
-    const [title, setTitle] = useState('');
     const [editorLoaded, setEditorLoaded] = useState(false);
-    const [loading, setLoading] = useState(false);
-    const [dataCatStatus, setDataCatStatus] = useState(null);
-    const [Fulldata, setFullData] = useState(null);
-    const [textAreaItems, setTextAreaItmes] = useState(null);
-    const [categoryName, setCategoryName] = useState('');
-    const [tegProductsLists, setTegProdcutsLists] = useState([]);
-    const [category_id, setCategory_ID] = useState(null)
-    const routerId = Router.query?.id
-    const [products, setProducts] = useState(null)
-    const [page_count, setPageCount] = useState(0);
-    const [demoLink, setDemoLink] = useState(null);
-    const [posters, setPosters] = useState([])
-    const [poster, setPoster] = useState(null)
-    const [submitLoading, setSubmitLoading] = useState(false)
+    const [generateImg, { isLoading }] = useLazyRegenrateAdminProductQuery();
 
-    const [generateImg, { isLoading }] = useLazyRegenrateAdminProductQuery()
-
+    const {
+        loading,
+        setLoading,
+        submitLoading,
+        setSubmitLoading,
+        products,
+        setProducts,
+        dataCategory,
+        setDataCategory,
+        tagItems,
+        setTagItems,
+        tegProductsLists,
+        setTegProdcutsLists,
+        title,
+        setTitle,
+        categoryName,
+        setCategoryName,
+        category_id,
+        setCategory_ID,
+        dataCatStatus,
+        setDataCatStatus,
+        Fulldata,
+        setFullData,
+        textAreaItems,
+        setTextAreaItems,
+        page_count,
+        setPageCount,
+        demoLink,
+        setDemoLink,
+        posters,
+        setPosters,
+        poster,
+        setPoster,
+        tagSearchResult,
+        setTagSearchResult,
+        tagSearchResult1,
+        setTagSearchResult2,
+        routerId
+    } = useFastApprove(user);
 
     const breadCrumb = [
         {
@@ -557,7 +575,7 @@ const PostsProductsEdit = () => {
                                             <textarea
                                                 defaultValue={products?.reason}
                                                 onChange={(e) =>
-                                                    setTextAreaItmes(e.target.value)
+                                                    setTextAreaItems(e.target.value)
                                                 }
                                                 required
                                                 rows={4}
@@ -925,4 +943,3 @@ const PostsProductsEdit = () => {
 };
 
 export default PostsProductsEdit;
-

@@ -58,6 +58,8 @@ const PostsProductsEdit = () => {
     const Option = Select.Option;
 
     async function GetItemsCategoryLists() {
+        console.log(products);
+        
         if (products?.document?.content_type === 'file') {
             const ItemsData = await GetRepository.getAllCategoryLists();
             if (ItemsData) {
@@ -189,11 +191,11 @@ const PostsProductsEdit = () => {
     }, [user?.access]);
 
     useEffect(() => {
-        if (user?.access) {
+        if (products) {
             GetItemsCategoryLists();
             GetItemsTagAktivmas();
         }
-    }, [user?.access]);
+    }, [products]);
 
 
 

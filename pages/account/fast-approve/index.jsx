@@ -41,7 +41,6 @@ export async function getServerSideProps(context) {
         headers: { Authorization: `Bearer ${token}` },
     });
     const defaultProducts = await resquest.json();
-    console.log(defaultProducts, query);
 
     if (!defaultProducts?.id) {
         return {
