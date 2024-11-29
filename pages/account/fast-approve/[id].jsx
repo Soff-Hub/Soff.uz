@@ -420,26 +420,18 @@ const PostsProductsEdit = () => {
                                                 : 'Audioni tinglash'}
                                         </button>
                                     ) : (
-                                        ''
+                                        <a
+                                            className="btn-success"
+                                            href={products?.document?.file_url}
+                                            target="_blank"
+                                            style={{
+                                                padding: '4px 8px',
+                                                borderRadius: '6px',
+                                            }}>
+                                            <i className="fa-solid fa-download me-2"></i>
+                                            Faylni yuklab olish
+                                        </a>
                                     )}
-                                    {products?.document?.content_type ===
-                                        'file' ||
-                                        (products?.document?.content_type ===
-                                            'template' && (
-                                            <a
-                                                className="btn-success"
-                                                href={
-                                                    products?.document?.file_url
-                                                }
-                                                target="_blank"
-                                                style={{
-                                                    padding: '4px 8px',
-                                                    borderRadius: '6px',
-                                                }}>
-                                                <i className="fa-solid fa-download me-2"></i>
-                                                Faylni yuklab olish
-                                            </a>
-                                        ))}
                                 </div>
                                 <ViewProductModal
                                     title={products?.title}
