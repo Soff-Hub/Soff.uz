@@ -204,18 +204,20 @@ class ProductRepository {
     }
 
     async postCartData(arr) {
-        const reponse = await Repository({
-            method: 'POST',
-            url: `${baseUrl}customer/documents-list/`,
-            data: {
-                documents: arr,
-            },
-        })
-            .then((response) => {
-                return response;
+        if (arr?.length > 0) {
+            const reponse = await Repository({
+                method: 'POST',
+                url: `${baseUrl}customer/documents-list/`,
+                data: {
+                    documents: arr,
+                },
             })
-            .catch((error) => ({ error: JSON.stringify(error) }));
-        return reponse;
+                .then((response) => {
+                    return response;
+                })
+                .catch((error) => ({ error: JSON.stringify(error) }));
+            return reponse;
+        }
     }
 
     async getProductsById(pid) {
