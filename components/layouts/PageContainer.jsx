@@ -80,6 +80,11 @@ export let accountAdminLinks = [
         icon: 'fa-solid fa-triangle-exclamation',
     },
     {
+        text: "Sotilgan hostinglar",
+        url: '/account/storages',
+        icon: 'fa-solid fa-hard-drive',
+    },
+    {
         text: "Bildirishnomalar yuborish",
         url: '/account/email',
         icon: 'fa-solid fa-envelope',

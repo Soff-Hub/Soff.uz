@@ -9,7 +9,10 @@ export const reportsApi = createApi({
         fetchReports: builder.query({
             query: (params) => ({ url: '/seller/admin/complaints/', params }),
         }),
+        fetchHostings: builder.query({
+            query: (params) => ({ url: '/seller/admin/storage-orders/', params }),
+        }),
     }),
 });
 
-export const { useFetchReportsQuery } = reportsApi;
+export const { useFetchReportsQuery, useFetchHostingsQuery } = reportsApi;
