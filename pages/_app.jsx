@@ -69,7 +69,8 @@ function App({ Component, pageProps }) {
             <NextProgress
                 delay={300}
                 options={{ showSpinner: false }}
-                color="#00A44F"
+                // color="#00A44F"
+                color="#000"
             />
             <Provider store={store}>
                 <GoogleOAuthProvider clientId="203103939049-2ste634q2uc1io9oaup8gt35tsmucru0.apps.googleusercontent.com">

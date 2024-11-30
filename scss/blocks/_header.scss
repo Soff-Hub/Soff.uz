@@ -9,11 +9,15 @@
 .header-bottom {
     position: fixed;
     width: 100%;
-    top: 24px;
+    top: 0px;
     z-index: 1000;
     transition: all 0.2s ease;
     padding: 0 0 6px;
     background-color: transparent;
+}
+
+.nprogress {
+    z-index: 99999999999;
 }
 
 .header-bottom--show {
