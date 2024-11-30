@@ -5,36 +5,27 @@ import ModuleAudioDetailTopInformation from './modules/ModuleAudioDetailTopInfor
 import ModuleAudioDetailShoppingActions from './modules/ModuleAudioDetailShoppingActions';
 import Link from 'next/link';
 import BuyBtnScroll from './BuyBtnScroll';
+import ReportButton from './ReportButton';
 
-
-
-const ProductAudioDetailFullWidth = ({
-    product,
-    views,
-    admin,
-    ActiveTag,
-}) => {
-
-
-
-
-
+const ProductAudioDetailFullWidth = ({ product, views, admin, ActiveTag }) => {
     return (
         <>
-
             <div className="ps-product--detail ">
                 <div className="row">
                     <div className="col-12">
                         <DefaultAudio product={product} />
-                        <span id='get-buy'></span>
+                        <span id="get-buy"></span>
                         <ModuleAudioDetailTopInformation
                             product={product}
                             views={views}
                             admin={false}
                         />
+                        <div className="d-flex py-3">
+                            <ReportButton productId={product?.slug} />
+                        </div>
                     </div>
                 </div>
-                <div className="price_and_tag">
+                <div className="price_and_tag pt-0">
                     <ModuleAudioDetailShoppingActions
                         product={product}
                         admin={admin}
@@ -51,12 +42,12 @@ const ProductAudioDetailFullWidth = ({
                                             <div
                                                 key={i}
                                                 className="m-2 tag-product">
-                                                <Link href={`/search-page?keyword=${item?.name?.replace(/^#/, '')}`}>
-                                                    <a
-                                                    >
-                                                        {' '}
-                                                        {item.name}{' '}
-                                                    </a>
+                                                <Link
+                                                    href={`/search-page?keyword=${item?.name?.replace(
+                                                        /^#/,
+                                                        ''
+                                                    )}`}>
+                                                    <a> {item.name} </a>
                                                 </Link>
                                             </div>
                                         ))}

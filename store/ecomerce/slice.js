@@ -33,16 +33,26 @@ export const initLocalCart = createAsyncThunk(
     async (payload, { rejectWithValue }) => {
         const wishL = JSON.parse(localStorage.getItem('wishlist')) || [];
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
-        try {
-            const resp = await api.post(baseUrl + 'customer/documents-list/', {
-                documents: [...wishL, ...cart],
-            });
+        if (wishL.length > 0 || cart.length > 0) {
+            try {
+                const resp = await api.post(baseUrl + 'customer/documents-list/', {
+                    documents: [...wishL, ...cart],
+                });
+                return {
+                    wishlist: wishL.map((el, i) => resp.data?.data?.[i]),
+                    cart: cart.map((el, i) => resp.data?.data?.[wishL.length + i]),
+                };
+            } catch (error) {
+                return {
+                    wishlist: wishL.map((el, i) => resp.data?.data?.[i]),
+                    cart: cart.map((el, i) => resp.data?.data?.[wishL.length + i]),
+                };
+            }
+        } else {
             return {
-                wishlist: wishL.map((el, i) => resp.data?.data?.[i]),
-                cart: cart.map((el, i) => resp.data?.data?.[wishL.length + i]),
+                wishlist: [],
+                cart: [],
             };
-        } catch (error) {
-            return rejectWithValue(error.message);
         }
     }
 );

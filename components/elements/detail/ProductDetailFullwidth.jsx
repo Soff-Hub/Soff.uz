@@ -6,42 +6,44 @@ import ModuleDetailShoppingActions from '~/components/elements/detail/modules/Mo
 import ModuleDetailTopInformation from '~/components/elements/detail/modules/ModuleDetailTopInformation';
 import Link from 'next/link';
 import BuyBtnScroll from './BuyBtnScroll';
+import ReportButton from './ReportButton';
 
 const ProductDetailFullwidth = ({ product, views }) => {
-
-
-
     return (
         <>
             <div className="ps-product--detail ps-product--fullwidth">
                 <div className="ps-product__header ">
-                    <ThumbnailDefault product={product} views={views?.view_count} />
-                    <div className="ps-product__info" id='get-buy'>
+                    <ThumbnailDefault
+                        product={product}
+                        views={views?.view_count}
+                    />
+                    <div className="ps-product__info" id="get-buy">
+                        <ReportButton productId={product?.slug} />
                         <ModuleDetailTopInformation product={product} />
-
                         <ModuleProductDetailDescription
                             product={product}
                             views={views}
                         />
-                        <ModuleDetailShoppingActions
-                            product={product}
-                        />
+                        <ModuleDetailShoppingActions product={product} />
                         <p>Tezkor teglar</p>
                         <div className=" d-flex justify-content-start align-content-center flex-wrap">
                             {product?.tag?.length > 0 &&
                                 product?.tag.slice(0, 15).map((item, i) => (
-                                    <div key={i} className="m-2 " style={{
-                                        borderRadius: "20px",
-                                        padding: "8px 16px",
-                                        border: "1px solid #999",
-                                        fontSize: "15px"
-                                    }}>
-                                        <Link href={`/search-page?keyword=${item?.name?.replace(/^#/, '')}`}>
-                                            <a
-                                            >
-                                                {' '}
-                                                {item.name}{' '}
-                                            </a>
+                                    <div
+                                        key={i}
+                                        className="m-2 "
+                                        style={{
+                                            borderRadius: '20px',
+                                            padding: '8px 16px',
+                                            border: '1px solid #999',
+                                            fontSize: '15px',
+                                        }}>
+                                        <Link
+                                            href={`/search-page?keyword=${item?.name?.replace(
+                                                /^#/,
+                                                ''
+                                            )}`}>
+                                            <a> {item.name} </a>
                                         </Link>
                                     </div>
                                 ))}
@@ -52,7 +54,7 @@ const ProductDetailFullwidth = ({ product, views }) => {
                 <DefaultDescription product={product} />
 
                 <BuyBtnScroll />
-            </div >
+            </div>
         </>
     );
 };
