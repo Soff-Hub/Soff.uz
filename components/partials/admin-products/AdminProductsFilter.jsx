@@ -68,7 +68,7 @@ export default function AdminProductsFilter() {
   return (
     <div>
       <form className='d-flex gap-2' onSubmit={e => e.preventDefault()}>
-        <Input placeholder='Qidirish...' onChange={(e) => debounceFunction(e.target.value, handleSearch)} />
+        <Input defaultValue={productParams?.search} placeholder='Qidirish...' onChange={(e) => debounceFunction(e.target.value, handleSearch)} />
         <Button color='primary' type={openFilter ? 'primary' : 'default'} className='px-3' onClick={() => setOpen(!openFilter)}>
           <i class="fa-solid fa-sliders"></i>
           Filter

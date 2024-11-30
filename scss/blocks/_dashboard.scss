@@ -153,3 +153,12 @@
         min-width: 220px;
     }
 }
+
+.report__link {
+    transition: all 0.2s ease;
+}
+
+.report__link:hover {
+    transition: all 0.2s ease;
+    color: $color-1st;
+}

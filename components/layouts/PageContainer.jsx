@@ -75,6 +75,11 @@ export let accountAdminLinks = [
         icon: 'fa-solid fa-file-signature',
     },
     {
+        text: "Kelib tushgan shikoyatlar",
+        url: '/account/reports',
+        icon: 'fa-solid fa-triangle-exclamation',
+    },
+    {
         text: "Bildirishnomalar yuborish",
         url: '/account/email',
         icon: 'fa-solid fa-envelope',
