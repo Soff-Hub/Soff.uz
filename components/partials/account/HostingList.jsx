@@ -75,7 +75,7 @@ function HostingList() {
     ];
 
     const handlePagination = (page, page_size) => {
-        if (page_size !== Number(pageParams?.page_size)) {
+        if (page_size !== Number(hostingPageParams?.page_size)) {
             dispatch(updateHostingPagePrams({ page_size, page: 1 }));
         } else dispatch(updateHostingPagePrams({ page }));
     };
