@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { Form, Input, Modal, Segmented } from 'antd';
 import { MailOutlined, PhoneOutlined } from '@ant-design/icons';
 import GoogleBox from './GoogleBox';
@@ -7,90 +7,112 @@ import Axios from 'axios';
 import { useRouter } from 'next/router';
 import { baseUrlAuth } from '~/repositories/Repository';
 
-
 export default function LoginForm() {
-    const [type, setType] = useState('t') // t, e
-    const [loading, setLoading] = useState(false)
+    const [type, setType] = useState('t'); // t, e
+    const [loading, setLoading] = useState(false);
 
-    const router = useRouter()
+    const router = useRouter();
 
     const handleSubmit = async ({ phone, email }) => {
-        setLoading(true)
+        setLoading(true);
 
         const data = {
             phone_or_email: type === 't' ? '+998' + phone : email,
-            role: 'customer'
-        }
+            role: 'customer',
+        };
 
         try {
-            const resp = await Axios.post(baseUrlAuth + 'auth/register/', data)
+            const resp = await Axios.post(baseUrlAuth + 'auth/register/', data);
             localStorage.setItem('via_', resp?.data?.via_);
             localStorage.setItem('data', JSON.stringify(data));
             router.push({
                 query: { ...router.query, user: resp.data?.user },
-                pathname: '/auth/code-verify'
-            })
+                pathname: '/auth/code-verify',
+            });
         } catch (err) {
-            setLoading(false)
+            setLoading(false);
             const modal = Modal.error({
                 centered: true,
                 title: 'Xatolik',
-                content: err?.response?.data?.msg || JSON.stringify(err?.response),
+                content:
+                    err?.response?.data?.msg || JSON.stringify(err?.response),
             });
             modal.update;
         }
-    }
-
+    };
 
     return (
-        <div style={{ backgroundColor: '#f1f1f1', padding: "50px 20px" }}>
+        <div style={{ backgroundColor: '#f1f1f1', padding: '50px 20px' }}>
             <div className="container p-0">
                 <div className="ps-form--account">
                     <Form onFinish={handleSubmit}>
                         <div className="d-flex justify-content-center align-items-center flex-column mb-4">
-                            <span style={{ fontSize: "28px", fontWeight: 700 }}>Kirish</span>
+                            <span style={{ fontSize: '28px', fontWeight: 700 }}>
+                                Kirish
+                            </span>
+                        </div>
+                        <GoogleBox
+                            params={
+                                router.query?.id ? `?id=${router.query.id}` : ''
+                            }
+                        />
+                        <div className="or_google mt-2 mb-3">
+                            <span></span>
+                            <span>YOKI</span>
+                            <span></span>
                         </div>
                         <Segmented
                             onChange={(value) => setType(value)}
-                            options={[{
-                                label: 'Telefon raqam',
-                                value: 't',
-                                icon: <PhoneOutlined />,
-                            },
-                            {
-                                label: 'Elektron pochta',
-                                value: 'e',
-                                icon: <MailOutlined />,
-                            },]}
+                            options={[
+                                {
+                                    label: 'Telefon raqam',
+                                    value: 't',
+                                    icon: <PhoneOutlined />,
+                                },
+                                {
+                                    label: 'Elektron pochta',
+                                    value: 'e',
+                                    icon: <MailOutlined />,
+                                },
+                            ]}
                             block
-                            className='mb-5'
-                            style={{ height: "48px" }}
+                            className="mb-5"
+                            size="small"
+                            style={{ height: '38px' }}
                             value={type}
                         />
 
-
-                        {type === "e" ?
+                        {type === 'e' ? (
                             <Form.Item
                                 name="email"
                                 className="mb-4"
                                 rules={[
                                     {
                                         required: true,
-                                        message: 'Elektron pochta kiritish majburiy',
+                                        message:
+                                            'Elektron pochta kiritish majburiy',
                                     },
                                     {
                                         type: 'email',
-                                        message: 'Iltimos, haqiqiy elektron pochta kiriting',
+                                        message:
+                                            'Iltimos, haqiqiy elektron pochta kiriting',
                                     },
-                                ]}
-                            >
+                                ]}>
                                 <Input
                                     style={{ height: '50px', fontSize: '16px' }}
-                                    addonBefore={<MailOutlined style={{ fontSize: '16px', padding: '0 8px' }} />}
+                                    addonBefore={
+                                        <MailOutlined
+                                            style={{
+                                                fontSize: '16px',
+                                                padding: '0 8px',
+                                            }}
+                                        />
+                                    }
                                     type="email"
                                     placeholder="Elektron pochta"
                                 />
-                            </Form.Item> :
+                            </Form.Item>
+                        ) : (
                             <Form.Item
                                 name="phone"
                                 rules={[
@@ -101,28 +123,30 @@ export default function LoginForm() {
                                     },
                                     {
                                         pattern: /^\d{9}$/,
-                                        message: 'Iltimos, haqiqiy telefon raqam kiriting',
+                                        message:
+                                            'Iltimos, haqiqiy telefon raqam kiriting',
                                     },
-
                                 ]}>
                                 <Input
                                     autoComplete="off"
                                     style={{ height: '50px', fontSize: '16px' }}
-                                    type='text'
+                                    type="text"
                                     placeholder="Telefon raqam"
                                     maxLength={9}
                                     addonBefore="+998"
                                 />
                             </Form.Item>
-                        }
+                        )}
 
                         <div className="form-group submit mt-5">
-                            {loading ? <button
-                                disabled={true}
-                                type="submit"
-                                className="ps-btn ps-btn--fullwidth">
-                                <BeatLoader color="#fff" />
-                            </button> : (
+                            {loading ? (
+                                <button
+                                    disabled={true}
+                                    type="submit"
+                                    className="ps-btn ps-btn--fullwidth">
+                                    <BeatLoader color="#fff" />
+                                </button>
+                            ) : (
                                 <button
                                     type="submit"
                                     className="ps-btn ps-btn--fullwidth">
@@ -130,17 +154,9 @@ export default function LoginForm() {
                                 </button>
                             )}
                         </div>
-
-                        <div className="or_google">
-                            <span></span>
-                            <span>yoki</span>
-                            <span></span>
-                        </div>
                     </Form>
-
-                    <GoogleBox params={router.query?.id ? `?id=${router.query.id}` : ''} />
                 </div>
             </div>
         </div>
-    )
+    );
 }

@@ -48,9 +48,11 @@ export default function Document() {
                     href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
                 />
 
-                {process.env.NODE_ENV === 'production' && <script
-                    defer
-                    src="https://www.googletagmanager.com/gtag/js?id=G-H60GJQ0WF2"></script>}
+                {process.env.NODE_ENV === 'production' && (
+                    <script
+                        defer
+                        src="https://www.googletagmanager.com/gtag/js?id=G-H60GJQ0WF2"></script>
+                )}
                 <noscript>
                     <div>
                         <img
@@ -61,20 +63,23 @@ export default function Document() {
                     </div>
                 </noscript>
 
-                {process.env.NODE_ENV === 'production' && <script
-                    defer
-                    dangerouslySetInnerHTML={{
-                        __html: `
+                {process.env.NODE_ENV === 'production' && (
+                    <script
+                        defer
+                        dangerouslySetInnerHTML={{
+                            __html: `
                         window.dataLayer = window.dataLayer || [];
                         function gtag(){dataLayer.push(arguments);}
                         gtag('js', new Date());
                         gtag('config', 'G-H60GJQ0WF2');
                     `,
-                    }}></script>}
-                {process.env.NODE_ENV === 'production' && <script
-                    defer
-                    dangerouslySetInnerHTML={{
-                        __html: `
+                        }}></script>
+                )}
+                {process.env.NODE_ENV === 'production' && (
+                    <script
+                        defer
+                        dangerouslySetInnerHTML={{
+                            __html: `
                         (function(h,o,t,j,a,r){
                             h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
                             h._hjSettings={hjid:3805854,hjsv:6};
@@ -84,13 +89,14 @@ export default function Document() {
                             a.appendChild(r);
                         })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
                         `,
-                    }}>
-                </script>}
+                        }}></script>
+                )}
 
-                {process.env.NODE_ENV === 'production' && <script
-                    defer
-                    dangerouslySetInnerHTML={{
-                        __html: `
+                {process.env.NODE_ENV === 'production' && (
+                    <script
+                        defer
+                        dangerouslySetInnerHTML={{
+                            __html: `
                         (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
                         m[i].l=1*new Date();
                         for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
@@ -103,12 +109,15 @@ export default function Document() {
                              accurateTrackBounce:true
                         });
                     `,
-                    }}></script>}
+                        }}></script>
+                )}
             </Head>
             <body>
                 <Main />
                 <NextScript />
-                <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+                <script
+                    defer
+                    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
             </body>
         </Html>
     );

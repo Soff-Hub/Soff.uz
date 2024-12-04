@@ -25,11 +25,11 @@ const ProductDefaultPage = ({ defaultProducts }) => {
     const [product, setProduct] = useState([]);
     const [similar, setSimilar] = useState([]);
     const [isPlay, setIsPlay] = useState(null);
-    const [run, setRun] = useState(false)
-    const [loading, setLoading] = useState(false)
+    const [run, setRun] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const { user } = useSelector((state) => state.auth);
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
     const removeHTMLTags = (html) => {
         return html.replace(/<[^>]+>/g, '');
@@ -37,7 +37,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
 
     async function getProducts() {
         const token = user?.access;
-        setLoading(true)
+        setLoading(true);
         try {
             const response = await axios.get(
                 baseUrl + `customer/documents/${pid}/`,
@@ -52,7 +52,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
         } catch (error) {
             console.error('Error fetching document:', error);
         }
-        setLoading(false)
+        setLoading(false);
     }
 
     async function getProductSimiller() {
@@ -90,20 +90,24 @@ const ProductDefaultPage = ({ defaultProducts }) => {
     }, [user?.access, pid]);
 
     useEffect(() => {
-        if (pid) {
-            localStorage.getItem('uuid')
-                ? ''
-                : localStorage.setItem('uuid', uuidv4());
+        if (product?.slug) {
+            if (pid) {
+                localStorage.getItem('uuid')
+                    ? ''
+                    : localStorage.setItem('uuid', uuidv4() + product?.slug);
+            }
         }
-    }, []);
+    }, [product]);
 
     useEffect(() => {
-        getUUID(
-            localStorage.getItem('uuid')
-                ? localStorage.getItem('uuid')
-                : uuidv4()
-        );
-    }, [pid]);
+        if (product?.slug) {
+            getUUID(
+                localStorage.getItem('uuid')
+                    ? localStorage.getItem('uuid')
+                    : uuidv4() + product?.slug
+            );
+        }
+    }, [pid, product?.slug]);
 
     const breadCrumb = [
         {
@@ -120,27 +124,28 @@ const ProductDefaultPage = ({ defaultProducts }) => {
             target: '.buystep-0',
             content: "Mahsulot sotib olish bo'yicha yordam kerakmi?",
             locale: {
-                close: "Yopish",
-                next: "Ha, albatta",
-                open: "5",
+                close: 'Yopish',
+                next: 'Ha, albatta',
+                open: '5',
             },
-            placement: 'top'
+            placement: 'top',
         },
         {
             target: '.buystep-1',
-            content: "Mahsulotni savatga qo'shib bir nechta mahsulotni bittada sotib oling!",
+            content:
+                "Mahsulotni savatga qo'shib bir nechta mahsulotni bittada sotib oling!",
         },
         {
             target: '.buystep-2',
-            content: "Mahsulotni hoziroq sotib oling",
-        }
-    ]
+            content: 'Mahsulotni hoziroq sotib oling',
+        },
+    ];
 
     const callbackSingle = (data) => {
-        if (data.action === 'reset' || data.action === "close") {
-            const doc = document.querySelector('.headerSticky')
-            doc.id = "headerSticky"
-            setRun(false)
+        if (data.action === 'reset' || data.action === 'close') {
+            const doc = document.querySelector('.headerSticky');
+            doc.id = 'headerSticky';
+            setRun(false);
             if (user?.access) {
                 dispatch(setOneShopDoc(product));
                 router.push(`/account/checkout-one?id=${product?.id}`);
@@ -151,14 +156,13 @@ const ProductDefaultPage = ({ defaultProducts }) => {
     };
 
     const handleClickStepper = () => {
-        const doc = document.querySelector('.headerSticky')
-        doc.id = ""
+        const doc = document.querySelector('.headerSticky');
+        doc.id = '';
 
         setTimeout(() => {
-            setRun(true)
+            setRun(true);
         }, 500);
-    }
-
+    };
 
     return (
         <>
@@ -167,35 +171,135 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                 {/* <BreadCrumb breacrumb={breadCrumb} layout="fullwidth" /> */}
 
                 <Head>
-                    <title>{defaultProducts?.title || "Soff.uz - Intellektual mulk marketi"}</title>
-                    <meta name="title" content={defaultProducts?.title || "soff.uz - Intellektual mulk marketi"} />
-                    <meta name="description" content={defaultProducts?.description ? removeHTMLTags(defaultProducts?.description) : `${defaultProducts?.title || "soff.uz - Intellektual mulk marketi"} `} />
-                    <meta name="image" content={defaultProducts?.poster_url || '../../static/img/soff/logo-dark.png'} />
-                    <meta name="keywords" content={defaultProducts?.tag ? defaultProducts?.tag?.map((e) => e?.name)?.join(', ') : "kurs ishi, taqdimotlar, slaydlar, diplom ishi, prezentatsiya"} />
+                    <title>
+                        {defaultProducts?.title ||
+                            'Soff.uz - Intellektual mulk marketi'}
+                    </title>
+                    <meta
+                        name="title"
+                        content={
+                            defaultProducts?.title ||
+                            'soff.uz - Intellektual mulk marketi'
+                        }
+                    />
+                    <meta
+                        name="description"
+                        content={
+                            defaultProducts?.description
+                                ? removeHTMLTags(defaultProducts?.description)
+                                : `${
+                                      defaultProducts?.title ||
+                                      'soff.uz - Intellektual mulk marketi'
+                                  } `
+                        }
+                    />
+                    <meta
+                        name="image"
+                        content={
+                            defaultProducts?.poster_url ||
+                            '../../static/img/soff/logo-dark.png'
+                        }
+                    />
+                    <meta
+                        name="keywords"
+                        content={
+                            defaultProducts?.tag
+                                ? defaultProducts?.tag
+                                      ?.map((e) => e?.name)
+                                      ?.join(', ')
+                                : 'kurs ishi, taqdimotlar, slaydlar, diplom ishi, prezentatsiya'
+                        }
+                    />
 
                     <meta property="og:type" content="website" />
-                    <meta property="og:title" content={defaultProducts?.title || "soff.uz - Intellektual mulk marketi"} />
-                    <meta property="og:description" content={defaultProducts?.description ? removeHTMLTags(defaultProducts?.description) : `${defaultProducts?.title || "soff.uz - Intellektual mulk marketi"} `} />
-                    <meta property="og:image" content={defaultProducts?.poster_url || '../../static/img/soff/logo-dark.png'} />
+                    <meta
+                        property="og:title"
+                        content={
+                            defaultProducts?.title ||
+                            'soff.uz - Intellektual mulk marketi'
+                        }
+                    />
+                    <meta
+                        property="og:description"
+                        content={
+                            defaultProducts?.description
+                                ? removeHTMLTags(defaultProducts?.description)
+                                : `${
+                                      defaultProducts?.title ||
+                                      'soff.uz - Intellektual mulk marketi'
+                                  } `
+                        }
+                    />
+                    <meta
+                        property="og:image"
+                        content={
+                            defaultProducts?.poster_url ||
+                            '../../static/img/soff/logo-dark.png'
+                        }
+                    />
                     <meta property="og:url" content="https://soff.uz" />
                     <meta property="og:site_name" content="soff.uz" />
-                    <meta property="og:keywords" content={defaultProducts?.tag ? defaultProducts?.tag?.map((e) => e?.name)?.join(', ') : "kurs ishi, taqdimotlar, slaydlar, diplom ishi, prezentatsiya"} />
+                    <meta
+                        property="og:keywords"
+                        content={
+                            defaultProducts?.tag
+                                ? defaultProducts?.tag
+                                      ?.map((e) => e?.name)
+                                      ?.join(', ')
+                                : 'kurs ishi, taqdimotlar, slaydlar, diplom ishi, prezentatsiya'
+                        }
+                    />
 
-                    <meta property="twitter:image" content={defaultProducts?.poster_url || '../../static/img/soff/logo-dark.png'}></meta>
+                    <meta
+                        property="twitter:image"
+                        content={
+                            defaultProducts?.poster_url ||
+                            '../../static/img/soff/logo-dark.png'
+                        }></meta>
                     <meta property="twitter:type" content="website" />
-                    <meta property="twitter:title" content={defaultProducts?.title || "soff.uz - Intellektual mulk marketi"} />
-                    <meta property="twitter:description" content={defaultProducts?.description ? removeHTMLTags(defaultProducts?.description) : `${defaultProducts?.title || "soff.uz - Intellektual mulk marketi"} `} />
+                    <meta
+                        property="twitter:title"
+                        content={
+                            defaultProducts?.title ||
+                            'soff.uz - Intellektual mulk marketi'
+                        }
+                    />
+                    <meta
+                        property="twitter:description"
+                        content={
+                            defaultProducts?.description
+                                ? removeHTMLTags(defaultProducts?.description)
+                                : `${
+                                      defaultProducts?.title ||
+                                      'soff.uz - Intellektual mulk marketi'
+                                  } `
+                        }
+                    />
                     <meta property="twitter:url" content="https://soff.uz" />
                     <meta property="twitter:site_name" content="soff.uz" />
-                    <meta property="twitter:keywords" content={defaultProducts?.tag ? defaultProducts?.tag?.map((e) => e?.name)?.join(', ') : "kurs ishi, taqdimotlar, slaydlar, diplom ishi, prezentatsiya"} />
+                    <meta
+                        property="twitter:keywords"
+                        content={
+                            defaultProducts?.tag
+                                ? defaultProducts?.tag
+                                      ?.map((e) => e?.name)
+                                      ?.join(', ')
+                                : 'kurs ishi, taqdimotlar, slaydlar, diplom ishi, prezentatsiya'
+                        }
+                    />
                 </Head>
 
                 <div style={{ backgroundColor: '#fff' }}>
                     {/* <div style={{ backgroundColor: '#fafdff' }}> */}
                     <div className="container" style={{ position: 'relative' }}>
-                        <div className='text-end m-0'>
-                            {defaultProducts?.discpunt_price === 0 && <p onClick={handleClickStepper} style={{ cursor: 'pointer', margin: 0 }}>Sotib olish bo'yicha qo'llanma</p>
-                            }
+                        <div className="text-end m-0">
+                            {defaultProducts?.discpunt_price === 0 && (
+                                <p
+                                    onClick={handleClickStepper}
+                                    style={{ cursor: 'pointer', margin: 0 }}>
+                                    Sotib olish bo'yicha qo'llanma
+                                </p>
+                            )}
                         </div>
 
                         <Joyride
@@ -205,7 +309,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                             floaterProps={{
                                 autoOpen: true,
                                 placement: 'right-start',
-                                offset: 0
+                                offset: 0,
                             }}
                             styles={{
                                 options: {
@@ -215,77 +319,84 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                                     padding: '0 !important',
                                     width: 300,
                                 },
-
                             }}
                             callback={callbackSingle}
                             locale={{
-                                back: "Oldingisi",
-                                last: "Tushundim",
-                                close: "Yopish",
-                                next: "Tushundim",
-                                open: "Ochish",
+                                back: 'Oldingisi',
+                                last: 'Tushundim',
+                                close: 'Yopish',
+                                next: 'Tushundim',
+                                open: 'Ochish',
                             }}
                         />
 
-                        <div className={`ps-page--product ${defaultProducts?.price === 0 ? "" : "pt-2"}`}>
+                        <div
+                            className={`ps-page--product ${
+                                defaultProducts?.price === 0 ? '' : 'pt-2'
+                            }`}>
                             <div className="ps-container p-0">
                                 <div className="ps-page__container">
-                                    {(!loading && product?.document?.content_type === 'file') ? (
+                                    {!loading &&
+                                    product?.document?.content_type ===
+                                        'file' ? (
                                         <div className="pt-5">
                                             <ProductDetailFullwidth
                                                 product={product}
                                                 views={views}
                                             />
                                         </div>
-                                    ) :
-                                        !loading && product?.document?.content_type === 'template' ? (
-                                            <div className="">
-                                                <TemplateProductDetail
-                                                    product={product}
-                                                    views={views}
-                                                />
-                                            </div>
-                                        ) :
-
-                                            !loading && product?.document?.content_type ===
-                                                'video' ? (
-                                                <div className="pt-3">
-                                                    <ProductVideoDetailFullWidth
-                                                        isPlay={isPlay} setIsPlay={setIsPlay}
-                                                        product={product}
-                                                        views={views}
-                                                        similar={similar}
-                                                    />
-                                                </div>
-                                            ) : !loading && product?.document?.content_type ===
-                                                'audio' ? (
-                                                <div className="pt-5 mt-2">
-                                                    <ProductAudioDetailFullWidth
-                                                        product={product}
-                                                        views={views}
-                                                    />
-                                                </div>
-                                            ) : !loading && product?.document?.content_type ===
-                                                'article' ? (
-                                                <div>
-                                                    <ProductAudioDetailFullWidth
-                                                        product={product}
-                                                        document={document}
-                                                        views={views}
-                                                    />
-                                                </div>
-                                            ) : (
-                                                <div className="ps-page__left">
-                                                    <SkeletonProductDetail />
-                                                </div>
-                                            )}
+                                    ) : !loading &&
+                                      product?.document?.content_type ===
+                                          'template' ? (
+                                        <div className="">
+                                            <TemplateProductDetail
+                                                product={product}
+                                                views={views}
+                                            />
+                                        </div>
+                                    ) : !loading &&
+                                      product?.document?.content_type ===
+                                          'video' ? (
+                                        <div className="pt-3">
+                                            <ProductVideoDetailFullWidth
+                                                isPlay={isPlay}
+                                                setIsPlay={setIsPlay}
+                                                product={product}
+                                                views={views}
+                                                similar={similar}
+                                            />
+                                        </div>
+                                    ) : !loading &&
+                                      product?.document?.content_type ===
+                                          'audio' ? (
+                                        <div className="pt-5 mt-2">
+                                            <ProductAudioDetailFullWidth
+                                                product={product}
+                                                views={views}
+                                            />
+                                        </div>
+                                    ) : !loading &&
+                                      product?.document?.content_type ===
+                                          'article' ? (
+                                        <div>
+                                            <ProductAudioDetailFullWidth
+                                                product={product}
+                                                document={document}
+                                                views={views}
+                                            />
+                                        </div>
+                                    ) : (
+                                        <div className="ps-page__left">
+                                            <SkeletonProductDetail />
+                                        </div>
+                                    )}
                                 </div>
 
-
-                                {(similar?.length > 0 && product?.document?.content_type !==
-                                    'video') ? (
+                                {similar?.length > 0 &&
+                                product?.document?.content_type !== 'video' ? (
                                     <RelatedProduct
-                                        isPlay={isPlay} setIsPlay={setIsPlay}
+                                        isPlay={isPlay}
+                                        setIsPlay={setIsPlay}
                                         data={similar}
                                         collectionSlug="shop-recommend-items"
                                     />
@@ -300,7 +411,6 @@ const ProductDefaultPage = ({ defaultProducts }) => {
         </>
     );
 };
-
 
 export async function getServerSideProps({ query }) {
     const resquest = await fetch(baseUrl + `customer/documents/${query.pid}/`);
