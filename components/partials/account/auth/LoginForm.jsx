@@ -51,16 +51,6 @@ export default function LoginForm() {
                                 Kirish
                             </span>
                         </div>
-                        <GoogleBox
-                            params={
-                                router.query?.id ? `?id=${router.query.id}` : ''
-                            }
-                        />
-                        <div className="or_google mt-2 mb-3">
-                            <span></span>
-                            <span>YOKI</span>
-                            <span></span>
-                        </div>
                         <Segmented
                             onChange={(value) => setType(value)}
                             options={[
@@ -154,6 +144,18 @@ export default function LoginForm() {
                                 </button>
                             )}
                         </div>
+
+                        {/* <div className="or_google mt-2 mb-3">
+                            <span></span>
+                            <span>YOKI</span>
+                            <span></span>
+                        </div> */}
+
+                        <GoogleBox
+                            params={
+                                router.query?.id ? `?id=${router.query.id}` : ''
+                            }
+                        />
                     </Form>
                 </div>
             </div>
