@@ -26,13 +26,13 @@ const ProductDetailQuickView = ({ product }) => {
     const searchTag = (e) => {
         Router.push(`/search-page?keyword=${e}`);
     };
+    console.log(product);
 
     const getImage = async () => {
         const responsImage = await ProductRepository.getProductImagesSlug(
             product?.slug
         );
         if (responsImage) {
-
             setImage(responsImage.images);
             const { page_count, file_type, file_size } = responsImage;
             setDocument({ page_count, file_type, file_size });
@@ -50,17 +50,18 @@ const ProductDetailQuickView = ({ product }) => {
     }
     useEffect(() => {
         setTag(product?.tag);
-        localStorage.getItem('uuid')
-            ? ''
-            : localStorage.setItem('uuid', uuidv4());
-        getImage();
-        getUUID(
+        if (product?.slug) {
             localStorage.getItem('uuid')
-                ? localStorage.getItem('uuid')
-                : uuidv4()
-        );
-    }, []);
-
+                ? ''
+                : localStorage.setItem('uuid', uuidv4() + product?.slug);
+            getImage();
+            getUUID(
+                localStorage.getItem('uuid')
+                    ? localStorage.getItem('uuid')
+                    : uuidv4() + product?.slug
+            );
+        }
+    }, [product?.slug]);
 
     return (
         <>
@@ -72,10 +73,7 @@ const ProductDetailQuickView = ({ product }) => {
                     quek={true}
                 />
             ) : product?.document?.content_type === 'audio' ? (
-                <ProductAudioDetailFullWidth
-                    product={product}
-                    views={views}
-                />
+                <ProductAudioDetailFullWidth product={product} views={views} />
             ) : (
                 <div className="ps-product--detail ps-product--quickview">
                     <div className="ps-product__header">
@@ -105,19 +103,20 @@ const ProductDetailQuickView = ({ product }) => {
                                     </span>
                                 </div>
                             </div>
-                        ) : product?.document?.content_type === 'file' || product?.document?.content_type === 'template' ? (
+                        ) : product?.document?.content_type === 'file' ||
+                          product?.document?.content_type === 'template' ? (
                             <figure className="figure">
                                 <div className="ps-wrapper">
                                     {img?.length > 0
                                         ? img?.map((item, i) => (
-                                            <NextImageCard
-                                                key={i}
-                                                url={item?.image_url}
-                                                className="border mb-3 objectFitCover "
-                                                width="380px"
-                                                height="390px"
-                                            />
-                                        ))
+                                              <NextImageCard
+                                                  key={i}
+                                                  url={item?.image_url}
+                                                  className="border mb-3 objectFitCover "
+                                                  width="380px"
+                                                  height="390px"
+                                              />
+                                          ))
                                         : ''}
                                 </div>
                                 <div className="views view-quik">
@@ -133,8 +132,6 @@ const ProductDetailQuickView = ({ product }) => {
                         ) : product?.document?.content_type === 'audio' ? (
                             <div className="audio-ramka">
                                 <div className="ps-wrapper">
-
-
                                     <div
                                         className="audio_ramka"
                                         style={{
@@ -158,7 +155,6 @@ const ProductDetailQuickView = ({ product }) => {
                                             }></audio>
                                     </div>
 
-
                                     <div className="views_audio">
                                         {' '}
                                         <i className="fa-solid fa-eye"></i>{' '}
@@ -175,19 +171,19 @@ const ProductDetailQuickView = ({ product }) => {
                                 <div className="ps-wrapper">
                                     {product?.document?.images?.length > 0
                                         ? product?.document?.images?.map(
-                                            (item, i) => (
-                                                <NextImageCard
-                                                    key={i}
-                                                    url={item?.image_url}
-                                                    className="border mb-3"
-                                                    width="270px"
-                                                    height="350px"
-                                                    style={{
-                                                        objectFit: 'contain',
-                                                    }}
-                                                />
-                                            )
-                                        )
+                                              (item, i) => (
+                                                  <NextImageCard
+                                                      key={i}
+                                                      url={item?.image_url}
+                                                      className="border mb-3"
+                                                      width="270px"
+                                                      height="350px"
+                                                      style={{
+                                                          objectFit: 'contain',
+                                                      }}
+                                                  />
+                                              )
+                                          )
                                         : ''}
                                 </div>
                                 <div className="views">

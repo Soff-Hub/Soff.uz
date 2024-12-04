@@ -1,12 +1,12 @@
-import React from 'react'
+import Router from 'next/router';
+import React from 'react';
 import useAuth from '~/hooks/useAuth';
 
 export default function GoogleBox({ loading, params }) {
     const { registerGoogleUser } = useAuth();
 
-
     const handleGoogleClick = async () => {
-        window.location = 'https://api.soff.uz/auth/social/login/customer'
+        window.location = 'https://api.soff.uz/auth/social/login/customer';
         try {
             const user = await registerGoogleUser(params, 'customer');
             console.log(user.data);
@@ -18,28 +18,39 @@ export default function GoogleBox({ loading, params }) {
             // });
             // modal.update
             console.log(err);
-
         }
     };
 
-
     return (
-        <div className="google_account d-flex align-items-center justify-content-center">
-            {!loading ? (
-                <div
-                    onClick={handleGoogleClick}
-                    className="ps-btn ps-btn--fullwidth d-flex align-items-center justify-content-center pb-0 gap-2">
-                    <span>Google akkount orqali kirish</span>
-                    <img src="/static/img/google.png" alt="" height={30} />
-                </div>
-            ) : (
-                <button
-                    disabled={true}
-                    type="submit"
-                    className="ps-btn ps-btn--fullwidth">
-                    <BeatLoader color="#fff" />
-                </button>
-            )}
+        <div className="d-flex align-items-center justify-content-center gap-3 mt-3">
+            <div
+                onClick={() =>
+                    Router.push({
+                        query: { ...Router.query },
+                        pathname: '/auth/telegram',
+                    })
+                }
+                style={{
+                    border: '1px solid #24A1DE',
+                    borderRadius: '10px',
+                    cursor: 'pointer',
+                }}
+                className="py-2 px-3 d-flex align-items-center gap-2 w-100 justify-content-center">
+                <img src="/static/img/telegram.png" alt="" height={20} />
+                <span>Orqali kirish</span>
+            </div>
+
+            <div
+                onClick={handleGoogleClick}
+                style={{
+                    border: '1px solid #DB4437',
+                    borderRadius: '10px',
+                    cursor: 'pointer',
+                }}
+                className="py-2 px-3 d-flex align-items-center gap-2 w-100 justify-content-center">
+                <img src="/static/img/google.png" alt="" height={20} />
+                <span>Orqali kirish</span>
+            </div>
         </div>
-    )
+    );
 }
