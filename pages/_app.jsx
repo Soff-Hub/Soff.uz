@@ -64,6 +64,7 @@ function App({ Component, pageProps }) {
                 <meta name="format-detection" content="telephone=no" />
                 {/* <meta name="apple-mobile-web-app-capable" content="yes" /> */}
                 <meta name="mobile-web-app-capable" content="yes"></meta>
+                <meta name="google-adsense-account" content="ca-pub-2651864926558603"/>
             </Head>
 
             <NextProgress
