@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import DefaultDescription from './description/DefaultDescription';
 import DefaultAudio from './thumbnail/DefaultAudio';
 import ModuleAudioDetailTopInformation from './modules/ModuleAudioDetailTopInformation';
@@ -8,16 +8,6 @@ import BuyBtnScroll from './BuyBtnScroll';
 import ReportButton from './ReportButton';
 
 const ProductAudioDetailFullWidth = ({ product, views, admin, ActiveTag }) => {
-    useEffect(() => {
-        // Initialize the Yandex ad script
-        window.yaContextCb = window.yaContextCb || [];
-        window.yaContextCb.push(() => {
-            Ya.Context.AdvManager.render({
-                blockId: 'R-A-13331140-1',
-                renderTo: 'yandex_rtb_R-A-13331140-1',
-            });
-        });
-    }, []);
     return (
         <>
             <div className="ps-product--detail ">
@@ -40,8 +30,7 @@ const ProductAudioDetailFullWidth = ({ product, views, admin, ActiveTag }) => {
                         product={product}
                         admin={admin}
                     />
-                    {/* Yandex Ad Unit */}
-                    <div id="yandex_rtb_R-A-13331140-1"></div>
+
                     <>
                         {admin && ActiveTag}
                         {product?.tag?.length > 0 && (
