@@ -227,16 +227,18 @@ const PostsProductsEdit = () => {
         }
     }, [user?.access]);
 
+    // console.log(posters?.length > 0)
+
     async function handleClickPostsEdit(e) {
         e.preventDefault();
-        // if (!products?.document?.images && !posters.length) {
-        //     const modal = Modal.success({
-        //         centered: true,
-        //         title: 'Xatolik!',
-        //         content: "Kamida bitta rasm kiriting ",
-        //     });
-        //     return
-        // }
+        if (!products?.document?.images?.[0]?.image_url && !posters?.length) {
+            const modal = Modal.warning({
+                centered: true,
+                title: 'Xatolik!',
+                content: "Kamida bitta rasm kiriting ",
+            });
+            return
+        }
         if (
             title ||
             category_id ||
@@ -273,7 +275,7 @@ const PostsProductsEdit = () => {
                 formData.append('demo_link', demoLink);
             }
 
-            if (!products?.document?.images.length) {
+            if (!products?.document?.[0]?.images?.image_url) {
                 for (const img of posters) {
                     formData.append('images', img?.file);
                 }
@@ -358,6 +360,7 @@ const PostsProductsEdit = () => {
         setCategory_ID(products?.category?.id);
     }, [products?.category?.id]);
 
+
     return user?.role === 'admin' ? (
         <PageContainer
             footer={<FooterDefault />}
@@ -403,7 +406,7 @@ const PostsProductsEdit = () => {
                                     style={{ maxWidth: '360px' }}>
                                     {products?.document?.content_type ===
                                         'video' ||
-                                    products?.document?.content_type ===
+                                        products?.document?.content_type ===
                                         'audio' ? (
                                         <button
                                             className="btn-success"
@@ -489,34 +492,34 @@ const PostsProductsEdit = () => {
                                             }>
                                             {dataStatus?.map((item, i) =>
                                                 products.status ===
-                                                item.status ? (
+                                                    item.status ? (
                                                     <option
                                                         selected
                                                         key={i}
                                                         value={item.status}>
                                                         {products.status ===
-                                                        'moderation'
+                                                            'moderation'
                                                             ? 'Moderatsiya'
                                                             : products.status ===
-                                                              'cancelled'
-                                                            ? 'Bekor qilingan'
-                                                            : products.status ===
-                                                              'approved'
-                                                            ? 'Tasdiqlangan'
-                                                            : ''}
+                                                                'cancelled'
+                                                                ? 'Bekor qilingan'
+                                                                : products.status ===
+                                                                    'approved'
+                                                                    ? 'Tasdiqlangan'
+                                                                    : ''}
                                                     </option>
                                                 ) : (
                                                     <option value={item.status}>
                                                         {item.status ===
-                                                        'moderation'
+                                                            'moderation'
                                                             ? 'Moderatsiya'
                                                             : item.status ===
-                                                              'cancelled'
-                                                            ? 'Bekor qilingan'
-                                                            : item.status ===
-                                                              'approved'
-                                                            ? 'Tasdiqlangan'
-                                                            : ''}
+                                                                'cancelled'
+                                                                ? 'Bekor qilingan'
+                                                                : item.status ===
+                                                                    'approved'
+                                                                    ? 'Tasdiqlangan'
+                                                                    : ''}
                                                     </option>
                                                 )
                                             )}
@@ -539,7 +542,7 @@ const PostsProductsEdit = () => {
 
                                             <div className="col-md-8 p-0">
                                                 <div
-                                                    className="add-product-user-image bg-white d-flex justify-content-between  form-control py-2 rounded-3"
+                                                    className="add-product-user-image bg-white d-flex justify-content-between w-100 form-control py-2 rounded-3"
                                                     style={{
                                                         height: '100px',
                                                         backgroundColor: false
@@ -590,10 +593,8 @@ const PostsProductsEdit = () => {
                                                     </label>
 
                                                     <div
-                                                        className="overflow-x-scroll  d-flex  gap-1"
-                                                        style={{
-                                                            width: '430px',
-                                                        }}>
+                                                        className="overflow-x-scroll w-100 d-flex justify-content-center   gap-1"
+                                                    >
                                                         {products?.poster_url ? (
                                                             products?.document?.images?.map(
                                                                 (item, i) => (
@@ -613,7 +614,7 @@ const PostsProductsEdit = () => {
                                                                 )
                                                             )
                                                         ) : !posters.length >
-                                                          0 ? (
+                                                            0 ? (
                                                             <span
                                                                 className="d-flex flex-column align-items-center mt-4 mx-5"
                                                                 style={{
@@ -658,7 +659,7 @@ const PostsProductsEdit = () => {
                                         </div>
                                     }
                                     {dataCatStatus === 'cancelled' ||
-                                    products.status === 'cancelled' ? (
+                                        products.status === 'cancelled' ? (
                                         <div className="row">
                                             <div className="col-md-4 d-flex justify-content-between p-0">
                                                 <p>
@@ -807,33 +808,33 @@ const PostsProductsEdit = () => {
 
                                     {products?.document?.content_type ===
                                         'template' && (
-                                        <div className="  row mt-3">
-                                            <div className="col-md-4 d-flex justify-content-between p-0">
-                                                <p>Shablon demo link: </p>{' '}
-                                                <Tooltip title="Mijozlarga mahsulotingizni to'liq ko'rishi uchun. Bu mijozlaringiz mahsulotni sotib olishda ularning ishonchini yanada oshirish uchun xizmat qiladi.">
-                                                    <i
-                                                        style={{
-                                                            cursor: 'pointer',
-                                                        }}
-                                                        className="fa-regular fa-circle-question px-4 mt-2"></i>
-                                                </Tooltip>
+                                            <div className="  row mt-3">
+                                                <div className="col-md-4 d-flex justify-content-between p-0">
+                                                    <p>Shablon demo link: </p>{' '}
+                                                    <Tooltip title="Mijozlarga mahsulotingizni to'liq ko'rishi uchun. Bu mijozlaringiz mahsulotni sotib olishda ularning ishonchini yanada oshirish uchun xizmat qiladi.">
+                                                        <i
+                                                            style={{
+                                                                cursor: 'pointer',
+                                                            }}
+                                                            className="fa-regular fa-circle-question px-4 mt-2"></i>
+                                                    </Tooltip>
+                                                </div>
+                                                <div className=" p-0 rounded-3 col-md-8">
+                                                    <input
+                                                        type="url"
+                                                        defaultValue={
+                                                            products?.demo_link
+                                                        }
+                                                        className="form-control  rounded-3  bg-white"
+                                                        onChange={(e) =>
+                                                            setDemoLink(
+                                                                e.target.value
+                                                            )
+                                                        }
+                                                    />
+                                                </div>
                                             </div>
-                                            <div className=" p-0 rounded-3 col-md-8">
-                                                <input
-                                                    type="url"
-                                                    defaultValue={
-                                                        products?.demo_link
-                                                    }
-                                                    className="form-control  rounded-3  bg-white"
-                                                    onChange={(e) =>
-                                                        setDemoLink(
-                                                            e.target.value
-                                                        )
-                                                    }
-                                                />
-                                            </div>
-                                        </div>
-                                    )}
+                                        )}
 
                                     <div className="row">
                                         <div className="col-md-4 d-flex justify-content-between p-0">
@@ -999,7 +1000,7 @@ const PostsProductsEdit = () => {
                                                     {categoryName
                                                         ? categoryName
                                                         : products?.category
-                                                              ?.name}
+                                                            ?.name}
                                                 </span>
                                             </p>
                                             <p className="live-card-p">
@@ -1062,10 +1063,10 @@ const PostsProductsEdit = () => {
                                                     {Fulldata
                                                         ? parse(Fulldata)
                                                         : products?.description
-                                                        ? parse(
-                                                              products?.description
-                                                          )
-                                                        : ''}
+                                                            ? parse(
+                                                                products?.description
+                                                            )
+                                                            : ''}
                                                 </span>
                                             </p>
                                         </div>
