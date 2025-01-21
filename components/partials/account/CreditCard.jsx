@@ -123,6 +123,7 @@ const CreditCard = () => {
     if (countdown <= 0) {
       setOpen(false);
       setKod(null);
+      setCoutdown(120);
     }
   }, [countdown]);
 
