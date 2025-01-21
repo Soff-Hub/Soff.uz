@@ -100,6 +100,8 @@ const CreditCard = () => {
   }
 
   useEffect(() => {
+    if (!open) return;
+
     const interval = setInterval(() => {
       setCoutdown((prevCountdown) => {
         if (prevCountdown === 0) {
@@ -111,14 +113,17 @@ const CreditCard = () => {
       });
     }, 1000);
 
-    if (countdown <= 0) {
-      setOpen(false);
-      setKod(null);
-    }
 
     return () => {
       clearInterval(interval);
     };
+  }, [open]);
+
+  useEffect(() => {
+    if (countdown <= 0) {
+      setOpen(false);
+      setKod(null);
+    }
   }, [countdown]);
 
 
