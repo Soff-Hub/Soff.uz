@@ -19,6 +19,7 @@ const CreditCard = () => {
   const [countdown, setCoutdown] = useState(120);
   const [code, setKod] = useState(null);
   const [loadingPayment, setLoadingPayment] = useState(false)
+  const [loadingApp, setLoadingApp] = useState(false)
 
 
   profileCard.forEach(item => {
@@ -40,6 +41,7 @@ const CreditCard = () => {
   }
 
   async function handleClickCardPosts() {
+    setLoadingApp(true);
     const ItemsData = await PostsRepository.CardPostsCredit({ "credit_card": numberCardVal }, user?.access);
     if (ItemsData.status === 201 || ItemsData.status === 200) {
       setOpen(true);
@@ -52,7 +54,9 @@ const CreditCard = () => {
 
       });
       modal.update;
+
     }
+    setLoadingApp(false);
   }
 
   async function getItemsSellerCardList() {
@@ -143,8 +147,16 @@ const CreditCard = () => {
           <div className="col-md-5 p-0">
             <CreditCardInput onChange={value => numberTyper(value)} />
           </div>
-          <button onClick={handleClickCardPosts} disabled={String(numberCardVal)?.length < 16} className="btn btn-success py-2  col-md-2">
-            <span className="fs-4" >Saqlash</span></button>
+          <button onClick={handleClickCardPosts} disabled={String(numberCardVal)?.length < 16 || loadingApp} className="btn btn-success py-2  col-md-2">
+            {loadingApp && <div
+              className="spinner-border fs-5"
+              role="status"
+              style={{ width: '15px', height: '15px' }}
+            >
+              <span className="visually-hidden">
+                Loading...
+              </span>
+            </div>} <span className="fs-4" >Saqlash</span></button>
         </div>
 
       </div>
