@@ -730,8 +730,8 @@ function ApplicationLists() {
                     onOk={getItemsSellerPost}
                     onCancel={handleCancel}
                     okText="Ha, davom etaman"
-                    cancelText="Yo'q, bekor qilish"
-                    okButtonProps={{ style: { backgroundColor: "#28A745", borderColor: "#28A745" } }}
+                    cancelText="Yo'q"
+                    okButtonProps={{ style: { backgroundColor: "#28A745", borderColor: "#28A745",  } }}
                     cancelButtonProps={{ style: { borderColor: "#28A745", color: "#28A745" } }}
                 >
                     <p style={{ marginBottom: '10px', color: '#666' }}>
