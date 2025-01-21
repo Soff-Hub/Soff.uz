@@ -46,9 +46,17 @@ function ApplicationLists() {
     const [openApplication, setOpenAplication] = useState(false);
     const [form] = Form.useForm();
     const dispatch = useDispatch();
-
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [lifeTime, setLifetime] = useState('');
     const [lifeTime1, setLifetime2] = useState('');
+
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
 
 
     const handleChangeDate = (date) => {
@@ -162,16 +170,17 @@ function ApplicationLists() {
 
 
     async function getItemsSellerPost() {
-        if (dataPrice ? dataPrice > 3100 : profile?.wallet > 3100) {
+        setIsModalOpen(false)
+        if (dataPrice < Number(alertMess)) {
             return Modal.error({
                 centered: true,
                 title: 'Xatolik!',
-                content: `Hisobingizda mablag' yetarli emas`,
+                content: `Hisobingizda mablag' yetarli emas. Minimal o'tkazma miqdori ${addPeriodToThousands(alertMess)} so'm bo'lishi kerak. Iltimos, balansingizni tekshirib, qayta urinib ko'ring.`,
             });
         }
 
         setLoadingPayment(true);
-        const data = { credit_card: dataCard, amount: dataPrice ? dataPrice : profile?.wallet }
+        const data = { credit_card: dataCard, amount: dataPrice }
         const Items = await PostsRepository.PostsMyProductsAriza(data, user?.access);
         if (Items?.status === 200 || Items?.status === 201) {
             const modal = Modal.success({
@@ -498,10 +507,10 @@ function ApplicationLists() {
                                                 <i className="fa-solid fa-lock"></i> Siz Bloklangansiz. Bu davr mobaynida Pul yechib olish uchun ariza yuborishni imkoni yo'q.</span>
                                         </div> :
                                             <form className='row row-gap-3 px-4 gap-4 mx-auto'>
-                                                <label className='h4 p-0 ' style={{ color: "orange" }} >
-                                                    <strong>Hisobingizda kamida {alertMess ? formatCurrency(alertMess) : '10 000'} so’m bo’lishi kerak.</strong>
+                                                <label className='h4 p-0 '  >
+                                                    <strong>Hisobingizda kamida {alertMess ? formatCurrency(alertMess) : '40 000'} so’m bo’lishi kerak.</strong>
                                                 </label>
-                                                <input required id='count' type="number" defaultValue={profile?.wallet} style={{ height: "41.6px" }} placeholder='Summa' className='form-control rounded-3 col-md-4' onChange={(e) => (setDataPrice(e.target.value))} />
+                                                <input required id='count' type="number" style={{ height: "41.6px" }} placeholder='Summa' className='form-control rounded-3 col-md-4' onChange={(e) => (setDataPrice(e.target.value))} />
 
                                                 <select className='form-select rounded-3 col-md-5 fs-3 ' style={{ height: "41.6px", cursor: "pointer" }} onChange={(e) => setDataCard(e.target.value)} >
                                                     <option className='fs-3' value='' selected disabled >Kartalaringiz</option>
@@ -517,9 +526,10 @@ function ApplicationLists() {
                                                 </select>
 
                                                 {
-                                                    dataCard ?
-                                                        <Button onClick={getItemsSellerPost} disabled={loadingPayment} className='bg-success text-light col-md-2' style={{
+                                                    (dataCard && dataPrice) ?
+                                                        <Button onClick={showModal} disabled={loadingPayment} className=' text-light col-md-2' style={{
                                                             height: "41.6px",
+                                                            backgroundColor: "#28A745"
                                                         }}>
                                                             {
                                                                 loadingPayment && <div
@@ -534,8 +544,9 @@ function ApplicationLists() {
                                                             }
                                                             <span className='fs-4'>Yechib olish</span></Button>
                                                         :
-                                                        <Button disabled className='bg-success text-light col-md-2' style={{
+                                                        <Button disabled className='text-light col-md-2' style={{
                                                             height: "41.6px",
+                                                            backgroundColor: "#28A745"
                                                         }}>
 
                                                             <span className='fs-4'>Yechib olish</span>
@@ -710,6 +721,26 @@ function ApplicationLists() {
                     </Form>
 
 
+                </Modal>
+
+                <Modal
+                    title={"Amalni tasdiqlaysizmi?"}
+                    open={isModalOpen}
+                    centered
+                    onOk={getItemsSellerPost}
+                    onCancel={handleCancel}
+                    okText="Ha, davom etaman"
+                    cancelText="Yo'q, bekor qilish"
+                    okButtonProps={{ style: { backgroundColor: "#28A745", borderColor: "#28A745" } }}
+                    cancelButtonProps={{ style: { borderColor: "#28A745", color: "#28A745" } }}
+                >
+                    <p style={{ marginBottom: '10px', color: '#666' }}>
+                        Sizning hisobingizdan
+                        {
+                            ` **** **** ****  ${String(dataCard).slice(-4)} karta raqamiga ${addPeriodToThousands(dataPrice ? dataPrice : profile?.wallet)} so'm 💴 mablag' o'tkaziladi. Davom etishga ishonchingiz komilmi?
+                        `
+                        }
+                    </p>
                 </Modal>
 
 
