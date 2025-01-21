@@ -165,7 +165,7 @@ class PostRepository {
             .catch((error) => error?.response?.data);
         return response;
     }
-    
+
     async PostsPLaylists(data, token) {
         const endPoint = `playlist/`;
         const response = await Repository({
@@ -230,6 +230,27 @@ class PostRepository {
 
     CardPostsCredit(data, token) {
         const endPoint = 'seller-card-create';
+        const response = Repository({
+            url: baseUrl + endPoint,
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        })
+            .then((response) => {
+                if (response) {
+                    return response;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => error.response);
+        return response;
+    }
+
+    CardPostsCreditVerify(data, token) {
+        const endPoint = 'seller-card-verify';
         const response = Repository({
             url: baseUrl + endPoint,
             method: 'POST',

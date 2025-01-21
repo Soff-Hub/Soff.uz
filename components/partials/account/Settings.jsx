@@ -18,29 +18,11 @@ function Notifications() {
     const [loading2, setLoading2] = useState(false);
     const [loading1, setLoading1] = useState(false);
     const [image, setImage] = useState('');
-    const [imageBag, setImageBag] = useState({ url: null, img: null });
-    const [imageBagMobile, setImageBagMobile] = useState({ url: null, img: null });
     const [profilePassword, setProfilePassword] = useState(null);
     const [profilePassword1, setProfilePassword2] = useState(null);
     const [open, setOpen] = useState(false);
-    const [openViewImage, setOpenViewImage] = useState(false);
-    const [openViewTitle, setOpenViewTitle] = useState('mobile');
     const [nameModal, setNameModal] = useState(false)
 
-
-    const LivePosterDesktop = (images) => {
-        if (images) {
-            const img = window.URL.createObjectURL(images);
-            setImageBag({ img: img, url: images });
-        }
-    }
-
-    const LivePosterMobile = (images) => {
-        if (images) {
-            const img = window.URL.createObjectURL(images);
-            setImageBagMobile({ img: img, url: images });
-        }
-    }
 
 
     async function handleClickEditChangePassword(e) {
@@ -60,6 +42,7 @@ function Notifications() {
         if (ItemsData.status === 200) {
             const modal = Modal.success({
                 centered: true,
+                maskClosable: true,
                 title: 'Muvaffaqqiyatli!',
                 content: ItemsData?.data?.msg,
             });
@@ -67,6 +50,7 @@ function Notifications() {
         } else {
             const modal = Modal.error({
                 centered: true,
+                maskClosable: true,
                 title: 'Muvaffaqqiyatli!',
                 content: ItemsData?.data?.msg,
             });
@@ -94,16 +78,16 @@ function Notifications() {
             );
             const modal = Modal.success({
                 centered: true,
+                maskClosable: true,
                 title: 'Muvaffaqqiyatli!',
                 content: `Sizning ma'lumotlaringiz o'zgartirildi`,
             });
             modal.update;
             setNameModal(false)
         } catch (err) {
-            console.log(err?.msg);
-
             const modal = Modal.error({
                 centered: true,
+                maskClosable: true,
                 title: 'Xatolik!',
                 content: err?.msg,
             });
@@ -127,13 +111,6 @@ function Notifications() {
                 formData.append('image', image);
             }
 
-            if (imageBag?.url) {
-                formData.append('background_image', imageBag?.url);
-            }
-            if (imageBagMobile?.url) {
-                formData.append('mobile_background_image', imageBagMobile?.url);
-            }
-
             await PatchRepository.getPatchProfile(
                 formData,
                 user?.access
@@ -142,21 +119,21 @@ function Notifications() {
                 const ItemsDataProfile = await GetRepository.getProfile(user?.access);
                 dispatch(setSavedPrfileData(ItemsDataProfile))
             }
-            setImageBag({ img: null, url: null })
-            setImageBagMobile({ img: null, url: null })
             setImage(null)
 
 
             Modal.success({
                 centered: true,
+                maskClosable: true,
                 title: 'Muvaffaqqiyatli!',
                 content: `Sizning ma'lumotlaringiz o'zgartirildi`,
             });
         } catch (error) {
             Modal.error({
                 centered: true,
+                maskClosable: true,
                 title: 'Xatolik!',
-                content: error && (error?.background_image?.[0] || error?.image?.[0]),
+                content: error && (error?.image?.[0]),
             });
         }
         setLoading2(false)
@@ -171,8 +148,7 @@ function Notifications() {
                 <div className="row pb-5" style={{ alignItems: 'flex-start' }}>
                     <SidebarLayout accountLinks={accountLinks}>
                         <div className="user_profile_container">
-                            <div className="user_profile_card" style={{ backgroundImage: `url(${loading2 ? "/static/img/orqafon1.avif" : (profile?.background_image ? profile?.background_image : "/static/img/orqafon1.avif")})` }}>
-                                {loading2 ? <h2 className='text-center text-white loading_h2'>Yuklanmoqda...</h2> : <></>}
+                            <div className="user_profile_card" style={{ backgroundImage: `url(/static/img/orqafon1.avif)` }}>
                                 <div className="profile_images_card"  >
                                     <Image.PreviewGroup >
                                         <Image
@@ -191,16 +167,18 @@ function Notifications() {
                             <div className='user_profile_body'>
                                 <>
 
-                                    <>
-                                        <h1>{profile?.first_name}  {profile?.last_name}
-                                            <span style={{ cursor: "pointer" }} onClick={() => setNameModal(true)} >
-                                                <i className="fa-solid fa-pen fs-4 mx-3 text-primary"></i>
-                                            </span></h1>
-                                        {
-                                            profile?.email &&
-                                            <p>{profile?.email}</p>
-                                        }
-                                    </>
+                                    <h1>{profile?.first_name}  {profile?.last_name}
+                                        <span style={{ cursor: "pointer" }} onClick={() => setNameModal(true)} >
+                                            <i className="fa-solid fa-pen fs-4 mx-3 text-primary"></i>
+                                        </span></h1>
+                                    {
+                                        profile?.email &&
+                                        <p>{profile?.email}</p>
+                                    }
+                                    {
+                                        profile?.phone &&
+                                        <p>{profile?.phone}</p>
+                                    }
 
 
                                 </>
@@ -208,7 +186,7 @@ function Notifications() {
                                     user?.role === 'seller' ?
                                         <>
                                             <CreditCard />
-                                            <div className="border p-4 rounded mt-4 " style={{ transform: "translateX(-7px)" }}>
+                                            <div className="border p-4 rounded mt-4 ">
                                                 <h4>Parolni o'zgartirish</h4>
                                                 <form
                                                     className="row gap-4 row-gap-3 mx-auto "
@@ -225,6 +203,7 @@ function Notifications() {
                                                                 e.target.value
                                                             )
                                                         }
+                                                        style={{ height: "35px" }}
                                                     />
                                                     <input
                                                         type="password"
@@ -236,18 +215,21 @@ function Notifications() {
                                                                 e.target.value
                                                             )
                                                         }
+                                                        style={{ height: "35px" }}
                                                     />
 
                                                     <button
                                                         type="submit"
-                                                        className="btn btn-success py-3 col-md-2  ">
+                                                        disabled={loading1}
+                                                        style={{ height: "35px" }}
+                                                        className="btn btn-success col-md-2  ">
                                                         {loading1 ? (
                                                             <BeatLoader
                                                                 size={10}
                                                                 color="#fff"
                                                             />
                                                         ) : (
-                                                            <span className="fs-3">
+                                                            <span className="fs-4">
                                                                 O'zgartirish
                                                             </span>
                                                         )}
@@ -266,7 +248,7 @@ function Notifications() {
                 </div>
 
                 <Modal
-                    title="Rasm yuklash (Profil, Mobile, Desktop)"
+                    title="Rasm yuklash (Profil)"
                     open={open}
                     onCancel={() => setOpen(false)}
                     footer={null}
@@ -284,8 +266,8 @@ function Notifications() {
                     />
 
                     <div className='d-flex justify-content-end gap-3 mt-3'>
-                        <button className='btn btn-secondary fs-4 px-4' onClick={() => setOpen(false)}>Yopish</button>
-                        <Button className='btn btn-success fs-4 px-4' onClick={handleClickEditUserProfile}
+                        <Button className='bg-secondary text-white fs-4 px-4' onClick={() => setOpen(false)}>Yopish</Button>
+                        <Button className='bg-success text-white fs-4 px-4' onClick={handleClickEditUserProfile}
                             disabled={loading2} loading={loading2} >
                             <span className='ml-2'> Saqlash</span>
                         </Button>
@@ -293,38 +275,20 @@ function Notifications() {
 
                 </Modal>
 
-                <Modal
-                    title={openViewTitle === "mobile" ? "Mobile ko'rinish" : "Desktop ko'rinish"}
-                    open={openViewImage}
-                    onCancel={() => setOpenViewImage(false)}
-                    footer={null}
-                    className={openViewTitle === "mobile" ? "" : "container"}
-                >
-                    <img
-                        style={{
-                            objectFit: "cover",
-                            height: "200px",
-                            objectPosition: "center center",
-                            width: "100%"
-                        }}
-                        src={(openViewTitle === "desktop" ? (imageBag?.img || profile?.background_image) : (imageBagMobile?.img || profile?.mobile_background_image)) || "/static/img/orqafon1.avif"} alt="desktop" />
-
-                </Modal>
-
-
+                {/* Profil ism va familiyasini o'zgartirish */}
                 <Modal
                     title={"Profil ma'lumotlarni tahrirlash"}
                     open={nameModal}
-                    onCancel={() => setOpenViewImage(false)}
+                    onCancel={() => setNameModal(false)}
                     footer={null}
-                    className={openViewTitle === "mobile" ? "" : "container"}
+                    className={"mobile"}
                 >
                     <form
                         onSubmit={(e) => {
                             e.preventDefault()
                             handleClickEdit()
                         }}
-                        className='d-flex flex-column gap-3 my-5'
+                        className='d-flex flex-column gap-3 mt-5'
                         id='edit-profile-form'
                     >
                         <input
@@ -358,9 +322,9 @@ function Notifications() {
                             }
                         />
 
-                        <div className="d-flex justify-content-center gap-5 pb-5 pt-3">
+                        <div className="d-flex justify-content-end gap-3 pt-3">
                             <button
-                                className=" btn btn-secondary d-block w-25 py-2 "
+                                className=" btn btn-secondary d-block w-25  fs-4 "
                                 type="button"
                                 onClick={() => {
                                     document.getElementById('edit-profile-form').reset()
@@ -371,7 +335,7 @@ function Notifications() {
                             </button>
                             <button
                                 type="submit"
-                                className="btn btn-success d-block w-25 py-2"
+                                className="btn btn-success d-block w-25 fs-4 "
                             >
                                 <span className="fs-3">Saqlash</span>
                             </button>
@@ -379,14 +343,6 @@ function Notifications() {
                     </form>
                 </Modal>
 
-
-                {/* <ModalDeletePostEdit formID={"user-modal-profile-name"}
-                    dataBsTarget="exampleModalMyProductsUserProfileName"
-                    onSubmited={handleClickEdit}
-                    noCloseOnSubmit={true}
-                >
-
-                </ModalDeletePostEdit> */}
 
             </div>
         </section >

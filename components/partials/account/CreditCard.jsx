@@ -4,18 +4,21 @@ import PostsRepository from "~/reositoriy-admin/PostsRepository";
 import { useSelector } from 'react-redux';
 import GetRepository from "~/reositoriy-admin/GetRepository";
 import DeleteRepository from "~/reositoriy-admin/DeleteRepository";
-import { Modal } from "antd";
+import { Input, Modal } from "antd";
 import ModalDelete from "./Modal";
 
 
 
 const CreditCard = () => {
   const { user } = useSelector(state => state.auth);
-  const [number, SetNumber] = useState("●●●● ●●●● ●●●● ●●●●");
-  const [numberCard, SetNumberCard] = useState(null);
-  const [numberCardVal, SetNumberCardVal] = useState(null);
+  const [numberCardVal, setNumberCardVal] = useState(null);
   const [profileCard, setProfileCard] = useState([]);
+  const { profile } = useSelector((state) => state.ecomerce);
   const [deleteId, setDeleteId] = useState(null);
+  const [open, setOpen] = useState(false);
+  const [countdown, setCoutdown] = useState(120);
+  const [code, setKod] = useState(null);
+  const [loadingPayment, setLoadingPayment] = useState(false)
 
 
   profileCard.forEach(item => {
@@ -24,9 +27,7 @@ const CreditCard = () => {
 
 
   const numberTyper = (value) => {
-    SetNumberCardVal(value)
-    const firstFourNumbers = value.slice(0, 4);
-    SetNumberCard(Number(firstFourNumbers))
+    setNumberCardVal(value)
     if (!value == 0) {
       let numberPlaceholder = ''
       for (let i = 0; i < 16; i++) {
@@ -35,34 +36,23 @@ const CreditCard = () => {
         }
         numberPlaceholder += value[i] || '●';
       }
-      return SetNumber(numberPlaceholder)
     }
-
-    SetNumber('●●●● ●●●● ●●●● ●●●●')
   }
 
   async function handleClickCardPosts() {
     const ItemsData = await PostsRepository.CardPostsCredit({ "credit_card": numberCardVal }, user?.access);
-    if (ItemsData.status === 201) {
-      const modal = Modal.success({
-        centered: true,
-        title: 'Muvaffaqqiyatli!',
-        content: ItemsData?.data?.msg,
-
-      });
-      modal.update;
+    if (ItemsData.status === 201 || ItemsData.status === 200) {
+      setOpen(true);
     } else {
       const modal = Modal.error({
         centered: true,
-        title: 'Muvaffaqqiyatli!',
+        maskClosable: true,
+        title: 'Xatolik!',
         content: ItemsData?.data?.msg,
 
       });
       modal.update;
     }
-
-
-    getItemsSellerCardList();
   }
 
   async function getItemsSellerCardList() {
@@ -73,9 +63,10 @@ const CreditCard = () => {
   }
 
   async function handleClickDelete() {
-    const ItemRemove = await DeleteRepository.getCategoryDeleteCard(deleteId, user?.access);
-    const modal = Modal.error({
+    await DeleteRepository.getCategoryDeleteCard(deleteId, user?.access);
+    Modal.error({
       centered: true,
+      maskClosable: true,
       title: 'Muvaffaqqiyatli!',
       content: `Siz kartangizni o'chirdingiz`,
     });
@@ -83,27 +74,76 @@ const CreditCard = () => {
 
   }
 
+  async function handleSendMessage() {
+    setLoadingPayment(true)
+    const ItemsData = await PostsRepository.CardPostsCreditVerify({ "credit_card": numberCardVal, "code": code }, user?.access);
+    if (ItemsData.status === 201 || ItemsData.status === 200) {
+      getItemsSellerCardList();
+      setOpen(false);
+      setKod(null);
+      const modal = Modal.success({
+        centered: true,
+        title: 'Muvaffaqqiyatli!',
+        content: ItemsData?.data?.msg,
+      });
+      modal.update;
+    } else if (ItemsData?.status >= 400) {
+      const modal = Modal.error({
+        centered: true,
+        title: 'Xatolik!',
+        content: ItemsData?.data?.msg,
+
+      });
+      modal.update;
+    } setLoadingPayment(false)
+
+  }
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCoutdown((prevCountdown) => {
+        if (prevCountdown === 0) {
+          clearInterval(interval);
+          return 0;
+        } else {
+          return prevCountdown - 1;
+        }
+      });
+    }, 1000);
+
+    if (countdown <= 0) {
+      setOpen(false);
+    }
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [countdown]);
+
+
   useEffect(() => {
     getItemsSellerCardList()
-  }, [])
+  }, []);
+
+
 
   return (
-    <div className="row mx-auto mt-3 " >
-      <div className="rounded">
+    <div className="row mx-auto mt-3 border rounded p-4" >
+      <div className="rounded p-0">
         <strong>Yangi karta qo'shish</strong>
-        
-        <div className="row mt-2 row-gap-2 gap-3">
+
+        <div className="row mt-2 row-gap-3 mx-auto gap-3">
           <div className="col-md-5 p-0">
             <CreditCardInput onChange={value => numberTyper(value)} />
           </div>
-          <button onClick={handleClickCardPosts} className="btn btn-success py-2  col-md-2">
-            <span className="fs-5" >Saqlash</span></button>
+          <button onClick={handleClickCardPosts} disabled={String(numberCardVal)?.length < 16} className="btn btn-success py-2  col-md-2">
+            <span className="fs-4" >Saqlash</span></button>
         </div>
 
       </div>
 
-      <div className="row mt-2 row-gap-3 mx-auto gap-3 p-0" style={{ transform: "translateX(-7px)" }} >
-        <strong className="m-0 mt-3">Kartalaringiz: <i className="fa-solid fa-credit-card fa-flip mt-2 fs-4 text-primary m-0"></i></strong>
+      <div className="row mt-2 row-gap-3 mx-auto gap-3 p-0"  >
+        <strong className="m-0 p-0 mt-3">Kartalaringiz: <i className="fa-solid fa-credit-card fa-flip mt-2 fs-4 text-primary m-0"></i></strong>
         {
           profileCard?.length > 0 ? profileCard?.map((item, index) => (
             <div className="d-flex gap-4 col-md-6 p-0 align-items-center" key={index} >
@@ -118,6 +158,61 @@ const CreditCard = () => {
         }
       </div>
       <ModalDelete onSuccess={handleClickDelete} />
+
+      <Modal
+        title={"Karta raqamni tasdiqlash"}
+        open={open}
+        centered
+        width={416}
+        onOk={handleSendMessage}
+        onCancel={() => setOpen(false)}
+        okText={
+          <div className="d-flex align-items-center gap-2">
+            {loadingPayment && <div
+              className="spinner-border fs-5"
+              role="status"
+              style={{ width: '10px', height: '10px' }}
+            >
+              <span className="visually-hidden">
+                Loading...
+              </span>
+            </div>}
+            <span>Tasdiqlash</span>
+          </div>
+        }
+        cancelText="Yopish"
+        okButtonProps={
+          {
+            disabled: (String(code)?.length < 6 || String(code)?.length > 6 || loadingPayment),
+            style:
+              { backgroundColor: "#28A745", borderColor: "#28A745" }
+          }}
+        cancelButtonProps={{ style: { borderColor: "#28A745", color: "#28A745" } }}
+      >
+        <div className="ps-form__content mt-4">
+          <h5 className="mb-2 " style={{ fontFamily: "sans-serif", color: "#333" }}>
+            Tasdiqlash SMS - kodi quyidagiga yuborildi:
+          </h5>
+          <h5 style={{ color: "#333", marginBottom: '5px' }}>
+            {profile?.phone ? profile?.phone : profile?.email}
+          </h5>
+          <div className="kod-input">
+            <Input
+              required
+              className="form-control mb-2"
+              type="number"
+              placeholder="Kodni kiriting..."
+              onChange={(e) => setKod(e.target.value)}
+              style={{ height: "35px", borderRadius: "5px" }}
+            />
+            <h5 className="mb-2">{` 0 ${Math.floor(countdown / 60)} : ${countdown >= 10
+              ? countdown % 60
+              : '0 ' + countdown
+              }`}</h5>
+          </div>
+        </div>
+
+      </Modal>
     </div>
 
   );

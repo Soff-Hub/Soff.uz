@@ -96,6 +96,8 @@ function ApplicationLists() {
             if (ItemsData?.status == 200) {
                 const modal = Modal.success({
                     centered: true,
+                    maskClosable: true,
+                    maskClosable: true,
                     title: 'Muvaffaqiyatli!',
                     content: "Siz  kelib tushgan taklifga javob berdingiz ",
                 });
@@ -107,15 +109,19 @@ function ApplicationLists() {
             } else {
                 const modal = Modal.error({
                     centered: true,
+                    maskClosable: true,
                     title: 'Xato!',
+                    maskClosable: true,
                     content: ItemsData?.status + ' ' + ItemsData?.statusText,
                 });
                 modal.update;
             }
         }
         else {
-            const modal = Modal.info({
+            Modal.info({
                 centered: true,
+                maskClosable: true,
+                maskClosable: true,
                 title: "Qayta urinib ko'ring",
                 content: "O'zgartirish uchun malumot kiritilmadi ",
             });
@@ -174,8 +180,9 @@ function ApplicationLists() {
         if (dataPrice < Number(alertMess)) {
             return Modal.error({
                 centered: true,
+                maskClosable: true,
                 title: 'Xatolik!',
-                content: `Hisobingizda mablag' yetarli emas. Minimal o'tkazma miqdori ${addPeriodToThousands(alertMess)} so'm bo'lishi kerak. Iltimos, balansingizni tekshirib, qayta urinib ko'ring.`,
+                content: `${Items?.data?.msg || Items?.data?.amount || `Status: ${Items?.status} Xatolik yuz berdi`}`,
             });
         }
 
@@ -187,6 +194,7 @@ function ApplicationLists() {
                 centered: true,
                 title: null,
                 icon: null,
+                maskClosable: true,
                 content: (
                     <div className='bg-white  rounded ' style={{ textAlign: 'center', maxWidth: "368px" }}>
                         <i className="fa-solid fa-circle-check fa-4x mb-5 text-success"></i>
@@ -225,6 +233,7 @@ function ApplicationLists() {
             const modal = Modal.error({
                 centered: true,
                 title: 'Xatolik!',
+                maskClosable: true,
                 content: `${Items?.data?.msg || Items?.data?.amount || 'Xatolik yuz berdi'}`,
             });
             modal.update
@@ -238,9 +247,10 @@ function ApplicationLists() {
     async function getItemsTextItmes(e) {
         e.preventDefault()
         setLoading({ loadingButton: false })
-        const Items = await PostsRepository.PostsMyProductsTextItmes({ offer: textItems }, user?.access);
+        await PostsRepository.PostsMyProductsTextItmes({ offer: textItems }, user?.access);
         const modal = Modal.success({
             centered: true,
+            maskClosable: true,
             title: 'Muvaffaqqiyatli!',
             content: `Sizning taklifingiz yuborildi`,
         });
@@ -508,7 +518,7 @@ function ApplicationLists() {
                                         </div> :
                                             <form className='row row-gap-3 px-4 gap-4 mx-auto'>
                                                 <label className='h4 p-0 '  >
-                                                    <strong>Hisobingizda kamida {alertMess ? formatCurrency(alertMess) : '40 000'} so’m bo’lishi kerak.</strong>
+                                                    <strong>Hisobingizda kamida {alertMess ? formatCurrency(alertMess) : '35 000'} so’m bo’lishi kerak.</strong>
                                                 </label>
                                                 <input required id='count' type="number" style={{ height: "41.6px" }} placeholder='Summa' className='form-control rounded-3 col-md-4' onChange={(e) => (setDataPrice(e.target.value))} />
 
@@ -731,7 +741,7 @@ function ApplicationLists() {
                     onCancel={handleCancel}
                     okText="Ha, davom etaman"
                     cancelText="Yo'q"
-                    okButtonProps={{ style: { backgroundColor: "#28A745", borderColor: "#28A745",  } }}
+                    okButtonProps={{ style: { backgroundColor: "#28A745", borderColor: "#28A745", } }}
                     cancelButtonProps={{ style: { borderColor: "#28A745", color: "#28A745" } }}
                 >
                     <p style={{ marginBottom: '10px', color: '#666' }}>

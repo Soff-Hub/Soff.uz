@@ -1,17 +1,16 @@
 import React, { useState } from 'react';
 
 const CreditCardInput = ({ onChange }) => {
-
     const [formattedCardNumber, setFormattedCardNumber] = useState('');
-
+    
     const handleCardNumberChange = (e) => {
-        const inputValue = e.target.value.replace(/\D/g, ''); // Raqam va probilni olib tashlash
+        const inputValue = e.target.value.replace(/\D/g, ''); 
         let formattedValue = '';
 
         if (inputValue.length <= 16) {
             for (let i = 0; i < inputValue.length; i++) {
                 if (i > 0 && i % 4 === 0) {
-                    formattedValue += ' '; // Raqamlarni probil bilan ajratish
+                    formattedValue += ' '; 
                 }
                 formattedValue += inputValue[i];
             }
@@ -20,6 +19,7 @@ const CreditCardInput = ({ onChange }) => {
         onChange(inputValue);
         setFormattedCardNumber(formattedValue);
     };
+
     return (
         <>
             <input
