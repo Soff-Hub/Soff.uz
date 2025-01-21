@@ -113,6 +113,7 @@ const CreditCard = () => {
 
     if (countdown <= 0) {
       setOpen(false);
+      setKod(null);
     }
 
     return () => {
@@ -198,6 +199,7 @@ const CreditCard = () => {
           </h5>
           <div className="kod-input">
             <Input
+              value={code}
               required
               className="form-control mb-2"
               type="number"
@@ -214,7 +216,6 @@ const CreditCard = () => {
 
       </Modal>
     </div>
-
   );
 };
 export default CreditCard;
