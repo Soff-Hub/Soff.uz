@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import AccountMenuSidebar from './modules/AccountMenuSidebar';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import GetRepository from '~/reositoriy-admin/GetRepository';
-import { Button, Form, Modal, Pagination, Table, Input, Select } from 'antd';
+import { Button, Form, Modal, Pagination, Table, Input, Select, Tooltip, InputNumber } from 'antd';
 import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import CalculateTimeDifference from './DateFormatter';
-import NextImageCard from '~/components/nextImagecard';
 import { DatePicker } from 'antd';
 import { formatCurrency } from '~/utilities/product-helper';
 import { addPeriodToThousands } from './ProductsLists';
 import SidebarLayout from '../SidebarLayout';
 import Link from 'next/link';
+import { setSavedPrfileData } from '~/rtk-store/ecomerce';
+import { CheckCircleTwoTone } from '@mui/icons-material';
 const { TextArea } = Input;
-const { Option } = Select;
 
 
 
@@ -26,12 +25,10 @@ function ApplicationLists() {
     const [loadingSeller, setloadingSeller] = useState(false);
     const [loadingOffer, setloadingOffer] = useState(false);
     const [loadingOfferSeller, setloadingOfferSeller] = useState(false);
-    const [dataCat, setDataCat] = useState(null);
     const [dataAdmin, setDataAdmin] = useState([]);
     const [dataAdmintaklif, setDataAdminTaklif] = useState([]);
     const [dataPrice, setDataPrice] = useState(null);
     const [dataCard, setDataCard] = useState(null);
-    const [dataCardModal, setDataCardModal] = useState(null);
     const [profileCard, setProfileCard] = useState([]);
     const [pageCount, setPageCount] = useState(0)
     const [pageCount1, setPageCount1] = useState(0)
@@ -41,15 +38,14 @@ function ApplicationLists() {
     const [textItemsId, setTextItemsId] = useState(null)
     const [sellerSearch, setSellerSearch] = useState('')
     const [loading, setLoading] = useState({ loadingButton: true })
-
+    const [loadingPayment, setLoadingPayment] = useState(false)
     const [allPrice, setAllPrice] = useState(null);
     const { RangePicker } = DatePicker;
     const [alertMess, setAlertMess] = useState("");
     const [dataBlock, setdataBlock] = useState(null);
-    const [open, setOpen] = useState(false);
     const [openApplication, setOpenAplication] = useState(false);
     const [form] = Form.useForm();
-    const [valuesImage, setValuesImage] = useState(null);
+    const dispatch = useDispatch();
 
     const [lifeTime, setLifetime] = useState('');
     const [lifeTime1, setLifetime2] = useState('');
@@ -68,15 +64,11 @@ function ApplicationLists() {
     const dataFormat = `${lifeTime}&end_date=${lifeTime1}`;
 
 
-
-
-
     async function ProfileUsersBLock() {
         const token = user?.access
         const ItemsData = await GetRepository.getProfileBlock(token);
         setdataBlock(ItemsData);
     }
-
 
     async function ProfileUsersTextItems(page, dataFormat) {
         setloadingOffer(true)
@@ -125,7 +117,6 @@ function ApplicationLists() {
 
     }
 
-
     async function getItemsSeller(page) {
         setloadingSeller(true)
         const Items = await GetRepository.getProfileAriza(page, user?.access, user?.role === "admin");
@@ -145,10 +136,9 @@ function ApplicationLists() {
         }
     }
 
-
     async function getItemsSellerAdmin(page) {
         setloadingData(true)
-        const Items = await GetRepository.getProfileArizaAdmin(page, dataCat, user?.access, user?.role === "admin", sellerSearch);
+        const Items = await GetRepository.getProfileArizaAdmin(page, null, user?.access, user?.role === "admin", sellerSearch);
         if (Items && user?.role === "admin") {
             setAllPrice(Items?.total_amount?.amount__sum)
             setloadingData(false)
@@ -170,27 +160,70 @@ function ApplicationLists() {
         setloadingOfferSeller(false)
     }
 
+
     async function getItemsSellerPost() {
+        if (dataPrice ? dataPrice > 3100 : profile?.wallet > 3100) {
+            return Modal.error({
+                centered: true,
+                title: 'Xatolik!',
+                content: `Hisobingizda mablag' yetarli emas`,
+            });
+        }
+
+        setLoadingPayment(true);
         const data = { credit_card: dataCard, amount: dataPrice ? dataPrice : profile?.wallet }
         const Items = await PostsRepository.PostsMyProductsAriza(data, user?.access);
         if (Items?.status === 200 || Items?.status === 201) {
             const modal = Modal.success({
                 centered: true,
-                title: 'Muvaffaqqiyatli!',
-                content: 'Arizangiz muvaffaqqiyatli qabul qilindi, admin tomonidan ko\'rib chiqilmoqda',
+                title: null,
+                icon: null,
+                content: (
+                    <div className='bg-white  rounded ' style={{ textAlign: 'center', maxWidth: "368px" }}>
+                        <i className="fa-solid fa-circle-check fa-4x mb-5 text-success"></i>
+                        <h3 style={{ marginBottom: '10px', color: '#333' }}>Toʻlov muvaffaqqiyatli! o'tkazildi!</h3>
+                        <p style={{ marginBottom: '10px', color: '#666' }}>
+                            {
+                                `**** **** **** ${String(dataCard).slice(-4)} karta raqamiga ${addPeriodToThousands(dataPrice ? dataPrice : profile?.wallet)} so'm 💴 miqdoridagi pul o'tkazildi!
+                        `
+                            }
+                        </p>
+                        <p style={{ marginBottom: '20px', color: '#666' }}>
+                            Kuningiz xayrli o'tsin🫡!
+                        </p>
+                        <Button
+                            className='bg-success '
+                            type="primary"
+                            style={{
+                                borderRadius: '8px',
+                                padding: '5px 20px',
+                            }}
+                            onClick={() => Modal.destroyAll()}
+                        >
+                            Yopish
+                        </Button>
+                    </div>
+                ),
+                footer: null,
             });
             modal.update
-            getItemsSeller(1, dataCat);
+            getItemsSeller(1, null);
+            if (user?.access) {
+                const ItemsDataProfile = await GetRepository.getProfile(user?.access);
+                dispatch(setSavedPrfileData(ItemsDataProfile))
+            }
         } else if (Items?.status >= 400) {
             const modal = Modal.error({
                 centered: true,
                 title: 'Xatolik!',
-                content: `${Items?.data?.msg ? Items?.data?.msg[0] : 'Ariza yuborishda narx va kartangizni belgilashingiz zarur!'}`,
+                content: `${Items?.data?.msg || Items?.data?.amount || 'Xatolik yuz berdi'}`,
             });
             modal.update
         }
+        setLoadingPayment(false);
 
     }
+
 
 
     async function getItemsTextItmes(e) {
@@ -208,111 +241,21 @@ function ApplicationLists() {
         e.target.reset()
 
     }
+
     const handlePagination = (pageNum) => {
         setCurrPage(pageNum)
-        getItemsSeller(pageNum, dataCat)
+        getItemsSeller(pageNum, null)
     }
-
-    async function postOrder(values) {
-        form.resetFields();
-        const formData = new FormData();
-        if (valuesImage) {
-            formData.append("receipt", valuesImage)
-        }
-        if (values?.description) {
-            formData.append("description", values?.description)
-        }
-        if (values?.status) {
-            formData.append("status", values?.status)
-        }
-
-        const ItemsData = await PatchRepository.getPatchProfileAriza(formData, dataCardModal?.id, user?.access);
-        if (ItemsData?.status == 200) {
-            const modal = Modal.success({
-                centered: true,
-                title: 'Muvaffaqiyatli!',
-                content: `${ItemsData?.data?.msg
-                    ? ItemsData?.data?.msg
-                    : "Siz  malumotlarni o'zgartirdingiz "
-                    }  `,
-            });
-            modal.update;
-            form.resetFields();
-            getItemsSellerAdmin(1, dataCat);
-
-        } else {
-            const modal = Modal.error({
-                centered: true,
-                title: 'Xato!',
-                content: ItemsData?.status + ' ' + ItemsData?.statusText,
-            });
-            modal.update;
-        }
-
-    }
-
 
     const columns = [
         {
-            title: 'Summa',
+            title: 'Tranzaksiya ID',
             dataIndex: 'amount',
             key: 'address',
-            render: (price) => (
-                <span><i className="fa-solid fa-coins text-warning"></i>  {addPeriodToThousands(price)} so'm</span>
+            render: (id) => (
+                <span># {id}</span>
             )
         },
-        {
-            title: 'Karta raqam',
-            dataIndex: 'credit_card',
-            key: 'address',
-        },
-        {
-            title: 'Tavsif',
-            dataIndex: 'description',
-            key: 'address',
-            width: 350,
-        },
-        {
-            title: 'Chek',
-            dataIndex: 'receipt',
-            key: 'address',
-            render: (image) => (
-                <div>
-                    {
-                        image ?
-                            <a href={image} download target='_blank'>
-                                <NextImageCard url={image} className=' rounded-3 mb-2' width='74px' height='46px' />
-                            </a>
-                            :
-                            <i className="fa-solid fa-file fa-2x"></i>
-                    }
-                </div>
-            ),
-        },
-        {
-            title: ' Yuborilgan sana',
-            dataIndex: 'created_at',
-            key: 'created_at',
-            render: (created_at) => <span key={created_at}> <i className="fa-solid fa-clock text-info-emphasis"></i> <CalculateTimeDifference targetDate={created_at} /></span>
-        },
-        {
-            title: 'Holat',
-            dataIndex: 'status',
-            key: 'address',
-            render: (status) => (
-                status === "moderation" ?
-                    (<span><i className="text-primary-emphasis fa-solid fa-circle-info"></i> Moderatsiya</span>) :
-                    status === 'approved' ?
-                        (<span><i className="fa-solid text-success fa-circle-check"></i> Tasdiqlangan</span>) :
-                        status === 'cancelled' ?
-                            (<span><i className="fa-solid fa-circle-xmark text-danger"></i> Bekor qilingan</span>) :
-                            <></>
-            ),
-        },
-    ];
-
-
-    const columnsAdmin = [
         {
             title: 'Summa',
             dataIndex: 'amount',
@@ -326,7 +269,60 @@ function ApplicationLists() {
             dataIndex: 'credit_card',
             key: 'address',
             render: (credit_card) => (
-                <span>{credit_card}</span>
+                <span><i className="fa-solid fa-credit-card text-success"></i>  **** **** ****  {String(credit_card)?.slice(-4)}</span>
+            )
+        },
+
+        {
+            title: 'Vaqt',
+            dataIndex: 'created_at',
+            key: 'created_at',
+            render: (created_at) => <span key={created_at}> <i className="fa-solid fa-clock text-info-emphasis"></i> <CalculateTimeDifference targetDate={created_at} /></span>
+        },
+        {
+            title: 'Holat',
+            dataIndex: 'status',
+            key: 'address',
+            render: (status, rowItems) => (
+                status === "moderation" ?
+                    (<span><i className="text-primary-emphasis fa-solid fa-circle-info"></i> Moderatsiya</span>) :
+                    status === 'approved' ?
+                        (<span><i className="fa-solid text-success fa-circle-check"></i> To'landi</span>) :
+                        status === 'cancelled' ?
+                            (
+                                <Tooltip title={rowItems?.description}>
+                                    <span style={{ cursor: "pointer" }}><i className="fa-solid fa-circle-xmark text-danger"></i> Bekor qilingan</span>
+                                </Tooltip>
+                            ) :
+                            <span><i className="fa-solid text-success fa-circle-check"></i> To'landi</span>
+            ),
+        },
+    ];
+
+
+    const columnsAdmin = [
+        {
+            title: 'Tranzaksiya ID',
+            dataIndex: 'amount',
+            key: 'address',
+            render: (id) => (
+                <span>#{id}</span>
+            )
+        },
+        {
+            title: 'Summa',
+            dataIndex: 'amount',
+            key: 'address',
+            render: (price) => (
+                <span><i className="fa-solid fa-coins text-warning"></i>  {addPeriodToThousands(price)} so'm</span>
+            )
+        },
+        {
+            title: 'Karta raqam',
+            dataIndex: 'credit_card',
+            key: 'address',
+            render: (credit_card) => (
+                <span><i className="fa-solid fa-credit-card text-success"></i> {String(credit_card).replace(/(\d{4})(?=\d)/g, "$1 ")}</span>
             )
         },
         {
@@ -346,30 +342,6 @@ function ApplicationLists() {
             ),
         },
         {
-            title: 'Tavsif',
-            dataIndex: 'description',
-            key: 'address',
-            width: 350,
-
-        },
-        {
-            title: 'Chek',
-            dataIndex: 'receipt',
-            key: 'address',
-            render: (image) => (
-                <div>
-                    {
-                        image ?
-                            <a href={image} download target='_blank'>
-                                <NextImageCard url={image} className='rounded-3 mb-2' width='74px' height='46px' />
-                            </a>
-                            :
-                            <i className="fa-solid fa-file fa-2x"></i>
-                    }
-                </div>
-            ),
-        },
-        {
             title: ' Ariza sana',
             dataIndex: 'created_at',
             key: 'created_at',
@@ -379,30 +351,17 @@ function ApplicationLists() {
             title: 'Holat',
             dataIndex: 'status',
             key: 'address',
-            render: (status) => (
+            render: (status, rowItems) => (
                 status === "moderation" ?
                     (<span><i className="text-primary-emphasis fa-solid fa-circle-info"></i> Moderatsiya</span>) :
                     status === 'approved' ?
-                        (<span><i className="fa-solid text-success fa-circle-check"></i> Tasdiqlangan</span>) :
+                        (<span><i className="fa-solid text-success fa-circle-check"></i> To'landi</span>) :
                         status === 'cancelled' ?
-                            (<span><i className="fa-solid fa-circle-xmark text-danger"></i> Bekor qilingan</span>) :
-                            <></>
+                            (<Tooltip title={rowItems?.description}>
+                                <span style={{ cursor: "pointer" }}><i className="fa-solid fa-circle-xmark text-danger"></i> Bekor qilingan</span>
+                            </Tooltip>) :
+                            <span><i className="fa-solid text-success fa-circle-check"></i> To'landi</span>
             ),
-        },
-        {
-            title: 'Harakatlar',
-            dataIndex: 'answer_data',
-            key: 'id',
-            render: (answer_data) => (
-                answer_data?.is_answer ?
-                    <a >
-                        <i className="fa-solid fa-pen-to-square mx-5  text-success-emphasis"
-                            onClick={() => (setDataCardModal(dataAdmin.find(item => item.id === answer_data?.id)), setOpen(true))}>
-                        </i></a>
-                    :
-                    <a style={{ cursor: "not-allowed", opacity: "0.6" }}><i className="fa-solid fa-pen-to-square mx-5  text-success-emphasis" ></i></a>
-
-            )
         },
     ];
 
@@ -458,7 +417,6 @@ function ApplicationLists() {
         },
     ];
 
-
     const columnsTextAreaseller = [
 
         {
@@ -486,26 +444,6 @@ function ApplicationLists() {
         },
     ];
 
-    const dataStatus = [
-        {
-            id: 1,
-            status: "moderation"
-        },
-        {
-            id: 2,
-            status: "approved"
-        },
-        {
-            id: 3,
-            status: "cancelled"
-        }
-    ]
-
-    const statusText = {
-        moderation: "Moderatsiya",
-        cancelled: "Bekor qilingan",
-        approved: "Tasdiqlangan"
-    }
 
     useEffect(() => {
         if (user?.access && user?.role === "seller") {
@@ -515,16 +453,11 @@ function ApplicationLists() {
 
 
     useEffect(() => {
-        getItemsSellerAdmin(currPage, dataCat, sellerSearch);
-    }, [dataCat, sellerSearch])
+        getItemsSellerAdmin(currPage, null, sellerSearch);
+    }, [sellerSearch])
 
     useEffect(() => {
         getItemsSeller(currPage);
-        if (user?.access && user?.role == "seller") {
-
-            getItemsSellerTaklif(currPage)
-            getItemsSellerCardList()
-        }
         if (user?.access && user?.role == "seller") {
 
             getItemsSellerTaklif(currPage)
@@ -538,23 +471,14 @@ function ApplicationLists() {
     }, [dataFormat])
 
     useEffect(() => {
-        if (open && dataCardModal) {
-            form.setFieldsValue({
-                status: dataCardModal?.status,
-                description: `Arizangiz muvaffaqiyatli tasdiqlandi! Kartangizga ${addPeriodToThousands(dataCardModal?.amount)} so'm miqdoridagi summa o'tkazildi`
-                ,
-            });
-        }
-    }, [open, dataCardModal, form]);
-
-
-    useEffect(() => {
         if (openApplication && textItemsId) {
             form.setFieldsValue({
                 description: textItemsId?.description,
             });
         }
-    }, [open, textItemsId, form]);
+    }, [textItemsId, form]);
+
+
 
     return (
         <section className="ps-my-account ps-page--account pb-5">
@@ -562,9 +486,12 @@ function ApplicationLists() {
                 <div className="row" style={{ alignItems: "flex-start" }}>
                     <SidebarLayout accountLinks={accountLinks}>
                         <div className="ps-page__content ">
+
+                            {/* To'lov tarixilari */}
                             <div className="ps-section--account-setting ">
 
-                                {user?.role === 'seller' ? <div className="ps-section__content ">
+                                {/* Seller To'lov tarixi  */}
+                                {user?.role === 'seller' && <div className="ps-section__content ">
                                     <div className='border py-4 rounded '>
                                         {dataBlock?.has_blocked ? <div className=' px-4'>
                                             <span className='text-danger fw-bold '>
@@ -572,54 +499,64 @@ function ApplicationLists() {
                                         </div> :
                                             <form className='row row-gap-3 px-4 gap-4 mx-auto'>
                                                 <label className='h4 p-0 ' style={{ color: "orange" }} >
-                                                    Balansdagi pulingizni yechib olishingiz uchun ariza yuboring. Sizga 10 soat ichida arizangizda ko’rsatilgan summa bo’yicha pul o’tkaziladi va bu bo’yicha xabar yuboriladi. <br />
-                                                    <strong>!Eslatma: Xisobingizda kamida {alertMess ? formatCurrency(alertMess) : '10 000'} so’m bo’lishi kerak.</strong>
+                                                    <strong>Hisobingizda kamida {alertMess ? formatCurrency(alertMess) : '10 000'} so’m bo’lishi kerak.</strong>
                                                 </label>
-                                                <input required id='count' type="number" defaultValue={profile?.wallet} placeholder='Narx' className='form-control rounded-3 col-md-4' onChange={(e) => (setDataPrice(e.target.value))} />
-                                                <select className='form-select rounded-3 col-md-5 fs-3  ' style={{ height: "50px" }} onChange={(e) => setDataCard(e.target.value)} >
+                                                <input required id='count' type="number" defaultValue={profile?.wallet} style={{ height: "41.6px" }} placeholder='Summa' className='form-control rounded-3 col-md-4' onChange={(e) => (setDataPrice(e.target.value))} />
+
+                                                <select className='form-select rounded-3 col-md-5 fs-3 ' style={{ height: "41.6px", cursor: "pointer" }} onChange={(e) => setDataCard(e.target.value)} >
                                                     <option className='fs-3' value='' selected disabled >Kartalaringiz</option>
 
                                                     {
                                                         profileCard?.length > 0 && (
                                                             profileCard?.map(item => (
-                                                                <option key={item.id} value={item.credit_card}>{item.credit_card} </option>
+                                                                <option key={item.id} value={item.credit_card}>{String(item?.credit_card).replace(/(\d{4})(?=\d)/g, "$1 ")} </option>
                                                             ))
                                                         )
                                                     }
 
                                                 </select>
+
                                                 {
-                                                    profile?.is_application === true && profile?.is_payment === true ?
-                                                        <Button onClick={getItemsSellerPost} className='bg-success text-light col-md-2' style={{
-                                                            height: "50px",
-                                                        }}><span className='fs-4'>Yuborish</span></Button>
+                                                    dataCard ?
+                                                        <Button onClick={getItemsSellerPost} disabled={loadingPayment} className='bg-success text-light col-md-2' style={{
+                                                            height: "41.6px",
+                                                        }}>
+                                                            {
+                                                                loadingPayment && <div
+                                                                    className="spinner-border fs-5"
+                                                                    role="status"
+                                                                    style={{ width: '15px', height: '15px' }}
+                                                                >
+                                                                    <span className="visually-hidden">
+                                                                        Loading...
+                                                                    </span>
+                                                                </div>
+                                                            }
+                                                            <span className='fs-4'>Yechib olish</span></Button>
                                                         :
-                                                        <Button onClick={getItemsSellerPost} disabled className='bg-success text-light col-md-2' style={{
-                                                            height: "50px",
+                                                        <Button disabled className='bg-success text-light col-md-2' style={{
+                                                            height: "41.6px",
                                                         }}>
 
-                                                            <span className='fs-4'>Yuborish</span>
+                                                            <span className='fs-4'>Yechib olish</span>
                                                         </Button>
                                                 }
 
                                             </form>}
 
-                                        <h4 className='py-4 px-4'>Yuborilgan Arizalar</h4>
-                                        <Table scroll={{ x: 1250 }} dataSource={data} columns={columns} pagination={false} loading={loadingSeller} />
+                                        <h5 className='pt-4 px-4 fs-3'><i className="fa-solid fa-clock-rotate-left"></i>  To'lovlar tarixi</h5>
+                                        <Table scroll={{ x: 800 }} dataSource={data} columns={columns} pagination={false} loading={loadingSeller} />
                                         <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount}
                                             onChange={handlePagination} />
                                     </div>
-                                </div> : ''}
+                                </div>}
 
-                                {user?.role === "admin" && user?.is_superuser ? <div className="ps-section__content ">
+                                {/* Admin To'lov tarixi  */}
+
+                                {user?.role === "admin" && user?.is_superuser && <div className="ps-section__content ">
                                     <div className='row g-3 mx-auto'>
-                                        <h4 className='py-3 col-md-6'>{user?.role === "seller" ? "Arizalar" : `Arizalar Bo'limi - ${addPeriodToThousands(allPrice)} so'm `}</h4>
-                                        <select className='form-select col-md-5  fs-3 py-3 rounded-3' onChange={(e) => setDataCat(e.target.value)}  >
-                                            <option className='fs-3' selected value="">Holatlar</option>
-                                            <option className='fs-3' value="moderation">Moderatsiya</option>
-                                            <option className='fs-3' value="approved">Tasdiqlangan</option>
-                                            <option className='fs-3' value="cancelled">Bekor qilingan</option>
-                                        </select>
+                                        <h4 className='py-3 col-md-6'>{`Arizalar Bo'limi - ${addPeriodToThousands(allPrice)} so'm `}</h4>
+
                                         <label
                                             className={`form-label border col-md-12 p-0 d-flex justify-content-between align-items-center`}
                                             style={{
@@ -641,17 +578,20 @@ function ApplicationLists() {
                                             </span>
                                         </label>
                                     </div>
-                                    <Table scroll={{ x: 1800 }} dataSource={dataAdmin} columns={columnsAdmin}
+                                    <Table scroll={{ x: 1200 }} dataSource={dataAdmin} columns={columnsAdmin}
                                         loading={loadingData}
                                         pagination={false} />
                                     <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount}
                                         onChange={getItemsSellerAdmin} />
-                                </div> : ''}
+                                </div>}
                             </div>
                         </div>
 
-                        {
-                            user?.role === "admin" ?
+                        {/* Takliflar bo'limi */}
+                        <>
+                            {/* Admin takliflar (kelib tushgan) */}
+                            {
+                                user?.role === "admin" &&
                                 <div className=''>
                                     <div className='mb-5 bg-white mx-auto p-4 container'>
                                         <h4 className='text-center mb-4'>Kelib tushgan takliflar   </h4>
@@ -663,11 +603,11 @@ function ApplicationLists() {
                                             onChange={ProfileUsersTextItems} />
                                     </div>
                                 </div>
-                                : <></>
-                        }
+                            }
+                            {/* Seller takliflar (yuborgan) */}
 
-                        {
-                            user?.role === "seller" ?
+                            {
+                                user?.role === "seller" &&
                                 <div className='p-0'>
                                     <form className='border mt-5 rounded bg-white p-4' onSubmit={getItemsTextItmes} >
                                         <h4>Taklif berish <i className="fa-solid fa-file-signature"></i></h4>
@@ -695,146 +635,14 @@ function ApplicationLists() {
                                             onChange={getItemsSellerTaklif} />
                                     </div>
                                 </div>
-                                : <></>
-                        }
+                            }
+
+                        </>
 
                     </SidebarLayout>
                 </div>
 
-                <Modal
-                    title="Arizani tasdiqlash"
-                    width={550}
-                    centered
-                    open={open}
-                    onOk={() => setOpen(false)}
-                    okText="Yopish"
-                    footer={null}
-                    cancelButtonProps={{
-                        style: {
-                            display: 'none',
-                        },
-                    }}
-                    okButtonProps={{
-                        style: {
-                            display: 'none',
-                        },
-                    }}
-
-                    onCancel={() => setOpen(false)}>
-
-                    <h5 className='mb-0 text-success'>{dataCardModal?.seller_info?.name}</h5>
-                    <h5 className='mb-0 text-success'>{addPeriodToThousands(dataCardModal?.amount)} so'm </h5>
-
-                    <Form
-                        form={form}
-                        onFinish={postOrder}
-                        className="row  pt-4 "
-                        layout='vertical'
-                        initialValues={{
-                            status: dataCardModal?.status,
-                            description: dataCardModal?.description,
-
-
-                        }}
-                    >
-
-                        <Form.Item
-                            label="Chek rasmi"
-                            name={"receipt"}
-                            className='col-md-12 mb-3 '>
-
-                            <label
-                                style={{
-                                    display: 'inline-block',
-                                    width: '100%',
-                                    height: '45px',
-                                    border: '1px solid #ccc',
-                                    padding: '10px 15px',
-                                    boxSizing: 'border-box',
-                                    textAlign: 'center',
-                                    cursor: 'pointer',
-                                    backgroundColor: '#fff',
-                                    borderRadius: "5px"
-                                }}
-                            >
-
-                                {
-                                    (dataCardModal?.receipt || valuesImage) ?
-                                        <span>Chek rasmi yuklangan <i className="fa-solid fa-circle-check text-success"></i></span>
-                                        :
-                                        <span><i className="fa-solid fa-cloud-arrow-up text-primary mx-2 fs-3"></i> Chek rasmini yuklash uchun rasm tanlang</span>
-                                }
-                                <Input
-                                    accept='image/*'
-                                    onChange={(e) => setValuesImage(e.target.files[0])}
-                                    type='file'
-                                    style={{
-                                        position: 'absolute',
-                                        width: '1px',
-                                        height: '1px',
-                                        overflow: 'hidden',
-                                        clip: 'rect(0, 0, 0, 0)',
-                                        border: '0'
-                                    }}
-                                />
-                            </label>
-
-                        </Form.Item>
-
-                        <Form.Item label="Holat" name={"status"} className='col-md-12 mb-3'>
-
-
-                            <Select style={{ height: "45px" }} >
-                                {
-                                    dataStatus?.map((item) => (
-                                        <Option key={item?.id} value={item.status}>{statusText[item?.status]}</Option>
-                                    ))
-
-                                }
-
-                            </Select>
-
-
-                        </Form.Item>
-
-                        <Form.Item
-                            label="Tavsif"
-                            name="description"
-                            className='col-md-12 mb-3'>
-                            <TextArea
-                                rows={4}
-                                placeholder="Tavsif"
-
-                            />
-                        </Form.Item>
-
-                        <Form.Item className="col-md-12 d-flex justify-content-end m-0  mt-3">
-                            <Button
-                                onClick={() => setOpen(false)}
-                                htmlType="submit"
-                                style={{
-                                    width: '100%',
-                                    height: '37px',
-                                    padding: "1px 30px"
-                                }}
-                                className="btn-success btn-send-email">
-                                <span
-                                    style={{
-                                        color: '#fff',
-                                        fontSize:
-                                            '16px',
-                                    }}>
-                                    Tasdiqlash
-                                </span>
-                            </Button>
-                        </Form.Item>
-
-                    </Form>
-
-
-                </Modal>
-
-
+                {/* Kelib tushgan takliflarga javob berish modalkasi */}
                 <Modal
                     title="Kelib tushgan taklifga javob"
                     width={550}
