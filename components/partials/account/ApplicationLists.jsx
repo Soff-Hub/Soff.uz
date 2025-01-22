@@ -182,7 +182,7 @@ function ApplicationLists() {
                 centered: true,
                 maskClosable: true,
                 title: 'Xatolik!',
-                content: `${Items?.data?.msg || Items?.data?.amount || `Status: ${Items?.status} Xatolik yuz berdi`}`,
+                content: `Hisobingizda mablag' yetarli emas. Minimal o'tkazma miqdori ${addPeriodToThousands(alertMess)} so'm bo'lishi kerak. Iltimos, balansingizni tekshirib, qayta urinib ko'ring.`,
             });
         }
 
@@ -234,7 +234,7 @@ function ApplicationLists() {
                 centered: true,
                 title: 'Xatolik!',
                 maskClosable: true,
-                content: `${Items?.data?.msg || Items?.data?.amount || 'Xatolik yuz berdi'}`,
+                content: `${Items?.data?.msg || Items?.data?.amount || `Status: ${Items?.status} Xatolik yuz berdi`}`,
             });
             modal.update
         }
