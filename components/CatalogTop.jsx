@@ -4,6 +4,7 @@ import ProductRepository from '~/repositories/ProductRepository';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import NextImageCard from './nextImagecard';
+import { Skeleton } from 'antd'
 
 const CatalogTop = () => {
     const [data, setData] = useState(null);
@@ -26,7 +27,7 @@ const CatalogTop = () => {
                     <div
                         className="ps-block--categories-grid row"
                         data-mh="catalog-top">
-                        {data?.length > 0 &&
+                        {data?.length > 0 ?
                             data?.map((category, index) => {
                                 return (
                                     <div
@@ -115,7 +116,17 @@ const CatalogTop = () => {
                                         </div>
                                     </div>
                                 );
-                            })}
+                            }) : (
+                                <div className={`product-list p-loading`}>
+                                    {
+                                        Array(15).fill(0).map((d, i) => <Skeleton.Image
+                                            key={i}
+                                            active
+                                            className={`skeletion-card`}
+                                        />)
+                                    }
+                                </div>
+                            )}
                     </div>
                 </div>
             </div>
