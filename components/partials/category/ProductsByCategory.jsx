@@ -22,7 +22,7 @@ export default function ProductsByCategory({ data = [], page, handlePagination, 
                         Array(15).fill(0).map((d, i) => <Skeleton.Image
                             key={i}
                             active
-                            className={`skeletion-card`}
+                            className={`skeletion-card file`}
                         />)
                     }
                     </div>
