@@ -6,7 +6,7 @@ import { Skeleton } from 'antd'
 export default function ProductsByCategory({ data = [], page, handlePagination, loading }) {
 
     return (
-        <div className="container" id='products'>
+        <div id='products'>
             <div className="row">
                 {data?.results?.length > 0 && !loading ?
                     (data?.results?.map((item, index) => (
