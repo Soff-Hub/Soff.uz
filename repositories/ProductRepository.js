@@ -376,8 +376,8 @@ class ProductRepository {
             });
         return reponse;
     }
-    async getCustomerProducts(type, category, page, page_size = 48, slug) {
-        const endPoint = `customer/products/?type=${type}&category=${category}&page=${page}&page_size=${page_size}&slug=${slug}`;
+    async getCustomerProducts(type, page, page_size = 48, slug) {
+        const endPoint = `customer/products/?type=${type}&category=${slug}&page=${page}&page_size=${page_size}`;
         const reponse = await Repository.get(baseUrl + endPoint)
             .then((response) => {
                 if (response.data) {
