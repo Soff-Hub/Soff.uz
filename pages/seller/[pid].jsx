@@ -17,6 +17,7 @@ import { useMediaQuery } from 'react-responsive';
 const SellerPage = ({ seller, sellerr }) => {
     const isBigScreen = useMediaQuery({ query: '(max-width: 430px)' });
     const [data, setData] = useState(seller);
+    console.log("seller -> ", seller)
     const [page, setPage] = useState(1);
     const router = useRouter();
     const { pid } = router.query;

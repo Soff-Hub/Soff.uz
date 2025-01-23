@@ -4,6 +4,8 @@ import FooterDefault from '~/components/shared/footers/FooterDefault';
 import Meta from '~/components/shared/headers/Meta';
 import BreadCrumb from '~/components/elements/BreadCrumb';
 import SellerProducts from '~/components/partials/seller/SellerProducts';
+import ProductRepository from '~/repositories/ProductRepository';
+import ProductsByCategory from '~/components/partials/category/ProductsByCategory';
 
 
 const navCategoryMenu = [
@@ -170,6 +172,18 @@ export default function ProductCategoryScreen ({ category2 }) {
         },
     ];
 
+    const [data, setData] = useState([])
+    const [page, setPage] = useState(1)
+
+    async function getProductsByCategoryName() {
+        const responseData = await ProductRepository.getCustomerProducts('file', '', page);
+        responseData && setData(responseData)
+    }
+
+    useEffect(() => {
+        getProductsByCategoryName()
+    }, [page]);
+
 
     return (
         <PageContainer
@@ -180,8 +194,8 @@ export default function ProductCategoryScreen ({ category2 }) {
                 title={`${'asdf'}`}
                 description={`Biz siz qidirayotgan mahsulotlarni Soff.uz saytimizning kategoriyasida topdik`}
             />
-            <div className='ps-page--shop p-3'>
-                <div className='nav-menu-cards d-flex align-items-center flex-wrap gap-3'>
+            <div className='ps-page--shop container'>
+                <div className='nav-menu-cards d-flex align-items-center flex-wrap gap-3 mt-3'>
                     {navCategoryMenu.map(e => {
                         return (
                             <div className='d-flex align-items-center gap-3 border  border-secondary-subtle rounded-2 pr-2'>
@@ -198,8 +212,8 @@ export default function ProductCategoryScreen ({ category2 }) {
                     })}
                 </div>
 
-                <div className='bg--white p-5 mt-5  border  border-secondary-subtle rounded-2'>
-                    <h3>Animals 3d models</h3>
+                <div className='bg--white p-4 my-2  border  border-secondary-subtle rounded-2'>
+                    <h4>Animals 3d models</h4>
                     <p>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit.
                         Quasi nemo, ipsa harum amet, aliquid culpa alias optio
@@ -214,37 +228,7 @@ export default function ProductCategoryScreen ({ category2 }) {
 
                 </div>
             </div>
-
-                    <SellerProducts
-                        // data={data}
-                        // page={page}
-                        // handlePagination={handlePagination}
-                    />
-                   {/* <SellerProducts
-                        data={data}
-                        page={page}
-                        handlePagination={handlePagination}
-                    /> */}
-                
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            <ProductsByCategory data={data} page={page} handlePagination={(number) => {setPage(number)}}/>  
         </PageContainer>
     );
 }
