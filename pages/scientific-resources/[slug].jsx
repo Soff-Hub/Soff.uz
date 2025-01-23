@@ -6,161 +6,11 @@ import BreadCrumb from '~/components/elements/BreadCrumb';
 import SellerProducts from '~/components/partials/seller/SellerProducts';
 import ProductRepository from '~/repositories/ProductRepository';
 import ProductsByCategory from '~/components/partials/category/ProductsByCategory';
-
-
-const navCategoryMenu = [
-    {
-        img: 'https://picsum.photos/100/75',
-        title: '3d Models',
-    },
-    {
-        img: 'https://picsum.photos/100/75',
-        title: '3d Models',
-    },
-    {
-        img: 'https://picsum.photos/100/75',
-        title: '3d Models',
-    },
-    {
-        img: 'https://picsum.photos/100/75',
-        title: '3d Models',
-    },
-    {
-        img: 'https://picsum.photos/100/75',
-        title: '3d Models',
-    },
-    {
-        img: 'https://picsum.photos/100/75',
-        title: '3d Models',
-    },
-    {
-        img: 'https://picsum.photos/100/75',
-        title: '3d Models',
-    },
-    {
-        img: 'https://picsum.photos/100/75',
-        title: '3d Models',
-    },
-    {
-        img: 'https://picsum.photos/100/75',
-        title: '3d Models',
-    },
-    {
-        img: 'https://picsum.photos/100/75',
-        title: '3d Models',
-    },
-    {
-        img: 'https://picsum.photos/100/75',
-        title: '3d Models',
-    },
-    {
-        img: 'https://picsum.photos/100/75',
-        title: '3d Models',
-    },
-    {
-        img: 'https://picsum.photos/100/75',
-        title: '3d Models',
-    },
-    {
-        img: 'https://picsum.photos/100/75',
-        title: '3d Models',
-    },
-    {
-        img: 'https://picsum.photos/100/75',
-        title: '3d Models',
-    },
-    {
-        img: 'https://picsum.photos/100/75',
-        title: '3d Models',
-    },
-    {
-        img: 'https://picsum.photos/100/75',
-        title: '3d Models',
-    },
-    {
-        img: 'https://picsum.photos/100/75',
-        title: '3d Models',
-    },
-    {
-        img: 'https://picsum.photos/100/75',
-        title: '3d Models',
-    },
-    {
-        img: 'https://picsum.photos/100/75',
-        title: '3d Models',
-    },
-    {
-        img: 'https://picsum.photos/100/75',
-        title: '3d Models',
-    },
-    {
-        img: 'https://picsum.photos/100/75',
-        title: '3d Models',
-    },
-    {
-        img: 'https://picsum.photos/100/75',
-        title: '3d Models',
-    },
-    {
-        img: 'https://picsum.photos/100/75',
-        title: '3d Models',
-    },
-    {
-        img: 'https://picsum.photos/100/75',
-        title: '3d Models',
-    },
-    {
-        img: 'https://picsum.photos/100/75',
-        title: '3d Models',
-    },
-    {
-        img: 'https://picsum.photos/100/75',
-        title: '3d Models',
-    },
-    {
-        img: 'https://picsum.photos/100/75',
-        title: '3d Models',
-    },
-    {
-        img: 'https://picsum.photos/100/75',
-        title: '3d Models',
-    },
-    {
-        img: 'https://picsum.photos/100/75',
-        title: '3d Models',
-    },
-    {
-        img: 'https://picsum.photos/100/75',
-        title: '3d Models',
-    },
-    {
-        img: 'https://picsum.photos/100/75',
-        title: '3d Models',
-    },
-    {
-        img: 'https://picsum.photos/100/75',
-        title: '3d Models',
-    },
-    {
-        img: 'https://picsum.photos/100/75',
-        title: '3d Models',
-    },
-    {
-        img: 'https://picsum.photos/100/75',
-        title: '3d Models',
-    },
-    {
-        img: 'https://picsum.photos/100/75',
-        title: '3d Models',
-    },
-];
-
-
-
+import Link from 'next/link';
+import { router } from 'websocket';
+import { useRouter } from 'next/router';
 
 export default function ProductCategoryScreen ({ category2 }) {
-   
-   
     const breadCrumb = [
         {
             text: 'Asosiy sahifa',
@@ -172,18 +22,36 @@ export default function ProductCategoryScreen ({ category2 }) {
         },
     ];
 
-    const [data, setData] = useState([])
-    const [page, setPage] = useState(1)
+    const [data, setData] = useState([]);
+    const [categoryData, setCategoryData] = useState([]);
+    const [page, setPage] = useState(1);
+    const router = useRouter();
+    const {slug} = router.query
 
-    async function getProductsByCategoryName() {
-        const responseData = await ProductRepository.getCustomerProducts('file', '', page);
-        responseData && setData(responseData)
+    console.log(slug);
+    
+
+    async function getProductsByCategoryName () {
+        const responseData = await ProductRepository.getCustomerProducts(
+            'file',
+            '',
+            page
+        );
+        responseData && setData(responseData);
     }
 
-    useEffect(() => {
-        getProductsByCategoryName()
-    }, [page]);
+    const getCategories = async () => {
+        const res = await ProductRepository.getMoreTopCategorys();
+        res && setCategoryData(res.results);
+    };
 
+    useEffect(() => {
+        getProductsByCategoryName();
+    }, [page, slug]);
+
+    useEffect(() => {
+        getCategories();
+    }, []);
 
     return (
         <PageContainer
@@ -195,19 +63,22 @@ export default function ProductCategoryScreen ({ category2 }) {
                 description={`Biz siz qidirayotgan mahsulotlarni Soff.uz saytimizning kategoriyasida topdik`}
             />
             <div className='ps-page--shop container'>
-                <div className='nav-menu-cards d-flex align-items-center flex-wrap gap-3 mt-3'>
-                    {navCategoryMenu.map(e => {
+                <div className='nav-menu-cards d-flex align-items-center justify-content-center flex-wrap gap-3 mt-3'>
+                    {categoryData.map(e => {
                         return (
-                            <div className='d-flex align-items-center gap-3 border  border-secondary-subtle rounded-2 pr-2'>
-                                <img
-                                    className=' rounded-2'
-                                    src={e.img}
-                                    alt=''
-                                    width={58}
-                                    height={38}
-                                />
-                                <span className=''>{e.title}</span>
-                            </div>
+                            <Link
+                                href='/scientific-resources/[slug]'
+                                as={`/scientific-resources/${e.slug}`}>
+                                <a className='categoryMenuCard bg--white d-flex align-items-center gap-3 border  border-secondary-subtle rounded-2 p-2'>
+                                    <img
+                                        className=' rounded-2'
+                                        src={e.image}
+                                        alt={e.name}
+                                        height={25}
+                                    />
+                                    <span className=''>{e.name}</span>
+                                </a>
+                            </Link>
                         );
                     })}
                 </div>
@@ -225,10 +96,15 @@ export default function ProductCategoryScreen ({ category2 }) {
                     </p>
 
                     <BreadCrumb breacrumb={breadCrumb} />
-
                 </div>
             </div>
-            <ProductsByCategory data={data} page={page} handlePagination={(number) => {setPage(number)}}/>  
+            <ProductsByCategory
+                data={data}
+                page={page}
+                handlePagination={number => {
+                    setPage(number);
+                }}
+            />
         </PageContainer>
     );
 }
