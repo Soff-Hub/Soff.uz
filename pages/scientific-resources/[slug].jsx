@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import BreadCrumbCategories from '~/components/elements/BreadCrumbCategories';
 import { Skeleton } from 'antd';
+import HeaderTitle from './headerTitle';
 
 export default function ProductCategoryScreen() {
     const [data, setData] = useState([]);
@@ -62,6 +63,8 @@ export default function ProductCategoryScreen() {
                 title={`${'asdf'}`}
                 description={`Biz siz qidirayotgan mahsulotlarni Soff.uz saytimizning kategoriyasida topdik`}
             />
+
+            <HeaderTitle/>
             <div ref={breadCrumbRef} className='ps-page--shop container'>
                 <div className='nav-menu-cards d-flex align-items-center justify-content-center flex-wrap gap-3 mt-3'>
                     {categoryData.length > 0 ? (
