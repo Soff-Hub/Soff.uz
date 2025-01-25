@@ -40,16 +40,6 @@ export default function FaqSaidbar() {
                 </Link>
             </li>
             <li>
-                <Link href="/page/questions" as="/page/questions">
-                    <a
-                        className={`${
-                            query === '/page/questions' ? 'active-faq' : ''
-                        }`}>
-                        Savol-javoblar
-                    </a>
-                </Link>
-            </li>
-            <li>
                 <Link href="/page/form" as="/page/form">
                     <a
                         className={`${
