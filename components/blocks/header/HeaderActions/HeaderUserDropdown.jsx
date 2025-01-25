@@ -69,8 +69,6 @@ const HeaderUserDropdown = (props) => {
         }
     }, [user?.access, profile]);
 
-    console.log("profile - >" ,profile)
-
     // View
     const linksView = accountLinks.map((item, index) => (
         <>
