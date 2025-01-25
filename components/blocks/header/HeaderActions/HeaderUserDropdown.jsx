@@ -69,8 +69,6 @@ const HeaderUserDropdown = (props) => {
         }
     }, [user?.access, profile]);
 
-
-
     // View
     const linksView = accountLinks.map((item, index) => (
         <>
@@ -148,14 +146,14 @@ const HeaderUserDropdown = (props) => {
 
     if (isLoggedIn === true) {
         return (
-            <div className="ps-block--user-account">
+            <div className="ps-block--user-account ">
                 <Link
                     href={
                         user?.role === 'admin' || user?.role === 'seller'
                             ? '/account/dashbord'
                             : '/account/sellerproducts'
                     }>
-                    <a>
+                    <a className='fs-3 d-flex align-items-center'> 
                         {profile?.image ? (
                             <img
                                 alt="soff"
@@ -163,8 +161,9 @@ const HeaderUserDropdown = (props) => {
                                 className="profile__image-client"
                             />
                         ) : (
-                            <i className={`icon-user ${color}`}></i>
+                            <i className={`fa-regular fa-user fs-2 me-1 ${color}`}></i>
                         )}
+                        {profile?.email.slice(0, profile?.email.indexOf("@"))}
                     </a>
                 </Link>
                 <div className="ps-block__content">

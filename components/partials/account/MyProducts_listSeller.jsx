@@ -1,6 +1,7 @@
 import React from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
-import { DatePicker, Modal, Pagination, Select, Table, Tabs } from 'antd';
+import { DownloadOutlined } from '@ant-design/icons';
+import { Button, DatePicker, Modal, Pagination, Select, Table, Tabs } from 'antd';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
@@ -26,6 +27,7 @@ function MyProductsListsSeller() {
     const [loadingPlay, setLoadingPlay] = useState(false);
     const { RangePicker } = DatePicker;
     const { accountLinks, user } = useSelector((state) => state.auth);
+    
     const Option = Select.Option;
     const searchDebounce = useDebounce(search, 1000);
     const [pageCountPlay, setPageCountPlay] = useState(0);
@@ -194,17 +196,21 @@ function MyProductsListsSeller() {
                     <>
                         {
                             content_type_id?.id !== loading2 ?
-                                <a href={item?.file}>
-                                    <i
-                                        className="fa-solid fa-file-arrow-down text-success-emphasis mx-3 fs-3"
-                                        // onClick={() => handleButtonClick(content_type_id?.id)}
+                                    <Button
+                                        type="primary"
+                                        size="large"
+                                        shape="round"
+                                        icon={<DownloadOutlined />}
+                                        href={item?.file}
+                                        download
+                                        className="bg-blue-500 hover:bg-blue-600 text-white font-semibold shadow-lg"
                                     >
-                                    </i>
-                                </a>
+                                        Yuklab olish
+                                    </Button>
                                 :
                                 <div className="spinner-border" role="status">
                                     <span className="visually-hidden">
-                                        Loading...
+                                        Yuklanmoqda...
                                     </span>
                                 </div>
                         }
@@ -444,10 +450,10 @@ function MyProductsListsSeller() {
 
 
     return (
-        <section className="ps-my-account ps-page--account ">
+        <section className="ps-my-account ps-page--account my-5">
             <div className="container">
                 <div className="row " style={{ alignItems: 'flex-start' }}>
-                    <SidebarLayout accountLinks={accountLinks}>
+                    {/* <SidebarLayout accountLinks={accountLinks}> */}
                         <div className="ps-page__content">
                             {isSeller &&
                                 <div className={`mb-2  p-4 d-flex flex-column justify-content-between mobileImage`}
@@ -491,7 +497,8 @@ function MyProductsListsSeller() {
                                 </div>}
                             <div className="ps-section--account-setting">
                                 <div className="ps-section__content">
-                                    <div className="row mx-auto gap-4  pt-5">
+                                    <h4> <i className='fa-solid fa-bag-shopping'></i> Xarid Qilingan Materiallar:</h4>
+                                    <div className="row mx-auto gap-4">
                                         <label
                                             className="form-label border col-md-9 m-0 p-0 d-flex justify-content-between align-items-center"
                                             style={{
@@ -513,7 +520,7 @@ function MyProductsListsSeller() {
 
                                         <button className='btn btn-outline-success fs-4 col-md-2 py-3'
                                             onClick={() => (setOpenFilter(true))}>
-                                            <i className="fa-solid fa-sliders"></i> Filter
+                                            <i className="fa-solid fa-sliders"></i> Filtr
                                         </button>
 
                                     </div>
@@ -527,7 +534,7 @@ function MyProductsListsSeller() {
                                 </div>
                             </div>
                         </div>
-                    </SidebarLayout>
+                    {/* </SidebarLayout> */}
                 </div>
 
                 <Modal

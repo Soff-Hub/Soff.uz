@@ -133,11 +133,11 @@ export let cutomerAccountLink = [
     //     url: 'b',
     //     icon: 'fa-regular fa-handshake',
     // },
-    {
-        text: 'Profil',
-        url: '/account/settings',
-        icon: 'fa-solid fa-gear',
-    },
+    // {
+    //     text: 'Profil',
+    //     url: '/account/settings',
+    //     icon: 'fa-solid fa-gear',
+    // },
 ];
 
 const PageLayout = ({
