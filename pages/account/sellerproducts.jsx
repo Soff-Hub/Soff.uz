@@ -7,25 +7,15 @@ import FooterDefault from '~/components/shared/footers/FooterDefault';
 import Meta from '~/components/shared/headers/Meta';
 
 const SellerProducts = () => {
-    const breadCrumb = [
-        {
-            text: 'Asosiy sahifa',
-            url: '/',
-        },
-        {
-            text: 'Sotib olinganlar',
-        },
-    ];
 
     return (
         <PageContainer
             footer={<FooterDefault />}
             title="Recent Viewed Products">
-            <div className="ps-page--my-account ">
+            <div className="ps-page--my-account">
                 <Meta
                     title={"Sotib olinganlar"}
                 />
-                <BreadCrumb breacrumb={breadCrumb} />
                 <MyProducts_listSeller />
             </div>
         </PageContainer> 
