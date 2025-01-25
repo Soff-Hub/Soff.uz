@@ -27,7 +27,6 @@ function MyProductsListsSeller() {
     const [loadingPlay, setLoadingPlay] = useState(false);
     const { RangePicker } = DatePicker;
     const { accountLinks, user } = useSelector((state) => state.auth);
-    console.log("accountLinks => ", accountLinks);
     
     const Option = Select.Option;
     const searchDebounce = useDebounce(search, 1000);
