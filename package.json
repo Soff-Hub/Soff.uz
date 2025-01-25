@@ -40,7 +40,7 @@
         "swiper": "^11.0.5",
         "uuid": "^9.0.1",
         "video-react": "^0.16.0",
-        "wavesurfer.js": "^7.7.11",
+        "wavesurfer.js": "^7.7.11"
     },
     "devDependencies": {
         "@ckeditor/ckeditor5-build-classic": "^40.0.0",
