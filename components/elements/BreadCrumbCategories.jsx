@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { formatCurrencyWithSpace } from '~/utilities/product-helper';
 import { Skeleton } from 'antd';
 
 const BreadCrumbCategories = ({ breacrumb, count, loading }) => {
-    console.log('log=>', breacrumb);
+    const [expanded, setExpanded] = useState(false);
+
     const router = useRouter();
     const { slug } = router.query;
     const subCategoryItem =
@@ -13,14 +14,16 @@ const BreadCrumbCategories = ({ breacrumb, count, loading }) => {
             return item.slug == slug;
         }) || null;
 
+    const subCategory = expanded ? subCategoryItem?.child : subCategoryItem?.child.slice(0, 20) || null;
+
     return (
         <div className='bg--white p-4 my-2  border  border-secondary-subtle rounded-2'>
-            {subCategoryItem && !loading ? (
+            {subCategory && !loading ? (
                 <>
                     <div className='ps-breadcrumb-2 py-3'>
                         <ul className='breadcrumb-2'>
-                            <li>{subCategoryItem.name} (<span>{formatCurrencyWithSpace(count)}+</span>)</li>
-                            {subCategoryItem.child.map((item, index) => {
+                            <li>{subCategory.name} (<span>{formatCurrencyWithSpace(count)}+</span>)</li>
+                            {subCategory.map((item, index) => {
                                 return (
                                     <li key={index}>
                                         <Link
@@ -31,6 +34,7 @@ const BreadCrumbCategories = ({ breacrumb, count, loading }) => {
                                     </li>
                                 );
                             })}
+                            <li className='forMoreInformation' onClick={() => setExpanded(!expanded)}> {expanded ? "Kamroq ko‘rsatish" : "Barchasini ko‘rsatish"}</li>
                         </ul>
                     </div>
                 </>

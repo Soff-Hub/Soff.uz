@@ -58,7 +58,6 @@
     }
 }
 
-
 .ps-breadcrumb-2 {
     padding: 20px 0;
     background-color: #fff;
@@ -121,5 +120,36 @@
             }
         }
     }
+}
+
+.forMoreInformation {
+    text-decoration: none !important;
+    font-weight: 400 !important;
+    cursor: pointer !important;
+}
+
+.forMoreInformation:hover {
+    color: #000 !important;
+}
+
+.websitesNavItems {
+    list-style-type: none;
+    cursor: pointer;
+    font-weight: 500;
+    padding: 5px 10px;
+    border: 2px solid #fff;
+    border-radius: 10px;
+    color: #000;
+    transition: ease 0.8s;
+}
+
+.websitesNavItems:hover {
+    background: #fff !important;
+    color: #00a44f !important;
+    border: 2px solid #00a44f;
+}
+
+.ModelsAndInteriorDesignModels {
+    cursor: pointer;
 }
 

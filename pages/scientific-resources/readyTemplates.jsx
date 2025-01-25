@@ -11,10 +11,8 @@ import { Select, Option, Skeleton } from 'antd';
 import HeaderTitle from '../../components/blocks/header/headerTitle';
 import Websites from './websites';
 import ModelsAndInteriorDesign from './modelsAndInteriorDesign';
-import ReadyTemplates from './readyTemplates';
-import DesignDevelopments from './designDevelopments';
 
-export default function ProductCategoryScreen () {
+export default function ReadyTemplates () {
     const [data, setData] = useState([]);
     const [categoryData, setCategoryData] = useState([]);
     const [page, setPage] = useState(1);
@@ -23,8 +21,7 @@ export default function ProductCategoryScreen () {
     const router = useRouter();
     const { slug } = router.query;
 
-    console.log('categoryData=>salom',categoryData);
-
+    console.log('categoryData=>',categoryData);
     
     async function getProductsByCategoryName () {
         setLoadingProducts(true);
@@ -70,7 +67,7 @@ export default function ProductCategoryScreen () {
                 title={`${'asdf'}`}
                 description={`Biz siz qidirayotgan mahsulotlarni Soff.uz saytimizning kategoriyasida topdik`}
             />
-
+            <h1>ReadyTemplates</h1>
             <HeaderTitle />
             <div ref={breadCrumbRef} className='ps-page--shop container'>
                 <div className='nav-menu-cards d-flex align-items-center justify-content-center flex-wrap gap-3 mt-3'>
@@ -163,10 +160,8 @@ export default function ProductCategoryScreen () {
                     }}
                 />
             </div>
-            <ReadyTemplates/>
             <Websites />
             <ModelsAndInteriorDesign />
-            <DesignDevelopments/>
         </PageContainer>
     );
 }
