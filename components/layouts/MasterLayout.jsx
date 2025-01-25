@@ -40,7 +40,8 @@ const MasterLayout = ({ children }) => {
         <>
             {children}
             {/* <PageLoader /> */}
-            {accountLinks.some((el) => el.url === pathname) || accountLinks.some((el) => el.url === pathname + "?page=1") ? (
+            {
+            accountLinks.some((el) => el.url === pathname) || accountLinks.some((el) => el.url === pathname + "?page=1") && (
                 user?.role === 'admin' ? (
                     <NavigationListAdmin />
                 ) : user?.role === 'seller' ? (
@@ -48,9 +49,11 @@ const MasterLayout = ({ children }) => {
                 ) : (
                     <NavigationListCustomer />
                 )
-            ) : (
-                <NavigationList />
-            )}
+            ) 
+            // : (
+            //     <NavigationList />
+            // )
+            }
             {!pathname.startsWith('/product/') && <div className="ant-back-top">
                 <Backtop setBackground={setBackground} backtop={background} />
             </div>}
