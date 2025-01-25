@@ -1,20 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react';
-import PageContainer from '~/components/layouts/PageContainer';
-import FooterDefault from '~/components/shared/footers/FooterDefault';
-import Meta from '~/components/shared/headers/Meta';
-import ProductRepository from '~/repositories/ProductRepository';
-import ProductsByCategory from '~/components/partials/category/ProductsByCategory';
+import { Skeleton } from 'antd';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import BreadCrumbCategories from '~/components/elements/BreadCrumbCategories';
-import { Select, Option, Skeleton } from 'antd';
-import HeaderTitle from '../../components/blocks/header/headerTitle';
-import Websites from './websites';
-import ModelsAndInteriorDesign from './modelsAndInteriorDesign';
-import ReadyTemplates from './readyTemplates';
-import DesignDevelopments from './designDevelopments';
+import React, { useEffect, useRef, useState } from 'react';
+import HeaderTitle from '~/components/blocks/header/headerTitle';
+import PageContainer from '~/components/layouts/PageContainer';
+import ProductsByCategory from '~/components/partials/category/ProductsByCategory';
+import ProductRepository from '~/repositories/ProductRepository';
 
-export default function ProductCategoryScreen () {
+export default function ModelsAndInteriorDesign () {
     const [data, setData] = useState([]);
     const [categoryData, setCategoryData] = useState([]);
     const [page, setPage] = useState(1);
@@ -23,9 +16,6 @@ export default function ProductCategoryScreen () {
     const router = useRouter();
     const { slug } = router.query;
 
-    console.log('categoryData=>salom',categoryData);
-
-    
     async function getProductsByCategoryName () {
         setLoadingProducts(true);
         const responseData = await ProductRepository.getCustomerProducts(
@@ -60,18 +50,47 @@ export default function ProductCategoryScreen () {
     useEffect(() => {
         getCategories();
     }, []);
-
     return (
-        <PageContainer
-            footer={<FooterDefault />}
-            title={'Kategoriya'}
-            boxed={true}>
-            <Meta
-                title={`${'asdf'}`}
-                description={`Biz siz qidirayotgan mahsulotlarni Soff.uz saytimizning kategoriyasida topdik`}
-            />
-
+        <div>
+            <h1>ModelsAndInteriorDesign</h1>
+        <div className='container'>
             <HeaderTitle />
+            <div className='d-flex my-2 py-5 justify-content-center gap-5 '>
+                <div className='ModelsAndInteriorDesignModels d-flex align-items-center gap-5 w-25 border border-1  rounded-5 p-3'>
+                    <img
+                        src='https://picsum.photos/30/30'
+                        width={80}
+                        height={80}
+                        alt=''
+                    />
+                    <div className='title'>
+                        <h4>3D modellar</h4>
+                        <p>
+                            Lorem ipsum dolor, sit amet consectetur adipisicing
+                            elit. Saepe id dignissimos fugit omnis voluptatum
+                            soluta eius, nemo animi in recusandae?
+                        </p>
+                    </div>
+                </div>
+
+                <div className='ModelsAndInteriorDesignModels d-flex align-items-center gap-5 w-25 border border-1  rounded-5 p-3'>
+                    <img
+                        src='https://picsum.photos/30/30'
+                        width={80}
+                        height={80}
+                        alt=''
+                    />
+                    <div className='title'>
+                        <h4>Interyer dizaynlar</h4>
+                        <p>
+                            Lorem ipsum dolor, sit amet consectetur adipisicing
+                            elit. Saepe id dignissimos fugit omnis voluptatum
+                            soluta eius, nemo animi in recusandae?
+                        </p>
+                    </div>
+                </div>
+            </div>
+
             <div ref={breadCrumbRef} className='ps-page--shop container'>
                 <div className='nav-menu-cards d-flex align-items-center justify-content-center flex-wrap gap-3 mt-3'>
                     {categoryData.length > 0 ? (
@@ -125,48 +144,19 @@ export default function ProductCategoryScreen () {
                         </div>
                     )}
                 </div>
-
-                <Select
-                    className='my-2 mx-auto d-flex justify-content-center w-25'
-                    // onChange={e => setSelectValStatus(e)}
-                    defaultValue='moderation'
-                    style={{ height: '45px' }}>
-                    <Option key={''}>
-                        <i className='fa-solid fa-list mr-2'></i> Barchasi
-                        holatlar
-                    </Option>
-                    <Option key={'moderation'}>
-                        <i className='text-primary-emphasis fa-solid fa-circle-info mr-2'></i>
-                        Moderatsiya
-                    </Option>
-                    <Option key={'cancelled'}>
-                        <i className='mr-2 fa-solid fa-circle-question text-danger'></i>
-                        Bekor qilingan
-                    </Option>
-                    <Option key={'approved'}>
-                        <i className='fa-solid text-success fa-circle-check mr-2'></i>
-                        Tasdiqlangan
-                    </Option>
-                </Select>
-
-                <BreadCrumbCategories
-                    breacrumb={categoryData}
-                    count={data?.count}
-                    loading={loadingProducts}
-                />
-                <ProductsByCategory
-                    data={data}
-                    loading={loadingProducts}
-                    page={page}
-                    handlePagination={number => {
-                        setPage(number);
-                    }}
-                />
             </div>
-            <ReadyTemplates/>
-            <Websites />
-            <ModelsAndInteriorDesign />
-            <DesignDevelopments/>
-        </PageContainer>
+
+            <ProductsByCategory
+                data={data}
+                loading={loadingProducts}
+                page={page}
+                handlePagination={number => {
+                    setPage(number);
+                }}
+            />
+        </div>
+            {/* <PageContainer /> */}
+        </div>
+
     );
 }
