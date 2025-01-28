@@ -7,7 +7,7 @@ import ProductsByCategory from '~/components/partials/category/ProductsByCategor
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import BreadCrumbCategories from '~/components/elements/BreadCrumbCategories';
-import { Select, Option, Skeleton } from 'antd';
+import { Skeleton } from 'antd';
 import HeaderTitle from '../../components/blocks/header/headerTitle';
 
 export default function ProductCategoryScreen () {
@@ -71,9 +71,10 @@ export default function ProductCategoryScreen () {
             <div ref={breadCrumbRef} className='ps-page--shop container'>
                 <div className='nav-menu-cards d-flex align-items-center justify-content-center flex-wrap gap-3 mt-3'>
                     {categoryData.length > 0 ? (
-                        categoryData.map(e => {
+                        categoryData.map((e, index) => {
                             return (
-                                <Link
+                                <Link 
+                                    key={index}
                                     href='/scientific-resources/[slug]'
                                     as={`/scientific-resources/${
                                         slug == e.slug ? 'all' : e.slug
@@ -121,29 +122,6 @@ export default function ProductCategoryScreen () {
                         </div>
                     )}
                 </div>
-
-                <Select
-                    className='my-2 mx-auto d-flex justify-content-center w-25'
-                    // onChange={e => setSelectValStatus(e)}
-                    defaultValue='moderation'
-                    style={{ height: '45px' }}>
-                    <Option key={''}>
-                        <i className='fa-solid fa-list mr-2'></i> Barchasi
-                        holatlar
-                    </Option>
-                    <Option key={'moderation'}>
-                        <i className='text-primary-emphasis fa-solid fa-circle-info mr-2'></i>
-                        Moderatsiya
-                    </Option>
-                    <Option key={'cancelled'}>
-                        <i className='mr-2 fa-solid fa-circle-question text-danger'></i>
-                        Bekor qilingan
-                    </Option>
-                    <Option key={'approved'}>
-                        <i className='fa-solid text-success fa-circle-check mr-2'></i>
-                        Tasdiqlangan
-                    </Option>
-                </Select>
 
                 <BreadCrumbCategories
                     breacrumb={categoryData}
