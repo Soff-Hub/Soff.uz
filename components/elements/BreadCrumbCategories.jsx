@@ -4,13 +4,13 @@ import { useRouter } from 'next/router';
 import { formatCurrencyWithSpace } from '~/utilities/product-helper';
 import { Skeleton } from 'antd';
 
-const BreadCrumbCategories = ({ breacrumb, count, loading }) => {
+const BreadCrumbCategories = ({ breacrumb, count }) => {
     const [expanded, setExpanded] = useState(false);
 
     const router = useRouter();
     const { slug } = router.query;
     const subCategoryItem =
-        breacrumb.find(item => {
+        breacrumb?.results.find(item => {
             return item.slug == slug;
         }) || null;
 
@@ -18,7 +18,7 @@ const BreadCrumbCategories = ({ breacrumb, count, loading }) => {
 
     return (
         <div className='bg--white p-4 my-2  border  border-secondary-subtle rounded-2'>
-            {subCategory && !loading ? (
+            {subCategory ? (
                 <>
                     <div className='ps-breadcrumb-2 py-3'>
                         <ul className='breadcrumb-2'>
