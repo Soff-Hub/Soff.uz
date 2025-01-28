@@ -14,6 +14,9 @@ import { ProductProvider } from '~/context/ProductsContext';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { Provider } from 'react-redux';
 import { store } from '~/store';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+const queryClient = new QueryClient()
+
 
 function App({ Component, pageProps }) {
 
@@ -64,7 +67,7 @@ function App({ Component, pageProps }) {
                 <meta name="format-detection" content="telephone=no" />
                 {/* <meta name="apple-mobile-web-app-capable" content="yes" /> */}
                 <meta name="mobile-web-app-capable" content="yes"></meta>
-                <meta name="google-adsense-account" content="ca-pub-2651864926558603"/>
+                <meta name="google-adsense-account" content="ca-pub-2651864926558603" />
             </Head>
 
             <NextProgress
@@ -74,17 +77,19 @@ function App({ Component, pageProps }) {
                 color="#000"
             />
             <Provider store={store}>
-                <GoogleOAuthProvider clientId="203103939049-2ste634q2uc1io9oaup8gt35tsmucru0.apps.googleusercontent.com">
-                    <CookiesProvider>
-                        <ProductProvider>
-                            <AudioProvider>
-                                <MasterLayout>
-                                    <Component {...pageProps} />
-                                </MasterLayout>
-                            </AudioProvider>
-                        </ProductProvider>
-                    </CookiesProvider>
-                </GoogleOAuthProvider>
+                <QueryClientProvider client={queryClient}>
+                    <GoogleOAuthProvider clientId="203103939049-2ste634q2uc1io9oaup8gt35tsmucru0.apps.googleusercontent.com">
+                        <CookiesProvider>
+                            <ProductProvider>
+                                <AudioProvider>
+                                    <MasterLayout>
+                                        <Component {...pageProps} />
+                                    </MasterLayout>
+                                </AudioProvider>
+                            </ProductProvider>
+                        </CookiesProvider>
+                    </GoogleOAuthProvider>
+                </QueryClientProvider>
             </Provider>
         </>
     );
