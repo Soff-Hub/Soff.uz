@@ -8,9 +8,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import BreadCrumbCategories from '~/components/elements/BreadCrumbCategories';
 import { Select, Option, Skeleton } from 'antd';
-import HeaderTitle from '../../components/blocks/header/headerTitle';
+import HeaderTitle from '../../components/blocks/header/HeaderTitle';
 
-export default function ProductCategoryScreen () {
+export default function ScientificProducts () {
     const [data, setData] = useState([]);
     const [categoryData, setCategoryData] = useState([]);
     const [page, setPage] = useState(1);

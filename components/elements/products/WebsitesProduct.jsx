@@ -1,0 +1,102 @@
+import React, { useState } from 'react';
+import Link from 'next/link';
+import useProduct from '~/hooks/useProduct';
+import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
+import useWishlist from '~/hooks/useWishlist';
+
+const WebsitesProduct = ({ product }) => {
+    console.log(product);
+    const [countShow, setCountShow] = useState(false);
+    const { addSavedItem, wishlist, removeSavedItemm } = useWishlist();
+
+    function handleAddItemToWishlist (e) {
+        e.preventDefault();
+        addSavedItem(product.id);
+        if (wishlist?.find(item => item.id === product?.id)) {
+            removeSavedItemm(product.id);
+        }
+    }
+
+    return (
+        <div>
+            <div
+                className='websiteMenuCard card d-flex align-items-center'
+                onMouseEnter={() => setCountShow(true)}
+                onMouseLeave={() => setCountShow(false)}>
+                <div className=''>
+                    <Link
+                        href='/WebsitesProduct/[pid]'
+                        as={`/WebsitesProduct/${WebsitesProduct.slug}`}
+                        className='w-full mx-auto'>
+                        <a>
+                            {WebsitesProduct.poster_url ? (
+                                thumbnailImage(WebsitesProduct)
+                            ) : (
+                                <img
+                                    src={product.poster_url}
+                                    alt='hujjat'
+                                    height={180}
+                                    className='mx-auto'
+                                    style={{ height: 180 }}
+                                />
+                            )}
+                        </a>
+                    </Link>
+                </div>
+
+                <div className=''>
+                    <div className='px-2 card-text'>
+                        {/* <Link
+                            href='/product/[pid]'
+                            as={`/product/${product.slug}`}> */}
+                        <i class='bi bi-box-arrow-up-right'></i>
+                        <a>{product.title}</a>
+                        {/* </Link> */}
+                    </div>
+
+                    <div className='websiteCardIcons'>
+                        <div>
+                            {(product?.views_count ||
+                                product?.views_count === 0) && (
+                                <p
+                                    className='text-end mb-0 mt-1'
+                                    style={{
+                                        fontSize: '12px',
+                                        opacity: countShow ? '1' : '0',
+                                        transition: 'opacity 0.3s linear',
+                                    }}>
+                                    <i
+                                        className='fa-solid fa-eye '
+                                        style={{
+                                            fontSize: '10px',
+                                        }}></i>{' '}
+                                    {product?.views_count}
+                                </p>
+                            )}
+                        </div>
+
+                        <a
+                            href='#'
+                            data-toggle='tooltip'
+                            data-placement='top'
+                            title="Tanlanganlarga qo'shish"
+                            onClick={handleAddItemToWishlist}>
+                            <i
+                                className={`${
+                                    wishlist?.some(
+                                        item =>
+                                            Number(item.id) ===
+                                            Number(product?.id)
+                                    )
+                                        ? 'fa-solid fa-heart  text-danger '
+                                        : 'icon-heart'
+                                } `}></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default WebsitesProduct;
