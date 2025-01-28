@@ -9,10 +9,6 @@ import { useRouter } from 'next/router';
 import BreadCrumbCategories from '~/components/elements/BreadCrumbCategories';
 import { Select, Option, Skeleton } from 'antd';
 import HeaderTitle from '../../components/blocks/header/headerTitle';
-import Websites from './websites';
-import ModelsAndInteriorDesign from './modelsAndInteriorDesign';
-import ReadyTemplates from './readyTemplates';
-import DesignDevelopments from './designDevelopments';
 
 export default function ProductCategoryScreen () {
     const [data, setData] = useState([]);
@@ -163,10 +159,7 @@ export default function ProductCategoryScreen () {
                     }}
                 />
             </div>
-            <ReadyTemplates/>
-            <Websites />
-            <ModelsAndInteriorDesign />
-            <DesignDevelopments/>
+
         </PageContainer>
     );
 }
