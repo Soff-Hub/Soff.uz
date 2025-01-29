@@ -63,8 +63,8 @@ const SiteFooter = () => {
                     </div>
                     <div className="site-footer-right col-lg-6 col-md-6 col-sm-12">
                         {
-                            contacts.map(el => (
-                                <div className='site-footer-item'>
+                            contacts.map((el, index) => (
+                                <div key={index} className='site-footer-item'>
                                     <div className="site-footer-icon">
                                         <i className={el.icon}></i>
                                     </div>
