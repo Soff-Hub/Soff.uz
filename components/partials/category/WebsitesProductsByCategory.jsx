@@ -6,8 +6,16 @@ import WebsitesProduct from '~/components/elements/products/WebsitesProduct';
 export default function WebsitesProductsByCategory({ data = [], page, handlePagination, loading }) {
 
     return (
-        <div id='products'>
-            <div className="row">
+        <div id='products' className='overflow-hidden container'>
+            <div className="row ">
+            <div className='d-flex justify-content-center gap-5 py-3 bg-white mb-2'>
+                <a className='websitesNavItems'>WebSiteDesign</a>
+                <a className='websitesNavItems'>WebSiteDesign</a>
+                <a className='websitesNavItems'>WebSiteDesign</a>
+                <a className='websitesNavItems'>WebSiteDesign</a>
+                <a className='websitesNavItems'>WebSiteDesign</a>
+                <a className='websitesNavItems'>WebSiteDesign</a>
+            </div>
                 {data?.results?.length > 0 && !loading ?
                     (data?.results?.map((item, index) => (
                             <div
@@ -28,7 +36,7 @@ export default function WebsitesProductsByCategory({ data = [], page, handlePagi
                     </div>
                 }
             </div>
-            {data?.count >= 40 && (
+            {data?.count >= 48 && (
                 <div className="text-center my-4">
                     <Pagination
                         total={data?.count}

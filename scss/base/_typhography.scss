@@ -339,17 +339,18 @@ figure {
     color: #fff;
 }
 
-.websiteMenuCard{
-    height: 280px !important;
+.websiteMenuCard {
+    min-height: 260px !important;
     gap: 15px;
     position: relative !important;
+    
 }
 
-.websiteCardIcons{
+.websiteCardIcons {
     display: flex;
     align-items: center !important;
     gap: 10px;
-    position:absolute;
-    bottom: 100px;
-    right: 10px;
+    position: absolute;
+    bottom: 5px !important;
+    right: 8px;
 }

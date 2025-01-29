@@ -1,6 +1,7 @@
 import Axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import HeaderTitle from '~/components/blocks/header/HeaderTitle';
+import Product from '~/components/elements/products/Product';
 import PageContainer from '~/components/layouts/PageContainer';
 import WebsitesProductsByCategory from '~/components/partials/category/WebsitesProductsByCategory';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
@@ -11,7 +12,7 @@ export default function WebsiteProducts () {
     const [data, setData] = useState([]);
 
     async function getProducts () {
-        const endPoint = 'customer/products';
+        const endPoint = 'customer/products/?page_size=48';
         Axios.get(baseUrl + endPoint)
             .then(res => {
                 console.log('success => ', res);
@@ -19,12 +20,14 @@ export default function WebsiteProducts () {
             })
             .catch(err => {
                 console.log('err -> ', err);
-            });
+            });            
     }
+    
 
     useEffect(() => {
         getProducts();
     }, []);
+
 
     return (
         <PageContainer

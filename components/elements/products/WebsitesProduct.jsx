@@ -12,10 +12,15 @@ const WebsitesProduct = ({ product }) => {
     function handleAddItemToWishlist (e) {
         e.preventDefault();
         addSavedItem(product.id);
-        if (wishlist?.find(item => item.id === product?.id)) {
-            removeSavedItemm(product.id);
+        if (wishlist?.find(item => item.id === WebsitesProduct?.id)) {
+            removeSavedItemm(WebsitesProduct.id);
         }
     }
+
+    const websiteCardTitle =
+        product.title.length > 50
+            ? product.title.slice(0, 55) + '...'
+            : product.title;
 
     return (
         <div>
@@ -45,13 +50,14 @@ const WebsitesProduct = ({ product }) => {
                 </div>
 
                 <div className=''>
-                    <div className='px-2 card-text'>
-                        {/* <Link
+                    <div className='px-2 d-flex align-items-baseline websiteCardTitle'>
+                        <Link
                             href='/product/[pid]'
-                            as={`/product/${product.slug}`}> */}
-                        <i class='bi bi-box-arrow-up-right'></i>
-                        <a>{product.title}</a>
-                        {/* </Link> */}
+                            as={`/product/${product.slug}`}>
+                            <a className='text-center text-uppercase'>
+                                {websiteCardTitle}
+                            </a>
+                        </Link>
                     </div>
 
                     <div className='websiteCardIcons'>
@@ -66,7 +72,7 @@ const WebsitesProduct = ({ product }) => {
                                         transition: 'opacity 0.3s linear',
                                     }}>
                                     <i
-                                        className='fa-solid fa-eye '
+                                        className='fa-solid fa-eye text-dark'
                                         style={{
                                             fontSize: '10px',
                                         }}></i>{' '}
@@ -88,8 +94,8 @@ const WebsitesProduct = ({ product }) => {
                                             Number(item.id) ===
                                             Number(product?.id)
                                     )
-                                        ? 'fa-solid fa-heart  text-danger '
-                                        : 'icon-heart'
+                                        ? 'fa-solid fa-heart  text-danger d-flex align-items-center'
+                                        : 'icon-heart d-flex align-items-center'
                                 } `}></i>
                         </a>
                     </div>
