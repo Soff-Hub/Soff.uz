@@ -23,7 +23,7 @@ export default function ProductCategoryScreen() {
     // Four-child API uchun so'rov
     const { data: fourChildData, error: fourChildError, isLoading: isFourChildLoading } = useApi(
         ["fourChild"], // Query key
-        `${baseUrlUseApi}customer/four-child`,
+        `${baseUrlUseApi}customer/four-child?type=file`,
         "GET"
     );
 
