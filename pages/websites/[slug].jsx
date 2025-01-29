@@ -1,7 +1,6 @@
 import Axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import HeaderTitle from '~/components/blocks/header/HeaderTitle';
-import Product from '~/components/elements/products/Product';
 import PageContainer from '~/components/layouts/PageContainer';
 import WebsitesProductsByCategory from '~/components/partials/category/WebsitesProductsByCategory';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
