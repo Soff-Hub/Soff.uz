@@ -401,11 +401,15 @@
 .skeletion-card {
     min-width: unset !important;
     max-width: unset !important;
-    width: 260px !important;
-    height: 230px !important;
+    width: 260px;
+    height: 230px;
     border-radius: 16px !important;
 }
 
+.skeletion-card.file {
+    width: 260px !important;
+    height: 230px !important;
+}
 .skeletion-card.video {
     width: 440px !important;
     height: 270px !important;
@@ -422,6 +426,18 @@
 .skeletion-card.template {
     width: 600px !important;
     height: 230px !important;
+    border-radius: 16px !important;
+}
+
+.skeletion-card.small-card {
+    width: 200px !important;
+    height: 37px !important;
+    border-radius: 16px !important;
+}
+
+.skeletion-card.small-full-card {
+    width: 100% !important;
+    height: 150px !important;
     border-radius: 16px !important;
 }
 
