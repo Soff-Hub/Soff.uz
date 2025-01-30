@@ -26,7 +26,7 @@ const parentCategoriesData = [
         title: 'Veb saytlar',
         imgUrl: '/static/img/Veb saytlar.png',
         bgColor: '#02732f',
-        path: '#'
+        path: '/websites/all'
     },
     {
         title: 'Video darsliklar',
