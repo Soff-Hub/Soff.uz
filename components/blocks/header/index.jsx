@@ -6,6 +6,7 @@ import HeaderSearchbar from './HeaderSearchbar';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { initLocalCart } from '~/store/ecomerce/slice';
+import MenuCategoriesDropdown from '~/components/shared/menu/MenuCategoriesDropdown';
 
 const Header = () => {
     const [headerSticky, setHeaderSticky] = useState(false);
@@ -41,16 +42,19 @@ const Header = () => {
                 <div className="container">
                     <div className="header-inner">
                         <HeaderLogo mode={'dark'} />
-
-                        <HeaderSearchbar />
-
-                        <HeaderActions isDark={true} />
+                        <div className='d-flex gap-5'>
+                            <div className="header__items">
+                                <MenuCategoriesDropdown />
+                            </div>
+                            <HeaderActions isDark={true} />
+                        </div>
                     </div>
-                    <div className="search-form-mobile">
+                    {/* <div className="search-form-mobile">
                         {pathname !== '/' ? <HeaderSearchbar /> : ''}
-                    </div>
+                    </div> */}
                 </div>
             </div>
+            <div style={{ height: '80px', width: '100%' }}></div>
         </header>
     );
 };

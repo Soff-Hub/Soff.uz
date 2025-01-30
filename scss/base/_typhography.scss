@@ -338,3 +338,22 @@ figure {
     background-color: #00a44f !important;
     color: #fff;
 }
+
+.title-1 {
+    font-size: 48px;
+}
+
+.title-2 {
+    font-size: 40px;
+}
+
+@media only screen and (max-width: 576px) {
+
+.title-1 {
+    font-size: 35px;
+}
+
+.title-2 {
+    font-size: 30px;
+}
+}
