@@ -5,7 +5,6 @@ import Meta from '~/components/shared/headers/Meta';
 import ProductsByCategory from '~/components/partials/category/ProductsByCategory';
 import { useRouter } from 'next/router';
 import CategoriesFilterSecion from '~/components/elements/CategoriesFilterSecion';
-import HeaderTitle from '../../components/blocks/header/headerTitle';
 import useApi, { baseUrlUseApi } from '~/repositories/useApi';
 
 export default function ProductCategoryScreen() {
@@ -45,7 +44,6 @@ export default function ProductCategoryScreen() {
                 description={`Biz siz qidirayotgan mahsulotlarni Soff.uz saytimizning kategoriyasida topdik`}
             />
 
-            <HeaderTitle />
             <div className='ps-page--shop container'>
                 <CategoriesFilterSecion
                     breacrumb={fourChildData}
