@@ -116,10 +116,10 @@
     position: relative;
     padding: 5px;
     background-color: white;
-    border-radius: 22px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
-    max-width: 700px;
+    max-width: 580px;
     margin: 0 auto;
     z-index: 0;
 }
@@ -157,11 +157,19 @@
     width: 140px;
 }
 
+.video-card video{
+    border-radius: 20px;
+    height: 770px;
+}
+
 @media only screen and (max-width: 576px) {
     .site-header-logo {
         width: 100px;
     }
-
+    .video-card video{
+        border-radius: 20px;
+        height: 250px;
+    }
     .hero-search-input {
         padding: 6px;
         padding-left: 10px;

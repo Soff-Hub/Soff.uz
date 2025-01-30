@@ -163,7 +163,8 @@ const HeaderUserDropdown = (props) => {
                         ) : (
                             <i className={`fa-regular fa-user fs-2 me-1 ${color}`}></i>
                         )}
-                        {profile?.email.slice(0, profile?.email.indexOf("@"))}
+                        {profile?.email?.slice(0, profile?.email.indexOf("@"))}
+                        {profile?.phone}
                     </a>
                 </Link>
                 <div className="ps-block__content">
