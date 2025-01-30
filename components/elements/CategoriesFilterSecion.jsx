@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { formatCurrencyWithSpace } from '~/utilities/product-helper';
 import { Skeleton } from 'antd';
@@ -8,6 +7,7 @@ const CategoriesFilterSecion = ({ breacrumb, count, isLoading }) => {
     const [expanded, setExpanded] = useState(false);
 
     const router = useRouter();
+
     const { slug, parentCategory, childCategory } = router.query;
 
     // Ota kategoriyalar ro'yxati
@@ -28,7 +28,6 @@ const CategoriesFilterSecion = ({ breacrumb, count, isLoading }) => {
                     <div
                         key={index}
                         className={`${parentCategory === item.slug ? 'categoryMenuCardActive' : ''} categoryMenuCard bg--white d-flex align-items-center gap-3 border  border-secondary-subtle rounded-2 p-2`} // Ota kategoriya aktivligi
-                        // onClick={() => router.push(`/scientific-resources/${item.slug}`)}
                         onClick={() => router.push({
                             pathname: `/scientific-resources/${item.slug}`,
                             query: { parentCategory: item.slug } // query parametrini qo'shish
@@ -67,15 +66,22 @@ const CategoriesFilterSecion = ({ breacrumb, count, isLoading }) => {
                                         key={index}
                                         onClick={() =>
                                             router.push({
-                                                pathname: router.pathname,
-                                                query: { ...router.query, slug: item.slug, page: 1, childCategory: item.slug }, // Yangi sub-kategoriyani yo‘llash
-                                            })}
+                                                pathname: "/scientific-resources/[slug]",
+                                                query: {
+                                                    ...router.query,
+                                                    slug: item.slug,
+                                                    page: 1,
+                                                    childCategory: item.slug
+                                                }
+                                            }, `/scientific-resources/${item.slug}`)
+                                        }
+
                                         style={{ cursor: 'pointer' }}>
                                         {item.name}
                                     </li>
                                 );
                             })}
-                            <li className='forMoreInformation' onClick={() => setExpanded(!expanded)}> {expanded ? "Kamroq ko‘rsatish" : "Barchasini ko‘rsatish"}</li>
+                            <li className='forMoreInformation active' onClick={() => setExpanded(!expanded)}> {expanded ? "Kamroq ko‘rsatish" : "Barchasini ko‘rsatish"}</li>
                         </ul>
                     </div>
                 </>
