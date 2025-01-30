@@ -1,13 +1,12 @@
 .file-card {
-    max-width: 260px;
+    max-width: 240px;
     height: 330px;
     width: 100%;
     padding: 8px;
     border-radius: 15px;
-    display: flex
-    ;
-        flex-direction: column;
-        justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .file-card-inner {
@@ -259,6 +258,7 @@
     border-radius: 10px;
     border: 1px solid #00a44f;
 }
+
 .video-card-container {
     max-width: 450px;
     width: 100%;
@@ -375,7 +375,7 @@
     .file-card.template {
         max-width: 600px;
         border-radius: 15px !important;
-        
+
         .file-card-img {
             width: 100%;
             margin: 0;
@@ -412,6 +412,7 @@
     width: 260px !important;
     height: 230px !important;
 }
+
 .skeletion-card.video {
     width: 440px !important;
     height: 270px !important;

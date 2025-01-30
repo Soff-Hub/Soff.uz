@@ -41,7 +41,7 @@ export default function ParentCategories() {
     return (
         parentCategoriesData.map((item, index) => {
             return (
-                <div className={`file-card`} style={{ backgroundColor: item.bgColor }}>
+                <div className="file-card" style={{ backgroundColor: item.bgColor }}>
                     <h3 className='file-card-title p-md-4 p-3'>
                         {item.title}
                     </h3>
