@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import React from 'react'
 import FreeBtn from '~/components/elements/FreeBtn'
 import { formatCurrencyWithSpace } from '~/utilities/product-helper'
@@ -37,27 +38,27 @@ const parentCategoriesData = [
 ]
 
 export default function ParentCategories() {
+    const router = useRouter()
 
     return (
         parentCategoriesData.map((item, index) => {
             return (
 
-                <Link href={item.path}>
-                    <a>
-                        <div className="file-card" style={{ backgroundColor: item.bgColor }}>
-                            <h3 className='file-card-title p-md-4 p-3'>
-                                {item.title}
-                            </h3>
-                            <div className="file-card-img">
-                                <img
-                                    src={item.imgUrl}
-                                    className='file-card-imge'
-                                    alt={item.title}
-                                />
-                            </div>
-                        </div>
-                    </a>
-                </Link>
+                <div
+                    className="file-card"
+                    style={{ backgroundColor: item.bgColor, cursor: 'pointer' }} 
+                    onClick={() => router.push(item.path)}>
+                    <h3 className='file-card-title p-md-4 p-3'>
+                        {item.title}
+                    </h3>
+                    <div className="file-card-img">
+                        <img
+                            src={item.imgUrl}
+                            className='file-card-imge'
+                            alt={item.title}
+                        />
+                    </div>
+                </div>
             )
         })
     )
