@@ -26,11 +26,15 @@ export default function VedioCart({ title, url, vedioUrl, id }) {
             </Head>
             <div className="vedio-cart-container">
                 <div className="vedio-cart-content" onClick={haldleModalOpen}>
+                    <div className="vedio-cart-footer">
+                        <p className='fs-3'> 
+                            {id}. {title}{' '}
+                        </p>
+                    </div>
                     <div
                         style={{
                             backgroundImage: `url(${url})`,
                             width: '100%',
-                            height: '150px',
                             position: 'relative',
                             borderTopRightRadius: '5px',
                             borderTopLeftRadius: '5px',
@@ -46,12 +50,6 @@ export default function VedioCart({ title, url, vedioUrl, id }) {
                                     fontSize: '45px',
                                 }}></i>
                         </div>
-                    </div>
-                    <div className="vedio-cart-footer">
-                        <p>
-                            {' '}
-                            <span>{id}.</span> {title}{' '}
-                        </p>
                     </div>
                 </div>
             </div>
