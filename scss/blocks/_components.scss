@@ -157,9 +157,24 @@
     width: 140px;
 }
 
+.video-card {
+    border-radius: 20px;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+}
+
+
 .video-card video{
     border-radius: 20px;
-    height: 770px;
+    height: 600px;
+    object-fit: cover; /* Video ni o'rtaga joylash uchun */
+    max-height: 100%;
+    max-width: 100%;
 }
 
 @media only screen and (max-width: 576px) {
