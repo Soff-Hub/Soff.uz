@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { formatCurrencyWithSpace } from '~/utilities/product-helper';
-import { Skeleton } from 'antd';
+import { Select, Skeleton } from 'antd';
+const Option = Select.Option;
 
 const CategoriesFilterSecion = ({ breacrumb, count, isLoading }) => {
     const [expanded, setExpanded] = useState(false);
@@ -23,6 +24,34 @@ const CategoriesFilterSecion = ({ breacrumb, count, isLoading }) => {
         <div className='bg--white p-4 my-2  border  border-secondary-subtle rounded-2'>
 
             <div className='nav-menu-cards d-flex align-items-center justify-content-center flex-wrap gap-3 mt-3'>
+
+                <Select
+                    onChange={(e) => router.push({
+                        pathname: `/scientific-resources/${e}`,
+                        query: { parentCategory: e } // query parametrini qo'shish
+                    })}
+                    defaultValue={'all'}
+                    style={{
+                        height: "42px",
+                        flex: 1,
+                    }}
+                    className='t'
+                >
+                    <Option key={'all'}><i className="fa-solid fa-list mr-2"></i> Barchasi</Option>
+                    {breacrumb?.results?.map((item, index) => {
+                        return (
+                            <Option key={item.slug}>
+                                <img
+                                    className='rounded-2 me-2'
+                                    src={item.image}
+                                    alt={item.name}
+                                    width={25}
+                                />
+                                {item.name}
+                            </Option>
+                        )
+                    })}
+                </Select>
 
                 {breacrumb?.results?.map((item, index) => (
                     <div
