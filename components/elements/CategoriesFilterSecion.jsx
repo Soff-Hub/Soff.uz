@@ -73,7 +73,7 @@ const CategoriesFilterSecion = ({ breacrumb, count, isLoading }) => {
                                                     page: 1,
                                                     childCategory: item.slug
                                                 }
-                                            }, `/scientific-resources/${item.slug}`)
+                                            })
                                         }
 
                                         style={{ cursor: 'pointer' }}>
