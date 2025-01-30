@@ -14,25 +14,25 @@ const parentCategoriesData = [
         title: '3D moddellar va Interier dizaynlar',
         imgUrl: '/static/img/3D moddellar.png',
         bgColor: '#4d1727',
-        path: '/scientific-resources/all'
+        path: '#'
     },
     {
         title: 'Dizayn shablonlari',
         imgUrl: '/static/img/Dizayn shablonlari.png',
         bgColor: '#697200',
-        path: '/scientific-resources/all'
+        path: '#'
     },
     {
         title: 'Veb saytlar',
         imgUrl: '/static/img/Veb saytlar.png',
         bgColor: '#02732f',
-        path: '/scientific-resources/all'
+        path: '#'
     },
     {
         title: 'Video darsliklar',
         imgUrl: '/static/img/Video darsliklar.png',
         bgColor: '#421300',
-        path: '/scientific-resources/all'
+        path: '#'
     }
 ]
 
@@ -41,13 +41,13 @@ export default function ParentCategories() {
     return (
         parentCategoriesData.map((item, index) => {
             return (
-                <div className="file-card" style={{ backgroundColor: item.bgColor }}>
-                    <h3 className='file-card-title p-md-4 p-3'>
-                        {item.title}
-                    </h3>
 
-                    <Link href={item.path}>
-                        <a>
+                <Link href={item.path}>
+                    <a>
+                        <div className="file-card" style={{ backgroundColor: item.bgColor }}>
+                            <h3 className='file-card-title p-md-4 p-3'>
+                                {item.title}
+                            </h3>
                             <div className="file-card-img">
                                 <img
                                     src={item.imgUrl}
@@ -55,9 +55,9 @@ export default function ParentCategories() {
                                     alt={item.title}
                                 />
                             </div>
-                        </a>
-                    </Link>
-                </div>
+                        </div>
+                    </a>
+                </Link>
             )
         })
     )
