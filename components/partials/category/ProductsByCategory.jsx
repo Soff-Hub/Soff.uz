@@ -18,7 +18,7 @@ export default function ProductsByCategory({ data = [], page, handlePagination, 
                     )))
                 }
                 {
-                    isLoading && <div className={`product-list p-loading`}>
+                    isLoading && <div className={`product-list p-loading mt-4`}>
                         {Array(15).fill(0).map((d, i) => <Skeleton.Image
                             key={i}
                             active
