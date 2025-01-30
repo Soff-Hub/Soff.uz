@@ -77,19 +77,12 @@
 }
 
 .vedio-cart-container {
-    border-top-right-radius: 5px;
-    border-top-left-radius: 5px;
-    max-width: 300px;
-    width: 100%;
 }
 
 .vedio-cart-content {
-    margin-top: 10px;
-    height: 245px !important ;
-    border-top-right-radius: 5px;
-    border-top-left-radius: 5px;
+    margin-top: 30px;
+    height: 200px;
     display: flex;
-    flex-direction: column;
     border-radius: 5px;
     border: 1px solid #e2e1e1;
     transition: all 0.5s;
@@ -104,15 +97,10 @@
 }
 
 .vedio-cart-footer {
+    width: 80%;
+    display: flex;
+    align-items: center;
     padding: 5px 8px  8px;
-    p {
-        font-weight: 600;
-        font-size: 16px;
-        line-height: 18px;
-        span{
-            font-weight: 700;
-        }
-    }
 }
 
 .image-color {
