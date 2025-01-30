@@ -5,13 +5,13 @@ export const VideoComponent = () => {
         <div className='video-card'>
             <video
                 className="w-100"
-                autoPlay
                 controls
                 poster="/static/img/Soff.uz - bu qanday loyiha.png"
                 preload="auto"
                 crossOrigin="anonymous"
                 role="video"
                 playsInline
+                muted
             >
                 <source
                     role="source"
@@ -35,7 +35,7 @@ export default function HomeVideo() {
 
     return (
         <div className="container">
-            <p className='title-2 py-4'>Soff.uz - bu qanday loyiha?</p>
+            <h2 className=' py-4'>Soff.uz - bu qanday loyiha?</h2>
             <VideoComponent />
         </div>
     )
