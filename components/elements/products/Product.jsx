@@ -12,8 +12,6 @@ const Product = ({ product }) => {
 
     return (
         <div className="ps-product"
-            onMouseEnter={() => setCountShow(true)}
-            onMouseLeave={() => setCountShow(false)}
 
         >
             <div
