@@ -7,7 +7,7 @@ import { formatCurrencyWithSpace } from '~/utilities/product-helper'
 const parentCategoriesData = [
     {
         title: 'Ilmiy ishlar',
-        imgUrl: '/static/img/ilmiy ishlar.png',
+        imgUrl: '/static/img/Ilmiy ishlar.png',
         bgColor: '#ff7641',
         path: '/scientific-resources/all'
     },
