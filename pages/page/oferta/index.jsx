@@ -8,7 +8,7 @@ export default function Oferta() {
             <Meta title="Soff - barcha ma'lumotlar bazasi" image="/static/img/soff/soff_green_white.png" />
 
             <div className="container px-5">
-                <h3>
+                <h3 className='mt-5'>
                     Soff.uz platformasidan foydalanish
                     qonun-qoidalari
                 </h3>

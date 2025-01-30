@@ -24,7 +24,7 @@ const VedioList = () => {
                 />
                 <div className="ps-page--singlee">
                     <div className="container px-5">
-                        <h3 className='my-2'>Soff.uz sotuvchilari uchun video qo'llanma: </h3>
+                        <h3 className='mb-2 mt-5'>Soff.uz sotuvchilari uchun video qo'llanma: </h3>
                         <div className="row">
                             {data?.map((el) => (
                                 <div
