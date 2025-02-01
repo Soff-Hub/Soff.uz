@@ -7,9 +7,9 @@ const SiteFooter = () => {
     const [email, setEmail] = useState('')
     const contacts = [
         {
-            link: "https://yandex.uz/maps/-/CDxfY-1C",
-            text: "8/1 Bunyodkor Avenue, Toshkent shahri",
-            icon: "fa-solid fa-location-dot"
+            link: "https://t.me/soff_uz",
+            text: "t.me/soff_uz",
+            icon: "fa-regular fa-paper-plane"
         },
         {
             link: "tel:+998910086789",
@@ -17,9 +17,9 @@ const SiteFooter = () => {
             icon: "fa-solid fa-phone"
         },
         {
-            link: "mailto:support@soff.uz",
-            text: "support@soff.uz",
-            icon: "fa-solid fa-envelope"
+            link: "https://yandex.uz/maps/-/CDxfY-1C",
+            text: "8/1 Bunyodkor Avenue, Toshkent shahri",
+            icon: "fa-solid fa-location-dot"
         }
     ]
 
