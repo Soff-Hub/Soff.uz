@@ -58,7 +58,7 @@ const ProductDetailFullwidth = ({ product, views }) => {
                             }}
                         />
 
-                        <p>Tezkor teglar</p>
+                        <p className="mt-3">Tezkor teglar</p>
                         <div className=" d-flex justify-content-start align-content-center flex-wrap">
                             {product?.tag?.length > 0 &&
                                 product?.tag.slice(0, 15).map((item, i) => (
