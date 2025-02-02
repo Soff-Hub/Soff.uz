@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ThumbnailDefault from '~/components/elements/detail/thumbnail/ThumbnailDefault';
 import DefaultDescription from '~/components/elements/detail/description/DefaultDescription';
 import ModuleProductDetailDescription from '~/components/elements/detail/modules/ModuleProductDetailDescription';
@@ -7,8 +7,21 @@ import ModuleDetailTopInformation from '~/components/elements/detail/modules/Mod
 import Link from 'next/link';
 import BuyBtnScroll from './BuyBtnScroll';
 import ReportButton from './ReportButton';
+import Script from 'next/script';
 
 const ProductDetailFullwidth = ({ product, views }) => {
+
+    useEffect(() => {
+        if (window.yaContextCb) {
+            window.yaContextCb.push(() => {
+                Ya.Context.AdvManager.render({
+                    blockId: "R-A-13331140-1",
+                    renderTo: "yandex_rtb_R-A-13331140-1"
+                });
+            });
+        }
+    }, []);
+
     return (
         <>
             <div className="ps-product--detail ps-product--fullwidth">
@@ -25,6 +38,26 @@ const ProductDetailFullwidth = ({ product, views }) => {
                             views={views}
                         />
                         <ModuleDetailShoppingActions product={product} />
+
+                        {/* Yandex reklama kodi */}
+                        <div id="yandex_rtb_R-A-13331140-1"></div>
+
+                        {/* Yandex scriptni yuklash */}
+                        <Script
+                            src="https://yandex.ru/ads/system/context.js"
+                            strategy="lazyOnload"
+                            onLoad={() => {
+                                if (window.yaContextCb) {
+                                    window.yaContextCb.push(() => {
+                                        Ya.Context.AdvManager.render({
+                                            blockId: "R-A-13331140-1",
+                                            renderTo: "yandex_rtb_R-A-13331140-1"
+                                        });
+                                    });
+                                }
+                            }}
+                        />
+
                         <p>Tezkor teglar</p>
                         <div className=" d-flex justify-content-start align-content-center flex-wrap">
                             {product?.tag?.length > 0 &&
