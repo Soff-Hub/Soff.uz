@@ -32,7 +32,7 @@ const ThumbnailDefault = ({ product, vertical = true, views }) => {
     }, [product]);
 
     return (
-        <div>
+        <div className="full-detail-image ">
             {/* Yandex reklama kodi */}
             <div id="yandex_rtb_R-A-13331140-2"></div>
             {/* Yandex scriptni yuklash */}
@@ -51,7 +51,7 @@ const ThumbnailDefault = ({ product, vertical = true, views }) => {
                 }}
             />
             <div
-                className="ps-product__thumbnail full-detail-image mt-4"
+                className="ps-product__thumbnail mt-4"
                 data-vertical={vertical ? 'true' : 'false'}>
                 <figure style={{ flex: '1', minWidth: '100%' }}>
                     <div className="ps-wrapper d-block p-4" ref={wrapperRef}>
