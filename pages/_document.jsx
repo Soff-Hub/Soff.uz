@@ -111,9 +111,6 @@ export default function Document() {
                     `,
                         }}></script>
                 )}
-
-            <script>window.yaContextCb=window.yaContextCb||[]</script>
-            <script src="https://yandex.ru/ads/system/context.js" async></script>
             </Head>
             <body>
                 <Main />
