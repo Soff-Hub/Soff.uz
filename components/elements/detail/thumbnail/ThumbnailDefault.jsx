@@ -1,7 +1,8 @@
 import Script from 'next/script';
 import React, { useEffect, useRef } from 'react';
+import ModuleDetailTopInformation from '../modules/ModuleDetailTopInformation';
 
-const ThumbnailDefault = ({ product, vertical = true, views }) => {
+const ThumbnailDefault = ({ product, views }) => {
     product?.document?.images?.sort((a, b) => a?.id - b?.id)
 
     const wrapperRef = useRef(null);
@@ -32,7 +33,7 @@ const ThumbnailDefault = ({ product, vertical = true, views }) => {
     }, [product]);
 
     return (
-        <div className="full-detail-image ">
+        <>
             {/* Yandex reklama kodi */}
             <div id="yandex_rtb_R-A-13331140-2"></div>
             {/* Yandex scriptni yuklash */}
@@ -50,10 +51,18 @@ const ThumbnailDefault = ({ product, vertical = true, views }) => {
                     }
                 }}
             />
+            {/* <ModuleDetailTopInformation product={product} /> */}
+            <h1 className="product__name">
+                {product?.title !== undefined ? product?.title : ''}
+            </h1>
             <div
-                className="ps-product__thumbnail mt-4"
-                data-vertical={vertical ? 'true' : 'false'}>
-                <figure style={{ flex: '1', minWidth: '100%' }}>
+                className="mt-4">
+                <figure
+                    style={{
+                        border: '1px solid #ddd',
+                        boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
+                        position: 'relative'
+                    }}>
                     <div className="ps-wrapper d-block p-4" ref={wrapperRef}>
                         {product?.document?.images?.length > 0
                             ? product?.document?.images?.map((item, i) => (
@@ -76,7 +85,7 @@ const ThumbnailDefault = ({ product, vertical = true, views }) => {
                     </div>
                 </figure>
             </div>
-        </div>
+        </>
     );
 };
 

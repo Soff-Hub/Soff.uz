@@ -25,12 +25,14 @@ const ProductDetailFullwidth = ({ product, views }) => {
     return (
         <>
             <div className="ps-product--detail ps-product--fullwidth">
-                <div className="ps-product__header ">
-                    <ThumbnailDefault
-                        product={product}
-                        views={views?.view_count}
-                    />
-                    <div className="ps-product__info" id="get-buy">
+                <div className="row">
+                    <div className='col-lg-7 col-md-6 col-12'>
+                        <ThumbnailDefault
+                            product={product}
+                            views={views?.view_count}
+                        />
+                    </div>
+                    <div className="col-lg-5 col-md-6 col-12" id="get-buy">
                         <ReportButton productId={product?.slug} />
                         <ModuleDetailTopInformation product={product} />
                         <ModuleProductDetailDescription

@@ -164,6 +164,7 @@ const ModuleDetailShoppingActions = ({ product }) => {
                                             href="#"
                                             style={{ fontSize: "14px" }}
                                             onClick={(e) => handleBuynow(e)}>
+                                            <i class="fa-solid fa-download mr-3"></i>
                                             Hoziroq xarid qilish
                                         </a>
                                         <a
@@ -171,6 +172,7 @@ const ModuleDetailShoppingActions = ({ product }) => {
                                             href="#"
                                             style={{ fontSize: "14px" }}
                                             onClick={(e) => handleAddItemToCart(e)}>
+                                            <i class="fa-solid fa-cart-arrow-down mr-3"></i>
                                             Savatga qo'shish
                                         </a>
                                     </>
