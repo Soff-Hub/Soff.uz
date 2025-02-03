@@ -56,9 +56,9 @@ const ModuleDetailTopInformation = ({ product }) => {
 
     return (
         <header>
-            <h1 className="product__name">
+            {/* <h1 className="product__name">
                 {product?.title !== undefined ? product?.title : ''}
-            </h1>
+            </h1> */}
             <div className="product__top-information">
                 <div className='w_fulls'>
                     <span className="input--label">Muallif</span>

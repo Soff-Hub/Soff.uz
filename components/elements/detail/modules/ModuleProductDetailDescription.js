@@ -2,7 +2,7 @@ import React from 'react';
 
 const ModuleProductDetailDescription = ({ product, views }) => {
     return (
-        <div className="ps-product__desc">
+        <div className="ps-product__desc mt-3">
             <strong className="fs-4"> Qisqa tavsif </strong>
             <ul style={{ listStyleType: 'revert' }}>
                 {

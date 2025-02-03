@@ -298,7 +298,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                     />
                 </Head>
 
-                <div style={{ backgroundColor: '#fff' }}>
+                <div>
                     {/* <div style={{ backgroundColor: '#fafdff' }}> */}
                     <div className="container" style={{ position: 'relative' }}>
                         <div className="text-end m-0">

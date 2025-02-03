@@ -2,7 +2,7 @@
 .product__top-information {
     display: flex;
     justify-content: space-between;
-    padding: 20px 0;
+    // padding: 20px 0;
 
     .w_fulls {
         width: 70%;
@@ -1411,6 +1411,7 @@
             display: block;
             max-width: calc(100% - 60px);
             padding-left: 10px;
+            border: 1.5px dashed black;
         }
 
         .ps-product__variants {
