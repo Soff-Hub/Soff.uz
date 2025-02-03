@@ -56,12 +56,11 @@ const ModuleDetailTopInformation = ({ product }) => {
 
     return (
         <header>
-            {/* <h1 className="product__name">
+            <h1 className="product__name">
                 {product?.title !== undefined ? product?.title : ''}
-            </h1> */}
+            </h1>
             <div className="product__top-information">
                 <div className='w_fulls'>
-                    <span className="input--label">Muallif</span>
                     <div
                         className="product__top-information-account"
                         style={{ cursor: 'pointer' }}
@@ -84,15 +83,14 @@ const ModuleDetailTopInformation = ({ product }) => {
 
                         {product?.seller?.first_name && (
                             <div>
-                                <p>{product?.seller?.first_name}{' '}</p>
-                                <p> {product?.seller?.last_name}</p>
+                                <p>Muallif</p>
+                                <p>{product?.seller?.first_name}{' '} {product?.seller?.last_name}</p>
                             </div>
                         )}
                     </div>
                 </div>
 
                 <div className='w_fulls2 '  >
-                    <span className="input--label">Narxi</span>
                     <div className="product__top-information--price buystep-0 ">
                         {priceView}
                     </div>

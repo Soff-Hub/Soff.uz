@@ -2,22 +2,22 @@ import React from 'react';
 
 const ModuleProductDetailDescription = ({ product, views }) => {
     return (
-        <div className="ps-product__desc mt-3">
-            <strong className="fs-4"> Qisqa tavsif </strong>
+        <div className="ps-product__desc mt-3 border">
+            {/* <strong className="fs-4"> Qisqa tavsif </strong> */}
             <ul style={{ listStyleType: 'revert' }}>
                 {
                     product?.document?.page_count ?
-                        <li style={{ fontSize: "12px", padding: "5px 0" }} >
+                        <li style={{ fontSize: "16px", padding: "5px 0" }} >
                             <strong>Betlar soni : </strong> <div></div>{' '}
                             <span>{product?.document?.page_count} bet</span>
                         </li> : ''
 
                 }
-                <li style={{ fontSize: "12px", paddingBottom: "5px" }} >
+                <li style={{ fontSize: "16px", paddingBottom: "5px" }} >
                     <strong>Hajmi : </strong> <div></div>{' '}
                     <span>{product?.document?.file_size}</span>
                 </li>
-                <li style={{ fontSize: "12px", paddingBottom: "5px" }} >
+                <li style={{ fontSize: "16px", paddingBottom: "5px" }} >
                     <strong>Turi : </strong> <div></div>{' '}
                     <span
                         className="file_type-color"
@@ -51,13 +51,13 @@ const ModuleProductDetailDescription = ({ product, views }) => {
                     </span>
                 </li>
                 {product?.category?.name && (
-                    <li style={{ fontSize: "12px", paddingBottom: "5px" }} >
+                    <li style={{ fontSize: "16px", paddingBottom: "5px" }} >
                         <strong> Kategoriyasi</strong> : <div></div>{' '}
                         <span> {product?.category?.name}</span>
                     </li>
                 )}
                 {views?.approved > 0 && (
-                    <li style={{ fontSize: "12px", paddingBottom: "5px" }} >
+                    <li style={{ fontSize: "16px", paddingBottom: "5px" }} >
                         <strong>Xarid qilishlar soni : </strong> <div></div>{' '}
                         <span>{views?.approved}</span>
                     </li>
