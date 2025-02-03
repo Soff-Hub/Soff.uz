@@ -1,7 +1,7 @@
 import Script from 'next/script';
 import React, { useEffect, useRef } from 'react';
 
-const ThumbnailDefault = ({ product, vertical = true, views }) => {
+const ThumbnailDefault = ({ product, views }) => {
     product?.document?.images?.sort((a, b) => a?.id - b?.id)
 
     const wrapperRef = useRef(null);
@@ -19,42 +19,17 @@ const ThumbnailDefault = ({ product, vertical = true, views }) => {
             }
         }
 
-        {/* Yandex reklama kodi */ }
-        if (window.yaContextCb) {
-            window.yaContextCb.push(() => {
-                Ya.Context.AdvManager.render({
-                    blockId: "R-A-13331140-2",
-                    renderTo: "yandex_rtb_R-A-13331140-2"
-                });
-            });
-        }
-
     }, [product]);
 
     return (
-        <div className="full-detail-image ">
-            {/* Yandex reklama kodi */}
-            <div id="yandex_rtb_R-A-13331140-2"></div>
-            {/* Yandex scriptni yuklash */}
-            <Script
-                src="https://yandex.ru/ads/system/context.js"
-                strategy="lazyOnload"
-                onLoad={() => {
-                    if (window.yaContextCb) {
-                        window.yaContextCb.push(() => {
-                            Ya.Context.AdvManager.render({
-                                blockId: "R-A-13331140-2",
-                                renderTo: "yandex_rtb_R-A-13331140-2"
-                            });
-                        });
-                    }
-                }}
-            />
-            <div
-                className="ps-product__thumbnail mt-4"
-                data-vertical={vertical ? 'true' : 'false'}>
-                <figure style={{ flex: '1', minWidth: '100%' }}>
-                    <div className="ps-wrapper d-block p-4" ref={wrapperRef}>
+        <>
+            <div>
+                <figure
+                    style={{
+                        // boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
+                        position: 'relative'
+                    }}>
+                    <div className="ps-wrapper d-block p-4 border" ref={wrapperRef}>
                         {product?.document?.images?.length > 0
                             ? product?.document?.images?.map((item, i) => (
                                 <img
@@ -76,7 +51,7 @@ const ThumbnailDefault = ({ product, vertical = true, views }) => {
                     </div>
                 </figure>
             </div>
-        </div>
+        </>
     );
 };
 
