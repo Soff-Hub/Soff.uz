@@ -298,8 +298,8 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                     />
                 </Head>
 
-                <div>
-                    {/* <div style={{ backgroundColor: '#fafdff' }}> */}
+                {/* <div> */}
+                <div style={{ backgroundColor: '#fff'}}>
                     <div className="container" style={{ position: 'relative' }}>
                         <div className="text-end m-0">
                             {defaultProducts?.discpunt_price === 0 && (
@@ -347,7 +347,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                                     {!loading &&
                                         product?.document?.content_type ===
                                         'file' ? (
-                                        <div className="pt-5">
+                                        <div>
                                             <ProductDetailFullwidth
                                                 product={product}
                                                 views={views}
