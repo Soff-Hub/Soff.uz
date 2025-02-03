@@ -19,37 +19,10 @@ const ThumbnailDefault = ({ product, views }) => {
             }
         }
 
-        {/* Yandex reklama kodi */ }
-        if (window.yaContextCb) {
-            window.yaContextCb.push(() => {
-                Ya.Context.AdvManager.render({
-                    blockId: "R-A-13331140-2",
-                    renderTo: "yandex_rtb_R-A-13331140-2"
-                });
-            });
-        }
-
     }, [product]);
 
     return (
         <>
-            {/* Yandex reklama kodi */}
-            <div id="yandex_rtb_R-A-13331140-2"></div>
-            {/* Yandex scriptni yuklash */}
-            <Script
-                src="https://yandex.ru/ads/system/context.js"
-                strategy="lazyOnload"
-                onLoad={() => {
-                    if (window.yaContextCb) {
-                        window.yaContextCb.push(() => {
-                            Ya.Context.AdvManager.render({
-                                blockId: "R-A-13331140-2",
-                                renderTo: "yandex_rtb_R-A-13331140-2"
-                            });
-                        });
-                    }
-                }}
-            />
             <div>
                 <figure
                     style={{

@@ -99,6 +99,16 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                 });
             });
         }
+
+        {/* Yandex reklama kodi */ }
+        if (window.yaContextCb) {
+            window.yaContextCb.push(() => {
+                Ya.Context.AdvManager.render({
+                    blockId: "R-A-13331140-2",
+                    renderTo: "yandex_rtb_R-A-13331140-2"
+                });
+            });
+        }
     }, [user?.access, pid]);
 
     useEffect(() => {
@@ -297,9 +307,27 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                         }
                     />
                 </Head>
-
+                <div className='container'>
+                    {/* Yandex reklama kodi */}
+                    <div id="yandex_rtb_R-A-13331140-2"></div>
+                    {/* Yandex scriptni yuklash */}
+                    <Script
+                        src="https://yandex.ru/ads/system/context.js"
+                        strategy="lazyOnload"
+                        onLoad={() => {
+                            if (window.yaContextCb) {
+                                window.yaContextCb.push(() => {
+                                    Ya.Context.AdvManager.render({
+                                        blockId: "R-A-13331140-2",
+                                        renderTo: "yandex_rtb_R-A-13331140-2"
+                                    });
+                                });
+                            }
+                        }}
+                    />
+                </div>
                 {/* <div> */}
-                <div style={{ backgroundColor: '#fff'}}>
+                <div style={{ backgroundColor: '#fff' }}>
                     <div className="container" style={{ position: 'relative' }}>
                         <div className="text-end m-0">
                             {defaultProducts?.discpunt_price === 0 && (
