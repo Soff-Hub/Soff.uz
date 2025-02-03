@@ -13,16 +13,22 @@ export default function ProductCategoryScreen() {
 
     // products API uchun so'rov
     const { data, error, isLoading } = useApi(
-        ["products", slug, page, parentCategory, childCategory], // queryKey dinamik
+        ["products", page, parentCategory, childCategory], // queryKey dinamik
         `${baseUrlUseApi}customer/products/?type=file&category=${childCategory ? childCategory : parentCategory}&page=${page || 1}&page_size=48`,
         "GET"
     );
 
-
-    // Four-child API uchun so'rov
+    // Otab kategoriya API uchun so'rov
     const { data: fourChildData, error: fourChildError, isLoading: isFourChildLoading } = useApi(
         ["fourChild"], // Query key
         `${baseUrlUseApi}customer/four-child?type=file`,
+        "GET"
+    );
+
+    // Farzand kategoriya API uchun so'rov
+    const { data: childCategoryData, error: childCategoryEror, isLoading: isChildCategory } = useApi(
+        ["fourChild", parentCategory], // Query key
+        `${baseUrlUseApi}customer/four-child?type=file&parent__slug=${parentCategory}`,
         "GET"
     );
 
@@ -49,6 +55,7 @@ export default function ProductCategoryScreen() {
                     breacrumb={fourChildData}
                     count={data?.count}
                     isLoading={isFourChildLoading}
+                    childCategoryData={childCategoryData}
                 />
                 <ProductsByCategory
                     data={data}
