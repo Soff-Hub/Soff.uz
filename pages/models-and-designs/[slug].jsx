@@ -9,15 +9,14 @@ import FooterDefault from '~/components/shared/footers/FooterDefault';
 import Meta from '~/components/shared/headers/Meta';
 import useApi, { baseUrlUseApi } from '~/repositories/useApi';
 
-export default function ModelsAndInteriorDesign () {
+export default function ModelsAndInteriorDesign() {
     const router = useRouter();
     const { slug, page, parentCategory, childCategory } = router.query;
 
     // products API uchun so'rov
     const { data, error, isLoading } = useApi(
         ['products', slug, page, parentCategory, childCategory], // queryKey dinamik
-        `${baseUrlUseApi}customer/products/?type=file&category=${
-            childCategory ? childCategory : parentCategory
+        `${baseUrlUseApi}customer/products/?type=template&category=${childCategory ? childCategory : parentCategory
         }&page=${page || 1}&page_size=48`,
         'GET'
     );
@@ -29,7 +28,7 @@ export default function ModelsAndInteriorDesign () {
         isLoading: isFourChildLoading,
     } = useApi(
         ['fourChild'], // Query key
-        `${baseUrlUseApi}customer/four-child?type=file`,
+        `${baseUrlUseApi}customer/four-child?type=template`,
         'GET'
     );
 
@@ -50,8 +49,7 @@ export default function ModelsAndInteriorDesign () {
                 title={`${'asdf'}`}
                 description={`Biz siz qidirayotgan mahsulotlarni Soff.uz saytimizning kategoriyasida topdik`}
             />
-            <HeaderTitle />
-            <ModelAndDesignHero/>
+            <ModelAndDesignHero />
 
             <div className='ps-page--shop container'>
                 <CategoriesFilterSecion
@@ -59,7 +57,7 @@ export default function ModelsAndInteriorDesign () {
                     count={data?.count}
                     isLoading={isFourChildLoading}
                 />
-                <ProductsByModelsAndDesignCategory  
+                <ProductsByModelsAndDesignCategory
                     data={data}
                     page={page}
                     handlePagination={number => {
