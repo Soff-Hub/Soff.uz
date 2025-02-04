@@ -5,7 +5,6 @@ import Meta from '~/components/shared/headers/Meta';
 import ProductsByCategory from '~/components/partials/category/ProductsByCategory';
 import { useRouter } from 'next/router';
 import CategoriesFilterSecion from '~/components/elements/CategoriesFilterSecion';
-import HeaderTitle from '../../components/blocks/header/HeaderTitle';
 import useApi, { baseUrlUseApi } from '~/repositories/useApi';
 
 export default function ProductCategoryScreen() {
@@ -14,16 +13,22 @@ export default function ProductCategoryScreen() {
 
     // products API uchun so'rov
     const { data, error, isLoading } = useApi(
-        ["products", slug, page, parentCategory, childCategory], // queryKey dinamik
+        ["products", page, parentCategory, childCategory], // queryKey dinamik
         `${baseUrlUseApi}customer/products/?type=file&category=${childCategory ? childCategory : parentCategory}&page=${page || 1}&page_size=48`,
         "GET"
     );
 
-
-    // Four-child API uchun so'rov
+    // Otab kategoriya API uchun so'rov
     const { data: fourChildData, error: fourChildError, isLoading: isFourChildLoading } = useApi(
         ["fourChild"], // Query key
         `${baseUrlUseApi}customer/four-child?type=file`,
+        "GET"
+    );
+
+    // Farzand kategoriya API uchun so'rov
+    const { data: childCategoryData, error: childCategoryEror, isLoading: isChildCategory } = useApi(
+        ["fourChild", parentCategory], // Query key
+        `${baseUrlUseApi}customer/four-child?type=file&parent__slug=${parentCategory}`,
         "GET"
     );
 
@@ -38,19 +43,19 @@ export default function ProductCategoryScreen() {
     return (
         <PageContainer
             footer={<FooterDefault />}
-            title={'Kategoriya'}
+            title={'Ilmiy ishlar kategoriyasi'}
             boxed={true}>
             <Meta
-                title={`${'asdf'}`}
-                description={`Biz siz qidirayotgan mahsulotlarni Soff.uz saytimizning kategoriyasida topdik`}
+                title={`${'Ilmiy ishlar kategoriyasi'}`}
+                description={`Ilmiy ishlar kategoriyasi: Audio materiallar Biznes rejalar Video materiallar Taqdimotlar Tayyor shablonlar Kurs ishlari Diplom ishlari Referatlar Mustaqil ishlar Labaratoriya Ishlari Dissertatsiya ishlari Testlar O'quv qo'llanmalar Dars ishlanmalar Tarqatma materiallar Amaliy ishlar Blankalar Ijodiy Ishlar Loyihalar Plakatlar Maqola Ixtiro patenti Namunaviy hujjatlar Statistika Elektron kitoblar Dasturlash tillari `}
             />
 
-            <HeaderTitle />
             <div className='ps-page--shop container'>
                 <CategoriesFilterSecion
                     breacrumb={fourChildData}
                     count={data?.count}
                     isLoading={isFourChildLoading}
+                    childCategoryData={childCategoryData}
                 />
                 <ProductsByCategory
                     data={data}

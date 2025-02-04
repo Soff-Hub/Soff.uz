@@ -1,7 +1,7 @@
 .hero {
     // background-image: url('https://pixabay.com/get/g74ca2a8569f2138508aba75eaca6b26b3cce304076b434386f6fe0883476bf1008831021385e8dc8f330c331a8525a92_1920.jpg');
     // background-image: url('https://blog.datagate.ee/wp-content/uploads/2019/08/fb.jpg');
-    background-image: url('/static/img/hero-bg-1.webp');
+    background-image: url('/static/img/soff imkoniyatlari 2.png');
     // background-image: url('https://avatars.mds.yandex.net/i?id=6ba1b8955b6be7b47a2836b949c48202_l-5287379-images-thumbs&n=13');
     // background-image: url('https://conduitnews.com/wp-content/uploads/2023/06/library-books.jpg');
     // background-image: url('https://sh33-petropavlovskkamchatskij-r30.gosweb.gosuslugi.ru/netcat_files/244/6286/mcCwhp02Z_U.jpg');
@@ -9,6 +9,7 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+    border-radius: 20px;
 }
 
 .hero.video {
@@ -23,15 +24,14 @@
     background-image: url('/static/img/template-opt.jpg');
 }
 
-.hero-bg {
-    padding: 140px 0;
-    background: linear-gradient(
-        0deg,
-        rgba(25, 27, 38, 0.32),
-        rgba(25, 27, 38, 0.72)
-    );
+.hero-inner {
+    display: flex;
+    align-items: center;
+    height: 500px;
+    justify-content: center;
 }
-
+.hero-search-form {
+}
 .hero-content {
     display: flex;
     flex-direction: column;
@@ -129,8 +129,15 @@
 }
 
 @media only screen and (max-width: 576px) {
-    .hero-bg {
-        padding: 150px 0 50px;
+    .hero {
+        border-radius: 0px;
+    }
+    .hero-inner {
+        height: 300px;
+    }
+
+    .hero-title {
+        font-size: 30px;
     }
 
     .category-tabs {

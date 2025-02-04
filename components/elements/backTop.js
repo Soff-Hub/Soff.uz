@@ -1,10 +1,25 @@
 import Link from 'next/link';
-export default function Backtop({ setBackground , backtop }) {
+export default function Backtop({ setBackground, backtop }) {
 
     return (
         <>
             <div className="ps-btn--container">
-                <div className="ps-btn--backtop" onClick={() => ( setBackground(!backtop))}>
+                <Link href="https://t.me/soff_uz">
+                    <a target='_blank' className="ps-btn--backtop" >
+                        <i
+                            style={{ color: '#fff' }}
+                            className={
+                                !backtop
+                                    ? 'fa-regular fa-paper-plane'
+                                    : 'fa-solid fa-xmark fa-lg'
+                            }></i>
+                        <span className="ps-btn--backtop--border1"></span>
+                        <span className="ps-btn--backtop--border2"></span>
+                    </a>
+                </Link>
+            </div>
+            {/* <div className="ps-btn--container">
+                <div className="ps-btn--backtop" onClick={() => (setBackground(!backtop))}>
                     <i
                         style={{ color: '#fff' }}
                         className={
@@ -23,7 +38,7 @@ export default function Backtop({ setBackground , backtop }) {
                         <Link
                             href="/account/donat">
                             <a>
-                            <i className="fa-solid fa-hand-holding-hand"></i>
+                                <i className="fa-solid fa-hand-holding-hand"></i>
                             </a>
                         </Link>
                     </li>
@@ -42,7 +57,7 @@ export default function Backtop({ setBackground , backtop }) {
                         </Link>
                     </li>
                 </ul>
-            </div>
+            </div> */}
         </>
     );
 }
