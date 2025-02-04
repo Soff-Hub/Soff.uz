@@ -31,8 +31,8 @@ const ModelAndDesignProduct = ({ product }) => {
                 onMouseLeave={() => setCountShow(false)}>
                 <div className=''>
                     <Link
-                        href='/ModelAndDesignProduct/[pid]'
-                        as={`/ModelAndDesignProduct/${ModelAndDesignProduct.slug}`}
+                        href="/product/[pid]" 
+                        as={`/product/${product.slug}`}
                         className=''>
                         <a>
                             {ModelAndDesignProduct.poster_url ? (
@@ -49,7 +49,7 @@ const ModelAndDesignProduct = ({ product }) => {
                 </div>
 
                 <div className='modelAndDesignCardBody'>
-                    <Link href='/product/[pid]' as={`/product/${product.slug}`}>
+                    <Link href="/product/[pid]" as={`/product/${product.slug}`}>
                         <a className='modelAndDesignCardTitle'>
                             {produvctTitle}
                         </a>
