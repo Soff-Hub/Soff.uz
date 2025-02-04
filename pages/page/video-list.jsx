@@ -23,12 +23,12 @@ const VedioList = () => {
                     description="Saytdan qanday foydalanish haqida videolar orqali bizdan yordam olishingiz mumkin"
                 />
                 <div className="ps-page--singlee">
-                    <div className="container-faqs mt-4">
-                        <h3>Video qo'llanma</h3>
+                    <div className="container px-5">
+                        <h3 className='mb-2 mt-5'>Soff.uz sotuvchilari uchun video qo'llanma: </h3>
                         <div className="row">
                             {data?.map((el) => (
                                 <div
-                                    className="col-md-4 mt-2"
+                                    className="col-md-6 mt-2"
                                     key={el.id}>
                                     <VedioCart
                                         title={el.title}

@@ -6,20 +6,18 @@ export default function HeroMain() {
     const { query } = useRouter()
 
     return (
-        <div className={`hero ${query?.tab}`}>
-            <div className="hero-bg">
-                <div className="container">
-                    <div className="hero-inner">
-                        <div className="hero-search-form">
-                            <div className="hero-content">
-                                <h1 className='hero-title'>Soff.uz - <span>qidiruv tizimi</span></h1>
-                                <p className='hero-text'>O‘zbek tilida saralanib borilayotgan sifatli ma’lumotlar jamlanmasini, fayllar, tasvirlar, videolar, audiolar ko‘rinishida qidirib topish imkonini beradi.</p>
-                            </div>
+        <div className={`container mt-4 hero ${query?.tab}`}>
+            <div className="hero-inner">
+                <div className="hero-search-form">
+                    <div className="hero-content">
+                        <p className='hero-title'>Soff.uz – raqamli xizmatlar bozori! </p>
+                        {/* <p className='hero-text'>Malakali mutaxassislar yordamida jamoangizni kengaytiring va biznesingizni rivojlantiring!</p> */}
+                    </div>
 
-                            <div className="hero-search-form">
-                                <HeroSearchInput />
+                    <div className="hero-search-form">
+                        <HeroSearchInput />
 
-                                {/* <Select
+                        {/* <Select
                                 value={'all'}
                                 className='hero-search-select'
                             >
@@ -47,8 +45,6 @@ export default function HeroMain() {
                                     <i className='fa-solid text-success fa-video mr-2'></i> Playlist
                                 </Option>
                             </Select> */}
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

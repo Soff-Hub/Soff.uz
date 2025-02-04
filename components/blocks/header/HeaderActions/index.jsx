@@ -13,11 +13,11 @@ const HeaderActions = ({ auth, isDark }) => {
 
     return (
         <div className={`site-header-actions ${isDark ? 'text-black' : 'text-white'}`}>
-            <Link href="/page/about-us">
+            {/* <Link href="/page/about-us">
                 <a className="header__extra fs-2">
                     <i className="fa-regular fa-circle-question"></i>
                 </a>
-            </Link>
+            </Link> */}
 
             <HeaderNotifications color={isDark ? 'text-black' : 'text-white'} />
 

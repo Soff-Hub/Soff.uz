@@ -1,6 +1,6 @@
 .site-footer {
     background-color: white;
-    padding: 50px 0 100px;
+    padding: 20px 0 20px;
 }
 
 .site-footer-item {
@@ -28,15 +28,14 @@
 
 .site-footer-right {
     display: flex;
-    flex-direction: column;
     gap: 10px;
+    justify-content: end;
 }
 
 .left-inner {
-    max-width: 500px;
     display: flex;
-    flex-direction: column;
     gap: 10px;
+    align-items: center;
 }
 
 .subscribe-input {
@@ -67,6 +66,7 @@
 
 @media only screen and (max-width: 576px) {
     .site-footer-right {
+        flex-direction: column;
         margin-top: 30px;
     }
 }
