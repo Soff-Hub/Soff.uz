@@ -16,7 +16,7 @@ export default function ModelsAndInteriorDesign() {
     // products API uchun so'rov
     const { data, error, isLoading } = useApi(
         ['products', slug, page, parentCategory, childCategory], // queryKey dinamik
-        `${baseUrlUseApi}customer/products/?type=template&category=${childCategory ? childCategory : parentCategory
+        `${baseUrlUseApi}customer/products/?category__direction=three_d_model&category=${childCategory ? childCategory : parentCategory
         }&page=${page || 1}&page_size=48`,
         'GET'
     );
@@ -28,7 +28,7 @@ export default function ModelsAndInteriorDesign() {
         isLoading: isFourChildLoading,
     } = useApi(
         ['fourChild'], // Query key
-        `${baseUrlUseApi}customer/four-child?type=template`,
+        `${baseUrlUseApi}customer/four-child?direction=three_d_model`,
         'GET'
     );
 
