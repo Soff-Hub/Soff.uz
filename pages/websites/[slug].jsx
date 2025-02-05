@@ -14,7 +14,7 @@ export default function Websites() {
     // products API uchun so'rov
     const { data, error, isLoading } = useApi(
         ["products", slug, page, parentCategory, childCategory], // queryKey dinamik
-        `${baseUrlUseApi}customer/products/?type=website&category=${childCategory ? childCategory : parentCategory}&page=${page || 1}&page_size=48`,
+        `${baseUrlUseApi}customer/products/?direction=website&category=${childCategory ? childCategory : parentCategory}&page=${page || 1}&page_size=48`,
         "GET"
     );
 
@@ -22,10 +22,17 @@ export default function Websites() {
     // Four-child API uchun so'rov
     const { data: fourChildData, error: fourChildError, isLoading: isFourChildLoading } = useApi(
         ["fourChild"], // Query key
-        `${baseUrlUseApi}customer/four-child?type=website`,
+        `${baseUrlUseApi}customer/four-child?direction=website`,
         "GET"
     );
 
+    // Farzand kategoriya API uchun so'rov
+    const { data: childCategoryData, error: childCategoryEror, isLoading: isChildCategory } = useApi(
+        ["fourChild", parentCategory], // Query key
+        `${baseUrlUseApi}customer/four-child?direction=three_d_model&parent__slug=${parentCategory}`,
+        "GET"
+    );
+    
     // Pagination tugmalari uchun funksiya
     const handlePageChange = (newPage) => {
         router.push({
@@ -49,6 +56,7 @@ export default function Websites() {
                     breacrumb={fourChildData}
                     count={data?.count}
                     isLoading={isFourChildLoading}
+                    childCategoryData={childCategoryData}
                 />
                 <WebsitesProductsByCategory
                     data={data}
