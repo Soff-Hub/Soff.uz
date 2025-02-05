@@ -3,21 +3,18 @@ import { useRouter } from 'next/router';
 import { formatCurrencyWithSpace } from '~/utilities/product-helper';
 import { Skeleton } from 'antd';
 
-const WebsitesCategoriesFilterSecion = ({ breacrumb, count, isLoading }) => {
+const WebsitesCategoriesFilterSecion = ({ breacrumb, count, isLoading, childCategoryData }) => {
     const [expanded, setExpanded] = useState(false);
 
     const router = useRouter();
 
+    // router.isReady yuklanmaguncha null qaytarish
+    if (!router.isReady) return null;
+
     const { slug, parentCategory, childCategory } = router.query;
 
-    // Ota kategoriyalar ro'yxati
-    const parentCategories = breacrumb?.results?.map(item => item.slug) || [];
+    const subCategory = expanded ? childCategoryData?.results : childCategoryData?.results.slice(0, 20) || null;
 
-    const subCategoryItems = parentCategories.includes(slug)
-        ? breacrumb?.results.find(item => item.slug == slug)
-        : breacrumb?.results.find(item => item.slug == parentCategory);
-
-    const subCategory = expanded ? subCategoryItems?.child : subCategoryItems?.child.slice(0, 20) || null;
 
     return (
         <div className='bg--white p-4 my-2  border  border-secondary-subtle rounded-2'>
