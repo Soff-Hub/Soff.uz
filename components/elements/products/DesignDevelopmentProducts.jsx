@@ -30,10 +30,7 @@ const DesignDevelopmentProducts = ({ product }) => {
                 onMouseEnter={() => setCountShow(true)}
                 onMouseLeave={() => setCountShow(false)}>
                 <div className=''>
-                    <Link
-                        href='/DesignDevelopmentProducts/[pid]'
-                        as={`/DesignDevelopmentProducts/${DesignDevelopmentProducts.slug}`}
-                        className=''>
+                    <Link href="/product/[pid]" as={`/product/${product.slug}`}>
                         <a>
                             {DesignDevelopmentProducts.poster_url ? (
                                 thumbnailImage(DesignDevelopmentProducts)
@@ -49,7 +46,7 @@ const DesignDevelopmentProducts = ({ product }) => {
                 </div>
 
                 <div className='designDevelopmentCardBody'>
-                    <Link href='/product/[pid]' as={`/product/${product.slug}`}>
+                    <Link href="/product/[pid]" as={`/product/${product.slug}`}>
                         <a className='designDevelopmentCardTitle'>
                             {produvctTitle}
                         </a>
