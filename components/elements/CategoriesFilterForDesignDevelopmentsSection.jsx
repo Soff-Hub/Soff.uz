@@ -3,31 +3,21 @@ import { useRouter } from 'next/router';
 import { formatCurrencyWithSpace } from '~/utilities/product-helper';
 import { Modal, Select, Skeleton } from 'antd';
 
-const CategoriesFilterSecion = ({ breacrumb, count, isLoading }) => {
+const CategoriesFilterSecion = ({ breacrumb, count, isLoading, childCategoryData }) => {
     const [expanded, setExpanded] = useState(false);
     // const [openFilter, setOpenFilter] = useState(false);
 
     const router = useRouter();
 
+    // router.isReady yuklanmaguncha null qaytarish
+    if (!router.isReady) return null;
+
     const { slug, parentCategory, childCategory } = router.query;
 
-    // Ota kategoriyalar ro'yxati
-    const parentCategories = breacrumb?.results?.map(item => item.slug) || [];
+    const subCategory = expanded ? childCategoryData?.results : childCategoryData?.results.slice(0, 20) || null;
 
-    const subCategoryItems = parentCategories.includes(slug)
-        ? breacrumb?.results.find(item => item.slug == slug)
-        : breacrumb?.results.find(item => item.slug == parentCategory);
-
-    const subCategory = expanded
-        ? subCategoryItems?.child
-        : subCategoryItems?.child.slice(0, 9) || null;
-
-    // const handeClearFilter = () => {
-    //     setDataCat('');
-    //     setLifetime('');
-    //     setLifetime2('');
-    //     setOpenFilter(false);
-    // };
+    console.log("subCategory -> ", subCategory);
+    
 
     return (
         <div className='p-4 my-2  border-secondary-subtle rounded-2'>
@@ -70,21 +60,8 @@ const CategoriesFilterSecion = ({ breacrumb, count, isLoading }) => {
             </div>
             {subCategory ? (
                 <>
-                    <div className='ps-breadcrumb-3 py-3 d-flex justify-content-between align-items-center'>
-                        <form action=''>
-                            <select
-                                className='py-2 px-3 rounded-2'
-                                name='popular'
-                                id=''>
-                                <option value='popular'>Popular</option>
-                                <option value=''></option>
-                            </select>
-                        </form>
+                    <div className='ps-breadcrumb-3 py-3'>
                         <ul className='breadcrumb-3 '>
-                            {/* <li>
-                                {subCategory.name} ( 
-                                <span>{formatCurrencyWithSpace(count)}+</span>)
-                            </li> */}
                             {subCategory.map((item, index) => {
                                 return (
                                     <li
@@ -104,8 +81,7 @@ const CategoriesFilterSecion = ({ breacrumb, count, isLoading }) => {
                                                         childCategory:
                                                             item.slug,
                                                     },
-                                                },
-                                                `/design-developments/${item.slug}`
+                                                }
                                             )
                                         }
                                         style={{ cursor: 'pointer' }}>
@@ -113,60 +89,7 @@ const CategoriesFilterSecion = ({ breacrumb, count, isLoading }) => {
                                     </li>
                                 );
                             })}
-                            {/* <li
-                                className='forMoreInformation active'
-                                onClick={() => setExpanded(!expanded)}>
-                                {' '}
-                                {expanded
-                                    ? 'Kamroq ko‘rsatish'
-                                    : 'Barchasini ko‘rsatish'}
-                            </li> */}
                         </ul>
-
-                        <button
-                            className='px-3 py-2 rounded-2 border-1 bg-light'
-                            onClick={() => setOpenFilter(true)}>
-                            <i className='fa-solid fa-sliders'></i> Filters
-                        </button>
-{/* 
-                        <Modal
-                            title={'Mahsulotlarni filterlash'}
-                            open={openFilter}
-                            onOk={() => setOpenFilter(true)}
-                            onCancel={() => setOpenFilter(false)}
-                            footer={null}
-                            width={500}>
-                            <div className='p-0 mt-5 mb-3 w-100 d-flex gap-4 flex-column'>
-                                <button
-                                    onClick={handeClearFilter}
-                                    className='btn btn-outline-secondary rounded-3 fs-4 py-3 w-100'>
-                                    Barcha mahsulotlar
-                                </button>
-
-                                <Select
-                                    className=' p-0'
-                                    mode='select'
-                                    showSearch
-                                    allowClear
-                                    style={{
-                                        width: '100%',
-                                        height: '47px',
-                                    }}
-                                    onChange ={onChange}
-                                    onSearch={onSearchCategory}
-                                    placeholder='Barcha kategoriyalar'>
-                                    <Option value='all'>
-                                        Barcha kategoriyalar
-                                    </Option>
-
-                                    {options}
-                                </Select>
-                                <RangePicker
-                                    className='py-3   rounded-3'
-                                    onChange={handleChangeDate}
-                                />
-                            </div>
-                        </Modal> */}
                     </div>
                 </>
             ) : (

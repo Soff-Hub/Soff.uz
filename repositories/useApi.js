@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 export const baseUrlUseApi = `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/`
-// export const baseUrlUseApi = `http://192.168.1.41:8000/api/v1/`
+// export const baseUrlUseApi = `http://162.254.37.89:8008/api/v1/`
 
 const useApi = (key, endpoint, method = "GET", options = {}) => {
   const queryClient = useQueryClient();
