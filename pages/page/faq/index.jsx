@@ -114,7 +114,7 @@ export default function Faq() {
             <Meta title="Soff - barcha ma'lumotlar bazasi" image="/static/img/soff/soff_green_white.png" />
 
             <div className="container px-5">
-                <h3 className='mb-4'>Soff.uz xaridorlaridan ko'p beriladigan savollar: </h3>
+                <h3 className='mb-4 mt-5'>Soff.uz xaridorlaridan ko'p beriladigan savollar: </h3>
                 {
                     customersFaqs.map((item, index) => {
                         return (

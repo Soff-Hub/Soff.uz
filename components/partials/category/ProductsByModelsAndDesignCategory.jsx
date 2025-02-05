@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import Product from '~/components/elements/products/Product';
 import { Pagination } from 'antd';
 import { Skeleton } from 'antd'
+import ModelAndDesignProduct from '~/components/elements/products/ModelAndDesignProduct';
 
-export default function ProductsByCategory({ data = [], page, handlePagination, isLoading }) {
+export default function ProductsByModelsAndDesignCategory({ data = [], page, handlePagination, isLoading }) {
 
     return (
         <div id='products'>
@@ -11,14 +11,14 @@ export default function ProductsByCategory({ data = [], page, handlePagination, 
                 {
                     data && (data?.results?.map((item, index) => (
                         <div
-                            className="home-card col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6"
+                            className="home-card col-xl-3 col-lg-3 col-md-4 col-sm-6 col-xs-3 col-6"
                             key={item.id}>
-                            <Product product={item} />
+                            <ModelAndDesignProduct product={item} />
                         </div>
                     )))
                 }
                 {
-                    isLoading && <div className={`product-list p-loading mt-4`}>
+                    isLoading && <div className={`product-list p-loading`}>
                         {Array(15).fill(0).map((d, i) => <Skeleton.Image
                             key={i}
                             active
@@ -30,7 +30,7 @@ export default function ProductsByCategory({ data = [], page, handlePagination, 
 
             </div>
             {
-                data?.count >= 40 && (
+                data?.count >= 48 && (
                     <div className="text-center my-4">
                         <Pagination
                             total={data?.count}

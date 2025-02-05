@@ -17,6 +17,7 @@ import Head from 'next/head';
 import Joyride from 'react-joyride';
 import TemplateProductDetail from '~/components/elements/detail/TemplateProductDetail';
 import { setOneShopDoc } from '~/store/auth/slice';
+import Script from 'next/script';
 
 const ProductDefaultPage = ({ defaultProducts }) => {
     const router = useRouter();
@@ -86,6 +87,27 @@ const ProductDefaultPage = ({ defaultProducts }) => {
         if (pid) {
             getProducts();
             getProductSimiller();
+        }
+
+
+        {/* Yandex reklama kodi */ }
+        if (window.yaContextCb) {
+            window.yaContextCb.push(() => {
+                Ya.Context.AdvManager.render({
+                    blockId: "R-A-13331140-3",
+                    renderTo: "yandex_rtb_R-A-13331140-3"
+                });
+            });
+        }
+
+        {/* Yandex reklama kodi */ }
+        if (window.yaContextCb) {
+            window.yaContextCb.push(() => {
+                Ya.Context.AdvManager.render({
+                    blockId: "R-A-13331140-2",
+                    renderTo: "yandex_rtb_R-A-13331140-2"
+                });
+            });
         }
     }, [user?.access, pid]);
 
@@ -187,10 +209,9 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                         content={
                             defaultProducts?.description
                                 ? removeHTMLTags(defaultProducts?.description)
-                                : `${
-                                      defaultProducts?.title ||
-                                      'soff.uz - Intellektual mulk marketi'
-                                  } `
+                                : `${defaultProducts?.title ||
+                                'soff.uz - Intellektual mulk marketi'
+                                } `
                         }
                     />
                     <meta
@@ -205,8 +226,8 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                         content={
                             defaultProducts?.tag
                                 ? defaultProducts?.tag
-                                      ?.map((e) => e?.name)
-                                      ?.join(', ')
+                                    ?.map((e) => e?.name)
+                                    ?.join(', ')
                                 : 'kurs ishi, taqdimotlar, slaydlar, diplom ishi, prezentatsiya'
                         }
                     />
@@ -224,10 +245,9 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                         content={
                             defaultProducts?.description
                                 ? removeHTMLTags(defaultProducts?.description)
-                                : `${
-                                      defaultProducts?.title ||
-                                      'soff.uz - Intellektual mulk marketi'
-                                  } `
+                                : `${defaultProducts?.title ||
+                                'soff.uz - Intellektual mulk marketi'
+                                } `
                         }
                     />
                     <meta
@@ -244,8 +264,8 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                         content={
                             defaultProducts?.tag
                                 ? defaultProducts?.tag
-                                      ?.map((e) => e?.name)
-                                      ?.join(', ')
+                                    ?.map((e) => e?.name)
+                                    ?.join(', ')
                                 : 'kurs ishi, taqdimotlar, slaydlar, diplom ishi, prezentatsiya'
                         }
                     />
@@ -269,10 +289,9 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                         content={
                             defaultProducts?.description
                                 ? removeHTMLTags(defaultProducts?.description)
-                                : `${
-                                      defaultProducts?.title ||
-                                      'soff.uz - Intellektual mulk marketi'
-                                  } `
+                                : `${defaultProducts?.title ||
+                                'soff.uz - Intellektual mulk marketi'
+                                } `
                         }
                     />
                     <meta property="twitter:url" content="https://soff.uz" />
@@ -282,15 +301,33 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                         content={
                             defaultProducts?.tag
                                 ? defaultProducts?.tag
-                                      ?.map((e) => e?.name)
-                                      ?.join(', ')
+                                    ?.map((e) => e?.name)
+                                    ?.join(', ')
                                 : 'kurs ishi, taqdimotlar, slaydlar, diplom ishi, prezentatsiya'
                         }
                     />
                 </Head>
-
+                <div className='container'>
+                    {/* Yandex reklama kodi */}
+                    <div id="yandex_rtb_R-A-13331140-2"></div>
+                    {/* Yandex scriptni yuklash */}
+                    <Script
+                        src="https://yandex.ru/ads/system/context.js"
+                        strategy="lazyOnload"
+                        onLoad={() => {
+                            if (window.yaContextCb) {
+                                window.yaContextCb.push(() => {
+                                    Ya.Context.AdvManager.render({
+                                        blockId: "R-A-13331140-2",
+                                        renderTo: "yandex_rtb_R-A-13331140-2"
+                                    });
+                                });
+                            }
+                        }}
+                    />
+                </div>
+                {/* <div> */}
                 <div style={{ backgroundColor: '#fff' }}>
-                    {/* <div style={{ backgroundColor: '#fafdff' }}> */}
                     <div className="container" style={{ position: 'relative' }}>
                         <div className="text-end m-0">
                             {defaultProducts?.discpunt_price === 0 && (
@@ -331,23 +368,22 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                         />
 
                         <div
-                            className={`ps-page--product ${
-                                defaultProducts?.price === 0 ? '' : 'pt-2'
-                            }`}>
+                            className={`ps-page--product ${defaultProducts?.price === 0 ? '' : 'pt-2'
+                                }`}>
                             <div className="ps-container p-0">
                                 <div className="ps-page__container">
                                     {!loading &&
-                                    product?.document?.content_type ===
+                                        product?.document?.content_type ===
                                         'file' ? (
-                                        <div className="pt-5">
+                                        <div>
                                             <ProductDetailFullwidth
                                                 product={product}
                                                 views={views}
                                             />
                                         </div>
                                     ) : !loading &&
-                                      product?.document?.content_type ===
-                                          'template' ? (
+                                        product?.document?.content_type ===
+                                        'template' ? (
                                         <div className="">
                                             <TemplateProductDetail
                                                 product={product}
@@ -355,8 +391,8 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                                             />
                                         </div>
                                     ) : !loading &&
-                                      product?.document?.content_type ===
-                                          'video' ? (
+                                        product?.document?.content_type ===
+                                        'video' ? (
                                         <div className="pt-3">
                                             <ProductVideoDetailFullWidth
                                                 isPlay={isPlay}
@@ -367,8 +403,8 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                                             />
                                         </div>
                                     ) : !loading &&
-                                      product?.document?.content_type ===
-                                          'audio' ? (
+                                        product?.document?.content_type ===
+                                        'audio' ? (
                                         <div className="pt-5 mt-2">
                                             <ProductAudioDetailFullWidth
                                                 product={product}
@@ -376,8 +412,8 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                                             />
                                         </div>
                                     ) : !loading &&
-                                      product?.document?.content_type ===
-                                          'article' ? (
+                                        product?.document?.content_type ===
+                                        'article' ? (
                                         <div>
                                             <ProductAudioDetailFullWidth
                                                 product={product}
@@ -392,8 +428,27 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                                     )}
                                 </div>
 
+                                {/* Yandex reklama kodi */}
+                                <div id="yandex_rtb_R-A-13331140-3"></div>
+                                {/* Yandex scriptni yuklash */}
+                                <Script
+                                    src="https://yandex.ru/ads/system/context.js"
+                                    strategy="lazyOnload"
+                                    onLoad={() => {
+                                        if (window.yaContextCb) {
+                                            window.yaContextCb.push(() => {
+                                                Ya.Context.AdvManager.render({
+                                                    blockId: "R-A-13331140-3",
+                                                    renderTo: "yandex_rtb_R-A-13331140-3"
+                                                });
+                                            });
+                                        }
+                                    }}
+                                />
+
+
                                 {similar?.length > 0 &&
-                                product?.document?.content_type !== 'video' ? (
+                                    product?.document?.content_type !== 'video' ? (
                                     <RelatedProduct
                                         isPlay={isPlay}
                                         setIsPlay={setIsPlay}
