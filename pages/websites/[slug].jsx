@@ -14,7 +14,7 @@ export default function Websites() {
     // products API uchun so'rov
     const { data, error, isLoading } = useApi(
         ["products", slug, page, parentCategory, childCategory], // queryKey dinamik
-        `${baseUrlUseApi}customer/products/?direction=website&category=${childCategory ? childCategory : parentCategory}&page=${page || 1}&page_size=48`,
+        `${baseUrlUseApi}customer/products/?direction=website_template&category=${childCategory ? childCategory : parentCategory}&page=${page || 1}&page_size=48`,
         "GET"
     );
 
@@ -22,7 +22,7 @@ export default function Websites() {
     // Four-child API uchun so'rov
     const { data: fourChildData, error: fourChildError, isLoading: isFourChildLoading } = useApi(
         ["fourChild"], // Query key
-        `${baseUrlUseApi}customer/four-child?direction=website`,
+        `${baseUrlUseApi}customer/four-child?direction=website_template`,
         "GET"
     );
 

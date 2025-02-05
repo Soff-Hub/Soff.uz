@@ -51,11 +51,12 @@ const WebsitesCategoriesFilterSecion = ({ breacrumb, count, isLoading, childCate
                     </div>
                 ))}
             </div>
-            {subCategory ? (
+            {subCategory?.length > 0 ? (
                 <>
                     <div className='ps-breadcrumb-2 py-3'>
                         <ul className='breadcrumb-2'>
                             <li>{subCategory.name} (<span>{formatCurrencyWithSpace(count)}+</span>)</li>
+
                             {subCategory.map((item, index) => {
                                 return (
                                     <li
@@ -79,7 +80,7 @@ const WebsitesCategoriesFilterSecion = ({ breacrumb, count, isLoading, childCate
                                 );
                             })}
                             {
-                                (subCategory.length <! 20) && <li className='forMoreInformation active' onClick={() => setExpanded(!expanded)}> {expanded ? "Kamroq ko‘rsatish" : "Barchasini ko‘rsatish"}</li>
+                                (subCategory.length < !20) && <li className='forMoreInformation active' onClick={() => setExpanded(!expanded)}> {expanded ? "Kamroq ko‘rsatish" : "Barchasini ko‘rsatish"}</li>
                             }
                         </ul>
                     </div>

@@ -8,26 +8,40 @@ export default function ProductsByCategory({ data = [], page, handlePagination, 
     return (
         <div id='products'>
             <div className="row">
+
                 {
-                    data && (data?.results?.map((item, index) => (
+                    isLoading && (
+                        <div className={`product-list p-loading`}>
+                            {
+                                Array(15).fill(0).map((d, i) => <Skeleton.Image
+                                    key={i}
+                                    active
+                                    className={`skeletion-card file`}
+                                />)
+                            }
+                        </div>
+                    )
+                }
+                {
+                    (data?.results?.map((item, index) => (
                         <div
                             className="home-card col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6"
-                            key={item.id}>
+                            key={index}>
                             <Product product={item} />
                         </div>
                     )))
                 }
+            </div>
+            <div className='row justify-content-center'>
                 {
-                    isLoading && <div className={`product-list p-loading mt-4`}>
-                        {Array(15).fill(0).map((d, i) => <Skeleton.Image
-                            key={i}
-                            active
-                            className={`skeletion-card file`}
-                        />)
-                        }
-                    </div>
+                    (data?.results?.length == 0) && (
+                        <div
+                            className="text-center col-md-6 com-12" style={{ padding: '150px 0px' }}>
+                            <p className='fs-1'>😕 Bu yerda hozircha hech narsa yo‘q...</p>
+                            <p className='fs-4'>Birinchilardan bo‘lib ushbu kategoriyaga mahsulot joylashtirib boshlang va o'z auditoriyangizni yig'ib daromad qilishni boshlang! 👉 <a target='_blank' className='text-primary' href="https://seller.soff.uz">seller.soff.uz</a> </p>
+                        </div>
+                    )
                 }
-
             </div>
             {
                 data?.count >= 40 && (
