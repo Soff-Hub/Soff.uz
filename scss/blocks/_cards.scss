@@ -285,6 +285,32 @@
     display: flex;
 }
 
+.categoryMenuCard:hover {
+    background-color: #00a44f !important;
+    color: #fff;
+}
+
+.categoryMenuCardActive {
+    background-color: #00a44f !important;
+    color: #fff;
+}
+
+.websiteMenuCard {
+    min-height: 260px !important;
+    gap: 15px;
+    position: relative !important;
+
+}
+
+.websiteCardIcons {
+    display: flex;
+    align-items: center !important;
+    gap: 10px;
+    position: absolute;
+    bottom: 5px !important;
+    right: 8px;
+}
+
 @media only screen and (max-width: 768px) {
     .miniplayer {
         width: 100%;
