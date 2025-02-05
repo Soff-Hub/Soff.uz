@@ -122,11 +122,13 @@ const ThreeDCategoriesFilterSecion = ({ breacrumb, count, isLoading, childCatego
                         }
                     </div>
                     {
-                        subCategory && subCategory.length > 0 && (
+                        subCategory?.length > 0 && (
                             <>
                                 <div className='ps-breadcrumb-2 py-3'>
                                     <ul className='breadcrumb-2'>
-                                        <li>{subCategory.name} (<span>{formatCurrencyWithSpace(count)}+</span>)</li>
+                                        {
+                                            subCategory.name && <li>{subCategory.name} (<span>{formatCurrencyWithSpace(count)}+</span>)</li>
+                                        }
                                         {subCategory.map((item, index) => {
                                             return (
                                                 <li

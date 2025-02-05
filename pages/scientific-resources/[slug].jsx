@@ -14,21 +14,21 @@ export default function ProductCategoryScreen() {
     // products API uchun so'rov
     const { data, error, isLoading } = useApi(
         ["products", page, parentCategory, childCategory], // queryKey dinamik
-        `${baseUrlUseApi}customer/products/?type=file&category=${childCategory ? childCategory : parentCategory}&page=${page || 1}&page_size=48`,
+        `${baseUrlUseApi}customer/products/?direction=scientific_work&category=${childCategory ? childCategory : parentCategory}&page=${page || 1}&page_size=48`,
         "GET"
     );
 
     // Otab kategoriya API uchun so'rov
     const { data: fourChildData, error: fourChildError, isLoading: isFourChildLoading } = useApi(
         ["fourChild"], // Query key
-        `${baseUrlUseApi}customer/four-child?type=file`,
+        `${baseUrlUseApi}customer/four-child?direction=scientific_work`,
         "GET"
     );
 
     // Farzand kategoriya API uchun so'rov
     const { data: childCategoryData, error: childCategoryEror, isLoading: isChildCategory } = useApi(
         ["fourChild", parentCategory], // Query key
-        `${baseUrlUseApi}customer/four-child?type=file&parent__slug=${parentCategory}`,
+        `${baseUrlUseApi}customer/four-child?direction=scientific_work&parent__slug=${parentCategory}`,
         "GET"
     );
 
