@@ -24,9 +24,10 @@ export default function BuyBtnScroll() {
     return (
         <div className={`scroll-buy-btn ${show ? '' : 'scroll-buy-btn-no-active'}`}>
             <a
-                className="ps-btn py-3 m-0"
+                className="ps-btn py-3 m-0 text-white"
                 href="#get-buy"
             >
+                <i class="fa-solid fa-download mr-3"></i>
                 Yuklab olish
             </a>
         </div>

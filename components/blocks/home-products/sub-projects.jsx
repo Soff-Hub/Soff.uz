@@ -41,7 +41,7 @@ export default function SubProjects() {
         <div>
             <div className="system">
                 <div className="container">
-                    <h3 className='text-center mb-5 system-title'>Soff — faqatgina intellektual mulk bozori emas</h3>
+                    <h2 className='text-center my-5'>Soff — faqatgina intellektual mulk bozori emas</h2>
                     <div className="system-inner">
                         {
                             projecs.map(el => (
