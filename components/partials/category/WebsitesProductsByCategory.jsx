@@ -26,7 +26,7 @@ export default function WebsitesProductsByCategory({ data = [], page, handlePagi
                     (data?.results?.length > 0) && (data?.results?.map((item, index) => (
                         <div
                             className="home-card col-md-3 col-sm-4 col-xs-3 col-6"
-                            key={item.id}>
+                            key={index}>
                             <WebsitesProduct product={item} />
                         </div>
                     )))
