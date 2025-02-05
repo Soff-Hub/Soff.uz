@@ -122,7 +122,7 @@ const CategoriesFilterSecion = ({ breacrumb, count, isLoading, childCategoryData
                         }
                     </div>
                     {
-                        subCategory && subCategory.length > 0 && (
+                        subCategory?.length > 0 && (
                             <>
                                 <div className='ps-breadcrumb-2 py-3'>
                                     <ul className='breadcrumb-2'>
