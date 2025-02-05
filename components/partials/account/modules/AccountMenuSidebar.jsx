@@ -132,13 +132,6 @@ const AccountMenuSidebar = ({ data, menuOpen }) => {
                         `${process.env.NEXT_PUBLIC_WS_BASE_URL}ws/admin-application/?token=${user?.access}`
                     )
                 );
-            } else {
-                setSocketApplication(
-                    new WebSocket(
-                        `${process.env.NEXT_PUBLIC_WS_BASE_URL}ws/seller-application/?token=` +
-                        user?.access
-                    )
-                );
             }
         }
     }, [user?.access]);
