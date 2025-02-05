@@ -7,9 +7,9 @@ const SiteFooter = () => {
     const [email, setEmail] = useState('')
     const contacts = [
         {
-            link: "https://yandex.uz/maps/-/CDxfY-1C",
-            text: "8/1 Bunyodkor Avenue, Toshkent shahri",
-            icon: "fa-solid fa-location-dot"
+            link: "https://t.me/soff_uz",
+            text: "t.me/soff_uz",
+            icon: "fa-regular fa-paper-plane"
         },
         {
             link: "tel:+998910086789",
@@ -17,9 +17,9 @@ const SiteFooter = () => {
             icon: "fa-solid fa-phone"
         },
         {
-            link: "mailto:support@soff.uz",
-            text: "support@soff.uz",
-            icon: "fa-solid fa-envelope"
+            link: "https://yandex.uz/maps/-/CDxfY-1C",
+            text: "8/1 Bunyodkor Avenue, Toshkent shahri",
+            icon: "fa-solid fa-location-dot"
         }
     ]
 
@@ -35,33 +35,23 @@ const SiteFooter = () => {
     return (
         <div className='site-footer'>
             <div className="container">
-                <div className="site-footer-inner row m-0">
-                    <div className="site-footer-left col-lg-6 col-md-6 col-sm-12">
+                <div className="row">
+                    <div className="col-lg-5 col-sm-12">
                         <div className="left-inner">
                             <Link href="/">
                                 <a className="ps-logo">
                                     <NextImageCard
                                         url="/static/img/soff/logo-dark.png"
                                         className="logoo"
-                                        width="150px"
-                                        height="50px"
+                                        width="100px"
+                                        height="40px"
                                     />
                                 </a>
                             </Link>
-                            <p>
-                                <strong>SOFF.UZ</strong> - qidiruv tizimi
-                            </p>
-                            <p>
-                                O‘zbek tilida saralanib borilayotgan sifatli ma’lumotlar jamlanmasini, fayllar, tasvirlar, videolar, audiolar ko‘rinishida qidirib topish imkonini beradi.
-                            </p>
-                            {/* <Link href={'/account/donat'}>
-                                <a>
-                                    Loyiha rivoji uchun o'z hissangizni qo'shing - Donat
-                                </a>
-                            </Link> */}
+                            <p className='fs-3'> - raqamli xizmatlar bozori! </p>
                         </div>
                     </div>
-                    <div className="site-footer-right col-lg-6 col-md-6 col-sm-12">
+                    <div className="site-footer-right col-lg-7 col-sm-12 ">
                         {
                             contacts.map((el, index) => (
                                 <div key={index} className='site-footer-item'>

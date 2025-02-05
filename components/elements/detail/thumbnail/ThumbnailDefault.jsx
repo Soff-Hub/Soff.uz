@@ -1,6 +1,7 @@
+import Script from 'next/script';
 import React, { useEffect, useRef } from 'react';
 
-const ThumbnailDefault = ({ product, vertical = true, views }) => {
+const ThumbnailDefault = ({ product, views }) => {
     product?.document?.images?.sort((a, b) => a?.id - b?.id)
 
     const wrapperRef = useRef(null);
@@ -17,35 +18,40 @@ const ThumbnailDefault = ({ product, vertical = true, views }) => {
                 wrapperRef.current.scrollTop = 0;
             }
         }
+
     }, [product]);
 
     return (
-        <div
-            className="ps-product__thumbnail full-detail-image"
-            data-vertical={vertical ? 'true' : 'false'}>
-            <figure style={{ flex: '1', minWidth: '100%' }}>
-                <div className="ps-wrapper d-block p-4" ref={wrapperRef}>
-                    {product?.document?.images?.length > 0
-                        ? product?.document?.images?.map((item, i) => (
-                            <img
-                                src={item?.image_url}
-                                className="border mb-3 w-100 mx-auto"
-                                // width="100%"
-                                // height={['.docx', '.doc', '.pdf'].includes(type) ? '800px' : '400px'}
-                                // style={{ objectFit: 'contain' }}
-                                key={i}
-                                detail={true}
-                                style={{ display: 'flex', width: '90%', maxWidth: '60%' }}
-                            />
-                        ))
-                        : ''}
-                </div>
-                <div className="views">
-                    {' '}
-                    <i className="fa-solid fa-eye"></i> <span>{views}</span>
-                </div>
-            </figure>
-        </div>
+        <>
+            <div>
+                <figure
+                    style={{
+                        // boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
+                        position: 'relative'
+                    }}>
+                    <div className="ps-wrapper d-block p-4 border" ref={wrapperRef}>
+                        {product?.document?.images?.length > 0
+                            ? product?.document?.images?.map((item, i) => (
+                                <img
+                                    src={item?.image_url}
+                                    className="border mb-3 w-100 mx-auto"
+                                    // width="100%"
+                                    // height={['.docx', '.doc', '.pdf'].includes(type) ? '800px' : '400px'}
+                                    // style={{ objectFit: 'contain' }}
+                                    key={i}
+                                    detail={true}
+                                    style={{ display: 'flex', width: '90%', maxWidth: '60%' }}
+                                />
+                            ))
+                            : ''}
+                    </div>
+                    <div className="views">
+                        {' '}
+                        <i className="fa-solid fa-eye"></i> <span>{views}</span>
+                    </div>
+                </figure>
+            </div>
+        </>
     );
 };
 

@@ -23,7 +23,7 @@ export default function ProductsByDesignDevelopment({ data = [], page, handlePag
 
                 }
                 {
-                    (data?.results?.map((item, index) => (
+                    (data?.results?.length > 0) && (data?.results?.map((item, index) => (
                         <div
                             className="home-card col-xl-3 col-lg-3 col-md-4 col-sm-6 col-xs-3 col-6"
                             key={index}>
@@ -32,6 +32,17 @@ export default function ProductsByDesignDevelopment({ data = [], page, handlePag
                     )))
                 }
 
+            </div>
+            <div className='row justify-content-center'>
+                {
+                    (data?.results?.length == 0) && (
+                        <div
+                            className="text-center col-md-6 com-12" style={{ padding: '150px 0px'}}>
+                            <p className='fs-1'>😕 Bu yerda hozircha hech narsa yo‘q...</p>
+                            <p className='fs-4'>Birinchilardan bo‘lib ushbu kategoriyaga mahsulot joylashtirib boshlang va o'z auditoriyangizni yig'ib daromad qilishni boshlang! 👉 <a target='_blank' className='text-primary' href="https://seller.soff.uz">seller.soff.uz</a> </p>
+                        </div>
+                    )
+                }
             </div>
             {
                 data?.count >= 48 && (

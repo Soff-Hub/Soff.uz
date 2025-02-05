@@ -4,7 +4,7 @@ import { formatCurrencyWithSpace } from '~/utilities/product-helper';
 import { Select, Skeleton } from 'antd';
 const Option = Select.Option;
 
-const CategoriesFilterSecion = ({ breacrumb, count, isLoading, childCategoryData }) => {
+const ThreeDCategoriesFilterSecion = ({ breacrumb, count, isLoading, childCategoryData }) => {
     const [expanded, setExpanded] = useState(false);
 
     const router = useRouter();
@@ -24,7 +24,7 @@ const CategoriesFilterSecion = ({ breacrumb, count, isLoading, childCategoryData
                         onChange={(value) => {
                             {
                                 router.push({
-                                    pathname: `/scientific-resources/${value}`,
+                                    pathname: `/3d-models-and-interior-designs/${value}`,
                                     query: { parentCategory: value } // query parametrini qo'shish
                                 })
                             }
@@ -56,7 +56,7 @@ const CategoriesFilterSecion = ({ breacrumb, count, isLoading, childCategoryData
                             onChange={(value) => {
                                 {
                                     router.push({
-                                        pathname: "/scientific-resources/[slug]",
+                                        pathname: "/3d-models-and-interior-designs/[slug]",
                                         query: {
                                             ...router.query,
                                             slug: value,
@@ -95,7 +95,7 @@ const CategoriesFilterSecion = ({ breacrumb, count, isLoading, childCategoryData
                                     key={index}
                                     className={`${parentCategory === item.slug ? 'categoryMenuCardActive' : ''} categoryMenuCard bg--white d-flex align-items-center gap-3 border  border-secondary-subtle rounded-2 p-2`} // Ota kategoriya aktivligi
                                     onClick={() => router.push({
-                                        pathname: `/scientific-resources/${item.slug}`,
+                                        pathname: `/3d-models-and-interior-designs/${item.slug}`,
                                         query: { parentCategory: item.slug } // query parametrini qo'shish
                                     })}
                                 >
@@ -126,7 +126,9 @@ const CategoriesFilterSecion = ({ breacrumb, count, isLoading, childCategoryData
                             <>
                                 <div className='ps-breadcrumb-2 py-3'>
                                     <ul className='breadcrumb-2'>
-                                        <li>{subCategory.name} (<span>{formatCurrencyWithSpace(count)}+</span>)</li>
+                                        {
+                                            subCategory.name && <li>{subCategory.name} (<span>{formatCurrencyWithSpace(count)}+</span>)</li>
+                                        }
                                         {subCategory.map((item, index) => {
                                             return (
                                                 <li
@@ -134,7 +136,7 @@ const CategoriesFilterSecion = ({ breacrumb, count, isLoading, childCategoryData
                                                     key={index}
                                                     onClick={() =>
                                                         router.push({
-                                                            pathname: "/scientific-resources/[slug]",
+                                                            pathname: "/3d-models-and-interior-designs/[slug]",
                                                             query: {
                                                                 ...router.query,
                                                                 slug: item.slug,
@@ -168,4 +170,4 @@ const CategoriesFilterSecion = ({ breacrumb, count, isLoading, childCategoryData
     );
 };
 
-export default CategoriesFilterSecion;
+export default ThreeDCategoriesFilterSecion;

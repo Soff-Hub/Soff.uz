@@ -113,9 +113,9 @@ const ModuleDetailShoppingActions = ({ product }) => {
                     <p></p>
                 </Modal>
 
-                <div className="ps-product__shopping  ">
+                <div className="ps-product__shopping bg-white p-3 mt-3 ">
                     {contextHolder}
-                    <div className='d-flex  align-items-center gap-4  m-0 w-100 flex-wrap ' >
+                    <div className='d-flex align-items-center gap-4  m-0 w-100 flex-wrap ' >
 
                         {product?.discount_price > 0 ? (
                             <>
@@ -127,7 +127,7 @@ const ModuleDetailShoppingActions = ({ product }) => {
                                             fontSize: "14px"
 
                                         }}
-                                        className="ps-btn ps-btn--black py-3 "
+                                        className="ps-btn ps-btn--black py-3 w-100"
                                         target='_blank'
                                         href={product?.document?.file_url}
                                     // onClick={async (e) => {
@@ -160,17 +160,18 @@ const ModuleDetailShoppingActions = ({ product }) => {
                                 ) : (
                                     <>
                                         <a
-                                            className="ps-btn py-3 buystep-2 m-0"
+                                            className="ps-btn w-100"
                                             href="#"
-                                            style={{ fontSize: "14px" }}
                                             onClick={(e) => handleBuynow(e)}>
+                                            <i class="fa-solid fa-download mr-3"></i>
                                             Hoziroq xarid qilish
                                         </a>
                                         <a
-                                            className="ps-btn ps-btn--black py-3 buystep-1 m-0"
+                                            className="ps-btn ps-btn--white--gray py-3 buystep-1 w-100"
                                             href="#"
                                             style={{ fontSize: "14px" }}
                                             onClick={(e) => handleAddItemToCart(e)}>
+                                            <i class="fa-solid fa-cart-arrow-down mr-3"></i>
                                             Savatga qo'shish
                                         </a>
                                     </>
@@ -203,32 +204,33 @@ const ModuleDetailShoppingActions = ({ product }) => {
                             </a>
 
                         )}
+                        <div className='d-flex w-100 justify-content-between'>
+                            <div className="p-3 px-5 rounded-3 col-9 border" style={{ backgroundColor: "#fff" }} onClick={() => copyVideoUrl()}>
+                                {copy ? (
+                                    <div className='text-center'>
+                                        <i className="fa-solid fa-check mr-3"></i> nusxalandi
+                                    </div>
+                                ) : (
+                                    <div style={{ cursor: "pointer" }} className='w-100 d-flex justify-content-center align-items-center'>
+                                        <i className="fa-solid fa-share-nodes mr-3" style={{ marginRight: "5px" }}></i>
+                                        ulashish
+                                    </div>
+                                )}
+                            </div>
 
-                        <div className="p-3 px-5 rounded-3 col-md-3 " style={{ backgroundColor: "#fff", width: "100%" }} onClick={() => copyVideoUrl()}>
-                            {copy ? (
-                                <div className='text-center'>
-                                    <i className="fa-solid fa-check mr-3"></i> nusxalandi
-                                </div>
-                            ) : (
-                                <div style={{ cursor: "pointer" }} className='w-100 d-flex justify-content-center align-items-center'>
-                                    <i className="fa-solid fa-share-nodes mr-3" style={{ marginRight: "5px" }}></i>
-                                    ulashish
-                                </div>
-                            )}
-                        </div>
-
-                        <div className="ps-product__actions">
-                            <a href="#" onClick={(e) => handleAddItemToWishlist(e)}>
-                                <i
-                                    className={`${wishlist?.some(
-                                        (item) =>
-                                            Number(item.id) ===
-                                            Number(product.id)
-                                    )
-                                        ? 'fa-solid fa-heart text-danger'
-                                        : 'icon-heart'
-                                        } `}></i>
-                            </a>
+                            <div className="ps-product__actions col-2">
+                                <a href="#" onClick={(e) => handleAddItemToWishlist(e)}>
+                                    <i
+                                        className={`${wishlist?.some(
+                                            (item) =>
+                                                Number(item.id) ===
+                                                Number(product.id)
+                                        )
+                                            ? 'fa-solid fa-heart text-danger'
+                                            : 'icon-heart'
+                                            } `}></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
 

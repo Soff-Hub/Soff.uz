@@ -43,7 +43,7 @@ const RelatedProduct = ({ collectionSlug, boxed, pid, data }) => {
         <>
             {relatedProduct?.length > 0 ? (
                 <div
-                    className={`ps-section--default ps-related-products ${boxed === true ? 'boxed' : ''
+                    className={`mt-5 ps-section--default ps-related-products ${boxed === true ? 'boxed' : ''
                         }`}>
                     <div className="ps-section__header">
                         <h3>O'xshash mahsulotlar</h3> 
