@@ -1,13 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Pagination } from 'antd';
 import { Skeleton } from 'antd'
-import WebsitesProduct from '~/components/elements/products/WebsitesProduct';
+import DesignDevelopmentProducts from '~/components/elements/products/DesignDevelopmentProducts';
 
-export default function WebsitesProductsByCategory({ data = [], page, handlePagination, isLoading }) {
+export default function ProductsByDesignDevelopment({ data = [], page, handlePagination, isLoading }) {
 
     return (
-        <div id='products' className='overflow-hidden container'>
-            <div className="row ">
+        <div id='products'>
+            <div className="row">
                 {
                     isLoading && (
                         <div className={`product-list p-loading`}>
@@ -25,12 +25,13 @@ export default function WebsitesProductsByCategory({ data = [], page, handlePagi
                 {
                     (data?.results?.length > 0) && (data?.results?.map((item, index) => (
                         <div
-                            className="home-card col-md-3 col-sm-4 col-xs-3 col-6"
+                            className="home-card col-xl-3 col-lg-3 col-md-4 col-sm-6 col-xs-3 col-6"
                             key={index}>
-                            <WebsitesProduct product={item} />
+                            <DesignDevelopmentProducts product={item} />
                         </div>
                     )))
                 }
+
             </div>
             <div className='row justify-content-center'>
                 {
@@ -43,21 +44,23 @@ export default function WebsitesProductsByCategory({ data = [], page, handlePagi
                     )
                 }
             </div>
-            {data?.count >= 48 && (
-                <div className="text-center my-4">
-                    <Pagination
-                        total={data?.count}
-                        pageSize={48}
-                        responsive={true}
-                        showSizeChanger={false}
-                        current={page}
-                        showTotal={(total, range) =>
-                            `${total} ta dan ${range[0]}-${range[1]} oralig'i `
-                        }
-                        onChange={(e) => handlePagination(e)}
-                    />
-                </div>
-            )}
-        </div>
+            {
+                data?.count >= 48 && (
+                    <div className="text-center my-4">
+                        <Pagination
+                            total={data?.count}
+                            pageSize={48}
+                            responsive={true}
+                            showSizeChanger={false}
+                            current={page}
+                            showTotal={(total, range) =>
+                                `${total} ta dan ${range[0]}-${range[1]} oralig'i `
+                            }
+                            onChange={(e) => handlePagination(e)}
+                        />
+                    </div>
+                )
+            }
+        </div >
     )
 }
