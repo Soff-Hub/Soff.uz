@@ -42,6 +42,16 @@ export const uploadApi = createApi({
                 },
             }),
         }),
+        uploadThreeDProducts: builder.mutation({
+            query: (data) => ({
+                url: '/seller/template-create-second/',
+                data,
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            }),
+        }),
     }),
 });
 
@@ -51,4 +61,5 @@ export const {
     useUploadTemplateMutation,
     useFetchProductDetailQuery,
     useUpdateTemplateMutation,
+    useUploadThreeDProductsMutation,
 } = uploadApi;

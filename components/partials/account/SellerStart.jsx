@@ -22,6 +22,11 @@ export const productTypeItems = [
         path: '/account/upload/template/create',
         img: '/static/img/template-i.jpg',
         title: 'Shablonlar'
+    },
+    {
+        path: '/account/upload/3d-models-and-interior-designs/create',
+        img: '/static/img/template-i.jpg',
+        title: '3D moddellar va Interier dizaynlar'
     }
 ]
 
@@ -48,6 +53,11 @@ const SellerStart = () => {
             path: '/account/upload/template/create',
             img: '/static/img/template-i.jpg',
             title: 'Shablonlar'
+        },
+        {
+            path: '/account/upload/3d-models-and-interior-designs/create',
+            img: '/static/img/template-i.jpg',
+            title: '3D moddellar va Interier dizaynlar'
         }
     ]
 

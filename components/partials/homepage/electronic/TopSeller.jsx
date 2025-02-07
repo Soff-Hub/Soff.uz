@@ -1,5 +1,4 @@
 import React from 'react';
-import Slider from 'react-slick';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import 'swiper/css';

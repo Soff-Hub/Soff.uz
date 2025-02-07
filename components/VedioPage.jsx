@@ -1,6 +1,5 @@
 import React from 'react';
 import { useState } from 'react';
-import ModalVideo from "react-modal-video"
 
 export default function VedioPage() {
     const [modalClose, setModalClose] = useState(false);
@@ -22,8 +21,6 @@ export default function VedioPage() {
                     <p> <span>Soff.uz</span> - biz bilan bilimingiz orqali daromad qiling</p>
                 </div>
             </div>
-            <ModalVideo  channel="youtube" autoplay isOpen={modalClose} 
-            videoId={videoId} onClose={() => setModalClose(false)} />
         </div>
     );
 }

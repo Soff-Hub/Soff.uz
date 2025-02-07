@@ -11,7 +11,6 @@ import { addPeriodToThousands } from './ProductsLists';
 import SidebarLayout from '../SidebarLayout';
 import Link from 'next/link';
 import { setSavedPrfileData } from '~/rtk-store/ecomerce';
-import { CheckCircleTwoTone } from '@mui/icons-material';
 const { TextArea } = Input;
 
 
