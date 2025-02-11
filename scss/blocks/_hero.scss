@@ -43,8 +43,11 @@
 }
 
 .hero-title {
-    color: white;
-    font-size: 40px;
+    color: #000;
+    font-size: 58.35px;
+    font-weight: 600;
+    line-height: 64px;
+    font-family: 'Poppins';
 
     span {
         color: #00a44f;
@@ -156,5 +159,12 @@
     .sub-category-tab-item {
         font-size: 10px;
         padding: 3px 6px;
+    }
+}
+
+.HeroService {
+    margin-top: 75px !important;
+    .HeroService-title {
+        padding: 25px 0 108px;
     }
 }

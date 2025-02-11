@@ -25,7 +25,8 @@
 
 .menu--product-categories {
     display: flex;
-    gap: 20px
+    gap: 20px;
+    padding: 5px 0;
 }
 
 .menu__toggle__drop_down_item:hover .menu__toggle__drop_down {
