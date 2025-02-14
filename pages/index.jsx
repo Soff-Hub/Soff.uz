@@ -1,30 +1,39 @@
-import React from 'react'
-import HeroMain from '~/components/blocks/hero'
-import HeroService from '~/components/blocks/hero/HeroService'
-import HomeCategories from '~/components/blocks/home-categories'
-import SubProjects from '~/components/blocks/home-products/sub-projects'
-import HomeVideo from '~/components/blocks/home-video'
-import PageLayout from '~/components/layouts/PageLayout'
-import Meta from '~/components/shared/headers/Meta'
-import VedioPage from '~/components/VedioPage'
+import React from 'react';
+import FooterComponents from '~/components/blocks/footer/FooterComponents';
+import ResutsComponents from '~/components/blocks/header/Results/ResutsComponents';
+import HeroMain from '~/components/blocks/hero';
+import HeroService from '~/components/blocks/hero/HeroService';
+import HomeCategories from '~/components/blocks/home-categories';
+import ItServicesCategories from '~/components/blocks/home-categories/ItServicesCategories';
+import SubProjects from '~/components/blocks/home-products/sub-projects';
+import HomeVideo from '~/components/blocks/home-video';
+import PageLayout from '~/components/layouts/PageLayout';
+import Meta from '~/components/shared/headers/Meta';
+import VedioPage from '~/components/VedioPage';
 
-function NewHomePage({ tab, category }) {
-
+function NewHomePage ({ tab, category }) {
     return (
         <PageLayout>
-            <Meta title="Soff - barcha ma'lumotlar bazasi" image="/static/img/soff/soff_green_white.png" />
+            <Meta
+                title="Soff - barcha ma'lumotlar bazasi"
+                image='/static/img/soff/soff_green_white.png'
+            />
             {/* <HeroMain /> */}
-            <HeroService/>
+            <HeroService />
             {/* <CategoryTabs tab={tab} category={category} /> */}
-            <HomeCategories/>
-            <HomeVideo/>
+            <HomeCategories />
+            <ItServicesCategories />
+
+            <HomeVideo />
+            <ResutsComponents />
             {/* <HomeProducts tab={tab} /> */}
             <SubProjects />
+            <FooterComponents />
         </PageLayout>
-    )
+    );
 }
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps (context) {
     const { query } = context;
 
     return {
@@ -35,4 +44,4 @@ export async function getServerSideProps(context) {
     };
 }
 
-export default NewHomePage
+export default NewHomePage;

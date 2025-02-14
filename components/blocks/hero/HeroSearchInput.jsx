@@ -26,7 +26,7 @@ export default function HeroSearchInput(inputProps) {
                 type="text"
                 placeholder="Izlayotgan mahsulotingizni toping..." {...inputProps}
             />
-            <div className="btn btn-success fs-4 rounded-3   px-5 py-3">Izlash</div>
+            <div className="btn btn-success fs-4 rounded-3 px-5 py-3">Izlash</div>
 
             {/* <SearchSelectDropdown value={value} setValue={setValue} /> */}
         </form>
