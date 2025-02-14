@@ -6,6 +6,7 @@ import { useFetchReportsQuery } from '~/rtk-store/admin/reportsApi';
 import { updateReportPagePrams } from '~/rtk-store/admin/reportSlice';
 import { updateProductParams } from '~/rtk-store/products/slice';
 import Router from 'next/router';
+import CalculateTimeDifference from './DateFormatter';
 
 /**
  * ReportsList is a React component that displays a list of reports (complaints)
@@ -30,17 +31,26 @@ function ReportsList() {
         {
             dataIndex: 'contact',
             title: 'Kontakt',
-            width: 100,
         },
         {
             dataIndex: 'message',
             title: 'Xabar',
-            width: 160,
+        },
+        {
+            title: 'Sanasi',
+            dataIndex: 'created_at',
+            key: 'address',
+            render: (created_at) => (
+                <div style={{ minWidth: "200px" }}>
+                    {' '}
+                    <i className="fa-solid fa-clock text-info-emphasis"></i>{' '}
+                    <CalculateTimeDifference targetDate={created_at} />
+                </div>
+            ),
         },
         {
             dataIndex: 'document_data',
             title: 'Mahsulot',
-            width: 160,
             render: (document_data) => (
                 <span
                     style={{ cursor: 'pointer' }}
@@ -72,7 +82,7 @@ function ReportsList() {
                                 columns={reportsColumns}
                                 dataSource={data?.results}
                                 pagination={false}
-                                scroll={{ x: 1024 }}
+                                scroll={{ x: 1200 }}
                             />
                             {pageParams?.page ? (
                                 <div

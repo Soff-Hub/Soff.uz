@@ -45,10 +45,20 @@ export default function DashboardCommentsTable() {
             key: 'address',
             render: (created_at) => (
                 <span>
-                    {' '}
-                    <i className="fa-solid fa-clock text-info-emphasis"></i>{' '}
                     {created_at}
                 </span>
+            ),
+        },
+        {
+            title: 'Sanasi',
+            dataIndex: 'created_at',
+            key: 'address',
+            render: (created_at) => (
+                <div style={{minWidth:"200px"}}>
+                    {' '}
+                    <i className="fa-solid fa-clock text-info-emphasis"></i>{' '}
+                    <CalculateTimeDifference targetDate={created_at} />
+                </div>
             ),
         },
         {
@@ -130,7 +140,7 @@ export default function DashboardCommentsTable() {
                         columns={commentsColumn}
                         pagination={false}
                         loading={orderLoading}
-                        scroll={{ x: 1000 }}
+                        scroll={{ x: 1600 }}
                     />
                 )
             }

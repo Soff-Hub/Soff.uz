@@ -161,7 +161,7 @@ export default function DashboardOrderTable({ role }) {
                 ) : (
                     <Table
                         size="small"
-                        scroll={{ x: role === "admin" ? 1600 : 576 }}
+                        scroll={{ x: role === "admin" ? 1700 : 576 }}
                         dataSource={dataOrders}
                         columns={columnsOrders}
                         pagination={false}

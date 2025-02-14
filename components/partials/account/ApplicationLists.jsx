@@ -268,7 +268,7 @@ function ApplicationLists() {
     const columns = [
         {
             title: 'Tranzaksiya ID',
-            dataIndex: 'amount',
+            dataIndex: 'id',
             key: 'address',
             render: (id) => (
                 <span># {id}</span>
@@ -321,7 +321,7 @@ function ApplicationLists() {
     const columnsAdmin = [
         {
             title: 'Tranzaksiya ID',
-            dataIndex: 'amount',
+            dataIndex: 'id',
             key: 'address',
             render: (id) => (
                 <span>#{id}</span>
