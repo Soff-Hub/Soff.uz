@@ -163,8 +163,16 @@
 }
 
 .HeroService {
-    margin-top: 75px !important;
+    margin-top: 75.74px !important;
+
     .HeroService-title {
-        padding: 25px 0 108px;
+        // padding: 25px 0 108px;
+        
+    }
+    .HeroServiceLeft {
+        width: 806.91px;
+        .hero-title{
+            margin-top: 28.34px;
+        }
     }
 }

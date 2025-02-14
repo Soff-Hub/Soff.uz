@@ -6,27 +6,27 @@ export default function HeroService () {
     const { query } = useRouter();
 
     return (
-        <div className={'container-xxl'}>
+        <div className='container p-0'>
             <div className='HeroService'>
-                <div className='d-flex '>
-                    <div className='HeroService-title'>
-                        <p className='hero-title'>
+                <div className='d-flex justify-content-between'>
+                    <div className='HeroServiceLeft'>
+                        <p className='hero-title fw-semibold'>
                             Soff.uz – raqamli xizmatlar bozori!
                         </p>
-                        <p className='fs-3 w-75 text-dark fw-normal '>
+                        <p class='hero-description  fs-3 w-75  lh-base  custom-letter-spacing'>
                             Lorem Ipsum is simply dummy text of the printing and
                             typesetting industry. Lorem Ipsum has been the
                             industry's standard.
                         </p>
                         <HeroSearchInput />
-                        <div className='d-flex align-items-center'>
-                            <p className='fs-7 fw-normal p-3 text-dark m-0'>
+                        <div className='d-flex align-items-center gap-4 mt-5'>
+                            <p className='fs-3 fw-normal  text-dark m-0'>
                                 Mashhur:
                             </p>
-                            <div>
+                            <div className=''>
                                 <a
                                     href=''
-                                    className='fs-7 fw-normal p-3 border boder-1 border-success rounded-3'>
+                                    className='fs-4 fw-normal p-2 border boder-1 border-success rounded-3'>
                                     Kurs ishlari
                                 </a>
                             </div>
@@ -34,7 +34,11 @@ export default function HeroService () {
                     </div>
 
                     <div>
-                        <img src='/static/img/heroComponentsHero.svg' width={'531px'} alt='' />
+                        <img
+                            src='/static/img/heroComponentsHero.png'
+                            // style={{ width: '531px', height: '535px' }}
+                            alt=''
+                        />
                     </div>
                 </div>
             </div>
