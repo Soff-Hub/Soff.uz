@@ -3,11 +3,16 @@ import { useRouter } from 'next/router';
 import CreditCard2 from '../CreditCard2';
 
 function FormCheckoutInformationOne() {
-    const Router = useRouter();
-    const { id, type } = Router.query;
+    const router = useRouter();
+
+    const { id, type } = router.query;
+
+    if (!router.isReady) return null;
 
     let arr = [];
-    arr.push(id);
+    if(id){
+        arr.push(id);
+    }
 
     return (
         <div className="tolov-usullari">
