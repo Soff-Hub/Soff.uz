@@ -11,16 +11,16 @@ import Script from 'next/script';
 
 const ProductDetailFullwidth = ({ product, views }) => {
 
-    useEffect(() => {
-        if (window.yaContextCb) {
-            window.yaContextCb.push(() => {
-                Ya.Context.AdvManager.render({
-                    blockId: "R-A-13331140-1",
-                    renderTo: "yandex_rtb_R-A-13331140-1"
-                });
-            });
-        }
-    }, []);
+    // useEffect(() => {
+    //     if (window.yaContextCb) {
+    //         window.yaContextCb.push(() => {
+    //             Ya.Context.AdvManager.render({
+    //                 blockId: "R-A-13331140-1",
+    //                 renderTo: "yandex_rtb_R-A-13331140-1"
+    //             });
+    //         });
+    //     }
+    // }, []);
 
     return (
         <>
@@ -45,10 +45,10 @@ const ProductDetailFullwidth = ({ product, views }) => {
                         {/* <ModuleDetailShoppingActions product={product} /> */}
 
                         {/* Yandex reklama kodi */}
-                        <div id="yandex_rtb_R-A-13331140-1"></div>
+                        {/* <div id="yandex_rtb_R-A-13331140-1"></div> */}
 
                         {/* Yandex scriptni yuklash */}
-                        <Script
+                        {/* <Script
                             src="https://yandex.ru/ads/system/context.js"
                             strategy="lazyOnload"
                             onLoad={() => {
@@ -61,7 +61,7 @@ const ProductDetailFullwidth = ({ product, views }) => {
                                     });
                                 }
                             }}
-                        />
+                        /> */}
 
                         {
                             product?.tag?.length > 0 && (
