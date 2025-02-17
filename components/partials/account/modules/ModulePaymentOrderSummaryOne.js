@@ -39,7 +39,6 @@ const ModulePaymentOrderSummaryOne = () => {
         setLoading(true);
         if (type !== 'playlist' && id) {
             const res = await ProductRepository.postCartData([id]);
-            console.log("res => ", res?.data?.data?.[0])
             setData(res?.data?.data?.[0]);
         }
         if (type === 'playlist' && slug) {

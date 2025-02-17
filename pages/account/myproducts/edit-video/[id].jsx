@@ -408,9 +408,6 @@ const Posts = () => {
         'cancelled': 'Bekor qilingan',
     }
 
-    console.log(valuesPlayUpdate);
-
-
     return (user?.role === 'seller' || user?.role === 'admin') ? (
         <PageContainer
             footer={<FooterDefault />}
