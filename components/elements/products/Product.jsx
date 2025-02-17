@@ -13,8 +13,7 @@ const Product = ({ product }) => {
     return (
         <div className="ps-product"
             onMouseEnter={() => setCountShow(true)}
-            onMouseLeave={() => setCountShow(false)}
-        >
+            onMouseLeave={() => setCountShow(false)}>
             <div
                 className="ps-product__thumbnail"
                 style={{
