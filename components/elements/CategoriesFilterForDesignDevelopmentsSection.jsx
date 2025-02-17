@@ -16,9 +16,6 @@ const CategoriesFilterSecion = ({ breacrumb, count, isLoading, childCategoryData
 
     const subCategory = expanded ? childCategoryData?.results : childCategoryData?.results.slice(0, 20) || null;
 
-    console.log("subCategory -> ", subCategory);
-    
-
     return (
         <div className='p-4 my-2  border-secondary-subtle rounded-2'>
             <div className='nav-menu-cards d-flex align-items-center justify-content-center flex-wrap gap-3 mt-3 mb-4'>

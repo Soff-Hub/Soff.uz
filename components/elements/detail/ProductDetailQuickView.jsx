@@ -26,7 +26,6 @@ const ProductDetailQuickView = ({ product }) => {
     const searchTag = (e) => {
         Router.push(`/search-page?keyword=${e}`);
     };
-    console.log(product);
 
     const getImage = async () => {
         const responsImage = await ProductRepository.getProductImagesSlug(
