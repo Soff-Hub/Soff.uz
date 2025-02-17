@@ -62,7 +62,7 @@ export default function TopSellersHome() {
                                                     <a target='blank'>{el?.seller?.full_name}</a>
                                                 </Link>
                                             </h4>
-                                            <p className='seller-card-text'>{formatCurrencyWithSpace(el?.top_income)} uzs/oy</p>
+                                          
                                         </div>
                                     </div>
                                     <div className="seller-card-body">
