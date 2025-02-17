@@ -56,8 +56,8 @@ const ModulePaymentOrderSummaryOne = () => {
     };
 
     useEffect(() => {
-        getOneProductData();
         getPercentage();
+        getOneProductData();
     }, [slug, id]);
 
     const hisob = addPeriodToThousands(
@@ -66,6 +66,9 @@ const ModulePaymentOrderSummaryOne = () => {
     const hisobb = addPeriodToThousands(
         Math.floor(data?.discount_price * percentage)
     );
+
+     console.log(type, slug, id );
+     
 
     return (
         <div className="ps-block--checkout-order">

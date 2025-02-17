@@ -19,6 +19,7 @@ const SellerPage = ({ seller, sellerr }) => {
     const [data, setData] = useState(seller);
     const [page, setPage] = useState(1);
     const router = useRouter();
+    if (!router.isReady) return null;
     const { pid } = router.query;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalOpenDonate, setIsModalOpenDonate] = useState(false);
@@ -60,9 +61,10 @@ const SellerPage = ({ seller, sellerr }) => {
 
     const getSellerDocumentType = async (slug) => {
         const respons = await ProductRepository.getSellerProductNameSlug(slug);
-        if (respons) {
+        if (respons?.status === 200) {
             setProductType(respons?.data);
-        }
+
+        }         
     };
 
 
