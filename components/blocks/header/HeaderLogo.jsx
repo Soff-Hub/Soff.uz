@@ -1,20 +1,21 @@
-import Image from 'next/image'
-import Router from 'next/router'
-import React from 'react'
+import Image from 'next/image';
+import Router from 'next/router';
+import React from 'react';
 
-export default function HeaderLogo({ mode }) {
-
+export default function HeaderLogo ({ mode }) {
     return (
         <div>
-            <div className='site-header-logo' style={{ cursor: 'pointer' }} onClick={() => Router.push('/')}>
+            <div
+                className='site-header-logo'
+                style={{ cursor: 'pointer' }}
+                onClick={() => Router.push('/')}>
                 <Image
                     src={`/static/img/soff/logo-${mode}.png`}
-                    width={140}
-                    height={40}
+                    width={'130.37px'}
+                    height={'36.67px'}
                     alt='Logo of Soff.uz'
                 />
             </div>
         </div>
-
-    )
+    );
 }

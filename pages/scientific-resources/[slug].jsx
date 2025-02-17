@@ -6,6 +6,8 @@ import ProductsByCategory from '~/components/partials/category/ProductsByCategor
 import { useRouter } from 'next/router';
 import CategoriesFilterSecion from '~/components/elements/CategoriesFilterSecion';
 import useApi, { baseUrlUseApi } from '~/repositories/useApi';
+import { Footer } from 'antd/es/layout/layout';
+import FooterComponents from '~/components/blocks/footer/FooterComponents';
 
 export default function ProductCategoryScreen() {
     const router = useRouter();
@@ -50,7 +52,7 @@ export default function ProductCategoryScreen() {
                 description={`Ilmiy ishlar kategoriyasi: Audio materiallar Biznes rejalar Video materiallar Taqdimotlar Tayyor shablonlar Kurs ishlari Diplom ishlari Referatlar Mustaqil ishlar Labaratoriya Ishlari Dissertatsiya ishlari Testlar O'quv qo'llanmalar Dars ishlanmalar Tarqatma materiallar Amaliy ishlar Blankalar Ijodiy Ishlar Loyihalar Plakatlar Maqola Ixtiro patenti Namunaviy hujjatlar Statistika Elektron kitoblar Dasturlash tillari `}
             />
 
-            <div className='ps-page--shop container'>
+            <div className='ps-page--shop container p-lg-1'>
                 <CategoriesFilterSecion
                     breacrumb={fourChildData}
                     count={data?.count}
@@ -66,6 +68,7 @@ export default function ProductCategoryScreen() {
                     isLoading={isLoading}
                 />
             </div>
+            <FooterComponents/>
 
         </PageContainer>
     );
