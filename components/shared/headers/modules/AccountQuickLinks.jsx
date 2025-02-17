@@ -28,11 +28,6 @@ const AccountQuickLinks = (props) => {
         const res = logOutAuth(data);
 
         if (res) {
-            const modal = Modal.info({
-                centered: true,
-                title: 'Muvaffaqqiyatli!',
-                content: `Siz muvaffaqqiyatli chiqdingiz`,
-            });
             if (asPath == '/account/dashbord') {
                 Router.push('/account/login')
             } else if ('/account/myproducts') {
