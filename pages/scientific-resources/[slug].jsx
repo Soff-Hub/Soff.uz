@@ -6,7 +6,6 @@ import ProductsByCategory from '~/components/partials/category/ProductsByCategor
 import { useRouter } from 'next/router';
 import CategoriesFilterSecion from '~/components/elements/CategoriesFilterSecion';
 import useApi, { baseUrlUseApi } from '~/repositories/useApi';
-import { Footer } from 'antd/es/layout/layout';
 import FooterComponents from '~/components/blocks/footer/FooterComponents';
 
 export default function ProductCategoryScreen() {

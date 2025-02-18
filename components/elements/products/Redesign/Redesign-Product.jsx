@@ -4,11 +4,14 @@ import useProduct from '~/hooks/useProduct';
 import useWishlist from '~/hooks/useWishlist';
 import { useState } from 'react';
 import useCart from '~/hooks/useCart';
+import { Modal } from 'antd';
+import { useRouter } from 'next/router';
 
 const RedesignProduct = ({ product }) => {
     const { addSavedItem, wishlist, removeSavedItem } = useWishlist();
     const [open, setOpen] = useState(false);
     const { setCartOneItem } = useCart();
+    const Router = useRouter();
 
     const showModal = () => {
         setOpen(true);

@@ -336,6 +336,31 @@ figure {
 .categoryCard {
     padding: 9.58px 28.33px 9.58px 20.83px;
 }
+
+.open_subcategory_btn {
+    background: #00a44f !important;
+}
+
+.subcategory_btn {
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.05), -2px -2px 2px rgba(0, 0, 0, 0.05),
+        2px -2px 2px rgba(0, 0, 0, 0.05), -2px 2px 2px rgba(0, 0, 0, 0.05) !important;
+
+    &:hover {
+        background: #00a44f !important;
+        color: #fff !important;
+        .subcategory_btn_title {
+            color: #fff !important;
+        }
+    }
+    &:active {
+        background: #00a44f !important;
+        color: #fff !important;
+        .subcategory_btn_title {
+            color: #fff !important;
+        }
+    }
+}
+
 .subcategoryMenu {
     margin-top: 24px;
 }
@@ -347,7 +372,7 @@ figure {
 
 .categoryMenuCardActive {
     background-color: #00a44f !important;
-    color: #fff;
+    color: #fff !important;
 }
 
 .title-1 {
