@@ -28,6 +28,14 @@ const RedesignProduct = ({ product }) => {
         setCartOneItem(product.id);
     }
 
+    const hideModal = () => {
+        setOpen(false);
+    };
+    const hideModalOk = () => {
+        setOpen(false);
+        Router.push('/account/shopping-cart');
+    };
+
     return (
         <div className='scientific-resources-card pointer '>
             <Link href='/product/[pid]' as={`/product/${product.slug}`}>
@@ -102,6 +110,28 @@ const RedesignProduct = ({ product }) => {
                     </a>
                 </div>
             </div>
+
+            <Modal
+                title='Muvaffaqqiyatli'
+                open={open}
+                onOk={hideModalOk}
+                onCancel={hideModal}
+                cancelButtonProps={{
+                    style: {
+                        color: '#000',
+                    },
+                }}
+                okButtonProps={{
+                    style: {
+                        color: '#fff',
+                    },
+                }}
+                okText="Savatga o'tish"
+                cancelText='Xaridlarni davom etirish'>
+                <p></p>
+                <p>Mahsulotingizni savatga qo'shdingiz!</p>
+                <p></p>
+            </Modal>
         </div>
     );
 };
