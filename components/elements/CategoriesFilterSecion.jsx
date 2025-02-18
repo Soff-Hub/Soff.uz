@@ -116,7 +116,7 @@ const CategoriesFilterSecion = ({
                                     parentCategory === item.slug
                                         ? 'categoryMenuCardActive'
                                         : ''
-                                } px-3 py-3 shadow-sm pointer border-success  rounded-3 gap-3  bg-white d-flex align-items-center`} // Ota kategoriya aktivligi
+                                } d-lg-none d-xl-block px-3 py-3 shadow-sm pointer border-success  rounded-3 gap-3  bg-white d-flex align-items-center`} // Ota kategoriya aktivligi
                                 onClick={() =>
                                     router.push({
                                         pathname: `/scientific-resources/${item.slug}`,
@@ -139,7 +139,7 @@ const CategoriesFilterSecion = ({
                     </div>
                     <div className=''>
                         {dropDownMenu && (
-                            <div className='d-flex align-items-center justify-content-between flex-wrap rounded-3 gap-3 border-secondary bg-white p-4'>
+                            <div className='mx-md-3 d-flex align-items-center justify-content-between flex-wrap rounded-3 gap-3 border-secondary bg-white p-4'>
                                 {breacrumb?.results?.map((item, index) => (
                                     <div
                                         key={index}
