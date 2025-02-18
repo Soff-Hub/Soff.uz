@@ -49,17 +49,25 @@
     align-items: stretch;
     margin-top: 50px;
 
-    @media (max-width: 1200px) {
+    @media (max-width: 1300px) {
         grid-template-columns: repeat(4, 1fr);
+        scrollbar-width: none;
+
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 1150px) {
         grid-template-columns: repeat(3, 1fr);
+        scrollbar-width: none;
+    }
+    @media (max-width: 1000px) {
+        grid-template-columns: repeat(3, 1fr);
+        margin-top: 20px;
     }
 
     // 📌 MD ekran (≤768px) → 2 ta kartaga o'tadi
     @media (max-width: 768px) {
         grid-template-columns: repeat(2, 1fr);
+        margin-top: 20px;
     }
 
     // 📌 SM ekran (≤480px) → 1 ta karta chiqadi
@@ -75,8 +83,6 @@
     justify-content: space-between;
     align-items: start;
     gap: 10px;
-    width: 100%;
-    max-width: 270px;
     border-radius: 12.5px;
     padding: 20px;
     height: 100%;
@@ -111,9 +117,6 @@
         }
     }
 
-
-    
-    
     .scientific-resources-card-btn {
         display: flex;
         justify-content: space-between;

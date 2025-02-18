@@ -97,9 +97,9 @@ const CategoriesFilterSecion = ({
                 </div>
             </div>
 
-            <div className='d-none d-lg-block p-lg-0'>
+            <div className='d-none container d-lg-block p-lg-0'>
                 <div className='subcategoryMenu p-lg-0'>
-                    <div className='d-flex align-items-center mb-4 gap-3 pointer '>
+                    <div className='d-flex align-items-center justify-content-between mb-4 gap-3 pointer '>
                         <div
                             onClick={() => setDropdownMenu(!dropDownMenu)}
                             className='categoryCard btn-success d-flex align-items-center rounded-3 gap-4 shadow-md'>
@@ -116,7 +116,7 @@ const CategoriesFilterSecion = ({
                                     parentCategory === item.slug
                                         ? 'categoryMenuCardActive'
                                         : ''
-                                } d-lg-none d-xl-block px-3 py-3 shadow-sm pointer border-success  rounded-3 gap-3  bg-white d-flex align-items-center`} // Ota kategoriya aktivligi
+                                } d-lg-none subcategory_btn d-xl-block px-3 py-3 shadow-sm pointer  rounded-3 gap-3  bg-white d-flex align-items-center`} // Ota kategoriya aktivligi
                                 onClick={() =>
                                     router.push({
                                         pathname: `/scientific-resources/${item.slug}`,
@@ -125,7 +125,7 @@ const CategoriesFilterSecion = ({
                                         }, // query parametrini qo'shish
                                     })
                                 }>
-                                <span className='m-0 text-black fs-3 fw-medium	'>
+                                <span className='m-0 fs-3 fw-medium	'>
                                     {item.name}
                                 </span>
                                 <img
@@ -139,7 +139,7 @@ const CategoriesFilterSecion = ({
                     </div>
                     <div className=''>
                         {dropDownMenu && (
-                            <div className='mx-md-3 d-flex align-items-center justify-content-between flex-wrap rounded-3 gap-3 border-secondary bg-white p-4'>
+                            <div className='px-md-3 d-flex align-items-center justify-content-between flex-wrap rounded-3 gap-3 border-secondary bg-white p-4'>
                                 {breacrumb?.results?.map((item, index) => (
                                     <div
                                         key={index}
@@ -147,7 +147,7 @@ const CategoriesFilterSecion = ({
                                             parentCategory === item.slug
                                                 ? 'categoryMenuCardActive'
                                                 : ''
-                                        } px-3 py-3 shadow-sm pointer border-success  rounded-3 gap-3  bg-white d-flex align-items-center`} // Ota kategoriya aktivligi
+                                        } p-3 subcategory_btn shadow-sm pointer  rounded-3 gap-3  bg-white d-flex align-items-center`} // Ota kategoriya aktivligi
                                         onClick={() =>
                                             router.push({
                                                 pathname: `/scientific-resources/${item.slug}`,
@@ -157,7 +157,7 @@ const CategoriesFilterSecion = ({
                                             }) && setDropdownMenu(!dropDownMenu)
                                         }>
                                         {' '}
-                                        <span className='m-0 text-black fs-3 fw-medium	'>
+                                        <span className='m-0  fs-3 fw-medium	subcategory_btn_title'>
                                             {item.name}
                                         </span>
                                         <img
@@ -174,8 +174,8 @@ const CategoriesFilterSecion = ({
                     {subCategory?.length > 0 && (
                         <>
                             <div className='ps-breadcrumb-2 py-3  '>
-                                <div className='d-flex'>
-                                    <ul className='breadcrumb-2 gap-4 mt-2 d-flex align-items-center bg-none'>
+                                <div className='d-flex justify-content-between '>
+                                    <ul className='breadcrumb-2 mt-2 gap-5 d-flex align-items-center  justify-content-between bg-none'>
                                         {subCategory
                                             .slice(0, 6)
                                             .map((item, index) => {

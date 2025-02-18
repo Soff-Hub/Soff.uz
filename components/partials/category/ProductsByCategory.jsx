@@ -11,7 +11,7 @@ export default function ProductsByCategory ({
     isLoading,
 }) {
     return (
-        <div id='products'>
+        <div id='products' className='container p-lg-0' >
             {isLoading && (
                 <div className={`product-list  p-loading gap-4 mt-5`}>
                     {Array(15)
@@ -25,7 +25,7 @@ export default function ProductsByCategory ({
                         ))}
                 </div>
             )}
-            <div className='card_conatiner_section'>
+            <div className='card_conatiner_section  '>
                 {data?.results?.map((item, index) => (
                     <div className='card_container' key={index}>
                         <RedesignProduct product={item} />
