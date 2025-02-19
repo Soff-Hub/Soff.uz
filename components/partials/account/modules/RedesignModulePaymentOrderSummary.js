@@ -6,10 +6,14 @@ import ProductRepository from '~/repositories/ProductRepository';
 import { useState } from 'react';
 import { addPeriodToThousands } from '../ProductsLists';
 import { Skeleton } from 'antd';
+import useCart from '~/hooks/useCart';
 
-const ModulePaymentOrderSummary = ({ ecomerce }) => {
+const RedesignModulePaymentOrderSummary = ({ ecomerce }) => {
     const [percentage, setPercentage] = useState(0);
+    const { removeCartOneItem } = useCart();
+
     let amount = calculateAmount(ecomerce.cartDataItems);
+    console.log(ecomerce.cartDataItems);
 
     async function getPercentage () {
         const responseData = await ProductRepository.getOrderPercentage();
@@ -22,6 +26,11 @@ const ModulePaymentOrderSummary = ({ ecomerce }) => {
         amount + Math.floor(amount * percentage)
     );
     const hisobb = addPeriodToThousands(Math.floor(amount * percentage));
+
+    const handleRemoveItem = async (e, item) => {
+        e.preventDefault();
+        removeCartOneItem(item.id);
+    };
 
     // view
     let listItemsView, totalView;
@@ -68,38 +77,56 @@ const ModulePaymentOrderSummary = ({ ecomerce }) => {
     }, []);
 
     return (
-        <div className='ps-block--checkout-order'>
-            <h3>Buyurtma mahsulotlari</h3>
-            <div className='shot overflow-auto'>
+        <div className='ps-block--checkout-order p-0 p-md-3 p-sm-0 p-lg-3 m-0'>
+            {/* <h3>Buyurtma mahsulotlari</h3> */}
+            <div className='shot  w-100 p-md-2 m-0'>
+                <p className='product_count m-0'>
+                    {ecomerce.cartDataItems.length} ta mahsulot
+                </p>
                 <div
-                    className='ps-block__content '
+                    className='ps-block__content w-100 hidden-scroll'
                     style={{ backgroundColor: 'transparent' }}>
                     {ecomerce.cartDataItems &&
                     ecomerce.cartDataItems.length > 0 ? (
                         ecomerce.cartDataItems?.map((el, i) => (
-                            <figure key={el?.slug}>
-                                <p>Mahsulot</p>
-                                <div className='my-2'>
-                                    <Link href={`/product/${el?.slug}`}>
-                                        <a>
-                                            <strong>{el?.title}</strong>
-                                        </a>
-                                    </Link>
+                            <div className='sell_card' key={el?.slug}>
+                                <img
+                                    src={el.poster_url}
+                                    alt='document'
+                                    height={'128px'}
+                                    width={'90px'}
+                                />
+                                <div className='sell_card_body'>
+                                    <div className='sell_card_title'>
+                                        <Link href={`/product/${el?.slug}`}>
+                                            <a>
+                                                <p className=''>{el?.title}</p>
+                                            </a>
+                                        </Link>
+                                        <span className='product_type  '>
+                                            {el?.file_type}
+                                        </span>
+                                    </div>
                                 </div>
-                                <span className='product_type  '>
-                                    {el?.file_type}
-                                </span>
-                                <div className='product_price_click my-3'>
-                                    <p>Narxi</p>
-                                    <div></div>
-                                    <strong>
+
+                                <div className='sell_card_price'>
+                                    <a
+                                        className='sell_card_delete'
+                                        href='#'
+                                        onClick={e => handleRemoveItem(e, el)}>
+                                        <img
+                                            src='/static/img/exitBtn.png'
+                                            alt=''
+                                        />
+                                    </a>
+                                    <p className='w-100'>
                                         {addPeriodToThousands(
                                             el?.discount_price
-                                        )}{' '}
+                                        )}
                                         so'm
-                                    </strong>
+                                    </p>
                                 </div>
-                            </figure>
+                            </div>
                         ))
                     ) : (
                         <figure className='ps-block__total'>
@@ -108,25 +135,24 @@ const ModulePaymentOrderSummary = ({ ecomerce }) => {
                     )}
                 </div>
             </div>
-            <div className='checkout_footer mt-5 bg-white'>
+            <div className='checkout_footer rounded-2 my-5 bg-white'>
                 {ecomerce.cartDataItems && ecomerce.cartDataItems.length > 0 && (
-                    <figure>
+                    <div className='total_amount'>
+                        <figcaption className='product_price_click_all'>
+                            <p>Jami narx</p>
+                            <p>{hisob} so'm </p>
+                        </figcaption>
+
                         {percentage > 0 && (
-                            <div className='product_price_click my-3'>
+                            <div className='total_amount_service_fee'>
                                 <p>Xizmat haqi uchun</p>
-                                <div></div>
-                                <strong>
+                                <p>
                                     {' '}
                                     {hisobb} so`m {`(${percentage * 100} %)`}
-                                </strong>
+                                </p>
                             </div>
                         )}
-                        <figcaption className='product_price_click_all'>
-                            <strong>Jami narx</strong>
-                            <div></div>
-                            <strong>{hisob} so'm </strong>
-                        </figcaption>
-                    </figure>
+                    </div>
                 )}
                 {/* {ecomerce.cartDataItems && ecomerce.cartDataItems.length > 0 ? (
                     <Link href={'/account/shopping-cart'}>
@@ -145,4 +171,4 @@ const ModulePaymentOrderSummary = ({ ecomerce }) => {
         </div>
     );
 };
-export default connect(state => state)(ModulePaymentOrderSummary);
+export default connect(state => state)(RedesignModulePaymentOrderSummary);

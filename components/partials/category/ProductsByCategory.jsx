@@ -11,7 +11,7 @@ export default function ProductsByCategory ({
     isLoading,
 }) {
     return (
-        <div id='products' className='container p-lg-0' >
+        <div id='products' className='container' >
             {isLoading && (
                 <div className={`product-list  p-loading gap-4 mt-5`}>
                     {Array(15)
