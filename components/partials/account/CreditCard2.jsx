@@ -245,11 +245,11 @@ const CreditCard2 = ({ document, type }) => {
                         <div>
                             <form
                                 onSubmit={handleClickCardPosts}
-                                className=" pt-3 pb-3 d-flex align-items-end justify-content-between row gap-xxs-0 gap-xs-0 gap-lg-0 gap-md-0 gap-3">
+                                className=" pt-3 pb-3 d-flex align-items-end justify-content-between row gap-xxs-0 gap-xs-0 gap-lg-0 gap-md-0 gap-3 bg-white">
                                 <div className="col-md-8 col-sm-8 click-form-item">
-                                    <span style={{ display: 'block' }}>
+                                    <p className='cardNumber'>
                                         Karta raqam
-                                    </span>
+                                    </p >
                                     <label htmlFor="ccn">
                                         <i className="fa-regular fa-credit-card i"></i>
                                         <input
@@ -268,7 +268,7 @@ const CreditCard2 = ({ document, type }) => {
                                     </label>
                                 </div>
                                 <div className="col-md-4 col-sm-4 click-form-item">
-                                    <label>
+                                    <label className=''>
                                         <i className="fa-regular fa-calendar-days"></i>
                                         <input
                                             required
@@ -287,7 +287,7 @@ const CreditCard2 = ({ document, type }) => {
                                     {message ? (
                                         <button
                                             type="submit"
-                                            className="ps-btn w-100 text-center btn_color">
+                                            className="ps-btn w-100 mt-3 text-center btn_color">
                                             Davom etish
                                         </button>
                                     ) : (

@@ -2518,3 +2518,34 @@
 .ant-skeleton-paragraph {
     list-style-type: none !important;
 }
+
+.type_payment {
+    padding: 48px 50px 44px;
+    background: #fff;
+    border-radius: 10px !important;
+    .type_payment_h3 {
+        font-family: 'Poppins';
+        font-weight: 600;
+        font-size: 25px;
+        line-height: 37.5px;
+        letter-spacing: 0%;
+    }
+    .type_payment_description {
+        font-family: 'Poppins';
+        font-weight: 400;
+        font-size: 15px;
+        line-height: 28.5px;
+        letter-spacing: 2%;
+        margin: 29px 0 50px;
+    }
+}
+
+.cardNumber {
+    font-family: 'Poppins';
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 27px;
+    letter-spacing: 0%;
+    margin-top: 25px;
+    color: #312f30;
+}

@@ -27,7 +27,7 @@ const CategoriesFilterSecion = ({
 
     return (
         <div>
-            <div className='d-lg-none d-block mt-5'>
+            <div className='d-xl-none d-block mt-5 container'>
                 <div className='d-flex gap-3 justify-content-between'>
                     <Select
                         onChange={value => {
@@ -97,12 +97,12 @@ const CategoriesFilterSecion = ({
                 </div>
             </div>
 
-            <div className='d-none container d-lg-block p-lg-0'>
-                <div className='subcategoryMenu p-lg-0'>
+            <div className='d-none container d-lg-block'>
+                <div className='subcategoryMenu d-xl-block d-lg-none p-lg-0'>
                     <div className='d-flex align-items-center justify-content-between mb-4 gap-3 pointer '>
                         <div
                             onClick={() => setDropdownMenu(!dropDownMenu)}
-                            className='categoryCard btn-success d-flex align-items-center rounded-3 gap-4 shadow-md'>
+                            className='categoryCard btn-success d-flex align-items-center rounded-3 gap-4 shadow-md CategoryMenu'>
                             <img src='/static/img/rectangel.png' alt='' />
                             <p className='m-0 text-white fs-3 fw-semibold	'>
                                 Barcha Katalog
@@ -116,7 +116,7 @@ const CategoriesFilterSecion = ({
                                     parentCategory === item.slug
                                         ? 'categoryMenuCardActive'
                                         : ''
-                                } d-lg-none subcategory_btn d-xl-block px-3 py-3 shadow-sm pointer  rounded-3 gap-3  bg-white d-flex align-items-center`} // Ota kategoriya aktivligi
+                                } subcategory_btn  px-3 py-3 shadow-sm pointer  rounded-3  bg-white d-flex align-items-center`} // Ota kategoriya aktivligi
                                 onClick={() =>
                                     router.push({
                                         pathname: `/scientific-resources/${item.slug}`,
@@ -125,7 +125,7 @@ const CategoriesFilterSecion = ({
                                         }, // query parametrini qo'shish
                                     })
                                 }>
-                                <span className='m-0 fs-3 fw-medium	'>
+                                <span className='m-0 fs-xl-5 fw-medium	'>
                                     {item.name}
                                 </span>
                                 <img
@@ -139,7 +139,7 @@ const CategoriesFilterSecion = ({
                     </div>
                     <div className=''>
                         {dropDownMenu && (
-                            <div className='px-md-3 d-flex align-items-center justify-content-between flex-wrap rounded-3 gap-3 border-secondary bg-white p-4'>
+                            <div className='CategoryOpen  container d-flex align-items-center justify-content-between flex-wrap rounded-3 gap-3 bg-white p-4'>
                                 {breacrumb?.results?.map((item, index) => (
                                     <div
                                         key={index}
@@ -173,9 +173,9 @@ const CategoriesFilterSecion = ({
                     </div>
                     {subCategory?.length > 0 && (
                         <>
-                            <div className='ps-breadcrumb-2 py-3  '>
-                                <div className='d-flex justify-content-between '>
-                                    <ul className='breadcrumb-2 mt-2 gap-5 d-flex align-items-center  justify-content-between bg-none'>
+                            <div className='ps-breadcrumb-2 py-3'>
+                                <div className='d-flex justify-content-between subCategoryContainer'>
+                                    <ul className=' breadcrumb-2 mt-2 gap-5 d-flex align-items-center  justify-content-between w-100 bg-none'>
                                         {subCategory
                                             .slice(0, 6)
                                             .map((item, index) => {
@@ -224,10 +224,9 @@ const CategoriesFilterSecion = ({
                                             />
                                         </li>
                                     </ul>
-                                </div>
-                                <div>
+
                                     {childCategoryOpen && (
-                                        <ul className='breadcrumb-2 d-flex align-items-center mt-5 justify-content-between bg-white gap-2 flex-wrap   shadow-md rounded-3 p-3'>
+                                        <ul className='subCategoryOpen container breadcrumb-2 d-flex align-items-center mt-5 justify-content-between bg-white gap-2 flex-wrap shadow-md rounded-3 p-3'>
                                             {subCategory.map((item, index) => {
                                                 return (
                                                     <li

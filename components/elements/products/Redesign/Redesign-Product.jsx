@@ -10,8 +10,9 @@ import { useRouter } from 'next/router';
 const RedesignProduct = ({ product }) => {
     const { addSavedItem, wishlist, removeSavedItem } = useWishlist();
     const [open, setOpen] = useState(false);
-    const { setCartOneItem } = useCart();
+    const { setCartOneItem, removeCartOneItem } = useCart();
     const Router = useRouter();
+    const [basket, setBasket] = useState(false);
 
     const showModal = () => {
         setOpen(true);
@@ -28,7 +29,13 @@ const RedesignProduct = ({ product }) => {
     function handleAddItemToCart (e) {
         showModal();
         e.preventDefault();
-        setCartOneItem(product.id);
+        if (basket) {
+            removeCartOneItem(product.id);
+        } else {
+            setCartOneItem(product.id);
+        }
+
+        setBasket(prev => !prev); // Holatni almashtirish
     }
 
     const hideModal = () => {
@@ -109,7 +116,14 @@ const RedesignProduct = ({ product }) => {
                         data-placement='top'
                         title="Savatga qo'shish"
                         onClick={handleAddItemToCart}>
-                        <img src='/static/img/buyIcon.png' alt='' />
+                        <img
+                            src={
+                                basket
+                                    ? '/static/img/buyIconHover.png'
+                                    : '/static/img/buyIcon.png'
+                            }
+                            alt=''
+                        />
                     </a>
                 </div>
             </div>

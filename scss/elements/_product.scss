@@ -52,7 +52,6 @@
     @media (max-width: 1300px) {
         grid-template-columns: repeat(4, 1fr);
         scrollbar-width: none;
-
     }
 
     @media (max-width: 1150px) {
@@ -74,6 +73,35 @@
     @media (max-width: 480px) {
         grid-template-columns: repeat(1, 1fr);
     }
+}
+
+.CategoryMenu {
+    position: relative;
+}
+
+.CategoryOpen {
+    position: absolute;
+    z-index: 9;
+    box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: inherit;
+    right: 0;
+    left: 0;
+}
+
+.subCategoryContainer{
+    position: relative;
+
+}
+
+.subCategoryOpen{
+    position: absolute;
+    z-index: 9;
+    box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: inherit;
+    right: 0;
+    left: 0;
 }
 
 .scientific-resources-card {
