@@ -2529,6 +2529,15 @@
         font-size: 25px;
         line-height: 37.5px;
         letter-spacing: 0%;
+        @media (min-width: 768px) and (max-width: 1024px) {
+            padding: 0 !important;
+            font-weight: 500;
+            font-size: 20px;
+            line-height: 30.5px;
+        }
+        @media (max-width: 425px) {
+            padding: 0 10px;
+        }
     }
     .type_payment_description {
         font-family: 'Poppins';
@@ -2537,6 +2546,17 @@
         line-height: 28.5px;
         letter-spacing: 2%;
         margin: 29px 0 50px;
+        @media (min-width: 768px) and (max-width: 1024px) {
+            font-size: 12px;
+            line-height: 20.5px;
+            margin: 10px 0 20px;
+        }
+        @media (max-width: 425px) {
+            padding: 0 10px;
+        }
+    }
+    @media (max-width: 425px) {
+        padding: 0px;
     }
 }
 
@@ -2548,4 +2568,9 @@
     letter-spacing: 0%;
     margin-top: 25px;
     color: #312f30;
+    @media (min-width: 768px) and (max-width: 1024px) {
+        font-weight: 500;
+        font-size: 15px;
+        line-height: 30.5px;
+    }
 }

@@ -21,17 +21,14 @@ function FormCheckoutInformation () {
     const ids = extractIds(data);
 
     return (
-        <div className='type_payment'>
-            <h3
-                className='type_payment_h3'>
-                To'lov turini tanlang
-            </h3>
+        <div className='type_payment p-lg-5 mt-lg-3 p-md-2'>
+            <h3 className='type_payment_h3'>To'lov turini tanlang</h3>
             <p className='type_payment_description'>
                 Ishonch bilan to‘lov qiling – biz faqat tasdiqlangan tizimlardan
                 foydalanamiz. Ma’lumotlaringiz xavfsiz saqlanadi va begonalarga
                 ko‘rinmaydi.
             </p>
-            <div className='bg-white'>
+            <div className='bg-white mx-5 '>
                 <CreditCard2 document={ids} />
             </div>
         </div>
