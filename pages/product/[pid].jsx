@@ -186,6 +186,9 @@ const ProductDefaultPage = ({ defaultProducts }) => {
         }, 500);
     };
 
+     console.log(defaultProducts);
+     
+
     return (
         <>
             <PageContainer

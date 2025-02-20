@@ -18,9 +18,10 @@ export default function TemplateProductThumbnail({ data }) {
     }
 
     useEffect(() => {
-        setPoster(data[0])
-        setPreview(data[0])
+        setPoster(data?.[0])
+        setPreview(data?.[0])
     }, [data])
+
 
     return (
         <div className=''>
@@ -98,13 +99,13 @@ export default function TemplateProductThumbnail({ data }) {
 
             <div className='d-flex align-items-center gap-2 mt-2 px-2'>
                 {
-                    data.map((_) => (
-                        <div style={{ cursor: 'pointer', height: '60px', width: '100px', borderRadius: '5px', backgroundColor: '#F6F5F2', }} onClick={() => (setPoster(_), setPreview(_))} className={`${_?.id === poster?.id ? 'active-thumb' : 'noactive-thumb'}`}>
+                    data?.map((item) => (
+                        item?.url && <div style={{ cursor: 'pointer', height: '60px', width: '100px', borderRadius: '5px', backgroundColor: '#F6F5F2', }} onClick={() => (setPoster(item), setPreview(item))} className={`${item?.id === poster?.id ? 'active-thumb' : 'noactive-thumb'}`}>
                             <Image
-                                key={_?.id}
+                                key={item?.id}
                                 height={60}
                                 width={100}
-                                src={_?.url}
+                                src={item?.url}
                                 priority={false}
                                 alt={"slow network"}
                                 objectFit='contain'
