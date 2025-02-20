@@ -236,23 +236,23 @@ const CreditCard2 = ({ document, type }) => {
         {
             key: '1',
             label: (
-                <div className="click">
+                <div className="click ">
                     <img src="/static/img/uzcard_humo.png" alt="" />
                 </div>
             ),
             children: (
-                <div className="row   mx-auto m-0">
-                    <div className=" px-4 rounded click-b">
+                <div className="row mx-auto m-0">
+                    <div className=" px-4 mx-md-auto rounded click-b">
                         <div>
                             <form
                                 onSubmit={handleClickCardPosts}
                                 className=" pt-3 pb-3 d-flex align-items-end justify-content-between row gap-xxs-0 gap-xs-0 gap-lg-0 gap-md-0 gap-3 bg-white">
-                                <div className="col-md-8 col-sm-8 click-form-item">
+                                <div className="col-xl-7 col-lg-12 p-0 col-md-7 col-sm-6 click-form-item">
                                     <p className='cardNumber'>
                                         Karta raqam
                                     </p >
                                     <label htmlFor="ccn">
-                                        <i className="fa-regular fa-credit-card i"></i>
+                                        <i className="fa-regular fa-credit-card i "></i>
                                         <input
                                             required
                                             id="ccn"
@@ -268,7 +268,7 @@ const CreditCard2 = ({ document, type }) => {
                                         />
                                     </label>
                                 </div>
-                                <div className="col-md-4 col-sm-4 click-form-item">
+                                <div className="col-xl-4 col-lg-8 p-0 col-md-5 col-sm-6 click-form-item">
                                     <label className=''>
                                         <i className="fa-regular fa-calendar-days"></i>
                                         <input
@@ -409,6 +409,6 @@ const CreditCard2 = ({ document, type }) => {
         },
     ];
 
-    return <Tabs className='checkoutstep-1' defaultActiveKey="1" items={items} onChange={onChange} />;
+    return <Tabs className='bg-white shadow-sm checkoutstep-1' defaultActiveKey="1" items={items} onChange={onChange} />;
 };
 export default CreditCard2;

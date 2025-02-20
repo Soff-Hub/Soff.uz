@@ -13,6 +13,7 @@ import Head from 'next/head';
 import Joyride from 'react-joyride';
 import { setOneShopDoc } from '~/store/auth/slice';
 import Script from 'next/script';
+import FileProductsDetails from '~/components/details-components/file-products-detail/details-page';
 
 const ProductDefaultPage = ({ defaultProducts }) => {
     const router = useRouter();
@@ -322,7 +323,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                     />
                 </div>
                 {/* <div> */}
-                <div style={{ backgroundColor: '#fff' }}>
+                <div >
                     <div className="container" style={{ position: 'relative' }}>
                         <div className="text-end m-0">
                             {defaultProducts?.discpunt_price === 0 && (
@@ -371,9 +372,8 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                                         product?.document?.content_type ===
                                         'file' ? (
                                         <div>
-                                            <ProductDetailFullwidth
+                                            <FileProductsDetails
                                                 product={product}
-                                                views={views}
                                             />
                                         </div>
                                     ) : !loading &&
