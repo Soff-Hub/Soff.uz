@@ -66,7 +66,7 @@ const AccountMenuSidebar = ({ setMenuDrawer, setCategoriesDrawer }) => {
     };
 
     async function ProfileUsersToken(token) {
-        const ItemsData = await GetRepository.getProfileToken(token);
+        const ItemsData = await GetRepository.getProfile(token);
         if (Number(ItemsData?.status) == 403) {
             handleLogoutToken();
         }
