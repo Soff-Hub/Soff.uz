@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { calculateAmount } from '~/utilities/ecomerce-helpers';
 import ProductRepository from '~/repositories/ProductRepository';
 import { useState } from 'react';
-import { addPeriodToThousands } from '../ProductsLists';
+import { addPeriodToThousands } from '../price-formatter';
 import { Skeleton } from 'antd';
 
 const ModulePaymentOrderSummary = ({ ecomerce }) => {

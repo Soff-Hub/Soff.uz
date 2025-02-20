@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import useProduct from '~/hooks/useProduct';
-import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
 import useWishlist from '~/hooks/useWishlist';
 
 const DesignDevelopmentProducts = ({ product }) => {

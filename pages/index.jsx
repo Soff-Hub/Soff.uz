@@ -5,7 +5,6 @@ import SubProjects from '~/components/blocks/home-products/sub-projects'
 import HomeVideo from '~/components/blocks/home-video'
 import PageLayout from '~/components/layouts/PageLayout'
 import Meta from '~/components/shared/headers/Meta'
-import VedioPage from '~/components/VedioPage'
 
 function NewHomePage({ tab, category }) {
 
@@ -13,10 +12,8 @@ function NewHomePage({ tab, category }) {
         <PageLayout>
             <Meta title="Soff - barcha ma'lumotlar bazasi" image="/static/img/soff/soff_green_white.png" />
             <HeroMain />
-            {/* <CategoryTabs tab={tab} category={category} /> */}
             <HomeCategories/>
             <HomeVideo/>
-            {/* <HomeProducts tab={tab} /> */}
             <SubProjects />
         </PageLayout>
     )

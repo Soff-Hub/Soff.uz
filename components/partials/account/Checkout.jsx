@@ -10,6 +10,7 @@ const Checkout = () => {
     const ecomerce = useSelector((state) => state.ecomerce.cartDataItems);
     const { setAllCartItem } = useCart()
 
+    
 
     useEffect(() => {
         if (ecomerce.length !== JSON.parse(localStorage.getItem('cart'))) {
