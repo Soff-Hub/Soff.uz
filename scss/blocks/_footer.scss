@@ -82,15 +82,26 @@
     gap: 10px;
 }
 
+.system-inner-title {
+    font-family: 'Poppins';
+    font-weight: 500;
+    font-size: 41.61px;
+    line-height: 62.42px;
+    letter-spacing: 1%;
+    margin-top: 140px;
+    margin-bottom: 48px;
+}
+
 .system-card {
     padding: 20px;
+    border: 1px solid rgba(0, 164, 79, 1);
     border-radius: 20px;
     min-height: 180px;
-    width: 280px;
+    max-width: 440px !important;
+    height: 266px !important;
     cursor: pointer;
     position: relative;
     overflow: hidden;
-    max-width: 320px;
     width: 100%;
 }
 
@@ -108,48 +119,19 @@
     background-position: center;
     transform: rotateZ(-80deg);
 }
-.system-card:nth-child(1) {
-    background-color: #4caf4f4e;
-}
 
 .system-card:nth-child(2) {
-    background: #0ea5ea;
-    background: linear-gradient(90deg, #0ea5ea, #0bd1d1 51%, #0ea5ea)
-        var(--x, 0) / 200%;
+    background: rgba(0, 164, 79, 1);
+    color: #ffffff;
 }
 
 .sdsdsd {
-    font-size: 28px;
-}
-
-.system-card:nth-child(3) {
-    background-color: #0f172a;
-    color: white !important;
-
-    & .system-text::after {
-        background-image: url('/static/img/arrow-white.png');
-    }
-
-    img {
-        height: 28px;
-    }
-}
-
-.system-card:nth-child(4) {
-    background-color: #151526;
-    color: white !important;
-
-    & .system-text::after {
-        background-image: url('/static/img/arrow-white.png');
-    }
-}
-
-.system-card:nth-child(5) {
-    background-color: #6556ff26;
-}
-
-.system-card:nth-child(6) {
-    border: 1px solid #4caf4f88;
+    font-family: 'Inter';
+    font-weight: 700;
+    font-size: 41.61px;
+    line-height: 50.36px;
+    letter-spacing: 0%;
+    color: #000;
 }
 
 .system-card-inner {
@@ -184,7 +166,14 @@
     display: block;
     position: relative;
     width: 100%;
+    font-family: 'Inter';
+    font-weight: 500;
+    font-size: 20.81px;
+    line-height: 25.18px;
+    letter-spacing: 0%;
+    color: #000;
 }
+
 
 .system-title {
     color: #4caf4f;
@@ -258,4 +247,16 @@
 
 .system .container {
     max-width: 1240px !important;
+}
+
+
+
+.footer-link {
+    color: black;
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+}
+.footer-link:hover {
+    color: #00A44F;
+    text-decoration: underline;
 }

@@ -1,62 +1,105 @@
-import React from 'react'
+import React from 'react';
 
-export default function SubProjects() {
-
+export default function SubProjects () {
     const projecs = [
         {
-            logo: '/static/img/soff/logo-dark.png',
+            logoImg: '/static/img/soff.svg',
             link: 'https://soff.uz',
             linkMask: 'SOFF.UZ - Intellektual mulk marketi',
         },
         {
-            logo: 'https://soffstudy.uz/assets/imgs/page/logo/Soff%20Study%20dark%20logo.png',
-            link: 'https://soffstudy.uz',
-            linkMask: 'SOFF STUDY - Zamonaviy kasblarni o\'qitish markazi',
+            logoImg: '',
+            link: '#',
+            title: 'Soff Jamoasi',
+            linkMask: 'Biz rivojalishda davom etamiz!',
+            bgColor: 'rgba(0, 164, 79, 1)',
+            textColor: '#fff',
+            last: true,
         },
         {
-            logo: 'https://soffhub.uz/assets/imgs/page/about/soffhub-removebg-preview.png',
+            logoImg: '/static/img/soffStudy.png',
+            link: 'https://soffstudy.uz',
+            linkMask: "SOFF STUDY - Zamonaviy kasblarni o'qitish markazi",
+        },
+        {
+            logoImg: '/static/img/_Soff_.svg',
             link: 'https://soffhub.uz',
             linkMask: 'SOFFHUB - Biznes uchun raqamli yechimlar',
         },
         {
-            logo: 'https://birja.soff.uz/images/soffbirja-dark-logo.png',
+            logoImg: '/static/img/soffBIrja.png',
             link: 'https://birja.soff.uz',
             linkMask: 'SOFF BIRJA - Intellektual mulk birjasi',
         },
         {
-            logo: 'https://soffcrm.uz/_next/image?url=%2Fassets%2Fimages%2Flogo.jpg&w=256&q=75',
+            logoImg: '/static/img/soffcrm.svg',
             link: 'https://soffcrm.uz',
-            linkMask: 'SOFFCRM - O\'quv markazlar uchun crm tizim',
+            linkMask: "SOFFCRM - O'quv markazlar uchun crm tizim",
         },
-        {
-            logo: '',
-            link: '#',
-            linkMask: 'Biz rivojalishda davom etamiz!',
-            title: "SOFF Jamoasi",
-            last: true
-        }
-    ]
+    ];
 
     return (
         <div>
-            <div className="system">
-                <div className="container">
-                    <h2 className='text-center my-5'>Soff — faqatgina intellektual mulk bozori emas</h2>
-                    <div className="system-inner">
-                        {
-                            projecs.map(el => (
-                                <div className='system-card'>
-                                    <div className="system-card-inner">
-                                        {el?.last ? <h2 className='sdsdsd'>{el?.title}</h2> : <img src={el?.logo} alt='' height={40} />}
-                                        <span className='system-text'>{el?.linkMask}</span>
-                                        <a className='system-link' href={el?.link} target={el?.last ? '' : '_blank'}>.</a>
-                                    </div>
+            <div className='container'>
+                <div className='container'>
+                    <h2 className='text-start system-inner-title'>
+                        Soff — faqatgina intellektual mulk bozori emas
+                    </h2>
+                    <div className='system-inner'>
+                        {projecs.map(el => (
+                            <div className='system-card' key={el.id}>
+                                <div
+                                    className='system-card-inner p-4'
+                                    style={{
+                                        background:
+                                            el?.bgColor || 'defaultColor',
+                                    }}>
+                                    {el?.last ? (
+                                        <div className='d-flex gap-3'>
+                                            {el?.logoImg && (
+                                                <img src={el.logoImg} alt='' />
+                                            )}
+                                            <h2
+                                                className='sdsdsd'
+                                                style={{
+                                                    color:
+                                                        el?.textColor ||
+                                                        'defaultColor',
+                                                }}>
+                                                {el?.title}
+                                            </h2>
+                                        </div>
+                                    ) : (
+                                        <>
+                                            {el?.logoImg && (
+                                                <img
+                                                    src={el.logoImg}
+                                                    alt={el.title}
+                                                />
+                                            )}
+                                            <h2>{el?.title}</h2>
+                                        </>
+                                    )}
+                                    <span
+                                        className='system-text'
+                                        style={{
+                                            color:
+                                                el?.textColor || 'defaultColor',
+                                        }}>
+                                        {el?.linkMask}
+                                    </span>
+                                    <a
+                                        className='system-link'
+                                        href={el?.link}
+                                        target={el?.last ? '' : '_blank'}>
+                                        .
+                                    </a>
                                 </div>
-                            ))
-                        }
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
         </div>
-    )
+    );
 }

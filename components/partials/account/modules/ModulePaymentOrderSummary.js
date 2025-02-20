@@ -11,7 +11,7 @@ const ModulePaymentOrderSummary = ({ ecomerce }) => {
     const [percentage, setPercentage] = useState(0);
     let amount = calculateAmount(ecomerce.cartDataItems);
 
-    async function getPercentage() {
+    async function getPercentage () {
         const responseData = await ProductRepository.getOrderPercentage();
         if (responseData) {
             setPercentage(Number(responseData?.data?.percentage));
@@ -27,7 +27,7 @@ const ModulePaymentOrderSummary = ({ ecomerce }) => {
     let listItemsView, totalView;
     if (ecomerce.cartDataItems && ecomerce.cartDataItems.length > 0) {
         listItemsView = ecomerce.cartDataItems?.map((item, i) => (
-            <Link href="/" key={item.id}>
+            <Link href='/' key={item.id}>
                 <a>
                     <strong>
                         {i + 1}. {item.title}
@@ -55,7 +55,7 @@ const ModulePaymentOrderSummary = ({ ecomerce }) => {
     }
 
     totalView = (
-        <figure className="ps-block__total">
+        <figure className='ps-block__total'>
             <h3>
                 Umumiy hisob:
                 <strong>{hisob}.00 so'm </strong>
@@ -68,28 +68,28 @@ const ModulePaymentOrderSummary = ({ ecomerce }) => {
     }, []);
 
     return (
-        <div className="ps-block--checkout-order">
+        <div className='ps-block--checkout-order'>
             <h3>Buyurtma mahsulotlari</h3>
-            <div className="shot">
+            <div className='shot overflow-auto'>
                 <div
-                    className="ps-block__content "
+                    className='ps-block__content '
                     style={{ backgroundColor: 'transparent' }}>
                     {ecomerce.cartDataItems &&
                     ecomerce.cartDataItems.length > 0 ? (
                         ecomerce.cartDataItems?.map((el, i) => (
                             <figure key={el?.slug}>
                                 <p>Mahsulot</p>
-                                <div className="my-2">
+                                <div className='my-2'>
                                     <Link href={`/product/${el?.slug}`}>
                                         <a>
                                             <strong>{el?.title}</strong>
                                         </a>
                                     </Link>
                                 </div>
-                                <span className="product_type  ">
+                                <span className='product_type  '>
                                     {el?.file_type}
                                 </span>
-                                <div className="product_price_click my-3">
+                                <div className='product_price_click my-3'>
                                     <p>Narxi</p>
                                     <div></div>
                                     <strong>
@@ -102,51 +102,47 @@ const ModulePaymentOrderSummary = ({ ecomerce }) => {
                             </figure>
                         ))
                     ) : (
-                        <figure className="ps-block__total">
+                        <figure className='ps-block__total'>
                             <Skeleton active paragraph={{ rows: 7 }} />
                         </figure>
                     )}
                 </div>
-
-                <div className="checkout_footer">
-                    {ecomerce.cartDataItems &&
-                        ecomerce.cartDataItems.length > 0 && (
-                            <figure>
-                                {percentage > 0 && (
-                                    <div className="product_price_click my-3">
-                                        <p>Xizmat haqi uchun</p>
-                                        <div></div>
-                                        <strong>
-                                            {' '}
-                                            {hisobb} so`m{' '}
-                                            {`(${percentage * 100} %)`}
-                                        </strong>
-                                    </div>
-                                )}
-                                <figcaption className="product_price_click_all">
-                                    <strong>Jami narx</strong>
-                                    <div></div>
-                                    <strong>{hisob} so'm </strong>
-                                </figcaption>
-                            </figure>
-                        )}
-                    {ecomerce.cartDataItems &&
-                    ecomerce.cartDataItems.length > 0 ? (
-                        <Link href={'/account/shopping-cart'}>
-                            <a>
-                                <div className="prevev_button">
+            </div>
+            <div className='checkout_footer mt-5 bg-white'>
+                {ecomerce.cartDataItems && ecomerce.cartDataItems.length > 0 && (
+                    <figure>
+                        {percentage > 0 && (
+                            <div className='product_price_click my-3'>
+                                <p>Xizmat haqi uchun</p>
+                                <div></div>
+                                <strong>
                                     {' '}
-                                    <i className="fa-solid fa-angles-left"></i>{' '}
-                                    orqaga
-                                </div>
-                            </a>
-                        </Link>
-                    ) : (
-                        ''
-                    )}
-                </div>
+                                    {hisobb} so`m {`(${percentage * 100} %)`}
+                                </strong>
+                            </div>
+                        )}
+                        <figcaption className='product_price_click_all'>
+                            <strong>Jami narx</strong>
+                            <div></div>
+                            <strong>{hisob} so'm </strong>
+                        </figcaption>
+                    </figure>
+                )}
+                {/* {ecomerce.cartDataItems && ecomerce.cartDataItems.length > 0 ? (
+                    <Link href={'/account/shopping-cart'}>
+                        <a>
+                            <div className='prevev_button'>
+                                {' '}
+                                <i className='fa-solid fa-angles-left'></i>{' '}
+                                orqaga
+                            </div>
+                        </a>
+                    </Link>
+                ) : (
+                    ''
+                )} */}
             </div>
         </div>
     );
 };
-export default connect((state) => state)(ModulePaymentOrderSummary);
+export default connect(state => state)(ModulePaymentOrderSummary);
