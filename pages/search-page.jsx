@@ -33,7 +33,7 @@ const Products_Search_Results = () => {
         if (debouncedSearchTerm) {
             setLoading(true); // Set loading true when making a new request
             if (keyword || typeSelect) {
-                const products = PostRepository.postSearchFilterNews(currPagePlay, keyword, typeSelect);
+                const products = PostRepository.postSearchFilterNews(currPagePlay, debouncedSearchTerm, typeSelect);
                 products.then((result) => {
                     setResultItems(result);
                     setPageCountPlay(result?.count);
