@@ -4,7 +4,7 @@ import { message } from 'antd';
 import Meta from '~/components/shared/headers/Meta';
 import useWishlist from '~/hooks/useWishlist';
 import { checkIfUserIsOnline } from '~/components/partials/homepage/electronic/TopSellersTable';
-import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
+import { addPeriodToThousands } from '~/components/partials/account/price-formatter';
 
 const ModuleVideoDetailTopInformation = ({ product, views, admin }) => {
     const router = useRouter();

@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { CookiesProvider } from 'react-cookie';
-import MasterLayout from '~/components/layouts/MasterLayout';
 import '~/public/static/fonts/Linearicons/Font/demo-files/demo.css';
 import '~/public/static/fonts/font-awesome/css/font-awesome.min.css';
 import '~/public/static/css/bootstrap.min.css';
@@ -82,9 +81,7 @@ function App({ Component, pageProps }) {
                         <CookiesProvider>
                             <ProductProvider>
                                 <AudioProvider>
-                                    <MasterLayout>
-                                        <Component {...pageProps} />
-                                    </MasterLayout>
+                                    <Component {...pageProps} />
                                 </AudioProvider>
                             </ProductProvider>
                         </CookiesProvider>

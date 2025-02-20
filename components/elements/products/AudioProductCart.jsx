@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useContext } from 'react';
 import wavesurfer from 'wavesurfer.js';
 import Link from 'next/link';
 import ModuleProductActions from './modules/ModuleProductActions';
-import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
+import { addPeriodToThousands } from '~/components/partials/account/price-formatter';
 import { AudioContext } from '~/hooks/AudioContext';
 
 const AudioWaveform = ({ product, inCategory }) => {

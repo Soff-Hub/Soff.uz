@@ -1,7 +1,4 @@
-import { Skeleton } from 'antd'
-import Link from 'next/link'
 import React from 'react'
-import ProductMainCard from '~/components/product/ProductMainCard'
 import ParentCategories from '../categories/ParentCategories'
 
 export default function HomeCategories() {

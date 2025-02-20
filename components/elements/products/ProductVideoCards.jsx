@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import ModuleProductVideoActions from './modules/ModuleProductVideoActions';
-import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
+import { addPeriodToThousands } from '~/components/partials/account/price-formatter';
 import Router from 'next/router';
 import DefaultVideo from '../detail/thumbnail/DefaultVideo';
 

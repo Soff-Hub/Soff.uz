@@ -4,7 +4,7 @@ import Link from 'next/link';
 import ProductOnCart from '~/components/elements/products/ProductOnCart';
 import { calculateAmount } from '~/utilities/ecomerce-helpers';
 import useCart from '~/hooks/useCart';
-import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
+import { addPeriodToThousands } from '~/components/partials/account/price-formatter';
 
 const MiniCart = () => {
     const state = useSelector((state) => state.auth.user);

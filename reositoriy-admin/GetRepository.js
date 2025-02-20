@@ -6,6 +6,7 @@ import Repository, {
     orginalUrl,
 } from './Repository';
 
+
 class GetRepository {
     async getSellerDashbord(token) {
         const endPoint = `admin/dashboard/`;
