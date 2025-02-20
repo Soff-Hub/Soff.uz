@@ -77,7 +77,7 @@ const RedesignModulePaymentOrderSummary = ({ ecomerce }) => {
     }, []);
 
     return (
-        <div className='ps-block--checkout-order p-0 p-md-3 p-sm-0 p-lg-3 m-0'>
+        <div className='ps-block--checkout-order p-0 p-md-3 p-sm-0 p-lg-3 p-xl-3 m-0'>
             {/* <h3>Buyurtma mahsulotlari</h3> */}
             <div className='shot  w-100 p-md-2 m-0'>
                 <p className='product_count m-0'>
