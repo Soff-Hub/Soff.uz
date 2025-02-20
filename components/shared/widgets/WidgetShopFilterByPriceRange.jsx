@@ -5,7 +5,7 @@ import ProductRepository from '~/repositories/ProductRepository';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { baseUrl } from '~/repositories/Repository';
-import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
+import { addPeriodToThousands } from '~/components/partials/account/price-formatter';
 import { setCategorySlug } from '~/store/auth/slice';
 
 const WidgetShopFilterByPriceRange =

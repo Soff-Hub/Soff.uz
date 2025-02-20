@@ -1,13 +1,15 @@
 import React, { useEffect } from 'react';
 import FormCheckoutInformation from './modules/FormCheckoutInformation';
-import ModulePaymentOrderSummary from '~/components/partials/account/modules/ModulePaymentOrderSummary';
 import { useSelector } from 'react-redux';
 import useCart from '~/hooks/useCart';
 import RedesignModulePaymentOrderSummary from './modules/RedesignModulePaymentOrderSummary';
+import { useRouter } from 'next/router';
 const Checkout = () => {
-    const ecomerce = useSelector(state => state.ecomerce.cartDataItems);
+    const router = useRouter();
+    if (!router.isReady) return null;
+    const ecomerce = useSelector((state) => state.ecomerce.cartDataItems);
+    const { setAllCartItem } = useCart()
 
-    const { setAllCartItem } = useCart();
 
     useEffect(() => {
         if (ecomerce.length !== JSON.parse(localStorage.getItem('cart'))) {
@@ -29,6 +31,7 @@ const Checkout = () => {
                                     <RedesignModulePaymentOrderSummary
                                         ecomerce={ecomerce}
                                     />
+
                                 </div>
                                 <div className='col-xl-5 col-lg-6 col-md-12 col-12'>
                                     <FormCheckoutInformation />

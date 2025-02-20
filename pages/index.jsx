@@ -1,7 +1,6 @@
 import React from 'react';
 import FooterComponents from '~/components/blocks/footer/FooterComponents';
 import ResutsComponents from '~/components/blocks/header/Results/ResutsComponents';
-import HeroMain from '~/components/blocks/hero';
 import HeroService from '~/components/blocks/hero/HeroService';
 import HomeCategories from '~/components/blocks/home-categories';
 import ItServicesCategories from '~/components/blocks/home-categories/ItServicesCategories';
@@ -9,7 +8,6 @@ import SubProjects from '~/components/blocks/home-products/sub-projects';
 import HomeVideo from '~/components/blocks/home-video';
 import PageLayout from '~/components/layouts/PageLayout';
 import Meta from '~/components/shared/headers/Meta';
-import VedioPage from '~/components/VedioPage';
 
 function NewHomePage ({ tab, category }) {
     return (
@@ -18,15 +16,11 @@ function NewHomePage ({ tab, category }) {
                 title="Soff - barcha ma'lumotlar bazasi"
                 image='/static/img/soff/soff_green_white.png'
             />
-            {/* <HeroMain /> */}
             <HeroService />
-            {/* <CategoryTabs tab={tab} category={category} /> */}
+            <ResutsComponents />
             <HomeCategories />
             <ItServicesCategories />
-
             <HomeVideo />
-            <ResutsComponents />
-            {/* <HomeProducts tab={tab} /> */}
             <SubProjects />
             <FooterComponents />
         </PageLayout>

@@ -7,7 +7,7 @@ import useAuth from '~/hooks/useAuth';
 import { logOut } from '~/store/auth/slice';
 import { Badge, Card, Modal, Tooltip } from 'antd';
 import { formatCurrency } from '~/utilities/product-helper';
-import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
+import { addPeriodToThousands } from '~/components/partials/account/price-formatter';
 import CalculateTimeDifference from '~/components/partials/account/DateFormatter';
 
 const AccountMenuSidebar = ({ setMenuDrawer, setCategoriesDrawer }) => {
@@ -66,7 +66,7 @@ const AccountMenuSidebar = ({ setMenuDrawer, setCategoriesDrawer }) => {
     };
 
     async function ProfileUsersToken(token) {
-        const ItemsData = await GetRepository.getProfileToken(token);
+        const ItemsData = await GetRepository.getProfile(token);
         if (Number(ItemsData?.status) == 403) {
             handleLogoutToken();
         }

@@ -1,4 +1,3 @@
-import React from 'react';
 import Repository, { baseUrl, baseUrlAuth } from '~/repositories/Repository';
 
 export default function useAuth() {

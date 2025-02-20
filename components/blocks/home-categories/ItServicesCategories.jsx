@@ -1,8 +1,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
-import FreeBtn from '~/components/elements/FreeBtn';
-import { formatCurrencyWithSpace } from '~/utilities/product-helper';
+
 
 const itServicesCategoriesData = [
     {

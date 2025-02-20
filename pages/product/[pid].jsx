@@ -1,8 +1,6 @@
 import React from 'react';
 import ProductDetailFullwidth from '~/components/elements/detail/ProductDetailFullwidth';
-import RelatedProduct from '~/components/partials/product/RelatedProduct';
 import PageContainer from '~/components/layouts/PageContainer';
-import SkeletonProductDetail from '~/components/elements/skeletons/SkeletonProductDetail';
 import { baseUrl } from '~/repositories/Repository';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
@@ -10,12 +8,9 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import PostRepository from '~/repositories/PostRepository';
-import ProductVideoDetailFullWidth from '~/components/elements/detail/ProductVideoDetailFullWidth';
-import ProductAudioDetailFullWidth from '~/components/elements/detail/ProductAudioDetailFullWidth';
 import axios from 'axios';
 import Head from 'next/head';
 import Joyride from 'react-joyride';
-import TemplateProductDetail from '~/components/elements/detail/TemplateProductDetail';
 import { setOneShopDoc } from '~/store/auth/slice';
 import Script from 'next/script';
 
@@ -383,47 +378,19 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                                         </div>
                                     ) : !loading &&
                                         product?.document?.content_type ===
-                                        'template' ? (
-                                        <div className="">
-                                            <TemplateProductDetail
-                                                product={product}
-                                                views={views}
-                                            />
-                                        </div>
-                                    ) : !loading &&
-                                        product?.document?.content_type ===
                                         'video' ? (
                                         <div className="pt-3">
-                                            <ProductVideoDetailFullWidth
+                                            {/* <ProductVideoDetailFullWidth
                                                 isPlay={isPlay}
                                                 setIsPlay={setIsPlay}
                                                 product={product}
                                                 views={views}
                                                 similar={similar}
-                                            />
-                                        </div>
-                                    ) : !loading &&
-                                        product?.document?.content_type ===
-                                        'audio' ? (
-                                        <div className="pt-5 mt-2">
-                                            <ProductAudioDetailFullWidth
-                                                product={product}
-                                                views={views}
-                                            />
-                                        </div>
-                                    ) : !loading &&
-                                        product?.document?.content_type ===
-                                        'article' ? (
-                                        <div>
-                                            <ProductAudioDetailFullWidth
-                                                product={product}
-                                                document={document}
-                                                views={views}
-                                            />
+                                            /> */}
                                         </div>
                                     ) : (
                                         <div className="ps-page__left">
-                                            <SkeletonProductDetail />
+                                          Yuklanmoqda
                                         </div>
                                     )}
                                 </div>
@@ -447,17 +414,6 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                                 />
 
 
-                                {similar?.length > 0 &&
-                                    product?.document?.content_type !== 'video' ? (
-                                    <RelatedProduct
-                                        isPlay={isPlay}
-                                        setIsPlay={setIsPlay}
-                                        data={similar}
-                                        collectionSlug="shop-recommend-items"
-                                    />
-                                ) : (
-                                    ''
-                                )}
                             </div>
                         </div>
                     </div>

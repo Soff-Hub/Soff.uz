@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import useProduct from '~/hooks/useProduct';
-import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
+import { addPeriodToThousands } from '~/components/partials/account/price-formatter';
 
 const ProductOnCart = ({ product, children }) => {
     const { thumbnailImage, title } = useProduct();

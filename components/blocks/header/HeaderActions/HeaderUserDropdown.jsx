@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import { logOut } from '~/store/auth/slice';
-import { Badge, Card, Modal } from 'antd';
+import { Badge, Card } from 'antd';
 import useAuth from '~/hooks/useAuth';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import Router, { useRouter } from 'next/router';
@@ -25,11 +25,6 @@ const HeaderUserDropdown = (props) => {
         const res = logOutAuth(data);
 
         if (res) {
-            const modal = Modal.info({
-                centered: true,
-                title: 'Muvaffaqqiyatli!',
-                content: `Siz muvaffaqqiyatli chiqdingiz`,
-            });
             if (asPath == '/account/dashbord') {
                 Router.push('/auth/login')
             } else if ('/account/myproducts') {

@@ -1,6 +1,5 @@
 import Link from 'next/link';
-import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
-import useProduct from '~/hooks/useProduct';
+import { addPeriodToThousands } from '~/components/partials/account/price-formatter';
 import useWishlist from '~/hooks/useWishlist';
 import { useState } from 'react';
 import useCart from '~/hooks/useCart';
