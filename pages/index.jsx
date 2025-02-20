@@ -17,10 +17,10 @@ function NewHomePage ({ tab, category }) {
                 image='/static/img/soff/soff_green_white.png'
             />
             <HeroService />
-            <ResutsComponents />
             <HomeCategories />
             <ItServicesCategories />
             <HomeVideo />
+            <ResutsComponents />
             <SubProjects />
             <FooterComponents />
         </PageLayout>
