@@ -6,8 +6,8 @@ import HomeVideo from '~/components/blocks/home-video'
 import PageLayout from '~/components/layouts/PageLayout'
 import Meta from '~/components/shared/headers/Meta'
 
-function NewHomePage({ tab, category }) {
 
+function NewHomePage ({ tab, category }) {
     return (
         <PageLayout>
             <Meta title="Soff - barcha ma'lumotlar bazasi" image="/static/img/soff/soff_green_white.png" />
@@ -16,10 +16,10 @@ function NewHomePage({ tab, category }) {
             <HomeVideo/>
             <SubProjects />
         </PageLayout>
-    )
+    );
 }
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps (context) {
     const { query } = context;
 
     return {
@@ -30,4 +30,4 @@ export async function getServerSideProps(context) {
     };
 }
 
-export default NewHomePage
+export default NewHomePage;
