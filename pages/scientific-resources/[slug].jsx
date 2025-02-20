@@ -14,9 +14,8 @@ export default function ProductCategoryScreen() {
 
     // products API uchun so'rov
     const { data, error, isLoading } = useApi(
-        ["products", page, parentCategory, childCategory], // queryKey dinamik
-        `${baseUrlUseApi}customer/products/?direction=scientific_work&category=${childCategory ? childCategory : parentCategory}&page=${page || 1}&page_size=48`,
-        "GET"
+        ["products", page, parentCategory, childCategory], // queryKey dinamik 
+        `${baseUrlUseApi}customer/products/?direction=scientific_work&category=${childCategory ? childCategory : parentCategory}&page=${page || 1}&page_size=48`,"GET"
     );
 
     // Otab kategoriya API uchun so'rov

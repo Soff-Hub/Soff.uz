@@ -83,7 +83,7 @@ const ModelAndDesignProduct = ({ product }) => {
                     </div>
                 </div>
 
-                {/* <div className='modelAndDesignCardIcons'>
+                <div className='modelAndDesignCardIcons'>
                     <div>
                         {(product?.views_count ||
                             product?.views_count === 0) && (
@@ -120,7 +120,7 @@ const ModelAndDesignProduct = ({ product }) => {
                                     : 'icon-heart d-flex align-items-center'
                             } `}></i>
                     </a>
-                </div> */}
+                </div>
             </div>
         </div>
     );
