@@ -2,10 +2,14 @@ import React, { useEffect, useState } from 'react';
 import FormCheckoutInformationOne from './modules/FormCheckoutInformationOne';
 import ModulePaymentOrderSummaryOne from './modules/ModulePaymentOrderSummaryOne';
 import Joyride from 'react-joyride';
+import { useRouter } from 'next/router';
 
 
 const CheckoutOne = () => {
-    const [run, setRun] = useState(false)
+    const [run, setRun] = useState(false);
+    const router = useRouter();
+
+    if (!router.isReady) return null;
 
     const steps = [
         {
@@ -33,16 +37,6 @@ const CheckoutOne = () => {
             setRun(false)
         }
     };
-
-
-    // useEffect(() => {
-    //     const doc = document.querySelector('.headerSticky')
-    //     doc.id = ""
-
-    //     // setTimeout(() => {
-    //     //     setRun(true)
-    //     // }, 500);
-    // }, []);
 
 
 

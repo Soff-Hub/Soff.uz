@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
-import ModuleProductActions from '~/components/elements/products/modules/ModuleProductActions';
 import useProduct from '~/hooks/useProduct';
-import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
+import { addPeriodToThousands } from '~/components/partials/account/price-formatter';
 
 const Product = ({ product }) => {
     const { thumbnailImage, title } = useProduct();
@@ -49,7 +48,6 @@ const Product = ({ product }) => {
                     </a>
                 </Link>
 
-                <ModuleProductActions product={product} />
             </div>
             <div className='ps-product__container'>
                 <div className='ps-product__content card-narx-box'>

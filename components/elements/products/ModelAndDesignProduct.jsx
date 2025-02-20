@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import useProduct from '~/hooks/useProduct';
-import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
+import { addPeriodToThousands } from '~/components/partials/account/price-formatter';
 import useWishlist from '~/hooks/useWishlist';
 
 const ModelAndDesignProduct = ({ product }) => {

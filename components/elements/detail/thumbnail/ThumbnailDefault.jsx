@@ -2,7 +2,6 @@ import Script from 'next/script';
 import React, { useEffect, useRef } from 'react';
 
 const ThumbnailDefault = ({ product, views }) => {
-    product?.document?.images?.sort((a, b) => a?.id - b?.id)
 
     const wrapperRef = useRef(null);
 

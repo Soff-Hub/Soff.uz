@@ -3,7 +3,7 @@ import { Tabs } from 'antd';
 import PartialDescription from '~/components/elements/detail/description/PartialDescription';
 import RateCommit from './RateCommit';
 import Commits from './Commits';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import { useRouter } from 'next/router';
 import Axios from 'axios';

@@ -1,26 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import ThumbnailDefault from '~/components/elements/detail/thumbnail/ThumbnailDefault';
 import DefaultDescription from '~/components/elements/detail/description/DefaultDescription';
-import ModuleProductDetailDescription from '~/components/elements/detail/modules/ModuleProductDetailDescription';
-import ModuleDetailShoppingActions from '~/components/elements/detail/modules/ModuleDetailShoppingActions';
-import ModuleDetailTopInformation from '~/components/elements/detail/modules/ModuleDetailTopInformation';
 import Link from 'next/link';
-import BuyBtnScroll from './BuyBtnScroll';
 import ReportButton from './ReportButton';
-import Script from 'next/script';
 
 const ProductDetailFullwidth = ({ product, views }) => {
 
-    useEffect(() => {
-        if (window.yaContextCb) {
-            window.yaContextCb.push(() => {
-                Ya.Context.AdvManager.render({
-                    blockId: "R-A-13331140-1",
-                    renderTo: "yandex_rtb_R-A-13331140-1"
-                });
-            });
-        }
-    }, []);
 
     return (
         <>
@@ -35,33 +20,8 @@ const ProductDetailFullwidth = ({ product, views }) => {
                     <div className="col-lg-5 col-md-6 col-12 mt-md-0 mt-3" id="get-buy">
                         <div className='border p-3'>
                             <ReportButton productId={product?.slug} />
-                            <ModuleDetailTopInformation product={product} />
-                            <ModuleDetailShoppingActions product={product} />
+                        
                         </div>
-                        <ModuleProductDetailDescription
-                            product={product}
-                            views={views}
-                        />
-                        {/* <ModuleDetailShoppingActions product={product} /> */}
-
-                        {/* Yandex reklama kodi */}
-                        <div id="yandex_rtb_R-A-13331140-1"></div>
-
-                        {/* Yandex scriptni yuklash */}
-                        <Script
-                            src="https://yandex.ru/ads/system/context.js"
-                            strategy="lazyOnload"
-                            onLoad={() => {
-                                if (window.yaContextCb) {
-                                    window.yaContextCb.push(() => {
-                                        Ya.Context.AdvManager.render({
-                                            blockId: "R-A-13331140-1",
-                                            renderTo: "yandex_rtb_R-A-13331140-1"
-                                        });
-                                    });
-                                }
-                            }}
-                        />
 
                         {
                             product?.tag?.length > 0 && (
@@ -97,8 +57,6 @@ const ProductDetailFullwidth = ({ product, views }) => {
                 </div>
 
                 <DefaultDescription product={product} />
-
-                <BuyBtnScroll />
             </div>
         </>
     );

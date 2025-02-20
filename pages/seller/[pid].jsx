@@ -11,7 +11,7 @@ import ProductRepository from '~/repositories/ProductRepository';
 import SellerProducts from '~/components/partials/seller/SellerProducts';
 import SellerDonateForm from '~/components/partials/seller/SellerDonateForm';
 import CalculateTimeDifference from '~/components/partials/account/DateFormatter';
-import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
+import { addPeriodToThousands } from '~/components/partials/account/price-formatter';
 import { useMediaQuery } from 'react-responsive';
 
 const SellerPage = ({ seller, sellerr }) => {
@@ -19,6 +19,7 @@ const SellerPage = ({ seller, sellerr }) => {
     const [data, setData] = useState(seller);
     const [page, setPage] = useState(1);
     const router = useRouter();
+    if (!router.isReady) return null;
     const { pid } = router.query;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalOpenDonate, setIsModalOpenDonate] = useState(false);
@@ -60,9 +61,10 @@ const SellerPage = ({ seller, sellerr }) => {
 
     const getSellerDocumentType = async (slug) => {
         const respons = await ProductRepository.getSellerProductNameSlug(slug);
-        if (respons) {
+        if (respons?.status === 200) {
             setProductType(respons?.data);
-        }
+
+        }         
     };
 
 

@@ -24,11 +24,6 @@ function AccountQuickLinks() {
         const res = logOutAuth(data);
 
         if (res) {
-            const modal = Modal.info({
-                centered: true,
-                title: 'Muvaffaqqiyatli!',
-                content: `Siz muvaffaqqiyatli chiqdingiz`,
-            });
             Router.push('/auth/login');
             dispatch(logOut());
             dispatch(setSavedPrfileData(null))
