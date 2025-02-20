@@ -9,7 +9,6 @@ import { useDispatch } from 'react-redux';
 import useDebounce from '~/hooks/useDebounce';
 import { baseUrl } from '~/repositories/Repository';
 import axios from 'axios';
-import AudioWaveform from '~/components/elements/products/AudioProductCart';
 import ProductVideo from '~/components/elements/products/ProductVideo';
 import PlaylistCard from '~/components/elements/products/PlaylistCard';
 import { setCategorySlug } from '~/store/auth/slice';
@@ -341,12 +340,7 @@ const ShopItems = ({
                 newData?.length > 0 &&
                 newData?.map((item, index) => (
                     <>
-                        {item?.document?.content_type === 'audio' ? (
-                            <div className="col-12 my-2" key={index}>
-                                <AudioWaveform product={item} inCategory={true} />
-                            </div>
-                        ) :
-
+                        {
                             item?.document?.content_type === 'video' ? (
                                 <div className="col-md-4 px-2  my-2" key={index}>
                                     <ProductVideo
