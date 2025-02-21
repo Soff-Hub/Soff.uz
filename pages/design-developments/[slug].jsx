@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import useApi, { baseUrlUseApi } from '~/repositories/useApi';
 import ProductsByDesignDevelopment from '~/components/partials/category/ProductsByDesignDevelopment';
 import CategoriesFilterForDesignDevelopmentsSection from '~/components/elements/CategoriesFilterForDesignDevelopmentsSection';
+import FooterComponents from '~/components/blocks/footer/FooterComponents';
 
 export default function DesignDevelopments () {
     const router = useRouter();
@@ -13,25 +14,33 @@ export default function DesignDevelopments () {
 
     // products API uchun so'rov
     const { data, error, isLoading } = useApi(
-        ['products', slug, page, parentCategory, childCategory], // queryKey dinamik
-        `${baseUrlUseApi}customer/products/?direction=design_template&category=${
+        ['products', page, parentCategory, childCategory], // queryKey dinamik
+        `${baseUrlUseApi}customer/products/?direction=scientific_work&category=${
             childCategory ? childCategory : parentCategory
         }&page=${page || 1}&page_size=48`,
         'GET'
     );
 
-    // Four-child API uchun so'rov
-    const { data: fourChildData, error: fourChildError, isLoading: isFourChildLoading, } = useApi(
+    // Otab kategoriya API uchun so'rov
+    const {
+        data: fourChildData,
+        error: fourChildError,
+        isLoading: isFourChildLoading,
+    } = useApi(
         ['fourChild'], // Query key
-        `${baseUrlUseApi}customer/four-child?direction=design_template`,
+        `${baseUrlUseApi}customer/four-child?direction=scientific_work`,
         'GET'
     );
 
     // Farzand kategoriya API uchun so'rov
-    const { data: childCategoryData, error: childCategoryEror, isLoading: isChildCategory } = useApi(
-        ["fourChild", parentCategory], // Query key
-        `${baseUrlUseApi}customer/four-child?direction=design_template&parent__slug=${parentCategory}`,
-        "GET"
+    const {
+        data: childCategoryData,
+        error: childCategoryEror,
+        isLoading: isChildCategory,
+    } = useApi(
+        ['fourChild', parentCategory], // Query key
+        `${baseUrlUseApi}customer/four-child?direction=scientific_work&parent__slug=${parentCategory}`,
+        'GET'
     );
 
     // Pagination tugmalari uchun funksiya
@@ -68,6 +77,7 @@ export default function DesignDevelopments () {
                     isLoading={isLoading}
                 />
             </div>
+            <FooterComponents />
         </PageContainer>
     );
 }
