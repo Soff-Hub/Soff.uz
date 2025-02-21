@@ -5,8 +5,6 @@ import { addPeriodToThousands } from '~/components/partials/account/price-format
 import useWishlist from '~/hooks/useWishlist';
 import useCart from '~/hooks/useCart';
 import { useRouter } from 'next/router';
-import { Modal } from 'antd';
-
 
 const ModelAndDesignProduct = ({ product }) => {
     const [countShow, setCountShow] = useState(false);
@@ -167,27 +165,6 @@ const ModelAndDesignProduct = ({ product }) => {
                     </div>
                 </div>
             </div>
-            <Modal
-                title='Muvaffaqqiyatli'
-                open={open}
-                onOk={hideModalOk}
-                onCancel={hideModal}
-                cancelButtonProps={{
-                    style: {
-                        color: '#000',
-                    },
-                }}
-                okButtonProps={{
-                    style: {
-                        color: '#fff',
-                    },
-                }}
-                okText="Savatga o'tish"
-                cancelText='Xaridlarni davom etirish'>
-                <p></p>
-                <p>Mahsulotingizni savatga qo'shdingiz!</p>
-                <p></p>
-            </Modal>
         </div>
     );
 };
