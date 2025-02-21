@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import React from 'react';
+import FooterComponents from '~/components/blocks/footer/FooterComponents';
 import ModelAndDesignHero from '~/components/blocks/header/ModelAndDesignHero';
 import CategoriesFilterSecion from '~/components/elements/CategoriesFilterForDesignDevelopmentsSection';
 import ThreeDCategoriesFilterSecion from '~/components/elements/ThreeDCategoriesFilterSecion';
@@ -76,6 +77,7 @@ export default function ModelsAndInteriorDesign () {
                     isLoading={isLoading}
                 />
             </div>
+            <FooterComponents />
         </PageContainer>
     );
 }

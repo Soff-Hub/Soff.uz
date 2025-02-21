@@ -3,10 +3,13 @@ import Link from 'next/link';
 import useProduct from '~/hooks/useProduct';
 import { addPeriodToThousands } from '~/components/partials/account/price-formatter';
 import useWishlist from '~/hooks/useWishlist';
+import useCart from '~/hooks/useCart';
+import { useRouter } from 'next/router';
+import { Modal } from 'antd';
+
 
 const ModelAndDesignProduct = ({ product }) => {
     const [countShow, setCountShow] = useState(false);
-    const { addSavedItem, wishlist, removeSavedItemm } = useWishlist();
     const { thumbnailImage, title } = useProduct();
 
     function handleAddItemToWishlist (e) {
@@ -17,49 +20,84 @@ const ModelAndDesignProduct = ({ product }) => {
         }
     }
 
+    const { addSavedItem, wishlist, removeSavedItem } = useWishlist();
+    const [open, setOpen] = useState(false);
+    const Router = useRouter();
+    const { setCartOneItem, removeCartOneItem } = useCart();
+    const [basket, setBasket] = useState(false);
+
+    function handleAddItemToCart (e) {
+        showModal();
+        e.preventDefault();
+        if (basket) {
+            removeCartOneItem(product.id);
+        } else {
+            setCartOneItem(product.id);
+        }
+
+        setBasket(prev => !prev); // Holatni almashtirish
+    }
+
+    function handleAddItemToWishlist (e) {
+        e.preventDefault();
+        addSavedItem(product.id);
+        if (wishlist?.find(item => item.id === product?.id)) {
+            removeSavedItem(product.id);
+        }
+    }
+
+    // ----------------modals
+    const showModal = () => {
+        setOpen(true);
+    };
+
+    const hideModal = () => {
+        setOpen(false);
+    };
+    const hideModalOk = () => {
+        setOpen(false);
+        Router.push('/account/shopping-cart');
+    };
+
     const produvctTitle =
         product.title.length > 10
             ? product.title.slice(0, 15) + '...'
             : product.title;
 
     return (
-        <div>
+        <div className='modelAndDesignCardWrap'>
             <div
                 className='modelAndDesignCard'
                 onMouseEnter={() => setCountShow(true)}
                 onMouseLeave={() => setCountShow(false)}>
-                <div className=''>
+                <div className='modelAndDesignCardImg'>
                     <Link
-                        href="/product/[pid]" 
+                        href='/product/[pid]'
                         as={`/product/${product.slug}`}
-                        className=''>
-                        <a>
-                            {ModelAndDesignProduct.poster_url ? (
-                                thumbnailImage(ModelAndDesignProduct)
-                            ) : (
-                                <img
-                                    src={product.poster_url}
-                                    alt='hujjat'
-                                    className='modelAndDesignCardImg'
-                                />
-                            )}
-                        </a>
-                    </Link>
-                </div>
-
-                <div className='modelAndDesignCardBody'>
-                    <Link href="/product/[pid]" as={`/product/${product.slug}`}>
-                        <a className='modelAndDesignCardTitle'>
-                            {produvctTitle}
-                        </a>
+                        className='w-100'>
+                        {ModelAndDesignProduct.poster_url ? (
+                            thumbnailImage(ModelAndDesignProduct)
+                        ) : (
+                            <img
+                                src={product.poster_url}
+                                alt='hujjat'
+                                className='w-100'
+                                style={{ borderRadius: '9px 9px 0 0' }}
+                            />
+                        )}
                     </Link>
 
-                    <div className='modelAndDesignCardPrice'>
-                        <div className='ps-product__content card-narx-box  '>
+                    <div className='modelAndDesignCardTopSide d-flex justify-content-between'>
+                        <div className='aboutModel d-flex gap-2'>
+                            <p className='aboutModelItem m-0'>blend</p>
+                            <p className='aboutModelItem'>blend</p>
+                            <p className='aboutModelItem'>blend</p>
+                        </div>
+                        <div className='modelAndDesignCardPriceBox'>
                             {+product.discount_price === 0 ? (
-                                <p className='free-product-text'>Bepul</p>
+                                <p className='modelAndDesignCardPrice'>Bepul</p>
                             ) : product.discount === 0 ? (
-                                <p>
+                                <p className='modelAndDesignCardPrice'>
                                     {addPeriodToThousands(
                                         product.discount_price
                                     )}{' '}
@@ -71,7 +109,7 @@ const ModelAndDesignProduct = ({ product }) => {
                                         {addPeriodToThousands(product.price)}{' '}
                                         so'm
                                     </del>
-                                    <p>
+                                    <p className='modelAndDesignCardPrice'>
                                         {addPeriodToThousands(
                                             product.discount_price
                                         )}
@@ -83,45 +121,73 @@ const ModelAndDesignProduct = ({ product }) => {
                     </div>
                 </div>
 
-                <div className='modelAndDesignCardIcons'>
-                    <div>
-                        {(product?.views_count ||
-                            product?.views_count === 0) && (
-                            <p
-                                className='text-center d-flex align-items-center gap-2 mb-0 mt-1'
-                                style={{
-                                    fontSize: '12px',
-                                    opacity: countShow ? '1' : '0',
-                                    transition: 'opacity 0.3s linear',
-                                }}>
-                                <i
-                                    className='fa-solid fa-eye text-dark'
-                                    style={{
-                                        fontSize: '10px',
-                                    }}></i>{' '}
-                                {product?.views_count}
-                            </p>
-                        )}
-                    </div>
+                <div className='modelAndDesignCardBody'>
+                    <Link href='/product/[pid]' as={`/product/${product.slug}`}>
+                        <a className='modelAndDesignCardTitle'>
+                            {produvctTitle}
+                        </a>
+                    </Link>
 
-                    <a
-                        href='#'
-                        data-toggle='tooltip'
-                        data-placement='top'
-                        title="Tanlanganlarga qo'shish"
-                        onClick={handleAddItemToWishlist}>
-                        <i
-                            className={`${
-                                wishlist?.some(
-                                    item =>
-                                        Number(item.id) === Number(product?.id)
-                                )
-                                    ? 'fa-solid fa-heart  text-danger d-flex align-items-center'
-                                    : 'icon-heart d-flex align-items-center'
-                            } `}></i>
-                    </a>
+                    <div className='modelAndDesignCardBtn'>
+                        <a
+                            className='scientific-resources-card-heard'
+                            href='#'
+                            data-toggle='tooltip'
+                            data-placement='top'
+                            title="Tanlanganlarga qo'shish"
+                            onClick={handleAddItemToWishlist}>
+                            <img
+                                src={`${
+                                    wishlist?.some(
+                                        item =>
+                                            Number(item.id) ===
+                                            Number(product?.id)
+                                    )
+                                        ? '/static/img/onclickHeard.png'
+                                        : '/static/img/heard.png'
+                                } `}
+                                alt=''
+                            />
+                        </a>
+                        <a
+                            href='#'
+                            data-toggle='tooltip'
+                            data-placement='top'
+                            title="Savatga qo'shish"
+                            onClick={handleAddItemToCart}>
+                            <img
+                                src={
+                                    basket
+                                        ? '/static/img/buyIconHover.png'
+                                        : '/static/img/buyIcon.png'
+                                }
+                                alt=''
+                            />
+                        </a>
+                    </div>
                 </div>
             </div>
+            <Modal
+                title='Muvaffaqqiyatli'
+                open={open}
+                onOk={hideModalOk}
+                onCancel={hideModal}
+                cancelButtonProps={{
+                    style: {
+                        color: '#000',
+                    },
+                }}
+                okButtonProps={{
+                    style: {
+                        color: '#fff',
+                    },
+                }}
+                okText="Savatga o'tish"
+                cancelText='Xaridlarni davom etirish'>
+                <p></p>
+                <p>Mahsulotingizni savatga qo'shdingiz!</p>
+                <p></p>
+            </Modal>
         </div>
     );
 };
