@@ -9,21 +9,9 @@ import { useRouter } from 'next/router';
 const RedesignProduct = ({ product }) => {
     const { addSavedItem, wishlist, removeSavedItem } = useWishlist();
     const [open, setOpen] = useState(false);
-    const { setCartOneItem, removeCartOneItem } = useCart();
     const Router = useRouter();
+    const { setCartOneItem, removeCartOneItem } = useCart();
     const [basket, setBasket] = useState(false);
-
-    const showModal = () => {
-        setOpen(true);
-    };
-
-    function handleAddItemToWishlist (e) {
-        e.preventDefault();
-        addSavedItem(product.id);
-        if (wishlist?.find(item => item.id === product?.id)) {
-            removeSavedItem(product.id);
-        }
-    }
 
     function handleAddItemToCart (e) {
         showModal();
@@ -36,6 +24,19 @@ const RedesignProduct = ({ product }) => {
 
         setBasket(prev => !prev); // Holatni almashtirish
     }
+
+    function handleAddItemToWishlist (e) {
+        e.preventDefault();
+        addSavedItem(product.id);
+        if (wishlist?.find(item => item.id === product?.id)) {
+            removeSavedItem(product.id);
+        }
+    }
+
+    // ----------------modals
+    const showModal = () => {
+        setOpen(true);
+    };
 
     const hideModal = () => {
         setOpen(false);

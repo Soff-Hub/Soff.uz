@@ -2035,14 +2035,14 @@
         background-color: rgba(#000, 0.5);
     }
 
-    &:before {
-        content: '\f16d';
-        font-family: FontAwesome;
-        @include center();
-        z-index: 20;
-        color: #ffffff;
-        font-size: 30px;
-    }
+    // &:before {
+    //     content: '\f16d';
+    //     font-family: FontAwesome;
+    //     @include center();
+    //     z-index: 20;
+    //     color: #ffffff;
+    //     font-size: 30px;
+    // }
 
     &:hover {
         &:before,
@@ -3064,6 +3064,10 @@ h3 {
         height: 60px;
     }
 }
+
+
+
+
 
 // .overflow-auto
 .hidden-scroll {

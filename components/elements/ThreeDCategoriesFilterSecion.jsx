@@ -27,8 +27,9 @@ const CategoriesFilterSecion = ({
     return (
         <div>
             <div className='d-xl-none d-block mt-5 container p-xl-0'>
-                <div className='d-flex gap-3 justify-content-between mb-5'>
+                <div className='row gap-2 my-md-4'>
                     <Select
+                        className='col-lg-6 col-md-6 col-sm-12 col-12 '
                         onChange={value => {
                             {
                                 router.push({
@@ -42,8 +43,9 @@ const CategoriesFilterSecion = ({
                             height: '42px',
                             flex: 1,
                         }}>
-                        <Option key={'all'} value={'all'}>
-                            <i className='fa-solid fa-list mr-2'></i> Barchasi
+                        <Option key={'all'} value={'all'} className='w-50'>
+                            <i className='fa-solid fa-list mr-2'></i>
+                             Barchasi
                         </Option>
                         {breacrumb?.results?.map((item, index) => {
                             return (
@@ -61,6 +63,7 @@ const CategoriesFilterSecion = ({
                     </Select>
                     {subCategory && (
                         <Select
+                            className=' w-100 col-lg-4 col-md-6 col-sm-12 col-12'
                             onChange={value => {
                                 {
                                     router.push({
