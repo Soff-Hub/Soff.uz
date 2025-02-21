@@ -268,13 +268,13 @@ input[type='number']::-webkit-outer-spin-button {
 // ________________________________ProductsByModelsAndDesignCategory styles____________________________
 
 .modelAndDesignCardWrap {
-    margin-top: 45px;
+    margin-top: 28px;
     @media screen and (max-width: 1000px) {
         margin-top: 0px;
     }
 
     .modelAndDesignCard {
-        margin-bottom: 42.5px !important;
+        // margin-bottom: 5px !important;
         border-radius: 9px !important;
         @media screen and (max-width: 1000px) {
             margin-bottom: 30px !important;
@@ -289,15 +289,17 @@ input[type='number']::-webkit-outer-spin-button {
         .modelAndDesignCardImg {
             position: relative;
             img {
-                height: 329px;
+                height: 281px;
+                object-fit: cover;
+                object-position: center;
                 @media screen and (max-width: 700px) {
-                    height: 300px;
-                }
-                @media screen and (max-width: 600px) {
                     height: 250px;
                 }
-                @media screen and (max-width: 500px) {
+                @media screen and (max-width: 600px) {
                     height: 200px;
+                }
+                @media screen and (max-width: 500px) {
+                    height: 180px;
                 }
                 @media screen and (max-width: 400px) {
                     height: 130px;
@@ -371,6 +373,8 @@ input[type='number']::-webkit-outer-spin-button {
             align-items: center;
             padding: 8.5px 13px;
             background: #fff;
+            border-radius: 0 0 9px 9px !important;
+
             @media screen and (max-width: 550px) {
                 padding: 4.5px 6.5px;
             }
