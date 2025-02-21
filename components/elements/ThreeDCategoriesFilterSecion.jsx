@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { Select, Skeleton } from 'antd';
 const Option = Select.Option;
 
-const CategoriesFilterSecion = ({
+const ThreeDCategoriesFilterSecion = ({
     breacrumb,
     count,
     isLoading,
@@ -275,4 +275,4 @@ const CategoriesFilterSecion = ({
     );
 };
 
-export default CategoriesFilterSecion;
+export default ThreeDCategoriesFilterSecion;
