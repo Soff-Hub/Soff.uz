@@ -26,14 +26,14 @@ const CategoriesFilterSecion = ({
 
     return (
         <div>
-            <div className='d-xl-none d-block mt-5 container p-xl-0'>
-                <div className='row gap-2 my-md-4'>
+            <div className='d-xl-none d-block mt-5 container p-xl-0 '>
+                <div className='row mx-auto my-md-4 row-gap-3'>
                     <Select
-                        className='col-lg-6 col-md-6 col-sm-12 col-12 '
+                        className=' col-md-6  col-12  p-0 m-0 mr-md-2'
                         onChange={value => {
                             {
                                 router.push({
-                                    pathname: `/scientific-resources/${value}`,
+                                    pathname: `/3d-models-and-interior-designs/${value}`,
                                     query: { parentCategory: value }, // query parametrini qo'shish
                                 });
                             }
@@ -45,7 +45,7 @@ const CategoriesFilterSecion = ({
                         }}>
                         <Option key={'all'} value={'all'} className='w-50'>
                             <i className='fa-solid fa-list mr-2'></i>
-                             Barchasi
+                            Barchasi
                         </Option>
                         {breacrumb?.results?.map((item, index) => {
                             return (
@@ -63,7 +63,7 @@ const CategoriesFilterSecion = ({
                     </Select>
                     {subCategory && (
                         <Select
-                            className=' w-100 col-lg-4 col-md-6 col-sm-12 col-12'
+                            className=' col-md-6  col-12  p-0 m-0 ml-md-2'
                             onChange={value => {
                                 {
                                     router.push({
