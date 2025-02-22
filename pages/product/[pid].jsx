@@ -14,6 +14,7 @@ import Joyride from 'react-joyride';
 import { setOneShopDoc } from '~/store/auth/slice';
 import Script from 'next/script';
 import FileProductsDetails from '~/components/details-components/file-products-detail/details-page';
+import { Button, Card, Flex, Typography } from 'antd';
 
 const ProductDefaultPage = ({ defaultProducts }) => {
     const router = useRouter();
@@ -25,14 +26,14 @@ const ProductDefaultPage = ({ defaultProducts }) => {
     const [run, setRun] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    const { user } = useSelector((state) => state.auth);
+    const { user } = useSelector(state => state.auth);
     const dispatch = useDispatch();
 
-    const removeHTMLTags = (html) => {
+    const removeHTMLTags = html => {
         return html.replace(/<[^>]+>/g, '');
     };
 
-    async function getProducts() {
+    async function getProducts () {
         const token = user?.access;
         setLoading(true);
         try {
@@ -52,7 +53,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
         setLoading(false);
     }
 
-    async function getProductSimiller() {
+    async function getProductSimiller () {
         try {
             const token = user?.access;
             const response = await axios.get(
@@ -72,7 +73,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
         }
     }
 
-    async function getUUID(uuid) {
+    async function getUUID (uuid) {
         const respons = await PostRepository.postProductUUID(pid, uuid);
         if (respons) {
             setViews(respons);
@@ -85,23 +86,26 @@ const ProductDefaultPage = ({ defaultProducts }) => {
             getProductSimiller();
         }
 
-
-        {/* Yandex reklama kodi */ }
+        {
+            /* Yandex reklama kodi */
+        }
         if (window.yaContextCb) {
             window.yaContextCb.push(() => {
                 Ya.Context.AdvManager.render({
-                    blockId: "R-A-13331140-3",
-                    renderTo: "yandex_rtb_R-A-13331140-3"
+                    blockId: 'R-A-13331140-3',
+                    renderTo: 'yandex_rtb_R-A-13331140-3',
                 });
             });
         }
 
-        {/* Yandex reklama kodi */ }
+        {
+            /* Yandex reklama kodi */
+        }
         if (window.yaContextCb) {
             window.yaContextCb.push(() => {
                 Ya.Context.AdvManager.render({
-                    blockId: "R-A-13331140-2",
-                    renderTo: "yandex_rtb_R-A-13331140-2"
+                    blockId: 'R-A-13331140-2',
+                    renderTo: 'yandex_rtb_R-A-13331140-2',
                 });
             });
         }
@@ -159,7 +163,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
         },
     ];
 
-    const callbackSingle = (data) => {
+    const callbackSingle = data => {
         if (data.action === 'reset' || data.action === 'close') {
             const doc = document.querySelector('.headerSticky');
             doc.id = 'headerSticky';
@@ -194,128 +198,131 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                             'Soff.uz - Intellektual mulk marketi'}
                     </title>
                     <meta
-                        name="title"
+                        name='title'
                         content={
                             defaultProducts?.title ||
                             'soff.uz - Intellektual mulk marketi'
                         }
                     />
                     <meta
-                        name="description"
+                        name='description'
                         content={
                             defaultProducts?.description
                                 ? removeHTMLTags(defaultProducts?.description)
-                                : `${defaultProducts?.title ||
-                                'soff.uz - Intellektual mulk marketi'
-                                } `
+                                : `${
+                                      defaultProducts?.title ||
+                                      'soff.uz - Intellektual mulk marketi'
+                                  } `
                         }
                     />
                     <meta
-                        name="image"
+                        name='image'
                         content={
                             defaultProducts?.poster_url ||
                             '../../static/img/soff/logo-dark.png'
                         }
                     />
                     <meta
-                        name="keywords"
+                        name='keywords'
                         content={
                             defaultProducts?.tag
                                 ? defaultProducts?.tag
-                                    ?.map((e) => e?.name)
-                                    ?.join(', ')
+                                      ?.map(e => e?.name)
+                                      ?.join(', ')
                                 : 'kurs ishi, taqdimotlar, slaydlar, diplom ishi, prezentatsiya'
                         }
                     />
 
-                    <meta property="og:type" content="website" />
+                    <meta property='og:type' content='website' />
                     <meta
-                        property="og:title"
+                        property='og:title'
                         content={
                             defaultProducts?.title ||
                             'soff.uz - Intellektual mulk marketi'
                         }
                     />
                     <meta
-                        property="og:description"
+                        property='og:description'
                         content={
                             defaultProducts?.description
                                 ? removeHTMLTags(defaultProducts?.description)
-                                : `${defaultProducts?.title ||
-                                'soff.uz - Intellektual mulk marketi'
-                                } `
+                                : `${
+                                      defaultProducts?.title ||
+                                      'soff.uz - Intellektual mulk marketi'
+                                  } `
                         }
                     />
                     <meta
-                        property="og:image"
+                        property='og:image'
                         content={
                             defaultProducts?.poster_url ||
                             '../../static/img/soff/logo-dark.png'
                         }
                     />
-                    <meta property="og:url" content="https://soff.uz" />
-                    <meta property="og:site_name" content="soff.uz" />
+                    <meta property='og:url' content='https://soff.uz' />
+                    <meta property='og:site_name' content='soff.uz' />
                     <meta
-                        property="og:keywords"
+                        property='og:keywords'
                         content={
                             defaultProducts?.tag
                                 ? defaultProducts?.tag
-                                    ?.map((e) => e?.name)
-                                    ?.join(', ')
+                                      ?.map(e => e?.name)
+                                      ?.join(', ')
                                 : 'kurs ishi, taqdimotlar, slaydlar, diplom ishi, prezentatsiya'
                         }
                     />
 
                     <meta
-                        property="twitter:image"
+                        property='twitter:image'
                         content={
                             defaultProducts?.poster_url ||
                             '../../static/img/soff/logo-dark.png'
                         }></meta>
-                    <meta property="twitter:type" content="website" />
+                    <meta property='twitter:type' content='website' />
                     <meta
-                        property="twitter:title"
+                        property='twitter:title'
                         content={
                             defaultProducts?.title ||
                             'soff.uz - Intellektual mulk marketi'
                         }
                     />
                     <meta
-                        property="twitter:description"
+                        property='twitter:description'
                         content={
                             defaultProducts?.description
                                 ? removeHTMLTags(defaultProducts?.description)
-                                : `${defaultProducts?.title ||
-                                'soff.uz - Intellektual mulk marketi'
-                                } `
+                                : `${
+                                      defaultProducts?.title ||
+                                      'soff.uz - Intellektual mulk marketi'
+                                  } `
                         }
                     />
-                    <meta property="twitter:url" content="https://soff.uz" />
-                    <meta property="twitter:site_name" content="soff.uz" />
+                    <meta property='twitter:url' content='https://soff.uz' />
+                    <meta property='twitter:site_name' content='soff.uz' />
                     <meta
-                        property="twitter:keywords"
+                        property='twitter:keywords'
                         content={
                             defaultProducts?.tag
                                 ? defaultProducts?.tag
-                                    ?.map((e) => e?.name)
-                                    ?.join(', ')
+                                      ?.map(e => e?.name)
+                                      ?.join(', ')
                                 : 'kurs ishi, taqdimotlar, slaydlar, diplom ishi, prezentatsiya'
                         }
                     />
                 </Head>
                 <div className='container'>
                     {/* Yandex reklama kodi */}
-                    <div id="yandex_rtb_R-A-13331140-2"></div>
+                    <div id='yandex_rtb_R-A-13331140-2'></div>
                     {/* Yandex scriptni yuklash */}
                     <Script
-                        src="https://yandex.ru/ads/system/context.js"
-                        strategy="lazyOnload"
+                        src='https://yandex.ru/ads/system/context.js'
+                        strategy='lazyOnload'
                         onLoad={() => {
                             if (window.yaContextCb) {
                                 window.yaContextCb.push(() => {
                                     Ya.Context.AdvManager.render({
-                                        blockId: "R-A-13331140-2",
-                                        renderTo: "yandex_rtb_R-A-13331140-2"
+                                        blockId: 'R-A-13331140-2',
+                                        renderTo: 'yandex_rtb_R-A-13331140-2',
                                     });
                                 });
                             }
@@ -323,9 +330,9 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                     />
                 </div>
                 {/* <div> */}
-                <div >
-                    <div className="container" style={{ position: 'relative' }}>
-                        <div className="text-end m-0">
+                <div>
+                    <div className='container' style={{ position: 'relative' }}>
+                        <div className='text-end m-0'>
                             {defaultProducts?.discpunt_price === 0 && (
                                 <p
                                     onClick={handleClickStepper}
@@ -364,12 +371,13 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                         />
 
                         <div
-                            className={`ps-page--product ${defaultProducts?.price === 0 ? '' : 'pt-2'
-                                }`}>
-                            <div className="ps-container p-0">
-                                <div className="ps-page__container">
+                            className={`ps-page--product ${
+                                defaultProducts?.price === 0 ? '' : 'pt-2'
+                            }`}>
+                            <div className='ps-container p-0'>
+                                <div className='ps-page__container'>
                                     {!loading &&
-                                        product?.document?.content_type ===
+                                    product?.document?.content_type ===
                                         'file' ? (
                                         <div>
                                             <FileProductsDetails
@@ -377,9 +385,9 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                                             />
                                         </div>
                                     ) : !loading &&
-                                        product?.document?.content_type ===
-                                        'video' ? (
-                                        <div className="pt-3">
+                                      product?.document?.content_type ===
+                                          'video' ? (
+                                        <div className='pt-3'>
                                             {/* <ProductVideoDetailFullWidth
                                                 isPlay={isPlay}
                                                 setIsPlay={setIsPlay}
@@ -389,31 +397,70 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                                             /> */}
                                         </div>
                                     ) : (
-                                        <div className="ps-page__left">
-                                          Yuklanmoqda
+                                        <div className='ps-page__left'>
+                                            {/*_____________________________________________________________ loader */}
+
+                                            <Card
+                                                hoverable
+                                                styles={{
+                                                    body: {
+                                                        width: '620px',
+                                                        padding: 0,
+                                                        overflow: 'hidden',
+                                                    },
+                                                }}>
+                                                <Flex justify='space-between'>
+                                                    <img
+                                                        alt='avatar'
+                                                        src='https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
+                                                        style={{
+                                                            display: 'block',
+                                                            width: '273px',
+                                                        }}
+                                                    />
+                                                    <Flex
+                                                        vertical
+                                                        align='flex-end'
+                                                        justify='space-between'
+                                                        style={{ padding: 32 }}>
+                                                        <Typography.Title
+                                                            level={3}>
+                                                            “antd is an
+                                                            enterprise-class UI
+                                                            design language and
+                                                            React UI library.”
+                                                        </Typography.Title>
+                                                        <Button
+                                                            type='primary'
+                                                            href='https://ant.design'
+                                                            target='_blank'>
+                                                            Get Started
+                                                        </Button>
+                                                    </Flex>
+                                                </Flex>
+                                            </Card>
                                         </div>
                                     )}
                                 </div>
 
                                 {/* Yandex reklama kodi */}
-                                <div id="yandex_rtb_R-A-13331140-3"></div>
+                                <div id='yandex_rtb_R-A-13331140-3'></div>
                                 {/* Yandex scriptni yuklash */}
                                 <Script
-                                    src="https://yandex.ru/ads/system/context.js"
-                                    strategy="lazyOnload"
+                                    src='https://yandex.ru/ads/system/context.js'
+                                    strategy='lazyOnload'
                                     onLoad={() => {
                                         if (window.yaContextCb) {
                                             window.yaContextCb.push(() => {
                                                 Ya.Context.AdvManager.render({
-                                                    blockId: "R-A-13331140-3",
-                                                    renderTo: "yandex_rtb_R-A-13331140-3"
+                                                    blockId: 'R-A-13331140-3',
+                                                    renderTo:
+                                                        'yandex_rtb_R-A-13331140-3',
                                                 });
                                             });
                                         }
                                     }}
                                 />
-
-
                             </div>
                         </div>
                     </div>
@@ -423,7 +470,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
     );
 };
 
-export async function getServerSideProps({ query }) {
+export async function getServerSideProps ({ query }) {
     const resquest = await fetch(baseUrl + `customer/documents/${query.pid}/`);
     const defaultProducts = await resquest.json();
 

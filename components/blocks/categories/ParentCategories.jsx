@@ -12,19 +12,19 @@ const parentCategoriesData = [
         title: '3D moddellar va Interier dizaynlar',
         imgUrl: '/static/img/3D-moddellar-va-Interier-dizaynlar.png',
         width: '401px',
-        path: '#',
+        path: '/3d-models-and-interior-designs/all',
     },
     {
         title: 'Dizayn shablonlari',
         imgUrl: '/static/img/Dizayn-shablonlari.png',
         width: '531px',
-        path: '#',
+        path: '/design-developments/all',
     },
     {
         title: 'Veb saytlar',
         imgUrl: '/static/img/Veb-saytlar.png',
         width: '531px',
-        path: '#',
+        path: '/websites/all',
     },
     {
         title: 'Ilmiy ishlar',
@@ -36,7 +36,7 @@ const parentCategoriesData = [
         title: 'Video darsliklar',
         imgUrl: '/static/img/Video-darsliklar.png',
         width: '401px',
-        path: '#',
+        path: '/videoLessons/all',
     },
 ];
 
