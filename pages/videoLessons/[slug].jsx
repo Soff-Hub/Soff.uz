@@ -4,11 +4,11 @@ import FooterDefault from '~/components/shared/footers/FooterDefault';
 import Meta from '~/components/shared/headers/Meta';
 import { useRouter } from 'next/router';
 import useApi, { baseUrlUseApi } from '~/repositories/useApi';
-import ProductsByDesignDevelopment from '~/components/partials/category/ProductsByDesignDevelopment';
-import CategoriesFilterForDesignDevelopmentsSection from '~/components/elements/DesignDevelopmentsFilterSection';
 import FooterComponents from '~/components/blocks/footer/FooterComponents';
+import VideoLessonsFilterSection from '~/components/elements/VideoLessonsFilterSection';
+import ProductsByVideoLessons from '~/components/partials/category/ProductsByVideoLessons';
 
-export default function DesignDevelopments () {
+export default function VideoLessons () {
     const router = useRouter();
     const { slug, page, parentCategory, childCategory } = router.query;
 
@@ -62,13 +62,13 @@ export default function DesignDevelopments () {
             />
 
             <div className='ps-page--shop container'>
-                <CategoriesFilterForDesignDevelopmentsSection
+                <VideoLessonsFilterSection
                     breacrumb={fourChildData}
                     count={data?.count}
                     isLoading={isFourChildLoading}
                     childCategoryData={childCategoryData}
                 />
-                <ProductsByDesignDevelopment
+                <ProductsByVideoLessons
                     data={data}
                     page={page}
                     handlePagination={number => {

@@ -75,8 +75,8 @@ export default function FooterComponents () {
                 padding: '57px 0 64px',
                 borderBottom: '1px solid rgba(0, 164, 79, 1)',
             }}>
-            <footer className=' bg-white container p-lg-0 d-flex justify-content-between align-items-start flex-wrap'>
-                <div className='logo'>
+            <footer className=' bg-white container p-lg-0 d-flex  justify-content-between align-items-start flex-wrap '>
+                <div className='logo col-xl-2 col-lg-3 col-md-6 col-sm-12 col-12'>
                     <img
                         src='/static/img/soff/logo-dark.png'
                         alt='logo'
@@ -90,7 +90,7 @@ export default function FooterComponents () {
                     </a>
                 </div>
 
-                <div className='company'>
+                <div className='company col-xl-2 col-lg-3 col-md-6 col-sm-12 col-12'>
                     <h5 className='fw-semibold fs-2 mb-5'>
                         {footerMenu.companies.title}
                     </h5>
@@ -106,7 +106,7 @@ export default function FooterComponents () {
                 </div>
 
                 {/* Xizmatlar bo‘limi */}
-                <div>
+                <div className='col-xl-2 col-lg-3 col-md-6 col-sm-12 col-12'>
                     <h5 className='fw-semibold fs-2 mb-5'>
                         {footerMenu.services.title}
                     </h5>
@@ -122,7 +122,7 @@ export default function FooterComponents () {
                 </div>
 
                 {/* Ijtimoiy tarmoqlar */}
-                <div>
+                <div className='col-xl-2 col-lg-3 col-md-6 col-sm-12 col-12'>
                     <h5 className='fw-semibold fs-2 mb-5'>
                         {footerMenu.sociols.title}
                     </h5>
@@ -144,7 +144,7 @@ export default function FooterComponents () {
                 </div>
 
                 {/* Bog‘lanish bo‘limi */}
-                <div>
+                <div className='col-xl-2 col-lg-3 col-md-6 col-sm-12 col-12 '>
                     <h5 className='fw-semibold fs-2 mb-5'>
                         {footerMenu.contact.title}
                     </h5>
