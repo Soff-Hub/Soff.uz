@@ -186,6 +186,8 @@ const ProductDefaultPage = ({ defaultProducts }) => {
         }, 500);
     };
 
+
+
     return (
         <>
             <PageContainer

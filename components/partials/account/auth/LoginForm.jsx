@@ -116,13 +116,14 @@ export default function LoginForm() {
                                         message:
                                             'Iltimos, haqiqiy telefon raqam kiriting',
                                     },
-                                ]}>
+                                ]}
+                                normalize={(value) => value.replace(/\D/g, "").slice(0, 9)}
+                                >
                                 <Input
                                     autoComplete="off"
                                     style={{ height: '50px', fontSize: '16px' }}
                                     type="text"
                                     placeholder="Telefon raqam"
-                                    maxLength={9}
                                     addonBefore="+998"
                                 />
                             </Form.Item>
