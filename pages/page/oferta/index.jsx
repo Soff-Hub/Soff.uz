@@ -8,7 +8,7 @@ export default function Oferta() {
             <Meta title="Soff - barcha ma'lumotlar bazasi" image="/static/img/soff/soff_green_white.png" />
 
             <div className="container px-5">
-                <h3 className='mt-5'>
+                <h3>
                     Soff.uz platformasidan foydalanish
                     qonun-qoidalari
                 </h3>
@@ -27,9 +27,7 @@ export default function Oferta() {
                     boshqalar shartli ravishda{' '}
                     <strong>mahsulot</strong> deb nomlanadi. Ular
                     faqatgina ma’lumotlar hisoblanib,
-                    o’qib-o’rganish uchun mo’ljallangan. Biznes
-                    rejalar esa tavsiyaviy harakterga ega bo’lib,
-                    undagi hisob-kitoblar tahminiy olingan.
+                    foydalanish, o’qib-o’rganish uchun mo’ljallangan.
                 </p>
                 <p>
                     1.3. Platformaning «Biznes xizmatlar» bo’limida
@@ -78,7 +76,7 @@ export default function Oferta() {
                     4.1.4. Xarid qilingan mahsulot bo’yicha
                     xabarnomalarni ro’yxatdan o’tish davomida
                     foydalanuvchi tomonidan kiritilgan elektron
-                    pochta (e-mail) orqali qabul qilib olish (4.2.4.
+                    pochta (e-mail) yoki telefon raqam orqali qabul qilib olish (4.2.4.
                     shart bajarilgan taqdirda) yoki o’zining shaxsiy
                     profilidagi «Sotib olinganlar» sahifasiga kirish
                     orqali qabul qilib olish;
@@ -116,7 +114,7 @@ export default function Oferta() {
                 <p>
                     4.2.4. Ro’yxatdan o’tish jarayonida amalda
                     mavjud bo’lgan, ishlaydigan elektron manzil
-                    (e-mail) kiritish shart;
+                    (e-mail) yoki telefon raqam kiritish shart;
                 </p>
                 <p>
                     4.2.5. Foydalanuvchi Platformaning foydalanish
@@ -136,7 +134,7 @@ export default function Oferta() {
                 <p>
                     5.1.3. Mahsulotlaridan bepulga yoki tijorat
                     hamda foyda olish maqsadida platformada
-                    ulashishlariga ruxsat etiladi (5.1.7. shart
+                    ulashishlariga ruxsat etiladi (5.1.6. shart
                     bajarilgan taqdirda);
                 </p>
                 <p>
@@ -151,20 +149,25 @@ export default function Oferta() {
                 <p>
                     5.1.5. Sotuvchining sotilgan mahsulotlari
                     yig’indisidan platforma ulishining (sotilgan
-                    mahsulotning 10% i) qiymatini ayirgan holatda
+                    mahsulotning 18% i) qiymatini ayirgan holatda
                     hosil bo’lgan summani o’z kartalariga tashlab
-                    olish (5.2.5. shart bajarilgan taqdirda);
+                    olish (5.2.5. shart bajarilgan taqdirda),
+                    shu bilan birga platforma o'z xizmat narxlarini
+                    yoki komissiya foizini vaqt o'tishi bilan o'z
+                    ehtiyojlariga qarab oshirish huquqini o'zida saqlab qoladi.
                 </p>
-                <p>5.1.6.</p>
-                <p>
-                    5.1.7. Sotuvchi mahsulotlarining muallifi o’zi
-                    yoki boshqa bir inson muallifidagi mahsulot
-                    bo’lsa uning roziligi bilan olingan mahsulot
-                    bo’lishi shart;
+                <p>5.1.6.
+                    Sotuvchi mahsulotlarining muallifi o’zi yoki boshqa bir inson muallifidagi
+                    mahsulot bo’lsa uning roziligi bilan olingan mahsulot bo’lishi shart
                 </p>
                 <p>
                     5.1.7. Platforma ma’muriyatiga murojaat qilish
                     huquqlariga ega
+                </p>
+                <p>
+                    5.1.8. Sotuvchi referal havola orqali do’stlarini
+                    taklif qilish va do’stlarining har bir daromadidan
+                    5% miqdorda bonus olish.
                 </p>
                 <h5>
                     5.2. Foydalanuchilar quyidagi majburiyatlarni
@@ -184,14 +187,14 @@ export default function Oferta() {
                     oluvchi xabarlarni jo’natish taqiqlanadi.
                 </p>
                 <p>
-                    5.2.4. Ro’yxatdan o’tish jarayonida amalda
+                    5.2.3. Ro’yxatdan o’tish jarayonida amalda
                     mavjud bo’lgan, ishlaydigan elektron manzil
-                    (e-mail) kiritish shart;
+                    (e-mail) yoki telefon raqam kiritish shart;
                 </p>
                 <p>
-                    5.2.5. Sotuvchining yig’ilgan summasini
+                    5.2.4. Sotuvchining yig’ilgan summasini
                     kartasiga tashlab olish jarayonidan uning
-                    miqdori 10 ming so’mdan kam bo’lmasligi shart.
+                    miqdori 18 ming so’mdan kam bo’lmasligi shart.
                 </p>
                 <p>
                     5.2.5. Sotuvchi Platformaning foydalanish
@@ -199,9 +202,19 @@ export default function Oferta() {
                     bajarishi shart
                 </p>
                 <p>
-                    5.2.6. Sotuvchi platformada sotilgan har bir
-                    mahsulotining 10% ini platforma ma’muriyati olib
-                    qolishi shart.
+                    5.2.7.  Sotuvchi yuklagan har bir mahsulotning
+                    sifatli, yaroqli va o'z ijodiy ishi ekanligiga
+                    javobgar. Xaridor yoki boshqa shaxslar norozilik
+                    bildirsa yoki mualliflik huquqi buzilsa, barcha
+                    javobgarlik Sotuvchida qoladi. Platforma mahsulotlarni
+                    moderatsiyadan o'tkazgan taqdirda ham xato yoki
+                    e'tibordan chetda qolgan holatlar uchun javobgar emas.
+                </p>
+                <p>
+                    5.2.8. Sotuvchi referal havola orqali o’zini-o’zi
+                    taklif qilgan holatlar aniqlansa, platforma ma’muriyati
+                    tomonidan ogohlantirish beriladi va ushbu taklif havolasi
+                    ro’yxatdan olib tashlanadi.
                 </p>
                 <h4>6. Javobgarlik</h4>
                 <p>
@@ -301,6 +314,7 @@ export default function Oferta() {
                     Saytga qilingan hurujlar bundan mustasno.
                 </p>
             </div>
+
         </PageLayout>
     )
 }
