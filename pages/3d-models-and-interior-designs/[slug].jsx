@@ -1,6 +1,8 @@
 import { useRouter } from 'next/router';
 import React from 'react';
+import FooterComponents from '~/components/blocks/footer/FooterComponents';
 import ModelAndDesignHero from '~/components/blocks/header/ModelAndDesignHero';
+import CategoriesFilterSecion from '~/components/elements/DesignDevelopmentsFilterSection';
 import ThreeDCategoriesFilterSecion from '~/components/elements/ThreeDCategoriesFilterSecion';
 import PageContainer from '~/components/layouts/PageContainer';
 import ProductsByModelsAndDesignCategory from '~/components/partials/category/ProductsByModelsAndDesignCategory';
@@ -8,32 +10,40 @@ import FooterDefault from '~/components/shared/footers/FooterDefault';
 import Meta from '~/components/shared/headers/Meta';
 import useApi, { baseUrlUseApi } from '~/repositories/useApi';
 
-export default function ModelsAndInteriorDesign() {
+export default function ModelsAndInteriorDesign () {
     const router = useRouter();
     const { slug, page, parentCategory, childCategory } = router.query;
 
     // products API uchun so'rov
     const { data, error, isLoading } = useApi(
-        ['products', slug, page, parentCategory, childCategory], // queryKey dinamik
-        `${baseUrlUseApi}customer/products/?direction=three_d_model&category=${childCategory ? childCategory : parentCategory
+        ['products', page, parentCategory, childCategory], // queryKey dinamik
+        `${baseUrlUseApi}customer/products/?direction=scientific_work&category=${
+            childCategory ? childCategory : parentCategory
         }&page=${page || 1}&page_size=48`,
         'GET'
     );
 
-    // Four-child API uchun so'rov
-    const {data: fourChildData, error: fourChildError, isLoading: isFourChildLoading } = useApi(
+    // Otab kategoriya API uchun so'rov
+    const {
+        data: fourChildData,
+        error: fourChildError,
+        isLoading: isFourChildLoading,
+    } = useApi(
         ['fourChild'], // Query key
-        `${baseUrlUseApi}customer/four-child?direction=three_d_model`,
+        `${baseUrlUseApi}customer/four-child?direction=scientific_work`,
         'GET'
     );
 
     // Farzand kategoriya API uchun so'rov
-    const { data: childCategoryData, error: childCategoryEror, isLoading: isChildCategory } = useApi(
-        ["fourChild", parentCategory], // Query key
-        `${baseUrlUseApi}customer/four-child?direction=three_d_model&parent__slug=${parentCategory}`,
-        "GET"
+    const {
+        data: childCategoryData,
+        error: childCategoryEror,
+        isLoading: isChildCategory,
+    } = useApi(
+        ['fourChild', parentCategory], // Query key
+        `${baseUrlUseApi}customer/four-child?direction=scientific_work&parent__slug=${parentCategory}`,
+        'GET'
     );
-
 
     // Pagination tugmalari uchun funksiya
     const handlePageChange = newPage => {
@@ -42,7 +52,6 @@ export default function ModelsAndInteriorDesign() {
             query: { ...router.query, page: newPage }, // URL'ga yangi page qo'shish
         });
     };
-
     return (
         <PageContainer
             footer={<FooterDefault />}
@@ -68,6 +77,7 @@ export default function ModelsAndInteriorDesign() {
                     isLoading={isLoading}
                 />
             </div>
+            <FooterComponents />
         </PageContainer>
     );
 }

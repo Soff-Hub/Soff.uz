@@ -39,6 +39,129 @@
     }
 }
 
+.card_conatiner_section {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: auto;
+    gap: 17px;
+    row-gap: 34px;
+    align-items: stretch;
+    margin-top: 50px;
+
+    @media (max-width: 1300px) {
+        grid-template-columns: repeat(4, 1fr);
+        scrollbar-width: none;
+    }
+
+    @media (max-width: 1150px) {
+        grid-template-columns: repeat(3, 1fr);
+        scrollbar-width: none;
+    }
+    @media (max-width: 1000px) {
+        grid-template-columns: repeat(3, 1fr);
+        margin-top: 20px;
+    }
+
+    // 📌 MD ekran (≤768px) → 2 ta kartaga o'tadi
+    @media (max-width: 768px) {
+        grid-template-columns: repeat(2, 1fr);
+        margin-top: 20px;
+    }
+
+    // 📌 SM ekran (≤480px) → 1 ta karta chiqadi
+    @media (max-width: 480px) {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+.CategoryMenu {
+    position: relative;
+}
+
+.CategoryOpen {
+    position: absolute;
+    z-index: 9;
+    box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: inherit;
+    right: 0;
+    left: 0;
+}
+
+.subCategoryContainer{
+    position: relative;
+
+}
+
+.subCategoryOpen{
+    position: absolute;
+    z-index: 9;
+    box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: inherit;
+    right: 0;
+    left: 0;
+}
+
+.scientific-resources-card {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    justify-content: space-between;
+    align-items: start;
+    gap: 10px;
+    border-radius: 12.5px;
+    padding: 20px;
+    height: 100%;
+    position: relative;
+    &:hover {
+        transition: ease-in-out;
+        box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .scientific-resources-card-heard {
+        position: absolute;
+        right: 20px;
+    }
+
+    .scientific-resources-card-img {
+        width: 224px !important;
+        height: 186px !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+    }
+    .scientific-resources-card-title {
+        font-family: 'Poppins';
+        font-weight: 500;
+        font-size: 12.5px;
+        line-height: 18.75px;
+        letter-spacing: 2%;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    .scientific-resources-card-btn {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        // padding: 0 20px;
+        width: 100%;
+        p {
+            margin: 0;
+            font-family: 'Poppins';
+            font-weight: 600;
+            font-size: 18.33px;
+            line-height: 27.5px;
+            letter-spacing: 2%;
+        }
+    }
+}
+
 .product__top-information-account {
     background-color: #fff;
     padding: 4px 7px;
@@ -914,7 +1037,7 @@
             background-color: rgba(#000, 0.5);
             color: #ffffff;
         }
-        
+
         .ps-btn--white--gray {
             background-color: #e7e8ec;
             color: #1f2027;

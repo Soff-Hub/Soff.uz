@@ -1,12 +1,6 @@
-/*
- * React template helpers
- * Author: Nouthemes
- * Developed: diaryforlife
- * */
 
-import React from 'react';
-import CollectionRepository from '~/repositories/CollectionRepository';
 import ProductRepository from '~/repositories/ProductRepository';
+import GetRepository from '~/reositoriy-admin/GetRepository';
 
 export async function getProductsByCollectionHelper(
     collectionSlug,
@@ -16,7 +10,7 @@ export async function getProductsByCollectionHelper(
     let products;
     if (collectionSlug) {
 
-        products = await CollectionRepository.getCategoryData(
+        products = await GetRepository.getCategoryData(
             collectionSlug
         );
     } else {
@@ -37,7 +31,7 @@ export async function getProductsByCollectionHelper(
 export async function getProductsByCategoriesHelper(slug, pageSize = 12) {
     let products;
     if (slug) {
-        products = await CollectionRepository.getProductsByCategorySlug(slug);
+        products = await GetRepository.getProductsByCategorySlug(slug);
     } else {
         const queries = {
             _limit: pageSize,

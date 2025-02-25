@@ -60,33 +60,31 @@
 
 .ps-breadcrumb-2 {
     padding: 20px 0;
-    background-color: #fff;
+    // background-color: #fff;/
 
     .breadcrumb-2 {
-        display: inline-block;
         margin: 0;
         padding: 0;
         background-color: transparent;
 
         li {
-            display: inline-block;
-            font-size: 14px;
-            line-height: 20px;
-            color: $color-text;
-            text-decoration: underline;
+            font-family: 'Poppins';
+            font-weight: 400;
+            font-size: 14.17px;
+            line-height: 21.25px;
+            letter-spacing: 2%;
+            list-style: none;
 
+            &:hover {
+                color: #00a44f;
+            }
             &:before {
                 content: ' ';
                 //font-family: FontAwesome;
                 margin: 0 5px;
             }
 
-            &:first-child {
-                padding-left: 0;
-                font-weight: 500;
-                font-size: large;
-                text-decoration: none;
-
+            &:last-child {
                 &:before {
                     display: none;
                 }
@@ -149,7 +147,6 @@
                 //font-family: FontAwesome;
                 margin: 0 5px;
             }
-
         }
 
         a {
@@ -183,13 +180,13 @@
 
 .forMoreInformation {
     text-decoration: none !important;
-    font-weight: 400 !important;
     cursor: pointer !important;
+    color: #00a44f;
 }
 
-.forMoreInformation:hover {
-    color: #000 !important;
-}
+// .forMoreInformation:hover {
+//     color: #000 !important;
+// }
 
 .websitesNavItems {
     list-style-type: none;
@@ -214,8 +211,6 @@
     background: #fff;
 }
 
-.websiteCardIcons{
+.websiteCardIcons {
     position: absolute;
 }
-
-

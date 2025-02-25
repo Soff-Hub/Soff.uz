@@ -8,6 +8,8 @@
 
 .btn_color {
     color: #fff !important;
+    width: 100%;
+    margin-top: 51px;
 }
 
 .tolov-usullari {
@@ -340,9 +342,7 @@
     margin-bottom: 20px;
 }
 
-.home-card {
-    // margin-bottom: 20px;
-}
+
 
 @include media('<lg') {
     .responsive-image-card {
@@ -661,10 +661,7 @@
     //     width: auto !important;
     // }
 
-    .card-narx-box {
-        padding: 0 10px;
-        text-align: center;
-    }
+  
 
     .ps-block__right {
         h4 {
@@ -710,14 +707,7 @@
         }
     }
 
-    .card-narx-box {
-        text-align: center;
-        font-size: 12px;
 
-        a {
-            margin: 0 auto;
-        }
-    }
 
     .mahsulotingiz {
         position: fixed;
@@ -2517,4 +2507,60 @@
 
 .ant-skeleton-paragraph {
     list-style-type: none !important;
+}
+
+.type_payment {
+    padding: 48px 50px 44px;
+    background: #fff;
+    border-radius: 10px !important;
+    .type_payment_h3 {
+        font-family: 'Poppins';
+        font-weight: 600;
+        font-size: 25px;
+        line-height: 37.5px;
+        letter-spacing: 0%;
+        @media (min-width: 768px) and (max-width: 1024px) {
+            padding: 0 !important;
+            font-weight: 500;
+            font-size: 20px;
+            line-height: 30.5px;
+        }
+        @media (max-width: 425px) {
+            padding: 0 10px;
+        }
+    }
+    .type_payment_description {
+        font-family: 'Poppins';
+        font-weight: 400;
+        font-size: 15px;
+        line-height: 28.5px;
+        letter-spacing: 2%;
+        margin: 29px 0 50px;
+        @media (min-width: 768px) and (max-width: 1024px) {
+            font-size: 12px;
+            line-height: 20.5px;
+            margin: 10px 0 20px;
+        }
+        @media (max-width: 425px) {
+            padding: 0 10px;
+        }
+    }
+    @media (max-width: 425px) {
+        padding: 0px;
+    }
+}
+
+.cardNumber {
+    font-family: 'Poppins';
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 27px;
+    letter-spacing: 0%;
+    color: #312f30;
+    margin: 48px 0 10px;
+    @media (min-width: 768px) and (max-width: 1024px) {
+        font-weight: 500;
+        font-size: 15px;
+        line-height: 30.5px;
+    }
 }

@@ -2,11 +2,11 @@ import React from 'react'
 
 export const VideoComponent = () => {
     return (
-        <div className='video-card'>
+        <div className='video-card homePageVideoComponentVideo'>
             <video
-                className="w-100"
+                className="w-100 "
                 controls
-                poster="/static/img/Soff.uz - bu qanday loyiha.png"
+                poster="/static/img/homePageVideo.png"
                 preload="auto"
                 crossOrigin="anonymous"
                 role="video"
@@ -34,8 +34,8 @@ export const VideoComponent = () => {
 export default function HomeVideo() {
 
     return (
-        <div className="container">
-            <h2 className=' py-4'>Soff.uz - bu qanday loyiha?</h2>
+        <div className="container homePageVideoComponent">
+            <h2 className=' p-0 product-list-title'>Soff.uz - bu qanday loyiha?</h2>
             <VideoComponent />
         </div>
     )

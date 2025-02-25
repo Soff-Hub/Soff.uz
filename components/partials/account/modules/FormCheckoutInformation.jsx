@@ -2,18 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import CreditCard2 from '../CreditCard2';
 
-function FormCheckoutInformation() {
-    const select = useSelector((state) => state.auth.user?.access);
-    const cartData = useSelector((state) => state.ecomerce.cartDataItems);
-    const [data, setData] = useState([])
-
+function FormCheckoutInformation () {
+    const select = useSelector(state => state.auth.user?.access);
+    const cartData = useSelector(state => state.ecomerce.cartDataItems);
+    const [data, setData] = useState([]);
 
     useEffect(() => {
-        select && 
-        setData(cartData);
+        select && setData(cartData);
     }, [cartData]);
 
-    function extractIds(data) {
+    function extractIds (data) {
         const ids = [];
         for (const item of data) {
             ids.push(Number(item.id));
@@ -22,16 +20,19 @@ function FormCheckoutInformation() {
     }
     const ids = extractIds(data);
 
-
     return (
-        <div className="tolov-usullari">
-            <h3 className='tolov-usullari-h3' style={{ fontWeight: '600', margin: '0', padding:'0 15px' }}>To'lov turini tanlang</h3>
-            <div className="d-flex aligin-content-center  rounded-5 px-3">
+        <div className='type_payment p-lg-5 mt-lg-3 p-md-2'>
+            <h3 className='type_payment_h3'>To'lov turini tanlang</h3>
+            <p className='type_payment_description'>
+                Ishonch bilan to‘lov qiling – biz faqat tasdiqlangan tizimlardan
+                foydalanamiz. Ma’lumotlaringiz xavfsiz saqlanadi va begonalarga
+                ko‘rinmaydi.
+            </p>
+            <div className='bg-white mx-5 '>
                 <CreditCard2 document={ids} />
             </div>
         </div>
     );
 }
-
 
 export default FormCheckoutInformation;

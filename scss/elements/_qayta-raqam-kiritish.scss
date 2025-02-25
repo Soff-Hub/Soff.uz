@@ -1,5 +1,3 @@
-
-
 .raqam-input {
     padding: 0 10px;
     height: 50px;
@@ -48,7 +46,7 @@
         justify-content: center;
         align-items: center;
         padding: 35px;
-        transition: all .6s;
+        transition: all 0.6s;
         & .register-choose-button {
             display: flex;
             flex-direction: column;
@@ -90,13 +88,12 @@
     }
 }
 
-
 @media screen and (max-width: 362px) {
     .selection-user {
         display: flex !important;
         max-width: 280px !important;
         gap: 8px !important;
-        .register-choose-button-parent_div{
+        .register-choose-button-parent_div {
             width: 120px;
             height: 120px;
         }
@@ -143,3 +140,465 @@ input[type='number']::-webkit-outer-spin-button {
     margin: 0;
 }
 
+.bg--white {
+    background-color: #ffffff !important;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.categoryCard {
+    padding: 9.58px 28.33px 9.58px 20.83px;
+}
+
+.open_subcategory_btn {
+    background: #00a44f !important;
+}
+
+.subcategory_btn {
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.05),
+        -2px -2px 2px rgba(0, 0, 0, 0.05), 2px -2px 2px rgba(0, 0, 0, 0.05),
+        -2px 2px 2px rgba(0, 0, 0, 0.05) !important;
+
+    &:hover {
+        background: #00a44f !important;
+        color: #fff !important;
+        .subcategory_btn_title {
+            color: #fff !important;
+        }
+    }
+    &:active {
+        background: #00a44f !important;
+        color: #fff !important;
+        .subcategory_btn_title {
+            color: #fff !important;
+        }
+    }
+}
+
+.subcategoryMenu {
+    margin-top: 24px;
+}
+
+.categoryMenuCard:hover {
+    background-color: #00a44f !important;
+    color: #fff;
+}
+
+.categoryMenuCardActive {
+    background-color: #00a44f !important;
+    color: #fff !important;
+}
+
+// -----------------------------------------------ThreeDCategoriesFilterSecion style
+
+.Models_category_btn {
+    display: flex;
+    align-items: center;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.05),
+        -2px -2px 2px rgba(0, 0, 0, 0.05), 2px -2px 2px rgba(0, 0, 0, 0.05),
+        -2px 2px 2px rgba(0, 0, 0, 0.05) !important;
+    background: #fff;
+    border: 1px #fff solid;
+    border-radius: 7px;
+    cursor: pointer;
+    // padding: 20px 0 20px 14.5px;
+    gap: 14.5px !important;
+
+    &:hover {
+        background: #00a44f !important;
+        color: #fff !important;
+        .subcategory_btn_title {
+            color: #fff !important;
+        }
+    }
+    &:active {
+        background: #00a44f !important;
+        color: #fff !important;
+        .subcategory_btn_title {
+            color: #fff !important;
+        }
+    }
+
+    .Models_category_btn_title {
+        font-family: 'Poppins';
+        font-weight: 500;
+        font-size: 14.17px;
+        line-height: 21.25px;
+        letter-spacing: 0%;
+        margin: 0 14.5px;
+    }
+    .Models_category_btn_img {
+        width: 64px;
+        height: 50px;
+        border-radius: 0 7px 7px 0;
+        background: #fff;
+    }
+}
+
+.Models_category_menu {
+    padding: 14.5px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(0, 164, 79, 1);
+    border: 1px solid rgba(0, 164, 79, 1);
+
+    gap: 18.33px;
+    border-radius: 8.33px;
+
+    p {
+        font-family: 'Poppins';
+        font-weight: 500;
+        font-size: 14.17px;
+        line-height: 21.25px;
+        letter-spacing: 0%;
+        color: #fff;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+    &:active {
+        background: rgba(0, 164, 79, 0.8);
+        border: 1px solid rgba(0, 164, 79, 1);
+    }
+}
+
+// ________________________________ProductsByModelsAndDesignCategory styles____________________________
+
+.modelAndDesignCardWrap {
+    margin-top: 28px;
+    @media screen and (max-width: 1000px) {
+        margin-top: 0px;
+    }
+
+    .modelAndDesignCard {
+        // margin-bottom: 5px !important;
+        border-radius: 9px !important;
+        @media screen and (max-width: 1000px) {
+            margin-bottom: 30px !important;
+        }
+        @media screen and (max-width: 700px) {
+            margin-bottom: 15px !important;
+        }
+        @media screen and (max-width: 400px) {
+            margin-bottom: 8px !important;
+        }
+
+        .modelAndDesignCardImg {
+            position: relative;
+            img {
+                height: 281px;
+                object-fit: cover;
+                object-position: center;
+                @media screen and (max-width: 700px) {
+                    height: 250px;
+                }
+                @media screen and (max-width: 600px) {
+                    height: 200px;
+                }
+                @media screen and (max-width: 500px) {
+                    height: 180px;
+                }
+                @media screen and (max-width: 400px) {
+                    height: 130px;
+                }
+                @media screen and (max-width: 300px) {
+                    height: 100px;
+                }
+            }
+            .modelAndDesignCardTopSide {
+                position: absolute;
+                top: 6.55px;
+                width: 100%;
+                .modelAndDesignCardPriceBox {
+                    .modelAndDesignCardPrice {
+                        margin: 0 13px 0 0 !important;
+                        padding: 7px 9px;
+                        border-radius: 50px;
+                        background: #fff;
+
+                        font-family: 'Poppins';
+                        font-weight: 600;
+                        font-size: 12px;
+                        line-height: 12px;
+                        letter-spacing: 2%;
+                        @media screen and (max-width: 650px) {
+                            font-weight: 500;
+                            font-size: 10px !important;
+                            line-height: 10px;
+                        }
+                        @media screen and (max-width: 500px) {
+                            font-weight: 400;
+                            font-size: 10px !important;
+                            line-height: 10px;
+                        }
+                        @media screen and (max-width: 350px) {
+                            font-weight: 300;
+                            font-size: 8px !important;
+                            line-height: 8px;
+                            padding: 3px;
+                        }
+                    }
+                }
+                .aboutModel {
+                    margin-left: 13px;
+                    padding: 3px 8px;
+                    font-family: 'Poppins';
+                    font-weight: 500;
+                    font-size: 11.25px;
+                    line-height: 11.25px;
+                    letter-spacing: 2%;
+
+                    @media screen and (max-width: 800px) {
+                        margin-left: 8px;
+                    }
+                    @media screen and (max-width: 600px) {
+                        display: none;
+                    }
+
+                    .aboutModelItem {
+                        @media screen and (max-width: 550px) {
+                            display: none;
+                        }
+                        display: flex;
+                        align-items: center;
+                        margin: 0 !important;
+                        padding: 0 4px;
+                        border-radius: 28px;
+                        background: #fff;
+                        font-family: 'Poppins';
+                        font-weight: 500;
+                        font-size: 11.25px;
+                        line-height: 11.25px;
+                        letter-spacing: 2%;
+                    }
+                }
+            }
+        }
+        .modelAndDesignCardBody {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8.5px 13px;
+            background: #fff;
+            border-radius: 0 0 9px 9px !important;
+
+            @media screen and (max-width: 550px) {
+                padding: 4.5px 6.5px;
+            }
+            .modelAndDesignCardTitle {
+                font-family: 'Poppins';
+                font-weight: 500;
+                font-size: 20px;
+                line-height: 20px;
+                letter-spacing: 2%;
+
+                @media screen and (max-width: 650px) {
+                    font-weight: 400;
+                    font-size: 15px;
+                    line-height: 18px;
+                }
+                @media screen and (max-width: 500px) {
+                    font-weight: 400;
+                    font-size: 12px;
+                    line-height: 15px;
+                }
+                @media screen and (max-width: 350px) {
+                    font-weight: 300;
+                    font-size: 8px;
+                    line-height: 10px;
+                }
+            }
+            .modelAndDesignCardBtn {
+                display: flex;
+                align-items: center;
+                gap: 9px;
+            }
+            a {
+                img {
+                    @media screen and (max-width: 600px) {
+                        width: 18px;
+                        height: 18px;
+                    }
+                    @media screen and (max-width: 500px) {
+                        width: 15px;
+                        height: 15px;
+                    }
+                    @media screen and (max-width: 350px) {
+                        width: 10px;
+                        height: 10px;
+                    }
+                }
+            }
+        }
+        &:hover {
+            transition: ease-in-out;
+            box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.1);
+        }
+    }
+}
+@media screen and (max-width: 550px) {
+    .aboutModel {
+        display: none;
+    }
+}
+
+// _____________________________Design Development styles____________________
+
+.designDevelopmentCard {
+    margin-bottom: 51px;
+    .designDevelopmentCardImgBox {
+        display: flex;
+        justify-content: center;
+        position: relative;
+        background: #fff;
+        border-radius: 10px 10px 0 0;
+
+        .designDevelopmentCardImg {
+            height: 276px;
+            object-fit: cover;
+            object-position: center;
+            border-radius: 10px 10px 0 0;
+            @media screen and (max-width: 700px) {
+                height: 250px;
+            }
+            @media screen and (max-width: 600px) {
+                height: 200px;
+            }
+            @media screen and (max-width: 500px) {
+                height: 180px;
+            }
+            @media screen and (max-width: 400px) {
+                height: 130px;
+            }
+            @media screen and (max-width: 300px) {
+                height: 100px;
+            }
+        }
+        .VideoLessonsProductsCardImg {
+            height: 200px;
+            object-fit: cover;
+            object-position: center;
+            border-radius: 10px 10px 0 0;
+            @media screen and (max-width: 700px) {
+                height: 180px;
+            }
+            @media screen and (max-width: 600px) {
+                height: 150px;
+            }
+            @media screen and (max-width: 500px) {
+                height: 130px;
+            }
+            @media screen and (max-width: 400px) {
+                height: 110px;
+            }
+            @media screen and (max-width: 300px) {
+                height: 100px;
+            }
+        }
+        .designDevelopmentCardheard {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            padding: 5px;
+            border-radius: 100%;
+            background: #fff;
+        }
+    }
+    .designDevelopmentCardBody {
+        background: #fff;
+        border-radius: 0 0 10px 10px;
+        padding: 11px 17px 15px 17px;
+
+        @media screen and (max-width: 650px) {
+            padding: 8px 14px 12px 14px;
+        }
+        @media screen and (max-width: 500px) {
+            padding: 6px 10px 11px 10px;
+        }
+        @media screen and (max-width: 350px) {
+            padding: 5px;
+        }
+
+        .designDevelopmentCardTitle {
+            font-family: 'Poppins';
+            font-weight: 400;
+            font-size: 15px;
+            line-height: 22.5px;
+            letter-spacing: 2%;
+            @media screen and (max-width: 650px) {
+                font-weight: 400;
+                font-size: 13px;
+                line-height: 18px;
+            }
+            @media screen and (max-width: 500px) {
+                font-weight: 400;
+                font-size: 12px;
+                line-height: 15px;
+            }
+            @media screen and (max-width: 350px) {
+                font-weight: 300;
+                font-size: 8px;
+                line-height: 0px;
+            }
+        }
+
+        .designDevelopmentCardPriceBox {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 18px;
+            @media screen and (max-width: 650px) {
+                margin-top: 12px;
+            }
+            @media screen and (max-width: 500px) {
+                margin-top: 8px;
+            }
+            @media screen and (max-width: 350px) {
+                margin-top: 3px;
+            }
+            .designDevelopmentCardPrice {
+                font-family: 'Poppins';
+                font-weight: 600;
+                font-size: 20px;
+                line-height: 30px;
+                letter-spacing: 2%;
+                @media screen and (max-width: 650px) {
+                    font-weight: 600;
+                    font-size: 18px;
+                    line-height: 12px;
+                }
+                @media screen and (max-width: 500px) {
+                    font-weight: 600;
+                    font-size: 12px;
+                    line-height: 12px;
+                }
+                @media screen and (max-width: 350px) {
+                    font-weight: 400;
+                    font-size: 10px;
+                    line-height: 12px;
+                }
+            }
+            .buyIcon {
+                img {
+                    @media screen and (max-width: 650px) {
+                    }
+                    @media screen and (max-width: 500px) {
+                        width: 25px !important;
+                        height: 25px !important;
+                    }
+                    @media screen and (max-width: 350px) {
+                        width: 20px !important;
+                        height: 20px !important;
+                    }
+                }
+            }
+        }
+    }
+    &:hover {
+        transition: ease-in-out;
+        box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.1);
+    }
+}

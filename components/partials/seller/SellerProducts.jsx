@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Product from '~/components/elements/products/Product';
 import { Pagination } from 'antd';
 import ProductVideo from '~/components/elements/products/ProductVideo';
-import AudioWaveform from '~/components/elements/products/AudioProductCart';
+
 
 export default function SellerProducts({ data = [], page, handlePagination }) {
     const [isPlay, setIsPlay] = useState(null)
@@ -22,10 +22,7 @@ export default function SellerProducts({ data = [], page, handlePagination }) {
                             item?.document?.content_type === 'video' ?
                                 <div className='col-md-4 my-3' key={index}>
                                     <ProductVideo isPlay={isPlay} setIsPlay={setIsPlay} product={item} />
-                                </div> : item?.document?.content_type === 'audio' ?
-                                    <div className='col-md-12 my-3' key={index}>
-                                        <AudioWaveform product={item} />
-                                    </div> :
+                                </div> : 
                                     <></>
                     ))) :
                     <div className='row d-flex justify-content-center align-items-center py-5 mt-5'>
