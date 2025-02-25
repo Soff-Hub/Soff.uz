@@ -57,16 +57,14 @@ export default function ProductsByModelsAndDesignCategory ({
                 )}
             </div>
             {data?.count >= 48 && (
-                <div className='text-center my-4'>
+                <div className='d-flex justify-content-center mt-5'>
                     <Pagination
+                        className='text-success'
                         total={data?.count}
                         pageSize={48}
                         responsive={true}
                         showSizeChanger={false}
                         current={page}
-                        showTotal={(total, range) =>
-                            `${total} ta dan ${range[0]}-${range[1]} oralig'i `
-                        }
                         onChange={e => handlePagination(e)}
                     />
                 </div>
