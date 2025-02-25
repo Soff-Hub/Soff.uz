@@ -15,17 +15,18 @@ export default function HeroSearchInput(inputProps) {
 
 
     return (
-        <form className='hero-search-box' onSubmit={handleSubmit}>
+        <form className='hero-search-box ' onSubmit={handleSubmit}>
             <div className="hero-search-input-loader">
                 <i className="fa fa-search fs-4"></i>
             </div>
 
             <input
                 onChange={e => setSearch(e.target.value)}
-                className='hero-search-input'
+                className='hero-search-input fs-3'
                 type="text"
                 placeholder="Izlayotgan mahsulotingizni toping..." {...inputProps}
             />
+            <div className="btn btn-success fs-4 rounded-3 px-5 py-3">Izlash</div>
 
             {/* <SearchSelectDropdown value={value} setValue={setValue} /> */}
         </form>

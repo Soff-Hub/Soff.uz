@@ -11,22 +11,20 @@ const App = () => {
             const modal = Modal.success({
                 centered: true,
                 title: 'Muvaffaqqiyatli!',
-                content: `${
-                    respons?.data?.msg
+                content: `${respons?.data?.msg
                         ? respons?.data?.msg
                         : 'Xabaringiz muvaffaqqiyatli qabul qilindi'
-                }`,
+                    }`,
             });
             modal.update;
         } else if (respons.status === 404) {
             const modal = Modal.error({
                 centered: true,
                 title: 'Xatolik!',
-                content: `${
-                    respons?.data?.msg
+                content: `${respons?.data?.msg
                         ? respons?.data?.msg
                         : 'Xabaringiz muvaffaqqiyatli qabul qilindi'
-                }`,
+                    }`,
             });
             modal.update;
         }
@@ -143,16 +141,13 @@ const App = () => {
                         </div>
                     </div>
 
-                   <div className='d-flex justify-content-center'>
-                   <div className="form-group submit">
-                        {/* <Form.Item> */}
+                    <div className='d-flex justify-content-center'>
+                        <div className="form-group submit">˝
                             <Button htmlType="submit" className="ps-btn  yuborish">
                                 Yuborish
                             </Button>
-                        {/* </Form.Item> */}
-                        {/* <CaptchaForm/> */}
+                        </div>
                     </div>
-                   </div>
                 </div>
             </Form>
         </>

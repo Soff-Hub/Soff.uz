@@ -16,8 +16,8 @@ const ModuleAudioDetailShoppingActions = ({ product, admin }) => {
     const dispatch = useDispatch();
     const Router = useRouter();
     const statee = useSelector((state) => state.auth);
-    const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [open, setOpen] = useState(false);
     const showModal = () => {
         setOpen(true);
     };

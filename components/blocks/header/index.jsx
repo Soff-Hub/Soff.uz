@@ -39,7 +39,7 @@ const Header = () => {
         <header className="site-header">
             <div className={`header-bottom top-0 bg-white`}>
                 <HeaderTop />
-                <div className="container">
+                <div className="container px-lg-0 pt-lg-2">
                     <div className="header-inner">
                         <HeaderLogo mode={'dark'} />
                         <div className='d-flex gap-5'>

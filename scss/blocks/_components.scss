@@ -112,16 +112,16 @@
 }
 
 .hero-search-box {
-    display: flex;
     position: relative;
-    padding: 5px;
+    padding: 10px;
     background-color: white;
     border-radius: 10px;
     display: flex;
     align-items: center;
-    max-width: 580px;
-    margin: 0 auto;
+    max-width: 708px;
+    font-family: 'Poppins';
     z-index: 0;
+    margin: 65px 0 35px;
 }
 
 .hero-search-input-loader {
@@ -168,8 +168,7 @@
     background-color: black;
 }
 
-
-.video-card video{
+.video-card video {
     border-radius: 20px;
     height: 600px;
     object-fit: cover; /* Video ni o'rtaga joylash uchun */
@@ -181,7 +180,7 @@
     .site-header-logo {
         width: 100px;
     }
-    .video-card video{
+    .video-card video {
         border-radius: 20px;
         height: 250px;
     }

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Result } from 'antd';
 import ProductCart from '~/components/elements/products/ProductCart';
 import useCart from '~/hooks/useCart';
-import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
+import { addPeriodToThousands } from '~/components/partials/account/price-formatter';
 
 const ModuleEcomerceCartItems = ({ cartItems }) => {
     const { removeCartOneItem } = useCart()

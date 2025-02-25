@@ -329,16 +329,6 @@ figure {
     background-color: #ffffff !important;
 }
 
-.categoryMenuCard:hover {
-    background-color: #00a44f !important;
-    color: #fff;
-}
-
-.categoryMenuCardActive {
-    background-color: #00a44f !important;
-    color: #fff;
-}
-
 .title-1 {
     font-size: 48px;
 }
@@ -348,16 +338,11 @@ figure {
 }
 
 @media only screen and (max-width: 576px) {
+    .title-1 {
+        font-size: 35px;
+    }
 
-.title-1 {
-    font-size: 35px;
-}
-
-.title-2 {
-    font-size: 30px;
-}
-}
-
-.bg--white {
-    background-color: #ffffff !important;
+    .title-2 {
+        font-size: 30px;
+    }
 }

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import ProductRepository from '~/repositories/ProductRepository';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { addPeriodToThousands } from '../ProductsLists';
+import { addPeriodToThousands } from '../price-formatter';
 import axios from 'axios';
 import { baseUrl } from '~/repositories/Repository';
 import { Skeleton } from 'antd';

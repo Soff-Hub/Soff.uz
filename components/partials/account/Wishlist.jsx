@@ -6,7 +6,7 @@ import { Modal } from 'antd';
 import useWishlist from '~/hooks/useWishlist';
 import useCart from '~/hooks/useCart';
 import { audioDownloaderSale } from '~/utilities/common-helpers';
-import { addPeriodToThousands } from './ProductsLists';
+import { addPeriodToThousands } from './price-formatter';
 
 const Wishlist = ({ ecomerce }) => {
     const { removeSavedItem } = useWishlist();
