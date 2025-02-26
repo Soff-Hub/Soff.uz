@@ -12,8 +12,8 @@ const ImageLightBox = ({ gallery = [] }) => {
 
   return (
     <div className="m-0">
-      <button type="button" onClick={() => setIsOpen(true)} style={{ border: "none", backgroundColor: "transparent" }}>
-        <IoExpandOutline className="fs-1" />
+      <button type="button"  onClick={() => setIsOpen(true)} style={{ border: "none", backgroundColor: "white", borderRadius:"5px", padding:"5px"  }}>
+        <IoExpandOutline className="fs-1 text-success" />
       </button>
 
       {isOpen && (
