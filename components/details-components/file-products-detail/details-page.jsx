@@ -1,8 +1,9 @@
 
 import React from 'react'
-import FileImagesScroll from './file-images-scroll';
-import FileActions from './file-actions';
-import SellerProfile from './seller-profile';
+import FileImagesScroll from '../details-actions/file-images-scroll';
+import FileActions from '../details-actions/file-actions';
+import SellerProfile from '../details-seller-profile/seller-profile';
+import Description from '../details-actions/description';
 
 function FileProductsDetails({ product }) { 
 
@@ -23,17 +24,8 @@ function FileProductsDetails({ product }) {
           </div>
 
           <div className='ps-product__header_seller_secound'>
-            <div className='ps-product__thumbnail_seller_secound'>
-              <h3 style={{
-                fontSize: "25px",
-                fontWeight: 500,
-                lineHeight: "37.5px",
-                color: "#312F30",
-                marginBottom: "30px"
-              }} >Mahsulot tavsifi</h3>
-
-              <div dangerouslySetInnerHTML={{ __html: product?.description }} />
-            </div>
+            <Description description={product?.description} />
+            
             <SellerProfile product={product}/>
           </div>
 

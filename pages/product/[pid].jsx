@@ -14,7 +14,9 @@ import Joyride from 'react-joyride';
 import { setOneShopDoc } from '~/store/auth/slice';
 import Script from 'next/script';
 import FileProductsDetails from '~/components/details-components/file-products-detail/details-page';
-import { Button, Card, Flex, Typography } from 'antd';
+import ThreeDesignProductsDetails from '~/components/details-components/templates-details/details-page';
+import WebSitesProductsDetails from '~/components/details-components/website-products-details/details-page';
+import VideosProductsDetails from '~/components/details-components/video-tutorials/details-page';
 
 const ProductDefaultPage = ({ defaultProducts }) => {
     const router = useRouter();
@@ -33,7 +35,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
         return html.replace(/<[^>]+>/g, '');
     };
 
-    async function getProducts () {
+    async function getProducts() {
         const token = user?.access;
         setLoading(true);
         try {
@@ -53,7 +55,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
         setLoading(false);
     }
 
-    async function getProductSimiller () {
+    async function getProductSimiller() {
         try {
             const token = user?.access;
             const response = await axios.get(
@@ -73,7 +75,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
         }
     }
 
-    async function getUUID (uuid) {
+    async function getUUID(uuid) {
         const respons = await PostRepository.postProductUUID(pid, uuid);
         if (respons) {
             setViews(respons);
@@ -187,6 +189,29 @@ const ProductDefaultPage = ({ defaultProducts }) => {
     };
 
 
+    const productsDetails = {
+        'file': <FileProductsDetails
+            product={product} />,
+        "3d": <ThreeDesignProductsDetails
+            product={product}
+        />,
+        "template": <ThreeDesignProductsDetails
+            product={product}
+        />,
+        "website": <WebSitesProductsDetails
+            product={product}
+        />,
+        "design": <ThreeDesignProductsDetails
+            product={product}
+        />,
+        "video": <VideosProductsDetails
+            isPlay={isPlay}
+            setIsPlay={setIsPlay}
+            // similar={similar}
+            product={product}
+        />
+    }
+
 
     return (
         <>
@@ -211,10 +236,9 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                         content={
                             defaultProducts?.description
                                 ? removeHTMLTags(defaultProducts?.description)
-                                : `${
-                                      defaultProducts?.title ||
-                                      'soff.uz - Intellektual mulk marketi'
-                                  } `
+                                : `${defaultProducts?.title ||
+                                'soff.uz - Intellektual mulk marketi'
+                                } `
                         }
                     />
                     <meta
@@ -229,8 +253,8 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                         content={
                             defaultProducts?.tag
                                 ? defaultProducts?.tag
-                                      ?.map(e => e?.name)
-                                      ?.join(', ')
+                                    ?.map(e => e?.name)
+                                    ?.join(', ')
                                 : 'kurs ishi, taqdimotlar, slaydlar, diplom ishi, prezentatsiya'
                         }
                     />
@@ -248,10 +272,9 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                         content={
                             defaultProducts?.description
                                 ? removeHTMLTags(defaultProducts?.description)
-                                : `${
-                                      defaultProducts?.title ||
-                                      'soff.uz - Intellektual mulk marketi'
-                                  } `
+                                : `${defaultProducts?.title ||
+                                'soff.uz - Intellektual mulk marketi'
+                                } `
                         }
                     />
                     <meta
@@ -268,8 +291,8 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                         content={
                             defaultProducts?.tag
                                 ? defaultProducts?.tag
-                                      ?.map(e => e?.name)
-                                      ?.join(', ')
+                                    ?.map(e => e?.name)
+                                    ?.join(', ')
                                 : 'kurs ishi, taqdimotlar, slaydlar, diplom ishi, prezentatsiya'
                         }
                     />
@@ -293,10 +316,9 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                         content={
                             defaultProducts?.description
                                 ? removeHTMLTags(defaultProducts?.description)
-                                : `${
-                                      defaultProducts?.title ||
-                                      'soff.uz - Intellektual mulk marketi'
-                                  } `
+                                : `${defaultProducts?.title ||
+                                'soff.uz - Intellektual mulk marketi'
+                                } `
                         }
                     />
                     <meta property='twitter:url' content='https://soff.uz' />
@@ -306,12 +328,13 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                         content={
                             defaultProducts?.tag
                                 ? defaultProducts?.tag
-                                      ?.map(e => e?.name)
-                                      ?.join(', ')
+                                    ?.map(e => e?.name)
+                                    ?.join(', ')
                                 : 'kurs ishi, taqdimotlar, slaydlar, diplom ishi, prezentatsiya'
                         }
                     />
                 </Head>
+
                 <div className='container'>
                     {/* Yandex reklama kodi */}
                     <div id='yandex_rtb_R-A-13331140-2'></div>
@@ -373,76 +396,11 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                         />
 
                         <div
-                            className={`ps-page--product ${
-                                defaultProducts?.price === 0 ? '' : 'pt-2'
-                            }`}>
+                            className={`ps-page--product ${defaultProducts?.price === 0 ? '' : 'pt-2'
+                                }`}>
                             <div className='ps-container p-0'>
                                 <div className='ps-page__container'>
-                                    {!loading &&
-                                    product?.document?.content_type ===
-                                        'file' ? (
-                                        <div>
-                                            <FileProductsDetails
-                                                product={product}
-                                            />
-                                        </div>
-                                    ) : !loading &&
-                                      product?.document?.content_type ===
-                                          'video' ? (
-                                        <div className='pt-3'>
-                                            {/* <ProductVideoDetailFullWidth
-                                                isPlay={isPlay}
-                                                setIsPlay={setIsPlay}
-                                                product={product}
-                                                views={views}
-                                                similar={similar}
-                                            /> */}
-                                        </div>
-                                    ) : (
-                                        <div className='ps-page__left'>
-                                            {/*_____________________________________________________________ loader */}
-
-                                            <Card
-                                                hoverable
-                                                styles={{
-                                                    body: {
-                                                        width: '620px',
-                                                        padding: 0,
-                                                        overflow: 'hidden',
-                                                    },
-                                                }}>
-                                                <Flex justify='space-between'>
-                                                    <img
-                                                        alt='avatar'
-                                                        src='https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
-                                                        style={{
-                                                            display: 'block',
-                                                            width: '273px',
-                                                        }}
-                                                    />
-                                                    <Flex
-                                                        vertical
-                                                        align='flex-end'
-                                                        justify='space-between'
-                                                        style={{ padding: 32 }}>
-                                                        <Typography.Title
-                                                            level={3}>
-                                                            “antd is an
-                                                            enterprise-class UI
-                                                            design language and
-                                                            React UI library.”
-                                                        </Typography.Title>
-                                                        <Button
-                                                            type='primary'
-                                                            href='https://ant.design'
-                                                            target='_blank'>
-                                                            Get Started
-                                                        </Button>
-                                                    </Flex>
-                                                </Flex>
-                                            </Card>
-                                        </div>
-                                    )}
+                                    {productsDetails[product?.document?.content_type]}
                                 </div>
 
                                 {/* Yandex reklama kodi */}
@@ -472,7 +430,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
     );
 };
 
-export async function getServerSideProps ({ query }) {
+export async function getServerSideProps({ query }) {
     const resquest = await fetch(baseUrl + `customer/documents/${query.pid}/`);
     const defaultProducts = await resquest.json();
 

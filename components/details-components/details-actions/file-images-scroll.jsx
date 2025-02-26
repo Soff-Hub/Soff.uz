@@ -5,6 +5,7 @@ import { InfoCircleOutlined } from '@ant-design/icons'
 function FileImagesScroll({ product, views }) {
     const containerRef = useRef(null);
 
+
     useEffect(() => {
         if (!containerRef.current) return;
 
@@ -26,8 +27,8 @@ function FileImagesScroll({ product, views }) {
                         ? product?.document?.images?.map((item, i) => (
                             <>
                                 {
-                                    item?.image_url && <Image
-                                        src={item?.image_url}
+                                    (item?.image_url || item?.thumbUrl || item?.url) && <Image
+                                        src={item?.image_url || item?.thumbUrl || item?.url || 'https://placehold.co/600x400'}
                                         width={785}
                                         height={614}
                                         alt={"sellerImage"}
@@ -38,11 +39,19 @@ function FileImagesScroll({ product, views }) {
                                 }
                             </>
                         ))
-                        : ''}
+                        : <Image
+                            src={'https://placehold.co/600x400'}
+                            width={1000}
+                            height={614}
+                            alt={"sellerImage"}
+                            unoptimized
+                            className={` seller_image_conatiner`}
+                            objectFit="contain"
+                        />}
                 </div>
                 <div className="views">
                     {' '}
-                    <i className="fa-solid fa-eye"></i> <span>{views}</span>
+                    <i className="fa-solid fa-eye"></i> <span>{views || 0}</span>
                 </div>
                 <div className='title_support'>
                     <InfoCircleOutlined className='fs-2 ' style={{ cursor: "pointer", }} />

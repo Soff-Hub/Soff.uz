@@ -1,13 +1,13 @@
 import { Button, Rate } from 'antd'
+import Image from 'next/image'
 import React from 'react'
 
 function SellerProfile({ product }) {
-
     return (
         <div className='seller_products_actions_secound'>
             <div className='seller_profile'>
                 <div className='img_container'>
-                    <img src={product?.seller?.image_url} alt='seller-profile' />
+                    <Image src={product?.seller?.image_url || 'https://placehold.co/600x400'} alt='seller-profile' height={200} width={200} />
                 </div>
                 <div>
                     <h3>{product?.seller?.first_name} {product?.seller?.last_name}</h3>
