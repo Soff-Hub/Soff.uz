@@ -17,7 +17,7 @@ function ThreeDesignProductsDetails({ product }) {
             <p className='m-0 fs-3'>{product?.category?.name}</p>
           </div>
           <div className="ps-product__header_seller_three_design ">
-            <ImageCarousel images={product?.document?.images}/>
+            <ImageCarousel images={product?.document?.images} views={product?.view_count}/>
             <FileActions product={product} />
           </div>
 

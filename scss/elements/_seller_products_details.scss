@@ -37,34 +37,37 @@
         gap: 30px;
 
         .price_container {
-             width: 100%;
+            width: 100%;
+
             h2 {
                 color: #312F30;
                 font-weight: 700;
                 font-size: 30px;
                 margin: 0;
             }
-            del{
+
+            del {
                 color: #312F30B2;
                 font-size: 20px;
                 font-weight: 400;
-                
+
             }
         }
 
-        .button_hover:hover{
+        .button_hover:hover {
             background-color: #00A44F;
             color: white !important;
             transition: all 0.1s ease-in-out;
         }
 
-        .icon_hover{
+        .icon_hover {
             padding: 6px;
             cursor: pointer;
         }
-        .icon_hover:hover{
+
+        .icon_hover:hover {
             background-color: #00A44F;
-            color: white !important; 
+            color: white !important;
             border-radius: 50%;
             transition: all 0.1s ease-in-out;
             padding: 6px;
@@ -173,6 +176,7 @@
 
                         }
 
+
                         .ps-wrapper_seller {
                             position: relative;
                             overflow-y: scroll;
@@ -234,7 +238,7 @@
                 gap: 34px;
 
                 .slider_swiper_container {
-                    width: 785px;
+                    max-width: 785px;
                     height: 100%;
                     background-color: white;
                     padding: 60px;
@@ -277,6 +281,47 @@
 
                     .thumb-slide.swiper-slide-thumb-active {
                         border: 1.5px solid #00A44F !important;
+                    }
+
+                    .title_support {
+                        position: absolute;
+                        bottom: 20px;
+                        display: flex;
+                        flex-wrap: wrap;
+                        align-items: center;
+                        gap: 10px;
+                    }
+
+                    .views {
+                        position: absolute;
+                        top: 5px;
+                        left: 5px;
+                        border-radius: 12px !important;
+                    }
+
+                    .swiper-container {
+                        width: 100%;
+                        height: 100%;
+                    }
+
+                    .swiper-slide {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+
+                    .image-wrapper {
+                        max-width: 100%;
+                        max-height: 500px;
+                        overflow-y: auto;
+                    }
+
+                    .swiper-image {
+                        width: auto;
+                        max-width: 100%;
+                        height: auto;
+                        max-height: 100%;
+                        object-fit: contain;
                     }
 
                 }

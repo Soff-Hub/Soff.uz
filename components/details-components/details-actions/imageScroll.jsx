@@ -6,17 +6,17 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
 import ImageLightBox from "./image-lightbox";
+import { InfoCircleOutlined } from '@ant-design/icons'
 
-const ImageCarousel = ({ images }) => {
+const ImageCarousel = ({ images, views }) => {
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
     const prevRef = useRef(null);
     const nextRef = useRef(null);
 
 
-
     return (
-        <div className="slider_swiper_container">
-            {images?.length > 0 && <div style={{ position: "absolute", top: "10px", right: "10px" }}>
+        <div className="slider_swiper_container" >
+            {images?.length > 0 && <div style={{ position: "absolute", top: "70px", right: "70px", zIndex: "999" }}>
                 <ImageLightBox gallery={images} /></div>}
             <i ref={prevRef} className="fa-solid fa-chevron-left image_prev_left"></i>
             <Swiper
@@ -27,20 +27,17 @@ const ImageCarousel = ({ images }) => {
                     nextEl: nextRef.current,
                 }}
                 slidesPerView={1}
-                className="w-100"
-                style={{
-                    height: "100%",
-                    overflow: "hidden",
-                    overflowY: "auto",
-                }}
+                className="swiper-container"
             >
                 {images?.map((item) => (
-                    <SwiperSlide key={item.id} s>
-                        <img
-                            src={item?.image_url || item?.thumbUrl}
-                            alt="Product"
-                            className="rounded"
-                        />
+                    <SwiperSlide key={item.id} className="swiper-slide">
+                        <div className="image-wrapper">
+                            <img
+                                src={item?.image_url || item?.thumbUrl}
+                                alt="Product"
+                                className="swiper-image"
+                            />
+                        </div>
                     </SwiperSlide>
                 ))}
             </Swiper>
@@ -62,6 +59,17 @@ const ImageCarousel = ({ images }) => {
                     </SwiperSlide>
                 ))}
             </Swiper>
+
+            <div className="views">
+                {' '}
+                <i className="fa-solid fa-eye"></i> <span>{views || 0}</span>
+            </div>
+            <div className='title_support'>
+                <InfoCircleOutlined className='fs-2 ' style={{ cursor: "pointer", }} />
+                <span>Mualliflik huquqi buzilgan holatda</span>
+                <strong className='text-success' style={{ cursor: "pointer" }}>shikoyat qiling!</strong>
+
+            </div>
         </div>
     );
 };
