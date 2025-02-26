@@ -15,6 +15,7 @@ function VideoPlayDetails({
     setIsPlay,}
 ) {
 
+    
 
     return (
         <div >
