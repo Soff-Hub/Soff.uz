@@ -1,5 +1,4 @@
 import React from 'react';
-import ProductDetailFullwidth from '~/components/elements/detail/ProductDetailFullwidth';
 import PageContainer from '~/components/layouts/PageContainer';
 import { baseUrl } from '~/repositories/Repository';
 import { useEffect } from 'react';
@@ -133,15 +132,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
         }
     }, [pid, product?.slug]);
 
-    const breadCrumb = [
-        {
-            text: 'Asosiy sahifa',
-            url: '/',
-        },
-        {
-            text: product?.title ? product?.title : 'Loading...',
-        },
-    ];
+ 
 
     const steps = [
         {
@@ -217,7 +208,6 @@ const ProductDefaultPage = ({ defaultProducts }) => {
         <>
             <PageContainer
                 title={defaultProducts ? defaultProducts?.title : 'Loading...'}>
-                {/* <BreadCrumb breacrumb={breadCrumb} layout="fullwidth" /> */}
 
                 <Head>
                     <title>
