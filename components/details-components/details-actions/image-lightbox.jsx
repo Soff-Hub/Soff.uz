@@ -20,7 +20,7 @@ const ImageLightBox = ({ gallery = [] }) => {
         <Lightbox open={isOpen}
           close={() => setIsOpen(false)}
           slides={slidesGallery}
-
+        
         />
       )}
     </div>

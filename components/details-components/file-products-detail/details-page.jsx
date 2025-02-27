@@ -12,7 +12,7 @@ function FileProductsDetails({ product }) {
       <div className="ps-container p-0">
         <div className="ps-product--detail_seller my-5">
           <div>
-            <p style={{ fontWeight: 600, fontSize: "25px", lineHeight: "37.5px", color: "#312F30", margin: 0 }}>{product?.title}</p>
+            <p className='titleh3' style={{ fontWeight: 600, fontSize: "25px", lineHeight: "37.5px", color: "#312F30", margin: 0 }}>{product?.title}</p>
             <p className='m-0 fs-3'>{product?.category?.name}</p>
           </div>
           <div className="ps-product__header_seller ">
