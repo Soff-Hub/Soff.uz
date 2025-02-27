@@ -61,7 +61,7 @@ export default function DesignDevelopments () {
                 description={`Biz siz qidirayotgan mahsulotlarni Soff.uz saytimizning kategoriyasida topdik`}
             />
 
-            <div className='ps-page--shop container'>
+            <div className='ps-page--shop container p-xl-0 p-l-0'>
                 <CategoriesFilterForDesignDevelopmentsSection
                     breacrumb={fourChildData}
                     count={data?.count}

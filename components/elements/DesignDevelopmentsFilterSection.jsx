@@ -26,7 +26,7 @@ const CategoriesFilterForDesignDevelopmentsSection = ({
 
     return (
         <div>
-            <div className='d-xl-none d-block mt-5 container p-xl-0 '>
+            <div className='d-xl-none d-block mt-5 container p-xl-0 p-l-0 '>
                 <div className='row mx-auto my-md-4 row-gap-3'>
                     <Select
                         className=' col-md-6  col-12  p-0 m-0 mr-md-2'
@@ -67,7 +67,8 @@ const CategoriesFilterForDesignDevelopmentsSection = ({
                             onChange={value => {
                                 {
                                     router.push({
-                                        pathname: '/design-developments/[slug]',
+                                        pathname:
+                                            '/scientific-resources/[slug]',
                                         query: {
                                             ...router.query,
                                             slug: value,
@@ -100,42 +101,49 @@ const CategoriesFilterForDesignDevelopmentsSection = ({
 
             <div className='d-none d-lg-block'>
                 <div className='subcategoryMenu d-xl-block d-lg-none p-lg-0'>
-                    <div className='d-flex align-items-center justify-content-between mb-4 gap-3 pointer '>
+                    <div className='d-flex align-items-center justify-content-start mb-4 gap-3 pointer '>
                         <div
                             onClick={() => setDropdownMenu(!dropDownMenu)}
                             className='Models_category_menu'>
                             <img src='/static/img/rectangel.png' alt='' />
-                            <p className=''>Barcha Katalog</p>
+                            <p className='' style={{ whiteSpace: 'nowrap' }}>
+                                Barcha Katalog
+                            </p>
                             <img src='/static/img/down.png' alt='' />
                         </div>
 
-                        {breacrumb?.results?.slice(0, 4).map((item, index) => (
-                            <div
-                                key={index}
-                                className={`${
-                                    parentCategory === item.slug
-                                        ? 'categoryMenuCardActive'
-                                        : ''
-                                } Models_category_btn `} // Ota kategoriya aktivligi
-                                onClick={() =>
-                                    router.push({
-                                        pathname: `/design-developments/${item.slug}`,
-                                        query: {
-                                            parentCategory: item.slug,
-                                        }, // query parametrini qo'shish
-                                    })
-                                }>
-                                <span className='Models_category_btn_title '>
-                                    {item.name}
-                                </span>
-                                <img
-                                    className='Models_category_btn_img'
-                                    src={item.image}
-                                    alt={item.name}
-                                    height={25}
-                                />
-                            </div>
-                        ))}
+                        <div className='Models_category_btn_wrap d-flex justify-content-start'>
+                            {breacrumb?.results
+                                ?.slice(0, 5)
+                                .map((item, index) => (
+                                    <div
+                                        key={index}
+                                        style={{ whiteSpace: 'nowrap' }}
+                                        className={`${
+                                            parentCategory === item.slug
+                                                ? 'categoryMenuCardActive'
+                                                : ''
+                                        } Models_category_btn `} // Ota kategoriya aktivligi
+                                        onClick={() =>
+                                            router.push({
+                                                pathname: `/design-developments/${item.slug}`,
+                                                query: {
+                                                    parentCategory: item.slug,
+                                                }, // query parametrini qo'shish
+                                            })
+                                        }>
+                                        <span className='Models_category_btn_title '>
+                                            {item.name}
+                                        </span>
+                                        <img
+                                            className='Models_category_btn_img'
+                                            src={item.image}
+                                            alt={item.name}
+                                            height={25}
+                                        />
+                                    </div>
+                                ))}
+                        </div>
                     </div>
                     <div className=''>
                         {dropDownMenu && (
@@ -147,7 +155,7 @@ const CategoriesFilterForDesignDevelopmentsSection = ({
                                             parentCategory === item.slug
                                                 ? 'categoryMenuCardActive'
                                                 : ''
-                                        } Models_category_btn`} // Ota kategoriya aktivligi
+                                        } Models_category_btn border`} // Ota kategoriya aktivligi
                                         onClick={() =>
                                             router.push({
                                                 pathname: `/design-developments/${item.slug}`,
@@ -173,42 +181,46 @@ const CategoriesFilterForDesignDevelopmentsSection = ({
                     </div>
                     {subCategory?.length > 0 && (
                         <>
-                            <div className='ps-breadcrumb-2 py-2'>
+                            <div className='ps-breadcrumb-2 py-3'>
                                 <div className='d-flex justify-content-between subCategoryContainer'>
-                                    <ul className=' breadcrumb-2 mt-2 gap-5 d-flex align-items-center  justify-content-between w-100 bg-none'>
-                                        {subCategory
-                                            .slice(0, 6)
-                                            .map((item, index) => {
-                                                return (
-                                                    <li
-                                                        className={`${
-                                                            slug === item.slug
-                                                                ? 'active'
-                                                                : ''
-                                                        } text-capitalize`}
-                                                        key={index}
-                                                        onClick={() =>
-                                                            router.push({
-                                                                pathname:
-                                                                    '/design-developments/[slug]',
-                                                                query: {
-                                                                    ...router.query,
-                                                                    slug: item.slug,
-                                                                    page: 1,
-                                                                    childCategory:
-                                                                        item.slug,
-                                                                },
-                                                            })
-                                                        }
-                                                        style={{
-                                                            cursor: 'pointer',
-                                                        }}>
-                                                        {item.name}
-                                                    </li>
-                                                );
-                                            })}
-                                        <li
-                                            className='  d-flex align-items-center gap-1 pointer text-success'
+                                    <div className='d-flex justify-content-between w-100'>
+                                        <ul className=' breadcrumb-2 mt-2 gap-5 d-flex align-items-center  justify-content-start w-100 bg-none'>
+                                            {subCategory
+                                                .slice(0, 6)
+                                                .map((item, index) => {
+                                                    return (
+                                                        <li
+                                                            className={`${
+                                                                slug ===
+                                                                item.slug
+                                                                    ? 'active'
+                                                                    : ''
+                                                            } text-capitalize`}
+                                                            key={index}
+                                                            onClick={() =>
+                                                                router.push({
+                                                                    pathname:
+                                                                        '/design-developments/[slug]',
+                                                                    query: {
+                                                                        ...router.query,
+                                                                        slug: item.slug,
+                                                                        page: 1,
+                                                                        childCategory:
+                                                                            item.slug,
+                                                                    },
+                                                                })
+                                                            }
+                                                            style={{whiteSpace: "nowrap",
+                                                                cursor: 'pointer',
+                                                            }}>
+                                                            {item.name}
+                                                        </li>
+                                                    );
+                                                })}
+                                        </ul>
+
+                                        <div
+                                            className='  d-flex align-items-center justify-content-end gap-1 pointer text-success w-100'
                                             onClick={() =>
                                                 setChildCategoryOpen(
                                                     !childCategoryOpen
@@ -222,8 +234,8 @@ const CategoriesFilterForDesignDevelopmentsSection = ({
                                                 width={'8.33px'}
                                                 height={'4.17px'}
                                             />
-                                        </li>
-                                    </ul>
+                                        </div>
+                                    </div>
 
                                     {childCategoryOpen && (
                                         <ul className='subCategoryOpen container breadcrumb-2 d-flex align-items-center mt-5 justify-content-between bg-white gap-2 flex-wrap shadow-md rounded-3 p-3'>
