@@ -16,16 +16,22 @@ import FileProductsDetails from '~/components/details-components/file-products-d
 import ThreeDesignProductsDetails from '~/components/details-components/templates-details/details-page';
 import WebSitesProductsDetails from '~/components/details-components/website-products-details/details-page';
 import VideosProductsDetails from '~/components/details-components/video-tutorials/details-page';
+import { useGet } from '~/repositories/https';
+import RedesignProduct from '~/components/elements/products/Redesign/Redesign-Product';
+import WebsitesProduct from '~/components/elements/products/WebsitesProduct';
+import DesignDevelopmentProducts from '~/components/elements/products/DesignDevelopmentProducts';
+import VideoLessonsProducts from '~/components/elements/products/VideoLessonsProducts';
+import SwiperPages from '~/components/details-components/swiper/swiper-page';
 
 const ProductDefaultPage = ({ defaultProducts }) => {
     const router = useRouter();
     const { pid } = router.query;
     const [views, setViews] = useState('');
-    const [product, setProduct] = useState([]);
-    const [similar, setSimilar] = useState([]);
     const [isPlay, setIsPlay] = useState(null);
     const [run, setRun] = useState(false);
     const [loading, setLoading] = useState(false);
+    const { data: product } = useGet("productsDetails", `customer/documents/${pid}/`, undefined, { enabled: Boolean(pid) })
+    const { data: similarProduct } = useGet("productSimilar", `customer/similar/${pid}/`, undefined, { enabled: Boolean(pid) })
 
     const { user } = useSelector(state => state.auth);
     const dispatch = useDispatch();
@@ -34,45 +40,6 @@ const ProductDefaultPage = ({ defaultProducts }) => {
         return html.replace(/<[^>]+>/g, '');
     };
 
-    async function getProducts() {
-        const token = user?.access;
-        setLoading(true);
-        try {
-            const response = await axios.get(
-                baseUrl + `customer/documents/${pid}/`,
-                {
-                    headers: {
-                        Authorization: token ? `Bearer ${token}` : '',
-                    },
-                }
-            );
-
-            setProduct(response?.data);
-        } catch (error) {
-            console.error('Error fetching document:', error);
-        }
-        setLoading(false);
-    }
-
-    async function getProductSimiller() {
-        try {
-            const token = user?.access;
-            const response = await axios.get(
-                baseUrl + `customer/similar/${pid}/`,
-                {
-                    headers: {
-                        Authorization: token ? `Bearer ${token}` : '',
-                    },
-                }
-            );
-
-            const responseDocumentFile = response.data;
-
-            setSimilar(responseDocumentFile);
-        } catch (error) {
-            console.error('Error fetching document:', error);
-        }
-    }
 
     async function getUUID(uuid) {
         const respons = await PostRepository.postProductUUID(pid, uuid);
@@ -82,11 +49,6 @@ const ProductDefaultPage = ({ defaultProducts }) => {
     }
 
     useEffect(() => {
-        if (pid) {
-            getProducts();
-            getProductSimiller();
-        }
-
         {
             /* Yandex reklama kodi */
         }
@@ -132,7 +94,9 @@ const ProductDefaultPage = ({ defaultProducts }) => {
         }
     }, [pid, product?.slug]);
 
- 
+
+    console.log(similarProduct);
+
 
     const steps = [
         {
@@ -202,6 +166,24 @@ const ProductDefaultPage = ({ defaultProducts }) => {
             product={product}
         />
     }
+    const productsDetailsSimilar = {
+        'file': similarProduct?.map((item, index) => (
+            <RedesignProduct product={item} key={index} />
+        )),
+        "3d": [<ThreeDesignProductsDetails product={similarProduct} key="3d" />],
+        "template": similarProduct?.map((item, index) => (
+            <DesignDevelopmentProducts product={item} key={index} />
+        )),
+        "website": similarProduct?.map((item, index) => (
+            <WebsitesProduct key={index} product={item} />
+        )),
+        "design": similarProduct?.map((item, index) => (
+            <DesignDevelopmentProducts key={index} product={item} />
+        )),
+        "video": similarProduct?.map((item, index) => (
+            <VideoLessonsProducts product={item} key={index} />
+        )),
+    };
 
 
     return (
@@ -391,6 +373,12 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                             <div className='ps-container p-0'>
                                 <div className='ps-page__container'>
                                     {productsDetails[product?.document?.content_type]}
+                                </div>
+                                <div className=' my-5'>
+                                    <h3 style={{ fontSize: "25px", fontWeight: 400 }} className='py-4 similar_title'>O’xshash mahsulotlar</h3>
+                                    <SwiperPages>
+                                        {productsDetailsSimilar[product?.document?.content_type]}
+                                    </SwiperPages>
                                 </div>
 
                                 {/* Yandex reklama kodi */}

@@ -25,11 +25,12 @@ export default function ProductsByCategory ({
                         ))}
                 </div>
             )}
-            <div className='card_conatiner_section  '>
+            <div className='card_conatiner_section '>
                 {data?.results?.map((item, index) => (
                     <div className='card_container' key={index}>
                         <RedesignProduct product={item} />
                     </div>
+                    
                 ))}
             </div>
             <div className='row justify-content-center'>

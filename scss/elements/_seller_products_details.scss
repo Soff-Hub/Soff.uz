@@ -1,3 +1,33 @@
+.swiper-wrapper {
+    position: relative;
+}
+
+.mySwiper {
+    position: relative;
+    overflow: hidden;
+    padding: 20px;
+}
+
+.swiper-navigation {
+    position: absolute;
+    width: 80px;
+    top: -50px;
+    right: 0;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    z-index: 9999;
+}
+
+.swiper-button-prev::after,
+.swiper-button-next::after {
+    display: none;
+
+}
+
+
+
+
 // Tegs components scss
 .tags_components {
     border-radius: 8px;
@@ -692,6 +722,10 @@
 }
 
 @media (max-width: 500px) {
+    .similar_title {
+        font-size: 20px !important;
+    }
+
     .seller_products_actions_container {
         .seller_products_actions {
             padding: 20px;
@@ -882,7 +916,7 @@
                             font-size: 12px;
                         }
 
-                      
+
 
                         .image-wrapper {
                             max-height: 220px;
