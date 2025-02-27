@@ -89,12 +89,13 @@
     left: 0;
 }
 
-.subCategoryContainer{
+.subCategoryContainer {
     position: relative;
-
 }
 
-.subCategoryOpen{
+.subCategoryOpen {
+    padding: 23px 32px !important;
+    row-gap: 17px;
     position: absolute;
     z-index: 9;
     box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.1);
@@ -112,7 +113,6 @@
     align-items: start;
     gap: 10px;
     border-radius: 12.5px;
-    padding: 20px;
     height: 100%;
     position: relative;
     &:hover {
@@ -123,6 +123,7 @@
     .scientific-resources-card-heard {
         position: absolute;
         right: 20px;
+        top: 20px;
     }
 
     .scientific-resources-card-img {
@@ -132,32 +133,37 @@
         align-items: center;
         justify-content: center;
         margin: 0 auto;
+        padding: 30px 70px 20px;
     }
-    .scientific-resources-card-title {
-        font-family: 'Poppins';
-        font-weight: 500;
-        font-size: 12.5px;
-        line-height: 18.75px;
-        letter-spacing: 2%;
-
-        &:hover {
-            text-decoration: underline;
-        }
-    }
-
-    .scientific-resources-card-btn {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        // padding: 0 20px;
-        width: 100%;
-        p {
-            margin: 0;
+    .scientific-resources-card-body {
+        padding: 20px 20px ;
+        .scientific-resources-card-title {
             font-family: 'Poppins';
-            font-weight: 600;
-            font-size: 18.33px;
-            line-height: 27.5px;
+            font-weight: 500;
+            font-size: 12.5px;
+            line-height: 18.75px;
             letter-spacing: 2%;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+        .scientific-resources-card-btn {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            // padding: 0 20px;
+            width: 100%;
+            margin-top: 22px;
+            p {
+                margin: 0;
+                font-family: 'Poppins';
+                font-weight: 600;
+                font-size: 18.33px;
+                line-height: 27.5px;
+                letter-spacing: 2%;
+            }
         }
     }
 }

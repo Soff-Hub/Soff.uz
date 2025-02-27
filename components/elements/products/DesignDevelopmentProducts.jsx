@@ -60,98 +60,93 @@ const DesignDevelopmentProducts = ({ product }) => {
 
     const produvctTitle =
         product.title.length > 10
-            ? product.title.slice(0, 25) + '...'
+            ? product.title.slice(0, 45) + '...'
             : product.title;
 
     return (
-        <div>
-            <div
-                className='designDevelopmentCard'
-                onMouseEnter={() => setCountShow(true)}
-                onMouseLeave={() => setCountShow(false)}>
-                <div className='designDevelopmentCardImgBox'>
-                    <Link href='/product/[pid]' as={`/product/${product.slug}`}>
-                        <a>
-                            {DesignDevelopmentProducts.poster_url ? (
-                                thumbnailImage(DesignDevelopmentProducts)
-                            ) : (
-                                <img
-                                    src={product.poster_url}
-                                    alt='hujjat'
-                                    className='designDevelopmentCardImg'
-                                />
-                            )}
-                        </a>
-                    </Link>
+        <div
+            className='designDevelopmentCard'
+            onMouseEnter={() => setCountShow(true)}
+            onMouseLeave={() => setCountShow(false)}>
+            <div className='designDevelopmentCardImgBox'>
+                <Link href='/product/[pid]' as={`/product/${product.slug}`}>
+                    <a>
+                        {DesignDevelopmentProducts.poster_url ? (
+                            thumbnailImage(DesignDevelopmentProducts)
+                        ) : (
+                            <img
+                                src={product.poster_url}
+                                alt='hujjat'
+                                className='designDevelopmentCardImg'
+                            />
+                        )}
+                    </a>
+                </Link>
 
+                <a
+                    className='designDevelopmentCardheard'
+                    href='#'
+                    data-toggle='tooltip'
+                    data-placement='top'
+                    title="Tanlanganlarga qo'shish"
+                    onClick={handleAddItemToWishlist}>
+                    <img
+                        src={`${
+                            wishlist?.some(
+                                item => Number(item.id) === Number(product?.id)
+                            )
+                                ? '/static/img/onclickHeard.png'
+                                : '/static/img/heard.png'
+                        } `}
+                        alt=''
+                    />
+                </a>
+            </div>
+
+            <div className='designDevelopmentCardBody'>
+                <Link href='/product/[pid]' as={`/product/${product.slug}`}>
+                    <a className='designDevelopmentCardTitle'>
+                        {produvctTitle}
+                    </a>
+                </Link>
+
+                <div className='designDevelopmentCardPriceBox'>
+                    {+product.discount_price === 0 ? (
+                        <p className='designDevelopmentCardPrice m-0 text-warning'>Bepul</p>
+                    ) : product.discount === 0 ? (
+                        <p className='designDevelopmentCardPrice m-0'>
+                            {addPeriodToThousands(product.discount_price)} so'm
+                        </p>
+                    ) : (
+                        <>
+                            <del>
+                                {addPeriodToThousands(product.price)} so'm
+                            </del>
+                            <p className='designDevelopmentCardPrice m-0'>
+                                {addPeriodToThousands(product.discount_price)}
+                                so'm
+                            </p>
+                        </>
+                    )}
                     <a
-                        className='designDevelopmentCardheard'
                         href='#'
                         data-toggle='tooltip'
                         data-placement='top'
-                        title="Tanlanganlarga qo'shish"
-                        onClick={handleAddItemToWishlist}>
+                        className='buyIcon'
+                        title="Savatga qo'shish"
+                        onClick={handleAddItemToCart}>
                         <img
-                            src={`${
-                                wishlist?.some(
-                                    item =>
-                                        Number(item.id) === Number(product?.id)
-                                )
-                                    ? '/static/img/onclickHeard.png'
-                                    : '/static/img/heard.png'
-                            } `}
+                            src={
+                                basket
+                                    ? '/static/img/buyIconHover.png'
+                                    : '/static/img/buyIcon.png'
+                            }
                             alt=''
                         />
                     </a>
                 </div>
-
-                <div className='designDevelopmentCardBody'>
-                    <Link href='/product/[pid]' as={`/product/${product.slug}`}>
-                        <a className='designDevelopmentCardTitle'>
-                            {produvctTitle}
-                        </a>
-                    </Link>
-
-                    <div className='designDevelopmentCardPriceBox'>
-                        {+product.discount_price === 0 ? (
-                            <p className='designDevelopmentCardPrice m-0'>Bepul</p>
-                        ) : product.discount === 0 ? (
-                            <p className='designDevelopmentCardPrice m-0'>
-                                {addPeriodToThousands(product.discount_price)}{' '}
-                                so'm
-                            </p>
-                        ) : (
-                            <>
-                                <del>
-                                    {addPeriodToThousands(product.price)} so'm
-                                </del>
-                                <p className='designDevelopmentCardPrice m-0'>
-                                    {addPeriodToThousands(
-                                        product.discount_price
-                                    )}
-                                    so'm
-                                </p>
-                            </>
-                        )}
-                        <a
-                            href='#'
-                            data-toggle='tooltip'
-                            data-placement='top'
-                            className='buyIcon'
-                            title="Savatga qo'shish"
-                            onClick={handleAddItemToCart}>
-                            <img
-                                src={
-                                    basket
-                                        ? '/static/img/buyIconHover.png'
-                                        : '/static/img/buyIcon.png'
-                                }
-                                alt=''
-                            />
-                        </a>
-                    </div>
-                </div>
             </div>
+
             <Modal
                 title='Muvaffaqqiyatli'
                 open={open}

@@ -78,7 +78,7 @@ const RedesignProduct = ({ product }) => {
                     alt=''
                 />
             </a>
-            <div className='w-100 d-flex flex-column gap-3'>
+            <div className='w-100 d-flex flex-column scientific-resources-card-body gap-3'>
                 <Link
                     href='/product/[pid]'
                     className='p-0'

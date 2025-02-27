@@ -11,16 +11,16 @@ export default function ProductsByDesignDevelopment ({
 }) {
     return (
         <div id='products'>
-            <div className='row mt-5 mx-auto'>
+            <div className=' container designDevelopmentProduct'>
                 {isLoading && (
-                    <div className={`product-list p-loading`}>
+                    <div className={`w-100 `}>
                         {Array(48)
                             .fill(0)
                             .map((d, i) => (
                                 <Skeleton.Image
                                     key={i}
                                     active
-                                    className={` ModelAndDesignProduct_skeletion_card col-xl-3 col-lg-3 col-md-4 col-sm-6 col-6  mb-5`}
+                                    className={`skeletion-card file`}
                                 />
                             ))}
                     </div>
@@ -28,7 +28,8 @@ export default function ProductsByDesignDevelopment ({
                 {data?.results?.length > 0 &&
                     data?.results?.map((item, index) => (
                         <div
-                            className=' mt-4 col-xl-3 col-lg-4 col-md-6 col-sm-6 col-xs-6 col-6'
+                            style={{ height: '100%' }}
+                            className='   p-0 m-0'
                             key={index}>
                             <DesignDevelopmentProducts product={item} />
                         </div>

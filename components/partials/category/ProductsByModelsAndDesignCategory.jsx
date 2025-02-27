@@ -11,7 +11,7 @@ export default function ProductsByModelsAndDesignCategory ({
 }) {
     return (
         <div id='products'>
-            <div className='row mx-auto'>
+            <div className='row contaioner  ' style={{rowGap:'42px'}}>
                 {isLoading && (
                     <div className={`product-list p-loading mb-5 mt-3 `}>
                         {Array(48)
@@ -28,7 +28,8 @@ export default function ProductsByModelsAndDesignCategory ({
 
                 {data?.results?.map((item, index) => (
                     <div
-                        className=' col-xl-4 col-lg-4 col-md-6 col-sm-6 col-6 mt-4'
+                        className=' col-xl-4 col-lg-4 col-md-6 col-sm-6 col-6 '
+                        style={{ height: '329px' }}
                         key={index}>
                         <ModelAndDesignProduct product={item} />
                     </div>
