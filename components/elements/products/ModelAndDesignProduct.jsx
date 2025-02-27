@@ -86,17 +86,24 @@ const ModelAndDesignProduct = ({ product }) => {
                         )}
                     </Link>
 
-                    <div className='modelAndDesignCardTopSide d-flex justify-content-between'>
-                        <div className='aboutModel d-flex gap-2'>
-                            <p className='aboutModelItem m-0'>blend</p>
-                            <p className='aboutModelItem'>blend</p>
+                    <div className='modelAndDesignCardTopSide '>
+                        <div className='aboutModel d-flex gap-2 w-100'>
+                            <p className='aboutModelItem'>stl</p>
+                            <p className='aboutModelItem'>ztl</p>
+                            <p className='aboutModelItem'>obj</p>
                             <p className='aboutModelItem'>blend</p>
                         </div>
                         <div className='modelAndDesignCardPriceBox'>
                             {+product.discount_price === 0 ? (
-                                <p className='modelAndDesignCardPrice'>Bepul</p>
+                                <p
+                                    className='modelAndDesignCardPrice'
+                                    style={{ whiteSpace: 'nowrap' }}>
+                                    Bepul
+                                </p>
                             ) : product.discount === 0 ? (
-                                <p className='modelAndDesignCardPrice'>
+                                <p
+                                    className='modelAndDesignCardPrice'
+                                    style={{ whiteSpace: 'nowrap' }}>
                                     {addPeriodToThousands(
                                         product.discount_price
                                     )}{' '}
@@ -108,10 +115,12 @@ const ModelAndDesignProduct = ({ product }) => {
                                         {addPeriodToThousands(product.price)}{' '}
                                         so'm
                                     </del>
-                                    <p className='modelAndDesignCardPrice'>
+                                    <p
+                                        className='modelAndDesignCardPrice'
+                                        style={{ whiteSpace: 'nowrap' }}>
                                         {addPeriodToThousands(
                                             product.discount_price
-                                        )}
+                                        )}{' '}
                                         so'm
                                     </p>
                                 </>

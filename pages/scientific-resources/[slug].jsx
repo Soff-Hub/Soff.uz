@@ -4,9 +4,9 @@ import FooterDefault from '~/components/shared/footers/FooterDefault';
 import Meta from '~/components/shared/headers/Meta';
 import ProductsByCategory from '~/components/partials/category/ProductsByCategory';
 import { useRouter } from 'next/router';
-import CategoriesFilterSecion from '~/components/elements/CategoriesFilterSecion';
 import useApi, { baseUrlUseApi } from '~/repositories/useApi';
 import FooterComponents from '~/components/blocks/footer/FooterComponents';
+import ScientificResourcesFilterSection from '~/components/elements/scientificResourcesFilterSection';
 
 export default function ProductCategoryScreen() {
     const router = useRouter();
@@ -51,7 +51,7 @@ export default function ProductCategoryScreen() {
             />
 
             <div className='ps-page--shop container p-lg-1'>
-                <CategoriesFilterSecion
+                <ScientificResourcesFilterSection
                     breacrumb={fourChildData}
                     count={data?.count}
                     isLoading={isFourChildLoading}
