@@ -5,14 +5,28 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { Navigation } from 'swiper/modules';
 
-export default function SwiperPages({ children }) {
+export default function SwiperPages({ children, type }) {
+
+    const count = {
+        'file': 5,
+        "3d": 3,
+        "template": 4,
+        "website": 4,
+        "design": 4,
+        "video": 4
+    }
+    if (!count[type]) return null
+
 
     const breakpoints = {
         320: { slidesPerView: 1 },
         480: { slidesPerView: 2 },
         768: { slidesPerView: 3 },
-        1024: { slidesPerView: 5 },
+        1024: { slidesPerView: count[type] },
     }
+
+
+
     return (
         <div className="swiper-wrapper">
             <Swiper
