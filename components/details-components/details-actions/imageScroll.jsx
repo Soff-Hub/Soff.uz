@@ -16,7 +16,7 @@ const ImageCarousel = ({ images, views }) => {
 
     return (
         <div className="slider_swiper_container" >
-            {images?.length > 0 && <div style={{ position: "absolute", top: "70px", right: "70px", zIndex: "999" }}>
+            {images?.length > 0 && <div className="imageLigthbox" style={{ position: "absolute", top: "70px", right: "70px", zIndex: "999" }}>
                 <ImageLightBox gallery={images} /></div>}
             <i ref={prevRef} className="fa-solid fa-chevron-left image_prev_left"></i>
             <Swiper
@@ -30,12 +30,12 @@ const ImageCarousel = ({ images, views }) => {
                 className="swiper-container"
             >
                 {images?.map((item) => (
-                    <SwiperSlide key={item.id} className="swiper-slide">
+                    <SwiperSlide key={item.id} className="w-100">
                         <div className="image-wrapper">
                             <img
                                 src={item?.image_url || item?.thumbUrl}
                                 alt="Product"
-                                className="swiper-image"
+                                className="swiper-image rounded-3"
                             />
                         </div>
                     </SwiperSlide>
@@ -55,7 +55,7 @@ const ImageCarousel = ({ images, views }) => {
             >
                 {images?.map((item) => (
                     <SwiperSlide key={item.id} className="thumb-slide">
-                        <Image src={item?.image_url || item?.thumbUrl} alt="Thumbnail" width={75} height={44} className="rounded img-thumbnail" />
+                        <Image objectFit={"cover"} src={item?.image_url || item?.thumbUrl} alt="Thumbnail" width={75} height={44} className="rounded img-thumbnail" />
                     </SwiperSlide>
                 ))}
             </Swiper>
