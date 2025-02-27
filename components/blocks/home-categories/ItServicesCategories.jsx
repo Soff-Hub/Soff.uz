@@ -64,7 +64,7 @@ export default function ItServicesCategories () {
                                     width={'450px'}
                                 />
                                 <div className='ItServicesCategories-card-title-box'>
-                                    <h3 className='ItServicesCategories-card-title '>
+                                    <h3 className='ItServicesCategories-card-title m-0 '>
                                         {item.title}
                                     </h3>
                                     <img

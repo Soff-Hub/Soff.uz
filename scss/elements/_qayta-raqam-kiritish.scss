@@ -192,6 +192,49 @@ input[type='number']::-webkit-outer-spin-button {
 }
 
 // -----------------------------------------------ThreeDCategoriesFilterSecion style
+.Models_category_btn_wrap {
+    gap: 15px !important;
+    .Models_category_btn {
+        display: flex;
+        align-items: center;
+        box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.05),
+            -2px -2px 2px rgba(0, 0, 0, 0.05), 2px -2px 2px rgba(0, 0, 0, 0.05),
+            -2px 2px 2px rgba(0, 0, 0, 0.05) !important;
+        background: #fff;
+        border-radius: 7px;
+        cursor: pointer;
+
+        &:hover {
+            background: #00a44f !important;
+            color: #fff !important;
+            .subcategory_btn_title {
+                color: #fff !important;
+            }
+        }
+        &:active {
+            background: #00a44f !important;
+            color: #fff !important;
+            .subcategory_btn_title {
+                color: #fff !important;
+            }
+        }
+
+        .Models_category_btn_title {
+            font-family: 'Poppins';
+            font-weight: 500;
+            font-size: 14.17px;
+            line-height: 21.25px;
+            letter-spacing: 0%;
+            padding: 14.5px;
+        }
+        .Models_category_btn_img {
+            width: 64px !important;
+            height: 50px !important;
+            border-radius: 0 7px 7px 0;
+            background: #fff;
+        }
+    }
+}
 
 .Models_category_btn {
     display: flex;
@@ -200,11 +243,8 @@ input[type='number']::-webkit-outer-spin-button {
         -2px -2px 2px rgba(0, 0, 0, 0.05), 2px -2px 2px rgba(0, 0, 0, 0.05),
         -2px 2px 2px rgba(0, 0, 0, 0.05) !important;
     background: #fff;
-    border: 1px #fff solid;
     border-radius: 7px;
     cursor: pointer;
-    // padding: 20px 0 20px 14.5px;
-    gap: 14.5px !important;
 
     &:hover {
         background: #00a44f !important;
@@ -227,11 +267,11 @@ input[type='number']::-webkit-outer-spin-button {
         font-size: 14.17px;
         line-height: 21.25px;
         letter-spacing: 0%;
-        margin: 0 14.5px;
+        padding: 14.5px;
     }
     .Models_category_btn_img {
-        width: 64px;
-        height: 50px;
+        width: 64px !important;
+        height: 50px !important;
         border-radius: 0 7px 7px 0;
         background: #fff;
     }
@@ -264,11 +304,11 @@ input[type='number']::-webkit-outer-spin-button {
         border: 1px solid rgba(0, 164, 79, 1);
     }
 }
-
 // ________________________________ProductsByModelsAndDesignCategory styles____________________________
 
 .modelAndDesignCardWrap {
-    margin-top: 28px;
+    margin-top: 48px;
+
     @media screen and (max-width: 1000px) {
         margin-top: 0px;
     }
@@ -288,10 +328,13 @@ input[type='number']::-webkit-outer-spin-button {
 
         .modelAndDesignCardImg {
             position: relative;
+            background: #fff;
             img {
-                height: 281px;
-                object-fit: cover;
+                height: 200px;
+                object-fit: contain;
                 object-position: center;
+                transition: all 0.3s ease;
+
                 @media screen and (max-width: 700px) {
                     height: 250px;
                 }
@@ -312,12 +355,22 @@ input[type='number']::-webkit-outer-spin-button {
                 position: absolute;
                 top: 6.55px;
                 width: 100%;
+                padding: 0 13px;
+
+                display: flex;
+                justify-content: space-between;
+                align-items: start;
+                @media screen and (max-width: 800px) {
+                    padding: 0 8px;
+                }
                 .modelAndDesignCardPriceBox {
+                    white-space: 'nowrap';
+
                     .modelAndDesignCardPrice {
-                        margin: 0 13px 0 0 !important;
-                        padding: 7px 9px;
+                        display: flex;
                         border-radius: 50px;
                         background: #fff;
+                        padding: 7px 9px;
 
                         font-family: 'Poppins';
                         font-weight: 600;
@@ -343,36 +396,22 @@ input[type='number']::-webkit-outer-spin-button {
                     }
                 }
                 .aboutModel {
-                    margin-left: 13px;
-                    padding: 3px 8px;
-                    font-family: 'Poppins';
-                    font-weight: 500;
-                    font-size: 11.25px;
-                    line-height: 11.25px;
-                    letter-spacing: 2%;
-
-                    @media screen and (max-width: 800px) {
-                        margin-left: 8px;
-                    }
-                    @media screen and (max-width: 600px) {
-                        display: none;
-                    }
-
                     .aboutModelItem {
                         @media screen and (max-width: 550px) {
                             display: none;
                         }
-                        display: flex;
-                        align-items: center;
-                        margin: 0 !important;
-                        padding: 0 4px;
                         border-radius: 28px;
                         background: #fff;
+                        padding: 3px 8px;
+
                         font-family: 'Poppins';
                         font-weight: 500;
                         font-size: 11.25px;
                         line-height: 11.25px;
                         letter-spacing: 2%;
+                    }
+                    @media screen and (max-width: 600px) {
+                        display: none;
                     }
                 }
             }
@@ -394,6 +433,7 @@ input[type='number']::-webkit-outer-spin-button {
                 font-size: 20px;
                 line-height: 20px;
                 letter-spacing: 2%;
+                cursor: pointer;
 
                 @media screen and (max-width: 650px) {
                     font-weight: 400;
@@ -437,6 +477,13 @@ input[type='number']::-webkit-outer-spin-button {
             transition: ease-in-out;
             box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.1);
         }
+        &:hover {
+            .modelAndDesignCardImg {
+                img {
+                    transform: scale(1.005);
+                }
+            }
+        }
     }
 }
 @media screen and (max-width: 550px) {
@@ -447,8 +494,40 @@ input[type='number']::-webkit-outer-spin-button {
 
 // _____________________________Design Development styles____________________
 
+.designDevelopmentProduct {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    row-gap: 51px;
+    margin-top: 38px;
+    padding: 0 !important;
+    align-items: stretch;
+
+    @media (max-width: 1200px) {
+        // LG: 3 ta ustun
+        grid-template-columns: repeat(4, 1fr);
+    }
+    @media (max-width: 992px) {
+        // MD: 2 ta ustun
+        grid-template-columns: repeat(3, 1fr);
+    }
+    @media (max-width: 768px) {
+        // SM: 2 ta ustun
+        grid-template-columns: repeat(2, 1fr);
+    }
+    @media (max-width: 576px) {
+        // XS: 2 ta ustun
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
 .designDevelopmentCard {
-    margin-bottom: 51px;
+    max-width: 335px;
+    width: 100%;
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    border-radius: 11px;
     .designDevelopmentCardImgBox {
         display: flex;
         justify-content: center;
@@ -457,8 +536,29 @@ input[type='number']::-webkit-outer-spin-button {
         border-radius: 10px 10px 0 0;
 
         .designDevelopmentCardImg {
+            height: 200px;
+            object-fit: contain;
+            object-position: center;
+            border-radius: 10px 10px 0 0;
+            @media screen and (max-width: 700px) {
+                height: 180px;
+            }
+            @media screen and (max-width: 600px) {
+                height: 170px;
+            }
+            @media screen and (max-width: 500px) {
+                height: 150px;
+            }
+            @media screen and (max-width: 400px) {
+                height: 130px;
+            }
+            @media screen and (max-width: 300px) {
+                height: 100px;
+            }
+        }
+        .videoLessonsCardImg {
             height: 276px;
-            object-fit: cover;
+            object-fit: contain;
             object-position: center;
             border-radius: 10px 10px 0 0;
             @media screen and (max-width: 700px) {
@@ -477,40 +577,96 @@ input[type='number']::-webkit-outer-spin-button {
                 height: 100px;
             }
         }
-        .VideoLessonsProductsCardImg {
-            height: 200px;
-            object-fit: cover;
-            object-position: center;
-            border-radius: 10px 10px 0 0;
-            @media screen and (max-width: 700px) {
-                height: 180px;
-            }
-            @media screen and (max-width: 600px) {
-                height: 150px;
-            }
-            @media screen and (max-width: 500px) {
-                height: 130px;
-            }
-            @media screen and (max-width: 400px) {
-                height: 110px;
-            }
-            @media screen and (max-width: 300px) {
-                height: 100px;
-            }
-        }
         .designDevelopmentCardheard {
             position: absolute;
-            top: 5px;
-            right: 5px;
+            top: 14px;
+            right: 14px;
             padding: 5px;
             border-radius: 100%;
             background: #fff;
         }
     }
+    .videoLessonsCardBody {
+        background: red;
+        border-radius: 0 0 10px 10px;
+        margin-top: 18px;
+        padding: 10px 17px 15px 17px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: end;
+
+        @media screen and (max-width: 650px) {
+            padding: 8px 14px 12px 14px;
+        }
+        @media screen and (max-width: 500px) {
+            padding: 6px 10px 11px 10px;
+        }
+        @media screen and (max-width: 350px) {
+            padding: 5px;
+        }
+
+        
+        .videoLessonsCardPriceBox {
+            display: flex;
+            // justify-content: space-between;
+            align-items: center;
+            // margin-top: 18px;
+            @media screen and (max-width: 650px) {
+                margin-top: 12px;
+            }
+            @media screen and (max-width: 500px) {
+                margin-top: 8px;
+            }
+            @media screen and (max-width: 350px) {
+                margin-top: 3px;
+            }
+            .designDevelopmentCardPrice {
+                font-family: 'Poppins';
+                font-weight: 600;
+                font-size: 20px;
+                line-height: 30px;
+                letter-spacing: 2%;
+                @media screen and (max-width: 650px) {
+                    font-weight: 600;
+                    font-size: 18px;
+                    line-height: 12px;
+                }
+                @media screen and (max-width: 500px) {
+                    font-weight: 600;
+                    font-size: 12px;
+                    line-height: 12px;
+                }
+                @media screen and (max-width: 350px) {
+                    font-weight: 400;
+                    font-size: 10px;
+                    line-height: 12px;
+                }
+            }
+            .buyIcon {
+                img {
+                    @media screen and (max-width: 650px) {
+                    }
+                    @media screen and (max-width: 500px) {
+                        width: 25px !important;
+                        height: 25px !important;
+                    }
+                    @media screen and (max-width: 350px) {
+                        width: 20px !important;
+                        height: 20px !important;
+                    }
+                }
+            }
+        }
+    }
     .designDevelopmentCardBody {
         background: #fff;
         border-radius: 0 0 10px 10px;
-        padding: 11px 17px 15px 17px;
+        padding: 0px 17px 15px 17px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
 
         @media screen and (max-width: 650px) {
             padding: 8px 14px 12px 14px;

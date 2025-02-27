@@ -61,7 +61,7 @@ export default function ModelsAndInteriorDesign () {
                 title={`${'3D moddellar va Interier dizaynlar'}`}
                 description={`3D moddellar va Interier dizaynlar kategoriyasi: Taqdimotlar Tayyor shablonlar Kurs ishlari Diplom ishlari Referatlar Mustaqil ishlar Labaratoriya Ishlari Dissertatsiya ishlari Testlar O'quv qo'llanmalar Dars ishlanmalar Tarqatma materiallar Amaliy ishlar Blankalar Ijodiy Ishlar Loyihalar Plakatlar Maqola Ixtiro patenti Namunaviy hujjatlar Statistika Elektron kitoblar Dasturlash tillari `}
             />
-            <div className='ps-page--shop container'>
+            <div className='ps-page--shop container p-xl-0 p-l-0'>
                 <ThreeDCategoriesFilterSecion
                     breacrumb={fourChildData}
                     count={data?.count}
