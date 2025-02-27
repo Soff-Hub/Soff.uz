@@ -376,7 +376,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                                 </div>
                                 <div className=' my-5'>
                                     <h3 style={{ fontSize: "25px", fontWeight: 400 }} className='py-4 similar_title'>O’xshash mahsulotlar</h3>
-                                    <SwiperPages>
+                                    <SwiperPages type={product?.document?.content_type}>
                                         {productsDetailsSimilar[product?.document?.content_type]}
                                     </SwiperPages>
                                 </div>
