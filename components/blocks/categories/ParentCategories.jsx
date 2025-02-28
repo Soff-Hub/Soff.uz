@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useState } from 'react';
 
 const parentCategoriesData = [
     {
@@ -27,7 +27,7 @@ const parentCategoriesData = [
         path: '/websites/all',
     },
     {
-        title: 'Ilmiy ishlar',
+        title: 'Tayyor shablonlar',
         imgUrl: '/static/img/Ilmiy-ishlar.png',
         path: '/scientific-resources/all',
         width: '401px',
@@ -40,8 +40,9 @@ const parentCategoriesData = [
     },
 ];
 
-export default function ParentCategories () {
+export default function ParentCategories() {
     const router = useRouter();
+    const [hoveredId, setHoveredId] = useState(null);
 
     return (
         <div className='container p-0 my-4 '>
@@ -54,15 +55,18 @@ export default function ParentCategories () {
                         key={index}
                         className='p-5'
                         style={{
-                            backgroundImage: `url(${item.imgUrl})`,
+                            backgroundImage: `linear-gradient(rgba(0, 0, 0, ${hoveredId === item.title ? "0.4" : "0.1"}), rgba(0, 0, 0,${hoveredId === item.title ? "0.4" : "0.1"})),url(${item.imgUrl})`,
                             backgroundSize: 'cover',
                             backgroundPosition: 'center',
                             backgroundRepeat: 'no-repeat',
                             cursor: 'pointer',
                             width: item.width,
                             height: '268px',
+                            borderRadius:"12px"
                         }}
-                        onClick={() => router.push(item.path)}>
+                        onClick={() => router.push(item.path)}
+                        onMouseEnter={() => setHoveredId(item.title)}
+                        onMouseLeave={() => setHoveredId(null)}>
                         <h3 className='product-list-card-title h-75'>
                             {item.title}
                         </h3>
