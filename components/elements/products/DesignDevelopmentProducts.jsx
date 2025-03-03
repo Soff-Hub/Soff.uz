@@ -65,10 +65,10 @@ const DesignDevelopmentProducts = ({ product }) => {
 
     return (
         <div
-            className='designDevelopmentCard'
+            className='videoLessonsCard'
             onMouseEnter={() => setCountShow(true)}
             onMouseLeave={() => setCountShow(false)}>
-            <div className='designDevelopmentCardImgBox'>
+            <div className='videoLessonsCardImgBox'>
                 <Link href='/product/[pid]' as={`/product/${product.slug}`}>
                     <a>
                         {DesignDevelopmentProducts.poster_url ? (
@@ -77,14 +77,14 @@ const DesignDevelopmentProducts = ({ product }) => {
                             <img
                                 src={product.poster_url}
                                 alt='hujjat'
-                                className='designDevelopmentCardImg'
+                                className='videoLessonsCardImg'
                             />
                         )}
                     </a>
                 </Link>
 
                 <a
-                    className='designDevelopmentCardheard'
+                    className='videoLessonsCardheard'
                     href='#'
                     data-toggle='tooltip'
                     data-placement='top'
@@ -103,31 +103,34 @@ const DesignDevelopmentProducts = ({ product }) => {
                 </a>
             </div>
 
-            <div className='designDevelopmentCardBody'>
+            <div className='videoLessonsCardBody '>
                 <Link href='/product/[pid]' as={`/product/${product.slug}`}>
-                    <a className='designDevelopmentCardTitle'>
-                        {produvctTitle}
-                    </a>
+                    <a className='videoLessonsCardTitle'>{produvctTitle}</a>
                 </Link>
 
-                <div className='designDevelopmentCardPriceBox'>
-                    {+product.discount_price === 0 ? (
-                        <p className='designDevelopmentCardPrice m-0 text-warning'>Bepul</p>
-                    ) : product.discount === 0 ? (
-                        <p className='designDevelopmentCardPrice m-0'>
-                            {addPeriodToThousands(product.discount_price)} so'm
-                        </p>
-                    ) : (
-                        <>
-                            <del>
-                                {addPeriodToThousands(product.price)} so'm
-                            </del>
-                            <p className='designDevelopmentCardPrice m-0'>
-                                {addPeriodToThousands(product.discount_price)}
+                <div className='videoLessonsCardPriceBox'>
+                    <div className='videoLessonsCardPrice'>
+                        {+product.discount_price === 0 ? (
+                            <p className='videoLessonsCardPrice m-0'>Bepul</p>
+                        ) : product.discount === 0 ? (
+                            <p className=' videoLessonsCardPrice m-0'>
+                                {addPeriodToThousands(product.discount_price)}{' '}
                                 so'm
                             </p>
-                        </>
-                    )}
+                        ) : (
+                            <>
+                                <del className='CardDiscountPrice'>
+                                    {addPeriodToThousands(product.price)} so'm
+                                </del>
+                                <p className='videoLessonsCardPrice  m-0'>
+                                    {addPeriodToThousands(
+                                        product.discount_price
+                                    )}
+                                    so'm
+                                </p>
+                            </>
+                        )}
+                    </div>
                     <a
                         href='#'
                         data-toggle='tooltip'

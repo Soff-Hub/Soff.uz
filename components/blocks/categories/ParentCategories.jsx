@@ -11,32 +11,34 @@ const parentCategoriesData = [
     {
         title: '3D moddellar va Interier dizaynlar',
         imgUrl: '/static/img/3D-moddellar-va-Interier-dizaynlar.png',
-        width: '401px',
         path: '/3d-models-and-interior-designs/all',
+        width: '401px',
     },
     {
         title: 'Dizayn shablonlari',
         imgUrl: '/static/img/Dizayn-shablonlari.png',
-        width: '531px',
         path: '/design-developments/all',
+        width: '531px',
     },
     {
         title: 'Veb saytlar',
         imgUrl: '/static/img/Veb-saytlar.png',
-        width: '531px',
         path: '/websites/all',
+        width: '531px',
     },
     {
         title: 'Ilmiy ishlar',
         imgUrl: '/static/img/Ilmiy-ishlar.png',
-        path: '/scientific-resources/all',
+        // path: '/scientific-resources/all',
+        path: '/websites/all',
+
         width: '401px',
     },
     {
         title: 'Video darsliklar',
         imgUrl: '/static/img/Video-darsliklar.png',
-        width: '401px',
         path: '/videoLessons/all',
+        width: '401px',
     },
 ];
 
@@ -68,7 +70,7 @@ export default function ParentCategories () {
                         </h3>
                         <a
                             className='product-list-card-btn text-white bg-success'
-                            href='#'>
+                            href={item.path}>
                             Ko'rib chiqish
                         </a>
                     </div>

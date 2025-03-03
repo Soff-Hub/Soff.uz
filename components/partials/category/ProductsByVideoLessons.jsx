@@ -11,7 +11,7 @@ export default function ProductsByVideoLessons ({
 }) {
     return (
         <div id='products'>
-            <div className=' container designDevelopmentProduct'>
+            <div className=' container videoLessonsProduct'>
                 {isLoading && (
                     <div className={`w-100 `}>
                         {Array(48)
@@ -27,10 +27,7 @@ export default function ProductsByVideoLessons ({
                 )}
                 {data?.results?.length > 0 &&
                     data?.results?.map((item, index) => (
-                        <div
-                            style={{ height: '100%', marginTop:'25px' }}
-                            className='   p-0'
-                            key={index}>
+                        <div key={index}>
                             <DesignDevelopmentProducts product={item} />
                         </div>
                     ))}

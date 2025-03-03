@@ -60,7 +60,7 @@ const Product = ({ product }) => {
                         </p>
                     ) : (
                         <>
-                            <del>
+                            <del className='CardDiscountPrice'>
                                 {addPeriodToThousands(product.price)} so'm
                             </del>
                             <p>

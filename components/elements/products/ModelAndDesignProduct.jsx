@@ -111,7 +111,7 @@ const ModelAndDesignProduct = ({ product }) => {
                                 </p>
                             ) : (
                                 <>
-                                    <del>
+                                    <del className='CardDiscountPrice'>
                                         {addPeriodToThousands(product.price)}{' '}
                                         so'm
                                     </del>

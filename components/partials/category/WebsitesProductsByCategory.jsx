@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Pagination } from 'antd';
 import { Skeleton } from 'antd';
 import WebsitesProduct from '~/components/elements/products/WebsitesProduct';
@@ -10,11 +10,11 @@ export default function WebsitesProductsByCategory ({
     isLoading,
 }) {
     return (
-        <div id='products' className='overflow-hidden container'>
-            <div className='row '>
+        <div id='products'>
+            <div className=' container designDevelopmentProduct '>
                 {isLoading && (
-                    <div className={`product-list p-loading`}>
-                        {Array(15)
+                    <div className={` designDevelopmentSkeleton`}>
+                        {Array(48)
                             .fill(0)
                             .map((d, i) => (
                                 <Skeleton.Image
@@ -27,9 +27,7 @@ export default function WebsitesProductsByCategory ({
                 )}
                 {data?.results?.length > 0 &&
                     data?.results?.map((item, index) => (
-                        <div
-                            className='home-card col-md-3 col-sm-4 col-xs-3 col-6'
-                            key={index}>
+                        <div style={{ height: '100%' }} key={index}>
                             <WebsitesProduct product={item} />
                         </div>
                     ))}

@@ -119,7 +119,7 @@ const VideoLessonsProducts = ({ product }) => {
                         </p>
                     ) : (
                         <>
-                            <del>
+                            <del className='CardDiscountPrice'>
                                 {addPeriodToThousands(product.price)} so'm
                             </del>
                             <p className='designDevelopmentCardPrice m-0'>

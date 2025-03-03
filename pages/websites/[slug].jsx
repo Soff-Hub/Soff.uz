@@ -4,37 +4,47 @@ import FooterDefault from '~/components/shared/footers/FooterDefault';
 import Meta from '~/components/shared/headers/Meta';
 import { useRouter } from 'next/router';
 import useApi, { baseUrlUseApi } from '~/repositories/useApi';
-import WebsitesProductsByCategory from '~/components/partials/category/WebsitesProductsByCategory';
+import FooterComponents from '~/components/blocks/footer/FooterComponents';
 import WebsitesCategoriesFilterSecion from '~/components/elements/WebsitesCategoriesFilterSecion';
+import WebsitesProductsByCategory from '~/components/partials/category/WebsitesProductsByCategory';
 
-export default function Websites() {
+export default function Websites () {
     const router = useRouter();
     const { slug, page, parentCategory, childCategory } = router.query;
 
     // products API uchun so'rov
     const { data, error, isLoading } = useApi(
-        ["products", slug, page, parentCategory, childCategory], // queryKey dinamik
-        `${baseUrlUseApi}customer/products/?direction=website_template&category=${childCategory ? childCategory : parentCategory}&page=${page || 1}&page_size=48`,
-        "GET"
+        ['products', page, parentCategory, childCategory], // queryKey dinamik
+        `${baseUrlUseApi}customer/products/?direction=scientific_work&category=${
+            childCategory ? childCategory : parentCategory
+        }&page=${page || 1}&page_size=48`,
+        'GET'
     );
 
-
-    // Four-child API uchun so'rov
-    const { data: fourChildData, error: fourChildError, isLoading: isFourChildLoading } = useApi(
-        ["fourChild"], // Query key
-        `${baseUrlUseApi}customer/four-child?direction=website_template`,
-        "GET"
+    // Otab kategoriya API uchun so'rov
+    const {
+        data: fourChildData,
+        error: fourChildError,
+        isLoading: isFourChildLoading,
+    } = useApi(
+        ['fourChild'], // Query key
+        `${baseUrlUseApi}customer/four-child?direction=scientific_work`,
+        'GET'
     );
 
     // Farzand kategoriya API uchun so'rov
-    const { data: childCategoryData, error: childCategoryEror, isLoading: isChildCategory } = useApi(
-        ["fourChild", parentCategory], // Query key
-        `${baseUrlUseApi}customer/four-child?direction=three_d_model&parent__slug=${parentCategory}`,
-        "GET"
+    const {
+        data: childCategoryData,
+        error: childCategoryEror,
+        isLoading: isChildCategory,
+    } = useApi(
+        ['fourChild', parentCategory], // Query key
+        `${baseUrlUseApi}customer/four-child?direction=scientific_work&parent__slug=${parentCategory}`,
+        'GET'
     );
-    
+
     // Pagination tugmalari uchun funksiya
-    const handlePageChange = (newPage) => {
+    const handlePageChange = newPage => {
         router.push({
             pathname: router.pathname,
             query: { ...router.query, page: newPage }, // URL'ga yangi page qo'shish
@@ -51,7 +61,7 @@ export default function Websites() {
                 description={`Biz siz qidirayotgan mahsulotlarni Soff.uz saytimizning kategoriyasida topdik`}
             />
 
-            <div className='ps-page--shop container'>
+            <div className='ps-page--shop container p-xl-0 p-l-0'>
                 <WebsitesCategoriesFilterSecion
                     breacrumb={fourChildData}
                     count={data?.count}
@@ -67,7 +77,7 @@ export default function Websites() {
                     isLoading={isLoading}
                 />
             </div>
-
+            <FooterComponents />
         </PageContainer>
     );
 }
