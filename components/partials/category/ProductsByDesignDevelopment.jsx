@@ -11,9 +11,9 @@ export default function ProductsByDesignDevelopment ({
 }) {
     return (
         <div id='products'>
-            <div className=' container designDevelopmentProduct'>
+            <div className=' container designDevelopmentProduct '>
                 {isLoading && (
-                    <div className={`w-100 `}>
+                    <div className={` designDevelopmentSkeleton`}>
                         {Array(48)
                             .fill(0)
                             .map((d, i) => (
@@ -27,10 +27,7 @@ export default function ProductsByDesignDevelopment ({
                 )}
                 {data?.results?.length > 0 &&
                     data?.results?.map((item, index) => (
-                        <div
-                            style={{ height: '100%' }}
-                            className='   p-0 m-0'
-                            key={index}>
+                        <div style={{ height: '100%' }} key={index}>
                             <DesignDevelopmentProducts product={item} />
                         </div>
                     ))}

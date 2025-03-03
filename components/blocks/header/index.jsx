@@ -36,10 +36,10 @@ const Header = () => {
     }, [])
 
     return (
-        <header className="site-header">
+        <header className="site-header ">
             <div className={`header-bottom top-0 bg-white`}>
                 <HeaderTop />
-                <div className="container px-lg-0 pt-lg-2">
+                <div className="container px-xl-0 px-lg-0 pt-lg-2">
                     <div className="header-inner">
                         <HeaderLogo mode={'dark'} />
                         <div className='d-flex gap-5'>

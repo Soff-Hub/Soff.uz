@@ -101,7 +101,7 @@ const CategoriesFilterForDesignDevelopmentsSection = ({
 
             <div className='d-none d-lg-block'>
                 <div className='subcategoryMenu d-xl-block d-lg-none p-lg-0'>
-                    <div className='d-flex align-items-center justify-content-start mb-4 gap-3 pointer '>
+                    <div className=' justify-content-start mb-3  pointer top_search_category '>
                         <div
                             onClick={() => setDropdownMenu(!dropDownMenu)}
                             className='Models_category_menu'>
@@ -112,7 +112,7 @@ const CategoriesFilterForDesignDevelopmentsSection = ({
                             <img src='/static/img/down.png' alt='' />
                         </div>
 
-                        <div className='Models_category_btn_wrap d-flex justify-content-start'>
+                        <div className='Models_category_btn_wrap'>
                             {breacrumb?.results
                                 ?.slice(0, 5)
                                 .map((item, index) => (
@@ -181,8 +181,8 @@ const CategoriesFilterForDesignDevelopmentsSection = ({
                     </div>
                     {subCategory?.length > 0 && (
                         <>
-                            <div className='ps-breadcrumb-2 py-3'>
-                                <div className='d-flex justify-content-between subCategoryContainer'>
+                            <div className='ps-breadcrumb-2 py-3 px-xl-0 px-l-0 '>
+                                <div className='subCategoryContainer'>
                                     <div className='d-flex justify-content-between w-100'>
                                         <ul className=' breadcrumb-2 mt-2 gap-5 d-flex align-items-center  justify-content-start w-100 bg-none'>
                                             {subCategory
@@ -210,7 +210,9 @@ const CategoriesFilterForDesignDevelopmentsSection = ({
                                                                     },
                                                                 })
                                                             }
-                                                            style={{whiteSpace: "nowrap",
+                                                            style={{
+                                                                whiteSpace:
+                                                                    'nowrap',
                                                                 cursor: 'pointer',
                                                             }}>
                                                             {item.name}

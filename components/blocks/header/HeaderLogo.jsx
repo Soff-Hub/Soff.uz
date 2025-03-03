@@ -7,7 +7,7 @@ export default function HeaderLogo ({ mode }) {
         <div>
             <div
                 className='site-header-logo'
-                style={{ cursor: 'pointer' }}
+                style={{ cursor: 'pointer', margin: '0px', padding: '0px' }}
                 onClick={() => Router.push('/')}>
                 <Image
                     src={`/static/img/soff/logo-${mode}.png`}

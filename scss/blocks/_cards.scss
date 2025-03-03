@@ -436,9 +436,9 @@
 .skeletion-card {
     min-width: unset !important;
     max-width: unset !important;
-    width: 260px;
-    height: 230px;
     border-radius: 16px !important;
+    display: flex;
+    justify-content: space-between;
 }
 
 .skeletion-card.file {

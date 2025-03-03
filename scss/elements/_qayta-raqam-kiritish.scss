@@ -178,7 +178,7 @@ input[type='number']::-webkit-outer-spin-button {
 }
 
 .subcategoryMenu {
-    margin-top: 24px;
+    margin-top: 26px;
 }
 
 .categoryMenuCard:hover {
@@ -191,8 +191,19 @@ input[type='number']::-webkit-outer-spin-button {
     color: #fff !important;
 }
 
+.top_search_category {
+    display: flex;
+    align-items: center;
+    gap: 38px;
+    @media screen and (max-width: 1300px) {
+        gap: 5px;
+    }
+}
+
 // -----------------------------------------------ThreeDCategoriesFilterSecion style
 .Models_category_btn_wrap {
+    display: flex;
+    justify-content: start;
     gap: 15px !important;
     .Models_category_btn {
         display: flex;
@@ -226,13 +237,23 @@ input[type='number']::-webkit-outer-spin-button {
             line-height: 21.25px;
             letter-spacing: 0%;
             padding: 14.5px;
+            @media screen and (max-width: 1300px) {
+                padding: 10px;
+            }
         }
         .Models_category_btn_img {
             width: 64px !important;
             height: 50px !important;
             border-radius: 0 7px 7px 0;
             background: #fff;
+            @media screen and (max-width: 1300px) {
+                width: 55px !important;
+                height: 50px !important;
+            }
         }
+    }
+    @media screen and (max-width: 1300px) {
+        gap: 10px !important;
     }
 }
 
@@ -278,22 +299,22 @@ input[type='number']::-webkit-outer-spin-button {
 }
 
 .Models_category_menu {
-    padding: 14.5px 20px;
+    padding: 12.5px 28.33px 12.5px 20.83px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     background: rgba(0, 164, 79, 1);
     border: 1px solid rgba(0, 164, 79, 1);
-
     gap: 18.33px;
     border-radius: 8.33px;
 
     p {
         font-family: 'Poppins';
-        font-weight: 500;
-        font-size: 14.17px;
-        line-height: 21.25px;
+        font-weight: 600;
+        font-size: 16.67px;
+        line-height: 25px;
         letter-spacing: 0%;
+
         color: #fff;
         width: 100%;
         padding: 0;
@@ -302,6 +323,16 @@ input[type='number']::-webkit-outer-spin-button {
     &:active {
         background: rgba(0, 164, 79, 0.8);
         border: 1px solid rgba(0, 164, 79, 1);
+    }
+    @media screen and (max-width: 1300px) {
+        padding: 12.5px 20.83px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: rgba(0, 164, 79, 1);
+        border: 1px solid rgba(0, 164, 79, 1);
+        gap: 10.33px;
+        border-radius: 8.33px;
     }
 }
 // ________________________________ProductsByModelsAndDesignCategory styles____________________________
@@ -494,18 +525,68 @@ input[type='number']::-webkit-outer-spin-button {
 
 // _____________________________Design Development styles____________________
 
-.designDevelopmentProduct {
+.designDevelopmentSkeleton {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, 335px);
     gap: 20px;
-    row-gap: 51px;
-    margin-top: 38px;
+    row-gap: 48px;
+    margin-top: 41px;
     padding: 0 !important;
     align-items: stretch;
+    z-index: 99;
 
+    @media (max-width: 1400px) {
+        // LG: 3 ta ustun
+        grid-template-columns: repeat(4, 320px);
+        justify-content: center;
+    }
+    @media (max-width: 1300px) {
+        // LG: 3 ta ustun
+        grid-template-columns: repeat(4, 290px);
+        justify-content: center;
+    }
     @media (max-width: 1200px) {
         // LG: 3 ta ustun
         grid-template-columns: repeat(4, 1fr);
+        justify-content: center;
+    }
+    @media (max-width: 992px) {
+        // MD: 2 ta ustun
+        grid-template-columns: repeat(3, 1fr);
+    }
+    @media (max-width: 768px) {
+        // SM: 2 ta ustun
+        grid-template-columns: repeat(2, 1fr);
+    }
+    @media (max-width: 576px) {
+        // XS: 2 ta ustun
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.designDevelopmentProduct {
+    display: grid;
+    grid-template-columns: repeat(4, 335px);
+    gap: 20px;
+    row-gap: 48px;
+    margin-top: 41px;
+    padding: 0 !important;
+    align-items: stretch;
+
+    @media (max-width: 1400px) {
+        // LG: 3 ta ustun
+        grid-template-columns: repeat(4, 320px);
+        justify-content: center;
+    }
+    @media (max-width: 1300px) {
+        // LG: 3 ta ustun
+        grid-template-columns: repeat(4, 290px);
+        justify-content: center;
+    }
+    @media (max-width: 1200px) {
+        // LG: 3 ta ustun
+        grid-template-columns: repeat(4, 1fr);
+        justify-content: center;
     }
     @media (max-width: 992px) {
         // MD: 2 ta ustun
@@ -536,24 +617,24 @@ input[type='number']::-webkit-outer-spin-button {
         border-radius: 10px 10px 0 0;
 
         .designDevelopmentCardImg {
-            height: 200px;
+            height: 276px;
             object-fit: contain;
             object-position: center;
             border-radius: 10px 10px 0 0;
             @media screen and (max-width: 700px) {
-                height: 180px;
+                height: 250px;
             }
             @media screen and (max-width: 600px) {
-                height: 170px;
+                height: 230px;
             }
             @media screen and (max-width: 500px) {
-                height: 150px;
+                height: 2000px;
             }
             @media screen and (max-width: 400px) {
-                height: 130px;
+                height: 180px;
             }
             @media screen and (max-width: 300px) {
-                height: 100px;
+                height: 150px;
             }
         }
         .videoLessonsCardImg {
@@ -587,7 +668,7 @@ input[type='number']::-webkit-outer-spin-button {
         }
     }
     .videoLessonsCardBody {
-        background: red;
+        background: #fff;
         border-radius: 0 0 10px 10px;
         margin-top: 18px;
         padding: 10px 17px 15px 17px;
@@ -606,7 +687,6 @@ input[type='number']::-webkit-outer-spin-button {
             padding: 5px;
         }
 
-        
         .videoLessonsCardPriceBox {
             display: flex;
             // justify-content: space-between;
@@ -662,7 +742,7 @@ input[type='number']::-webkit-outer-spin-button {
     .designDevelopmentCardBody {
         background: #fff;
         border-radius: 0 0 10px 10px;
-        padding: 0px 17px 15px 17px;
+        padding: 11px 17px 15px 17px;
         height: 100%;
         display: flex;
         flex-direction: column;
