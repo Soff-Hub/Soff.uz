@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { Select, Skeleton } from 'antd';
 const Option = Select.Option;
 
-const CategoriesFilterForDesignDevelopmentsSection = ({
+const DesignDevelopmentsFilterSection = ({
     breacrumb,
     count,
     isLoading,
@@ -68,7 +68,7 @@ const CategoriesFilterForDesignDevelopmentsSection = ({
                                 {
                                     router.push({
                                         pathname:
-                                            '/scientific-resources/[slug]',
+                                            '/design-developments/[slug]',
                                         query: {
                                             ...router.query,
                                             slug: value,
@@ -288,4 +288,4 @@ const CategoriesFilterForDesignDevelopmentsSection = ({
     );
 };
 
-export default CategoriesFilterForDesignDevelopmentsSection;
+export default DesignDevelopmentsFilterSection;

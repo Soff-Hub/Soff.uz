@@ -11,26 +11,23 @@ export default function ProductsByModelsAndDesignCategory ({
 }) {
     return (
         <div id='products'>
-            <div className='row contaioner  ' style={{rowGap:'42px'}}>
+            <div className='contaioner modelAndDesignProduct'>
                 {isLoading && (
-                    <div className={`product-list p-loading mb-5 mt-3 `}>
+                    <div className={``}>
                         {Array(48)
                             .fill(0)
                             .map((d, i) => (
                                 <Skeleton.Image
                                     key={i}
                                     active
-                                    className={`ModelAndDesignProduct_skeletion_card col-xl-4 col-lg-4 col-md-6 col-sm-6 col-6`}
+                                    className={`ModelAndDesignProduct_skeletion_card`}
                                 />
                             ))}
                     </div>
                 )}
 
                 {data?.results?.map((item, index) => (
-                    <div
-                        className=' col-xl-4 col-lg-4 col-md-6 col-sm-6 col-6 '
-                        style={{ height: '329px' }}
-                        key={index}>
+                    <div key={index}>
                         <ModelAndDesignProduct product={item} />
                     </div>
                 ))}

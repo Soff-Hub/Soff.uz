@@ -5,8 +5,8 @@ import Meta from '~/components/shared/headers/Meta';
 import { useRouter } from 'next/router';
 import useApi, { baseUrlUseApi } from '~/repositories/useApi';
 import ProductsByDesignDevelopment from '~/components/partials/category/ProductsByDesignDevelopment';
-import CategoriesFilterForDesignDevelopmentsSection from '~/components/elements/DesignDevelopmentsFilterSection';
 import FooterComponents from '~/components/blocks/footer/FooterComponents';
+import DesignDevelopmentsFilterSection from '~/components/elements/DesignDevelopmentsFilterSection';
 
 export default function DesignDevelopments () {
     const router = useRouter();
@@ -62,7 +62,7 @@ export default function DesignDevelopments () {
             />
 
             <div className='ps-page--shop container p-xl-0 p-l-0'>
-                <CategoriesFilterForDesignDevelopmentsSection
+                <DesignDevelopmentsFilterSection
                     breacrumb={fourChildData}
                     count={data?.count}
                     isLoading={isFourChildLoading}

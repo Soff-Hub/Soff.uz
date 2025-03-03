@@ -336,9 +336,55 @@ input[type='number']::-webkit-outer-spin-button {
     }
 }
 // ________________________________ProductsByModelsAndDesignCategory styles____________________________
+.modelAndDesignProduct {
+    display: grid;
+    grid-template-columns: repeat(3, 453px);
+    gap: 20px;
+    row-gap: 40px;
+    margin-top: 51px;
+    padding: 0 !important;
+    align-items: stretch;
+
+    @media (max-width: 1400px) {
+        // LG: 3 ta ustun
+        grid-template-columns: repeat(3, 425px);
+        justify-content: center;
+    }
+    @media (max-width: 1300px) {
+        // LG: 3 ta ustun
+        grid-template-columns: repeat(3, 400px);
+        justify-content: center;
+    }
+    @media (max-width: 1250px) {
+        // LG: 3 ta ustun
+        grid-template-columns: repeat(3, 380px);
+        justify-content: center;
+        row-gap: 20px;
+        margin-top: 41px;
+    }
+    @media (max-width: 1150px) {
+        // MD: 2 ta ustun
+        grid-template-columns: repeat(3, 1fr);
+        row-gap: 20px;
+        margin-top: 31px;
+    }
+    @media (max-width: 950px) {
+        // SM: 2 ta ustun
+        grid-template-columns: repeat(2, 1fr);
+        margin-top: 20px;
+    }
+    @media (max-width: 768px) {
+        // SM: 2 ta ustun
+        grid-template-columns: repeat(2, 1fr);
+    }
+    @media (max-width: 576px) {
+        // XS: 2 ta ustun
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
 
 .modelAndDesignCardWrap {
-    margin-top: 48px;
+    // margin-top: 48px;
 
     @media screen and (max-width: 1000px) {
         margin-top: 0px;
@@ -360,11 +406,13 @@ input[type='number']::-webkit-outer-spin-button {
         .modelAndDesignCardImg {
             position: relative;
             background: #fff;
+            border-radius: 6.76px 6.76px 0 0;
             img {
-                height: 200px;
+                height: 281.27px;
                 object-fit: contain;
                 object-position: center;
                 transition: all 0.3s ease;
+                border-radius: 6.76px 6.76px 0 0;
 
                 @media screen and (max-width: 700px) {
                     height: 250px;
