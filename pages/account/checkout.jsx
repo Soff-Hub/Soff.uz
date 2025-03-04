@@ -24,7 +24,7 @@ const CheckoutPage = () => {
 
     return (
         <PageContainer footer={<FooterDefault />} title='Checkout'>
-            <div className='ps-page--simple'>
+            <div className='ps-page--simple '>
                 <Meta title={'Xarid savati'} />
                 {/* <BreadCrumb breacrumb={breadCrumb} /> */}
                 <Checkout />

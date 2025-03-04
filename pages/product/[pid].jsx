@@ -14,9 +14,9 @@ import Joyride from 'react-joyride';
 import { setOneShopDoc } from '~/store/auth/slice';
 import Script from 'next/script';
 import FileProductsDetails from '~/components/details-components/file-products-detail/details-page';
-import { Button, Card, Flex, Typography } from 'antd';
+import { Skeleton } from 'antd';
 
-const ProductDefaultPage = ({ defaultProducts }) => {
+const ProductDefaultPage = ({ defaultProducts, isLoading }) => {
     const router = useRouter();
     const { pid } = router.query;
     const [views, setViews] = useState('');
@@ -186,14 +186,10 @@ const ProductDefaultPage = ({ defaultProducts }) => {
         }, 500);
     };
 
-
-
     return (
         <>
             <PageContainer
                 title={defaultProducts ? defaultProducts?.title : 'Loading...'}>
-                {/* <BreadCrumb breacrumb={breadCrumb} layout="fullwidth" /> */}
-
                 <Head>
                     <title>
                         {defaultProducts?.title ||
@@ -312,6 +308,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                         }
                     />
                 </Head>
+
                 <div className='container'>
                     {/* Yandex reklama kodi */}
                     <div id='yandex_rtb_R-A-13331140-2'></div>
@@ -334,11 +331,43 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                 {/* <div> */}
                 <div>
                     <div className='container' style={{ position: 'relative' }}>
+                        {loading && <div className='row'>
+                            <div className='col-12 my-3'>
+                                <Skeleton.Button
+                                    active={true}
+                                    size={'large'}
+                                    shape={'default'}
+                                    block={true}
+                                    style={{ height: 100 }}
+                                />
+                            </div>
+                            <div className='col-8 my-3'>
+                                <Skeleton.Button
+                                    active={true}
+                                    size={'large'}
+                                    shape={'default'}
+                                    block={true}
+                                    style={{ height: 600 }}
+                                />
+                            </div>
+                            <div className='col-4 my-3'>
+                                <Skeleton.Button
+                                    active={true}
+                                    size={'large'}
+                                    shape={'default'}
+                                    block={true}
+                                    style={{ height: 600 }}
+                                />
+                            </div>
+                        </div>}
                         <div className='text-end m-0'>
                             {defaultProducts?.discpunt_price === 0 && (
                                 <p
                                     onClick={handleClickStepper}
-                                    style={{ cursor: 'pointer', margin: 0 }}>
+                                    style={{
+                                        cursor: 'pointer',
+                                        margin: 0,
+                                    }}>
                                     Sotib olish bo'yicha qo'llanma
                                 </p>
                             )}
@@ -391,57 +420,15 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                                           'video' ? (
                                         <div className='pt-3'>
                                             {/* <ProductVideoDetailFullWidth
-                                                isPlay={isPlay}
-                                                setIsPlay={setIsPlay}
-                                                product={product}
-                                                views={views}
-                                                similar={similar}
-                                            /> */}
+                                                    isPlay={isPlay}
+                                                    setIsPlay={setIsPlay}
+                                                    product={product}
+                                                    views={views}
+                                                    similar={similar}
+                                                /> */}
                                         </div>
                                     ) : (
-                                        <div className='ps-page__left'>
-                                            {/*_____________________________________________________________ loader */}
-
-                                            <Card
-                                                hoverable
-                                                styles={{
-                                                    body: {
-                                                        width: '620px',
-                                                        padding: 0,
-                                                        overflow: 'hidden',
-                                                    },
-                                                }}>
-                                                <Flex justify='space-between'>
-                                                    <img
-                                                        alt='avatar'
-                                                        src='https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
-                                                        style={{
-                                                            display: 'block',
-                                                            width: '273px',
-                                                        }}
-                                                    />
-                                                    <Flex
-                                                        vertical
-                                                        align='flex-end'
-                                                        justify='space-between'
-                                                        style={{ padding: 32 }}>
-                                                        <Typography.Title
-                                                            level={3}>
-                                                            “antd is an
-                                                            enterprise-class UI
-                                                            design language and
-                                                            React UI library.”
-                                                        </Typography.Title>
-                                                        <Button
-                                                            type='primary'
-                                                            href='https://ant.design'
-                                                            target='_blank'>
-                                                            Get Started
-                                                        </Button>
-                                                    </Flex>
-                                                </Flex>
-                                            </Card>
-                                        </div>
+                                        <div></div>
                                     )}
                                 </div>
 

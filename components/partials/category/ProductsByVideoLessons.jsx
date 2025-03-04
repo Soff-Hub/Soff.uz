@@ -11,9 +11,9 @@ export default function ProductsByVideoLessons ({
 }) {
     return (
         <div id='products'>
-            <div className=' container videoLessonsProduct'>
+            <div className=' container designDevelopmentProduct '>
                 {isLoading && (
-                    <div className={`w-100 `}>
+                    <div className={` designDevelopmentSkeleton`}>
                         {Array(48)
                             .fill(0)
                             .map((d, i) => (

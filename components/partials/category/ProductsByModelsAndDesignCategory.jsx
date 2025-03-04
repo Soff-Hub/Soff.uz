@@ -11,21 +11,21 @@ export default function ProductsByModelsAndDesignCategory ({
 }) {
     return (
         <div id='products'>
-            <div className='contaioner modelAndDesignProduct'>
+            <div className='container modelAndDesignProduct'>
                 {isLoading && (
-                    <div className={``}>
+                    <div className={` modelAndDesignProduct`}>
                         {Array(48)
                             .fill(0)
                             .map((d, i) => (
                                 <Skeleton.Image
                                     key={i}
                                     active
-                                    className={`ModelAndDesignProduct_skeletion_card`}
+                                    className={`skeletion-card file`}
                                 />
                             ))}
                     </div>
                 )}
-
+                
                 {data?.results?.map((item, index) => (
                     <div key={index}>
                         <ModelAndDesignProduct product={item} />

@@ -29,9 +29,7 @@ const parentCategoriesData = [
     {
         title: 'Ilmiy ishlar',
         imgUrl: '/static/img/Ilmiy-ishlar.png',
-        // path: '/scientific-resources/all',
-        path: '/websites/all',
-
+        path: '/scientific-resources/all',
         width: '401px',
     },
     {

@@ -14,8 +14,8 @@ const DesignDevelopmentProducts = ({ product }) => {
     function handleAddItemToWishlist (e) {
         e.preventDefault();
         addSavedItem(product.id);
-        if (wishlist?.find(item => item.id === ModelAndDesignProduct?.id)) {
-            removeSavedItemm(ModelAndDesignProduct.id);
+        if (wishlist?.find(item => item.id === DesignDevelopmentProducts?.id)) {
+            removeSavedItemm(DesignDevelopmentProducts.id);
         }
     }
 
