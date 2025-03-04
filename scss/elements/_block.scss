@@ -2781,7 +2781,6 @@
         }
         @media (max-width: 500px) {
             padding: 3px 11px 3px 6px;
-
         }
         .sell_card_img {
             height: 128px;
@@ -2835,6 +2834,15 @@
                 padding: 4px 9.5px;
                 border-radius: 3px;
                 background: rgba(75, 122, 186, 1);
+                @media (max-width: 850px) {
+                    padding: 3px 7px;
+                }
+                @media (max-width: 650px) {
+                    padding: 1.5px 3.5px;
+                    font-weight: 400;
+                    font-size: 8px;
+                    line-height: 12.45px;
+                }
             }
         }
 
@@ -2961,12 +2969,12 @@
             letter-spacing: 0%;
             color: #000;
             width: 100%;
-            @media (max-width: 650px) {
+            @media (max-width: 750px) {
                 font-weight: 600;
                 font-size: 20px;
                 line-height: 25px;
             }
-            @media (max-width: 425px) {
+            @media (max-width: 450px) {
                 font-weight: 500;
                 font-size: 15px;
                 line-height: 15px;
@@ -2984,7 +2992,11 @@
             font-size: 20px;
             line-height: 30px;
             letter-spacing: 0%;
-            @media (max-width: 425px) {
+            @media (max-width: 750px) {
+                font-size: 15px;
+                line-height: 20.5px;
+            }
+            @media (max-width: 450px) {
                 font-size: 12px;
                 line-height: 20.5px;
             }
