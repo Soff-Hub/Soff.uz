@@ -101,7 +101,7 @@ const ScientificResourcesFilterSection = ({
 
             <div className='d-none d-lg-block'>
                 <div className='subcategoryMenu d-xl-block d-lg-none p-lg-0'>
-                    <div className='d-flex align-items-center justify-content-start mb-3 gap-3 pointer '>
+                    <div className=' justify-content-start mb-3  pointer top_search_category '>
                         <div
                             onClick={() => setDropdownMenu(!dropDownMenu)}
                             className='Models_category_menu'>
@@ -112,7 +112,7 @@ const ScientificResourcesFilterSection = ({
                             <img src='/static/img/down.png' alt='' />
                         </div>
 
-                        <div className='Models_category_btn_wrap d-flex justify-content-start'>
+                        <div className='Models_category_btn_wrap'>
                             {breacrumb?.results
                                 ?.slice(0, 5)
                                 .map((item, index) => (
@@ -139,7 +139,6 @@ const ScientificResourcesFilterSection = ({
                                             className='Models_category_btn_img'
                                             src={item.image}
                                             alt={item.name}
-                                            height={25}
                                         />
                                     </div>
                                 ))}
@@ -151,28 +150,27 @@ const ScientificResourcesFilterSection = ({
                                 {breacrumb?.results?.map((item, index) => (
                                     <div
                                         key={index}
+                                        style={{ whiteSpace: 'nowrap' }}
                                         className={`${
                                             parentCategory === item.slug
                                                 ? 'categoryMenuCardActive'
                                                 : ''
-                                        } Models_category_btn border`} // Ota kategoriya aktivligi
+                                        } Models_category_btn `} // Ota kategoriya aktivligi
                                         onClick={() =>
                                             router.push({
                                                 pathname: `/scientific-resources/${item.slug}`,
                                                 query: {
                                                     parentCategory: item.slug,
                                                 }, // query parametrini qo'shish
-                                            }) && setDropdownMenu(!dropDownMenu)
+                                            })
                                         }>
-                                        {' '}
-                                        <span className='Models_category_btn_title'>
+                                        <span className='Models_category_btn_title '>
                                             {item.name}
                                         </span>
                                         <img
                                             className='Models_category_btn_img'
                                             src={item.image}
                                             alt={item.name}
-                                            height={25}
                                         />
                                     </div>
                                 ))}
@@ -181,10 +179,10 @@ const ScientificResourcesFilterSection = ({
                     </div>
                     {subCategory?.length > 0 && (
                         <>
-                            <div className='ps-breadcrumb-2 py-3'>
-                                <div className='d-flex justify-content-between subCategoryContainer'>
+                            <div className='ps-breadcrumb-2 py-3 px-xl-0 px-l-0 '>
+                                <div className='subCategoryContainer'>
                                     <div className='d-flex justify-content-between w-100'>
-                                        <ul className=' breadcrumb-2 mt-2 gap-5 d-flex align-items-center  justify-content-start w-100 bg-none'>
+                                        <ul className=' breadcrumb-2 mt-3 gap-5 d-flex align-items-center  justify-content-start w-100 bg-none'>
                                             {subCategory
                                                 .slice(0, 6)
                                                 .map((item, index) => {
@@ -210,7 +208,9 @@ const ScientificResourcesFilterSection = ({
                                                                     },
                                                                 })
                                                             }
-                                                            style={{whiteSpace: "nowrap",
+                                                            style={{
+                                                                whiteSpace:
+                                                                    'nowrap',
                                                                 cursor: 'pointer',
                                                             }}>
                                                             {item.name}

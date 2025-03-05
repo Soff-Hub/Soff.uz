@@ -47,7 +47,7 @@ const RedesignProduct = ({ product }) => {
     };
 
     return (
-        <div className='scientific-resources-card pointer '>
+        <div className='scientific-resources-card pointer  '>
             <Link href='/product/[pid]' as={`/product/${product.slug}`}>
                 <div className='scientific-resources-card-img'>
                     <img
