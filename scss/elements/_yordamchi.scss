@@ -342,8 +342,6 @@
     margin-bottom: 20px;
 }
 
-
-
 @include media('<lg') {
     .responsive-image-card {
         display: flex;
@@ -661,8 +659,6 @@
     //     width: auto !important;
     // }
 
-  
-
     .ps-block__right {
         h4 {
             font-size: 16px;
@@ -706,8 +702,6 @@
             margin: 0 auto;
         }
     }
-
-
 
     .mahsulotingiz {
         position: fixed;
@@ -2510,9 +2504,23 @@
 }
 
 .type_payment {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
     padding: 48px 50px 44px;
     background: #fff;
     border-radius: 10px !important;
+    height: 608px;
+    @media (max-width: 768px) {
+        padding: 20px;
+        margin: 0;
+        height: 100%;
+
+    }
+    @media (max-width: 768px) {
+        // padding: 10px;
+        margin: 0;
+    }
     .type_payment_h3 {
         font-family: 'Poppins';
         font-weight: 600;
@@ -2535,7 +2543,7 @@
         font-size: 15px;
         line-height: 28.5px;
         letter-spacing: 2%;
-        margin: 29px 0 50px;
+        margin: 29px 0 35px;
         @media (min-width: 768px) and (max-width: 1024px) {
             font-size: 12px;
             line-height: 20.5px;
@@ -2545,9 +2553,14 @@
             padding: 0 10px;
         }
     }
-    @media (max-width: 425px) {
-        padding: 0px;
-    }
+}
+
+.creditCardForm {
+    // pb-3 d-flex align-items-end justify-content-between row gap-xxs-0 gap-xs-0 gap-lg-1 gap-md-0 gap-3 bg-white
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin: 0;
 }
 
 .cardNumber {
@@ -2557,7 +2570,7 @@
     line-height: 27px;
     letter-spacing: 0%;
     color: #312f30;
-    margin: 48px 0 10px;
+    margin: 23px 0 10px;
     @media (min-width: 768px) and (max-width: 1024px) {
         font-weight: 500;
         font-size: 15px;

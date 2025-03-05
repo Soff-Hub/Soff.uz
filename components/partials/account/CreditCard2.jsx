@@ -22,6 +22,8 @@ const CreditCard2 = ({ document, type }) => {
     const [buttonOk, setButtonOk] = useState(false);
     const [tab, setTab] = useState(false);
 
+    const [activeTab, setActiveTab] = useState('1'); // Bosilgan tabni saqlaymiz
+
     const numberTyper = value => {
         SetNumberCardVal(value);
         if (!value == 0) {
@@ -219,24 +221,28 @@ const CreditCard2 = ({ document, type }) => {
 
     const onChange = key => {
         setTab(key);
+        setActiveTab(key); // Tab bosilganda activeTab ni yangilaymiz
     };
     const items = [
         {
             key: '1',
             label: (
-                <div className='click '>
+                <div
+                    className={`click ${
+                        activeTab === '1' ? 'click_active' : ''
+                    }`}>
                     <img src='/static/img/uzcard_humo.png' alt='' />
                 </div>
             ),
             children: (
-                <div className='row mx-auto m-0'>
-                    <div className=' px-4 mx-md-auto rounded click-b'>
+                <div className='row'>
+                    <div className='mx-md-auto rounded click-b'>
                         <div>
+                            <p className='cardNumber'>Karta raqam</p>
                             <form
                                 onSubmit={handleClickCardPosts}
-                                className=' pb-3 d-flex align-items-end justify-content-between row gap-xxs-0 gap-xs-0 gap-lg-0 gap-md-0 gap-3 bg-white'>
-                                <div className='col-xl-7 col-lg-12 p-0 col-md-7 col-sm-6 click-form-item'>
-                                    <p className='cardNumber'>Karta raqam</p>
+                                className='row creditCardForm m-0'>
+                                <div className='col-xl-7 col-lg-8 p-0 col-md-8 col-sm-7 click-form-item'>
                                     <label htmlFor='ccn' className='m-0'>
                                         <i className='fa-regular fa-credit-card i '></i>
                                         <input
@@ -254,13 +260,13 @@ const CreditCard2 = ({ document, type }) => {
                                         />
                                     </label>
                                 </div>
-                                <div className='col-xl-4 col-lg-8 p-0 col-md-5 col-sm-6 click-form-item'>
+                                <div className=' col-xl-4 col-lg-4 p-0 col-md-5 col-sm-4 click-form-item'>
                                     <label className='m-0'>
                                         <i className='fa-regular fa-calendar-days'></i>
                                         <input
                                             required
                                             id='ccn'
-                                            className='form-control rounded-3 card__number'
+                                            className='form-control  rounded-3 card__number'
                                             inputMode='numeric'
                                             autoComplete='cc-number'
                                             maxLength='5'
@@ -270,15 +276,15 @@ const CreditCard2 = ({ document, type }) => {
                                         />
                                     </label>
                                 </div>
-                                <div className='col-12 p-0 '>
+                                <div className='col-12 m-0 p-0'>
                                     {message ? (
                                         <button
                                             type='submit'
-                                            className='ps-btn w-100 text-center btn_color '>
+                                            className='ps-btn w-100 text-center btn_color col-12 '>
                                             Davom etish
                                         </button>
                                     ) : (
-                                        <button className='ps-btn ps-btn--fullwidth w-100 text-center'>
+                                        <button className='ps-btn ps-btn--fullwidth w-100 text-center col-12'>
                                             <BeatLoader color='#fff' />
                                         </button>
                                     )}
@@ -333,21 +339,24 @@ const CreditCard2 = ({ document, type }) => {
         {
             key: '2',
             label: (
-                <div className='click'>
+                <div
+                    className={`click ${
+                        activeTab === '2' ? 'click_active' : ''
+                    }`}>
                     <img src='/static/img/click.png' alt='' />
                 </div>
             ),
             children: (
-                <div className='row   mx-auto m-0'>
+                <div className='row mx-auto m-0'>
                     <div className=' px-4 rounded click-b'>
                         <form
                             onSubmit={handleClickCardPostsclick}
                             className=' pt-3 pb-3 d-flex align-items-end justify-content-between row gap-xxs-0 gap-xs-0 gap-lg-0 gap-md-0 gap-3'>
-                            <div className='col-12 p-0 px-4 my-3'>
+                            <div className='col-12 mt-100 p-0'>
                                 {message ? (
                                     <button
                                         type='submit'
-                                        className='ps-btn w-100 text-center btn_color'>
+                                        className='ps-btn w-100 text-center btn_color '>
                                         Davom etish
                                     </button>
                                 ) : (
@@ -365,7 +374,10 @@ const CreditCard2 = ({ document, type }) => {
         {
             key: '3',
             label: (
-                <div className='click'>
+                <div
+                    className={`click ${
+                        activeTab === '3' ? 'click_active' : ''
+                    }`}>
                     <img src='/static/img/soff/paymee-r.png' alt='' />
                 </div>
             ),
@@ -375,7 +387,7 @@ const CreditCard2 = ({ document, type }) => {
                         <form
                             onSubmit={handleClickCardPostsPayme}
                             className=' pt-3 pb-3 d-flex align-items-end justify-content-between row gap-xxs-0 gap-xs-0 gap-lg-0 gap-md-0 gap-3'>
-                            <div className='col-12 p-0 px-4 my-3'>
+                            <div className='col-12 mt-100 p-0'>
                                 {message ? (
                                     <button
                                         type='submit'

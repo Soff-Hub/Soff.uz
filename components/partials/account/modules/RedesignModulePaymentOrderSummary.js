@@ -77,70 +77,68 @@ const RedesignModulePaymentOrderSummary = ({ ecomerce }) => {
     }, []);
 
     return (
-        <div className='ps-block--checkout-order p-0 p-md-3 p-sm-0 p-lg-3 m-0'>
-            <div className='shot w-100'>
+        <div className='ps-block--checkout-order  p-xl-0 p-l-0'>
+            <div className='shot w-100 shadow_llg'>
                 <p className='product_count m-0'>
                     {ecomerce.cartDataItems.length} ta mahsulot
                 </p>
-                    <div
-                        className='ps-block__content w-100 hidden-scroll'
-                        style={{ backgroundColor: 'transparent' }}>
-                        {ecomerce.cartDataItems &&
-                        ecomerce.cartDataItems.length > 0 ? (
-                            ecomerce.cartDataItems?.map((el, i) => (
-                                <div className='sell_card' key={el?.slug}>
-                                    <img
+                <div
+                    className='ps-block__content w-100 hidden-scroll'
+                    style={{ backgroundColor: 'transparent' }}>
+                    {ecomerce.cartDataItems &&
+                    ecomerce.cartDataItems.length > 0 ? (
+                        ecomerce.cartDataItems?.map((el, i) => (
+                            <div
+                                className='sell_card shadow_llg'
+                                key={el?.slug}>
+                                <img
                                     className='sell_card_img'
-                                        src={el.poster_url}
-                                        alt='document'
-                                        height={'128px'}
-                                        width={'90px'}
-                                    />
-                                    <div className='sell_card_body'>
-                                        <div className='sell_card_title'>
-                                            <Link href={`/product/${el?.slug}`}>
-                                                <a>
-                                                    <p className=''>{el?.title}</p>
-                                                </a>
-                                            </Link>
-                                            <span className='product_type  '>
-                                                {el?.file_type}
-                                            </span>
-                                        </div>
-                                    </div>
-
-                                    <div className='sell_card_price'>
-                                        <a
-                                            className='sell_card_delete'
-                                            href='#'
-                                            onClick={e => handleRemoveItem(e, el)}>
-                                            <img
-                                                src='/static/img/exitBtn.png'
-                                                alt=''
-                                            />
-                                        </a>
-                                        <p className='w-100'>
-                                            {addPeriodToThousands(
-                                                el?.discount_price
-                                            )}
-                                            so'm
+                                    src={el.poster_url}
+                                    alt='document'
+                                />
+                                <div className='sell_card_body'>
+                                    <Link href={`/product/${el?.slug}`}>
+                                        <p className='sell_card_title'>
+                                            {el?.title}
                                         </p>
-                                    </div>
+                                    </Link>
+                                    <p className='product_type'>
+                                        {el?.file_type}
+                                    </p>
                                 </div>
-                            ))
-                        ) : (
-                            <figure className='ps-block__total'>
-                                <Skeleton active paragraph={{ rows: 7 }} />
-                            </figure>
-                        )}
-                    </div>
+
+                                <div className='sell_card_price'>
+                                    <a
+                                        className='sell_card_delete'
+                                        href='#'
+                                        onClick={e => handleRemoveItem(e, el)}>
+                                        <img
+                                            src='/static/img/exitBtn.png'
+                                            alt=''
+                                        />
+                                    </a>
+                                    <p className='w-100'>
+                                        {addPeriodToThousands(
+                                            el?.discount_price
+                                        )}
+                                        so'm
+                                    </p>
+                                </div>
+                            </div>
+                        ))
+                    ) : (
+                        <figure className='ps-block__total'>
+                            <Skeleton active paragraph={{ rows: 7 }} />
+                        </figure>
+                    )}
+                </div>
             </div>
-            <div className='checkout_footer rounded-2 my-5 bg-white'>
+            <div className='checkout_footer rounded-2 my-5 bg-white shadow_llg'>
                 {ecomerce.cartDataItems && ecomerce.cartDataItems.length > 0 && (
                     <div className='total_amount'>
                         <figcaption className='product_price_click_all'>
                             <p>Jami narx</p>
-                            <p>{hisob} so'm </p>
+                            <p className='text-end'>{hisob} so'm </p>
                         </figcaption>
 
                         {percentage > 0 && (
