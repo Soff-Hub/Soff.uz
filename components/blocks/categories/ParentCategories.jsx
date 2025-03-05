@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React from 'react';
 
 const parentCategoriesData = [
     {
@@ -11,23 +11,23 @@ const parentCategoriesData = [
     {
         title: '3D moddellar va Interier dizaynlar',
         imgUrl: '/static/img/3D-moddellar-va-Interier-dizaynlar.png',
-        width: '401px',
         path: '/3d-models-and-interior-designs/all',
+        width: '401px',
     },
     {
         title: 'Dizayn shablonlari',
         imgUrl: '/static/img/Dizayn-shablonlari.png',
-        width: '531px',
         path: '/design-developments/all',
+        width: '531px',
     },
     {
         title: 'Veb saytlar',
         imgUrl: '/static/img/Veb-saytlar.png',
-        width: '531px',
         path: '/websites/all',
+        width: '531px',
     },
     {
-        title: 'Tayyor shablonlar',
+        title: 'Ilmiy ishlar',
         imgUrl: '/static/img/Ilmiy-ishlar.png',
         path: '/scientific-resources/all',
         width: '401px',
@@ -35,14 +35,13 @@ const parentCategoriesData = [
     {
         title: 'Video darsliklar',
         imgUrl: '/static/img/Video-darsliklar.png',
-        width: '401px',
         path: '/videoLessons/all',
+        width: '401px',
     },
 ];
 
-export default function ParentCategories() {
+export default function ParentCategories () {
     const router = useRouter();
-    const [hoveredId, setHoveredId] = useState(null);
 
     return (
         <div className='container p-0 my-4 '>
@@ -55,24 +54,21 @@ export default function ParentCategories() {
                         key={index}
                         className='p-5'
                         style={{
-                            backgroundImage: `linear-gradient(rgba(0, 0, 0, ${hoveredId === item.title ? "0.4" : "0.1"}), rgba(0, 0, 0,${hoveredId === item.title ? "0.4" : "0.1"})),url(${item.imgUrl})`,
+                            backgroundImage: `url(${item.imgUrl})`,
                             backgroundSize: 'cover',
                             backgroundPosition: 'center',
                             backgroundRepeat: 'no-repeat',
                             cursor: 'pointer',
                             width: item.width,
                             height: '268px',
-                            borderRadius:"12px"
                         }}
-                        onClick={() => router.push(item.path)}
-                        onMouseEnter={() => setHoveredId(item.title)}
-                        onMouseLeave={() => setHoveredId(null)}>
+                        onClick={() => router.push(item.path)}>
                         <h3 className='product-list-card-title h-75'>
                             {item.title}
                         </h3>
                         <a
                             className='product-list-card-btn text-white bg-success'
-                            href='#'>
+                            href={item.path}>
                             Ko'rib chiqish
                         </a>
                     </div>
