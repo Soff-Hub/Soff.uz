@@ -14,8 +14,8 @@ const DesignDevelopmentProducts = ({ product }) => {
     function handleAddItemToWishlist (e) {
         e.preventDefault();
         addSavedItem(product.id);
-        if (wishlist?.find(item => item.id === ModelAndDesignProduct?.id)) {
-            removeSavedItemm(ModelAndDesignProduct.id);
+        if (wishlist?.find(item => item.id === DesignDevelopmentProducts?.id)) {
+            removeSavedItemm(DesignDevelopmentProducts.id);
         }
     }
 
@@ -103,31 +103,34 @@ const DesignDevelopmentProducts = ({ product }) => {
                 </a>
             </div>
 
-            <div className='designDevelopmentCardBody'>
+            <div className='designDevelopmentCardBody '>
                 <Link href='/product/[pid]' as={`/product/${product.slug}`}>
-                    <a className='designDevelopmentCardTitle'>
-                        {produvctTitle}
-                    </a>
+                    <a className='designDevelopmentCardTitle'>{produvctTitle}</a>
                 </Link>
 
                 <div className='designDevelopmentCardPriceBox'>
-                    {+product.discount_price === 0 ? (
-                        <p className='designDevelopmentCardPrice m-0 text-warning'>Bepul</p>
-                    ) : product.discount === 0 ? (
-                        <p className='designDevelopmentCardPrice m-0'>
-                            {addPeriodToThousands(product.discount_price)} so'm
-                        </p>
-                    ) : (
-                        <>
-                            <del>
-                                {addPeriodToThousands(product.price)} so'm
-                            </del>
-                            <p className='designDevelopmentCardPrice m-0'>
-                                {addPeriodToThousands(product.discount_price)}
+                    <div className='designDevelopmentCardPrice'>
+                        {+product.discount_price === 0 ? (
+                            <p className='designDevelopmentCardPrice m-0'>Bepul</p>
+                        ) : product.discount === 0 ? (
+                            <p className=' designDevelopmentCardPrice m-0'>
+                                {addPeriodToThousands(product.discount_price)}{' '}
                                 so'm
                             </p>
-                        </>
-                    )}
+                        ) : (
+                            <>
+                                <del className='CardDiscountPrice'>
+                                    {addPeriodToThousands(product.price)} so'm
+                                </del>
+                                <p className='designDevelopmentCardPrice  m-0'>
+                                    {addPeriodToThousands(
+                                        product.discount_price
+                                    )}
+                                    so'm
+                                </p>
+                            </>
+                        )}
+                    </div>
                     <a
                         href='#'
                         data-toggle='tooltip'
