@@ -13,14 +13,14 @@ export default function ProductsByDesignDevelopment ({
         <div id='products'>
             <div className=' container designDevelopmentProduct '>
                 {isLoading && (
-                    <div className={` designDevelopmentSkeleton`}>
+                    <div className='container designDevelopmentProduct'>
                         {Array(48)
                             .fill(0)
                             .map((d, i) => (
                                 <Skeleton.Image
                                     key={i}
                                     active
-                                    className={`skeletion-card file`}
+                                    className={'designDevelopmentSkeleton'}
                                 />
                             ))}
                     </div>
