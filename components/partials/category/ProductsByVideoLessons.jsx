@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Pagination } from 'antd';
 import { Skeleton } from 'antd';
-import DesignDevelopmentProducts from '~/components/elements/products/DesignDevelopmentProducts';
+import VideoLessonsProducts from '~/components/elements/products/VideoLessonsProducts';
 
 export default function ProductsByVideoLessons ({
     data = [],
@@ -11,27 +11,24 @@ export default function ProductsByVideoLessons ({
 }) {
     return (
         <div id='products'>
-            <div className=' container designDevelopmentProduct'>
+            <div className=' container videoLessonsProduct'>
                 {isLoading && (
-                    <div className={`w-100 `}>
+                    <div className={' container videoLessonsProduct'}>
                         {Array(48)
                             .fill(0)
                             .map((d, i) => (
                                 <Skeleton.Image
                                     key={i}
                                     active
-                                    className={`skeletion-card file`}
+                                    className={'designDevelopmentSkeleton'}
                                 />
                             ))}
                     </div>
                 )}
                 {data?.results?.length > 0 &&
                     data?.results?.map((item, index) => (
-                        <div
-                            style={{ height: '100%', marginTop:'25px' }}
-                            className='   p-0'
-                            key={index}>
-                            <DesignDevelopmentProducts product={item} />
+                        <div key={index}>
+                            <VideoLessonsProducts product={item} />
                         </div>
                     ))}
             </div>
