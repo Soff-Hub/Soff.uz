@@ -13,7 +13,7 @@ export default function ProductsByModelsAndDesignCategory ({
         <div id='products'>
             <div className='container modelAndDesignProduct'>
                 {isLoading && (
-                    <div className={` `}>
+                    <div className='container modelAndDesignProduct'>
                         {Array(48)
                             .fill(0)
                             .map((d, i) => (
@@ -29,7 +29,7 @@ export default function ProductsByModelsAndDesignCategory ({
 
                 {data?.results?.map((item, index) => (
                     <div key={index}>
-                        <ModelAndDesignProduct product={item} />
+                        <ModelAndDesignProduct product={item} />    
                     </div>
                 ))}
             </div>

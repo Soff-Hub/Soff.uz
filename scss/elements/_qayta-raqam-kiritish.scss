@@ -383,6 +383,75 @@ input[type='number']::-webkit-outer-spin-button {
     }
 }
 
+.ModelAndDesignProduct_skeletion_card {
+    width: 453px !important;
+    height: 281px !important;
+    border-radius: 16px !important;
+
+    @media (max-width: 1300px) {
+        width: 350px !important;
+        height: 281px !important;
+        border-radius: 16px !important;
+    }
+    @media (max-width: 1200px) {
+        margin: auto;
+        width: 300px !important;
+        height: 281px !important;
+        border-radius: 16px !important;
+    }
+    @media (max-width: 1100px) {
+        width: 280px !important;
+        height: 230px !important;
+        border-radius: 16px !important;
+    }
+    @media (max-width: 1000px) {
+        width: 320px !important;
+        height: 230px !important;
+        border-radius: 16px !important;
+    }
+
+    @media (max-width: 950px) {
+        width: 420px !important;
+        height: 200px !important;
+        border-radius: 16px !important;
+    }
+    @media (max-width: 800px) {
+        width: 350px !important;
+        height: 200px !important;
+        border-radius: 16px !important;
+    }
+    @media (max-width: 700px) {
+        width: 310px !important;
+        height: 200px !important;
+        border-radius: 16px !important;
+    }
+    @media (max-width: 600px) {
+        width: 260px !important;
+        height: 200px !important;
+        border-radius: 16px !important;
+    }
+    @media (max-width: 500px) {
+        width: 230px !important;
+        height: 200px !important;
+        border-radius: 16px !important;
+    }
+    @media (max-width: 430px) {
+        width: 200px !important;
+        height: 200px !important;
+        border-radius: 16px !important;
+    }
+    @media (max-width: 380px) {
+        width: 150px !important;
+        height: 150px !important;
+        border-radius: 16px !important;
+    }
+    @media (max-width: 320px) {
+        width: 110px !important;
+        height: 80px !important;
+        border-radius: 16px !important;
+    }
+}
+
 .modelAndDesignCardWrap {
     // margin-top: 48px;
 
@@ -580,7 +649,6 @@ input[type='number']::-webkit-outer-spin-button {
     width: 335;
     height: 396;
     border-radius: 10px;
-    
 }
 
 .designDevelopmentProduct {
