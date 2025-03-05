@@ -1,5 +1,4 @@
 import React from 'react';
-
 import BreadCrumb from '~/components/elements/BreadCrumb';
 import Checkout from '~/components/partials/account/Checkout';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
