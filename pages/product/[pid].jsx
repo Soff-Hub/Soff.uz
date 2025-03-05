@@ -28,6 +28,7 @@ const ProductDefaultPage = ({ defaultProducts, isLoading }) => {
 
     const { user } = useSelector(state => state.auth);
     const dispatch = useDispatch();
+    
 
     const removeHTMLTags = html => {
         return html.replace(/<[^>]+>/g, '');
@@ -372,7 +373,6 @@ const ProductDefaultPage = ({ defaultProducts, isLoading }) => {
                                 </p>
                             )}
                         </div>
-
                         <Joyride
                             steps={steps}
                             run={run}
@@ -419,13 +419,13 @@ const ProductDefaultPage = ({ defaultProducts, isLoading }) => {
                                       product?.document?.content_type ===
                                           'video' ? (
                                         <div className='pt-3'>
-                                            {/* <ProductVideoDetailFullWidth
+                                            <ProductDetailFullwidth
                                                     isPlay={isPlay}
                                                     setIsPlay={setIsPlay}
                                                     product={product}
                                                     views={views}
                                                     similar={similar}
-                                                /> */}
+                                                />
                                         </div>
                                     ) : (
                                         <div></div>

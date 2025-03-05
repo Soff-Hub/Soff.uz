@@ -276,15 +276,15 @@ const CreditCard2 = ({ document, type }) => {
                                         />
                                     </label>
                                 </div>
-                                <div className='col-12 mx-auto'>
+                                <div className='col-12 m-0 p-0'>
                                     {message ? (
                                         <button
                                             type='submit'
-                                            className='ps-btn w-100 text-center btn_color '>
+                                            className='ps-btn w-100 text-center btn_color col-12 '>
                                             Davom etish
                                         </button>
                                     ) : (
-                                        <button className='ps-btn ps-btn--fullwidth w-100 text-center'>
+                                        <button className='ps-btn ps-btn--fullwidth w-100 text-center col-12'>
                                             <BeatLoader color='#fff' />
                                         </button>
                                     )}
@@ -352,7 +352,7 @@ const CreditCard2 = ({ document, type }) => {
                         <form
                             onSubmit={handleClickCardPostsclick}
                             className=' pt-3 pb-3 d-flex align-items-end justify-content-between row gap-xxs-0 gap-xs-0 gap-lg-0 gap-md-0 gap-3'>
-                            <div className='col-12 mt-100'>
+                            <div className='col-12 mt-100 p-0'>
                                 {message ? (
                                     <button
                                         type='submit'
@@ -387,7 +387,7 @@ const CreditCard2 = ({ document, type }) => {
                         <form
                             onSubmit={handleClickCardPostsPayme}
                             className=' pt-3 pb-3 d-flex align-items-end justify-content-between row gap-xxs-0 gap-xs-0 gap-lg-0 gap-md-0 gap-3'>
-                            <div className='col-12 mt-100'>
+                            <div className='col-12 mt-100 p-0'>
                                 {message ? (
                                     <button
                                         type='submit'

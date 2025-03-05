@@ -577,42 +577,10 @@ input[type='number']::-webkit-outer-spin-button {
 // _____________________________Design Development styles____________________
 
 .designDevelopmentSkeleton {
-    display: grid;
-    grid-template-columns: repeat(4, 335px);
-    gap: 20px;
-    row-gap: 48px;
-    margin-top: 41px;
-    padding: 0 !important;
-    align-items: stretch;
-    z-index: 99;
-
-    @media (max-width: 1400px) {
-        // LG: 3 ta ustun
-        grid-template-columns: repeat(4, 320px);
-        justify-content: center;
-    }
-    @media (max-width: 1300px) {
-        // LG: 3 ta ustun
-        grid-template-columns: repeat(4, 290px);
-        justify-content: center;
-    }
-    @media (max-width: 1200px) {
-        // LG: 3 ta ustun
-        grid-template-columns: repeat(4, 1fr);
-        justify-content: center;
-    }
-    @media (max-width: 992px) {
-        // MD: 2 ta ustun
-        grid-template-columns: repeat(3, 1fr);
-    }
-    @media (max-width: 768px) {
-        // SM: 2 ta ustun
-        grid-template-columns: repeat(2, 1fr);
-    }
-    @media (max-width: 576px) {
-        // XS: 2 ta ustun
-        grid-template-columns: repeat(2, 1fr);
-    }
+    width: 335;
+    height: 396;
+    border-radius: 10px;
+    
 }
 
 .designDevelopmentProduct {

@@ -13,19 +13,20 @@ export default function ProductsByModelsAndDesignCategory ({
         <div id='products'>
             <div className='container modelAndDesignProduct'>
                 {isLoading && (
-                    <div className={` modelAndDesignProduct`}>
+                    <div className={` `}>
                         {Array(48)
                             .fill(0)
                             .map((d, i) => (
                                 <Skeleton.Image
                                     key={i}
                                     active
-                                    className={`skeletion-card file`}
+                                    style={{}}
+                                    className='ModelAndDesignProduct_skeletion_card'
                                 />
                             ))}
                     </div>
                 )}
-                
+
                 {data?.results?.map((item, index) => (
                     <div key={index}>
                         <ModelAndDesignProduct product={item} />
