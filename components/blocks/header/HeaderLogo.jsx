@@ -6,7 +6,7 @@ export default function HeaderLogo ({ mode }) {
     return (
         <div>
             <div
-                className='site-header-logo'
+                className='site-header-logo p-0 m-0'
                 style={{ cursor: 'pointer' }}
                 onClick={() => Router.push('/')}>
                 <Image
