@@ -22,6 +22,7 @@ import WebsitesProduct from '~/components/elements/products/WebsitesProduct';
 import DesignDevelopmentProducts from '~/components/elements/products/DesignDevelopmentProducts';
 import VideoLessonsProducts from '~/components/elements/products/VideoLessonsProducts';
 import SwiperPages from '~/components/details-components/swiper/swiper-page';
+import { Skeleton } from 'antd';
 
 const ProductDefaultPage = ({ defaultProducts }) => {
     const router = useRouter();
@@ -29,8 +30,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
     const [views, setViews] = useState('');
     const [isPlay, setIsPlay] = useState(null);
     const [run, setRun] = useState(false);
-    const [loading, setLoading] = useState(false);
-    const { data: product } = useGet("productsDetails", `customer/documents/${pid}/`, undefined, { enabled: Boolean(pid) })
+    const { data: product, isLoading } = useGet("productsDetails", `customer/documents/${pid}/`, undefined, { enabled: Boolean(pid) })
     const { data: similarProduct } = useGet("productSimilar", `customer/similar/${pid}/`, undefined, { enabled: Boolean(pid) })
 
     const { user } = useSelector(state => state.auth);
@@ -371,6 +371,9 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                             className={`ps-page--product ${defaultProducts?.price === 0 ? '' : 'pt-2'
                                 }`}>
                             <div className='ps-container p-0'>
+                                {
+                                    isLoading && <Skeleton style={{width: 500, height: 500}}/>
+                                }
                                 <div className='ps-page__container'>
                                     {productsDetails[product?.document?.content_type]}
                                 </div>
