@@ -33,7 +33,7 @@ export default function HeroService () {
                         </div>
                     </div>
 
-                    <div>
+                    <div className='HeroImage'>
                         <img
                             src='/static/img/heroComponentsHero.png'
                             // style={{ width: '531px', height: '535px' }}

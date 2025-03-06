@@ -1,35 +1,92 @@
 .products {
-    background-color: white;
-    background-color: rgb(245, 246, 247);
-    padding: 0px;
+  background-color: rgb(245, 246, 247);
+  padding: 20px 0;
 }
 
 .product-list-title {
-    font-size: 41.68px;
-    font-weight: 500;
-    line-height: 62.52px;
-    letter-spacing: 1%;
-    font-family: 'Poppins';
+  font-family: 'Poppins';
+  font-size: clamp(28px, 5vw, 41.68px);
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+  margin-bottom: 30px;
+  text-align: center;
+
+  @media (max-width: 768px) {
+    margin-bottom: 20px;
+  }
 }
 
 .product-list-card-box {
-    margin-top: 48px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 0 15px;
+  
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+  
+  @media (max-width: 576px) {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
 }
+
+.product-card {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  height: 268px;
+  padding: 20px;
+  transition: all 0.3s ease;
+  
+  @media (max-width: 1200px) {
+    width: 100% !important;
+    height: 240px;
+  }
+  
+  @media (max-width: 768px) {
+    height: 220px;
+    padding: 15px;
+  }
+  
+  @media (max-width: 576px) {
+    height: 200px;
+  }
+}
+
 .product-list-card-title {
-    font-family: 'Poppins';
-    font-weight: 700;
-    font-size: 29.18px;
-    letter-spacing: 1%;
-    color: white;
+  font-family: 'Poppins';
+  font-weight: 700;
+  font-size: clamp(20px, 3vw, 29.18px);
+  letter-spacing: 0.01em;
+  color: white;
+  margin-bottom: 15px;
 }
+
 .product-list-card-btn {
-    font-family: 'Poppins';
-    font-weight: 600;
-    font-size: 16.67px;
-    letter-spacing: 1%;
+  font-family: 'Poppins';
+  font-weight: 600;
+  font-size: clamp(14px, 2vw, 16.67px);
+  letter-spacing: 0.01em;
+  color: white;
+  background-color: #198754;
+  border-radius: 10px;
+  padding: 8px 16px;
+  display: inline-block;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background-color: #157347;
     color: white;
-    border-radius: 10px;
-    padding: 10px 20px;
+  }
 }
 
 .ItServicesCategories {
@@ -59,43 +116,88 @@
     margin-top: 48px;
 }
 .resultBox {
-    margin-top: 46px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    gap: 20px;
+    padding: 20px;
+    margin: 20px 0;
+
+    @media (max-width: 1200px) {
+        gap: 15px;
+    }
+
+    @media (max-width: 992px) {
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        flex-wrap: wrap;
+        img {
+            display: none; // Remove divider lines on mobile
+        }
+    }
 }
+
 .resultsItems {
-    padding: 60px 82px 48px;
+    padding: clamp(20px, 4vw, 60px) clamp(30px, 6vw, 82px);
+    text-align: center;
+
+    @media (max-width: 768px) {
+        width: 100%;
+        padding: 30px 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+
+        &:last-child {
+            border-bottom: none;
+        }
+    }
 }
 
 .resultsItemsRate {
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     font-weight: 700;
-    font-size: 41.61px;
-    line-height: 50.36px;
-    letter-spacing: 1%;
+    font-size: clamp(28px, 4vw, 41.61px);
+    line-height: 1.2;
+    letter-spacing: 0.01em;
     color: #fff;
-}
-.resultsItemsTitle {
-    font-family: 'Poppins';
-    font-weight: 500;
-    font-size: 20.81px;
-    line-height: 31.21px;
-    letter-spacing: 1%;
-    color: #fff;
+    margin-bottom: 10px;
 }
 
-.ourWebsites{
+.resultsItemsTitle {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: clamp(16px, 2vw, 20.81px);
+    line-height: 1.5;
+    letter-spacing: 0.01em;
+    color: #fff;
+    max-width: 200px;
+    margin: 0 auto;
+}
+
+.product-list-title {
+    font-size: clamp(24px, 3vw, 32px);
+    margin-bottom: 30px;
+
+    @media (max-width: 768px) {
+        margin-bottom: 20px;
+    }
+}
+
+.ourWebsites {
     margin: 140px 0 47.86px;
 }
 
-
-
-.ourWebsitesCard{
+.ourWebsitesCard {
     width: 450px;
     height: 266px;
 }
 .product-list {
     display: flex;
     flex-wrap: wrap;
-    // gap: 15px;
     justify-content: space-between;
 }
 
