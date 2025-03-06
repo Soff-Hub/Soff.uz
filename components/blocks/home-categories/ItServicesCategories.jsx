@@ -46,7 +46,7 @@ export default function ItServicesCategories () {
     const router = useRouter();
 
     return (
-        <div className='container ItServicesCategories p-0'>
+        <div className='container ItServicesCategories p-5'>
             <h2 className='product-list-title '>Bizning IT servislarimiz</h2>
             <div className='d-flex justify-content-center flex-wrap gap-4 mt-5 pt-4'>
                 {itServicesCategoriesData.map((item, index) => {

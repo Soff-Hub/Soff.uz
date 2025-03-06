@@ -204,14 +204,20 @@
 
     .sdsdsd {
         font-size: 20px;
+        line-height: 25px;
     }
 
     .system-title {
         font-size: 24px;
     }
+
+    .system-inner-title {
+        font-size: clamp(24px, 2vw, 16.67px);
+        line-height: 30px;
+    }
 }
 
-@media only screen and (max-width: 385px) {
+@media only screen and (max-width: 400px) {
     .system-inner-left,
     .system-inner-right {
         flex-wrap: wrap;
@@ -220,8 +226,9 @@
     .system-card {
         flex: unset !important;
         width: 150px;
+        min-height: 150px;
         padding: 12px;
-
+        height: 200px !important;
         span {
             font-size: 12px;
         }
@@ -242,6 +249,11 @@
         img {
             height: 14px;
         }
+    }
+    .system-card-inner {
+        display: flex;
+        justify-content: flex-start;
+        
     }
 }
 

@@ -130,9 +130,9 @@
             font-weight: 700;
             line-height: 18px;
 
-            &:hover {
-                // color: #ffffff;
-            }
+            // &:hover {
+            //     // color: #ffffff;
+            // }
         }
     }
 }
@@ -609,8 +609,8 @@
             }
 
             &:hover {
-                span {
-                }
+                // span {
+                // }
 
                 img {
                     @include transform(scale(1.1, 1.1));
@@ -2438,8 +2438,8 @@
         }
     }
 
-    .ps-block__content {
-    }
+    // .ps-block__content {
+    // }
 }
 
 .ps-block--vendor-status {
@@ -2793,11 +2793,11 @@
             }
         }
 
-        .sell_card_delete {
-            // position: absolute;
-            // top: 5 !important;/
-            // left: 15 !important;
-        }
+        // .sell_card_delete {
+        //     // position: absolute;
+        //     // top: 5 !important;/
+        //     // left: 15 !important;
+        // }
         .sell_card_price {
             width: 150px !important;
             display: flex;
@@ -2825,9 +2825,9 @@
             border: 1px solid rgba(0, 0, 0, 0.1);
             border-radius: 8px;
             position: relative; gap: 5px;
-            .sell_card_img {
-                // display: none;
-            }
+            // .sell_card_img {
+            //     // display: none;
+            // }
             .sell_card_title {
                 a {
                     p {
