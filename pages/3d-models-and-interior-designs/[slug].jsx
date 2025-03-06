@@ -1,8 +1,6 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import FooterComponents from '~/components/blocks/footer/FooterComponents';
-import ModelAndDesignHero from '~/components/blocks/header/ModelAndDesignHero';
-import CategoriesFilterSecion from '~/components/elements/DesignDevelopmentsFilterSection';
 import ThreeDCategoriesFilterSecion from '~/components/elements/ThreeDCategoriesFilterSecion';
 import PageContainer from '~/components/layouts/PageContainer';
 import ProductsByModelsAndDesignCategory from '~/components/partials/category/ProductsByModelsAndDesignCategory';

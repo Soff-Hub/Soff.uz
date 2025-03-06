@@ -111,36 +111,6 @@
     -ms-backface-visibility: hidden; /* Internet Explorer */
 }
 
-.hero-search-box {
-    position: relative;
-    padding: 10px;
-    background-color: white;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    max-width: 708px;
-    font-family: 'Poppins';
-    z-index: 0;
-    margin: 65px 0 35px;
-}
-
-.hero-search-input-loader {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-left: 15px;
-}
-
-.hero-search-input {
-    background-color: white;
-    padding: 10px 18px;
-    padding-left: 15px;
-    border: none;
-    border-radius: 20px;
-    display: block;
-    width: 100%;
-}
-
 .search-dropdown-box {
     position: absolute;
     right: 4px;
@@ -157,41 +127,9 @@
     width: 140px;
 }
 
-.video-card {
-    border-radius: 20px;
-    position: relative;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: black;
-}
-
-.video-card video {
-    border-radius: 20px;
-    height: 600px;
-    object-fit: cover; /* Video ni o'rtaga joylash uchun */
-    max-height: 100%;
-    max-width: 100%;
-}
-
 @media only screen and (max-width: 576px) {
     .site-header-logo {
         width: 100px;
-    }
-    .video-card video {
-        border-radius: 20px;
-        height: 250px;
-    }
-    .hero-search-input {
-        padding: 6px;
-        padding-left: 10px;
-        font-size: 12px;
-    }
-
-    .hero-search-box {
-        padding: 3px;
     }
 
     .dropdown-context {

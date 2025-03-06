@@ -35,7 +35,7 @@ export default function HomeVideo() {
 
     return (
         <div className="container homePageVideoComponent">
-            <h2 className=' p-0 product-list-title'>Soff.uz - bu qanday loyiha?</h2>
+            <h2 className=' p-xl-0 product-list-title'>Soff.uz - bu qanday loyiha?</h2>
             <VideoComponent />
         </div>
     )

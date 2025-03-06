@@ -6,39 +6,29 @@ export default function HeroService () {
     const { query } = useRouter();
 
     return (
-        <div className='container p-0'>
+        <div className='container p-xl-0'>
             <div className='HeroService'>
                 <div className='d-flex justify-content-between'>
                     <div className='HeroServiceLeft'>
-                        <p className='hero-title fw-semibold'>
+                        <p className='hero_title '>
                             Soff.uz – raqamli xizmatlar bozori!
                         </p>
-                        <p class='hero-description  fs-3 w-75  lh-base  custom-letter-spacing'>
+                        <p class='hero_description  fs-3 w-75  lh-base  custom-letter-spacing'>
                             Lorem Ipsum is simply dummy text of the printing and
                             typesetting industry. Lorem Ipsum has been the
                             industry's standard.
                         </p>
                         <HeroSearchInput />
-                        <div className='d-flex align-items-center gap-4 mt-5'>
-                            <p className='fs-3 fw-normal  text-dark m-0'>
-                                Mashhur:
-                            </p>
-                            <div className=''>
-                                <a
-                                    href=''
-                                    className='fs-4 fw-normal p-2 border boder-1 border-success rounded-3'>
-                                    Kurs ishlari
-                                </a>
+                        <div className='hero_top_category '>
+                            <p className='hero_top_category_title'>Mashhur:</p>
+                            <div className='hero_top_category_type'>
+                                <a href=''>Kurs ishlari</a>
                             </div>
                         </div>
                     </div>
 
-                    <div>
-                        <img
-                            src='/static/img/heroComponentsHero.png'
-                            // style={{ width: '531px', height: '535px' }}
-                            alt=''
-                        />
+                    <div className='HeroServiceRight'>
+                        <img src='/static/img/heroComponentsHero.png' alt='' />
                     </div>
                 </div>
             </div>

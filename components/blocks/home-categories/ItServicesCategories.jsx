@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React from 'react';
-
+import React, { useState } from 'react';
 
 const itServicesCategoriesData = [
     {
@@ -46,13 +45,13 @@ export default function ItServicesCategories () {
     const router = useRouter();
 
     return (
-        <div className='container ItServicesCategories p-0'>
+        <div className='container ItServicesCategories p-xl-0'>
             <h2 className='product-list-title '>Bizning IT servislarimiz</h2>
-            <div className='d-flex justify-content-center flex-wrap gap-4 mt-5 pt-4'>
+            <div className=' row ItServicesCardWrap'>
                 {itServicesCategoriesData.map((item, index) => {
                     return (
                         <div
-                            className=''
+                            className='ItServicesCard col-lg-4 col-md-6 col-sm-6 col-6'
                             key={index}
                             style={{ cursor: 'pointer', width: '450px' }}
                             onClick={() => router.push(item.path)}>
@@ -68,6 +67,7 @@ export default function ItServicesCategories () {
                                         {item.title}
                                     </h3>
                                     <img
+                                        className='ItServicesCategories-card-img'
                                         src='/static/img/ArrowRight.svg'
                                         alt=''
                                     />

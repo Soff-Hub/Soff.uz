@@ -40,29 +40,33 @@ const parentCategoriesData = [
     },
 ];
 
-export default function ParentCategories() {
+export default function ParentCategories () {
     const router = useRouter();
     const [hoveredId, setHoveredId] = useState(null);
 
     return (
-        <div className='container p-0 my-4 '>
+        <div className='my-4 '>
             <h2 className='product-list-title'>
                 Bizning Xizmatlar Katalogimiz!{' '}
             </h2>
-            <div className='d-flex justify-content-center flex-wrap gap-5 product-list-card-box p-0'>
+            <div className=' product-list-card-box p-0'>
                 {parentCategoriesData.map((item, index) => (
                     <div
                         key={index}
-                        className='p-5'
+                        className=' product_list_item'
                         style={{
-                            backgroundImage: `linear-gradient(rgba(0, 0, 0, ${hoveredId === item.title ? "0.4" : "0.1"}), rgba(0, 0, 0,${hoveredId === item.title ? "0.4" : "0.1"})),url(${item.imgUrl})`,
+                            backgroundImage: `linear-gradient(rgba(0, 0, 0, ${
+                                hoveredId === item.title ? '0.4' : '0.1'
+                            }), rgba(0, 0, 0,${
+                                hoveredId === item.title ? '0.4' : '0.1'
+                            })),url(${item.imgUrl})`,
                             backgroundSize: 'cover',
                             backgroundPosition: 'center',
                             backgroundRepeat: 'no-repeat',
                             cursor: 'pointer',
                             width: item.width,
                             height: '268px',
-                            borderRadius:"12px"
+                            borderRadius: '12px',
                         }}
                         onClick={() => router.push(item.path)}
                         onMouseEnter={() => setHoveredId(item.title)}

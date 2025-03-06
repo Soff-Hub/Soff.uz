@@ -1,34 +1,41 @@
-import React, { useState } from 'react'
-import SearchSelectDropdown from '../SearchSelectDropdown'
+import React, { useState } from 'react';
+import SearchSelectDropdown from '../SearchSelectDropdown';
 import Router from 'next/router';
 
-export default function HeroSearchInput(inputProps) {
-    const [search, setSearch] = useState('')
-    const [value, setValue] = useState({ label: 'Barcha turdagi', icn: 'fa fa-list', value: 'all' })
+export default function HeroSearchInput (inputProps) {
+    const [search, setSearch] = useState('');
+    const [value, setValue] = useState({
+        label: 'Barcha turdagi',
+        icn: 'fa fa-list',
+        value: 'all',
+    });
 
-    function handleSubmit(e) {
+    function handleSubmit (e) {
         e.preventDefault();
         if (search && search.trim()) {
             Router.push(`/search-page?keyword=${search}&type=${value.value}`);
         }
     }
 
-
     return (
-        <form className='hero-search-box ' onSubmit={handleSubmit}>
-            <div className="hero-search-input-loader">
-                <i className="fa fa-search fs-4"></i>
+        <form className='hero-search-box' onSubmit={handleSubmit}>
+            <div className='hero-search-input-loader'>
+                <i className='fa fa-search fs-4'></i>
             </div>
 
             <input
                 onChange={e => setSearch(e.target.value)}
-                className='hero-search-input fs-3'
-                type="text"
-                placeholder="Izlayotgan mahsulotingizni toping..." {...inputProps}
+                className='hero-search-input '
+                type='text'
+                placeholder='Izlayotgan mahsulotingizni toping...'
+                {...inputProps}
             />
-            <div className="btn btn-success fs-4 rounded-3 px-5 py-3">Izlash</div>
-
-            {/* <SearchSelectDropdown value={value} setValue={setValue} /> */}
+            <button
+                type='button'
+                className=' hero-search-input-btn'
+                onClick={handleSubmit}>
+                Izlash
+            </button>
         </form>
-    )
+    );
 }

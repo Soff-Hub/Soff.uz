@@ -4,7 +4,7 @@ export default function ResutsComponents () {
     return (
         <div className=''>
             <h2 className='product-list-title text-center'>Shu kunga qadar!</h2>
-            <div className='d-flex justify-content-center align-items-center bg-success resultBox'>
+            <div className=' resultBox'>
                 <div className='resultsItems'>
                     <p className='resultsItemsRate text-center'>5+</p>
                     <p className='resultsItemsTitle text-center'>
@@ -18,7 +18,7 @@ export default function ResutsComponents () {
                         Tugatilgan ishlar
                     </p>
                 </div>
-                <img src='/static/img/line.svg' alt='' />
+                <img src='/static/img/line.svg' className='sideLine' alt='' />
                 <div className='resultsItems '>
                     <p className='resultsItemsRate text-center'>2500+</p>
                     <p className='resultsItemsTitle text-center'>
