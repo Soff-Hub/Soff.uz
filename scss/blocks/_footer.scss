@@ -80,6 +80,7 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: 10px;
+    margin: 20px 0;
 }
 
 .system-inner-title {
@@ -88,8 +89,9 @@
     font-size: 41.61px;
     line-height: 62.42px;
     letter-spacing: 1%;
-    margin-top: 140px;
-    margin-bottom: 48px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+
 }
 
 .system-card {
@@ -181,6 +183,17 @@
     font-size: 32px;
 }
 
+@media only screen and (max-width: 768px) {
+    .system-inner-left,
+    .system-inner-right {
+        flex-wrap: wrap;
+    }
+    .system-card {
+        flex: unset !important;
+        width: 280px;
+    }
+}
+
 @media only screen and (max-width: 576px) {
     .system-inner-left,
     .system-inner-right {
@@ -254,6 +267,22 @@
         display: flex;
         justify-content: flex-start;
         
+    }
+}
+
+@media only screen and (max-width: 320px) {
+    .system-card {
+        padding: 10px;
+        min-height: 180px;
+        max-width: 440px !important;
+        height: 220px !important;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        width: 130px;
+    }
+    .system-inner {
+        justify-content: space-between !important;
     }
 }
 

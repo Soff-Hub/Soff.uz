@@ -39,8 +39,8 @@ export default function ParentCategories() {
     const [hoveredId, setHoveredId] = useState(null);
 
     return (
-        <div className='container p-0 my-4'>
-            <h2 className='product-list-title'>
+        <div className='container p-0 my-0'>
+            <h2 className='product-list-title pl-4'>
                 Bizning Xizmatlar Katalogimiz!
             </h2>
             <div className='product-list-card-box'>
