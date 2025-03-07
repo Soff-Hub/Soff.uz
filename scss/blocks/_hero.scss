@@ -165,10 +165,22 @@
     .HeroImage {
         display: none;
     }
+    .HeroService {
+        margin-top: 0px !important;
+    
+        .HeroServiceLeft {
+            max-width: 806.91;
+            width: 100%;
+            padding: 20px;
+            .hero-title {
+                margin-top: 28.34px;
+            }
+        }
+    }
 }
 
 .HeroService {
-    margin-top: 75.74px !important;
+    margin-top: 75.74px;
 
     .HeroServiceLeft {
         max-width: 806.91;
