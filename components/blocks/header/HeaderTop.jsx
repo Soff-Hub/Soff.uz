@@ -4,7 +4,7 @@ import MenuCategoriesDropdown from '~/components/shared/menu/MenuCategoriesDropd
 
 export default function HeaderTop() {
     return (
-        <div className="container header__top__items py-2">
+        <div className="header__top__items py-xl-2">
             <div className='d-flex justify-content-between align-items-center'>
 
                 <Link href="https://t.me/soff_uz">

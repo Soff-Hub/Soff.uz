@@ -10,9 +10,9 @@ import MenuCategoriesDropdown from '~/components/shared/menu/MenuCategoriesDropd
 
 const Header = () => {
     const [headerSticky, setHeaderSticky] = useState(false);
-    const { pathname } = useRouter()
-    const dispatch = useDispatch()
-    const cartItems = useSelector(state => state.ecomerce.cartDataItems)
+    const { pathname } = useRouter();
+    const dispatch = useDispatch();
+    const cartItems = useSelector(state => state.ecomerce.cartDataItems);
 
     const handleScroll = useCallback(() => {
         const shouldBeSticky = window.scrollY > 30;
@@ -31,25 +31,25 @@ const Header = () => {
 
     useEffect(() => {
         if (!cartItems.length) {
-            dispatch(initLocalCart())
+            dispatch(initLocalCart());
         }
-    }, [])
+    }, []);
 
     return (
-        <header className="site-header">
+        <header className='site-header'>
             <div className={`header-bottom top-0 bg-white`}>
                 <HeaderTop />
-                <div className="container px-lg-0 pt-lg-2">
-                    <div className="header-inner">
+                <div className='container px-lg-0 pt-lg-2'>
+                    <div className='header-inner'>
                         <HeaderLogo mode={'dark'} />
                         <div className='d-flex gap-5'>
-                            <div className="header__items">
+                            <div className='header__items'>
                                 <MenuCategoriesDropdown />
                             </div>
                             <HeaderActions isDark={true} />
                         </div>
                     </div>
-                    {/* <div className="search-form-mobile">
+                    {/* <div className='search-form-mobile'>
                         {pathname !== '/' ? <HeaderSearchbar /> : ''}
                     </div> */}
                 </div>
@@ -60,5 +60,3 @@ const Header = () => {
 };
 
 export default Header;
-
-
