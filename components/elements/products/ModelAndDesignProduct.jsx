@@ -65,6 +65,7 @@ const ModelAndDesignProduct = ({ product }) => {
 
     return (
         <div className='modelAndDesignCardWrap'>
+        
             <div
                 className='modelAndDesignCard'
                 onMouseEnter={() => setCountShow(true)}
