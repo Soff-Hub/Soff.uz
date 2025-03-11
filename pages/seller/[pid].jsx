@@ -15,12 +15,12 @@ import CalculateTimeDifference from '~/components/partials/account/DateFormatter
 import { addPeriodToThousands } from '~/components/partials/account/price-formatter';
 import { useMediaQuery } from 'react-responsive';
 import FooterComponents from '~/components/blocks/footer/FooterComponents';
+import { useGet } from '~/repositories/https';
 
 const SellerPage = ({ seller, sellerr }) => {
     const isBigScreen = useMediaQuery({ query: '(max-width: 430px)' });
     const [data, setData] = useState(seller);
     const [page, setPage] = useState(1);
-    const router = useRouter();
     const { pid } = router.query;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalOpenDonate, setIsModalOpenDonate] = useState(false);
