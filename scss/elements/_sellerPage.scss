@@ -47,15 +47,13 @@
     }
 }
 
-
-
 .profile__image {
     min-width: 50px !important;
     min-height: 50px !important;
     max-height: 50px !important;
     max-height: 50px !important;
     border-radius: 50%;
-    border: 2px solid $color-1st ;
+    border: 2px solid $color-1st;
     object-fit: cover !important;
     object-position: top center !important;
 }
@@ -64,7 +62,7 @@
     width: 35px;
     height: 35px;
     border-radius: 50%;
-    border: 2px solid $color-1st ;
+    border: 2px solid $color-1st;
     object-fit: cover;
 }
 
@@ -72,10 +70,9 @@
     width: 35px;
     height: 35px;
     border-radius: 50%;
-    border: 2px solid $color-1st ;
+    border: 2px solid $color-1st;
     object-fit: cover;
 }
-
 
 .ant-upload {
     height: 50px !important;
@@ -85,7 +82,7 @@
     height: 50px !important;
 }
 
-@media (max-width:1024px) {
+@media (max-width: 1024px) {
     .usr_bodyy {
         padding: 20px 0 !important;
     }
@@ -115,11 +112,164 @@
     }
 }
 
-
 .donate-color-btn {
     background-color: #c5ab35 !important;
 
     &:hover {
         background-color: #000 !important;
     }
+}
+
+.SellersPageWrap {
+    margin-top: 23px;
+    display: grid;
+    grid-template-columns: 355px 1fr;
+    gap: 20px;
+
+    .sellerProduct {
+        // background: white;
+    }
+}
+.sellerInfo {
+    padding: 37px 36px 50px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 52px;
+
+    .aboutSeller {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+
+        .sellerAvatar {
+            width: 143px;
+            height: 143px;
+            border-radius: 100%;
+        }
+        .sellerNameContainer {
+            // d-flex justify-content-between align-items-center gap-2
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 5px;
+            margin-top: 25px;
+            .sellerName {
+                font-family: 'Poppins';
+                font-weight: 600;
+                font-size: 20px;
+                line-height: 100%;
+                letter-spacing: 2%;
+                color: #000;
+            }
+        }
+
+        .sellerStatusContainer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            gap: 5px;
+            .sellerStatus {
+                font-family: 'Poppins';
+                font-weight: 600;
+                font-size: 16px;
+                line-height: 100%;
+                color: #000;
+            }
+        }
+    }
+    .VerifiedInformation {
+        .VerifiedInformationTitle {
+            font-family: 'Poppins';
+            color: #000;
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 100%;
+            letter-spacing: 0%;
+        }
+        .VerifiedInformationInfoWrap {
+            margin: 24px 0 0 0;
+            padding: 0;
+            display: flex;
+            justify-content: space-between;
+            flex-direction: column;
+            gap: 22px;
+            .VerifiedInformationInfo {
+            }
+        }
+    }
+}
+
+.between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.innerInfo {
+    font-family: 'Poppins';
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 100%;
+    color: #000;
+}
+.titleInfo {
+    font-family: 'Poppins';
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #000;
+}
+
+.bg-gray-999 {
+    background-color: (245, 246, 247, 1);
+}
+
+.sellerProductMenu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+    padding: 16px 50px;
+    background: white;
+    border-radius: 10px;
+
+    li {
+        list-style-type: none;
+        cursor: pointer;
+    }
+}
+
+.sellerProductMenu li {
+    color: #7b7b7b;
+    padding: 0 10px;
+    margin: 0;
+    font-family: 'Poppins';
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    cursor: pointer;
+    list-style: none;
+    position: relative;
+    transition: color 0.3s ease;
+    &:hover {
+        color: #000;
+    }
+}
+
+.sellerProductMenu li.active {
+    color: #000 !important;
+    font-weight: bold;
+}
+
+.sellerProductMenu li.active::before {
+    content: url(/static/img/beforeRec.png);
+    position: absolute;
+    left: 0;
+    color: #000;
 }
