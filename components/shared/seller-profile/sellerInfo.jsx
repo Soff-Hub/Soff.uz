@@ -2,58 +2,130 @@ import React from 'react';
 
 export default function SellerInfo () {
     return (
-        <div className='sellerInfo rounded-1'>
-            <div className='aboutSeller'>
-                <img
-                    className='sellerAvatar'
-                    src={'https://picsum.photos/id/237/200/300'}
-                    alt=''
-                />
-                <div className=' sellerNameContainer '>
-                    <img src='/static/img/Vector.png' alt='' />
-                    <p className='sellerName m-0'>Mark Zuckerberg</p>
+        <div className='SellerInfo'>
+            <p className='SellerInfoTitle'>Statistikalar</p>
+            <div className='SellerInfoCardWrap'>
+                <div className='SellerInfoCard'>
+                    <div className='SellerInfoCardBody'>
+                        <img
+                            className='SellerInfoCardImg'
+                            src='/static/img/Mahsulotlari_soni.png'
+                            alt=''
+                        />
+                        <p className='SellerInfoCardTitle'>Mahsulotlari soni</p>
+                    </div>
+                    <p className='SellerInfoCardCount'>1 548 ta </p>
                 </div>
-                <div className='sellerStatusContainer'>
-                    <img src='/static/img/Ritsar.png' alt='' />
-                    <p className='sellerStatus m-0'>Ritsar</p>
+                <div className='SellerInfoCard'>
+                    <div className='SellerInfoCardBody'>
+                        <img
+                            className='SellerInfoCardImg'
+                            src='/static/img/Sotilgan_mahsulotlar.png'
+                            alt=''
+                        />
+                        <p className='SellerInfoCardTitle'>
+                            Sotilgan mahsulotlar{' '}
+                        </p>
+                    </div>
+                    <p className='SellerInfoCardCount'>15 048 ta </p>
+                </div>
+                <div className='SellerInfoCard'>
+                    <div className='SellerInfoCardBody'>
+                        <img
+                            className='SellerInfoCardImg'
+                            src='/static/img/Jarayondagi_ishlar.png'
+                            alt=''
+                        />
+                        <p className='SellerInfoCardTitle'>
+                            Jarayondagi ishlar{' '}
+                        </p>
+                    </div>
+                    <p className='SellerInfoCardCount'>5 ta</p>
+                </div>
+                <div className='SellerInfoCard'>
+                    <div className='SellerInfoCardBody'>
+                        <img
+                            className='SellerInfoCardImg'
+                            src='/static/img/Muvaffaqiyatsiz_tugatilgan.png'
+                            alt=''
+                        />
+                        <p className='SellerInfoCardTitle'>
+                            Muvaffaqiyatsiz tugatilgan{' '}
+                        </p>
+                    </div>
+                    <p className='SellerInfoCardCount'>17 ta</p>
+                </div>
+                <div className='SellerInfoCard'>
+                    <div className='SellerInfoCardBody'>
+                        <img
+                            className='SellerInfoCardImg'
+                            src='/static/img/Muvaffaqiyatli_Tugatilgan.png'
+                            alt=''
+                        />
+                        <p className='SellerInfoCardTitle'>
+                            Muvaffaqiyatli Tugatilgan{' '}
+                        </p>
+                    </div>
+                    <p className='SellerInfoCardCount'>254 ta</p>
                 </div>
             </div>
-            <ul className='p-0 rowgap_16'>
-                <li className=' between mt-3 '>
-                    <p className='titleInfo'>Ro'yhatdan o'tgan</p>
-                    <p className='innerInfo'>01.01.2025</p>
-                </li>
-                <li className=' between mt-3'>
-                    <p className='titleInfo'>Manzil</p>
-                    <p className='innerInfo'>Toshkent</p>
-                </li>
-                <li className=' between mt-3'>
-                    <p className='titleInfo'>Oxirgi faollik</p>
-                    <p className='innerInfo'>5 soat oldin</p>
-                </li>
-            </ul>
-            <div className='VerifiedInformation'>
-                <p className='VerifiedInformationTitle'>
-                    Malumotlar tasdiqlangan
-                </p>
-                <ul className='VerifiedInformationInfoWrap'>
-                    <li className='VerifiedInformationInfo between  '>
-                        <p className='titleInfo m-0 p-0'>Telefon raqami</p>
-                        <img src='' alt='' />
-                    </li>
-                    <li className='VerifiedInformationInfo between'>
-                        <p className='titleInfo m-0 p-0'>Email manzil</p>
-                        <img src='' alt='' />
-                    </li>
-                    <li className='VerifiedInformationInfo between'>
-                        <p className='titleInfo m-0 p-0'>Telefon raqami</p>
-                        <img src='' alt='' />
-                    </li>
-                    <li className='VerifiedInformationInfo between'>
-                        <p className='titleInfo m-0 p-0'>Email manzil</p>
-                        <img src='' alt='' />
-                    </li>
-                </ul>
+            <p className='SellerInfoSecondTitle'>Muallif Haqida</p>
+            <p className='SellerInfoDescription'>
+                Lorem Ipsum is simply dummy text of the printing and typesetting
+                industry. Lorem Ipsum has been the industry's standard dummy
+                text ever since the 1500s, when an unknown printer took a galley
+                of type and scrambled it to make a type specimen book. It has
+                survived not only five centuries, but also the leap into
+                electronic typesetting, remaining essentially unchanged. It was
+                popularised in the 1960s with the release of Letraset sheets
+                containing Lorem Ipsum passages, and more recently with desktop
+                publishing software like Aldus PageMaker including versions of
+                Lorem Ipsum. It has survived not only five centuries, but also
+                the leap into electronic typesetting.
+                <span className='SellerInfoDescriptionForMore'>
+                    Qo’llab quvvatlash
+                </span>
+            </p>
+            <div className='SellerInfoEnd'>
+                <div className='SellerInfoSecondCardWrap'>
+                    <div className='SellerInfoSecondCard'>
+                        <img src='/static/img/Buyurtma_bering.svg ' alt='' />
+                        <p className='SellerInfoSecondCardTitle'>
+                            Buyurtma bering
+                        </p>
+                        <p className='SellerInfoSecondCardDescription'>
+                            Lorem Ipsum is simply dummy text of the printing and
+                            typesetting industry.
+                        </p>
+                    </div>
+                    <img src='/static/img/ArrowRight.svg' alt='' />
+                    <div className='SellerInfoSecondCard'>
+                        <img src='/static/img/To’lov_qiling.svg ' alt='' />
+                        <p className='SellerInfoSecondCardTitle'>
+                            To’lov qiling
+                        </p>
+                        <p className='SellerInfoSecondCardDescription'>
+                            Lorem Ipsum is simply dummy text of the printing and
+                            typesetting industry.
+                        </p>
+                    </div>
+                    <img src='/static/img/ArrowRight.svg' alt='' />
+                    <div className='SellerInfoSecondCard'>
+                        <img src='/static/img/Yuklab_oling.svg  ' alt='' />
+                        <p className='SellerInfoSecondCardTitle'>
+                            {' '}
+                            Yuklab oling
+                        </p>
+                        <p className='SellerInfoSecondCardDescription'>
+                            Lorem Ipsum is simply dummy text of the printing and
+                            typesetting industry.
+                        </p>
+                    </div>
+                </div>
+                <div className='SellerInfoSecondCardBtn'>
+                    <a className='SellerInfoSecondCardBtnTitle' href=''>Buyurtma berish</a>
+                    <img src='/static/img/RocketLaunch.svg' alt='' />
+                </div>
             </div>
         </div>
     );
