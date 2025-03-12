@@ -65,9 +65,8 @@ const ModelAndDesignProduct = ({ product }) => {
 
     return (
         <div className='modelAndDesignCardWrap'>
-        
             <div
-                className='modelAndDesignCard'
+                className='modelAndDesignCard '
                 onMouseEnter={() => setCountShow(true)}
                 onMouseLeave={() => setCountShow(false)}>
                 <div className='modelAndDesignCardImg'>
