@@ -1,11 +1,56 @@
 import React, { useState } from 'react';
 
 export default function SellerServices () {
-
     return (
         <div>
-
             <div className='servicesSection shadow-sm'>
+                <div className='servicesSectionInfoCardWrap'>
+                    <div className='servicesSectionInfoCard'>
+                        <img
+                            src='/static/img/Buyurtma_bering.svg '
+                            alt=''
+                            className='servicesSectionInfoCardImg'
+                        />
+                        <p className='servicesSectionInfoCardTitle'>
+                            Buyurtma bering
+                        </p>
+                        <p className='servicesSectionInfoCardDescription'>
+                            Lorem Ipsum is simply dummy text of the printing and
+                            typesetting industry.
+                        </p>
+                    </div>
+                    <img src='/static/img/ArrowRight.svg' alt='' />
+                    <div className='servicesSectionInfoCard'>
+                        <img
+                            src='/static/img/To’lov_qiling.svg '
+                            alt=''
+                            className='servicesSectionInfoCardImg'
+                        />
+                        <p className='servicesSectionInfoCardTitle'>
+                            To’lov qiling
+                        </p>
+                        <p className='servicesSectionInfoCardDescription'>
+                            Lorem Ipsum is simply dummy text of the printing and
+                            typesetting industry.
+                        </p>
+                    </div>
+                    <img src='/static/img/ArrowRight.svg' alt='' />
+                    <div className='servicesSectionInfoCard'>
+                        <img
+                            src='/static/img/Yuklab_oling.svg  '
+                            alt=''
+                            className='servicesSectionInfoCardImg'
+                        />
+                        <p className='servicesSectionInfoCardTitle'>
+                            {' '}
+                            Yuklab oling
+                        </p>
+                        <p className='servicesSectionInfoCardDescription'>
+                            Lorem Ipsum is simply dummy text of the printing and
+                            typesetting industry.
+                        </p>
+                    </div>
+                </div>
                 <form action='' className='servicesSectionForm'>
                     <div className='servicesSectionInputBox '>
                         <input
@@ -22,6 +67,17 @@ export default function SellerServices () {
                             Xizmat turlari
                         </option>
                     </select>
+                    <select className='servicesSectionSelect ' name='' id=''>
+                        <option value='' selected hidden>
+                            Xizmat turlari
+                        </option>
+                    </select>
+                    <div className='servicesSectionBtn'>
+                        <a className='servicesSectionBtnTitle' href=''>
+                            Buyurtma berish
+                        </a>
+                        <img src='/static/img/RocketLaunch.svg' alt='' />
+                    </div>
                 </form>
 
                 <div className='servicesSectionWrap'>

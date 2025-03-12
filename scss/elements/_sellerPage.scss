@@ -120,22 +120,30 @@
     }
 }
 
+// _________________________Sellers page styles_______________________
+
 .SellersPageWrap {
     margin-top: 23px;
     display: grid;
-    grid-template-columns: 355px 1fr;
+    grid-template-columns: 25% 1fr;
     gap: 20px;
-
-    .sellerProduct {
-        // background: white;
+    @media (max-width: 1125px) {
+        grid-template-columns: 30% 1fr;
+    }
+    @media (max-width: 675px) {
+        margin-top: 50px;
     }
 }
+// ___________________________sellerInfo STYLE START_______________________________
 .sellerInfo {
     padding: 37px 36px 50px;
     display: flex;
     justify-content: space-between;
     flex-direction: column;
     gap: 52px;
+    @media (max-width: 1000px) {
+        padding: 20px;
+    }
 
     .aboutSeller {
         display: flex;
@@ -147,14 +155,24 @@
             width: 143px;
             height: 143px;
             border-radius: 100%;
+            @media (max-width: 950px) {
+                width: 143px;
+                height: 143px;
+                border-radius: 100%;
+            }
         }
         .sellerNameContainer {
-            // d-flex justify-content-between align-items-center gap-2
             display: flex;
             justify-content: space-between;
             align-items: center;
             gap: 5px;
             margin-top: 25px;
+            img {
+                @media (max-width: 950px) {
+                    width: 15px;
+                    height: 15px;
+                }
+            }
             .sellerName {
                 font-family: 'Poppins';
                 font-weight: 600;
@@ -162,6 +180,10 @@
                 line-height: 100%;
                 letter-spacing: 2%;
                 color: #000;
+                @media (max-width: 950px) {
+                    font-weight: 500;
+                    font-size: 15px;
+                }
             }
         }
 
@@ -171,12 +193,22 @@
             align-items: center;
             margin-top: 10px;
             gap: 5px;
-            .sellerStatus {
-                font-family: 'Poppins';
-                font-weight: 600;
-                font-size: 16px;
-                line-height: 100%;
-                color: #000;
+            img {
+                @media (max-width: 950px) {
+                    width: 15px;
+                    height: 15px;
+                }
+                .sellerStatus {
+                    font-family: 'Poppins';
+                    font-weight: 600;
+                    font-size: 16px;
+                    line-height: 100%;
+                    color: #000;
+                    @media (max-width: 950px) {
+                        font-weight: 500;
+                        font-size: 14px;
+                    }
+                }
             }
         }
     }
@@ -188,6 +220,12 @@
             font-size: 16px;
             line-height: 100%;
             letter-spacing: 0%;
+            @media (max-width: 950px) {
+                font-size: 14px;
+            }
+            @media (max-width: 950px) {
+                font-size: 14px;
+            }
         }
         .VerifiedInformationInfoWrap {
             margin: 21.5px 0 0 0;
@@ -196,8 +234,6 @@
             justify-content: space-between;
             flex-direction: column;
             gap: 16px;
-            .VerifiedInformationInfo {
-            }
         }
     }
 }
@@ -215,6 +251,9 @@
     font-size: 14px;
     line-height: 100%;
     color: (49, 47, 48, 1);
+    @media (max-width: 950px) {
+        font-size: 12px;
+    }
 }
 .titleInfo {
     font-family: 'Poppins';
@@ -223,67 +262,125 @@
     line-height: 100%;
     letter-spacing: 0%;
     color: rgba(49, 47, 48, 1);
+    @media (max-width: 950px) {
+        font-size: 12px;
+    }
 }
 
 .bg-gray-999 {
     background-color: (245, 246, 247, 1);
 }
 
+// _________________________________sellerProductMenu style start______________________
 .sellerProductMenu {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 0;
+    margin-bottom: 13px;
     padding: 14px 50px;
     background: white;
     border-radius: 10px;
-
-    li {
-        list-style-type: none;
+    @media (max-width: 750px) {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        row-gap: 14px;
+    }
+    .activeTab {
+        color: #7b7b7b;
+        padding: 0 10px;
+        margin: 0;
+        font-family: 'Poppins';
+        font-size: 15px;
+        font-weight: 500;
         cursor: pointer;
+        list-style: none;
+        position: relative;
+        transition: color 0.3s ease;
+        @media (max-width: 850px) {
+            font-size: 12px;
+        }
+        &:hover {
+            color: #000;
+        }
     }
 }
-
-.sellerProductMenu .activeTab {
-    color: #7b7b7b;
-    padding: 0 10px;
-    margin: 0;
-    font-family: 'Poppins';
-    font-size: 15px;
-    font-weight: 500;
-    cursor: pointer;
-    list-style: none;
-    position: relative;
-    transition: color 0.3s ease;
-    &:hover {
+.active {
+    color: #000 !important;
+    font-weight: bold;
+    &::before {
+        content: url(/static/img/beforeRec.png);
+        position: absolute;
+        left: 0;
         color: #000;
     }
 }
 
-.sellerProductMenu .activeTab.active {
-    color: #000 !important;
-    font-weight: bold;
-}
-
-.sellerProductMenu .activeTab.active::before {
-    content: url(/static/img/beforeRec.png);
-    position: absolute;
-    left: 0;
-    color: #000;
-}
+// _________________________________sellerProductMenu style end_____________________________
 
 .servicesSection {
-    margin-top: 13px;
     background: #fff;
     height: 100%;
     padding: 30px 47px;
-    .servicesSectionForm {
+    @media (max-width: 1200px) {
+        padding: 30px;
+    }
+    .servicesSectionInfoCardWrap {
         display: flex;
         align-items: center;
-        justify-content: end;
+        justify-content: space-between;
+        padding: 20px 28px;
+        @media (max-width: 1000px) {
+            display: none;
+        }
+        .servicesSectionInfoCard {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            .servicesSectionInfoCardImg {
+                width: 58.852px;
+                height: 48.617px;
+                flex-shrink: 0;
+            }
+
+            .servicesSectionInfoCardTitle {
+                margin: 16.5px 0 5px 0;
+                color: #312f30;
+                font-family: 'Poppins';
+                font-size: 15px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+                letter-spacing: 0.3px;
+            }
+            .servicesSectionInfoCardDescription {
+                color: #312f30;
+                text-align: center;
+                font-family: 'Poppins';
+                font-size: 12px;
+                font-style: normal;
+                font-weight: 300;
+                line-height: normal;
+                width: 206px;
+                @media (max-width: 1000px) {
+                    font-size: 10px;
+                    width: 180px;
+                }
+            }
+        }
+    }
+
+    .servicesSectionForm {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
         gap: 18px;
+        margin-top: 32px;
+        @media (max-width: 1000px) {
+            grid-template-columns: repeat(2, 1fr);
+            margin-top: 0;
+        }
         .servicesSectionInputBox {
-            width: 25%;
+            width: 100%;
             background: #fff;
             display: flex;
             justify-content: space-between;
@@ -307,7 +404,7 @@
             }
         }
         .servicesSectionSelect {
-            width: 25%;
+            width: 100%;
             padding: 7px 17px 7px 16px;
             border: none;
             border-radius: 4px;
@@ -319,6 +416,34 @@
             font-weight: 500;
             line-height: normal;
         }
+
+        .servicesSectionBtn {
+            display: flex;
+            align-items: center;
+            padding: 7px 17px 7px 16px;
+            border-radius: 6.549px;
+            background: #a020f0;
+            gap: 10px;
+            @media (max-width: 1200px) {
+                padding: 7px 15px;
+                gap: 8px;
+            }
+            .servicesSectionBtnTitle {
+                color: #fff;
+                font-family: 'Poppins';
+                font-size: 13.098px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+                letter-spacing: 0.262px;
+                margin: 0;
+                text-wrap: nowrap;
+                width: 108px;
+                @media (max-width: 1200px) {
+                    font-size: 12px;
+                }
+            }
+        }
     }
 
     .servicesSectionWrap {
@@ -326,7 +451,17 @@
         grid-template-columns: repeat(4, 224px);
         gap: 10px;
         row-gap: 29px;
-        margin-top: 25px;
+        margin-top: 41.5px;
+        @media (max-width: 1390px) {
+            grid-template-columns: repeat(4, 1fr);
+        }
+        @media (max-width: 1200px) {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        @media (max-width: 950px) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
         .servicesSectionCard {
             display: flex;
             align-items: center;
@@ -433,7 +568,6 @@
     flex-direction: column;
     gap: 16px;
 
-    margin-top: 14px;
     border-radius: 10px;
     background: #fff;
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.05);
@@ -662,4 +796,384 @@
     }
 }
 
-// ________________________________________SellerInfo end____________________
+// ________________________________________SellerInfo_end____________________
+
+.SellerProduct {
+    background-color: #fff;
+    padding: 40px;
+    .SellerProductForm {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 18px;
+        // margin-top: 32px;
+        @media (max-width: 1000px) {
+            grid-template-columns: repeat(2, 1fr);
+            margin-top: 0;
+        }
+        .SellerProductInputBox {
+            width: 100%;
+            background: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 17px 6px 16px;
+            flex-shrink: 0;
+            border-radius: 4px;
+            box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.15);
+            .SellerProductInput {
+                border: none;
+                outline: none;
+                background: none;
+                &::placeholder {
+                    color: #7b7b7b;
+                    font-family: Poppins;
+                    font-size: 12px;
+                    font-style: normal;
+                    font-weight: 500;
+                    line-height: normal;
+                }
+            }
+        }
+        .SellerProductSelect {
+            width: 100%;
+            padding: 7px 17px 7px 16px;
+            border: none;
+            border-radius: 4px;
+            box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.15);
+            color: #7b7b7b;
+            font-family: 'Poppins';
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+        }
+
+        .SellerProductBtn {
+            display: flex;
+            align-items: center;
+            padding: 7px 17px 7px 16px;
+            border-radius: 6.549px;
+            background: #a020f0;
+            gap: 10px;
+            @media (max-width: 1200px) {
+                padding: 7px 15px;
+                gap: 8px;
+            }
+            .SellerProductBtnTitle {
+                color: #fff;
+                font-family: 'Poppins';
+                font-size: 13.098px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+                letter-spacing: 0.262px;
+                margin: 0;
+                text-wrap: nowrap;
+                width: 108px;
+                @media (max-width: 1200px) {
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+}
+
+// ________________________________________SellerProduct_end____________________
+.sellerpage {
+    width: 100%;
+    .sellerpageTitleBox {
+        display: flex;
+        align-items: center;
+        margin: 35px 0 31px;
+        gap: 10px;
+        .sellerpageTitle {
+            color: #312f30;
+            font-family: 'Poppins';
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+            margin: 0;
+            color: (49, 47, 48, 1);
+        }
+    }
+    .ScientificResourcesCardWrap {
+        display: grid;
+        grid-template-columns: repeat(4, 226px);
+        gap: 10px;
+        row-gap: 31px;
+        align-items: stretch;
+        margin-top: 50px;
+        @media (max-width: 1300px) {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+    .VideoLessonsCardWrap {
+        display: grid;
+        grid-template-columns: repeat(4, 226px);
+        gap: 9px;
+        row-gap: 25px;
+        align-items: stretch;
+        margin-top: 50px;
+        @media (max-width: 1300px) {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+    .ModelAndDesignCardWrap {
+        display: grid;
+        grid-template-columns: repeat(3, 306px);
+        gap: 6px;
+        row-gap: 25px;
+        align-items: stretch;
+        margin-top: 50px;
+        width: 100%;
+
+        @media (max-width: 1300px) {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+    .WebSitesCardWrap {
+        display: grid;
+        grid-template-columns: repeat(4, 228px);
+        gap: 6.5px;
+        row-gap: 25px;
+        align-items: stretch;
+        margin-top: 50px;
+        @media (max-width: 1300px) {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+    .DesignDevelopmentCardWrap {
+        display: grid;
+        grid-template-columns: repeat(4, 228px);
+        gap: 6.5px;
+        row-gap: 25px;
+        align-items: stretch;
+        margin-top: 50px;
+        @media (max-width: 1300px) {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+}
+.showMoreBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .showMore {
+        color: #312f30;
+        font-family: 'Poppins';
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+        letter-spacing: 0.12px;
+        padding: 10px 30px;
+        border-radius: 5px;
+        background: #e0e2e7;
+        margin-top: 31px;
+        width: 280px;
+        text-align: center;
+    }
+}
+// ____________________________________________________________
+.SellerPortfolio {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.05);
+    padding: 40px 47px;
+    .SellerPortfolioForm {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 18px;
+        margin-bottom: 25px;
+
+        .SellerPortfolioSelect {
+            width: 30%;
+            padding: 7px 17px 7px 16px;
+            border: none;
+            border-radius: 4px;
+            box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.15);
+            color: #7b7b7b;
+            font-family: 'Poppins';
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+        }
+    }
+    .SellerPortfolioWrap {
+        display: grid;
+        grid-template-columns: repeat(4, 224px);
+        gap: 8px;
+        row-gap: 15px;
+
+        .SellerPortfolioCard {
+            position: relative;
+            .SellerPortfolioCardImg {
+                width: 224px;
+                height: 164px;
+            }
+            &:hover {
+                .SellerPortfolioCardbody {
+                    display: block;
+                }
+            }
+            .SellerPortfolioCardbody {
+                position: absolute;
+                display: none;
+                bottom: 0;
+                padding: 0 9px;
+                width: 100%;
+                .SellerPortfolioCardTitle {
+                    color: #fff;
+                    font-family: 'Poppins';
+                    font-size: 12px;
+                    font-style: normal;
+                    font-weight: 500;
+                    line-height: normal;
+                    letter-spacing: 0.24px;
+                }
+                .SellerPortfolioCardEnd {
+                    p {
+                        color: #fff;
+                        font-family: 'Poppins';
+                        font-size: 12px;
+                        font-style: normal;
+                        font-weight: 400;
+                        line-height: normal;
+                        letter-spacing: 0.24px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.ServiceIsUnavailable {
+    padding: 48px 221px;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.05);
+    .ServiceIsUnavailableImg {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .ServiceIsUnavailableBody {
+        margin-top: 71px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        .ServiceIsUnavailableTitle {
+            color: #000;
+            text-align: center;
+            font-family: 'Poppins';
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 150%; /* 30px */
+        }
+        .ServiceIsUnavailableDescription {
+            color: #312f30;
+            text-align: center;
+            font-family: 'Poppins';
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 150%; /* 21px */
+            margin-top: 8px;
+            text-wrap: nowrap;
+            margin-bottom: 40px;
+        }
+        .ServiceIsUnavailableBtn {
+            color: #fff;
+            text-align: center;
+            font-family: 'Poppins';
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 150%; /* 18px */
+            margin-top: 40px;
+            padding: 8px 15px;
+            border-radius: 5px;
+            background: #00a44f;
+        }
+    }
+}
+.dontWork {
+    padding: 48px 171px;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.05);
+    .dontWorkImg {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .dontWorkBody {
+        margin-top: 71px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        .dontWorkTitle {
+            color: #000;
+            text-align: center;
+            font-family: 'Poppins';
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 150%;
+            width: 633px;
+        }
+    }
+    .dontWorkCardWrap {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px 28px;
+        margin-top: 47px;
+        gap: 32px;
+        @media (max-width: 1000px) {
+            display: none;
+        }
+        .dontWorkCard {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            .dontWorkCardImg {
+                width: 58.852px;
+                height: 48.617px;
+                flex-shrink: 0;
+            }
+
+            .dontWorkCardTitle {
+                margin: 16.5px 0 5px 0;
+                color: #312f30;
+                font-family: 'Poppins';
+                font-size: 15px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+                letter-spacing: 0.3px;
+            }
+            .dontWorkCardDescription {
+                color: #312f30;
+                text-align: center;
+                font-family: 'Poppins';
+                font-size: 12px;
+                font-style: normal;
+                font-weight: 300;
+                line-height: normal;
+                width: 206px;
+                @media (max-width: 1000px) {
+                    font-size: 10px;
+                    width: 180px;
+                }
+            }
+        }
+    }
+}

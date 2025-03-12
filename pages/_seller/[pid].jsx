@@ -5,6 +5,8 @@ import FooterComponents from '~/components/blocks/footer/FooterComponents';
 import PageContainer from '~/components/layouts/PageContainer';
 import SellerComments from '~/components/shared/seller-profile/sellerComments';
 import SellerInfo from '~/components/shared/seller-profile/sellerInfo';
+import SellerPortfolio from '~/components/shared/seller-profile/sellerPortfolio';
+import SellerProduct from '~/components/shared/seller-profile/sellerProduct';
 import SellerServices from '~/components/shared/seller-profile/sellerServices';
 import SellerShortInfo from '~/components/shared/seller-profile/sellerShortInfo';
 
@@ -15,13 +17,19 @@ export default function SellersPage () {
     const sellerTabItems = {
         about_author: <SellerInfo />,
         services: <SellerServices />,
+        portfolio: <SellerPortfolio />,
         comments: <SellerComments />,
+        products: <SellerProduct />,
     };
 
     const menuItems = [
         {
-            title: 'Muallif Haqimizda',
+            title: 'Muallif Haqida',
             path: 'about_author',
+        },
+        {
+            title: 'Portfolio',
+            path: 'portfolio',
         },
         {
             title: 'Xizmatlar',
