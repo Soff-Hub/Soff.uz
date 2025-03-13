@@ -47,15 +47,13 @@
     }
 }
 
-
-
 .profile__image {
     min-width: 50px !important;
     min-height: 50px !important;
     max-height: 50px !important;
     max-height: 50px !important;
     border-radius: 50%;
-    border: 2px solid $color-1st ;
+    border: 2px solid $color-1st;
     object-fit: cover !important;
     object-position: top center !important;
 }
@@ -64,7 +62,7 @@
     width: 35px;
     height: 35px;
     border-radius: 50%;
-    border: 2px solid $color-1st ;
+    border: 2px solid $color-1st;
     object-fit: cover;
 }
 
@@ -72,10 +70,9 @@
     width: 35px;
     height: 35px;
     border-radius: 50%;
-    border: 2px solid $color-1st ;
+    border: 2px solid $color-1st;
     object-fit: cover;
 }
-
 
 .ant-upload {
     height: 50px !important;
@@ -85,7 +82,7 @@
     height: 50px !important;
 }
 
-@media (max-width:1024px) {
+@media (max-width: 1024px) {
     .usr_bodyy {
         padding: 20px 0 !important;
     }
@@ -115,11 +112,1343 @@
     }
 }
 
-
 .donate-color-btn {
     background-color: #c5ab35 !important;
 
     &:hover {
         background-color: #000 !important;
+    }
+}
+
+// _________________________Sellers page styles_______________________
+
+.SellersPageWrap {
+    margin-top: 23px;
+    display: grid;
+    grid-template-columns: 25% 75%;
+    gap: 20px;
+    @media (max-width: 1125px) {
+        grid-template-columns: 30% 70%;
+    }
+    @media (max-width: 768px) {
+        grid-template-columns: repeat(1, 100%);
+    }
+    @media (max-width: 675px) {
+        margin-top: 50px;
+    }
+}
+// ___________________________sellerInfo STYLE START_______________________________
+.sellerInfo {
+    padding: 37px 36px 50px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 52px;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.05);
+    @media (max-width: 1000px) {
+        padding: 20px;
+    }
+
+    .aboutSeller {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+
+        .sellerAvatar {
+            width: 143px;
+            height: 143px;
+            border-radius: 100%;
+            @media (max-width: 950px) {
+                width: 143px;
+                height: 143px;
+                border-radius: 100%;
+            }
+        }
+        .sellerNameContainer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 5px;
+            margin-top: 25px;
+            img {
+                @media (max-width: 950px) {
+                    width: 15px;
+                    height: 15px;
+                }
+            }
+            .sellerName {
+                font-family: 'Poppins';
+                font-weight: 600;
+                font-size: 20px;
+                line-height: 100%;
+                letter-spacing: 2%;
+                color: #000;
+                @media (max-width: 950px) {
+                    font-weight: 500;
+                    font-size: 15px;
+                }
+            }
+        }
+
+        .sellerStatusContainer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            gap: 5px;
+            img {
+                @media (max-width: 950px) {
+                    width: 15px;
+                    height: 15px;
+                }
+                .sellerStatus {
+                    font-family: 'Poppins';
+                    font-weight: 600;
+                    font-size: 16px;
+                    line-height: 100%;
+                    color: #000;
+                    @media (max-width: 950px) {
+                        font-weight: 500;
+                        font-size: 14px;
+                    }
+                }
+            }
+        }
+    }
+    .VerifiedInformation {
+        .VerifiedInformationTitle {
+            font-family: 'Poppins';
+            color: rgba(49, 47, 48, 1);
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 100%;
+            letter-spacing: 0%;
+            @media (max-width: 950px) {
+                font-size: 14px;
+            }
+            @media (max-width: 950px) {
+                font-size: 14px;
+            }
+        }
+        .VerifiedInformationInfoWrap {
+            margin: 21.5px 0 0 0;
+            padding: 0;
+            display: flex;
+            justify-content: space-between;
+            flex-direction: column;
+            gap: 16px;
+        }
+    }
+}
+
+.between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.innerInfo {
+    font-family: 'Poppins';
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 100%;
+    color: (49, 47, 48, 1);
+    @media (max-width: 950px) {
+        font-size: 12px;
+    }
+}
+.titleInfo {
+    font-family: 'Poppins';
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: rgba(49, 47, 48, 1);
+    @media (max-width: 950px) {
+        font-size: 12px;
+    }
+}
+
+.bg-gray-999 {
+    background-color: (245, 246, 247, 1);
+}
+
+.SellerCollapseMenu {
+    display: none;
+    @media (max-width: 600px) {
+        display: block;
+    }
+}
+
+// _________________________________sellerProductMenu style start______________________
+.sellerProductMenu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 13px;
+    padding: 14px 50px;
+    background: white;
+    border-radius: 10px;
+    @media (max-width: 600px) {
+        display: none;
+    }
+    .activeTab {
+        color: #7b7b7b;
+        padding: 0 10px;
+        margin: 0;
+        font-family: 'Poppins';
+        font-size: 15px;
+        font-weight: 500;
+        cursor: pointer;
+        list-style: none;
+        position: relative;
+        transition: color 0.3s ease;
+        @media (max-width: 850px) {
+            font-size: 12px;
+        }
+        &:hover {
+            color: #000;
+        }
+    }
+}
+.active {
+    color: #000 !important;
+    font-weight: bold;
+    &::before {
+        content: url(/static/img/beforeRec.png);
+        position: absolute;
+        left: 0;
+        color: #000;
+    }
+}
+
+.sellerProductSkeletonWrap {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    row-gap: 20px;
+    @media (max-width: 768px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    @media (max-width: 500px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .sellerProductSkeleton {
+        width: 100%;
+        height: 200px !important;
+        @media (max-width: 768px) {
+            height: 150px !important;
+        }
+        @media (max-width: 500px) {
+            height: 120px !important;
+        }
+        @media (max-width: 400px) {
+            height: 100px !important;
+        }
+        @media (max-width: 300px) {
+            height: 80px !important;
+        }
+    }
+}
+
+// _________________________________sellerProductMenu style end_____________________________
+
+.servicesSection {
+    height: 100%;
+    padding: 30px 47px;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.05);
+    @media (max-width: 1200px) {
+        padding: 30px;
+    }
+    @media (max-width: 550px) {
+        background: none;
+        padding: 0;
+    }
+
+    .servicesSectionInfoCardWrap {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px 28px;
+        @media (max-width: 1000px) {
+            display: none;
+        }
+        .servicesSectionInfoCard {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            .servicesSectionInfoCardImg {
+                width: 58.852px;
+                height: 48.617px;
+                flex-shrink: 0;
+            }
+
+            .servicesSectionInfoCardTitle {
+                margin: 16.5px 0 5px 0;
+                color: #312f30;
+                font-family: 'Poppins';
+                font-size: 15px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+                letter-spacing: 0.3px;
+            }
+            .servicesSectionInfoCardDescription {
+                color: #312f30;
+                text-align: center;
+                font-family: 'Poppins';
+                font-size: 12px;
+                font-style: normal;
+                font-weight: 300;
+                line-height: normal;
+                width: 206px;
+                @media (max-width: 1000px) {
+                    font-size: 10px;
+                    width: 180px;
+                }
+            }
+        }
+    }
+
+    .servicesSectionForm {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 18px;
+        margin-top: 32px;
+        @media (max-width: 1000px) {
+            grid-template-columns: repeat(2, 1fr);
+            margin-top: 0;
+        }
+        @media (max-width: 450px) {
+            grid-template-columns: repeat(1, 1fr);
+            margin-top: 0;
+        }
+        .servicesSectionInputBox {
+            width: 100%;
+            background: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 17px 6px 16px;
+            flex-shrink: 0;
+            border-radius: 4px;
+            box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.15);
+            .servicesSectionInput {
+                border: none;
+                outline: none;
+                background: none;
+                &::placeholder {
+                    color: #7b7b7b;
+                    font-family: Poppins;
+                    font-size: 12px;
+                    font-style: normal;
+                    font-weight: 500;
+                    line-height: normal;
+                }
+            }
+        }
+        .servicesSectionSelect {
+            width: 100%;
+            padding: 7px 17px 7px 16px;
+            border: none;
+            border-radius: 4px;
+            box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.15);
+            color: #7b7b7b;
+            font-family: 'Poppins';
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+        }
+
+        .servicesSectionBtn {
+            display: flex;
+            align-items: center;
+            padding: 7px 17px 7px 16px;
+            border-radius: 6.549px;
+            background: #a020f0;
+            gap: 10px;
+            @media (max-width: 1200px) {
+                padding: 7px 15px;
+                gap: 8px;
+            }
+            .servicesSectionBtnTitle {
+                color: #fff;
+                font-family: 'Poppins';
+                font-size: 13.098px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+                letter-spacing: 0.262px;
+                margin: 0;
+                text-wrap: nowrap;
+                width: 108px;
+                @media (max-width: 1200px) {
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+
+    .servicesSectionWrap {
+        display: grid;
+        grid-template-columns: repeat(4, 224px);
+        gap: 10px;
+        row-gap: 29px;
+        margin-top: 41.5px;
+        @media (max-width: 1390px) {
+            grid-template-columns: repeat(4, 1fr);
+        }
+        @media (max-width: 1200px) {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        @media (max-width: 950px) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        @media (max-width: 300px) {
+            grid-template-columns: repeat(1, 1fr);
+        }
+
+        .servicesSectionCard {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-direction: column;
+            flex-wrap: wrap;
+            width: 100%;
+            padding: 10px 9px;
+            border-radius: 5px;
+            background: #fff;
+            box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+
+            .servicesSectionCardImg {
+                img {
+                    border-radius: 5px;
+                    height: 184px;
+                    width: 100%;
+                    @media (max-width: 480px) {
+                        height: 120px;
+                    }
+                }
+            }
+            .servicesSectionCardbody {
+                margin-top: 7.5px;
+                .servicesSectionCardTitle {
+                    color: #312f30;
+                    font-family: 'Poppins';
+                    font-size: 12px;
+                    font-style: normal;
+                    font-weight: 500;
+                    line-height: 150%; /* 18px */
+                    letter-spacing: 0.24px;
+                    margin-bottom: 5.5px;
+                    @media (max-width: 480px) {
+                        font-size: 10px;
+                    }
+                }
+                .servicesSectionCardRating {
+                    display: flex;
+                    align-items: center;
+                    gap: 2px;
+                    margin-bottom: 10px;
+                    img {
+                    }
+                    p {
+                        color: #312f30;
+                        font-family: 'Poppins';
+                        font-size: 10px;
+                        font-style: normal;
+                        font-weight: 500;
+                        line-height: normal;
+                        letter-spacing: 0.1px;
+                        margin: 0;
+                        padding: 0;
+                    }
+                    span {
+                        color: #555;
+                        font-family: 'Poppins';
+                        font-size: 9px;
+                        font-style: normal;
+                        font-weight: 500;
+                        line-height: normal;
+                        letter-spacing: 0.45px;
+                        padding: 0;
+                        margin: 0;
+                    }
+                }
+                .servicesSectionCardPrice {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    p {
+                        color: #312f30;
+                        font-family: 'Poppins';
+                        font-size: 12px;
+                        font-style: normal;
+                        font-weight: 600;
+                        line-height: normal;
+                        letter-spacing: 0.12px;
+                        margin: 0;
+                        @media (max-width: 480px) {
+                            font-size: 8px;
+                        }
+                    }
+                    a {
+                        color: #fff;
+                        font-family: 'Poppins';
+                        font-size: 10px;
+                        font-style: normal;
+                        font-weight: 600;
+                        line-height: normal;
+                        letter-spacing: 0.1px;
+                        padding: 4px 8px;
+                        background: rgba(0, 210, 101, 1);
+                        border-radius: 3px;
+                        margin: 0;
+                        @media (max-width: 480px) {
+                            font-size: 8px;
+                            padding: 2px 4px;
+                        }
+                        &:hover {
+                            background: rgba(0, 210, 101, 0.5);
+                        }
+                    }
+                }
+            }
+        }
+
+        .servicesSectionCardSkeleton {
+            height: 200px;
+            width: 100%;
+            @media (max-width: 380px) {
+                height: 120px;
+            }
+            @media (max-width: 300px) {
+                height: 80px;
+            }
+        }
+    }
+}
+// ________________________________________________servicesSection end______________________________________
+
+.SellerComments {
+    padding: 38px 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 16px;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.05);
+    @media (max-width: 768px) {
+        padding: 20px;
+    }
+    @media (max-width: 550px) {
+        padding: 0px;
+        box-shadow: none;
+        background: none;
+    }
+
+    .SellerCommentsSkeleton {
+        width: 100%;
+        height: 150px;
+        border-radius: 15px;
+        padding: 20px;
+        @media (max-width: 550px) {
+            padding: 10px;
+            height: 250px;
+        }
+        @media (max-width: 400px) {
+            padding: 5px;
+            height: 200px;
+        }
+    }
+    .SellerCommentsCard {
+        display: flex;
+        padding: 21px 40px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        border-radius: 20px 20px 20px 5.6px;
+        background: #fff;
+        box-shadow: 0px 0px 3.5px 0px rgba(0, 0, 0, 0.2);
+        @media (max-width: 768px) {
+            padding: 21px;
+        }
+        @media (max-width: 500px) {
+            padding: 10px;
+        }
+        .SellerCommentsCardAboutSeller {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            @media (max-width: 520px) {
+                flex-direction: column;
+                align-items: start;
+            }
+            .SellerCommentsCardAboutSellerinfo {
+                display: flex;
+                align-items: center;
+                gap: 30px;
+                @media (max-width: 520px) {
+                    flex-direction: column;
+                    align-items: start;
+                    gap: 10px;
+                }
+                .SellerCommentsCardSellerAvatar {
+                    display: flex;
+                    align-items: center;
+                    gap: 7px;
+                    img {
+                        height: 35px;
+                        width: 35px;
+                        border-radius: 100%;
+                    }
+                    p {
+                        color: #312f30;
+                        font-family: 'Poppins';
+                        font-size: 14px;
+                        font-style: normal;
+                        font-weight: 600;
+                        line-height: normal;
+                        letter-spacing: 0.28px;
+                        margin: 0;
+                    }
+                }
+                .SellerCommentsCardSellerActivety {
+                    color: rgba(152, 152, 152, 0.9);
+                    font-family: 'Poppins';
+                    font-size: 12px;
+                    font-style: normal;
+                    font-weight: 500;
+                    line-height: normal;
+                    margin: 0;
+                }
+            }
+        }
+
+        .SellerCommentsCardSellerCommentWrap {
+            display: flex;
+            align-items: flex-end;
+            flex-direction: column;
+            // @media (max-width: 700px) {
+            //     align-items: flex-start;
+            // }
+            .SellerCommentsCardComment {
+                color: #7b7b7b;
+                font-family: 'Poppins';
+                font-size: 12px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+                letter-spacing: 0.24px;
+                width: 90%;
+                @media (max-width: 520px) {
+                    width: 100%;
+                }
+            }
+            .SellerCommentsCardBtn {
+                color: #fff;
+                font-family: 'Poppins';
+                font-size: 10px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+                letter-spacing: 0.1px;
+                background: rgba(0, 164, 79, 1);
+                padding: 7px 15px;
+                border-radius: 10px;
+                width: 15%;
+                @media (max-width: 700px) {
+                    text-wrap: nowrap;
+                    text-align: center;
+                    width: 30%;
+                }
+                @media (max-width: 580px) {
+                    text-wrap: nowrap;
+                    width: 50%;
+                    text-align: center;
+                }
+                @media (max-width: 320px) {
+                    text-wrap: nowrap;
+                    width: 100%;
+                    text-align: center;
+                }
+            }
+        }
+    }
+}
+// _____________________________SellerComments end_________________________
+
+.SellerInfo {
+    margin-top: 13px;
+    background: #fff;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.05);
+    padding: 36px 47px;
+    @media (max-width: 600px) {
+        padding: 20px;
+    }
+    @media (max-width: 550px) {
+        background: none;
+        box-shadow: none;
+        padding: 0px;
+    }
+    .SellerInfoTitle {
+        color: #312f30;
+        font-family: 'Poppins';
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+    }
+    .SellerInfoCardWrap {
+        display: grid;
+        grid-template-columns: repeat(5, 172px);
+        gap: 18px;
+        margin-top: 20px;
+        @media (max-width: 1300px) {
+            grid-template-columns: repeat(5, 1fr);
+        }
+        @media (max-width: 1250px) {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        @media (max-width: 768px) {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        @media (max-width: 500px) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .SellerInfoCard {
+            border-radius: 5px;
+            background: #fff;
+            box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.25);
+            padding: 13px 17px;
+            display: flex;
+            justify-content: space-between;
+            flex-direction: column;
+            gap: 18px;
+            @media (max-width: 600px) {
+                padding: 10px;
+            }
+            @media (max-width: 400px) {
+                padding: 8px;
+                gap: 10px;
+            }
+            @media (max-width: 350px) {
+                padding: 5px;
+                gap: 5px;
+            }
+
+            .SellerInfoCardBody {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                @media (max-width: 300px) {
+                    flex-direction: column;
+                    justify-content: center;
+                }
+                .SellerInfoCardImg {
+                    @media (max-width: 600px) {
+                        width: 20px;
+                        height: 20px;
+                    }
+                    @media (max-width: 350px) {
+                        width: 12px;
+                        height: 12px;
+                    }
+                }
+                .SellerInfoCardTitle {
+                    color: #312f30;
+                    font-family: 'Poppins';
+                    font-size: 12px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: 120%; /* 14.4px */
+                    letter-spacing: 0.24px;
+                    margin: 0 !important;
+
+                    @media (max-width: 600px) {
+                        font-size: 10px;
+                    }
+                    @media (max-width: 400px) {
+                        font-size: 8px;
+                        text-align: center;
+                    }
+                }
+            }
+            .SellerInfoCardCount {
+                color: #312f30;
+                font-family: 'Poppins';
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+                letter-spacing: 0.28px;
+                margin: 0 !important;
+
+                @media (max-width: 600px) {
+                    font-size: 12px;
+                }
+                @media (max-width: 400px) {
+                    font-size: 10px;
+                    text-align: center;
+                }
+            }
+        }
+    }
+    .SellerInfoSecondTitle {
+        color: #312f30;
+        font-family: 'Poppins';
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+        margin-top: 60px;
+    }
+    .SellerInfoDescription {
+        color: #312f30;
+        font-family: 'Poppins';
+        font-size: 13px;
+        font-style: normal;
+        font-weight: 300;
+        line-height: normal;
+        margin-top: 20px;
+        .SellerInfoDescriptionForMore {
+            color: #00a44f;
+            font-family: 'Poppins';
+            font-size: 13px;
+            font-style: normal;
+            font-weight: 300;
+            line-height: normal;
+        }
+    }
+    .SellerInfoEnd {
+        margin-top: 70px;
+        display: flex;
+        align-items: center;
+        gap: 57px;
+        .SellerInfoSecondCardWrap {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            @media (max-width: 768px) {
+                display: none;
+            }
+            .SellerInfoSecondCard {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                .SellerInfoSecondCardTitle {
+                    margin-top: 18px;
+                    color: #312f30;
+                    font-family: 'Poppins';
+                    font-size: 12.6px;
+                    font-style: normal;
+                    font-weight: 500;
+                    line-height: normal;
+                    letter-spacing: 0.252px;
+                }
+                .SellerInfoSecondCardDescription {
+                    color: #312f30;
+                    text-align: center;
+                    font-family: 'Poppins';
+                    font-size: 9.9px;
+                    font-style: normal;
+                    font-weight: 300;
+                    line-height: normal;
+                    width: 170px;
+                }
+            }
+        }
+        .SellerInfoSecondCardBtn {
+            display: flex;
+            align-items: center;
+            padding: 10px 22px;
+            border-radius: 6.549px;
+            background: #a020f0;
+            gap: 10px;
+            .SellerInfoSecondCardBtnTitle {
+                color: #fff;
+                font-family: 'Poppins';
+                font-size: 13.098px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+                letter-spacing: 0.262px;
+                margin: 0;
+                text-wrap: nowrap;
+            }
+        }
+    }
+}
+
+// ________________________________________SellerInfo_end____________________
+
+.SellerProduct {
+    background-color: #fff;
+    padding: 40px;
+    @media (max-width: 800px) {
+        padding: 20px;
+    }
+    @media (max-width: 768px) {
+        padding: 0px;
+        background: none;
+    }
+    .SellerProductForm {
+        // display: grid;
+        // grid-template-columns: repeat(4, 1fr);
+        display: flex;
+        justify-content: end;
+        gap: 18px;
+        margin-bottom: 35px;
+        @media (max-width: 600px) {
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        .SellerProductInputBox {
+            width: 50%;
+            background: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 17px 6px 16px;
+            flex-shrink: 0;
+            border-radius: 4px;
+            box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.15);
+            @media (max-width: 600px) {
+                width: 100%;
+            }
+            .SellerProductInput {
+                border: none;
+                outline: none;
+                background: none;
+                &::placeholder {
+                    color: #7b7b7b;
+                    font-family: Poppins;
+                    font-size: 12px;
+                    font-style: normal;
+                    font-weight: 500;
+                    line-height: normal;
+                }
+            }
+        }
+        .SellerProductSelect {
+            width: 25%;
+            padding: 7px 17px 7px 16px;
+            border: none;
+            border-radius: 4px;
+            box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.15);
+            color: #7b7b7b;
+            font-family: 'Poppins';
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+            @media (max-width: 600px) {
+                width: 48%;
+            }
+            @media (max-width: 260px) {
+                width: 100%;
+            }
+        }
+
+        .SellerProductBtn {
+            display: flex;
+            align-items: center;
+            padding: 7px 17px 7px 16px;
+            border-radius: 6.549px;
+            background: #a020f0;
+            gap: 10px;
+            @media (max-width: 1200px) {
+                padding: 7px 15px;
+                gap: 8px;
+            }
+            .SellerProductBtnTitle {
+                color: #fff;
+                font-family: 'Poppins';
+                font-size: 13.098px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+                letter-spacing: 0.262px;
+                margin: 0;
+                text-wrap: nowrap;
+                width: 108px;
+                @media (max-width: 1200px) {
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+}
+
+// ________________________________________SellerProduct_end____________________
+.sellerpage {
+    width: 100%;
+    .sellerpageTitleBox {
+        display: flex;
+        align-items: center;
+        margin: 0 0 31px;
+        gap: 10px;
+        .sellerpageTitle {
+            color: #312f30;
+            font-family: 'Poppins';
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+            margin: 0;
+            color: (49, 47, 48, 1);
+        }
+    }
+    .ScientificResourcesCardWrap {
+        display: grid;
+        grid-template-columns: repeat(4, 226px);
+        gap: 10px;
+        row-gap: 31px;
+        align-items: stretch;
+        margin-top: 50px;
+        @media (max-width: 1300px) {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+    .VideoLessonsCardWrap {
+        display: grid;
+        grid-template-columns: repeat(4, 226px);
+        gap: 9px;
+        row-gap: 25px;
+        align-items: stretch;
+        margin-top: 50px;
+        @media (max-width: 1300px) {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+    .ModelAndDesignCardWrap {
+        display: grid;
+        grid-template-columns: repeat(3, 306px);
+        gap: 6px;
+        row-gap: 25px;
+        align-items: stretch;
+        margin-top: 50px;
+        width: 100%;
+
+        @media (max-width: 1300px) {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+    .WebSitesCardWrap {
+        display: grid;
+        grid-template-columns: repeat(4, 228px);
+        gap: 6.5px;
+        row-gap: 25px;
+        align-items: stretch;
+        margin-top: 50px;
+        @media (max-width: 1300px) {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+    .DesignDevelopmentCardWrap {
+        display: grid;
+        grid-template-columns: repeat(4, 228px);
+        gap: 6.5px;
+        row-gap: 25px;
+        align-items: stretch;
+        margin-top: 50px;
+        @media (max-width: 1300px) {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+}
+.showMoreBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    .showMore {
+        color: #312f30;
+        font-family: 'Poppins';
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+        letter-spacing: 0.12px;
+        padding: 10px 30px;
+        border-radius: 5px;
+        background: #e0e2e7;
+        margin-top: 31px;
+        width: 280px;
+        text-align: center;
+        & :hover {
+            background: #e0e2e7;
+        }
+    }
+}
+// ____________________________________________________________
+.SellerPortfolio {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.05);
+    padding: 40px 47px;
+    @media (max-width: 1000px) {
+        padding: 30px;
+    }
+    @media (max-width: 768px) {
+        padding: 20px;
+        background: none;
+        box-shadow: none;
+    }
+    @media (max-width: 500px) {
+        padding: 15px;
+    }
+    @media (max-width: 400px) {
+        padding: 10px;
+    }
+    .SellerPortfolioForm {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 18px;
+        margin-bottom: 25px;
+
+        .SellerPortfolioSelect {
+            width: 30%;
+            padding: 7px 17px 7px 16px;
+            border: none;
+            border-radius: 4px;
+            box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.15);
+            color: #7b7b7b;
+            font-family: 'Poppins';
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+            @media (max-width: 768px) {
+                width: 50%;
+            }
+        }
+    }
+    .SellerPortfolioWrap {
+        display: grid;
+        grid-template-columns: repeat(4, 224px);
+        gap: 8px;
+        row-gap: 15px;
+        @media (max-width: 1300px) {
+            grid-template-columns: repeat(4, 1fr);
+        }
+        @media (max-width: 1000px) {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        @media (max-width: 768px) {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        @media (max-width: 500px) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .SellerPortfolioCard {
+            position: relative;
+            .SellerPortfolioCardImg {
+                width: 224px;
+                height: 164px;
+                @media (max-width: 600px) {
+                    width: 200px;
+                    height: 140px;
+                }
+                @media (max-width: 380px) {
+                    width: 150px;
+                    height: 100px;
+                }
+
+                @media (max-width: 300px) {
+                    width: 100px;
+                    height: 80px;
+                }
+            }
+            &:hover {
+                .SellerPortfolioCardbody {
+                    display: block;
+                }
+            }
+            .SellerPortfolioCardbody {
+                position: absolute;
+                display: none;
+                bottom: 0;
+                padding: 0 9px;
+                width: 100%;
+                .SellerPortfolioCardTitle {
+                    color: #fff;
+                    font-family: 'Poppins';
+                    font-size: 12px;
+                    font-style: normal;
+                    font-weight: 500;
+                    line-height: normal;
+                    letter-spacing: 0.24px;
+                }
+                .SellerPortfolioCardEnd {
+                    p {
+                        color: #fff;
+                        font-family: 'Poppins';
+                        font-size: 12px;
+                        font-style: normal;
+                        font-weight: 400;
+                        line-height: normal;
+                        letter-spacing: 0.24px;
+                    }
+                }
+            }
+        }
+        .SellerPortfolioSkeleton {
+            width: 100%;
+            height: 164px;
+            border-radius: 15px;
+            @media (max-width: 350px) {
+                height: 120px;
+            }
+            @media (max-width: 300px) {
+                height: 80px;
+            }
+        }
+    }
+}
+
+.ServiceIsUnavailable {
+    padding: 48px 221px;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.05);
+    .ServiceIsUnavailableImg {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .ServiceIsUnavailableBody {
+        margin-top: 71px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        .ServiceIsUnavailableTitle {
+            color: #000;
+            text-align: center;
+            font-family: 'Poppins';
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 150%; /* 30px */
+        }
+        .ServiceIsUnavailableDescription {
+            color: #312f30;
+            text-align: center;
+            font-family: 'Poppins';
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 150%; /* 21px */
+            margin-top: 8px;
+            text-wrap: nowrap;
+            margin-bottom: 40px;
+        }
+        .ServiceIsUnavailableBtn {
+            color: #fff;
+            text-align: center;
+            font-family: 'Poppins';
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 150%; /* 18px */
+            margin-top: 40px;
+            padding: 8px 15px;
+            border-radius: 5px;
+            background: #00a44f;
+        }
+    }
+}
+.dontWork {
+    padding: 48px 171px;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.05);
+    .dontWorkImg {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .dontWorkBody {
+        margin-top: 71px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        .dontWorkTitle {
+            color: #000;
+            text-align: center;
+            font-family: 'Poppins';
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 150%;
+            width: 633px;
+        }
+    }
+    .dontWorkCardWrap {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px 28px;
+        margin-top: 47px;
+        gap: 32px;
+        @media (max-width: 1000px) {
+            display: none;
+        }
+        .dontWorkCard {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            .dontWorkCardImg {
+                width: 58.852px;
+                height: 48.617px;
+                flex-shrink: 0;
+            }
+
+            .dontWorkCardTitle {
+                margin: 16.5px 0 5px 0;
+                color: #312f30;
+                font-family: 'Poppins';
+                font-size: 15px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+                letter-spacing: 0.3px;
+            }
+            .dontWorkCardDescription {
+                color: #312f30;
+                text-align: center;
+                font-family: 'Poppins';
+                font-size: 12px;
+                font-style: normal;
+                font-weight: 300;
+                line-height: normal;
+                width: 206px;
+                @media (max-width: 1000px) {
+                    font-size: 10px;
+                    width: 180px;
+                }
+            }
+        }
     }
 }

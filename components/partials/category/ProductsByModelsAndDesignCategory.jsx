@@ -28,7 +28,7 @@ export default function ProductsByModelsAndDesignCategory ({
 
                 {data?.results?.map((item, index) => (
                     <div
-                        className=' col-xl-4 col-lg-4 col-md-6 col-sm-6 col-6 '
+                        className='mt-5  col-xl-4 col-lg-4 col-md-6 col-sm-6 col-6 '
                         style={{ height: '329px' }}
                         key={index}>
                         <ModelAndDesignProduct product={item} />
