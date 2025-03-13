@@ -82,7 +82,7 @@ export default function SellerInfo () {
                 publishing software like Aldus PageMaker including versions of
                 Lorem Ipsum. It has survived not only five centuries, but also
                 the leap into electronic typesetting.
-                <span className='SellerInfoDescriptionForMore'>
+                <span className='SellerInfoDescriptionForMore pointer'>
                     Qo’llab quvvatlash
                 </span>
             </p>
@@ -123,7 +123,9 @@ export default function SellerInfo () {
                     </div>
                 </div>
                 <div className='SellerInfoSecondCardBtn'>
-                    <a className='SellerInfoSecondCardBtnTitle' href=''>Buyurtma berish</a>
+                    <a className='SellerInfoSecondCardBtnTitle' href=''>
+                        Buyurtma berish
+                    </a>
                     <img src='/static/img/RocketLaunch.svg' alt='' />
                 </div>
             </div>
