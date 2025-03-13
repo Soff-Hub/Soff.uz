@@ -1,6 +1,8 @@
 'use client';
 
+import { Skeleton } from 'antd';
 import { useState } from 'react';
+import useApi from '~/repositories/useApi';
 
 const dataOptions = [
     {
@@ -22,28 +24,28 @@ const dataOptions = [
         title: 'Title Title Title Title Title ... ',
         price: '$15',
         image: '/static/img/type2.png',
-        hoverImage: '/static/img/typeHover.png',
+        hoverImage: '/static/img/type2Hover.png',
     },
     {
         type: 'type2',
         title: 'Title Title Title Title Title ... ',
         price: '$18',
         image: '/static/img/type2.png',
-        hoverImage: '/static/img/typeHover.png',
+        hoverImage: '/static/img/type2Hover.png',
     },
     {
         type: 'type3',
         title: 'Title Title Title Title Title ... ',
         price: '$20',
         image: '/static/img/type3.png',
-        hoverImage: '/static/img/typeHover.png',
+        hoverImage: '/static/img/type3Hover.png',
     },
     {
         type: 'type3',
         title: 'Title Title Title Title Title ... ',
         price: '$22',
         image: '/static/img/type3.png',
-        hoverImage: '/static/img/typeHover.png',
+        hoverImage: '/static/img/type3Hover.png',
     },
     {
         type: 'type1',
@@ -64,28 +66,28 @@ const dataOptions = [
         title: 'Title Title Title Title Title ... ',
         price: '$15',
         image: '/static/img/type2.png',
-        hoverImage: '/static/img/typeHover.png',
+        hoverImage: '/static/img/type2Hover.png',
     },
     {
         type: 'type2',
         title: 'Title Title Title Title Title ... ',
         price: '$18',
         image: '/static/img/type2.png',
-        hoverImage: '/static/img/typeHover.png',
+        hoverImage: '/static/img/type2Hover.png',
     },
     {
         type: 'type3',
         title: 'Title Title Title Title Title ... ',
         price: '$20',
         image: '/static/img/type3.png',
-        hoverImage: '/static/img/typeHover.png',
+        hoverImage: '/static/img/type3Hover.png',
     },
     {
         type: 'type3',
         title: 'Title Title Title Title Title ... ',
         price: '$22',
         image: '/static/img/type3.png',
-        hoverImage: '/static/img/typeHover.png',
+        hoverImage: '/static/img/type3Hover.png',
     },
     {
         type: 'type1',
@@ -106,28 +108,28 @@ const dataOptions = [
         title: 'Title Title Title Title Title ... ',
         price: '$15',
         image: '/static/img/type2.png',
-        hoverImage: '/static/img/typeHover.png',
+        hoverImage: '/static/img/type2Hover.png',
     },
     {
         type: 'type2',
         title: 'Title Title Title Title Title ... ',
         price: '$18',
         image: '/static/img/type2.png',
-        hoverImage: '/static/img/typeHover.png',
+        hoverImage: '/static/img/type2Hover.png',
     },
     {
         type: 'type3',
         title: 'Title Title Title Title Title ... ',
         price: '$20',
         image: '/static/img/type3.png',
-        hoverImage: '/static/img/typeHover.png',
+        hoverImage: '/static/img/type3Hover.png',
     },
     {
         type: 'type3',
         title: 'Title Title Title Title Title ... ',
         price: '$22',
         image: '/static/img/type3.png',
-        hoverImage: '/static/img/typeHover.png',
+        hoverImage: '/static/img/type3Hover.png',
     },
     {
         type: 'type1',
@@ -148,28 +150,28 @@ const dataOptions = [
         title: 'Title Title Title Title Title ... ',
         price: '$15',
         image: '/static/img/type2.png',
-        hoverImage: '/static/img/typeHover.png',
+        hoverImage: '/static/img/type2Hover.png',
     },
     {
         type: 'type2',
         title: 'Title Title Title Title Title ... ',
         price: '$18',
         image: '/static/img/type2.png',
-        hoverImage: '/static/img/typeHover.png',
+        hoverImage: '/static/img/type2Hover.png',
     },
     {
         type: 'type3',
         title: 'Title Title Title Title Title ... ',
         price: '$20',
         image: '/static/img/type3.png',
-        hoverImage: '/static/img/typeHover.png',
+        hoverImage: '/static/img/type3Hover.png',
     },
     {
         type: 'type3',
         title: 'Title Title Title Title Title ... ',
         price: '$22',
         image: '/static/img/type3.png',
-        hoverImage: '/static/img/typeHover.png',
+        hoverImage: '/static/img/type3Hover.png',
     },
     {
         type: 'type1',
@@ -190,28 +192,28 @@ const dataOptions = [
         title: 'Title Title Title Title Title ... ',
         price: '$15',
         image: '/static/img/type2.png',
-        hoverImage: '/static/img/typeHover.png',
+        hoverImage: '/static/img/type2Hover.png',
     },
     {
         type: 'type2',
         title: 'Title Title Title Title Title ... ',
         price: '$18',
         image: '/static/img/type2.png',
-        hoverImage: '/static/img/typeHover.png',
+        hoverImage: '/static/img/type2Hover.png',
     },
     {
         type: 'type3',
         title: 'Title Title Title Title Title ... ',
         price: '$20',
         image: '/static/img/type3.png',
-        hoverImage: '/static/img/typeHover.png',
+        hoverImage: '/static/img/type3Hover.png',
     },
     {
         type: 'type3',
         title: 'Title Title Title Title Title ... ',
         price: '$22',
         image: '/static/img/type3.png',
-        hoverImage: '/static/img/typeHover.png',
+        hoverImage: '/static/img/type3Hover.png',
     },
     {
         type: 'type1',
@@ -232,28 +234,28 @@ const dataOptions = [
         title: 'Title Title Title Title Title ... ',
         price: '$15',
         image: '/static/img/type2.png',
-        hoverImage: '/static/img/typeHover.png',
+        hoverImage: '/static/img/type2Hover.png',
     },
     {
         type: 'type2',
         title: 'Title Title Title Title Title ... ',
         price: '$18',
         image: '/static/img/type2.png',
-        hoverImage: '/static/img/typeHover.png',
+        hoverImage: '/static/img/type2Hover.png',
     },
     {
         type: 'type3',
         title: 'Title Title Title Title Title ... ',
         price: '$20',
         image: '/static/img/type3.png',
-        hoverImage: '/static/img/typeHover.png',
+        hoverImage: '/static/img/type3Hover.png',
     },
     {
         type: 'type3',
         title: 'Title Title Title Title Title ... ',
         price: '$22',
         image: '/static/img/type3.png',
-        hoverImage: '/static/img/typeHover.png',
+        hoverImage: '/static/img/type3Hover.png',
     },
     {
         type: 'type1',
@@ -274,38 +276,39 @@ const dataOptions = [
         title: 'Title Title Title Title Title ... ',
         price: '$15',
         image: '/static/img/type2.png',
-        hoverImage: '/static/img/typeHover.png',
+        hoverImage: '/static/img/type2Hover.png',
     },
     {
         type: 'type2',
         title: 'Title Title Title Title Title ... ',
         price: '$18',
         image: '/static/img/type2.png',
-        hoverImage: '/static/img/typeHover.png',
+        hoverImage: '/static/img/type2Hover.png',
     },
     {
         type: 'type3',
         title: 'Title Title Title Title Title ... ',
         price: '$20',
         image: '/static/img/type3.png',
-        hoverImage: '/static/img/typeHover.png',
+        hoverImage: '/static/img/type3Hover.png',
     },
     {
         type: 'type3',
         title: 'Title Title Title Title Title ... ',
         price: '$22',
         image: '/static/img/type3.png',
-        hoverImage: '/static/img/typeHover.png',
+        hoverImage: '/static/img/type3Hover.png',
     },
 ];
 
 export default function DynamicSelect () {
-    const [selectedType, setSelectedType] = useState('type1');
+    const [selectedType, setSelectedType] = useState('all');
     const [hoveredIndex, setHoveredIndex] = useState(null);
 
     const filteredItems = dataOptions.filter(
         item => item.type === selectedType
     );
+    const { isLoading } = useApi();
 
     return (
         <div className='SellerPortfolio'>
@@ -313,6 +316,7 @@ export default function DynamicSelect () {
                 <select
                     className='SellerPortfolioSelect'
                     onChange={e => setSelectedType(e.target.value)}>
+                    <option value='all'>Barchasini korish</option>
                     <option value='type1'>Type 1</option>
                     <option value='type2'>Type 2</option>
                     <option value='type3'>Type 3</option>
@@ -324,6 +328,24 @@ export default function DynamicSelect () {
                 </select>
             </form>
             <div className='SellerPortfolioWrap'>
+                {isLoading && (
+                    <div className={`SellerPortfolioWrap`}>
+                        {Array(16)
+                            .fill(0)
+                            .map((d, i) => (
+                                <Skeleton.Image
+                                    key={i}
+                                    active
+                                    className='shadow'
+                                    style={{
+                                        width: '224px',
+                                        height: '164px',
+                                        borderRadius: '15px',
+                                    }}
+                                />
+                            ))}
+                    </div>
+                )}
                 {filteredItems.map((item, index) => (
                     <div
                         key={index}
