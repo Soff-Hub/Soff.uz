@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 import PageContainer from '~/components/layouts/PageContainer';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
 
-import ShopItems from '~/components/partials/shop/ShopItems';
+// import ShopItems from '~/components/partials/shop/ShopItems';
 import { baseUrl } from '~/repositories/Repository';
 import Meta from '~/components/shared/headers/Meta';
 
@@ -165,14 +165,14 @@ export default function ProductCategoryScreen({ category2 }) {
                             />
                         </div>
                         <div className="ps-layout__right">
-                            <ShopItems
+                            {/* <ShopItems
                                 data={filteredData}
                                 columns={4}
                                 pageSize={36}
                                 dataCount={count}
                                 setDataCount={setCount}
                                 categoryData={category2 || []}
-                            />
+                            /> */}
                         </div>
                     </div>
                 </div>
