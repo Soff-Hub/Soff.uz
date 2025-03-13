@@ -7,8 +7,12 @@ import Templates from '../seller-products-types/templates';
 import VideoLessons from '../seller-products-types/video-lessons';
 import ServiceIsUnavailable from './ServiceIsUnavailable';
 import DontWork from './dontWork';
+import useApi from '~/repositories/useApi';
+import { Skeleton } from 'antd';
 
 export default function SellerProduct () {
+    const { isLoading } = useApi();
+
     const [selectedOption, setSelectedOption] = useState('All');
 
     const renderComponent = () => {
@@ -117,6 +121,21 @@ export default function SellerProduct () {
                     </option>
                 </select>
             </form>
+
+            {isLoading && (
+                <div className={`sellerProductSkeleton`}>
+                    {Array(16)
+                        .fill(0)
+                        .map((d, i) => (
+                            <Skeleton.Image
+                                key={i}
+                                active
+                                className='sellerProductSkeleton shadow'
+                                style={{ height: '200px', width: '100%'     }}
+                            />
+                        ))}
+                </div>
+            )}
             <div className=''>{renderComponent()}</div>
         </div>
     );

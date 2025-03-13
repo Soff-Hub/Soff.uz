@@ -315,6 +315,18 @@
     }
 }
 
+.sellerProductSkeleton {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    row-gap: 20px;
+    // margin-top: 40px;
+    .sellerProductSkeletonItem {
+        width: 100%;
+        height: 200px !important;
+    }
+}
+
 // _________________________________sellerProductMenu style end_____________________________
 
 .servicesSection {
@@ -635,7 +647,7 @@
                 font-weight: 400;
                 line-height: normal;
                 letter-spacing: 0.24px;
-                width: 95%;
+                width: 90%;
             }
             .SellerCommentsCardBtn {
                 color: #fff;
@@ -805,7 +817,7 @@
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         gap: 18px;
-        // margin-top: 32px;
+        margin-bottom: 35px;
         @media (max-width: 1000px) {
             grid-template-columns: repeat(2, 1fr);
             margin-top: 0;
@@ -884,7 +896,7 @@
     .sellerpageTitleBox {
         display: flex;
         align-items: center;
-        margin: 35px 0 31px;
+        margin: 0 0 0 31px;
         gap: 10px;
         .sellerpageTitle {
             color: #312f30;
@@ -959,6 +971,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
     .showMore {
         color: #312f30;
         font-family: 'Poppins';

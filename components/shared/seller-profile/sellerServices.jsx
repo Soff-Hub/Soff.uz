@@ -1,6 +1,175 @@
+import { Skeleton } from 'antd';
+import Item from 'antd/es/list/Item';
 import React, { useState } from 'react';
+import useApi from '~/repositories/useApi';
 
 export default function SellerServices () {
+    const { isLoading } = useApi();
+
+    const data = [
+        {
+            image: ' https://picsum.photos/204/184',
+            title: 'Graphic, Logo, Packaging and brand design',
+            ratingImg: '/static/img/servicesSectionCardStar.svg',
+            rating: '4.8',
+            countComment: '164 sharxlar',
+            price: '898 687',
+            path: '#',
+        },
+        {
+            image: ' https://picsum.photos/204/184',
+            title: 'Graphic, Logo, Packaging and brand design',
+            ratingImg: '/static/img/servicesSectionCardStar.svg',
+            rating: '4.8',
+            countComment: '164 sharxlar',
+            price: '898 687',
+            path: '#',
+        },
+        {
+            image: ' https://picsum.photos/204/184',
+            title: 'Graphic, Logo, Packaging and brand design',
+            ratingImg: '/static/img/servicesSectionCardStar.svg',
+            rating: '4.8',
+            countComment: '164 sharxlar',
+            price: '898 687',
+            path: '#',
+        },
+        {
+            image: ' https://picsum.photos/204/184',
+            title: 'Graphic, Logo, Packaging and brand design',
+            ratingImg: '/static/img/servicesSectionCardStar.svg',
+            rating: '4.8',
+            countComment: '164 sharxlar',
+            price: '898 687',
+            path: '#',
+        },
+        {
+            image: ' https://picsum.photos/204/184',
+            title: 'Graphic, Logo, Packaging and brand design',
+            ratingImg: '/static/img/servicesSectionCardStar.svg',
+            rating: '4.8',
+            countComment: '164 sharxlar',
+            price: '898 687',
+            path: '#',
+        },
+        {
+            image: ' https://picsum.photos/204/184',
+            title: 'Graphic, Logo, Packaging and brand design',
+            ratingImg: '/static/img/servicesSectionCardStar.svg',
+            rating: '4.8',
+            countComment: '164 sharxlar',
+            price: '898 687',
+            path: '#',
+        },
+        {
+            image: ' https://picsum.photos/204/184',
+            title: 'Graphic, Logo, Packaging and brand design',
+            ratingImg: '/static/img/servicesSectionCardStar.svg',
+            rating: '4.8',
+            countComment: '164 sharxlar',
+            price: '898 687',
+            path: '#',
+        },
+        {
+            image: ' https://picsum.photos/204/184',
+            title: 'Graphic, Logo, Packaging and brand design',
+            ratingImg: '/static/img/servicesSectionCardStar.svg',
+            rating: '4.8',
+            countComment: '164 sharxlar',
+            price: '898 687',
+            path: '#',
+        },
+        {
+            image: ' https://picsum.photos/204/184',
+            title: 'Graphic, Logo, Packaging and brand design',
+            ratingImg: '/static/img/servicesSectionCardStar.svg',
+            rating: '4.8',
+            countComment: '164 sharxlar',
+            price: '898 687',
+            path: '#',
+        },
+        {
+            image: ' https://picsum.photos/204/184',
+            title: 'Graphic, Logo, Packaging and brand design',
+            ratingImg: '/static/img/servicesSectionCardStar.svg',
+            rating: '4.8',
+            countComment: '164 sharxlar',
+            price: '898 687',
+            path: '#',
+        },
+        {
+            image: ' https://picsum.photos/204/184',
+            title: 'Graphic, Logo, Packaging and brand design',
+            ratingImg: '/static/img/servicesSectionCardStar.svg',
+            rating: '4.8',
+            countComment: '164 sharxlar',
+            price: '898 687',
+            path: '#',
+        },
+        {
+            image: ' https://picsum.photos/204/184',
+            title: 'Graphic, Logo, Packaging and brand design',
+            ratingImg: '/static/img/servicesSectionCardStar.svg',
+            rating: '4.8',
+            countComment: '164 sharxlar',
+            price: '898 687',
+            path: '#',
+        },
+        {
+            image: ' https://picsum.photos/204/184',
+            title: 'Graphic, Logo, Packaging and brand design',
+            ratingImg: '/static/img/servicesSectionCardStar.svg',
+            rating: '4.8',
+            countComment: '164 sharxlar',
+            price: '898 687',
+            path: '#',
+        },
+        {
+            image: ' https://picsum.photos/204/184',
+            title: 'Graphic, Logo, Packaging and brand design',
+            ratingImg: '/static/img/servicesSectionCardStar.svg',
+            rating: '4.8',
+            countComment: '164 sharxlar',
+            price: '898 687',
+            path: '#',
+        },
+        {
+            image: ' https://picsum.photos/204/184',
+            title: 'Graphic, Logo, Packaging and brand design',
+            ratingImg: '/static/img/servicesSectionCardStar.svg',
+            rating: '4.8',
+            countComment: '164 sharxlar',
+            price: '898 687',
+            path: '#',
+        },
+        {
+            image: ' https://picsum.photos/204/184',
+            title: 'Graphic, Logo, Packaging and brand design',
+            ratingImg: '/static/img/servicesSectionCardStar.svg',
+            rating: '4.8',
+            countComment: '164 sharxlar',
+            price: '898 687',
+            path: '#',
+        },
+        {
+            image: ' https://picsum.photos/204/184',
+            title: 'Graphic, Logo, Packaging and brand design',
+            ratingImg: '/static/img/servicesSectionCardStar.svg',
+            rating: '4.8',
+            countComment: '164 sharxlar',
+            price: '898 687',
+            path: '#',
+        },
+        {
+            image: ' https://picsum.photos/204/184',
+            title: 'Graphic, Logo, Packaging and brand design',
+            ratingImg: '/static/img/servicesSectionCardStar.svg',
+            rating: '4.8',
+            countComment: '164 sharxlar',
+            price: '898 687',
+            path: '#',
+        },
+    ];
     return (
         <div>
             <div className='servicesSection shadow-sm'>
@@ -81,160 +250,48 @@ export default function SellerServices () {
                 </form>
 
                 <div className='servicesSectionWrap'>
-                    <div className='servicesSectionCard'>
-                        <div className='servicesSectionCardImg'>
-                            <img src=' https://picsum.photos/204/184' alt='' />
-                        </div>
-                        <div className='servicesSectionCardbody'>
-                            <p className='servicesSectionCardTitle'>
-                                Graphic, Logo, Packaging and brand design
-                            </p>
-                            <div className='servicesSectionCardRating'>
-                                <img
-                                    src='/static/img/servicesSectionCardStar.svg'
-                                    alt=''
-                                />
-                                <p>4.8</p>
-                                <span>(164 Sharhlar)</span>
+                    {isLoading && (
+                        <>
+                            {Array(16)
+                                .fill(0)
+                                .map((d, i) => (
+                                    <Skeleton.Image
+                                        key={i}
+                                        active
+                                        className='servicesSectionCard '
+                                        style={{
+                                            height: '200px',
+                                            width: '100%',
+                                        }}
+                                    />
+                                ))}
+                        </>
+                    )}
+
+                    {data.map((item, index) => (
+                        <div className='servicesSectionCard' key={index}>
+                            <div className='servicesSectionCardImg'>
+                                <img src={item.image} alt='' />
                             </div>
-                            <div className='servicesSectionCardPrice'>
-                                <p>898 867 so’m</p>
-                                <a href=''>Tafsilotlar</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div className='servicesSectionCard'>
-                        <div className='servicesSectionCardImg'>
-                            <img src=' https://picsum.photos/204/184' alt='' />
-                        </div>
-                        <div className='servicesSectionCardbody'>
-                            <p className='servicesSectionCardTitle'>
-                                Graphic, Logo, Packaging and brand design
-                            </p>
-                            <div className='servicesSectionCardRating'>
-                                <img
-                                    src='/static/img/servicesSectionCardStar.svg'
-                                    alt=''
-                                />
-                                <p>4.8</p>
-                                <span>(164 Sharhlar)</span>
-                            </div>
-                            <div className='servicesSectionCardPrice'>
-                                <p>898 867 so’m</p>
-                                <a href=''>Tafsilotlar</a>
+                            <div className='servicesSectionCardbody'>
+                                <p className='servicesSectionCardTitle'>
+                                    {item.title}{' '}
+                                </p>
+                                <div className='servicesSectionCardRating'>
+                                    <img src={item.ratingImg} alt='' />
+                                    <p>{item.rating}</p>
+                                    <span>({item.countComment})</span>
+                                </div>
+                                <div className='servicesSectionCardPrice'>
+                                    <p>{item.price} so’m</p>
+                                    <a href={item.path}>Tafsilotlar</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className='servicesSectionCard'>
-                        <div className='servicesSectionCardImg'>
-                            <img src=' https://picsum.photos/204/184' alt='' />
-                        </div>
-                        <div className='servicesSectionCardbody'>
-                            <p className='servicesSectionCardTitle'>
-                                Graphic, Logo, Packaging and brand design
-                            </p>
-                            <div className='servicesSectionCardRating'>
-                                <img
-                                    src='/static/img/servicesSectionCardStar.svg'
-                                    alt=''
-                                />
-                                <p>4.8</p>
-                                <span>(164 Sharhlar)</span>
-                            </div>
-                            <div className='servicesSectionCardPrice'>
-                                <p>898 867 so’m</p>
-                                <a href=''>Tafsilotlar</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div className='servicesSectionCard'>
-                        <div className='servicesSectionCardImg'>
-                            <img src=' https://picsum.photos/204/184' alt='' />
-                        </div>
-                        <div className='servicesSectionCardbody'>
-                            <p className='servicesSectionCardTitle'>
-                                Graphic, Logo, Packaging and brand design
-                            </p>
-                            <div className='servicesSectionCardRating'>
-                                <img
-                                    src='/static/img/servicesSectionCardStar.svg'
-                                    alt=''
-                                />
-                                <p>4.8</p>
-                                <span>(164 Sharhlar)</span>
-                            </div>
-                            <div className='servicesSectionCardPrice'>
-                                <p>898 867 so’m</p>
-                                <a href=''>Tafsilotlar</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div className='servicesSectionCard'>
-                        <div className='servicesSectionCardImg'>
-                            <img src=' https://picsum.photos/204/184' alt='' />
-                        </div>
-                        <div className='servicesSectionCardbody'>
-                            <p className='servicesSectionCardTitle'>
-                                Graphic, Logo, Packaging and brand design
-                            </p>
-                            <div className='servicesSectionCardRating'>
-                                <img
-                                    src='/static/img/servicesSectionCardStar.svg'
-                                    alt=''
-                                />
-                                <p>4.8</p>
-                                <span>(164 Sharhlar)</span>
-                            </div>
-                            <div className='servicesSectionCardPrice'>
-                                <p>898 867 so’m</p>
-                                <a href=''>Tafsilotlar</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div className='servicesSectionCard'>
-                        <div className='servicesSectionCardImg'>
-                            <img src=' https://picsum.photos/204/184' alt='' />
-                        </div>
-                        <div className='servicesSectionCardbody'>
-                            <p className='servicesSectionCardTitle'>
-                                Graphic, Logo, Packaging and brand design
-                            </p>
-                            <div className='servicesSectionCardRating'>
-                                <img
-                                    src='/static/img/servicesSectionCardStar.svg'
-                                    alt=''
-                                />
-                                <p>4.8</p>
-                                <span>(164 Sharhlar)</span>
-                            </div>
-                            <div className='servicesSectionCardPrice'>
-                                <p>898 867 so’m</p>
-                                <a href=''>Tafsilotlar</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div className='servicesSectionCard'>
-                        <div className='servicesSectionCardImg'>
-                            <img src=' https://picsum.photos/204/184' alt='' />
-                        </div>
-                        <div className='servicesSectionCardbody'>
-                            <p className='servicesSectionCardTitle'>
-                                Graphic, Logo, Packaging and brand design
-                            </p>
-                            <div className='servicesSectionCardRating'>
-                                <img
-                                    src='/static/img/servicesSectionCardStar.svg'
-                                    alt=''
-                                />
-                                <p>4.8</p>
-                                <span>(164 Sharhlar)</span>
-                            </div>
-                            <div className='servicesSectionCardPrice'>
-                                <p>898 867 so’m</p>
-                                <a href=''>Tafsilotlar</a>
-                            </div>
-                        </div>
-                    </div>
+                    ))}
+                </div>
+                <div className='showMoreBox'>
+                    <p className='showMore'> Yana ko’rsatish</p>
                 </div>
             </div>
         </div>
