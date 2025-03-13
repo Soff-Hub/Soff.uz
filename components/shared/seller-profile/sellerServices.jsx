@@ -1,5 +1,4 @@
 import { Skeleton } from 'antd';
-import Item from 'antd/es/list/Item';
 import React, { useState } from 'react';
 import useApi from '~/repositories/useApi';
 
@@ -172,7 +171,7 @@ export default function SellerServices () {
     ];
     return (
         <div>
-            <div className='servicesSection shadow-sm'>
+            <div className='servicesSection '>
                 <div className='servicesSectionInfoCardWrap'>
                     <div className='servicesSectionInfoCard'>
                         <img
@@ -258,11 +257,7 @@ export default function SellerServices () {
                                     <Skeleton.Image
                                         key={i}
                                         active
-                                        className='servicesSectionCard '
-                                        style={{
-                                            height: '200px',
-                                            width: '100%',
-                                        }}
+                                        className='servicesSectionCardSkeleton '
                                     />
                                 ))}
                         </>

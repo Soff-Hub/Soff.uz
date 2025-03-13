@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function SellerShortInfo () {
     return (
-        <div className='sellerInfo rounded-1'>
+        <div className='sellerInfo'>
             <div className='aboutSeller'>
                 <img
                     className='sellerAvatar'

@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import FooterComponents from '~/components/blocks/footer/FooterComponents';
 import PageContainer from '~/components/layouts/PageContainer';
+import SellerCollapseMenu from '~/components/shared/seller-profile/sellerCollapseMenu';
 import SellerComments from '~/components/shared/seller-profile/sellerComments';
 import SellerInfo from '~/components/shared/seller-profile/sellerInfo';
 import SellerPortfolio from '~/components/shared/seller-profile/sellerPortfolio';
@@ -46,10 +47,13 @@ export default function SellersPage () {
     ];
     return (
         <PageContainer>
-            <div className='container bg-gray-999 p-xl-0'>
+            <div className='container bg-gray-999 '>
                 <div className='SellersPageWrap'>
-                    <div className='bg-white rounded-1 shadow-sm'>
+                    <div className=''>
                         <SellerShortInfo />
+                    </div>
+                    <div className='SellerCollapseMenu'>
+                        <SellerCollapseMenu />
                     </div>
                     <div className='sellerProduct '>
                         <div className='shadow-sm'>

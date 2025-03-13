@@ -122,20 +122,22 @@ export default function SellerProduct () {
                 </select>
             </form>
 
-            {isLoading && (
-                <div className={`sellerProductSkeleton`}>
-                    {Array(16)
-                        .fill(0)
-                        .map((d, i) => (
-                            <Skeleton.Image
-                                key={i}
-                                active
-                                className='sellerProductSkeleton shadow'
-                                style={{ height: '200px', width: '100%'     }}
-                            />
-                        ))}
-                </div>
-            )}
+            <div className='sellerProductSkeletonWrap'>
+                {isLoading && (
+                    <>
+                        {Array(16)
+                            .fill(0)
+                            .map((d, i) => (
+                                <Skeleton.Image
+                                    key={i}
+                                    active
+                                    className='sellerProductSkeleton shadow'
+                                    style={{ width: '100%' }}
+                                />
+                            ))}
+                    </>
+                )}
+            </div>
             <div className=''>{renderComponent()}</div>
         </div>
     );

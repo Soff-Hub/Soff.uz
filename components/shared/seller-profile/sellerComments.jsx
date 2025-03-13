@@ -128,24 +128,17 @@ export default function SellerComments () {
     return (
         <div className='SellerComments'>
             {isLoading && (
-                <div
-                    className={`d-flex justify-content-between flex-column gap-5`}>
+                <>
                     {Array(15)
                         .fill(0)
                         .map((d, i) => (
                             <Skeleton
                                 key={i}
                                 active
-                                className='shadow'
-                                style={{
-                                    width: '944px',
-                                    height: '150px',
-                                    borderRadius: '15px',
-                                    padding: '20px',
-                                }}
+                                className='SellerCommentsSkeleton shadow'
                             />
                         ))}
-                </div>
+                </>
             )}
             {comments.map((item, index) => (
                 <div className='SellerCommentsCard'>
