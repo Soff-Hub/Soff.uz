@@ -307,15 +307,13 @@ input[type='number']::-webkit-outer-spin-button {
 // ________________________________ProductsByModelsAndDesignCategory styles____________________________
 
 .modelAndDesignCardWrap {
-    margin-top: 48px;
-
     @media screen and (max-width: 1000px) {
         margin-top: 0px;
     }
 
     .modelAndDesignCard {
-        // margin-bottom: 5px !important;
         border-radius: 9px !important;
+        box-shadow: 0px 0px 5.906px 0px rgba(0, 0, 0, 0.2);
         @media screen and (max-width: 1000px) {
             margin-bottom: 30px !important;
         }
@@ -324,6 +322,10 @@ input[type='number']::-webkit-outer-spin-button {
         }
         @media screen and (max-width: 400px) {
             margin-bottom: 8px !important;
+        }
+        &:hover {
+            transition: ease-in-out;
+            box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.1);
         }
 
         .modelAndDesignCardImg {
@@ -473,17 +475,6 @@ input[type='number']::-webkit-outer-spin-button {
                 }
             }
         }
-        &:hover {
-            transition: ease-in-out;
-            box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.1);
-        }
-        &:hover {
-            .modelAndDesignCardImg {
-                img {
-                    transform: scale(1.005);
-                }
-            }
-        }
     }
 }
 @media screen and (max-width: 550px) {
@@ -528,6 +519,10 @@ input[type='number']::-webkit-outer-spin-button {
     height: 100%;
     flex-direction: column;
     border-radius: 11px;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+    &:hover {
+        transition: ease-in-out;
+    }
     .designDevelopmentCardImgBox {
         display: flex;
         justify-content: center;
@@ -587,7 +582,7 @@ input[type='number']::-webkit-outer-spin-button {
         }
     }
     .videoLessonsCardBody {
-        background: red;
+        background: #fff;
         border-radius: 0 0 10px 10px;
         margin-top: 18px;
         padding: 10px 17px 15px 17px;
@@ -606,10 +601,9 @@ input[type='number']::-webkit-outer-spin-button {
             padding: 5px;
         }
 
-        
         .videoLessonsCardPriceBox {
             display: flex;
-            // justify-content: space-between;
+            justify-content: space-between;
             align-items: center;
             // margin-top: 18px;
             @media screen and (max-width: 650px) {
@@ -752,9 +746,5 @@ input[type='number']::-webkit-outer-spin-button {
                 }
             }
         }
-    }
-    &:hover {
-        transition: ease-in-out;
-        box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.1);
     }
 }

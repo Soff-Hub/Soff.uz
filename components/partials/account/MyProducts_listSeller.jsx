@@ -389,7 +389,6 @@ function MyProductsListsSeller() {
             ),
             children: (
                 <>
-
                     <Table
                         dataSource={data}
                         scroll={{ x: 1200 }}
