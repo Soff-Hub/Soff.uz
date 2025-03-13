@@ -3,10 +3,10 @@ import { addPeriodToThousands } from '~/components/partials/account/price-format
 import useWishlist from '~/hooks/useWishlist';
 import { useState } from 'react';
 import useCart from '~/hooks/useCart';
-import { Modal } from 'antd';
+    import { Modal } from 'antd';
 import { useRouter } from 'next/router';
 
-const RedesignProduct = ({ product }) => {
+const   RedesignProduct = ({ product }) => {
     const { addSavedItem, wishlist, removeSavedItem } = useWishlist();
     const [open, setOpen] = useState(false);
     const Router = useRouter();
