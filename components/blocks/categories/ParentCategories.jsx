@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 const parentCategoriesData = [
     {
         title: 'Ilmiy ishlar',
-        imgUrl: '/static/img/Ilmiy-ishlar.png',
+        imgUrl: '/static/img/ilmiy-ishlar.png',
         path: '/scientific-resources/all',
     },
     {
@@ -14,22 +14,22 @@ const parentCategoriesData = [
     },
     {
         title: 'Dizayn shablonlari',
-        imgUrl: '/static/img/Dizayn-shablonlari.png',
+        imgUrl: '/static/img/dizayn-shablonlari.png',
         path: '/design-developments/all',
     },
     {
         title: 'Veb saytlar',
-        imgUrl: '/static/img/Veb-saytlar.png',
+        imgUrl: '/static/img/veb-saytlar.png',
         path: '/websites/all',
     },
     {
         title: 'Tayyor shablonlar',
-        imgUrl: '/static/img/Ilmiy-ishlar.png',
+        imgUrl: '/static/img/ilmiy-ishlar.png',
         path: '/scientific-resources/all',
     },
     {
         title: 'Video darsliklar',
-        imgUrl: '/static/img/Video-darsliklar.png',
+        imgUrl: '/static/img/video-darsliklar.png',
         path: '/videoLessons/all',
     },
 ];
