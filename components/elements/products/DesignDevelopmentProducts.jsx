@@ -103,7 +103,7 @@ const DesignDevelopmentProducts = ({ product }) => {
                 </a>
             </div>
 
-            <div className='designDevelopmentCardBody '>
+            <div className='designDevelopmentCardBody'>
                 <Link href='/product/[pid]' as={`/product/${product.slug}`}>
                     <a className='designDevelopmentCardTitle'>{produvctTitle}</a>
                 </Link>
