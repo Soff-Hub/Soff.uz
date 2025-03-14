@@ -12,7 +12,7 @@ export default function ProductsByCategory ({
     return (
         <>
             <div id='products' className='container  scientificResourcesWrap'>
-                {isLoading && (
+                {true    && (
                     <>
                         {Array(15)
                             .fill(0)
