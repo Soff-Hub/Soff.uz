@@ -5,8 +5,6 @@ import Meta from '~/components/shared/headers/Meta';
 import { useRouter } from 'next/router';
 import useApi, { baseUrlUseApi } from '~/repositories/useApi';
 import FooterComponents from '~/components/blocks/footer/FooterComponents';
-import DevelopmentAndItFilterSecion from '~/components/elements/ItServicesCategoriesFilter/DevelopmentAndItFilterSecion';
-import DevelopmentAndItProductsByCategory from '~/components/partials/ItServicesCategory/DevelopmentAndItProductsByCategory';
 
 export default function DevelopmentAndIt () {
     const router = useRouter();
