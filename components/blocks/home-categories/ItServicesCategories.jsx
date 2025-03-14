@@ -2,13 +2,12 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
 
-
 const itServicesCategoriesData = [
     {
         title: 'Rivojlanish & IT',
         imgUrl: '/static/img/Rivojlanish-&-IT.png',
         bgColor: '#ff7641',
-        path: '/scientific-resources/all',
+        path: '/Development-and-it/all',
     },
     {
         title: 'Dizayn',
