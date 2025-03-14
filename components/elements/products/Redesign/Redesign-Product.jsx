@@ -47,21 +47,18 @@ const RedesignProduct = ({ product }) => {
     };
 
     return (
-        <div className='scientific-resources-card pointer  '>
+        <div className='scientificResourcesCard'>
             <Link href='/product/[pid]' as={`/product/${product.slug}`}>
-                <div className='scientific-resources-card-img'>
+                <div className='scientificResourcesCardImgBox'>
                     <img
                         src={product.poster_url}
                         alt=''
-                        style={{
-                            maxWidth: '132px',
-                            maxHeight: '186px',
-                        }}
+                        className='scientificResourcesCardImg'
                     />
                 </div>
             </Link>
             <a
-                className='scientific-resources-card-heard'
+                className='scientificResourcesCardHeard'
                 href='#'
                 data-toggle='tooltip'
                 data-placement='top'
@@ -78,17 +75,17 @@ const RedesignProduct = ({ product }) => {
                     alt=''
                 />
             </a>
-            <div className='w-100 d-flex flex-column scientific-resources-card-body gap-3'>
+            <div className='scientificResourcesCardBody'>
                 <Link
                     href='/product/[pid]'
                     className='p-0'
                     as={`/product/${product.slug}`}>
-                    <p className='p-0 m-0  scientific-resources-card-title'>
+                    <p className='scientificResourcesCardTitle'>
                         {product.title.slice(0, 35)}
                     </p>
                 </Link>
-                <div className='scientific-resources-card-btn'>
-                    <div className='ps-product__content card-narx-box'>
+                <div className='scientificResourcesCardPriceBox'>
+                    <div className='scientificResourcesCardPrice'>
                         {+product.discount_price === 0 ? (
                             <p className='free-product-text'>Bepul</p>
                         ) : product.discount === 0 ? (
