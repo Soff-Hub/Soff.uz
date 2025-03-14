@@ -33,27 +33,7 @@ export default function DevelopmentAndItProductsByCategory ({
                         </div>
                     ))}
             </div>
-            {data?.results?.length == 0 && (
-                <div className='DevelopmentAndItCategory_DontWork'>
-                    <img
-                        src='/static/img/DevelopmentAndItCategory_DontWorkImg.png'
-                        alt=''
-                    />
-                    <p className='DevelopmentAndItCategory_DontWorkTitle'>
-                        Yangi imkoniyatlar tez orada siz bilan!
-                    </p>
-                    <p className='DevelopmentAndItCategory_DontWorkDescription'>
-                        Hozircha bu yerda xizmatlar yo‘q. Xaridor sifatida siz
-                        yaqin orada yangi xizmatlarni topishingiz mumkin.
-                        Sotuvchi sifatida esa hoziroq birinchi bo‘lib o‘z
-                        xizmatlaringizni qo‘shib, bozorda yetakchi bo‘lishingiz
-                        mumkin!
-                    </p>
-                    <a className='DevelopmentAndItCategory_DontWorkBtn'>
-                        Bosh sahifa
-                    </a>
-                </div>
-            )}
+
             <div className='showMoreBox'>
                 <p className='showMore'>Yana ko’rsatish 46</p>
             </div>

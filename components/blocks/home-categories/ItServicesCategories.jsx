@@ -7,7 +7,7 @@ const itServicesCategoriesData = [
         title: 'Rivojlanish & IT',
         imgUrl: '/static/img/Rivojlanish-&-IT.png',
         bgColor: '#ff7641',
-        path: '/Development-and-it/all',
+        path: '/development-and-it/all',
     },
     {
         title: 'Dizayn',

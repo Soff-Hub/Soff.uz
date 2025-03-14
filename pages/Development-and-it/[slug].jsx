@@ -5,6 +5,8 @@ import Meta from '~/components/shared/headers/Meta';
 import { useRouter } from 'next/router';
 import useApi, { baseUrlUseApi } from '~/repositories/useApi';
 import FooterComponents from '~/components/blocks/footer/FooterComponents';
+import DevelopmentAndItFilterSecion from '~/components/elements/ItServicesCategoriesFilter/DevelopmentAndItFilterSecion';
+import DevelopmentAndItProductsByCategory from '~/components/partials/ItServicesCategory/DevelopmentAndItProductsByCategory';
 
 export default function DevelopmentAndIt () {
     const router = useRouter();
@@ -60,21 +62,44 @@ export default function DevelopmentAndIt () {
             />
 
             <div className='ps-page--shop container p-lg-1'>
-                <DevelopmentAndItFilterSecion
-                    breacrumb={fourChildData}
-                    count={data?.count}
-                    isLoading={isFourChildLoading}
-                    childCategoryData={childCategoryData}
-                />
-                <DevelopmentAndItProductsByCategory
-                    data={data}
-                    page={page}
-                    handlePagination={number => {
-                        handlePageChange(number);
-                    }}
-                    isLoading={isLoading}
-                />
+                {data?.results?.length === 0 ? (
+                    <div className='DevelopmentAndItCategory_DontWork'>
+                        <img
+                            src='/static/img/DevelopmentAndItCategory_DontWorkImg.png'
+                            alt=''
+                        />
+                        <p className='DevelopmentAndItCategory_DontWorkTitle'>
+                            Yangi imkoniyatlar tez orada siz bilan!
+                        </p>
+                        <p className='DevelopmentAndItCategory_DontWorkDescription'>
+                            Hozircha bu yerda xizmatlar yo‘q. Xaridor sifatida
+                            siz yaqin orada yangi xizmatlarni topishingiz
+                            mumkin. Sotuvchi sifatida esa hoziroq birinchi
+                            bo‘lib o‘z xizmatlaringizni qo‘shib, bozorda
+                            yetakchi bo‘lishingiz mumkin!
+                        </p>
+                        <a className='DevelopmentAndItCategory_DontWorkBtn'>
+                            Bosh sahifa
+                        </a>
+                    </div>
+                ) : (
+                    <>
+                        <DevelopmentAndItFilterSecion
+                            breacrumb={fourChildData}
+                            count={data?.count}
+                            isLoading={isFourChildLoading}
+                            childCategoryData={childCategoryData}
+                        />
+                        <DevelopmentAndItProductsByCategory
+                            data={data}
+                            page={page}
+                            handlePagination={handlePageChange}
+                            isLoading={isLoading}
+                        />
+                    </>
+                )}
             </div>
+
             <FooterComponents />
         </PageContainer>
     );
