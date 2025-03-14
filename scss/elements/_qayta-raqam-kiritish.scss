@@ -234,6 +234,12 @@ input[type='number']::-webkit-outer-spin-button {
     .scientificResourcesSkeleton {
         width: 100% !important;
         height: 320px !important;
+        @media screen and (max-width: 750px) {
+            height: 250px !important;
+        }
+        @media screen and (max-width: 400px) {
+            height: 180px !important;
+        }
     }
 }
 
@@ -363,7 +369,6 @@ input[type='number']::-webkit-outer-spin-button {
 }
 
 // _____________________________scientificResources styles end____________________________
-
 
 // -----------------------------------------------ThreeDCategoriesFilterSecion style
 .Models_category_btn_wrap {
