@@ -109,7 +109,7 @@ const RedesignProduct = ({ product }) => {
                                 </p>
                             </>
                         )}
-                    </div>{' '}
+                    </div>
                     <a
                         href='#'
                         data-toggle='tooltip'
@@ -123,6 +123,7 @@ const RedesignProduct = ({ product }) => {
                                     : '/static/img/buyIcon.png'
                             }
                             alt=''
+                            className='scientificBuyIcon'
                         />
                     </a>
                 </div>

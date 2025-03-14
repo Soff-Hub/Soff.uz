@@ -63,15 +63,9 @@
         margin-top: 20px;
     }
 
-    // 📌 MD ekran (≤768px) → 2 ta kartaga o'tadi
     @media (max-width: 768px) {
         grid-template-columns: repeat(2, 1fr);
         margin-top: 20px;
-    }
-
-    // 📌 SM ekran (≤480px) → 1 ta karta chiqadi
-    @media (max-width: 480px) {
-        grid-template-columns: repeat(1, 1fr);
     }
 }
 
@@ -124,25 +118,44 @@
         position: absolute;
         right: 20px;
         top: 20px;
+        @media (max-width: 425px) {
+            img {
+                height: 15px;
+            }
+        }
     }
 
     .scientific-resources-card-img {
-        width: 224px !important;
+        // width: 224px !important;
         height: 186px !important;
         display: flex;
         align-items: center;
         justify-content: center;
         margin: 0 auto;
         padding: 30px 70px 20px;
+        @media (max-width: 768px) {
+            padding: 10px;
+            height: 150px !important;
+        }
+        @media (max-width: 425px) {
+            height: 120px !important;
+            padding: 0px;
+        }
     }
     .scientific-resources-card-body {
-        padding: 20px 20px ;
+        padding: 20px 20px;
+        @media (max-width: 768px) {
+            padding: 10px;
+        }
         .scientific-resources-card-title {
             font-family: 'Poppins';
             font-weight: 500;
             font-size: 12.5px;
             line-height: 18.75px;
             letter-spacing: 2%;
+            @media (max-width: 425px) {
+                font-size: 10px;
+            }
 
             &:hover {
                 text-decoration: underline;
@@ -163,6 +176,9 @@
                 font-size: 18.33px;
                 line-height: 27.5px;
                 letter-spacing: 2%;
+                @media (max-width: 425px) {
+                    font-size: 14px;
+                }
             }
         }
     }
