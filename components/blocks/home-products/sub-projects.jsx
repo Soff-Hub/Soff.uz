@@ -17,7 +17,7 @@ export default function SubProjects () {
             last: true,
         },
         {
-            logoImg: '/static/img/soffStudy.png',
+            logoImg: '/static/img/soffstudy.png',
             link: 'https://soffstudy.uz',
             linkMask: "SOFF STUDY - Zamonaviy kasblarni o'qitish markazi",
         },
