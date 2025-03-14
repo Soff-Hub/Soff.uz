@@ -80,6 +80,7 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: 10px;
+    margin: 20px 0;
 }
 
 .system-inner-title {
@@ -88,8 +89,9 @@
     font-size: 41.61px;
     line-height: 62.42px;
     letter-spacing: 1%;
-    margin-top: 140px;
-    margin-bottom: 48px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+
 }
 
 .system-card {
@@ -181,6 +183,17 @@
     font-size: 32px;
 }
 
+@media only screen and (max-width: 768px) {
+    .system-inner-left,
+    .system-inner-right {
+        flex-wrap: wrap;
+    }
+    .system-card {
+        flex: unset !important;
+        width: 280px;
+    }
+}
+
 @media only screen and (max-width: 576px) {
     .system-inner-left,
     .system-inner-right {
@@ -204,14 +217,20 @@
 
     .sdsdsd {
         font-size: 20px;
+        line-height: 25px;
     }
 
     .system-title {
         font-size: 24px;
     }
+
+    .system-inner-title {
+        font-size: clamp(24px, 2vw, 16.67px);
+        line-height: 30px;
+    }
 }
 
-@media only screen and (max-width: 385px) {
+@media only screen and (max-width: 400px) {
     .system-inner-left,
     .system-inner-right {
         flex-wrap: wrap;
@@ -220,8 +239,9 @@
     .system-card {
         flex: unset !important;
         width: 150px;
+        min-height: 150px;
         padding: 12px;
-
+        height: 200px !important;
         span {
             font-size: 12px;
         }
@@ -242,6 +262,27 @@
         img {
             height: 14px;
         }
+    }
+    .system-card-inner {
+        display: flex;
+        justify-content: flex-start;
+        
+    }
+}
+
+@media only screen and (max-width: 320px) {
+    .system-card {
+        padding: 10px;
+        min-height: 180px;
+        max-width: 440px !important;
+        height: 220px !important;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        width: 130px;
+    }
+    .system-inner {
+        justify-content: space-between !important;
     }
 }
 

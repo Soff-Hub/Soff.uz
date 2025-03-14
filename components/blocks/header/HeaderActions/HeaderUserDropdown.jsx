@@ -8,14 +8,14 @@ import GetRepository from '~/reositoriy-admin/GetRepository';
 import Router, { useRouter } from 'next/router';
 import { setSavedPrfileData } from '~/store/ecomerce/slice';
 
-const HeaderUserDropdown = (props) => {
+const HeaderUserDropdown = props => {
     const dispatch = useDispatch();
-    const { accountLinks, user } = useSelector((state) => state.auth);
-    const { profile } = useSelector((state) => state.ecomerce);
-    const refresh = useSelector((state) => state.auth?.user?.refresh);
+    const { accountLinks, user } = useSelector(state => state.auth);
+    const { profile } = useSelector(state => state.ecomerce);
+    const refresh = useSelector(state => state.auth?.user?.refresh);
     const { asPath } = useRouter();
     const router = useRouter();
-    const { id, deal } = router?.query
+    const { id, deal } = router?.query;
 
     const handleLogout = () => {
         const data = {
@@ -26,22 +26,22 @@ const HeaderUserDropdown = (props) => {
 
         if (res) {
             if (asPath == '/account/dashbord') {
-                Router.push('/auth/login')
+                Router.push('/auth/login');
             } else if ('/account/myproducts') {
-                Router.push('/auth/login')
+                Router.push('/auth/login');
             } else if ('/account/sellerproducts') {
-                Router.push('/auth/login')
+                Router.push('/auth/login');
             } else if ('/account/myproducts/product-selection') {
-                Router.push('/auth/login')
+                Router.push('/auth/login');
             } else if ('/account/orders') {
-                Router.push('/auth/login')
+                Router.push('/auth/login');
             } else if ('/account/settings') {
-                Router.push('/auth/login')
+                Router.push('/auth/login');
             } else if ('/account/application') {
-                Router.push('/auth/login')
+                Router.push('/auth/login');
             }
             dispatch(logOut());
-            dispatch(setSavedPrfileData(null))
+            dispatch(setSavedPrfileData(null));
         }
     };
 
@@ -50,13 +50,12 @@ const HeaderUserDropdown = (props) => {
     async function ProfileUsers(token) {
         const ItemsData = await GetRepository.getProfile(token);
         if (ItemsData) {
-            dispatch(setSavedPrfileData(ItemsData))
+            dispatch(setSavedPrfileData(ItemsData));
             if (Number(ItemsData?.status) == 403) {
                 handleLogout();
             }
         }
     }
-
 
     useEffect(() => {
         if (!profile && user?.access) {
@@ -68,26 +67,31 @@ const HeaderUserDropdown = (props) => {
     const linksView = accountLinks.map((item, index) => (
         <>
             {item?.url === '/account/selling' ? (
-                <Badge.Ribbon key={index} text="Yangi funksiya" color='blue'>
+                <Badge.Ribbon key={index} text="Yangi funksiya" color="blue">
                     <Card size="small" key={index}>
-                        <li  key={index}>
+                        <li key={index}>
                             <Link
                                 href={item?.url}
                                 style={{
                                     cursor: 'pointer',
                                 }}>
                                 <a className="d-flex align-items-center">
-                                    <img src='/static/img/birja-icon.png' height={20} width={20} className='me-2' />
+                                    <img
+                                        src="/static/img/birja-icon.png"
+                                        height={20}
+                                        width={20}
+                                        className="me-2"
+                                    />
                                     {item.text}
                                 </a>
                             </Link>
-                        </li >
+                        </li>
                     </Card>
                 </Badge.Ribbon>
             ) : item?.url === 'b' ? (
                 <Badge.Ribbon key={index} text="Tez kunda" color="volcano">
                     <Card size="small" key={index}>
-                        <li  key={index}>
+                        <li key={index}>
                             <span
                                 style={{
                                     cursor: 'pointer',
@@ -97,7 +101,7 @@ const HeaderUserDropdown = (props) => {
                                     Buyurtma berish
                                 </a>
                             </span>
-                        </li >
+                        </li>
                     </Card>
                 </Badge.Ribbon>
             ) : item?.url == '/account/deals' ? (
@@ -105,17 +109,16 @@ const HeaderUserDropdown = (props) => {
                     <Card size="small" key={index}>
                         <li>
                             <Link href={item.url}>
-
                                 <a
                                     style={{
                                         cursor: 'pointer',
                                     }}>
                                     <a className="d-flex align-items-center">
-                                        <i className={` text-dark fs-4 me-2  ${item.icon}`}></i>
+                                        <i
+                                            className={` text-dark fs-4 me-2  ${item.icon}`}></i>
                                         Mening bitimlarim
                                     </a>
                                 </a>
-
                             </Link>
                         </li>
                     </Card>
@@ -137,8 +140,6 @@ const HeaderUserDropdown = (props) => {
         </>
     ));
 
-
-
     if (isLoggedIn === true) {
         return (
             <div className="ps-block--user-account ">
@@ -148,7 +149,7 @@ const HeaderUserDropdown = (props) => {
                             ? '/account/dashbord'
                             : '/account/sellerproducts'
                     }>
-                    <a className='fs-3 d-flex align-items-center'> 
+                    <a className="fs-3 d-flex align-items-center gap-2">
                         {profile?.image ? (
                             <img
                                 alt="soff"
@@ -156,10 +157,16 @@ const HeaderUserDropdown = (props) => {
                                 className="profile__image-client"
                             />
                         ) : (
-                            <i className={`fa-regular fa-user fs-2 me-1 ${color}`}></i>
+                            <i
+                                className={`fa-regular fa-user fs-2 me-1 ${color}`}></i>
                         )}
-                        {profile?.email?.slice(0, profile?.email.indexOf("@"))}
-                        {profile?.phone}
+                        <span className='username_title'>
+                            {profile?.email?.slice(
+                                0,
+                                profile?.email.indexOf('@')
+                            )}
+                            {profile?.phone}
+                        </span>
                     </a>
                 </Link>
                 <div className="ps-block__content">
@@ -167,7 +174,8 @@ const HeaderUserDropdown = (props) => {
                         {linksView}
                         <li className="ps-block__footer">
                             <a href="#" onClick={() => handleLogout()}>
-                                <i className={`fa-solid fa-right-from-bracket me-3 mx-2 text-dark fs-4  ${color}`}></i>{' '}
+                                <i
+                                    className={`fa-solid fa-right-from-bracket me-3 mx-2 text-dark fs-4  ${color}`}></i>{' '}
                                 Chiqish
                             </a>
                         </li>
@@ -176,20 +184,21 @@ const HeaderUserDropdown = (props) => {
             </div>
         );
     } else {
-
         return (
             <div className="ps-block--user-header">
                 <div className="ps-block__left">
                     <i className="icon-user fs-2"></i>
                 </div>
                 <div className="ps-block__right d-flex align-items-center">
-
-                    <Link href={
-                        (id) ? `/auth/login?id=${id}` :
-                            (deal) ? `/auth/login?deal=${deal}` :
-                                "/auth/login"
-                    } >
-                        <a className='fs-3'>Kirish</a>
+                    <Link
+                        href={
+                            id
+                                ? `/auth/login?id=${id}`
+                                : deal
+                                ? `/auth/login?deal=${deal}`
+                                : '/auth/login'
+                        }>
+                        <a className="fs-3">Kirish</a>
                     </Link>
                 </div>
             </div>
@@ -197,4 +206,4 @@ const HeaderUserDropdown = (props) => {
     }
 };
 
-export default connect((state) => state)(HeaderUserDropdown);
+export default connect(state => state)(HeaderUserDropdown);

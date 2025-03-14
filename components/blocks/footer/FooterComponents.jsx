@@ -71,7 +71,8 @@ export default function FooterComponents () {
         <div
             className='bg-white'
             style={{
-                marginTop: '116.52px',
+                // marginTop: '116.52px',
+                marginTop: '20px',
                 padding: '57px 0 64px',
                 borderBottom: '1px solid rgba(0, 164, 79, 1)',
             }}>
