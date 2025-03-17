@@ -1,73 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Router, { useRouter } from 'next/router';
-import { Pagination, Spin } from 'antd';
-import PostRepository from '~/repositories/PostRepository';
+import { Spin } from 'antd';
 import Link from 'next/link';
 import NextImageCard from '~/components/nextImagecard';
-import ProductSearchGoogle from '~/components/elements/products/ProductSearchGoogle';
-import useDebounce from '~/hooks/useDebounce';
 import Head from 'next/head';
+import Search_Results_Products from '~/components/elements/search-page-details/products';
+import Search_Results_Specialists from '~/components/elements/search-page-details/specialists';
+import Search_Results_Services from '~/components/elements/search-page-details/services';
+import Search_Results_NotFound from '~/components/elements/search-page-details/notFound';
 
-const Products_Search_Results = () => {
+const Search_Results = () => {
     const inputEl = useRef(null);
     const [keyword, setKeyword] = useState('');
-    const [resultItems, setResultItems] = useState([]);
-    const [loading, setLoading] = useState(true); // Initially true
-    const [typeSelect, setTypeSelect] = useState('all');
-    const debouncedSearchTerm = useDebounce(keyword, 1000);
-    const [pageCountPlay, setPageCountPlay] = useState(0);
-    const [currPagePlay, setCurrPagePlay] = useState(1);
-    const { query } = useRouter();
-
-    function handleSubmit (e) {
-        e.preventDefault();
-        if (keyword) {
-            Router.push(`/search-page?keyword=${keyword}`);
-        }
-    }
-
-    useEffect(() => {
-        if (debouncedSearchTerm) {
-            setLoading(true); // Set loading true when making a new request
-            if (keyword || typeSelect) {
-                const products = PostRepository.postSearchFilterNews(
-                    currPagePlay,
-                    debouncedSearchTerm,
-                    typeSelect
-                );
-                products
-                    .then(result => {
-                        setResultItems(result);
-                        setPageCountPlay(result?.count);
-                        setLoading(false); // Set loading false after data is fetched
-                    })
-                    .catch(() => {
-                        setLoading(false); // In case of error, stop loading
-                    });
-            } else {
-                setKeyword('');
-                setLoading(false); // Stop loading if no keyword
-            }
-        }
-    }, [currPagePlay, debouncedSearchTerm, keyword, typeSelect]);
-
-    useEffect(() => {
-        if (query.keyword) {
-            setKeyword(query.keyword);
-            setLoading(true); // Set loading true when keyword is set from query
-        }
-        if (query.type) {
-            setTypeSelect(query.type);
-            setLoading(true); // Set loading true when keyword is set from query
-        }
-    }, [query]);
-
-    useEffect(() => {
-        if (inputEl?.current && keyword !== '') {
-            inputEl.current.setSelectionRange(keyword?.length, keyword?.length);
-            inputEl.current.focus();
-        }
-    }, [keyword, inputEl]);
+    const [loading, setLoading] = useState(true); // Initially true\
 
     // Views
     let clearTextView, loadingView;
@@ -85,19 +30,44 @@ const Products_Search_Results = () => {
         );
     }
 
-    const itemsType = [
-        { id: 1, name: 'Barchasi', value: 'all' },
+    const { asPath } = useRouter();
+    const activeIndex = asPath.slice(asPath.indexOf('#') + 1, asPath.length);
+
+    const sellerTabItems = {
+        all: (
+            <>
+                <Search_Results_Specialists />
+                <Search_Results_Services />
+                <Search_Results_Products />
+            </>
+        ),
+        specialists: <Search_Results_Specialists />,
+        services: <Search_Results_Services />,
+        products: <Search_Results_Products />,
+        notFound: <Search_Results_NotFound />,
+    };
+
+    const menuItems = [
         {
-            id: 2,
-            name: 'Mutaxasislar',
-            value: 'specialists',
+            title: 'Barchasi',
+            path: 'all',
         },
-        { id: 3, name: 'Xizmatlar', value: 'services' },
         {
-            id: 4,
-            name: 'Mahsulotlar',
-            value: 'file',
+            title: 'Mahsulotlar',
+            path: 'products',
         },
+        {
+            title: 'Mutaxasislar',
+            path: 'specialists',
+        },
+        {
+            title: 'Xizmatlar',
+            path: 'services',
+        },
+        // {
+        //     title: "Don't found",
+        //     path: 'notFound',
+        // },
     ];
 
     return (
@@ -127,7 +97,8 @@ const Products_Search_Results = () => {
                             className='ps-form--quick-search'
                             method='get'
                             action='/'
-                            onSubmit={handleSubmit}>
+                            // onSubmit={handleSubmit}
+                        >
                             <div
                                 className={
                                     keyword === ''
@@ -158,71 +129,29 @@ const Products_Search_Results = () => {
                 </div>
             </nav>
 
-            <nav className='global_navbar_bottom'>
-                <div className='container '>
-                    <div className='navbar-container p-0'>
-                        <ul className='d-flex align-items-end gap-5'>
-                            {itemsType.map(item => (
-                                <li
-                                    onClick={() => setTypeSelect(item?.value)}
-                                    key={item.id}
-                                    className={`d-flex align-items-center ${
-                                        typeSelect === item.value &&
-                                        'active_type'
-                                    }`}>
-                                    <i
-                                        style={{ fontSize: '18px' }}
-                                        className={item.icon}></i>
-                                    {item.name}
-                                </li>
+            <div className=''>
+                <div className='Search_Results'>
+                    <div className='Search_Results_container container'>
+                        <ul className='Search_ResultsMenu'>
+                            {menuItems.map((item, index) => (
+                                <Link href={`#${item.path}`} key={index}>
+                                    <li
+                                        className={`activeTab ${
+                                            activeIndex === item.path
+                                                ? 'active_type'
+                                                : ''
+                                        }`}>
+                                        {item.title}
+                                    </li>
+                                </Link>
                             ))}
                         </ul>
                     </div>
                 </div>
-            </nav>
-
-            <div className='results mt-3'>
-                <div className='container'>
-                    {!loading ? (
-                        resultItems?.results?.length > 0 ? (
-                            <>
-                                <p
-                                    style={{
-                                        fontWeight: '600',
-                                        color: '#00a44f',
-                                    }}>
-                                    Qidiruv natijasida topilgan ma'lumotlar soni{' '}
-                                    {resultItems.count} ta
-                                </p>
-                                {resultItems?.results?.map(product => (
-                                    <ProductSearchGoogle
-                                        product={product}
-                                        key={product.id}
-                                    />
-                                ))}
-                                <Pagination
-                                    className='mt-3'
-                                    defaultCurrent={currPagePlay}
-                                    total={pageCountPlay}
-                                    onChange={e => setCurrPagePlay(e)}
-                                />
-                            </>
-                        ) : (
-                            <div className='d-flex align-items-center justify-content-center pt-5'>
-                                <p>Ma'lumot topilmadi</p>
-                            </div>
-                        )
-                    ) : (
-                        <div className='d-flex align-items-center justify-content-center pt-5'>
-                            <span className='ps-form__action'>
-                                <Spin size='large' />
-                            </span>
-                        </div>
-                    )}
-                </div>
+                <div className='container'>{sellerTabItems[activeIndex]}</div>
             </div>
         </div>
     );
 };
 
-export default Products_Search_Results;
+export default Search_Results;

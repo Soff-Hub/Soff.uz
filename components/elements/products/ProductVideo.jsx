@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import useProduct from '~/hooks/useProduct';
 import ModuleProductVideoActions from './modules/ModuleProductVideoActions';
-import DefaultVideo from '../detail/thumbnail/DefaultVideo';
+// import DefaultVideo from '../detail/thumbnail/DefaultVideo';
 import { addPeriodToThousands } from '~/components/partials/account/price-formatter';
 
 
@@ -30,7 +30,7 @@ const ProductVideo = ({ product, isPlay, setIsPlay, iscategroy = false }) => {
                             height: iscategroy ? '160px' : '210px',
                             objectFit: 'cover'
                         }}>
-                        <DefaultVideo isPlay={isPlay} setIsPlay={setIsPlay} product={product} class_products={true}
+                        {/* <DefaultVideo isPlay={isPlay} setIsPlay={setIsPlay} product={product} class_products={true} */}
                         
                         />
                     </a>
