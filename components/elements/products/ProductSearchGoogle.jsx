@@ -5,11 +5,11 @@ const ProductSearchGoogle = ({ product }) => {
 
     return (
         <div className='search_products_head'>
-            <div className="search_products_box_cards">
+            <div className="search_products_box_cards ">
                 <Link href="/product/[pid]" as={`/product/${product.slug}`}>
 
                     <a>
-                        <span className='body_span_title' style={{ color: "gray" }}>
+                        <span className='body_span_title ' style={{ color: "gray" }}>
                             <span style={{ fontWeight: "600", color: "gray" }}>
 
                                 {product?.category_data?.parent}</span> {product?.category_data?.parent ? "|" : "Playlist"} {product?.category_data?.category}

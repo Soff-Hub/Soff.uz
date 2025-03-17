@@ -74,7 +74,7 @@ const Products_Search_Results = () => {
     if (!loading) {
         clearTextView = (
             <span className='ps-form__action'>
-                <p className='ps-form__action_search_btn' >izlash</p>
+                <p className='ps-form__action_search_btn'>izlash</p>
             </span>
         );
     } else {
