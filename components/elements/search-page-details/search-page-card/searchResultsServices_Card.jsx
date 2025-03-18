@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function SearchResultsServices_Card ({product}) {
+export default function SearchResultsServices_Card ({ product }) {
     return (
         <div className='Search_Results_Services_card'>
             <img
@@ -36,7 +36,7 @@ export default function SearchResultsServices_Card ({product}) {
                         alt=''
                     />
                     <p className='Search_Results_Services_card_infoPerson_isname'>
-                        {product.isName}
+                        {product.isName.slice(0, 15)}
                     </p>
                     <img
                         className='Search_Results_Services_card_infoPerson_status'

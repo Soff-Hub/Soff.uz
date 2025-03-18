@@ -80,6 +80,9 @@
                     border-bottom-left-radius: 50px;
                     transition: all 0.3 linear !important;
                     box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
 
                     input {
                         border-top-left-radius: 50px;
@@ -639,6 +642,54 @@
     color: #00a44f !important;
 }
 
+.global_search_results_form {
+    .global_search_results_inputBox {
+        width: 678px;
+        padding: 13px 7px 13px 25px;
+        border-radius: 50px;
+        background: #fff;
+        box-shadow: 0px 0px 3.727px 0px rgba(0, 0, 0, 0.25);
+        gap: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        .global_search_results_input {
+            border: none;
+            outline: none;
+            background: none;
+            width: 80%;
+            &::placeholder {
+                color: #7b7b7b;
+                font-family: 'Poppins';
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+            }
+        }
+    }
+}
+.global_search_results_SignInBtn {
+    display: flex;
+    padding: 8.333px 23.333px 8.333px 25px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4.167px;
+    background: rgba(0, 164, 79, 1);
+
+    color: #fff;
+    font-family: 'Poppins';
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    cursor: pointer;
+    &:hover {
+        border-radius: 4.167px;
+        background: rgba(0, 164, 79, 0.8);
+    }
+}
+
 // ________________________________________search result styles__________________________
 
 .Search_Results {
@@ -829,56 +880,78 @@
             display: none;
         }
     }
-    .Search_Results_Products_Wrap {
+}
+.Search_Results_Products_Wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+    .Breadcrumb {
+        @media (max-width: 500px) {
+            display: none;
+        }
+    }
+    .Search_Results_Products_card {
+        padding-bottom: 35px;
+        border-bottom: 1px solid #e5e5e5;
         display: flex;
-        flex-direction: column;
-        gap: 35px;
-        .Breadcrumb {
+        align-items: center;
+        justify-content: space-between;
+        // max-width: 934px;
+        img {
+            width: 118px;
+            border-radius: 5.102px;
             @media (max-width: 500px) {
-                display: none;
+                width: 90px;
+            }
+            @media (max-width: 350px) {
+                width: 70px;
             }
         }
-        .Search_Results_Products_card {
-            padding-bottom: 35px;
-            border-bottom: 1px solid #e5e5e5;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            // max-width: 934px;
-            img {
-                width: 118px;
-                border-radius: 5.102px;
-                @media (max-width: 500px) {
-                    width: 90px;
-                }
-                @media (max-width: 350px) {
-                    width: 70px;
-                }
+        .Search_Results_Products_card_title {
+            color: #000;
+            font-family: 'Poppins';
+            font-size: 20.408px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+            @media (max-width: 600px) {
+                font-size: 15px;
             }
-            .Search_Results_Products_card_title {
-                color: #000;
-                font-family: 'Poppins';
-                font-size: 20.408px;
-                font-style: normal;
-                font-weight: 500;
-                line-height: normal;
-                @media (max-width: 600px) {
-                    font-size: 15px;
-                }
-                @media (max-width: 600px) {
-                    font-size: 12px;
-                }
-                @media (max-width: 350px) {
-                    font-size: 10px;
-                }
+            @media (max-width: 600px) {
+                font-size: 12px;
             }
-            .Search_Results_Products_card_description {
-                color: #312f30;
+            @media (max-width: 350px) {
+                font-size: 10px;
+            }
+        }
+        .Search_Results_Products_card_description {
+            color: #312f30;
+            font-family: 'Poppins';
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            max-width: 645px;
+            @media (max-width: 600px) {
+                font-size: 12px;
+            }
+            @media (max-width: 450px) {
+                font-size: 9px;
+            }
+            @media (max-width: 350px) {
+                font-size: 7px;
+            }
+        }
+        .Search_Results_Products_card_info {
+            .Search_Results_Products_card_type {
+                color: #7b7b7b;
                 font-family: 'Poppins';
-                font-size: 14px;
+                font-size: 14.285px;
                 font-style: normal;
                 font-weight: 400;
-                max-width: 645px;
+                line-height: normal;
+                display: flex;
+                align-items: center;
+                gap: 20px;
                 @media (max-width: 600px) {
                     font-size: 12px;
                 }
@@ -888,14 +961,12 @@
                 @media (max-width: 350px) {
                     font-size: 7px;
                 }
-            }
-            .Search_Results_Products_card_info {
-                .Search_Results_Products_card_type {
-                    color: #7b7b7b;
+                .Search_Results_Products_card_boldtype {
+                    color: #312f30;
                     font-family: 'Poppins';
                     font-size: 14.285px;
                     font-style: normal;
-                    font-weight: 400;
+                    font-weight: 500;
                     line-height: normal;
                     @media (max-width: 600px) {
                         font-size: 12px;
@@ -905,31 +976,31 @@
                     }
                     @media (max-width: 350px) {
                         font-size: 7px;
-                    }
-                    .Search_Results_Products_card_boldtype {
-                        color: #312f30;
-                        font-family: 'Poppins';
-                        font-size: 14.285px;
-                        font-style: normal;
-                        font-weight: 500;
-                        line-height: normal;
-                        @media (max-width: 600px) {
-                            font-size: 12px;
-                        }
-                        @media (max-width: 450px) {
-                            font-size: 9px;
-                        }
-                        @media (max-width: 350px) {
-                            font-size: 7px;
-                        }
                     }
                 }
-                .Search_Results_Products_card_price {
-                    color: #7b7b7b;
+            }
+            .Search_Results_Products_card_price {
+                color: #7b7b7b;
+                font-family: 'Poppins';
+                font-size: 14.285px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+                @media (max-width: 600px) {
+                    font-size: 12px;
+                }
+                @media (max-width: 450px) {
+                    font-size: 9px;
+                }
+                @media (max-width: 350px) {
+                    font-size: 7px;
+                }
+                .Search_Results_Products_card_price_boldspan {
+                    color: #312f30;
                     font-family: 'Poppins';
                     font-size: 14.285px;
                     font-style: normal;
-                    font-weight: 400;
+                    font-weight: 500;
                     line-height: normal;
                     @media (max-width: 600px) {
                         font-size: 12px;
@@ -939,23 +1010,6 @@
                     }
                     @media (max-width: 350px) {
                         font-size: 7px;
-                    }
-                    .Search_Results_Products_card_price_boldspan {
-                        color: #312f30;
-                        font-family: 'Poppins';
-                        font-size: 14.285px;
-                        font-style: normal;
-                        font-weight: 500;
-                        line-height: normal;
-                        @media (max-width: 600px) {
-                            font-size: 12px;
-                        }
-                        @media (max-width: 450px) {
-                            font-size: 9px;
-                        }
-                        @media (max-width: 350px) {
-                            font-size: 7px;
-                        }
                     }
                 }
             }
@@ -1086,140 +1140,92 @@
             display: none;
         }
     }
-    .Search_Results_Specialists_Wrap {
-        display: grid;
-        grid-template-columns: repeat(4, 221px);
-        gap: 15px;
-        row-gap: 20px;
-        @media (max-width: 1300px) {
-            grid-template-columns: repeat(4, 1fr);
+}
+.Search_Results_Specialists_Wrap {
+    display: grid;
+    grid-template-columns: repeat(4, 221px);
+    gap: 15px;
+    row-gap: 20px;
+    @media (max-width: 1300px) {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    @media (max-width: 1250px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    @media (max-width: 650px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .Search_Results_Wrap_skeleton {
+        width: 100% !important;
+        height: 250px !important;
+        border-radius: 10px;
+        @media (max-width: 400px) {
+            height: 200px !important;
         }
-        @media (max-width: 1250px) {
-            grid-template-columns: repeat(3, 1fr);
-        }
-        @media (max-width: 650px) {
-            grid-template-columns: repeat(2, 1fr);
-        }
-        .Search_Results_Wrap_skeleton {
-            width: 100%;
-            height: 250px;
-            border-radius: 10px;
-            @media (max-width: 400px) {
-                height: 200px;
-            }
-        }
+    }
 
-        .Search_Results_Wrap_skeleton {
-            width: 100%;
-            height: 250px;
-            border-radius: 10px;
-            @media (max-width: 400px) {
-                height: 200px;
-            }
+    .Search_Results_Wrap_skeleton {
+        width: 100% !important;
+        height: 250px !important;
+        border-radius: 10px;
+        @media (max-width: 400px) {
+            height: 200px !important;
         }
-        .Search_Results_Specialists_Card {
-            display: flex;
-            align-items: center;
-            flex-direction: column;
-            justify-content: center;
-            padding: 21px 27px;
+    }
+    .Search_Results_Specialists_Card {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        padding: 21px 27px;
+        border-radius: 10px;
+        background: #fff;
+        box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        &:hover {
             border-radius: 10px;
             background: #fff;
-            box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.1);
-            cursor: pointer;
-            &:hover {
-                border-radius: 10px;
-                background: #fff;
-                box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.15);
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.15);
+        }
+        @media (max-width: 650px) {
+            padding: 15px;
+        }
+        @media (max-width: 380px) {
+            padding: 5px;
+        }
+        .Search_Results_Specialists_Card_img {
+            width: 126px;
+            border-radius: 126px;
+            box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.15);
+            @media (max-width: 450px) {
+                width: 100px;
             }
-            @media (max-width: 650px) {
-                padding: 15px;
+            @media (max-width: 350px) {
+                width: 80px;
             }
-            @media (max-width: 380px) {
-                padding: 5px;
+        }
+        .Search_Results_Specialists_Card_status_box {
+            gap: 3px;
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+            @media (max-width: 450px) {
+                margin: 10px 0;
             }
-            .Search_Results_Specialists_Card_img {
-                width: 126px;
-                border-radius: 126px;
-                box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.15);
-                @media (max-width: 450px) {
-                    width: 100px;
-                }
-                @media (max-width: 350px) {
-                    width: 80px;
-                }
+            @media (max-width: 350px) {
+                margin: 5px 0;
             }
-            .Search_Results_Specialists_Card_status_box {
-                gap: 3px;
-                display: flex;
-                align-items: center;
-                margin: 15px 0;
-                @media (max-width: 450px) {
-                    margin: 10px 0;
-                }
-                @media (max-width: 350px) {
-                    margin: 5px 0;
-                }
-                .Search_Results_Specialists_Card_status {
-                    margin: 0;
-                    color: #312f30;
-                    font-family: 'Poppins';
-                    font-size: 12.976px;
-                    font-style: normal;
-                    font-weight: 600;
-                    line-height: normal;
-                    cursor: pointer;
-                    &:hover {
-                        color: #7b7b7b;
-                    }
-                    @media (max-width: 450px) {
-                        font-size: 10px;
-                    }
-                    @media (max-width: 350px) {
-                        font-size: 8px;
-                    }
-                }
-                .Search_Results_Specialists_Card_status_img {
-                    width: 24.33px;
-                    flex-shrink: 0;
-                    @media (max-width: 450px) {
-                        width: 18px;
-                    }
-                }
-            }
-            .Search_Results_Specialists_Card_isName {
-                text-align: center;
+            .Search_Results_Specialists_Card_status {
+                margin: 0;
                 color: #312f30;
                 font-family: 'Poppins';
-                font-size: 14px;
+                font-size: 12.976px;
                 font-style: normal;
                 font-weight: 600;
                 line-height: normal;
                 cursor: pointer;
-                margin: 0;
-                text-wrap: nowrap;
                 &:hover {
                     color: #7b7b7b;
-                }
-                @media (max-width: 450px) {
-                    font-size: 12px;
-                }
-                @media (max-width: 350px) {
-                    font-size: 8px;
-                }
-            }
-            .Search_Results_Specialists_Card_job {
-                color: #7b7b7b;
-                text-align: center;
-                font-family: 'Poppins';
-                font-size: 12px;
-                font-style: normal;
-                font-weight: 400;
-                line-height: normal;
-                cursor: pointer;
-                margin: 0;
-                &:hover {
-                    color: #312f30;
                 }
                 @media (max-width: 450px) {
                     font-size: 10px;
@@ -1227,6 +1233,54 @@
                 @media (max-width: 350px) {
                     font-size: 8px;
                 }
+            }
+            .Search_Results_Specialists_Card_status_img {
+                width: 24.33px;
+                flex-shrink: 0;
+                @media (max-width: 450px) {
+                    width: 18px;
+                }
+            }
+        }
+        .Search_Results_Specialists_Card_isName {
+            text-align: center;
+            color: #312f30;
+            font-family: 'Poppins';
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+            cursor: pointer;
+            margin: 0;
+            text-wrap: nowrap;
+            &:hover {
+                color: #7b7b7b;
+            }
+            @media (max-width: 450px) {
+                font-size: 12px;
+            }
+            @media (max-width: 350px) {
+                font-size: 8px;
+            }
+        }
+        .Search_Results_Specialists_Card_job {
+            color: #7b7b7b;
+            text-align: center;
+            font-family: 'Poppins';
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            cursor: pointer;
+            margin: 0;
+            &:hover {
+                color: #312f30;
+            }
+            @media (max-width: 450px) {
+                font-size: 10px;
+            }
+            @media (max-width: 350px) {
+                font-size: 8px;
             }
         }
     }
@@ -1360,118 +1414,94 @@
                 display: none;
             }
         }
-        .Search_Results_Services_wrap {
-            display: grid;
-            grid-template-columns: repeat(4, 226px);
-            gap: 13px;
-            row-gap: 30px;
-            @media (max-width: 1300px) {
-                grid-template-columns: repeat(4, 1fr);
-            }
-            @media (max-width: 1250px) {
-                grid-template-columns: repeat(3, 1fr);
-            }
+    }
+}
+.Search_Results_Services_wrap {
+    display: grid;
+    grid-template-columns: repeat(4, 226px);
+    gap: 13px;
+    row-gap: 30px;
+    @media (max-width: 1300px) {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    @media (max-width: 1250px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    @media (max-width: 650px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .Search_Results_Wrap_skeleton {
+        width: 100% !important;
+        height: 250px !important;
+        border-radius: 10px;
+        @media (max-width: 400px) {
+            height: 200px !important;
+        }
+    }
+    .Search_Results_Services_card {
+        padding: 10px;
+        border-radius: 5.072px;
+        position: relative;
+        background: #fff;
+        &:hover {
+            border-radius: 5.072px;
+            background: #fff;
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+        }
+        .likeBtn {
+            border-radius: 100%;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 24px !important;
             @media (max-width: 650px) {
-                grid-template-columns: repeat(2, 1fr);
+                width: 20px !important;
             }
-            .Search_Results_Wrap_skeleton {
-                width: 100%;
-                height: 250px;
-                border-radius: 10px;
-                @media (max-width: 400px) {
-                    height: 200px;
-                }
+        }
+        .Search_Results_Services_card_img {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 186.638px;
+            flex-shrink: 0;
+            border-radius: 5.072px;
+            @media (max-width: 650px) {
+                height: 150px;
             }
-            .Search_Results_Services_card {
-                padding: 10px;
-                border-radius: 5.072px;
-                position: relative;
-                background: #fff;
-                &:hover {
-                    border-radius: 5.072px;
-                    background: #fff;
-                    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
-                }
-                .likeBtn {
-                    border-radius: 100%;
-                    position: absolute;
-                    top: 10px;
-                    right: 10px;
-                    width: 24px !important;
-                    @media (max-width: 650px) {
-                        width: 20px !important;
-                    }
-                }
-                .Search_Results_Services_card_img {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    width: 100%;
-                    height: 186.638px;
+            @media (max-width: 380px) {
+                height: 100px;
+            }
+        }
+        .Search_Results_Services_card_body {
+            .Search_Results_Services_card_infoPerson {
+                margin: 10px 0;
+                display: flex;
+                align-items: center;
+                justify-content: start;
+                gap: 5px;
+                .Search_Results_Services_card_infoPerson_avatar {
+                    height: 25px;
                     flex-shrink: 0;
-                    border-radius: 5.072px;
-                    @media (max-width: 650px) {
-                        height: 150px;
-                    }
-                    @media (max-width: 380px) {
-                        height: 100px;
-                    }
-                }
-                .Search_Results_Services_card_body {
-                    .Search_Results_Services_card_infoPerson {
-                        margin: 10px 0;
-                        display: flex;
-                        align-items: center;
-                        justify-content: start;
-                        gap: 5px;
-                        .Search_Results_Services_card_infoPerson_avatar {
-                            height: 25px;
-                            flex-shrink: 0;
-                            aspect-ratio: 26/25;
-                            border-radius: 26px;
-                            box-shadow: 0px 0px 2.835px 0px rgba(0, 0, 0, 0.25);
-                            @media (max-width: 500px) {
-                                height: 20px;
-                            }
-                        }
-                        .Search_Results_Services_card_infoPerson_isname {
-                            margin: 0;
-                            color: #7b7b7b;
-                            font-family: 'Poppins';
-                            font-size: 14.461px;
-                            font-style: normal;
-                            font-weight: 400;
-                            line-height: normal;
-                            letter-spacing: 0.145px;
-                            cursor: pointer;
-                            &:hover {
-                                color: #312f30;
-                            }
-                            @media (max-width: 500px) {
-                                font-size: 12px;
-                            }
-                            @media (max-width: 350px) {
-                                font-size: 10px;
-                            }
-                        }
-                        .Search_Results_Services_card_infoPerson_status {
-                            width: 17.245px;
-                            height: 17.245px;
-                            flex-shrink: 0;
-                        }
+                    aspect-ratio: 26/25;
+                    border-radius: 26px;
+                    box-shadow: 0px 0px 2.835px 0px rgba(0, 0, 0, 0.25);
+                    @media (max-width: 500px) {
+                        height: 20px;
                     }
                 }
-                .Search_Results_Services_card_title {
-                    color: #312f30;
+                .Search_Results_Services_card_infoPerson_isname {
+                    margin: 0;
+                    color: #7b7b7b;
                     font-family: 'Poppins';
-                    font-size: 15px;
+                    font-size: 14.461px;
                     font-style: normal;
-                    font-weight: 600;
-                    line-height: 150%; /* 22.5px */
-                    letter-spacing: 0.3px;
+                    font-weight: 400;
+                    line-height: normal;
+                    letter-spacing: 0.145px;
                     cursor: pointer;
                     &:hover {
-                        color: #7b7b7b;
+                        color: #312f30;
                     }
                     @media (max-width: 500px) {
                         font-size: 12px;
@@ -1480,27 +1510,116 @@
                         font-size: 10px;
                     }
                 }
-                .Search_Results_Services_card_price {
-                    color: #312f30;
-                    font-family: 'Poppins';
-                    font-size: 15px;
-                    font-style: normal;
-                    font-weight: 600;
-                    line-height: 150%; /* 22.5px */
-                    letter-spacing: 0.3px;
-                    margin-top: 10px;
-                    cursor: pointer;
-                    &:hover {
-                        color: #7b7b7b;
-                    }
-                    @media (max-width: 500px) {
-                        font-size: 12px;
-                    }
-                    @media (max-width: 350px) {
-                        font-size: 10px;
-                    }
+                .Search_Results_Services_card_infoPerson_status {
+                    width: 17.245px;
+                    height: 17.245px;
+                    flex-shrink: 0;
                 }
             }
+        }
+        .Search_Results_Services_card_title {
+            color: #312f30;
+            font-family: 'Poppins';
+            font-size: 15px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 150%; /* 22.5px */
+            letter-spacing: 0.3px;
+            cursor: pointer;
+            &:hover {
+                color: #7b7b7b;
+            }
+            @media (max-width: 500px) {
+                font-size: 12px;
+            }
+            @media (max-width: 350px) {
+                font-size: 10px;
+            }
+        }
+        .Search_Results_Services_card_price {
+            color: #312f30;
+            font-family: 'Poppins';
+            font-size: 15px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 150%; /* 22.5px */
+            letter-spacing: 0.3px;
+            margin-top: 10px;
+            cursor: pointer;
+            &:hover {
+                color: #7b7b7b;
+            }
+            @media (max-width: 500px) {
+                font-size: 12px;
+            }
+            @media (max-width: 350px) {
+                font-size: 10px;
+            }
+        }
+    }
+}
+
+// ____________________________________________________________________
+
+.SearchAllProducts {
+    display: grid;
+    grid-template-columns: 1fr 30%;
+    gap: 45px;
+    @media (max-width: 1000px) {
+        gap: 25px !important;
+    }
+    @media (max-width: 900px) {
+        display: block;
+    }
+    .forAdds {
+        border-radius: 10px;
+        background: #fff;
+        box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.1);
+        @media (max-width: 1000px) {
+            display: none;
+        }
+    }
+    .SearchAllProductsTitle {
+        color: #312f30;
+        font-family: 'Poppins';
+        font-size: 25px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+    }
+
+    .specialistsSection {
+        margin: 30px 0 50px;
+    }
+    .productsDataSection {
+        margin: 50px 0;
+    }
+    .forMoreBox {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 12px 62px;
+        border-radius: 42.013px;
+        background: rgba(228, 228, 228, 1);
+        width: 40%;
+        gap: 10px;
+        margin: 30px auto 0;
+        @media (max-width: 700px) {
+            width: 100%;
+        }
+        &:hover {
+            background: rgba(228, 228, 228, 0.8);
+        }
+        .forMore {
+            margin: 0;
+            padding: 0;
+            text-wrap: nowrap;
+            color: #312f30;
+            font-family: 'Poppins';
+            font-size: 12.604px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
         }
     }
 }

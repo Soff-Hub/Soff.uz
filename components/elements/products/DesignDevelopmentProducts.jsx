@@ -104,7 +104,8 @@ const DesignDevelopmentProducts = ({ product }) => {
             </div>
 
             <div className='designDevelopmentCardBody'>
-                <Link href='/product/[pid]' as={`/product/${product.slug}`}>
+            <Link href='/product/[pid]'
+                 as={`/product/${product.slug}`}>
                     <a className='designDevelopmentCardTitle'>{produvctTitle}</a>
                 </Link>
 

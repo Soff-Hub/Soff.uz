@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default function SearchResultsSpecialists_Card ({data}) {
-    console.log(data);
+    console.log(' asdasdasdasd  =>',data);
     
     return (
         <div className='Search_Results_Specialists_Card'>
