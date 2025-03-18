@@ -188,8 +188,6 @@ const Search_Results = () => {
         },
         {
             title: 'Korxona bizneslari uchun light va dark mode bosh sahifasi',
-            description:
-                'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
             price: '13 500',
             type: 'figma',
             img: 'https://picsum.photos/id/237/500/300',
