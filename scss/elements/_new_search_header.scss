@@ -942,6 +942,14 @@
             }
         }
         .Search_Results_Products_card_info {
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            gap: 10px;
+            @media (max-width: 600px) {
+                flex-direction: column;
+            }
+
             .Search_Results_Products_card_type {
                 color: #7b7b7b;
                 font-family: 'Poppins';
@@ -951,7 +959,7 @@
                 line-height: normal;
                 display: flex;
                 align-items: center;
-                gap: 20px;
+                gap: 10px;
                 @media (max-width: 600px) {
                     font-size: 12px;
                 }

@@ -317,7 +317,7 @@ const Search_Results = () => {
         <div className='global_search_results'>
             <Head>
                 <title>Soff.uz - Qidiruv natijalar</title>
-                <meta name='robots' content='index, follow'/>
+                <meta name='robots' content='index, follow' />
                 <meta
                     name='description'
                     content="Soff.uz qidiruv tizimi orqali o'zingizga kerakli bo'lgan istalgan turdagi intellektual mulklaringizni toping"
@@ -336,33 +336,37 @@ const Search_Results = () => {
                                 />
                             </a>
                         </Link>
-                        <form action='' className='global_search_results_form'>
-                            <div className='global_search_results_inputBox'>
-                                <svg
-                                    xmlns='http://www.w3.org/2000/svg'
-                                    width='17'
-                                    height='18'
-                                    viewBox='0 0 17 18'
-                                    fill='none'>
-                                    <path
-                                        fill-rule='evenodd'
-                                        clip-rule='evenodd'
-                                        d='M12.7795 11.8966C13.5588 10.7671 14.0152 9.39769 14.0152 7.92164C14.0152 4.05146 10.8778 0.914062 7.00758 0.914062C3.1374 0.914062 0 4.05146 0 7.92164C0 11.7918 3.1374 14.9292 7.00758 14.9292C8.75091 14.9292 10.3456 14.2926 11.5717 13.2392L15.6276 16.9766C15.7956 17.1313 16.0571 17.1206 16.2118 16.9527L16.8752 16.2328C17.0299 16.0649 17.0192 15.8034 16.8513 15.6487L12.7795 11.8966ZM7.00758 13.452C3.95326 13.452 1.47724 10.976 1.47724 7.92164C1.47724 4.86732 3.95326 2.39131 7.00758 2.39131C10.0619 2.39131 12.5379 4.86732 12.5379 7.92164C12.5379 10.976 10.0619 13.452 7.00758 13.452Z'
-                                        fill='#989898'
-                                        fill-opacity='0.9'
-                                    />
-                                </svg>
+                        <form
+                            className='ps-form--quick-search'
+                            method='get'
+                            action='/'>
+                            {/* // onSubmit={handleSubmit} */}
+                            <div
+                                className={
+                                    keyword === ''
+                                        ? 'ps-form__input'
+                                        : 'ps-form__input active_search_input'
+                                }>
                                 <input
-                                    className='global_search_results_input'
-                                    placeholder='Izlayotgan mahsulotingizni toping...'
+                                    ref={inputEl}
+                                    autoFocus
+                                    className={
+                                        keyword === ''
+                                            ? 'form-control input2'
+                                            : 'input1 form-control active_search_input'
+                                    }
                                     type='text'
+                                    defaultValue={keyword}
+                                    placeholder='Izlayotgan mahsulotingizni toping...'
+                                    onInput={e => {
+                                        const value = e.target.value.trim();
+                                        setKeyword(value);
+                                    }}
                                 />
+                                {clearTextView}
+                                {loadingView}
                             </div>
                         </form>
-
-                        <div className='global_search_results_SignInBtn'>
-                            Kirish
-                        </div>
                     </div>
                 </div>
             </nav>
