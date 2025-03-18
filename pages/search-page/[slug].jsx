@@ -14,6 +14,252 @@ const Search_Results = () => {
     const [keyword, setKeyword] = useState('');
     const [loading, setLoading] = useState(true); // Initially true\
 
+    const servicesData = [
+        {
+            img: 'https://picsum.photos/400',
+            avatar: 'https://picsum.photos/400',
+            isName: 'Alexander Makedonskiy',
+            statusImg:
+                'https://s3-alpha-sig.figma.com/img/4afd/de33/020ffdd05cc1f2b999be91e49f1e9b82?Expires=1743379200&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=QPOylFO6C1gyn3byU2rQFE3UFxzzG~aF3V~8XHK1TKxJYUV8e~SKKEXmtFqYk8PLMvEY6WBl2HCKB3oZjQhYibKRWrgaRC4etFSQk40VZctVcF5q0e08tpx5eSaRzbERdEIrwfO3prpy7Ol1B4r3amWycuQt0sWxjIOruIaDQdAR5GwaG2-L4NEXmrTgrd-oH2lrA-Ui2F8y2lHftva3Wp-9g717Cgj7gssN2jmoDjaSRVLDYkWVFbPGW0SqlRabmF~Xxk4bh4D3ufKMjzmUFgk0AEkdcley4-9K6vHhtdZkHz7N9DRM9ZiKoHe5VBHOriRyWtwxGm4A6Kq24DyqHA__',
+            title: 'Graphic, Logo, Packaging and brand design',
+            price: '898 520',
+        },
+        {
+            img: 'https://picsum.photos/400',
+            avatar: 'https://picsum.photos/400',
+            isName: 'Alexander Makedonskiy',
+            statusImg:
+                'https://s3-alpha-sig.figma.com/img/4afd/de33/020ffdd05cc1f2b999be91e49f1e9b82?Expires=1743379200&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=QPOylFO6C1gyn3byU2rQFE3UFxzzG~aF3V~8XHK1TKxJYUV8e~SKKEXmtFqYk8PLMvEY6WBl2HCKB3oZjQhYibKRWrgaRC4etFSQk40VZctVcF5q0e08tpx5eSaRzbERdEIrwfO3prpy7Ol1B4r3amWycuQt0sWxjIOruIaDQdAR5GwaG2-L4NEXmrTgrd-oH2lrA-Ui2F8y2lHftva3Wp-9g717Cgj7gssN2jmoDjaSRVLDYkWVFbPGW0SqlRabmF~Xxk4bh4D3ufKMjzmUFgk0AEkdcley4-9K6vHhtdZkHz7N9DRM9ZiKoHe5VBHOriRyWtwxGm4A6Kq24DyqHA__',
+            title: 'Graphic, Logo, Packaging and brand design',
+            price: '898 520',
+        },
+        {
+            img: 'https://picsum.photos/400',
+            avatar: 'https://picsum.photos/400',
+            isName: 'Alexander Makedonskiy',
+            statusImg:
+                'https://s3-alpha-sig.figma.com/img/4afd/de33/020ffdd05cc1f2b999be91e49f1e9b82?Expires=1743379200&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=QPOylFO6C1gyn3byU2rQFE3UFxzzG~aF3V~8XHK1TKxJYUV8e~SKKEXmtFqYk8PLMvEY6WBl2HCKB3oZjQhYibKRWrgaRC4etFSQk40VZctVcF5q0e08tpx5eSaRzbERdEIrwfO3prpy7Ol1B4r3amWycuQt0sWxjIOruIaDQdAR5GwaG2-L4NEXmrTgrd-oH2lrA-Ui2F8y2lHftva3Wp-9g717Cgj7gssN2jmoDjaSRVLDYkWVFbPGW0SqlRabmF~Xxk4bh4D3ufKMjzmUFgk0AEkdcley4-9K6vHhtdZkHz7N9DRM9ZiKoHe5VBHOriRyWtwxGm4A6Kq24DyqHA__',
+            title: 'Graphic, Logo, Packaging and brand design',
+            price: '898 520',
+        },
+        {
+            img: 'https://picsum.photos/400',
+            avatar: 'https://picsum.photos/400',
+            isName: 'Alexander Makedonskiy',
+            statusImg:
+                'https://s3-alpha-sig.figma.com/img/4afd/de33/020ffdd05cc1f2b999be91e49f1e9b82?Expires=1743379200&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=QPOylFO6C1gyn3byU2rQFE3UFxzzG~aF3V~8XHK1TKxJYUV8e~SKKEXmtFqYk8PLMvEY6WBl2HCKB3oZjQhYibKRWrgaRC4etFSQk40VZctVcF5q0e08tpx5eSaRzbERdEIrwfO3prpy7Ol1B4r3amWycuQt0sWxjIOruIaDQdAR5GwaG2-L4NEXmrTgrd-oH2lrA-Ui2F8y2lHftva3Wp-9g717Cgj7gssN2jmoDjaSRVLDYkWVFbPGW0SqlRabmF~Xxk4bh4D3ufKMjzmUFgk0AEkdcley4-9K6vHhtdZkHz7N9DRM9ZiKoHe5VBHOriRyWtwxGm4A6Kq24DyqHA__',
+            title: 'Graphic, Logo, Packaging and brand design',
+            price: '898 520',
+        },
+        {
+            img: 'https://picsum.photos/400',
+            avatar: 'https://picsum.photos/400',
+            isName: 'Alexander Makedonskiy',
+            statusImg:
+                'https://s3-alpha-sig.figma.com/img/4afd/de33/020ffdd05cc1f2b999be91e49f1e9b82?Expires=1743379200&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=QPOylFO6C1gyn3byU2rQFE3UFxzzG~aF3V~8XHK1TKxJYUV8e~SKKEXmtFqYk8PLMvEY6WBl2HCKB3oZjQhYibKRWrgaRC4etFSQk40VZctVcF5q0e08tpx5eSaRzbERdEIrwfO3prpy7Ol1B4r3amWycuQt0sWxjIOruIaDQdAR5GwaG2-L4NEXmrTgrd-oH2lrA-Ui2F8y2lHftva3Wp-9g717Cgj7gssN2jmoDjaSRVLDYkWVFbPGW0SqlRabmF~Xxk4bh4D3ufKMjzmUFgk0AEkdcley4-9K6vHhtdZkHz7N9DRM9ZiKoHe5VBHOriRyWtwxGm4A6Kq24DyqHA__',
+            title: 'Graphic, Logo, Packaging and brand design',
+            price: '898 520',
+        },
+        {
+            img: 'https://picsum.photos/400',
+            avatar: 'https://picsum.photos/400',
+            isName: 'Alexander Makedonskiy',
+            statusImg:
+                'https://s3-alpha-sig.figma.com/img/4afd/de33/020ffdd05cc1f2b999be91e49f1e9b82?Expires=1743379200&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=QPOylFO6C1gyn3byU2rQFE3UFxzzG~aF3V~8XHK1TKxJYUV8e~SKKEXmtFqYk8PLMvEY6WBl2HCKB3oZjQhYibKRWrgaRC4etFSQk40VZctVcF5q0e08tpx5eSaRzbERdEIrwfO3prpy7Ol1B4r3amWycuQt0sWxjIOruIaDQdAR5GwaG2-L4NEXmrTgrd-oH2lrA-Ui2F8y2lHftva3Wp-9g717Cgj7gssN2jmoDjaSRVLDYkWVFbPGW0SqlRabmF~Xxk4bh4D3ufKMjzmUFgk0AEkdcley4-9K6vHhtdZkHz7N9DRM9ZiKoHe5VBHOriRyWtwxGm4A6Kq24DyqHA__',
+            title: 'Graphic, Logo, Packaging and brand design',
+            price: '898 520',
+        },
+        {
+            img: 'https://picsum.photos/400',
+            avatar: 'https://picsum.photos/400',
+            isName: 'Alexander Makedonskiy',
+            statusImg:
+                'https://s3-alpha-sig.figma.com/img/4afd/de33/020ffdd05cc1f2b999be91e49f1e9b82?Expires=1743379200&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=QPOylFO6C1gyn3byU2rQFE3UFxzzG~aF3V~8XHK1TKxJYUV8e~SKKEXmtFqYk8PLMvEY6WBl2HCKB3oZjQhYibKRWrgaRC4etFSQk40VZctVcF5q0e08tpx5eSaRzbERdEIrwfO3prpy7Ol1B4r3amWycuQt0sWxjIOruIaDQdAR5GwaG2-L4NEXmrTgrd-oH2lrA-Ui2F8y2lHftva3Wp-9g717Cgj7gssN2jmoDjaSRVLDYkWVFbPGW0SqlRabmF~Xxk4bh4D3ufKMjzmUFgk0AEkdcley4-9K6vHhtdZkHz7N9DRM9ZiKoHe5VBHOriRyWtwxGm4A6Kq24DyqHA__',
+            title: 'Graphic, Logo, Packaging and brand design',
+            price: '898 520',
+        },
+    ];
+    const specialistsData = [
+        {
+            img: 'https://picsum.photos/400',
+            isName: 'Alexander Makedonskiy',
+            status: 'Ritsar',
+            statusImg:
+                'https://s3-alpha-sig.figma.com/img/4afd/de33/020ffdd05cc1f2b999be91e49f1e9b82?Expires=1743379200&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=QPOylFO6C1gyn3byU2rQFE3UFxzzG~aF3V~8XHK1TKxJYUV8e~SKKEXmtFqYk8PLMvEY6WBl2HCKB3oZjQhYibKRWrgaRC4etFSQk40VZctVcF5q0e08tpx5eSaRzbERdEIrwfO3prpy7Ol1B4r3amWycuQt0sWxjIOruIaDQdAR5GwaG2-L4NEXmrTgrd-oH2lrA-Ui2F8y2lHftva3Wp-9g717Cgj7gssN2jmoDjaSRVLDYkWVFbPGW0SqlRabmF~Xxk4bh4D3ufKMjzmUFgk0AEkdcley4-9K6vHhtdZkHz7N9DRM9ZiKoHe5VBHOriRyWtwxGm4A6Kq24DyqHA__',
+            job: 'Grafik dizayner',
+        },
+        {
+            img: 'https://picsum.photos/400',
+            isName: 'Alexander Makedonskiy',
+            status: 'Ritsar',
+            statusImg:
+                'https://s3-alpha-sig.figma.com/img/4afd/de33/020ffdd05cc1f2b999be91e49f1e9b82?Expires=1743379200&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=QPOylFO6C1gyn3byU2rQFE3UFxzzG~aF3V~8XHK1TKxJYUV8e~SKKEXmtFqYk8PLMvEY6WBl2HCKB3oZjQhYibKRWrgaRC4etFSQk40VZctVcF5q0e08tpx5eSaRzbERdEIrwfO3prpy7Ol1B4r3amWycuQt0sWxjIOruIaDQdAR5GwaG2-L4NEXmrTgrd-oH2lrA-Ui2F8y2lHftva3Wp-9g717Cgj7gssN2jmoDjaSRVLDYkWVFbPGW0SqlRabmF~Xxk4bh4D3ufKMjzmUFgk0AEkdcley4-9K6vHhtdZkHz7N9DRM9ZiKoHe5VBHOriRyWtwxGm4A6Kq24DyqHA__',
+            job: 'Grafik dizayner',
+        },
+        {
+            img: 'https://picsum.photos/400',
+            isName: 'Alexander Makedonskiy',
+            status: 'Ritsar',
+            statusImg:
+                'https://s3-alpha-sig.figma.com/img/4afd/de33/020ffdd05cc1f2b999be91e49f1e9b82?Expires=1743379200&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=QPOylFO6C1gyn3byU2rQFE3UFxzzG~aF3V~8XHK1TKxJYUV8e~SKKEXmtFqYk8PLMvEY6WBl2HCKB3oZjQhYibKRWrgaRC4etFSQk40VZctVcF5q0e08tpx5eSaRzbERdEIrwfO3prpy7Ol1B4r3amWycuQt0sWxjIOruIaDQdAR5GwaG2-L4NEXmrTgrd-oH2lrA-Ui2F8y2lHftva3Wp-9g717Cgj7gssN2jmoDjaSRVLDYkWVFbPGW0SqlRabmF~Xxk4bh4D3ufKMjzmUFgk0AEkdcley4-9K6vHhtdZkHz7N9DRM9ZiKoHe5VBHOriRyWtwxGm4A6Kq24DyqHA__',
+            job: 'Grafik dizayner',
+        },
+        {
+            img: 'https://picsum.photos/400',
+            isName: 'Alexander Makedonskiy',
+            status: 'Ritsar',
+            statusImg:
+                'https://s3-alpha-sig.figma.com/img/4afd/de33/020ffdd05cc1f2b999be91e49f1e9b82?Expires=1743379200&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=QPOylFO6C1gyn3byU2rQFE3UFxzzG~aF3V~8XHK1TKxJYUV8e~SKKEXmtFqYk8PLMvEY6WBl2HCKB3oZjQhYibKRWrgaRC4etFSQk40VZctVcF5q0e08tpx5eSaRzbERdEIrwfO3prpy7Ol1B4r3amWycuQt0sWxjIOruIaDQdAR5GwaG2-L4NEXmrTgrd-oH2lrA-Ui2F8y2lHftva3Wp-9g717Cgj7gssN2jmoDjaSRVLDYkWVFbPGW0SqlRabmF~Xxk4bh4D3ufKMjzmUFgk0AEkdcley4-9K6vHhtdZkHz7N9DRM9ZiKoHe5VBHOriRyWtwxGm4A6Kq24DyqHA__',
+            job: 'Grafik dizayner',
+        },
+        {
+            img: 'https://picsum.photos/400',
+            isName: 'Alexander Makedonskiy',
+            status: 'Ritsar',
+            statusImg:
+                'https://s3-alpha-sig.figma.com/img/4afd/de33/020ffdd05cc1f2b999be91e49f1e9b82?Expires=1743379200&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=QPOylFO6C1gyn3byU2rQFE3UFxzzG~aF3V~8XHK1TKxJYUV8e~SKKEXmtFqYk8PLMvEY6WBl2HCKB3oZjQhYibKRWrgaRC4etFSQk40VZctVcF5q0e08tpx5eSaRzbERdEIrwfO3prpy7Ol1B4r3amWycuQt0sWxjIOruIaDQdAR5GwaG2-L4NEXmrTgrd-oH2lrA-Ui2F8y2lHftva3Wp-9g717Cgj7gssN2jmoDjaSRVLDYkWVFbPGW0SqlRabmF~Xxk4bh4D3ufKMjzmUFgk0AEkdcley4-9K6vHhtdZkHz7N9DRM9ZiKoHe5VBHOriRyWtwxGm4A6Kq24DyqHA__',
+            job: 'Grafik dizayner',
+        },
+        {
+            img: 'https://picsum.photos/400',
+            isName: 'Alexander Makedonskiy',
+            status: 'Ritsar',
+            statusImg:
+                'https://s3-alpha-sig.figma.com/img/4afd/de33/020ffdd05cc1f2b999be91e49f1e9b82?Expires=1743379200&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=QPOylFO6C1gyn3byU2rQFE3UFxzzG~aF3V~8XHK1TKxJYUV8e~SKKEXmtFqYk8PLMvEY6WBl2HCKB3oZjQhYibKRWrgaRC4etFSQk40VZctVcF5q0e08tpx5eSaRzbERdEIrwfO3prpy7Ol1B4r3amWycuQt0sWxjIOruIaDQdAR5GwaG2-L4NEXmrTgrd-oH2lrA-Ui2F8y2lHftva3Wp-9g717Cgj7gssN2jmoDjaSRVLDYkWVFbPGW0SqlRabmF~Xxk4bh4D3ufKMjzmUFgk0AEkdcley4-9K6vHhtdZkHz7N9DRM9ZiKoHe5VBHOriRyWtwxGm4A6Kq24DyqHA__',
+            job: 'Grafik dizayner',
+        },
+        {
+            img: 'https://picsum.photos/400',
+            isName: 'Alexander Makedonskiy',
+            status: 'Ritsar',
+            statusImg:
+                'https://s3-alpha-sig.figma.com/img/4afd/de33/020ffdd05cc1f2b999be91e49f1e9b82?Expires=1743379200&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=QPOylFO6C1gyn3byU2rQFE3UFxzzG~aF3V~8XHK1TKxJYUV8e~SKKEXmtFqYk8PLMvEY6WBl2HCKB3oZjQhYibKRWrgaRC4etFSQk40VZctVcF5q0e08tpx5eSaRzbERdEIrwfO3prpy7Ol1B4r3amWycuQt0sWxjIOruIaDQdAR5GwaG2-L4NEXmrTgrd-oH2lrA-Ui2F8y2lHftva3Wp-9g717Cgj7gssN2jmoDjaSRVLDYkWVFbPGW0SqlRabmF~Xxk4bh4D3ufKMjzmUFgk0AEkdcley4-9K6vHhtdZkHz7N9DRM9ZiKoHe5VBHOriRyWtwxGm4A6Kq24DyqHA__',
+            job: 'Grafik dizayner',
+        },
+        {
+            img: 'https://picsum.photos/400',
+            isName: 'Alexander Makedonskiy',
+            status: 'Ritsar',
+            statusImg:
+                'https://s3-alpha-sig.figma.com/img/4afd/de33/020ffdd05cc1f2b999be91e49f1e9b82?Expires=1743379200&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=QPOylFO6C1gyn3byU2rQFE3UFxzzG~aF3V~8XHK1TKxJYUV8e~SKKEXmtFqYk8PLMvEY6WBl2HCKB3oZjQhYibKRWrgaRC4etFSQk40VZctVcF5q0e08tpx5eSaRzbERdEIrwfO3prpy7Ol1B4r3amWycuQt0sWxjIOruIaDQdAR5GwaG2-L4NEXmrTgrd-oH2lrA-Ui2F8y2lHftva3Wp-9g717Cgj7gssN2jmoDjaSRVLDYkWVFbPGW0SqlRabmF~Xxk4bh4D3ufKMjzmUFgk0AEkdcley4-9K6vHhtdZkHz7N9DRM9ZiKoHe5VBHOriRyWtwxGm4A6Kq24DyqHA__',
+            job: 'Grafik dizayner',
+        },
+        {
+            img: 'https://picsum.photos/400',
+            isName: 'Alexander Makedonskiy',
+            status: 'Ritsar',
+            statusImg:
+                'https://s3-alpha-sig.figma.com/img/4afd/de33/020ffdd05cc1f2b999be91e49f1e9b82?Expires=1743379200&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=QPOylFO6C1gyn3byU2rQFE3UFxzzG~aF3V~8XHK1TKxJYUV8e~SKKEXmtFqYk8PLMvEY6WBl2HCKB3oZjQhYibKRWrgaRC4etFSQk40VZctVcF5q0e08tpx5eSaRzbERdEIrwfO3prpy7Ol1B4r3amWycuQt0sWxjIOruIaDQdAR5GwaG2-L4NEXmrTgrd-oH2lrA-Ui2F8y2lHftva3Wp-9g717Cgj7gssN2jmoDjaSRVLDYkWVFbPGW0SqlRabmF~Xxk4bh4D3ufKMjzmUFgk0AEkdcley4-9K6vHhtdZkHz7N9DRM9ZiKoHe5VBHOriRyWtwxGm4A6Kq24DyqHA__',
+            job: 'Grafik dizayner',
+        },
+        {
+            img: 'https://picsum.photos/400',
+            isName: 'Alexander Makedonskiy',
+            status: 'Ritsar',
+            statusImg:
+                'https://s3-alpha-sig.figma.com/img/4afd/de33/020ffdd05cc1f2b999be91e49f1e9b82?Expires=1743379200&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=QPOylFO6C1gyn3byU2rQFE3UFxzzG~aF3V~8XHK1TKxJYUV8e~SKKEXmtFqYk8PLMvEY6WBl2HCKB3oZjQhYibKRWrgaRC4etFSQk40VZctVcF5q0e08tpx5eSaRzbERdEIrwfO3prpy7Ol1B4r3amWycuQt0sWxjIOruIaDQdAR5GwaG2-L4NEXmrTgrd-oH2lrA-Ui2F8y2lHftva3Wp-9g717Cgj7gssN2jmoDjaSRVLDYkWVFbPGW0SqlRabmF~Xxk4bh4D3ufKMjzmUFgk0AEkdcley4-9K6vHhtdZkHz7N9DRM9ZiKoHe5VBHOriRyWtwxGm4A6Kq24DyqHA__',
+            job: 'Grafik dizayner',
+        },
+        {
+            img: 'https://picsum.photos/400',
+            isName: 'Alexander Makedonskiy',
+            status: 'Ritsar',
+            statusImg:
+                'https://s3-alpha-sig.figma.com/img/4afd/de33/020ffdd05cc1f2b999be91e49f1e9b82?Expires=1743379200&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=QPOylFO6C1gyn3byU2rQFE3UFxzzG~aF3V~8XHK1TKxJYUV8e~SKKEXmtFqYk8PLMvEY6WBl2HCKB3oZjQhYibKRWrgaRC4etFSQk40VZctVcF5q0e08tpx5eSaRzbERdEIrwfO3prpy7Ol1B4r3amWycuQt0sWxjIOruIaDQdAR5GwaG2-L4NEXmrTgrd-oH2lrA-Ui2F8y2lHftva3Wp-9g717Cgj7gssN2jmoDjaSRVLDYkWVFbPGW0SqlRabmF~Xxk4bh4D3ufKMjzmUFgk0AEkdcley4-9K6vHhtdZkHz7N9DRM9ZiKoHe5VBHOriRyWtwxGm4A6Kq24DyqHA__',
+            job: 'Grafik dizayner',
+        },
+        {
+            img: 'https://picsum.photos/400',
+            isName: 'Alexander Makedonskiy',
+            status: 'Ritsar',
+            statusImg:
+                'https://s3-alpha-sig.figma.com/img/4afd/de33/020ffdd05cc1f2b999be91e49f1e9b82?Expires=1743379200&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=QPOylFO6C1gyn3byU2rQFE3UFxzzG~aF3V~8XHK1TKxJYUV8e~SKKEXmtFqYk8PLMvEY6WBl2HCKB3oZjQhYibKRWrgaRC4etFSQk40VZctVcF5q0e08tpx5eSaRzbERdEIrwfO3prpy7Ol1B4r3amWycuQt0sWxjIOruIaDQdAR5GwaG2-L4NEXmrTgrd-oH2lrA-Ui2F8y2lHftva3Wp-9g717Cgj7gssN2jmoDjaSRVLDYkWVFbPGW0SqlRabmF~Xxk4bh4D3ufKMjzmUFgk0AEkdcley4-9K6vHhtdZkHz7N9DRM9ZiKoHe5VBHOriRyWtwxGm4A6Kq24DyqHA__',
+            job: 'Grafik dizayner',
+        },
+    ];
+    const productsData = [
+        {
+            title: 'Korxona bizneslari uchun light va dark mode bosh sahifasi',
+            description:
+                'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+            price: '13 500',
+            type: 'figma',
+            img: 'https://picsum.photos/id/237/500/300',
+        },
+        {
+            title: 'Korxona bizneslari uchun light va dark mode bosh sahifasi',
+            description:
+                'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+            price: '13 500',
+            type: 'figma',
+            img: 'https://picsum.photos/id/237/500/300',
+        },
+        {
+            title: 'Korxona bizneslari uchun light va dark mode bosh sahifasi',
+            description:
+                'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+            price: '13 500',
+            type: 'figma',
+            img: 'https://picsum.photos/id/237/500/300',
+        },
+        {
+            title: 'Korxona bizneslari uchun light va dark mode bosh sahifasi',
+            description:
+                'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+            price: '13 500',
+            type: 'figma',
+            img: 'https://picsum.photos/id/237/500/300',
+        },
+        {
+            title: 'Korxona bizneslari uchun light va dark mode bosh sahifasi',
+            description:
+                'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+            price: '13 500',
+            type: 'figma',
+            img: 'https://picsum.photos/id/237/500/300',
+        },
+        {
+            title: 'Korxona bizneslari uchun light va dark mode bosh sahifasi',
+            description:
+                'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+            price: '13 500',
+            type: 'figma',
+            img: 'https://picsum.photos/id/237/500/300',
+        },
+        {
+            title: 'Korxona bizneslari uchun light va dark mode bosh sahifasi',
+            description:
+                'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+            price: '13 500',
+            type: 'figma',
+            img: 'https://picsum.photos/id/237/500/300',
+        },
+        {
+            title: 'Korxona bizneslari uchun light va dark mode bosh sahifasi',
+            description:
+                'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+            price: '13 500',
+            type: 'figma',
+            img: 'https://picsum.photos/id/237/500/300',
+        },
+        {
+            title: 'Korxona bizneslari uchun light va dark mode bosh sahifasi',
+            description:
+                'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+            price: '13 500',
+            type: 'figma',
+            img: 'https://picsum.photos/id/237/500/300',
+        },
+        {
+            title: 'Korxona bizneslari uchun light va dark mode bosh sahifasi',
+            description:
+                'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+            price: '13 500',
+            type: 'figma',
+            img: 'https://picsum.photos/id/237/500/300',
+        },
+    ];
+
     // Views
     let clearTextView, loadingView;
     if (!loading) {
@@ -34,16 +280,16 @@ const Search_Results = () => {
     const activeIndex = asPath.slice(asPath.indexOf('#') + 1, asPath.length);
 
     const sellerTabItems = {
-        all: (
-            <>
-                <Search_Results_Specialists />
-                <Search_Results_Services />
-                <Search_Results_Products />
-            </>
-        ),
-        specialists: <Search_Results_Specialists />,
-        services: <Search_Results_Services />,
-        products: <Search_Results_Products />,
+        // all: (
+        //     <>
+        //         <Search_Results_Specialists />
+        //         <Search_Results_Services />
+        //         <Search_Results_Products />
+        //     </>
+        // ),
+        specialists: <Search_Results_Specialists data={specialistsData} />,
+        services: <Search_Results_Services data={servicesData} />,
+        products: <Search_Results_Products data={productsData} />,
         notFound: <Search_Results_NotFound />,
     };
 
