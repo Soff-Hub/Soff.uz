@@ -20,11 +20,11 @@ const Checkout = () => {
 
     return (
         <div className='container p-xl-0 mt-5'>
-            <div className='row'>
-                <div className='container col-xl-7 col-lg-12 col-md-10 col-sm-11 col-12'>
+            <div className='CheckoutStyle'>
+                <div className='RedesignModulePaymentOrderSummary'>
                     <RedesignModulePaymentOrderSummary ecomerce={ecomerce} />
                 </div>
-                <div className=' container col-xl-5 col-lg-10 col-md-10 col-sm-10 col-12'>
+                <div className=' FormCheckoutInformation'>
                     <FormCheckoutInformation />
                 </div>
             </div>

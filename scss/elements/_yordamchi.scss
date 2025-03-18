@@ -2593,3 +2593,228 @@
         font-size: 20px;
     }
 }
+
+.CheckoutStyle {
+    display: grid;
+    grid-template-columns: 1fr 548px;
+    gap: 35px;
+    @media (max-width: 1300px) {
+        grid-template-columns: 1fr 40%;
+    }
+    @media (max-width: 1300px) {
+        grid-template-columns: 1fr 40%;
+    }
+    @media (max-width: 1000px) {
+        grid-template-columns: repeat(1, 80%);
+        justify-content: center;
+    }
+    @media (max-width: 750px) {
+        grid-template-columns: repeat(1, 100%);
+        justify-content: center;
+    }
+}
+
+.RedesignModulePaymentOrderSummarySection {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 32px;
+    .RedesignModulePaymentOrderSummaryWrapper {
+        border-radius: 10px;
+        box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.05);
+        background: #fff;
+        padding: 22px 50px;
+        max-height: 412px;
+        @media (max-width: 650px) {
+            padding: 15px;
+        }
+
+        .RedesignModulePaymentOrderSummary_product_count {
+            color: #312f30;
+            font-family: 'Poppins';
+            font-size: 15px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+        }
+        .RedesignModulePaymentOrderSummary_Wrap {
+            max-height: 322px;
+            overflow-y: scroll; /* ✅ Scroll ishlaydi */
+            overflow-x: hidden; /* ✅ Gorizontal scroll yo‘q */
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            padding: 5px; /* ✅ Content scrollga tegib qolmasligi uchun */
+            scrollbar-width: none; /* ✅ Firefox */
+            -ms-overflow-style: none; /* ✅ Internet Explorer va Edge */
+            &::-webkit-scrollbar {
+                width: 0px; /* ✅ Chrome va Safari uchun scroll chizig‘ini yo‘q qilish */
+                height: 0px;
+            }
+
+            .RedesignModulePaymentOrderSummary_Card {
+                padding: 13px 24px;
+                display: flex;
+                align-items: stretch;
+                justify-content: start;
+                gap: 37px;
+                width: 100%;
+                box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+                border-radius: 8px;
+                background: #fff;
+                position: relative;
+                @media (max-width: 650px) {
+                    padding: 10px;
+                }
+                @media (max-width: 450px) {
+                    flex-direction: column;
+                    gap: 0px
+                }
+
+                .RedesignModulePaymentOrderSummary_Card_delete {
+                    position: absolute;
+                    top: 15px;
+                    right: 15px;
+                    @media (max-width: 450px) {
+                        top: 5px;
+                        right: 5px;
+                    }
+                }
+                .RedesignModulePaymentOrderSummary_Card_img {
+                    height: 128px !important ;
+                    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+                    @media (max-width: 450px) {
+                        display: none;
+                    }
+                }
+                .RedesignModulePaymentOrderSummary_Card_body {
+                    display: flex;
+                    align-items: start;
+                    justify-content: center;
+                    flex-direction: column;
+                    flex-grow: 1;
+
+                    .RedesignModulePaymentOrderSummary_Card_title {
+                        color: #312f30;
+                        font-family: 'Poppins';
+                        font-size: 15px;
+                        font-style: normal;
+                        font-weight: 500;
+                        line-height: 170%; /* 25.5px */
+                        letter-spacing: 0.3px;
+                        flex-grow: 1;
+                        width: 85%;
+                        @media (max-width: 650px) {
+                            font-size: 12px;
+                            width: 100%;
+                        }
+                        @media (max-width: 450px) {
+                            width: 90%;
+                        }
+                        @media (max-width: 350px) {
+                            font-size: 10px;
+                            // width: 100%;
+                        }
+                    }
+                    .RedesignModulePaymentOrderSummary_Card_product_type {
+                        color: #fff;
+                        font-family: 'Poppins';
+                        font-size: 12.299px;
+                        font-style: normal;
+                        font-weight: 500;
+                        line-height: normal;
+                        letter-spacing: 0.615px;
+
+                        padding: 4px 9px;
+                        border-radius: 3.075px;
+                        background: #4b7aba;
+                        @media (max-width: 500px) {
+                            font-size: 8px;
+                            padding: 2px;
+                        }
+                    }
+                }
+                .RedesignModulePaymentOrderSummary_Card_priceBox {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-end; /* Pastga joylashtiradi */
+                    align-items: flex-end; /* O‘ngga chiqaradi */
+
+                    .RedesignModulePaymentOrderSummary_Card_price {
+                        color: #312f30;
+                        font-family: 'Poppins';
+                        font-size: 18px;
+                        font-style: normal;
+                        font-weight: 600;
+                        line-height: normal;
+                        text-wrap: nowrap;
+                         margin: 0;
+                        @media (max-width: 450px) {
+                            font-size: 12px;
+                        }
+                        @media (max-width: 350px) {
+                            font-size: 10px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .RedesignModulePaymentOrderSummarySection_info_wrap {
+        padding: 37px 50px;
+        box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.05);
+        border-radius: 10px;
+        background: #fff;
+        @media (max-width: 550px) {
+            padding: 20px;
+        }
+        .RedesignModulePaymentOrderSummarySection_info_wrap_total_amount_box {
+            display: flex;
+            justify-content: space-between;
+            flex-direction: column;
+            gap: 27px;
+            @media (max-width: 500px) {
+                gap: 10px;
+            }
+            .RedesignModulePaymentOrderSummarySection_info_wrap_total_amount {
+                display: flex;
+                justify-content: space-between;
+                .RedesignModulePaymentOrderSummarySection_info_wrap_total_amount_item {
+                    color: #312f30;
+                    font-family: 'Poppins';
+                    font-size: 30px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: normal;
+                    margin: 0;
+                    @media (max-width: 650px) {
+                        font-size: 20px;
+                    }
+                    @media (max-width: 400px) {
+                        font-size: 12px;
+                    }
+                }
+            }
+            .RedesignModulePaymentOrderSummarySection_info_wrap_service_fee {
+                display: flex;
+                justify-content: space-between;
+                .RedesignModulePaymentOrderSummarySection_info_wrap_service_fee_item {
+                    color: #312f30;
+                    font-family: 'Poppins';
+                    font-size: 20px;
+                    font-style: normal;
+                    font-weight: 300;
+                    line-height: normal;
+                    margin: 0;
+                    @media (max-width: 650px) {
+                        font-size: 15px;
+                    }
+                    @media (max-width: 400px) {
+                        font-size: 10px;
+                    }
+                }
+            }
+        }
+    }
+}

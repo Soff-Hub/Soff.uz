@@ -77,52 +77,49 @@ const RedesignModulePaymentOrderSummary = ({ ecomerce }) => {
     }, []);
 
     return (
-        <div className='ps-block--checkout-order  p-xl-0 p-l-0'>
-            <div className='shot w-100 shadow_llg'>
-                <p className='product_count m-0'>
+        <div className='RedesignModulePaymentOrderSummarySection'>
+            <div className='RedesignModulePaymentOrderSummaryWrapper'>
+                <p className='RedesignModulePaymentOrderSummary_product_count'>
                     {ecomerce.cartDataItems.length} ta mahsulot
                 </p>
                 <div
-                    className='ps-block__content w-100 hidden-scroll'
+                    className='RedesignModulePaymentOrderSummary_Wrap'
                     style={{ backgroundColor: 'transparent' }}>
                     {ecomerce.cartDataItems &&
                     ecomerce.cartDataItems.length > 0 ? (
                         ecomerce.cartDataItems?.map((el, i) => (
                             <div
-                                className='sell_card shadow_llg'
+                                className='RedesignModulePaymentOrderSummary_Card'
                                 key={el?.slug}>
                                 <img
-                                    className='sell_card_img'
+                                    className='RedesignModulePaymentOrderSummary_Card_img'
                                     src={el.poster_url}
                                     alt='document'
                                 />
-                                <div className='sell_card_body'>
+                                <div className='RedesignModulePaymentOrderSummary_Card_body'>
                                     <Link href={`/product/${el?.slug}`}>
-                                        <p className='sell_card_title'>
+                                        <p className='RedesignModulePaymentOrderSummary_Card_title'>
                                             {el?.title}
                                         </p>
                                     </Link>
-                                    <p className='product_type'>
+                                    <p className='RedesignModulePaymentOrderSummary_Card_product_type'>
                                         {el?.file_type}
                                     </p>
                                 </div>
-                                <div className='sell_card_price'>
-                                    <a
-                                        className='sell_card_delete'
-                                        href='#'
-                                        onClick={e => handleRemoveItem(e, el)}>
-                                        <img
-                                            src='/static/img/exitBtn.png'
-                                            alt=''
-                                        />
-                                    </a>
-                                    <p className='w-100'>
+                                <div className='RedesignModulePaymentOrderSummary_Card_priceBox'>
+                                    <p className='RedesignModulePaymentOrderSummary_Card_price'>
                                         {addPeriodToThousands(
                                             el?.discount_price
                                         )}{' '}
                                         so'm
                                     </p>
                                 </div>
+                                <a
+                                    className='RedesignModulePaymentOrderSummary_Card_delete'
+                                    href='#'
+                                    onClick={e => handleRemoveItem(e, el)}>
+                                    <img src='/static/img/exitBtn.png' alt='' />
+                                </a>
                             </div>
                         ))
                     ) : (
@@ -130,21 +127,22 @@ const RedesignModulePaymentOrderSummary = ({ ecomerce }) => {
                     )}
                 </div>
             </div>
-            <div className='checkout_footer rounded-2 my-5 bg-white shadow_llg'>
+            <div className='RedesignModulePaymentOrderSummarySection_info_wrap'>
                 {ecomerce.cartDataItems && ecomerce.cartDataItems.length > 0 && (
-                    <div className='total_amount'>
-                        <figcaption className='product_price_click_all'>
-                            <p>Jami narx</p>
-                            <p className='text-end'>{hisob} so'm </p>
+                    <div className='RedesignModulePaymentOrderSummarySection_info_wrap_total_amount_box'>
+                        <figcaption className='RedesignModulePaymentOrderSummarySection_info_wrap_total_amount'>
+                            <p className='RedesignModulePaymentOrderSummarySection_info_wrap_total_amount_item'>
+                                Jami narx
+                            </p>
+                            <p className='RedesignModulePaymentOrderSummarySection_info_wrap_total_amount_item'>
+                                {hisobb} so`m {`(${percentage * 100} %)`}
+                            </p>
                         </figcaption>
 
                         {percentage > 0 && (
-                            <div className='total_amount_service_fee'>
-                                <p>Xizmat haqi uchun</p>
-                                <p>
-                                    {' '}
-                                    {hisobb} so`m {`(${percentage * 100} %)`}
-                                </p>
+                            <div className='RedesignModulePaymentOrderSummarySection_info_wrap_service_fee'>
+                                <p className='RedesignModulePaymentOrderSummarySection_info_wrap_service_fee_item'>Xizmat haqi uchun</p>
+                                <p className='RedesignModulePaymentOrderSummarySection_info_wrap_service_fee_item'> {hisob} so'm </p>
                             </div>
                         )}
                     </div>
