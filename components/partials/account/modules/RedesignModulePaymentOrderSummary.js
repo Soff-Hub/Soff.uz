@@ -106,7 +106,6 @@ const RedesignModulePaymentOrderSummary = ({ ecomerce }) => {
                                         {el?.file_type}
                                     </p>
                                 </div>
-
                                 <div className='sell_card_price'>
                                     <a
                                         className='sell_card_delete'
@@ -120,16 +119,14 @@ const RedesignModulePaymentOrderSummary = ({ ecomerce }) => {
                                     <p className='w-100'>
                                         {addPeriodToThousands(
                                             el?.discount_price
-                                        )}
+                                        )}{' '}
                                         so'm
                                     </p>
                                 </div>
                             </div>
                         ))
                     ) : (
-                        <figure className='ps-block__total'>
-                            <Skeleton active paragraph={{ rows: 7 }} />
-                        </figure>
+                        <p className='no-products'>Savatda mahsulot yo'q</p>
                     )}
                 </div>
             </div>

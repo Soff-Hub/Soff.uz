@@ -2515,7 +2515,6 @@
         padding: 20px;
         margin: 0;
         height: 100%;
-
     }
     @media (max-width: 768px) {
         // padding: 10px;
@@ -2537,6 +2536,7 @@
             padding: 0 10px;
         }
     }
+
     .type_payment_description {
         font-family: 'Poppins';
         font-weight: 400;
@@ -2575,5 +2575,21 @@
         font-weight: 500;
         font-size: 15px;
         line-height: 30.5px;
+    }
+}
+
+.no-products {
+    font-family: 'Poppins';
+    font-weight: 600;
+    font-size: 25px;
+    line-height: 37.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: #000;
+
+    @media (max-width: 600px) {
+        font-size: 20px;
     }
 }
