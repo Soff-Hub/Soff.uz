@@ -6,10 +6,8 @@ import SearchResultsProducts_Card from './search-page-card/searchResultsProducts
 import Link from 'next/link';
 import SearchResultsServices_Card from './search-page-card/searchResultsServices_Card';
 
-export default function SearchAllProducts ({ data = {} }) {
-    // data obyektidan ma'lumotlarni ajratib olish
-    const { specialistsData = [], servicesData = [], productsData = [] } = data;
-    const { isLoading } = useApi();
+export default function SearchAllProducts ({ data }, isLoading) {
+    console.log('data =>>>>>>>>00', data);
 
     return (
         <div className='SearchAllProducts'>
@@ -28,7 +26,7 @@ export default function SearchAllProducts ({ data = {} }) {
                                 ))}
                         </>
                     ) : (
-                        productsData?.slice(0, 2).map((item, index) => (
+                        data?.slice(0, 2).map((item, index) => (
                             <div key={index}>
                                 <SearchResultsProducts_Card product={item} />
                             </div>
@@ -52,7 +50,7 @@ export default function SearchAllProducts ({ data = {} }) {
                                     ))}
                             </>
                         ) : (
-                            specialistsData.slice(0, 4).map((item, index) => (
+                            data?.slice(0, 4).map((item, index) => (
                                 <div key={index}>
                                     <SearchResultsSpecialists_Card
                                         data={item}
@@ -78,7 +76,7 @@ export default function SearchAllProducts ({ data = {} }) {
                 </div>
 
                 <div className='servicesDataSection'>
-                    <p className='SearchAllProductsTitle  '>Mutaxassislar</p>
+                    <p className='SearchAllProductsTitle  '>Xizmatlar</p>
                     <div className='Search_Results_Services_wrap'>
                         {isLoading ? (
                             <>
@@ -93,7 +91,7 @@ export default function SearchAllProducts ({ data = {} }) {
                                     ))}
                             </>
                         ) : (
-                            servicesData.slice(0, 4).map((item, index) => (
+                            data?.resluts?.slice(0, 4).map((item, index) => (
                                 <div key={index}>
                                     <SearchResultsServices_Card
                                         product={item}
@@ -135,7 +133,7 @@ export default function SearchAllProducts ({ data = {} }) {
                                     ))}
                             </>
                         ) : (
-                            productsData?.slice(0, 5).map((item, index) => (
+                            data?.resluts?.slice(0, 5).map((item, index) => (
                                 <div key={index}>
                                     <SearchResultsProducts_Card
                                         product={item}

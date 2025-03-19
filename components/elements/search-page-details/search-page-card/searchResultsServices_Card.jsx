@@ -36,7 +36,7 @@ export default function SearchResultsServices_Card ({ product }) {
                         alt=''
                     />
                     <p className='Search_Results_Services_card_infoPerson_isname'>
-                        {product.isName.slice(0, 15)}
+                        {product.title.slice(0, 15)}
                     </p>
                     <img
                         className='Search_Results_Services_card_infoPerson_status'

@@ -1,9 +1,11 @@
 import React from 'react';
 
 export default function SearchResultsSpecialists_Filter (data) {
+    console.log('SearchResultsSpecialists_Filter =>>>', data);
+    
     return (
         <div className='Search_Results_Specialists_form_box'>
-            <p className='countSpecialist'>{data.count.length} ta mutaxassis</p>
+            <p className='countSpecialist'>{data?.count?.length} ta mutaxassis</p>
             <form action='' className='Search_Results_Specialists_form'>
                 <div className='Search_Results_Specialists_form_inputBox'>
                     <input type='text' placeholder='Mutaxassisni izlash' />

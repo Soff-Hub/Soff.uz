@@ -1,9 +1,9 @@
 import React from 'react';
 import { Breadcrumb } from 'antd';
 
-export default function SearchResultsProducts_Card ({product}) {
-    console.log('product =>', product);
-
+export default function SearchResultsProducts_Card ({ product }) {
+    console.log('SearchResultsProducts_Card =>>>' ,product);
+    
     return (
         <div className='Search_Results_Products_card'>
             <div className='Search_Results_Products_card_body'>
@@ -14,13 +14,19 @@ export default function SearchResultsProducts_Card ({product}) {
                             title: 'Home',
                         },
                         {
-                            title: <a href=''>Application Center</a>,
+                            title: (
+                                <a href=''>{product?.category_data?.parent}</a>
+                            ),
                         },
                         {
-                            title: <a href=''>Application List</a>,
+                            title: (
+                                <a href=''>
+                                    {product?.category_data?.category}
+                                </a>
+                            ),
                         },
                         {
-                            title: 'An Application',
+                            title: product.slug,
                         },
                     ]}
                 />
@@ -34,7 +40,7 @@ export default function SearchResultsProducts_Card ({product}) {
                     <p className='Search_Results_Products_card_type'>
                         Fayl turi:{' '}
                         <span className='Search_Results_Products_card_boldtype'>
-                            {product.type}
+                            {product.file_type}
                         </span>
                     </p>
                     <p className='Search_Results_Products_card_price'>

@@ -10,14 +10,15 @@ import Head from 'next/head';
 
 const Products_Search_Results = () => {
     const inputEl = useRef(null);
-    const [keyword, setKeyword] = useState('');
     const [resultItems, setResultItems] = useState([]);
-    const [loading, setLoading] = useState(true); // Initially true
-    const [typeSelect, setTypeSelect] = useState('all');
     const debouncedSearchTerm = useDebounce(keyword, 1000);
     const [pageCountPlay, setPageCountPlay] = useState(0);
     const [currPagePlay, setCurrPagePlay] = useState(1);
     const { query } = useRouter();
+    
+    const [loading, setLoading] = useState(true); // Initially true
+    const [typeSelect, setTypeSelect] = useState('all');
+    const [keyword, setKeyword] = useState('');
 
     function handleSubmit (e) {
         e.preventDefault();
@@ -74,7 +75,7 @@ const Products_Search_Results = () => {
     if (!loading) {
         clearTextView = (
             <span className='ps-form__action'>
-                <p className='ps-form__action_search_btn' >izlash</p>
+                <p className='ps-form__action_search_btn'>izlash</p>
             </span>
         );
     } else {
@@ -126,7 +127,6 @@ const Products_Search_Results = () => {
                         <form
                             className='ps-form--quick-search'
                             method='get'
-                            action='/'
                             onSubmit={handleSubmit}>
                             <div
                                 className={

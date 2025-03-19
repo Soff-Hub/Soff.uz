@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default function SearchResultsSpecialists_Card ({data}) {
-    console.log(' asdasdasdasd  =>',data);
+    console.log(' SearchResultsSpecialists_Card  =>',data);  
     
     return (
         <div className='Search_Results_Specialists_Card'>
@@ -21,9 +21,10 @@ export default function SearchResultsSpecialists_Card ({data}) {
                 </p>
             </div>
             <p className='Search_Results_Specialists_Card_isName'>
-                {data.isName}
+                {data.title}
             </p>
             <p className='Search_Results_Specialists_Card_job'>{data.job}</p>
         </div>
+        
     );
 }

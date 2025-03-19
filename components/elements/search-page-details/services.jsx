@@ -1,38 +1,54 @@
 import React from 'react';
 import Search_Results_Services_filter from './search-page-filter/search-results-services-filter';
 import SearchResultsServices_Card from './search-page-card/searchResultsServices_Card';
-import useApi from '~/repositories/useApi';
 import { Skeleton } from 'antd';
 
 export default function Search_Results_Services ({ data }) {
-    console.log('Search_Results_Services =>', data);
-    const { isLoading } = useApi();
+    // console.log('sadasdsadasdasdasd +>>>>>>>>>', data);
 
     return (
         <div className='Search_Results_Services'>
             <Search_Results_Services_filter count={data} />
             <div className='Search_Results_Services_product'>
-                <div className='Search_Results_Services_wrap'>
-                    {isLoading ? (
-                        <>
-                            {Array(15)
-                                .fill(0)
-                                .map((_, i) => (
-                                    <Skeleton.Image
-                                        key={i}
-                                        active
-                                        className='Search_Results_Wrap_skeleton'
+                <div>
+                    {' '}
+                    <div className='Search_Results_Services_wrap'>
+                        {false ? (
+                            <>
+                                {Array(12)
+                                    .fill(0)
+                                    .map((_, i) => (
+                                        <Skeleton.Image
+                                            key={i}
+                                            active
+                                            className='Search_Results_Wrap_skeleton'
+                                        />
+                                    ))}
+                            </>
+                        ) : (
+                            data?.count?.map((item, index) => (
+                                <div key={index}>
+                                    <SearchResultsServices_Card
+                                        product={item}
                                     />
-                                ))}
-                        </>
-                    ) : (
-                        data &&
-                        data.map((item, index) => (
-                            <div key={index}>
-                                <SearchResultsServices_Card product={item} />
-                            </div>
-                        ))
-                    )}
+                                </div>
+                            ))
+                        )}
+                    </div>
+                    <div className='forMoreBox text-center'>
+                        <a className='forMore'>Ko'proq ko'rish</a>
+                        <svg
+                            xmlns='http://www.w3.org/2000/svg'
+                            width='18'
+                            height='18'
+                            viewBox='0 0 18 18'
+                            fill='none'>
+                            <path
+                                d='M11.6243 7.97984L7.86833 4.22389L8.85857 3.23364L14.305 8.68005L8.85857 14.1264L7.86833 13.1361L11.6243 9.38027H3.10156V7.97984H11.6243Z'
+                                fill='#312F30'
+                            />
+                        </svg>
+                    </div>
                 </div>
                 <div className='forAdds'></div>
             </div>

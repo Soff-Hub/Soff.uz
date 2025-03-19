@@ -1602,35 +1602,36 @@
     .productsDataSection {
         margin: 50px 0;
     }
-    .forMoreBox {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 12px 62px;
-        border-radius: 42.013px;
-        background: rgba(228, 228, 228, 1);
-        width: 40%;
-        gap: 10px;
-        margin: 30px auto 0;
-        @media (max-width: 700px) {
-            width: 80%;
-        }
-        @media (max-width: 500px) {
-            width: 100%;
-        }
-        &:hover {
-            background: rgba(228, 228, 228, 0.8);
-        }
-        .forMore {
-            margin: 0;
-            padding: 0;
-            text-wrap: nowrap;
-            color: #312f30;
-            font-family: 'Poppins';
-            font-size: 12.604px;
-            font-style: normal;
-            font-weight: 500;
-            line-height: normal;
-        }
+}
+
+.forMoreBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 62px;
+    border-radius: 42.013px;
+    background: rgba(228, 228, 228, 1);
+    width: 40%;
+    gap: 10px;
+    margin: 30px auto;
+    @media (max-width: 700px) {
+        width: 80%;
+    }
+    @media (max-width: 500px) {
+        width: 100%;
+    }
+    &:hover {
+        background: rgba(228, 228, 228, 0.8);
+    }
+    .forMore {
+        margin: 0;
+        padding: 0;
+        text-wrap: nowrap;
+        color: #312f30;
+        font-family: 'Poppins';
+        font-size: 12.604px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
     }
 }

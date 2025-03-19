@@ -59,11 +59,12 @@ export default function ProductCategoryScreen() {
                 />
                 <ProductsByCategory
                     data={data}
-                    page={page}
-                    handlePagination={number => {
-                        handlePageChange(number);
-                    }}
-                    isLoading={isLoading}
+                    current={page}
+                        page={page}
+                        handlePagination={number => {
+                            handlePageChange(number);
+                        }}
+                        isLoading={isLoading}
                 />
             </div>
             <FooterComponents/>

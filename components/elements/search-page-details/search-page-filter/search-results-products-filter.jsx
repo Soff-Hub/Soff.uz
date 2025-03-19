@@ -1,11 +1,12 @@
 import React from 'react';
 
-export default function SearchResultsProducts (data) {
-    console.log(data);
-
+export default function SearchResultsProductsFilter (data) {
+    console.log('data =><><>', data);
+    
+    
     return (
         <div className='Search_Results_Products_form_box container'>
-            <p className='countProduct'>{data.count.length} ta mahsulot</p>
+            <p className='countProduct'>{data?.count?.length} ta mahsulot</p>
             <form action='' className='Search_Results_Products_form'>
                 <div className='Search_Results_Products_form_inputBox'>
                     <input type='text' placeholder='Mutaxassisni izlash' />

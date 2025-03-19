@@ -11,7 +11,7 @@ export default function ProductsByCategory ({
     isLoading,
 }) {
     return (
-        <div id='products' className='container p-l-0 p-xl-0' >
+        <div id='products' className='container p-l-0 p-xl-0'>
             {isLoading && (
                 <div className={`product-list  p-loading gap-4 mt-5`}>
                     {Array(15)
@@ -30,7 +30,6 @@ export default function ProductsByCategory ({
                     <div className='card_container' key={index}>
                         <RedesignProduct product={item} />
                     </div>
-                    
                 ))}
             </div>
             <div className='row justify-content-center'>
