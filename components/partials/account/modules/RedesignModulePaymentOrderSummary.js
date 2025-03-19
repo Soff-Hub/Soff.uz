@@ -99,7 +99,7 @@ const RedesignModulePaymentOrderSummary = ({ ecomerce }) => {
                                 <div className='RedesignModulePaymentOrderSummary_Card_body'>
                                     <Link href={`/product/${el?.slug}`}>
                                         <p className='RedesignModulePaymentOrderSummary_Card_title'>
-                                            {el?.title}
+                                            {el?.title.slice(0,30)}
                                         </p>
                                     </Link>
                                     <p className='RedesignModulePaymentOrderSummary_Card_product_type'>
