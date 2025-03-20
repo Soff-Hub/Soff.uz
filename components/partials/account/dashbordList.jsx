@@ -1,4 +1,5 @@
 import React from 'react';
+import { useRouter } from "next/router";
 import { useSelector } from 'react-redux';
 import Example from './Chart';
 import SidebarLayout from '../SidebarLayout';
@@ -12,11 +13,23 @@ import DashboardSecondTabs from '../dashboard/DashboardSecondTabs';
 function DashbordList() {
     const { accountLinks, user } = useSelector((state) => state.auth);
     const { profile } = useSelector((state) => state.ecomerce);
+    const router = useRouter();
 
     return (
         <section className="ps-my-account ps-page--account pt-0">
             <p className="step-0 m-0"></p>
             <div className="container py-3">
+
+                {
+                    (!profile?.have_sale && profile?.role === 'seller') && 
+                    <div class="d-grid gap-2 my-3">
+                        <button onClick={() => router.push('/page/video-list')} className="btn btn-success fs-4">
+                            <span>Sotuvchilar uchun Video qo'llanma</span>
+                            <i className='fa-solid fa-video ms-3'></i>
+                        </button> 
+                    </div>
+                }
+
                 <DashboardStatsList />
 
                 <div

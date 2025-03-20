@@ -299,7 +299,7 @@ const PageContainer = ({
                                             ? ''
                                             : 'd-none'
                             }`}>
-                        <FaqSaidbar />
+                        {/* <FaqSaidbar /> */}
                     </div>
 
                     {children}
