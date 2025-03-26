@@ -24,6 +24,7 @@ import VideoLessonsProducts from '~/components/elements/products/VideoLessonsPro
 import SwiperPages from '~/components/details-components/swiper/swiper-page';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
 import FooterComponents from '~/components/blocks/footer/FooterComponents';
+import SkeletonProductDetail from '~/components/elements/skeletons/SkeletonProductDetail';
 
 const ProductDefaultPage = ({ defaultProducts }) => {
     const router = useRouter();
@@ -31,9 +32,11 @@ const ProductDefaultPage = ({ defaultProducts }) => {
     const [views, setViews] = useState('');
     const [isPlay, setIsPlay] = useState(null);
     const [run, setRun] = useState(false);
-    const [loading, setLoading] = useState(false);
+    // const [loading, setLoading] = useState(false);
     const { data: product } = useGet("productsDetails", `customer/documents/${pid}/`, undefined, { enabled: Boolean(pid) })
     const { data: similarProduct } = useGet("productSimilar", `customer/similar/${pid}/`, undefined, { enabled: Boolean(pid) })
+
+    console.log("product -> ", product)
 
     const { user } = useSelector(state => state.auth);
     const dispatch = useDispatch();
@@ -376,14 +379,19 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                                 }`}>
                             <div className='ps-container p-0'>
                                 <div className='ps-page__container'>
+                                    {!product && <SkeletonProductDetail/>}
                                     {productsDetails[product?.document?.content_type]}
                                 </div>
-                                <div className=' my-5'>
-                                    <h3 style={{ fontSize: "25px", fontWeight: 400 }} className='py-4 similar_title'>O’xshash mahsulotlar</h3>
-                                    <SwiperPages type={product?.document?.content_type}>
-                                        {productsDetailsSimilar[product?.document?.content_type]}
-                                    </SwiperPages>
-                                </div>
+                                {
+                                    product && (
+                                        <div className=' my-5'>
+                                            <h3 style={{ fontSize: "25px", fontWeight: 400 }} className='py-4 similar_title'>O’xshash mahsulotlar</h3>
+                                            <SwiperPages type={product?.document?.content_type}>
+                                                {productsDetailsSimilar[product?.document?.content_type]}
+                                            </SwiperPages>
+                                        </div>
+                                    )
+                                }
 
                                 {/* Yandex reklama kodi */}
                                 <div id='yandex_rtb_R-A-13331140-3'></div>

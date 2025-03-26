@@ -7,22 +7,24 @@ function FileImagesScroll({ product, views }) {
 
 
     useEffect(() => {
-        if (!containerRef.current) return;
+        const scrollContainer = containerRef.current;
+        if (scrollContainer) {
+            // Scrollni eng pastga tushirish
+            scrollContainer.scrollTop = scrollContainer.scrollHeight;
 
-        const images = containerRef.current.children;
-        if (images.length === 0) return;
-        images[images.length - 1].scrollIntoView({ behavior: 'instant' });
+            // 1 soniyadan keyin avtomatik yuqoriga qaytarish
+            setTimeout(() => {
+                scrollContainer.scrollTo({ top: 0, behavior: "smooth" });
+            }, 1000);
+        }
+    }, [product?.document?.images]); 
 
-        setTimeout(() => {
-            images[0]?.scrollIntoView({ behavior: 'smooth' });
-        }, 1500);
-    }, [product?.document?.images]);
 
     return (
         <div
             className="ps-product__thumbnail_seller">
             <figure className='figuree'>
-                <div className="ps-wrapper_seller" ref={containerRef}>
+                <div className="ps-wrapper_seller" ref={containerRef} >
                     {product?.document?.images?.length > 0
                         ? product?.document?.images?.map((item, i) => (
                             <>
@@ -35,6 +37,7 @@ function FileImagesScroll({ product, views }) {
                                         unoptimized
                                         className={` seller_image_conatiner`}
                                         objectFit="contain"
+                                style={{ flexShrink: 0, objectFit: "contain" }}
                                     />
                                 }
                             </>
