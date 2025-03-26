@@ -22,6 +22,8 @@ import WebsitesProduct from '~/components/elements/products/WebsitesProduct';
 import DesignDevelopmentProducts from '~/components/elements/products/DesignDevelopmentProducts';
 import VideoLessonsProducts from '~/components/elements/products/VideoLessonsProducts';
 import SwiperPages from '~/components/details-components/swiper/swiper-page';
+import FooterDefault from '~/components/shared/footers/FooterDefault';
+import FooterComponents from '~/components/blocks/footer/FooterComponents';
 
 const ProductDefaultPage = ({ defaultProducts }) => {
     const router = useRouter();
@@ -188,8 +190,10 @@ const ProductDefaultPage = ({ defaultProducts }) => {
 
     return (
         <>
-            <PageContainer
-                title={defaultProducts ? defaultProducts?.title : 'Loading...'}>
+        <PageContainer
+            footer={<FooterDefault />}
+            title={defaultProducts ? defaultProducts?.title : 'Loading...'}
+            boxed={true}>
 
                 <Head>
                     <title>
@@ -403,6 +407,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                         </div>
                     </div>
                 </div>
+                <FooterComponents/>
             </PageContainer>
         </>
     );
