@@ -1,5 +1,5 @@
 const nextSettings = {
-    optimizeFonts: false,
+    optimizeFonts: true,
     // disable eslint
     eslint: {
         ignoreDuringBuilds: true,

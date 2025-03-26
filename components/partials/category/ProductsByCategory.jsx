@@ -9,10 +9,12 @@ export default function ProductsByCategory ({
     handlePagination,
     isLoading,
 }) {
+    console.log(data?.results);
+
     return (
         <>
-            <div id='products' className='container  scientificResourcesWrap'>
-                {true    && (
+            <div id='products' className='container scientificResourcesWrap'>
+                {isLoading && (
                     <>
                         {Array(15)
                             .fill(0)

@@ -26,7 +26,7 @@ const ScientificResourcesFilterSection = ({
 
     return (
         <div>
-            <div className='d-xl-none d-block mt-5 container p-xl-0 p-l-0 '>
+            <div className='d-xl-none d-block my-5 container p-xl-0 p-l-0 '>
                 <div className='row mx-auto my-md-4 row-gap-3'>
                     <Select
                         className=' col-md-6  col-12  p-0 m-0 mr-md-2'

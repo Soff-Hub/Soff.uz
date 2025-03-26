@@ -46,13 +46,13 @@ export default function ItServicesCategories () {
     const router = useRouter();
 
     return (
-        <div className='container ItServicesCategories p-0'>
-            <h2 className='product-list-title '>Bizning IT servislarimiz</h2>
-            <div className='d-flex justify-content-center flex-wrap gap-4 mt-5 pt-4'>
+        <div className='container ItServicesCategories p-5'>
+            <h2 className='product-list-title pl-0'>Bizning IT servislarimiz</h2>
+            {/* <div className='d-flex justify-content-center flex-wrap gap-4 mt-5 pt-4'>
                 {itServicesCategoriesData.map((item, index) => {
                     return (
                         <div
-                            className=''
+                            className='IT-Services-card-box'
                             key={index}
                             style={{ cursor: 'pointer', width: '450px' }}
                             onClick={() => router.push(item.path)}>
@@ -76,7 +76,36 @@ export default function ItServicesCategories () {
                         </div>
                     );
                 })}
-            </div>
+            </div> */}
+            <div className="it-services-grid-container">
+  {itServicesCategoriesData.map((item, index) => {
+    return (
+      <div
+        className="it-services-card"
+        key={index}
+        onClick={() => router.push(item.path)}
+      >
+        <div className="it-services-card-inner">
+          <img
+            src={item.imgUrl}
+            className="it-services-card-image"
+            alt={item.title}
+          />
+          <div className="it-services-card-title-box">
+            <h3 className="it-services-card-title">
+              {item.title}
+            </h3>
+            <img
+              src="/static/img/ArrowRight.svg"
+              alt="Arrow Right"
+              className="it-services-card-arrow"
+            />
+          </div>
+        </div>
+      </div>
+    );
+  })}
+</div>
         </div>
     );
 }
