@@ -122,6 +122,47 @@
     font-family: 'Poppins';
     z-index: 0;
     margin: 65px 0 35px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+}
+
+// @media only screen and (max-width: 425px) {
+//     .hero-search-box {
+//         margin: 20px 0 !important;
+//     }
+// }
+
+/* Mobile devices (small phones) */
+@media screen and (max-width: 480px) {
+    .hero-search-box {
+        margin: 30px 0 20px;
+        padding: 8px;
+        max-width: 100%;
+    }
+}
+
+/* Medium-sized mobile devices */
+@media screen and (min-width: 481px) and (max-width: 767px) {
+    .hero-search-box {
+        margin: 40px 0 25px;
+        max-width: 95%;
+    }
+}
+
+/* Tablets */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    .hero-search-box {
+        margin: 50px 0 30px;
+        max-width: 80%;
+    }
+}
+
+/* Larger screens */
+@media screen and (min-width: 1024px) {
+    .hero-search-box {
+        margin: 65px 0 35px;
+        max-width: 708px;
+    }
 }
 
 .hero-search-input-loader {
@@ -139,8 +180,10 @@
     border-radius: 20px;
     display: block;
     width: 100%;
-}
-
+    ::placeholder {
+        color: red;
+    }
+} 
 .search-dropdown-box {
     position: absolute;
     right: 4px;
@@ -154,7 +197,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 140px;
+    width: 130px;
 }
 
 .video-card {
@@ -174,6 +217,7 @@
     object-fit: cover; /* Video ni o'rtaga joylash uchun */
     max-height: 100%;
     max-width: 100%;
+    margin-bottom: 20px;
 }
 
 @media only screen and (max-width: 576px) {

@@ -205,6 +205,9 @@ input[type='number']::-webkit-outer-spin-button {
     display: flex;
     justify-content: start;
     gap: 15px !important;
+    @media screen and (max-width: 1300px) {
+        gap: 10px !important;
+    }
     .Models_category_btn {
         display: flex;
         align-items: center;
@@ -242,9 +245,9 @@ input[type='number']::-webkit-outer-spin-button {
             }
         }
         .Models_category_btn_img {
-            width: 64px !important;
-            height: 50px !important;
-            border-radius: 0 7px 7px 0;
+            width: 45px !important;
+            height: 100% !important;
+            // border-radius: 0 7px 7px 0;
             background: #fff;
             @media screen and (max-width: 1300px) {
                 width: 55px !important;
@@ -687,6 +690,10 @@ input[type='number']::-webkit-outer-spin-button {
     height: 100%;
     flex-direction: column;
     border-radius: 11px;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+    &:hover {
+        transition: ease-in-out;
+    }
     .designDevelopmentCardImgBox {
         display: flex;
         justify-content: center;
@@ -778,6 +785,188 @@ input[type='number']::-webkit-outer-spin-button {
                 font-size: 20px;
                 line-height: 30px;
                 letter-spacing: 2%;
+                @media screen and (max-width: 650px) {
+                    font-weight: 600;
+                    font-size: 18px;
+                    line-height: 12px;
+                }
+                @media screen and (max-width: 500px) {
+                    font-weight: 600;
+                    font-size: 12px;
+                    line-height: 12px;
+                }
+                @media screen and (max-width: 350px) {
+                    font-weight: 400;
+                    font-size: 10px;
+                    line-height: 12px;
+                }
+            }
+            .buyIcon {
+                img {
+                    @media screen and (max-width: 650px) {
+                    }
+                    @media screen and (max-width: 500px) {
+                        width: 25px !important;
+                        height: 25px !important;
+                    }
+                    @media screen and (max-width: 350px) {
+                        width: 20px !important;
+                        height: 20px !important;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// _____________________________________video lessons style______________________________
+
+.videoLessonsProduct {
+    display: grid;
+    grid-template-columns: repeat(4, 335px);
+    gap: 20px;
+    row-gap: 43px;
+    margin-top: 64px;
+    padding: 0 !important;
+    align-items: stretch;
+
+    @media (max-width: 1400px) {
+        // LG: 3 ta ustun
+        grid-template-columns: repeat(4, 320px);
+        justify-content: center;
+    }
+    @media (max-width: 1300px) {
+        // LG: 3 ta ustun
+        grid-template-columns: repeat(4, 290px);
+        justify-content: center;
+    }
+    @media (max-width: 1200px) {
+        // LG: 3 ta ustun
+        grid-template-columns: repeat(4, 1fr);
+        justify-content: center;
+    }
+    @media (max-width: 992px) {
+        // MD: 2 ta ustun
+        grid-template-columns: repeat(3, 1fr);
+    }
+    @media (max-width: 768px) {
+        // SM: 2 ta ustun
+        grid-template-columns: repeat(2, 1fr);
+    }
+    @media (max-width: 576px) {
+        // XS: 2 ta ustun
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.videoLessonsCard {
+    width: 100%;
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    border-radius: 11px;
+    .videoLessonsCardImgBox {
+        display: flex;
+        justify-content: center;
+        position: relative;
+        background: #fff;
+        border-radius: 10px 10px 0 0;
+
+        .videoLessonsCardImg {
+            height: 200px;
+            object-fit: contain;
+            object-position: center;
+            border-radius: 10px 10px 0 0;
+            @media screen and (max-width: 700px) {
+                height: 180px;
+            }
+            @media screen and (max-width: 600px) {
+                height: 150px;
+            }
+            @media screen and (max-width: 500px) {
+                height: 125px;
+            }
+            @media screen and (max-width: 400px) {
+                height: 100px;
+            }
+            @media screen and (max-width: 300px) {
+                height: 100px;
+            }
+        }
+        .videoLessonsCardheard {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            padding: 5px;
+            border-radius: 100%;
+            background: #fff;
+        }
+    }
+
+    .videoLessonsCardBody {
+        background: #fff;
+        border-radius: 0 0 10px 10px;
+        padding: 18px 17px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        @media screen and (max-width: 650px) {
+            padding: 8px 14px 12px 14px;
+        }
+        @media screen and (max-width: 500px) {
+            padding: 6px 10px 11px 10px;
+        }
+        @media screen and (max-width: 350px) {
+            padding: 5px;
+        }
+
+        .videoLessonsCardTitle {
+            font-family: 'Poppins';
+            font-weight: 400;
+            font-size: 15px;
+            line-height: 22.5px;
+            letter-spacing: 2%;
+            @media screen and (max-width: 650px) {
+                font-weight: 400;
+                font-size: 13px;
+                line-height: 18px;
+            }
+            @media screen and (max-width: 500px) {
+                font-weight: 400;
+                font-size: 12px;
+                line-height: 15px;
+            }
+            @media screen and (max-width: 350px) {
+                font-weight: 300;
+                font-size: 8px;
+                line-height: 0px;
+            }
+        }
+
+        .videoLessonsCardPriceBox {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 18px;
+            @media screen and (max-width: 650px) {
+                margin-top: 12px;
+            }
+            @media screen and (max-width: 500px) {
+                margin-top: 8px;
+            }
+            @media screen and (max-width: 350px) {
+                margin-top: 3px;
+            }
+            .videoLessonsCardPrice {
+                font-family: 'Poppins' !important;
+                font-weight: 600 !important;
+                font-size: 22px !important;
+                line-height: 33px !important;
+                letter-spacing: 2% !important;
+                color: #000000;
+
                 @media screen and (max-width: 650px) {
                     font-weight: 600;
                     font-size: 18px;
