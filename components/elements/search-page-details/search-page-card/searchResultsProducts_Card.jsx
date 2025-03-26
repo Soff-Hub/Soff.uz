@@ -2,8 +2,7 @@ import React from 'react';
 import { Breadcrumb } from 'antd';
 
 export default function SearchResultsProducts_Card ({ product }) {
-    console.log('SearchResultsProducts_Card =>>>' ,product);
-    
+
     return (
         <div className='Search_Results_Products_card'>
             <div className='Search_Results_Products_card_body'>

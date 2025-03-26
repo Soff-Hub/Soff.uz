@@ -1,7 +1,6 @@
 import React from 'react';
 
 export default function SearchResultsSpecialists_Filter (data) {
-    console.log('SearchResultsSpecialists_Filter =>>>', data);
     
     return (
         <div className='Search_Results_Specialists_form_box'>

@@ -14,19 +14,18 @@ import useDebounce from '~/hooks/useDebounce';
 
 const Search_Results = () => {
     const inputEl = useRef(null);
-    const [loading, setLoading] = useState(true); // Initially true\
+    const [loading, 1] = useState(true); // Initially true\
     const [searchTerm, setSearchTerm] = useState('');
 
     const debouncedSearchTerm = useDebounce(searchTerm, 1000);
     const router = useRouter();
     const { page, keyword } = router.query;
-    console.log("keyword => ", keyword);
-    
 
     const queryKey = ['searchedItem', keyword, page];
-    const queryUrl = `${baseUrlUseApi}customer/same-google-search/?page=${1}&search=${keyword || ''}&type=all`;
+    const queryUrl = `${baseUrlUseApi}customer/same-google-search/?page=${1}&search=${
+        keyword || ''
+    }&type=all`;
     const { data, error, isLoading } = useApi(queryKey, queryUrl, 'GET');
-
 
     useEffect(() => {
         if (debouncedSearchTerm) {
@@ -36,9 +35,9 @@ const Search_Results = () => {
             });
         }
     }, [debouncedSearchTerm]);
-    
-    // console.log(data, error, isLoading);
 
+
+    
     // Views
     let clearTextView, loadingView;
     if (!loading) {
@@ -56,10 +55,12 @@ const Search_Results = () => {
     }
 
     const { asPath } = useRouter();
+
     const activeIndex = asPath.includes('#')
         ? asPath.slice(asPath.indexOf('#') + 1)
         : 'all';
 
+        
     const sellerTabItems = {
         all: <SearchAllProducts data={data?.results} isLoading={isLoading} />,
         specialists: (
@@ -68,13 +69,7 @@ const Search_Results = () => {
                 isLoading={isLoading}
             />
         ),
-        services: (
-            <Search_Results_Services
-                vices
-                data={data?.results}
-                isLoading={isLoading}
-            />
-        ),
+
         products: (
             <Search_Results_Products
                 data={data?.results}
@@ -83,6 +78,13 @@ const Search_Results = () => {
                 handlePagination={number => {
                     handlePageChange(number);
                 }}
+                isLoading={isLoading}
+            />
+        ),
+        services: (
+            <Search_Results_Services
+                vices
+                data={data?.results}
                 isLoading={isLoading}
             />
         ),
@@ -142,8 +144,7 @@ const Search_Results = () => {
                                 />
                             </a>
                         </Link>
-                        <div
-                            className='ps-form--quick-search'>
+                        <div className='ps-form--quick-search'>
                             <div
                                 className={
                                     keyword === ''

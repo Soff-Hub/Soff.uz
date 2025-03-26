@@ -1,7 +1,6 @@
 import React from 'react';
 
 export default function Search_Results_Services_filter (data) {
-    console.log('sadasdsadasdasdasd +>>>>>>>>>', data);
 
     return (
         <div className='Search_Results_Services_form_box'>

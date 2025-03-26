@@ -665,7 +665,7 @@ input[type='number']::-webkit-outer-spin-button {
     @media (max-width: 1200px) {
         grid-template-columns: repeat(4, 1fr);
         justify-content: center;
-        row-gap: 40px;
+        // row-gap: 40px;
     }
     @media (max-width: 992px) {
         row-gap: 35px;
@@ -684,7 +684,6 @@ input[type='number']::-webkit-outer-spin-button {
 }
 
 .designDevelopmentSkeleton {
-    width: 335px !important;
     height: 396px !important;
     border-radius: 10px;
 

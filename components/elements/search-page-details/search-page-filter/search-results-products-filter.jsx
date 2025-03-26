@@ -1,9 +1,8 @@
 import React from 'react';
 
 export default function SearchResultsProductsFilter (data) {
-    console.log('data =><><>', data);
-    
-    
+    console.log(data?.count);
+
     return (
         <div className='Search_Results_Products_form_box container'>
             <p className='countProduct'>{data?.count?.length} ta mahsulot</p>
@@ -24,6 +23,13 @@ export default function SearchResultsProductsFilter (data) {
                 </div>
                 <select name='' id=''>
                     <option value=''>Kategoriya</option>
+                    {data?.count?.category_data?.parent.map((item, index) =>
+                        console.log(item)()
+
+                        // <option key={index} value=''>
+                        //     {item}
+                        // </option>
+                    )}
                 </select>
                 <select name='' id=''>
                     <option value=''>Sub kategoriya</option>

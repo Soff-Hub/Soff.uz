@@ -4,8 +4,6 @@ import SearchResultsServices_Card from './search-page-card/searchResultsServices
 import { Skeleton } from 'antd';
 
 export default function Search_Results_Services ({ data }) {
-    // console.log('sadasdsadasdasdasd +>>>>>>>>>', data);
-
     return (
         <div className='Search_Results_Services'>
             <Search_Results_Services_filter count={data} />
@@ -26,7 +24,7 @@ export default function Search_Results_Services ({ data }) {
                                     ))}
                             </>
                         ) : (
-                            data?.count?.map((item, index) => (
+                            data?.map((item, index) => (
                                 <div key={index}>
                                     <SearchResultsServices_Card
                                         product={item}
@@ -35,8 +33,9 @@ export default function Search_Results_Services ({ data }) {
                             ))
                         )}
                     </div>
-                    <div className='forMoreBox text-center'>
-                        <a className='forMore'>Ko'proq ko'rish</a>
+                    {/* <Link href='#services'> */}
+                    <button className='forMoreBox'>
+                        Ko‘proq ko‘rish
                         <svg
                             xmlns='http://www.w3.org/2000/svg'
                             width='18'
@@ -48,7 +47,8 @@ export default function Search_Results_Services ({ data }) {
                                 fill='#312F30'
                             />
                         </svg>
-                    </div>
+                    </button>
+                    {/* </Link> */}
                 </div>
                 <div className='forAdds'></div>
             </div>
