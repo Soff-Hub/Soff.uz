@@ -19,6 +19,7 @@ import { useForm } from 'react-hook-form';
 import Input from '~/components/form/Input';
 import Progress from '~/components/progress/progress';
 import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
+import useDebounce from '~/hooks/useDebounce';
 const category_id = [];
 
 
@@ -26,6 +27,8 @@ const Posts = () => {
     const { TabPane } = Tabs;
     const Router = useRouter();
     const [tagSearchResult, setTagSearchResult] = useState([]);
+    const [singleTag, setSingleTag] = useState('');
+    const [singleCategory, setSingleCategory] = useState('');
     const [dataCategory, setDataCategory] = useState([]);
     const [tagItems, setTagItems] = useState([]);
     const { user } = useSelector((state) => state.auth);
@@ -39,6 +42,9 @@ const Posts = () => {
     const [disabled, setDeisabled] = useState(false);
     const [free, setFree] = useState(false);
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
+
+    const debouncedSearchTag = useDebounce(singleTag, 1000);
+    const debouncedSearchCategory = useDebounce(singleCategory, 1000);
 
 
 
@@ -119,11 +125,29 @@ const Posts = () => {
     }
 
     const onSearchTegsAktiv = async (value) => {
+        console.log("value -> ", value);
+        
         const ItemsData = await MediaRepository.getTagItmesAktive(value);
         if (ItemsData) {
             setTagItems(ItemsData);
         }
     }
+
+    useEffect(() => {
+        if(debouncedSearchTag){
+            console.log("singleTag => ", debouncedSearchTag);
+            
+                onSearchTegsAktiv(debouncedSearchTag)
+        }
+    }, [debouncedSearchTag]);
+
+    useEffect(() => {
+        if(debouncedSearchCategory){
+            console.log("debouncedSearchCategory => ", debouncedSearchCategory);
+            
+                onSearch(debouncedSearchCategory)
+        }
+    }, [debouncedSearchCategory]);
 
 
     const children = [];
@@ -366,20 +390,31 @@ const Posts = () => {
                                     </Tooltip>
                                 </div>
                                 <div className="rounded-3  p-0 m-0 d-flex flex-column col-md-8">
+                                    {/* <Select
+                                        mode="tags"
+                                        style={{ width: '100%' }}
+                                        onChange={(e) => {
+                                            handleChange(e)
+                                        }}
+                                        value={tagSearchResult}
+                                        onSearch={onSearchTegsAktiv}
+                                    >
+                                        {children}
+                                    </Select> */}
                                     <Select
                                         mode="tags"
                                         style={{ width: '100%' }}
                                         // onChange={handleChange}
                                         onChange={(e) => {
                                             handleChange(e)
-                                            // if (e?.at(-1)?.length < 20) {
-                                            //     handleChange(e)
-                                            // } else {
-                                            //     Modal.info({ content: 'Tegning maksimal uzunligi 20ta belgidan oshmasligi kerak', okText: "Tushunarli" })
-                                            // }
                                         }}
-                                        value={tagSearchResult}
-                                        onSearch={onSearchTegsAktiv}
+                                        defaultValue={tagSearchResult}
+                                        // value={tagSearchResult}
+                                        // onSearch={onSearchTegsAktiv}
+                                        onInput={e => {
+                                            const value = e.target.value.trim();
+                                            setSingleTag(value);
+                                        }}
                                     >
                                         {children}
                                     </Select>
@@ -397,7 +432,7 @@ const Posts = () => {
                                 </div>
 
                                 <div className="rounded-3  p-0 m-0 d-flex flex-column col-md-8">
-                                    <Select
+                                    {/* <Select
                                         mode="select"
                                         showSearch
                                         allowClear
@@ -407,7 +442,24 @@ const Posts = () => {
                                         }}
                                         onChange={onChange}
                                         onSearch={onSearch}
+                                    >
+                                        {options}
+                                    </Select> */}
+                                    <Select
+                                        mode="select"
+                                        showSearch
+                                        allowClear
+                                        style={{
+                                            width: '100%',
+                                            height: '47px',
+                                        }}
+                                        onChange={onChange}
+                                        // onSearch={onSearch}
                                     // value={categoryName}
+                                        onInput={e => {
+                                            const value = e.target.value.trim();
+                                            setSingleCategory(value);
+                                        }}
                                     >
                                         {options}
                                     </Select>
