@@ -1,6 +1,9 @@
 import React from 'react'
 
 function Description({ description }) {
+    console.log("description ", typeof(description));
+    console.log("description ", description.length);
+    
     return (
         <div className='ps-product__thumbnail_seller_secound'>
             <h3 style={{
@@ -11,7 +14,20 @@ function Description({ description }) {
                 marginBottom: "30px"
             }} >Mahsulot tavsifi</h3>
 
-            <div dangerouslySetInnerHTML={{ __html: description }} />
+            {
+                description.length > 0 ? (
+                    <div dangerouslySetInnerHTML={{ __html: description }} />
+                ) : (
+                    <div className="text-center">
+                        <img
+                            src='/static/img/noinfo.svg  '
+                            alt="Batafsil ma'lumot yo'q"
+                            width="35%"
+                        />
+                        <p>Hozircha muallif ushbu mahsuloti uchun tavsif qo‘shmagan.</p>
+                    </div>
+                )
+            }
         </div>
     )
 }

@@ -5,6 +5,7 @@ import FileActions from '../details-actions/file-actions';
 import SellerProfile from '../details-seller-profile/seller-profile';
 import Description from '../details-actions/description';
 import Tags from '../details-actions/tags';
+import OrderCardBtn from '../details-seller-profile/order-card-btn';
 
 function FileProductsDetails({ product }) { 
   
@@ -22,15 +23,20 @@ function FileProductsDetails({ product }) {
               views={product?.view_count}
             />
             <div className='seller_products_right_section'>
-              <FileActions product={product} />
-              <Tags tag={product?.tag} />
+              <div 
+                className='seller_products_actions_container'
+                style={{height:!(product?.tag.length > 0) && '100%'}}>
+                <FileActions product={product} />
+                <Tags tag={product?.tag} />
+              </div>
             </div>
           </div>
 
           <div className='ps-product__header_seller_secound'>
             <Description description={product?.description} />
             
-            <SellerProfile product={product}/>
+            {/* <SellerProfile product={product}/> */}
+            <OrderCardBtn product={product}/>
           </div>
 
         </div>
