@@ -9,6 +9,20 @@ import { useRouter } from 'next/router';
 import { setOneShopDoc } from '~/store/auth/slice';
 import { useDispatch, useSelector } from 'react-redux';
 
+export const fileColors = {
+    ".doc": "#007DFF",
+    ".xls": "#509C62",
+    ".xlsx": "#509C62",
+    ".ppt": "#DC8452",
+    ".pdf": "#E22C2F",
+    ".avi": "#6EB5E9",
+    "mp3": "#88549E",
+    "html": "#6D96A",
+    "zip": "#E4BD3E",
+    ".psd": "#0053BD",
+    ".pptx": "#DD7657"
+};
+
 function FileActions({ product }) {
     const { addSavedItem, wishlist, removeSavedItem } = useWishlist();
     const [open, setOpen] = useState(false);
@@ -88,8 +102,9 @@ function FileActions({ product }) {
     function handleBuynow(e) {
         e.preventDefault();
         if (state) {
-            dispatch(setOneShopDoc(product));
-            Router.push(`/account/checkout-one?id=${product?.id}`);
+            // dispatch(setOneShopDoc(product));
+            setCartOneItem(product.id);
+            Router.push(`/account/checkout?id=${product?.id}`);
         } else {
             Router.push(`/auth/login?id=${product?.id}`);
         }
@@ -97,20 +112,6 @@ function FileActions({ product }) {
 
 
     // content_type colors
-
-    const fileColors = {
-        ".doc": "#007DFF",
-        ".xls": "#509C62",
-        ".xlsx": "#509C62",
-        ".ppt": "#DC8452",
-        ".pdf": "#E22C2F",
-        ".avi": "#6EB5E9",
-        "mp3": "#88549E",
-        "html": "#6D96A",
-        "zip": "#E4BD3E",
-        ".psd": "#0053BD",
-        ".pptx": "#DD7657"
-    };
     
     return (
         <>
