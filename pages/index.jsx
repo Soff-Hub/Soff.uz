@@ -1,6 +1,7 @@
 import React from 'react';
 import FooterComponents from '~/components/blocks/footer/FooterComponents';
 import ResutsComponents from '~/components/blocks/header/Results/ResutsComponents';
+import HeroSearch from '~/components/blocks/hero';
 import HeroService from '~/components/blocks/hero/HeroService';
 import HomeCategories from '~/components/blocks/home-categories';
 import ItServicesCategories from '~/components/blocks/home-categories/ItServicesCategories';
@@ -16,7 +17,8 @@ function NewHomePage ({ tab, category }) {
                 title="Soff - barcha ma'lumotlar bazasi"
                 image='/static/img/soff/soff_green_white.png'
             />
-            <HeroService />
+            {/* <HeroService /> */}
+            <HeroSearch/>
             <HomeCategories />
             <ItServicesCategories />
             <HomeVideo />
