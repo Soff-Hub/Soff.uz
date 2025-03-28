@@ -21,9 +21,9 @@ function FormCheckoutInformation() {
     const ids = extractIds(data);
 
     return (
-        <div className='type_payment p-lg-4 p-md-5 p-4'>
-            <h3 className='type_payment_h3'>To'lov turini tanlang</h3>
-            <div class="type_payment_description">
+        <div className='type_payment p-lg-5 p-md-5 p-4'>
+            <h3 className='type_payment_h3'>To'lov turini tanlang:</h3>
+            {/* <div class="type_payment_description">
                 <p>
                     <i className="fa-solid fa-shield-halved text-success"></i>
                     <strong className='text-success'> 100% xavfsiz to‘lov: </strong>
@@ -34,7 +34,7 @@ function FormCheckoutInformation() {
                     <strong className='text-primary'> Maxfiylik kafolatlangan: </strong>
                     Karta ma’lumotlaringiz shifrlangan holda saqlanadi va begonalarga uzatilmaydi.
                 </p>
-            </div>
+            </div> */}
             <div className='bg-white'>
                 <CreditCard2 document={ids} />
             </div>
