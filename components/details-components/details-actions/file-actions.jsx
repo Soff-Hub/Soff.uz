@@ -113,7 +113,7 @@ function FileActions({ product }) {
     };
     
     return (
-        <div className='seller_products_actions_container'>
+        <>
             {contextHolder}
             <div className='seller_products_actions'>
                 <div className='d-flex justify-content-between align-items-center'>
@@ -219,7 +219,7 @@ function FileActions({ product }) {
                 <p>Mahsulotingizni savatga qo'shdingiz!</p>
                 <p></p>
             </Modal>
-        </div>
+        </>
     )
 }
 

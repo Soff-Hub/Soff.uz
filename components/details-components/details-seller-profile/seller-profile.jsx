@@ -32,7 +32,7 @@ function SellerProfile({ product }) {
                 </div>
             </div>
             <div className='w-100 d-flex flex-column gap-3'>
-                {/* <div className='w-100 d-flex align-items-center fs-3 gap-2'>
+                <div className='w-100 d-flex align-items-center fs-3 gap-2'>
                     <i className='fa-solid text-success fs-3 fa-circle-check'></i>
                     <span>Jami mahsulotlar soni:</span>
                     <span> 87 ta</span>
@@ -41,7 +41,7 @@ function SellerProfile({ product }) {
                     <i className='text-success fs-3 fa-solid fa-briefcase'></i>
                     <span>Sotilgan mahsulotlar soni:</span>
                     <span> 625 ta</span>
-                </div> */}
+                </div>
             </div>
             <Button
                 iconPosition='end'
