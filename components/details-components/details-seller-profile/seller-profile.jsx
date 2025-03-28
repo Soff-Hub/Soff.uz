@@ -48,7 +48,7 @@ function SellerProfile({ product }) {
                 style={{ height: '58px', fontSize: '20px' }}
                 type='primary'
                 className='w-100 seller_profile_button'
-                icon={<i class='fa-solid fa-rocket'></i>}
+                icon={<i className='fa-solid fa-rocket'></i>}
                 size={'large'}>
                 Buyurtma berish
             </Button>

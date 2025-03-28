@@ -1,9 +1,7 @@
 import React from 'react';
 import HeroSearchInput from './HeroSearchInput';
-import { useRouter } from 'next/router';
 
 export default function HeroService () {
-    const { query } = useRouter();
 
     return (
         <div className='container p-0'>
@@ -13,7 +11,7 @@ export default function HeroService () {
                         <p className='hero-title fw-semibold'>
                             Soff.uz – raqamli xizmatlar bozori!
                         </p>
-                        <p class='hero-description  fs-3 w-75  lh-base  custom-letter-spacing'>
+                        <p className='hero-description  fs-3 w-75  lh-base  custom-letter-spacing'>
                             Lorem Ipsum is simply dummy text of the printing and
                             typesetting industry. Lorem Ipsum has been the
                             industry's standard.

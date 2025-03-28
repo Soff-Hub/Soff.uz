@@ -17,7 +17,7 @@ function FileImagesScroll({ product, views }) {
                 scrollContainer.scrollTo({ top: 0, behavior: "smooth" });
             }, 1000);
         }
-    }, [product?.document?.images]); 
+    }, [product?.document?.images]);
 
 
     return (
@@ -27,20 +27,17 @@ function FileImagesScroll({ product, views }) {
                 <div className="ps-wrapper_seller" ref={containerRef} >
                     {product?.document?.images?.length > 0
                         ? product?.document?.images?.map((item, i) => (
-                            <>
-                                {
-                                    (item?.image_url || item?.thumbUrl || item?.url) && <Image
-                                        src={item?.image_url || item?.thumbUrl || item?.url || 'https://placehold.co/600x400'}
-                                        width={785}
-                                        height={614}
-                                        alt={"sellerImage"}
-                                        unoptimized
-                                        className={` seller_image_conatiner`}
-                                        objectFit="contain"
+                            (item?.image_url || item?.thumbUrl || item?.url) && <Image
+                                key={i}
+                                src={item?.image_url || item?.thumbUrl || item?.url || 'https://placehold.co/600x400'}
+                                width={785}
+                                height={614}
+                                alt={"sellerImage"}
+                                unoptimized
+                                className={` seller_image_conatiner`}
+                                objectFit="contain"
                                 style={{ flexShrink: 0, objectFit: "contain" }}
-                                    />
-                                }
-                            </>
+                            />
                         ))
                         : <Image
                             src={'https://placehold.co/600x400'}
