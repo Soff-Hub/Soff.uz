@@ -6,7 +6,7 @@ const MenuCategoriesDropdown = () => {
         <div className="menu--product-categories">
             <div className="menu__toggle menu__toggle__drop_down_item">
                     <a className='fs-3 font-weight-lighter'>
-                        <i class="fa-solid fa-angle-down mr-2"></i>
+                        <i className="fa-solid fa-angle-down mr-2"></i>
                         Ko‘rib chiqing
                     </a>
                 <div className="menu__toggle__drop_down">

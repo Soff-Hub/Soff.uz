@@ -45,16 +45,12 @@
 }
 
 // Products detils action scss
+.seller_products_right_section {
 
-.seller_products_actions_container {
-    height: 100%;
     max-width: 550px;
     width: 100%;
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-    gap: 10px;
-
+}
+.seller_products_actions_container {
     .seller_products_actions {
         background-color: white;
         height: 100%;

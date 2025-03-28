@@ -4,9 +4,10 @@ import FileImagesScroll from '../details-actions/file-images-scroll';
 import FileActions from '../details-actions/file-actions';
 import SellerProfile from '../details-seller-profile/seller-profile';
 import Description from '../details-actions/description';
+import Tags from '../details-actions/tags';
 
 function FileProductsDetails({ product }) { 
-
+  
   return (
     <div className='seller_container_products_details'>
       <div className="ps-container p-0">
@@ -20,7 +21,10 @@ function FileProductsDetails({ product }) {
               product={product}
               views={product?.view_count}
             />
-            <FileActions product={product} />
+            <div className='seller_products_right_section'>
+              <FileActions product={product} />
+              <Tags tag={product?.tag} />
+            </div>
           </div>
 
           <div className='ps-product__header_seller_secound'>

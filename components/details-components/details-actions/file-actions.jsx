@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { Button, message, Modal } from 'antd'
 import { DownloadOutlined, HeartOutlined, ShoppingCartOutlined } from '@ant-design/icons';
-import TagsComponents from './tagsComponents';
 import ShareAltOutlined from '@ant-design/icons/ShareAltOutlined';
 import { addPeriodToThousands } from '~/components/partials/account/price-formatter';
 import useWishlist from '~/hooks/useWishlist';
@@ -112,7 +111,7 @@ function FileActions({ product }) {
         ".psd": "#0053BD",
         ".pptx": "#DD7657"
     };
-
+    
     return (
         <div className='seller_products_actions_container'>
             {contextHolder}
@@ -198,18 +197,6 @@ function FileActions({ product }) {
                 </div>
 
             </div>
-            {product?.tags?.length >
-                0 && <div className=" d-flex justify-content-start align-content-center gap-3 flex-wrap">
-                    {
-                        product?.tags.map(
-                            (
-                                item,
-                                i
-                            ) => (
-                                <TagsComponents name={item.name || item} />
-                            )
-                        )}
-                </div>}
 
             <Modal
                 title='Muvaffaqqiyatli'

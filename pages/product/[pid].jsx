@@ -36,8 +36,6 @@ const ProductDefaultPage = ({ defaultProducts }) => {
     const { data: product } = useGet("productsDetails", `customer/documents/${pid}/`, undefined, { enabled: Boolean(pid) })
     const { data: similarProduct } = useGet("productSimilar", `customer/similar/${pid}/`, undefined, { enabled: Boolean(pid) })
 
-    console.log("product -> ", product)
-
     const { user } = useSelector(state => state.auth);
     const dispatch = useDispatch();
 
@@ -98,9 +96,6 @@ const ProductDefaultPage = ({ defaultProducts }) => {
             );
         }
     }, [pid, product?.slug]);
-
-
-    console.log(similarProduct);
 
 
     const steps = [
