@@ -2767,7 +2767,12 @@
         border: 1px solid rgba(0, 0, 0, 0.1);
         border-radius: 8px;
         position: relative;
-        height: 167px;
+        height: 218px;
+
+        @media (max-width: 425px) {
+            height: 140px !important;
+        }
+
         .sell_card_img{
             object-fit: contain;
         }
@@ -2823,6 +2828,11 @@
                 line-height: 27px;
                 letter-spacing: 0%;
             }
+
+            @media (max-width: 425px) {
+                width: 100px !important;
+            }
+    
         }
 
         @media (max-width: 425px) {
