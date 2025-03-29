@@ -377,6 +377,18 @@ input[type='number']::-webkit-outer-spin-button {
 // _____________________________scientificResources styles end____________________________
 
 // -----------------------------------------------ThreeDCategoriesFilterSecion style
+.category-btn:hover {
+    background-color: #00a44f;
+}
+.category-btn:hover .category-btn-title{
+    color: white;
+}
+.category-btn .category-btn-title {
+    color: #312F30
+}
+.sub-category-btn:hover .sub-category-btn-title{
+    color: #00a44f;
+}
 .Models_category_btn_wrap {
     display: flex;
     justify-content: start;
@@ -392,6 +404,7 @@ input[type='number']::-webkit-outer-spin-button {
             -2px 2px 2px rgba(0, 0, 0, 0.05) !important;
         background: #fff;
         border-radius: 7px;
+        padding: 12px 14.5px;
         cursor: pointer;
 
         &:hover {
@@ -415,14 +428,13 @@ input[type='number']::-webkit-outer-spin-button {
             font-size: 14.17px;
             line-height: 21.25px;
             letter-spacing: 0%;
-            padding: 12px 14.5px;
             @media screen and (max-width: 1300px) {
-                padding: 10px;
+                // padding: 10px;
             }
         }
         .Models_category_btn_img {
-            width: 45px !important;
-            height: 100% !important;
+            width: 26px !important;
+            height: 21px !important;
             // border-radius: 0 7px 7px 0;
             background: #fff;
             @media screen and (max-width: 1300px) {
@@ -441,6 +453,7 @@ input[type='number']::-webkit-outer-spin-button {
             -2px 2px 2px rgba(0, 0, 0, 0.05) !important;
         background: #fff;
         border-radius: 7px;
+        padding: 12px 14.5px;
         cursor: pointer;
 
         &:hover {
@@ -464,9 +477,9 @@ input[type='number']::-webkit-outer-spin-button {
             font-size: 14.17px;
             line-height: 21.25px;
             letter-spacing: 0%;
-            padding: 12px 14.5px;
+            // padding: 12px 14.5px;
             @media screen and (max-width: 1300px) {
-                padding: 10px;
+                // padding: 10px;
             }
         }
         .Models_category_btn_img {
@@ -474,6 +487,8 @@ input[type='number']::-webkit-outer-spin-button {
             height: 100% !important;
             // border-radius: 0 7px 7px 0;
             background: #fff;
+            width: 26px !important;
+            height: 21px !important;
             @media screen and (max-width: 1300px) {
                 width: 55px !important;
                 height: 50px !important;
@@ -513,7 +528,7 @@ input[type='number']::-webkit-outer-spin-button {
         font-size: 14.17px;
         line-height: 21.25px;
         letter-spacing: 0%;
-        padding: 14.5px;
+        // padding: 14.5px;
     }
     .Models_category_btn_img {
         width: 64px !important;
