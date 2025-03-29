@@ -3,6 +3,16 @@ import { useRouter } from 'next/router';
 import { Select, Skeleton } from 'antd';
 const Option = Select.Option;
 
+export const getTitleFromSlug = (array, slug) => {
+    let title = null
+    if(array && slug){
+        title = array.find(item => {
+            return item.slug == slug
+        }).name
+    }
+    return title
+}
+
 const ScientificResourcesFilterSection = ({
     breacrumb,
     count,

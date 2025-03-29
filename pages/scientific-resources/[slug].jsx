@@ -6,7 +6,7 @@ import ProductsByCategory from '~/components/partials/category/ProductsByCategor
 import { useRouter } from 'next/router';
 import useApi, { baseUrlUseApi } from '~/repositories/useApi';
 import FooterComponents from '~/components/blocks/footer/FooterComponents';
-import ScientificResourcesFilterSection from '~/components/elements/scientificResourcesFilterSection';
+import ScientificResourcesFilterSection, { getTitleFromSlug } from '~/components/elements/scientificResourcesFilterSection';
 
 export default function ProductCategoryScreen() {
     const router = useRouter();
@@ -40,14 +40,17 @@ export default function ProductCategoryScreen() {
         });
     };
 
+    const title = getTitleFromSlug(fourChildData.results, parentCategory)
+    
+
     return (
         <PageContainer
             footer={<FooterDefault />}
-            title={'Ilmiy ishlar kategoriyasi'}
+            title={title || 'Ilmiy ishlar kategoriyasi'}
             boxed={true}>
             <Meta
-                title={`${'Ilmiy ishlar kategoriyasi'}`}
-                description={`Ilmiy ishlar kategoriyasi: Audio materiallar Biznes rejalar Video materiallar Taqdimotlar Tayyor shablonlar Kurs ishlari Diplom ishlari Referatlar Mustaqil ishlar Labaratoriya Ishlari Dissertatsiya ishlari Testlar O'quv qo'llanmalar Dars ishlanmalar Tarqatma materiallar Amaliy ishlar Blankalar Ijodiy Ishlar Loyihalar Plakatlar Maqola Ixtiro patenti Namunaviy hujjatlar Statistika Elektron kitoblar Dasturlash tillari `}
+                title={`${title || 'Ilmiy ishlar kategoriyasi'}`}
+                description={`${title || 'Ilmiy ishlar kategoriyasi'} bo‘yicha eng yaxshi raqamli mahsulotlarni Soff.uz da toping. Ishonchli sotuvchilar va sifatli kontent!`}
             />
 
             <div className='ps-page--shop container p-lg-1'>

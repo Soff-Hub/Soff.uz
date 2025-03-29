@@ -8,6 +8,7 @@ const Meta = ({ title, image, description, keywords, author }) => {
 
     return (
         <Head>
+            <title>{title}</title>
             <meta property="og:type" content="website" />
             <meta property="og:title" content={title} />
             <meta
