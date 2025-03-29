@@ -40,17 +40,23 @@ export default function ProductCategoryScreen() {
         });
     };
 
-    const title = getTitleFromSlug(fourChildData.results, parentCategory)
-    
+    const title = getTitleFromSlug(fourChildData?.results, parentCategory)
+    const subTitle = getTitleFromSlug(childCategoryData?.results, childCategory)
+
+    const fullTitle = title && subTitle 
+    ? `${title} - ${subTitle}` 
+    : title 
+    ? title 
+    : "Ilmiy ishlar kategoriyasi";
 
     return (
         <PageContainer
             footer={<FooterDefault />}
-            title={title || 'Ilmiy ishlar kategoriyasi'}
+            title={fullTitle || 'Ilmiy ishlar kategoriyasi'}
             boxed={true}>
             <Meta
-                title={`${title || 'Ilmiy ishlar kategoriyasi'}`}
-                description={`${title || 'Ilmiy ishlar kategoriyasi'} bo‘yicha eng yaxshi raqamli mahsulotlarni Soff.uz da toping. Ishonchli sotuvchilar va sifatli kontent!`}
+                title={`${fullTitle || 'Ilmiy ishlar kategoriyasi'}`}
+                description={`${fullTitle || 'Ilmiy ishlar kategoriyasi'} bo‘yicha eng yaxshi raqamli mahsulotlarni Soff.uz da toping. Ishonchli sotuvchilar va sifatli kontent!`}
             />
 
             <div className='ps-page--shop container p-lg-1'>
