@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Input, Button, Card, Select, message } from "antd";
+import { Input, Button, Card, Select, message, Modal } from "antd";
 import { EditOutlined, CopyOutlined, FileTextOutlined, FilePptOutlined, FileWordOutlined, FilePdfOutlined, ScheduleOutlined, ReadOutlined, SolutionOutlined, ProfileOutlined, FileDoneOutlined, SnippetsOutlined, ProjectOutlined, PictureOutlined, ContainerOutlined, BulbOutlined, FileProtectOutlined, FileUnknownOutlined, CodeOutlined, SketchOutlined, GlobalOutlined } from "@ant-design/icons";
 import PageContainer from "~/components/layouts/PageContainer";
 import Meta from "~/components/shared/headers/Meta";
@@ -42,6 +42,7 @@ export default function OrderForm() {
         deadline: "",
     });
     const [copied, setCopied] = useState(false);
+    const [isBlocked, setIsBlocked] = useState(false);
 
     const handleChange = (name, value) => {
         setOrderDetails({ ...orderDetails, [name]: value });
@@ -61,12 +62,16 @@ export default function OrderForm() {
         navigator.clipboard.writeText(formattedText);
         setCopied(true);
         message.success("Buyurtma nusxalandi! Endi Telegram moderatoriga yuborishingiz mumkin.");
+    
         setTimeout(() => {
             setCopied(false);
-            window.open(MODERATOR_TELEGRAM, "_blank");
+            const newWindow = window.open(MODERATOR_TELEGRAM, "_blank");
+    
+            if (!newWindow || newWindow.closed || typeof newWindow.closed === "undefined") {
+                setIsBlocked(true); // Agar bloklansa, modalni ochish
+            }
         }, 2000);
     };
-
     return (
         <PageContainer
             footer={<FooterDefault />}
@@ -76,6 +81,20 @@ export default function OrderForm() {
                 title={'Raqamli mahsulot buyurtma berish'}
                 description={'Raqamli mahsulot buyurtma berish bo‘yicha eng yaxshi raqamli mahsulotlarni Soff.uz da toping. Ishonchli sotuvchilar va sifatli kontent!'}
             />
+            <Modal
+                title="Havola bloklandi"
+                open={isBlocked}
+                onCancel={() => setIsBlocked(false)}
+                footer={[
+                    <Button key="close" onClick={() => setIsBlocked(false)}>Yopish</Button>,
+                    <Button key="link" type="primary">
+                        <a href={MODERATOR_TELEGRAM} target="_blank" rel="noopener noreferrer">Havolani ochish</a>
+                    </Button>
+                ]}
+            >
+                <p>Brauzer xavfsizlik cheklovlari sababli Telegram havolasi avtomatik ochilmadi.</p>
+                <p>Havolani qo‘lda ochish uchun quyidagi tugmani bosing:</p>
+            </Modal>
             <Card 
                 title={
                     <span className="h4 p-0">
