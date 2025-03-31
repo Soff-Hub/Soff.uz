@@ -2,27 +2,28 @@ import React from 'react';
 import Link from 'next/link';
 import PageContainer from '~/components/layouts/PageContainer';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
+import FooterComponents from '~/components/blocks/footer/FooterComponents';
 
 const Page404 = () => {
     return (
-        <PageContainer footer={<FooterDefault />} title="Page not found.">
-            <div className="ps-page--404 py-5">
+        <PageContainer footer={<FooterDefault />} title="Sahifa topilmadi">
+            <div className="ps-page--404">
                 <div className="container">
                     <div className="ps-section__content">
-                        <figure>
-                            <img src="/static/img/404.png" alt="" />
-                            <h3>Oh! sahifa topilmadi</h3>
-                            <p>
+                        <img src="/static/img/noinfo.svg" alt="Sahifa topilmadi" />
+                        <h3>Sahifa topilmadi</h3>
+                        <p>
                             Siz qidirayotgan narsani topa olmadik.
-                            
-                                <Link href="/">
-                                    <a> Bosh sahifa</a>
-                                </Link>
-                            </p>
-                        </figure>
+                        </p>
+                        <p>
+                            <Link href="/">
+                                <a> Bosh sahifa</a>
+                            </Link>
+                        </p>
                     </div>
                 </div>
             </div>
+            <FooterComponents/>
         </PageContainer>
     );
 };
