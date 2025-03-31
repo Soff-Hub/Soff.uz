@@ -23,7 +23,6 @@ function Error() {
                     </div>
                 </div>
             </div>
-            <FooterComponents />
         </PageContainer>
     );
 }

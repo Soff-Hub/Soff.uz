@@ -26,10 +26,10 @@ const categories = [
     { name: "Ixtiro patenti", icon: <FileProtectOutlined /> },
     { name: "Namunaviy hujjat", icon: <FileUnknownOutlined /> },
     { name: "Biznes reja", icon: <FileWordOutlined /> },
-    { name: "3D model va Interier dizayn", icon: <SketchOutlined /> },
-    { name: "Dasturlash", icon: <CodeOutlined /> },
-    { name: "Dizayn", icon: <SketchOutlined /> },
-    { name: "Veb sayt", icon: <GlobalOutlined /> },
+    { name: "3D Dizayn va Vizualizatsiya", icon: <SketchOutlined /> },
+    { name: "Veb Dasturlash va IT Xizmatlari", icon: <CodeOutlined /> },
+    { name: "Grafik Dizayn va Shablonlar", icon: <SketchOutlined /> },
+    { name: "Hujjatlar va Professional Shablonlar", icon: <PictureOutlined /> },
 ];
 
 const MODERATOR_TELEGRAM = "https://t.me/soff_moderator";
@@ -149,7 +149,6 @@ export default function OrderForm() {
                 </Button>
             </Card>
 
-            <FooterComponents/>
         </PageContainer>
     );
 }

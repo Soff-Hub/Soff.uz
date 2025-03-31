@@ -374,7 +374,7 @@ const ScientificResourcesFilterSection = ({
                     {isLoading && (
                         <Skeleton.Node
                             active
-                            className={`skeletion-card small-full-card`}
+                            className={`skeletion-card small-full-card mb-3`}
                         />
                     )}
                 </div>

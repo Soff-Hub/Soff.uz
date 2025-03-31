@@ -77,7 +77,6 @@ export default function VideoLessons () {
                     isLoading={isLoading}
                 />
             </div>
-            <FooterComponents />
         </PageContainer>
     );
 }

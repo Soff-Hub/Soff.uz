@@ -48,35 +48,36 @@ import React from 'react';
 
 export default function ResultsComponent() {
   return (
-    <div className='results-container'>
+    <div className='results-container mt-4'>
       <div className="container">
-        <h2 className='product-list-title text-center mt-5'>Shu kunga qadar!</h2>
+        <h2 className='product-list-title mt-5'>Shu kunga qadar!</h2>
       </div>
       <div className='bg-success'>
         <div className='resultBox'>
-          <div className='resultsItems'>
-            <p className='resultsItemsRate'>5+</p>
-            <p className='resultsItemsTitle'>Yillik tajriba</p>
-          </div>
-          
-          <div className='divider'></div>
           
           <div className='resultsItems'>
-            <p className='resultsItemsRate'>864+</p>
-            <p className='resultsItemsTitle'>Tugatilgan ishlar</p>
+            <p className='resultsItemsRate'>200 000+</p>
+            <p className='resultsItemsTitle'>Raqamli mahsulotlar</p>
           </div>
           
           <div className='divider middle-divider'></div>
           
           <div className='resultsItems'>
-            <p className='resultsItemsRate'>2500+</p>
-            <p className='resultsItemsTitle'>Faol foydalanuvchilar</p>
+            <p className='resultsItemsRate'>500 000+</p>
+            <p className='resultsItemsTitle'>Oylik faol foydalanuvchilar</p>
+          </div>
+          
+          <div className='divider'></div>
+
+          <div className='resultsItems'>
+            <p className='resultsItemsRate'>50 000</p>
+            <p className='resultsItemsTitle'>Sotilgan mahuslotlar</p>
           </div>
           
           <div className='divider'></div>
           
           <div className='resultsItems'>
-            <p className='resultsItemsRate'>235+</p>
+            <p className='resultsItemsRate'>8 200+</p>
             <p className='resultsItemsTitle'>Mutaxassislar soni</p>
           </div>
         </div>

@@ -410,7 +410,6 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                         </div>
                     </div>
                 </div>
-                <FooterComponents/>
             </PageContainer>
         </>
     );

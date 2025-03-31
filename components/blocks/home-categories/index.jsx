@@ -5,7 +5,7 @@ import ItServicesCategories from './ItServicesCategories'
 export default function HomeCategories() {
 
     return (
-        <div className='products my-1'>
+        <div className='products mt-1'>
             <div className="container  p-0">
                 <div className={`product-list`}>
                     <ParentCategories />

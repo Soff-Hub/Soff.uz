@@ -34,8 +34,8 @@ export const VideoComponent = () => {
 export default function HomeVideo() {
 
     return (
-        <div className="container homePageVideoComponent">
-            <h2 className='pl-2 product-list-title'>Soff.uz - bu qanday loyiha?</h2>
+        <div className="container p-md-0 mt-4 homePageVideoComponent">
+            <h2 className='product-list-title'>Soff.uz - bu qanday loyiha?</h2>
             <VideoComponent />
         </div>
     )

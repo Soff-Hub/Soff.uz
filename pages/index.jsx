@@ -24,7 +24,6 @@ function NewHomePage ({ tab, category }) {
             <HomeVideo />
             <ResutsComponents />
             <SubProjects />
-            <FooterComponents />
         </PageLayout>
     );
 }
