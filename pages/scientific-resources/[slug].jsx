@@ -81,8 +81,6 @@ export default function ProductCategoryScreen() {
                     isLoading={isLoading}
                 />
             </div>
-            <FooterComponents/>
-
         </PageContainer>
     );
 }

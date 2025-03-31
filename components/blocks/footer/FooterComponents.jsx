@@ -36,9 +36,10 @@ const footerMenu = {
     },
     contact: {
         title: 'Biz bilan bog’lanish',
-        items: [{ name: 'Telefon', icon: '/static/img/linkPhone.png', contact: '+998 (91) 008 67 89', url: 'tel:+998910086789' },
-            { name: 'Telegram', icon: '/static/img/linkTelegram.png', contact: '@soff_moderator', url: 'https://t.me/soff_moderator' },
-            { name: 'Email', icon: '/static/img/linkEmail.png', contact: 'soffceo@gmail.com', url: 'mailto:soffceo@gmail.com' }],
+        items: [{ icon: 'fa-solid fa-phone-volume', contact: '+998 (91) 008 67 89', url: 'tel:+998910086789' },
+            { icon: 'fa-solid fa-paper-plane', contact: '@soff_moderator', url: 'https://t.me/soff_moderator' },
+            { icon: 'fa-solid fa-envelope', contact: 'soffceo@gmail.com', url: 'mailto:soffceo@gmail.com' },
+            { icon: 'fa-solid fa-location-dot', contact: '8/1 Bunyodkor Avenue, Toshkent shahri', url: 'https://yandex.uz/maps/-/CDxfY-1C' }]
     },
 };
 
@@ -131,13 +132,8 @@ export default function FooterComponents () {
                             key={i}
                             href={item.url}
                             className='d-flex align-items-center footer-link gap-3 footer-link fs-4 mb-3'>
-                            <img
-                                src={item.icon}
-                                alt={item.name}
-                                className='me-2'
-                                style={{ width: '20px' }}
-                            />
-                            {item.name}
+                            <i className={`${item.icon} text-success`}></i>
+                            {item.contact}
                         </a>
                     ))}
                 </div>

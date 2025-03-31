@@ -78,7 +78,7 @@
 .system-inner {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-evenly;
     gap: 10px;
     margin: 20px 0;
 }
@@ -238,9 +238,9 @@
 
     .system-card {
         flex: unset !important;
-        width: 150px;
+        width: 160px;
         min-height: 150px;
-        padding: 12px;
+        padding: 0px;
         height: 200px !important;
         span {
             font-size: 12px;
@@ -279,7 +279,7 @@
         cursor: pointer;
         position: relative;
         overflow: hidden;
-        width: 130px;
+        width: 140px;
     }
     .system-inner {
         justify-content: space-between !important;

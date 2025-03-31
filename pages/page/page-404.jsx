@@ -23,7 +23,6 @@ const Page404 = () => {
                     </div>
                 </div>
             </div>
-            <FooterComponents/>
         </PageContainer>
     );
 };

@@ -28,7 +28,7 @@ function FileProductsDetails({ product }) {
           <div className="ps-product__header_seller ">
             <FileImagesScroll
               product={product}
-              views={product?.view_count}
+              views={product?.view}
             />
             <div className='seller_products_right_section'>
               <div 

@@ -110,7 +110,6 @@ export default function SellersPage () {
                         </div>
                     </div>
                 </div>
-                <FooterComponents />
             </PageContainer>
         </div>
     );
