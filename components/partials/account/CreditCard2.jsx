@@ -7,7 +7,6 @@ import Router from 'next/router';
 import useCart from '~/hooks/useCart';
 
 const CreditCard2 = ({ document, type }) => {
-    console.log('document -> ', document);
     const { user } = useSelector(state => state.auth);
     const [numberCardVal, SetNumberCardVal] = useState(null);
     const [message, setMessage] = useState(true);

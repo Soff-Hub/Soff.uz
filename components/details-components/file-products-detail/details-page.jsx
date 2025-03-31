@@ -9,10 +9,6 @@ import OrderCardBtn from '../details-seller-profile/order-card-btn';
 import Link from 'next/link';
 
 function FileProductsDetails({ product }) { 
-  console.log("product ", product);
-  console.log("product ", product?.category?.name);
-  
-  
   return (
     <div className='seller_container_products_details'>
       <div className="ps-container p-0">

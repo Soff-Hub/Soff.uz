@@ -9,8 +9,6 @@ const Checkout = () => {
     const router = useRouter();
     if (!router.isReady) return null;
     const ecomerce = useSelector((state) => state.ecomerce.cartDataItems);
-    console.log("ecomerce -> ", ecomerce);
-    
 
     return (
         <div className='ps-checkout ps-section--shopping p-0'>
