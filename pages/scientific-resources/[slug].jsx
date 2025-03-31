@@ -40,6 +40,12 @@ export default function ProductCategoryScreen() {
         });
     };
 
+    console.log('fourChildData => ', fourChildData);
+    console.log('childCategoryData => ', childCategoryData);
+    console.log('parentCategory => ', parentCategory);
+    console.log('childCategory => ', childCategory);
+    
+
     const title = getTitleFromSlug(fourChildData?.results, parentCategory)
     const subTitle = getTitleFromSlug(childCategoryData?.results, childCategory)
 

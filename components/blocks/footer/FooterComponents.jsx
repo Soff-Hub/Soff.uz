@@ -3,66 +3,42 @@ import React from 'react';
 const footerMenu = {
     soff: {
         logoImg: '/static/img/soff.svg',
-        title: 'Intellektual mulk marketi',
+        title: 'Raqamli xizmatlar bozori!',
         path: '#',
     },
     companies: {
-        title: 'Kompaniya',
+        title: 'Soff Loyihalari',
         links: [
-            'Biz haqimizda',
-            'Soff Study',
-            'Soff CRM',
-            'Soff HUB',
-            'Soff Birja',
-        ],
-        path: [
-            '#',
-            'https://soffstudy.uz/',
-            'https://soffcrm.uz/',
-            'https://soffhub.uz/',
-            'https://birja.soff.uz/',
+            { name: 'Soff Birja', url: 'https://birja.soff.uz/' },
+            { name: 'Soff Study', url: 'https://soffstudy.uz/' },
+            { name: 'Soff CRM', url: 'https://soffcrm.uz/' },
+            { name: 'Soff Hub', url: 'https://soffhub.uz/' }
         ],
     },
     services: {
-        title: 'Xizmatlar katalogi',
-        links: [
-            'Ilmiy ishlar',
-            '3D modellar',
-            'Dizayn shablonlari',
-            'Veb saytlar',
-            'Video darsliklar',
+        title: 'Soff.uz xizmatlari',
+        links: [    
+            { name: 'Ilmiy ishlar', url: '/scientific-resources/all' },
+            { name: '3D modellar', url: '#' },
+            { name: 'Dizayn shablonlari', url: '#' },
+            { name: 'Veb saytlar', url: '#' },
+            { name: 'Video darsliklar', url: '#' }
         ],
-        path: ['#', '#', '#', '#', '#'],
     },
-    sociols: {
+    social: {
         title: 'Ijtimoiy tarmoqlarimiz',
-        icons: [
-            '/static/img/youtube.svg',
-            '/static/img/telegram.svg',
-            '/static/img/instagram.svg',
-            '/static/img/linkedin.svg',
-        ],
-        links: ['@soffuz', 't.me/soff_uz', 'soffuz_', 'Soff Hub'],
-        path: [
-            'https://www.youtube.com/@soffuz',
-            'https://t.me/Soffstudyuz',
-            'https://www.instagram.com/soffuz_?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==',
-            'https://www.linkedin.com/company/soffhub/posts/?feedView=all',
+        items: [
+            { name: 'YouTube', icon: '/static/img/youtube.svg', username: '@soffuz', url: 'https://www.youtube.com/@soffuz' },
+            { name: 'Telegram', icon: '/static/img/telegram.svg', username: 't.me/soff_uz', url: 'https://t.me/soff_uz' },
+            { name: 'Instagram', icon: '/static/img/instagram.svg', username: 'soffuz_', url: 'https://www.instagram.com/soffuz_?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==' },
+            { name: 'LinkedIn', icon: '/static/img/linkedin.svg', username: 'Soff Hub', url: 'https://www.linkedin.com/company/soffhub/posts/?feedView=all' }
         ],
     },
     contact: {
         title: 'Biz bilan bog’lanish',
-        icons: [
-            '/static/img/linkPhone.png',
-            '/static/img/linkTelegram.png',
-            '/static/img/linkEmail.png',
-        ],
-        links: ['+998 (91) 008 67 89', '@soffuz_support', 'soffuz@gmail.com'],
-        path: [
-            'tel:+998910086789',
-            'https://t.me/soffuzsupport_bot',
-            'soffuz@gmail.com',
-        ],
+        items: [{ name: 'Telefon', icon: '/static/img/linkPhone.png', contact: '+998 (91) 008 67 89', url: 'tel:+998910086789' },
+            { name: 'Telegram', icon: '/static/img/linkTelegram.png', contact: '@soff_moderator', url: 'https://t.me/soff_moderator' },
+            { name: 'Email', icon: '/static/img/linkEmail.png', contact: 'soffceo@gmail.com', url: 'mailto:soffceo@gmail.com' }],
     },
 };
 
@@ -99,9 +75,9 @@ export default function FooterComponents () {
                         <a
                             target='_blank'
                             key={i}
-                            href={footerMenu.companies.path[i]}
+                            href={link.url}
                             className='footer-link d-block hover:text-success fs-4 mb-3'>
-                            {link}
+                            {link.name}
                         </a>
                     ))}
                 </div>
@@ -115,9 +91,9 @@ export default function FooterComponents () {
                         <a
                             target='_blank'
                             key={i}
-                            href={footerMenu.services.path[i]}
+                            href={link.url}
                             className='footer-link d-block fs-4 mb-3'>
-                            {link}
+                            {link.name}
                         </a>
                     ))}
                 </div>
@@ -125,21 +101,21 @@ export default function FooterComponents () {
                 {/* Ijtimoiy tarmoqlar */}
                 <div className='col-xl-2 col-lg-3 col-md-6 col-sm-12 col-12'>
                     <h5 className='fw-semibold fs-2 mb-5'>
-                        {footerMenu.sociols.title}
+                        {footerMenu.social.title}
                     </h5>
-                    {footerMenu.sociols.links.map((link, i) => (
+                    {footerMenu.social.items.map((item, i) => (
                         <a
                             target='_blank'
                             key={i}
-                            href={footerMenu.sociols.path[i]}
+                            href={item.url}
                             className='d-flex align-items-center gap-3 footer-link fs-4 mb-3'>
                             <img
-                                src={footerMenu.sociols.icons[i]}
-                                alt={link}
+                                src={item.icon}
+                                alt={item.name}
                                 className='me-2'
                                 style={{ width: '20px' }}
                             />
-                            {link}
+                            {item.name}
                         </a>
                     ))}
                 </div>
@@ -149,19 +125,19 @@ export default function FooterComponents () {
                     <h5 className='fw-semibold fs-2 mb-5'>
                         {footerMenu.contact.title}
                     </h5>
-                    {footerMenu.contact.links.map((link, i) => (
+                    {footerMenu.contact.items.map((item, i) => (
                         <a
                             target='_blank'
                             key={i}
-                            href={footerMenu.contact.path[i]}
+                            href={item.url}
                             className='d-flex align-items-center footer-link gap-3 footer-link fs-4 mb-3'>
                             <img
-                                src={footerMenu.contact.icons[i]}
-                                alt={link}
+                                src={item.icon}
+                                alt={item.name}
                                 className='me-2'
                                 style={{ width: '20px' }}
                             />
-                            {link}
+                            {item.name}
                         </a>
                     ))}
                 </div>

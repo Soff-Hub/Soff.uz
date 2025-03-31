@@ -6,8 +6,12 @@ import SellerProfile from '../details-seller-profile/seller-profile';
 import Description from '../details-actions/description';
 import Tags from '../details-actions/tags';
 import OrderCardBtn from '../details-seller-profile/order-card-btn';
+import Link from 'next/link';
 
 function FileProductsDetails({ product }) { 
+  console.log("product ", product);
+  console.log("product ", product?.category?.name);
+  
   
   return (
     <div className='seller_container_products_details'>
@@ -15,7 +19,11 @@ function FileProductsDetails({ product }) {
         <div className="ps-product--detail_seller my-5">
           <div>
             <p className='titleh3' style={{ fontWeight: 600, fontSize: "25px", lineHeight: "37.5px", color: "#312F30", margin: 0 }}>{product?.title}</p>
-            <p className='m-0 fs-3'>{product?.category?.name}</p>
+            <Link href={`/scientific-resources/${product?.category?.slug}?childCategory=${product?.category?.slug}`}>
+              <a>
+                <p className='m-0 fs-3'>{product?.category?.name}</p>
+              </a>
+            </Link>
           </div>
           <div className="ps-product__header_seller ">
             <FileImagesScroll
