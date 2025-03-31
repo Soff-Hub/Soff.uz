@@ -57,7 +57,6 @@ export default function ProductCategoryScreen() {
 
     return (
         <PageContainer
-            footer={<FooterDefault />}
             title={fullTitle || 'Ilmiy ishlar kategoriyasi'}
             boxed={true}>
             <Meta
