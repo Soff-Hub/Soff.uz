@@ -12,13 +12,13 @@ const itServicesCategoriesData = [
     },
     {
         title: '3D Dizayn va Vizualizatsiya',
-        imgUrl: '/static/img/Social-Media-Reklama.png',
+        imgUrl: '/static/img/3d-design.png',
         bgColor: '#02732f',
         path: '/orders',
     },
     {
         title: 'Grafik Dizayn va Shablonlar',
-        imgUrl: '/static/img/Dizayn.png',
+        imgUrl: '/static/img/dizayn-2.png',
         bgColor: '#4d1727',
         path: '/orders',
     },

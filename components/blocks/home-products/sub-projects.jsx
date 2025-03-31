@@ -32,7 +32,7 @@ export default function SubProjects() {
             linkMask: 'SOFF BIRJA - Intellektual mulk birjasi',
         },
         {
-            logoImg: '/static/img/soffstudy.png',
+            logoImg: '/static/img/soff-study.png',
             link: 'https://soffstudy.uz',
             linkMask: "SOFF STUDY - Zamonaviy kasblarni o'qitish markazi",
         },

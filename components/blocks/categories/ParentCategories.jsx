@@ -5,32 +5,32 @@ import React, { useState } from 'react';
 const parentCategoriesData = [
     {
         title: 'Ilmiy ishlar',
-        imgUrl: '/static/img/ilmiy-ishlar.png',
+        imgUrl: '/static/img/ilmiy-ishlar-2.png',
         path: '/scientific-resources/all',
     },
     {
         title: '3D moddellar va Interier dizaynlar',
-        imgUrl: '/static/img/3D-moddellar-va-Interier-dizaynlar.png',
+        imgUrl: '/static/img/3D-moddellar-va-Interier-dizaynlar-2.png',
         path: '/3d-models-and-interior-designs',
     },
     {
         title: 'Dizayn shablonlari',
-        imgUrl: '/static/img/dizayn-shablonlari.png',
+        imgUrl: '/static/img/dizayn-shablonlari-2.png',
         path: '/design-developments',
     },
     {
         title: 'Veb saytlar',
-        imgUrl: '/static/img/veb-saytlar.png',
+        imgUrl: '/static/img/veb-saytlar-2.png',
         path: '/websites',
     },
     {
         title: 'Turli sohalar uchun shablonlar',
-        imgUrl: '/static/img/ilmiy-ishlar.png',
+        imgUrl: '/static/img/shablonlar-3.png',
         path: '/templates',
     },
     {
         title: 'Video darsliklar',
-        imgUrl: '/static/img/video-darsliklar.png',
+        imgUrl: '/static/img/video-darsliklar-2.png',
         path: '/video-lessons',
     },
 ];

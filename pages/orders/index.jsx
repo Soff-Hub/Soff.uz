@@ -59,7 +59,7 @@ export default function OrderForm() {
     const formattedText = `📌 Yangi buyurtma:\n🔹 Kategoriya: ${orderDetails.category}\n🔹 Tavsif: ${orderDetails.description}\n🔹 Byudjet: ${orderDetails.budget}\n🔹 Muddati: ${orderDetails.deadline}`;
 
     const handleCopy = () => {
-        navigator.clipboard.writeText(formattedText);
+        navigator?.clipboard.writeText(formattedText);
         setCopied(true);
         message.success("Buyurtma nusxalandi! Endi Telegram moderatoriga yuborishingiz mumkin.");
     
@@ -82,7 +82,7 @@ export default function OrderForm() {
                 description={'Raqamli mahsulot buyurtma berish bo‘yicha eng yaxshi raqamli mahsulotlarni Soff.uz da toping. Ishonchli sotuvchilar va sifatli kontent!'}
             />
             <Modal
-                title="Havola bloklandi"
+                title="Havolani oching!"
                 open={isBlocked}
                 onCancel={() => setIsBlocked(false)}
                 footer={[
