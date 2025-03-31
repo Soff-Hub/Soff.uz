@@ -32,6 +32,8 @@ function FileActions({ product }) {
     const [basket, setBasket] = useState(false);
     const [messageApi, contextHolder] = message.useMessage();
     const state = useSelector((state) => state.auth.user?.access);
+    console.log("state -? ", state);
+    
     const dispatch = useDispatch();
 
     // Savatga qo'shish
@@ -101,9 +103,8 @@ function FileActions({ product }) {
     //  Hoziroq xarid qilish
     function handleBuynow(e) {
         e.preventDefault();
+        setCartOneItem(product.id);
         if (state) {
-            // dispatch(setOneShopDoc(product));
-            setCartOneItem(product.id);
             Router.push(`/account/checkout?id=${product?.id}`);
         } else {
             Router.push(`/auth/login?id=${product?.id}`);

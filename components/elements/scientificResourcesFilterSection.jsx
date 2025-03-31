@@ -261,10 +261,8 @@ const ScientificResourcesFilterSection = ({
                                                                             childCategory:
                                                                                 item.slug,
                                                                         },
-                                                                    }) &&
-                                                                    setChildCategoryOpen(
-                                                                        !childCategoryOpen
-                                                                    )}
+                                                                    })
+                                                                }
                                                                 style={{
                                                                     cursor: 'pointer'
                                                                 }}

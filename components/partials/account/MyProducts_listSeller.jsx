@@ -16,6 +16,8 @@ export default function PurchasedProducts() {
   const { data, isLoading } = useGet("approved-product", `seller/approved-product/?page=1&category=&start_date=&end_date=&search=`, undefined, { enabled: Boolean('approved-product') });
   const { data: categoryList } = useGet("global-childern", `seller/admin/global-childern/`, undefined, { enabled: Boolean('global-childern') });
 
+  console.log("data -> ", data);
+  
   if (!data) return null;
   if (!categoryList) return null;
 
@@ -86,14 +88,12 @@ export default function PurchasedProducts() {
 
   return (
     <Card 
-      title={
-        <div className="d-flex align-items-center gap-2 fw-bold fs-4">
-          <ShoppingCartOutlined /> <span>Xarid Qilingan Materiallar</span>
-        </div>
-      }
       className="p-4 mb-3"
     >
       <div className="container mt-4">
+        <div className="d-flex align-items-center gap-2 fs-4 my-3">
+          <ShoppingCartOutlined /> <span className="fw-bold">Xarid Qilingan Materiallar</span>
+        </div>
         <div className="row g-3 align-items-center">
           <div className="col-12 col-sm-6">
             <Input
