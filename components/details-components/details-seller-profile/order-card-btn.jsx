@@ -10,6 +10,31 @@ function OrderCardBtn({ product }) {
     return (
         <div className='seller_products_actions_secound'>
             <div className='seller_profile'>
+                <div className='img_container'>
+                    <Image
+                        src={
+                            product?.seller?.image_url ||
+                            '/static/img/ozodbek.png'
+                        }
+                        alt='seller-profile'
+                        height={200}
+                        width={200}
+                    />
+                </div>
+                <div>
+                    <Link
+                        href='/seller/[pid]'
+                        as={`/seller/${product.seller.id}`}>
+                        <h3 className='pointer'>
+                            {product?.seller?.first_name}{' '}
+                            {product?.seller?.last_name}
+                        </h3>
+                    </Link>
+
+                    {/* <Rate allowHalf defaultValue={3.5} /> */}
+                </div>
+            </div>
+            <div className='seller_profile'>
                 <div className='d-flex align-items-center'>
                     <p style={{ fontSize: 36 }}>🔍</p>
                     <p className='ms-3 font-weight-bold' style={{ fontSize: 22, color: '#312F30' }}>
