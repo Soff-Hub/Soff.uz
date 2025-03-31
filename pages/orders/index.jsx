@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Input, Button, Card, Select, message, Modal } from "antd";
+import { Input, Button, Card, Select, message, Modal, Alert } from "antd";
 import { EditOutlined, CopyOutlined, FileTextOutlined, FilePptOutlined, FileWordOutlined, FilePdfOutlined, ScheduleOutlined, ReadOutlined, SolutionOutlined, ProfileOutlined, FileDoneOutlined, SnippetsOutlined, ProjectOutlined, PictureOutlined, ContainerOutlined, BulbOutlined, FileProtectOutlined, FileUnknownOutlined, CodeOutlined, SketchOutlined, GlobalOutlined } from "@ant-design/icons";
 import PageContainer from "~/components/layouts/PageContainer";
 import Meta from "~/components/shared/headers/Meta";
@@ -103,6 +103,13 @@ export default function OrderForm() {
                 } 
                 className="p-4 max-w-md mx-auto"
                 styles={{ header: { padding: 0 } }}>
+                <Alert
+                        message="Diqqat!"
+                        description="Iltimos, buyurtma berishdan oldin platformamizda mavjud mahsulotlardan qidirib ko‘ring. Kerakli mahsulotni topa olmasangizgina, yangi buyurtma berishingiz mumkin."
+                        type="warning"
+                        showIcon
+                        closable
+                    />
                 <Select
                     placeholder="Kategoriya tanlang"
                     className="mb-2 mt-3 w-100"
