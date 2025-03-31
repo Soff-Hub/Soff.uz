@@ -32,8 +32,6 @@ function FileActions({ product }) {
     const [basket, setBasket] = useState(false);
     const [messageApi, contextHolder] = message.useMessage();
     const state = useSelector((state) => state.auth.user?.access);
-    console.log("state -? ", state);
-    
     const dispatch = useDispatch();
 
     // Savatga qo'shish

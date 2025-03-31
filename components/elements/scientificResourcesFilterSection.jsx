@@ -5,7 +5,6 @@ const Option = Select.Option;
 
 export const getTitleFromSlug = (array, slug) => {
     let title = null
-    console.log("array && slug -> ", array && slug);
     
     if(array && slug){
         title = array.find(item => {
@@ -21,8 +20,6 @@ const ScientificResourcesFilterSection = ({
     isLoading,
     childCategoryData,
 }) => {
-    console.log(breacrumb);
-
     const [expanded, setExpanded] = useState(false);
     const [dropDownMenu, setDropdownMenu] = useState(false);
     const [childCategoryOpen, setChildCategoryOpen] = useState(false);

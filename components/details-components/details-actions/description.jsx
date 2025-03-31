@@ -1,8 +1,6 @@
 import React from 'react'
 
 function Description({ description }) {
-    console.log("description ", typeof(description));
-    console.log("description ", description.length);
     
     return (
         <div className='ps-product__thumbnail_seller_secound'>

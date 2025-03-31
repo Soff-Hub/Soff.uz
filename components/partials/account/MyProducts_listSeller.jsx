@@ -16,8 +16,6 @@ export default function PurchasedProducts() {
   const { data, isLoading } = useGet("approved-product", `seller/approved-product/?page=1&category=&start_date=&end_date=&search=`, undefined, { enabled: Boolean('approved-product') });
   const { data: categoryList } = useGet("global-childern", `seller/admin/global-childern/`, undefined, { enabled: Boolean('global-childern') });
 
-  console.log("data -> ", data);
-  
   if (!data) return null;
   if (!categoryList) return null;
 
