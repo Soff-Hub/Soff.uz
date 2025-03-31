@@ -5,10 +5,12 @@ const Option = Select.Option;
 
 export const getTitleFromSlug = (array, slug) => {
     let title = null
+    console.log("array && slug -> ", array && slug);
+    
     if(array && slug){
         title = array.find(item => {
             return item.slug == slug
-        }).name
+        })?.name
     }
     return title
 }
