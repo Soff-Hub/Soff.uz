@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import React, { useEffect, useRef } from 'react'
 import { InfoCircleOutlined } from '@ant-design/icons'
+import Link from 'next/link';
 
 function FileImagesScroll({ product, views }) {
     const containerRef = useRef(null);
@@ -19,6 +20,8 @@ function FileImagesScroll({ product, views }) {
         }
     }, [product?.document?.images]);
 
+    console.log("product    ----", product);
+    
 
     return (
         <div
@@ -56,7 +59,11 @@ function FileImagesScroll({ product, views }) {
                 <div className='title_support'>
                     <InfoCircleOutlined className='fs-2 ' style={{ cursor: "pointer", }} />
                     <span>Mualliflik huquqi buzilgan holatda</span>
-                    <strong className='text-success' style={{ cursor: "pointer" }}>shikoyat qiling!</strong>
+                    <Link href={`/report/${product.slug}`}>
+                        <a>
+                            <strong className='text-success' style={{ cursor: "pointer" }}>shikoyat qiling!</strong>
+                        </a>
+                    </Link>
 
                 </div>
             </figure>
