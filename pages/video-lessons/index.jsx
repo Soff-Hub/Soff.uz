@@ -6,7 +6,7 @@ import Meta from '~/components/shared/headers/Meta'
 
 export default function VideoLessonsPage() {
   return (
-      <PageContainer footer={<FooterDefault />} title="Sahifa topilmadi">
+      <PageContainer footer={<FooterDefault />} title="Video Darsliklar">
         <Meta
             title="Video Darsliklar" 
             image="/static/img/video-darsliklar-2.png" 
