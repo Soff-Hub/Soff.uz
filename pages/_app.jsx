@@ -57,6 +57,7 @@ function App({ Component, pageProps }) {
     return (
         <>
             <Head>
+                <meta charSet="UTF-8" />
                 <title>Soff</title>
                 <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
                 <meta

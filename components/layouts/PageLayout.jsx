@@ -59,8 +59,7 @@ const PageLayout = ({
     return (
         <>
             <Head>
-                <title>Soff - barcha ma'lumotlar bazasi </title>
-                <meta property="og:title" content={title} />
+                <title>{title}</title>
             </Head>
             <Header />
             {children}
