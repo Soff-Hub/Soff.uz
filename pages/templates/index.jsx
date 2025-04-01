@@ -6,7 +6,7 @@ import Meta from '~/components/shared/headers/Meta'
 
 export default function TemplatesPage() {
   return (
-      <PageContainer footer={<FooterDefault />} title="Sahifa topilmadi">
+      <PageContainer footer={<FooterDefault />} title="Turli sohalar uchun shablonlar">
         <Meta
             title="Turli sohalar uchun shablonlar" 
             image="/static/img/shablonlar-3.png" 

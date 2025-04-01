@@ -6,7 +6,7 @@ import Meta from '~/components/shared/headers/Meta'
 
 export default function WebsitesPage() {
   return (
-      <PageContainer footer={<FooterDefault />} title="Sahifa topilmadi">
+      <PageContainer footer={<FooterDefault />} title="Veb-sayt Shablonlari">
         <Meta
             title="Veb-sayt Shablonlari" 
             image="/static/img/veb-saytlar-2.png" 
