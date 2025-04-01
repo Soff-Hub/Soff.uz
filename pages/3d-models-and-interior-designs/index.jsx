@@ -3,10 +3,18 @@ import React from 'react'
 import FooterComponents from '~/components/blocks/footer/FooterComponents'
 import PageContainer from '~/components/layouts/PageContainer'
 import FooterDefault from '~/components/shared/footers/FooterDefault'
+import Meta from '~/components/shared/headers/Meta'
 
 export default function ThreeDModelsAndInteriorDesigns() {
   return (
-      <PageContainer footer={<FooterDefault />} title="Sahifa topilmadi">
+      <PageContainer footer={<FooterDefault />} title="3D Modellar va Interyer Dizaynlari">
+            <Meta 
+                title="3D Modellar va Interyer Dizaynlari" 
+                image="/static/img/3D-moddellar-va-Interier-dizaynlar-2.png" 
+                description="Bu sahifa dizaynerlar, arxitektorlar va 3D model mutaxassislari uchun. Bu yerda 3D modellar, interyer dizaynlari va vizualizatsiyalarni topish mumkin." 
+                keywords={[{name: "3D"}, {name:"3D modellar"}, {name: "Interyer dizaynlari"}]} 
+                author="Soff.uz"
+            />
           <div className="ps-page-status">
               <div className="container">
                   <div className="ps-section__content">

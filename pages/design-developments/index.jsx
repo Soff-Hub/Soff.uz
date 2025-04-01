@@ -2,10 +2,18 @@ import Link from 'next/link'
 import React from 'react'
 import PageContainer from '~/components/layouts/PageContainer'
 import FooterDefault from '~/components/shared/footers/FooterDefault'
+import Meta from '~/components/shared/headers/Meta'
 
 export default function DesignDevelopmentsPage() {
   return (
-      <PageContainer footer={<FooterDefault />} title="Sahifa topilmadi">
+      <PageContainer footer={<FooterDefault />} title="Grafik Dizayn Shablonlari">
+        <Meta
+            title="Grafik Dizayn Shablonlari" 
+            image="/static/img/dizayn-shablonlari-2.png" 
+            description="Bu sahifa grafik dizaynerlar va kreativ mutaxassislar uchun. Bu yerda dizayn shablonlari, bannerlar, logotiplar va boshqa grafik materiallarni topish mumkin." 
+            keywords={[{name: "grafik dizaynerlar"}, {name:"kreativ mutaxassislar"}, {name: "dizayn shablonlari"}, {name: "bannerlar"}, {name: "logotiplar"}, {name: "grafik materiallar"}]} 
+            author="Soff.uz"
+        />
           <div className="ps-page-status">
               <div className="container">
                   <div className="ps-section__content">

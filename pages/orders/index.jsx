@@ -75,11 +75,14 @@ export default function OrderForm() {
     return (
         <PageContainer
             footer={<FooterDefault />}
-            title={'Raqamli mahsulot buyurtma berish'}
+            title={'Raqamli mahsulot buyurtma berish - Soff.uz'}
             boxed={true}>
             <Meta
-                title={'Raqamli mahsulot buyurtma berish'}
-                description={'Raqamli mahsulot buyurtma berish bo‘yicha eng yaxshi raqamli mahsulotlarni Soff.uz da toping. Ishonchli sotuvchilar va sifatli kontent!'}
+                title={'Raqamli mahsulot buyurtma berish - Soff.uz'}
+                description={'Soff.uz orqali raqamli mahsulotlarga buyurtma bering. Ishonchli sotuvchilar va sifatli kontent bilan tez va oson xizmatlardan foydalaning.'}
+                image="/static/img/video-darsliklar-2.png" 
+                keywords={[{name: "Biznes rejalar buyurtma berish"}, {name:"Taqdimotlar buyurtma berish"}, {name: "Kurs ishlari buyurtma berish"}, {name: "Diplom ishlari buyurtma berish"}, {name: "Referatlar buyurtma berish"}, {name: "Mustaqil ishlar buyurtma berish"}, {name: "Labaratoriya Ishlari buyurtma berish"}, {name: "Dissertatsiya ishlari buyurtma berish"}, {name: "Testlar buyurtma berish"}, {name: "O'quv qo'llanmalar buyurtma berish"}, {name: "MustDars ishlanmalaraqil buyurtma berish"}, {name: "Tarqatma materiallar buyurtma berish"}, {name: "Amaliy ishlar buyurtma berish"}, {name: "Blankalar buyurtma berish"}, {name: "Ijodiy Ishlar buyurtma berish"}, {name: "Loyihalar buyurtma berish"}, {name: "Plakatlar buyurtma berish"}, {name: "Elektron kitoblar buyurtma berish"}, {name: "Dasturlash tillari"}]} 
+                author="Soff.uz"
             />
             <Modal
                 title="Havolani oching!"
