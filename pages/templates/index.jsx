@@ -2,10 +2,18 @@ import Link from 'next/link'
 import React from 'react'
 import PageContainer from '~/components/layouts/PageContainer'
 import FooterDefault from '~/components/shared/footers/FooterDefault'
+import Meta from '~/components/shared/headers/Meta'
 
 export default function TemplatesPage() {
   return (
       <PageContainer footer={<FooterDefault />} title="Sahifa topilmadi">
+        <Meta
+            title="Turli sohalar uchun shablonlar" 
+            image="/static/img/shablonlar-3.png" 
+            description="Bu sahifa har qanday soha vakillari uchun. Bu yerda dizayn, biznes, ta’lim, IT va boshqa yo‘nalishlar uchun turli tayyor shablonlarni topish mumkin." 
+            keywords={[{name: "dizayn"}, {name:"biznes"}, {name: "ta’lim"}, {name: "tayyor shablonlar"}]} 
+            author="Soff.uz"
+        />
           <div className="ps-page-status">
               <div className="container">
                   <div className="ps-section__content">
