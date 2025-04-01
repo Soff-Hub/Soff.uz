@@ -49,13 +49,19 @@ export default function ProductCategoryScreen() {
     ? title 
     : "Ilmiy ishlar kategoriyasi";
 
+    console.log("fullTitle -> ", fullTitle);
+    
+
     return (
         <PageContainer
-            title={fullTitle || 'Ilmiy ishlar kategoriyasi'}
+            title={fullTitle}
             boxed={true}>
             <Meta
-                title={`${fullTitle || 'Ilmiy ishlar kategoriyasi'}`}
-                description={`${fullTitle || 'Ilmiy ishlar kategoriyasi'} bo‘yicha eng yaxshi raqamli mahsulotlarni Soff.uz da toping. Ishonchli sotuvchilar va sifatli kontent!`}
+                title={fullTitle}
+                description={fullTitle + " bo‘yicha eng yaxshi raqamli mahsulotlarni Soff.uz da toping. Ishonchli sotuvchilar va sifatli kontent!"}
+                image="/static/img/ilmiy-ishlar-2.png" 
+                keywords={[{name: "Biznes rejalar"}, {name:"Taqdimotlar"}, {name: "Kurs ishlari"}, {name: "Diplom ishlari"}, {name: "Referatlar"}, {name: "Mustaqil ishlar"}, {name: "Labaratoriya Ishlari"}, {name: "Dissertatsiya ishlari"}, {name: "Testlar"}, {name: "O'quv qo'llanmalar"}, {name: "MustDars ishlanmalaraqil"}, {name: "Tarqatma materiallar"}, {name: "Amaliy ishlar"}, {name: "Blankalar"}, {name: "Ijodiy Ishlar"}, {name: "Loyihalar"}, {name: "Plakatlar"}, {name: "Elektron kitoblar"}, {name: "Dasturlash tillari"}]}
+                author="Soff.uz"
             />
 
             <div className='ps-page--shop container p-lg-1'>
