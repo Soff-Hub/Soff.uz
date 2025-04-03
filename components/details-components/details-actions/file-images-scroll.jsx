@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from 'react'
 import { InfoCircleOutlined } from '@ant-design/icons'
 import Link from 'next/link';
 
-function FileImagesScroll({ product, views }) {
+function FileImagesScroll({ product, view }) {
     const containerRef = useRef(null);
 
 
@@ -54,7 +54,7 @@ function FileImagesScroll({ product, views }) {
                 </div>
                 <div className="views">
                     {' '}
-                    <i className="fa-solid fa-eye"></i> <span>{views || 0}</span>
+                    <i className="fa-solid fa-eye"></i> <span>{view || 0}</span>
                 </div>
                 <div className='title_support'>
                     <InfoCircleOutlined className='fs-2 ' style={{ cursor: "pointer", }} />

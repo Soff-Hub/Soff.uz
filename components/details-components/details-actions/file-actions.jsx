@@ -23,7 +23,7 @@ export const fileColors = {
     ".pptx": "#DD7657"
 };
 
-function FileActions({ product }) {
+function FileActions({ product, approved }) {
     const { addSavedItem, wishlist, removeSavedItem } = useWishlist();
     const [open, setOpen] = useState(false);
     const Router = useRouter();
@@ -137,8 +137,8 @@ function FileActions({ product }) {
                     </div>
                 </div>
                 <ul className='fs-2 p-0 d-flex flex-column gap-3' style={{ listStyle: "none" }}>
-                    {product?.upload_count > 0 && <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
-                        <span>Mahsulotni sotilgan soni:</span> <span>{product?.upload_count} ta</span>
+                    {approved && <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
+                        <span>Mahsulotni sotilgan soni:</span> <span>{approved} ta</span>
                     </li>}
                     {product?.document?.content_duration && <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
                         <span>Video davomiyligi:</span> <span>
