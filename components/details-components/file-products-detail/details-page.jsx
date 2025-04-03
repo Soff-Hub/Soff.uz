@@ -9,7 +9,6 @@ import OrderCardBtn from '../details-seller-profile/order-card-btn';
 import Link from 'next/link';
 
 function FileProductsDetails({ product, views }) { 
-  console.log("views ", views);
   
   return (
     <div className='seller_container_products_details'>
