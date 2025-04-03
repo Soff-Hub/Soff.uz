@@ -146,7 +146,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
 
     const productsDetails = {
         'file': <FileProductsDetails
-            product={product} />,
+            product={product} views={views}/>,
         "3d": <ThreeDesignProductsDetails
             product={product}
         />,
