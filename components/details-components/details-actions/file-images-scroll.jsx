@@ -20,9 +20,6 @@ function FileImagesScroll({ product, view }) {
         }
     }, [product?.document?.images]);
 
-    console.log("product    ----", product);
-    
-
     return (
         <div
             className="ps-product__thumbnail_seller">
