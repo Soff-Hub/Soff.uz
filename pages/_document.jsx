@@ -7,20 +7,20 @@ export default function Document() {
     return (
         <Html>
             <Head>
-                <link rel="shortcut icon" href={'/static/img/soff-logo.webp'} />
+                <link rel="shortcut icon" href={'/static/img/soff logo.png'} />
                 <link
                     rel="icon"
-                    href={'/static/img/soff-logo.webp'}
+                    href={'/static/img/soff logo.png'}
                     sizes="32x32"
                 />
                 <link
                     rel="icon"
-                    href={'/static/img/soff-logo.webp'}
+                    href={'/static/img/soff logo.png'}
                     sizes="192x192"
                 />
                 <link
                     rel="apple-touch-icon-precomposed"
-                    href={'/static/img/soff-logo.webp'}
+                    href={'/static/img/soff logo.png'}
                 />
 
                 <link
