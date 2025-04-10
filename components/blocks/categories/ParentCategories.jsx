@@ -6,32 +6,38 @@ const parentCategoriesData = [
     {
         title: 'Ilmiy ishlar',
         imgUrl: '/static/img/ilmiy-ishlar-2.png',
-        path: '/scientific-resources/all',
+        // path: '/scientific-resources/all',
+        path: '#',
     },
     {
         title: '3D moddellar va Interier dizaynlar',
         imgUrl: '/static/img/3D-moddellar-va-Interier-dizaynlar-2.png',
-        path: '/3d-models-and-interior-designs',
+        // path: '/3d-models-and-interior-designs',
+        path: '#',
     },
     {
         title: 'Dizayn shablonlari',
         imgUrl: '/static/img/dizayn-shablonlari-2.png',
-        path: '/design-developments',
+        // path: '/design-developments',
+        path: '#',
     },
     {
         title: 'Veb saytlar',
         imgUrl: '/static/img/veb-saytlar-2.png',
-        path: '/websites',
+        // path: '/websites',
+        path: '#',
     },
     {
         title: 'Turli sohalar uchun shablonlar',
         imgUrl: '/static/img/shablonlar-3.png',
-        path: '/templates',
+        // path: '/templates',
+        path: '#',
     },
     {
         title: 'Video darsliklar',
         imgUrl: '/static/img/video-darsliklar-2.png',
-        path: '/video-lessons',
+        // path: '/video-lessons',
+        path: '#',
     },
 ];
 
