@@ -7,10 +7,10 @@ export default function HeroSearchInput(inputProps) {
     const [value, setValue] = useState({ label: 'Barcha turdagi', icn: 'fa fa-list', value: 'all' })
 
     function handleSubmit(e) {
-        e.preventDefault();
-        if (search && search.trim()) {
-            Router.push(`/search-page?keyword=${search}&type=${value.value}`);
-        }
+        // e.preventDefault();
+        // if (search && search.trim()) {
+        //     Router.push(`/search-page?keyword=${search}&type=${value.value}`);
+        // }
     }
 
 
