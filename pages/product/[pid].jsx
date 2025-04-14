@@ -29,7 +29,6 @@ import SkeletonProductDetail from '~/components/elements/skeletons/SkeletonProdu
 const ProductDefaultPage = ({ defaultProducts }) => {
     const router = useRouter();
     const { pid } = router.query;
-    const [views, setViews] = useState('');
     const [isPlay, setIsPlay] = useState(null);
     const [run, setRun] = useState(false);
     // const [loading, setLoading] = useState(false);
@@ -42,14 +41,6 @@ const ProductDefaultPage = ({ defaultProducts }) => {
     const removeHTMLTags = html => {
         return html.replace(/<[^>]+>/g, '');
     };
-
-
-    async function getUUID(uuid) {
-        const respons = await PostRepository.postProductUUID(pid, uuid);
-        if (respons) {
-            setViews(respons);
-        }
-    }
 
     useEffect(() => {
         {
@@ -86,17 +77,6 @@ const ProductDefaultPage = ({ defaultProducts }) => {
             }
         }
     }, [product]);
-
-    useEffect(() => {
-        if (product?.slug) {
-            getUUID(
-                localStorage.getItem('uuid')
-                    ? localStorage.getItem('uuid')
-                    : uuidv4() + product?.slug
-            );
-        }
-    }, [pid, product?.slug]);
-
 
     const steps = [
         {
@@ -146,7 +126,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
 
     const productsDetails = {
         'file': <FileProductsDetails
-            product={product} views={views}/>,
+            product={product}/>,
         "3d": <ThreeDesignProductsDetails
             product={product}
         />,
