@@ -49,10 +49,16 @@ function FileImagesScroll({ product, view }) {
                             objectFit="contain"
                         />}
                 </div>
-                {/* <div className="views">
-                    {' '}
-                    <i className="fa-solid fa-eye"></i> <span>{view || 0}</span>
-                </div> */}
+                {
+                    product?.view_count && 
+                        (
+                            <div className="views">
+                                {' '}
+                                <i className="fa-solid fa-eye"></i> <span>{product?.view_count}</span>
+                            </div>
+                        )
+                }
+                
                 <div className='title_support'>
                     <InfoCircleOutlined className='fs-2 ' style={{ cursor: "pointer", }} />
                     <span>Mualliflik huquqi buzilgan holatda</span>

@@ -137,7 +137,7 @@ function FileActions({ product, approved }) {
                     </div>
                 </div>
                 <ul className='fs-2 p-0 d-flex flex-column gap-3' style={{ listStyle: "none" }}>
-                    {(approved > 0) && <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
+                    {(product?.sold_count > 0) && <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
                         <span>Mahsulotni sotilgan soni:</span> <span>{approved} ta</span>
                     </li>}
                     {product?.document?.content_duration && <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
