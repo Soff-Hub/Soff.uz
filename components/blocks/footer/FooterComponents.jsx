@@ -18,11 +18,11 @@ const footerMenu = {
     services: {
         title: 'Soff.uz xizmatlari',
         links: [    
-            { name: 'Ilmiy ishlar', url: '/scientific-resources/all' },
-            { name: '3D modellar', url: '#' },
-            { name: 'Dizayn shablonlari', url: '#' },
-            { name: 'Veb saytlar', url: '#' },
-            { name: 'Video darsliklar', url: '#' }
+            { name: 'Ilmiy ishlar', url: '/orders' },
+            { name: '3D modellar', url: '/orders' },
+            { name: 'Dizayn shablonlari', url: '/orders' },
+            { name: 'Veb saytlar', url: '/orders' },
+            { name: 'Video darsliklar', url: '/orders' }
         ],
     },
     social: {
@@ -34,12 +34,19 @@ const footerMenu = {
             { name: 'LinkedIn', icon: '/static/img/linkedin.svg', username: 'Soff Hub', url: 'https://www.linkedin.com/company/soffhub/posts/?feedView=all' }
         ],
     },
-    contact: {
-        title: 'Biz bilan bog’lanish',
-        items: [{ icon: 'fa-solid fa-phone-volume', contact: '+998 (91) 008 67 89', url: 'tel:+998910086789' },
+    contactTech: {
+        title: 'Texnik muammolar uchun:',
+        items: [
+            { icon: 'fa-solid fa-phone-volume', contact: '+998 (91) 008 67 89', url: 'tel:+998910086789' },
+            { icon: 'fa-solid fa-paper-plane', contact: '@hr_soffhub', url: 'https://t.me/hr_soffhub' },
+        ]
+    },
+    contactModeration: {
+        title: 'Sotib olish va moderatsiya bo‘yicha:',
+        items: [
+            { icon: 'fa-solid fa-phone-volume', contact: '+998 (99) 266 30 29', url: 'tel:+998910086789' },
             { icon: 'fa-solid fa-paper-plane', contact: '@soff_moderator', url: 'https://t.me/soff_moderator' },
-            { icon: 'fa-solid fa-envelope', contact: 'soffceo@gmail.com', url: 'mailto:soffceo@gmail.com' },
-            { icon: 'fa-solid fa-location-dot', contact: '8/1 Bunyodkor Avenue, Toshkent shahri', url: 'https://yandex.uz/maps/-/CDxfY-1C' }]
+        ]
     },
 };
 
@@ -50,11 +57,11 @@ export default function FooterComponents () {
             style={{
                 // marginTop: '116.52px',
                 marginTop: '20px',
-                padding: '57px 0 64px',
+                padding: '57px 0 20px',
                 borderBottom: '1px solid rgba(0, 164, 79, 1)',
             }}>
             <footer className=' bg-white container p-lg-0 d-flex  justify-content-between align-items-start flex-wrap '>
-                <div className='logo col-xl-2 col-lg-3 col-md-6 col-sm-12 col-12'>
+                <div className='logo col-xl-3 col-lg-3 col-md-6 mb-5 col-sm-12 col-12'>
                     <img
                         src='/static/img/soff/logo-dark.png'
                         alt='logo'
@@ -68,7 +75,7 @@ export default function FooterComponents () {
                     </a>
                 </div>
 
-                <div className='company col-xl-2 col-lg-3 col-md-6 col-sm-12 col-12'>
+                {/* <div className='company col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12'>
                     <h5 className='fw-semibold fs-2 mb-5'>
                         {footerMenu.companies.title}
                     </h5>
@@ -81,10 +88,43 @@ export default function FooterComponents () {
                             {link.name}
                         </a>
                     ))}
+                </div> */}
+
+                {/* Bog‘lanish bo‘limi */}
+                <div className='col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 mb-5'>
+                    <h5 className='fw-semibold fs-2 mb-5'>
+                        {footerMenu.contactTech.title}
+                    </h5>
+                    {footerMenu.contactTech.items.map((item, i) => (
+                        <a
+                            target='_blank'
+                            key={i}
+                            href={item.url}
+                            className='d-flex align-items-center footer-link gap-3 footer-link fs-4 mb-3'>
+                            <i className={`${item.icon} text-success`}></i>
+                            {item.contact}
+                        </a>
+                    ))}
                 </div>
 
+                <div className='col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 mb-5'>
+                    <h5 className='fw-semibold fs-2 mb-5'>
+                        {footerMenu.contactModeration.title}
+                    </h5>
+                    {footerMenu.contactModeration.items.map((item, i) => (
+                        <a
+                            target='_blank'
+                            key={i}
+                            href={item.url}
+                            className='d-flex align-items-center footer-link gap-3 footer-link fs-4 mb-3'>
+                            <i className={`${item.icon} text-success`}></i>
+                            {item.contact}
+                        </a>
+                    ))}
+                </div>
+                
                 {/* Xizmatlar bo‘limi */}
-                <div className='col-xl-2 col-lg-3 col-md-6 col-sm-12 col-12'>
+                <div className='col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12'>
                     <h5 className='fw-semibold fs-2 mb-5'>
                         {footerMenu.services.title}
                     </h5>
@@ -98,46 +138,24 @@ export default function FooterComponents () {
                         </a>
                     ))}
                 </div>
-
-                {/* Ijtimoiy tarmoqlar */}
-                <div className='col-xl-2 col-lg-3 col-md-6 col-sm-12 col-12'>
-                    <h5 className='fw-semibold fs-2 mb-5'>
-                        {footerMenu.social.title}
-                    </h5>
-                    {footerMenu.social.items.map((item, i) => (
-                        <a
-                            target='_blank'
-                            key={i}
-                            href={item.url}
-                            className='d-flex align-items-center gap-3 footer-link fs-4 mb-3'>
-                            <img
-                                src={item.icon}
-                                alt={item.name}
-                                className='me-2'
-                                style={{ width: '20px' }}
-                            />
-                            {item.name}
-                        </a>
-                    ))}
-                </div>
-
-                {/* Bog‘lanish bo‘limi */}
-                <div className='col-xl-2 col-lg-3 col-md-6 col-sm-12 col-12 '>
-                    <h5 className='fw-semibold fs-2 mb-5'>
-                        {footerMenu.contact.title}
-                    </h5>
-                    {footerMenu.contact.items.map((item, i) => (
-                        <a
-                            target='_blank'
-                            key={i}
-                            href={item.url}
-                            className='d-flex align-items-center footer-link gap-3 footer-link fs-4 mb-3'>
-                            <i className={`${item.icon} text-success`}></i>
-                            {item.contact}
-                        </a>
-                    ))}
-                </div>
             </footer>
+            <div className='d-flex gap-4 justify-content-center mt-5 border-top pt-5 flex-wrap container'>
+                {footerMenu.social.items.map((item, i) => (
+                    <a
+                        target='_blank'
+                        key={i}
+                        href={item.url}
+                        className='d-flex align-items-center gap-3 footer-link fs-4 mb-3'>
+                        <img
+                            src={item.icon}
+                            alt={item.name}
+                            className='me-2'
+                            style={{ width: '20px' }}
+                        />
+                        {item.name}
+                    </a>
+                ))}
+            </div>
         </div>
     );
 }
