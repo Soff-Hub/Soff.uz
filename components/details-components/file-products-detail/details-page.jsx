@@ -8,7 +8,7 @@ import Tags from '../details-actions/tags';
 import OrderCardBtn from '../details-seller-profile/order-card-btn';
 import Link from 'next/link';
 
-function FileProductsDetails({ product, views }) { 
+function FileProductsDetails({ product }) { 
   
   return (
     <div className='seller_container_products_details'>
@@ -25,13 +25,12 @@ function FileProductsDetails({ product, views }) {
           <div className="ps-product__header_seller ">
             <FileImagesScroll
               product={product}
-              view={views.view_count}
             />
             <div className='seller_products_right_section'>
               <div 
                 className='seller_products_actions_container'
                 style={{height:!(product?.tag.length > 0) && '100%'}}>
-                <FileActions product={product} approved={views?.approved}/>
+                <FileActions product={product} />
                 <Tags tag={product?.tag} />
               </div>
             </div>

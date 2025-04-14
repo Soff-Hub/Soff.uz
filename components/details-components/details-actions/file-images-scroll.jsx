@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from 'react'
 import { InfoCircleOutlined } from '@ant-design/icons'
 import Link from 'next/link';
 
-function FileImagesScroll({ product, view }) {
+function FileImagesScroll({ product }) {
     const containerRef = useRef(null);
 
 
