@@ -1,5 +1,6 @@
 import { message } from 'antd';
 import Axios from 'axios';
+import Head from 'next/head';
 import Router from 'next/router';
 import React from 'react';
 import PageContainer from '~/components/layouts/PageContainer';
@@ -32,6 +33,9 @@ function Report({ product }) {
 
     return (
         <div>
+        <Head>
+            <meta name="robots" content="noindex, nofollow"/>
+        </Head>
             <PageContainer>
                 <div className="container">
                     <div
