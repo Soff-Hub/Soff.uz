@@ -5,9 +5,22 @@ import Meta from '~/components/shared/headers/Meta'
 export default function Oferta() {
     return (
         <PageLayout>
-            <Meta title="Soff - barcha ma'lumotlar bazasi" image="/static/img/soff/soff_green_white.png" />
+            <Meta 
+            title="Foydalanish qonun-qoidalari - Soff.uz"
+            description="Soff.uz platformasining foydalanish qonun-qoidalari. Raqamli mahsulotlar va onlayn xizmatlardan foydalanish, sotish va sotib olish bo'yicha barcha muhim ma'lumotlar."
+            keywords={[
+                { "name": "Foydalanish qonun-qoidalari" },
+                { "name": "Soff.uz shartlari" },
+                { "name": "foydalanuvchi shartlari" },
+                { "name": "platforma shartlari" },
+                { "name": "raqamli mahsulotlar" },
+                { "name": "onlayn xizmatlar" },
+                { "name": "raqamli kontent" },
+                { "name": "sotish va sotib olish" }
+            ]}
+            author="Soff.uz jamoasi"/>
 
-            <div className="container px-5">
+            <div className="container px-5 mt-5">
                 <h3>
                     Soff.uz platformasidan foydalanish
                     qonun-qoidalari
