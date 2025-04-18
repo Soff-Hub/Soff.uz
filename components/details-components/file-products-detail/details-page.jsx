@@ -15,7 +15,7 @@ function FileProductsDetails({ product }) {
       <div className="ps-container p-0">
         <div className="ps-product--detail_seller my-5">
           <div>
-            <p className='titleh3' style={{ fontWeight: 600, fontSize: "25px", lineHeight: "37.5px", color: "#312F30", margin: 0 }}>{product?.title}</p>
+            <h1 className='titleh3' style={{ fontWeight: 600, fontSize: "25px", lineHeight: "37.5px", color: "#312F30", margin: 0 }}>{product?.title}</h1>
             <Link href={`/scientific-resources/${product?.category?.slug}?childCategory=${product?.category?.slug}`}>
               <a>
                 <p className='m-0 fs-3'>{product?.category?.name}</p>

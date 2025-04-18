@@ -53,15 +53,6 @@ export default function Document() {
                         defer
                         src="https://www.googletagmanager.com/gtag/js?id=G-H60GJQ0WF2"></script>
                 )}
-                <noscript>
-                    <div>
-                        <img
-                            src="https://mc.yandex.ru/watch/96065878"
-                            style={{ position: 'absolute', left: '-9999px' }}
-                            alt=""
-                        />
-                    </div>
-                </noscript>
 
                 {process.env.NODE_ENV === 'production' && (
                     <script
@@ -97,7 +88,6 @@ export default function Document() {
                 )}
 
             <script>window.yaContextCb=window.yaContextCb||[]</script>
-            <script src="https://yandex.ru/ads/system/context.js" async></script>
             </Head>
             <body>
                 <Main />

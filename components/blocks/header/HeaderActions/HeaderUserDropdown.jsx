@@ -65,65 +65,7 @@ const HeaderUserDropdown = props => {
 
     // View
     const linksView = accountLinks.map((item, index) => (
-        <>
-            {item?.url === '/account/selling' ? (
-                <Badge.Ribbon key={index} text="Yangi funksiya" color="blue">
-                    <Card size="small" key={index}>
-                        <li key={index}>
-                            <Link
-                                href={item?.url}
-                                style={{
-                                    cursor: 'pointer',
-                                }}>
-                                <a className="d-flex align-items-center">
-                                    <img
-                                        src="/static/img/birja-icon.png"
-                                        height={20}
-                                        width={20}
-                                        className="me-2"
-                                    />
-                                    {item.text}
-                                </a>
-                            </Link>
-                        </li>
-                    </Card>
-                </Badge.Ribbon>
-            ) : item?.url === 'b' ? (
-                <Badge.Ribbon key={index} text="Tez kunda" color="volcano">
-                    <Card size="small" key={index}>
-                        <li key={index}>
-                            <span
-                                style={{
-                                    cursor: 'pointer',
-                                }}>
-                                <a className="d-flex align-items-center">
-                                    <i className="fa-regular fa-handshake text-dark fs-4 me-2 "></i>
-                                    Buyurtma berish
-                                </a>
-                            </span>
-                        </li>
-                    </Card>
-                </Badge.Ribbon>
-            ) : item?.url == '/account/deals' ? (
-                <Badge.Ribbon key={index} text="Yangi funksiya" color="primary">
-                    <Card size="small" key={index}>
-                        <li>
-                            <Link href={item.url}>
-                                <a
-                                    style={{
-                                        cursor: 'pointer',
-                                    }}>
-                                    <a className="d-flex align-items-center">
-                                        <i
-                                            className={` text-dark fs-4 me-2  ${item.icon}`}></i>
-                                        Mening bitimlarim
-                                    </a>
-                                </a>
-                            </Link>
-                        </li>
-                    </Card>
-                </Badge.Ribbon>
-            ) : (
+            (
                 <li key={index}>
                     <Link href={item.url}>
                         <a>
@@ -136,8 +78,7 @@ const HeaderUserDropdown = props => {
                         </a>
                     </Link>
                 </li>
-            )}
-        </>
+            )
     ));
 
     if (isLoggedIn === true) {

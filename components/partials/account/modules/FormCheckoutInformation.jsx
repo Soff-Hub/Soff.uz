@@ -23,7 +23,7 @@ function FormCheckoutInformation() {
     return (
         <div className='type_payment p-lg-5 p-md-5 p-4'>
             <h3 className='type_payment_h3'>To'lov turini tanlang:</h3>
-            {/* <div class="type_payment_description">
+            {/* <div className="type_payment_description">
                 <p>
                     <i className="fa-solid fa-shield-halved text-success"></i>
                     <strong className='text-success'> 100% xavfsiz to‘lov: </strong>

@@ -117,14 +117,14 @@ const ScientificResourcesFilterSection = ({
                             onClick={() => setDropdownMenu(!dropDownMenu)}
                             className='Models_category_menu'>
                             <img src='/static/img/list-category.svg' alt='' />
-                            <p className='' style={{ whiteSpace: 'nowrap' }}>
+                            <h1 style={{ whiteSpace: 'nowrap' }}>
                                 {
                                     parentCategory ? breacrumb?.results.find(item => {
                                         return item.slug == parentCategory
                                     }).name :
                                         'Barcha Katalog'
                                 }
-                            </p>
+                            </h1>
 
                             {
                                 dropDownMenu ? <img src='/static/img/up-icon.svg' alt='' /> :
