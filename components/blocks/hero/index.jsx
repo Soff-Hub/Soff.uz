@@ -10,7 +10,7 @@ export default function HeroMain() {
             <div className="hero-inner">
                 <div className="hero-search-form">
                     <div className="hero-content">
-                        <p className='hero-title'>Soff.uz – raqamli xizmatlar bozori! </p>
+                        <h1 className='hero-title'>Soff.uz – raqamli xizmatlar bozori! </h1>
                         {/* <p className='hero-text'>Malakali mutaxassislar yordamida jamoangizni kengaytiring va biznesingizni rivojlantiring!</p> */}
                     </div>
 
