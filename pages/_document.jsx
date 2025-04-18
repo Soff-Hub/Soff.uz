@@ -87,7 +87,7 @@ export default function Document() {
                         }}></script>
                 )}
 
-            <noscript><div><img src="https://mc.yandex.ru/watch/96098801" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+            {/* <noscript><div><img src="https://mc.yandex.ru/watch/96098801" style="position:absolute; left:-9999px;" alt="" /></div></noscript> */}
 
             <script>window.yaContextCb=window.yaContextCb||[]</script>
             </Head>
