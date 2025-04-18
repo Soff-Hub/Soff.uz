@@ -14,8 +14,22 @@ function NewHomePage ({ tab, category }) {
     return (
         <PageLayout>
             <Meta
-                title="Soff - barcha ma'lumotlar bazasi"
-                image='/static/img/soff/soff_green_white.png'
+                title="Raqamli mahsulotlar va onlayn xizmatlar bozori – Soff.uz"
+                description={'Soff.uz - tayyor materiallar, ilmiy ishlar, 3D dizaynlar, veb saytlar, dizayn shablonlari va turli xizmatlar bozori. Hozir xarid qiling yoki soting!'}
+                keywords={[
+                    { name: "raqamli mahsulotlar" },
+                    { name: "onlayn xizmatlar" },
+                    { name: "tayyor materiallar" },
+                    { name: "ilmiy ishlar" },
+                    { name: "3D dizayn" },
+                    { name: "dizayn shablonlari" },
+                    { name: "veb saytlar" },
+                    { name: "grafik dizayn" },
+                    { name: "akademik xizmatlar" },
+                    { name: "Soff.uz" },
+                    ]}
+                author='Soff.uz'
+                image='/static/img/soff imkoniyatlari 2.png'
             />
             {/* <HeroService /> */}
             <HeroSearch/>
