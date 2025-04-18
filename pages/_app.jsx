@@ -93,10 +93,10 @@ function App({ Component, pageProps }) {
             </Head>
 
             <NextProgress
+                height="4px"
                 delay={300}
                 options={{ showSpinner: false }}
-                // color="#00A44F"
-                color="#000"
+                color="#00A44F"
             />
             <Provider store={store}>
                 <QueryClientProvider client={queryClient}>
