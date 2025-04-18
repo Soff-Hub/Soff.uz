@@ -20,8 +20,8 @@ export const VideoComponent = () => {
                 />
                 <track
                     role="track"
-                    label="EN"
-                    srclang="en-US"
+                    label="UZ"
+                    srcLang="uz"
                     src="https://npm-assets.fiverrcdn.com/assets/@fiverr/logged_out_homepage_perseus/subtitles_en.c0bcbb7.vtt"
                     default
                     kind="subtitles"

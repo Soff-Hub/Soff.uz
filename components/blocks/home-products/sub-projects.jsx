@@ -44,8 +44,8 @@ export default function SubProjects() {
                     Soff — faqatgina intellektual mulk bozori emas
                 </h2>
                 <div className='system-inner'>
-                    {projecs.map(el => (
-                        <div className='system-card' key={el.id}>
+                    {projecs.map((el, index) => (
+                        <div className='system-card' key={index}>
                             <div
                                 className='system-card-inner p-4'
                                 style={{
@@ -86,12 +86,6 @@ export default function SubProjects() {
                                     }}>
                                     {el?.linkMask}
                                 </span>
-                                <a
-                                    className='system-link'
-                                    href={el?.link}
-                                    target={el?.last ? '' : '_blank'}>
-                                    .
-                                </a>
                             </div>
                         </div>
                     ))}

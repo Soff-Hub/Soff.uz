@@ -43,32 +43,6 @@ const ProductDefaultPage = ({ defaultProducts }) => {
     };
 
     useEffect(() => {
-        {
-            /* Yandex reklama kodi */
-        }
-        if (window.yaContextCb) {
-            window.yaContextCb.push(() => {
-                Ya.Context.AdvManager.render({
-                    blockId: 'R-A-13331140-3',
-                    renderTo: 'yandex_rtb_R-A-13331140-3',
-                });
-            });
-        }
-
-        {
-            /* Yandex reklama kodi */
-        }
-        if (window.yaContextCb) {
-            window.yaContextCb.push(() => {
-                Ya.Context.AdvManager.render({
-                    blockId: 'R-A-13331140-2',
-                    renderTo: 'yandex_rtb_R-A-13331140-2',
-                });
-            });
-        }
-    }, [user?.access, pid]);
-
-    useEffect(() => {
         if (product?.slug) {
             if (pid) {
                 localStorage.getItem('uuid')
@@ -190,7 +164,9 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                         content={
                             defaultProducts?.description
                                 ? removeHTMLTags(defaultProducts?.description)
-                                : `${defaultProducts?.title ||
+                                : `${defaultProducts?.title} + ${defaultProducts?.tag
+                                    ?.map(e => e?.name)
+                                    ?.join(', ') ||
                                 'soff.uz - Intellektual mulk marketi'
                                 } `
                         }
@@ -226,7 +202,9 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                         content={
                             defaultProducts?.description
                                 ? removeHTMLTags(defaultProducts?.description)
-                                : `${defaultProducts?.title ||
+                                : `${defaultProducts?.title} + ${defaultProducts?.tag
+                                    ?.map(e => e?.name)
+                                    ?.join(', ') ||
                                 'soff.uz - Intellektual mulk marketi'
                                 } `
                         }
@@ -270,7 +248,9 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                         content={
                             defaultProducts?.description
                                 ? removeHTMLTags(defaultProducts?.description)
-                                : `${defaultProducts?.title ||
+                                : `${defaultProducts?.title} + ${defaultProducts?.tag
+                                    ?.map(e => e?.name)
+                                    ?.join(', ') ||
                                 'soff.uz - Intellektual mulk marketi'
                                 } `
                         }
@@ -288,27 +268,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                         }
                     />
                 </Head>
-
-                <div className='container'>
-                    {/* Yandex reklama kodi */}
-                    <div id='yandex_rtb_R-A-13331140-2'></div>
-                    {/* Yandex scriptni yuklash */}
-                    <Script
-                        src='https://yandex.ru/ads/system/context.js'
-                        strategy='lazyOnload'
-                        onLoad={() => {
-                            if (window.yaContextCb) {
-                                window.yaContextCb.push(() => {
-                                    Ya.Context.AdvManager.render({
-                                        blockId: 'R-A-13331140-2',
-                                        renderTo: 'yandex_rtb_R-A-13331140-2',
-                                    });
-                                });
-                            }
-                        }}
-                    />
-                </div>
-                {/* <div> */}
+                
                 <div>
                     <div className='container' style={{ position: 'relative' }}>
                         <div className='text-end m-0'>
@@ -367,25 +327,6 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                                         </div>
                                     )
                                 }
-
-                                {/* Yandex reklama kodi */}
-                                <div id='yandex_rtb_R-A-13331140-3'></div>
-                                {/* Yandex scriptni yuklash */}
-                                <Script
-                                    src='https://yandex.ru/ads/system/context.js'
-                                    strategy='lazyOnload'
-                                    onLoad={() => {
-                                        if (window.yaContextCb) {
-                                            window.yaContextCb.push(() => {
-                                                Ya.Context.AdvManager.render({
-                                                    blockId: 'R-A-13331140-3',
-                                                    renderTo:
-                                                        'yandex_rtb_R-A-13331140-3',
-                                                });
-                                            });
-                                        }
-                                    }}
-                                />
                             </div>
                         </div>
                     </div>
