@@ -184,8 +184,8 @@ function FileActions({ product }) {
                             } size={"large"}>
                         </Button>
                     </div>
-                    {product?.document?.file_url ?
-                        <a href={product?.document?.file_url} target='_blank'>
+                    {product?.document?.short_content_url ?
+                        <a href={product?.document?.short_content_url} target='_blank'>
                             <Button iconPosition='end' style={{ height: "58px", fontSize: "20px" }} type="primary" className='w-100 bg-success' icon={<DownloadOutlined />} size={"large"}>
                                 Yuklab olish
                             </Button>
