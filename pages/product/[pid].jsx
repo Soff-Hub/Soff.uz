@@ -34,7 +34,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
         return html.replace(/<[^>]+>/g, '');
     };
 
-    const [run, setRun] = useState(true);
+    const [run, setRun] = useState(false);
     const [steps, setSteps] = useState([
         {
             target: '.product-poster',
