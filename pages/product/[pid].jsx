@@ -54,7 +54,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
     useEffect(() => {
         const timer = setTimeout(() => {
           setRun(true);
-        }, 3000);
+        }, 2400);
       
         return () => clearTimeout(timer);
       }, []);
@@ -66,7 +66,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
         showProgress={false}
         styles={{
             options: {
-                zIndex: 9999,
+                // zIndex: 9999,
                 arrowColor: '#e3ffeb',
                 primaryColor: '#00A44F',
                 textColor: '#004a14',
