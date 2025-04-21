@@ -25,6 +25,7 @@ import SwiperPages from '~/components/details-components/swiper/swiper-page';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
 import FooterComponents from '~/components/blocks/footer/FooterComponents';
 import SkeletonProductDetail from '~/components/elements/skeletons/SkeletonProductDetail';
+import AISoffiaPresentation from '~/components/elements/AISoffiaPresentation';
 
 const ProductDefaultPage = ({ defaultProducts }) => {
     const router = useRouter();
@@ -317,6 +318,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                                     {!product && <SkeletonProductDetail/>}
                                     {productsDetails[product?.document?.content_type]}
                                 </div>
+                                <AISoffiaPresentation/>
                                 {
                                     product && (
                                         <div className=' my-5'>

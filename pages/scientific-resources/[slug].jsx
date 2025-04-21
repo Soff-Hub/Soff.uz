@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import useApi, { baseUrlUseApi } from '~/repositories/useApi';
 import FooterComponents from '~/components/blocks/footer/FooterComponents';
 import ScientificResourcesFilterSection, { getTitleFromSlug } from '~/components/elements/scientificResourcesFilterSection';
+import AISoffiaPresentation from '~/components/elements/AISoffiaPresentation';
 
 export default function ProductCategoryScreen() {
     const router = useRouter();
@@ -65,6 +66,7 @@ export default function ProductCategoryScreen() {
             />
 
             <div className='ps-page--shop container p-lg-1'>
+                <AISoffiaPresentation/>
                 <ScientificResourcesFilterSection
                     breacrumb={fourChildData}
                     count={data?.count}
