@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PageContainer from '~/components/layouts/PageContainer';
 import { baseUrl } from '~/repositories/Repository';
 import { useRouter } from 'next/router';
@@ -50,7 +50,38 @@ const ProductDefaultPage = ({ defaultProducts }) => {
             content: 'Bu yerda narxi va sotib olish tugmasi bor. Bosib sotib olasiz.',
         }
     ]);
-
+    
+    useEffect(() => {
+        const timer = setTimeout(() => {
+          setRun(true);
+        }, 3000);
+      
+        return () => clearTimeout(timer);
+      }, []);
+    
+    const joyrideFeature = run && <Joyride
+        steps={steps}
+        run={run}
+        continuous={true}
+        showProgress={false}
+        styles={{
+            options: {
+                zIndex: 9999,
+                arrowColor: '#e3ffeb',
+                primaryColor: '#00A44F',
+                textColor: '#004a14',
+                width: 300,
+            },
+        }}
+        locale={{
+            back: 'Oldingisi',
+            last: 'Tushundim',
+            close: 'Yopish',
+            next: 'Keyingisi',
+            open: 'Ochish',
+            skip: 'Bilaman',
+        }}
+    />
 
     const productsDetails = {
         'file': <FileProductsDetails
@@ -222,31 +253,8 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                         }
                     />
                 </Head>
-
-                {/* <Joyride
-                    steps={steps}
-                    run={run}
-                    continuous={true}
-                    showProgress={false}
-                    showSkipButton={true}
-                    styles={{
-                        options: {
-                            zIndex: 9999,
-                            arrowColor: '#e3ffeb',
-                            primaryColor: '#00A44F',
-                            textColor: '#004a14',
-                            width: 300,
-                        },
-                    }}
-                    locale={{
-                        back: 'Oldingisi',
-                        last: 'Tushundim',
-                        close: 'Yopish',
-                        next: 'Keyingisi',
-                        open: 'Ochish',
-                        skip: 'Bilaman',
-                    }}
-                /> */}
+                
+                {joyrideFeature}
                 
                 <div>
                     <div className='container' style={{ position: 'relative' }}>
