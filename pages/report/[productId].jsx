@@ -2,14 +2,18 @@ import { message } from 'antd';
 import Axios from 'axios';
 import Head from 'next/head';
 import Link from 'next/link';
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
 import React from 'react';
 import PageContainer from '~/components/layouts/PageContainer';
 import { orginalUrl } from '~/reositoriy-admin/Repository';
+import { useGet } from '~/repositories/https';
 import { baseUrl } from '~/repositories/Repository';
 
-function Report({ product }) {
+function Report() {
+    const router = useRouter();
     const [loading, setLoading] = React.useState(false);
+    const { productId } = router.query;
+    const { data: product } = useGet("customerDocuments/", `customer/documents/${productId}/`, undefined, { enabled: Boolean(productId) })
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -100,18 +104,6 @@ function Report({ product }) {
             </PageContainer>
         </div>
     );
-}
-
-export async function getServerSideProps({ query }) {
-    const resquest = await fetch(
-        baseUrl + `customer/documents/${query.productId}/`
-    );
-    const product = await resquest.json();
-    return {
-        props: {
-            product,
-        },
-    };
 }
 
 export default Report;

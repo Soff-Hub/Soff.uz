@@ -20,12 +20,12 @@ import SwiperPages from '~/components/details-components/swiper/swiper-page';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
 import SkeletonProductDetail from '~/components/elements/skeletons/SkeletonProductDetail';
 
-const ProductDefaultPage = ({ defaultProducts }) => {
+const ProductDefaultPage = ({ defaultProducts, similarProduct }) => {
     const router = useRouter();
     const { pid } = router.query;
     const [isPlay, setIsPlay] = useState(null);
     // const { data: product } = useGet("productsDetails", `customer/documents/${pid}/`, undefined, { enabled: Boolean(pid) })
-    const { data: similarProduct } = useGet("productSimilar", `customer/similar/${pid}/`, undefined, { enabled: Boolean(pid) })
+    // const { data: similarProduct } = useGet("productSimilar", `customer/similar/${pid}/`, undefined, { enabled: Boolean(pid) })
 
     const { user } = useSelector(state => state.auth);
     const dispatch = useDispatch();
@@ -289,9 +289,13 @@ export async function getServerSideProps({ query }) {
     const resquest = await fetch(baseUrl + `customer/documents/${query.pid}/`);
     const defaultProducts = await resquest.json();
 
+    const resquestSimilarProduct = await fetch(baseUrl + `customer/similar/${query.pid}/`);
+    const similarProduct = await resquestSimilarProduct.json();
+
     return {
         props: {
             defaultProducts,
+            similarProduct,
         },
     };
 }

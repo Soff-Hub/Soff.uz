@@ -2,8 +2,9 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 
-const CategoryPage = ({ slug }) => {
+const CategoryPage = () => {
   const router = useRouter();
+  const { slug } = router.query;
 
   useEffect(() => {
     // Redirect to the new URL
@@ -12,12 +13,5 @@ const CategoryPage = ({ slug }) => {
 
   return null; // This page will redirect immediately
 };
-
-export async function getServerSideProps(context) {
-  const { slug } = context.params;
-
-  // Pass the slug to the component as a prop
-  return { props: { slug } };
-}
 
 export default CategoryPage;
