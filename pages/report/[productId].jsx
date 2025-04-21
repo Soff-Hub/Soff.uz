@@ -32,8 +32,6 @@ function Report({ product }) {
         setLoading(false);
     }
 
-    console.log("product -> ", product)
-
     return (
         <div>
             <PageContainer>
