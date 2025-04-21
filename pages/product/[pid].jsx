@@ -223,12 +223,10 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                     />
                 </Head>
 
-                <Joyride
+                {/* <Joyride
                     steps={steps}
                     run={run}
                     continuous={true}
-                    // scrollToFirstStep={false}
-                    // disableScrolling={false}
                     showProgress={false}
                     showSkipButton={true}
                     styles={{
@@ -248,7 +246,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                         open: 'Ochish',
                         skip: 'Bilaman',
                     }}
-                />
+                /> */}
                 
                 <div>
                     <div className='container' style={{ position: 'relative' }}>
