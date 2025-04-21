@@ -115,7 +115,7 @@ function FileActions({ product }) {
     return (
         <>
             {contextHolder}
-            <div className='seller_products_actions'>
+            <div className='seller_products_actions product-price-section'>
                 <div className='d-flex justify-content-between align-items-center'>
 
                     <div className='price_container'>
