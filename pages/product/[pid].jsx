@@ -41,10 +41,10 @@ const ProductDefaultPage = ({ defaultProducts }) => {
             content: 'Bu yerda mahsulotning bir qismi joylashgan.',
             disableBeacon: false
         },
-        {
-            target: '.product-description',
-            content: 'Bu esa mahsulotning batafsil tavsifi.',
-        },
+        // {
+        //     target: '.product-description',
+        //     content: 'Bu esa mahsulotning batafsil tavsifi.',
+        // },
         {
             target: '.product-price-section',
             content: 'Bu yerda narxi va sotib olish tugmasi bor. Bosib sotib olasiz.',
@@ -227,7 +227,8 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                     steps={steps}
                     run={run}
                     continuous={true}
-                    scrollToFirstStep={false}
+                    // scrollToFirstStep={false}
+                    // disableScrolling={false}
                     showProgress={false}
                     showSkipButton={true}
                     styles={{
@@ -236,7 +237,6 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                             arrowColor: '#e3ffeb',
                             primaryColor: '#00A44F',
                             textColor: '#004a14',
-                            padding: '0 !important',
                             width: 300,
                         },
                     }}
