@@ -3,7 +3,7 @@ import React from 'react'
 function Description({ description }) {
     
     return (
-        <div className='ps-product__thumbnail_seller_secound'>
+        <div className='ps-product__thumbnail_seller_secound product-description'>
             <h3 style={{
                 fontSize: "25px",
                 fontWeight: 500,

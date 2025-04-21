@@ -21,13 +21,9 @@ import FooterDefault from '~/components/shared/footers/FooterDefault';
 import SkeletonProductDetail from '~/components/elements/skeletons/SkeletonProductDetail';
 
 const ProductDefaultPage = ({ defaultProducts }) => {
-
-    console.log("defaultProducts -> ", defaultProducts);
-    
     const router = useRouter();
     const { pid } = router.query;
     const [isPlay, setIsPlay] = useState(null);
-    const [run, setRun] = useState(false);
     // const { data: product } = useGet("productsDetails", `customer/documents/${pid}/`, undefined, { enabled: Boolean(pid) })
     const { data: similarProduct } = useGet("productSimilar", `customer/similar/${pid}/`, undefined, { enabled: Boolean(pid) })
 
@@ -38,50 +34,22 @@ const ProductDefaultPage = ({ defaultProducts }) => {
         return html.replace(/<[^>]+>/g, '');
     };
 
-    const steps = [
+    const [run, setRun] = useState(true);
+    const [steps, setSteps] = useState([
         {
-            target: '.buystep-0',
-            content: "Mahsulot sotib olish bo'yicha yordam kerakmi?",
-            locale: {
-                close: 'Yopish',
-                next: 'Ha, albatta',
-                open: '5',
-            },
-            placement: 'top',
+            target: '.product-poster',
+            content: 'Bu yerda mahsulotning bir qismi joylashgan.',
+            disableBeacon: false
         },
         {
-            target: '.buystep-1',
-            content:
-                "Mahsulotni savatga qo'shib bir nechta mahsulotni bittada sotib oling!",
+            target: '.product-description',
+            content: 'Bu esa mahsulotning batafsil tavsifi.',
         },
         {
-            target: '.buystep-2',
-            content: 'Mahsulotni hoziroq sotib oling',
-        },
-    ];
-
-    const callbackSingle = data => {
-        if (data.action === 'reset' || data.action === 'close') {
-            const doc = document.querySelector('.headerSticky');
-            doc.id = 'headerSticky';
-            setRun(false);
-            if (user?.access) {
-                dispatch(setOneShopDoc(defaultProducts));
-                router.push(`/account/checkout-one?id=${defaultProducts?.id}`);
-            } else {
-                router.push(`/auth/login?id=${defaultProducts?.id}`);
-            }
+            target: '.product-price-section',
+            content: 'Bu yerda narxi va sotib olish tugmasi bor. Bosib sotib olasiz.',
         }
-    };
-
-    const handleClickStepper = () => {
-        const doc = document.querySelector('.headerSticky');
-        doc.id = '';
-
-        setTimeout(() => {
-            setRun(true);
-        }, 500);
-    };
+    ]);
 
 
     const productsDetails = {
@@ -254,47 +222,36 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                         }
                     />
                 </Head>
+
+                <Joyride
+                    steps={steps}
+                    run={run}
+                    continuous={true}
+                    scrollToFirstStep={false}
+                    showProgress={false}
+                    showSkipButton={true}
+                    styles={{
+                        options: {
+                            zIndex: 9999,
+                            arrowColor: '#e3ffeb',
+                            primaryColor: '#00A44F',
+                            textColor: '#004a14',
+                            padding: '0 !important',
+                            width: 300,
+                        },
+                    }}
+                    locale={{
+                        back: 'Oldingisi',
+                        last: 'Tushundim',
+                        close: 'Yopish',
+                        next: 'Keyingisi',
+                        open: 'Ochish',
+                        skip: 'Bilaman',
+                    }}
+                />
                 
                 <div>
                     <div className='container' style={{ position: 'relative' }}>
-                        <div className='text-end m-0'>
-                            {defaultProducts?.discpunt_price === 0 && (
-                                <p
-                                    onClick={handleClickStepper}
-                                    style={{ cursor: 'pointer', margin: 0 }}>
-                                    Sotib olish bo'yicha qo'llanma
-                                </p>
-                            )}
-                        </div>
-
-                        <Joyride
-                            steps={steps}
-                            run={run}
-                            continuous
-                            floaterProps={{
-                                autoOpen: true,
-                                placement: 'right-start',
-                                offset: 0,
-                            }}
-                            styles={{
-                                options: {
-                                    arrowColor: '#e3ffeb',
-                                    primaryColor: '#00A44F',
-                                    textColor: '#004a14',
-                                    padding: '0 !important',
-                                    width: 300,
-                                },
-                            }}
-                            callback={callbackSingle}
-                            locale={{
-                                back: 'Oldingisi',
-                                last: 'Tushundim',
-                                close: 'Yopish',
-                                next: 'Tushundim',
-                                open: 'Ochish',
-                            }}
-                        />
-
                         <div
                             className={`ps-page--product ${defaultProducts?.price === 0 ? '' : 'pt-2'
                                 }`}>
