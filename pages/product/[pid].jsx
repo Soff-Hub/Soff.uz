@@ -1,17 +1,12 @@
 import React from 'react';
 import PageContainer from '~/components/layouts/PageContainer';
 import { baseUrl } from '~/repositories/Repository';
-import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { v4 as uuidv4 } from 'uuid';
-import PostRepository from '~/repositories/PostRepository';
-import axios from 'axios';
 import Head from 'next/head';
 import Joyride from 'react-joyride';
 import { setOneShopDoc } from '~/store/auth/slice';
-import Script from 'next/script';
 import FileProductsDetails from '~/components/details-components/file-products-detail/details-page';
 import ThreeDesignProductsDetails from '~/components/details-components/templates-details/details-page';
 import WebSitesProductsDetails from '~/components/details-components/website-products-details/details-page';
@@ -23,16 +18,17 @@ import DesignDevelopmentProducts from '~/components/elements/products/DesignDeve
 import VideoLessonsProducts from '~/components/elements/products/VideoLessonsProducts';
 import SwiperPages from '~/components/details-components/swiper/swiper-page';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
-import FooterComponents from '~/components/blocks/footer/FooterComponents';
 import SkeletonProductDetail from '~/components/elements/skeletons/SkeletonProductDetail';
 
 const ProductDefaultPage = ({ defaultProducts }) => {
+
+    console.log("defaultProducts -> ", defaultProducts);
+    
     const router = useRouter();
     const { pid } = router.query;
     const [isPlay, setIsPlay] = useState(null);
     const [run, setRun] = useState(false);
-    // const [loading, setLoading] = useState(false);
-    const { data: product } = useGet("productsDetails", `customer/documents/${pid}/`, undefined, { enabled: Boolean(pid) })
+    // const { data: product } = useGet("productsDetails", `customer/documents/${pid}/`, undefined, { enabled: Boolean(pid) })
     const { data: similarProduct } = useGet("productSimilar", `customer/similar/${pid}/`, undefined, { enabled: Boolean(pid) })
 
     const { user } = useSelector(state => state.auth);
@@ -41,16 +37,6 @@ const ProductDefaultPage = ({ defaultProducts }) => {
     const removeHTMLTags = html => {
         return html.replace(/<[^>]+>/g, '');
     };
-
-    useEffect(() => {
-        if (product?.slug) {
-            if (pid) {
-                localStorage.getItem('uuid')
-                    ? ''
-                    : localStorage.setItem('uuid', uuidv4() + product?.slug);
-            }
-        }
-    }, [product]);
 
     const steps = [
         {
@@ -80,10 +66,10 @@ const ProductDefaultPage = ({ defaultProducts }) => {
             doc.id = 'headerSticky';
             setRun(false);
             if (user?.access) {
-                dispatch(setOneShopDoc(product));
-                router.push(`/account/checkout-one?id=${product?.id}`);
+                dispatch(setOneShopDoc(defaultProducts));
+                router.push(`/account/checkout-one?id=${defaultProducts?.id}`);
             } else {
-                router.push(`/auth/login?id=${product?.id}`);
+                router.push(`/auth/login?id=${defaultProducts?.id}`);
             }
         }
     };
@@ -100,24 +86,24 @@ const ProductDefaultPage = ({ defaultProducts }) => {
 
     const productsDetails = {
         'file': <FileProductsDetails
-            product={product}/>,
+            product={defaultProducts}/>,
         "3d": <ThreeDesignProductsDetails
-            product={product}
+            product={defaultProducts}
         />,
         "template": <ThreeDesignProductsDetails
-            product={product}
+            product={defaultProducts}
         />,
         "website": <WebSitesProductsDetails
-            product={product}
+            product={defaultProducts}
         />,
         "design": <ThreeDesignProductsDetails
-            product={product}
+            product={defaultProducts}
         />,
         "video": <VideosProductsDetails
             isPlay={isPlay}
             setIsPlay={setIsPlay}
             // similar={similar}
-            product={product}
+            product={defaultProducts}
         />
     }
     const productsDetailsSimilar = {
@@ -314,15 +300,15 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                                 }`}>
                             <div className='ps-container p-0'>
                                 <div className='ps-page__container'>
-                                    {!product && <SkeletonProductDetail/>}
-                                    {productsDetails[product?.document?.content_type]}
+                                    {!defaultProducts && <SkeletonProductDetail/>}
+                                    {productsDetails[defaultProducts?.document?.content_type]}
                                 </div>
                                 {
-                                    product && (
+                                    defaultProducts && (
                                         <div className=' my-5'>
                                             <h3 style={{ fontSize: "25px", fontWeight: 400 }} className='py-4 similar_title'>O’xshash mahsulotlar</h3>
-                                            <SwiperPages type={product?.document?.content_type}>
-                                                {productsDetailsSimilar[product?.document?.content_type]}
+                                            <SwiperPages type={defaultProducts?.document?.content_type}>
+                                                {productsDetailsSimilar[defaultProducts?.document?.content_type]}
                                             </SwiperPages>
                                         </div>
                                     )
