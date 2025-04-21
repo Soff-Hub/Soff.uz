@@ -1,6 +1,7 @@
 import { message } from 'antd';
 import Axios from 'axios';
 import Head from 'next/head';
+import Link from 'next/link';
 import Router from 'next/router';
 import React from 'react';
 import PageContainer from '~/components/layouts/PageContainer';
@@ -31,11 +32,10 @@ function Report({ product }) {
         setLoading(false);
     }
 
+    console.log("product -> ", product)
+
     return (
         <div>
-        <Head>
-            <meta name="robots" content="noindex, nofollow"/>
-        </Head>
             <PageContainer>
                 <div className="container">
                     <div
@@ -46,29 +46,33 @@ function Report({ product }) {
                             bu sahifaga orqali biz bilan bog'laning
                         </p>
 
-                        <div
-                            className="reported-product p-2 bg-white d-flex align-items-center gap-3 mb-4"
-                            style={{ borderRadius: '8px' }}>
-                            <div className="reported-product-img">
-                                <img
-                                    src={product?.poster_url}
-                                    alt=""
-                                    height={50}
-                                />
-                            </div>
-                            <div className="reported-product-info">
-                                <h5 className="fw-medium fs-4 m-0">
-                                    {product?.title}
-                                </h5>
-                            </div>
-                            <div className="d-flex align-items-center gap-2 ml-auto">
-                                <i className="fa fa-user"></i>
-                                <h5 className="m-0 fw-medium">
-                                    {product?.seller?.first_name}{' '}
-                                    {product?.seller?.last_name}
-                                </h5>
-                            </div>
-                        </div>
+                        <Link href={`/product/${product?.slug}`}>
+                            <a>
+                                <div
+                                    className="reported-product p-2 bg-white d-flex align-items-center gap-3 mb-4"
+                                    style={{ borderRadius: '8px' }}>
+                                    <div className="reported-product-img">
+                                        <img
+                                            src={product?.poster_url}
+                                            alt=""
+                                            height={50}
+                                        />
+                                    </div>
+                                    <div className="reported-product-info">
+                                        <h5 className="fw-medium fs-4 m-0">
+                                            {product?.title}
+                                        </h5>
+                                    </div>
+                                    <div className="d-flex align-items-center gap-2 ml-auto">
+                                        <i className="fa fa-user"></i>
+                                        <h5 className="m-0 fw-medium">
+                                            {product?.seller?.first_name}{' '}
+                                            {product?.seller?.last_name}
+                                        </h5>
+                                    </div>
+                                </div>
+                            </a>
+                        </Link>
 
                         <form onSubmit={handleSubmit}>
                             <input
