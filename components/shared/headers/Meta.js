@@ -9,6 +9,7 @@ const Meta = ({ title, image, description, keywords, author="Soff.uz" }) => {
     return (
         <Head>
             <title>{title}</title>
+            <meta name="robots" content="index, follow" />
             <meta name="author" content={author}/>
             <meta name="description" content={description ? removeHTMLTags(description) : `${title}`}/>
             <meta

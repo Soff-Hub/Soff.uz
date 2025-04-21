@@ -7,6 +7,7 @@ import NextImageCard from '~/components/nextImagecard';
 import ProductSearchGoogle from '~/components/elements/products/ProductSearchGoogle';
 import useDebounce from '~/hooks/useDebounce';
 import Head from 'next/head';
+import Meta from '~/components/shared/headers/Meta';
 
 const Products_Search_Results = () => {
     const inputEl = useRef(null);
@@ -63,11 +64,10 @@ const Products_Search_Results = () => {
 
     return (
         <div className='global_search_results'>
-            <Head>
-                <title>Soff.uz - Qidiruv natijalar</title>
-                <meta name="robots" content="index, follow" />
-                <meta name="description" content="Soff.uz qidiruv tizimi orqali o'zingizga kerakli bo'lgan istalgan turdagi intellektual mulklaringizni toping" />
-            </Head>
+            <Meta
+                title={`${keyword} bo‘yicha qidiruv natijalari | Soff.uz`}
+                description={`${keyword} bilan bog‘liq fayllar, videolar, xizmatlar va boshqa raqamli mahsulotlarni toping.`}
+            />
             <nav className='global_navbar'>
                 <div className='container d-flex align-items-center'>
                     <div className='d-flex align-items-center gap-5 width_full_screen'>
