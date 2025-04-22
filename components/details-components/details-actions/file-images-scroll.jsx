@@ -7,18 +7,18 @@ function FileImagesScroll({ product }) {
     const containerRef = useRef(null);
 
 
-    // useEffect(() => {
-    //     const scrollContainer = containerRef.current;
-    //     if (scrollContainer) {
-    //         // Scrollni eng pastga tushirish
-    //         scrollContainer.scrollTop = scrollContainer.scrollHeight;
+    useEffect(() => {
+        const scrollContainer = containerRef.current;
+        if (scrollContainer) {
+            // Scrollni eng pastga tushirish
+            scrollContainer.scrollTop = scrollContainer.scrollHeight;
 
-    //         // 1 soniyadan keyin avtomatik yuqoriga qaytarish
-    //         setTimeout(() => {
-    //             scrollContainer.scrollTo({ top: 0, behavior: "smooth" });
-    //         }, 1000);
-    //     }
-    // }, [product?.document?.images]);
+            // 1 soniyadan keyin avtomatik yuqoriga qaytarish
+            setTimeout(() => {
+                scrollContainer.scrollTo({ top: 0, behavior: "smooth" });
+            }, 1000);
+        }
+    }, [product?.document?.images]);
 
     return (
         <div
