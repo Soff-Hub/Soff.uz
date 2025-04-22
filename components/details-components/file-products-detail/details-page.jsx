@@ -16,15 +16,15 @@ function FileProductsDetails({ product }) {
         <div className="ps-product--detail_seller my-5">
           <div>
             <h1 className='titleh3' style={{ fontWeight: 600, fontSize: "25px", lineHeight: "37.5px", color: "#312F30", margin: 0 }}>
-              {product?.title}
+              {product?.title || <span className="invisible-text">Mahsulot nomi</span>}
             </h1>
-            {/* <Link href={`/scientific-resources/${product?.category?.slug}?childCategory=${product?.category?.slug}`}>
+            <Link href={`/scientific-resources/${product?.category?.slug}?childCategory=${product?.category?.slug}`}>
               <a>
                 <p className='m-0 fs-3'>
                   {product?.category?.name || <span className="invisible-text">Kategoriya nomi</span>}
                 </p>
               </a>
-            </Link> */}
+            </Link>
           </div>
           <div className="ps-product__header_seller ">
             <FileImagesScroll
