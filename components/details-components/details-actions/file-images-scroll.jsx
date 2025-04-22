@@ -7,18 +7,18 @@ function FileImagesScroll({ product }) {
     const containerRef = useRef(null);
 
 
-    useEffect(() => {
-        const scrollContainer = containerRef.current;
-        if (scrollContainer) {
-            // Scrollni eng pastga tushirish
-            scrollContainer.scrollTop = scrollContainer.scrollHeight;
+    // useEffect(() => {
+    //     const scrollContainer = containerRef.current;
+    //     if (scrollContainer) {
+    //         // Scrollni eng pastga tushirish
+    //         scrollContainer.scrollTop = scrollContainer.scrollHeight;
 
-            // 1 soniyadan keyin avtomatik yuqoriga qaytarish
-            setTimeout(() => {
-                scrollContainer.scrollTo({ top: 0, behavior: "smooth" });
-            }, 1000);
-        }
-    }, [product?.document?.images]);
+    //         // 1 soniyadan keyin avtomatik yuqoriga qaytarish
+    //         setTimeout(() => {
+    //             scrollContainer.scrollTo({ top: 0, behavior: "smooth" });
+    //         }, 1000);
+    //     }
+    // }, [product?.document?.images]);
 
     return (
         <div
@@ -33,7 +33,6 @@ function FileImagesScroll({ product }) {
                                 width={785}
                                 height={614}
                                 alt={"sellerImage"}
-                                unoptimized
                                 className={` seller_image_conatiner`}
                                 objectFit="contain"
                                 style={{ flexShrink: 0, objectFit: "contain" }}
@@ -44,7 +43,6 @@ function FileImagesScroll({ product }) {
                             width={1000}
                             height={614}
                             alt={"sellerImage"}
-                            unoptimized
                             className={` seller_image_conatiner`}
                             objectFit="contain"
                         />}
