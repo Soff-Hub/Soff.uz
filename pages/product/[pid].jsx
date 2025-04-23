@@ -23,8 +23,6 @@ import * as cookie from 'cookie';
 
 
 export default function ProductDefaultPage({ defaultProducts, similarProduct }) {
-    console.log("defaultProducts -> ", defaultProducts);
-    
     const router = useRouter();
     const { pid } = router.query;
     const [isPlay, setIsPlay] = useState(null);
