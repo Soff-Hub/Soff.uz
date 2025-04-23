@@ -170,20 +170,24 @@ function FileActions({ product }) {
                 </ul>
 
                 <div className='d-flex flex-column gap-3 '>
-                    <div className=' d-flex align-items-center gap-3 justify-content-end'>
-                        {product?.discount_price !== 0 && <Button onClick={handleAddItemToCart} iconPosition='end' style={{ height: "58px", fontSize: "20px" }} type="text" variant='solid' className='w-100 border-2 border-success text-success button_hover' icon={<ShoppingCartOutlined />} size={"large"}>
-                            Savatga qo’shish
-                        </Button>}
-                        <Button iconPosition='end' onClick={handleAddItemToWishlist} style={{ height: "58px", width: "80px", fontSize: "28px" }} type="text" variant='solid' className='border-2 border-success text-success button_hover'
-                            icon={wishlist?.some(
-                                item => Number(item.id) === Number(product?.id)
-                            ) ?
-                                <i className="fa-solid fa-heart"></i>
-                                :
-                                <i className="fa-regular fa-heart "></i>
-                            } size={"large"}>
-                        </Button>
-                    </div>
+                    {
+                        !product?.document?.file_url && (
+                            <div className=' d-flex align-items-center gap-3 justify-content-end'>
+                                {product?.discount_price !== 0 && <Button onClick={handleAddItemToCart} iconPosition='end' style={{ height: "58px", fontSize: "20px" }} type="text" variant='solid' className='w-100 border-2 border-success text-success button_hover' icon={<ShoppingCartOutlined />} size={"large"}>
+                                    Savatga qo’shish
+                                </Button>}
+                                <Button iconPosition='end' onClick={handleAddItemToWishlist} style={{ height: "58px", width: "80px", fontSize: "28px" }} type="text" variant='solid' className='border-2 border-success text-success button_hover'
+                                    icon={wishlist?.some(
+                                        item => Number(item.id) === Number(product?.id)
+                                    ) ?
+                                        <i className="fa-solid fa-heart"></i>
+                                        :
+                                        <i className="fa-regular fa-heart "></i>
+                                    } size={"large"}>
+                                </Button>
+                            </div>
+                        )
+                    }
                     {product?.document?.file_url ?
                         <a href={product?.document?.file_url} target='_blank'>
                             <Button iconPosition='end' style={{ height: "58px", fontSize: "20px" }} type="primary" className='w-100 bg-success' icon={<DownloadOutlined />} size={"large"}>

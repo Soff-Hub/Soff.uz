@@ -16,13 +16,13 @@ export const formatTime = (seconds) => {
 export default function CodeVerifyForm() {
     const [loading, setLoading] = useState(false);
     const [secondsRemaining, setSecondsRemaining] = useState(120);
-    const [via, setVia] = useState(null);
+    const [msg, SetMsg] = useState(null);
     const router = useRouter();
     const dispatch = useDispatch();
     const [timerId, setTimerId] = useState(null);
 
     useEffect(() => {
-        setVia(localStorage.getItem('via_'));
+        SetMsg(localStorage.getItem('msg'));
 
         startTimer(); // Sahifa yuklanishi bilan timerni ishga tushiramiz
 
@@ -106,7 +106,7 @@ export default function CodeVerifyForm() {
                 <div className="ps-form--account">
                     <Form onFinish={handleSubmit}>
                         <p className='text-center fs-2 mb-4'>
-                            {via === 'via_phone' ? 'Telefon raqamingizga' : 'Elektron pochtangizga'} yuborilgan tasdiqlash kodini kiriting
+                            {msg}
                         </p>
 
                         <Form.Item

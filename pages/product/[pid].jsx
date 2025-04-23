@@ -19,8 +19,12 @@ import VideoLessonsProducts from '~/components/elements/products/VideoLessonsPro
 import SwiperPages from '~/components/details-components/swiper/swiper-page';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
 import SkeletonProductDetail from '~/components/elements/skeletons/SkeletonProductDetail';
+import * as cookie from 'cookie';
 
-const ProductDefaultPage = ({ defaultProducts, similarProduct }) => {
+
+export default function ProductDefaultPage({ defaultProducts, similarProduct }) {
+    console.log("defaultProducts -> ", defaultProducts);
+    
     const router = useRouter();
     const { pid } = router.query;
     const [isPlay, setIsPlay] = useState(null);
@@ -50,7 +54,7 @@ const ProductDefaultPage = ({ defaultProducts, similarProduct }) => {
             content: 'Bu yerda narxi va sotib olish tugmasi bor. Bosib sotib olasiz.',
         }
     ]);
-    
+
     useEffect(() => {
         const timer = setTimeout(() => {
           setRun(true);
@@ -156,6 +160,7 @@ const ProductDefaultPage = ({ defaultProducts, similarProduct }) => {
                                 } `
                         }
                     />
+                    <meta name="robots" content="index, follow" />
                     <meta
                         name='image'
                         content={
@@ -285,19 +290,25 @@ const ProductDefaultPage = ({ defaultProducts, similarProduct }) => {
     );
 };
 
-export async function getServerSideProps({ query }) {
-    const resquest = await fetch(baseUrl + `customer/documents/${query.pid}/`);
+export async function getServerSideProps({ query, req }) {
+    const cookies = cookie.parse(req.headers.cookie || '');
+    const token = cookies.token;
+    
+    const headers = token
+    ? { 'Authorization': `Bearer ${token}` }
+    : {};
+
+    const resquest = await fetch(`${baseUrl}customer/documents/${query.pid}/`, {headers});
+  
     const defaultProducts = await resquest.json();
-
-    const resquestSimilarProduct = await fetch(baseUrl + `customer/similar/${query.pid}/`);
+  
+    const resquestSimilarProduct = await fetch(`${baseUrl}customer/similar/${query.pid}/`);
     const similarProduct = await resquestSimilarProduct.json();
-
+  
     return {
-        props: {
-            defaultProducts,
-            similarProduct,
-        },
+      props: {
+        defaultProducts,
+        similarProduct,
+      },
     };
-}
-
-export default ProductDefaultPage;
+  }
