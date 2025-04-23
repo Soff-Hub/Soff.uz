@@ -47,15 +47,10 @@ function FileImagesScroll({ product }) {
                             objectFit="contain"
                         />}
                 </div>
-                {
-                    product?.view_count && 
-                        (
-                            <div className="views">
-                                {' '}
-                                <i className="fa-solid fa-eye"></i> <span>{product?.view_count}</span>
-                            </div>
-                        )
-                }
+                <div className="views">
+                    {' '}
+                    <i className="fa-solid fa-eye"></i> <span>{product?.view_count}</span>
+                </div>
                 
                 <div className='title_support'>
                     <InfoCircleOutlined className='fs-2 ' style={{ cursor: "pointer", }} />
