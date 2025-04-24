@@ -20,7 +20,7 @@ const HeaderActions = ({ auth, isDark }) => {
                     <i className="fa-regular fa-circle-question"></i>
                 </a>
             </Link> */}
-            <HeaderAIIcon />
+            {/* <HeaderAIIcon /> */}
             <HeaderSearchIcon />
             <HeaderNotifications color={isDark ? 'text-black' : 'text-white'} />
 

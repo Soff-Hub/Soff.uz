@@ -57,7 +57,7 @@ export default function SoffiaPage() {
           boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
           color: '#fff',
         }}>
-          <h1 className="display-4 mb-4" style={{ fontFamily: 'Roboto, sans-serif' }}>
+          <h1 className="display-5 mb-4" style={{ fontFamily: 'Roboto, sans-serif' }}>
             <strong>Soffia AI</strong> yordamida avtomatik prezentatsiya yarating
           </h1>
           <p className=" mb-4 mx-auto" style={{ maxWidth: '800px' }}>
