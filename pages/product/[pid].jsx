@@ -20,6 +20,7 @@ import SwiperPages from '~/components/details-components/swiper/swiper-page';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
 import SkeletonProductDetail from '~/components/elements/skeletons/SkeletonProductDetail';
 import * as cookie from 'cookie';
+import AISoffiaPresentation from '~/components/elements/AISoffiaPresentation';
 
 
 export default function ProductDefaultPage({ defaultProducts, similarProduct }) {
@@ -269,6 +270,7 @@ export default function ProductDefaultPage({ defaultProducts, similarProduct }) 
                                     {!defaultProducts && <SkeletonProductDetail/>}
                                     {productsDetails[defaultProducts?.document?.content_type]}
                                 </div>
+                                <AISoffiaPresentation/>
                                 {
                                     defaultProducts && (
                                         <div className=' my-5'>

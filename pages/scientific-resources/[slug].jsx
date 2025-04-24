@@ -7,6 +7,7 @@ import FooterComponents from '~/components/blocks/footer/FooterComponents';
 import ScientificResourcesFilterSection, { getTitleFromSlug } from '~/components/elements/scientificResourcesFilterSection';
 import { useRouter } from 'next/router';
 import { baseUrlUseApi } from '~/repositories/useApi';
+import AISoffiaPresentation from '~/components/elements/AISoffiaPresentation';
 
 export default function ProductCategoryScreen({ 
     productsData, 
@@ -53,6 +54,7 @@ export default function ProductCategoryScreen({
             />
 
             <div className='ps-page--shop container p-lg-1'>
+                <AISoffiaPresentation/>
                 <ScientificResourcesFilterSection
                     breacrumb={fourChildData}
                     count={productsData?.count}

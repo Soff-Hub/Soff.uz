@@ -6,7 +6,7 @@ export default function HeaderSearchIcon() {
     return (
         <Link href={`/`}>
             <a className="header__extra fs-2" style={{ cursor: 'pointer' }}>
-                <i className="fa-solid fa-magnifying-glass"></i>
+                <i class="fa-solid fa-magnifying-glass"></i>
             </a>
         </Link>
     )
