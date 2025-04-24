@@ -7,6 +7,7 @@ import HomeCategories from '~/components/blocks/home-categories';
 import ItServicesCategories from '~/components/blocks/home-categories/ItServicesCategories';
 import SubProjects from '~/components/blocks/home-products/sub-projects';
 import HomeVideo from '~/components/blocks/home-video';
+import AISoffiaPresentation from '~/components/elements/AISoffiaPresentation';
 import PageLayout from '~/components/layouts/PageLayout';
 import Meta from '~/components/shared/headers/Meta';
 

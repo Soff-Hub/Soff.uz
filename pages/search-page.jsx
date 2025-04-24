@@ -8,6 +8,7 @@ import ProductSearchGoogle from '~/components/elements/products/ProductSearchGoo
 import useDebounce from '~/hooks/useDebounce';
 import Head from 'next/head';
 import Meta from '~/components/shared/headers/Meta';
+import AISoffiaPresentation, { AISoffiaPresentationNotFoundProduct } from '~/components/elements/AISoffiaPresentation';
 
 const Products_Search_Results = () => {
     const inputEl = useRef(null);
@@ -135,9 +136,7 @@ const Products_Search_Results = () => {
                             />
                         </>
                     ) : (
-                        <div className='d-flex align-items-center justify-content-center pt-5'>
-                            <p>Ma'lumot topilmadi</p>
-                        </div>
+                        <AISoffiaPresentationNotFoundProduct/>
                     )}
                 </div>
             </div>

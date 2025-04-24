@@ -7,6 +7,7 @@ import MiniCart from '~/components/shared/headers/modules/MiniCart';
 import HeaderNotifications from './HeaderNotifications';
 import HeaderUserDropdown from './HeaderUserDropdown';
 import HeaderSearchIcon from './HeaderSearchIcon';
+import HeaderAIIcon from './HeaderAIIcon';
 
 const HeaderActions = ({ auth, isDark }) => {
     const { wishlist } = useWishlist();
@@ -19,7 +20,7 @@ const HeaderActions = ({ auth, isDark }) => {
                     <i className="fa-regular fa-circle-question"></i>
                 </a>
             </Link> */}
-            
+            {/* <HeaderAIIcon /> */}
             <HeaderSearchIcon />
             <HeaderNotifications color={isDark ? 'text-black' : 'text-white'} />
 
