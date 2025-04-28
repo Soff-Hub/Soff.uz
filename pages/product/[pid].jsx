@@ -27,6 +27,7 @@ export default function ProductDefaultPage({ defaultProducts, similarProduct }) 
     const router = useRouter();
     const { pid } = router.query;
     const [isPlay, setIsPlay] = useState(null);
+
     // const { data: product } = useGet("productsDetails", `customer/documents/${pid}/`, undefined, { enabled: Boolean(pid) })
     // const { data: similarProduct } = useGet("productSimilar", `customer/similar/${pid}/`, undefined, { enabled: Boolean(pid) })
 
@@ -58,10 +59,10 @@ export default function ProductDefaultPage({ defaultProducts, similarProduct }) 
         const timer = setTimeout(() => {
           setRun(true);
         }, 2400);
-      
+
         return () => clearTimeout(timer);
       }, []);
-    
+
     const joyrideFeature = run && <Joyride
         steps={steps}
         run={run}
@@ -257,9 +258,9 @@ export default function ProductDefaultPage({ defaultProducts, similarProduct }) 
                         }
                     />
                 </Head>
-                
+
                 {joyrideFeature}
-                
+
                 <div>
                     <div className='container' style={{ position: 'relative' }}>
                         <div
@@ -293,18 +294,19 @@ export default function ProductDefaultPage({ defaultProducts, similarProduct }) 
 export async function getServerSideProps({ query, req }) {
     const cookies = cookie.parse(req.headers.cookie || '');
     const token = cookies.token;
-    
+
     const headers = token
     ? { 'Authorization': `Bearer ${token}` }
     : {};
 
     const resquest = await fetch(`${baseUrl}customer/documents/${query.pid}/`, {headers});
-  
+
     const defaultProducts = await resquest.json();
-  
+
     const resquestSimilarProduct = await fetch(`${baseUrl}customer/similar/${query.pid}/`);
     const similarProduct = await resquestSimilarProduct.json();
-  
+
+
     return {
       props: {
         defaultProducts,
