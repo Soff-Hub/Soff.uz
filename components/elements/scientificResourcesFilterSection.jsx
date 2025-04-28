@@ -5,7 +5,7 @@ const Option = Select.Option;
 
 export const getTitleFromSlug = (array, slug) => {
     let title = null
-    
+
     if(array && slug){
         title = array.find(item => {
             return item.slug == slug
@@ -26,7 +26,6 @@ const ScientificResourcesFilterSection = ({
 
     const router = useRouter();
 
-    // router.isReady yuklanmaguncha null qaytarish
     if (!router.isReady) return null;
 
     const { slug, parentCategory, childCategory } = router.query;
@@ -230,12 +229,10 @@ const ScientificResourcesFilterSection = ({
                                             }>
                                             (<span>{subCategory.length}+</span>) {` `}
                                             {
-                                                childCategory ? subCategory.find(item => {
-                                                    return item.slug == childCategory
-                                                }).name :
-                                                    'Barchasini korish '
+                                                childCategory
+                                                    ? subCategory.find(item => item.slug == childCategory)?.name || 'Barchasini korish'
+                                                    : 'Barchasini korish'
                                             }
-
                                             {
                                                 childCategoryOpen ? <img src='/static/img/up-icon-green.svg' alt='' /> :
                                                 <img src='/static/img/down-icon-green.svg' alt='' />
