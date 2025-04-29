@@ -30,8 +30,18 @@ const ProductDefaultPage = ({ defaultProducts }) => {
     const [isPlay, setIsPlay] = useState(null);
     const [run, setRun] = useState(false);
     const [loading, setLoading] = useState(false);
-    const { data: product } = useGet("productsDetails", `customer/documents/${pid}/`, undefined, { enabled: Boolean(pid) })
-    const { data: similarProduct } = useGet("productSimilar", `customer/similar/${pid}/`, undefined, { enabled: Boolean(pid) })
+    const { data: product } = useGet(
+        'productsDetails',
+        `customer/documents/${pid}/`,
+        undefined,
+        { enabled: Boolean(pid) }
+    );
+    const { data: similarProduct } = useGet(
+        'productSimilar',
+        `customer/similar/${pid}/`,
+        undefined,
+        { enabled: Boolean(pid) }
+    );
 
     const { user } = useSelector(state => state.auth);
     const dispatch = useDispatch();
@@ -40,8 +50,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
         return html.replace(/<[^>]+>/g, '');
     };
 
-
-    async function getUUID(uuid) {
+    async function getUUID (uuid) {
         const respons = await PostRepository.postProductUUID(pid, uuid);
         if (respons) {
             setViews(respons);
@@ -94,9 +103,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
         }
     }, [pid, product?.slug]);
 
-
     console.log(similarProduct);
-
 
     const steps = [
         {
@@ -143,54 +150,46 @@ const ProductDefaultPage = ({ defaultProducts }) => {
         }, 500);
     };
 
-
     const productsDetails = {
-        'file': <FileProductsDetails
-            product={product} />,
-        "3d": <ThreeDesignProductsDetails
-            product={product}
-        />,
-        "template": <ThreeDesignProductsDetails
-            product={product}
-        />,
-        "website": <WebSitesProductsDetails
-            product={product}
-        />,
-        "design": <ThreeDesignProductsDetails
-            product={product}
-        />,
-        "video": <VideosProductsDetails
-            isPlay={isPlay}
-            setIsPlay={setIsPlay}
-            // similar={similar}
-            product={product}
-        />
-    }
+        file: <FileProductsDetails product={product} />,
+        '3d': <ThreeDesignProductsDetails product={product} template={true} />,
+        template: <ThreeDesignProductsDetails product={product} />,
+        website: <WebSitesProductsDetails product={product} />,
+        design: <ThreeDesignProductsDetails product={product} />,
+        video: (
+            <VideosProductsDetails
+                isPlay={isPlay}
+                setIsPlay={setIsPlay}
+                // similar={similar}
+                product={product}
+            />
+        ),
+    };
     const productsDetailsSimilar = {
-        'file': similarProduct?.map((item, index) => (
+        file: similarProduct?.map((item, index) => (
             <RedesignProduct product={item} key={index} />
         )),
-        "3d": [<ThreeDesignProductsDetails product={similarProduct} key="3d" />],
-        "template": similarProduct?.map((item, index) => (
+        '3d': [
+            <ThreeDesignProductsDetails product={similarProduct} key='3d' />,
+        ],
+        template: similarProduct?.map((item, index) => (
             <DesignDevelopmentProducts product={item} key={index} />
         )),
-        "website": similarProduct?.map((item, index) => (
+        website: similarProduct?.map((item, index) => (
             <WebsitesProduct key={index} product={item} />
         )),
-        "design": similarProduct?.map((item, index) => (
+        design: similarProduct?.map((item, index) => (
             <DesignDevelopmentProducts key={index} product={item} />
         )),
-        "video": similarProduct?.map((item, index) => (
+        video: similarProduct?.map((item, index) => (
             <VideoLessonsProducts product={item} key={index} />
         )),
     };
-
 
     return (
         <>
             <PageContainer
                 title={defaultProducts ? defaultProducts?.title : 'Loading...'}>
-
                 <Head>
                     <title>
                         {defaultProducts?.title ||
@@ -208,9 +207,10 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                         content={
                             defaultProducts?.description
                                 ? removeHTMLTags(defaultProducts?.description)
-                                : `${defaultProducts?.title ||
-                                'soff.uz - Intellektual mulk marketi'
-                                } `
+                                : `${
+                                      defaultProducts?.title ||
+                                      'soff.uz - Intellektual mulk marketi'
+                                  } `
                         }
                     />
                     <meta
@@ -225,8 +225,8 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                         content={
                             defaultProducts?.tag
                                 ? defaultProducts?.tag
-                                    ?.map(e => e?.name)
-                                    ?.join(', ')
+                                      ?.map(e => e?.name)
+                                      ?.join(', ')
                                 : 'kurs ishi, taqdimotlar, slaydlar, diplom ishi, prezentatsiya'
                         }
                     />
@@ -244,9 +244,10 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                         content={
                             defaultProducts?.description
                                 ? removeHTMLTags(defaultProducts?.description)
-                                : `${defaultProducts?.title ||
-                                'soff.uz - Intellektual mulk marketi'
-                                } `
+                                : `${
+                                      defaultProducts?.title ||
+                                      'soff.uz - Intellektual mulk marketi'
+                                  } `
                         }
                     />
                     <meta
@@ -263,8 +264,8 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                         content={
                             defaultProducts?.tag
                                 ? defaultProducts?.tag
-                                    ?.map(e => e?.name)
-                                    ?.join(', ')
+                                      ?.map(e => e?.name)
+                                      ?.join(', ')
                                 : 'kurs ishi, taqdimotlar, slaydlar, diplom ishi, prezentatsiya'
                         }
                     />
@@ -288,9 +289,10 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                         content={
                             defaultProducts?.description
                                 ? removeHTMLTags(defaultProducts?.description)
-                                : `${defaultProducts?.title ||
-                                'soff.uz - Intellektual mulk marketi'
-                                } `
+                                : `${
+                                      defaultProducts?.title ||
+                                      'soff.uz - Intellektual mulk marketi'
+                                  } `
                         }
                     />
                     <meta property='twitter:url' content='https://soff.uz' />
@@ -300,8 +302,8 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                         content={
                             defaultProducts?.tag
                                 ? defaultProducts?.tag
-                                    ?.map(e => e?.name)
-                                    ?.join(', ')
+                                      ?.map(e => e?.name)
+                                      ?.join(', ')
                                 : 'kurs ishi, taqdimotlar, slaydlar, diplom ishi, prezentatsiya'
                         }
                     />
@@ -368,16 +370,33 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                         />
 
                         <div
-                            className={`ps-page--product ${defaultProducts?.price === 0 ? '' : 'pt-2'
-                                }`}>
+                            className={`ps-page--product ${
+                                defaultProducts?.price === 0 ? '' : 'pt-2'
+                            }`}>
                             <div className='ps-container p-0'>
                                 <div className='ps-page__container'>
-                                    {productsDetails[product?.document?.content_type]}
+                                    {
+                                        productsDetails[
+                                            product?.document?.content_type
+                                        ]
+                                    }
                                 </div>
                                 <div className=' my-5'>
-                                    <h3 style={{ fontSize: "25px", fontWeight: 400 }} className='py-4 similar_title'>O’xshash mahsulotlar</h3>
-                                    <SwiperPages type={product?.document?.content_type}>
-                                        {productsDetailsSimilar[product?.document?.content_type]}
+                                    <h3
+                                        style={{
+                                            fontSize: '25px',
+                                            fontWeight: 400,
+                                        }}
+                                        className='py-4 similar_title'>
+                                        O’xshash mahsulotlar
+                                    </h3>
+                                    <SwiperPages
+                                        type={product?.document?.content_type}>
+                                        {
+                                            productsDetailsSimilar[
+                                                product?.document?.content_type
+                                            ]
+                                        }
                                     </SwiperPages>
                                 </div>
 
@@ -408,7 +427,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
     );
 };
 
-export async function getServerSideProps({ query }) {
+export async function getServerSideProps ({ query }) {
     const resquest = await fetch(baseUrl + `customer/documents/${query.pid}/`);
     const defaultProducts = await resquest.json();
 

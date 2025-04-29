@@ -1,8 +1,6 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import FooterComponents from '~/components/blocks/footer/FooterComponents';
-import ModelAndDesignHero from '~/components/blocks/header/ModelAndDesignHero';
-import CategoriesFilterSecion from '~/components/elements/DesignDevelopmentsFilterSection';
 import ThreeDCategoriesFilterSecion from '~/components/elements/ThreeDCategoriesFilterSecion';
 import PageContainer from '~/components/layouts/PageContainer';
 import ProductsByModelsAndDesignCategory from '~/components/partials/category/ProductsByModelsAndDesignCategory';
@@ -17,22 +15,23 @@ export default function ModelsAndInteriorDesign () {
     // products API uchun so'rov
     const { data, error, isLoading } = useApi(
         ['products', page, parentCategory, childCategory], // queryKey dinamik
-        `${baseUrlUseApi}customer/products/?direction=scientific_work&category=${
+        `${baseUrlUseApi}customer/products/?direction=3d&category=${
             childCategory ? childCategory : parentCategory
         }&page=${page || 1}&page_size=48`,
         'GET'
     );
 
-    // Otab kategoriya API uchun so'rov
+    // Ota kategoriya API uchun so'rov
     const {
         data: fourChildData,
         error: fourChildError,
         isLoading: isFourChildLoading,
     } = useApi(
         ['fourChild'], // Query key
-        `${baseUrlUseApi}customer/four-child?direction=scientific_work`,
+        `${baseUrlUseApi}customer/four-child?direction=3d`,
         'GET'
     );
+    console.log('fourChildData =>', fourChildData);
 
     // Farzand kategoriya API uchun so'rov
     const {
@@ -41,7 +40,7 @@ export default function ModelsAndInteriorDesign () {
         isLoading: isChildCategory,
     } = useApi(
         ['fourChild', parentCategory], // Query key
-        `${baseUrlUseApi}customer/four-child?direction=scientific_work&parent__slug=${parentCategory}`,
+        `${baseUrlUseApi}customer/four-child?direction=3d&parent__slug=${parentCategory}`,
         'GET'
     );
 
@@ -52,6 +51,7 @@ export default function ModelsAndInteriorDesign () {
             query: { ...router.query, page: newPage }, // URL'ga yangi page qo'shish
         });
     };
+
     return (
         <PageContainer
             footer={<FooterDefault />}

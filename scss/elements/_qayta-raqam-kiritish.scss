@@ -338,35 +338,15 @@ input[type='number']::-webkit-outer-spin-button {
 // ________________________________ProductsByModelsAndDesignCategory styles____________________________
 .modelAndDesignProduct {
     display: grid;
-    grid-template-columns: repeat(3, 453px);
-    gap: 20px;
-    row-gap: 40px;
-    margin-top: 51px;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(clamp(9.375rem, 28.662vw + 3.105rem, 37.5rem), 1fr)
+    );
+    gap: clamp(8px, 1.5vw, 20px); /* responsiv gap */
+    row-gap: clamp(12px, 3vw, 40px); /* responsiv row-gap */
+    margin-top: clamp(12px, 5vw, 51px); /* hammasi moslashadi */
     padding: 0 !important;
     align-items: stretch;
-
-    @media (max-width: 1400px) {
-        grid-template-columns: repeat(3, 425px);
-        justify-content: center;
-    }
-    @media (max-width: 1300px) {
-        grid-template-columns: repeat(3, 1fr);
-        justify-content: center;
-    }
-    @media (max-width: 1150px) {
-        grid-template-columns: repeat(3, 1fr);
-        margin-top: 31px;
-    }
-    @media (max-width: 950px) {
-        grid-template-columns: repeat(2, 1fr);
-        margin-top: 20px;
-    }
-    @media (max-width: 768px) {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    @media (max-width: 576px) {
-        grid-template-columns: repeat(2, 1fr);
-    }
 }
 
 .ModelAndDesignProduct_skeletion_card {
@@ -522,9 +502,12 @@ input[type='number']::-webkit-outer-spin-button {
         .modelAndDesignCardTitle {
             font-family: 'Poppins';
             font-weight: 500;
-            font-size: 20px;
+            font-size: 16px;
             line-height: 20px;
-            letter-spacing: 2%;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
             cursor: pointer;
 
             @media screen and (max-width: 650px) {
@@ -547,6 +530,7 @@ input[type='number']::-webkit-outer-spin-button {
             display: flex;
             align-items: center;
             gap: 9px;
+            flex-shrink: 0;
         }
         a {
             img {

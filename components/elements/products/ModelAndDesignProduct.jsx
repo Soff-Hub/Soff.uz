@@ -58,11 +58,6 @@ const ModelAndDesignProduct = ({ product }) => {
         Router.push('/account/shopping-cart');
     };
 
-    const produvctTitle =
-        product.title.length > 10
-            ? product.title.slice(0, 15) + '...'
-            : product.title;
-
     return (
         <div
             className='modelAndDesignCard'
@@ -77,7 +72,10 @@ const ModelAndDesignProduct = ({ product }) => {
                         thumbnailImage(ModelAndDesignProduct)
                     ) : (
                         <img
-                            src={product.poster_url}
+                            src={
+                                // product?.poster_url ||
+                                '/static/img/videoposter.jpg'
+                            }
                             alt='hujjat'
                             className='w-100'
                             style={{ borderRadius: '9px 9px 0 0' }}
@@ -111,9 +109,7 @@ const ModelAndDesignProduct = ({ product }) => {
                                 <del>
                                     {addPeriodToThousands(product.price)} so'm
                                 </del>
-                                <p
-                                    className='modelAndDesignCardPrice'
-                                    style={{ whiteSpace: 'nowrap' }}>
+                                <p className='modelAndDesignCardPrice'>
                                     {addPeriodToThousands(
                                         product.discount_price
                                     )}{' '}
@@ -127,7 +123,7 @@ const ModelAndDesignProduct = ({ product }) => {
 
             <div className='modelAndDesignCardBody'>
                 <Link href='/product/[pid]' as={`/product/${product.slug}`}>
-                    <a className='modelAndDesignCardTitle'>{produvctTitle}</a>
+                    <a className='modelAndDesignCardTitle'>{product.title}</a>
                 </Link>
 
                 <div className='modelAndDesignCardBtn'>
