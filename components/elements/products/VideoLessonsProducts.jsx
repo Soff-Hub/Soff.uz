@@ -58,11 +58,6 @@ const VideoLessonsProducts = ({ product }) => {
         Router.push('/account/shopping-cart');
     };
 
-    const produvctTitle =
-        product.title.length > 10
-            ? product.title.slice(0, 45) + '...'
-            : product.title;
-
     return (
         <div
             className='videoLessonsCard '
@@ -75,7 +70,10 @@ const VideoLessonsProducts = ({ product }) => {
                             thumbnailImage(VideoLessonsProducts)
                         ) : (
                             <img
-                                src={product.poster_url}
+                                src={
+                                    // product.poster_url ||
+                                    '/static/img/videoposter.jpg'
+                                }
                                 alt='hujjat'
                                 className='videoLessonsCardImg'
                             />
@@ -105,17 +103,13 @@ const VideoLessonsProducts = ({ product }) => {
 
             <div className='videoLessonsCardBody '>
                 <Link href='/product/[pid]' as={`/product/${product.slug}`}>
-                    <a className='videoLessonsCardTitle'>
-                        {produvctTitle}
-                    </a>
+                    <a className='videoLessonsCardTitle'>{product.title}</a>
                 </Link>
 
                 <div className='videoLessonsCardPriceBox'>
                     <div className='videoLessonsCardPrice'>
                         {+product.discount_price === 0 ? (
-                            <p className='videoLessonsCardPrice m-0'>
-                                Bepul
-                            </p>
+                            <p className='videoLessonsCardPrice m-0'>Bepul</p>
                         ) : product.discount === 0 ? (
                             <p className=' videoLessonsCardPrice m-0'>
                                 {addPeriodToThousands(product.discount_price)}{' '}

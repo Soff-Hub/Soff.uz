@@ -15,7 +15,7 @@ export default function VideoLessons () {
     // products API uchun so'rov
     const { data, error, isLoading } = useApi(
         ['products', page, parentCategory, childCategory], // queryKey dinamik
-        `${baseUrlUseApi}customer/products/?direction=scientific_work&category=${
+        `${baseUrlUseApi}customer/products/?direction=video&category=${
             childCategory ? childCategory : parentCategory
         }&page=${page || 1}&page_size=48`,
         'GET'
@@ -28,7 +28,7 @@ export default function VideoLessons () {
         isLoading: isFourChildLoading,
     } = useApi(
         ['fourChild'], // Query key
-        `${baseUrlUseApi}customer/four-child?direction=scientific_work`,
+        `${baseUrlUseApi}customer/four-child?direction=video`,
         'GET'
     );
 
@@ -39,7 +39,7 @@ export default function VideoLessons () {
         isLoading: isChildCategory,
     } = useApi(
         ['fourChild', parentCategory], // Query key
-        `${baseUrlUseApi}customer/four-child?direction=scientific_work&parent__slug=${parentCategory}`,
+        `${baseUrlUseApi}customer/four-child?direction=video&parent__slug=${parentCategory}`,
         'GET'
     );
 
