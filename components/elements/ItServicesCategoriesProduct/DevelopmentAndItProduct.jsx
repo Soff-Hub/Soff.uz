@@ -32,8 +32,8 @@ const DevelopmentAndItProduct = ({ product }) => {
         <div className='DevelopmentAndItCard'>
             <div className='DevelopmentAndItCardImgBox'>
                 <Link
-                    href='/DevelopmentAndItProduct/[pid]'
-                    as={`/DevelopmentAndItProduct/${DevelopmentAndItProduct.slug}`}
+                    href='/product/[pid]'
+                    as={`/product/${product.slug}`}
                     className='w-full mx-auto'>
                     <a>
                         {DevelopmentAndItProduct.poster_url ? (
@@ -85,8 +85,7 @@ const DevelopmentAndItProduct = ({ product }) => {
                 </div>
                 <Link href='/product/[pid]' as={`/product/${product.slug}`}>
                     <a className='DevelopmentAndItCardTitle'>
-                    {product.title.slice(0, 45)}
-
+                        {product.title.slice(0, 45)}
                     </a>
                 </Link>
                 <div className='DevelopmentAndItCardPriceBox'>
@@ -112,7 +111,6 @@ const DevelopmentAndItProduct = ({ product }) => {
                 </div>
             </div>
         </div>
-        
     );
 };
 
