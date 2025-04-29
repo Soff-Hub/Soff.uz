@@ -646,41 +646,19 @@ input[type='number']::-webkit-outer-spin-button {
 // _____________________________Design Development styles____________________
 
 .designDevelopmentProduct {
-    display: grid;
-    grid-template-columns: repeat(4, 335px);
+    // display: grid;
+    // grid-template-columns: repeat(4, 335px);
     gap: 20px;
     row-gap: 48px;
     margin-top: 41px;
     padding: 0 !important;
     align-items: stretch;
 
-    @media (max-width: 1400px) {
-        grid-template-columns: repeat(4, 320px);
-        justify-content: center;
-    }
-    @media (max-width: 1300px) {
-        grid-template-columns: repeat(4, 290px);
-        justify-content: center;
-    }
-    @media (max-width: 1200px) {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        justify-content: center;
-        row-gap: 40px;
-    }
-    @media (max-width: 1025px) {
-        row-gap: 35px;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-    @media (max-width: 768px) {
-        margin-top: 30px;
-        row-gap: 25px;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-    @media (max-width: 576px) {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        row-gap: 20px;
-        margin-top: 20px;
-    }
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(clamp(9.375rem, 28.169vw + 2.773rem, 28.125rem), 1fr)
+    );
 }
 
 .designDevelopmentSkeleton {
@@ -691,14 +669,13 @@ input[type='number']::-webkit-outer-spin-button {
     @media (max-width: 1300px) {
         height: 350px !important;
     }
-  
+
     @media (max-width: 1000px) {
         height: 300px !important;
     }
     @media (max-width: 600px) {
         height: 200px !important;
     }
-
 }
 
 .designDevelopmentCard {
@@ -767,9 +744,12 @@ input[type='number']::-webkit-outer-spin-button {
         .designDevelopmentCardTitle {
             font-family: 'Poppins';
             font-weight: 400;
-            font-size: 15px;
-            line-height: 22.5px;
-            letter-spacing: 2%;
+            font-size: 16px;
+            line-height: 20px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
             @media screen and (max-width: 650px) {
                 font-weight: 400;
                 font-size: 13px;
@@ -807,6 +787,7 @@ input[type='number']::-webkit-outer-spin-button {
                 font-size: 20px;
                 line-height: 30px;
                 letter-spacing: 2%;
+                color: #000000;
                 @media screen and (max-width: 650px) {
                     font-weight: 600;
                     font-size: 18px;

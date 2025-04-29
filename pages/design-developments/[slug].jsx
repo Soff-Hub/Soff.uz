@@ -15,11 +15,12 @@ export default function DesignDevelopments () {
     // products API uchun so'rov
     const { data, error, isLoading } = useApi(
         ['products', page, parentCategory, childCategory], // queryKey dinamik
-        `${baseUrlUseApi}customer/products/?direction=scientific_work&category=${
+        `${baseUrlUseApi}customer/products/?direction=design&category=${
             childCategory ? childCategory : parentCategory
         }&page=${page || 1}&page_size=48`,
         'GET'
     );
+    console.log(' =>>>> design', data);
 
     // Otab kategoriya API uchun so'rov
     const {
@@ -28,7 +29,7 @@ export default function DesignDevelopments () {
         isLoading: isFourChildLoading,
     } = useApi(
         ['fourChild'], // Query key
-        `${baseUrlUseApi}customer/four-child?direction=scientific_work`,
+        `${baseUrlUseApi}customer/four-child?direction=design`,
         'GET'
     );
 
@@ -39,7 +40,7 @@ export default function DesignDevelopments () {
         isLoading: isChildCategory,
     } = useApi(
         ['fourChild', parentCategory], // Query key
-        `${baseUrlUseApi}customer/four-child?direction=scientific_work&parent__slug=${parentCategory}`,
+        `${baseUrlUseApi}customer/four-child?direction=design&parent__slug=${parentCategory}`,
         'GET'
     );
 
