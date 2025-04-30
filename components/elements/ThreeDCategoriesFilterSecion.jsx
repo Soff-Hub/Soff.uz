@@ -123,7 +123,7 @@ const ThreeDCategoriesFilterSecion = ({
                                             parentCategory === item.slug
                                                 ? 'categoryMenuCardActive'
                                                 : ''
-                                        } Models_category_btn `} // Ota kategoriya aktivligi
+                                        } Models_category_btn `}
                                         onClick={() =>
                                             router.push({
                                                 pathname: `/3d-models-and-interior-designs/${item.slug}`,
