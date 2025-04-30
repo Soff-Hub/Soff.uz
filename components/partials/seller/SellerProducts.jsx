@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Product from '~/components/elements/products/Product';
 import { Pagination } from 'antd';
-import ProductVideo from '~/components/elements/products/ProductVideo';
+// import ProductVideo from '~/components/elements/products/ProductVideo';
 
 
 export default function SellerProducts({ data = [], page, handlePagination }) {
@@ -21,8 +21,8 @@ export default function SellerProducts({ data = [], page, handlePagination }) {
                             </div> :
                             item?.document?.content_type === 'video' ?
                                 <div className='col-md-4 my-3' key={index}>
-                                    <ProductVideo isPlay={isPlay} setIsPlay={setIsPlay} product={item} />
-                                </div> : 
+                                    {/*<ProductVideo isPlay={isPlay} setIsPlay={setIsPlay} product={item} />*/}
+                                </div> :
                                     <></>
                     ))) :
                     <div className='row d-flex justify-content-center align-items-center py-5 mt-5'>
