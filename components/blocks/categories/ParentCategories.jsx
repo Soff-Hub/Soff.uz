@@ -1,42 +1,37 @@
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 
 const parentCategoriesData = [
     {
         title: 'Ilmiy ishlar',
-        imgUrl: '/static/img/Ilmiy-ishlar.png',
+        imgUrl: '/static/img/ilmiy-ishlar-2.png',
         path: '/scientific-resources/all',
-        width: '401px',
     },
     {
         title: '3D moddellar va Interier dizaynlar',
-        imgUrl: '/static/img/3D-moddellar-va-Interier-dizaynlar.png',
-        width: '401px',
-        path: '/3d-models-and-interior-designs/all',
+        imgUrl: '/static/img/3D-moddellar-va-Interier-dizaynlar-2.png',
+        path: '/3d-models-and-interior-designs',
     },
     {
         title: 'Dizayn shablonlari',
-        imgUrl: '/static/img/Dizayn-shablonlari.png',
-        width: '531px',
+        imgUrl: '/static/img/dizayn-shablonlari-2.png',
         path: '/design-developments/all',
     },
     {
         title: 'Veb saytlar',
-        imgUrl: '/static/img/Veb-saytlar.png',
-        width: '531px',
-        path: '/websites/all',
+        imgUrl: '/static/img/veb-saytlar-2.png',
+        path: '/websites',
     },
     {
-        title: 'Tayyor shablonlar',
-        imgUrl: '/static/img/Ilmiy-ishlar.png',
-        path: '/scientific-resources/all',
-        width: '401px',
+        title: 'Turli sohalar uchun shablonlar',
+        imgUrl: '/static/img/shablonlar-3.png',
+        path: '/templates',
     },
     {
         title: 'Video darsliklar',
-        imgUrl: '/static/img/Video-darsliklar.png',
-        width: '401px',
-        path: '/videoLessons/all',
+        imgUrl: '/static/img/video-darsliklar-2.png',
+        path: '/video-lessons',
     },
 ];
 
@@ -45,37 +40,42 @@ export default function ParentCategories() {
     const [hoveredId, setHoveredId] = useState(null);
 
     return (
-        <div className='container p-0 my-4 '>
+        <div className='container p-0 my-0'>
             <h2 className='product-list-title'>
-                Bizning Xizmatlar Katalogimiz!{' '}
+                Tayyor Materiallar Bo‘limi
             </h2>
-            <div className='d-flex justify-content-center flex-wrap gap-5 product-list-card-box p-0'>
+            <div className='product-list-card-box'>
                 {parentCategoriesData.map((item, index) => (
-                    <div
+                    <Link
+                        href={item.path}
                         key={index}
-                        className='p-5'
-                        style={{
-                            backgroundImage: `linear-gradient(rgba(0, 0, 0, ${hoveredId === item.title ? "0.4" : "0.1"}), rgba(0, 0, 0,${hoveredId === item.title ? "0.4" : "0.1"})),url(${item.imgUrl})`,
-                            backgroundSize: 'cover',
-                            backgroundPosition: 'center',
-                            backgroundRepeat: 'no-repeat',
-                            cursor: 'pointer',
-                            width: item.width,
-                            height: '268px',
-                            borderRadius:"12px"
-                        }}
-                        onClick={() => router.push(item.path)}
-                        onMouseEnter={() => setHoveredId(item.title)}
-                        onMouseLeave={() => setHoveredId(null)}>
-                        <h3 className='product-list-card-title h-75'>
-                            {item.title}
-                        </h3>
-                        <a
-                            className='product-list-card-btn text-white bg-success'
-                            href='#'>
-                            Ko'rib chiqish
+                    >
+                        <a>
+                            <div
+                                className='product-card'
+                                style={{
+                                    backgroundImage: `linear-gradient(rgba(0, 0, 0, ${hoveredId === item.title ? "0.4" : "0.1"
+                                        }), rgba(0, 0, 0,${hoveredId === item.title ? "0.4" : "0.1"
+                                        })),url(${item.imgUrl})`,
+                                    backgroundSize: 'cover',
+                                    backgroundPosition: 'center',
+                                    backgroundRepeat: 'no-repeat',
+                                }}
+                                onMouseEnter={() => setHoveredId(item.title)}
+                                onMouseLeave={() => setHoveredId(null)}
+                            >
+                                <div className="d-flex flex-column justify-content-between h-100">
+                                    <h3 className='product-list-card-title'>
+                                        {item.title}
+                                    </h3>
+                                    {/* <p
+                                        className='product-list-card-btn'>
+                                        Ko'rib chiqish
+                                    </p> */}
+                                </div>
+                            </div>
                         </a>
-                    </div>
+                    </Link>
                 ))}
             </div>
         </div>

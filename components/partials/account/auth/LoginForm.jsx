@@ -24,6 +24,7 @@ export default function LoginForm() {
         try {
             const resp = await Axios.post(baseUrlAuth + 'auth/register/', data);
             localStorage.setItem('via_', resp?.data?.via_);
+            localStorage.setItem('msg', resp?.data?.msg);
             localStorage.setItem('data', JSON.stringify(data));
             router.push({
                 query: { ...router.query, user: resp.data?.user },

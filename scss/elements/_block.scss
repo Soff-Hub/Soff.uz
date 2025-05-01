@@ -130,9 +130,9 @@
             font-weight: 700;
             line-height: 18px;
 
-            &:hover {
-                // color: #ffffff;
-            }
+            // &:hover {
+            //     // color: #ffffff;
+            // }
         }
     }
 }
@@ -609,8 +609,8 @@
             }
 
             &:hover {
-                span {
-                }
+                // span {
+                // }
 
                 img {
                     @include transform(scale(1.1, 1.1));
@@ -2438,8 +2438,8 @@
         }
     }
 
-    .ps-block__content {
-    }
+    // .ps-block__content {
+    // }
 }
 
 .ps-block--vendor-status {
@@ -2650,22 +2650,19 @@
 
 .ps-block--checkout-order {
     .checkout_footer {
-        display: flex;
-        flex-direction: column;
-        background: red;
-        gap: 8px;
         border-radius: 10px !important;
-        .prevev_button {
-            background-color: #efefef;
-            max-width: 80px;
-            width: 100%;
-            padding: 5px;
-            border-radius: 5px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 3px;
-        }
+    }
+    .prevev_button {
+        background-color: #efefef;
+        padding: 5px;
+        border-radius: 5px;
+        gap: 3px;
+        font-size: 16px;
+        border: none;
+    }
+    .prevev_button:hover {
+        background-color: #fff;
+        
     }
 
     .shot {
@@ -2674,7 +2671,7 @@
         flex-direction: column;
         gap: 15px;
         max-height: 398px;
-        margin-bottom: 32px;
+        // margin-bottom: 32px;
         background: #fff;
         // padding: 10px;
         border-radius: 10px !important;
@@ -2765,11 +2762,20 @@
         justify-content: space-between;
         align-items: start;
         background: #fff;
-        padding: 12px 44px 12px 24px;
-        box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.1);
+        padding: 12px 24px 12px 24px;
+        // box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.1);
         border: 1px solid rgba(0, 0, 0, 0.1);
         border-radius: 8px;
         position: relative;
+        height: 218px;
+
+        @media (max-width: 425px) {
+            height: 140px !important;
+        }
+
+        .sell_card_img{
+            object-fit: contain;
+        }
         .sell_card_body {
             width: 100%;
             .sell_card_title {
@@ -2793,13 +2799,23 @@
             }
         }
 
-        .sell_card_delete {
-            // position: absolute;
-            // top: 5 !important;/
-            // left: 15 !important;
+        // .sell_card_delete {
+        //     // position: absolute;
+        //     // top: 5 !important;/
+        //     // left: 15 !important;
+        // }
+        .sell_card_delete img{
+            // margin-top: 10px;
+            border: 2px solid #fff;
+
+        }
+        .sell_card_delete img:hover{
+            border: 2px solid #FFA5A6;
+            // padding: 5px;
+            border-radius: 50%;
         }
         .sell_card_price {
-            width: 150px !important;
+            width: 200px !important;
             display: flex;
             align-items: end !important;
             flex-direction: column;
@@ -2812,6 +2828,11 @@
                 line-height: 27px;
                 letter-spacing: 0%;
             }
+
+            @media (max-width: 425px) {
+                width: 100px !important;
+            }
+    
         }
 
         @media (max-width: 425px) {
@@ -2819,32 +2840,17 @@
             justify-content: space-between;
             align-items: start;
             // flex-direction: column;
-            background: #fff;
+            // background: #fff;
             padding: 5px;
-            box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(0, 0, 0, 0.1);
             border-radius: 8px;
             position: relative; gap: 5px;
-            .sell_card_img {
-                // display: none;
-            }
+            // .sell_card_img {
+            //     // display: none;
+            // }
             .sell_card_title {
                 a {
                     p {
-                        font-family: 'Poppins';
-                        font-weight: 300;
-                        font-size: 8px !important;
-                        line-height: 12.5px !important;
-                        letter-spacing: 2%;
-                    }
-                }
-            }
-            .sell_card_title {
-                a {
-                    p {
-                        font-family: 'Poppins';
-                        font-weight: 300;
-                        font-size: 8px !important;
+                        font-size: 10px !important;
                         line-height: 12.5px !important;
                         letter-spacing: 2%;
                     }
@@ -2852,17 +2858,11 @@
             }
             .sell_card_price {
                 p {
-                    font-family: 'Poppins';
-                    font-weight: 300;
-                    font-size: 8px !important;
+                    font-weight: 600;
+                    font-size: 14px !important;
                     line-height: 12.5px !important;
                 }
             }
-        }
-        .product_type {
-            width: 20px !important;
-            height: 10px !important;
-            font-size: 5px;
         }
     }
     @media (max-width: 320px) {
@@ -2870,10 +2870,8 @@
         justify-content: start;
         align-items: start;
         flex-direction: column;
-        background: #fff;
+        // background: #fff;
         padding: 5px !important;
-        box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.1);
-        border: 1px solid rgba(0, 0, 0, 0.1);
         border-radius: 8px;
         position: relative;
         .sell_card_img {
@@ -2899,16 +2897,11 @@
             }
         }
     }
-    .product_type {
-        width: 20px !important;
-        height: 10px !important;
-        font-size: 5px;
-    }
 }
 .total_amount {
     padding: 40px 50px;
     border-radius: 10px !important;
-    figcaption {
+    .product_price_click_all {
         p {
             font-family: 'Poppins';
             font-weight: 700;
@@ -2930,29 +2923,19 @@
             letter-spacing: 0%;
         }
     }
-    @media (max-width: 425x) {
+    @media (max-width: 425px) {
+
         padding: 10px 5px !important;
         border-radius: 10px !important;
         .product_price_click_all {
             p {
-                font-weight: 300 !important;
-                font-size: 10px !important;
-                line-height: 12px !important ;
+                font-size: 18px !important;
             }
         }
         .total_amount_service_fee {
-            margin-top: 27px;
+            margin-top: 10px;
             p {
-                font-weight: 300 !important;
                 font-size: 12px !important;
-                line-height: 15px !important;
-            }
-            .product_price_click_all {
-                p {
-                    font-weight: 300 !important;
-                    font-size: 10px !important;
-                    line-height: 12px !important;
-                }
             }
         }
     }
@@ -3072,7 +3055,7 @@ h3 {
 // .overflow-auto
 .hidden-scroll {
     overflow: auto !important; // Scroll har doim ishlaydi
-    height: 817px !important; // O'zingizga mos balandlikni qo'ying
+    // height: 817px !important; // O'zingizga mos balandlikni qo'ying
     width: 100% !important; // To‘liq kenglik uchun
 
     // Chrome, Safari, Edge uchun scrollbarni yashirish

@@ -8,6 +8,7 @@ import Header from '../blocks/header';
 
 import { GoogleLogin } from '@react-oauth/google';
 import SiteFooter from '../shared/footers/SiteFooter';
+import FooterComponents from '../blocks/footer/FooterComponents';
 
 export let cutomerAccountLink = [
     {
@@ -58,13 +59,12 @@ const PageLayout = ({
     return (
         <>
             <Head>
-                <title>Soff - barcha ma'lumotlar bazasi </title>
-                <meta property="og:title" content={title} />
+                <title>{title}</title>
             </Head>
             <Header />
             {children}
             <HeaderMobileBottom />
-            <SiteFooter />
+            <FooterComponents />
 
 
             {user ? '' : <div style={{ height: 0, overflow: 'hidden' }}>

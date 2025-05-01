@@ -61,7 +61,7 @@ export default function DesignDevelopments () {
                 description={`Biz siz qidirayotgan mahsulotlarni Soff.uz saytimizning kategoriyasida topdik`}
             />
 
-            <div className='ps-page--shop container p-xl-0 p-l-0'>
+            <div className='ps-page--shop container p-xl-0 p-l-0' style={{ display: "flex", flexDirection: 'column', gap: 'clamp(0.75rem, 2.33vw + 0.204rem, 3rem)' }}>
                 <CategoriesFilterForDesignDevelopmentsSection
                     breacrumb={fourChildData}
                     count={data?.count}
@@ -77,7 +77,6 @@ export default function DesignDevelopments () {
                     isLoading={isLoading}
                 />
             </div>
-            <FooterComponents />
         </PageContainer>
     );
 }
