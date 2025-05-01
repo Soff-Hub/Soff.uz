@@ -4,8 +4,9 @@ import FooterDefault from '~/components/shared/footers/FooterDefault';
 import Meta from '~/components/shared/headers/Meta';
 import { useRouter } from 'next/router';
 import useApi, { baseUrlUseApi } from '~/repositories/useApi';
-import WebsitesProductsByCategory from '~/components/partials/category/WebsitesProductsByCategory';
+import FooterComponents from '~/components/blocks/footer/FooterComponents';
 import WebsitesCategoriesFilterSecion from '~/components/elements/WebsitesCategoriesFilterSecion';
+import ProductsByDesignDevelopment from '~/components/partials/category/ProductsByDesignDevelopment';
 
 export default function Websites () {
     const router = useRouter();
@@ -13,14 +14,14 @@ export default function Websites () {
 
     // products API uchun so'rov
     const { data, error, isLoading } = useApi(
-        ['products', slug, page, parentCategory, childCategory], // queryKey dinamik
+        ['products', page, parentCategory, childCategory], // queryKey dinamik
         `${baseUrlUseApi}customer/products/?direction=scientific_work&category=${
             childCategory ? childCategory : parentCategory
         }&page=${page || 1}&page_size=48`,
         'GET'
     );
 
-    // Four-child API uchun so'rov
+    // Otab kategoriya API uchun so'rov
     const {
         data: fourChildData,
         error: fourChildError,
@@ -60,14 +61,14 @@ export default function Websites () {
                 description={`Biz siz qidirayotgan mahsulotlarni Soff.uz saytimizning kategoriyasida topdik`}
             />
 
-            <div className='ps-page--shop container'>
+            <div className='ps-page--shop container p-xl-0 p-l-0'>
                 <WebsitesCategoriesFilterSecion
                     breacrumb={fourChildData}
                     count={data?.count}
                     isLoading={isFourChildLoading}
                     childCategoryData={childCategoryData}
                 />
-                <WebsitesProductsByCategory
+                <ProductsByDesignDevelopment
                     data={data}
                     page={page}
                     handlePagination={number => {
@@ -76,6 +77,7 @@ export default function Websites () {
                     isLoading={isLoading}
                 />
             </div>
+            <FooterComponents />
         </PageContainer>
     );
 }
