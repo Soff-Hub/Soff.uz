@@ -15,7 +15,7 @@ export default function Websites () {
     // products API uchun so'rov
     const { data, error, isLoading } = useApi(
         ['products', page, parentCategory, childCategory], // queryKey dinamik
-        `${baseUrlUseApi}customer/products/?direction=website&category=${
+        `${baseUrlUseApi}customer/products/?direction=scientific_work&category=${
             childCategory ? childCategory : parentCategory
         }&page=${page || 1}&page_size=48`,
         'GET'
@@ -28,7 +28,7 @@ export default function Websites () {
         isLoading: isFourChildLoading,
     } = useApi(
         ['fourChild'], // Query key
-        `${baseUrlUseApi}customer/four-child?direction=website`,
+        `${baseUrlUseApi}customer/four-child?direction=scientific_work`,
         'GET'
     );
 
@@ -39,7 +39,7 @@ export default function Websites () {
         isLoading: isChildCategory,
     } = useApi(
         ['fourChild', parentCategory], // Query key
-        `${baseUrlUseApi}customer/four-child?direction=website&parent__slug=${parentCategory}`,
+        `${baseUrlUseApi}customer/four-child?direction=scientific_work&parent__slug=${parentCategory}`,
         'GET'
     );
 
