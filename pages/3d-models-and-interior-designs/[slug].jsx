@@ -1,15 +1,14 @@
+import { useRouter } from 'next/router';
 import React from 'react';
+import FooterComponents from '~/components/blocks/footer/FooterComponents';
 import ThreeDCategoriesFilterSecion from '~/components/elements/ThreeDCategoriesFilterSecion';
 import PageContainer from '~/components/layouts/PageContainer';
+import ProductsByModelsAndDesignCategory from '~/components/partials/category/ProductsByModelsAndDesignCategory';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
 import Meta from '~/components/shared/headers/Meta';
-import { useRouter } from 'next/router';
 import useApi, { baseUrlUseApi } from '~/repositories/useApi';
-import FooterComponents from '~/components/blocks/footer/FooterComponents';
-import VideoLessonsFilterSection from '~/components/elements/VideoLessonsFilterSection';
-import ProductsByVideoLessons from '~/components/partials/category/ProductsByVideoLessons';
 
-export default function VideoLessons () {
+export default function ModelsAndInteriorDesign () {
     const router = useRouter();
     const { slug, page, parentCategory, childCategory } = router.query;
 
@@ -21,7 +20,6 @@ export default function VideoLessons () {
         }&page=${page || 1}&page_size=48`,
         'GET'
     );
-    console.log('models=>>>', data);
 
     // Ota kategoriya API uchun so'rov
     const {
@@ -60,24 +58,17 @@ export default function VideoLessons () {
             title={'Kategoriya'}
             boxed={true}>
             <Meta
-                title={`${'asdf'}`}
-                description={`Biz siz qidirayotgan mahsulotlarni Soff.uz saytimizning kategoriyasida topdik`}
+                title={`${'3D moddellar va Interier dizaynlar'}`}
+                description={`3D moddellar va Interier dizaynlar kategoriyasi: Taqdimotlar Tayyor shablonlar Kurs ishlari Diplom ishlari Referatlar Mustaqil ishlar Labaratoriya Ishlari Dissertatsiya ishlari Testlar O'quv qo'llanmalar Dars ishlanmalar Tarqatma materiallar Amaliy ishlar Blankalar Ijodiy Ishlar Loyihalar Plakatlar Maqola Ixtiro patenti Namunaviy hujjatlar Statistika Elektron kitoblar Dasturlash tillari `}
             />
-
-            <div
-                className='ps-page--shop container p-l-0 p-xl-0'
-                style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: 'clamp(0.75rem, 2.33vw + 0.204rem, 3rem)',
-                }}>
-                <VideoLessonsFilterSection
+            <div className='ps-page--shop container p-xl-0 p-l-0'>
+                <ThreeDCategoriesFilterSecion
                     breacrumb={fourChildData}
                     count={data?.count}
                     isLoading={isFourChildLoading}
                     childCategoryData={childCategoryData}
                 />
-                <ProductsByVideoLessons
+                <ProductsByModelsAndDesignCategory
                     data={data}
                     page={page}
                     handlePagination={number => {
@@ -86,6 +77,7 @@ export default function VideoLessons () {
                     isLoading={isLoading}
                 />
             </div>
+            <FooterComponents />
         </PageContainer>
     );
 }

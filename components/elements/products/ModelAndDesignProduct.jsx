@@ -58,121 +58,109 @@ const ModelAndDesignProduct = ({ product }) => {
         Router.push('/account/shopping-cart');
     };
 
-    const produvctTitle =
-        product.title.length > 10
-            ? product.title.slice(0, 15) + '...'
-            : product.title;
-
     return (
-        <div className='modelAndDesignCardWrap'>
-            <div
-                className='modelAndDesignCard '
-                onMouseEnter={() => setCountShow(true)}
-                onMouseLeave={() => setCountShow(false)}>
-                <div className='modelAndDesignCardImg'>
-                    <Link
-                        href='/product/[pid]'
-                        as={`/product/${product.slug}`}
-                        className='w-100'>
-                        {ModelAndDesignProduct.poster_url ? (
-                            thumbnailImage(ModelAndDesignProduct)
-                        ) : (
-                            <img
-                                src={product.poster_url}
-                                alt='hujjat'
-                                className='w-100'
-                                style={{ borderRadius: '9px 9px 0 0' }}
-                            />
-                        )}
-                    </Link>
+        <div
+            className='modelAndDesignCard'
+            onMouseEnter={() => setCountShow(true)}
+            onMouseLeave={() => setCountShow(false)}>
+            <div className='modelAndDesignCardImg'>
+                <Link
+                    href='/product/[pid]'
+                    as={`/product/${product.slug}`}
+                    className='w-100'>
+                    {ModelAndDesignProduct.poster_url ? (
+                        thumbnailImage(ModelAndDesignProduct)
+                    ) : (
+                        <img
+                            src={
+                                product?.poster_url ||
+                                '/static/img/videoposter.jpg'
+                            }
+                            alt='hujjat'
+                            className='w-100'
+                            style={{ borderRadius: '9px 9px 0 0' }}
+                        />
+                    )}
+                </Link>
 
-                    <div className='modelAndDesignCardTopSide '>
-                        <div className='aboutModel d-flex gap-2 w-100'>
-                            <p className='aboutModelItem'>stl</p>
-                            <p className='aboutModelItem'>ztl</p>
-                            <p className='aboutModelItem'>obj</p>
-                            <p className='aboutModelItem'>blend</p>
-                        </div>
-                        <div className='modelAndDesignCardPriceBox'>
-                            {+product.discount_price === 0 ? (
-                                <p
-                                    className='modelAndDesignCardPrice'
-                                    style={{ whiteSpace: 'nowrap' }}>
-                                    Bepul
-                                </p>
-                            ) : product.discount === 0 ? (
-                                <p
-                                    className='modelAndDesignCardPrice'
-                                    style={{ whiteSpace: 'nowrap' }}>
+                <div className='modelAndDesignCardTopSide '>
+                    <div className='aboutModel d-flex gap-2 w-100'>
+                        <p className='aboutModelItem'>stl</p>
+                        <p className='aboutModelItem'>ztl</p>
+                        <p className='aboutModelItem'>obj</p>
+                        <p className='aboutModelItem'>blend</p>
+                    </div>
+                    <div className='modelAndDesignCardPriceBox'>
+                        {+product.discount_price === 0 ? (
+                            <p
+                                className='modelAndDesignCardPrice'
+                                style={{ whiteSpace: 'nowrap' }}>
+                                Bepul
+                            </p>
+                        ) : product.discount === 0 ? (
+                            <p
+                                className='modelAndDesignCardPrice'
+                                style={{ whiteSpace: 'nowrap' }}>
+                                {addPeriodToThousands(product.discount_price)}{' '}
+                                so'm
+                            </p>
+                        ) : (
+                            <>
+                                <del>
+                                    {addPeriodToThousands(product.price)} so'm
+                                </del>
+                                <p className='modelAndDesignCardPrice'>
                                     {addPeriodToThousands(
                                         product.discount_price
                                     )}{' '}
                                     so'm
                                 </p>
-                            ) : (
-                                <>
-                                    <del>
-                                        {addPeriodToThousands(product.price)}{' '}
-                                        so'm
-                                    </del>
-                                    <p
-                                        className='modelAndDesignCardPrice'
-                                        style={{ whiteSpace: 'nowrap' }}>
-                                        {addPeriodToThousands(
-                                            product.discount_price
-                                        )}{' '}
-                                        so'm
-                                    </p>
-                                </>
-                            )}
-                        </div>
+                            </>
+                        )}
                     </div>
                 </div>
+            </div>
 
-                <div className='modelAndDesignCardBody'>
-                    <Link href='/product/[pid]' as={`/product/${product.slug}`}>
-                        <a className='modelAndDesignCardTitle'>
-                            {produvctTitle}
-                        </a>
-                    </Link>
+            <div className='modelAndDesignCardBody'>
+                <Link href='/product/[pid]' as={`/product/${product.slug}`}>
+                    <a className='modelAndDesignCardTitle'>{product.title}</a>
+                </Link>
 
-                    <div className='modelAndDesignCardBtn'>
-                        <a
-                            className='scientific-resources-card-heard'
-                            href='#'
-                            data-toggle='tooltip'
-                            data-placement='top'
-                            title="Tanlanganlarga qo'shish"
-                            onClick={handleAddItemToWishlist}>
-                            <img
-                                src={`${
-                                    wishlist?.some(
-                                        item =>
-                                            Number(item.id) ===
-                                            Number(product?.id)
-                                    )
-                                        ? '/static/img/onclickHeard.png'
-                                        : '/static/img/heard.png'
-                                } `}
-                                alt=''
-                            />
-                        </a>
-                        <a
-                            href='#'
-                            data-toggle='tooltip'
-                            data-placement='top'
-                            title="Savatga qo'shish"
-                            onClick={handleAddItemToCart}>
-                            <img
-                                src={
-                                    basket
-                                        ? '/static/img/buyIconHover.png'
-                                        : '/static/img/buyIcon.png'
-                                }
-                                alt=''
-                            />
-                        </a>
-                    </div>
+                <div className='modelAndDesignCardBtn'>
+                    <a
+                        className='scientific-resources-card-heard'
+                        href='#'
+                        data-toggle='tooltip'
+                        data-placement='top'
+                        title="Tanlanganlarga qo'shish"
+                        onClick={handleAddItemToWishlist}>
+                        <img
+                            src={`${
+                                wishlist?.some(
+                                    item =>
+                                        Number(item.id) === Number(product?.id)
+                                )
+                                    ? '/static/img/onclickHeard.png'
+                                    : '/static/img/heard.png'
+                            } `}
+                            alt=''
+                        />
+                    </a>
+                    <a
+                        href='#'
+                        data-toggle='tooltip'
+                        data-placement='top'
+                        title="Savatga qo'shish"
+                        onClick={handleAddItemToCart}>
+                        <img
+                            src={
+                                basket
+                                    ? '/static/img/buyIconHover.png'
+                                    : '/static/img/buyIcon.png'
+                            }
+                            alt=''
+                        />
+                    </a>
                 </div>
             </div>
             <Modal

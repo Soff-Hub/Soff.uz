@@ -33,7 +33,10 @@ const ImageCarousel = ({ images, views }) => {
                     <SwiperSlide key={item.id} className="w-100">
                         <div className="image-wrapper">
                             <img
-                                src={item?.image_url || item?.thumbUrl}
+                                src={
+                                    item?.image_url || item?.thumbUrl
+                                    // '/static/img/videoposter.jpg'
+                                }
                                 alt="Product"
                                 className="swiper-image rounded-3"
                             />
