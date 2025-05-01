@@ -1,13 +1,11 @@
 import React from 'react';
-import ThreeDCategoriesFilterSecion from '~/components/elements/ThreeDCategoriesFilterSecion';
 import PageContainer from '~/components/layouts/PageContainer';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
 import Meta from '~/components/shared/headers/Meta';
 import { useRouter } from 'next/router';
 import useApi, { baseUrlUseApi } from '~/repositories/useApi';
-import FooterComponents from '~/components/blocks/footer/FooterComponents';
-import VideoLessonsFilterSection from '~/components/elements/VideoLessonsFilterSection';
 import ProductsByVideoLessons from '~/components/partials/category/ProductsByVideoLessons';
+import ScientificResourcesFilterSection from '~/components/elements/scientificResourcesFilterSection';
 
 export default function VideoLessons () {
     const router = useRouter();
@@ -71,7 +69,7 @@ export default function VideoLessons () {
                     flexDirection: 'column',
                     gap: 'clamp(0.75rem, 2.33vw + 0.204rem, 3rem)',
                 }}>
-                <VideoLessonsFilterSection
+                <ScientificResourcesFilterSection
                     breacrumb={fourChildData}
                     count={data?.count}
                     isLoading={isFourChildLoading}
