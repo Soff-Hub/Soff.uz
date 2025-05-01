@@ -3,66 +3,50 @@ import React from 'react';
 const footerMenu = {
     soff: {
         logoImg: '/static/img/soff.svg',
-        title: 'Intellektual mulk marketi',
+        title: 'Raqamli xizmatlar bozori!',
         path: '#',
     },
     companies: {
-        title: 'Kompaniya',
+        title: 'Soff Loyihalari',
         links: [
-            'Biz haqimizda',
-            'Soff Study',
-            'Soff CRM',
-            'Soff HUB',
-            'Soff Birja',
-        ],
-        path: [
-            '#',
-            'https://soffstudy.uz/',
-            'https://soffcrm.uz/',
-            'https://soffhub.uz/',
-            'https://birja.soff.uz/',
+            { name: 'Soff Birja', url: 'https://birja.soff.uz/' },
+            { name: 'Soff Study', url: 'https://soffstudy.uz/' },
+            { name: 'Soff CRM', url: 'https://soffcrm.uz/' },
+            { name: 'Soff Hub', url: 'https://soffhub.uz/' }
         ],
     },
     services: {
-        title: 'Xizmatlar katalogi',
-        links: [
-            'Ilmiy ishlar',
-            '3D modellar',
-            'Dizayn shablonlari',
-            'Veb saytlar',
-            'Video darsliklar',
+        title: 'Soff.uz xizmatlari',
+        links: [    
+            { name: 'Ilmiy ishlar', url: '/orders' },
+            { name: '3D modellar', url: '/orders' },
+            { name: 'Dizayn shablonlari', url: '/orders' },
+            { name: 'Veb saytlar', url: '/orders' },
+            { name: 'Video darsliklar', url: '/orders' }
         ],
-        path: ['#', '#', '#', '#', '#'],
     },
-    sociols: {
+    social: {
         title: 'Ijtimoiy tarmoqlarimiz',
-        icons: [
-            '/static/img/youtube.svg',
-            '/static/img/telegram.svg',
-            '/static/img/instagram.svg',
-            '/static/img/linkedin.svg',
-        ],
-        links: ['@soffuz', 't.me/soff_uz', 'soffuz_', 'Soff Hub'],
-        path: [
-            'https://www.youtube.com/@soffuz',
-            'https://t.me/Soffstudyuz',
-            'https://www.instagram.com/soffuz_?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==',
-            'https://www.linkedin.com/company/soffhub/posts/?feedView=all',
+        items: [
+            { name: 'YouTube', icon: '/static/img/youtube.svg', username: '@soffuz', url: 'https://www.youtube.com/@soffuz' },
+            { name: 'Telegram', icon: '/static/img/telegram.svg', username: 't.me/soff_uz', url: 'https://t.me/soff_uz' },
+            { name: 'Instagram', icon: '/static/img/instagram.svg', username: 'soffuz_', url: 'https://www.instagram.com/soffuz_?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==' },
+            { name: 'LinkedIn', icon: '/static/img/linkedin.svg', username: 'Soff Hub', url: 'https://www.linkedin.com/company/soffhub/posts/?feedView=all' }
         ],
     },
-    contact: {
-        title: 'Biz bilan bog’lanish',
-        icons: [
-            '/static/img/linkPhone.png',
-            '/static/img/linkTelegram.png',
-            '/static/img/linkEmail.png',
-        ],
-        links: ['+998 (91) 008 67 89', '@soffuz_support', 'soffuz@gmail.com'],
-        path: [
-            'tel:+998910086789',
-            'https://t.me/soffuzsupport_bot',
-            'soffuz@gmail.com',
-        ],
+    contactTech: {
+        title: 'Texnik muammolar uchun:',
+        items: [
+            { icon: 'fa-solid fa-phone-volume', contact: '+998 (91) 008 67 89', url: 'tel:+998910086789' },
+            { icon: 'fa-solid fa-paper-plane', contact: '@hr_soffhub', url: 'https://t.me/hr_soffhub' },
+        ]
+    },
+    contactModeration: {
+        title: 'Sotib olish va moderatsiya bo‘yicha:',
+        items: [
+            { icon: 'fa-solid fa-phone-volume', contact: '+998 (99) 266 30 29', url: 'tel:+998910086789' },
+            { icon: 'fa-solid fa-paper-plane', contact: '@soff_moderator', url: 'https://t.me/soff_moderator' },
+        ]
     },
 };
 
@@ -71,12 +55,13 @@ export default function FooterComponents () {
         <div
             className='bg-white'
             style={{
-                marginTop: '116.52px',
-                padding: '57px 0 64px',
+                // marginTop: '116.52px',
+                marginTop: '20px',
+                padding: '57px 0 20px',
                 borderBottom: '1px solid rgba(0, 164, 79, 1)',
             }}>
             <footer className=' bg-white container p-lg-0 d-flex  justify-content-between align-items-start flex-wrap '>
-                <div className='logo col-xl-2 col-lg-3 col-md-6 col-sm-12 col-12'>
+                <div className='logo col-xl-3 col-lg-3 col-md-6 mb-5 col-sm-12 col-12'>
                     <img
                         src='/static/img/soff/logo-dark.png'
                         alt='logo'
@@ -90,7 +75,7 @@ export default function FooterComponents () {
                     </a>
                 </div>
 
-                <div className='company col-xl-2 col-lg-3 col-md-6 col-sm-12 col-12'>
+                {/* <div className='company col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12'>
                     <h5 className='fw-semibold fs-2 mb-5'>
                         {footerMenu.companies.title}
                     </h5>
@@ -98,15 +83,48 @@ export default function FooterComponents () {
                         <a
                             target='_blank'
                             key={i}
-                            href={footerMenu.companies.path[i]}
+                            href={link.url}
                             className='footer-link d-block hover:text-success fs-4 mb-3'>
-                            {link}
+                            {link.name}
+                        </a>
+                    ))}
+                </div> */}
+
+                {/* Bog‘lanish bo‘limi */}
+                <div className='col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 mb-5'>
+                    <h5 className='fw-semibold fs-2 mb-5'>
+                        {footerMenu.contactTech.title}
+                    </h5>
+                    {footerMenu.contactTech.items.map((item, i) => (
+                        <a
+                            target='_blank'
+                            key={i}
+                            href={item.url}
+                            className='d-flex align-items-center footer-link gap-3 footer-link fs-4 mb-3'>
+                            <i className={`${item.icon} text-success`}></i>
+                            {item.contact}
                         </a>
                     ))}
                 </div>
 
+                <div className='col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 mb-5'>
+                    <h5 className='fw-semibold fs-2 mb-5'>
+                        {footerMenu.contactModeration.title}
+                    </h5>
+                    {footerMenu.contactModeration.items.map((item, i) => (
+                        <a
+                            target='_blank'
+                            key={i}
+                            href={item.url}
+                            className='d-flex align-items-center footer-link gap-3 footer-link fs-4 mb-3'>
+                            <i className={`${item.icon} text-success`}></i>
+                            {item.contact}
+                        </a>
+                    ))}
+                </div>
+                
                 {/* Xizmatlar bo‘limi */}
-                <div className='col-xl-2 col-lg-3 col-md-6 col-sm-12 col-12'>
+                <div className='col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12'>
                     <h5 className='fw-semibold fs-2 mb-5'>
                         {footerMenu.services.title}
                     </h5>
@@ -114,57 +132,30 @@ export default function FooterComponents () {
                         <a
                             target='_blank'
                             key={i}
-                            href={footerMenu.services.path[i]}
+                            href={link.url}
                             className='footer-link d-block fs-4 mb-3'>
-                            {link}
-                        </a>
-                    ))}
-                </div>
-
-                {/* Ijtimoiy tarmoqlar */}
-                <div className='col-xl-2 col-lg-3 col-md-6 col-sm-12 col-12'>
-                    <h5 className='fw-semibold fs-2 mb-5'>
-                        {footerMenu.sociols.title}
-                    </h5>
-                    {footerMenu.sociols.links.map((link, i) => (
-                        <a
-                            target='_blank'
-                            key={i}
-                            href={footerMenu.sociols.path[i]}
-                            className='d-flex align-items-center gap-3 footer-link fs-4 mb-3'>
-                            <img
-                                src={footerMenu.sociols.icons[i]}
-                                alt={link}
-                                className='me-2'
-                                style={{ width: '20px' }}
-                            />
-                            {link}
-                        </a>
-                    ))}
-                </div>
-
-                {/* Bog‘lanish bo‘limi */}
-                <div className='col-xl-2 col-lg-3 col-md-6 col-sm-12 col-12 '>
-                    <h5 className='fw-semibold fs-2 mb-5'>
-                        {footerMenu.contact.title}
-                    </h5>
-                    {footerMenu.contact.links.map((link, i) => (
-                        <a
-                            target='_blank'
-                            key={i}
-                            href={footerMenu.contact.path[i]}
-                            className='d-flex align-items-center footer-link gap-3 footer-link fs-4 mb-3'>
-                            <img
-                                src={footerMenu.contact.icons[i]}
-                                alt={link}
-                                className='me-2'
-                                style={{ width: '20px' }}
-                            />
-                            {link}
+                            {link.name}
                         </a>
                     ))}
                 </div>
             </footer>
+            <div className='d-flex gap-4 justify-content-center mt-5 border-top pt-5 flex-wrap container'>
+                {footerMenu.social.items.map((item, i) => (
+                    <a
+                        target='_blank'
+                        key={i}
+                        href={item.url}
+                        className='d-flex align-items-center gap-3 footer-link fs-4 mb-3'>
+                        <img
+                            src={item.icon}
+                            alt={item.name}
+                            className='me-2'
+                            style={{ width: '20px' }}
+                        />
+                        {item.name}
+                    </a>
+                ))}
+            </div>
         </div>
     );
 }

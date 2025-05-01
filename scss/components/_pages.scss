@@ -28,6 +28,10 @@
 
         a {
             color: $color-1st;
+            background-color: #00a44f;
+            color: white;
+            padding: 8px 18px;
+            font-size: 15px;
         }
     }
 
@@ -44,6 +48,81 @@
     @include media('<sm') {
         h3 {
             font-size: 24px;
+        }
+
+        p {
+            font-size: 14px;
+        }
+    }
+}
+
+.ps-page-status {
+    position: relative;
+    min-height: 85vh;
+    background-color: #fff;
+    text-align: center;
+
+    .container {
+        min-height: 85vh;
+        display: flex;
+        flex-flow: column wrap;
+        justify-content: center;
+    }
+
+    img {
+        margin-bottom: 100px;
+    }
+
+    h3 {
+        margin-bottom: 20px;
+        font-size: 25px;
+        color: $color-heading;
+        font-weight: 600;
+    }
+
+    p {
+        margin-top: 23px;
+        margin-bottom: 45px;
+        font-size: 15px;
+        padding: 0px 200px;
+
+        strong:hover {
+            color: #00a44f;
+            cursor: pointer;
+        }
+
+        a {
+            color: $color-1st;
+            background-color: #00a44f;
+            color: white;
+            padding: 8px 18px;
+            font-size: 15px;
+            border-radius: 5px;
+        }
+    }
+
+    .ps-form--widget-search {
+        max-width: 370px;
+        margin: 0 auto;
+
+        input {
+            height: 50px;
+            border-color: #fff;
+        }
+    }
+
+    @include media('<md') {
+        img {
+            margin-bottom: 50px;
+            width: 70%;
+        }
+        p {
+            padding: 0px;
+        }
+    }
+    @include media('<sm') {
+        h3 {
+            font-size: 22px;
         }
 
         p {

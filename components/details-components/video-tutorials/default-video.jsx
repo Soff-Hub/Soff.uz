@@ -28,10 +28,6 @@ export default function DefaultVideoContent({
         : product?.document?.short_content_url
 
 
-        console.log(isPlay);
-        
-
-
     return (
         <div className='video_iframe'
             style={{

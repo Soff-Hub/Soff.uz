@@ -3,10 +3,10 @@ import { addPeriodToThousands } from '~/components/partials/account/price-format
 import useWishlist from '~/hooks/useWishlist';
 import { useState } from 'react';
 import useCart from '~/hooks/useCart';
-import { Modal } from 'antd';
+    import { Modal } from 'antd';
 import { useRouter } from 'next/router';
 
-const RedesignProduct = ({ product }) => {
+const   RedesignProduct = ({ product }) => {
     const { addSavedItem, wishlist, removeSavedItem } = useWishlist();
     const [open, setOpen] = useState(false);
     const Router = useRouter();
@@ -69,8 +69,8 @@ const RedesignProduct = ({ product }) => {
                         wishlist?.some(
                             item => Number(item.id) === Number(product?.id)
                         )
-                            ? '/static/img/onclickHeard.png'
-                            : '/static/img/heard.png'
+                            ? '/static/img/heart-full.svg'
+                            : '/static/img/heart.svg'
                     } `}
                     alt=''
                 />
@@ -116,8 +116,8 @@ const RedesignProduct = ({ product }) => {
                         <img
                             src={
                                 basket
-                                    ? '/static/img/buyIconHover.png'
-                                    : '/static/img/buyIcon.png'
+                                    ? '/static/img/cart.svg'
+                                    : '/static/img/cart-outlet.svg'
                             }
                             alt=''
                             className='scientificBuyIcon'

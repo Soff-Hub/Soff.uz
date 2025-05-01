@@ -1,8 +1,6 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import FooterComponents from '~/components/blocks/footer/FooterComponents';
-import ModelAndDesignHero from '~/components/blocks/header/ModelAndDesignHero';
-import CategoriesFilterSecion from '~/components/elements/DesignDevelopmentsFilterSection';
 import ThreeDCategoriesFilterSecion from '~/components/elements/ThreeDCategoriesFilterSecion';
 import PageContainer from '~/components/layouts/PageContainer';
 import ProductsByModelsAndDesignCategory from '~/components/partials/category/ProductsByModelsAndDesignCategory';
@@ -23,7 +21,7 @@ export default function ModelsAndInteriorDesign () {
         'GET'
     );
 
-    // Otab kategoriya API uchun so'rov
+    // Ota kategoriya API uchun so'rov
     const {
         data: fourChildData,
         error: fourChildError,
@@ -33,6 +31,7 @@ export default function ModelsAndInteriorDesign () {
         `${baseUrlUseApi}customer/four-child?direction=scientific_work`,
         'GET'
     );
+    console.log('fourChildData =>', fourChildData);
 
     // Farzand kategoriya API uchun so'rov
     const {
@@ -52,6 +51,7 @@ export default function ModelsAndInteriorDesign () {
             query: { ...router.query, page: newPage }, // URL'ga yangi page qo'shish
         });
     };
+
     return (
         <PageContainer
             footer={<FooterDefault />}

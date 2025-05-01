@@ -5,10 +5,10 @@ const MenuCategoriesDropdown = () => {
     return (
         <div className="menu--product-categories">
             <div className="menu__toggle menu__toggle__drop_down_item">
-                    <a className='fs-3 font-weight-lighter'>
-                        <i class="fa-solid fa-angle-down mr-2"></i>
-                        Ko‘rib chiqing
-                    </a>
+                <a className='fs-3 font-weight-lighter ms-md-4'>
+                    <i className="fa-solid fa-angle-down mr-2"></i>
+                    Ko‘rib chiqing
+                </a>
                 <div className="menu__toggle__drop_down">
                     <div className="menu__item">
                         <Link href={'https://t.me/soff_uz'}>

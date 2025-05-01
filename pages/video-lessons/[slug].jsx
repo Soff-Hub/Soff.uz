@@ -1,4 +1,5 @@
 import React from 'react';
+import ThreeDCategoriesFilterSecion from '~/components/elements/ThreeDCategoriesFilterSecion';
 import PageContainer from '~/components/layouts/PageContainer';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
 import Meta from '~/components/shared/headers/Meta';
@@ -20,8 +21,9 @@ export default function VideoLessons () {
         }&page=${page || 1}&page_size=48`,
         'GET'
     );
+    console.log('models=>>>', data);
 
-    // Otab kategoriya API uchun so'rov
+    // Ota kategoriya API uchun so'rov
     const {
         data: fourChildData,
         error: fourChildError,
@@ -31,6 +33,7 @@ export default function VideoLessons () {
         `${baseUrlUseApi}customer/four-child?direction=scientific_work`,
         'GET'
     );
+    console.log('fourChildData =>', fourChildData);
 
     // Farzand kategoriya API uchun so'rov
     const {
@@ -61,7 +64,13 @@ export default function VideoLessons () {
                 description={`Biz siz qidirayotgan mahsulotlarni Soff.uz saytimizning kategoriyasida topdik`}
             />
 
-            <div className='ps-page--shop container p-l-0 p-xl-0'>
+            <div
+                className='ps-page--shop container p-l-0 p-xl-0'
+                style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 'clamp(0.75rem, 2.33vw + 0.204rem, 3rem)',
+                }}>
                 <VideoLessonsFilterSection
                     breacrumb={fourChildData}
                     count={data?.count}
@@ -77,7 +86,6 @@ export default function VideoLessons () {
                     isLoading={isLoading}
                 />
             </div>
-            <FooterComponents />
         </PageContainer>
     );
 }

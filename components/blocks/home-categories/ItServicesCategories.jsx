@@ -5,40 +5,34 @@ import React from 'react';
 
 const itServicesCategoriesData = [
     {
-        title: 'Rivojlanish & IT',
+        title: 'Ilmiy va Akademik Xizmatlar',
+        imgUrl: '/static/img/Biznes-&-Hayot.png',
+        bgColor: '#697200',
+        path: '/orders',
+    },
+    {
+        title: '3D Dizayn va Vizualizatsiya',
+        imgUrl: '/static/img/3d-design.png',
+        bgColor: '#02732f',
+        path: '/orders',
+    },
+    {
+        title: 'Grafik Dizayn va Shablonlar',
+        imgUrl: '/static/img/dizayn-2.png',
+        bgColor: '#4d1727',
+        path: '/orders',
+    },
+    {
+        title: 'Veb Dasturlash va IT Xizmatlari',
         imgUrl: '/static/img/Rivojlanish-&-IT.png',
         bgColor: '#ff7641',
         path: '/scientific-resources/all',
     },
     {
-        title: 'Dizayn',
-        imgUrl: '/static/img/Dizayn.png',
-        bgColor: '#4d1727',
-        path: '#',
-    },
-    {
-        title: 'Biznes & Hayot',
-        imgUrl: '/static/img/Biznes-&-Hayot.png',
-        bgColor: '#697200',
-        path: '#',
-    },
-    {
-        title: 'Social Media & Reklama',
-        imgUrl: '/static/img/Social-Media-Reklama.png',
-        bgColor: '#02732f',
-        path: '#',
-    },
-    {
-        title: 'SEO & Traffics',
-        imgUrl: '/static/img/SEO-&-Traffics.png',
-        bgColor: '#421300',
-        path: '#',
-    },
-    {
-        title: 'Matnlar & Tarjimalar',
+        title: 'Hujjatlar va Professional Shablonlar',
         imgUrl: '/static/img/Matnlar-&-Tarjimalar.png',
         bgColor: '#421300',
-        path: '#',
+        path: '/orders',
     },
 ];
 
@@ -46,36 +40,31 @@ export default function ItServicesCategories () {
     const router = useRouter();
 
     return (
-        <div className='container ItServicesCategories p-0'>
-            <h2 className='product-list-title '>Bizning IT servislarimiz</h2>
-            <div className='d-flex justify-content-center flex-wrap gap-4 mt-5 pt-4'>
-                {itServicesCategoriesData.map((item, index) => {
-                    return (
-                        <div
-                            className=''
-                            key={index}
-                            style={{ cursor: 'pointer', width: '450px' }}
-                            onClick={() => router.push(item.path)}>
-                            <div className=''>
-                                <img
-                                    src={item.imgUrl}
-                                    className=''
-                                    alt={item.title}
-                                    width={'450px'}
-                                />
-                                <div className='ItServicesCategories-card-title-box'>
-                                    <h3 className='ItServicesCategories-card-title m-0 '>
-                                        {item.title}
-                                    </h3>
-                                    <img
-                                        src='/static/img/ArrowRight.svg'
-                                        alt=''
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    );
-                })}
+        <div className='container p-md-0 mt-3'>
+            <h2 className='product-list-title'>Xizmatni Tanlang – Buyurtma Bering</h2>
+            <div className="it-services-grid-container">
+              {itServicesCategoriesData.map((item, index) => {
+                return (
+                  <div
+                    className="it-services-card"
+                    key={index}
+                    onClick={() => router.push(item.path)}
+                  >
+                    <div className="it-services-card-inner">
+                      <img
+                        src={item.imgUrl}
+                        className="it-services-card-image"
+                        alt={item.title}
+                      />
+                      <div className="it-services-card-title-box">
+                        <h3 className="it-services-card-title">
+                          {item.title}
+                        </h3>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
         </div>
     );
