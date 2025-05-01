@@ -111,12 +111,12 @@ const DesignDevelopmentProducts = ({ product }) => {
                     <a className='designDevelopmentCardTitle'>{produvctTitle}</a>
                 </Link>
 
-                <div className='designDevelopmentCardPriceBox'>
+                <div className='designDevelopmentCardPriceBox d-flex justify-content-between align-items-center'>
                     <div className='designDevelopmentCardPrice'>
                         {+product.discount_price === 0 ? (
-                            <p className='designDevelopmentCardPrice m-0'>Bepul</p>
+                            <p className='designDevelopmentCardPrice p-0 m-0'>Bepul</p>
                         ) : product.discount === 0 ? (
-                            <p className=' designDevelopmentCardPrice m-0'>
+                            <p className=' designDevelopmentCardPrice p-0 m-0'>
                                 {addPeriodToThousands(product.discount_price)}{' '}
                                 so'm
                             </p>
@@ -125,7 +125,7 @@ const DesignDevelopmentProducts = ({ product }) => {
                                 <del className='CardDiscountPrice'>
                                     {addPeriodToThousands(product.price)} so'm
                                 </del>
-                                <p className='designDevelopmentCardPrice  m-0'>
+                                <p className='designDevelopmentCardPrice p-0  m-0'>
                                     {addPeriodToThousands(
                                         product.discount_price
                                     )}
