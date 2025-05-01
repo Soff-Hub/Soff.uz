@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import useApi, { baseUrlUseApi } from '~/repositories/useApi';
 import FooterComponents from '~/components/blocks/footer/FooterComponents';
 import WebsitesCategoriesFilterSecion from '~/components/elements/WebsitesCategoriesFilterSecion';
-import WebsitesProductsByCategory from '~/components/partials/category/WebsitesProductsByCategory';
+import ProductsByDesignDevelopment from '~/components/partials/category/ProductsByDesignDevelopment';
 
 export default function Websites () {
     const router = useRouter();
@@ -68,7 +68,7 @@ export default function Websites () {
                     isLoading={isFourChildLoading}
                     childCategoryData={childCategoryData}
                 />
-                <WebsitesProductsByCategory
+                <ProductsByDesignDevelopment
                     data={data}
                     page={page}
                     handlePagination={number => {
