@@ -13,124 +13,106 @@ export const formatTime = (seconds) => {
     return `${String(minutes).padStart(2, '0')}:${String(secondsLeft).padStart(2, '0')}`;
 };
 
-
 export default function CodeVerifyForm() {
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false);
     const [secondsRemaining, setSecondsRemaining] = useState(120);
-    const [via, setVia] = useState(null)
+    const [msg, SetMsg] = useState(null);
+    const router = useRouter();
+    const dispatch = useDispatch();
+    const [timerId, setTimerId] = useState(null);
 
-    const router = useRouter()
-    const dispatch = useDispatch()
+    useEffect(() => {
+        SetMsg(localStorage.getItem('msg'));
+
+        startTimer(); // Sahifa yuklanishi bilan timerni ishga tushiramiz
+
+        return () => clearInterval(timerId); // Komponent unmount bo‘lganda intervalni to‘xtatish
+    }, []);
+
+    const startTimer = () => {
+        if (timerId) clearInterval(timerId); // Eski intervalni to‘xtatish
+
+        const newTimerId = setInterval(() => {
+            setSecondsRemaining((prev) => {
+                if (prev > 0) return prev - 1;
+                clearInterval(newTimerId);
+                return 0;
+            });
+        }, 1000);
+
+        setTimerId(newTimerId);
+    };
 
     const handleSubmit = async ({ code }) => {
-        setLoading(true)
-        const data = {
-            user: router?.query?.user,
-            code
-        }
+        setLoading(true);
+        const data = { user: router?.query?.user, code };
 
         try {
-            const resp = await Axios.post(baseUrlAuth + 'auth/verify/', data)
+            const resp = await Axios.post(baseUrlAuth + 'auth/verify/', data);
             dispatch(login({
                 user: { ...resp.data, role: 'customer' },
                 data: JSON.parse(localStorage.getItem('data'))
             }));
             if (resp.data?.role === 'seller') {
-                localStorage.setItem('is_seller', '1')
+                localStorage.setItem('is_seller', '1');
             }
 
             if (router?.query?.returnUrl) {
-                router.push(router?.query?.returnUrl)
-            }
-            else if (router?.query?.id) {
-                router.push(`/account/checkout-one?id=${router?.query?.id}`);
+                router.push(router?.query?.returnUrl);
+            } else if (router?.query?.id) {
+                router.push(`/account/checkout?id=${router?.query?.id}`);
             } else if (router?.query?.deal) {
-                router.push(
-                    `/account/all-orders`
-                );
+                router.push(`/account/all-orders`);
             } else {
                 router.push('/account/sellerproducts');
             }
         } catch (err) {
-            setLoading(false)
-            const modal = Modal.error({
+            setLoading(false);
+            Modal.error({
                 centered: true,
                 title: 'Xatolik',
                 content: err?.response?.data?.msg,
             });
-            modal.update
         }
-    }
+    };
 
     const getRecode = async () => {
-        setLoading(true)
-
-        const data = JSON.parse(localStorage.getItem('data'))
+        setLoading(true);
+        const data = JSON.parse(localStorage.getItem('data'));
 
         try {
-            await Axios.post(baseUrlAuth + 'auth/get-new-code/', { ...data, user: router?.query?.user, })
-            const modal = Modal.success({
+            await Axios.post(baseUrlAuth + 'auth/get-new-code/', { ...data, user: router?.query?.user });
+            Modal.success({
                 centered: true,
                 title: 'Yuborildi',
                 content: 'Tasdiqlash kodi qayta yuborildi',
             });
-            modal.update;
-            setSecondsRemaining(120)
 
-            const interval = setInterval(() => {
-                setSecondsRemaining(prevSeconds => {
-                    if (prevSeconds > 0) {
-                        return prevSeconds - 1;
-                    } else {
-                        clearInterval(interval);
-                        return 0;
-                    }
-                });
-            }, 1000);
-
+            setSecondsRemaining(120);
+            startTimer(); // Yangi kod yuborilganda timerni qayta ishga tushiramiz
         } catch (err) {
-            const modal = Modal.error({
+            Modal.error({
                 centered: true,
                 title: 'Xatolik',
                 content: err?.response?.data?.msg,
             });
-            modal.update;
         }
-        setLoading(false)
-    }
-
-    useEffect(() => {
-        setVia(localStorage.getItem('via_'))
-
-        const interval = setInterval(() => {
-            setSecondsRemaining(prevSeconds => {
-                if (prevSeconds > 0) {
-                    return prevSeconds - 1;
-                } else {
-                    clearInterval(interval);
-                    return 0;
-                }
-            });
-        }, 1000);
-    }, []);
-
+        setLoading(false);
+    };
 
     return (
         <div style={{ backgroundColor: '#f1f1f1', padding: "50px 20px" }}>
             <div className="container p-0">
                 <div className="ps-form--account">
                     <Form onFinish={handleSubmit}>
-                        <p className='text-center fs-2 mb-4'>{via === 'via_phone' ? 'Telefon raqamingizga' : 'Elektron pochtangizga'} yuborilgan tasdiqlash kodini kiriting</p>
+                        <p className='text-center fs-2 mb-4'>
+                            {msg}
+                        </p>
 
                         <Form.Item
                             name="code"
                             className="mb-4 d-flex justify-content-center"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Ilitmos kodni kiriting',
-                                }
-                            ]}
+                            rules={[{ required: true, message: 'Iltimos, kodni kiriting' }]}
                         >
                             <Input.OTP
                                 size='large'
@@ -141,23 +123,27 @@ export default function CodeVerifyForm() {
                             />
                         </Form.Item>
 
-                        {secondsRemaining === 0 ? <p className="text-xs cursor-pointer text-center mb-4" style={{ color: 'red', cursor: 'pointer' }} onClick={getRecode} >
-                            Qayta kod yuborish
-                        </p> : <p className="text-xs cursor-pointer text-center mb-4">
-                            Qayta kod olish uchun {formatTime(secondsRemaining)}
-                        </p>}
-
+                        {secondsRemaining === 0 ? (
+                            <p
+                                className="text-xs text-center mb-4"
+                                style={{ color: 'red', cursor: 'pointer' }}
+                                onClick={getRecode}
+                            >
+                                Qayta kod yuborish
+                            </p>
+                        ) : (
+                            <p className="text-xs text-center mb-4">
+                                Qayta kod olish uchun {formatTime(secondsRemaining)}
+                            </p>
+                        )}
 
                         <div className="form-group submit mt-3">
-                            {loading ? <button
-                                disabled={true}
-                                type="submit"
-                                className="ps-btn ps-btn--fullwidth">
-                                <BeatLoader color="#fff" />
-                            </button> : (
-                                <button
-                                    type="submit"
-                                    className="ps-btn ps-btn--fullwidth">
+                            {loading ? (
+                                <button disabled type="submit" className="ps-btn ps-btn--fullwidth">
+                                    <BeatLoader color="#fff" />
+                                </button>
+                            ) : (
+                                <button type="submit" className="ps-btn ps-btn--fullwidth">
                                     Tasdiqlash
                                 </button>
                             )}
@@ -166,5 +152,5 @@ export default function CodeVerifyForm() {
                 </div>
             </div>
         </div>
-    )
+    );
 }

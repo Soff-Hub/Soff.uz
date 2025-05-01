@@ -200,11 +200,201 @@ input[type='number']::-webkit-outer-spin-button {
     }
 }
 
+// _____________________________scientificResources styles____________________________
+.scientificResourcesWrap {
+    margin-top: 45px;
+    display: grid;
+    grid-template-columns: repeat(5, 267px);
+    gap: 16px;
+    row-gap: 34px;
+    padding: 0px !important;
+    @media screen and (max-width: 1350px) {
+        grid-template-columns: repeat(5, 1fr);
+    }
+    @media screen and (max-width: 1250px) {
+        grid-template-columns: repeat(4, 1fr);
+        padding: 0 15px;
+    }
+    @media screen and (max-width: 1000px) {
+        grid-template-columns: repeat(3, 1fr);
+        padding: 0 15px;
+        margin-top: 40px;
+        row-gap: 30px;
+    }
+    @media screen and (max-width: 600px) {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 0 15px;
+        margin-top: 30px;
+        row-gap: 20px;
+    }
+    @media screen and (max-width: 450px) {
+        margin-top: 15px;
+        row-gap: 15px;
+    }
+    @media screen and (max-width: 400px) {
+        margin-top: 15px;
+        row-gap: 10px;
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .scientificResourcesSkeleton {
+        width: 100% !important;
+        height: 320px !important;
+        @media screen and (max-width: 750px) {
+            height: 250px !important;
+        }
+        @media screen and (max-width: 400px) {
+            height: 180px !important;
+        }
+    }
+}
+
+.scientificResourcesCard {
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    border-radius: 12.5px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    &:hover {
+        filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.2));
+    }
+
+    .scientificResourcesCardImgBox {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        @media (max-width: 768px) {
+            padding: 10px;
+        }
+        @media (max-width: 450px) {
+            padding: 5px;
+        }
+        .scientificResourcesCardImg {
+            height: 186px;
+            border-radius: 12.5px;
+            @media (max-width: 768px) {
+                height: 160px;
+            }
+            @media (max-width: 450px) {
+                height: 130px;
+            }
+            @media (max-width: 300px) {
+                height: 100px;
+            }
+        }
+    }
+    .scientificResourcesCardHeard {
+        position: absolute;
+        right: 20px;
+        top: 20px;
+        padding: 10px;
+        background: #fff;
+        border-radius: 100%;
+        @media (max-width: 650px) {
+            right: 15px;
+            top: 15px;
+            padding: 8px;
+        }
+        @media (max-width: 450px) {
+            right: 10px;
+            top: 10px;
+            padding: 4px;
+        }
+        img {
+            @media (max-width: 450px) {
+                width: 15px;
+            }
+        }
+    }
+    .scientificResourcesCardBody {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        flex-grow: 1;
+        padding: 20px 20px;
+        gap: 20px;
+        @media (max-width: 768px) {
+            padding: 10px;
+            gap: 15px;
+        }
+        @media (max-width: 400px) {
+            padding: 5px;
+            gap: 8px;
+        }
+        .scientificResourcesCardTitle {
+            color: #000;
+            font-family: 'Poppins';
+            font-size: 12.5px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            letter-spacing: 0.25px;
+            @media (max-width: 768px) {
+                font-size: 10px;
+            }
+            @media (max-width: 450px) {
+                font-size: 8px;
+            }
+        }
+        .scientificResourcesCardPriceBox {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .scientificResourcesCardPrice {
+                p {
+                    color: #000;
+                    font-family: 'Poppins';
+                    font-size: 18.333px;
+                    font-style: normal;
+                    font-weight: 600;
+                    line-height: normal;
+                    letter-spacing: 0.367px;
+                    margin: 0;
+                    @media (max-width: 768px) {
+                        font-size: 14px;
+                    }
+                    @media (max-width: 450px) {
+                        font-size: 10px;
+                    }
+                }
+            }
+            .scientificBuyIcon {
+                @media (max-width: 768px) {
+                    width: 25px;
+                }
+                @media (max-width: 450px) {
+                    width: 20px;
+                }
+            }
+        }
+    }
+}
+
+// _____________________________scientificResources styles end____________________________
+
 // -----------------------------------------------ThreeDCategoriesFilterSecion style
+.category-btn:hover {
+    background-color: #00a44f;
+}
+.category-btn:hover .category-btn-title {
+    color: white;
+}
+.category-btn .category-btn-title {
+    color: #312f30;
+}
+.sub-category-btn:hover .sub-category-btn-title {
+    color: #00a44f;
+}
 .Models_category_btn_wrap {
     display: flex;
     justify-content: start;
     gap: 15px !important;
+    @media screen and (max-width: 1300px) {
+        gap: 10px !important;
+    }
     .Models_category_btn {
         display: flex;
         align-items: center;
@@ -213,6 +403,7 @@ input[type='number']::-webkit-outer-spin-button {
             -2px 2px 2px rgba(0, 0, 0, 0.05) !important;
         background: #fff;
         border-radius: 7px;
+        padding: 12px 14.5px;
         cursor: pointer;
 
         &:hover {
@@ -288,7 +479,7 @@ input[type='number']::-webkit-outer-spin-button {
         font-size: 14.17px;
         line-height: 21.25px;
         letter-spacing: 0%;
-        padding: 14.5px;
+        // padding: 14.5px;
     }
     .Models_category_btn_img {
         width: 64px !important;
@@ -308,8 +499,11 @@ input[type='number']::-webkit-outer-spin-button {
     gap: 18.33px;
     border-radius: 8.33px;
 
-    p {
+    h1 {
         font-family: 'Poppins';
+        font-weight: 600;
+        font-size: 16.67px;
+        line-height: 25px;
         font-weight: 600;
         font-size: 16.67px;
         line-height: 25px;
@@ -336,121 +530,6 @@ input[type='number']::-webkit-outer-spin-button {
     }
 }
 // ________________________________ProductsByModelsAndDesignCategory styles____________________________
-.modelAndDesignProduct {
-    display: grid;
-    grid-template-columns: repeat(3, 453px);
-    gap: 20px;
-    row-gap: 40px;
-    margin-top: 51px;
-    padding: 0 !important;
-    align-items: stretch;
-
-    @media (max-width: 1400px) {
-        // LG: 3 ta ustun
-        grid-template-columns: repeat(3, 425px);
-        justify-content: center;
-    }
-    @media (max-width: 1300px) {
-        // LG: 3 ta ustun
-        grid-template-columns: repeat(3, 400px);
-        justify-content: center;
-    }
-    @media (max-width: 1250px) {
-        // LG: 3 ta ustun
-        grid-template-columns: repeat(3, 380px);
-        justify-content: center;
-        row-gap: 20px;
-        margin-top: 41px;
-    }
-    @media (max-width: 1150px) {
-        // MD: 2 ta ustun
-        grid-template-columns: repeat(3, 1fr);
-        row-gap: 20px;
-        margin-top: 31px;
-    }
-    @media (max-width: 950px) {
-        // SM: 2 ta ustun
-        grid-template-columns: repeat(2, 1fr);
-        margin-top: 20px;
-    }
-    @media (max-width: 768px) {
-        // SM: 2 ta ustun
-        grid-template-columns: repeat(2, 1fr);
-    }
-    @media (max-width: 576px) {
-        // XS: 2 ta ustun
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-.ModelAndDesignProduct_skeletion_card {
-    width: 453px !important;
-    height: 281px !important;
-    border-radius: 16px !important;
-
-    @media (max-width: 1300px) {
-        width: 350px !important;
-        height: 281px !important;
-        border-radius: 16px !important;
-    }
-    @media (max-width: 1200px) {
-        margin: auto;
-        width: 300px !important;
-        height: 281px !important;
-        border-radius: 16px !important;
-    }
-    @media (max-width: 1100px) {
-        width: 280px !important;
-        height: 230px !important;
-        border-radius: 16px !important;
-    }
-    @media (max-width: 1000px) {
-        width: 320px !important;
-        height: 230px !important;
-        border-radius: 16px !important;
-    }
-
-    @media (max-width: 950px) {
-        width: 420px !important;
-        height: 200px !important;
-        border-radius: 16px !important;
-    }
-    @media (max-width: 800px) {
-        width: 350px !important;
-        height: 200px !important;
-        border-radius: 16px !important;
-    }
-    @media (max-width: 700px) {
-        width: 310px !important;
-        height: 200px !important;
-        border-radius: 16px !important;
-    }
-    @media (max-width: 600px) {
-        width: 260px !important;
-        height: 200px !important;
-        border-radius: 16px !important;
-    }
-    @media (max-width: 500px) {
-        width: 230px !important;
-        height: 200px !important;
-        border-radius: 16px !important;
-    }
-    @media (max-width: 430px) {
-        width: 200px !important;
-        height: 200px !important;
-        border-radius: 16px !important;
-    }
-    @media (max-width: 380px) {
-        width: 150px !important;
-        height: 150px !important;
-        border-radius: 16px !important;
-    }
-    @media (max-width: 320px) {
-        width: 110px !important;
-        height: 80px !important;
-        border-radius: 16px !important;
-    }
-}
 
 .modelAndDesignCardWrap {
     // margin-top: 48px;
@@ -460,8 +539,8 @@ input[type='number']::-webkit-outer-spin-button {
     }
 
     .modelAndDesignCard {
-        // margin-bottom: 5px !important;
         border-radius: 9px !important;
+        box-shadow: 0px 0px 5.906px 0px rgba(0, 0, 0, 0.2);
         @media screen and (max-width: 1000px) {
             margin-bottom: 30px !important;
         }
@@ -470,6 +549,10 @@ input[type='number']::-webkit-outer-spin-button {
         }
         @media screen and (max-width: 400px) {
             margin-bottom: 8px !important;
+        }
+        &:hover {
+            transition: ease-in-out;
+            box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.1);
         }
 
         .modelAndDesignCardImg {
@@ -624,17 +707,6 @@ input[type='number']::-webkit-outer-spin-button {
                 }
             }
         }
-        &:hover {
-            transition: ease-in-out;
-            box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.1);
-        }
-        &:hover {
-            .modelAndDesignCardImg {
-                img {
-                    transform: scale(1.005);
-                }
-            }
-        }
     }
 }
 @media screen and (max-width: 550px) {
@@ -645,33 +717,32 @@ input[type='number']::-webkit-outer-spin-button {
 
 // _____________________________Design Development styles____________________
 
+.designDevelopmentSkeleton {
+    width: 335;
+    height: 396;
+    border-radius: 10px;
+}
+
 .designDevelopmentProduct {
-    // display: grid;
-    // grid-template-columns: repeat(4, 335px);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
     gap: 20px;
     row-gap: 48px;
     margin-top: 41px;
     padding: 0 !important;
     align-items: stretch;
 
-    display: grid;
-    grid-template-columns: repeat(
-        auto-fit,
-        minmax(clamp(9.375rem, 28.169vw + 2.773rem, 28.125rem), 1fr)
-    );
-}
-
-.designDevelopmentSkeleton {
-    height: 396px !important;
-    width: 100% !important  ;
-    border-radius: 10px;
-
-    @media (max-width: 1300px) {
-        height: 350px !important;
+    @media (max-width: 1200px) {
+        // LG: 3 ta ustun
+        grid-template-columns: repeat(4, 1fr);
     }
-
-    @media (max-width: 1000px) {
-        height: 300px !important;
+    @media (max-width: 992px) {
+        // MD: 2 ta ustun
+        grid-template-columns: repeat(3, 1fr);
+    }
+    @media (max-width: 768px) {
+        // SM: 2 ta ustun
+        grid-template-columns: repeat(2, 1fr);
     }
     @media (max-width: 600px) {
         height: 200px !important;
@@ -683,6 +754,10 @@ input[type='number']::-webkit-outer-spin-button {
     height: 100%;
     flex-direction: column;
     border-radius: 11px;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+    &:hover {
+        transition: ease-in-out;
+    }
     .designDevelopmentCardImgBox {
         display: flex;
         justify-content: center;
@@ -702,13 +777,13 @@ input[type='number']::-webkit-outer-spin-button {
                 height: 230px;
             }
             @media screen and (max-width: 500px) {
-                height: 200px;
+                height: 180px;
             }
             @media screen and (max-width: 400px) {
-                height: 160px;
+                height: 130px;
             }
             @media screen and (max-width: 300px) {
-                height: 130px;
+                height: 100px;
             }
         }
         .designDevelopmentCardheard {
@@ -723,12 +798,13 @@ input[type='number']::-webkit-outer-spin-button {
     .designDevelopmentCardBody {
         background: #fff;
         border-radius: 0 0 10px 10px;
-        padding: 13px 17px 10px 17px;
+        margin-top: 18px;
+        padding: 10px 17px 15px 17px;
         height: 100%;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
-        gap: 20px;
+        justify-content: end;
+
         @media screen and (max-width: 650px) {
             padding: 8px 14px 12px 14px;
             gap: 15px;
@@ -741,33 +817,8 @@ input[type='number']::-webkit-outer-spin-button {
             gap: 5px;
             padding: 5px;
         }
-        .designDevelopmentCardTitle {
-            font-family: 'Poppins';
-            font-weight: 400;
-            font-size: 16px;
-            line-height: 20px;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            @media screen and (max-width: 650px) {
-                font-weight: 400;
-                font-size: 13px;
-                line-height: 18px;
-            }
-            @media screen and (max-width: 500px) {
-                font-weight: 400;
-                font-size: 12px;
-                line-height: 15px;
-            }
-            @media screen and (max-width: 350px) {
-                font-weight: 300;
-                font-size: 8px;
-                line-height: 0px;
-            }
-        }
 
-        .designDevelopmentCardPriceBox {
+        .videoLessonsCardPriceBox {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -820,100 +871,10 @@ input[type='number']::-webkit-outer-spin-button {
             }
         }
     }
-    &:hover {
-        transition: ease-in-out;
-        box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.1);
-    }
-}
-
-// _____________________________________video lessons style______________________________
-
-.videoLessonsProduct {
-    display: grid;
-    grid-template-columns: repeat(4, 335px);
-    gap: 20px;
-    row-gap: 43px;
-    margin-top: 64px;
-    padding: 0 !important;
-    align-items: stretch;
-
-    @media (max-width: 1400px) {
-        // LG: 3 ta ustun
-        grid-template-columns: repeat(4, 320px);
-        justify-content: center;
-    }
-    @media (max-width: 1300px) {
-        // LG: 3 ta ustun
-        grid-template-columns: repeat(4, 290px);
-        justify-content: center;
-    }
-    @media (max-width: 1200px) {
-        // LG: 3 ta ustun
-        grid-template-columns: repeat(4, 1fr);
-        justify-content: center;
-    }
-    @media (max-width: 992px) {
-        // MD: 2 ta ustun
-        grid-template-columns: repeat(3, 1fr);
-    }
-    @media (max-width: 768px) {
-        // SM: 2 ta ustun
-        grid-template-columns: repeat(2, 1fr);
-    }
-    @media (max-width: 576px) {
-        // XS: 2 ta ustun
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-.videoLessonsCard {
-    width: 100%;
-    display: flex;
-    height: 100%;
-    flex-direction: column;
-    border-radius: 11px;
-    .videoLessonsCardImgBox {
-        display: flex;
-        justify-content: center;
-        position: relative;
-        background: #fff;
-        border-radius: 10px 10px 0 0;
-
-        .videoLessonsCardImg {
-            height: 200px;
-            object-fit: contain;
-            object-position: center;
-            border-radius: 10px 10px 0 0;
-            @media screen and (max-width: 700px) {
-                height: 180px;
-            }
-            @media screen and (max-width: 600px) {
-                height: 150px;
-            }
-            @media screen and (max-width: 500px) {
-                height: 125px;
-            }
-            @media screen and (max-width: 400px) {
-                height: 100px;
-            }
-            @media screen and (max-width: 300px) {
-                height: 100px;
-            }
-        }
-        .videoLessonsCardheard {
-            position: absolute;
-            top: 14px;
-            right: 14px;
-            padding: 5px;
-            border-radius: 100%;
-            background: #fff;
-        }
-    }
-
-    .videoLessonsCardBody {
+    .designDevelopmentCardBody {
         background: #fff;
         border-radius: 0 0 10px 10px;
-        padding: 13px 17px 10px 17px;
+        padding: 0px 17px 15px 17px;
         height: 100%;
         display: flex;
         flex-direction: column;

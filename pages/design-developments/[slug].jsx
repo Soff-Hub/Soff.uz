@@ -78,7 +78,6 @@ export default function DesignDevelopments () {
                     isLoading={isLoading}
                 />
             </div>
-            <FooterComponents />
         </PageContainer>
     );
 }

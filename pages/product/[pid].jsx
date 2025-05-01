@@ -1,17 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PageContainer from '~/components/layouts/PageContainer';
 import { baseUrl } from '~/repositories/Repository';
-import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { v4 as uuidv4 } from 'uuid';
-import PostRepository from '~/repositories/PostRepository';
-import axios from 'axios';
 import Head from 'next/head';
 import Joyride from 'react-joyride';
 import { setOneShopDoc } from '~/store/auth/slice';
-import Script from 'next/script';
 import FileProductsDetails from '~/components/details-components/file-products-detail/details-page';
 import ThreeDesignProductsDetails from '~/components/details-components/templates-details/details-page';
 import WebSitesProductsDetails from '~/components/details-components/website-products-details/details-page';
@@ -22,16 +17,19 @@ import WebsitesProduct from '~/components/elements/products/WebsitesProduct';
 import DesignDevelopmentProducts from '~/components/elements/products/DesignDevelopmentProducts';
 import VideoLessonsProducts from '~/components/elements/products/VideoLessonsProducts';
 import SwiperPages from '~/components/details-components/swiper/swiper-page';
+import FooterDefault from '~/components/shared/footers/FooterDefault';
+import SkeletonProductDetail from '~/components/elements/skeletons/SkeletonProductDetail';
+import * as cookie from 'cookie';
+import AISoffiaPresentation from '~/components/elements/AISoffiaPresentation';
 
-const ProductDefaultPage = ({ defaultProducts }) => {
+
+export default function ProductDefaultPage({ defaultProducts, similarProduct }) {
     const router = useRouter();
     const { pid } = router.query;
-    const [views, setViews] = useState('');
     const [isPlay, setIsPlay] = useState(null);
-    const [run, setRun] = useState(false);
-    const [loading, setLoading] = useState(false);
-    const { data: product } = useGet("productsDetails", `customer/documents/${pid}/`, undefined, { enabled: Boolean(pid) })
-    const { data: similarProduct } = useGet("productSimilar", `customer/similar/${pid}/`, undefined, { enabled: Boolean(pid) })
+
+    // const { data: product } = useGet("productsDetails", `customer/documents/${pid}/`, undefined, { enabled: Boolean(pid) })
+    // const { data: similarProduct } = useGet("productSimilar", `customer/similar/${pid}/`, undefined, { enabled: Boolean(pid) })
 
     const { user } = useSelector(state => state.auth);
     const dispatch = useDispatch();
@@ -40,130 +38,75 @@ const ProductDefaultPage = ({ defaultProducts }) => {
         return html.replace(/<[^>]+>/g, '');
     };
 
-
-    async function getUUID(uuid) {
-        const respons = await PostRepository.postProductUUID(pid, uuid);
-        if (respons) {
-            setViews(respons);
+    const [run, setRun] = useState(false);
+    const [steps, setSteps] = useState([
+        {
+            target: '.product-poster',
+            content: 'Bu yerda mahsulotning bir qismi joylashgan.',
+            disableBeacon: false
+        },
+        // {
+        //     target: '.product-description',
+        //     content: 'Bu esa mahsulotning batafsil tavsifi.',
+        // },
+        {
+            target: '.product-price-section',
+            content: 'Bu yerda narxi va sotib olish tugmasi bor. Bosib sotib olasiz.',
         }
-    }
+    ]);
 
     useEffect(() => {
-        {
-            /* Yandex reklama kodi */
-        }
-        if (window.yaContextCb) {
-            window.yaContextCb.push(() => {
-                Ya.Context.AdvManager.render({
-                    blockId: 'R-A-13331140-3',
-                    renderTo: 'yandex_rtb_R-A-13331140-3',
-                });
-            });
-        }
+        const timer = setTimeout(() => {
+          setRun(true);
+        }, 2400);
 
-        {
-            /* Yandex reklama kodi */
-        }
-        if (window.yaContextCb) {
-            window.yaContextCb.push(() => {
-                Ya.Context.AdvManager.render({
-                    blockId: 'R-A-13331140-2',
-                    renderTo: 'yandex_rtb_R-A-13331140-2',
-                });
-            });
-        }
-    }, [user?.access, pid]);
+        return () => clearTimeout(timer);
+      }, []);
 
-    useEffect(() => {
-        if (product?.slug) {
-            if (pid) {
-                localStorage.getItem('uuid')
-                    ? ''
-                    : localStorage.setItem('uuid', uuidv4() + product?.slug);
-            }
-        }
-    }, [product]);
-
-    useEffect(() => {
-        if (product?.slug) {
-            getUUID(
-                localStorage.getItem('uuid')
-                    ? localStorage.getItem('uuid')
-                    : uuidv4() + product?.slug
-            );
-        }
-    }, [pid, product?.slug]);
-
-
-    console.log(similarProduct);
-
-
-    const steps = [
-        {
-            target: '.buystep-0',
-            content: "Mahsulot sotib olish bo'yicha yordam kerakmi?",
-            locale: {
-                close: 'Yopish',
-                next: 'Ha, albatta',
-                open: '5',
+    const joyrideFeature = run && <Joyride
+        steps={steps}
+        run={run}
+        continuous={true}
+        showProgress={false}
+        styles={{
+            options: {
+                // zIndex: 9999,
+                arrowColor: '#e3ffeb',
+                primaryColor: '#00A44F',
+                textColor: '#004a14',
+                width: 300,
             },
-            placement: 'top',
-        },
-        {
-            target: '.buystep-1',
-            content:
-                "Mahsulotni savatga qo'shib bir nechta mahsulotni bittada sotib oling!",
-        },
-        {
-            target: '.buystep-2',
-            content: 'Mahsulotni hoziroq sotib oling',
-        },
-    ];
-
-    const callbackSingle = data => {
-        if (data.action === 'reset' || data.action === 'close') {
-            const doc = document.querySelector('.headerSticky');
-            doc.id = 'headerSticky';
-            setRun(false);
-            if (user?.access) {
-                dispatch(setOneShopDoc(product));
-                router.push(`/account/checkout-one?id=${product?.id}`);
-            } else {
-                router.push(`/auth/login?id=${product?.id}`);
-            }
-        }
-    };
-
-    const handleClickStepper = () => {
-        const doc = document.querySelector('.headerSticky');
-        doc.id = '';
-
-        setTimeout(() => {
-            setRun(true);
-        }, 500);
-    };
-
+        }}
+        locale={{
+            back: 'Oldingisi',
+            last: 'Tushundim',
+            close: 'Yopish',
+            next: 'Keyingisi',
+            open: 'Ochish',
+            skip: 'Bilaman',
+        }}
+    />
 
     const productsDetails = {
         'file': <FileProductsDetails
-            product={product} />,
+            product={defaultProducts}/>,
         "3d": <ThreeDesignProductsDetails
-            product={product}
+            product={defaultProducts}
         />,
         "template": <ThreeDesignProductsDetails
-            product={product}
+            product={defaultProducts}
         />,
         "website": <WebSitesProductsDetails
-            product={product}
+            product={defaultProducts}
         />,
         "design": <ThreeDesignProductsDetails
-            product={product}
+            product={defaultProducts}
         />,
         "video": <VideosProductsDetails
             isPlay={isPlay}
             setIsPlay={setIsPlay}
             // similar={similar}
-            product={product}
+            product={defaultProducts}
         />
     }
     const productsDetailsSimilar = {
@@ -188,8 +131,10 @@ const ProductDefaultPage = ({ defaultProducts }) => {
 
     return (
         <>
-            <PageContainer
-                title={defaultProducts ? defaultProducts?.title : 'Loading...'}>
+        <PageContainer
+            footer={<FooterDefault />}
+            title={defaultProducts ? defaultProducts?.title : 'Loading...'}
+            boxed={true}>
 
                 <Head>
                     <title>
@@ -208,11 +153,14 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                         content={
                             defaultProducts?.description
                                 ? removeHTMLTags(defaultProducts?.description)
-                                : `${defaultProducts?.title ||
+                                : `${defaultProducts?.title} + ${defaultProducts?.tag
+                                    ?.map(e => e?.name)
+                                    ?.join(', ') ||
                                 'soff.uz - Intellektual mulk marketi'
                                 } `
                         }
                     />
+                    <meta name="robots" content="index, follow" />
                     <meta
                         name='image'
                         content={
@@ -244,7 +192,9 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                         content={
                             defaultProducts?.description
                                 ? removeHTMLTags(defaultProducts?.description)
-                                : `${defaultProducts?.title ||
+                                : `${defaultProducts?.title} + ${defaultProducts?.tag
+                                    ?.map(e => e?.name)
+                                    ?.join(', ') ||
                                 'soff.uz - Intellektual mulk marketi'
                                 } `
                         }
@@ -288,7 +238,9 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                         content={
                             defaultProducts?.description
                                 ? removeHTMLTags(defaultProducts?.description)
-                                : `${defaultProducts?.title ||
+                                : `${defaultProducts?.title} + ${defaultProducts?.tag
+                                    ?.map(e => e?.name)
+                                    ?.join(', ') ||
                                 'soff.uz - Intellektual mulk marketi'
                                 } `
                         }
@@ -307,98 +259,29 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                     />
                 </Head>
 
-                <div className='container'>
-                    {/* Yandex reklama kodi */}
-                    <div id='yandex_rtb_R-A-13331140-2'></div>
-                    {/* Yandex scriptni yuklash */}
-                    <Script
-                        src='https://yandex.ru/ads/system/context.js'
-                        strategy='lazyOnload'
-                        onLoad={() => {
-                            if (window.yaContextCb) {
-                                window.yaContextCb.push(() => {
-                                    Ya.Context.AdvManager.render({
-                                        blockId: 'R-A-13331140-2',
-                                        renderTo: 'yandex_rtb_R-A-13331140-2',
-                                    });
-                                });
-                            }
-                        }}
-                    />
-                </div>
-                {/* <div> */}
+                {joyrideFeature}
+
                 <div>
                     <div className='container' style={{ position: 'relative' }}>
-                        <div className='text-end m-0'>
-                            {defaultProducts?.discpunt_price === 0 && (
-                                <p
-                                    onClick={handleClickStepper}
-                                    style={{ cursor: 'pointer', margin: 0 }}>
-                                    Sotib olish bo'yicha qo'llanma
-                                </p>
-                            )}
-                        </div>
-
-                        <Joyride
-                            steps={steps}
-                            run={run}
-                            continuous
-                            floaterProps={{
-                                autoOpen: true,
-                                placement: 'right-start',
-                                offset: 0,
-                            }}
-                            styles={{
-                                options: {
-                                    arrowColor: '#e3ffeb',
-                                    primaryColor: '#00A44F',
-                                    textColor: '#004a14',
-                                    padding: '0 !important',
-                                    width: 300,
-                                },
-                            }}
-                            callback={callbackSingle}
-                            locale={{
-                                back: 'Oldingisi',
-                                last: 'Tushundim',
-                                close: 'Yopish',
-                                next: 'Tushundim',
-                                open: 'Ochish',
-                            }}
-                        />
-
                         <div
                             className={`ps-page--product ${defaultProducts?.price === 0 ? '' : 'pt-2'
                                 }`}>
                             <div className='ps-container p-0'>
                                 <div className='ps-page__container'>
-                                    {productsDetails[product?.document?.content_type]}
+                                    {!defaultProducts && <SkeletonProductDetail/>}
+                                    {productsDetails[defaultProducts?.document?.content_type]}
                                 </div>
-                                <div className=' my-5'>
-                                    <h3 style={{ fontSize: "25px", fontWeight: 400 }} className='py-4 similar_title'>O’xshash mahsulotlar</h3>
-                                    <SwiperPages type={product?.document?.content_type}>
-                                        {productsDetailsSimilar[product?.document?.content_type]}
-                                    </SwiperPages>
-                                </div>
-
-                                {/* Yandex reklama kodi */}
-                                <div id='yandex_rtb_R-A-13331140-3'></div>
-                                {/* Yandex scriptni yuklash */}
-                                <Script
-                                    src='https://yandex.ru/ads/system/context.js'
-                                    strategy='lazyOnload'
-                                    onLoad={() => {
-                                        if (window.yaContextCb) {
-                                            window.yaContextCb.push(() => {
-                                                Ya.Context.AdvManager.render({
-                                                    blockId: 'R-A-13331140-3',
-                                                    renderTo:
-                                                        'yandex_rtb_R-A-13331140-3',
-                                                });
-                                            });
-                                        }
-                                    }}
-                                />
+                                <AISoffiaPresentation/>
+                                {
+                                    defaultProducts && (
+                                        <div className=' my-5'>
+                                            <h3 style={{ fontSize: "25px", fontWeight: 400 }} className='py-4 similar_title'>O’xshash mahsulotlar</h3>
+                                            <SwiperPages type={defaultProducts?.document?.content_type}>
+                                                {productsDetailsSimilar[defaultProducts?.document?.content_type]}
+                                            </SwiperPages>
+                                        </div>
+                                    )
+                                }
                             </div>
                         </div>
                     </div>
@@ -408,15 +291,26 @@ const ProductDefaultPage = ({ defaultProducts }) => {
     );
 };
 
-export async function getServerSideProps({ query }) {
-    const resquest = await fetch(baseUrl + `customer/documents/${query.pid}/`);
+export async function getServerSideProps({ query, req }) {
+    const cookies = cookie.parse(req.headers.cookie || '');
+    const token = cookies.token;
+
+    const headers = token
+    ? { 'Authorization': `Bearer ${token}` }
+    : {};
+
+    const resquest = await fetch(`${baseUrl}customer/documents/${query.pid}/`, {headers});
+
     const defaultProducts = await resquest.json();
 
-    return {
-        props: {
-            defaultProducts,
-        },
-    };
-}
+    const resquestSimilarProduct = await fetch(`${baseUrl}customer/similar/${query.pid}/`);
+    const similarProduct = await resquestSimilarProduct.json();
 
-export default ProductDefaultPage;
+
+    return {
+      props: {
+        defaultProducts,
+        similarProduct,
+      },
+    };
+  }

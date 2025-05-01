@@ -64,7 +64,7 @@ const ModuleCartSummary = ({ source }) => {
                     </p>
                    
                 </div>
-                <div className="ps-block__content">
+                <div className="">
                     <ul className="ps-block__product">{productItemsView}</ul>
                     {percentage > 0 && (
                         <p className='d-flex justify-content-between' >

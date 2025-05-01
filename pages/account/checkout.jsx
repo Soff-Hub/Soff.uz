@@ -29,7 +29,6 @@ const CheckoutPage = () => {
                 {/* <BreadCrumb breacrumb={breadCrumb} /> */}
                 <Checkout />
             </div>
-            <FooterComponents />
         </PageContainer>
     );
 };
