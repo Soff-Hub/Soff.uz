@@ -1,36 +1,48 @@
+import React from 'react';
+import FileActions from '../details-actions/file-actions';
+import Description from '../details-actions/description';
+import SellerProfile from '../details-seller-profile/seller-profile';
+import ImageCarousel from '../details-actions/imageScroll';
 
-import React from 'react'
-import FileActions from '../details-actions/file-actions'
-import Description from '../details-actions/description'
-import SellerProfile from '../details-seller-profile/seller-profile'
-import ImageCarousel from '../details-actions/imageScroll'
+function ThreeDesignProductsDetails ({ product, template }) {
+    return (
+        <div className='seller_container_products_details_three_design'>
+            <div className='ps-container p-0'>
+                <div className='ps-product--detail_seller_three_design my-5'>
+                    <div>
+                        <p
+                            className='titleh3'
+                            style={{
+                                fontWeight: 600,
+                                fontSize: '25px',
+                                lineHeight: '37.5px',
+                                color: '#312F30',
+                                margin: 0,
+                            }}>
+                            {product?.title}
+                        </p>
+                        <p className='m-0 fs-3 title_cat'>
+                            {product?.category?.name}
+                        </p>
+                    </div>
+                    <div className='ps-product__header_seller_three_design '>
+                        <ImageCarousel
+                            images={product?.document?.images}
+                            views={product?.view_count}
+                        />
 
+                        <FileActions product={product} />
+                    </div>
 
-function ThreeDesignProductsDetails({ product }) { 
+                    <div className='ps-product__header_seller_secound_three_design'>
+                        <Description description={product?.description} />
 
-  return (
-    <div className='seller_container_products_details_three_design'>
-      <div className="ps-container p-0">
-        <div className="ps-product--detail_seller_three_design my-5">
-          <div >
-            <p className='titleh3' style={{ fontWeight: 600, fontSize: "25px", lineHeight: "37.5px", color: "#312F30", margin: 0 }}>{product?.title}</p>
-            <p className='m-0 fs-3 title_cat'>{product?.category?.name}</p>
-          </div>
-          <div className="ps-product__header_seller_three_design ">
-            <ImageCarousel images={product?.document?.images} views={product?.view_count}/>
-            <FileActions product={product} />
-          </div>
-
-          <div className='ps-product__header_seller_secound_three_design'>
-            <Description description={product?.description} />
-            
-            <SellerProfile product={product}/>
-          </div>
-
+                        <SellerProfile product={product} />
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  )
+    );
 }
 
-export default ThreeDesignProductsDetails
+export default ThreeDesignProductsDetails;

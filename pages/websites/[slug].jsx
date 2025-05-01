@@ -41,6 +41,14 @@ export default function Websites () {
         ['fourChild', parentCategory], // Query key
         `${baseUrlUseApi}customer/four-child?direction=scientific_work&parent__slug=${parentCategory}`,
         'GET'
+    const {
+        data: childCategoryData,
+        error: childCategoryEror,
+        isLoading: isChildCategory,
+    } = useApi(
+        ['fourChild', parentCategory], // Query key
+        `${baseUrlUseApi}customer/four-child?direction=scientific_work&parent__slug=${parentCategory}`,
+        'GET'
     );
 
     // Pagination tugmalari uchun funksiya

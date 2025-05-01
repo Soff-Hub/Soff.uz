@@ -1,5 +1,4 @@
-
-import React from 'react'
+import React from 'react';
 import FileImagesScroll from '../details-actions/file-images-scroll';
 import FileActions from '../details-actions/file-actions';
 import SellerProfile from '../details-seller-profile/seller-profile';
@@ -53,4 +52,4 @@ function FileProductsDetails({ product }) {
   )
 }
 
-export default FileProductsDetails
+export default FileProductsDetails;
