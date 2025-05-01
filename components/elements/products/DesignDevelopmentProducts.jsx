@@ -108,46 +108,42 @@ const DesignDevelopmentProducts = ({ product }) => {
 
             <div className='designDevelopmentCardBody'>
                 <Link href='/product/[pid]' as={`/product/${product.slug}`}>
-                    <a className='designDevelopmentCardTitle'>{produvctTitle}</a>
+                    <a className='designDevelopmentCardTitle'>
+                        {produvctTitle}
+                    </a>
                 </Link>
-
-                        {+product.discount_price === 0 ? (
-                            <p className='designDevelopmentCardPrice m-0'>Bepul</p>
-                        ) : product.discount === 0 ? (
-                            <p className=' designDevelopmentCardPrice m-0'>
-                                {addPeriodToThousands(product.discount_price)}{' '}
+                <div className='d-flex justify-content-between align-items-center'>
+                    {+product.discount_price === 0 ? (
+                        <p className='designDevelopmentCardPrice m-0'>Bepul</p>
+                    ) : product.discount === 0 ? (
+                        <p className=' designDevelopmentCardPrice m-0'>
+                            {addPeriodToThousands(product.discount_price)} so'm
+                        </p>
+                    ) : (
+                        <>
+                            <del className='CardDiscountPrice'>
+                                {addPeriodToThousands(product.price)} so'm
+                            </del>
+                            <p className='designDevelopmentCardPrice  m-0'>
+                                {addPeriodToThousands(product.discount_price)}
                                 so'm
                             </p>
-                        ) : (
-                            <>
-                                <del className='CardDiscountPrice'>
-                                    {addPeriodToThousands(product.price)} so'm
-                                </del>
-                                <p className='designDevelopmentCardPrice  m-0'>
-                                    {addPeriodToThousands(
-                                        product.discount_price
-                                    )}
-                                    so'm
-                                </p>
-                            </>
-                        )}
-                    </div>
-                    <a
-                        href='#'
+                        </>
+                    )}
+
+                    <img
+                        src={
+                            basket
+                                ? '/static/img/buyIconHover.png'
+                                : '/static/img/buyIcon.png'
+                        }
+                        alt=''
                         data-toggle='tooltip'
                         data-placement='top'
                         className='buyIcon'
                         title="Savatga qo'shish"
-                        onClick={handleAddItemToCart}>
-                        <img
-                            src={
-                                basket
-                                    ? '/static/img/buyIconHover.png'
-                                    : '/static/img/buyIcon.png'
-                            }
-                            alt=''
-                        />
-                    </a>
+                        onClick={handleAddItemToCart}
+                    />
                 </div>
             </div>
 
