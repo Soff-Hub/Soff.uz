@@ -725,28 +725,17 @@ input[type='number']::-webkit-outer-spin-button {
 
 .designDevelopmentProduct {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    row-gap: 48px;
-    margin-top: 41px;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(clamp(6.25rem, 33.333vw + 1.25rem, 31.25rem), 1fr)
+    );
+    gap: clamp(0.75rem, 2.33vw + 0.204rem, 3rem);
+    row-gap: clamp(0.75rem, 2.33vw + 0.204rem, 3rem);
     padding: 0 !important;
     align-items: stretch;
-
-    @media (max-width: 1200px) {
-        // LG: 3 ta ustun
-        grid-template-columns: repeat(4, 1fr);
-    }
-    @media (max-width: 992px) {
-        // MD: 2 ta ustun
-        grid-template-columns: repeat(3, 1fr);
-    }
-    @media (max-width: 768px) {
-        // SM: 2 ta ustun
-        grid-template-columns: repeat(2, 1fr);
-    }
-    @media (max-width: 600px) {
-        height: 200px !important;
-    }
+    // @media (max-width: 600px) {
+    //     height: 200px !important;
+    // }
 }
 
 .designDevelopmentCard {
@@ -766,25 +755,10 @@ input[type='number']::-webkit-outer-spin-button {
         border-radius: 10px 10px 0 0;
 
         .designDevelopmentCardImg {
-            height: 276px;
+            height: clamp(6.25rem, 11.392vw + 3.58rem, 17.25rem);
             object-fit: contain;
             object-position: center;
             border-radius: 10px 10px 0 0;
-            @media screen and (max-width: 700px) {
-                height: 250px;
-            }
-            @media screen and (max-width: 600px) {
-                height: 230px;
-            }
-            @media screen and (max-width: 500px) {
-                height: 180px;
-            }
-            @media screen and (max-width: 400px) {
-                height: 130px;
-            }
-            @media screen and (max-width: 300px) {
-                height: 100px;
-            }
         }
         .designDevelopmentCardheard {
             position: absolute;
@@ -819,54 +793,22 @@ input[type='number']::-webkit-outer-spin-button {
         }
 
         .videoLessonsCardPriceBox {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 18px;
-            @media screen and (max-width: 650px) {
-                margin-top: 12px;
-            }
-            @media screen and (max-width: 500px) {
-                margin-top: 8px;
-            }
-            @media screen and (max-width: 350px) {
-                margin-top: 3px;
-            }
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            margin-top: clamp(0.188rem, 0.971vw - 0.04rem, 1.125rem);
             .designDevelopmentCardPrice {
                 font-family: 'Poppins';
                 font-weight: 600;
-                font-size: 20px;
-                line-height: 30px;
+                font-size: clamp(0.625rem, 0.647vw + 0.473rem, 1.25rem);
+                line-height: clamp(0.75rem, 1.165vw + 0.477rem, 1.875rem);
                 letter-spacing: 2%;
                 color: #000000;
-                @media screen and (max-width: 650px) {
-                    font-weight: 600;
-                    font-size: 18px;
-                    line-height: 12px;
-                }
-                @media screen and (max-width: 500px) {
-                    font-weight: 600;
-                    font-size: 12px;
-                    line-height: 12px;
-                }
-                @media screen and (max-width: 350px) {
-                    font-weight: 400;
-                    font-size: 10px;
-                    line-height: 12px;
-                }
             }
             .buyIcon {
                 img {
-                    @media screen and (max-width: 650px) {
-                    }
-                    @media screen and (max-width: 500px) {
-                        width: 25px !important;
-                        height: 25px !important;
-                    }
-                    @media screen and (max-width: 350px) {
-                        width: 20px !important;
-                        height: 20px !important;
-                    }
+                    width: clamp(1.25rem, 0.906vw + 1.038rem, 2.125rem);
+                    height: clamp(1.25rem, 0.906vw + 1.038rem, 2.125rem);
                 }
             }
         }
@@ -894,76 +836,36 @@ input[type='number']::-webkit-outer-spin-button {
         .videoLessonsCardTitle {
             font-family: 'Poppins';
             font-weight: 400;
-            font-size: 15px;
-            line-height: 22.5px;
+            font-size: clamp(0.5rem, 0.453vw + 0.394rem, 0.938rem);
+            line-height: clamp(0.313rem, 1.1vw + 0.055rem, 1.375rem);
             letter-spacing: 2%;
-            @media screen and (max-width: 650px) {
-                font-weight: 400;
-                font-size: 13px;
-                line-height: 18px;
-            }
-            @media screen and (max-width: 500px) {
-                font-weight: 400;
-                font-size: 12px;
-                line-height: 15px;
-            }
-            @media screen and (max-width: 350px) {
-                font-weight: 300;
-                font-size: 8px;
-                line-height: 0px;
-            }
         }
 
         .videoLessonsCardPriceBox {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 18px;
-            @media screen and (max-width: 650px) {
-                margin-top: 12px;
-            }
-            @media screen and (max-width: 500px) {
-                margin-top: 8px;
-            }
-            @media screen and (max-width: 350px) {
-                margin-top: 3px;
-            }
+            margin-top: clamp(0.188rem, 0.971vw - 0.04rem, 1.125rem);
             .videoLessonsCardPrice {
                 font-family: 'Poppins' !important;
                 font-weight: 600 !important;
-                font-size: 22px !important;
-                line-height: 33px !important;
+                font-size: clamp(
+                    0.625rem,
+                    0.777vw + 0.443rem,
+                    1.375rem
+                ) !important;
+                line-height: clamp(
+                    0.75rem,
+                    1.359vw + 0.431rem,
+                    2.063rem
+                ) !important;
                 letter-spacing: 2% !important;
                 color: #000000;
-
-                @media screen and (max-width: 650px) {
-                    font-weight: 600;
-                    font-size: 18px;
-                    line-height: 12px;
-                }
-                @media screen and (max-width: 500px) {
-                    font-weight: 600;
-                    font-size: 12px;
-                    line-height: 12px;
-                }
-                @media screen and (max-width: 350px) {
-                    font-weight: 400;
-                    font-size: 10px;
-                    line-height: 12px;
-                }
             }
             .buyIcon {
                 img {
-                    @media screen and (max-width: 650px) {
-                    }
-                    @media screen and (max-width: 500px) {
-                        width: 25px !important;
-                        height: 25px !important;
-                    }
-                    @media screen and (max-width: 350px) {
-                        width: 20px !important;
-                        height: 20px !important;
-                    }
+                    width: clamp(1.25rem, 0.906vw + 1.038rem, 2.125rem);
+                    height: clamp(1.25rem, 0.906vw + 1.038rem, 2.125rem);
                 }
             }
         }

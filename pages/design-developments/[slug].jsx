@@ -15,12 +15,11 @@ export default function DesignDevelopments () {
     // products API uchun so'rov
     const { data, error, isLoading } = useApi(
         ['products', page, parentCategory, childCategory], // queryKey dinamik
-        `${baseUrlUseApi}customer/products/?direction=design&category=${
+        `${baseUrlUseApi}customer/products/?direction=scientific_work&category=${
             childCategory ? childCategory : parentCategory
         }&page=${page || 1}&page_size=48`,
         'GET'
     );
-    console.log(' =>>>> design', data);
 
     // Otab kategoriya API uchun so'rov
     const {
@@ -29,7 +28,7 @@ export default function DesignDevelopments () {
         isLoading: isFourChildLoading,
     } = useApi(
         ['fourChild'], // Query key
-        `${baseUrlUseApi}customer/four-child?direction=design`,
+        `${baseUrlUseApi}customer/four-child?direction=scientific_work`,
         'GET'
     );
 
@@ -40,7 +39,7 @@ export default function DesignDevelopments () {
         isLoading: isChildCategory,
     } = useApi(
         ['fourChild', parentCategory], // Query key
-        `${baseUrlUseApi}customer/four-child?direction=design&parent__slug=${parentCategory}`,
+        `${baseUrlUseApi}customer/four-child?direction=scientific_work&parent__slug=${parentCategory}`,
         'GET'
     );
 
@@ -62,7 +61,7 @@ export default function DesignDevelopments () {
                 description={`Biz siz qidirayotgan mahsulotlarni Soff.uz saytimizning kategoriyasida topdik`}
             />
 
-            <div className='ps-page--shop container p-xl-0 p-l-0'>
+            <div className='ps-page--shop container p-xl-0 p-l-0' style={{ display: "flex", flexDirection: 'column', gap: 'clamp(0.75rem, 2.33vw + 0.204rem, 3rem)' }}>
                 <CategoriesFilterForDesignDevelopmentsSection
                     breacrumb={fourChildData}
                     count={data?.count}

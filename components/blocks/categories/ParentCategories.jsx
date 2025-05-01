@@ -16,7 +16,7 @@ const parentCategoriesData = [
     {
         title: 'Dizayn shablonlari',
         imgUrl: '/static/img/dizayn-shablonlari-2.png',
-        path: '/design-developments',
+        path: '/design-developments/all',
     },
     {
         title: 'Veb saytlar',
