@@ -61,7 +61,13 @@ export default function VideoLessons () {
                 description={`Biz siz qidirayotgan mahsulotlarni Soff.uz saytimizning kategoriyasida topdik`}
             />
 
-            <div className='ps-page--shop container p-l-0 p-xl-0'>
+            <div
+                className='ps-page--shop container p-l-0 p-xl-0'
+                style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 'clamp(0.75rem, 2.33vw + 0.204rem, 3rem)',
+                }}>
                 <VideoLessonsFilterSection
                     breacrumb={fourChildData}
                     count={data?.count}

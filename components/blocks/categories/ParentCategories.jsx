@@ -11,7 +11,7 @@ const parentCategoriesData = [
     {
         title: '3D moddellar va Interier dizaynlar',
         imgUrl: '/static/img/3D-moddellar-va-Interier-dizaynlar-2.png',
-        path: '/3d-models-and-interior-designs',
+        path: '/3d-models-and-interior-designs/all',
     },
     {
         title: 'Dizayn shablonlari',
@@ -21,50 +21,46 @@ const parentCategoriesData = [
     {
         title: 'Veb saytlar',
         imgUrl: '/static/img/veb-saytlar-2.png',
-        path: '/websites',
+        path: '/websites/all',
     },
     {
         title: 'Turli sohalar uchun shablonlar',
         imgUrl: '/static/img/shablonlar-3.png',
-        path: '/templates',
+        path: '/templates/all',
     },
     {
         title: 'Video darsliklar',
         imgUrl: '/static/img/video-darsliklar-2.png',
-        path: '/video-lessons',
+        path: '/video-lessons/all',
     },
 ];
 
-export default function ParentCategories() {
+export default function ParentCategories () {
     const router = useRouter();
     const [hoveredId, setHoveredId] = useState(null);
 
     return (
         <div className='container p-0 my-0'>
-            <h2 className='product-list-title'>
-                Tayyor Materiallar Bo‘limi
-            </h2>
+            <h2 className='product-list-title'>Tayyor Materiallar Bo‘limi</h2>
             <div className='product-list-card-box'>
                 {parentCategoriesData.map((item, index) => (
-                    <Link
-                        href={item.path}
-                        key={index}
-                    >
+                    <Link href={item.path} key={index}>
                         <a>
                             <div
                                 className='product-card'
                                 style={{
-                                    backgroundImage: `linear-gradient(rgba(0, 0, 0, ${hoveredId === item.title ? "0.4" : "0.1"
-                                        }), rgba(0, 0, 0,${hoveredId === item.title ? "0.4" : "0.1"
-                                        })),url(${item.imgUrl})`,
+                                    backgroundImage: `linear-gradient(rgba(0, 0, 0, ${
+                                        hoveredId === item.title ? '0.4' : '0.1'
+                                    }), rgba(0, 0, 0,${
+                                        hoveredId === item.title ? '0.4' : '0.1'
+                                    })),url(${item.imgUrl})`,
                                     backgroundSize: 'cover',
                                     backgroundPosition: 'center',
                                     backgroundRepeat: 'no-repeat',
                                 }}
                                 onMouseEnter={() => setHoveredId(item.title)}
-                                onMouseLeave={() => setHoveredId(null)}
-                            >
-                                <div className="d-flex flex-column justify-content-between h-100">
+                                onMouseLeave={() => setHoveredId(null)}>
+                                <div className='d-flex flex-column justify-content-between h-100'>
                                     <h3 className='product-list-card-title'>
                                         {item.title}
                                     </h3>
