@@ -709,47 +709,29 @@ input[type='number']::-webkit-outer-spin-button {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        gap: 20px;
+        gap: clamp(0.313rem, 0.971vw + 0.085rem, 1.25rem);
         @media screen and (max-width: 650px) {
             padding: 8px 14px 12px 14px;
-            gap: 15px;
         }
         @media screen and (max-width: 500px) {
             padding: 6px 10px 11px 10px;
-            gap: 10px;
         }
         @media screen and (max-width: 350px) {
-            gap: 5px;
             padding: 5px;
         }
 
-        .videoLessonsCardPriceBox {
-            display: flex;
-            // justify-content: space-between;
-            align-items: center;
-            // margin-top: 18px;
-            @media screen and (max-width: 650px) {
-                margin-top: 12px;
-            }
-            @media screen and (max-width: 500px) {
-                margin-top: 8px;
-            }
-            @media screen and (max-width: 350px) {
-                margin-top: 3px;
-            }
-            .designDevelopmentCardPrice {
-                font-family: 'Poppins';
-                font-weight: 600;
-                font-size: clamp(0.625rem, 0.647vw + 0.473rem, 1.25rem);
-                line-height: clamp(0.75rem, 1.165vw + 0.477rem, 1.875rem);
-                letter-spacing: 2%;
-                color: #000000;
-            }
-            .buyIcon {
-                img {
-                    width: clamp(1.25rem, 0.906vw + 1.038rem, 2.125rem);
-                    height: clamp(1.25rem, 0.906vw + 1.038rem, 2.125rem);
-                }
+        .designDevelopmentCardPrice {
+            font-family: 'Poppins';
+            font-weight: 600;
+            font-size: clamp(0.625rem, 0.647vw + 0.473rem, 1.25rem);
+            line-height: clamp(0.75rem, 1.165vw + 0.477rem, 1.875rem);
+            letter-spacing: 2%;
+            color: #000000;
+        }
+        .buyIcon {
+            img {
+                width: clamp(1.25rem, 0.906vw + 1.038rem, 2.125rem);
+                height: clamp(1.25rem, 0.906vw + 1.038rem, 2.125rem);
             }
         }
     }
@@ -759,17 +741,16 @@ input[type='number']::-webkit-outer-spin-button {
     }
 }
 
-// _____________________________________video lessons style______________________________
+// _____________________________________video lessons style________________________clamp(7.5rem, 21.359vw + 2.494rem, 28.125rem)______
 
 .videoLessonsProduct {
     display: grid;
     grid-template-columns: repeat(
         auto-fit,
-        minmax(clamp(9.375rem, 28.662vw + 3.105rem, 37.5rem), 1fr)
+        minmax(clamp(9.375rem, 19.417vw + 4.824rem, 28.125rem), 1fr)
     );
-
-    gap: 20px;
-    row-gap: 43px;
+    gap: clamp(0.75rem, 2.33vw + 0.204rem, 3rem);
+    row-gap: clamp(0.75rem, 2.33vw + 0.204rem, 3rem);
     margin-top: 64px;
     padding: 0 !important;
     align-items: stretch;
@@ -789,33 +770,34 @@ input[type='number']::-webkit-outer-spin-button {
         border-radius: 10px 10px 0 0;
 
         .videoLessonsCardImg {
-            height: 200px;
+            height: clamp(6.25rem, 6.472vw + 4.733rem, 12.5rem);
             object-fit: contain;
             object-position: center;
             border-radius: 10px 10px 0 0;
-            @media screen and (max-width: 700px) {
-                height: 180px;
-            }
-            @media screen and (max-width: 600px) {
-                height: 150px;
-            }
-            @media screen and (max-width: 500px) {
-                height: 125px;
-            }
-            @media screen and (max-width: 400px) {
-                height: 100px;
-            }
-            @media screen and (max-width: 300px) {
-                height: 100px;
-            }
         }
         .videoLessonsCardheard {
             position: absolute;
-            top: 14px;
-            right: 14px;
-            padding: 5px;
-            border-radius: 100%;
+            top: clamp(0.313rem, 0.583vw + 0.176rem, 0.875rem);
+            right: clamp(0.313rem, 0.583vw + 0.176rem, 0.875rem);
+            width: clamp(
+                1.5rem,
+                1.5vw + 1rem,
+                2.5rem
+            ); // aniqlik uchun o‘rnatildi
+            height: clamp(
+                1.5rem,
+                1.5vw + 1rem,
+                2.5rem
+            ); // width bilan bir xil bo‘lishi kerak
+            border-radius: 50%; // 100% ham bo‘ladi, lekin 50% tavsiya etiladi
             background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            img {
+                width: clamp(0.75rem, 0.841vw + 0.553rem, 1.563rem);
+            }
         }
     }
 
@@ -827,8 +809,7 @@ input[type='number']::-webkit-outer-spin-button {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        gap: 20px;
-
+        gap: clamp(0.313rem, 0.971vw + 0.085rem, 1.25rem);
         @media screen and (max-width: 650px) {
             padding: 8px 14px 12px 14px;
         }
@@ -842,9 +823,11 @@ input[type='number']::-webkit-outer-spin-button {
         .videoLessonsCardTitle {
             font-family: 'Poppins';
             font-weight: 400;
-            font-size: clamp(0.5rem, 0.453vw + 0.394rem, 0.938rem);
-            line-height: clamp(0.313rem, 1.1vw + 0.055rem, 1.375rem);
-            letter-spacing: 2%;
+            font-size: clamp(0.5rem, 0.777vw + 0.318rem, 1.25rem);
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
         .videoLessonsCardPriceBox {

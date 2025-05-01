@@ -15,7 +15,7 @@ export default function VideoLessons () {
     // products API uchun so'rov
     const { data, error, isLoading } = useApi(
         ['products', page, parentCategory, childCategory], // queryKey dinamik
-        `${baseUrlUseApi}customer/products/?direction=video&category=${
+        `${baseUrlUseApi}customer/products/?direction=scientific_work&category=${
             childCategory ? childCategory : parentCategory
         }&page=${page || 1}&page_size=48`,
         'GET'
@@ -28,7 +28,7 @@ export default function VideoLessons () {
         isLoading: isFourChildLoading,
     } = useApi(
         ['fourChild'], // Query key
-        `${baseUrlUseApi}customer/four-child?direction=video`,
+        `${baseUrlUseApi}customer/four-child?direction=scientific_work`,
         'GET'
     );
 
@@ -39,7 +39,7 @@ export default function VideoLessons () {
         isLoading: isChildCategory,
     } = useApi(
         ['fourChild', parentCategory], // Query key
-        `${baseUrlUseApi}customer/four-child?direction=video&parent__slug=${parentCategory}`,
+        `${baseUrlUseApi}customer/four-child?direction=scientific_work&parent__slug=${parentCategory}`,
         'GET'
     );
 
@@ -61,7 +61,13 @@ export default function VideoLessons () {
                 description={`Biz siz qidirayotgan mahsulotlarni Soff.uz saytimizning kategoriyasida topdik`}
             />
 
-            <div className='ps-page--shop container p-l-0 p-xl-0'>
+            <div
+                className='ps-page--shop container p-l-0 p-xl-0'
+                style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 'clamp(0.75rem, 2.33vw + 0.204rem, 3rem)',
+                }}>
                 <VideoLessonsFilterSection
                     breacrumb={fourChildData}
                     count={data?.count}

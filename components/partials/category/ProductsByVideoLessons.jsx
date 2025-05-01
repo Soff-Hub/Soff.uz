@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Pagination } from 'antd';
 import { Skeleton } from 'antd';
-import DesignDevelopmentProducts from '~/components/elements/products/DesignDevelopmentProducts';
+import Link from 'next/link';
+import VideoLessonsProducts from '~/components/elements/products/VideoLessonsProducts';
 
 export default function ProductsByVideoLessons ({
     data = [],
@@ -32,18 +33,25 @@ export default function ProductsByVideoLessons ({
                         </div>
                     ))}
             </div>
-            
+
             {data?.results?.length == 0 && (
-                <div className="ps-page-status">
-                    <div className="container">
-                        <div className="ps-section__content">
-                        <img src="/static/img/noinfo.svg" alt="Ma'lumot topilmadi" />
+                <div className='ps-page-status'>
+                    <div className='container'>
+                        <div className='ps-section__content'>
+                            <img
+                                src='/static/img/noinfo.svg'
+                                alt="Ma'lumot topilmadi"
+                            />
                             <h3>😕 Bu yerda hozircha hech narsa yo‘q...</h3>
                             <p>
-                                Ammo bu siz uchun ajoyib imkoniyat! Birinchilardan bo‘lib ushbu kategoriyaga mahsulot joylashtiring, o‘z auditoriyangizni yarating va daromad olishni boshlang. Imkoniyatni qo‘ldan boy bermang!
+                                Ammo bu siz uchun ajoyib imkoniyat!
+                                Birinchilardan bo‘lib ushbu kategoriyaga
+                                mahsulot joylashtiring, o‘z auditoriyangizni
+                                yarating va daromad olishni boshlang.
+                                Imkoniyatni qo‘ldan boy bermang!
                             </p>
                             <p>
-                                <Link href="https://seller.soff.uz">
+                                <Link href='https://seller.soff.uz'>
                                     <a target='_blank'>Sotuvchi bo'lish</a>
                                 </Link>
                             </p>
