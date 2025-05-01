@@ -400,18 +400,18 @@ input[type='number']::-webkit-outer-spin-button {
     }
 }
 
-    .modelAndDesignCard {
-        // margin-bottom: 5px !important;
-        border-radius: 9px !important;
-        @media screen and (max-width: 1000px) {
-            margin-bottom: 30px !important;
-        }
-        @media screen and (max-width: 700px) {
-            margin-bottom: 15px !important;
-        }
-        @media screen and (max-width: 400px) {
-            margin-bottom: 8px !important;
-        }
+.modelAndDesignCard {
+    // margin-bottom: 5px !important;
+    border-radius: 9px !important;
+    @media screen and (max-width: 1000px) {
+        margin-bottom: 30px !important;
+    }
+    @media screen and (max-width: 700px) {
+        margin-bottom: 15px !important;
+    }
+    @media screen and (max-width: 400px) {
+        margin-bottom: 8px !important;
+    }
 
     .modelAndDesignCardImg {
         position: relative;
@@ -475,37 +475,37 @@ input[type='number']::-webkit-outer-spin-button {
                     background: #fff;
                     padding: 7px 9px;
 
-                        font-family: 'Poppins';
-                        font-weight: 600;
-                        font-size: 12px;
-                        line-height: 12px;
-                        letter-spacing: 2%;
-                        @media screen and (max-width: 650px) {
-                            font-weight: 500;
-                            font-size: 10px !important;
-                            line-height: 10px;
-                        }
-                        @media screen and (max-width: 500px) {
-                            font-weight: 400;
-                            font-size: 10px !important;
-                            line-height: 10px;
-                        }
-                        @media screen and (max-width: 350px) {
-                            font-weight: 300;
-                            font-size: 8px !important;
-                            line-height: 8px;
-                            padding: 3px;
-                        }
+                    font-family: 'Poppins';
+                    font-weight: 600;
+                    font-size: 12px;
+                    line-height: 12px;
+                    letter-spacing: 2%;
+                    @media screen and (max-width: 650px) {
+                        font-weight: 500;
+                        font-size: 10px !important;
+                        line-height: 10px;
+                    }
+                    @media screen and (max-width: 500px) {
+                        font-weight: 400;
+                        font-size: 10px !important;
+                        line-height: 10px;
+                    }
+                    @media screen and (max-width: 350px) {
+                        font-weight: 300;
+                        font-size: 8px !important;
+                        line-height: 8px;
+                        padding: 3px;
                     }
                 }
-                .aboutModel {
-                    .aboutModelItem {
-                        @media screen and (max-width: 550px) {
-                            display: none;
-                        }
-                        border-radius: 28px;
-                        background: #fff;
-                        padding: 3px 8px;
+            }
+            .aboutModel {
+                .aboutModelItem {
+                    @media screen and (max-width: 550px) {
+                        display: none;
+                    }
+                    border-radius: 28px;
+                    background: #fff;
+                    padding: 3px 8px;
 
                     font-family: 'Poppins';
                     font-weight: 500;
@@ -601,8 +601,8 @@ input[type='number']::-webkit-outer-spin-button {
 // _____________________________Design Development styles____________________
 
 .designDevelopmentSkeleton {
-    width: 335;
-    height: 396;
+    width: clamp(7.5rem, 14.688vw + 4.563rem, 22.188rem);
+    height: clamp(9.375rem, 15.375vw + 6.3rem, 24.75rem);
     border-radius: 10px;
 }
 
@@ -886,4 +886,3 @@ input[type='number']::-webkit-outer-spin-button {
     text-decoration: line-through;
     color: #7b7b7b;
 }
-
