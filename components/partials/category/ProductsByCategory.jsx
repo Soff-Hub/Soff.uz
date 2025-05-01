@@ -12,7 +12,7 @@ export default function ProductsByCategory ({
 }) {
     return (
         <>
-            <div id='products' className='container scientificResourcesWrap'>
+            <div id='products' className='container  scientificResourcesWrap'>
                 {isLoading && (
                     <>
                         {Array(15)

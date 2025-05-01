@@ -200,19 +200,177 @@ input[type='number']::-webkit-outer-spin-button {
     }
 }
 
+// _____________________________scientificResources styles____________________________
+.scientificResourcesWrap {
+    margin-top: 45px;
+    display: grid;
+    grid-template-columns: repeat(5, 267px);
+    gap: 16px;
+    row-gap: 34px;
+    padding: 0px !important;
+    @media screen and (max-width: 1350px) {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+    @media screen and (max-width: 1250px) {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        padding: 0 15px;
+    }
+    @media screen and (max-width: 1000px) {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        padding: 0 15px;
+        margin-top: 40px;
+        row-gap: 30px;
+    }
+    @media screen and (max-width: 600px) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        padding: 0 15px;
+        margin-top: 30px;
+        row-gap: 20px;
+    }
+    @media screen and (max-width: 450px) {
+        margin-top: 15px;
+        row-gap: 15px;
+    }
+    .scientificResourcesSkeleton {
+        width: 100% !important;
+        height: 320px !important;
+        @media screen and (max-width: 750px) {
+            height: 250px !important;
+        }
+        @media screen and (max-width: 400px) {
+            height: 180px !important;
+        }
+    }
+}
+
+.scientificResourcesCard {
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    border-radius: 12.5px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    &:hover {
+        filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.2));
+    }
+
+    .scientificResourcesCardImgBox {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        @media (max-width: 768px) {
+            padding: 10px;
+        }
+        @media (max-width: 450px) {
+            padding: 5px;
+        }
+        .scientificResourcesCardImg {
+            height: 186px;
+            border-radius: 12.5px;
+            @media (max-width: 768px) {
+                height: 160px;
+            }
+            @media (max-width: 450px) {
+                height: 130px;
+            }
+            @media (max-width: 300px) {
+                height: 100px;
+            }
+        }
+    }
+    .scientificResourcesCardHeard {
+        position: absolute;
+        right: 20px;
+        top: 20px;
+        padding: 10px;
+        background: #fff;
+        border-radius: 100%;
+        @media (max-width: 650px) {
+            right: 15px;
+            top: 15px;
+            padding: 8px;
+        }
+        @media (max-width: 450px) {
+            right: 10px;
+            top: 10px;
+            padding: 4px;
+        }
+        img {
+            @media (max-width: 450px) {
+                width: 15px;
+            }
+        }
+    }
+    .scientificResourcesCardBody {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        flex-grow: 1;
+        padding: 20px 20px;
+        gap: 20px;
+        @media (max-width: 768px) {
+            padding: 10px;
+            gap: 15px;
+        }
+        @media (max-width: 400px) {
+            padding: 5px;
+            gap: 8px;
+        }
+        .scientificResourcesCardTitle {
+            color: #000;
+            font-family: 'Poppins';
+            font-size: 12.5px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            letter-spacing: 0.25px;
+            @media (max-width: 768px) {
+                font-size: 10px;
+            }
+            @media (max-width: 450px) {
+                font-size: 8px;
+            }
+        }
+        .scientificResourcesCardPriceBox {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .scientificResourcesCardPrice {
+                p {
+                    color: #000;
+                    font-family: 'Poppins';
+                    font-size: 18.333px;
+                    font-style: normal;
+                    font-weight: 600;
+                    line-height: normal;
+                    letter-spacing: 0.367px;
+                    margin: 0;
+                    @media (max-width: 768px) {
+                        font-size: 14px;
+                    }
+                    @media (max-width: 450px) {
+                        font-size: 10px;
+                    }
+                }
+            }
+            .scientificBuyIcon {
+                @media (max-width: 768px) {
+                    width: 25px;
+                }
+                @media (max-width: 450px) {
+                    width: 20px;
+                }
+            }
+        }
+    }
+}
+
+// _____________________________scientificResources styles end____________________________
+
 // -----------------------------------------------ThreeDCategoriesFilterSecion style
-.category-btn:hover {
-    background-color: #00a44f;
-}
-.category-btn:hover .category-btn-title {
-    color: white;
-}
-.category-btn .category-btn-title {
-    color: #312f30;
-}
-.sub-category-btn:hover .sub-category-btn-title {
-    color: #00a44f;
-}
 .Models_category_btn_wrap {
     display: flex;
     justify-content: start;
