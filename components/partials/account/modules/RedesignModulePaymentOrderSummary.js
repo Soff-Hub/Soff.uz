@@ -7,13 +7,15 @@ import { useState } from 'react';
 import { addPeriodToThousands } from '../price-formatter';
 import { Skeleton } from 'antd';
 import useCart from '~/hooks/useCart';
+import { fileColors } from '~/components/details-components/details-actions/file-actions';
+import { useRouter } from 'next/router';
 
 const RedesignModulePaymentOrderSummary = ({ ecomerce }) => {
+    const router = useRouter();
     const [percentage, setPercentage] = useState(0);
     const { removeCartOneItem } = useCart();
 
     let amount = calculateAmount(ecomerce.cartDataItems);
-    console.log(ecomerce.cartDataItems);
 
     async function getPercentage () {
         const responseData = await ProductRepository.getOrderPercentage();
@@ -103,7 +105,14 @@ const RedesignModulePaymentOrderSummary = ({ ecomerce }) => {
                                                     <p className=''>{el?.title}</p>
                                                 </a>
                                             </Link>
-                                            <span className='product_type  '>
+                                            <span
+                                                style={{
+                                                    color: "white",
+                                                    padding: "4px 9px",
+                                                    borderRadius: "4px",
+                                                    backgroundColor: fileColors[el?.file_type] || "#007DFF"
+                                                }}>
+                                                {' '}
                                                 {el?.file_type}
                                             </span>
                                         </div>
@@ -115,14 +124,14 @@ const RedesignModulePaymentOrderSummary = ({ ecomerce }) => {
                                             href='#'
                                             onClick={e => handleRemoveItem(e, el)}>
                                             <img
-                                                src='/static/img/exitBtn.png'
+                                                src='/static/img/xicon.svg'
                                                 alt=''
                                             />
                                         </a>
                                         <p className='w-100'>
-                                            {addPeriodToThousands(
-                                                el?.discount_price
-                                            )}
+                                            {
+                                                addPeriodToThousands(el?.discount_price) + ` `
+                                            }
                                             so'm
                                         </p>
                                     </div>
@@ -135,26 +144,30 @@ const RedesignModulePaymentOrderSummary = ({ ecomerce }) => {
                         )}
                     </div>
             </div>
-            <div className='checkout_footer rounded-2 my-5 bg-white'>
+            <div className='checkout_footer rounded-2 my-5 bg-white w-100'>
                 {ecomerce.cartDataItems && ecomerce.cartDataItems.length > 0 && (
                     <div className='total_amount'>
-                        <figcaption className='product_price_click_all'>
-                            <p>Jami narx</p>
-                            <p>{hisob} so'm </p>
-                        </figcaption>
-
                         {percentage > 0 && (
                             <div className='total_amount_service_fee'>
-                                <p>Xizmat haqi uchun</p>
+                                <p>Sayt xizmat haqi uchun:</p>
                                 <p>
                                     {' '}
                                     {hisobb} so`m {`(${percentage * 100} %)`}
                                 </p>
                             </div>
                         )}
+
+                        <figcaption className='product_price_click_all'>
+                            <p>Jami narx</p>
+                            <p>{hisob} so'm </p>
+                        </figcaption>
                     </div>
                 )}
             </div>
+                <button className="prevev_button" onClick={() => router.back()}>
+                    <i className="fa-solid fa-angles-left"></i>{' '}
+                    orqaga
+                </button>
         </div>
     );
 };

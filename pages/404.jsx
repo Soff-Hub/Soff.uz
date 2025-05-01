@@ -1,28 +1,29 @@
 import React from 'react';
 import Link from 'next/link';
 import FooterDefault from '../components/shared/footers/FooterDefault';
+import PageContainer from '~/components/layouts/PageContainer';
+import FooterComponents from '~/components/blocks/footer/FooterComponents';
 
 function Error() {
     return (
-        <div className="site-content pb-5">
-            {/* <HeaderDefault /> */}
+        <PageContainer footer={<FooterDefault />} title="Sahifa topilmadi">
             <div className="ps-page--404">
                 <div className="container">
                     <div className="ps-section__content">
-                        <figure>
-                            <img src="/static/img/404.png" alt="" />
-                            <h3>Afsuski sahifa topilmadi</h3>
-                            <p>
-                                <Link href="/">
-                                    <a> Bosh sahifaga qayting</a>
-                                </Link>
-                            </p>
-                        </figure>
+                        <img src="/static/img/noinfo.svg" alt="Sahifa topilmadi" />
+                        <h3>Sahifa topilmadi</h3>
+                        <p>
+                            Siz qidirayotgan narsani topa olmadik.
+                        </p>
+                        <p>
+                            <Link href="/">
+                                <a> Bosh sahifa</a>
+                            </Link>
+                        </p>
                     </div>
                 </div>
             </div>
-            <FooterDefault />
-        </div>
+        </PageContainer>
     );
 }
 

@@ -3,10 +3,10 @@ import { addPeriodToThousands } from '~/components/partials/account/price-format
 import useWishlist from '~/hooks/useWishlist';
 import { useState } from 'react';
 import useCart from '~/hooks/useCart';
-import { Modal } from 'antd';
+    import { Modal } from 'antd';
 import { useRouter } from 'next/router';
 
-const RedesignProduct = ({ product }) => {
+const   RedesignProduct = ({ product }) => {
     const { addSavedItem, wishlist, removeSavedItem } = useWishlist();
     const [open, setOpen] = useState(false);
     const Router = useRouter();
@@ -47,21 +47,18 @@ const RedesignProduct = ({ product }) => {
     };
 
     return (
-        <div className='scientific-resources-card pointer '>
+        <div className='scientificResourcesCard'>
             <Link href='/product/[pid]' as={`/product/${product.slug}`}>
-                <div className='scientific-resources-card-img'>
+                <div className='scientificResourcesCardImgBox'>
                     <img
                         src={product.poster_url}
                         alt=''
-                        style={{
-                            maxWidth: '132px',
-                            maxHeight: '186px',
-                        }}
+                        className='scientificResourcesCardImg'
                     />
                 </div>
             </Link>
             <a
-                className='scientific-resources-card-heard'
+                className='scientificResourcesCardHeard'
                 href='#'
                 data-toggle='tooltip'
                 data-placement='top'
@@ -72,23 +69,23 @@ const RedesignProduct = ({ product }) => {
                         wishlist?.some(
                             item => Number(item.id) === Number(product?.id)
                         )
-                            ? '/static/img/onclickHeard.png'
-                            : '/static/img/heard.png'
+                            ? '/static/img/heart-full.svg'
+                            : '/static/img/heart.svg'
                     } `}
                     alt=''
                 />
             </a>
-            <div className='w-100 d-flex flex-column scientific-resources-card-body gap-3'>
+            <div className='scientificResourcesCardBody'>
                 <Link
                     href='/product/[pid]'
                     className='p-0'
                     as={`/product/${product.slug}`}>
-                    <p className='p-0 m-0  scientific-resources-card-title'>
+                    <p className='scientificResourcesCardTitle'>
                         {product.title.slice(0, 35)}
                     </p>
                 </Link>
-                <div className='scientific-resources-card-btn'>
-                    <div className='ps-product__content card-narx-box'>
+                <div className='scientificResourcesCardPriceBox'>
+                    <div className='scientificResourcesCardPrice'>
                         {+product.discount_price === 0 ? (
                             <p className='free-product-text'>Bepul</p>
                         ) : product.discount === 0 ? (
@@ -109,7 +106,7 @@ const RedesignProduct = ({ product }) => {
                                 </p>
                             </>
                         )}
-                    </div>{' '}
+                    </div>
                     <a
                         href='#'
                         data-toggle='tooltip'
@@ -119,10 +116,11 @@ const RedesignProduct = ({ product }) => {
                         <img
                             src={
                                 basket
-                                    ? '/static/img/buyIconHover.png'
-                                    : '/static/img/buyIcon.png'
+                                    ? '/static/img/cart.svg'
+                                    : '/static/img/cart-outlet.svg'
                             }
                             alt=''
+                            className='scientificBuyIcon'
                         />
                     </a>
                 </div>

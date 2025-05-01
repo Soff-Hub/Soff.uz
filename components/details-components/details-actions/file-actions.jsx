@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { Button, message, Modal } from 'antd'
 import { DownloadOutlined, HeartOutlined, ShoppingCartOutlined } from '@ant-design/icons';
-import TagsComponents from './tagsComponents';
 import ShareAltOutlined from '@ant-design/icons/ShareAltOutlined';
 import { addPeriodToThousands } from '~/components/partials/account/price-formatter';
 import useWishlist from '~/hooks/useWishlist';
@@ -9,6 +8,20 @@ import useCart from '~/hooks/useCart';
 import { useRouter } from 'next/router';
 import { setOneShopDoc } from '~/store/auth/slice';
 import { useDispatch, useSelector } from 'react-redux';
+
+export const fileColors = {
+    ".doc": "#007DFF",
+    ".xls": "#509C62",
+    ".xlsx": "#509C62",
+    ".ppt": "#DC8452",
+    ".pdf": "#E22C2F",
+    ".avi": "#6EB5E9",
+    "mp3": "#88549E",
+    "html": "#6D96A",
+    "zip": "#E4BD3E",
+    ".psd": "#0053BD",
+    ".pptx": "#DD7657"
+};
 
 function FileActions({ product }) {
     const { addSavedItem, wishlist, removeSavedItem } = useWishlist();
@@ -88,9 +101,9 @@ function FileActions({ product }) {
     //  Hoziroq xarid qilish
     function handleBuynow(e) {
         e.preventDefault();
+        setCartOneItem(product.id);
         if (state) {
-            dispatch(setOneShopDoc(product));
-            Router.push(`/account/checkout-one?id=${product?.id}`);
+            Router.push(`/account/checkout?id=${product?.id}`);
         } else {
             Router.push(`/auth/login?id=${product?.id}`);
         }
@@ -98,25 +111,11 @@ function FileActions({ product }) {
 
 
     // content_type colors
-
-    const fileColors = {
-        ".doc": "#007DFF",
-        ".xls": "#509C62",
-        ".xlsx": "#509C62",
-        ".ppt": "#DC8452",
-        ".pdf": "#E22C2F",
-        ".avi": "#6EB5E9",
-        "mp3": "#88549E",
-        "html": "#6D96A",
-        "zip": "#E4BD3E",
-        ".psd": "#0053BD",
-        ".pptx": "#DD7657"
-    };
-
+    
     return (
-        <div className='seller_products_actions_container'>
+        <>
             {contextHolder}
-            <div className='seller_products_actions'>
+            <div className='seller_products_actions product-price-section'>
                 <div className='d-flex justify-content-between align-items-center'>
 
                     <div className='price_container'>
@@ -138,8 +137,8 @@ function FileActions({ product }) {
                     </div>
                 </div>
                 <ul className='fs-2 p-0 d-flex flex-column gap-3' style={{ listStyle: "none" }}>
-                    {product?.upload_count > 0 && <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
-                        <span>Mahsulotni sotilgan soni:</span> <span>{product?.upload_count} ta</span>
+                    {(product?.sold_count > 0) && <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
+                        <span>Mahsulotni sotilgan soni:</span> <span>{product?.sold_count} ta</span>
                     </li>}
                     {product?.document?.content_duration && <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
                         <span>Video davomiyligi:</span> <span>
@@ -171,20 +170,24 @@ function FileActions({ product }) {
                 </ul>
 
                 <div className='d-flex flex-column gap-3 '>
-                    <div className=' d-flex align-items-center gap-3 justify-content-end'>
-                        {product?.discount_price !== 0 && <Button onClick={handleAddItemToCart} iconPosition='end' style={{ height: "58px", fontSize: "20px" }} type="text" variant='solid' className='w-100 border-2 border-success text-success button_hover' icon={<ShoppingCartOutlined />} size={"large"}>
-                            Savatga qo’shish
-                        </Button>}
-                        <Button iconPosition='end' onClick={handleAddItemToWishlist} style={{ height: "58px", width: "80px", fontSize: "28px" }} type="text" variant='solid' className='border-2 border-success text-success button_hover'
-                            icon={wishlist?.some(
-                                item => Number(item.id) === Number(product?.id)
-                            ) ?
-                                <i className="fa-solid fa-heart"></i>
-                                :
-                                <i className="fa-regular fa-heart "></i>
-                            } size={"large"}>
-                        </Button>
-                    </div>
+                    {
+                        !product?.document?.file_url && (
+                            <div className=' d-flex align-items-center gap-3 justify-content-end'>
+                                {product?.discount_price !== 0 && <Button onClick={handleAddItemToCart} iconPosition='end' style={{ height: "58px", fontSize: "20px" }} type="text" variant='solid' className='w-100 border-2 border-success text-success button_hover' icon={<ShoppingCartOutlined />} size={"large"}>
+                                    Savatga qo’shish
+                                </Button>}
+                                <Button iconPosition='end' onClick={handleAddItemToWishlist} style={{ height: "58px", width: "80px", fontSize: "28px" }} type="text" variant='solid' className='border-2 border-success text-success button_hover'
+                                    icon={wishlist?.some(
+                                        item => Number(item.id) === Number(product?.id)
+                                    ) ?
+                                        <i className="fa-solid fa-heart"></i>
+                                        :
+                                        <i className="fa-regular fa-heart "></i>
+                                    } size={"large"}>
+                                </Button>
+                            </div>
+                        )
+                    }
                     {product?.document?.file_url ?
                         <a href={product?.document?.file_url} target='_blank'>
                             <Button iconPosition='end' style={{ height: "58px", fontSize: "20px" }} type="primary" className='w-100 bg-success' icon={<DownloadOutlined />} size={"large"}>
@@ -198,18 +201,6 @@ function FileActions({ product }) {
                 </div>
 
             </div>
-            {product?.tags?.length >
-                0 && <div className=" d-flex justify-content-start align-content-center gap-3 flex-wrap">
-                    {
-                        product?.tags.map(
-                            (
-                                item,
-                                i
-                            ) => (
-                                <TagsComponents name={item.name || item} />
-                            )
-                        )}
-                </div>}
 
             <Modal
                 title='Muvaffaqqiyatli'
@@ -232,7 +223,7 @@ function FileActions({ product }) {
                 <p>Mahsulotingizni savatga qo'shdingiz!</p>
                 <p></p>
             </Modal>
-        </div>
+        </>
     )
 }
 

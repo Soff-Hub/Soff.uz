@@ -14,8 +14,8 @@ const VideoLessonsProducts = ({ product }) => {
     function handleAddItemToWishlist (e) {
         e.preventDefault();
         addSavedItem(product.id);
-        if (wishlist?.find(item => item.id === ModelAndDesignProduct?.id)) {
-            removeSavedItemm(ModelAndDesignProduct.id);
+        if (wishlist?.find(item => item.id === VideoLessonsProducts?.id)) {
+            removeSavedItemm(VideoLessonsProducts.id);
         }
     }
 
@@ -58,24 +58,22 @@ const VideoLessonsProducts = ({ product }) => {
         Router.push('/account/shopping-cart');
     };
 
-    const produvctTitle =
-        product.title.length > 10
-            ? product.title.slice(0, 45) + '...'
-            : product.title;
-
     return (
         <div
-            className='designDevelopmentCard'
+            className='videoLessonsCard '
             onMouseEnter={() => setCountShow(true)}
             onMouseLeave={() => setCountShow(false)}>
-            <div className='designDevelopmentCardImgBox'>
+            <div className='videoLessonsCardImgBox '>
                 <Link href='/product/[pid]' as={`/product/${product.slug}`}>
                     <a>
                         {VideoLessonsProducts.poster_url ? (
                             thumbnailImage(VideoLessonsProducts)
                         ) : (
                             <img
-                                src={product.poster_url}
+                                src={
+                                    product.poster_url ||
+                                    '/static/img/videoposter.jpg'
+                                }
                                 alt='hujjat'
                                 className='videoLessonsCardImg'
                             />
@@ -84,7 +82,7 @@ const VideoLessonsProducts = ({ product }) => {
                 </Link>
 
                 <a
-                    className='designDevelopmentCardheard'
+                    className='videoLessonsCardheard'
                     href='#'
                     data-toggle='tooltip'
                     data-placement='top'
@@ -103,31 +101,34 @@ const VideoLessonsProducts = ({ product }) => {
                 </a>
             </div>
 
-            <div className='videoLessonsCardBody'>
+            <div className='videoLessonsCardBody '>
                 <Link href='/product/[pid]' as={`/product/${product.slug}`}>
-                    <a className='designDevelopmentCardTitle'>
-                        {produvctTitle}
-                    </a>
+                    <a className='videoLessonsCardTitle'>{product.title}</a>
                 </Link>
 
                 <div className='videoLessonsCardPriceBox'>
-                    {+product.discount_price === 0 ? (
-                        <p className='designDevelopmentCardPrice m-0 text-warning'>Bepul</p>
-                    ) : product.discount === 0 ? (
-                        <p className='designDevelopmentCardPrice m-0'>
-                            {addPeriodToThousands(product.discount_price)} so'm
-                        </p>
-                    ) : (
-                        <>
-                            <del>
-                                {addPeriodToThousands(product.price)} so'm
-                            </del>
-                            <p className='designDevelopmentCardPrice m-0'>
-                                {addPeriodToThousands(product.discount_price)}
+                    <div className='videoLessonsCardPrice'>
+                        {+product.discount_price === 0 ? (
+                            <p className='videoLessonsCardPrice m-0'>Bepul</p>
+                        ) : product.discount === 0 ? (
+                            <p className=' videoLessonsCardPrice m-0'>
+                                {addPeriodToThousands(product.discount_price)}{' '}
                                 so'm
                             </p>
-                        </>
-                    )}
+                        ) : (
+                            <>
+                                <del className='CardDiscountPrice'>
+                                    {addPeriodToThousands(product.price)} so'm
+                                </del>
+                                <p className='videoLessonsCardPrice  m-0'>
+                                    {addPeriodToThousands(
+                                        product.discount_price
+                                    )}
+                                    so'm
+                                </p>
+                            </>
+                        )}
+                    </div>
                     <a
                         href='#'
                         data-toggle='tooltip'

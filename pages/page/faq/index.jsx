@@ -111,7 +111,20 @@ const sellersFaqs = [
 export default function Faq() {
     return (
         <PageLayout>
-            <Meta title="Soff - barcha ma'lumotlar bazasi" image="/static/img/soff/soff_green_white.png" />
+            <Meta 
+            title="Ko'p beriladigan savollar - Soff.uz" 
+            description={"Soff.uz platformasida ko'p beriladigan savollar (FAQ). Mahsulotlar, xizmatlar, sotish va sotib olish jarayonlari haqida tez-tez so'raladigan savollar va javoblar."}
+            keywords={[
+                { "name": "Ko\'p beriladigan savollar" },
+                { "name": "FAQ Soff.uz" },
+                { "name": "Soff.uz savollar" },
+                { "name": "raqamli mahsulotlar savollar" },
+                { "name": "onlayn xizmatlar FAQ" },
+                { "name": "mahsulot sotish savollari" },
+                { "name": "sotib olish savollari" },
+                { "name": "foydalanish bo'yicha savollar" }
+            ]}
+            author='Soff.uz jamoasi'/>
 
             <div className="container px-5">
                 <h3 className='mb-4 mt-5'>Soff.uz xaridorlaridan ko'p beriladigan savollar: </h3>

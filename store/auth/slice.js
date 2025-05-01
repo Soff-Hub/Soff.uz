@@ -1,4 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import {jwtDecode} from "jwt-decode";
+import Cookies from 'js-cookie';
 
 // Boshlang'ich holat
 const initialState = {
@@ -23,7 +25,8 @@ export const login = createAsyncThunk(
     async ({ user, data }, { rejectWithValue }) => {
         try {
             // API chaqiruv
-            localStorage.setItem('user', JSON.stringify(user));
+            localStorage.setItem('user', JSON.stringify(user));  
+            Cookies.set('token', user?.access, { expires: jwtDecode(user?.access)?.exp || 8 })
             localStorage.setItem(
                 'data',
                 JSON.stringify({ ...data, password: null })
@@ -41,6 +44,7 @@ export const logOut = createAsyncThunk(
         try {
             // API chaqiruv
             localStorage.clear();
+            Cookies.remove('token');
             return;
         } catch (error) {
             return rejectWithValue(error.message);
