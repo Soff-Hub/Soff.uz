@@ -45,16 +45,12 @@
 }
 
 // Products detils action scss
+.seller_products_right_section {
 
-.seller_products_actions_container {
-    height: 100%;
     max-width: 550px;
     width: 100%;
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-    gap: 10px;
-
+}
+.seller_products_actions_container {
     .seller_products_actions {
         background-color: white;
         height: 100%;
@@ -116,7 +112,7 @@
     border-radius: 12px;
     display: flex;
     flex-direction: column;
-    gap: 54px;
+    gap: 30px;
 
     .seller_profile {
         width: 100%;
@@ -168,10 +164,21 @@
     border-radius: 12px;
 }
 
+.invisible-text {
+    visibility: hidden;
+}
 
 // Fayl mahsuloti uchun details
 .seller_container_products_details {
     .ps-container {
+        .titleh3 {
+            font-size: 25px !important;
+            line-height: 37.5px !important;
+            color: "#312F30";
+            margin: 0;
+            font-weight: 600
+        }
+        
         .ps-product--detail_seller {
             width: 100%;
             display: flex;
@@ -180,7 +187,7 @@
 
             .ps-product__header_seller {
                 width: 100%;
-                height: 614px;
+                // height: 614px;
                 display: flex;
                 justify-content: space-between;
                 gap: 34px;
@@ -607,7 +614,7 @@
     // fayl details
     .seller_container_products_details {
         .ps-container {
-
+            
             .ps-product--detail_seller {
                 .ps-product__header_seller {
                     height: 100%;

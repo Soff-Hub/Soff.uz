@@ -11,7 +11,7 @@ import ProductRepository from '~/repositories/ProductRepository';
 import SellerProducts from '~/components/partials/seller/SellerProducts';
 import SellerDonateForm from '~/components/partials/seller/SellerDonateForm';
 import CalculateTimeDifference from '~/components/partials/account/DateFormatter';
-import { addPeriodToThousands } from '~/components/partials/account/price-formatter';
+import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
 import { useMediaQuery } from 'react-responsive';
 
 const SellerPage = ({ seller, sellerr }) => {

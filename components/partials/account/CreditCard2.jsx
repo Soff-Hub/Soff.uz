@@ -7,7 +7,6 @@ import Router from 'next/router';
 import useCart from '~/hooks/useCart';
 
 const CreditCard2 = ({ document, type }) => {
-    console.log('document -> ', document);
     const { user } = useSelector(state => state.auth);
     const [numberCardVal, SetNumberCardVal] = useState(null);
     const [message, setMessage] = useState(true);
@@ -235,7 +234,7 @@ const CreditCard2 = ({ document, type }) => {
                             <form
                                 onSubmit={handleClickCardPosts}
                                 className=' pb-3 d-flex align-items-end justify-content-between row gap-xxs-0 gap-xs-0 gap-lg-0 gap-md-0 gap-3 bg-white'>
-                                <div className='col-xl-7 col-lg-12 p-0 col-md-7 col-sm-6 click-form-item'>
+                                <div className='col-xl-7 col-lg-12 p-0 col-md-7 col-sm-6 click-form-item my-2'>
                                     <p className='cardNumber'>Karta raqam</p>
                                     <label htmlFor='ccn' className='m-0'>
                                         <i className='fa-regular fa-credit-card i '></i>
@@ -254,7 +253,7 @@ const CreditCard2 = ({ document, type }) => {
                                         />
                                     </label>
                                 </div>
-                                <div className='col-xl-4 col-lg-8 p-0 col-md-5 col-sm-6 click-form-item'>
+                                <div className='col-xl-4 col-lg-6 p-0 col-md-4 col-sm-6 click-form-item my-2'>
                                     <label className='m-0'>
                                         <i className='fa-regular fa-calendar-days'></i>
                                         <input
@@ -274,7 +273,7 @@ const CreditCard2 = ({ document, type }) => {
                                     {message ? (
                                         <button
                                             type='submit'
-                                            className='ps-btn w-100 text-center btn_color '>
+                                            className='ps-btn w-100 text-center btn_color'>
                                             Davom etish
                                         </button>
                                     ) : (

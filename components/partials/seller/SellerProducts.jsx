@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Product from '~/components/elements/products/Product';
 import { Pagination } from 'antd';
-import ProductVideo from '~/components/elements/products/ProductVideo';
+// import ProductVideo from '~/components/elements/products/ProductVideo';
 
 
 export default function SellerProducts({ data = [], page, handlePagination }) {

@@ -57,6 +57,7 @@ function App({ Component, pageProps }) {
     return (
         <>
             <Head>
+                <meta charSet="UTF-8" />
                 <title>Soff</title>
                 <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
                 <meta
@@ -67,13 +68,35 @@ function App({ Component, pageProps }) {
                 {/* <meta name="apple-mobile-web-app-capable" content="yes" /> */}
                 <meta name="mobile-web-app-capable" content="yes"></meta>
                 <meta name="google-adsense-account" content="ca-pub-2651864926558603" />
+                
+                <link rel="alternate" href="https://soff.uz/" hrefLang="uz" />
+                <script
+                    defer
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                        __html: JSON.stringify({
+                        "@context": "https://schema.org",
+                        "@type": "WebSite",
+                        "name": "Soff.uz",
+                        "url": "https://soff.uz",
+                        "potentialAction": {
+                            "@type": "SearchAction",
+                            "target": "https://soff.uz/search-page?keyword={search_term_string}",
+                            "query-input": "required name=search_term_string"
+                        }
+                        })
+                    }}
+                    ></script>
+
+
+
             </Head>
 
             <NextProgress
+                height="4px"
                 delay={300}
                 options={{ showSpinner: false }}
-                // color="#00A44F"
-                color="#000"
+                color="#00A44F"
             />
             <Provider store={store}>
                 <QueryClientProvider client={queryClient}>

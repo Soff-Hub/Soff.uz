@@ -1,16 +1,14 @@
-import { useRouter } from 'next/router';
 import React from 'react';
-import FooterComponents from '~/components/blocks/footer/FooterComponents';
-import ModelAndDesignHero from '~/components/blocks/header/ModelAndDesignHero';
-import CategoriesFilterSecion from '~/components/elements/DesignDevelopmentsFilterSection';
-import ThreeDCategoriesFilterSecion from '~/components/elements/ThreeDCategoriesFilterSecion';
 import PageContainer from '~/components/layouts/PageContainer';
-import ProductsByModelsAndDesignCategory from '~/components/partials/category/ProductsByModelsAndDesignCategory';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
 import Meta from '~/components/shared/headers/Meta';
+import { useRouter } from 'next/router';
 import useApi, { baseUrlUseApi } from '~/repositories/useApi';
+import FooterComponents from '~/components/blocks/footer/FooterComponents';
+import VideoLessonsFilterSection from '~/components/elements/VideoLessonsFilterSection';
+import ProductsByVideoLessons from '~/components/partials/category/ProductsByVideoLessons';
 
-export default function ModelsAndInteriorDesign () {
+export default function VideoLessons () {
     const router = useRouter();
     const { slug, page, parentCategory, childCategory } = router.query;
 
@@ -52,23 +50,31 @@ export default function ModelsAndInteriorDesign () {
             query: { ...router.query, page: newPage }, // URL'ga yangi page qo'shish
         });
     };
+
     return (
         <PageContainer
             footer={<FooterDefault />}
             title={'Kategoriya'}
             boxed={true}>
             <Meta
-                title={`${'3D moddellar va Interier dizaynlar'}`}
-                description={`3D moddellar va Interier dizaynlar kategoriyasi: Taqdimotlar Tayyor shablonlar Kurs ishlari Diplom ishlari Referatlar Mustaqil ishlar Labaratoriya Ishlari Dissertatsiya ishlari Testlar O'quv qo'llanmalar Dars ishlanmalar Tarqatma materiallar Amaliy ishlar Blankalar Ijodiy Ishlar Loyihalar Plakatlar Maqola Ixtiro patenti Namunaviy hujjatlar Statistika Elektron kitoblar Dasturlash tillari `}
+                title={`${'asdf'}`}
+                description={`Biz siz qidirayotgan mahsulotlarni Soff.uz saytimizning kategoriyasida topdik`}
             />
-            <div className='ps-page--shop container p-xl-0 p-l-0'>
-                <ThreeDCategoriesFilterSecion
+
+            <div
+                className='ps-page--shop container p-l-0 p-xl-0'
+                style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 'clamp(0.75rem, 2.33vw + 0.204rem, 3rem)',
+                }}>
+                <VideoLessonsFilterSection
                     breacrumb={fourChildData}
                     count={data?.count}
                     isLoading={isFourChildLoading}
                     childCategoryData={childCategoryData}
                 />
-                <ProductsByModelsAndDesignCategory
+                <ProductsByVideoLessons
                     data={data}
                     page={page}
                     handlePagination={number => {
@@ -77,7 +83,6 @@ export default function ModelsAndInteriorDesign () {
                     isLoading={isLoading}
                 />
             </div>
-            <FooterComponents />
         </PageContainer>
     );
 }

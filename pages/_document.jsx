@@ -5,7 +5,7 @@ import React from 'react';
 
 export default function Document() {
     return (
-        <Html>
+        <Html lang="uz">
             <Head>
                 <link rel="shortcut icon" href={'/static/img/soff logo.png'} />
                 <link
@@ -23,10 +23,10 @@ export default function Document() {
                     href={'/static/img/soff logo.png'}
                 />
 
-                {/* <link
-                    href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,500,600,700&amp;amp;subset=latin-ext"
+                <link
+                    href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
                     rel="stylesheet"
-                /> */}
+                />
 
                 <link
                     rel="stylesheet"
@@ -53,15 +53,6 @@ export default function Document() {
                         defer
                         src="https://www.googletagmanager.com/gtag/js?id=G-H60GJQ0WF2"></script>
                 )}
-                <noscript>
-                    <div>
-                        <img
-                            src="https://mc.yandex.ru/watch/96065878"
-                            style={{ position: 'absolute', left: '-9999px' }}
-                            alt=""
-                        />
-                    </div>
-                </noscript>
 
                 {process.env.NODE_ENV === 'production' && (
                     <script
@@ -73,22 +64,6 @@ export default function Document() {
                         gtag('js', new Date());
                         gtag('config', 'G-H60GJQ0WF2');
                     `,
-                        }}></script>
-                )}
-                {process.env.NODE_ENV === 'production' && (
-                    <script
-                        defer
-                        dangerouslySetInnerHTML={{
-                            __html: `
-                        (function(h,o,t,j,a,r){
-                            h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-                            h._hjSettings={hjid:3805854,hjsv:6};
-                            a=o.getElementsByTagName('head')[0];
-                            r=o.createElement('script');r.async=1;
-                            r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-                            a.appendChild(r);
-                        })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
-                        `,
                         }}></script>
                 )}
 
@@ -111,9 +86,17 @@ export default function Document() {
                     `,
                         }}></script>
                 )}
+                <noscript>
+                    <div>
+                        <img
+                            src="https://mc.yandex.ru/watch/96098801"
+                            style={{ position: 'absolute', left: '-9999px' }}
+                            alt=""
+                        />
+                    </div>
+                </noscript>
 
             <script>window.yaContextCb=window.yaContextCb||[]</script>
-            <script src="https://yandex.ru/ads/system/context.js" async></script>
             </Head>
             <body>
                 <Main />

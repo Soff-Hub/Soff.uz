@@ -1,78 +1,80 @@
-
+import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useState } from 'react';
 
 const parentCategoriesData = [
     {
         title: 'Ilmiy ishlar',
-        imgUrl: '/static/img/Ilmiy-ishlar.png',
+        imgUrl: '/static/img/ilmiy-ishlar-2.png',
         path: '/scientific-resources/all',
-        width: '401px',
     },
     {
         title: '3D moddellar va Interier dizaynlar',
-        imgUrl: '/static/img/3D-moddellar-va-Interier-dizaynlar.png',
+        imgUrl: '/static/img/3D-moddellar-va-Interier-dizaynlar-2.png',
         path: '/3d-models-and-interior-designs/all',
         width: '401px',
     },
     {
         title: 'Dizayn shablonlari',
-        imgUrl: '/static/img/Dizayn-shablonlari.png',
+        imgUrl: '/static/img/dizayn-shablonlari-2.png',
         path: '/design-developments/all',
         width: '531px',
     },
     {
         title: 'Veb saytlar',
-        imgUrl: '/static/img/Veb-saytlar.png',
+        imgUrl: '/static/img/veb-saytlar-2.png',
         path: '/websites/all',
         width: '531px',
     },
     {
-        title: 'Ilmiy ishlar',
-        imgUrl: '/static/img/Ilmiy-ishlar.png',
-        path: '/scientific-resources/all',
-        width: '401px',
+        title: 'Turli sohalar uchun shablonlar',
+        imgUrl: '/static/img/shablonlar-3.png',
+        path: '/templates/all',
     },
     {
         title: 'Video darsliklar',
-        imgUrl: '/static/img/Video-darsliklar.png',
-        path: '/videoLessons/all',
-        width: '401px',
+        imgUrl: '/static/img/video-darsliklar-2.png',
+        path: '/video-lessons/all',
     },
 ];
 
 export default function ParentCategories () {
     const router = useRouter();
+    const [hoveredId, setHoveredId] = useState(null);
 
     return (
-        <div className='container p-0 my-4 '>
-            <h2 className='product-list-title'>
-                Bizning Xizmatlar Katalogimiz!{' '}
-            </h2>
-            <div className='d-flex justify-content-center flex-wrap gap-5 product-list-card-box p-0'>
+        <div className='container p-0 my-0'>
+            <h2 className='product-list-title'>Tayyor Materiallar Bo‘limi</h2>
+            <div className='product-list-card-box'>
                 {parentCategoriesData.map((item, index) => (
-                    <div
-                        key={index}
-                        className='p-5'
-                        style={{
-                            backgroundImage: `url(${item.imgUrl})`,
-                            backgroundSize: 'cover',
-                            backgroundPosition: 'center',
-                            backgroundRepeat: 'no-repeat',
-                            cursor: 'pointer',
-                            width: item.width,
-                            height: '268px',
-                        }}
-                        onClick={() => router.push(item.path)}>
-                        <h3 className='product-list-card-title h-75'>
-                            {item.title}
-                        </h3>
-                        <a
-                            className='product-list-card-btn text-white bg-success'
-                            href={item.path}>
-                            Ko'rib chiqish
+                    <Link href={item.path} key={index}>
+                        <a>
+                            <div
+                                className='product-card'
+                                style={{
+                                    backgroundImage: `linear-gradient(rgba(0, 0, 0, ${
+                                        hoveredId === item.title ? '0.4' : '0.1'
+                                    }), rgba(0, 0, 0,${
+                                        hoveredId === item.title ? '0.4' : '0.1'
+                                    })),url(${item.imgUrl})`,
+                                    backgroundSize: 'cover',
+                                    backgroundPosition: 'center',
+                                    backgroundRepeat: 'no-repeat',
+                                }}
+                                onMouseEnter={() => setHoveredId(item.title)}
+                                onMouseLeave={() => setHoveredId(null)}>
+                                <div className='d-flex flex-column justify-content-between h-100'>
+                                    <h3 className='product-list-card-title'>
+                                        {item.title}
+                                    </h3>
+                                    {/* <p
+                                        className='product-list-card-btn'>
+                                        Ko'rib chiqish
+                                    </p> */}
+                                </div>
+                            </div>
                         </a>
-                    </div>
+                    </Link>
                 ))}
             </div>
         </div>
