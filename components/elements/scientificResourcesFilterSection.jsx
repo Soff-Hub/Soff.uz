@@ -39,7 +39,7 @@ const ScientificResourcesFilterSection = ({
             <div className='d-xl-none d-block my-4 container'>
                 <div className='row mx-auto gap-3'>
                     <Select
-                        className=' col-md-6  col-12  p-0 m-0 mr-md-2'
+                        className=' col-md-6  col-6  p-0 m-0 mr-md-2'
                         onChange={value => {
                             {
                                 router.push({
@@ -73,7 +73,7 @@ const ScientificResourcesFilterSection = ({
                     </Select>
                     {subCategory && (
                         <Select
-                            className=' col-md-6  col-12  p-0 m-0 ml-md-2'
+                            className=' col-md-6  col-6  p-0 m-0 ml-md-2'
                             onChange={value => {
                                 {
                                     router.push({

@@ -179,6 +179,7 @@ input[type='number']::-webkit-outer-spin-button {
 
 .subcategoryMenu {
     margin-top: 26px;
+    margin-top: 26px;
 }
 
 .categoryMenuCard:hover {
@@ -200,19 +201,186 @@ input[type='number']::-webkit-outer-spin-button {
     }
 }
 
+.top_search_category {
+    display: flex;
+    align-items: center;
+    gap: 38px;
+    @media screen and (max-width: 1300px) {
+        gap: 5px;
+    }
+}
+
+// _____________________________scientificResources styles____________________________
+.scientificResourcesWrap {
+    margin-top: 45px;
+    display: grid;
+    grid-template-columns: repeat(5, 267px);
+    gap: 16px;
+    row-gap: 34px;
+    padding: 0px !important;
+    @media screen and (max-width: 1350px) {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+    @media screen and (max-width: 1250px) {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        padding: 0 15px;
+    }
+    @media screen and (max-width: 1000px) {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        padding: 0 15px;
+        margin-top: 40px;
+        row-gap: 30px;
+    }
+    @media screen and (max-width: 600px) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        padding: 0 15px;
+        margin-top: 30px;
+        row-gap: 20px;
+    }
+    @media screen and (max-width: 450px) {
+        margin-top: 15px;
+        row-gap: 15px;
+    }
+    .scientificResourcesSkeleton {
+        width: 100% !important;
+        height: 320px !important;
+        @media screen and (max-width: 750px) {
+            height: 250px !important;
+        }
+        @media screen and (max-width: 400px) {
+            height: 180px !important;
+        }
+    }
+}
+
+.scientificResourcesCard {
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    border-radius: 12.5px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    &:hover {
+        filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.2));
+    }
+
+    .scientificResourcesCardImgBox {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        @media (max-width: 768px) {
+            padding: 10px;
+        }
+        @media (max-width: 450px) {
+            padding: 5px;
+        }
+        .scientificResourcesCardImg {
+            height: 186px;
+            border-radius: 12.5px;
+            @media (max-width: 768px) {
+                height: 160px;
+            }
+            @media (max-width: 450px) {
+                height: 130px;
+            }
+            @media (max-width: 300px) {
+                height: 100px;
+            }
+        }
+    }
+    .scientificResourcesCardHeard {
+        position: absolute;
+        right: 20px;
+        top: 20px;
+        padding: 10px;
+        background: #fff;
+        border-radius: 100%;
+        @media (max-width: 650px) {
+            right: 15px;
+            top: 15px;
+            padding: 8px;
+        }
+        @media (max-width: 450px) {
+            right: 10px;
+            top: 10px;
+            padding: 4px;
+        }
+        img {
+            @media (max-width: 450px) {
+                width: 15px;
+            }
+        }
+    }
+    .scientificResourcesCardBody {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        flex-grow: 1;
+        padding: 20px 20px;
+        gap: 20px;
+        @media (max-width: 768px) {
+            padding: 10px;
+            gap: 15px;
+        }
+        @media (max-width: 400px) {
+            padding: 5px;
+            gap: 8px;
+        }
+        .scientificResourcesCardTitle {
+            color: #000;
+            font-family: 'Poppins';
+            font-size: 12.5px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            letter-spacing: 0.25px;
+            @media (max-width: 768px) {
+                font-size: 10px;
+            }
+            @media (max-width: 450px) {
+                font-size: 8px;
+            }
+        }
+        .scientificResourcesCardPriceBox {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .scientificResourcesCardPrice {
+                p {
+                    color: #000;
+                    font-family: 'Poppins';
+                    font-size: 18.333px;
+                    font-style: normal;
+                    font-weight: 600;
+                    line-height: normal;
+                    letter-spacing: 0.367px;
+                    margin: 0;
+                    @media (max-width: 768px) {
+                        font-size: 14px;
+                    }
+                    @media (max-width: 450px) {
+                        font-size: 10px;
+                    }
+                }
+            }
+            .scientificBuyIcon {
+                @media (max-width: 768px) {
+                    width: 25px;
+                }
+                @media (max-width: 450px) {
+                    width: 20px;
+                }
+            }
+        }
+    }
+}
+
+// _____________________________scientificResources styles end____________________________
+
 // -----------------------------------------------ThreeDCategoriesFilterSecion style
-.category-btn:hover {
-    background-color: #00a44f;
-}
-.category-btn:hover .category-btn-title {
-    color: white;
-}
-.category-btn .category-btn-title {
-    color: #312f30;
-}
-.sub-category-btn:hover .sub-category-btn-title {
-    color: #00a44f;
-}
 .Models_category_btn_wrap {
     display: flex;
     justify-content: start;
@@ -274,6 +442,7 @@ input[type='number']::-webkit-outer-spin-button {
     @media screen and (max-width: 1300px) {
         gap: 10px !important;
     }
+
 }
 
 .Models_category_btn {
@@ -601,19 +770,17 @@ input[type='number']::-webkit-outer-spin-button {
 // _____________________________Design Development styles____________________
 
 .designDevelopmentSkeleton {
-    width: 335;
-    height: 396;
+    width: clamp(11.25rem, 23.125vw + 6.625rem, 34.375rem) !important;
+    height: clamp(13.75rem, 23.75vw + 9rem, 37.5rem) !important;
     border-radius: 10px;
 }
 
 .designDevelopmentProduct {
     display: grid;
-    grid-template-columns: repeat(
-        auto-fit,
-        minmax(clamp(6.25rem, 33.333vw + 1.25rem, 31.25rem), 1fr)
-    );
-    gap: clamp(0.75rem, 2.33vw + 0.204rem, 3rem);
-    row-gap: clamp(0.75rem, 2.33vw + 0.204rem, 3rem);
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    row-gap: 51px;
+    margin-top: 38px;
     padding: 0 !important;
     align-items: stretch;
 
@@ -635,8 +802,64 @@ input[type='number']::-webkit-outer-spin-button {
     }
 }
 
+.designDevelopmentSkeleton {
+    width: 335px !important;
+    height: 396px !important;
+    border-radius: 10px;
+
+    @media (max-width: 1300px) {
+        width: 280px !important;
+        height: 350px !important;
+    }
+    @media (max-width: 1200px) {
+        width: 300px !important;
+        height: 350px !important;
+    }
+    @media (max-width: 1100px) {
+        width: 282px !important;
+        height: 350px !important;
+    }
+    @media (max-width: 1000px) {
+        width: 250px !important;
+        height: 300px !important;
+    }
+
+    @media (max-width: 900px) {
+        width: 335px !important;
+        height: 200px !important;
+    }
+    @media (max-width: 800px) {
+        width: 320px !important;
+        height: 200px !important;
+    }
+    @media (max-width: 700px) {
+        width: 280px !important;
+        height: 200px !important;
+    }
+    @media (max-width: 600px) {
+        width: 250px !important;
+        height: 200px !important;
+    }
+    @media (max-width: 500px) {
+        width: 200px !important;
+        height: 200px !important;
+    }
+    @media (max-width: 430px) {
+        width: 180px !important;
+        height: 200px !important;
+    }
+    @media (max-width: 380px) {
+        width: 150px !important;
+        height: 200px !important;
+    }
+    @media (max-width: 320px) {
+        width: 110px !important;
+        height: 80px !important;
+        border-radius: 16px !important;
+    }
+}
+
 .designDevelopmentCard {
-    max-width: 335px;
     width: 100%;
     display: flex;
     height: 100%;
@@ -723,65 +946,95 @@ input[type='number']::-webkit-outer-spin-button {
             padding: 5px;
         }
 
-        .designDevelopmentCardTitle {
+        .designDevelopmentCardPrice {
             font-family: 'Poppins';
-            font-weight: 400;
-            font-size: 15px;
-            line-height: 22.5px;
+            font-weight: 600;
+            font-size: clamp(0.625rem, 0.647vw + 0.473rem, 1.25rem);
+            line-height: clamp(0.75rem, 1.165vw + 0.477rem, 1.875rem);
             letter-spacing: 2%;
-            @media screen and (max-width: 650px) {
-                font-weight: 400;
-                font-size: 13px;
-                line-height: 18px;
-            }
-            @media screen and (max-width: 500px) {
-                font-weight: 400;
-                font-size: 12px;
-                line-height: 15px;
-            }
-            @media screen and (max-width: 350px) {
-                font-weight: 300;
-                font-size: 8px;
-                line-height: 0px;
+            color: #000000;
+        }
+        .buyIcon {
+            img {
+                width: clamp(1.25rem, 0.906vw + 1.038rem, 2.125rem);
+                height: clamp(1.25rem, 0.906vw + 1.038rem, 2.125rem);
             }
         }
+    }
+    &:hover {
+        transition: ease-in-out;
+        box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.1);
+    }
+}
 
-        .designDevelopmentCardPriceBox {
-            margin-top: clamp(0.188rem, 0.938vw + 0rem, 1.125rem);
+// _____________________________________video lessons style________________________clamp(7.5rem, 21.359vw + 2.494rem, 28.125rem)______
+
+.videoLessonsProduct {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(clamp(9.375rem, 19.417vw + 4.824rem, 28.125rem), 1fr)
+    );
+    gap: clamp(0.75rem, 2.33vw + 0.204rem, 3rem);
+    row-gap: clamp(0.75rem, 2.33vw + 0.204rem, 3rem);
+    margin-top: 64px;
+    padding: 0 !important;
+    align-items: stretch;
+}
+
+.videoLessonsCard {
+    width: 100%;
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    border-radius: 11px;
+    .videoLessonsCardImgBox {
+        display: flex;
+        justify-content: center;
+        position: relative;
+        background: #fff;
+        border-radius: 10px 10px 0 0;
+
+        .videoLessonsCardImg {
+            height: clamp(6.25rem, 6.472vw + 4.733rem, 12.5rem);
+            object-fit: contain;
+            object-position: center;
+            border-radius: 10px 10px 0 0;
+        }
+        .videoLessonsCardheard {
+            position: absolute;
+            top: clamp(0.313rem, 0.583vw + 0.176rem, 0.875rem);
+            right: clamp(0.313rem, 0.583vw + 0.176rem, 0.875rem);
+            width: clamp(
+                1.5rem,
+                1.5vw + 1rem,
+                2.5rem
+            ); // aniqlik uchun o‘rnatildi
+            height: clamp(
+                1.5rem,
+                1.5vw + 1rem,
+                2.5rem
+            ); // width bilan bir xil bo‘lishi kerak
+            border-radius: 50%; // 100% ham bo‘ladi, lekin 50% tavsiya etiladi
+            background: #fff;
             display: flex;
             align-items: center;
-            .designDevelopmentCardPrice {
-                font-family: 'Poppins';
-                font-weight: 600;
-                font-size: clamp(0.625rem, 0.625vw + 0.5rem, 1.25rem);
-                line-height: clamp(0.75rem, 1.125vw + 0.525rem, 1.875rem);
-                letter-spacing: 2%;
-            }
-            .buyIcon {
-                img {
-                    width: clamp(
-                        1.25rem,
-                        1.563vw + 0.938rem,
-                        2.813rem
-                    ) !important;
-                    height: clamp(
-                        1.25rem,
-                        1.563vw + 0.938rem,
-                        2.813rem
-                    ) !important;
-                }
+            justify-content: center;
+
+            img {
+                width: clamp(0.75rem, 0.841vw + 0.553rem, 1.563rem);
             }
         }
     }
     .designDevelopmentCardBody {
         background: #fff;
         border-radius: 0 0 10px 10px;
-        padding: 18px 17px;
+        padding: 0px 17px 15px 17px;
         height: 100%;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        gap: clamp(0.313rem, 0.971vw + 0.085rem, 1.25rem);
+
         @media screen and (max-width: 650px) {
             padding: 8px 14px 12px 14px;
         }
