@@ -123,7 +123,7 @@ const VideoLessonsFilterSection = ({
                                             parentCategory === item.slug
                                                 ? 'categoryMenuCardActive'
                                                 : ''
-                                        } Models_category_btn `} // Ota kategoriya aktivligi
+                                        } Models_category_btn `}
                                         onClick={() =>
                                             router.push({
                                                 pathname: `/videoLessons/${item.slug}`,
@@ -155,13 +155,13 @@ const VideoLessonsFilterSection = ({
                                             parentCategory === item.slug
                                                 ? 'categoryMenuCardActive'
                                                 : ''
-                                        } Models_category_btn border`} // Ota kategoriya aktivligi
+                                        } Models_category_btn border`}
                                         onClick={() =>
                                             router.push({
                                                 pathname: `/videoLessons/${item.slug}`,
                                                 query: {
                                                     parentCategory: item.slug,
-                                                }, // query parametrini qo'shish
+                                                },
                                             }) && setDropdownMenu(!dropDownMenu)
                                         }>
                                         {' '}

@@ -21,7 +21,7 @@ export default function SellerProducts({ data = [], page, handlePagination }) {
                             </div> :
                             item?.document?.content_type === 'video' ?
                                 <div className='col-md-4 my-3' key={index}>
-                                    {/* <ProductVideo isPlay={isPlay} setIsPlay={setIsPlay} product={item} /> */}
+                                    <ProductVideo isPlay={isPlay} setIsPlay={setIsPlay} product={item} />
                                 </div> : 
                                     <></>
                     ))) :

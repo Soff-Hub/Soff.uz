@@ -71,7 +71,7 @@ const VideoLessonsProducts = ({ product }) => {
                         ) : (
                             <img
                                 src={
-                                    // product.poster_url ||
+                                    product.poster_url ||
                                     '/static/img/videoposter.jpg'
                                 }
                                 alt='hujjat'
