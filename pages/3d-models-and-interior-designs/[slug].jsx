@@ -15,11 +15,12 @@ export default function ModelsAndInteriorDesign () {
     // products API uchun so'rov
     const { data, error, isLoading } = useApi(
         ['products', page, parentCategory, childCategory], // queryKey dinamik
-        `${baseUrlUseApi}customer/products/?direction=3d&category=${
+        `${baseUrlUseApi}customer/products/?direction=scientific_work&category=${
             childCategory ? childCategory : parentCategory
         }&page=${page || 1}&page_size=48`,
         'GET'
     );
+    console.log('models=>>>', data);
 
     // Ota kategoriya API uchun so'rov
     const {
@@ -28,7 +29,7 @@ export default function ModelsAndInteriorDesign () {
         isLoading: isFourChildLoading,
     } = useApi(
         ['fourChild'], // Query key
-        `${baseUrlUseApi}customer/four-child?direction=3d`,
+        `${baseUrlUseApi}customer/four-child?direction=scientific_work`,
         'GET'
     );
     console.log('fourChildData =>', fourChildData);
@@ -40,7 +41,7 @@ export default function ModelsAndInteriorDesign () {
         isLoading: isChildCategory,
     } = useApi(
         ['fourChild', parentCategory], // Query key
-        `${baseUrlUseApi}customer/four-child?direction=3d&parent__slug=${parentCategory}`,
+        `${baseUrlUseApi}customer/four-child?direction=scientific_work&parent__slug=${parentCategory}`,
         'GET'
     );
 
