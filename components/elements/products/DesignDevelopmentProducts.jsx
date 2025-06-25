@@ -91,14 +91,12 @@ const DesignDevelopmentProducts = ({ product }) => {
                     title="Tanlanganlarga qo'shish"
                     onClick={handleAddItemToWishlist}>
                     <img
-                        src={`${
-                            wishlist?.some(
-                                item => Number(item.id) === Number(product?.id)
-                            )
+                        src={
+                            wishlist?.some(item => Number(item.id) === Number(product?.id))
                                 ? '/static/img/onclickHeard.png'
                                 : '/static/img/heard.png'
-                        } `}
-                        alt=''
+                        }
+                        alt='heart'
                     />
                 </a>
             </div>
