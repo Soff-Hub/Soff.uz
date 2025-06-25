@@ -14,10 +14,10 @@ export default function PurchasedProducts() {
   const [loading, setLoading] = useState(null);
 
   const { data, isLoading } = useGet("approved-product", `seller/approved-product/?page=1&category=&start_date=&end_date=&search=`, undefined, { enabled: Boolean('approved-product') });
-  const { data: categoryList } = useGet("global-childern", `seller/admin/global-childern/`, undefined, { enabled: Boolean('global-childern') });
+  // const { data: categoryList } = useGet("global-childern", `seller/admin/global-childern/`, undefined, { enabled: Boolean('global-childern') });
 
   if (!data) return null;
-  if (!categoryList) return null;
+  // if (!categoryList) return null;
 
   const filteredProducts = data.results.filter(
     (p) =>
@@ -101,7 +101,7 @@ export default function PurchasedProducts() {
               className=""
             />
           </div>
-          <div className="col-12 col-sm-6">
+          {/* <div className="col-12 col-sm-6">
             <Select
               placeholder="Kategoriya"
               className=" w-100"
@@ -114,7 +114,7 @@ export default function PurchasedProducts() {
                     })
                 }
             </Select>
-          </div>
+          </div> */}
         </div>
         <div className="table-responsive mt-3">
           <Table
