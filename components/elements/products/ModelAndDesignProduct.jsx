@@ -59,7 +59,7 @@ const ModelAndDesignProduct = ({ product }) => {
     };
 
     const produvctTitle =
-        product.title.length > 10
+        product.title.length > 15
             ? product.title.slice(0, 15) + '...'
             : product.title;
 
@@ -73,7 +73,8 @@ const ModelAndDesignProduct = ({ product }) => {
                     <Link
                         href='/product/[pid]'
                         as={`/product/${product.slug}`}
-                        className='w-100'>
+                        className='w-100'
+                        >
                         {ModelAndDesignProduct.poster_url ? (
                             thumbnailImage(ModelAndDesignProduct)
                         ) : (
@@ -87,12 +88,12 @@ const ModelAndDesignProduct = ({ product }) => {
                     </Link>
 
                     <div className='modelAndDesignCardTopSide '>
-                        <div className='aboutModel d-flex gap-2 w-100'>
+                        {/* <div className='aboutModel d-flex gap-2 w-100'>
                             <p className='aboutModelItem'>stl</p>
                             <p className='aboutModelItem'>ztl</p>
                             <p className='aboutModelItem'>obj</p>
                             <p className='aboutModelItem'>blend</p>
-                        </div>
+                        </div> */}
                         <div className='modelAndDesignCardPriceBox'>
                             {+product.discount_price === 0 ? (
                                 <p
