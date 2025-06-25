@@ -87,9 +87,9 @@ export async function getServerSideProps(context) {
 
     const categoryParam = childCategory ? childCategory : parentCategory;
 
-    const productsUrl = `${baseUrlUseApi}customer/products/?direction=scientific_work&category=${categoryParam}&page=${page}&page_size=48`;
-    const fourChildUrl = `${baseUrlUseApi}customer/four-child?direction=scientific_work`;
-    const childCategoryUrl = `${baseUrlUseApi}customer/four-child?direction=scientific_work&parent__slug=${parentCategory}`;
+    const productsUrl = `${baseUrlUseApi}customer/products/?direction=file&category=${categoryParam}&page=${page}&page_size=48`;
+    const fourChildUrl = `${baseUrlUseApi}customer/four-child?direction=file`;
+    const childCategoryUrl = `${baseUrlUseApi}customer/four-child?direction=file&parent__slug=${parentCategory}`;
 
     const [productsData, fourChildData, childCategoryData] = await Promise.all([
         fetchJson(productsUrl),
