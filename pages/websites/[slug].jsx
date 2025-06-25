@@ -35,7 +35,7 @@ export default function Websites({
                 description={`Biz siz qidirayotgan mahsulotlarni Soff.uz saytimizning kategoriyasida topdik`}
             />
 
-            <div className='ps-page--shop container'>
+            <div className='ps-page--shop container my-5'>
                 <WebsitesCategoriesFilterSecion
                     breacrumb={fourChildData}
                     count={productsData?.count}

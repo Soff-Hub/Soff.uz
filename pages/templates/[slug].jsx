@@ -37,7 +37,7 @@ export default function Templates ({
                 description={`Biz siz qidirayotgan mahsulotlarni Soff.uz saytimizning kategoriyasida topdik`}
             />
 
-            <div className='ps-page--shop container p-xl-0 p-l-0'>
+            <div className='ps-page--shop container my-5 p-xl-0 p-l-0'>
                 <CategoriesFilterForDesignDevelopmentsSection
                     breacrumb={fourChildData}
                     count={productsData?.count}
