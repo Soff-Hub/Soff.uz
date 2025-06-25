@@ -3,6 +3,7 @@ import { Pagination } from 'antd';
 import { Skeleton } from 'antd';
 import WebsitesProduct from '~/components/elements/products/WebsitesProduct';
 import Link from 'next/link';
+import DesignDevelopmentProducts from '~/components/elements/products/DesignDevelopmentProducts';
 
 export default function WebsitesProductsByCategory ({
     data = [],
@@ -11,7 +12,7 @@ export default function WebsitesProductsByCategory ({
     isLoading,
 }) {
     return (
-        <div id='products' className='overflow-hidden container'>
+        <div id='products' className='overflow-hidden '>
             <div className='row '>
                 {isLoading && (
                     <div className={`product-list p-loading`}>
@@ -31,7 +32,7 @@ export default function WebsitesProductsByCategory ({
                         <div
                             className='home-card col-md-3 col-sm-4 col-xs-3 col-6'
                             key={index}>
-                            <WebsitesProduct product={item} />
+                            <DesignDevelopmentProducts product={item} />
                         </div>
                     ))}
             </div>  

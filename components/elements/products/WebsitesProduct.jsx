@@ -27,8 +27,8 @@ const WebsitesProduct = ({ product }) => {
                 onMouseLeave={() => setCountShow(false)}>
                 <div className=''>
                     <Link
-                        href='/WebsitesProduct/[pid]'
-                        as={`/WebsitesProduct/${WebsitesProduct.slug}`}
+                        href='/product/[pid]'
+                        as={`/product/${WebsitesProduct.slug}`}
                         className='w-full mx-auto'>
                         <a>
                             {WebsitesProduct.poster_url ? (

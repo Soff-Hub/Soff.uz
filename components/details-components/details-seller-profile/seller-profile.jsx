@@ -21,7 +21,7 @@ function SellerProfile({ product }) {
                 <div>
                     <Link
                         href='/seller/[pid]'
-                        as={`/seller/${product.seller.id}`}>
+                        as={`/seller/${product?.seller?.id}`}>
                         <h3 className='pointer'>
                             {product?.seller?.first_name}{' '}
                             {product?.seller?.last_name}

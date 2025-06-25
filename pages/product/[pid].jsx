@@ -6,12 +6,10 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Head from 'next/head';
 import Joyride from 'react-joyride';
-import { setOneShopDoc } from '~/store/auth/slice';
 import FileProductsDetails from '~/components/details-components/file-products-detail/details-page';
 import ThreeDesignProductsDetails from '~/components/details-components/templates-details/details-page';
 import WebSitesProductsDetails from '~/components/details-components/website-products-details/details-page';
 import VideosProductsDetails from '~/components/details-components/video-tutorials/details-page';
-import { useGet } from '~/repositories/https';
 import RedesignProduct from '~/components/elements/products/Redesign/Redesign-Product';
 import WebsitesProduct from '~/components/elements/products/WebsitesProduct';
 import DesignDevelopmentProducts from '~/components/elements/products/DesignDevelopmentProducts';
@@ -22,8 +20,11 @@ import SkeletonProductDetail from '~/components/elements/skeletons/SkeletonProdu
 import * as cookie from 'cookie';
 import AISoffiaPresentation from '~/components/elements/AISoffiaPresentation';
 
-
-export default function ProductDefaultPage({ defaultProducts, similarProduct }) {
+export default function ProductDefaultPage ({
+    defaultProducts,
+    similarProduct,
+}) {
+    console.log('smillar=>', similarProduct)
     const router = useRouter();
     const { pid } = router.query;
     const [isPlay, setIsPlay] = useState(null);
@@ -43,7 +44,7 @@ export default function ProductDefaultPage({ defaultProducts, similarProduct }) 
         {
             target: '.product-poster',
             content: 'Bu yerda mahsulotning bir qismi joylashgan.',
-            disableBeacon: false
+            disableBeacon: false,
         },
         // {
         //     target: '.product-description',
@@ -51,91 +52,87 @@ export default function ProductDefaultPage({ defaultProducts, similarProduct }) 
         // },
         {
             target: '.product-price-section',
-            content: 'Bu yerda narxi va sotib olish tugmasi bor. Bosib sotib olasiz.',
-        }
+            content:
+                'Bu yerda narxi va sotib olish tugmasi bor. Bosib sotib olasiz.',
+        },
     ]);
 
     useEffect(() => {
         const timer = setTimeout(() => {
-          setRun(true);
+            setRun(true);
         }, 2400);
 
         return () => clearTimeout(timer);
-      }, []);
+    }, []);
 
-    const joyrideFeature = run && <Joyride
-        steps={steps}
-        run={run}
-        continuous={true}
-        showProgress={false}
-        styles={{
-            options: {
-                // zIndex: 9999,
-                arrowColor: '#e3ffeb',
-                primaryColor: '#00A44F',
-                textColor: '#004a14',
-                width: 300,
-            },
-        }}
-        locale={{
-            back: 'Oldingisi',
-            last: 'Tushundim',
-            close: 'Yopish',
-            next: 'Keyingisi',
-            open: 'Ochish',
-            skip: 'Bilaman',
-        }}
-    />
-
-    const productsDetails = {
-        'file': <FileProductsDetails
-            product={defaultProducts}/>,
-        "3d": <ThreeDesignProductsDetails
-            product={defaultProducts}
-        />,
-        "template": <ThreeDesignProductsDetails
-            product={defaultProducts}
-        />,
-        "website": <WebSitesProductsDetails
-            product={defaultProducts}
-        />,
-        "design": <ThreeDesignProductsDetails
-            product={defaultProducts}
-        />,
-        "video": <VideosProductsDetails
-            isPlay={isPlay}
-            setIsPlay={setIsPlay}
-            // similar={similar}
-            product={defaultProducts}
+    const joyrideFeature = run && (
+        <Joyride
+            steps={steps}
+            run={run}
+            continuous={true}
+            showProgress={false}
+            styles={{
+                options: {
+                    // zIndex: 9999,
+                    arrowColor: '#e3ffeb',
+                    primaryColor: '#00A44F',
+                    textColor: '#004a14',
+                    width: 300,
+                },
+            }}
+            locale={{
+                back: 'Oldingisi',
+                last: 'Tushundim',
+                close: 'Yopish',
+                next: 'Keyingisi',
+                open: 'Ochish',
+                skip: 'Bilaman',
+            }}
         />
-    }
-    const productsDetailsSimilar = {
-        'file': similarProduct?.map((item, index) => (
-            <RedesignProduct product={item} key={index} />
-        )),
-        "3d": [<ThreeDesignProductsDetails product={similarProduct} key="3d" />],
-        "template": similarProduct?.map((item, index) => (
-            <DesignDevelopmentProducts product={item} key={index} />
-        )),
-        "website": similarProduct?.map((item, index) => (
-            <WebsitesProduct key={index} product={item} />
-        )),
-        "design": similarProduct?.map((item, index) => (
-            <DesignDevelopmentProducts key={index} product={item} />
-        )),
-        "video": similarProduct?.map((item, index) => (
-            <VideoLessonsProducts product={item} key={index} />
-        )),
+    );
+    
+    const productsDetails = {
+        file: <FileProductsDetails product={defaultProducts} />,
+        '3d': <ThreeDesignProductsDetails product={defaultProducts} />,
+        template: <ThreeDesignProductsDetails product={defaultProducts} />,
+        website: <ThreeDesignProductsDetails product={defaultProducts} />,
+        design: <ThreeDesignProductsDetails product={defaultProducts} />,
+        video: (
+            <VideosProductsDetails
+                isPlay={isPlay}
+                setIsPlay={setIsPlay}
+                // similar={similar}
+                product={defaultProducts}
+            />
+        ),
     };
-
+    // const productsDetailsSimilar = {
+    //     file: similarProduct?.map((item, index) => (
+    //         <DesignDevelopmentProducts product={item} key={index} />
+    //     )),
+    //     '3d': [
+    //         <DesignDevelopmentProducts product={similarProduct} key='3d' />,
+    //     ],
+    //     template: similarProduct?.map((item, index) => (
+    //         <DesignDevelopmentProducts product={item} key={index} />
+    //     )),
+    //     website: similarProduct?.map((item, index) => (
+    //         <DesignDevelopmentProducts key={index} product={item} />
+    //     )),
+    //     design: similarProduct?.map((item, index) => (
+    //         <DesignDevelopmentProducts key={index} product={item} />
+    //     )),
+    //     video: similarProduct?.map((item, index) => (
+    //         <DesignDevelopmentProducts product={item} key={index} />
+    //     )),
+    // };
 
     return (
         <>
-        <PageContainer
-            footer={<FooterDefault />}
-            title={defaultProducts ? defaultProducts?.title : 'Loading...'}
-            boxed={true}>
-
+            <PageContainer
+                footer={<FooterDefault />}
+                title={defaultProducts ? defaultProducts?.title : 'Loading...'}
+                boxed={true}>
                 <Head>
                     <title>
                         {defaultProducts?.title ||
@@ -153,14 +150,15 @@ export default function ProductDefaultPage({ defaultProducts, similarProduct }) 
                         content={
                             defaultProducts?.description
                                 ? removeHTMLTags(defaultProducts?.description)
-                                : `${defaultProducts?.title} + ${defaultProducts?.tag
-                                    ?.map(e => e?.name)
-                                    ?.join(', ') ||
-                                'soff.uz - Intellektual mulk marketi'
-                                } `
+                                : `${defaultProducts?.title} + ${
+                                      defaultProducts?.tag
+                                          ?.map(e => e?.name)
+                                          ?.join(', ') ||
+                                      'soff.uz - Intellektual mulk marketi'
+                                  } `
                         }
                     />
-                    <meta name="robots" content="index, follow" />
+                    <meta name='robots' content='index, follow' />
                     <meta
                         name='image'
                         content={
@@ -173,8 +171,8 @@ export default function ProductDefaultPage({ defaultProducts, similarProduct }) 
                         content={
                             defaultProducts?.tag
                                 ? defaultProducts?.tag
-                                    ?.map(e => e?.name)
-                                    ?.join(', ')
+                                      ?.map(e => e?.name)
+                                      ?.join(', ')
                                 : 'kurs ishi, taqdimotlar, slaydlar, diplom ishi, prezentatsiya'
                         }
                     />
@@ -192,11 +190,12 @@ export default function ProductDefaultPage({ defaultProducts, similarProduct }) 
                         content={
                             defaultProducts?.description
                                 ? removeHTMLTags(defaultProducts?.description)
-                                : `${defaultProducts?.title} + ${defaultProducts?.tag
-                                    ?.map(e => e?.name)
-                                    ?.join(', ') ||
-                                'soff.uz - Intellektual mulk marketi'
-                                } `
+                                : `${defaultProducts?.title} + ${
+                                      defaultProducts?.tag
+                                          ?.map(e => e?.name)
+                                          ?.join(', ') ||
+                                      'soff.uz - Intellektual mulk marketi'
+                                  } `
                         }
                     />
                     <meta
@@ -213,8 +212,8 @@ export default function ProductDefaultPage({ defaultProducts, similarProduct }) 
                         content={
                             defaultProducts?.tag
                                 ? defaultProducts?.tag
-                                    ?.map(e => e?.name)
-                                    ?.join(', ')
+                                      ?.map(e => e?.name)
+                                      ?.join(', ')
                                 : 'kurs ishi, taqdimotlar, slaydlar, diplom ishi, prezentatsiya'
                         }
                     />
@@ -238,11 +237,12 @@ export default function ProductDefaultPage({ defaultProducts, similarProduct }) 
                         content={
                             defaultProducts?.description
                                 ? removeHTMLTags(defaultProducts?.description)
-                                : `${defaultProducts?.title} + ${defaultProducts?.tag
-                                    ?.map(e => e?.name)
-                                    ?.join(', ') ||
-                                'soff.uz - Intellektual mulk marketi'
-                                } `
+                                : `${defaultProducts?.title} + ${
+                                      defaultProducts?.tag
+                                          ?.map(e => e?.name)
+                                          ?.join(', ') ||
+                                      'soff.uz - Intellektual mulk marketi'
+                                  } `
                         }
                     />
                     <meta property='twitter:url' content='https://soff.uz' />
@@ -252,8 +252,8 @@ export default function ProductDefaultPage({ defaultProducts, similarProduct }) 
                         content={
                             defaultProducts?.tag
                                 ? defaultProducts?.tag
-                                    ?.map(e => e?.name)
-                                    ?.join(', ')
+                                      ?.map(e => e?.name)
+                                      ?.join(', ')
                                 : 'kurs ishi, taqdimotlar, slaydlar, diplom ishi, prezentatsiya'
                         }
                     />
@@ -264,24 +264,40 @@ export default function ProductDefaultPage({ defaultProducts, similarProduct }) 
                 <div>
                     <div className='container' style={{ position: 'relative' }}>
                         <div
-                            className={`ps-page--product ${defaultProducts?.price === 0 ? '' : 'pt-2'
-                                }`}>
+                            className={`ps-page--product ${
+                                defaultProducts?.price === 0 ? '' : 'pt-2'
+                            }`}>
                             <div className='ps-container p-0'>
                                 <div className='ps-page__container'>
-                                    {!defaultProducts && <SkeletonProductDetail/>}
-                                    {productsDetails[defaultProducts?.document?.content_type]}
+                                    {!defaultProducts && (
+                                        <SkeletonProductDetail />
+                                    )}
+                                    {
+                                        productsDetails[
+                                            defaultProducts?.document
+                                                ?.content_type
+                                        ]
+                                    }
                                 </div>
-                                <AISoffiaPresentation/>
-                                {
-                                    defaultProducts && (
-                                        <div className=' my-5'>
-                                            <h3 style={{ fontSize: "25px", fontWeight: 400 }} className='py-4 similar_title'>O’xshash mahsulotlar</h3>
-                                            <SwiperPages type={defaultProducts?.document?.content_type}>
-                                                {productsDetailsSimilar[defaultProducts?.document?.content_type]}
-                                            </SwiperPages>
-                                        </div>
-                                    )
-                                }
+                                {defaultProducts?.document?.content_type == 'file' && <AISoffiaPresentation />}
+                                
+                                {defaultProducts  && (
+                                    <div className=' my-5'>
+                                        <h3
+                                            style={{
+                                                fontSize: '25px',
+                                                fontWeight: 400,
+                                            }}
+                                            className='py-4 similar_title'>
+                                            O’xshash mahsulotlar
+                                        </h3>
+                                        <SwiperPages type={defaultProducts?.document?.content_type}>
+                                            {Array.isArray(similarProduct) && similarProduct.map((item, index) => (
+                                                <DesignDevelopmentProducts product={item} key={index} />
+                                            ))}
+                                        </SwiperPages>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -289,28 +305,29 @@ export default function ProductDefaultPage({ defaultProducts, similarProduct }) 
             </PageContainer>
         </>
     );
-};
+}
 
-export async function getServerSideProps({ query, req }) {
+export async function getServerSideProps ({ query, req }) {
     const cookies = cookie.parse(req.headers.cookie || '');
     const token = cookies.token;
 
-    const headers = token
-    ? { 'Authorization': `Bearer ${token}` }
-    : {};
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
-    const resquest = await fetch(`${baseUrl}customer/documents/${query.pid}/`, {headers});
+    const resquest = await fetch(`${baseUrl}customer/documents/${query.pid}/`, {
+        headers,
+    });
 
     const defaultProducts = await resquest.json();
 
-    const resquestSimilarProduct = await fetch(`${baseUrl}customer/similar/${query.pid}/`);
+    const resquestSimilarProduct = await fetch(
+        `${baseUrl}customer/similar/${query.pid}/`
+    );
     const similarProduct = await resquestSimilarProduct.json();
 
-
     return {
-      props: {
-        defaultProducts,
-        similarProduct,
-      },
+        props: {
+            defaultProducts,
+            similarProduct,
+        },
     };
-  }
+}

@@ -12,7 +12,7 @@ export default function ProductsByDesignDevelopment ({
 }) {
     return (
         <div id='products'>
-            <div className=' container designDevelopmentProduct'>
+            <div className='  designDevelopmentProduct'>
                 {isLoading && (
                     <div className={`w-100 `}>
                         {Array(48)
@@ -30,7 +30,7 @@ export default function ProductsByDesignDevelopment ({
                     data?.results?.map((item, index) => (
                         <div
                             style={{ height: '100%' }}
-                            className='   p-0 m-0'
+                            className='p-0 m-0'
                             key={index}>
                             <DesignDevelopmentProducts product={item} />
                         </div>
