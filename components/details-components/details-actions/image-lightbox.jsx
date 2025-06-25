@@ -17,10 +17,25 @@ const ImageLightBox = ({ gallery = [] }) => {
       </button>
 
       {isOpen && (
-        <Lightbox open={isOpen}
+        <Lightbox
+          open={isOpen}
           close={() => setIsOpen(false)}
           slides={slidesGallery}
-        
+          render={{
+            slide: ({ slide }) => (
+              <img
+                src={slide.src}
+                alt=""
+                style={{
+                  maxWidth: '100vw',
+                  maxHeight: '100vh',
+                  objectFit: 'contain',
+                  margin: 'auto',
+                  display: 'block',
+                }}
+              />
+            ),
+          }}
         />
       )}
     </div>

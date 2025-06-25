@@ -540,6 +540,56 @@
 
                     }
                 }
+                    .seller_products_actions {
+                        background-color: white;
+                        height: 100%;
+                        width: 100%;
+                        border-radius: 12px;
+                        max-width: 550px;
+                        display: flex;
+                        justify-content: space-between;
+                        flex-direction: column;
+                        padding: 50px;
+                        gap: 30px;
+
+                        .price_container {
+                            width: 100%;
+
+                            h2 {
+                                color: #312F30;
+                                font-weight: 700;
+                                font-size: 30px;
+                                margin: 0;
+                            }
+
+                            del {
+                                color: #312F30B2;
+                                font-size: 20px;
+                                font-weight: 400;
+
+                            }
+                        }
+
+                        .button_hover:hover {
+                            background-color: #00A44F;
+                            color: white !important;
+                            transition: all 0.1s ease-in-out;
+                        }
+
+                        .icon_hover {
+                            padding: 6px;
+                            cursor: pointer;
+                        }
+
+                        .icon_hover:hover {
+                            background-color: #00A44F;
+                            color: white !important;
+                            border-radius: 50%;
+                            transition: all 0.1s ease-in-out;
+                            padding: 6px;
+                        }
+        
+    }
 
             }
 
