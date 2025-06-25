@@ -11,27 +11,30 @@ const parentCategoriesData = [
     {
         title: '3D moddellar va Interier dizaynlar',
         imgUrl: '/static/img/3D-moddellar-va-Interier-dizaynlar-2.png',
-        path: '/3d-models-and-interior-designs',
+        path: '/3d-models-and-interior-designs/all',
+        width: '401px',
     },
     {
         title: 'Dizayn shablonlari',
         imgUrl: '/static/img/dizayn-shablonlari-2.png',
-        path: '/design-developments',
+        path: '/design-developments/all',
+        width: '531px',
     },
     {
         title: 'Veb saytlar',
         imgUrl: '/static/img/veb-saytlar-2.png',
-        path: '/websites',
+        path: '/websites/all',
+        width: '531px',
     },
     {
         title: 'Turli sohalar uchun shablonlar',
         imgUrl: '/static/img/shablonlar-3.png',
-        path: '/templates',
+        path: '/templates/all',
     },
     {
         title: 'Video darsliklar',
         imgUrl: '/static/img/video-darsliklar-2.png',
-        path: '/video-lessons',
+        path: '/video-lessons/all',
     },
 ];
 

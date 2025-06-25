@@ -7,31 +7,15 @@ import useApi, { baseUrlUseApi } from '~/repositories/useApi';
 import WebsitesProductsByCategory from '~/components/partials/category/WebsitesProductsByCategory';
 import WebsitesCategoriesFilterSecion from '~/components/elements/WebsitesCategoriesFilterSecion';
 
-export default function Websites() {
+export default function Websites({ 
+    productsData, 
+    fourChildData, 
+    childCategoryData, 
+    parentCategory, 
+    childCategory, 
+    page 
+}) {
     const router = useRouter();
-    const { slug, page, parentCategory, childCategory } = router.query;
-
-    // products API uchun so'rov
-    const { data, error, isLoading } = useApi(
-        ["products", slug, page, parentCategory, childCategory], // queryKey dinamik
-        `${baseUrlUseApi}customer/products/?direction=website_template&category=${childCategory ? childCategory : parentCategory}&page=${page || 1}&page_size=48`,
-        "GET"
-    );
-
-
-    // Four-child API uchun so'rov
-    const { data: fourChildData, error: fourChildError, isLoading: isFourChildLoading } = useApi(
-        ["fourChild"], // Query key
-        `${baseUrlUseApi}customer/four-child?direction=website_template`,
-        "GET"
-    );
-
-    // Farzand kategoriya API uchun so'rov
-    const { data: childCategoryData, error: childCategoryEror, isLoading: isChildCategory } = useApi(
-        ["fourChild", parentCategory], // Query key
-        `${baseUrlUseApi}customer/four-child?direction=three_d_model&parent__slug=${parentCategory}`,
-        "GET"
-    );
     
     // Pagination tugmalari uchun funksiya
     const handlePageChange = (newPage) => {
@@ -54,20 +38,57 @@ export default function Websites() {
             <div className='ps-page--shop container'>
                 <WebsitesCategoriesFilterSecion
                     breacrumb={fourChildData}
-                    count={data?.count}
-                    isLoading={isFourChildLoading}
+                    count={productsData?.count}
+                    isLoading={false}
                     childCategoryData={childCategoryData}
                 />
                 <WebsitesProductsByCategory
-                    data={data}
+                    data={productsData}
                     page={page}
                     handlePagination={number => {
                         handlePageChange(number);
                     }}
-                    isLoading={isLoading}
+                    isLoading={false}
                 />
             </div>
 
         </PageContainer>
     );
+}
+
+
+
+export async function getServerSideProps(context) {
+    const { slug, page = 1, parentCategory = '', childCategory = '' } = context.query;
+
+    const fetchJson = async (url) => {
+        const res = await fetch(url);
+        if (!res.ok) {
+            return null;
+        }
+        return res.json();
+    };
+
+    const categoryParam = childCategory ? childCategory : parentCategory;
+
+    const productsUrl = `${baseUrlUseApi}customer/products/?direction=website&category=${categoryParam}&page=${page}&page_size=48`;
+    const fourChildUrl = `${baseUrlUseApi}customer/four-child?direction=website`;
+    const childCategoryUrl = `${baseUrlUseApi}customer/four-child?direction=website&parent__slug=${parentCategory}`;
+
+    const [productsData, fourChildData, childCategoryData] = await Promise.all([
+        fetchJson(productsUrl),
+        fetchJson(fourChildUrl),
+        fetchJson(childCategoryUrl)
+    ]);
+
+    return {
+        props: {
+            productsData: productsData || null,
+            fourChildData: fourChildData || null,
+            childCategoryData: childCategoryData || null,
+            parentCategory,
+            childCategory,
+            page
+        }
+    };
 }
