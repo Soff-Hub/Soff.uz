@@ -60,12 +60,14 @@ const ScientificResourcesFilterSection = ({
                         {breacrumb?.results?.map((item, index) => {
                             return (
                                 <Option key={item.slug} value={item.slug}>
-                                    <img
-                                        className='rounded-2 me-2'
-                                        src={item.image}
-                                        alt={item.name}
-                                        width={25}
-                                    />
+                                    {
+                                        item.image && <img
+                                                className='rounded-2 me-2'
+                                                src={item.image}
+                                                alt={item.name}
+                                                width={25}
+                                                />
+                                    }
                                     {item.name}
                                 </Option>
                             );
@@ -338,6 +340,7 @@ const ScientificResourcesFilterSection = ({
                                                             router.push({
                                                                 pathname:
                                                                     '/scientific-resources/[slug]',
+                                                                    
                                                                 query: {
                                                                     ...router.query,
                                                                     slug: item.slug,

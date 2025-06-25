@@ -13,7 +13,7 @@ function Description({ description }) {
             }} >Mahsulot tavsifi</h3>
 
             {
-                description.length > 0 ? (
+                description?.length > 0 ? (
                     <div dangerouslySetInnerHTML={{ __html: description }} />
                 ) : (
                     <div className="text-center">
