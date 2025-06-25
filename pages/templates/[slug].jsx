@@ -7,6 +7,7 @@ import useApi, { baseUrlUseApi } from '~/repositories/useApi';
 import ProductsByDesignDevelopment from '~/components/partials/category/ProductsByDesignDevelopment';
 import CategoriesFilterForDesignDevelopmentsSection from '~/components/elements/DesignDevelopmentsFilterSection';
 import FooterComponents from '~/components/blocks/footer/FooterComponents';
+import TemplatesFilterSection from '~/components/elements/TemplatesFilterSection';
 
 export default function Templates ({ 
     productsData, 
@@ -38,7 +39,7 @@ export default function Templates ({
             />
 
             <div className='ps-page--shop container my-5 p-xl-0 p-l-0'>
-                <CategoriesFilterForDesignDevelopmentsSection
+                <TemplatesFilterSection
                     breacrumb={fourChildData}
                     count={productsData?.count}
                     isLoading={false}

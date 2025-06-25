@@ -28,7 +28,7 @@ const MiniCart = () => {
                 data?.length > 0  ?
             <Link href="/account/shopping-cart">
                 <a className="header__extra">
-                    <i className="icon-bag2"></i>
+                    <i className="icon-bag2 fa-regular fa-lg"></i>
                     <span>{<i>{data.length}</i>}</span>
                 </a>
             </Link> : ""

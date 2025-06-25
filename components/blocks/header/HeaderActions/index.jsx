@@ -27,7 +27,7 @@ const HeaderActions = ({ auth, isDark }) => {
             {wishlist?.length > 0 ? (
                 <Link href="/account/wishlist">
                     <a className="header__extra">
-                        <i className={`icon-heart ${isDark ? 'text-black' : 'text-white'}`}></i>
+                        <i className={`fa-regular fa-heart fa-lg ${isDark ? 'text-black' : 'text-white'}`}></i>
                         <span>
                             <i className={isDark ? 'text-black' : 'text-white'} >{wishlist.length}</i>
                         </span>
