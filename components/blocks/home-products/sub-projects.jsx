@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 
 export default function SubProjects() {
@@ -52,47 +53,54 @@ export default function SubProjects() {
                 <div className='system-inner'>
                     {projecs.map((el, index) => (
                         <div className='system-card' key={index}>
-                            <div
-                                className='system-card-inner p-4'
-                                style={{
-                                    background:
-                                        el?.bgColor || 'defaultColor',
-                                }}>
-                                {el?.last ? (
-                                    <div className='d-flex gap-3'>
-                                        {el?.logoImg && (
-                                            <img src={el.logoImg} alt={el.imgAlt}/>
-                                        )}
-                                        <h2
-                                            className='sdsdsd'
-                                            style={{
-                                                color:
-                                                    el?.textColor ||
-                                                    'defaultColor',
-                                            }}>
-                                            {el?.title}
-                                        </h2>
-                                    </div>
-                                ) : (
-                                    <>
-                                        {el?.logoImg && (
-                                            <img
-                                                src={el.logoImg}
-                                                alt={el.imgAlt}
-                                            />
-                                        )}
-                                        <h2>{el?.title}</h2>
-                                    </>
-                                )}
-                                <span
-                                    className='system-text'
+                        <Link
+                            href={el.link}
+                            as={el.link}
+                            target="_blank">
+                            <a target="_blank" rel="noopener noreferrer">
+                                <div
+                                    className='system-card-inner p-4'
                                     style={{
-                                        color:
-                                            el?.textColor || 'defaultColor',
+                                        background:
+                                            el?.bgColor || 'defaultColor',
                                     }}>
-                                    {el?.linkMask}
-                                </span>
-                            </div>
+                                    {el?.last ? (
+                                        <div className='d-flex gap-3'>
+                                            {el?.logoImg && (
+                                                <img src={el.logoImg} alt={el.imgAlt}/>
+                                            )}
+                                            <h2
+                                                className='sdsdsd'
+                                                style={{
+                                                    color:
+                                                        el?.textColor ||
+                                                        'defaultColor',
+                                                }}>
+                                                {el?.title}
+                                            </h2>
+                                        </div>
+                                    ) : (
+                                        <>
+                                            {el?.logoImg && (
+                                                <img
+                                                    src={el.logoImg}
+                                                    alt={el.imgAlt}
+                                                />
+                                            )}
+                                            <h2>{el?.title}</h2>
+                                        </>
+                                    )}
+                                    <span
+                                        className='system-text'
+                                        style={{
+                                            color:
+                                                el?.textColor || 'defaultColor',
+                                        }}>
+                                        {el?.linkMask}
+                                    </span>
+                                </div>
+                            </a>
+                            </Link>
                         </div>
                     ))}
                 </div>
