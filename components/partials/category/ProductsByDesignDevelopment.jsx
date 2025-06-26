@@ -29,7 +29,7 @@ export default function ProductsByDesignDevelopment ({
                 {data?.results?.length > 0 &&
                     data?.results?.map((item, index) => (
                         <div
-                            style={{ height: '100%' }}
+                            style={{ height: '100%', width: '100%' }}
                             className='p-0 m-0'
                             key={index}>
                             <DesignDevelopmentProducts product={item} />
