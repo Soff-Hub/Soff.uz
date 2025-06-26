@@ -24,7 +24,7 @@ function FileImagesScroll({ product }) {
         <div
             className="ps-product__thumbnail_seller">
             <figure className='figuree'>
-                <div className="ps-wrapper_seller product-poster" ref={containerRef} >
+                <div className="ps-wrapper_seller product-poster product-short-view" ref={containerRef} >
                     {product?.document?.images?.length > 0
                         ? product?.document?.images?.map((item, i) => (
                             (item?.image_url || item?.thumbUrl || item?.url) && <Image
