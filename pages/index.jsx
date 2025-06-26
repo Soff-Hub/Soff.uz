@@ -36,7 +36,7 @@ function NewHomePage ({ tab, category }) {
             <HeroSearch/>
             <HomeCategories />
             <ItServicesCategories />
-            <HomeVideo />
+            {/* <HomeVideo /> */}
             <ResutsComponents />
             <SubProjects />
         </PageLayout>

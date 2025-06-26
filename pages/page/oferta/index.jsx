@@ -5,20 +5,20 @@ import Meta from '~/components/shared/headers/Meta'
 export default function Oferta() {
     return (
         <PageLayout>
-            <Meta 
-            title="Foydalanish qonun-qoidalari - Soff.uz"
-            description="Soff.uz platformasining foydalanish qonun-qoidalari. Raqamli mahsulotlar va onlayn xizmatlardan foydalanish, sotish va sotib olish bo'yicha barcha muhim ma'lumotlar."
-            keywords={[
-                { "name": "Foydalanish qonun-qoidalari" },
-                { "name": "Soff.uz shartlari" },
-                { "name": "foydalanuvchi shartlari" },
-                { "name": "platforma shartlari" },
-                { "name": "raqamli mahsulotlar" },
-                { "name": "onlayn xizmatlar" },
-                { "name": "raqamli kontent" },
-                { "name": "sotish va sotib olish" }
-            ]}
-            author="Soff.uz jamoasi"/>
+            <Meta
+                title="Foydalanish qonun-qoidalari - Soff.uz"
+                description="Soff.uz platformasining foydalanish qonun-qoidalari. Raqamli mahsulotlar va onlayn xizmatlardan foydalanish, sotish va sotib olish bo'yicha barcha muhim ma'lumotlar."
+                keywords={[
+                    { "name": "Foydalanish qonun-qoidalari" },
+                    { "name": "Soff.uz shartlari" },
+                    { "name": "foydalanuvchi shartlari" },
+                    { "name": "platforma shartlari" },
+                    { "name": "raqamli mahsulotlar" },
+                    { "name": "onlayn xizmatlar" },
+                    { "name": "raqamli kontent" },
+                    { "name": "sotish va sotib olish" }
+                ]}
+                author="Soff.uz jamoasi" />
 
             <div className="container px-5 mt-5">
                 <h3>
@@ -169,9 +169,8 @@ export default function Oferta() {
                     yoki komissiya foizini vaqt o'tishi bilan o'z
                     ehtiyojlariga qarab oshirish huquqini o'zida saqlab qoladi.
                 </p>
-                <p>5.1.6.
-                    Sotuvchi mahsulotlarining muallifi o’zi yoki boshqa bir inson muallifidagi
-                    mahsulot bo’lsa uning roziligi bilan olingan mahsulot bo’lishi shart
+                <p>
+                    5.1.6. Sotuvchi faqat o‘ziga tegishli yoki muallifning ruxsati bilan joylashtirilgan mahsulotlarni sotishi mumkin.
                 </p>
                 <p>
                     5.1.7. Platforma ma’muriyatiga murojaat qilish
@@ -207,7 +206,7 @@ export default function Oferta() {
                 <p>
                     5.2.4. Sotuvchining yig’ilgan summasini
                     kartasiga tashlab olish jarayonidan uning
-                    miqdori 18 ming so’mdan kam bo’lmasligi shart.
+                    miqdori 35 ming so’mdan kam bo’lmasligi shart.
                 </p>
                 <p>
                     5.2.5. Sotuvchi Platformaning foydalanish
@@ -215,7 +214,7 @@ export default function Oferta() {
                     bajarishi shart
                 </p>
                 <p>
-                    5.2.7.  Sotuvchi yuklagan har bir mahsulotning
+                    5.2.6.  Sotuvchi yuklagan har bir mahsulotning
                     sifatli, yaroqli va o'z ijodiy ishi ekanligiga
                     javobgar. Xaridor yoki boshqa shaxslar norozilik
                     bildirsa yoki mualliflik huquqi buzilsa, barcha
@@ -224,10 +223,18 @@ export default function Oferta() {
                     e'tibordan chetda qolgan holatlar uchun javobgar emas.
                 </p>
                 <p>
+                    5.2.7. Sotuvchi platformada sotilgan har bir
+                    mahsulotining 18% ini platforma ma’muriyati olib
+                    qolishi shart.
+                </p>
+                <p>
                     5.2.8. Sotuvchi referal havola orqali o’zini-o’zi
                     taklif qilgan holatlar aniqlansa, platforma ma’muriyati
                     tomonidan ogohlantirish beriladi va ushbu taklif havolasi
                     ro’yxatdan olib tashlanadi.
+                </p>
+                <p>
+                    5.2.9. Sotuvchi o‘z ijtimoiy tarmoqlari, messenjerlari yoki boshqa tashqi platformalar orqali mijozlarni Soff.uz ga jalb qilishi va u yerda savdo qilish huquqiga ega. Bu yaxshi va qo‘llab-quvvatlanadi. Biroq sotuvchi platformaning chat tizimi yoki boshqa xizmatlari orqali mijozlarni tashqi platformalarga (Telegram, WhatsApp, Instagram va boshqalar) yo‘naltirish, shuningdek, savdoni Soff.uz tashqarisida davom ettirish taqiqlanadi. Bu qoidani buzgan sotuvchilar platformadan chetlashtirilishi mumkin.
                 </p>
                 <h4>6. Javobgarlik</h4>
                 <p>
@@ -325,6 +332,99 @@ export default function Oferta() {
                     Biz ushbu manzillardan foydalanuvchining
                     shaxsini aniqlash maqsadida foydalanmaymiz,
                     Saytga qilingan hurujlar bundan mustasno.
+                </p>
+                <h4>
+                    9. Mualliflik huquqlari va intellektual mulk himoyasi
+                </h4>
+                <h5>
+                    Mahsulot muallifligi:
+                </h5>
+                <p>
+                    - Sotuvchi faqat o‘ziga tegishli yoki muallifning ruxsati bilan joylashtirilgan mahsulotlarni sotishi mumkin.
+                </p>
+                <p>
+                    - Plagiat yoki ruxsatsiz foydalanish aniqlansa, mahsulot platformadan o‘chiriladi(yoki haqiqiy muallifning xohishiga ko'ra uning Soff.uz'dagi profiliga o'tkazib berilishi mumkin), takroriy holatda sotuvchining akkaunti bloklanishi mumkin.
+                </p>
+                <h5>
+                    Mualliflik huquqlarini buzish bo‘yicha shikoyat tizimi:
+                </h5>
+                <p>
+                    - Agar biror shaxs o‘ziga tegishli mahsulot boshqa sotuvchi tomonidan joylashtirilganini aniqlasa, shikoyat yuborish imkoniyati ega. Shikoyat bo'limi mahsulot batafsil sahifasida mavjud.
+                </p>
+                <p>
+                    - Shikoyatlar ko‘rib chiqilishi muddati – 3 ish kuni.
+                </p>
+                <h4>
+                    10. Xaridorlarni himoya qilish (Refund Policy)
+                </h4>
+                <h5>
+                    Mahsulotga nisbatan shikoyat
+                </h5>
+                <p>
+                    - Mahsulot xaridor hohlagani kabi bo'lmasa, xaridor o'z fikrlarini mahsulotning izohlar bo'limida qoldirishi yoki jiddiy holatlarda platforma ma’muriyatiga shikoyat qilish huquqiga ega. Shikoyat bo'limi mahsulot batafsil sahifasida mavjud.
+                </p>
+                <p>
+                    - Sotuvchi mahsulotni noto‘g‘ri joylashtirgan yoki sifatli yetkazmagan bo‘lsa ya'ni foydalanishga yaroqsiz deb topilsa, platforma mamuriyati ushbu mahsulotni o'chirib tashlashi huquqiga ega.
+                </p>
+                <h4>
+                    10. Xaridor va sotuvchilar o‘rtasidagi baholash tizimi
+                </h4>
+                <h5>
+                    Baholash va sharhlar:
+                </h5>
+                <p>
+                    - Xaridor xarid qilgan mahsulotiga yulduzli baho (⭐) va fikr-mulohaza qoldirish imkoniyatiga ega. Baholar sotuvchilarning ishonchliligini aniqlashda yordam beradi.
+                </p>
+                <h5>
+                    Sotuvchilarning reytingi:
+                </h5>
+                <p>
+                    - Past baholarga ega sotuvchilar kuzatib boriladi, kerak bo‘lsa, platformadan chetlatiladi.
+                </p>
+                <h4>
+                    11. Platforma va sotuvchi o‘rtasidagi shartlar
+                </h4>
+                <h5>
+                    Mahsulotni o‘chirish huquqi:
+                </h5>
+                <p>
+                    - Soff.uz shubhali yoki qonunga zid mahsulotlarni istalgan vaqtda o‘chirish huquqiga ega.
+                </p>
+                <p>
+                    - Agar sotuvchi ko‘p marotaba qoidalarni buzsa, u platformadan chetlatiladi.
+                </p>
+                <h5>
+                    To‘lov tizimlari bo‘yicha aniq qoidalar:
+                </h5>
+                <p>
+                    - Platforma faqat rasmiy to‘lov tizimlari orqali ishlaydi(masalan, Click, PayMe va boshqalar).
+                </p>
+                <p>
+                    - Qo‘lda yoki boshqa norasmiy usullarda pul olish qat’iyan taqiqlanadi.
+                </p>
+                <h4>
+                    12. Soff.uz'ning qonuniy himoyasi
+                </h4>
+                <h5>
+                    Qonuniy javobgarlik:
+                </h5>
+                <p>
+                    - Platforma sotuvchi va xaridor o‘rtasidagi kelishmovchiliklarga to‘g‘ridan-to‘g‘ri javobgar emas, lekin shikoyatlarni ko‘rib chiqish huquqiga ega.
+                </p>
+                <p>
+                    - O‘zbekiston Respublikasi qonunchiligiga muvofiq ravishda xizmat ko‘rsatilishi kafolatlanadi.
+                </p>
+                <h4>
+                    13. Qoidalar va shartlarni yangilash
+                </h4>
+                <p>
+                    - Soff.uz platformadagi qoidalarni istalgan vaqtda o‘zgartirish yoki yangilash huquqiga ega.
+                </p>
+                <p>
+                    - Rasmiy Telegram kanalida (t.me/soff_uz) e’lon qilingan har qanday yangilik yoki o‘zgarish rasmiy hisoblanadi.
+                </p>
+                <p>
+                    - Foydalanuvchilarga shaxsiy profil orqali yetkazilgan bildirishnomalar rasmiy kuchga ega.
                 </p>
             </div>
 

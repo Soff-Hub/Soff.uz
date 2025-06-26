@@ -56,7 +56,7 @@ export default function ResultsComponent() {
         <div className='resultBox'>
           
           <div className='resultsItems'>
-            <p className='resultsItemsRate'>200 000+</p>
+            <p className='resultsItemsRate'>250 000+</p>
             <p className='resultsItemsTitle'>Raqamli mahsulotlar</p>
           </div>
           
@@ -70,14 +70,14 @@ export default function ResultsComponent() {
           <div className='divider'></div>
 
           <div className='resultsItems'>
-            <p className='resultsItemsRate'>50 000</p>
-            <p className='resultsItemsTitle'>Sotilgan mahuslotlar</p>
+            <p className='resultsItemsRate'>86 000+</p>
+            <p className='resultsItemsTitle'>Tranzaksiyalar</p>
           </div>
           
           <div className='divider'></div>
           
           <div className='resultsItems'>
-            <p className='resultsItemsRate'>8 200+</p>
+            <p className='resultsItemsRate'>11 000+</p>
             <p className='resultsItemsTitle'>Mutaxassislar soni</p>
           </div>
         </div>
