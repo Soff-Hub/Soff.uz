@@ -201,14 +201,7 @@ const ScientificResourcesFilterSection = ({
                                                         <p className={`${parentCategory === item.slug ? 'bg-success text-white' : ''} category-btn-title m-0 p-0`}>
                                                             {item.name}
                                                         </p>
-                                                        <img
-                                                            style={{
-                                                                width: '26px',
-                                                                height: '21px'
-                                                            }}
-                                                            src={item.image}
-                                                            alt={item.name}
-                                                        />
+                                                        {item.image && <img style={{ width: '26px', height: '21px' }} src={item.image} alt={item.name} />}
                                                     </div>
                                                 </div>
                                             </div>

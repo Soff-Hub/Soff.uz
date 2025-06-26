@@ -856,10 +856,9 @@ input[type='number']::-webkit-outer-spin-button {
     height: 100%;
     flex-direction: column;
     border-radius: 11px;
-    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
-    overflow: hidden; // 👈 rasm yoki element chiqib ketmasligi uchun
     &:hover {
         transition: ease-in-out;
+        box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
     }
     .designDevelopmentCardImgBox {
         width: 100%;
@@ -903,7 +902,7 @@ input[type='number']::-webkit-outer-spin-button {
             max-height: 276px;
             object-fit: contain;
             object-position: center;
-            transition: transform 0.3s ease;
+            // transition: transform 0.3s ease;
             border-radius: 0;
             display: block;
             @media screen and (max-width: 700px) {
