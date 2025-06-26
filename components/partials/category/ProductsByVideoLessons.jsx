@@ -12,7 +12,7 @@ export default function ProductsByVideoLessons ({
 }) {
     return (
         <div id='products'>
-            <div className=' container designDevelopmentProduct'>
+            <div className='designDevelopmentProduct '>
                 {isLoading && (
                     <div className={`w-100 `}>
                         {Array(48)
