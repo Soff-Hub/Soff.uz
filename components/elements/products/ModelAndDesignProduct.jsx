@@ -59,7 +59,7 @@ const ModelAndDesignProduct = ({ product }) => {
     };
 
     const produvctTitle =
-        product.title.length > 15
+        product?.title?.length > 15
             ? product.title.slice(0, 15) + '...'
             : product.title;
 

@@ -19,6 +19,8 @@ import FooterDefault from '~/components/shared/footers/FooterDefault';
 import SkeletonProductDetail from '~/components/elements/skeletons/SkeletonProductDetail';
 import * as cookie from 'cookie';
 import AISoffiaPresentation from '~/components/elements/AISoffiaPresentation';
+import ModelAndDesignProduct from '~/components/elements/products/ModelAndDesignProduct';
+
 
 export default function ProductDefaultPage ({
     defaultProducts,
@@ -107,23 +109,23 @@ export default function ProductDefaultPage ({
         ),
     };
     // const productsDetailsSimilar = {
-    //     file: similarProduct?.map((item, index) => (
-    //         <DesignDevelopmentProducts product={item} key={index} />
+    //     'file': similarProduct?.map((item, index) => (
+    //         <RedesignProduct product={item} key={index} />
     //     )),
     //     '3d': [
-    //         <DesignDevelopmentProducts product={similarProduct} key='3d' />,
+    //         <ModelAndDesignProduct product={similarProduct} key='3d' />,
     //     ],
-    //     template: similarProduct?.map((item, index) => (
+    //     'template': similarProduct?.map((item, index) => (
     //         <DesignDevelopmentProducts product={item} key={index} />
     //     )),
-    //     website: similarProduct?.map((item, index) => (
+    //     'website': similarProduct?.map((item, index) => (
     //         <DesignDevelopmentProducts key={index} product={item} />
     //     )),
-    //     design: similarProduct?.map((item, index) => (
+    //     'design': similarProduct?.map((item, index) => (
     //         <DesignDevelopmentProducts key={index} product={item} />
     //     )),
-    //     video: similarProduct?.map((item, index) => (
-    //         <DesignDevelopmentProducts product={item} key={index} />
+    //     'video': similarProduct?.map((item, index) => (
+    //         <VideoLessonsProducts product={item} key={index} />
     //     )),
     // };
 
@@ -293,6 +295,7 @@ export default function ProductDefaultPage ({
                                         </h3>
                                         <SwiperPages type={defaultProducts?.document?.content_type}>
                                             {Array.isArray(similarProduct) && similarProduct.map((item, index) => (
+                                                // productsDetailsSimilar[defaultProducts?.document?.content_type]
                                                 <DesignDevelopmentProducts product={item} key={index} />
                                             ))}
                                         </SwiperPages>
