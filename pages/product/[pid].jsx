@@ -42,7 +42,7 @@ export default function ProductDefaultPage ({
     const [run, setRun] = useState(false);
     const [steps, setSteps] = useState([
         {
-            target: '.product-poster',
+            target: '.product-short-view',
             content: 'Bu yerda mahsulotning bir qismi joylashgan.',
             disableBeacon: false,
         },

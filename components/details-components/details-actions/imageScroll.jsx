@@ -27,7 +27,7 @@ const ImageCarousel = ({ images, views }) => {
                     nextEl: nextRef.current,
                 }}
                 slidesPerView={1}
-                className="swiper-container"
+                className="swiper-container product-short-view"
             >
                 {images?.map((item) => (
                     <SwiperSlide key={item.id} className="w-100">
