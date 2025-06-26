@@ -14,7 +14,7 @@ import useDebounce from '~/hooks/useDebounce';
 
 const Search_Results = () => {
     const inputEl = useRef(null);
-    const [loading, 1] = useState(true); // Initially true\
+    const [loading, setLoading] = useState(true); // Initially true\
     const [searchTerm, setSearchTerm] = useState('');
 
     const debouncedSearchTerm = useDebounce(searchTerm, 1000);
