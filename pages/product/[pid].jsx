@@ -26,7 +26,6 @@ export default function ProductDefaultPage ({
     defaultProducts,
     similarProduct,
 }) {
-    console.log('smillar=>', similarProduct)
     const router = useRouter();
     const { pid } = router.query;
     const [isPlay, setIsPlay] = useState(null);
