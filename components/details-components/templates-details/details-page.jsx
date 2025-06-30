@@ -4,6 +4,8 @@ import Description from '../details-actions/description';
 import SellerProfile from '../details-seller-profile/seller-profile';
 import ImageCarousel from '../details-actions/imageScroll';
 import Tags from '../details-actions/tags';
+import CommentForm from '../comment-section/commentForm';
+import { CommentList } from '../comment-section/commentList';
 
 function ThreeDesignProductsDetails ({ product, template }) {
     return (
@@ -46,6 +48,10 @@ function ThreeDesignProductsDetails ({ product, template }) {
 
                         <SellerProfile product={product} />
                     </div>
+                    {/* <div>
+                        <CommentForm/>
+                        <CommentList/>
+                    </div> */}
                 </div>
             </div>
         </div>

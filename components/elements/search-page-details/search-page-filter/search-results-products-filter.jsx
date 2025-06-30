@@ -6,8 +6,7 @@ export default function SearchResultsProductsFilter ({data, parentData, childDat
     const allTypes = [
         'all','file', '3d', 'design','template', 'website', 'video'
     ]
-    console.log('cild', childData)
-    console.log('parent', parentData)
+
     return (
         <div className='Search_Results_Products_form_box container'>
             <p className='countProduct'>{data?.count?.length && `${data?.count?.length}ta mahsulot`} </p>
@@ -16,10 +15,10 @@ export default function SearchResultsProductsFilter ({data, parentData, childDat
                     onChange={(e) => {
                         router.push({
                             pathname: router.pathname,
-                            query: { ...router.query, type: e.target.value, page: 1 }, // Sahifani 1-ga reset qilamiz
+                            query: { ...router.query, type: e.target.value, page: 1, parentCategory: '', childCategory: '' },
                         });
                     }}
-                    value={router.query.type || ''} // fallback bo'lishi uchun
+                    value={router.query.type || ''}
                 >
                     {allTypes.map((type) => (
                         <option key={type} value={type}>
@@ -28,14 +27,31 @@ export default function SearchResultsProductsFilter ({data, parentData, childDat
                     ))}
                 </select>
 
-                <select name='' id=''>
+                <select
+                    onChange={(e)=>{
+                        router.push({
+                            pathname: router.pathname,
+                            query: {...router.query, parentCategory: e.target.value, childCategory: '', page: 1}
+                        })
+                    }}
+                >
                     <option value=''>Kategoriya</option>
-                    {data?.count?.category_data?.category.map((item, index) =>
-                        {item}
-                    )}
+                    {childData?.results.map(cat => (
+                        <option key={cat.slug} value={cat.slug}>{cat.name}</option>
+                    ))}
                 </select>
-                <select name='' id=''>
+                <select 
+                    onChange={(e)=>{
+                        router.push({
+                            pathname: router.pathname,
+                            query: {...router.query, childCategory: e.target.value,page: 1}
+                        })
+                    }}
+                >
                     <option value=''>Sub kategoriya</option>
+                    {parentData?.results.map(cat => (
+                        <option key={cat.slug} value={cat.slug}>{cat.name}</option>
+                    ))}
                 </select>
             </form>{' '}
         </div>
