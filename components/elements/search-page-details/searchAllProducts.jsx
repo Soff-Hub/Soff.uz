@@ -4,9 +4,10 @@ import SearchResultsSpecialists_Card from './search-page-card/searchResultsSpeci
 import SearchResultsProducts_Card from './search-page-card/searchResultsProducts_Card';
 import Link from 'next/link';
 import SearchResultsServices_Card from './search-page-card/searchResultsServices_Card';
+import { useRouter } from 'next/router';
 
 export default function SearchAllProducts ({ data }, isLoading) {
-
+    const router = useRouter()
     return (
         <div className='SearchAllProducts'>
             <div>
@@ -144,7 +145,14 @@ export default function SearchAllProducts ({ data }, isLoading) {
                             ))
                         )}
                     </div>
-                    <Link href='#products' className='forMore'>
+                    <Link 
+                        href={  
+                            {
+                                pathname: router.pathname,
+                                query: {...router.query, tab: 'products'}
+                            }
+                        }
+                    className='forMore'>
                         <button className='forMoreBox'>
                             Ko‘proq ko‘rish
                             <svg

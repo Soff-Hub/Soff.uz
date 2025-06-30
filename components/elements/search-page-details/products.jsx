@@ -7,12 +7,36 @@ import Search_Results_NotFound from './notFound';
 
 export default function Search_Results_Products({ data, page, total, isLoading, childData , parentData}) {
     const router = useRouter();
-    const showResults = !isLoading && Array.isArray(data) && data.length > 0;
+    const {parentCategory, childCategory, type} = router.query
+    console.log('data--->', data)
+    const filteredData = React.useMemo(() => {
+        if (!Array.isArray(data)) return [];
+
+        // Agar ikkalasi ham bor bo‘lsa, filter qilamiz
+        if (parentCategory && childCategory) {
+            return data.filter(item =>
+                item.category_data?.parent?.toLowerCase() === parentCategory.toLowerCase() &&
+                item.category_data?.category?.toLowerCase() === childCategory.toLowerCase()
+            );
+        }
+
+        // Agar faqat parentCategory bo‘lsa
+        if (parentCategory && !childCategory) {
+            return data.filter(item =>
+                item.category_data?.parent?.toLowerCase() === parentCategory.toLowerCase()
+            );
+        }
+
+        // Aks holda barcha data
+        return data;
+    }, [data, parentCategory, childCategory]);
+
+
+    const showResults = !isLoading && Array.isArray(filteredData) && filteredData.length > 0;
 
     return (
         <>
-            <SearchResultsProductsFilter childData={childData} parentData={parentData}  count={data} />
-
+            <SearchResultsProductsFilter parentData={parentData} childData={childData}   count={data} />
             <>
                 <div className='Search_Results_Products container'>
                     <div className='Search_Results_Products_Wrap'>
@@ -33,7 +57,7 @@ export default function Search_Results_Products({ data, page, total, isLoading, 
                                 )}
 
                                 {showResults ? (
-                                    data.map((item, index) => (
+                                    filteredData.map((item, index) => (
                                         <div key={index}>
                                             <SearchResultsProducts_Card product={item} />
                                         </div>

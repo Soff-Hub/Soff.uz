@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import PageContainer from '~/components/layouts/PageContainer';
 import { baseUrl } from '~/repositories/Repository';
 import { useRouter } from 'next/router';
@@ -20,18 +20,53 @@ import SkeletonProductDetail from '~/components/elements/skeletons/SkeletonProdu
 import * as cookie from 'cookie';
 import AISoffiaPresentation from '~/components/elements/AISoffiaPresentation';
 import ModelAndDesignProduct from '~/components/elements/products/ModelAndDesignProduct';
+import Axios from 'axios';
 
 
 export default function ProductDefaultPage ({
     defaultProducts,
-    similarProduct,
 }) {
     const router = useRouter();
     const { pid } = router.query;
     const [isPlay, setIsPlay] = useState(null);
 
-    // const { data: product } = useGet("productsDetails", `customer/documents/${pid}/`, undefined, { enabled: Boolean(pid) })
-    // const { data: similarProduct } = useGet("productSimilar", `customer/similar/${pid}/`, undefined, { enabled: Boolean(pid) })
+   const [similarProduct, setSimilarProduct] = useState([]);
+    const [hasLoadedSimilar, setHasLoadedSimilar] = useState(false);
+    const similarRef = useRef();
+
+    const fetchSimilarProducts = async () => {
+        try {
+            const { data } = await Axios.get(`${baseUrl}customer/similar/${pid}/`);
+            setSimilarProduct(data);
+        } catch (error) {
+            console.error("Oxshash mahsulotlarni olishda xatolik:", error);
+        }
+    };
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                const entry = entries[0];
+                if (entry.isIntersecting && !hasLoadedSimilar) {
+                    fetchSimilarProducts();
+                    setHasLoadedSimilar(true);
+                }
+            },
+            { threshold: 0.2 }
+        );
+
+        if (similarRef.current) {
+            observer.observe(similarRef.current);
+        }
+
+        return () => {
+            if (similarRef.current) {
+                observer.unobserve(similarRef.current);
+            }
+        };
+    }, [pid]); // pid bo‘yicha kuzatuv
+
+
 
     const { user } = useSelector(state => state.auth);
     const dispatch = useDispatch();
@@ -283,7 +318,7 @@ export default function ProductDefaultPage ({
                                 {defaultProducts?.document?.content_type == 'file' && <AISoffiaPresentation />}
                                 
                                 {defaultProducts  && (
-                                    <div className=' my-5'>
+                                    <div ref={similarRef} className=' my-5'>
                                         <h3
                                             style={{
                                                 fontSize: '25px',
@@ -292,12 +327,15 @@ export default function ProductDefaultPage ({
                                             className='py-4 similar_title'>
                                             O’xshash mahsulotlar
                                         </h3>
+                                    {hasLoadedSimilar ? (
                                         <SwiperPages type={defaultProducts?.document?.content_type}>
-                                            {Array.isArray(similarProduct) && similarProduct.map((item, index) => (
-                                                // productsDetailsSimilar[defaultProducts?.document?.content_type]
+                                            {similarProduct.map((item, index) => (
                                                 <DesignDevelopmentProducts product={item} key={index} />
                                             ))}
                                         </SwiperPages>
+                                    ) : (
+                                        <div className='text-center text-muted py-5'>Yuklanmoqda...</div>
+                                    )}
                                     </div>
                                 )}
                             </div>
@@ -321,15 +359,15 @@ export async function getServerSideProps ({ query, req }) {
 
     const defaultProducts = await resquest.json();
 
-    const resquestSimilarProduct = await fetch(
-        `${baseUrl}customer/similar/${query.pid}/`
-    );
-    const similarProduct = await resquestSimilarProduct.json();
+    // const resquestSimilarProduct = await fetch(
+    //     `${baseUrl}customer/similar/${query.pid}/`
+    // );
+    // const similarProduct = await resquestSimilarProduct.json();
 
     return {
         props: {
             defaultProducts,
-            similarProduct,
+            // similarProduct,
         },
     };
 }

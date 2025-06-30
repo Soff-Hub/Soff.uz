@@ -9,7 +9,7 @@ export default function HeroSearchInput(inputProps) {
     function handleSubmit(e) {
         e.preventDefault();
         if (search && search.trim()) {
-            Router.push(`/search-page?keyword=${search}&type=${value.value}`);
+            Router.push(`/search-page?keyword=${search}&type=${value.value}&tab=all&page=1`);
         }
     }
 

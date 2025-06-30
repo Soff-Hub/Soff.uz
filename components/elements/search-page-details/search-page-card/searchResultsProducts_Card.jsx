@@ -48,14 +48,14 @@ export default function SearchResultsProducts_Card ({ product }) {
                     <p className='Search_Results_Products_card_price'>
                         Narxi:{' '}
                         <span className='Search_Results_Products_card_price_boldspan'>
-                            {product.price} so'm
+                            {product.discount_price} so'm
                         </span>
                     </p>
                 </div>
             </div>
             <img
                 className='Search_Results_Products_card_img'
-                src={product.img}
+                src={product.poster}
                 alt=''
             />
         </div>
