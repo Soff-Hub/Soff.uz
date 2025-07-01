@@ -48,10 +48,10 @@ function ThreeDesignProductsDetails ({ product, template }) {
 
                         <SellerProfile product={product} />
                     </div>
-                    {/* <div>
+                    <div>
                         <CommentForm/>
                         <CommentList/>
-                    </div> */}
+                    </div>
                 </div>
             </div>
         </div>

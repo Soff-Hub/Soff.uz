@@ -90,6 +90,13 @@ export function removeCartItemHelper(product) {
 // new
 
 export function calculateAmount(obj) {
+    return Object.values(obj).reduce((acc, item) => {
+        if (!item) return acc;
+        const price = item.discount_price ?? item.price ?? 0;
+        return acc + Number(price);
+    }, 0);
+}
+// .toFixed(2);
 //     let price = [];
 //     let discount_Price = [];
 //     obj?.map((item) => {
@@ -112,18 +119,6 @@ export function calculateAmount(obj) {
 //     );
 // console.log('price = ', PriceSum, 'discount-price = ', DiscountPriceSum);
 //     return PriceSum + DiscountPriceSum
-
-
-    return  Object.values(obj).reduce(
-        (acc, { discount_price }) => acc + Number(discount_price),
-        0
-    );
-
-
-
-    // .toFixed(2);
-}
-
 
 
 export function formatCreditCardNumber(cardNumber) {

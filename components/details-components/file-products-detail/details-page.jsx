@@ -7,6 +7,8 @@ import Description from '../details-actions/description';
 import Tags from '../details-actions/tags';
 import OrderCardBtn from '../details-seller-profile/order-card-btn';
 import Link from 'next/link';
+import CommentForm from '../comment-section/commentForm';
+import { CommentList } from '../comment-section/commentList';
 
 function FileProductsDetails({ product }) { 
   
@@ -46,7 +48,10 @@ function FileProductsDetails({ product }) {
             {/* <SellerProfile product={product}/> */}
             <OrderCardBtn product={product}/>
           </div>
-
+          <div>
+              <CommentForm/>
+              <CommentList/>
+          </div>
         </div>
       </div>
     </div>

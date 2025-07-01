@@ -38,7 +38,7 @@ const MiniCart = () => {
                     <div className="ps-cart__items">
                         {data?.map((item) => {
                             return (
-                                <ProductOnCart product={item} key={item.id}>
+                                <ProductOnCart product={item} key={item?.id}>
                                     <a
                                         className="ps-product__remove"
                                         style={{ cursor: 'pointer' }}
