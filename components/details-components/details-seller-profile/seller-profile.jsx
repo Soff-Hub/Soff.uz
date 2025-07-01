@@ -3,8 +3,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
-function SellerProfile({ product }) {
-    console.log('product=>', product)
+function SellerProfile ({ product }) {
+    console.log('product=>', product);
     return (
         <div className='seller_products_actions_secound'>
             <div className='seller_profile'>
@@ -21,9 +21,9 @@ function SellerProfile({ product }) {
                 </div>
                 <div>
                     <Link
-                        href='/seller/[pid]'
-                        as={`/seller/${product?.seller?.id}`}>
-                        <h3 className='pointer'>
+                        href='/_seller/[pid]'
+                        as={`/_seller/${product?.seller?.id}`}>
+                        <h3 className='sellerNameHover'>
                             {product?.seller?.first_name}{' '}
                             {product?.seller?.last_name}
                         </h3>
@@ -36,12 +36,22 @@ function SellerProfile({ product }) {
                 <div className='w-100 d-flex align-items-center fs-3 gap-2'>
                     <i className='fa-solid text-success fs-3 fa-circle-check'></i>
                     <span>Jami mahsulotlar soni:</span>
-                    <span>{product.seller.total_approved_documents ? product.seller.total_approved_documents : 0 } ta</span>
+                    <span>
+                        {product.seller.total_approved_documents
+                            ? product.seller.total_approved_documents
+                            : 0}{' '}
+                        ta
+                    </span>
                 </div>
                 <div className='w-100 d-flex align-items-center fs-3 gap-2'>
                     <i className='text-success fs-3 fa-solid fa-briefcase'></i>
                     <span>Sotilgan mahsulotlar soni:</span>
-                    <span>{product.seller.total_sold_documents < 0 ? product.seller.total_sold_documents : 0 } ta</span>
+                    <span>
+                        {product.seller.total_sold_documents < 0
+                            ? product.seller.total_sold_documents
+                            : 0}{' '}
+                        ta
+                    </span>
                 </div>
             </div>
             <Button

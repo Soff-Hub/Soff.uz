@@ -148,6 +148,14 @@ input[type='number']::-webkit-outer-spin-button {
     cursor: pointer;
 }
 
+.sellerNameHover {
+    cursor: pointer;
+}
+
+.sellerNameHover:hover {
+    text-decoration: underline;
+}
+
 .categoryCard {
     padding: 9.58px 28.33px 9.58px 20.83px;
 }
@@ -235,7 +243,6 @@ input[type='number']::-webkit-outer-spin-button {
         margin-top: 15px;
         row-gap: 10px;
         grid-template-columns: repeat(2, 1fr);
-
     }
     .scientificResourcesSkeleton {
         width: 100% !important;
@@ -380,13 +387,13 @@ input[type='number']::-webkit-outer-spin-button {
 .category-btn:hover {
     background-color: #00a44f;
 }
-.category-btn:hover .category-btn-title{
+.category-btn:hover .category-btn-title {
     color: white;
 }
 .category-btn .category-btn-title {
-    color: #312F30
+    color: #312f30;
 }
-.sub-category-btn:hover .sub-category-btn-title{
+.sub-category-btn:hover .sub-category-btn-title {
     color: #00a44f;
 }
 .Models_category_btn_wrap {
@@ -856,7 +863,7 @@ input[type='number']::-webkit-outer-spin-button {
     height: 300px;
     flex-direction: column;
     border-radius: 11px;
-    
+
     &:hover {
         transition: ease-in-out;
         box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
@@ -870,8 +877,6 @@ input[type='number']::-webkit-outer-spin-button {
         border-radius: 0;
         display: block;
         position: relative;
-
-
 
         .designDevelopmentCardheard {
             position: absolute;
@@ -942,7 +947,7 @@ input[type='number']::-webkit-outer-spin-button {
         @media screen and (max-width: 350px) {
             padding: 5px;
         }
-        .designDevelopmentCardheard{
+        .designDevelopmentCardheard {
             position: absolute;
             top: 10px;
             right: 10px;
@@ -965,7 +970,7 @@ input[type='number']::-webkit-outer-spin-button {
             -webkit-box-orient: vertical;
             overflow: hidden;
             text-overflow: ellipsis;
-            
+
             @media screen and (max-width: 650px) {
                 font-weight: 400;
                 font-size: 13px;
@@ -1249,8 +1254,7 @@ input[type='number']::-webkit-outer-spin-button {
     }
 }
 
-
-.designDevelopmentCardheard{
+.designDevelopmentCardheard {
     z-index: 100;
     top: 20px;
     background: white;

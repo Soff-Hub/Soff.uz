@@ -52,9 +52,6 @@ const Header = () => {
                                 <HeaderActions isDark={true} />
                             </div>
                         </div>
-                        {/* <div className="search-form-mobile">
-                        {pathname !== '/' ? <HeaderSearchbar /> : ''}
-                        </div> */}
                     </div>
                 </div>
             </div>
