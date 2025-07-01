@@ -87,8 +87,8 @@ export default function useProduct() {
 
         title: (payload) => {
             let view = (
-                <Link href="/product/[pid]" as={`/product/${payload.slug}`}>
-                    <a className="ps-product__title ">{payload.title}</a>
+                <Link href="/product/[pid]" as={`/product/${payload?.slug}`}>
+                    <a className="ps-product__title ">{payload?.title}</a>
                 </Link>
             );
             return view;

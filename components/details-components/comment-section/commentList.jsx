@@ -1,8 +1,10 @@
 import Image from "next/image";
+import { Rating } from 'react-simple-star-rating'
+
 
 const mockComments = [
-  { id: 1, username: 'Ali', text: 'Zo‘r mahsulot!' },
-  { id: 2, username: 'Laylo', text: 'Yaxshi ishlayapti, rahmat!' },
+  { id: 1, username: 'Ali', text: 'Zo‘r mahsulot!', rating: 4 },
+  { id: 2, username: 'Laylo', text: 'Yaxshi ishlayapti, rahmat!', rating: 5 },
 ];
 
 export function CommentList() {
@@ -13,19 +15,31 @@ export function CommentList() {
         <p className="text-muted fs-3">Hali Izohlar Mavjud Emas</p>
       ) : (
         mockComments.map((comment) => (
-          <div  key={comment.id} className="p-3 mb-3 d-flex align-items-center gap-4  ">
-            <Image
-                src={
-                    
-                    '/static/img/ozodbek.png'
-                }
-                alt='seller-profile'
-                height={50}
-                width={50}
-            />
+          <div  key={comment.id} className="p-3 mb-3 d-flex justify-content-between align-items-center">
+            <div className="d-flex align-items-center gap-4 ">
+              <Image
+                  src={
+                      
+                      '/static/img/ozodbek.png'
+                  }
+                  alt='seller-profile'
+                  height={50}
+                  width={50}
+              />
+              <div>
+                  <strong className="fs-4">{comment.username}</strong>
+                  <p className="mb-0">{comment.text}</p>
+              </div>
+            </div>
             <div>
-                <strong className="fs-4">{comment.username}</strong>
-                <p className="mb-0">{comment.text}</p>
+              <Rating
+                readonly
+                allowFraction
+                initialValue={comment.rating}
+                size={25}
+                fillColor="orange"
+                emptyColor="gray"
+              />
             </div>
           </div>
         ))
