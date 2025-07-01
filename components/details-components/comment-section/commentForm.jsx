@@ -4,7 +4,7 @@ import { Rating } from 'react-simple-star-rating'
 export default function CommentForm() {
     const [text, setText] = useState('');
     const [rating, setRating] = useState(0)
-    const [ratingKey, setRatingKey] = useState(0) // 🔑 bu key orqali reset qilamiz
+    const [ratingKey, setRatingKey] = useState(0)
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -16,7 +16,6 @@ export default function CommentForm() {
         setText('');
         setRating(0);
 
-        // 🔁 componentni qayta render qilish uchun key ni o‘zgartiramiz
         setRatingKey(prev => prev + 1)
     };
 
@@ -37,7 +36,7 @@ export default function CommentForm() {
                 />
                 <div className='d-flex justify-content-between align-items-center'>
                     <Rating
-                        key={ratingKey} // 🔑 bu muhim
+                        key={ratingKey}
                         onClick={handleRating}
                         size={25}
                         ratingValue={rating}
