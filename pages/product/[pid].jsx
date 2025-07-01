@@ -21,6 +21,7 @@ import * as cookie from 'cookie';
 import AISoffiaPresentation from '~/components/elements/AISoffiaPresentation';
 import ModelAndDesignProduct from '~/components/elements/products/ModelAndDesignProduct';
 import Axios from 'axios';
+import { Spin } from 'antd';
 
 
 export default function ProductDefaultPage ({
@@ -327,15 +328,17 @@ export default function ProductDefaultPage ({
                                             className='py-4 similar_title'>
                                             O’xshash mahsulotlar
                                         </h3>
-                                    {hasLoadedSimilar ? (
-                                        <SwiperPages type={defaultProducts?.document?.content_type}>
-                                            {similarProduct.map((item, index) => (
-                                                <DesignDevelopmentProducts product={item} key={index} />
-                                            ))}
-                                        </SwiperPages>
-                                    ) : (
-                                        <div className='text-center text-muted py-5'>Yuklanmoqda...</div>
-                                    )}
+                                        {hasLoadedSimilar ? (
+                                            <SwiperPages type={defaultProducts?.document?.content_type}>
+                                                {similarProduct.map((item, index) => (
+                                                    <DesignDevelopmentProducts product={item} key={index} />
+                                                ))}
+                                            </SwiperPages>
+                                        ) : (
+                                            <div className=' d-flex justify-content-center align-items-center py-5'>
+                                                <Spin size='large'/>
+                                            </div>
+                                        )}
                                     </div>
                                 )}
                             </div>
