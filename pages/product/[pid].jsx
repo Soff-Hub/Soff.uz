@@ -65,7 +65,7 @@ export default function ProductDefaultPage ({
                 observer.unobserve(similarRef.current);
             }
         };
-    }, [pid]); // pid bo‘yicha kuzatuv
+    }, [pid]); 
 
 
 
@@ -110,7 +110,6 @@ export default function ProductDefaultPage ({
             showProgress={false}
             styles={{
                 options: {
-                    // zIndex: 9999,
                     arrowColor: '#e3ffeb',
                     primaryColor: '#00A44F',
                     textColor: '#004a14',
@@ -361,16 +360,9 @@ export async function getServerSideProps ({ query, req }) {
     });
 
     const defaultProducts = await resquest.json();
-
-    // const resquestSimilarProduct = await fetch(
-    //     `${baseUrl}customer/similar/${query.pid}/`
-    // );
-    // const similarProduct = await resquestSimilarProduct.json();
-
     return {
         props: {
             defaultProducts,
-            // similarProduct,
         },
     };
 }
