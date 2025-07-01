@@ -14,6 +14,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import { Provider } from 'react-redux';
 import { store } from '~/store';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Toaster } from 'react-hot-toast';
 const queryClient = new QueryClient()
 
 
@@ -105,6 +106,7 @@ function App({ Component, pageProps }) {
                             <ProductProvider>
                                 <AudioProvider>
                                     <Component {...pageProps} />
+                                    <Toaster position="top-center" />
                                 </AudioProvider>
                             </ProductProvider>
                         </CookiesProvider>

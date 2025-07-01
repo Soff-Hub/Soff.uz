@@ -6,6 +6,7 @@ import ImageCarousel from '../details-actions/imageScroll';
 import Tags from '../details-actions/tags';
 import CommentForm from '../comment-section/commentForm';
 import { CommentList } from '../comment-section/commentList';
+import CommentFormWrapper from '../comment-section/commentWrapper';
 
 function ThreeDesignProductsDetails ({ product, template }) {
     return (
@@ -49,8 +50,8 @@ function ThreeDesignProductsDetails ({ product, template }) {
                         <SellerProfile product={product} />
                     </div>
                     <div>
-                        <CommentForm/>
-                        <CommentList/>
+                        <CommentFormWrapper id={product.id} slug={product.slug}/>
+                        <CommentList slug={product.slug}/>
                     </div>
                 </div>
             </div>

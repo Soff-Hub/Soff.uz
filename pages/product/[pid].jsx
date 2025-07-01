@@ -359,6 +359,7 @@ export async function getServerSideProps ({ query, req }) {
     const resquest = await fetch(`${baseUrl}customer/documents/${query.pid}/`, {
         headers,
     });
+    console.log('req---->', resquest)
 
     const defaultProducts = await resquest.json();
 

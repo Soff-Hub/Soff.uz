@@ -1,49 +1,89 @@
 import { useState } from 'react';
-import { Rating } from 'react-simple-star-rating'
+import { Rating } from 'react-simple-star-rating';
+import Cookies from 'js-cookie';
+import axios from 'axios';
+import { baseURL } from '~/repositories/api';
+import toast from 'react-hot-toast';
 
-export default function CommentForm() {
-    const [text, setText] = useState('');
-    const [rating, setRating] = useState(0)
-    const [ratingKey, setRatingKey] = useState(0)
+export default function CommentForm({ documentId, hasFirstComment }) {
+  const [text, setText] = useState('');
+  const [rating, setRating] = useState(0);
+  const [ratingKey, setRatingKey] = useState(0);
+  const [loading, setLoading] = useState(false);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (!text.trim()) return;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!text.trim() ) return;
 
-        console.log("Yuborilgan comment:", text);
-        console.log("Yuborilgan rating:", rating);
-        
-        setText('');
-        setRating(0);
-
-        setRatingKey(prev => prev + 1)
-    };
-
-    const handleRating = (rate) => {
-        setRating(rate)
+    const token = Cookies.get('token');
+    if (!token) {
+      toast.error("Token topilmadi. Iltimos, tizimga kiring.");
+      return;
     }
 
-    return (
-        <form onSubmit={handleSubmit} className="mb-5">
-            <div style={{background: '#f0f0f0'}} className="mb-4 p-5 rounded-3">
-                <textarea
-                    style={{borderRadius:'10px', border:'none', background:'#f0f0f0'}}
-                    className="w-100 fs-4 "
-                    rows="5"
-                    placeholder="Izohingizni yozing..."
-                    value={text}
-                    onChange={(e) => setText(e.target.value)}
-                />
-                <div className='d-flex justify-content-between align-items-center'>
-                    <Rating
-                        key={ratingKey}
-                        onClick={handleRating}
-                        size={25}
-                        ratingValue={rating}
-                    />
-                    <button type="submit" className="btn fs-2 rounded-5 py-2 px-5 btn-success">Jo'natish</button>
-                </div>
-            </div>
-        </form>
-    );
+    try {
+      setLoading(true);
+      const res = await axios.post(
+        `${baseURL}seller/document-review/${documentId}`,
+        {
+          text,
+          rating,
+          replied_to: null,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      console.log('Yuborildi:', res.data);
+      setText('');
+      setRating(0);
+      setRatingKey(prev => prev + 1); // reset star rating
+      toast.success("Izoh muvaffaqiyatli yuborildi!")
+    } catch (err) {
+      toast.error("Izoh yuborilmadi.")
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleRating = (rate) => {
+    setRating(rate);
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="mb-5">
+      <div style={{ background: '#fff' }} className="mb-4 p-5 rounded-3">
+        <textarea
+          style={{ borderRadius: '10px', border: 'none', background: '#fff' }}
+          className="w-100 fs-4 "
+          rows="5"
+          placeholder="Izohingizni yozing..."
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+        />
+        <div className="d-flex justify-content-between align-items-center mt-3">
+          {!hasFirstComment ? (
+            <Rating
+              key={ratingKey}
+              onClick={handleRating}
+              size={25}
+              initialValue={rating}
+            />
+          ) : (
+            <div></div>
+          )}
+          <button
+            type="submit"
+            className="btn fs-4 rounded-5 py-2 px-5 btn-success"
+            disabled={loading}
+          >
+            {loading ? 'Yuborilmoqda...' : "Jo'natish"}
+          </button>
+        </div>
+      </div>
+    </form>
+  );
 }
