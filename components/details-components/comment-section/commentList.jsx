@@ -1,93 +1,55 @@
 import Image from "next/image";
 import { Rating } from 'react-simple-star-rating';
 import { Tooltip } from "antd";
-import { CheckCircleFilled, LikeOutlined, DislikeOutlined, MessageOutlined } from "@ant-design/icons";
+import { CheckCircleFilled, MessageOutlined } from "@ant-design/icons";
+import { useEffect, useState } from "react";
+import { baseURL } from "~/repositories/api";
+import { getTimeAgo } from "~/utilities/calculateTime";
+import ReplyForm from "./replysForm";
 
-const mockComments = [
-  {
-    id: 1,
-    username: 'Ali',
-    text: 'Zo‘r mahsulot!',
-    rating: 4,
-    time: '58 daqiqa oldin',
-    replys: [
-      {
-        username: 'Bobur (egasi)',
-        text: 'Rahmat! Sizga yoqqanidan xursandmiz.',
-        time: '8 daqiqa oldin'
-      }
-    ]
-  },
-  {
-    id: 2,
-    username: 'Laylo',
-    text: 'Yaxshi ishlayapti, rahmat!',
-    rating: 5,
-    time: '1 soat oldin',
-    replys: []
-  },
-    {
-    id: 1,
-    username: 'Ali',
-    text: 'Zo‘r mahsulot!',
-    rating: 4,
-    time: '58 daqiqa oldin',
-    replys: [
-      {
-        username: 'Bobur (egasi)',
-        text: 'Rahmat! Sizga yoqqanidan xursandmiz.',
-        time: '8 daqiqa oldin'
-      }
-    ]
-  },
-  {
-    id: 2,
-    username: 'Laylo',
-    text: 'Yaxshi ishlayapti, rahmat!',
-    rating: 5,
-    time: '1 soat oldin',
-    replys: []
-  },
-    {
-    id: 1,
-    username: 'Ali',
-    text: 'Zo‘r mahsulot!',
-    rating: 4,
-    time: '58 daqiqa oldin',
-    replys: [
-      {
-        username: 'Bobur (egasi)',
-        text: 'Rahmat! Sizga yoqqanidan xursandmiz.',
-        time: '8 daqiqa oldin'
-      }
-    ]
-  },
-  {
-    id: 2,
-    username: 'Laylo',
-    text: 'Yaxshi ishlayapti, rahmat!',
-    rating: 5,
-    time: '1 soat oldin',
-    replys: []
-  },
-];
+export function CommentList({ slug }) {
+  const [comments, setComments] = useState([]);
+  const [activeReplyId, setActiveReplyId] = useState(null);
 
-export function CommentList() {
+  const fetchComments = async () => {
+    try {
+      const res = await fetch(`${baseURL}seller/document-reviews/${slug}`);
+      const data = await res.json();
+      setComments(data);
+    } catch (err) {
+      console.error('Comment yuklashda xatolik:', err);
+    }
+  };
+
+  useEffect(() => {
+    if (slug) fetchComments();
+  }, [slug]);
+
   return (
-    <div style={{maxHeight:'500px', overflowY: 'auto'}} className="border rounded-5 p-5 bg-white">
+    <div className="border rounded-5 p-5 bg-white" >
       <h5 className="mb-4 fs-1 d-flex align-items-center gap-2">
         Izohlar
         <span className="rounded-5 fs-4 text-white bg-success px-3 py-1">
-          {mockComments.length}
+          {comments.count || 0}
         </span>
       </h5>
+    <div
+      style={{
+        maxHeight: '500px',
+        overflowY: 'auto',
+        paddingRight: '10px',
+        scrollbarGutter: 'stable',
+      }}
+      
+    >
 
-      {mockComments.length === 0 ? (
-        <p className="text-muted fs-3">Hali Izohlar Mavjud Emas</p>
+
+      {comments.count === 0 ? (
+        <p className="text-muted fs-3">Hali izohlar mavjud emas</p>
       ) : (
-        mockComments.map((comment) => (
-          <div key={comment.id} className="mb-4 pb-4 border-bottom">
-            {/* Main Comment */}
+        comments.results?.map((comment, i) => (
+          <div key={`${comment.id}-${i}`} className="mb-4 pb-4 border-bottom">
+            {/* Main comment */}
             <div className="d-flex align-items-start gap-3">
               <Image
                 src="/static/img/ozodbek.png"
@@ -98,11 +60,15 @@ export function CommentList() {
               />
               <div className="w-100">
                 <div className="d-flex justify-content-between">
-                  <div>
-                    <strong className="fs-5">{comment.username}</strong>
-                    <span className="text-muted ms-2">{comment.time}</span>
+                  <div className="d-flex align-items-center gap-2">
+                    <strong className="fs-3">
+                      {comment.user.first_name} {comment.user.last_name}
+                    </strong>
+                    <span className="text-muted ms-2">
+                      {getTimeAgo(comment.created_at)}
+                    </span>
                   </div>
-                  <div>
+                  {comment.rating !== 0 && (
                     <Rating
                       readonly
                       allowFraction
@@ -111,20 +77,45 @@ export function CommentList() {
                       fillColor="orange"
                       emptyColor="gray"
                     />
+                  )}
+                </div>
+                <p className="mt-2 mb-2 fs-4">{comment.text}</p>
+
+                {/* Javob yozish faqat hujjat egasiga */}
+                {comment.is_document_owner && (
+                  <div className="d-flex gap-4 text-muted fs-6">
+                    <Tooltip title="Javob yozish">
+                      <span
+                        role="button"
+                        onClick={() => setActiveReplyId(comment.id)}
+                        className="text-success"
+                      >
+                        <MessageOutlined /> Javob berish
+                      </span>
+                    </Tooltip>
                   </div>
-                </div>
-                <p className="mt-2 mb-2 fs-5">{comment.text}</p>
-                <div className="d-flex gap-4 text-muted fs-6">
-                  <Tooltip title="Javob yozish">
-                    <span><MessageOutlined /> Javob berish</span>
-                  </Tooltip>
-                </div>
+                )}
+
+                {/* Reply form ko‘rsatish */}
+                {activeReplyId === comment.id && (
+                  <ReplyForm
+                    commentId={comment.id}
+                    documentId={slug}
+                    onSuccess={() => {
+                      setActiveReplyId(null);
+                      fetchComments(); // replydan so'ng commentlarni yangilash
+                    }}
+                  />
+                )}
               </div>
             </div>
 
             {/* Replies */}
-            {comment.replys.map((reply, index) => (
-              <div key={index} className="d-flex align-items-start gap-3 mt-4 ms-5 ps-3 border-start border-3 border-success">
+            {comment.replys?.map((reply, index) => (
+              <div
+                key={index}
+                className="d-flex align-items-start gap-3 mt-4 ms-5 ps-3 border-start border-3 border-success"
+              >
                 <Image
                   src="/static/img/ozodbek.png"
                   alt="avatar"
@@ -134,22 +125,21 @@ export function CommentList() {
                 />
                 <div>
                   <div className="d-flex align-items-center gap-2">
-                    <strong className="fs-6 text-success">{reply.username}</strong>
+                    <strong className="fs-6 text-success">
+                      {reply.username}
+                    </strong>
                     <CheckCircleFilled className="text-success" />
                     <span className="text-muted small">{reply.time}</span>
                   </div>
                   <p className="mt-1 mb-0">{reply.text}</p>
-                  <div className="d-flex gap-4 text-muted fs-6">
-                    <Tooltip title="Javob yozish">
-                      <span><MessageOutlined /> Javob berish</span>
-                    </Tooltip>
-                  </div>
                 </div>
               </div>
             ))}
           </div>
         ))
       )}
+    </div>
+    
     </div>
   );
 }
