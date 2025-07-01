@@ -1,11 +1,27 @@
+import { Select } from 'antd';
 import { useRouter } from 'next/router';
 import React from 'react';
+import {
+  AppstoreOutlined,
+  FileTextOutlined,
+  PictureOutlined,
+  VideoCameraOutlined,
+  GlobalOutlined,
+  CodeOutlined,
+  LayoutOutlined,
+} from '@ant-design/icons';
 
 export default function SearchResultsProductsFilter({ data, parentData, childData }) {
     const router = useRouter();
-
+    const { Option } = Select;
     const allTypes = [
-        'all', 'file', '3d', 'design', 'template', 'website', 'video'
+        { title: 'Barchasi', value: 'all', icon: <AppstoreOutlined /> },
+        { title: 'Fayllar', value: 'file', icon: <FileTextOutlined /> },
+        { title: '3D modellar', value: '3d', icon: <PictureOutlined /> },
+        { title: 'Dizayn shablonlar', value: 'design', icon: <LayoutOutlined /> },
+        { title: 'Turli shablonlar', value: 'template', icon: <CodeOutlined /> },
+        { title: 'Veb saytlar', value: 'website', icon: <GlobalOutlined /> },
+        { title: 'Videolar', value: 'video', icon: <VideoCameraOutlined /> },
     ];
 
     const handleChange = (newQuery) => {
@@ -14,9 +30,9 @@ export default function SearchResultsProductsFilter({ data, parentData, childDat
             query: {
                 ...router.query,
                 ...newQuery,
-                page: 1, // har doim 1-sahifadan boshlansin
+                page: 1, 
             },
-        }, undefined, { scroll: false }); // scroll bo‘lmasin
+        }, undefined, { scroll: false }); 
     };
 
     return (
@@ -28,48 +44,47 @@ export default function SearchResultsProductsFilter({ data, parentData, childDat
             <form className='Search_Results_Products_form'>
 
                 {/* Mahsulot turi (type) */}
-                <select
-                    onChange={(e) =>
-                        handleChange({ type: e.target.value, parentCategory: '', category: '' })
-                    }
-                    value={router.query.type || 'all'}
-                >
-                    {allTypes.map((type) => (
-                        <option key={type} value={type}>
-                            {type}
-                        </option>
+                <Select
+                    style={{ width: '200px' }}
+                    defaultValue={router.query.type || 'all'}
+                    onChange={(value) => handleChange({ type: value, parentCategory: '', category: '' })}
+                    >
+                    {allTypes.map((item) => (
+                        <Option key={item.value} value={item.value}>
+                            <span className="d-flex align-items-center gap-4">
+                                {item.icon} {item.title}
+                            </span>
+                        </Option>
                     ))}
-                </select>
-
+                </Select>
                 {/* Katta kategoriya (parentCategory) */}
-                <select
-                    onChange={(e) =>
-                        handleChange({ parentCategory: e.target.value, category: '' })
-                    }
-                    value={router.query.parentCategory || ''}
-                >
-                    <option value=''>Kategoriya</option>
-                    {childData?.results?.map((cat) => (
-                        <option key={cat.slug} value={cat.slug}>
-                            {cat.name}
-                        </option>
-                    ))}
-                </select>
+                {router.query.type !== 'all' &&
+                    <>
+                        <Select
+                            style={{ width: '150px' }}
+                            placeholder="Tanlang"
+                            defaultValue={router.query.parentCategory || undefined}
+                            onChange={(value) => handleChange({ parentCategory: value, category: '' })}
+                            options={childData?.results?.map(cat => ({
+                                value: cat.slug,
+                                label: cat.name,
+                            }))}
+                        />
 
-                {/* Kichik kategoriya (childCategory) */}
-                <select
-                    onChange={(e) =>
-                        handleChange({ category: e.target.value })
-                    }
-                    value={router.query.category || ''}
-                >
-                    <option value=''>Subkategoriya</option>
-                    {parentData?.results?.map((cat) => (
-                        <option key={cat.slug} value={cat.id}>
-                            {cat.name}
-                        </option>
-                    ))}
-                </select>
+                        {router.query.parentCategory !== '' &&
+                            <Select
+                                style={{ width: '150px' }}
+                                placeholder="Tanlang"
+                                defaultValue={router.query.category || undefined}
+                                onChange={(value) => handleChange({ category: value })}
+                                options={parentData?.results?.map(cat => ({
+                                    value: cat.id,
+                                    label: cat.name,
+                                }))}
+                            />
+                        }
+                    </>
+                }
 
             </form>
         </div>

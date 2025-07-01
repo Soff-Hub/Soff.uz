@@ -48,10 +48,10 @@ function FileProductsDetails({ product }) {
             {/* <SellerProfile product={product}/> */}
             <OrderCardBtn product={product}/>
           </div>
-          <div>
+          {/* <div>
               <CommentForm/>
               <CommentList/>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
