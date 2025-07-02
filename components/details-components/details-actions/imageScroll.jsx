@@ -7,8 +7,9 @@ import "swiper/css/navigation";
 import "swiper/css/thumbs";
 import ImageLightBox from "./image-lightbox";
 import { InfoCircleOutlined } from '@ant-design/icons'
+import DemoButton from "~/components/form/demoBtn";
 
-const ImageCarousel = ({ images, views }) => {
+const ImageCarousel = ({ images, views, demo_link }) => {
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
     const prevRef = useRef(null);
     const nextRef = useRef(null);
@@ -64,11 +65,17 @@ const ImageCarousel = ({ images, views }) => {
                 {' '}
                 <i className="fa-solid fa-eye"></i> <span>{views || 0}</span>
             </div>
-            <div className='title_support'>
-                <InfoCircleOutlined className='fs-2 ' style={{ cursor: "pointer", }} />
-                <span>Mualliflik huquqi buzilgan holatda</span>
-                <strong className='text-success' style={{ cursor: "pointer" }}>shikoyat qiling!</strong>
-
+      
+            
+            <div className='d-flex align-items-center gap-5 mt-5 flex-wrap justify-content-center'>
+                { demo_link &&
+                    <DemoButton demo_link={demo_link}/> 
+                }
+                <div className="d-flex gap-2 align-items-center flex-wrap">
+                    <InfoCircleOutlined className='fs-2 ' style={{ cursor: "pointer", }} />
+                    <span>Mualliflik huquqi buzilgan holatda</span>
+                    <strong className='text-success' style={{ cursor: "pointer" }}>shikoyat qiling!</strong>    
+                </div>
             </div>
         </div>
     );
