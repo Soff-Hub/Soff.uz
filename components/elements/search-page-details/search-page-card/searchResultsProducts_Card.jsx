@@ -1,6 +1,8 @@
 import React from 'react';
 import { Breadcrumb } from 'antd';
 import Link from 'next/link';
+import { fileColors } from '~/components/details-components/details-actions/file-actions';
+
 
 export default function SearchResultsProducts_Card ({ product }) {
 
@@ -41,7 +43,14 @@ export default function SearchResultsProducts_Card ({ product }) {
                 <div className='Search_Results_Products_card_info'>
                     <p className='Search_Results_Products_card_type'>
                         Fayl turi:{' '}
-                        <span className='Search_Results_Products_card_boldtype'>
+                        <span 
+                        style={{
+                                color: "white",
+                                padding: "4px 9px",
+                                borderRadius: "4px",
+                                backgroundColor: fileColors[product?.file_type] || "#007DFF"
+                            }}
+                        className='Search_Results_Products_card_boldtype'>
                             {product.file_type}
                         </span>
                     </p>
