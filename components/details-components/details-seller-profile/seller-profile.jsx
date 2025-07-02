@@ -4,7 +4,6 @@ import Link from 'next/link';
 import React from 'react';
 
 function SellerProfile({ product }) {
-    console.log('product=>', product)
     return (
         <div className='seller_products_actions_secound'>
             <div className='seller_profile'>
