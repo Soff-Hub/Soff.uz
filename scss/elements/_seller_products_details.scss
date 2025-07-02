@@ -204,15 +204,15 @@
                         background-color: white;
                         position: relative;
 
-                        // .title_support {
-                            
-                        //     // width: 100%;
-                        //     // display: flex;
-                        //     // flex-wrap: wrap;
-                        //     // align-items: center;
-                        //     // gap: 10px;
-
-                        // }
+                        .title_support {
+                            position: absolute;
+                            bottom: 12px;
+                            width: 100%;
+                            display: flex;
+                            flex-wrap: wrap;
+                            align-items: center;
+                            gap: 10px;
+                        }
 
 
                         .ps-wrapper_seller {
