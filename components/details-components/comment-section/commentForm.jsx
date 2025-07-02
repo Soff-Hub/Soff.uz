@@ -5,14 +5,14 @@ import axios from 'axios';
 import { baseURL } from '~/repositories/api';
 import toast from 'react-hot-toast';
 
-export default function CommentForm({ documentId, hasFirstComment }) {
+export default function CommentForm({ documentId, fComment }) {
   const [text, setText] = useState('');
   const [rating, setRating] = useState(0);
   const [ratingKey, setRatingKey] = useState(0);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     if (!text.trim() ) return;
 
     const token = Cookies.get('token');
@@ -37,7 +37,6 @@ export default function CommentForm({ documentId, hasFirstComment }) {
         }
       );
 
-      console.log('Yuborildi:', res.data);
       setText('');
       setRating(0);
       setRatingKey(prev => prev + 1); // reset star rating
@@ -65,7 +64,7 @@ export default function CommentForm({ documentId, hasFirstComment }) {
           onChange={(e) => setText(e.target.value)}
         />
         <div className="d-flex justify-content-between align-items-center mt-3">
-          {!hasFirstComment ? (
+          {!fComment ? (
             <Rating
               key={ratingKey}
               onClick={handleRating}
