@@ -34,17 +34,15 @@ export default function CommentFormWrapper({ slug, id }) {
 
   if (loading) return <p>Tekshirilmoqda...</p>;
 
-  if (!canReview) {
+  if (canReview) {
     return (
-      <div className="alert alert-warning fs-5">
-        Bu mahsulotga faqat mahsulotni sotib olganlargina izoh yozoladi
+      <div>
+          <CommentForm documentId={id} fComment={hasFirstComment}/>
       </div>
     );
   }
 
   return (
-    <div>
-        <CommentForm documentId={id} fComment={hasFirstComment}/>
-    </div>
+    <div></div>
   );
 }

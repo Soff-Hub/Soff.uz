@@ -3,7 +3,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 
 dayjs.extend(relativeTime);
 
-// Hand-made O'zbekcha tarjima
+// O'zbekcha tarjima
 const uzLocale = {
   name: 'uz',
   relativeTime: {
@@ -23,7 +23,11 @@ const uzLocale = {
   },
 };
 
-dayjs.locale(uzLocale, null, true); // override 'uz'
+// 1. Ro'yxatdan o'tkazamiz
+dayjs.locale(uzLocale, null, true);
+
+// 2. Faollashtiramiz
+dayjs.locale('uz');
 
 export function getTimeAgo(dateString) {
   return dayjs(dateString, 'YYYY-MM-DD HH:mm').fromNow();
