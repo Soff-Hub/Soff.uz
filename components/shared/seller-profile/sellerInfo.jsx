@@ -1,7 +1,6 @@
 import React from 'react';
 
-export default function SellerInfo () {
-
+export default function SellerInfo ({ sellerInfo }) {
 
     return (
         <div className='SellerInfo'>
