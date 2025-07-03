@@ -1,13 +1,11 @@
 import { message } from 'antd';
 import Axios from 'axios';
-import Head from 'next/head';
 import Link from 'next/link';
 import Router, { useRouter } from 'next/router';
 import React from 'react';
 import PageContainer from '~/components/layouts/PageContainer';
 import { orginalUrl } from '~/reositoriy-admin/Repository';
 import { useGet } from '~/repositories/https';
-import { baseUrl } from '~/repositories/Repository';
 
 function Report() {
     const router = useRouter();

@@ -2,29 +2,18 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import ThreeDCategoriesFilterSecion from '~/components/elements/ThreeDCategoriesFilterSecion';
 import PageContainer from '~/components/layouts/PageContainer';
-import ScientificResourcesFilterSection, { getTitleFromSlug } from '~/components/elements/ScientificResourcesFilterSection';
-
-
-// import FilterSection from '~/components/elements/FilterSection';
-// import PageContainer from '~/components/layouts/PageContainer';
-// import DynamicProductList from '~/components/partials/category/DynamicProductList';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
 import Meta from '~/components/shared/headers/Meta';
-import useApi, { baseUrlUseApi } from '~/repositories/useApi';
-import ProductsByCategory from '~/components/partials/category/ProductsByCategory';
 import ProductsByModelsAndDesignCategory from '~/components/partials/category/ProductsByModelsAndDesignCategory';
 
 export default function ModelsAndInteriorDesign ({
     productsData,
     fourChildData,
     childCategoryData,
-    parentCategory,
-    childCategory,
     page,
 }) {
     const router = useRouter();
 
-    // Pagination tugmalari uchun funksiya
     const handlePageChange = newPage => {
         router.push({
             pathname: router.pathname,

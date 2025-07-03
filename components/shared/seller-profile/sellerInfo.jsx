@@ -1,6 +1,8 @@
 import React from 'react';
 
 export default function SellerInfo () {
+
+
     return (
         <div className='SellerInfo'>
             <p className='SellerInfoTitle'>Statistikalar</p>

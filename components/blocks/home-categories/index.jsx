@@ -1,7 +1,5 @@
 import React from 'react'
 import ParentCategories from '../categories/ParentCategories'
-import ItServicesCategories from './ItServicesCategories'
-
 export default function HomeCategories() {
 
     return (
