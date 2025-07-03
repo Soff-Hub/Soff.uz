@@ -10,6 +10,7 @@ export default function CommentFormWrapper({ slug, id }) {
   const [hasFirstComment, setHasFirstComment] = useState(false);
   const [loading, setLoading] = useState(true);
   const token = Cookies.get('token');
+  
 
   useEffect(() => {
     const checkPermission = async () => {

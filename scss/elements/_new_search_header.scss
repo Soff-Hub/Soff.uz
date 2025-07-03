@@ -1449,13 +1449,23 @@
         }
         @media (max-width: 600px) {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(1, 1fr);
             width: 100%;
         }
         @media (max-width: 350px) {
             display: grid;
             grid-template-columns: repeat(1, 1fr);
             width: 100%;
+        }
+
+        .search_filter_wrapper{
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            @media (max-width: 590px) {
+                flex-wrap: wrap;
+                
+            }
         }
 
         .Search_Results_Products_form_inputBox {
@@ -1585,6 +1595,7 @@
             gap: 10px;
             @media (max-width: 600px) {
                 flex-direction: column;
+                align-items: start;
             }
 
             .Search_Results_Products_card_type {

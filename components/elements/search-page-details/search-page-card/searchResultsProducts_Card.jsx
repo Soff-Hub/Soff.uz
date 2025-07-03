@@ -2,12 +2,16 @@ import React from 'react';
 import { Breadcrumb } from 'antd';
 import Link from 'next/link';
 import { fileColors } from '~/components/details-components/details-actions/file-actions';
+import { useRouter } from 'next/router';
 
 
 export default function SearchResultsProducts_Card ({ product }) {
-
+    const router = useRouter()
     return (
-        <div className='Search_Results_Products_card'>
+        <div onClick={() => router.push({pathname: `/product/${product.slug}`})} 
+            className='Search_Results_Products_card'
+            style={{cursor: 'pointer'}}
+            >
             <div className='Search_Results_Products_card_body'>
                 <Breadcrumb
                     className='Breadcrumb '

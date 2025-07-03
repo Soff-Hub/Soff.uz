@@ -9,11 +9,13 @@ import {
   GlobalOutlined,
   CodeOutlined,
   LayoutOutlined,
+  CloseCircleOutlined
 } from '@ant-design/icons';
 
-export default function SearchResultsProductsFilter({ data, parentData, childData }) {
+export default function SearchResultsProductsFilter({ total, parentData, childData }) {
     const router = useRouter();
     const { Option } = Select;
+
     const allTypes = [
         { title: 'Barchasi', value: 'all', icon: <AppstoreOutlined /> },
         { title: 'Fayllar', value: 'file', icon: <FileTextOutlined /> },
@@ -30,62 +32,90 @@ export default function SearchResultsProductsFilter({ data, parentData, childDat
             query: {
                 ...router.query,
                 ...newQuery,
-                page: 1, 
+                page: 1,
             },
-        }, undefined, { scroll: false }); 
+        }, undefined, { scroll: false });
+    };
+
+    const handleClearAll = () => {
+        router.push({
+            pathname: router.pathname,
+            query: {
+                page: 1,
+            },
+        }, undefined, { scroll: false });
     };
 
     return (
         <div className='Search_Results_Products_form_box container'>
             <p className='countProduct'>
-                {data?.count ? `${data.count} ta mahsulot` : ''}
+                {total ? `${total} ta mahsulot` : ''}
             </p>
 
             <form className='Search_Results_Products_form'>
 
-                {/* Mahsulot turi (type) */}
-                <Select
-                    style={{ width: '200px' }}
-                    defaultValue={router.query.type || 'all'}
-                    onChange={(value) => handleChange({ type: value, parentCategory: '', category: '' })}
-                    >
-                    {allTypes.map((item) => (
-                        <Option key={item.value} value={item.value}>
-                            <span className="d-flex align-items-center gap-4">
-                                {item.icon} {item.title}
-                            </span>
-                        </Option>
-                    ))}
-                </Select>
-                {/* Katta kategoriya (parentCategory) */}
-                {router.query.type !== 'all' &&
-                    <>
-                        <Select
-                            style={{ width: '150px' }}
-                            placeholder="Tanlang"
-                            defaultValue={router.query.parentCategory || undefined}
-                            onChange={(value) => handleChange({ parentCategory: value, category: '' })}
-                            options={childData?.results?.map(cat => ({
-                                value: cat.slug,
-                                label: cat.name,
-                            }))}
-                        />
+                <div className='search_filter_wrapper'>
 
-                        {router.query.parentCategory !== '' &&
+                    {/* Mahsulot turi (type) */}
+                    <Select
+                        style={{ width: '200px' }}
+                        value={router.query.type || 'all'}
+                        allowClear
+                        onClear={handleClearAll}
+                        onChange={(value) => handleChange({ type: value, parentCategory: '', category: '' })}
+                    >
+                        {allTypes.map((item) => (
+                            <Option key={item.value} value={item.value}>
+                                <span className="d-flex align-items-center gap-4">
+                                    {item.icon} {item.title}
+                                </span>
+                            </Option>
+                        ))}
+                    </Select>
+
+                    {/* Katta kategoriya (parentCategory) */}
+                    {router.query.type && router.query.type !== 'all' &&
+                        <>
                             <Select
-                                style={{ width: '150px' }}
-                                placeholder="Tanlang"
-                                defaultValue={router.query.category || undefined}
-                                onChange={(value) => handleChange({ category: value })}
-                                options={parentData?.results?.map(cat => ({
-                                    value: cat.id,
+                                style={{ width: '160px' }}
+                                placeholder="Katta kategoriya"
+                                value={router.query.parentCategory || undefined}
+                                allowClear
+                                onClear={() => handleChange({ parentCategory: '', category: '' })}
+                                onChange={(value) => handleChange({ parentCategory: value, category: '' })}
+                                options={childData?.results?.map(cat => ({
+                                    value: cat.slug,
                                     label: cat.name,
                                 }))}
                             />
-                        }
-                    </>
-                }
 
+                            {router.query.parentCategory &&
+                                <Select
+                                    style={{ width: '160px' }}
+                                    placeholder="Kategoriya"
+                                    value={router.query.category || undefined}
+                                    allowClear
+                                    onClear={() => handleChange({ category: '' })}
+                                    onChange={(value) => handleChange({ category: value })}
+                                    options={parentData?.results?.map(cat => ({
+                                        value: String(cat.id),
+                                        label: cat.name,
+                                    }))}
+                                />
+                            }
+                        </>
+                    }
+
+                    {/* Barchasini tozalovchi tugma */}
+                    {router.query.type && router.query.type !== 'all' &&
+                        <CloseCircleOutlined
+                            style={{ fontSize: 18, cursor: 'pointer', color: '#ff4d4f' }}
+                            title="Barchasini tozalash"
+                            onClick={handleClearAll}
+                        />
+                    }
+
+                </div>
             </form>
         </div>
     );
