@@ -135,7 +135,7 @@ export default function SearchResultsProductsFilter({ total, parentData, childDa
           {/* Tozalash tugmasi */}
           {router.query.type && router.query.type !== 'all' &&
             <CloseCircleOutlined
-              style={{ fontSize: 18, cursor: 'pointer', color: '#ff4d4f' }}
+              style={{ fontSize: 18, cursor: 'pointer', color: 'gray' }}
               title="Barchasini tozalash"
               onClick={handleClearAll}
             />
