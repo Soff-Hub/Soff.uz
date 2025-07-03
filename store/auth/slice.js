@@ -56,9 +56,12 @@ export const checkAuthorization = createAsyncThunk(
     'auth/checkAuthorization',
     async (_, { rejectWithValue }) => {
         try {
+            
             const user = localStorage.getItem('user')
                 ? JSON.parse(localStorage.getItem('user'))
                 : '';
+            const token = Cookies.get('token')
+            if(!token) Cookies.set('token', user?.access, { expires: jwtDecode(user?.access)?.exp || 8 })
             if (user?.access) {
                 return { isLoggedIn: true, user };
             } else {
