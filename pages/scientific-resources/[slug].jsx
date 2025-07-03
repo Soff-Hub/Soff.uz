@@ -93,8 +93,8 @@ export async function getServerSideProps(context) {
         fetchJson(productsUrl),
         fetchJson(fourChildUrl),
         fetchJson(childCategoryUrl)
+        
     ]);
-
     return {
         props: {
             productsData: productsData || null,

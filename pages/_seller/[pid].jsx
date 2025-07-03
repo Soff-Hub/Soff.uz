@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import PageContainer from '~/components/layouts/PageContainer';
 import SellerCollapseMenu from '~/components/shared/seller-profile/sellerCollapseMenu';
 import SellerComments from '~/components/shared/seller-profile/sellerComments';
@@ -9,23 +10,26 @@ import SellerProduct from '~/components/shared/seller-profile/sellerProduct';
 import SellerServices from '~/components/shared/seller-profile/sellerServices';
 import SellerShortInfo from '~/components/shared/seller-profile/sellerShortInfo';
 import { useGet } from '~/repositories/https';
+import { baseUrl } from '~/repositories/Repository';
+import { testApi } from '~/service/testApi';
 
 export default function SellersPage () {
-    const { asPath } = useRouter();
-    const activeIndex = asPath.slice(asPath.indexOf('#') + 1, asPath.length);
-
     const router = useRouter();
-    const { productId } = router.query;
+    const { query, asPath } = router;
+    const activeIndex = asPath.slice(asPath.indexOf('#') + 1, asPath.length);
+    const [seller, setSeller] = useState(null);
+    const [selleserviceDatar, setServiceData] = useState(null);
 
-    console.log('productId', productId);
-
-    const sellerTabItems = {
-        about_author: <SellerInfo />,
-        services: <SellerServices />,
-        portfolio: <SellerPortfolio />,
-        comments: <SellerComments />,
-        products: <SellerProduct />,
-    };
+    async function getData () {
+        await testApi
+            .get('services/')
+            .then(res => {
+                console.log(res);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
 
     const menuItems = [
         {
@@ -50,18 +54,34 @@ export default function SellersPage () {
         },
     ];
 
-    const id = 28977;
+    useEffect(() => {
+        if (query.pid) {
+            fetch(`${baseUrl}customer/top-sellers/${query.pid}`)
+                .then(res => res.json())
+                .then(data => {
+                    setSeller(data);
+                })
+                .catch(error => {
+                    console.error('Error fetching seller:', error);
+                });
+        }
+        getData();
+    }, [query.pid]);
 
-    const { data, isLoading } = useGet('users', `/users/${id}/`);
-
-    console.log('data', data);
+    const sellerTabItems = {
+        about_author: <SellerInfo sellerInfo={seller} />,
+        services: <SellerServices />,
+        portfolio: <SellerPortfolio />,
+        comments: <SellerComments />,
+        products: <SellerProduct />,
+    };
 
     return (
         <PageContainer>
             <div className='container bg-gray-999 '>
                 <div className='SellersPageWrap'>
                     <div className=''>
-                        <SellerShortInfo />
+                        <SellerShortInfo sellerInfo={seller} />
                     </div>
                     <div className='SellerCollapseMenu'>
                         <SellerCollapseMenu />

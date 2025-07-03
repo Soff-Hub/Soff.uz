@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Select } from 'antd';
 import { api } from '~/repositories/api';
 import { Input } from 'antd';
+import { testApi } from '~/service/testApi';
 
 const { TextArea } = Input;
 const options = [];
@@ -24,22 +25,21 @@ const AcceptFreelanceInviteModal = () => {
             setError(false); // agar to‘g‘ri tanlasa, xatolik yo‘qoladi
         }
     };
-
-    const handleSubmit = () => {
-        if (valueSelect.length === 0) {
-            setError(true); // validatsiya xatosi
-            return;
-        }
-
-        api.post('http://176.96.241.219:8006/auth/start-freelancing/')
+    async function getData () {
+        await testApi
+            .get('/categories/{category_id}')
             .then(res => {
                 console.log(res);
-                // window.location.href = `https://soff.uz/_seller${id}`;
             })
             .catch(err => {
                 console.log(err);
             });
-    };
+    }
+    useEffect(() => {
+        getData();
+    }, []);
+
+    const handleSubmit = () => {};
 
     return (
         <div>
@@ -91,7 +91,7 @@ const AcceptFreelanceInviteModal = () => {
                 <button
                     onClick={handleSubmit}
                     type='button'
-                    class='AcceptFreelanceInviteModalBtn'>
+                    className='AcceptFreelanceInviteModalBtn'>
                     Tasdiqlash
                 </button>
             </div>

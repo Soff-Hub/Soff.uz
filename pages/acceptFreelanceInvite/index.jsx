@@ -14,14 +14,12 @@ export default function AcceptFreelanceInvite () {
     const [isOpen, setIsOpen] = useState(true);
 
 
-    // Log productId on change
     useEffect(() => {
         if (productId) {
             console.log('Product ID:', productId);
         }
     }, [productId]);
 
-    // Handle body scroll lock
     useEffect(() => {
         if (isOpen) {
             document.body.classList.add('no-scroll');
