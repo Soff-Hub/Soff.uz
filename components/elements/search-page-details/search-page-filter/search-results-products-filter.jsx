@@ -13,137 +13,140 @@ import {
 } from '@ant-design/icons';
 
 export default function SearchResultsProductsFilter({ total, parentData, childData }) {
-    const router = useRouter();
-    const { Option } = Select;
+  const router = useRouter();
+  const { Option } = Select;
 
+  const orders = [
+    { label: 'Narx (arzon)', value: 'price' },
+    { label: 'Narx (qimmat)', value: '-price' },
+    { label: 'Ko‘rilganlar bo‘yicha', value: 'views' },
+    { label: 'Ko‘p xarid qilingan', value: 'purchased_count' },
+  ];
 
-    const orders = [
-        { label: 'Narx (arzon)', value: 'price' },
-        { label: 'Narx (qimmat)', value: '-price' },
-        { label: 'Ko‘rilganlar bo‘yicha', value: 'views' },
-        { label: 'Ko‘p xarid qilingan', value: 'purchased_count' },
-    ]
+  const allTypes = [
+    { title: 'Barchasi', value: 'all', icon: <AppstoreOutlined /> },
+    { title: 'Fayllar', value: 'file', icon: <FileTextOutlined /> },
+    { title: '3D modellar', value: '3d', icon: <PictureOutlined /> },
+    { title: 'Dizayn shablonlar', value: 'design', icon: <LayoutOutlined /> },
+    { title: 'Turli shablonlar', value: 'template', icon: <CodeOutlined /> },
+    { title: 'Veb saytlar', value: 'website', icon: <GlobalOutlined /> },
+    { title: 'Videolar', value: 'video', icon: <VideoCameraOutlined /> },
+  ];
 
-    const allTypes = [
-        { title: 'Barchasi', value: 'all', icon: <AppstoreOutlined /> },
-        { title: 'Fayllar', value: 'file', icon: <FileTextOutlined /> },
-        { title: '3D modellar', value: '3d', icon: <PictureOutlined /> },
-        { title: 'Dizayn shablonlar', value: 'design', icon: <LayoutOutlined /> },
-        { title: 'Turli shablonlar', value: 'template', icon: <CodeOutlined /> },
-        { title: 'Veb saytlar', value: 'website', icon: <GlobalOutlined /> },
-        { title: 'Videolar', value: 'video', icon: <VideoCameraOutlined /> },
-    ];
-    const handleOrderChange = (newQuery) => {
-        router.push({
-            pathname: router.pathname,
-            query: {
-            ...router.query,
-            ...newQuery
-            }
-        }, undefined, { shallow: true });
-    }
+  const handleChange = (newQuery) => {
+    router.push({
+      pathname: router.pathname,
+      query: {
+        ...router.query,
+        ...newQuery,
+        page: 1,
+      },
+    }, undefined, { scroll: false });
+  };
 
-    const handleChange = (newQuery) => {
-        router.push({
-            pathname: router.pathname,
-            query: {
-                ...router.query,
-                ...newQuery,
-                page: 1,
-            },
-        }, undefined, { scroll: false });
-    };
+  const handleClearAll = () => {
+    router.push({
+      pathname: router.pathname,
+      query: {
+        page: 1,
+        search: router.query.search || '',
+        type: 'all',
+      },
+    }, undefined, { scroll: false });
+  };
 
-    const handleClearAll = () => {
-        router.push({
-            pathname: router.pathname,
-            query: {
-                page: 1,
-            },
-        }, undefined, { scroll: false });
-    };
+  return (
+    <div className='Search_Results_Products_form_box container'>
+      <p className='countProduct'>
+        {total ? `${total} ta mahsulot` : ''}
+      </p>
 
-    return (
-        <div className='Search_Results_Products_form_box container'>
-            <p className='countProduct'>
-                {total ? `${total} ta mahsulot` : ''}
-            </p>
+      <form className='Search_Results_Products_form'>
+        <div className='search_filter_wrapper'>
 
-            <form className='Search_Results_Products_form'>
+          {/* Mahsulot turi (type) */}
+          <Select
+            style={{ width: '200px' }}
+            value={router.query.type || 'all'}
+            allowClear
+            onClear={handleClearAll}
+            onChange={(value) => handleChange({ type: value, parentCategory: '', category: '' })}
+          >
+            {allTypes.map((item) => (
+              <Option key={item.value} value={item.value}>
+                <span className="d-flex align-items-center gap-4">
+                  {item.icon} {item.title}
+                </span>
+              </Option>
+            ))}
+          </Select>
 
-                <div className='search_filter_wrapper'>
+          {/* Katta kategoriya (parentCategory) */}
+          {router.query.type && router.query.type !== 'all' &&
+            <>
+              <Select
+                style={{ width: '160px' }}
+                placeholder="Katta kategoriya"
+                value={router.query.parentCategory || undefined}
+                allowClear
+                onClear={() => handleChange({ parentCategory: '', category: '' })}
+                onChange={(value) => {
+                  const selected = childData?.results?.find(cat => cat.slug === value);
+                  handleChange({
+                    parentCategory: selected?.slug || '',
+                    category: '', // <- tozalaymiz
+                  });
+                }}
+                options={childData?.results?.map(cat => ({
+                  value: cat.slug,
+                  label: cat.name,
+                }))}
+              />
 
-                    {/* Mahsulot turi (type) */}
-                    <Select
-                        style={{ width: '200px' }}
-                        value={router.query.type || 'all'}
-                        allowClear
-                        onClear={handleClearAll}
-                        onChange={(value) => handleChange({ type: value, parentCategory: '', category: '' })}
-                    >
-                        {allTypes.map((item) => (
-                            <Option key={item.value} value={item.value}>
-                                <span className="d-flex align-items-center gap-4">
-                                    {item.icon} {item.title}
-                                </span>
-                            </Option>
-                        ))}
-                    </Select>
+              {/* Child kategoriya */}
+              {router.query.parentCategory &&
+                <Select
+                  style={{ width: '160px' }}
+                  placeholder="Kategoriya"
+                  value={router.query.category || undefined}
+                  allowClear
+                  onClear={() => handleChange({ category: '' })}
+                  onChange={(value) => handleChange({ category: value })}
+                  options={parentData?.results?.map(cat => ({
+                    value: String(cat.id),
+                    label: cat.name,
+                  }))}
+                />
+              }
+            </>
+          }
 
-                    {/* Katta kategoriya (parentCategory) */}
-                    {router.query.type && router.query.type !== 'all' &&
-                        <>
-                            <Select
-                                style={{ width: '160px' }}
-                                placeholder="Katta kategoriya"
-                                value={router.query.parentCategory || undefined}
-                                allowClear
-                                onClear={() => handleChange({ parentCategory: '', category: '' })}
-                                onChange={(value) => {
-                                    const selected = childData?.results?.find(cat => cat.slug === value);
-                                    handleChange({
-                                    parentCategory: selected?.slug || '',
-                                    category: selected?.id || ''
-                                    });
-                                }}
-                                options={childData?.results?.map(cat => ({
-                                    value: cat.slug,
-                                    label: cat.name,
-                                }))}
-                            />
+          {/* Saralash (order_by) */}
+          <Select
+            style={{ width: '180px' }}
+            placeholder="Saralash"
+            value={router.query.order_by || undefined}
+            allowClear
+            onClear={() => handleChange({ order_by: '' })}
+            onChange={(value) => handleChange({ order_by: value })}
+            options={orders}
+          />
 
+          {/* Tozalash tugmasi */}
+          {router.query.type && router.query.type !== 'all' &&
+            <CloseCircleOutlined
+              style={{ fontSize: 18, cursor: 'pointer', color: '#ff4d4f' }}
+              title="Barchasini tozalash"
+              onClick={handleClearAll}
+            />
+          }
 
-                            {router.query.parentCategory &&
-                                <Select
-                                    style={{ width: '160px' }}
-                                    placeholder="Kategoriya"
-                                    // value={router.query.category || undefined}
-                                    allowClear
-                                    onClear={() => handleChange({ category: '' })}
-                                    onChange={(value) => handleChange({ category: value })}
-                                    options={parentData?.results?.map(cat => ({
-                                        value: String(cat.id),
-                                        label: cat.name,
-                                    }))}
-                                />
-                            }
-                        </>
-                    }
-
-                    {/* Barchasini tozalovchi tugma */}
-                    {router.query.type && router.query.type !== 'all' &&
-                        <CloseCircleOutlined
-                            style={{ fontSize: 18, cursor: 'pointer', color: '#ff4d4f' }}
-                            title="Barchasini tozalash"
-                            onClick={handleClearAll}
-                        />
-                    }
-
-                </div>
-            </form>
         </div>
-    );
+      </form>
+    </div>
+  );
 }
+
 
 
 
