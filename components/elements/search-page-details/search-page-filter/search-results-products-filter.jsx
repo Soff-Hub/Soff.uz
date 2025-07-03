@@ -16,6 +16,14 @@ export default function SearchResultsProductsFilter({ total, parentData, childDa
     const router = useRouter();
     const { Option } = Select;
 
+
+    const orders = [
+        { label: 'Narx (arzon)', value: 'price' },
+        { label: 'Narx (qimmat)', value: '-price' },
+        { label: 'Ko‘rilganlar bo‘yicha', value: 'views' },
+        { label: 'Ko‘p xarid qilingan', value: 'purchased_count' },
+    ]
+
     const allTypes = [
         { title: 'Barchasi', value: 'all', icon: <AppstoreOutlined /> },
         { title: 'Fayllar', value: 'file', icon: <FileTextOutlined /> },
@@ -25,6 +33,15 @@ export default function SearchResultsProductsFilter({ total, parentData, childDa
         { title: 'Veb saytlar', value: 'website', icon: <GlobalOutlined /> },
         { title: 'Videolar', value: 'video', icon: <VideoCameraOutlined /> },
     ];
+    const handleOrderChange = (newQuery) => {
+        router.push({
+            pathname: router.pathname,
+            query: {
+            ...router.query,
+            ...newQuery
+            }
+        }, undefined, { shallow: true });
+    }
 
     const handleChange = (newQuery) => {
         router.push({
@@ -82,18 +99,25 @@ export default function SearchResultsProductsFilter({ total, parentData, childDa
                                 value={router.query.parentCategory || undefined}
                                 allowClear
                                 onClear={() => handleChange({ parentCategory: '', category: '' })}
-                                onChange={(value) => handleChange({ parentCategory: value, category: '' })}
+                                onChange={(value) => {
+                                    const selected = childData?.results?.find(cat => cat.slug === value);
+                                    handleChange({
+                                    parentCategory: selected?.slug || '',
+                                    category: selected?.id || ''
+                                    });
+                                }}
                                 options={childData?.results?.map(cat => ({
                                     value: cat.slug,
                                     label: cat.name,
                                 }))}
                             />
 
+
                             {router.query.parentCategory &&
                                 <Select
                                     style={{ width: '160px' }}
                                     placeholder="Kategoriya"
-                                    value={router.query.category || undefined}
+                                    // value={router.query.category || undefined}
                                     allowClear
                                     onClear={() => handleChange({ category: '' })}
                                     onChange={(value) => handleChange({ category: value })}
