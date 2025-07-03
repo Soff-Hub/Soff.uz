@@ -1,9 +1,7 @@
 import React from 'react';
 import PageContainer from '~/components/layouts/PageContainer';
-import FooterDefault from '~/components/shared/footers/FooterDefault';
 import Meta from '~/components/shared/headers/Meta';
 import ProductsByCategory from '~/components/partials/category/ProductsByCategory';
-import FooterComponents from '~/components/blocks/footer/FooterComponents';
 import ScientificResourcesFilterSection, { getTitleFromSlug } from '~/components/elements/ScientificResourcesFilterSection';
 import { useRouter } from 'next/router';
 import { baseUrlUseApi } from '~/repositories/useApi';

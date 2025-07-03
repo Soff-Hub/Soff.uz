@@ -38,36 +38,32 @@ const parentCategoriesData = [
     },
 ];
 
-export default function ParentCategories() {
+export default function ParentCategories () {
     const router = useRouter();
     const [hoveredId, setHoveredId] = useState(null);
 
     return (
         <div className='container p-0 my-0'>
-            <h2 className='product-list-title'>
-                Tayyor Materiallar Bo‘limi
-            </h2>
+            <h2 className='product-list-title'>Tayyor Materiallar Bo‘limi</h2>
             <div className='product-list-card-box'>
                 {parentCategoriesData.map((item, index) => (
-                    <Link
-                        href={item.path}
-                        key={index}
-                    >
+                    <Link href={item.path} key={index}>
                         <a>
                             <div
                                 className='product-card'
                                 style={{
-                                    backgroundImage: `linear-gradient(rgba(0, 0, 0, ${hoveredId === item.title ? "0.4" : "0.1"
-                                        }), rgba(0, 0, 0,${hoveredId === item.title ? "0.4" : "0.1"
-                                        })),url(${item.imgUrl})`,
+                                    backgroundImage: `linear-gradient(rgba(0, 0, 0, ${
+                                        hoveredId === item.title ? '0.4' : '0.1'
+                                    }), rgba(0, 0, 0,${
+                                        hoveredId === item.title ? '0.4' : '0.1'
+                                    })),url(${item.imgUrl})`,
                                     backgroundSize: 'cover',
                                     backgroundPosition: 'center',
                                     backgroundRepeat: 'no-repeat',
                                 }}
                                 onMouseEnter={() => setHoveredId(item.title)}
-                                onMouseLeave={() => setHoveredId(null)}
-                            >
-                                <div className="d-flex flex-column justify-content-between h-100">
+                                onMouseLeave={() => setHoveredId(null)}>
+                                <div className='d-flex flex-column justify-content-between h-100'>
                                     <h3 className='product-list-card-title'>
                                         {item.title}
                                     </h3>
