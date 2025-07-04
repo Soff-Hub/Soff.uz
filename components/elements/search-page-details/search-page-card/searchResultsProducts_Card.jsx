@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 export default function SearchResultsProducts_Card({ product }) {
     const paths = {
         file: 'scientific-resources',
-        d: '3d-models-and-interior-designs',
+        '3d': '3d-models-and-interior-designs',
         design: 'design-developments',
         website: 'websites',
         template: 'templates',
@@ -56,9 +56,6 @@ export default function SearchResultsProducts_Card({ product }) {
                                 </Link>
                             )
                         },
-                        {
-                            title: product.slug
-                        }
                     ]}
                 />
 
