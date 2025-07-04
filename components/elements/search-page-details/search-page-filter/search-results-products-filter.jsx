@@ -94,7 +94,7 @@ export default function SearchResultsProductsFilter({ total, parentData, childDa
                   const selected = childData?.results?.find(cat => cat.slug === value);
                   handleChange({
                     parentCategory: selected?.slug || '',
-                    category: '', // <- tozalaymiz
+                    category: selected?.id, // <- tozalaymiz
                   });
                 }}
                 options={childData?.results?.map(cat => ({
@@ -108,7 +108,6 @@ export default function SearchResultsProductsFilter({ total, parentData, childDa
                 <Select
                   style={{ width: '160px' }}
                   placeholder="Kategoriya"
-                  value={router.query.category || undefined}
                   allowClear
                   onClear={() => handleChange({ category: '' })}
                   onChange={(value) => handleChange({ category: value })}
