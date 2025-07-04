@@ -1,0 +1,16 @@
+import React from 'react';
+
+export default function CategoryHighlights () {
+    return (
+        <div>
+            <scientificResourcesSwipper />
+        </div>
+    );
+}
+// scientificResourcesSwipper
+// ModelsAndInteriorDesignSwipper
+// DesignDevelopmentSwipper
+// videoLessonsSwipper
+// templatesSwipper
+
+// Ilmiy ishlar     ,3D moddellar va Interier dizaynlar  ,Dizayn shablonlar   , Video ishlanmalar ,Tayyor shablonlar

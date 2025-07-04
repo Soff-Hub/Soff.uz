@@ -1,5 +1,5 @@
 import React from 'react';
-import CategoryHighlights from '~/components/blocks/categoryHighlights/CategoryHighlights';
+import CategoryHighlights from '~/pages/categoryHighlights/CategoryHighlights';
 import FooterComponents from '~/components/blocks/footer/FooterComponents';
 import ResutsComponents from '~/components/blocks/header/Results/ResutsComponents';
 import HeroSearch from '~/components/blocks/hero';
@@ -38,8 +38,6 @@ function NewHomePage ({ tab, category }) {
             {/* <HeroService /> */}
             <HeroSearch />
             <HomeCategories />
-            
-            <CategoryHighlights />
 
             <ItServicesCategories />
             {/* <HomeVideo /> */}

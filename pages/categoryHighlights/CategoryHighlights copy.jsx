@@ -5,6 +5,7 @@ import Axios from 'axios';
 import { useEffect, useState, useMemo } from 'react';
 import SwiperPages from '~/components/details-components/swiper/swiper-page';
 import DesignDevelopmentProducts from '~/components/elements/products/DesignDevelopmentProducts';
+import RedesignProduct from '~/components/elements/products/Redesign/Redesign-Product';
 import { useGet } from '~/repositories/https';
 import { baseUrl } from '~/repositories/Repository';
 import { baseUrlUseApi } from '~/repositories/useApi';
@@ -148,11 +149,12 @@ export default function CategoryHighlights () {
                 {isLoading ? (
                     <LoadingComponent />
                 ) : !hasResults ? (
-                    <EmptyComponent />
+                    // <EmptyComponent />
+                    <div></div>
                 ) : (
                     <SwiperPages type={type}>
                         {data.results.map((item, index) => (
-                            <DesignDevelopmentProducts
+                            <RedesignProduct
                                 key={`${key}-${item.id || index}`}
                                 product={item}
                             />
@@ -201,24 +203,23 @@ export default function CategoryHighlights () {
 
     return (
         <div className='products mt-1'>
-            <div className='container p-0'>
-                {productDirections.map(renderProductSection)}
+            <div className='container mb-3 bg-info p-0'>
+                {productDirections
+                    ? productDirections.map(renderProductSection)
+                    : null}
 
-                {similarProduct.length > 0 && (
+                {similarProduct.length ? (
                     <div className='products mt-1'>
-                        <h3 className='mb-3 product-list-title'>
-                            O'xshash mahsulotlar
-                        </h3>
                         <SwiperPages type='similar'>
                             {similarProduct.map((item, index) => (
-                                <DesignDevelopmentProducts
+                                <RedesignProduct
                                     key={`similar-${item.id || index}`}
                                     product={item}
                                 />
                             ))}
                         </SwiperPages>
                     </div>
-                )}
+                ) : null}
             </div>
         </div>
     );
