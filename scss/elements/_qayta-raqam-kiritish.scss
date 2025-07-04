@@ -851,11 +851,13 @@ input[type='number']::-webkit-outer-spin-button {
 }
 
 .designDevelopmentCard {
+    background: #fff;
     width: 100%;
     display: flex;
     height: 300px;
     flex-direction: column;
     border-radius: 11px;
+    padding: 10px 0;
     
     &:hover {
         transition: ease-in-out;

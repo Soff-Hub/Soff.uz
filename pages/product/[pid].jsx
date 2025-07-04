@@ -318,7 +318,7 @@ export default function ProductDefaultPage ({
                                 </div>
                                 {defaultProducts?.document?.content_type == 'file' && <AISoffiaPresentation />}
                                 
-                                {defaultProducts  && (
+                                {similarProduct && (
                                     <div ref={similarRef} className=' my-5'>
                                         <h3
                                             style={{
