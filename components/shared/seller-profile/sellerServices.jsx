@@ -1,12 +1,31 @@
 import { Skeleton } from 'antd';
-import React, { useState } from 'react';
-import useApi from '~/repositories/useApi';
+import React, { useEffect, useState } from 'react';
 
-export default function SellerServices () {
-    const { isLoading } = useApi();
+export default function SellerServices (pid) {
+    const [isLoading, setIsLoading] = useState(false);
 
-    // /api/v1/services/
+    useEffect(() => {
+        if (!pid) return;
 
+        setIsLoading(true);
+
+        fetch(`http://176.96.241.219:8005/api/v1/services/1/`)
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error(`HTTP error! status: ${res.status}`);
+                }
+                return res.json();
+            })
+            .then(data => {
+                setComments(data?.results || []);
+            })
+            .catch(error => {
+                console.error('Error fetching seller:', error);
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
+    }, [pid]);
 
     const data = [
         {

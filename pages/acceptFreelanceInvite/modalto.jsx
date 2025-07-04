@@ -13,7 +13,7 @@ for (let i = 10; i < 36; i++) {
     });
 }
 
-const AcceptFreelanceInviteModal = () => {
+const AcceptFreelanceInviteModal = (handleSubmit) => {
     const [value, setValue] = useState('');
     const [valueSelect, setValueSelect] = useState([]);
     const [error, setError] = useState(false);
@@ -38,7 +38,6 @@ const AcceptFreelanceInviteModal = () => {
         getData();
     }, []);
 
-    const handleSubmit = () => {};
 
     return (
         <div>
