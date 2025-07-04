@@ -5,6 +5,9 @@ import useApi from '~/repositories/useApi';
 export default function SellerServices () {
     const { isLoading } = useApi();
 
+    // /api/v1/services/
+
+
     const data = [
         {
             image: ' https://picsum.photos/204/184',

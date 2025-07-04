@@ -4,8 +4,8 @@ import axios from 'axios';
 const baseDomain = `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/`;
 export const basePostUrl = `${process.env.NEXT_PUBLIC_BASE_URL}`;
 export const baseStoreURL = `${process.env.NEXT_PUBLIC_BASE_URL}`;
-export const baseUrlAuth = `${process.env.NEXT_PUBLIC_BASE_URL}/`
-
+export const baseUrlAuth = `${process.env.NEXT_PUBLIC_BASE_URL}/`;
+export const baseUrlSoffNew = `${process.env.NEXT_PUBLIC_BASE_URL_SOFFNEW}/`;
 
 export const customHeaders = {
     Accept: 'application/json',
@@ -18,10 +18,10 @@ export default axios.create({
     headers: customHeaders,
 });
 
-export const serializeQuery = (query) => {
+export const serializeQuery = query => {
     return Object.keys(query)
         .map(
-            (key) =>
+            key =>
                 `${encodeURIComponent(key)}=${encodeURIComponent(query[key])}`
         )
         .join('&');

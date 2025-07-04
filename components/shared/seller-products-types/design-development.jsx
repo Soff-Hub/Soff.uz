@@ -1,113 +1,8 @@
 import React from 'react';
 import DesignDevelopmentProducts from '~/components/elements/products/DesignDevelopmentProducts';
 
-export default function DesignDevelopment () {
-    const data = [
-        {
-            content_type: 'file',
-            demo_link: null,
-            discount: 0,
-            discount_price: 12000,
-            file_url: null,
-            id: 175054,
-            poster_url: 'https://picsum.photos/200/300',
-            price: 12000,
-            seller: { fullname: 'Azizbek Ubaydullayev', id: '112428' },
-            slug: 'tibbiyot-132-oriental-contributions-and-discoveries-taqdimot-12-bet',
-            title: '13.2. Oriental Contributions and Discoveries. Taqdimot 12 bet',
-        },
-        {
-            content_type: 'file',
-            demo_link: null,
-            discount: 0,
-            discount_price: 12000,
-            file_url: null,
-            id: 175054,
-            poster_url: 'https://picsum.photos/200/300',
-            price: 12000,
-            seller: { fullname: 'Azizbek Ubaydullayev', id: '112428' },
-            slug: 'tibbiyot-132-oriental-contributions-and-discoveries-taqdimot-12-bet',
-            title: '13.2. Oriental Contributions and Discoveries. Taqdimot 12 bet',
-        },
-        {
-            content_type: 'file',
-            demo_link: null,
-            discount: 0,
-            discount_price: 12000,
-            file_url: null,
-            id: 175054,
-            poster_url: 'https://picsum.photos/200/300',
-            price: 12000,
-            seller: { fullname: 'Azizbek Ubaydullayev', id: '112428' },
-            slug: 'tibbiyot-132-oriental-contributions-and-discoveries-taqdimot-12-bet',
-            title: '13.2. Oriental Contributions and Discoveries. Taqdimot 12 bet',
-        },
-        {
-            content_type: 'file',
-            demo_link: null,
-            discount: 0,
-            discount_price: 12000,
-            file_url: null,
-            id: 175054,
-            poster_url: 'https://picsum.photos/200/300',
-            price: 12000,
-            seller: { fullname: 'Azizbek Ubaydullayev', id: '112428' },
-            slug: 'tibbiyot-132-oriental-contributions-and-discoveries-taqdimot-12-bet',
-            title: '13.2. Oriental Contributions and Discoveries. Taqdimot 12 bet',
-        },
-        {
-            content_type: 'file',
-            demo_link: null,
-            discount: 0,
-            discount_price: 12000,
-            file_url: null,
-            id: 175054,
-            poster_url: 'https://picsum.photos/200/300',
-            price: 12000,
-            seller: { fullname: 'Azizbek Ubaydullayev', id: '112428' },
-            slug: 'tibbiyot-132-oriental-contributions-and-discoveries-taqdimot-12-bet',
-            title: '13.2. Oriental Contributions and Discoveries. Taqdimot 12 bet',
-        },
-        {
-            content_type: 'file',
-            demo_link: null,
-            discount: 0,
-            discount_price: 12000,
-            file_url: null,
-            id: 175054,
-            poster_url: 'https://picsum.photos/200/300',
-            price: 12000,
-            seller: { fullname: 'Azizbek Ubaydullayev', id: '112428' },
-            slug: 'tibbiyot-132-oriental-contributions-and-discoveries-taqdimot-12-bet',
-            title: '13.2. Oriental Contributions and Discoveries. Taqdimot 12 bet',
-        },
-        {
-            content_type: 'file',
-            demo_link: null,
-            discount: 0,
-            discount_price: 12000,
-            file_url: null,
-            id: 175054,
-            poster_url: 'https://picsum.photos/200/300',
-            price: 12000,
-            seller: { fullname: 'Azizbek Ubaydullayev', id: '112428' },
-            slug: 'tibbiyot-132-oriental-contributions-and-discoveries-taqdimot-12-bet',
-            title: '13.2. Oriental Contributions and Discoveries. Taqdimot 12 bet',
-        },
-        {
-            content_type: 'file',
-            demo_link: null,
-            discount: 0,
-            discount_price: 12000,
-            file_url: null,
-            id: 175054,
-            poster_url: 'https://picsum.photos/200/300',
-            price: 12000,
-            seller: { fullname: 'Azizbek Ubaydullayev', id: '112428' },
-            slug: 'tibbiyot-132-oriental-contributions-and-discoveries-taqdimot-12-bet',
-            title: '13.2. Oriental Contributions and Discoveries. Taqdimot 12 bet',
-        },
-    ];
+export default function DesignDevelopment (product) {
+    const data = product?.data?.design;
 
     return (
         <div className='sellerpage'>
@@ -128,7 +23,7 @@ export default function DesignDevelopment () {
                 </svg>
             </div>
             <div className='DesignDevelopmentCardWrap'>
-                {data.map((item, index) => (
+                {data?.map((item, index) => (
                     <div className='' key={index}>
                         <DesignDevelopmentProducts product={item} />
                     </div>
