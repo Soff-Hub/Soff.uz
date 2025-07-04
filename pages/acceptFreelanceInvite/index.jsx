@@ -13,7 +13,6 @@ export default function AcceptFreelanceInvite () {
 
     const [isOpen, setIsOpen] = useState(true);
 
-
     useEffect(() => {
         if (productId) {
             console.log('Product ID:', productId);
@@ -30,6 +29,11 @@ export default function AcceptFreelanceInvite () {
             document.body.classList.remove('no-scroll');
         };
     }, [isOpen]);
+
+    const handleSubmit = () => {
+
+        
+    };
 
     return (
         <PageContainer>
