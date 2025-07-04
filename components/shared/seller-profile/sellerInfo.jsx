@@ -1,7 +1,6 @@
 import React from 'react';
 
 export default function SellerInfo ({ sellerInfo }) {
-
     return (
         <div className='SellerInfo'>
             <p className='SellerInfoTitle'>Statistikalar</p>
@@ -15,7 +14,11 @@ export default function SellerInfo ({ sellerInfo }) {
                         />
                         <p className='SellerInfoCardTitle'>Mahsulotlari soni</p>
                     </div>
-                    <p className='SellerInfoCardCount'>1 548 ta </p>
+                    <p className='SellerInfoCardCount'>
+                        {sellerInfo?.total_approved_documents
+                            ? sellerInfo.total_approved_documents + ' ta'
+                            : '0 ta'}
+                    </p>
                 </div>
                 <div className='SellerInfoCard'>
                     <div className='SellerInfoCardBody'>
@@ -25,10 +28,14 @@ export default function SellerInfo ({ sellerInfo }) {
                             alt=''
                         />
                         <p className='SellerInfoCardTitle'>
-                            Sotilgan mahsulotlar{' '}
+                            Sotilgan mahsulotlar
                         </p>
                     </div>
-                    <p className='SellerInfoCardCount'>15 048 ta </p>
+                    <p className='SellerInfoCardCount'>
+                        {sellerInfo?.total_sold_documents
+                            ? sellerInfo.total_sold_documents + ' ta'
+                            : '0 ta'}
+                    </p>
                 </div>
                 <div className='SellerInfoCard'>
                     <div className='SellerInfoCardBody'>
@@ -41,7 +48,11 @@ export default function SellerInfo ({ sellerInfo }) {
                             Jarayondagi ishlar{' '}
                         </p>
                     </div>
-                    <p className='SellerInfoCardCount'>5 ta</p>
+                    <p className='SellerInfoCardCount'>
+                        {sellerInfo?.seller?.in_progress_orders
+                            ? sellerInfo?.seller?.in_progress_orders + ' ta'
+                            : '0 ta'}
+                    </p>
                 </div>
                 <div className='SellerInfoCard'>
                     <div className='SellerInfoCardBody'>
@@ -54,7 +65,12 @@ export default function SellerInfo ({ sellerInfo }) {
                             Muvaffaqiyatsiz tugatilgan{' '}
                         </p>
                     </div>
-                    <p className='SellerInfoCardCount'>17 ta</p>
+                    <p className='SellerInfoCardCount'>
+                        {' '}
+                        {sellerInfo?.seller?.unsuccessful_orders
+                            ? sellerInfo?.seller?.unsuccessful_orders + ' ta'
+                            : '0 ta'}
+                    </p>
                 </div>
                 <div className='SellerInfoCard'>
                     <div className='SellerInfoCardBody'>
@@ -67,7 +83,12 @@ export default function SellerInfo ({ sellerInfo }) {
                             Muvaffaqiyatli Tugatilgan{' '}
                         </p>
                     </div>
-                    <p className='SellerInfoCardCount'>254 ta</p>
+                    <p className='SellerInfoCardCount'>
+                        {' '}
+                        {sellerInfo?.seller?.successful_orders
+                            ? sellerInfo?.seller?.successful_orders + ' ta'
+                            : '0 ta'}
+                    </p>
                 </div>
             </div>
             <p className='SellerInfoSecondTitle'>Muallif Haqida</p>

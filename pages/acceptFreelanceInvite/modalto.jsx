@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Select } from 'antd';
-import { api } from '~/repositories/api';
 import { Input } from 'antd';
-import { testApi } from '~/service/testApi';
+import { freelanceApi } from '~/service/freelanceApi';
 
 const { TextArea } = Input;
 const options = [];
@@ -26,7 +25,7 @@ const AcceptFreelanceInviteModal = () => {
         }
     };
     async function getData () {
-        await testApi
+        await freelanceApi
             .get('/categories/{category_id}')
             .then(res => {
                 console.log(res);

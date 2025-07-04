@@ -1,15 +1,14 @@
 import axios from 'axios';
 import api from './api';
-export const baseURL = `${process.env.NEXT_PUBLIC_BASE_URL_TEST}`;
+export const baseURL = `${process.env.NEXT_PUBLIC_BASE_URL_FREELANCENEW}`;
 
-export const testApi = axios.create({
+export const freelanceApi = axios.create({
     baseURL: baseURL,
     timeout: 30000,
 });
 
-
 api.interceptors.request.use(
-    (config) => {
+    config => {
         const storedToken = localStorage.getItem('user');
         if (storedToken && JSON.parse(storedToken).access) {
             const token = JSON.parse(storedToken).access;
@@ -17,19 +16,19 @@ api.interceptors.request.use(
         }
         return config;
     },
-    (error) => {
+    error => {
         return Promise.reject(error);
     }
 );
 
 api.interceptors.response.use(
-    (response) => {
+    response => {
         return response;
     },
-    (error) => {
+    error => {
         if (error.response && error.response.status === 403) {
             localStorage.clear();
-            window.location.href = "/";
+            window.location.href = '/';
         }
         return Promise.reject(error);
     }

@@ -9,27 +9,17 @@ import SellerPortfolio from '~/components/shared/seller-profile/sellerPortfolio'
 import SellerProduct from '~/components/shared/seller-profile/sellerProduct';
 import SellerServices from '~/components/shared/seller-profile/sellerServices';
 import SellerShortInfo from '~/components/shared/seller-profile/sellerShortInfo';
-import { useGet } from '~/repositories/https';
-import { baseUrl } from '~/repositories/Repository';
-import { testApi } from '~/service/testApi';
+import { soffApi } from '~/service/soffApi';
 
 export default function SellersPage () {
     const router = useRouter();
-    const { query, asPath } = router;
+    const { query, asPath, isReady } = router;
     const activeIndex = asPath.slice(asPath.indexOf('#') + 1, asPath.length);
     const [seller, setSeller] = useState(null);
-    const [selleserviceDatar, setServiceData] = useState(null);
+    // const pid = query.pid;
+    const pid = 8;
 
-    async function getData () {
-        await testApi
-            .get('services/')
-            .then(res => {
-                console.log(res);
-            })
-            .catch(err => {
-                console.log(err);
-            });
-    }
+    const [isLoading, setIsLoading] = useState(false);
 
     const menuItems = [
         {
@@ -55,25 +45,32 @@ export default function SellersPage () {
     ];
 
     useEffect(() => {
-        if (query.pid) {
-            fetch(`${baseUrl}customer/top-sellers/${query.pid}`)
-                .then(res => res.json())
-                .then(data => {
-                    setSeller(data);
-                })
-                .catch(error => {
-                    console.error('Error fetching seller:', error);
-                });
-        }
-        getData();
-    }, [query.pid]);
+        if (!isReady || !pid) return;
+
+        setIsLoading(true);
+
+        fetch(
+            `http://176.96.241.219:8006/api/v1/customer/freelance-profile/${pid}`
+        )
+            .then(res => res.json())
+            .then(data => {
+                setSeller(data);
+            })
+            .catch(error => {
+                console.error('Error fetching seller:', error);
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
+    }, [isReady, pid]);
+    console.log('seller', seller);
 
     const sellerTabItems = {
         about_author: <SellerInfo sellerInfo={seller} />,
-        services: <SellerServices />,
+        services: <SellerServices sellerId={pid} />,
         portfolio: <SellerPortfolio />,
-        comments: <SellerComments />,
-        products: <SellerProduct />,
+        comments: <SellerComments sellerId={pid} />,
+        products: <SellerProduct sellerId={pid}/>,
     };
 
     return (
