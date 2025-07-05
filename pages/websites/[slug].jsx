@@ -6,19 +6,20 @@ import { useRouter } from 'next/router';
 import useApi, { baseUrlUseApi } from '~/repositories/useApi';
 import WebsitesProductsByCategory from '~/components/partials/category/WebsitesProductsByCategory';
 import WebsitesCategoriesFilterSecion from '~/components/elements/WebsitesCategoriesFilterSecion';
+import ProductsByCategory from '~/components/partials/category/ProductsByCategory';
 
-export default function Websites({ 
-    productsData, 
-    fourChildData, 
-    childCategoryData, 
-    parentCategory, 
-    childCategory, 
-    page 
+export default function Websites ({
+    productsData,
+    fourChildData,
+    childCategoryData,
+    parentCategory,
+    childCategory,
+    page,
 }) {
     const router = useRouter();
-    
+
     // Pagination tugmalari uchun funksiya
-    const handlePageChange = (newPage) => {
+    const handlePageChange = newPage => {
         router.push({
             pathname: router.pathname,
             query: { ...router.query, page: newPage }, // URL'ga yangi page qo'shish
@@ -42,7 +43,7 @@ export default function Websites({
                     isLoading={false}
                     childCategoryData={childCategoryData}
                 />
-                <WebsitesProductsByCategory
+                <ProductsByCategory
                     data={productsData}
                     page={page}
                     handlePagination={number => {
@@ -51,17 +52,19 @@ export default function Websites({
                     isLoading={false}
                 />
             </div>
-
         </PageContainer>
     );
 }
 
+export async function getServerSideProps (context) {
+    const {
+        slug,
+        page = 1,
+        parentCategory = '',
+        childCategory = '',
+    } = context.query;
 
-
-export async function getServerSideProps(context) {
-    const { slug, page = 1, parentCategory = '', childCategory = '' } = context.query;
-
-    const fetchJson = async (url) => {
+    const fetchJson = async url => {
         const res = await fetch(url);
         if (!res.ok) {
             return null;
@@ -78,7 +81,7 @@ export async function getServerSideProps(context) {
     const [productsData, fourChildData, childCategoryData] = await Promise.all([
         fetchJson(productsUrl),
         fetchJson(fourChildUrl),
-        fetchJson(childCategoryUrl)
+        fetchJson(childCategoryUrl),
     ]);
 
     return {
@@ -88,7 +91,7 @@ export async function getServerSideProps(context) {
             childCategoryData: childCategoryData || null,
             parentCategory,
             childCategory,
-            page
-        }
+            page,
+        },
     };
 }

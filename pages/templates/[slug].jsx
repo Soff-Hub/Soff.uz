@@ -8,17 +8,18 @@ import ProductsByDesignDevelopment from '~/components/partials/category/Products
 import CategoriesFilterForDesignDevelopmentsSection from '~/components/elements/DesignDevelopmentsFilterSection';
 import FooterComponents from '~/components/blocks/footer/FooterComponents';
 import TemplatesFilterSection from '~/components/elements/TemplatesFilterSection';
+import ProductsByCategory from '~/components/partials/category/ProductsByCategory';
 
-export default function Templates ({ 
-    productsData, 
-    fourChildData, 
-    childCategoryData, 
-    parentCategory, 
-    childCategory, 
-    page 
+export default function Templates ({
+    productsData,
+    fourChildData,
+    childCategoryData,
+    parentCategory,
+    childCategory,
+    page,
 }) {
     const router = useRouter();
-    console.log('productsData=>>', productsData)
+    console.log('productsData=>>', productsData);
 
     // Pagination tugmalari uchun funksiya
     const handlePageChange = newPage => {
@@ -45,7 +46,7 @@ export default function Templates ({
                     isLoading={false}
                     childCategoryData={childCategoryData}
                 />
-                <ProductsByDesignDevelopment
+                <ProductsByCategory
                     data={productsData}
                     page={page}
                     handlePagination={number => {
@@ -58,12 +59,15 @@ export default function Templates ({
     );
 }
 
+export async function getServerSideProps (context) {
+    const {
+        slug,
+        page = 1,
+        parentCategory = '',
+        childCategory = '',
+    } = context.query;
 
-
-export async function getServerSideProps(context) {
-    const { slug, page = 1, parentCategory = '', childCategory = '' } = context.query;
-
-    const fetchJson = async (url) => {
+    const fetchJson = async url => {
         const res = await fetch(url);
         if (!res.ok) {
             return null;
@@ -80,7 +84,7 @@ export async function getServerSideProps(context) {
     const [productsData, fourChildData, childCategoryData] = await Promise.all([
         fetchJson(productsUrl),
         fetchJson(fourChildUrl),
-        fetchJson(childCategoryUrl)
+        fetchJson(childCategoryUrl),
     ]);
 
     return {
@@ -90,7 +94,7 @@ export async function getServerSideProps(context) {
             childCategoryData: childCategoryData || null,
             parentCategory,
             childCategory,
-            page
-        }
+            page,
+        },
     };
 }
