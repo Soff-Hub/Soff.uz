@@ -1,6 +1,5 @@
 import { Spin } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { baseURL } from '~/repositories/api';
 import Swiper_Pages from '../swipper/swiper';
 import RedesignProduct from '~/components/elements/products/Redesign/Redesign-Product';
 
