@@ -1,5 +1,6 @@
 'use client';
 import React, { useEffect, useState } from 'react';
+import { baseURL } from '~/repositories/api';
 
 export default function ActiveSellers () {
     const [isLoading, setIsLoading] = useState(false);
@@ -10,7 +11,7 @@ export default function ActiveSellers () {
             setIsLoading(true);
             try {
                 const res = await fetch(
-                    `http://176.96.241.219:8006/api/v1/customer/top-seller-statistics/?filter_stats=active_sellers&filter_by=${selectValue}`
+                    `${baseURL}customer/top-seller-statistics/?filter_stats=active_sellers&filter_by=${selectValue}`
                 );
                 const text = await res.text();
                 console.log('Raw response:', text);
@@ -37,12 +38,12 @@ export default function ActiveSellers () {
                     name=''
                     id=''
                     onChange={handleChange}>
-                    <option value='week'>Haftalik</option>
-                    <option value='month'>Oylik</option>
+                    <option value='week'>Haftaning</option>
+                    <option value='month'>Oyning</option>
                 </select>
-                <h2 className='BestSellerStaticsTable_titleWrap_title'>
+                <p className='BestSellerStaticsTable_titleWrap_title'>
                     faol sotuvchilari
-                </h2>
+                </p>
             </div>{' '}
             <div className='BestSellerStaticsTableCardWrap'>
                 {users?.map((item, index) => {
