@@ -1,13 +1,14 @@
-import CategoryHighlights from './categoryHighlights';
+'use client';
+import BestSellerStaticsTable from './BestSellerStatics';
 
 export default function BestSellerStatics () {
     return (
-        <div className='products mt-1'>
+        <div className=' mt-5'>
             <div className='container  p-0'>
                 <div className={`product-list`}>
-                    <BestSellerStatics />
+                    <BestSellerStaticsTable />
                 </div>
             </div>
         </div>
-    );
+    )
 }
