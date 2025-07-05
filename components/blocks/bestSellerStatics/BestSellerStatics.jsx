@@ -50,7 +50,7 @@ export default function BestSellerStatics () {
                 </div>
                 {sellerTabItems[activeIndex]}
             </div>
-            <div className='BestSellerStaticsTableWrap'>
+            <div className='BestSellerStaticsTableWrap container'>
                 <ActiveSellers />
                 <BestSeller />
                 <TopProduct />
