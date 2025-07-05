@@ -7,6 +7,7 @@ import useApi, { baseUrlUseApi } from '~/repositories/useApi';
 import FooterComponents from '~/components/blocks/footer/FooterComponents';
 import VideoLessonsFilterSection from '~/components/elements/VideoLessonsFilterSection';
 import ProductsByVideoLessons from '~/components/partials/category/ProductsByVideoLessons';
+import ProductsByCategory from '~/components/partials/category/ProductsByCategory';
 
 export default function VideoLessons ({
     productsData,
@@ -18,9 +19,7 @@ export default function VideoLessons ({
 }) {
     const router = useRouter();
 
-    console.log("productsData -> ", productsData);
-    
-
+    console.log('productsData -> ', productsData);
 
     // Pagination tugmalari uchun funksiya
     const handlePageChange = newPage => {
@@ -47,7 +46,7 @@ export default function VideoLessons ({
                     isLoading={false}
                     childCategoryData={childCategoryData}
                 />
-                <ProductsByVideoLessons
+                <ProductsByCategory
                     data={productsData}
                     page={page}
                     handlePagination={number => {
@@ -59,8 +58,6 @@ export default function VideoLessons ({
         </PageContainer>
     );
 }
-
-
 
 export async function getServerSideProps (context) {
     const {
