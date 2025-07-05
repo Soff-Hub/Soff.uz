@@ -205,24 +205,28 @@ input[type='number']::-webkit-outer-spin-button {
     margin-top: 45px;
     display: grid;
     grid-template-columns: repeat(5, 267px);
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(clamp(8.125rem, 11.588vw + 5.807rem, 25rem), 1fr)
+    );
     gap: 16px;
     row-gap: 34px;
     padding: 0px !important;
     @media screen and (max-width: 1350px) {
-        grid-template-columns: repeat(5, 1fr);
+        // grid-template-columns: repeat(5, 1fr);/
     }
     @media screen and (max-width: 1250px) {
-        grid-template-columns: repeat(4, 1fr);
+        // grid-template-columns: repeat(4, 1fr);
         padding: 0 15px;
     }
     @media screen and (max-width: 1000px) {
-        grid-template-columns: repeat(3, 1fr);
+        // grid-template-columns: repeat(3, 1fr);
         padding: 0 15px;
         margin-top: 40px;
         row-gap: 30px;
     }
     @media screen and (max-width: 600px) {
-        grid-template-columns: repeat(2, 1fr);
+        // grid-template-columns: repeat(2, 1fr);
         padding: 0 15px;
         margin-top: 30px;
         row-gap: 20px;
@@ -234,8 +238,7 @@ input[type='number']::-webkit-outer-spin-button {
     @media screen and (max-width: 400px) {
         margin-top: 15px;
         row-gap: 10px;
-        grid-template-columns: repeat(2, 1fr);
-
+        // grid-template-columns: repeat(2, 1fr);
     }
     .scientificResourcesSkeleton {
         width: 100% !important;
@@ -328,17 +331,13 @@ input[type='number']::-webkit-outer-spin-button {
         .scientificResourcesCardTitle {
             color: #000;
             font-family: 'Poppins';
-            font-size: 12.5px;
+            font-size: clamp(1.15rem, 0.343vw + 0.681rem, 1.25rem);
             font-style: normal;
             font-weight: 400;
             line-height: normal;
             letter-spacing: 0.25px;
-            @media (max-width: 768px) {
-                font-size: 10px;
-            }
-            @media (max-width: 450px) {
-                font-size: 8px;
-            }
+            margin: 0;
+            padding: 0;
         }
         .scientificResourcesCardPriceBox {
             display: flex;
@@ -348,18 +347,18 @@ input[type='number']::-webkit-outer-spin-button {
                 p {
                     color: #000;
                     font-family: 'Poppins';
-                    font-size: 18.333px;
+                    font-size: clamp(1rem, 0.386vw + 0.548rem, 1.188rem);
                     font-style: normal;
                     font-weight: 600;
                     line-height: normal;
                     letter-spacing: 0.367px;
                     margin: 0;
-                    @media (max-width: 768px) {
-                        font-size: 14px;
-                    }
-                    @media (max-width: 450px) {
-                        font-size: 10px;
-                    }
+                    padding: 0;
+                }
+                .scientificResourcesCardPrice_discount_price {
+                    font-size: clamp(1rem, 0.386vw + 0.548rem, 1.188rem);
+                    margin: 0;
+                    padding: 0;
                 }
             }
             .scientificBuyIcon {
@@ -380,13 +379,13 @@ input[type='number']::-webkit-outer-spin-button {
 .category-btn:hover {
     background-color: #00a44f;
 }
-.category-btn:hover .category-btn-title{
+.category-btn:hover .category-btn-title {
     color: white;
 }
 .category-btn .category-btn-title {
-    color: #312F30
+    color: #312f30;
 }
-.sub-category-btn:hover .sub-category-btn-title{
+.sub-category-btn:hover .sub-category-btn-title {
     color: #00a44f;
 }
 .Models_category_btn_wrap {
@@ -823,42 +822,23 @@ input[type='number']::-webkit-outer-spin-button {
     padding: 0 !important;
     align-items: stretch;
     justify-content: center;
-
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(clamp(9.375rem, 19.313vw + 5.512rem, 37.5rem), 1fr)
+    );
     // 5 ta ustun (1600px dan katta)
-    @media (min-width: 1600px) {
-        grid-template-columns: repeat(5, 1fr);
-    }
-
-    // 4 ta ustun (1400px dan katta)
-    @media (min-width: 1400px) and (max-width: 1599px) {
-        grid-template-columns: repeat(4, 1fr);
-    }
-
-    // 3 ta ustun (992px dan katta)
-    @media (min-width: 992px) and (max-width: 1399px) {
-        grid-template-columns: repeat(3, 1fr);
-    }
-
-    // 2 ta ustun (768px dan katta)
-    @media (min-width: 768px) and (max-width: 991px) {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    // 1 ta ustun (768px dan kichik)
-    @media (max-width: 767px) {
-        grid-template-columns: 1fr;
-    }
 }
 
 .designDevelopmentCard {
     background: #fff;
+    // width: clamp(9.375rem, 19.313vw + 5.512rem, 37.5rem);
     width: 100%;
     display: flex;
-    height: 300px;
+    height: 100%;
     flex-direction: column;
     border-radius: 11px;
     padding: 10px 0;
-    
+
     &:hover {
         transition: ease-in-out;
         box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
@@ -873,15 +853,13 @@ input[type='number']::-webkit-outer-spin-button {
         display: block;
         position: relative;
 
-
-
         .designDevelopmentCardheard {
             position: absolute;
             top: 12px;
             right: 12px;
             background-color: #fff;
             border-radius: 50%;
-            padding: 7px;
+            padding: 2.5px;
             cursor: pointer;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
@@ -944,13 +922,13 @@ input[type='number']::-webkit-outer-spin-button {
         @media screen and (max-width: 350px) {
             padding: 5px;
         }
-        .designDevelopmentCardheard{
+        .designDevelopmentCardheard {
             position: absolute;
             top: 10px;
             right: 10px;
             background-color: rgba(255, 255, 255, 0.9);
             border-radius: 50%;
-            padding: 8px;
+            padding: 5px;
             cursor: pointer;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
@@ -967,7 +945,7 @@ input[type='number']::-webkit-outer-spin-button {
             -webkit-box-orient: vertical;
             overflow: hidden;
             text-overflow: ellipsis;
-            
+
             @media screen and (max-width: 650px) {
                 font-weight: 400;
                 font-size: 13px;
@@ -1252,12 +1230,12 @@ input[type='number']::-webkit-outer-spin-button {
 }
 
 
-.designDevelopmentCardheard{
-    z-index: 100;
-    top: 20px;
-    background: white;
-    padding: 10px 10px;
-    width: 50px;
-    height: 50px;
-    border-radius: 100%;
-}
+// .designDevelopmentCardheard{
+//     z-index: 100;
+//     top: 10px;
+//     background: white;
+//     padding: 10px 10px;
+//     width: 50px;
+//     height: 50px;
+//     border-radius: 100%;
+// }
