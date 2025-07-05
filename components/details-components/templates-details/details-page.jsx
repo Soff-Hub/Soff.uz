@@ -4,7 +4,6 @@ import Description from '../details-actions/description';
 import SellerProfile from '../details-seller-profile/seller-profile';
 import ImageCarousel from '../details-actions/imageScroll';
 import Tags from '../details-actions/tags';
-import CommentForm from '../comment-section/commentForm';
 import { CommentList } from '../comment-section/commentList';
 import CommentFormWrapper from '../comment-section/commentWrapper';
 
