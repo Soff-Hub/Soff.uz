@@ -27,7 +27,7 @@ export default function ActiveSellers () {
     }, [selectValue]);
 
     function handleChange (e) {
-        setSelectValue(e.target.value);
+        setSelectValue(e?.target?.value);
     }
     return (
         <div className='BestSellerStaticsTable'>
@@ -46,30 +46,31 @@ export default function ActiveSellers () {
             </div>{' '}
             <div className='BestSellerStaticsTableCardWrap'>
                 {users?.map((item, index) => {
-                    return(
-
-                    <div
-                        key={(index, item?.id)}
-                        className='BestSellerStaticsTableCard'>
-                        <img
-                            className='BestSellerStaticsTableCard_Avatar'
-                            src={
-                                item?.image
-                                    ? item?.image
-                                    : '/static/img/user-none.jpg'
-                            }
-                            alt='User image'
-                        />
-                        <div className='BestSellerStaticsTableCard_infoWrap'>
-                            <h3 className='BestSellerStaticsTableCard_fullname'>
-                                {item?.first_name} {item?.last_name}
-                            </h3>
-                            <p className='BestSellerStaticsTableCard_statics'>
-                                Jami {item?.products_count} ta mahsulot yuklangan
-                            </p>
+                    return (
+                        <div
+                            key={index || item?.id}
+                            className='BestSellerStaticsTableCard'>
+                            <img
+                                className='BestSellerStaticsTableCard_Avatar'
+                                src={
+                                    item?.image
+                                        ? item?.image
+                                        : '/static/img/user-none.jpg'
+                                }
+                                alt='User image'
+                            />
+                            <div className='BestSellerStaticsTableCard_infoWrap'>
+                                <h3 className='BestSellerStaticsTableCard_fullname'>
+                                    {item?.first_name} {item?.last_name}
+                                </h3>
+                                <p className='BestSellerStaticsTableCard_statics'>
+                                    Jami {item?.products_count} ta mahsulot
+                                    yuklangan
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                )})}
+                    );
+                })}
             </div>
         </div>
     );

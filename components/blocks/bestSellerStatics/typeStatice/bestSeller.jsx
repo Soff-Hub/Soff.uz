@@ -27,15 +27,8 @@ export default function BestSellers () {
     }, [selectValue]);
 
     function handleChange (e) {
-        setSelectValue(e.target.value);
+        setSelectValue(e?.target?.value);
     }
-    console.log('best_seller', users);
-
-    // filter_stats
-
-    // active_sellers
-    // best_seller
-    // top_product
     return (
         <div className='BestSellerStaticsTable'>
             <div className='d-flex gap-2 align-items-center BestSellerStaticsTable_titleWrap'>
@@ -55,7 +48,7 @@ export default function BestSellers () {
                 {users?.map((item, index) => {
                     return (
                         <div
-                            key={(index, item?.id)}
+                            key={(index || item?.id)}
                             className='BestSellerStaticsTableCard'>
                             <img
                                 className='BestSellerStaticsTableCard_Avatar'

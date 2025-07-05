@@ -27,7 +27,7 @@ export default function TopProduct () {
     }, [selectValue]);
 
     function handleChange (e) {
-        setSelectValue(e.target.value);
+        setSelectValue(e?.target?.value);
     }
 
     return (
@@ -50,7 +50,7 @@ export default function TopProduct () {
                 {users?.map((item, index) => {
                     return (
                         <div
-                            key={(item?.id, index)}
+                            key={item?.id || index}
                             className='BestSellerStaticsTableCard'>
                             <img
                                 className='BestSellerStaticsTableCard_Avatar'
@@ -66,29 +66,14 @@ export default function TopProduct () {
                                     {item?.title}
                                 </h3>
                                 <p className='BestSellerStaticsTableCard_statics'>
-                                    {item?.view_count} marta ko'rilgan, {item?.sold_count} marta sotilgan
+                                    {item?.view_count} marta ko'rilgan,{' '}
+                                    {item?.sold_count} marta sotilgan
                                 </p>
                             </div>
                         </div>
                     );
                 })}
             </div>
-
-            {/* <div className='BestSellerStaticsTableCard'>
-                <img
-                    className='BestSellerStaticsTableCard_Avatar'
-                    src='/static/img/user-none.jpg'
-                    alt=''
-                />
-                <div className='BestSellerStaticsTableCard_infoWrap'>
-                    <h3 className='BestSellerStaticsTableCard_fullname'>
-                        Jhon dou
-                    </h3>
-                    <p className='BestSellerStaticsTableCard_statics'>
-                        Jami 2 ta mahsulot yuklangan
-                    </p>
-                </div>
-            </div> */}
         </div>
     );
 }
