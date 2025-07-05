@@ -27,9 +27,13 @@ export default function ModelsAndInteriorDesignSwipper () {
         <div className=' categoryHighlightsSwippercontainer'>
             {Array.isArray(product) && product.length > 0 && (
                 <div className='categoryHighlightsSwipper'>
-                    <h3 className='SwipperTitle'>
-                        3D moddellar va Interier dizaynlar{' '}
-                    </h3>
+                    <div className='SwipperTitlewrap'>
+                        <a
+                            className='SwipperTitle'
+                            href='/3d-models-and-interior-designs/all'>
+                            3D moddellar va Interier dizaynlar
+                        </a>
+                    </div>
                     {product ? (
                         <Swiper_Pages type='template'>
                             {product?.map((item, index) => (

@@ -30,8 +30,13 @@ export default function ScientificResourcesSwipper () {
         <div className=' categoryHighlightsSwippercontainer'>
             {Array.isArray(product) && product.length > 0 && (
                 <div className='categoryHighlightsSwipper'>
-                    <h3 className='SwipperTitle'>Ilmiy ishlar</h3>
-
+                    <div className='SwipperTitlewrap'>
+                        <a
+                            className='SwipperTitle'
+                            href='/scientific-resources/all'>
+                            Ilmiy ishlar{' '}
+                        </a>
+                    </div>
                     {product ? (
                         <Swiper_Pages categoryName type='template'>
                             {product?.map((item, index) => (

@@ -1459,10 +1459,13 @@
     overflow: hidden !important;
     .categoryHighlightsSwipper {
         margin-top: clamp(0.313rem, 0.58vw + 0.196rem, 1.125rem);
-        .SwipperTitle {
-            font-size: clamp(1.25rem, 0.67vw + 0.804rem, 1.875rem);
-            margin: 15px 0;
-            padding: 0;
+        .SwipperTitlewrap {
+            margin: 15px 0 15px 0 !important;
+
+            .SwipperTitle {
+                font-weight: 600;
+                font-size: clamp(1.25rem, 0.67vw + 0.804rem, 2rem);
+            }
         }
         .categoryHighlightsSwipperWrap {
             display: flex;
@@ -1565,8 +1568,7 @@
     z-index: 9999;
     @media (max-width: 768px) {
         // display: none;
-            right: -35px;
-
+        right: -35px;
     }
     .swipperICon {
         font-size: clamp(0.938rem, 0.446vw + 0.848rem, 1.563rem);
