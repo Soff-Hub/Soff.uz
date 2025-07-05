@@ -4,17 +4,17 @@ import { baseURL } from '~/repositories/api';
 import Swiper_Pages from '../swipper/swiper';
 import RedesignProduct from '~/components/elements/products/Redesign/Redesign-Product';
 
-export default function ModelsAndInteriorDesignSwipper () {
-    const [product, setProduct] = useState(null);
+export default function ScientificResourcesSwipper () {
+    const [products, setProducts] = useState();
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         setIsLoading(true);
 
-        fetch(`${baseURL}customer/products?direction=3d`)
+        fetch(`https://api.soff.uz/api/v1/customer/products/?direction=file`)
             .then(res => res.json())
             .then(data => {
-                setProduct(data.results);
+                setProducts(data?.results);
             })
             .catch(error => {
                 console.error('Error fetching products:', error);
@@ -24,17 +24,16 @@ export default function ModelsAndInteriorDesignSwipper () {
             });
     }, []);
 
+    console.log(products);
     return (
         <div className='container'>
-            {Array.isArray(product) && product.length > 0 && (
+            {Array.isArray(products) && products.length > 0 && (
                 <div className='categoryHighlightsSwipper'>
-                    <h3 className='SwipperTitle'>
-                        3D moddellar va Interier dizaynlar{' '}
-                    </h3>
+                    <h3 className='SwipperTitle'>Ilmiy ishlar</h3>
 
-                    {product ? (
-                        <Swiper_Pages type='3d'>
-                            {product.map((item, index) => (
+                    {products ? (
+                        <Swiper_Pages categoryName type='template'>
+                            {products?.map((item, index) => (
                                 <div>
                                     <RedesignProduct
                                         product={item}

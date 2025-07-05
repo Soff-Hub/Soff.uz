@@ -4,17 +4,17 @@ import { baseURL } from '~/repositories/api';
 import Swiper_Pages from '../swipper/swiper';
 import RedesignProduct from '~/components/elements/products/Redesign/Redesign-Product';
 
-export default function ScientificResourcesSwipper () {
-    const [products, setProducts] = useState();
+export default function VideoLessonsSwipper () {
+    const [product, setProduct] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         setIsLoading(true);
 
-        fetch(`${baseURL}customer/products?direction=file`)
+        fetch(`https://api.soff.uz/api/v1/customer/products?direction=video`)
             .then(res => res.json())
             .then(data => {
-                setProducts(data?.results);
+                setProduct(data.results);
             })
             .catch(error => {
                 console.error('Error fetching products:', error);
@@ -24,16 +24,15 @@ export default function ScientificResourcesSwipper () {
             });
     }, []);
 
-    console.log(products);
     return (
         <div className='container'>
-            {Array.isArray(products) && products.length > 0 && (
+            {Array.isArray(product) && product.length > 0 && (
                 <div className='categoryHighlightsSwipper'>
-                    <h3 className='SwipperTitle'>Ilmiy ishlar</h3>
+                    <h3 className='SwipperTitle'>Video ishlanmalar</h3>
 
-                    {products ? (
-                        <Swiper_Pages categoryName type='template'>
-                            {products?.map((item, index) => (
+                    {product ? (
+                        <Swiper_Pages type='design'>
+                            {product.map((item, index) => (
                                 <div>
                                     <RedesignProduct
                                         product={item}

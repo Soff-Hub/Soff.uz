@@ -1488,3 +1488,36 @@ body.no-scroll {
         }
     }
 }
+
+.categoryHighlightsSwipper {
+    margin-top: clamp(0.313rem, 0.58vw + 0.196rem, 1.125rem);
+    .SwipperTitle {
+        font-size: clamp(0.938rem, 0.67vw + 0.804rem, 1.875rem);
+        margin: 0;
+        padding: 0;
+        margin-bottom: 15px;
+        font-weight: 500;
+    }
+}
+
+.Swiper_Pages_swiper-navigation {
+    position: absolute;
+    width: 80px;
+    top: -30px;
+    right: 0;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    z-index: 9999;
+    @media (max-width: 768px) {
+        display: none;
+    }
+    .swipperICon {
+        font-size: clamp(0.938rem, 1.232vw + 0.148rem, 2.188rem);
+        cursor: pointer;
+        color: #00a44f;
+        &:active {
+            color: #312f30;
+        }
+    }
+}
