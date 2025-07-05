@@ -31,7 +31,7 @@ export default function BestSellerStatics () {
     ];
     return (
         <div className='BestSellerStaticsTable'>
-            <div className=' BestSellerStaticsTableTab '>
+            {/* <div className=' BestSellerStaticsTableTab '>
                 <div className='shadow-sm'>
                     <div className='sellerProductMenu'>
                         {menuItems.map((item, index) => (
@@ -49,8 +49,8 @@ export default function BestSellerStatics () {
                     </div>
                 </div>
                 {sellerTabItems[activeIndex]}
-            </div>
-            <div className='BestSellerStaticsTableWrap container'>
+            </div> */}
+            <div className='BestSellerStaticsTableWrap'>
                 <ActiveSellers />
                 <BestSeller />
                 <TopProduct />
