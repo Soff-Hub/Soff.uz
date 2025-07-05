@@ -1,4 +1,5 @@
 import React from 'react';
+import BestSellerStatics from '~/components/blocks/bestSellerStatics';
 import HomeCategoryHighlights from '~/components/blocks/categoryHighlights';
 import FooterComponents from '~/components/blocks/footer/FooterComponents';
 import ResutsComponents from '~/components/blocks/header/Results/ResutsComponents';
@@ -38,6 +39,9 @@ function NewHomePage ({ tab, category }) {
             {/* <HeroService /> */}
             <HeroSearch />
             <HomeCategories />
+
+            <BestSellerStatics />
+
             <HomeCategoryHighlights />
             <ItServicesCategories />
             {/* <HomeVideo /> */}

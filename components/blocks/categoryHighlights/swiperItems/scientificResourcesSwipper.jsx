@@ -25,7 +25,6 @@ export default function ScientificResourcesSwipper () {
             });
     }, []);
 
-    console.log(product);
     return (
         <div className=' categoryHighlightsSwippercontainer'>
             {Array.isArray(product) && product.length > 0 && (
