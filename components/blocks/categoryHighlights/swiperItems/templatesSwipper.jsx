@@ -1,19 +1,17 @@
 import { Spin } from 'antd';
 import React, { useEffect, useState } from 'react';
-import DesignDevelopmentProducts from '~/components/elements/products/DesignDevelopmentProducts';
 import { baseURL } from '~/repositories/api';
-import SwiperPages from '~/components/details-components/swiper/swiper-page';
 import Swiper_Pages from '../swipper/swiper';
 import RedesignProduct from '~/components/elements/products/Redesign/Redesign-Product';
 
-export default function DesignDevelopmentSwipper () {
+export default function TemplatesSwipper () {
     const [product, setProduct] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         setIsLoading(true);
 
-        fetch(`${baseURL}customer/products?direction=design`)
+        fetch(`https://api.soff.uz/api/v1/customer/products?direction=template`)
             .then(res => res.json())
             .then(data => {
                 setProduct(data.results);
@@ -30,7 +28,7 @@ export default function DesignDevelopmentSwipper () {
         <div className='container'>
             {Array.isArray(product) && product.length > 0 && (
                 <div className='categoryHighlightsSwipper'>
-                    <h3 className='SwipperTitle'>Dizayn shablonlar</h3>
+                    <h3 className='SwipperTitle'>Tayyor shablonlar</h3>
 
                     {product ? (
                         <Swiper_Pages type='design'>

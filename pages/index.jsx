@@ -1,6 +1,5 @@
 import React from 'react';
-import CategoryHighlights from '~/pages/categoryHighlights/CategoryHighlights';
-import FooterComponents from '~/components/blocks/footer/FooterComponents';
+import HomeCategoryHighlights from '~/components/blocks/categoryHighlights';
 import ResutsComponents from '~/components/blocks/header/Results/ResutsComponents';
 import HeroSearch from '~/components/blocks/hero';
 import HeroService from '~/components/blocks/hero/HeroService';
@@ -35,12 +34,12 @@ function NewHomePage ({ tab, category }) {
                 author='Soff.uz'
                 image='/static/img/soff imkoniyatlari 2.png'
             />
-            {/* <HeroService /> */}
             <HeroSearch />
             <HomeCategories />
 
+            <HomeCategoryHighlights />
+
             <ItServicesCategories />
-            {/* <HomeVideo /> */}
             <ResutsComponents />
             <SubProjects />
         </PageLayout>
