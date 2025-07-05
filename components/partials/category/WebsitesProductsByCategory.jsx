@@ -12,7 +12,7 @@ export default function WebsitesProductsByCategory ({
     isLoading,
 }) {
     return (
-        <div id='products' className='overflow-hidden '>
+        <div id='products' className='designDevelopmentProduct '>
             <div className='row '>
                 {isLoading && (
                     <div className={`product-list p-loading`}>
@@ -29,32 +29,37 @@ export default function WebsitesProductsByCategory ({
                 )}
                 {data?.results?.length > 0 &&
                     data?.results?.map((item, index) => (
-                        <div
-                            className='home-card col-md-3 col-sm-4 col-xs-3 col-6'
-                            key={index}>
+                        <div key={index}>
                             <DesignDevelopmentProducts product={item} />
                         </div>
                     ))}
-            </div>  
-            
+            </div>
+
             {data?.results?.length == 0 && (
-                <div className="ps-page-status">
-                    <div className="container">
-                        <div className="ps-section__content">
-                        <img src="/static/img/noinfo.svg" alt="Ma'lumot topilmadi" />
+                <div className='ps-page-status'>
+                    <div className='container'>
+                        <div className='ps-section__content'>
+                            <img
+                                src='/static/img/noinfo.svg'
+                                alt="Ma'lumot topilmadi"
+                            />
                             <h3>😕 Bu yerda hozircha hech narsa yo‘q...</h3>
                             <p>
-                                Ammo bu siz uchun ajoyib imkoniyat! Birinchilardan bo‘lib ushbu kategoriyaga mahsulot joylashtiring, o‘z auditoriyangizni yarating va daromad olishni boshlang. Imkoniyatni qo‘ldan boy bermang!
+                                Ammo bu siz uchun ajoyib imkoniyat!
+                                Birinchilardan bo‘lib ushbu kategoriyaga
+                                mahsulot joylashtiring, o‘z auditoriyangizni
+                                yarating va daromad olishni boshlang.
+                                Imkoniyatni qo‘ldan boy bermang!
                             </p>
                             <p>
-                                <Link href="https://seller.soff.uz">
+                                <Link href='https://seller.soff.uz'>
                                     <a target='_blank'>Sotuvchi bo'lish</a>
                                 </Link>
                             </p>
                         </div>
                     </div>
                 </div>
-            )}          
+            )}
 
             {data?.count >= 48 && (
                 <div className='d-flex justify-content-center mt-5'>

@@ -3,10 +3,10 @@ import { addPeriodToThousands } from '~/components/partials/account/price-format
 import useWishlist from '~/hooks/useWishlist';
 import { useState } from 'react';
 import useCart from '~/hooks/useCart';
-    import { Modal } from 'antd';
+import { Modal } from 'antd';
 import { useRouter } from 'next/router';
 
-const   RedesignProduct = ({ product }) => {
+const RedesignProductCardForcarousel = ({ product }) => {
     const { addSavedItem, wishlist, removeSavedItem } = useWishlist();
     const [open, setOpen] = useState(false);
     const Router = useRouter();
@@ -47,7 +47,7 @@ const   RedesignProduct = ({ product }) => {
     };
 
     return (
-        <div className='scientificResourcesCard'>
+        <div className='scientificResourcesCardForcarousel'>
             <Link href='/product/[pid]' as={`/product/${product.slug}`}>
                 <div className='scientificResourcesCardImgBox'>
                     <img
@@ -89,16 +89,16 @@ const   RedesignProduct = ({ product }) => {
                         {+product.discount_price === 0 ? (
                             <p className='free-product-text'>Bepul</p>
                         ) : product.discount === 0 ? (
-                            <p className='scientificResourcesCardPrice_discount_price'>
+                            <p>
                                 {addPeriodToThousands(product.discount_price)}{' '}
                                 so'm
-                            </p >
+                            </p>
                         ) : (
                             <>
-                                <del className='scientificResourcesCardPrice_discount_price'>
+                                <del>
                                     {addPeriodToThousands(product.price)} so'm
                                 </del>
-                                <p className='scientificResourcesCardPrice_discount_price'>
+                                <p>
                                     {addPeriodToThousands(
                                         product.discount_price
                                     )}
@@ -151,4 +151,4 @@ const   RedesignProduct = ({ product }) => {
     );
 };
 
-export default RedesignProduct;
+export default RedesignProductCardForcarousel;

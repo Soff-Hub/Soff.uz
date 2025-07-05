@@ -1452,3 +1452,128 @@
         }
     }
 }
+
+.categoryHighlightsSwippercontainer {
+    // margin: 0 auto;
+    width: clamp(18.75rem, 100.858vw - 1.422rem, 165.625rem) !important;
+    overflow: hidden !important;
+    .categoryHighlightsSwipper {
+        margin-top: clamp(0.313rem, 0.58vw + 0.196rem, 1.125rem);
+        .SwipperTitle {
+            font-size: clamp(1.25rem, 0.67vw + 0.804rem, 1.875rem);
+            margin: 15px 0;
+            padding: 0;
+        }
+        .categoryHighlightsSwipperWrap {
+            display: flex;
+            align-items: center;
+        }
+    }
+}
+.scientificResourcesCardForcarousel {
+    // min-width: clamp(8.125rem, 11.588vw + 5.807rem, 25rem);
+    // height: 100%;
+    background: #fff;
+    border-radius: 12.5px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    // margin: 0;
+
+    width: 100%;
+    max-width: clamp(10rem, 30vw, 18rem); /* 160–288px oralig‘ida */
+    margin: 0 auto;
+    box-sizing: border-box;
+    &:hover {
+        filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.2));
+    }
+
+    .scientificResourcesCardImgBox {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: clamp(0.313rem, 0.858vw + 0.141rem, 1.563rem);
+        .scientificResourcesCardImg {
+            height: clamp(6.25rem, 4.292vw + 5.392rem, 12.5rem);
+            border-radius: 12.5px;
+        }
+    }
+    .scientificResourcesCardHeard {
+        position: absolute;
+        right: clamp(0.625rem, 0.429vw + 0.539rem, 1.25rem);
+        top: clamp(0.625rem, 0.429vw + 0.539rem, 1.25rem);
+        padding: clamp(0.188rem, 0.3vw + 0.127rem, 0.625rem);
+        img {
+            @media (max-width: 450px) {
+                width: 15px;
+            }
+        }
+    }
+    .scientificResourcesCardBody {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        flex-grow: 1;
+        padding: clamp(0.5rem, 0.515vw + 0.397rem, 1.25rem);
+        gap: clamp(0.5rem, 0.515vw + 0.397rem, 1.25rem);
+        .scientificResourcesCardTitle {
+            color: #000;
+            font-family: 'Poppins';
+            font-size: clamp(0.5rem, 0.215vw + 0.457rem, 0.813rem);
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            letter-spacing: 0.25px;
+        }
+        .scientificResourcesCardPriceBox {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .scientificResourcesCardPrice {
+                p {
+                    color: #000;
+                    font-family: 'Poppins';
+                    font-size: clamp(0.625rem, 0.429vw + 0.539rem, 1.25rem);
+                    font-style: normal;
+                    font-weight: 600;
+                    line-height: normal;
+                    letter-spacing: 0.367px;
+                    margin: 0;
+                }
+            }
+            .scientificBuyIcon {
+                @media (max-width: 768px) {
+                    width: 25px;
+                }
+                @media (max-width: 450px) {
+                    width: 20px;
+                }
+            }
+        }
+    }
+}
+
+.Swiper_Pages_swiper-navigation {
+    position: absolute;
+    width: 80px;
+    top: -30px;
+    right: 0;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    z-index: 9999;
+    @media (max-width: 768px) {
+        // display: none;
+            right: -35px;
+
+    }
+    .swipperICon {
+        font-size: clamp(0.938rem, 0.446vw + 0.848rem, 1.563rem);
+        cursor: pointer;
+        color: #00a44f;
+        &:active {
+            color: #312f30;
+        }
+    }
+}

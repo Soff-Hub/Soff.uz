@@ -1,4 +1,5 @@
 import React from 'react';
+import HomeCategoryHighlights from '~/components/blocks/categoryHighlights';
 import FooterComponents from '~/components/blocks/footer/FooterComponents';
 import ResutsComponents from '~/components/blocks/header/Results/ResutsComponents';
 import HeroSearch from '~/components/blocks/hero';
@@ -37,6 +38,7 @@ function NewHomePage ({ tab, category }) {
             {/* <HeroService /> */}
             <HeroSearch />
             <HomeCategories />
+            <HomeCategoryHighlights />
             <ItServicesCategories />
             {/* <HomeVideo /> */}
             <ResutsComponents />
