@@ -19,7 +19,7 @@ export default function SearchResultsProductsFilter({ total, parentData, childDa
   const orders = [
     { label: 'Narx (arzon)', value: 'price' },
     { label: 'Narx (qimmat)', value: '-price' },
-    { label: 'Ko‘rilganlar bo‘yicha', value: 'views' },
+    { label: "Ko'p ko‘rilganlar bo‘yicha", value: 'views' },
     { label: 'Ko‘p xarid qilingan', value: 'purchased_count' },
   ];
 
@@ -57,7 +57,7 @@ export default function SearchResultsProductsFilter({ total, parentData, childDa
 
   return (
     <div className='Search_Results_Products_form_box container'>
-      <p className='countProduct'>
+      <p className='countProduct text-nowrap'>
         {total ? `${total} ta mahsulot` : ''}
       </p>
 

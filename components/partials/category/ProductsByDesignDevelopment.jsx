@@ -3,6 +3,7 @@ import { Pagination } from 'antd';
 import { Skeleton } from 'antd';
 import DesignDevelopmentProducts from '~/components/elements/products/DesignDevelopmentProducts';
 import Link from 'next/link';
+import RedesignProduct from '~/components/elements/products/Redesign/Redesign-Product';
 
 export default function ProductsByDesignDevelopment ({
     data = [],
@@ -32,7 +33,7 @@ export default function ProductsByDesignDevelopment ({
                             style={{ height: '100%', width: '100%' }}
                             className='p-0 m-0'
                             key={index}>
-                            <DesignDevelopmentProducts product={item} />
+                            <RedesignProduct key={index} product={item} />
                         </div>
                     ))}
             </div>
