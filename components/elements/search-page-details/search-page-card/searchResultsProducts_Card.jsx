@@ -15,9 +15,8 @@ export default function SearchResultsProducts_Card({ product }) {
         video: 'video-lessons'
     };
 
+
     const router = useRouter();
-    const parentSlug = product?.category_data?.parent_slug || '';
-    const categoryId = product?.category_data?.category_id || '';
 
     return (
         <div
@@ -34,8 +33,8 @@ export default function SearchResultsProducts_Card({ product }) {
                             title: (
                                 <Link
                                     href={{
-                                        pathname: `/${paths[product.content_type]}/${product?.category_data?.parent ||''}/`,
-                                        query: `parentCategory=${product?.category_data?.parent || ''}`
+                                        pathname: `/${paths[product.content_type]}/${(product?.category_data?.parent)?.replace(/\s+/g, '-').toLowerCase() ||''}/`,
+                                        query: `parentCategory=${(product?.category_data?.parent)?.replace(/\s+/g, '-').toLowerCase() || ''}`
                                     }}
                                     onClick={(e) => e.stopPropagation()}
                                 >
@@ -49,7 +48,7 @@ export default function SearchResultsProducts_Card({ product }) {
                                 <Link
                                     href={{
                                         pathname: `/${paths[product.content_type]}/${product?.category_data?.parent || ''}/`,
-                                        query: `childCategory=${product?.category_data?.category || ''}`
+                                        query: `childCategory=${(product?.category_data?.category)?.toLowerCase() || ''}`
                                     }}
                                     onClick={(e) => e.stopPropagation()}
                                 >

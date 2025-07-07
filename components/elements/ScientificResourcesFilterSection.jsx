@@ -122,7 +122,7 @@ const ScientificResourcesFilterSection = ({
                                 {
                                     parentCategory ? breacrumb?.results.find(item => {
                                         return item.slug == parentCategory
-                                    }).name :
+                                    })?.name :
                                         'Barcha Katalog'
                                 }
                             </h1>

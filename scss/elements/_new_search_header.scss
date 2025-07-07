@@ -1442,35 +1442,35 @@
     }
 
     .Search_Results_Products_form {
-        display: flex;
-        justify-content: flex-end;
-        gap: 20px;
-        width: 100%;
+        // display: flex;
+        // justify-content: flex-end;
+        // gap: 20px;
+        // width: 100%;
 
-        @media (max-width: 1150px) {
-            display: grid;
-            grid-template-columns: repeat(4, minmax(150px, 1fr));
-            gap: 16px;
-        }
+        // @media (max-width: 1150px) {
+        //     display: grid;
+        //     grid-template-columns: repeat(4, minmax(150px, 1fr));
+        //     gap: 16px;
+        // }
 
-        @media (max-width: 800px) {
-            grid-template-columns: repeat(2, minmax(150px, 1fr));
-        }
+        // @media (max-width: 800px) {
+        //     grid-template-columns: repeat(2, minmax(150px, 1fr));
+        // }
 
-        @media (max-width: 500px) {
-            grid-template-columns: repeat(1, minmax(150px, 1fr));
-        }
+        // @media (max-width: 500px) {
+        //     grid-template-columns: repeat(1, minmax(150px, 1fr));
+        // }
 
-        .search_filter_wrapper {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            flex-wrap: wrap;
+        // .search_filter_wrapper {
+        //     display: flex;
+        //     align-items: center;
+        //     gap: 1rem;
+        //     flex-wrap: wrap;
 
-            @media (max-width: 1150px) {
-                display: contents; // Grid ichida joylashadi
-            }
-        }
+        //     @media (max-width: 1150px) {
+        //         display: contents; // Grid ichida joylashadi
+        //     }
+        // }
 
         .Search_Results_Products_form_inputBox {
             display: flex;
@@ -1517,20 +1517,20 @@
             line-height: normal;
         }
 
-        // 🔧 Close icon (Tozalash) ham grid ichida joylashadi
-        :global(.anticon-close-circle) {
-            align-self: center;
-            justify-self: start;
+        // // 🔧 Close icon (Tozalash) ham grid ichida joylashadi
+        // :global(.anticon-close-circle) {
+        //     align-self: center;
+        //     justify-self: start;
 
-            @media (max-width: 1150px) {
-                margin-top: 4px;
-            }
-        }
+        //     @media (max-width: 1150px) {
+        //         margin-top: 4px;
+        //     }
+        // }
 
-        // 🔧 Antd Select komponentlarining kengligi responsive bo'lishi uchun
-        :global(.ant-select) {
-            width: 100%;
-        }
+        // // 🔧 Antd Select komponentlarining kengligi responsive bo'lishi uchun
+        // :global(.ant-select) {
+        //     width: 100%;
+        // }
     }
 }
 
@@ -1580,18 +1580,18 @@
         .Search_Results_Products_card_title {
             color: #000;
             font-family: 'Poppins';
-            font-size: 20.408px;
+            font-size: 22px;
             font-style: normal;
             font-weight: 500;
             line-height: normal;
             @media (max-width: 600px) {
-                font-size: 15px;
+                font-size: 22px;
             }
             @media (max-width: 600px) {
-                font-size: 12px;
+                font-size: 22px;
             }
             @media (max-width: 350px) {
-                font-size: 10px;
+                font-size: 22px;
             }
         }
         .Search_Results_Products_card_description {
@@ -1602,13 +1602,13 @@
             font-weight: 400;
             max-width: 645px;
             @media (max-width: 600px) {
-                font-size: 12px;
+                font-size: 16px;
             }
             @media (max-width: 450px) {
-                font-size: 9px;
+                font-size: 16px;
             }
             @media (max-width: 350px) {
-                font-size: 7px;
+                font-size: 16px;
             }
         }
         .Search_Results_Products_card_info {
@@ -1632,13 +1632,13 @@
                 align-items: center;
                 gap: 10px;
                 @media (max-width: 600px) {
-                    font-size: 12px;
+                    font-size: 16px;
                 }
                 @media (max-width: 450px) {
-                    font-size: 9px;
+                    font-size: 16px;
                 }
                 @media (max-width: 350px) {
-                    font-size: 7px;
+                    font-size: 16px;
                 }
                 .Search_Results_Products_card_boldtype {
                     color: #312f30;
@@ -1648,13 +1648,13 @@
                     font-weight: 500;
                     line-height: normal;
                     @media (max-width: 600px) {
-                        font-size: 12px;
+                        font-size: 14px;
                     }
                     @media (max-width: 450px) {
-                        font-size: 9px;
+                        font-size: 14px;
                     }
                     @media (max-width: 350px) {
-                        font-size: 7px;
+                        font-size: 14px;
                     }
                 }
             }
@@ -1666,13 +1666,13 @@
                 font-weight: 400;
                 line-height: normal;
                 @media (max-width: 600px) {
-                    font-size: 12px;
+                    font-size: 16px;
                 }
                 @media (max-width: 450px) {
-                    font-size: 9px;
+                    font-size: 16px;
                 }
                 @media (max-width: 350px) {
-                    font-size: 7px;
+                    font-size: 16px;
                 }
                 .Search_Results_Products_card_price_boldspan {
                     color: #312f30;
@@ -1682,13 +1682,13 @@
                     font-weight: 500;
                     line-height: normal;
                     @media (max-width: 600px) {
-                        font-size: 12px;
+                        font-size: 16px;
                     }
                     @media (max-width: 450px) {
-                        font-size: 9px;
+                        font-size: 16px;
                     }
                     @media (max-width: 350px) {
-                        font-size: 7px;
+                        font-size: 16px;
                     }
                 }
             }
