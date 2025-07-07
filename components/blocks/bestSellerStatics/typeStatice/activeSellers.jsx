@@ -1,43 +1,28 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { baseURL } from '~/repositories/api';
+import Link from 'next/link';
+import { Skeleton } from 'antd';
+import { useGet } from '~/repositories/https';
 
 export default function ActiveSellers () {
-    const [isLoading, setIsLoading] = useState(false);
-    const [users, setUsers] = useState(null);
     const [selectValue, setSelectValue] = useState('week');
-    useEffect(() => {
-        const fetchProducts = async () => {
-            setIsLoading(true);
-            try {
-                const res = await fetch(
-                    `${baseURL}customer/top-seller-statistics/?filter_stats=active_sellers&filter_by=${selectValue}`
-                );
-                const text = await res.text();
-                console.log('Raw response:', text);
-                const data = JSON.parse(text);
-                setUsers(data);
-            } catch (err) {
-                console.error('Error fetching seller:', err);
-            } finally {
-                setIsLoading(false);
-            }
-        };
 
-        fetchProducts();
-    }, [selectValue]);
+    const { data: users, isLoading } = useGet(
+        "customer/top-seller-statistics",
+        `customer/top-seller-statistics/`,
+        {
+          filter_stats: 'active_sellers',
+          filter_by: selectValue,
+        }
+      )
 
-    function handleChange (e) {
-        setSelectValue(e?.target?.value);
-    }
     return (
         <div className='BestSellerStaticsTable'>
             <div className='d-flex gap-2 align-items-center BestSellerStaticsTable_titleWrap'>
                 <select
                     className='BestSellerStaticsTable_titleWrap_select'
-                    name=''
-                    id=''
-                    onChange={handleChange}>
+                    onChange={e => setSelectValue(e?.target?.value)}>
                     <option value='week'>Haftaning</option>
                     <option value='month'>Oyning</option>
                 </select>
@@ -46,10 +31,24 @@ export default function ActiveSellers () {
                 </p>
             </div>{' '}
             <div className='BestSellerStaticsTableCardWrap'>
+                {isLoading && (
+                    <>
+                        {Array(5)
+                            .fill(0)
+                            .map((d, i) => (
+                                <div key={i} className='row align-items-center ms-1'>
+                                    <Skeleton.Input active={true} size={40} style={{ width: 350, height: 80 }}/>
+                                </div>
+                            ))}
+                    </>
+                )}
                 {users?.map((item, index) => {
                     return (
-                        <div
+                        <Link
                             key={index || item?.id}
+                            href='/seller/[pid]'
+                            as={`/seller/${item?.id}`}>
+                        <div
                             className='BestSellerStaticsTableCard'>
                             <img
                                 className='BestSellerStaticsTableCard_Avatar'
@@ -70,6 +69,7 @@ export default function ActiveSellers () {
                                 </p>
                             </div>
                         </div>
+                        </Link>
                     );
                 })}
             </div>
