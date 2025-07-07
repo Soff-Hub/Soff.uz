@@ -3,6 +3,7 @@ import { Breadcrumb } from 'antd';
 import Link from 'next/link';
 import { fileColors } from '~/components/details-components/details-actions/file-actions';
 import { useRouter } from 'next/router';
+import { addPeriodToThousands } from '~/components/partials/account/price-formatter';
 
 export default function SearchResultsProducts_Card({ product }) {
     const paths = {
@@ -90,7 +91,7 @@ export default function SearchResultsProducts_Card({ product }) {
                     <p className='Search_Results_Products_card_price'>
                         Narxi:{' '}
                         <span className='Search_Results_Products_card_price_boldspan'>
-                            {product.discount_price} so'm
+                            {addPeriodToThousands(product.discount_price)} so'm
                         </span>
                     </p>
                 </div>
