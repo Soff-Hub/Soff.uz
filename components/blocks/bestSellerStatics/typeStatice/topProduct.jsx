@@ -1,44 +1,28 @@
 'use client';
+import { Skeleton } from 'antd';
+import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { baseURL } from '~/repositories/api';
+import { useGet } from '~/repositories/https';
 
 export default function TopProduct () {
-    const [isLoading, setIsLoading] = useState(false);
-    const [users, setUsers] = useState(null);
     const [selectValue, setSelectValue] = useState('week');
-    useEffect(() => {
-        const fetchProducts = async () => {
-            setIsLoading(true);
-            try {
-                const res = await fetch(
-                    `${baseURL}customer/top-seller-statistics/?filter_stats=top_produc&filter_by=${selectValue}`
-                );
-                const text = await res.text();
-                console.log('Raw response:', text);
-                const data = JSON.parse(text);
-                setUsers(data);
-            } catch (err) {
-                console.error('Error fetching seller:', err);
-            } finally {
-                setIsLoading(false);
-            }
-        };
 
-        fetchProducts();
-    }, [selectValue]);
-
-    function handleChange (e) {
-        setSelectValue(e?.target?.value);
-    }
+    const { data: users, isLoading } = useGet(
+        "customer/top-seller-statistics",
+        `customer/top-seller-statistics/`,
+        {
+          filter_stats: 'top_produc',
+          filter_by: selectValue,
+        }
+      )
 
     return (
         <div className='BestSellerStaticsTable'>
             <div className='d-flex gap-2 align-items-center BestSellerStaticsTable_titleWrap'>
                 <select
                     className='BestSellerStaticsTable_titleWrap_select'
-                    name=''
-                    id=''
-                    onChange={handleChange}>
+                    onChange={e => setSelectValue(e?.target?.value)}>
                     <option value='week'>Haftaning</option>
                     <option value='month'>Oyning</option>
                 </select>
@@ -48,30 +32,45 @@ export default function TopProduct () {
             </div>
 
             <div className='BestSellerStaticsTableCardWrap'>
+                {isLoading && (
+                    <>
+                        {Array(5)
+                            .fill(0)
+                            .map((d, i) => (
+                                <div key={i} className='row align-items-center ms-1'>
+                                    <Skeleton.Input active={true} size={40} style={{ width: 350, height: 80 }}/>
+                                </div>
+                            ))}
+                    </>
+                )}
                 {users?.map((item, index) => {
                     return (
-                        <div
-                            key={item?.id || index}
-                            className='BestSellerStaticsTableCard'>
-                            <img
-                                className='BestSellerStaticsTableCard_Avatar'
-                                src={
-                                    item?.image
-                                        ? item?.image
-                                        : '/static/img/user-none.jpg'
-                                }
-                                alt='User image'
-                            />
-                            <div className='BestSellerStaticsTableCard_infoWrap'>
-                                <h3 className='BestSellerStaticsTableCard_fullname'>
-                                    {item?.title}
-                                </h3>
-                                <p className='BestSellerStaticsTableCard_statics'>
-                                    {item?.view_count} marta ko'rilgan,{' '}
-                                    {item?.sold_count} marta sotilgan
-                                </p>
+                        <Link
+                            key={item?.slug || index}
+                            href='/product/[slug]'
+                            as={`/product/${item?.slug}`}>
+                            <div
+                                className='BestSellerStaticsTableCard'>
+                                <img
+                                    className='BestSellerStaticsTableCard_ProductView'
+                                    src={
+                                        item?.poster
+                                            ? item?.poster
+                                            : '/static/img/user-none.jpg'
+                                    }
+                                    alt={item.title}
+                                />
+                                <div className='BestSellerStaticsTableCard_infoWrap'>
+                                    <h3 className='BestSellerStaticsTableCard_fullname'>
+                                        {item?.title}
+                                    </h3>
+                                    <p className='BestSellerStaticsTableCard_statics'>
+                                        {item?.view_count} marta ko'rilgan,{' '}
+                                        {item?.sold_count} marta sotilgan
+                                    </p>
+                                </div>
                             </div>
-                        </div>
+                        </Link>
                     );
                 })}
             </div>

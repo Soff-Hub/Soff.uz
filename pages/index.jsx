@@ -40,7 +40,7 @@ function NewHomePage ({ tab, category }) {
             <HeroSearch />
             <HomeCategories />
 
-            {/* <BestSellerStatics /> */}
+            <BestSellerStatics />
 
             <HomeCategoryHighlights />
             <ItServicesCategories />
