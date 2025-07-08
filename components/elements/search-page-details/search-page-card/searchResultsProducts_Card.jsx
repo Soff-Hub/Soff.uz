@@ -14,7 +14,7 @@ export default function SearchResultsProducts_Card({ product }) {
         template: 'templates',
         video: 'video-lessons'
     };
-
+    console.log('product-->', product)
 
     const router = useRouter();
 
@@ -47,8 +47,8 @@ export default function SearchResultsProducts_Card({ product }) {
                             title: (
                                 <Link
                                     href={{
-                                        pathname: `/${paths[product.content_type]}/${product?.category_data?.parent || ''}/`,
-                                        query: `childCategory=${(product?.category_data?.category)?.toLowerCase() || ''}`
+                                        pathname: `/${paths[product.content_type]}/${product?.category_data?.slug || ''}/`,
+                                        query: `parentCategory=${(product?.category_data?.parent)?.replace(/\s+/g, '-').toLowerCase() || ''}&childCategory=${(product?.category_data?.slug)?.toLowerCase() || ''}`
                                     }}
                                     onClick={(e) => e.stopPropagation()}
                                 >

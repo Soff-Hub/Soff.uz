@@ -50,7 +50,7 @@ const Search_Results = ({ fourChildData, childCategoryData }) => {
         };
 
         fetchData();
-    }, [page, keyword, type, category, order_by, searchTerm]);
+    }, [page, keyword, type, category, order_by]);
 
     // Sync input value with URL keyword
     useEffect(() => {
@@ -156,7 +156,7 @@ const Search_Results = ({ fourChildData, childCategoryData }) => {
                                     type='text'
                                     value={searchTerm}
                                     placeholder='Izlayotgan mahsulotingizni toping...'
-                                    onChange={e => setSearchTerm(e.target.value.trim())}
+                                    onInput={e => setSearchTerm(e.target.value.trim())}
                                 />
                                 {clearTextView}
                                 {loadingView}
