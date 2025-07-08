@@ -13,17 +13,33 @@ for (let i = 10; i < 36; i++) {
     });
 }
 
-const AcceptFreelanceInviteModal = (handleSubmit) => {
-    const [value, setValue] = useState('');
+const AcceptFreelanceInviteModal = () => {
+    const [descValue, setDescValue] = useState('');
     const [valueSelect, setValueSelect] = useState([]);
+    const [valueOption, setValueOption] = useState([]);
     const [error, setError] = useState(false);
+    const [token, setToken] = useState(null); // token uchun state
 
-    const handleChange = value => {
-        setValueSelect(value);
-        if (value.length > 0) {
-            setError(false); // agar to‘g‘ri tanlasa, xatolik yo‘qoladi
+    function getCookie (name) {
+        if (typeof document === 'undefined') return null;
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const t = getCookie('token');
+            setToken(t);
         }
+    }, []);
+
+    console.log('getData', getCookie('token'));
+
+    const handleChange = values => {
+        setValueSelect(values);
     };
+
     async function getData () {
         await freelanceApi
             .get('/categories/{category_id}')
@@ -34,10 +50,62 @@ const AcceptFreelanceInviteModal = (handleSubmit) => {
                 console.log(err);
             });
     }
+
+    const handleSubmit = () => {
+        if (valueSelect.length === 0) {
+            setError(true);
+            return;
+        }
+
+        console.log('token:', token);
+        console.log('Authorization header:', `Bearer ${getCookie('token')}`);
+        console.log('Yuborilayotgan body:', {
+            description: descValue,
+            Category: valueSelect,
+        });
+
+        fetch('http://176.96.241.219:8006/auth/start-freelancing/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                // Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+                description: descValue,
+                Category: valueSelect,
+                Authorization: `Bearer ${token}`,
+            }),
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Serverdan xato javob keldi');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Javob:', data);
+            })
+            .catch(error => {
+                console.error('Xatolik:', error);
+            });
+    };
+
+    useEffect(() => {
+        fetch(`http://176.96.241.219:8006/auth/start-freelancing/`)
+            .then(res => res.json())
+            .then(data => {
+                setValueOption(data);
+            })
+            .catch(error => {
+                console.error('Error fetching seller:', error);
+            })
+            .finally(() => {});
+    }, []);
+    console.log('valueOption', valueOption);
+
     useEffect(() => {
         getData();
     }, []);
-
 
     return (
         <div>
@@ -80,8 +148,8 @@ const AcceptFreelanceInviteModal = (handleSubmit) => {
             </p>
             <TextArea
                 className='d-flex justify-content-center align-items-center'
-                value={value}
-                onChange={e => setValue(e.target.value)}
+                // value={value}
+                onChange={e => setDescValue(e.target.value)}
                 placeholder='Malakangiz, tajribangiz va qanday xizmatlar ko‘rsatishingiz haqida yozing.'
                 autoSize={{ minRows: 3, maxRows: 5 }}
             />

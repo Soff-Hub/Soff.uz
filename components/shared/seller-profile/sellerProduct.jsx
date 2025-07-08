@@ -7,6 +7,7 @@ import Templates from '../seller-products-types/templates';
 import VideoLessons from '../seller-products-types/video-lessons';
 import { Skeleton } from 'antd';
 import { useRouter } from 'next/router';
+import ProductsByCategory from '~/components/partials/category/ProductsByCategory';
 
 export default function SellerProduct (pid) {
     const router = useRouter();
@@ -14,11 +15,8 @@ export default function SellerProduct (pid) {
     const [product, setProduct] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
 
-    console.log('product111', product);
-
     useEffect(() => {
         if (!isReady || !query.pid) return;
-
         const fetchProducts = async () => {
             setIsLoading(true);
             try {
@@ -45,14 +43,15 @@ export default function SellerProduct (pid) {
         switch (selectedOption) {
             case 'All':
                 return (
-                    <>
+                    <div>
+                        <ProductsByCategory data={product?.data?.['3d']} />
                         <ScientificResources data={product} />
                         <ModelAndDesign data={product} />
                         <DesignDevelopment data={product} />
                         <WebSites data={product} />
                         <Templates data={product} />
                         <VideoLessons data={product} />
-                    </>
+                    </div>
                 );
             case 'ScientificResources':
                 return <ScientificResources data={product} />;

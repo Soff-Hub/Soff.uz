@@ -174,7 +174,7 @@ body.no-scroll {
     grid-template-columns: 25% 75%;
     gap: 20px;
     @media (max-width: 1125px) {
-        grid-template-columns: 30% 70%;
+        grid-template-columns: repeat(1, 100%);
     }
     @media (max-width: 768px) {
         grid-template-columns: repeat(1, 100%);
@@ -1138,7 +1138,7 @@ body.no-scroll {
     .sellerpageTitleBox {
         display: flex;
         align-items: center;
-        margin: 0 0 31px;
+        margin: 31px 0;
         gap: 10px;
         .sellerpageTitle {
             color: #312f30;

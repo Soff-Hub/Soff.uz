@@ -30,10 +30,7 @@ export default function AcceptFreelanceInvite () {
         };
     }, [isOpen]);
 
-    const handleSubmit = () => {
-
-        
-    };
+    const handleSubmit = () => {};
 
     return (
         <PageContainer>

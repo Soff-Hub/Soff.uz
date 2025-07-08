@@ -6,34 +6,40 @@ export default function ModelAndDesign (product) {
 
     return (
         <div className='sellerpage'>
-            <div className='sellerpageTitleBox'>
-                <p className='sellerpageTitle'>
-                    3D modellar va interier dizaynlar
-                </p>
-                <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    width='8'
-                    height='10'
-                    viewBox='0 0 8 10'
-                    fill='none'>
-                    <path
-                        d='M1.875 1.5L6.12488 4.63195L2 8.5'
-                        stroke='#312F30'
-                        stroke-width='2'
-                        stroke-linecap='round'
-                    />
-                </svg>
-            </div>
-            <div className='ModelAndDesignCardWrap'>
-                {data?.map((item, index) => (
-                    <div className='card_container' key={index}>
-                        <ModelAndDesignProduct product={item} />
+            {product && (
+                <>
+                    <div className='sellerpageTitleBox'>
+                        <p className='sellerpageTitle'>
+                            3D modellar va interier dizaynlar
+                        </p>
+                        <svg
+                            xmlns='http://www.w3.org/2000/svg'
+                            width='8'
+                            height='10'
+                            viewBox='0 0 8 10'
+                            fill='none'>
+                            <path
+                                d='M1.875 1.5L6.12488 4.63195L2 8.5'
+                                stroke='#312F30'
+                                stroke-width='2'
+                                stroke-linecap='round'
+                            />
+                        </svg>
                     </div>
-                ))}
-            </div>
-            <div className='showMoreBox'>
-                <p className='showMore'> Yana ko’rsatish</p>
-            </div>
+                    <div className='scientificResourcesWrap'>
+                        {data?.map((item, index) => (
+                            <div className='card_container' key={index}>
+                                <ModelAndDesignProduct product={item} />
+                            </div>
+                        ))}
+                    </div>
+                </>
+            )}
+            {product?.length < 8 && (
+                <div className='showMoreBox'>
+                    <p className='showMore'>Yana ko’rsatish</p>
+                </div>
+            )}
         </div>
     );
 }

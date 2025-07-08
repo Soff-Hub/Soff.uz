@@ -17,7 +17,7 @@ export default function SellersPage () {
     const activeIndex = asPath.slice(asPath.indexOf('#') + 1, asPath.length);
     const [seller, setSeller] = useState(null);
     // const pid = query.pid;
-    const pid = 8;
+    const pid = 888;
 
     const [isLoading, setIsLoading] = useState(false);
 
@@ -63,14 +63,13 @@ export default function SellersPage () {
                 setIsLoading(false);
             });
     }, [isReady, pid]);
-    console.log('seller', seller);
 
     const sellerTabItems = {
         about_author: <SellerInfo sellerInfo={seller} />,
         services: <SellerServices sellerId={pid} />,
-        portfolio: <SellerPortfolio />,
+        portfolio: <SellerPortfolio sellerId={pid} />,
         comments: <SellerComments sellerId={pid} />,
-        products: <SellerProduct sellerId={pid}/>,
+        products: <SellerProduct sellerId={pid} />,
     };
 
     return (
