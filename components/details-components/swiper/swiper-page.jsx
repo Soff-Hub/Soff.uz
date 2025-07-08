@@ -65,7 +65,7 @@ import { Navigation } from 'swiper/modules';
 export default function SwiperPages({ children, type }) {
     const count = {
         file: 5,
-        '3d': 5,
+        '3d': 3,
         template: 4,
         website: 4,
         design: 4,

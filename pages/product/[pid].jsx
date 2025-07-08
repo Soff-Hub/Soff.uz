@@ -143,26 +143,26 @@ export default function ProductDefaultPage ({
             />
         ),
     };
-    // const productsDetailsSimilar = {
-    //     'file': similarProduct?.map((item, index) => (
-    //         <RedesignProduct product={item} key={index} />
-    //     )),
-    //     '3d': [
-    //         <ModelAndDesignProduct product={similarProduct} key='3d' />,
-    //     ],
-    //     'template': similarProduct?.map((item, index) => (
-    //         <DesignDevelopmentProducts product={item} key={index} />
-    //     )),
-    //     'website': similarProduct?.map((item, index) => (
-    //         <DesignDevelopmentProducts key={index} product={item} />
-    //     )),
-    //     'design': similarProduct?.map((item, index) => (
-    //         <DesignDevelopmentProducts key={index} product={item} />
-    //     )),
-    //     'video': similarProduct?.map((item, index) => (
-    //         <VideoLessonsProducts product={item} key={index} />
-    //     )),
-    // };
+    const productsDetailsSimilar = {
+        'file': similarProduct?.map((item, index) => (
+            <RedesignProduct product={item} key={index} />
+        )),
+        '3d': similarProduct?.map((item, index) => (
+            <ModelAndDesignProduct product={item} key={index} />
+        )),
+        'template': similarProduct?.map((item, index) => (
+            <RedesignProduct product={item} key={index} />
+        )),
+        'website': similarProduct?.map((item, index) => (
+            <RedesignProduct key={index} product={item} />
+        )),
+        'design': similarProduct?.map((item, index) => (
+            <RedesignProduct key={index} product={item} />
+        )),
+        'video': similarProduct?.map((item, index) => (
+            <RedesignProduct product={item} key={index} />
+        )),
+    };
 
     return (
         <>
@@ -330,9 +330,7 @@ export default function ProductDefaultPage ({
                                         </h3>
                                         {hasLoadedSimilar ? (
                                             <SwiperPages type={defaultProducts?.document?.content_type}>
-                                                {similarProduct.map((item, index) => (
-                                                    <DesignDevelopmentProducts product={item} key={index} />
-                                                ))}
+                                               { productsDetailsSimilar[defaultProducts?.document?.content_type]}
                                             </SwiperPages>
                                         ) : (
                                             <div className=' d-flex justify-content-center align-items-center py-5'>
