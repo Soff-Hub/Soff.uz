@@ -3,19 +3,19 @@ import PageContainer from '~/components/layouts/PageContainer';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
 import Meta from '~/components/shared/headers/Meta';
 import { useRouter } from 'next/router';
-import useApi, { baseUrlUseApi } from '~/repositories/useApi';
-import ProductsByDesignDevelopment from '~/components/partials/category/ProductsByDesignDevelopment';
+import { baseUrlUseApi } from '~/repositories/useApi';
 import CategoriesFilterForDesignDevelopmentsSection from '~/components/elements/DesignDevelopmentsFilterSection';
-import FooterComponents from '~/components/blocks/footer/FooterComponents';
 import ProductsByCategory from '~/components/partials/category/ProductsByCategory';
+import ProductsByDesignDevelopment from '~/components/partials/category/ProductsByDesignDevelopment';
+import ScientificResourcesFilterSection from '~/components/elements/DesignDevelopmentsFilterSection';
 
-export default function DesignDevelopments ({ 
-    productsData, 
-    fourChildData, 
-    childCategoryData, 
-    parentCategory, 
-    childCategory, 
-    page 
+export default function DesignDevelopments ({
+    productsData,
+    fourChildData,
+    childCategoryData,
+    parentCategory,
+    childCategory,
+    page,
 }) {
     const router = useRouter();
 
@@ -38,13 +38,13 @@ export default function DesignDevelopments ({
             />
 
             <div className='ps-page--shop container my-5 p-xl-0 p-l-0'>
-                <CategoriesFilterForDesignDevelopmentsSection
+                <ScientificResourcesFilterSection
                     breacrumb={fourChildData}
                     count={productsData?.count}
                     isLoading={false}
                     childCategoryData={childCategoryData}
                 />
-                <ProductsByCategory
+                <ProductsByDesignDevelopment
                     data={productsData}
                     page={page}
                     handlePagination={number => {
@@ -57,12 +57,15 @@ export default function DesignDevelopments ({
     );
 }
 
+export async function getServerSideProps (context) {
+    const {
+        slug,
+        page = 1,
+        parentCategory = '',
+        childCategory = '',
+    } = context.query;
 
-
-export async function getServerSideProps(context) {
-    const { slug, page = 1, parentCategory = '', childCategory = '' } = context.query;
-
-    const fetchJson = async (url) => {
+    const fetchJson = async url => {
         const res = await fetch(url);
         if (!res.ok) {
             return null;
@@ -79,7 +82,7 @@ export async function getServerSideProps(context) {
     const [productsData, fourChildData, childCategoryData] = await Promise.all([
         fetchJson(productsUrl),
         fetchJson(fourChildUrl),
-        fetchJson(childCategoryUrl)
+        fetchJson(childCategoryUrl),
     ]);
 
     return {
@@ -89,7 +92,7 @@ export async function getServerSideProps(context) {
             childCategoryData: childCategoryData || null,
             parentCategory,
             childCategory,
-            page
-        }
+            page,
+        },
     };
 }
