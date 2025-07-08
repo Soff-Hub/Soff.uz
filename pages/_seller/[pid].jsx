@@ -16,10 +16,10 @@ export default function SellersPage () {
     const { query, asPath, isReady } = router;
     const activeIndex = asPath.slice(asPath.indexOf('#') + 1, asPath.length);
     const [seller, setSeller] = useState(null);
-    // const pid = query.pid;
-    const pid = 888;
-
     const [isLoading, setIsLoading] = useState(false);
+
+    const pid = 8;
+    // const pid = query.pid;
 
     const menuItems = [
         {
@@ -65,11 +65,11 @@ export default function SellersPage () {
     }, [isReady, pid]);
 
     const sellerTabItems = {
-        about_author: <SellerInfo sellerInfo={seller} />,
-        services: <SellerServices sellerId={pid} />,
-        portfolio: <SellerPortfolio sellerId={pid} />,
-        comments: <SellerComments sellerId={pid} />,
-        products: <SellerProduct sellerId={pid} />,
+        about_author: <SellerInfo pid={seller} />,
+        services: <SellerServices pid={pid} />,
+        portfolio: <SellerPortfolio pid={pid} />,
+        comments: <SellerComments pid={pid} />,
+        products: <SellerProduct pid={pid} />,
     };
 
     return (

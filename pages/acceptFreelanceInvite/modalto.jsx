@@ -73,7 +73,6 @@ const AcceptFreelanceInviteModal = () => {
             body: JSON.stringify({
                 description: descValue,
                 Category: valueSelect,
-                Authorization: `Bearer ${token}`,
             }),
         })
             .then(response => {
@@ -84,6 +83,15 @@ const AcceptFreelanceInviteModal = () => {
             })
             .then(data => {
                 console.log('Javob:', data);
+
+                // ✅ User ID ni olish
+                const userId = data.user?.id || data.user_id || data.id;
+                if (userId) {
+                    console.log('User ID:', userId);
+                    window.location.href = `https://soff.uz//_seller/${userId}`;
+                } else {
+                    console.warn('User ID topilmadi!');
+                }
             })
             .catch(error => {
                 console.error('Xatolik:', error);

@@ -2,8 +2,6 @@
 
 import { Skeleton } from 'antd';
 import { useEffect, useState } from 'react';
-import VideoLessons from '../seller-products-types/video-lessons';
-import ServiceIsUnavailable from './ServiceIsUnavailable';
 
 const dataOptions = [
     {
@@ -309,13 +307,11 @@ export default function SellerPortfolio ({ pid }) {
     const [portfolioData, setPortfolioData] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
 
-    console.log('portfolioData', portfolioData);
 
     const filteredItems = dataOptions.filter(
         item => item.type === parentCategory
     );
 
-    console.log('filteredItems', filteredItems);
 
     useEffect(() => {
         if (!pid) return;
