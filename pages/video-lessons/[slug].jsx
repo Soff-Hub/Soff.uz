@@ -8,7 +8,7 @@ import FooterComponents from '~/components/blocks/footer/FooterComponents';
 import VideoLessonsFilterSection from '~/components/elements/VideoLessonsFilterSection';
 import ProductsByVideoLessons from '~/components/partials/category/ProductsByVideoLessons';
 import ProductsByCategory from '~/components/partials/category/ProductsByCategory';
-import ScientificResourcesFilterSection from '~/components/elements/DesignDevelopmentsFilterSection';
+import ProductsByDesignDevelopment from '~/components/partials/category/ProductsByDesignDevelopment';
 
 export default function VideoLessons ({
     productsData,
@@ -41,13 +41,13 @@ export default function VideoLessons ({
             />
 
             <div className='ps-page--shop container my-5 p-l-0 p-xl-0'>
-                <ScientificResourcesFilterSection
+                <VideoLessonsFilterSection
                     breacrumb={fourChildData}
                     count={productsData?.count}
                     isLoading={false}
                     childCategoryData={childCategoryData}
                 />
-                <ProductsByCategory
+                <ProductsByDesignDevelopment
                     data={productsData}
                     page={page}
                     handlePagination={number => {
