@@ -5,7 +5,7 @@
     "author": "Soff Hub",
     "homepage": "https://soff.uz",
     "scripts": {
-        "dev": "next dev  -p 2024",
+        "dev": "next dev  -p 2025",
         "build": "next build",
         "start": "next start -p 7000",
         "clean": "antd-tools run clean && rm -rf es lib coverage dist report.html",

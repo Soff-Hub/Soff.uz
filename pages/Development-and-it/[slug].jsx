@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PageContainer from '~/components/layouts/PageContainer';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
 import Meta from '~/components/shared/headers/Meta';
@@ -12,36 +12,59 @@ export default function DevelopmentAndIt () {
     const router = useRouter();
     const { slug, page, parentCategory, childCategory } = router.query;
 
-    // products API uchun so'rov
-    const { data, error, isLoading } = useApi(
-        ['products', page, parentCategory, childCategory], // queryKey dinamik
-        `${baseUrlUseApi}customer/products/?direction=scientific_work&category=${
-            childCategory ? childCategory : parentCategory
-        }&page=${page || 1}&page_size=48`,
-        'GET'
-    );
+    // // products API uchun so'rov
+    // const { data, error, isLoading } = useApi(
+    //     ['products', page, parentCategory, childCategory], // queryKey dinamik
+    //     `${baseUrlUseApi}customer/products/?direction=scientific_work&category=${
+    //         childCategory ? childCategory : parentCategory
+    //     }&page=${page || 1}&page_size=48`,
+    //     'GET'
+    // );
 
-    // Otab kategoriya API uchun so'rov
-    const {
-        data: fourChildData,
-        error: fourChildError,
-        isLoading: isFourChildLoading,
-    } = useApi(
-        ['fourChild'], // Query key
-        `${baseUrlUseApi}customer/four-child?direction=scientific_work`,
-        'GET'
-    );
+    // // Otab kategoriya API uchun so'rov
+    // const {
+    //     data: fourChildData,
+    //     error: fourChildError,
+    //     isLoading: isFourChildLoading,
+    // } = useApi(
+    //     ['fourChild'], // Query key
+    //     `${baseUrlUseApi}customer/four-child?direction=scientific_work`,
+    //     'GET'
+    // );
 
-    // Farzand kategoriya API uchun so'rov
-    const {
-        data: childCategoryData,
-        error: childCategoryEror,
-        isLoading: isChildCategory,
-    } = useApi(
-        ['fourChild', parentCategory], // Query key
-        `${baseUrlUseApi}customer/four-child?direction=scientific_work&parent__slug=${parentCategory}`,
-        'GET'
-    );
+    // // Farzand kategoriya API uchun so'rov
+    // const {
+    //     data: childCategoryData,
+    //     error: childCategoryEror,
+    //     isLoading: isChildCategory,
+    // } = useApi(
+    //     ['fourChild', parentCategory], // Query key
+    //     `${baseUrlUseApi}customer/four-child?direction=scientific_work&parent__slug=${parentCategory}`,
+    //     'GET'
+    // );
+
+    const [data, setData] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        setIsLoading(true);
+        fetch(
+            `http://176.96.241.219:8005/api/v1/users/sellers`
+            // `http://176.96.241.219:8006/api/v1/customer/freelance-profile/${pid}`
+        )
+            .then(res => res.json())
+            .then(data => {
+                setData(data?.results);
+                console.log('data=>>>><', data);
+            })
+            .catch(error => {
+                console.error('Error fetching seller:', error);
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
+    }, []);
+    console.log('Data', data);
 
     // Pagination tugmalari uchun funksiya
     const handlePageChange = newPage => {
@@ -62,7 +85,7 @@ export default function DevelopmentAndIt () {
             />
 
             <div className='ps-page--shop container p-lg-1'>
-                {data?.results?.length === 0 ? (
+                {data?.length === 0 ? (
                     <div className='DevelopmentAndItCategory_DontWork'>
                         <img
                             src='/static/img/DevelopmentAndItCategory_DontWorkImg.png'
@@ -85,10 +108,10 @@ export default function DevelopmentAndIt () {
                 ) : (
                     <>
                         <DevelopmentAndItFilterSecion
-                            breacrumb={fourChildData}
+                            breacrumb={data}
                             count={data?.count}
-                            isLoading={isFourChildLoading}
-                            childCategoryData={childCategoryData}
+                            // isLoading={isFourChildLoading}
+                            // childCategoryData={childCategoryData}
                         />
                         <DevelopmentAndItProductsByCategory
                             data={data}

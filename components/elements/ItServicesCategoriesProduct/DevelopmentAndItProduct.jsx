@@ -33,14 +33,14 @@ const DevelopmentAndItProduct = ({ product }) => {
             <div className='DevelopmentAndItCardImgBox'>
                 <Link
                     href='/product/[pid]'
-                    as={`/product/${product.slug}`}
+                    as={`/product/${product?.slug}`}
                     className='w-full mx-auto'>
                     <a>
                         {DevelopmentAndItProduct.poster_url ? (
                             thumbnailImage(DevelopmentAndItProduct)
                         ) : (
                             <img
-                                src={product.poster_url}
+                                src={product?.poster_url}
                                 alt='hujjat'
                                 className='DevelopmentAndItCardImg'
                             />
@@ -75,7 +75,7 @@ const DevelopmentAndItProduct = ({ product }) => {
                         className='DevelopmentAndItCardSellerAvatar'
                     />
                     <p className='DevelopmentAndItCardSellerName'>
-                        {product.seller.fullname.slice(0, 15)}
+                        {product?.fullname.slice(0, 15)}
                     </p>
                     <img
                         src='https://s3-alpha-sig.figma.com/img/4afd/de33/020ffdd05cc1f2b999be91e49f1e9b82?Expires=1742774400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=igjjV9w36OW3Z3NUTqAwRyEQpxb3zUFFqBr4MPNpAk3~CgsyhMHcJCB9I3kp2No72a-7FjAnDFdWgcwcpL4kLcn9oe52ONZ1VZ5AMMdXTrJvK2UDA9PIzCTD8IDMZIJx5jOicTceuEGhOvX6QRnwVqcfs1DVVhO9ewTSWEoKCUcBFGCKdsQMOYra~syUmA6FQ85CAwPrjejZ-oPgHUULdlKguaMJeJ64XcTx7OYZ3qFOMWDRdtX6x8Nrkk1j42ZEum3Dupihr7WW~cp2OIDF7uTJdAQ5rRH8-zzO6Gwr89bq5vNS94aOzIhE8Gu9F2OkWRCLbFW4rQIh0fLG3xTUFQ__'
@@ -83,27 +83,27 @@ const DevelopmentAndItProduct = ({ product }) => {
                         className='DevelopmentAndItCardSellerStatus'
                     />
                 </div>
-                <Link href='/product/[pid]' as={`/product/${product.slug}`}>
+                <Link href='/product/[pid]' as={`/product/${product?.id}`}>
                     <a className='DevelopmentAndItCardTitle'>
-                        {product.title.slice(0, 45)}
+                        {product?.title?.slice(0, 45)}
                     </a>
                 </Link>
                 <div className='DevelopmentAndItCardPriceBox'>
-                    {+product.discount_price === 0 ? (
+                    {+product?.discount_price === 0 ? (
                         <p className='DevelopmentAndItCardPrice m-0 text-warning'>
                             Bepul
                         </p>
                     ) : product.discount === 0 ? (
                         <p className='DevelopmentAndItCardPrice m-0'>
-                            {addPeriodToThousands(product.discount_price)} so'm
+                            {addPeriodToThousands(product?.discount_price)} so'm
                         </p>
                     ) : (
                         <>
                             <del>
-                                {addPeriodToThousands(product.price)} so'm
+                                {addPeriodToThousands(product?.price)} so'm
                             </del>
                             <p className='DevelopmentAndItCardPrice m-0'>
-                                {addPeriodToThousands(product.discount_price)}
+                                {addPeriodToThousands(product?.discount_price)}
                                 so'm
                             </p>
                         </>
