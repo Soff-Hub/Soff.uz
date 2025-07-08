@@ -15,14 +15,15 @@ export default function CommentFormWrapper({ slug, id }) {
   useEffect(() => {
     const checkPermission = async () => {
       try {
-        const res = await Axios.get(`${baseURL}customer/can-review/${slug}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        setCanReview(res.data.can_review);
-        setHasFirstComment(res.data.has_first_comment);
+        if(token){
+          const res = await Axios.get(`${baseURL}customer/can-review/${slug}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          setCanReview(res.data.can_review);
+          setHasFirstComment(res.data.has_first_comment);
+        }
       } catch (err) {
         console.error('Ruxsat tekshirishda xatolik:', err);
       } finally {
