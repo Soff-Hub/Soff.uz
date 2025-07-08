@@ -4,15 +4,15 @@ import { Select, Skeleton } from 'antd';
 const Option = Select.Option;
 
 export const getTitleFromSlug = (array, slug) => {
-    let title = null
+    let title = null;
 
-    if(array && slug){
+    if (array && slug) {
         title = array.find(item => {
-            return item.slug == slug
-        })?.name
+            return item.slug == slug;
+        })?.name;
     }
-    return title
-}
+    return title;
+};
 
 const ScientificResourcesFilterSection = ({
     breacrumb,
@@ -37,9 +37,9 @@ const ScientificResourcesFilterSection = ({
     return (
         <div>
             <div className='d-xl-none d-block my-4 container'>
-                <div className='row mx-auto gap-3'>
+                <div className='row mx-auto gap-3 my-0 my-lg-0 my-md-0 my-sm-5'>
                     <Select
-                        className=' col-md-6  col-12  p-0 m-0 mr-md-2'
+                        className=' col-md-6  col-6  p-0 m-0 mr-md-2'
                         onChange={value => {
                             {
                                 router.push({
@@ -60,14 +60,14 @@ const ScientificResourcesFilterSection = ({
                         {breacrumb?.results?.map((item, index) => {
                             return (
                                 <Option key={item.slug} value={item.slug}>
-                                    {
-                                        item.image && <img
-                                                className='rounded-2 me-2'
-                                                src={item.image}
-                                                alt={item.name}
-                                                width={25}
-                                                />
-                                    }
+                                    {item.image && (
+                                        <img
+                                            className='rounded-2 me-2'
+                                            src={item.image}
+                                            alt={item.name}
+                                            width={25}
+                                        />
+                                    )}
                                     {item.name}
                                 </Option>
                             );
@@ -75,12 +75,11 @@ const ScientificResourcesFilterSection = ({
                     </Select>
                     {subCategory && (
                         <Select
-                            className=' col-md-6  col-12  p-0 m-0 ml-md-2'
+                            className=' col-md-6  col-6  p-0 m-0 ml-md-2'
                             onChange={value => {
                                 {
                                     router.push({
-                                        pathname:
-                                            '/design-developments/[slug]',
+                                        pathname: '/design-developments/[slug]',
                                         query: {
                                             ...router.query,
                                             slug: value,
@@ -119,98 +118,131 @@ const ScientificResourcesFilterSection = ({
                             className='Models_category_menu'>
                             <img src='/static/img/list-category.svg' alt='' />
                             <h1 style={{ whiteSpace: 'nowrap' }}>
-                                {
-                                    parentCategory ? breacrumb?.results.find(item => {
-                                        return item.slug == parentCategory
-                                    }).name :
-                                        'Barcha Katalog'
-                                }
+                                {parentCategory
+                                    ? breacrumb?.results.find(item => {
+                                          return item.slug == parentCategory;
+                                      }).name
+                                    : 'Barcha Katalog'}
                             </h1>
 
-                            {
-                                dropDownMenu ? <img src='/static/img/up-icon.svg' alt='' /> :
+                            {dropDownMenu ? (
+                                <img src='/static/img/up-icon.svg' alt='' />
+                            ) : (
                                 <img src='/static/img/down-icon.svg' alt='' />
-                            }
+                            )}
                         </div>
 
                         <div className='d-flex gap-3'>
-                            {
-                                breacrumb?.results?.filter(item => {
-                                    return !'audio video template'.includes(item.slug)
-                                }).slice(0, 7).map((item, index) => {
+                            {breacrumb?.results
+                                ?.filter(item => {
+                                    return !'audio video template'.includes(
+                                        item.slug
+                                    );
+                                })
+                                .slice(0, 7)
+                                .map((item, index) => {
                                     return (
                                         <div className='my-2' key={index}>
                                             <div
-                                                className={`${parentCategory === item.slug ? 'bg-success' : ''} category-btn card p-3 shadow-sm rounded-3`}
+                                                className={`${
+                                                    parentCategory === item.slug
+                                                        ? 'bg-success'
+                                                        : ''
+                                                } category-btn card p-3 shadow-sm rounded-3`}
                                                 onClick={() =>
                                                     router.push({
                                                         pathname: `/design-developments/${item.slug}`,
                                                         query: {
-                                                            parentCategory: item.slug,
+                                                            parentCategory:
+                                                                item.slug,
                                                         },
-                                                    })}
+                                                    })
+                                                }
                                                 style={{
-                                                    cursor: 'pointer'
-                                                }}
-                                            >
+                                                    cursor: 'pointer',
+                                                }}>
                                                 <div className='d-flex justify-content-between'>
-                                                    <p className={`${parentCategory === item.slug ? 'bg-success text-white' : ''} category-btn-title m-0 p-0`}>
+                                                    <p
+                                                        className={`${
+                                                            parentCategory ===
+                                                            item.slug
+                                                                ? 'bg-success text-white'
+                                                                : ''
+                                                        } category-btn-title m-0 p-0`}>
                                                         {item.name}
                                                     </p>
-                                                    {
-                                                        (item.image) && <img
-                                                        style={{
-                                                            width: '26px',
-                                                            height: '21px'
-                                                        }}
-                                                        src={item.image}
-                                                        alt={item.name}
-                                                    />
-                                                    }
+                                                    {item.image && (
+                                                        <img
+                                                            style={{
+                                                                width: '26px',
+                                                                height: '21px',
+                                                            }}
+                                                            src={item.image}
+                                                            alt={item.name}
+                                                        />
+                                                    )}
                                                 </div>
                                             </div>
                                         </div>
-                                    )
-                                })
-                            }
+                                    );
+                                })}
                         </div>
                     </div>
-                    {
-                        dropDownMenu &&
+                    {dropDownMenu && (
                         <div className='card p-3'>
                             <div className='row'>
-                                {
-                                    breacrumb?.results?.map((item, index) => {
-                                        return (
-                                            <div className='col-2 my-2' key={index}>
-                                                <div
-                                                    className={`${parentCategory === item.slug ? 'bg-success' : ''} category-btn card p-3 shadow-sm rounded-3`}
-                                                    onClick={() =>
-                                                        router.push({
-                                                            pathname: `/design-developments/${item.slug}`,
-                                                            query: {
-                                                                parentCategory: item.slug,
-                                                            },
-                                                        }) &&
-                                                        setDropdownMenu(!dropDownMenu)}
-                                                    style={{
-                                                        cursor: 'pointer'
-                                                    }}
-                                                >
-                                                    <div className='d-flex justify-content-between'>
-                                                        <p className={`${parentCategory === item.slug ? 'bg-success text-white' : ''} category-btn-title m-0 p-0`}>
-                                                            {item.name}
-                                                        </p>
-                                                        {item.image && <img style={{ width: '26px', height: '21px' }} src={item.image} alt={item.name} />}
-                                                    </div>
+                                {breacrumb?.results?.map((item, index) => {
+                                    return (
+                                        <div className='col-2 my-2' key={index}>
+                                            <div
+                                                className={`${
+                                                    parentCategory === item.slug
+                                                        ? 'bg-success'
+                                                        : ''
+                                                } category-btn card p-3 shadow-sm rounded-3`}
+                                                onClick={() =>
+                                                    router.push({
+                                                        pathname: `/design-developments/${item.slug}`,
+                                                        query: {
+                                                            parentCategory:
+                                                                item.slug,
+                                                        },
+                                                    }) &&
+                                                    setDropdownMenu(
+                                                        !dropDownMenu
+                                                    )
+                                                }
+                                                style={{
+                                                    cursor: 'pointer',
+                                                }}>
+                                                <div className='d-flex justify-content-between'>
+                                                    <p
+                                                        className={`${
+                                                            parentCategory ===
+                                                            item.slug
+                                                                ? 'bg-success text-white'
+                                                                : ''
+                                                        } category-btn-title m-0 p-0`}>
+                                                        {item.name}
+                                                    </p>
+                                                    {item.image && (
+                                                        <img
+                                                            style={{
+                                                                width: '26px',
+                                                                height: '21px',
+                                                            }}
+                                                            src={item.image}
+                                                            alt={item.name}
+                                                        />
+                                                    )}
                                                 </div>
                                             </div>
-                                        )
-                                    })
-                                }
+                                        </div>
+                                    );
+                                })}
                             </div>
                         </div>
-                    }
+                    )}
 
                     {subCategory?.length > 0 && (
                         <>
@@ -224,52 +256,73 @@ const ScientificResourcesFilterSection = ({
                                                     !childCategoryOpen
                                                 )
                                             }>
-                                            (<span>{subCategory.length}+</span>) {` `}
-                                            {
-                                                childCategory
-                                                    ? subCategory.find(item => item.slug == childCategory)?.name || 'Barchasini korish'
-                                                    : 'Barchasini korish'
-                                            }
-                                            {
-                                                childCategoryOpen ? <img src='/static/img/up-icon-green.svg' alt='' /> :
-                                                <img src='/static/img/down-icon-green.svg' alt='' />
-                                            }
+                                            (<span>{subCategory.length}+</span>){' '}
+                                            {` `}
+                                            {childCategory
+                                                ? subCategory.find(
+                                                      item =>
+                                                          item.slug ==
+                                                          childCategory
+                                                  )?.name || 'Barchasini korish'
+                                                : 'Barchasini korish'}
+                                            {childCategoryOpen ? (
+                                                <img
+                                                    src='/static/img/up-icon-green.svg'
+                                                    alt=''
+                                                />
+                                            ) : (
+                                                <img
+                                                    src='/static/img/down-icon-green.svg'
+                                                    alt=''
+                                                />
+                                            )}
                                         </div>
 
                                         <div className='d-flex gap-3'>
-                                            {
-                                                subCategory.slice(0, 6).map((item, index) => {
+                                            {subCategory
+                                                .slice(0, 6)
+                                                .map((item, index) => {
                                                     return (
-                                                        <div className='my-2' key={index}>
+                                                        <div
+                                                            className='my-2'
+                                                            key={index}>
                                                             <div
                                                                 className={`sub-category-btn p-3`}
                                                                 onClick={() =>
-                                                                    router.push({
-                                                                        pathname:
-                                                                            '/design-developments/[slug]',
-                                                                        query: {
-                                                                            ...router.query,
-                                                                            slug: item.slug,
-                                                                            page: 1,
-                                                                            childCategory:
-                                                                                item.slug,
-                                                                        },
-                                                                    })
+                                                                    router.push(
+                                                                        {
+                                                                            pathname:
+                                                                                '/design-developments/[slug]',
+                                                                            query: {
+                                                                                ...router.query,
+                                                                                slug: item.slug,
+                                                                                page: 1,
+                                                                                childCategory:
+                                                                                    item.slug,
+                                                                            },
+                                                                        }
+                                                                    )
                                                                 }
                                                                 style={{
-                                                                    cursor: 'pointer'
-                                                                }}
-                                                            >
+                                                                    cursor: 'pointer',
+                                                                }}>
                                                                 <div className='d-flex justify-content-between'>
-                                                                    <p className={`${childCategory === item.slug ? 'text-success text-white' : ''} text-capitalize sub-category-btn-title m-0 p-0`}>
-                                                                        {item.name}
+                                                                    <p
+                                                                        className={`${
+                                                                            childCategory ===
+                                                                            item.slug
+                                                                                ? 'text-success text-white'
+                                                                                : ''
+                                                                        } text-capitalize sub-category-btn-title m-0 p-0`}>
+                                                                        {
+                                                                            item.name
+                                                                        }
                                                                     </p>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    )
-                                                })
-                                            }
+                                                    );
+                                                })}
                                         </div>
                                     </div>
                                     {/* <div className='d-flex justify-content-between w-100'>
@@ -347,10 +400,11 @@ const ScientificResourcesFilterSection = ({
                                                                 !childCategoryOpen
                                                             )
                                                         }
-                                                        className={`${slug === item.slug
-                                                            ? 'active'
-                                                            : ''
-                                                            } pointer text-capitalize col-2 my-1 border`}
+                                                        className={`${
+                                                            slug === item.slug
+                                                                ? 'active'
+                                                                : ''
+                                                        } pointer text-capitalize col-2 my-1 border`}
                                                         key={index}>
                                                         {item.name}
                                                     </div>

@@ -73,8 +73,7 @@ const ModelAndDesignProduct = ({ product }) => {
                     <Link
                         href='/product/[pid]'
                         as={`/product/${product.slug}`}
-                        className='w-100'
-                        >
+                        className='w-100'>
                         {ModelAndDesignProduct.poster_url ? (
                             thumbnailImage(ModelAndDesignProduct)
                         ) : (
@@ -112,7 +111,7 @@ const ModelAndDesignProduct = ({ product }) => {
                                 </p>
                             ) : (
                                 <>
-                                    <del>
+                                    <del className='modelAndDesignCardPrice mb-2'>
                                         {addPeriodToThousands(product.price)}{' '}
                                         so'm
                                     </del>

@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Pagination } from 'antd';
 import { Skeleton } from 'antd';
-import DesignDevelopmentProducts from '~/components/elements/products/DesignDevelopmentProducts';
 import Link from 'next/link';
 import RedesignProduct from '~/components/elements/products/Redesign/Redesign-Product';
 
@@ -12,43 +11,43 @@ export default function ProductsByDesignDevelopment ({
     isLoading,
 }) {
     return (
-        <div id='products'>
-            <div className='  designDevelopmentProduct'>
+        <>
+            <div id='products' className='VideoLessonsWrap'>
                 {isLoading && (
-                    <div className={`w-100 `}>
-                        {Array(48)
+                    <>
+                        {Array(15)
                             .fill(0)
                             .map((d, i) => (
                                 <Skeleton.Image
                                     key={i}
                                     active
-                                    className={`skeletion-card file`}
+                                    className={`VideoLessonsWrapSkeleton`}
                                 />
                             ))}
-                    </div>
+                    </>
                 )}
-                {data?.results?.length > 0 &&
-                    data?.results?.map((item, index) => (
-                        <div
-                            style={{ height: '100%', width: '100%' }}
-                            className='p-0 m-0'
-                            key={index}>
-                            <RedesignProduct key={index} product={item} />
-                        </div>
-                    ))}
+                {data?.results?.map((item, index) => (
+                    <RedesignProduct key={index} product={item} />
+                ))}
             </div>
-
             {data?.results?.length == 0 && (
-                <div className="ps-page-status">
-                    <div className="container">
-                        <div className="ps-section__content">
-                        <img src="/static/img/noinfo.svg" alt="Ma'lumot topilmadi" />
+                <div className='ps-page-status'>
+                    <div className='container'>
+                        <div className='ps-section__content'>
+                            <img
+                                src='/static/img/noinfo.svg'
+                                alt="Ma'lumot topilmadi"
+                            />
                             <h3>😕 Bu yerda hozircha hech narsa yo‘q...</h3>
                             <p>
-                                Ammo bu siz uchun ajoyib imkoniyat! Birinchilardan bo‘lib ushbu kategoriyaga mahsulot joylashtiring, o‘z auditoriyangizni yarating va daromad olishni boshlang. Imkoniyatni qo‘ldan boy bermang!
+                                Ammo bu siz uchun ajoyib imkoniyat!
+                                Birinchilardan bo‘lib ushbu kategoriyaga
+                                mahsulot joylashtiring, o‘z auditoriyangizni
+                                yarating va daromad olishni boshlang.
+                                Imkoniyatni qo‘ldan boy bermang!
                             </p>
                             <p>
-                                <Link href="https://seller.soff.uz">
+                                <Link href='https://seller.soff.uz'>
                                     <a target='_blank'>Sotuvchi bo'lish</a>
                                 </Link>
                             </p>
@@ -56,7 +55,6 @@ export default function ProductsByDesignDevelopment ({
                     </div>
                 </div>
             )}
-
             {data?.count >= 48 && (
                 <div className='d-flex justify-content-center mt-5'>
                     <Pagination
@@ -70,6 +68,6 @@ export default function ProductsByDesignDevelopment ({
                     />
                 </div>
             )}
-        </div>
+        </>
     );
 }
