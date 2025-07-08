@@ -21,7 +21,7 @@ export default function SellerProduct (pid) {
             setIsLoading(true);
             try {
                 const res = await fetch(
-                    `http://176.96.241.219:8006/api/v1/customer/seller-products/8/`
+                    `http://176.96.241.219:8006/api/v1/customer/seller-products/${pid}`
                     // `http://176.96.241.219:8006/api/v1/customer/seller-products/${query.pid}/`
                 );
                 const text = await res.text();

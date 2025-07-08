@@ -2,10 +2,11 @@ import { Skeleton } from 'antd';
 import React, { useEffect, useState } from 'react';
 import CalculateTimeDifference from '~/components/partials/account/DateFormatter';
 
-export default function SellerComments (pid) {
+export default function SellerComments ({ pid }) {
     const [comments, setComments] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
 
+    console.log('pid=>>>>>', pid);
 
     useEffect(() => {
         setIsLoading(true);
