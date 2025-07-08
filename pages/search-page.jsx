@@ -156,7 +156,7 @@ const Search_Results = ({ fourChildData, childCategoryData }) => {
                                     type='text'
                                     value={searchTerm}
                                     placeholder='Izlayotgan mahsulotingizni toping...'
-                                    onInput={e => setSearchTerm(e.target.value.trim())}
+                                    onInput={e => setSearchTerm(e.target.value)}
                                 />
                                 {clearTextView}
                                 {loadingView}
