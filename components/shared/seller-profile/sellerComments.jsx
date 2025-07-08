@@ -6,7 +6,6 @@ export default function SellerComments (pid) {
     const [comments, setComments] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
 
-    console.log('comments', comments);
 
     useEffect(() => {
         setIsLoading(true);

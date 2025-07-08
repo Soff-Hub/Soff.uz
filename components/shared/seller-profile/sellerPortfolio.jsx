@@ -1,8 +1,9 @@
 'use client';
 
 import { Skeleton } from 'antd';
-import { useState } from 'react';
-import useApi from '~/repositories/useApi';
+import { useEffect, useState } from 'react';
+import VideoLessons from '../seller-products-types/video-lessons';
+import ServiceIsUnavailable from './ServiceIsUnavailable';
 
 const dataOptions = [
     {
@@ -301,26 +302,56 @@ const dataOptions = [
     },
 ];
 
-export default function SellerPortfolio () {
-    const [selectedType, setSelectedType] = useState('type1');
+export default function SellerPortfolio ({ pid }) {
+    const [parentCategory, setParentCategory] = useState('type1');
+    const [childCategory, setChildCategory] = useState('type1');
     const [hoveredIndex, setHoveredIndex] = useState(null);
+    const [portfolioData, setPortfolioData] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+
+    console.log('portfolioData', portfolioData);
 
     const filteredItems = dataOptions.filter(
-        item => item.type === selectedType
+        item => item.type === parentCategory
     );
-    const { isLoading } = useApi();
+
+    console.log('filteredItems', filteredItems);
+
+    useEffect(() => {
+        if (!pid) return;
+
+        setIsLoading(true);
+
+        fetch(`http://176.96.241.219:8005/api/v1/categories/portfolio/1`, {
+            method: 'GET',
+        })
+            .then(res => res.json())
+            .then(data => {
+                setPortfolioData(data);
+            })
+            .catch(error => {
+                console.error('Error fetching seller:', error);
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
+    }, [pid]);
 
     return (
         <div className='SellerPortfolio'>
             <form action='' className='SellerPortfolioForm'>
                 <select
                     className='SellerPortfolioSelect'
-                    onChange={e => setSelectedType(e.target.value)}>
+                    onChange={e => setParentCategory(e.target.value)}>
                     <option value='type1'>Type 1</option>
                     <option value='type2'>Type 2</option>
                     <option value='type3'>Type 3</option>
                 </select>
-                <select className='SellerPortfolioSelect ' name='' id=''>
+                <select
+                    className='SellerPortfolioSelect '
+                    name=''
+                    id=''
+                    onChange={e => setChildCategory(e.target.value)}>
                     <option value='' selected hidden>
                         Xizmat turlari
                     </option>
