@@ -22,31 +22,25 @@
 .swiper-button-prev::after,
 .swiper-button-next::after {
     display: none;
-
 }
-
-
-
 
 // Tegs components scss
 .tags_components {
     border-radius: 8px;
     padding: 8px 15px;
-    border: 1.5px solid #00A44F;
+    border: 1.5px solid #00a44f;
     cursor: pointer;
-    color: #312F30;
+    color: #312f30;
     font-weight: 400;
-
 }
 
 .tags_components:hover {
-    color: #00A44F;
+    color: #00a44f;
     background-color: rgba(242, 244, 247, 0.615);
 }
 
 // Products detils action scss
 .seller_products_right_section {
-
     max-width: 550px;
     width: 100%;
 }
@@ -66,22 +60,21 @@
             width: 100%;
 
             h2 {
-                color: #312F30;
+                color: #312f30;
                 font-weight: 700;
                 font-size: 30px;
                 margin: 0;
             }
 
             del {
-                color: #312F30B2;
+                color: #312f30b2;
                 font-size: 20px;
                 font-weight: 400;
-
             }
         }
 
         .button_hover:hover {
-            background-color: #00A44F;
+            background-color: #00a44f;
             color: white !important;
             transition: all 0.1s ease-in-out;
         }
@@ -92,13 +85,12 @@
         }
 
         .icon_hover:hover {
-            background-color: #00A44F;
+            background-color: #00a44f;
             color: white !important;
             border-radius: 50%;
             transition: all 0.1s ease-in-out;
             padding: 6px;
         }
-
     }
 }
 
@@ -138,20 +130,18 @@
             font-size: 25px;
             line-height: 37.5px;
             letter-spacing: 2%;
-            color: #312F30;
+            color: #312f30;
             margin: 0;
-
         }
     }
 
     .seller_profile_button {
-        background-color: #A020F0;
+        background-color: #a020f0;
     }
 
     .seller_profile_button:hover {
-        background-color: #AD55E3 !important;
+        background-color: #ad55e3 !important;
     }
-
 }
 
 // Products detils descriptions scss
@@ -174,11 +164,11 @@
         .titleh3 {
             font-size: 25px !important;
             line-height: 37.5px !important;
-            color: "#312F30";
+            color: '#312F30';
             margin: 0;
-            font-weight: 600
+            font-weight: 600;
         }
-        
+
         .ps-product--detail_seller {
             width: 100%;
             display: flex;
@@ -214,7 +204,6 @@
                             gap: 10px;
                         }
 
-
                         .ps-wrapper_seller {
                             position: relative;
                             overflow-y: scroll;
@@ -230,7 +219,6 @@
                                     width: 100%;
                                     height: 100%;
                                 }
-
                             }
                         }
 
@@ -240,10 +228,8 @@
                             left: 5px;
                             border-radius: 12px !important;
                         }
-
                     }
                 }
-
             }
 
             .ps-product__header_seller_secound {
@@ -255,7 +241,6 @@
             }
         }
     }
-
 }
 
 // 3d design  mahsuloti uchun details
@@ -266,7 +251,6 @@
 //             display: flex;
 //             flex-direction: column;
 //             gap: 32px;
-
 
 //             .ps-product__header_seller_three_design {
 //                 width: 100%;
@@ -338,7 +322,6 @@
 //                         border-radius: 12px !important;
 //                     }
 
-
 //                     .swiper-slide {
 //                         max-width: 100% !important;
 //                         display: flex;
@@ -352,8 +335,6 @@
 //                             object-fit: contain !important;
 //                         }
 //                     }
-
-
 
 //                 }
 
@@ -403,7 +384,7 @@
                         top: 50%;
                         left: 23px;
                         font-size: 20px;
-                        color: #312F30;
+                        color: #312f30;
                         cursor: pointer;
                     }
 
@@ -412,7 +393,7 @@
                         top: 50%;
                         right: 23px;
                         font-size: 20px;
-                        color: #312F30;
+                        color: #312f30;
                         cursor: pointer;
                     }
 
@@ -429,7 +410,7 @@
                     }
 
                     .thumb-slide.swiper-slide-thumb-active {
-                        border: 1.5px solid #00A44F !important;
+                        border: 1.5px solid #00a44f !important;
                     }
 
                     .title_support {
@@ -520,8 +501,6 @@
     }
 }
 
-
-
 // websites  mahsuloti uchun details
 .seller_container_products_details_website {
     .ps-container {
@@ -530,7 +509,6 @@
             display: flex;
             flex-direction: column;
             gap: 32px;
-
 
             .ps-product__header_seller_website {
                 width: 100%;
@@ -557,7 +535,7 @@
                         top: 50%;
                         left: 23px;
                         font-size: 20px;
-                        color: #312F30;
+                        color: #312f30;
                         cursor: pointer;
                     }
 
@@ -566,7 +544,7 @@
                         top: 50%;
                         right: 23px;
                         font-size: 20px;
-                        color: #312F30;
+                        color: #312f30;
                         cursor: pointer;
                     }
 
@@ -583,7 +561,7 @@
                     }
 
                     .thumb-slide.swiper-slide-thumb-active {
-                        border: 1.5px solid #00A44F !important;
+                        border: 1.5px solid #00a44f !important;
                     }
 
                     .title_support {
@@ -611,7 +589,6 @@
                         display: flex;
                         justify-content: center;
                         align-items: center;
-
                     }
 
                     .image-wrapper {
@@ -629,9 +606,7 @@
                         margin: 8px 0;
                         border-radius: 5px;
                     }
-
                 }
-
             }
 
             .ps-product__header_seller_secound_website {
@@ -643,7 +618,6 @@
             }
         }
     }
-
 }
 
 // Videos  mahsuloti uchun details
@@ -654,7 +628,6 @@
             display: flex;
             flex-direction: column;
             gap: 32px;
-
 
             .ps-product__header_seller_videos {
                 width: 100%;
@@ -686,60 +659,56 @@
                         flex-wrap: wrap;
                         align-items: center;
                         gap: 10px;
-
                     }
                 }
-                    .seller_products_actions {
-                        background-color: white;
-                        height: 100%;
+                .seller_products_actions {
+                    background-color: white;
+                    height: 100%;
+                    width: 100%;
+                    border-radius: 12px;
+                    max-width: 550px;
+                    display: flex;
+                    justify-content: space-between;
+                    flex-direction: column;
+                    padding: 50px;
+                    gap: 30px;
+
+                    .price_container {
                         width: 100%;
-                        border-radius: 12px;
-                        max-width: 550px;
-                        display: flex;
-                        justify-content: space-between;
-                        flex-direction: column;
-                        padding: 50px;
-                        gap: 30px;
 
-                        .price_container {
-                            width: 100%;
-
-                            h2 {
-                                color: #312F30;
-                                font-weight: 700;
-                                font-size: 30px;
-                                margin: 0;
-                            }
-
-                            del {
-                                color: #312F30B2;
-                                font-size: 20px;
-                                font-weight: 400;
-
-                            }
+                        h2 {
+                            color: #312f30;
+                            font-weight: 700;
+                            font-size: 30px;
+                            margin: 0;
                         }
 
-                        .button_hover:hover {
-                            background-color: #00A44F;
-                            color: white !important;
-                            transition: all 0.1s ease-in-out;
+                        del {
+                            color: #312f30b2;
+                            font-size: 20px;
+                            font-weight: 400;
                         }
+                    }
 
-                        .icon_hover {
-                            padding: 6px;
-                            cursor: pointer;
-                        }
+                    .button_hover:hover {
+                        background-color: #00a44f;
+                        color: white !important;
+                        transition: all 0.1s ease-in-out;
+                    }
 
-                        .icon_hover:hover {
-                            background-color: #00A44F;
-                            color: white !important;
-                            border-radius: 50%;
-                            transition: all 0.1s ease-in-out;
-                            padding: 6px;
-                        }
-        
-    }
+                    .icon_hover {
+                        padding: 6px;
+                        cursor: pointer;
+                    }
 
+                    .icon_hover:hover {
+                        background-color: #00a44f;
+                        color: white !important;
+                        border-radius: 50%;
+                        transition: all 0.1s ease-in-out;
+                        padding: 6px;
+                    }
+                }
             }
 
             .ps-product__header_seller_secound_videos {
@@ -751,7 +720,6 @@
             }
         }
     }
-
 }
 
 // PlayLists Cards
@@ -763,7 +731,7 @@
     border-radius: 12px;
 
     p {
-        color: #312F30
+        color: #312f30;
     }
 
     .play_lists_card_main {
@@ -780,12 +748,9 @@
             display: flex;
             align-items: stretch;
             gap: 22px;
-
         }
     }
-
 }
-
 
 @media (max-width: 1100px) {
     .seller_products_actions_container {
@@ -813,7 +778,6 @@
     // fayl details
     .seller_container_products_details {
         .ps-container {
-            
             .ps-product--detail_seller {
                 .ps-product__header_seller {
                     height: 100%;
@@ -839,12 +803,10 @@
                             }
                         }
                     }
-
                 }
 
                 .ps-product__header_seller_secound {
                     flex-direction: column;
-
                 }
             }
         }
@@ -854,7 +816,6 @@
 
     .seller_container_products_details_three_design {
         .ps-container {
-
             .ps-product--detail_seller_three_design {
                 .ps-product__header_seller {
                     height: 100%;
@@ -867,12 +828,10 @@
                     .slider_swiper_container {
                         padding: 60px 40px;
                     }
-
                 }
 
                 .ps-product__header_seller_secound_three_design {
                     flex-direction: column;
-
                 }
             }
         }
@@ -882,7 +841,6 @@
 
     .seller_container_products_details_website {
         .ps-container {
-
             .ps-product--detail_seller_website {
                 .ps-product__header_seller {
                     height: 100%;
@@ -891,12 +849,10 @@
                 .ps-product__header_seller_website {
                     flex-direction: column;
                     height: 100%;
-
                 }
 
                 .ps-product__header_seller_secound_website {
                     flex-direction: column;
-
                 }
             }
         }
@@ -906,7 +862,6 @@
 
     .seller_container_products_details_videos {
         .ps-container {
-
             .ps-product--detail_seller_videos {
                 .ps-product__header_seller {
                     height: 100%;
@@ -915,12 +870,10 @@
                 .ps-product__header_seller_videos {
                     flex-direction: column;
                     height: 100%;
-
                 }
 
                 .ps-product__header_seller_secound_videos {
                     flex-direction: column;
-
                 }
             }
         }
@@ -970,7 +923,6 @@
 
     .seller_container_products_details {
         .ps-container {
-
             .ps-product--detail_seller {
                 .ps-product__header_seller {
                     .ps-product__thumbnail_seller {
@@ -978,18 +930,14 @@
                             padding: 20px;
                         }
                     }
-
                 }
-
-
             }
         }
     }
 
-    // fayl scss 
+    // fayl scss
     .seller_container_products_details {
         .ps-product--detail_seller {
-
             .titleh3 {
                 font-size: 15px !important;
                 line-height: 21px !important;
@@ -1029,7 +977,6 @@
     // 3d desing scss
     .seller_container_products_details_three_design {
         .ps-container {
-
             .ps-product--detail_seller_three_design {
                 gap: 20px;
 
@@ -1050,7 +997,6 @@
                         padding: 40px 30px;
                         gap: 15px;
 
-
                         .views {
                             padding: 5px;
                             font-size: 12px;
@@ -1080,7 +1026,6 @@
                             right: 10px;
                         }
                     }
-
                 }
 
                 .ps-product__header_seller_secound_three_design {
@@ -1095,7 +1040,6 @@
     // 3d desing scss
     .seller_container_products_details_website {
         .ps-container {
-
             .ps-product--detail_seller_website {
                 gap: 20px;
 
@@ -1116,18 +1060,14 @@
                         padding: 40px 30px;
                         gap: 15px;
 
-
                         .views {
                             padding: 5px;
                             font-size: 12px;
                         }
 
-
-
                         .image-wrapper {
                             max-height: 220px;
                         }
-
 
                         .thumb-slide {
                             width: 50px !important;
@@ -1153,7 +1093,6 @@
                             right: 10px;
                         }
                     }
-
                 }
 
                 .ps-product__header_seller_secound_website {
@@ -1164,8 +1103,10 @@
     }
 }
 
-
-
+.titleh3 {
+    font-size: 15px !important;
+    line-height: 21px !important;
+}
 /* Lightbox modalining umumiy stili */
 .yarl__slide_current {
     display: flex !important;
@@ -1181,4 +1122,55 @@
     object-fit: scale-down !important;
     display: block !important;
     margin-top: auto !important;
+}
+
+// _____________________________________________________________________________________service detail styles
+
+.ServiseDetail {
+    margin-top: 48px;
+    display: grid;
+    grid-template-columns: 65% 35%;
+    gap: 30px;
+    @media (max-width: 1024px) {
+        display: block;
+    }
+
+    .ServiseDetail_aboutService {
+        padding: clamp(1.25rem, 1.875vw + 0.875rem, 3.125rem);
+        background-color: #fff;
+        border: 1px solid #f1f1f1;
+        border-radius: 20px;
+        @media (max-width: 1024px) {
+            margin-bottom: 48px;
+        }
+    }
+    .ServiseDetail_sideBar {
+        padding: clamp(1.25rem, 1.875vw + 0.875rem, 3.125rem);
+        background-color: #fff;
+        border: 1px solid #f1f1f1;
+        border-radius: 20px;
+    }
+}
+
+.ServiseDetailAbout {
+    .ServiseDetailAbout_img {
+        width: 100%;
+        border-radius: 20px;
+    }
+    .ServiseDetailAbout_aboutService {
+        margin-top: 20px;
+        h2 {
+        }
+        p {
+            // font-size: clamp(0.938rem, 1.119vw + 0.22rem, 1.563rem);
+        }
+    }
+
+    .ServiseDetailAboutTitles {
+        font-size: clamp(1.5rem, 1.125vw + 0.9rem, 2.25rem);
+    }
+}
+
+.ServiseDetailTItle {
+    font-size: clamp(1rem, 0.625vw + 0.813rem, 3rem);
 }
