@@ -49,6 +49,7 @@ function FileProductsDetails({ product }) {
             {/* <SellerProfile product={product}/> */}
             <OrderCardBtn product={product}/>
           </div>
+          {/* comment section */}
           <div>
               <CommentFormWrapper id={product.id} slug={product.slug}/>
               <CommentList slug={product.slug}/>
