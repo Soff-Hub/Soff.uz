@@ -537,7 +537,7 @@ Siz ishlar yakunlanmasidan oldin ham test muhitida o‘zgarishlar bilan tanishis
             title={defaultProducts ? defaultProducts?.title : `${data.slug}`}
             boxed={true}>
             <div className='container mt-5 '>
-                <h1 className='SwipperTitle'>
+                <h1 className='SwipperTitlE '>
                     1C-Bitrix va Bitrix24 platformasida takomillashtirish
                     ishlari
                 </h1>

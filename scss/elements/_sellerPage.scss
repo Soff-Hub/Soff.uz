@@ -1446,6 +1446,13 @@
     font-weight: 600;
     font-size: clamp(2rem, 2.5vw, 2.5rem);
 }
+.SwipperTitlE {
+    font-weight: 600;
+    font-size: clamp(2rem, 2.5vw, 2.5rem);
+    @media (max-width: 320px) {
+        margin-top: 40px;
+    }
+}
 .scientificResourcesCardForcarousel {
     // min-width: clamp(8.125rem, 11.588vw + 5.807rem, 25rem);
     // height: 100%;
