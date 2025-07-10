@@ -49,6 +49,7 @@ function ThreeDesignProductsDetails ({ product, template }) {
 
                         <SellerProfile product={product} />
                     </div>
+                    {/* comment section */}
                     <div>
                         <CommentFormWrapper id={product.id} slug={product.slug}/>
                         <CommentList slug={product.slug}/>

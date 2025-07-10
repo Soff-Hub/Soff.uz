@@ -8,6 +8,7 @@ import NextImageCard from '~/components/nextImagecard';
 import Search_Results_Products from '~/components/elements/search-page-details/products';
 import { baseUrlUseApi } from '~/repositories/useApi';
 import useDebounce from '~/hooks/useDebounce';
+import Search_Results_Specialists from '~/components/elements/search-page-details/specialists';
 
 const Search_Results = ({ fourChildData, childCategoryData }) => {
     const inputEl = useRef(null);
@@ -19,7 +20,8 @@ const Search_Results = ({ fourChildData, childCategoryData }) => {
         type = 'all',
         category = '',
         parentCategory = '',
-        order_by = ''
+        order_by = '',
+        tab = 'products'
     } = router.query;
 
     const [searchTerm, setSearchTerm] = useState(keyword || '');
@@ -36,7 +38,7 @@ const Search_Results = ({ fourChildData, childCategoryData }) => {
             setError(null);
             try {
                 const res = await fetch(
-                    `${baseUrlUseApi}customer/same-google-search/?page=${page}&search=${keyword}&type=${type}&category=${category}&order_by=${order_by}`
+                    `${baseUrlUseApi}customer/same-google-search/?page=${page}&search=${keyword}&type=${type}&category=${category}&order_by=${order_by}&tab=${tab}`
                 );
                 if (!res.ok) throw new Error('Server error');
                 const json = await res.json();
@@ -73,7 +75,7 @@ const Search_Results = ({ fourChildData, childCategoryData }) => {
                     keyword: debouncedSearchTerm,
                     page: 1,
                     type: 'all',
-                    tab: 'all',
+                    tab: 'products',
                     category: '',
                     parentCategory: ''
                 }
@@ -85,6 +87,46 @@ const Search_Results = ({ fourChildData, childCategoryData }) => {
         setSearchTerm('');
         inputEl.current.value = '';
     };
+
+    const menuItems = [
+        {
+            title: 'Mahsulotlar',
+            path: 'products',
+        },
+        {
+            title: 'Mutaxasislar',
+            path: 'specialists',
+        },
+    ];
+
+    const sellerTabItems = {
+        specialists: (
+            <Search_Results_Specialists
+                data={data?.results}
+                isLoading={isLoading}
+            />
+        ),
+
+        products: (
+            <Search_Results_Products
+                childData={fourChildData}
+                parentData={childCategoryData}
+                data={data?.results}
+                page={page}
+                total={data?.count}
+                isLoading={isLoading}
+            />
+        ),
+    };
+
+
+    const activeIndex = router.query.tab
+    // const notFound = () => {
+    //     if(!data || data?.results.length == 0){
+    //         return <Search_Results_NotFound />
+    //     }
+    //     return  <SearchAllProducts data={data?.results} isLoading={isLoading} />
+    // }
 
     const clearTextView = !isLoading && (
         <span className='ps-form__action'>
@@ -165,18 +207,36 @@ const Search_Results = ({ fourChildData, childCategoryData }) => {
                     </div>
                 </div>
             </nav>
-
+            <div className='Search_Results'>
+                <div className='Search_Results_container container'>
+                    <ul className='Search_ResultsMenu'>
+                        {menuItems.map((item, index) => (
+                            <Link
+                                href={  
+                                        {
+                                            pathname: router.pathname,
+                                            query: {...router.query, tab: item.path}
+                                        }
+                                    }
+                                    key={index}
+                            >
+                                <li 
+                                    className={`activeTab ${
+                                        activeIndex === item.path
+                                            ? 'active_type'
+                                            : ''
+                                    }`}>
+                                    {item.title}
+                                </li>
+                            </Link>
+                        ))}
+                    </ul>
+                </div>
+            </div>
             {/* Natijalar */}
             <div className=''>
                 <div className='container'>
-                    <Search_Results_Products
-                        childData={fourChildData}
-                        parentData={childCategoryData}
-                        data={data?.results}
-                        page={page}
-                        total={data?.count}
-                        isLoading={isLoading}
-                    />
+                    {sellerTabItems[activeIndex]}
                     {error && <p className='text-danger text-center mt-4'>Xatolik: {error}</p>}
                 </div>
             </div>
