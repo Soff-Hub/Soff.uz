@@ -499,143 +499,139 @@
 
     .servicesSectionWrap {
         display: grid;
-        grid-template-columns: repeat(4, 224px);
+
+        grid-template-columns: repeat(
+            auto-fit,
+            minmax(clamp(5rem, 13.75vw + 2.25rem, 18.75rem), 1fr)
+        );
         gap: 10px;
         row-gap: 29px;
         margin-top: 41.5px;
-        @media (max-width: 1390px) {
-            grid-template-columns: repeat(4, 1fr);
-        }
-        @media (max-width: 1200px) {
-            grid-template-columns: repeat(3, 1fr);
-        }
-        @media (max-width: 950px) {
-            grid-template-columns: repeat(2, 1fr);
-        }
-        @media (max-width: 300px) {
-            grid-template-columns: repeat(1, 1fr);
-        }
+        // @media (max-width: 1390px) {
+        //     grid-template-columns: repeat(4, 1fr);
+        // }
+        // @media (max-width: 1200px) {
+        //     grid-template-columns: repeat(3, 1fr);
+        // }
+        // @media (max-width: 950px) {
+        //     grid-template-columns: repeat(2, 1fr);
+        // }
+        // @media (max-width: 300px) {
+        //     grid-template-columns: repeat(1, 1fr);
+        // }
 
-        .servicesSectionCard {
+        .servicesSectionCardSkeleton {
+            height: clamp(5rem, 7.5vw + 3.5rem, 12.5rem);
+            width: 100%;
+        }
+    }
+}
+.servicesSectionCard {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 100%;
+    padding: 10px 9px;
+    border-radius: 5px;
+    background: #fff;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+
+    .servicesSectionCardImg {
+        img {
+            border-radius: 5px;
+            height: clamp(7.5rem, 5vw + 6.5rem, 12.5rem);
+            width: 100%;
+        }
+    }
+    .servicesSectionCardbody {
+        margin-top: 7.5px;
+        width: 100%;
+        .servicesSectionCardTitle {
+            color: #312f30;
+            font-family: 'Poppins';
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 150%; /* 18px */
+            letter-spacing: 0.24px;
+            margin-bottom: 5.5px;
+            @media (max-width: 480px) {
+                font-size: 10px;
+            }
+        }
+        .servicesSectionCardRating {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            margin-bottom: 10px;
+            img {
+            }
+            p {
+                color: #312f30;
+                font-family: 'Poppins';
+                font-size: 10px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+                letter-spacing: 0.1px;
+                margin: 0;
+                padding: 0;
+            }
+            span {
+                color: #555;
+                font-family: 'Poppins';
+                font-size: 9px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+                letter-spacing: 0.45px;
+                padding: 0;
+                margin: 0;
+            }
+        }
+        .servicesSectionCardPrice {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            flex-direction: column;
-            flex-wrap: wrap;
-            width: 100%;
-            padding: 10px 9px;
-            border-radius: 5px;
-            background: #fff;
-            box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
-
-            .servicesSectionCardImg {
-                img {
-                    border-radius: 5px;
-                    height: 184px;
-                    width: 100%;
-                    @media (max-width: 480px) {
-                        height: 120px;
-                    }
+            p {
+                color: #312f30;
+                font-family: 'Poppins';
+                font-size: 12px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: normal;
+                letter-spacing: 0.12px;
+                margin: 0;
+                @media (max-width: 480px) {
+                    font-size: 8px;
                 }
             }
-            .servicesSectionCardbody {
-                margin-top: 7.5px;
-                .servicesSectionCardTitle {
-                    color: #312f30;
-                    font-family: 'Poppins';
-                    font-size: 12px;
-                    font-style: normal;
-                    font-weight: 500;
-                    line-height: 150%; /* 18px */
-                    letter-spacing: 0.24px;
-                    margin-bottom: 5.5px;
-                    @media (max-width: 480px) {
-                        font-size: 10px;
-                    }
+            a {
+                color: #fff;
+                font-family: 'Poppins';
+                font-size: 10px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: normal;
+                letter-spacing: 0.1px;
+                padding: 4px 8px;
+                background: rgba(0, 210, 101, 1);
+                border-radius: 3px;
+                margin: 0;
+                @media (max-width: 480px) {
+                    font-size: 8px;
+                    padding: 2px 4px;
                 }
-                .servicesSectionCardRating {
-                    display: flex;
-                    align-items: center;
-                    gap: 2px;
-                    margin-bottom: 10px;
-                    img {
-                    }
-                    p {
-                        color: #312f30;
-                        font-family: 'Poppins';
-                        font-size: 10px;
-                        font-style: normal;
-                        font-weight: 500;
-                        line-height: normal;
-                        letter-spacing: 0.1px;
-                        margin: 0;
-                        padding: 0;
-                    }
-                    span {
-                        color: #555;
-                        font-family: 'Poppins';
-                        font-size: 9px;
-                        font-style: normal;
-                        font-weight: 500;
-                        line-height: normal;
-                        letter-spacing: 0.45px;
-                        padding: 0;
-                        margin: 0;
-                    }
+                &:hover {
+                    background: rgba(0, 210, 101, 0.5);
                 }
-                .servicesSectionCardPrice {
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-between;
-                    p {
-                        color: #312f30;
-                        font-family: 'Poppins';
-                        font-size: 12px;
-                        font-style: normal;
-                        font-weight: 600;
-                        line-height: normal;
-                        letter-spacing: 0.12px;
-                        margin: 0;
-                        @media (max-width: 480px) {
-                            font-size: 8px;
-                        }
-                    }
-                    a {
-                        color: #fff;
-                        font-family: 'Poppins';
-                        font-size: 10px;
-                        font-style: normal;
-                        font-weight: 600;
-                        line-height: normal;
-                        letter-spacing: 0.1px;
-                        padding: 4px 8px;
-                        background: rgba(0, 210, 101, 1);
-                        border-radius: 3px;
-                        margin: 0;
-                        @media (max-width: 480px) {
-                            font-size: 8px;
-                            padding: 2px 4px;
-                        }
-                        &:hover {
-                            background: rgba(0, 210, 101, 0.5);
-                        }
-                    }
-                }
-            }
-        }
-
-        .servicesSectionCardSkeleton {
-            height: 200px;
-            width: 100%;
-            @media (max-width: 380px) {
-                height: 120px;
-            }
-            @media (max-width: 300px) {
-                height: 80px;
             }
         }
     }
 }
+
 // ________________________________________________servicesSection end______________________________________
 
 .SellerComments {
@@ -1243,74 +1239,14 @@
     }
     .SellerPortfolioWrap {
         display: grid;
-        grid-template-columns: repeat(4, 224px);
+
+        grid-template-columns: repeat(
+            auto-fit,
+            minmax(clamp(9rem, 12.5vw + 3.75rem, 18.75rem), 1fr)
+        );
         gap: 8px;
         row-gap: 15px;
-        @media (max-width: 1300px) {
-            grid-template-columns: repeat(4, 1fr);
-        }
-        @media (max-width: 1000px) {
-            grid-template-columns: repeat(3, 1fr);
-        }
-        @media (max-width: 768px) {
-            grid-template-columns: repeat(3, 1fr);
-        }
-        @media (max-width: 500px) {
-            grid-template-columns: repeat(2, 1fr);
-        }
 
-        .SellerPortfolioCard {
-            position: relative;
-            .SellerPortfolioCardImg {
-                width: 224px;
-                height: 164px;
-                @media (max-width: 600px) {
-                    width: 200px;
-                    height: 140px;
-                }
-                @media (max-width: 380px) {
-                    width: 150px;
-                    height: 100px;
-                }
-
-                @media (max-width: 300px) {
-                    width: 100px;
-                    height: 80px;
-                }
-            }
-            &:hover {
-                .SellerPortfolioCardbody {
-                    display: block;
-                }
-            }
-            .SellerPortfolioCardbody {
-                position: absolute;
-                display: none;
-                bottom: 0;
-                padding: 0 9px;
-                width: 100%;
-                .SellerPortfolioCardTitle {
-                    color: #fff;
-                    font-family: 'Poppins';
-                    font-size: 12px;
-                    font-style: normal;
-                    font-weight: 500;
-                    line-height: normal;
-                    letter-spacing: 0.24px;
-                }
-                .SellerPortfolioCardEnd {
-                    p {
-                        color: #fff;
-                        font-family: 'Poppins';
-                        font-size: 12px;
-                        font-style: normal;
-                        font-weight: 400;
-                        line-height: normal;
-                        letter-spacing: 0.24px;
-                    }
-                }
-            }
-        }
         .SellerPortfolioSkeleton {
             width: 100%;
             height: 164px;
@@ -1320,6 +1256,44 @@
             }
             @media (max-width: 300px) {
                 height: 80px;
+            }
+        }
+    }
+}
+.SellerPortfolioCard {
+    position: relative;
+    .SellerPortfolioCardImg {
+        width: 100%;
+    }
+    &:hover {
+        .SellerPortfolioCardbody {
+            display: block;
+        }
+    }
+    .SellerPortfolioCardbody {
+        position: absolute;
+        display: none;
+        bottom: 0;
+        padding: 0 9px;
+        width: 100%;
+        .SellerPortfolioCardTitle {
+            color: #fff;
+            font-family: 'Poppins';
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+            letter-spacing: 0.24px;
+        }
+        .SellerPortfolioCardEnd {
+            p {
+                color: #fff;
+                font-family: 'Poppins';
+                font-size: 12px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+                letter-spacing: 0.24px;
             }
         }
     }
@@ -1461,17 +1435,16 @@
         margin-top: clamp(0.313rem, 0.58vw + 0.196rem, 1.125rem);
         .SwipperTitlewrap {
             margin: 15px 0 15px 0 !important;
-
-            .SwipperTitle {
-                font-weight: 600;
-                font-size: clamp(2rem, 2.5vw, 2.5rem)
-            }
         }
         .categoryHighlightsSwipperWrap {
             display: flex;
             align-items: center;
         }
     }
+}
+.SwipperTitle {
+    font-weight: 600;
+    font-size: clamp(2rem, 2.5vw, 2.5rem);
 }
 .scientificResourcesCardForcarousel {
     // min-width: clamp(8.125rem, 11.588vw + 5.807rem, 25rem);
@@ -1757,4 +1730,13 @@
             }
         }
     }
+}
+
+.image-wrapper img {
+    display: block;
+    transition: filter 0.3s ease;
+}
+
+.image-wrapper:hover img {
+    filter: brightness(0.5); /* 0.5 = 50% yorqinlik — qoraroq ko‘rinadi */
 }

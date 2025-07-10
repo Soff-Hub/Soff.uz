@@ -23,30 +23,29 @@ import ModelAndDesignProduct from '~/components/elements/products/ModelAndDesign
 import Axios from 'axios';
 import { Spin } from 'antd';
 
-
-export default function ProductDefaultPage ({
-    defaultProducts,
-}) {
+export default function ProductDefaultPage ({ defaultProducts }) {
     const router = useRouter();
     const { pid } = router.query;
     const [isPlay, setIsPlay] = useState(null);
 
-   const [similarProduct, setSimilarProduct] = useState([]);
+    const [similarProduct, setSimilarProduct] = useState([]);
     const [hasLoadedSimilar, setHasLoadedSimilar] = useState(false);
     const similarRef = useRef();
 
     const fetchSimilarProducts = async () => {
         try {
-            const { data } = await Axios.get(`${baseUrl}customer/similar/${pid}/`);
+            const { data } = await Axios.get(
+                `${baseUrl}customer/similar/${pid}/`
+            );
             setSimilarProduct(data);
         } catch (error) {
-            console.error("Oxshash mahsulotlarni olishda xatolik:", error);
+            console.error('Oxshash mahsulotlarni olishda xatolik:', error);
         }
     };
 
     useEffect(() => {
         const observer = new IntersectionObserver(
-            (entries) => {
+            entries => {
                 const entry = entries[0];
                 if (entry.isIntersecting && !hasLoadedSimilar) {
                     fetchSimilarProducts();
@@ -66,8 +65,6 @@ export default function ProductDefaultPage ({
             }
         };
     }, [pid]); // pid bo‘yicha kuzatuv
-
-
 
     const { user } = useSelector(state => state.auth);
     const dispatch = useDispatch();
@@ -127,7 +124,7 @@ export default function ProductDefaultPage ({
             }}
         />
     );
-    
+
     const productsDetails = {
         file: <FileProductsDetails product={defaultProducts} />,
         '3d': <ThreeDesignProductsDetails product={defaultProducts} />,
@@ -144,22 +141,22 @@ export default function ProductDefaultPage ({
         ),
     };
     const productsDetailsSimilar = {
-        'file': similarProduct?.map((item, index) => (
+        file: similarProduct?.map((item, index) => (
             <RedesignProduct product={item} key={index} />
         )),
         '3d': similarProduct?.map((item, index) => (
             <ModelAndDesignProduct product={item} key={index} />
         )),
-        'template': similarProduct?.map((item, index) => (
+        template: similarProduct?.map((item, index) => (
             <RedesignProduct product={item} key={index} />
         )),
-        'website': similarProduct?.map((item, index) => (
+        website: similarProduct?.map((item, index) => (
             <RedesignProduct key={index} product={item} />
         )),
-        'design': similarProduct?.map((item, index) => (
+        design: similarProduct?.map((item, index) => (
             <RedesignProduct key={index} product={item} />
         )),
-        'video': similarProduct?.map((item, index) => (
+        video: similarProduct?.map((item, index) => (
             <RedesignProduct product={item} key={index} />
         )),
     };
@@ -316,8 +313,9 @@ export default function ProductDefaultPage ({
                                         ]
                                     }
                                 </div>
-                                {defaultProducts?.document?.content_type == 'file' && <AISoffiaPresentation />}
-                                
+                                {defaultProducts?.document?.content_type ==
+                                    'file' && <AISoffiaPresentation />}
+
                                 {similarProduct && (
                                     <div ref={similarRef} className=' my-5'>
                                         <h3
@@ -329,12 +327,22 @@ export default function ProductDefaultPage ({
                                             O’xshash mahsulotlar
                                         </h3>
                                         {hasLoadedSimilar ? (
-                                            <SwiperPages type={defaultProducts?.document?.content_type}>
-                                               { productsDetailsSimilar[defaultProducts?.document?.content_type]}
+                                            <SwiperPages
+                                                type={
+                                                    defaultProducts?.document
+                                                        ?.content_type
+                                                }>
+                                                {
+                                                    productsDetailsSimilar[
+                                                        defaultProducts
+                                                            ?.document
+                                                            ?.content_type
+                                                    ]
+                                                }
                                             </SwiperPages>
                                         ) : (
                                             <div className=' d-flex justify-content-center align-items-center py-5'>
-                                                <Spin size='large'/>
+                                                <Spin size='large' />
                                             </div>
                                         )}
                                     </div>
@@ -354,10 +362,12 @@ export async function getServerSideProps ({ query, req }) {
 
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
-    const resquest = await fetch(`${baseUrl}customer/documents/${query.pid}/`, {
+    const pid = 1;
+    // const resquest = await fetch(`${baseUrl}customer/documents/${query.pid}/`, {
+    const resquest = await fetch(`${baseUrl}customer/documents/${pid}/`, {
         headers,
     });
-    console.log('req---->', resquest)
+    console.log('req---->', resquest);
 
     const defaultProducts = await resquest.json();
 
