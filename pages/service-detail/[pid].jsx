@@ -2,20 +2,15 @@ import Link from 'next/link';
 import React from 'react';
 import Swiper_Pages from '~/components/blocks/categoryHighlights/swipper/swiper';
 import Comments from '~/components/details-components/comment-component/comments';
-import { CommentList } from '~/components/details-components/comment-section/commentList';
-import CommentFormWrapper from '~/components/details-components/comment-section/commentWrapper';
 import ServiseDetailAbout from '~/components/details-components/seller-detail/file-images-scroll';
-import ServiseDetailFileImagesScroll from '~/components/details-components/seller-detail/file-images-scroll';
 import SellerRating from '~/components/details-components/seller-detail/seller-service-rating-component';
 import ServiceDetailOrder from '~/components/details-components/seller-detail/serviceDetailOrder';
 import SimilarServices from '~/components/details-components/seller-detail/similar-services';
-import BreadCrumb from '~/components/elements/BreadCrumb';
-import RedesignProduct from '~/components/elements/products/Redesign/Redesign-Product';
 import PageContainer from '~/components/layouts/PageContainer';
 import PortfoilioCard from '~/components/shared/seller-profile/portfoilioCard';
 
 export default function ServiseDetail () {
-    const defaultProducts = null; // bu yerda `defaultProducts` qayerdan kelishini aniqlashtir, vaqtincha null qo‘ydim
+    const defaultProducts = null;
 
     const data = {
         id: 274737,
