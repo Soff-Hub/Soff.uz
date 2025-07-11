@@ -64,7 +64,7 @@ export default function ProductDefaultPage ({ defaultProducts }) {
                 observer.unobserve(similarRef.current);
             }
         };
-    }, [pid]); 
+    }, [pid]);
 
     const { user } = useSelector(state => state.auth);
     const dispatch = useDispatch();
@@ -361,9 +361,7 @@ export async function getServerSideProps ({ query, req }) {
 
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
-    const pid = 1;
-    // const resquest = await fetch(`${baseUrl}customer/documents/${query.pid}/`, {
-    const resquest = await fetch(`${baseUrl}customer/documents/${pid}/`, {
+    const resquest = await fetch(`${baseUrl}customer/documents/${query.pid}/`, {
         headers,
     });
     console.log('req---->', resquest);
