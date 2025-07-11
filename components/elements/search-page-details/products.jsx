@@ -10,8 +10,10 @@ export default function Search_Results_Products({ data, page, total, isLoading, 
     const showResults = !isLoading && Array.isArray(data) && data.length > 0;
 
     return (
-        <>
-            <SearchResultsProductsFilter parentData={parentData} childData={childData}   count={data} />
+        <>  
+            <div className='mb-5'>
+                <SearchResultsProductsFilter total={total} parentData={parentData} childData={childData}   count={data} />
+            </div>
             <>
                 <div className='Search_Results_Products container'>
                     <div className='Search_Results_Products_Wrap'>

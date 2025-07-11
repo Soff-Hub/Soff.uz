@@ -29,9 +29,7 @@ export default function ProductsByCategory ({
                     </>
                 )}
                 {data?.results?.map((item, index) => (
-                    <div key={index}>
-                        <RedesignProduct product={item} />
-                    </div>
+                    <RedesignProduct key={index} product={item} />
                 ))}
             </div>
 

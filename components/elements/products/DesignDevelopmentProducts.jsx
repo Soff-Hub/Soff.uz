@@ -58,11 +58,6 @@ const DesignDevelopmentProducts = ({ product }) => {
         Router.push('/account/shopping-cart');
     };
 
-    const produvctTitle =
-        product.title.length > 10
-            ? product.title.slice(0, 45) + '...'
-            : product.title;
-
     return (
         <div
             className='designDevelopmentCard'
@@ -92,7 +87,9 @@ const DesignDevelopmentProducts = ({ product }) => {
                     onClick={handleAddItemToWishlist}>
                     <img
                         src={
-                            wishlist?.some(item => Number(item.id) === Number(product?.id))
+                            wishlist?.some(
+                                item => Number(item.id) === Number(product?.id)
+                            )
                                 ? '/static/img/onclickHeard.png'
                                 : '/static/img/heard.png'
                         }
@@ -103,14 +100,16 @@ const DesignDevelopmentProducts = ({ product }) => {
 
             <div className='designDevelopmentCardBody'>
                 <Link href='/product/[pid]' as={`/product/${product.slug}`}>
-                    <a className='designDevelopmentCardTitle'>
-                        {produvctTitle}
-                    </a>
+                    <p className='designDevelopmentCardTitle'>
+                        {product.title}
+                    </p>
                 </Link>
 
                 <div className='designDevelopmentCardPriceBox'>
                     {+product.discount_price === 0 ? (
-                        <p className='designDevelopmentCardPrice m-0 text-warning'>Bepul</p>
+                        <p className='designDevelopmentCardPrice m-0 text-warning'>
+                            Bepul
+                        </p>
                     ) : product.discount === 0 ? (
                         <p className='designDevelopmentCardPrice m-0'>
                             {addPeriodToThousands(product.discount_price)} so'm

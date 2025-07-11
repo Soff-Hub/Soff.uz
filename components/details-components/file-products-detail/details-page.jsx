@@ -9,6 +9,7 @@ import OrderCardBtn from '../details-seller-profile/order-card-btn';
 import Link from 'next/link';
 import CommentForm from '../comment-section/commentForm';
 import { CommentList } from '../comment-section/commentList';
+import CommentFormWrapper from '../comment-section/commentWrapper';
 
 function FileProductsDetails({ product }) { 
   
@@ -48,9 +49,10 @@ function FileProductsDetails({ product }) {
             {/* <SellerProfile product={product}/> */}
             <OrderCardBtn product={product}/>
           </div>
+          {/* comment section */}
           <div>
-              <CommentForm/>
-              <CommentList/>
+              <CommentFormWrapper id={product.id} slug={product.slug}/>
+              <CommentList slug={product.slug}/>
           </div>
         </div>
       </div>

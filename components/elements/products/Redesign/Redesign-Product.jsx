@@ -89,16 +89,16 @@ const   RedesignProduct = ({ product }) => {
                         {+product.discount_price === 0 ? (
                             <p className='free-product-text'>Bepul</p>
                         ) : product.discount === 0 ? (
-                            <p>
+                            <p className='scientificResourcesCardPrice_discount_price'>
                                 {addPeriodToThousands(product.discount_price)}{' '}
                                 so'm
-                            </p>
+                            </p >
                         ) : (
                             <>
-                                <del>
+                                <del className='scientificResourcesCardPrice_discount_price'>
                                     {addPeriodToThousands(product.price)} so'm
                                 </del>
-                                <p>
+                                <p className='scientificResourcesCardPrice_discount_price'>
                                     {addPeriodToThousands(
                                         product.discount_price
                                     )}
@@ -108,6 +108,7 @@ const   RedesignProduct = ({ product }) => {
                         )}
                     </div>
                     <a
+                    className='scientificBuyIconBox'
                         href='#'
                         data-toggle='tooltip'
                         data-placement='top'
@@ -120,7 +121,8 @@ const   RedesignProduct = ({ product }) => {
                                     : '/static/img/cart-outlet.svg'
                             }
                             alt=''
-                            className='scientificBuyIcon'
+                            className='cart-img'
+                            // style={{                    width: 'clamp(2rem, 1.563vw + 0.625rem, 5rem)'}}
                         />
                     </a>
                 </div>

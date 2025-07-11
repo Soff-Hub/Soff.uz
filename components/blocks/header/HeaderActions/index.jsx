@@ -6,15 +6,20 @@ import MiniCart from '~/components/shared/headers/modules/MiniCart';
 import HeaderNotifications from './HeaderNotifications';
 import HeaderUserDropdown from './HeaderUserDropdown';
 import { Badge } from 'antd';
+import { Badge } from 'antd';
 
 const HeaderActions = ({ auth, isDark }) => {
     const { wishlist } = useWishlist();
     const data = useSelector(state => state.ecomerce.cartDataItems);
+    const data = useSelector(state => state.ecomerce.cartDataItems);
 
     return (
         <div
+           
             className={`site-header-actions ${
+                
                 isDark ? 'text-black' : 'text-white'
+            
             }`}>
             <HeaderNotifications color={isDark ? 'text-black' : 'text-white'} />
 
@@ -24,7 +29,7 @@ const HeaderActions = ({ auth, isDark }) => {
                         <a href='#'>
                             <Badge count={wishlist.length}>
                                 <img
-                                    src='/static/img/heart.png'
+                                    src='/static/img/heart1.png'
                                     width={'25px'}
                                     alt=''
                                 />{' '}
@@ -38,8 +43,11 @@ const HeaderActions = ({ auth, isDark }) => {
 
             {data?.length > 0 && <MiniCart />}
             <HeaderUserDropdown
+               
                 color={isDark ? 'text-black' : 'text-white'}
+              
                 isLoggedIn={auth.isLoggedIn && Boolean(auth.isLoggedIn)}
+           
             />
         </div>
     );
