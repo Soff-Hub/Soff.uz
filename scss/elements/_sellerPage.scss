@@ -1279,39 +1279,30 @@ body.no-scroll {
     }
     .SellerPortfolioWrap {
         display: grid;
-        grid-template-columns: repeat(4, 224px);
-        gap: 8px;
+        grid-template-columns: repeat(
+            auto-fit,
+            minmax(clamp(9rem, 9.375vw + 4.375rem, 19rem), 1fr)
+        );
+        gap: 15px;
         row-gap: 15px;
-        @media (max-width: 1300px) {
-            grid-template-columns: repeat(4, 1fr);
-        }
-        @media (max-width: 1000px) {
-            grid-template-columns: repeat(3, 1fr);
-        }
-        @media (max-width: 768px) {
-            grid-template-columns: repeat(3, 1fr);
-        }
-        @media (max-width: 500px) {
-            grid-template-columns: repeat(2, 1fr);
-        }
 
         .SellerPortfolioCard {
+            width: 100%;
+            max-width: 230px;
             position: relative;
+            border: 1px solid #f1f1f1;
+            border-radius: 10px;
             .SellerPortfolioCardImg {
-                width: 224px;
-                height: 164px;
-                @media (max-width: 600px) {
-                    width: 200px;
-                    height: 140px;
-                }
-                @media (max-width: 380px) {
-                    width: 150px;
-                    height: 100px;
-                }
-
-                @media (max-width: 300px) {
-                    width: 100px;
-                    height: 80px;
+                max-width: 230px;
+                width: 100%;
+                height: clamp(8rem, 6.25vw + 3.75rem, 13rem);
+                border-radius: 10px;
+            }
+            &:hover {
+                .SellerPortfolioCardImg {
+                    filter: brightness(
+                        50%
+                    ); // yoki grayscale(1), blur(2px), contrast(150%) va hokazo
                 }
             }
             &:hover {

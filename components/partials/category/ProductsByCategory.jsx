@@ -10,7 +10,7 @@ export default function ProductsByCategory ({
     handlePagination,
     isLoading,
 }) {
-    console.log(data);
+    console.log('ProductsByCategory', data);
 
     return (
         <>
