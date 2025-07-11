@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { baseURL } from '~/repositories/api';
 import Swiper_Pages from '../swipper/swiper';
 import RedesignProduct from '~/components/elements/products/Redesign/Redesign-Product';
+import DesignDevelopmentProducts from '~/components/elements/products/DesignDevelopmentProducts';
 
 export default function VideoLessonsSwipper () {
     const [product, setProduct] = useState(null);
@@ -34,12 +35,12 @@ export default function VideoLessonsSwipper () {
                         </a>
                     </div>
                     {product ? (
-                        <Swiper_Pages type='design'>
+                        <Swiper_Pages type='video'>
                             {product.map((item, index) => (
                                 <div>
-                                    <RedesignProduct
-                                        product={item}
+                                    <DesignDevelopmentProducts
                                         key={index}
+                                        product={item}
                                     />
                                 </div>
                             ))}

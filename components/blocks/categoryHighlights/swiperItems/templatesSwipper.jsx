@@ -34,7 +34,7 @@ export default function TemplatesSwipper () {
                         </a>
                     </div>
                     {product ? (
-                        <Swiper_Pages type='design'>
+                        <Swiper_Pages type='template'>
                             {product.map((item, index) => (
                                 <div>
                                     <RedesignProduct

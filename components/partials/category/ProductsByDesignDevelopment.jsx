@@ -3,6 +3,7 @@ import { Pagination } from 'antd';
 import { Skeleton } from 'antd';
 import Link from 'next/link';
 import RedesignProduct from '~/components/elements/products/Redesign/Redesign-Product';
+import DesignDevelopmentProducts from '~/components/elements/products/DesignDevelopmentProducts';
 
 export default function ProductsByDesignDevelopment ({
     data = [],
@@ -12,7 +13,7 @@ export default function ProductsByDesignDevelopment ({
 }) {
     return (
         <>
-            <div id='products' className='VideoLessonsWrap'>
+            <div id='products' className='designDevelopmentProduct'>
                 {isLoading && (
                     <>
                         {Array(15)
@@ -27,7 +28,7 @@ export default function ProductsByDesignDevelopment ({
                     </>
                 )}
                 {data?.results?.map((item, index) => (
-                    <RedesignProduct key={index} product={item} />
+                    <DesignDevelopmentProducts key={index} product={item} />
                 ))}
             </div>
             {data?.results?.length == 0 && (
