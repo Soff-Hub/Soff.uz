@@ -37,7 +37,8 @@ function VideosProductsDetails({ product, isPlay, setIsPlay, }) {
           </div>
 
           <div className='ps-product__header_seller_secound_videos'>
-            {/* {type !== "playlists" ? <Description description={product?.description} /> :
+             <Description description={product?.description}/>
+            {/* {type !== "playlists" ?  :
 
               <PlayListsCard product={product} isPlay={isPlay} setIsPlay={setIsPlay} />} */}
 

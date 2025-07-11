@@ -7,6 +7,8 @@ import useApi, { baseUrlUseApi } from '~/repositories/useApi';
 import FooterComponents from '~/components/blocks/footer/FooterComponents';
 import VideoLessonsFilterSection from '~/components/elements/VideoLessonsFilterSection';
 import ProductsByVideoLessons from '~/components/partials/category/ProductsByVideoLessons';
+import ProductsByCategory from '~/components/partials/category/ProductsByCategory';
+import ProductsByDesignDevelopment from '~/components/partials/category/ProductsByDesignDevelopment';
 
 export default function VideoLessons ({
     productsData,
@@ -18,9 +20,7 @@ export default function VideoLessons ({
 }) {
     const router = useRouter();
 
-    console.log("productsData -> ", productsData);
-    
-
+    console.log('productsData -> ', productsData);
 
     // Pagination tugmalari uchun funksiya
     const handlePageChange = newPage => {
@@ -47,7 +47,7 @@ export default function VideoLessons ({
                     isLoading={false}
                     childCategoryData={childCategoryData}
                 />
-                <ProductsByVideoLessons
+                <ProductsByDesignDevelopment
                     data={productsData}
                     page={page}
                     handlePagination={number => {
@@ -59,8 +59,6 @@ export default function VideoLessons ({
         </PageContainer>
     );
 }
-
-
 
 export async function getServerSideProps (context) {
     const {
@@ -80,9 +78,9 @@ export async function getServerSideProps (context) {
 
     const categoryParam = childCategory ? childCategory : parentCategory;
 
-    const productsUrl = `${baseUrlUseApi}customer/products/?direction=video&category=${categoryParam}&page=${page}&page_size=48`;
-    const fourChildUrl = `${baseUrlUseApi}customer/four-child?direction=video`;
-    const childCategoryUrl = `${baseUrlUseApi}customer/four-child?direction=video&parent__slug=${parentCategory}`;
+    const productsUrl = `${baseUrlUseApi}customer/products/?direction=file&category=${categoryParam}&page=${page}&page_size=48`;
+    const fourChildUrl = `${baseUrlUseApi}customer/four-child?direction=file`;
+    const childCategoryUrl = `${baseUrlUseApi}customer/four-child?direction=file&parent__slug=${parentCategory}`;
 
     const [productsData, fourChildData, childCategoryData] = await Promise.all([
         fetchJson(productsUrl),

@@ -545,143 +545,139 @@ body.no-scroll {
 
     .servicesSectionWrap {
         display: grid;
-        grid-template-columns: repeat(4, 224px);
+
+        grid-template-columns: repeat(
+            auto-fit,
+            minmax(clamp(5rem, 13.75vw + 2.25rem, 18.75rem), 1fr)
+        );
         gap: 10px;
         row-gap: 29px;
         margin-top: 41.5px;
-        @media (max-width: 1390px) {
-            grid-template-columns: repeat(4, 1fr);
-        }
-        @media (max-width: 1200px) {
-            grid-template-columns: repeat(3, 1fr);
-        }
-        @media (max-width: 950px) {
-            grid-template-columns: repeat(2, 1fr);
-        }
-        @media (max-width: 300px) {
-            grid-template-columns: repeat(1, 1fr);
-        }
+        // @media (max-width: 1390px) {
+        //     grid-template-columns: repeat(4, 1fr);
+        // }
+        // @media (max-width: 1200px) {
+        //     grid-template-columns: repeat(3, 1fr);
+        // }
+        // @media (max-width: 950px) {
+        //     grid-template-columns: repeat(2, 1fr);
+        // }
+        // @media (max-width: 300px) {
+        //     grid-template-columns: repeat(1, 1fr);
+        // }
 
-        .servicesSectionCard {
+        .servicesSectionCardSkeleton {
+            height: clamp(5rem, 7.5vw + 3.5rem, 12.5rem);
+            width: 100%;
+        }
+    }
+}
+.servicesSectionCard {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 100%;
+    padding: 10px 9px;
+    border-radius: 5px;
+    background: #fff;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+
+    .servicesSectionCardImg {
+        img {
+            border-radius: 5px;
+            height: clamp(7.5rem, 5vw + 6.5rem, 12.5rem);
+            width: 100%;
+        }
+    }
+    .servicesSectionCardbody {
+        margin-top: 7.5px;
+        width: 100%;
+        .servicesSectionCardTitle {
+            color: #312f30;
+            font-family: 'Poppins';
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 150%; /* 18px */
+            letter-spacing: 0.24px;
+            margin-bottom: 5.5px;
+            @media (max-width: 480px) {
+                font-size: 10px;
+            }
+        }
+        .servicesSectionCardRating {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            margin-bottom: 10px;
+            img {
+            }
+            p {
+                color: #312f30;
+                font-family: 'Poppins';
+                font-size: 10px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+                letter-spacing: 0.1px;
+                margin: 0;
+                padding: 0;
+            }
+            span {
+                color: #555;
+                font-family: 'Poppins';
+                font-size: 9px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+                letter-spacing: 0.45px;
+                padding: 0;
+                margin: 0;
+            }
+        }
+        .servicesSectionCardPrice {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            flex-direction: column;
-            flex-wrap: wrap;
-            width: 100%;
-            padding: 10px 9px;
-            border-radius: 5px;
-            background: #fff;
-            box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
-
-            .servicesSectionCardImg {
-                img {
-                    border-radius: 5px;
-                    height: 184px;
-                    width: 100%;
-                    @media (max-width: 480px) {
-                        height: 120px;
-                    }
+            p {
+                color: #312f30;
+                font-family: 'Poppins';
+                font-size: 12px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: normal;
+                letter-spacing: 0.12px;
+                margin: 0;
+                @media (max-width: 480px) {
+                    font-size: 8px;
                 }
             }
-            .servicesSectionCardbody {
-                margin-top: 7.5px;
-                .servicesSectionCardTitle {
-                    color: #312f30;
-                    font-family: 'Poppins';
-                    font-size: 12px;
-                    font-style: normal;
-                    font-weight: 500;
-                    line-height: 150%; /* 18px */
-                    letter-spacing: 0.24px;
-                    margin-bottom: 5.5px;
-                    @media (max-width: 480px) {
-                        font-size: 10px;
-                    }
+            a {
+                color: #fff;
+                font-family: 'Poppins';
+                font-size: 10px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: normal;
+                letter-spacing: 0.1px;
+                padding: 4px 8px;
+                background: rgba(0, 210, 101, 1);
+                border-radius: 3px;
+                margin: 0;
+                @media (max-width: 480px) {
+                    font-size: 8px;
+                    padding: 2px 4px;
                 }
-                .servicesSectionCardRating {
-                    display: flex;
-                    align-items: center;
-                    gap: 2px;
-                    margin-bottom: 10px;
-                    img {
-                    }
-                    p {
-                        color: #312f30;
-                        font-family: 'Poppins';
-                        font-size: 10px;
-                        font-style: normal;
-                        font-weight: 500;
-                        line-height: normal;
-                        letter-spacing: 0.1px;
-                        margin: 0;
-                        padding: 0;
-                    }
-                    span {
-                        color: #555;
-                        font-family: 'Poppins';
-                        font-size: 9px;
-                        font-style: normal;
-                        font-weight: 500;
-                        line-height: normal;
-                        letter-spacing: 0.45px;
-                        padding: 0;
-                        margin: 0;
-                    }
+                &:hover {
+                    background: rgba(0, 210, 101, 0.5);
                 }
-                .servicesSectionCardPrice {
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-between;
-                    p {
-                        color: #312f30;
-                        font-family: 'Poppins';
-                        font-size: 12px;
-                        font-style: normal;
-                        font-weight: 600;
-                        line-height: normal;
-                        letter-spacing: 0.12px;
-                        margin: 0;
-                        @media (max-width: 480px) {
-                            font-size: 8px;
-                        }
-                    }
-                    a {
-                        color: #fff;
-                        font-family: 'Poppins';
-                        font-size: 10px;
-                        font-style: normal;
-                        font-weight: 600;
-                        line-height: normal;
-                        letter-spacing: 0.1px;
-                        padding: 4px 8px;
-                        background: rgba(0, 210, 101, 1);
-                        border-radius: 3px;
-                        margin: 0;
-                        @media (max-width: 480px) {
-                            font-size: 8px;
-                            padding: 2px 4px;
-                        }
-                        &:hover {
-                            background: rgba(0, 210, 101, 0.5);
-                        }
-                    }
-                }
-            }
-        }
-
-        .servicesSectionCardSkeleton {
-            height: 200px;
-            width: 100%;
-            @media (max-width: 380px) {
-                height: 120px;
-            }
-            @media (max-width: 300px) {
-                height: 80px;
             }
         }
     }
 }
+
 // ________________________________________________servicesSection end______________________________________
 
 .SellerComments {
@@ -1279,74 +1275,14 @@ body.no-scroll {
     }
     .SellerPortfolioWrap {
         display: grid;
-        grid-template-columns: repeat(4, 224px);
+
+        grid-template-columns: repeat(
+            auto-fit,
+            minmax(clamp(9rem, 12.5vw + 3.75rem, 18.75rem), 1fr)
+        );
         gap: 8px;
         row-gap: 15px;
-        @media (max-width: 1300px) {
-            grid-template-columns: repeat(4, 1fr);
-        }
-        @media (max-width: 1000px) {
-            grid-template-columns: repeat(3, 1fr);
-        }
-        @media (max-width: 768px) {
-            grid-template-columns: repeat(3, 1fr);
-        }
-        @media (max-width: 500px) {
-            grid-template-columns: repeat(2, 1fr);
-        }
 
-        .SellerPortfolioCard {
-            position: relative;
-            .SellerPortfolioCardImg {
-                width: 224px;
-                height: 164px;
-                @media (max-width: 600px) {
-                    width: 200px;
-                    height: 140px;
-                }
-                @media (max-width: 380px) {
-                    width: 150px;
-                    height: 100px;
-                }
-
-                @media (max-width: 300px) {
-                    width: 100px;
-                    height: 80px;
-                }
-            }
-            &:hover {
-                .SellerPortfolioCardbody {
-                    display: block;
-                }
-            }
-            .SellerPortfolioCardbody {
-                position: absolute;
-                display: none;
-                bottom: 0;
-                padding: 0 9px;
-                width: 100%;
-                .SellerPortfolioCardTitle {
-                    color: #fff;
-                    font-family: 'Poppins';
-                    font-size: 12px;
-                    font-style: normal;
-                    font-weight: 500;
-                    line-height: normal;
-                    letter-spacing: 0.24px;
-                }
-                .SellerPortfolioCardEnd {
-                    p {
-                        color: #fff;
-                        font-family: 'Poppins';
-                        font-size: 12px;
-                        font-style: normal;
-                        font-weight: 400;
-                        line-height: normal;
-                        letter-spacing: 0.24px;
-                    }
-                }
-            }
-        }
         .SellerPortfolioSkeleton {
             width: 100%;
             height: 164px;
@@ -1356,6 +1292,44 @@ body.no-scroll {
             }
             @media (max-width: 300px) {
                 height: 80px;
+            }
+        }
+    }
+}
+.SellerPortfolioCard {
+    position: relative;
+    .SellerPortfolioCardImg {
+        width: 100%;
+    }
+    &:hover {
+        .SellerPortfolioCardbody {
+            display: block;
+        }
+    }
+    .SellerPortfolioCardbody {
+        position: absolute;
+        display: none;
+        bottom: 0;
+        padding: 0 9px;
+        width: 100%;
+        .SellerPortfolioCardTitle {
+            color: #fff;
+            font-family: 'Poppins';
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+            letter-spacing: 0.24px;
+        }
+        .SellerPortfolioCardEnd {
+            p {
+                color: #fff;
+                font-family: 'Poppins';
+                font-size: 12px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+                letter-spacing: 0.24px;
             }
         }
     }
@@ -1489,35 +1463,323 @@ body.no-scroll {
     }
 }
 
-.categoryHighlightsSwipper {
-    margin-top: clamp(0.313rem, 0.58vw + 0.196rem, 1.125rem);
-    .SwipperTitle {
-        font-size: clamp(0.938rem, 0.67vw + 0.804rem, 1.875rem);
-        margin: 0;
-        padding: 0;
-        margin-bottom: 15px;
-        font-weight: 500;
+.categoryHighlightsSwippercontainer {
+    // margin: 0 auto;
+    width: clamp(18.75rem, 100.858vw - 1.422rem, 165.625rem) !important;
+    overflow: hidden !important;
+    .categoryHighlightsSwipper {
+        margin-top: clamp(0.313rem, 0.58vw + 0.196rem, 1.125rem);
+        .SwipperTitlewrap {
+            margin: 15px 0 15px 0 !important;
+        }
+        .categoryHighlightsSwipperWrap {
+            display: flex;
+            align-items: center;
+        }
+    }
+}
+.SwipperTitle {
+    font-weight: 600;
+    font-size: clamp(2rem, 2.5vw, 2.5rem);
+}
+.SwipperTitlE {
+    font-weight: 600;
+    font-size: clamp(2rem, 2.5vw, 2.5rem);
+    @media (max-width: 320px) {
+        margin-top: 40px;
+    }
+}
+.scientificResourcesCardForcarousel {
+    // min-width: clamp(8.125rem, 11.588vw + 5.807rem, 25rem);
+    // height: 100%;
+    background: #fff;
+    border-radius: 12.5px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    // margin: 0;
+
+    width: 100%;
+    max-width: clamp(10rem, 30vw, 18rem); /* 160–288px oralig‘ida */
+    margin: 0 auto;
+    box-sizing: border-box;
+    &:hover {
+        filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.2));
+    }
+
+    .scientificResourcesCardImgBox {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: clamp(0.313rem, 0.858vw + 0.141rem, 1.563rem);
+        .scientificResourcesCardImg {
+            height: clamp(6.25rem, 4.292vw + 5.392rem, 12.5rem);
+            border-radius: 12.5px;
+        }
+    }
+    .scientificResourcesCardHeard {
+        position: absolute;
+        right: clamp(0.625rem, 0.429vw + 0.539rem, 1.25rem);
+        top: clamp(0.625rem, 0.429vw + 0.539rem, 1.25rem);
+        padding: clamp(0.188rem, 0.3vw + 0.127rem, 0.625rem);
+        img {
+            @media (max-width: 450px) {
+                width: 15px;
+            }
+        }
+    }
+    .scientificResourcesCardBody {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        flex-grow: 1;
+        padding: clamp(0.5rem, 0.515vw + 0.397rem, 1.25rem);
+        gap: clamp(0.5rem, 0.515vw + 0.397rem, 1.25rem);
+        .scientificResourcesCardTitle {
+            color: #000;
+            font-family: 'Poppins';
+            font-size: clamp(0.5rem, 0.215vw + 0.457rem, 0.813rem);
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            letter-spacing: 0.25px;
+        }
+        .scientificResourcesCardPriceBox {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .scientificResourcesCardPrice {
+                p {
+                    color: #000;
+                    font-family: 'Poppins';
+                    font-size: clamp(0.625rem, 0.429vw + 0.539rem, 1.25rem);
+                    font-style: normal;
+                    font-weight: 600;
+                    line-height: normal;
+                    letter-spacing: 0.367px;
+                    margin: 0;
+                }
+            }
+            .scientificBuyIcon {
+                @media (max-width: 768px) {
+                    width: 25px;
+                }
+                @media (max-width: 450px) {
+                    width: 20px;
+                }
+            }
+        }
     }
 }
 
 .Swiper_Pages_swiper-navigation {
     position: absolute;
     width: 80px;
-    top: -30px;
+    top: -40px;
     right: 0;
     display: flex;
     align-items: center;
     gap: 20px;
     z-index: 9999;
     @media (max-width: 768px) {
-        display: none;
+        // display: none;
+        right: -35px;
     }
     .swipperICon {
-        font-size: clamp(0.938rem, 1.232vw + 0.148rem, 2.188rem);
+        font-size: clamp(0.938rem, 0.446vw + 0.848rem, 1.563rem);
         cursor: pointer;
         color: #00a44f;
         &:active {
             color: #312f30;
         }
     }
+}
+
+.BestSellerStaticsTable {
+    @media (max-width: 768px) {
+        display: block;
+        width: 95vw;
+        margin: 0 auto;
+    }
+    .BestSellerStaticsTableTab {
+        display: none;
+        @media (max-width: 768px) {
+            display: block;
+
+            background-color: #fff;
+            padding: 40px;
+            @media (max-width: 800px) {
+                padding: 20px;
+            }
+            @media (max-width: 768px) {
+                padding: 0px;
+                background: none;
+            }
+            .SellerProductForm {
+                // display: grid;
+                // grid-template-columns: repeat(4, 1fr);
+                display: flex;
+                justify-content: end;
+                gap: 18px;
+                margin-bottom: 35px;
+                @media (max-width: 600px) {
+                    flex-wrap: wrap;
+                    justify-content: space-between;
+                    gap: 10px;
+                }
+                .SellerProductInputBox {
+                    width: 50%;
+                    background: #fff;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 6px 17px 6px 16px;
+                    flex-shrink: 0;
+                    border-radius: 4px;
+                    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.15);
+                    @media (max-width: 600px) {
+                        width: 100%;
+                    }
+                    .SellerProductInput {
+                        border: none;
+                        outline: none;
+                        background: none;
+                        &::placeholder {
+                            color: #7b7b7b;
+                            font-family: Poppins;
+                            font-size: 12px;
+                            font-style: normal;
+                            font-weight: 500;
+                            line-height: normal;
+                        }
+                    }
+                }
+                .SellerProductSelect {
+                    width: 25%;
+                    padding: 7px 17px 7px 16px;
+                    border: none;
+                    border-radius: 4px;
+                    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.15);
+                    color: #7b7b7b;
+                    font-family: 'Poppins';
+                    font-size: 12px;
+                    font-style: normal;
+                    font-weight: 500;
+                    line-height: normal;
+                    @media (max-width: 600px) {
+                        width: 48%;
+                    }
+                    @media (max-width: 260px) {
+                        width: 100%;
+                    }
+                }
+
+                .SellerProductBtn {
+                    display: flex;
+                    align-items: center;
+                    padding: 7px 17px 7px 16px;
+                    border-radius: 6.549px;
+                    background: #a020f0;
+                    gap: 10px;
+                    @media (max-width: 1200px) {
+                        padding: 7px 15px;
+                        gap: 8px;
+                    }
+                    .SellerProductBtnTitle {
+                        color: #fff;
+                        font-family: 'Poppins';
+                        font-size: 13.098px;
+                        font-style: normal;
+                        font-weight: 500;
+                        line-height: normal;
+                        letter-spacing: 0.262px;
+                        margin: 0;
+                        text-wrap: nowrap;
+                        width: 108px;
+                        @media (max-width: 1200px) {
+                            font-size: 12px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .BestSellerStaticsTableWrap {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        width: 100%;
+        gap: 50px;
+        @media (max-width: 768px) {
+            grid-template-columns: repeat(1, 1fr);
+        }
+    }
+}
+.BestSellerStaticsTable {
+    width: 100%;
+    .BestSellerStaticsTable_titleWrap {
+        .BestSellerStaticsTable_titleWrap_select {
+            border: 1px solid #f1f1f1;
+            border-radius: 10px;
+            padding: 5px 10px;
+            font-size: clamp(1.8rem, 2.5vw, 2rem);
+            color: #000;
+            font-weight: 600;
+        }
+        .BestSellerStaticsTable_titleWrap_title {
+            font-size: clamp(1.8rem, 2.5vw, 2rem);
+            padding: 0;
+            margin: 0;
+            color: #000;
+            font-weight: 600;
+        }
+    }
+    .BestSellerStaticsTableCardWrap {
+        margin: 20px auto 0 !important;
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        gap: 20px;
+        .BestSellerStaticsTableCard {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            gap: 20px;
+            border: 1px solid #f1f1f1;
+            min-width: 100%;
+            border-radius: 10px;
+            background-color: #fff;
+            .BestSellerStaticsTableCard_Avatar {
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+            }
+            .BestSellerStaticsTableCard_ProductView {
+                width: 50px;
+                height: 50px;
+            }
+            .BestSellerStaticsTableCard_infoWrap {
+                .BestSellerStaticsTableCard_fullname {
+                    font-size: clamp(0.8rem, 0.75vw + 0.975rem, 1.2rem);
+
+                    padding: 0;
+                    margin: 0;
+                }
+                .BestSellerStaticsTableCard_statics {
+                    padding: 0;
+                    margin: 0;
+                }
+            }
+        }
+    }
+}
+
+.image-wrapper img {
+    display: block;
+    transition: filter 0.3s ease;
+}
+
+.image-wrapper:hover img {
+    filter: brightness(0.5); /* 0.5 = 50% yorqinlik — qoraroq ko‘rinadi */
 }

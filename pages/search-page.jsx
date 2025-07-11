@@ -2,31 +2,43 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Spin } from 'antd';
 import Link from 'next/link';
-import NextImageCard from '~/components/nextImagecard';
 import Head from 'next/head';
+
+import NextImageCard from '~/components/nextImagecard';
 import Search_Results_Products from '~/components/elements/search-page-details/products';
 import { baseUrlUseApi } from '~/repositories/useApi';
 import useDebounce from '~/hooks/useDebounce';
+import Search_Results_Specialists from '~/components/elements/search-page-details/specialists';
 
 const Search_Results = ({ fourChildData, childCategoryData }) => {
     const inputEl = useRef(null);
-    const [searchTerm, setSearchTerm] = useState('');
-    const debouncedSearchTerm = useDebounce(searchTerm, 1000);
     const router = useRouter();
-    const { page = 1, keyword = '', type = 'all', category = '' } = router.query;
+
+    const {
+        page = 1,
+        keyword = '',
+        type = 'all',
+        category = '',
+        parentCategory = '',
+        order_by = '',
+        tab = 'products'
+    } = router.query;
+
+    const [searchTerm, setSearchTerm] = useState(keyword || '');
+    const debouncedSearchTerm = useDebounce(searchTerm, 1000);
 
     const [data, setData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    // Fetching data with fetch instead of useApi
+    // Fetch search data
     useEffect(() => {
         const fetchData = async () => {
             setIsLoading(true);
             setError(null);
             try {
                 const res = await fetch(
-                    `${baseUrlUseApi}customer/same-google-search/?page=${page}&search=${keyword}&type=${type}&category=${category}`
+                    `${baseUrlUseApi}customer/same-google-search/?page=${page}&search=${keyword}&type=${type}&category=${category}&order_by=${order_by}&tab=${tab}`
                 );
                 if (!res.ok) throw new Error('Server error');
                 const json = await res.json();
@@ -38,15 +50,23 @@ const Search_Results = ({ fourChildData, childCategoryData }) => {
                 setIsLoading(false);
             }
         };
-        fetchData();
-    }, [page, keyword, type, category]);
 
-    // Debounced search
+        fetchData();
+    }, [page, keyword, type, category, order_by]);
+
+    // Sync input value with URL keyword
+    useEffect(() => {
+        if (typeof keyword === 'string') {
+            setSearchTerm(keyword);
+        }
+    }, [keyword]);
+
+    // Push debounced search term to router
     useEffect(() => {
         if (
             debouncedSearchTerm &&
             debouncedSearchTerm.length >= 1 &&
-            debouncedSearchTerm !== keyword
+            debouncedSearchTerm !== String(keyword || '')
         ) {
             router.push({
                 pathname: router.pathname,
@@ -55,25 +75,84 @@ const Search_Results = ({ fourChildData, childCategoryData }) => {
                     keyword: debouncedSearchTerm,
                     page: 1,
                     type: 'all',
-                    tab: 'all',
+                    tab: 'products',
                     category: '',
                     parentCategory: ''
-                },
+                }
             });
         }
     }, [debouncedSearchTerm, router.query]);
 
-    let clearTextView = !isLoading && (
+    const handleClearInput = () => {
+        setSearchTerm('');
+        inputEl.current.value = '';
+    };
+
+    const menuItems = [
+        {
+            title: 'Mahsulotlar',
+            path: 'products',
+        },
+        {
+            title: 'Mutaxasislar',
+            path: 'specialists',
+        },
+    ];
+
+    const sellerTabItems = {
+        specialists: (
+            <Search_Results_Specialists
+                data={data?.results}
+                isLoading={isLoading}
+            />
+        ),
+
+        products: (
+            <Search_Results_Products
+                childData={fourChildData}
+                parentData={childCategoryData}
+                data={data?.results}
+                page={page}
+                total={data?.count}
+                isLoading={isLoading}
+            />
+        ),
+    };
+
+
+    const activeIndex = router.query.tab
+    // const notFound = () => {
+    //     if(!data || data?.results.length == 0){
+    //         return <Search_Results_NotFound />
+    //     }
+    //     return  <SearchAllProducts data={data?.results} isLoading={isLoading} />
+    // }
+
+    const clearTextView = !isLoading && (
         <span className='ps-form__action'>
-            <p className='ps-form__action_search_btn m-auto'>
-                <svg xmlns='http://www.w3.org/2000/svg' width='12' height='13' viewBox='0 0 12 13' fill='none'>
-                    <path d='M9.47006 9.13465L12 11.6646L11.1646 12.5L8.63465 9.97006C7.72497 10.6978 6.57133 11.1332 5.31661 11.1332C2.38184 11.1332 0 8.75138 0 5.81661C0 2.88184 2.38184 0.5 5.31661 0.5C8.25138 0.5 10.6332 2.88184 10.6332 5.81661C10.6332 7.07133 10.1978 8.22497 9.47006 9.13465ZM8.28487 8.69632C9.00722 7.95188 9.45175 6.93641 9.45175 5.81661C9.45175 3.53194 7.60127 1.68147 5.31661 1.68147C3.03194 1.68147 1.18147 3.53194 1.18147 5.81661C1.18147 8.10127 3.03194 9.95175 5.31661 9.95175C6.43641 9.95175 7.45188 9.50722 8.19632 8.78487L8.28487 8.69632Z' fill='#7B7B7B'/>
-                </svg>
-            </p>
+            {searchTerm ? (
+                <p
+                    className='ps-form__action_search_btn m-auto cursor-pointer'
+                    onClick={handleClearInput}
+                >
+                    <svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24'>
+                        <path
+                            fill='#7B7B7B'
+                            d='M18.3 5.71a1 1 0 0 0-1.41 0L12 10.59 7.11 5.7a1 1 0 0 0-1.41 1.41L10.59 12l-4.89 4.89a1 1 0 0 0 1.41 1.41L12 13.41l4.89 4.89a1 1 0 0 0 1.41-1.41L13.41 12l4.89-4.89a1 1 0 0 0 0-1.4Z'
+                        />
+                    </svg>
+                </p>
+            ) : (
+                <p className='ps-form__action_search_btn m-auto'>
+                    <svg xmlns='http://www.w3.org/2000/svg' width='12' height='13' viewBox='0 0 12 13'>
+                        <path d='M9.47006 9.13465L12 11.6646L11.1646 12.5L8.63465 9.97006C7.72497 10.6978 6.57133 11.1332 5.31661 11.1332C2.38184 11.1332 0 8.75138 0 5.81661C0 2.88184 2.38184 0.5 5.31661 0.5C8.25138 0.5 10.6332 2.88184 10.6332 5.81661C10.6332 7.07133 10.1978 8.22497 9.47006 9.13465ZM8.28487 8.69632C9.00722 7.95188 9.45175 6.93641 9.45175 5.81661C9.45175 3.53194 7.60127 1.68147 5.31661 1.68147C3.03194 1.68147 1.18147 3.53194 1.18147 5.81661C1.18147 8.10127 3.03194 9.95175 5.31661 9.95175C6.43641 9.95175 7.45188 9.50722 8.19632 8.78487L8.28487 8.69632Z' fill='#7B7B7B' />
+                    </svg>
+                </p>
+            )}
         </span>
     );
 
-    let loadingView = isLoading && (
+    const loadingView = isLoading && (
         <span className='ps-form__action'>
             <Spin size='small' />
         </span>
@@ -89,6 +168,8 @@ const Search_Results = ({ fourChildData, childCategoryData }) => {
                     content="Soff.uz qidiruv tizimi orqali o'zingizga kerakli bo'lgan istalgan turdagi intellektual mulklaringizni toping"
                 />
             </Head>
+
+            {/* Navbar */}
             <nav className='global_navbar'>
                 <div className='container d-flex align-items-center'>
                     <div className='d-flex align-items-center gap-5 width_full_screen'>
@@ -102,6 +183,8 @@ const Search_Results = ({ fourChildData, childCategoryData }) => {
                                 />
                             </a>
                         </Link>
+
+                        {/* Search bar */}
                         <div className='ps-form--quick-search'>
                             <div className={keyword === '' ? 'ps-form__input' : 'ps-form__input active_search_input'}>
                                 <input
@@ -113,12 +196,9 @@ const Search_Results = ({ fourChildData, childCategoryData }) => {
                                             : 'input1 form-control active_search_input'
                                     }
                                     type='text'
-                                    defaultValue={keyword}
+                                    value={searchTerm}
                                     placeholder='Izlayotgan mahsulotingizni toping...'
-                                    onInput={e => {
-                                        const value = e.target.value.trim();
-                                        setSearchTerm(value);
-                                    }}
+                                    onInput={e => setSearchTerm(e.target.value)}
                                 />
                                 {clearTextView}
                                 {loadingView}
@@ -127,17 +207,36 @@ const Search_Results = ({ fourChildData, childCategoryData }) => {
                     </div>
                 </div>
             </nav>
-
+            <div className='Search_Results'>
+                <div className='Search_Results_container container'>
+                    <ul className='Search_ResultsMenu'>
+                        {menuItems.map((item, index) => (
+                            <Link
+                                href={  
+                                        {
+                                            pathname: router.pathname,
+                                            query: {...router.query, tab: item.path}
+                                        }
+                                    }
+                                    key={index}
+                            >
+                                <li 
+                                    className={`activeTab ${
+                                        activeIndex === item.path
+                                            ? 'active_type'
+                                            : ''
+                                    }`}>
+                                    {item.title}
+                                </li>
+                            </Link>
+                        ))}
+                    </ul>
+                </div>
+            </div>
+            {/* Natijalar */}
             <div className=''>
                 <div className='container'>
-                    <Search_Results_Products
-                        childData={fourChildData}
-                        parentData={childCategoryData}
-                        data={data?.results}
-                        page={page}
-                        total={data?.count}
-                        isLoading={isLoading}
-                    />
+                    {sellerTabItems[activeIndex]}
                     {error && <p className='text-danger text-center mt-4'>Xatolik: {error}</p>}
                 </div>
             </div>
@@ -146,6 +245,7 @@ const Search_Results = ({ fourChildData, childCategoryData }) => {
 };
 
 export default Search_Results;
+
 
 
 
