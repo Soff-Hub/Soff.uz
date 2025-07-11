@@ -4,326 +4,28 @@ import { Skeleton } from 'antd';
 import { useEffect, useState } from 'react';
 import ServiceIsUnavailable from './ServiceIsUnavailable';
 
-const dataOptions = [
-    {
-        type: 'type1',
-        title: 'Title Title Title Title Title ... ',
-        price: '$10',
-        image: '/static/img/type1.png',
-        hoverImage: '/static/img/typeHover.png',
-    },
-    {
-        type: 'type1',
-        title: 'Title Title Title Title Title ... ',
-        price: '$12',
-        image: '/static/img/type1.png',
-        hoverImage: '/static/img/typeHover.png',
-    },
-    {
-        type: 'type2',
-        title: 'Title Title Title Title Title ... ',
-        price: '$15',
-        image: '/static/img/type2.png',
-        hoverImage: '/static/img/type2Hover.png',
-    },
-    {
-        type: 'type2',
-        title: 'Title Title Title Title Title ... ',
-        price: '$18',
-        image: '/static/img/type2.png',
-        hoverImage: '/static/img/type2Hover.png',
-    },
-    {
-        type: 'type3',
-        title: 'Title Title Title Title Title ... ',
-        price: '$20',
-        image: '/static/img/type3.png',
-        hoverImage: '/static/img/type3Hover.png',
-    },
-    {
-        type: 'type3',
-        title: 'Title Title Title Title Title ... ',
-        price: '$22',
-        image: '/static/img/type3.png',
-        hoverImage: '/static/img/type3Hover.png',
-    },
-    {
-        type: 'type1',
-        title: 'Title Title Title Title Title ... ',
-        price: '$10',
-        image: '/static/img/type1.png',
-        hoverImage: '/static/img/typeHover.png',
-    },
-    {
-        type: 'type1',
-        title: 'Title Title Title Title Title ... ',
-        price: '$12',
-        image: '/static/img/type1.png',
-        hoverImage: '/static/img/typeHover.png',
-    },
-    {
-        type: 'type2',
-        title: 'Title Title Title Title Title ... ',
-        price: '$15',
-        image: '/static/img/type2.png',
-        hoverImage: '/static/img/type2Hover.png',
-    },
-    {
-        type: 'type2',
-        title: 'Title Title Title Title Title ... ',
-        price: '$18',
-        image: '/static/img/type2.png',
-        hoverImage: '/static/img/type2Hover.png',
-    },
-    {
-        type: 'type3',
-        title: 'Title Title Title Title Title ... ',
-        price: '$20',
-        image: '/static/img/type3.png',
-        hoverImage: '/static/img/type3Hover.png',
-    },
-    {
-        type: 'type3',
-        title: 'Title Title Title Title Title ... ',
-        price: '$22',
-        image: '/static/img/type3.png',
-        hoverImage: '/static/img/type3Hover.png',
-    },
-    {
-        type: 'type1',
-        title: 'Title Title Title Title Title ... ',
-        price: '$10',
-        image: '/static/img/type1.png',
-        hoverImage: '/static/img/typeHover.png',
-    },
-    {
-        type: 'type1',
-        title: 'Title Title Title Title Title ... ',
-        price: '$12',
-        image: '/static/img/type1.png',
-        hoverImage: '/static/img/typeHover.png',
-    },
-    {
-        type: 'type2',
-        title: 'Title Title Title Title Title ... ',
-        price: '$15',
-        image: '/static/img/type2.png',
-        hoverImage: '/static/img/type2Hover.png',
-    },
-    {
-        type: 'type2',
-        title: 'Title Title Title Title Title ... ',
-        price: '$18',
-        image: '/static/img/type2.png',
-        hoverImage: '/static/img/type2Hover.png',
-    },
-    {
-        type: 'type3',
-        title: 'Title Title Title Title Title ... ',
-        price: '$20',
-        image: '/static/img/type3.png',
-        hoverImage: '/static/img/type3Hover.png',
-    },
-    {
-        type: 'type3',
-        title: 'Title Title Title Title Title ... ',
-        price: '$22',
-        image: '/static/img/type3.png',
-        hoverImage: '/static/img/type3Hover.png',
-    },
-    {
-        type: 'type1',
-        title: 'Title Title Title Title Title ... ',
-        price: '$10',
-        image: '/static/img/type1.png',
-        hoverImage: '/static/img/typeHover.png',
-    },
-    {
-        type: 'type1',
-        title: 'Title Title Title Title Title ... ',
-        price: '$12',
-        image: '/static/img/type1.png',
-        hoverImage: '/static/img/typeHover.png',
-    },
-    {
-        type: 'type2',
-        title: 'Title Title Title Title Title ... ',
-        price: '$15',
-        image: '/static/img/type2.png',
-        hoverImage: '/static/img/type2Hover.png',
-    },
-    {
-        type: 'type2',
-        title: 'Title Title Title Title Title ... ',
-        price: '$18',
-        image: '/static/img/type2.png',
-        hoverImage: '/static/img/type2Hover.png',
-    },
-    {
-        type: 'type3',
-        title: 'Title Title Title Title Title ... ',
-        price: '$20',
-        image: '/static/img/type3.png',
-        hoverImage: '/static/img/type3Hover.png',
-    },
-    {
-        type: 'type3',
-        title: 'Title Title Title Title Title ... ',
-        price: '$22',
-        image: '/static/img/type3.png',
-        hoverImage: '/static/img/type3Hover.png',
-    },
-    {
-        type: 'type1',
-        title: 'Title Title Title Title Title ... ',
-        price: '$10',
-        image: '/static/img/type1.png',
-        hoverImage: '/static/img/typeHover.png',
-    },
-    {
-        type: 'type1',
-        title: 'Title Title Title Title Title ... ',
-        price: '$12',
-        image: '/static/img/type1.png',
-        hoverImage: '/static/img/typeHover.png',
-    },
-    {
-        type: 'type2',
-        title: 'Title Title Title Title Title ... ',
-        price: '$15',
-        image: '/static/img/type2.png',
-        hoverImage: '/static/img/type2Hover.png',
-    },
-    {
-        type: 'type2',
-        title: 'Title Title Title Title Title ... ',
-        price: '$18',
-        image: '/static/img/type2.png',
-        hoverImage: '/static/img/type2Hover.png',
-    },
-    {
-        type: 'type3',
-        title: 'Title Title Title Title Title ... ',
-        price: '$20',
-        image: '/static/img/type3.png',
-        hoverImage: '/static/img/type3Hover.png',
-    },
-    {
-        type: 'type3',
-        title: 'Title Title Title Title Title ... ',
-        price: '$22',
-        image: '/static/img/type3.png',
-        hoverImage: '/static/img/type3Hover.png',
-    },
-    {
-        type: 'type1',
-        title: 'Title Title Title Title Title ... ',
-        price: '$10',
-        image: '/static/img/type1.png',
-        hoverImage: '/static/img/typeHover.png',
-    },
-    {
-        type: 'type1',
-        title: 'Title Title Title Title Title ... ',
-        price: '$12',
-        image: '/static/img/type1.png',
-        hoverImage: '/static/img/typeHover.png',
-    },
-    {
-        type: 'type2',
-        title: 'Title Title Title Title Title ... ',
-        price: '$15',
-        image: '/static/img/type2.png',
-        hoverImage: '/static/img/type2Hover.png',
-    },
-    {
-        type: 'type2',
-        title: 'Title Title Title Title Title ... ',
-        price: '$18',
-        image: '/static/img/type2.png',
-        hoverImage: '/static/img/type2Hover.png',
-    },
-    {
-        type: 'type3',
-        title: 'Title Title Title Title Title ... ',
-        price: '$20',
-        image: '/static/img/type3.png',
-        hoverImage: '/static/img/type3Hover.png',
-    },
-    {
-        type: 'type3',
-        title: 'Title Title Title Title Title ... ',
-        price: '$22',
-        image: '/static/img/type3.png',
-        hoverImage: '/static/img/type3Hover.png',
-    },
-    {
-        type: 'type1',
-        title: 'Title Title Title Title Title ... ',
-        price: '$10',
-        image: '/static/img/type1.png',
-        hoverImage: '/static/img/typeHover.png',
-    },
-    {
-        type: 'type1',
-        title: 'Title Title Title Title Title ... ',
-        price: '$12',
-        image: '/static/img/type1.png',
-        hoverImage: '/static/img/typeHover.png',
-    },
-    {
-        type: 'type2',
-        title: 'Title Title Title Title Title ... ',
-        price: '$15',
-        image: '/static/img/type2.png',
-        hoverImage: '/static/img/type2Hover.png',
-    },
-    {
-        type: 'type2',
-        title: 'Title Title Title Title Title ... ',
-        price: '$18',
-        image: '/static/img/type2.png',
-        hoverImage: '/static/img/type2Hover.png',
-    },
-    {
-        type: 'type3',
-        title: 'Title Title Title Title Title ... ',
-        price: '$20',
-        image: '/static/img/type3.png',
-        hoverImage: '/static/img/type3Hover.png',
-    },
-    {
-        type: 'type3',
-        title: 'Title Title Title Title Title ... ',
-        price: '$22',
-        image: '/static/img/type3.png',
-        hoverImage: '/static/img/type3Hover.png',
-    },
-];
-
 export default function SellerPortfolio ({ pid }) {
     const [parentCategory, setParentCategory] = useState('');
     const [childCategory, setChildCategory] = useState('');
-    const [portfolioType, setPortfolioType] = useState('');
 
     const [portfolioData, setPortfolioData] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
-    console.log('portfolioData', portfolioData);
-    // console.log('childCategory', childCategory);
-    console.log('parentCategory', parentCategory);
-
-    const filteredItems = dataOptions.filter(
-        item => item.type === parentCategory
-    );
+    console.log('parentCategory', portfolioData?.items);
 
     useEffect(() => {
         if (!pid) return;
 
         setIsLoading(true);
 
+        const query = new URLSearchParams({
+            soff_seller_id: pid,
+        });
+
+        if (parentCategory) query.append('category', parentCategory);
+        if (childCategory) query.append('sub_category', childCategory);
+
         fetch(
-            `http://176.96.241.219:8005/api/v1/categories/portfolio?soff_seller_id=${pid}`,
-            // `http://176.96.241.219:8005/api/v1/categories/portfolio?soff_seller_id=1`,
+            `http://176.96.241.219:8005/api/v1/categories/portfolio?${query.toString()}`,
             {
                 method: 'GET',
             }
@@ -338,7 +40,7 @@ export default function SellerPortfolio ({ pid }) {
             .finally(() => {
                 setIsLoading(false);
             });
-    }, [pid]);
+    }, [pid, parentCategory, childCategory]);
 
     const uniqueContentType = Array.from(
         new Set(portfolioData?.items?.map(item => item?.content_type))
@@ -350,8 +52,6 @@ export default function SellerPortfolio ({ pid }) {
     const uniqueSubCategories = Array.from(
         new Set(portfolioData?.items?.map(item => item?.sub_category))
     );
-
-    console.log(parentCategory?.category);
 
     return (
         <div>
@@ -375,42 +75,43 @@ export default function SellerPortfolio ({ pid }) {
                                 })}
                             </select>
                         )}
-                        {portfolioData?.items?.category?.length > 0 && (
+                        {/* {portfolioData?.items?.category?.length > 0 && (
+                         */}
+                        {portfolioData?.items?.some(
+                            item => item?.category !== null
+                        ) && (
                             <select
                                 className='SellerPortfolioSelect'
                                 onChange={e =>
                                     setParentCategory(e?.target?.value)
                                 }>
                                 {uniqueCategories?.map((item, index) => {
-                                    return (
-                                        <option
-                                            value={item?.category}
-                                            key={index}>
-                                            {item?.category}
-                                        </option>
-                                    );
+                                    return <option key={index}>{item}</option>;
                                 })}
                             </select>
                         )}
-                        {(portfolioData?.items?.category?.length > 0) &
-                            (portfolioData?.items?.sub_category?.length <
-                                0) && (
-                            <select
-                                className='SellerPortfolioSelect '
-                                name=''
-                                id=''
-                                onChange={e =>
-                                    setChildCategory(e?.target?.value)
-                                }>
-                                {uniqueSubCategories.map(
-                                    (subCategory, index) => (
-                                        <option key={index} value={subCategory}>
-                                            {subCategory}
-                                        </option>
-                                    )
-                                )}
-                            </select>
-                        )}
+                        {parentCategory &&
+                            portfolioData?.items?.some(
+                                item => item?.sub_category
+                            ) && (
+                                <select
+                                    className='SellerPortfolioSelect '
+                                    name=''
+                                    id=''
+                                    onChange={e =>
+                                        setChildCategory(e?.target?.value)
+                                    }>
+                                    {uniqueSubCategories.map(
+                                        (subCategory, index) => (
+                                            <option
+                                                key={index}
+                                                value={subCategory}>
+                                                {subCategory}
+                                            </option>
+                                        )
+                                    )}
+                                </select>
+                            )}
                     </form>
                     <div className='SellerPortfolioWrap'>
                         {isLoading && (
