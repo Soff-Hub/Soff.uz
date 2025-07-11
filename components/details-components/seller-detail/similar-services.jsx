@@ -5,7 +5,6 @@ import ServiceCard from '~/components/shared/seller-profile/serviceCard';
 export default function SimilarServices ({ portfoiloData }) {
     return (
         <div>
-            {' '}
             {Array.isArray(portfoiloData) && portfoiloData.length > 0 && (
                 <div className='categoryHighlightsSwipper'>
                     <div className='SwipperTitlewrap'>
@@ -13,7 +12,7 @@ export default function SimilarServices ({ portfoiloData }) {
                             O‘xshash xizmatlar va takliflar{' '}
                         </h2>
                     </div>
-                    {portfoiloData ? (
+                    {portfoiloData && (
                         <Swiper_Pages categoryName type='template'>
                             {portfoiloData?.map((item, index) => (
                                 <div>
@@ -21,7 +20,7 @@ export default function SimilarServices ({ portfoiloData }) {
                                 </div>
                             ))}
                         </Swiper_Pages>
-                    ) : null}
+                    )}
                 </div>
             )}
         </div>
