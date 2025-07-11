@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Swiper_Pages from '../swipper/swiper';
 import RedesignProduct from '~/components/elements/products/Redesign/Redesign-Product';
+import DesignDevelopmentProducts from '~/components/elements/products/DesignDevelopmentProducts';
 
 export default function DesignDevelopmentSwipper () {
     const [product, setProduct] = useState(null);
@@ -34,12 +35,12 @@ export default function DesignDevelopmentSwipper () {
                         </a>
                     </div>
                     {product ? (
-                        <Swiper_Pages categoryName type='template'>
+                        <Swiper_Pages categoryName type='design'>
                             {product?.map((item, index) => (
                                 <div>
-                                    <RedesignProduct
-                                        product={item}
+                                    <DesignDevelopmentProducts
                                         key={index}
+                                        product={item}
                                     />
                                 </div>
                             ))}

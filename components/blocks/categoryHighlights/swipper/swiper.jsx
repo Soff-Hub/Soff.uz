@@ -10,9 +10,9 @@ export default function Swiper_Pages ({ children, type }, titleText) {
 
     const count = {
         file: 5,
-        '3d': 5,
-        template: 4,
-        website: 4,
+        '3d': 3,
+        template: 5,
+        website: 5,
         design: 4,
         video: 4,
     };

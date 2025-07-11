@@ -8,10 +8,7 @@ import { useGet } from '~/repositories/https';
 export default function ActiveSellers () {
     const [selectValue, setSelectValue] = useState('week');
 
-    const { data: users, isLoading } = useGet(
-        "customer/top-seller-statistics",
-        `customer/top-seller-statistics/`,
-        {
+    const { data: users, isLoading } = useGet("customer/top-seller-statistics",`customer/top-seller-statistics/`,{
           filter_stats: 'active_sellers',
           filter_by: selectValue,
         }

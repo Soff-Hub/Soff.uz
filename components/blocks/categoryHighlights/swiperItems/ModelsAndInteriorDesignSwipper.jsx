@@ -2,6 +2,7 @@ import { Spin } from 'antd';
 import React, { useEffect, useState } from 'react';
 import Swiper_Pages from '../swipper/swiper';
 import RedesignProduct from '~/components/elements/products/Redesign/Redesign-Product';
+import ModelAndDesignProduct from '~/components/elements/products/ModelAndDesignProduct';
 
 export default function ModelsAndInteriorDesignSwipper () {
     const [product, setProduct] = useState(null);
@@ -35,10 +36,10 @@ export default function ModelsAndInteriorDesignSwipper () {
                         </a>
                     </div>
                     {product ? (
-                        <Swiper_Pages type='template'>
+                        <Swiper_Pages type='3d'>
                             {product?.map((item, index) => (
                                 <div>
-                                    <RedesignProduct
+                                    <ModelAndDesignProduct
                                         product={item}
                                         key={index}
                                     />
