@@ -541,7 +541,6 @@ Siz ishlar yakunlanmasidan oldin ham test muhitida o‘zgarishlar bilan tanishis
                     1C-Bitrix va Bitrix24 platformasida takomillashtirish
                     ishlari
                 </h1>
-
                 <div className='d-flex '>
                     <Link
                         // href={`/service-detail/${product?.category?.slug}?childCategory=${product?.category?.slug}`}
@@ -575,7 +574,6 @@ Siz ishlar yakunlanmasidan oldin ham test muhitida o‘zgarishlar bilan tanishis
                         </a>
                     </Link>
                 </div>
-
                 <div className=' ServiseDetail'>
                     <div className='ServiseDetail_aboutService'>
                         <ServiseDetailAbout product={kworkData} />
@@ -583,10 +581,8 @@ Siz ishlar yakunlanmasidan oldin ham test muhitida o‘zgarishlar bilan tanishis
                     <div className='ServiseDetail_sideBar'>
                         <ServiceDetailOrder product={data} />
                     </div>
-                </div>
-
+                </div>{' '}
                 <div className='mt-5'>
-                    {' '}
                     {Array.isArray(portfoiloData) && portfoiloData.length > 0 && (
                         <div className='categoryHighlightsSwipper'>
                             <div className='SwipperTitlewrap'>
@@ -597,17 +593,18 @@ Siz ishlar yakunlanmasidan oldin ham test muhitida o‘zgarishlar bilan tanishis
                             {portfoiloData ? (
                                 <Swiper_Pages categoryName type='template'>
                                     {portfoiloData?.map((item, index) => (
-                                        <PortfoilioCard
-                                            item={item}
-                                            key={index}
-                                        />
+                                        <div>
+                                            <PortfoilioCard
+                                                item={item}
+                                                key={index}
+                                            />
+                                        </div>
                                     ))}
                                 </Swiper_Pages>
                             ) : null}
                         </div>
                     )}
                 </div>
-
                 <div className='mt-5 border rounded-5 p-5 bg-white'>
                     <div className='mb-5'>
                         {' '}
@@ -616,7 +613,6 @@ Siz ishlar yakunlanmasidan oldin ham test muhitida o‘zgarishlar bilan tanishis
                     </div>
                     <Comments />
                 </div>
-
                 <div className='mt-5'>
                     <SimilarServices portfoiloData={portfoiloData} />
                 </div>

@@ -6,7 +6,7 @@ export default function PortfoilioCard ({ item }) {
     return (
         <div className='SellerPortfolioCard  image-wrapper'>
             <img
-                src={item?.poster_url ? item?.poster_url : item.image}
+                src={item?.poster_url ? item?.poster_url : item?.image}
                 alt={item?.title}
                 className='SellerPortfolioCardImg'
             />
