@@ -4,22 +4,24 @@ import FooterDefault from '~/components/shared/footers/FooterDefault';
 import Meta from '~/components/shared/headers/Meta';
 import ProductsByCategory from '~/components/partials/category/ProductsByCategory';
 import FooterComponents from '~/components/blocks/footer/FooterComponents';
-import ScientificResourcesFilterSection, { getTitleFromSlug } from '~/components/elements/ScientificResourcesFilterSection';
+import ScientificResourcesFilterSection, {
+    getTitleFromSlug,
+} from '~/components/elements/ScientificResourcesFilterSection';
 import { useRouter } from 'next/router';
 import { baseUrlUseApi } from '~/repositories/useApi';
 import AISoffiaPresentation from '~/components/elements/AISoffiaPresentation';
 
-export default function ProductCategoryScreen({ 
-    productsData, 
-    fourChildData, 
-    childCategoryData, 
-    parentCategory, 
-    childCategory, 
-    page 
+export default function ProductCategoryScreen ({
+    productsData,
+    fourChildData,
+    childCategoryData,
+    parentCategory,
+    childCategory,
+    page,
 }) {
     const router = useRouter();
 
-    const handlePageChange = (newPage) => {
+    const handlePageChange = newPage => {
         router.push({
             pathname: router.pathname,
             query: { ...router.query, page: newPage },
@@ -27,34 +29,53 @@ export default function ProductCategoryScreen({
     };
 
     const title = getTitleFromSlug(fourChildData?.results, parentCategory);
-    const subTitle = getTitleFromSlug(childCategoryData?.results, childCategory);
+    const subTitle = getTitleFromSlug(
+        childCategoryData?.results,
+        childCategory
+    );
 
-    const fullTitle = title && subTitle 
-        ? `${title} - ${subTitle}` 
-        : title 
-        ? title 
-        : "Ilmiy ishlar kategoriyasi";
+    const fullTitle =
+        title && subTitle
+            ? `${title} - ${subTitle}`
+            : title
+            ? title
+            : 'Ilmiy ishlar kategoriyasi';
 
     return (
         <PageContainer title={fullTitle} boxed={true}>
             <Meta
                 title={fullTitle}
-                description={fullTitle + " bo‘yicha eng yaxshi raqamli mahsulotlarni Soff.uz da toping. Ishonchli sotuvchilar va sifatli kontent!"}
-                image="/static/img/ilmiy-ishlar-2.png"
+                description={
+                    fullTitle +
+                    ' bo‘yicha eng yaxshi raqamli mahsulotlarni Soff.uz da toping. Ishonchli sotuvchilar va sifatli kontent!'
+                }
+                image='/static/img/ilmiy-ishlar-2.png'
                 keywords={[
-                    { name: "Biznes rejalar" }, { name: "Taqdimotlar" }, { name: "Kurs ishlari" },
-                    { name: "Diplom ishlari" }, { name: "Referatlar" }, { name: "Mustaqil ishlar" },
-                    { name: "Labaratoriya Ishlari" }, { name: "Dissertatsiya ishlari" }, { name: "Testlar" },
-                    { name: "O'quv qo'llanmalar" }, { name: "MustDars ishlanmalaraqil" }, { name: "Tarqatma materiallar" },
-                    { name: "Amaliy ishlar" }, { name: "Blankalar" }, { name: "Ijodiy Ishlar" },
-                    { name: "Loyihalar" }, { name: "Plakatlar" }, { name: "Elektron kitoblar" },
-                    { name: "Dasturlash tillari" }
+                    { name: 'Biznes rejalar' },
+                    { name: 'Taqdimotlar' },
+                    { name: 'Kurs ishlari' },
+                    { name: 'Diplom ishlari' },
+                    { name: 'Referatlar' },
+                    { name: 'Mustaqil ishlar' },
+                    { name: 'Labaratoriya Ishlari' },
+                    { name: 'Dissertatsiya ishlari' },
+                    { name: 'Testlar' },
+                    { name: "O'quv qo'llanmalar" },
+                    { name: 'MustDars ishlanmalaraqil' },
+                    { name: 'Tarqatma materiallar' },
+                    { name: 'Amaliy ishlar' },
+                    { name: 'Blankalar' },
+                    { name: 'Ijodiy Ishlar' },
+                    { name: 'Loyihalar' },
+                    { name: 'Plakatlar' },
+                    { name: 'Elektron kitoblar' },
+                    { name: 'Dasturlash tillari' },
                 ]}
-                author="Soff.uz"
+                author='Soff.uz'
             />
 
             <div className='ps-page--shop container p-lg-1'>
-                <AISoffiaPresentation/>
+                <AISoffiaPresentation />
                 <ScientificResourcesFilterSection
                     breacrumb={fourChildData}
                     count={productsData?.count}
@@ -74,10 +95,15 @@ export default function ProductCategoryScreen({
     );
 }
 
-export async function getServerSideProps(context) {
-    const { slug, page = 1, parentCategory = '', childCategory = '' } = context.query;
+export async function getServerSideProps (context) {
+    const {
+        slug,
+        page = 1,
+        parentCategory = '',
+        childCategory = '',
+    } = context.query;
 
-    const fetchJson = async (url) => {
+    const fetchJson = async url => {
         const res = await fetch(url);
         if (!res.ok) {
             return null;
@@ -94,7 +120,7 @@ export async function getServerSideProps(context) {
     const [productsData, fourChildData, childCategoryData] = await Promise.all([
         fetchJson(productsUrl),
         fetchJson(fourChildUrl),
-        fetchJson(childCategoryUrl)
+        fetchJson(childCategoryUrl),
     ]);
 
     return {
@@ -104,7 +130,7 @@ export async function getServerSideProps(context) {
             childCategoryData: childCategoryData || null,
             parentCategory,
             childCategory,
-            page
-        }
+            page,
+        },
     };
 }

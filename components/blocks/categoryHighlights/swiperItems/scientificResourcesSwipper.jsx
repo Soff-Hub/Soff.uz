@@ -37,7 +37,7 @@ export default function ScientificResourcesSwipper () {
                         </a>
                     </div>
                     {product ? (
-                        <Swiper_Pages categoryName type='template'>
+                        <Swiper_Pages categoryName type='file'>
                             {product?.map((item, index) => (
                                 <div>
                                     <RedesignProduct
