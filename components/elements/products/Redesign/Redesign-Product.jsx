@@ -122,7 +122,6 @@ const   RedesignProduct = ({ product }) => {
                             }
                             alt=''
                             className='cart-img'
-                            // style={{                    width: 'clamp(2rem, 1.563vw + 0.625rem, 5rem)'}}
                         />
                     </a>
                 </div>
