@@ -375,11 +375,25 @@ const SellerPage = ({ seller, sellerr }) => {
 };
 
 export async function getServerSideProps({ query }) {
-    const resquest = await fetch(
+    const response = await fetch(
         baseUrl + `customer/top-sellers/${query.pid}`
     );
 
-    const sellerr = await resquest.json();
+    // Agar topilmasa yoki status 404 bo‘lsa
+    if (!response.ok) {
+        return {
+            notFound: true,
+        };
+    }
+
+    const sellerr = await response.json();
+
+    // Agar JSON bo‘lsa ham lekin seller topilmagan bo‘lsa:
+    if (!sellerr?.seller) {
+        return {
+            notFound: true,
+        };
+    }
 
     return {
         props: {
