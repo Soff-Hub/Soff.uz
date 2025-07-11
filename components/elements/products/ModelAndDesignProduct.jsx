@@ -64,7 +64,7 @@ const ModelAndDesignProduct = ({ product }) => {
             : product.title;
 
     return (
-        <div className='modelAndDesignCardWrap'>
+        <>
             <div
                 className='modelAndDesignCard '
                 onMouseEnter={() => setCountShow(true)}
@@ -196,7 +196,7 @@ const ModelAndDesignProduct = ({ product }) => {
                 <p>Mahsulotingizni savatga qo'shdingiz!</p>
                 <p></p>
             </Modal>
-        </div>
+        </>
     );
 };
 
