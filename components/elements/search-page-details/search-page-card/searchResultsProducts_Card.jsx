@@ -5,26 +5,21 @@ import { fileColors } from '~/components/details-components/details-actions/file
 import { useRouter } from 'next/router';
 import { addPeriodToThousands } from '~/components/partials/account/price-formatter';
 
-export default function SearchResultsProducts_Card({ product }) {
+export default function SearchResultsProducts_Card ({ product }) {
     const paths = {
         file: 'scientific-resources',
         '3d': '3d-models-and-interior-designs',
         design: 'design-developments',
         website: 'websites',
         template: 'templates',
-        video: 'video-lessons'
+        video: 'video-lessons',
     };
-    console.log('product-->', product)
 
     const router = useRouter();
 
     return (
-        <div
-            className='Search_Results_Products_card'
-            
-        >
-            <div  className='Search_Results_Products_card_body'>
-
+        <div className='Search_Results_Products_card'>
+            <div className='Search_Results_Products_card_body'>
                 {/* Breadcrumb with Links */}
                 <Breadcrumb
                     className='Breadcrumb'
@@ -33,35 +28,59 @@ export default function SearchResultsProducts_Card({ product }) {
                             title: (
                                 <Link
                                     href={{
-                                        pathname: `/${paths[product.content_type]}/${(product?.category_data?.parent)?.replace(/\s+/g, '-').toLowerCase() ||''}/`,
-                                        query: `parentCategory=${(product?.category_data?.parent)?.replace(/\s+/g, '-').toLowerCase() || ''}`
+                                        pathname: `/${
+                                            paths[product.content_type]
+                                        }/${
+                                            product?.category_data?.parent
+                                                ?.replace(/\s+/g, '-')
+                                                .toLowerCase() || ''
+                                        }/`,
+                                        query: `parentCategory=${
+                                            product?.category_data?.parent
+                                                ?.replace(/\s+/g, '-')
+                                                .toLowerCase() || ''
+                                        }`,
                                     }}
-                                    onClick={(e) => e.stopPropagation()}
-                                >
-                                    <span style={{ cursor: 'pointer' }}>{product?.category_data?.parent || ''}</span>
-                                    
+                                    onClick={e => e.stopPropagation()}>
+                                    <span style={{ cursor: 'pointer' }}>
+                                        {product?.category_data?.parent || ''}
+                                    </span>
                                 </Link>
-                            )
+                            ),
                         },
                         {
                             title: (
                                 <Link
                                     href={{
-                                        pathname: `/${paths[product.content_type]}/${product?.category_data?.slug || ''}/`,
-                                        query: `parentCategory=${(product?.category_data?.parent)?.replace(/\s+/g, '-').toLowerCase() || ''}&childCategory=${(product?.category_data?.slug)?.toLowerCase() || ''}`
+                                        pathname: `/${
+                                            paths[product.content_type]
+                                        }/${
+                                            product?.category_data?.slug || ''
+                                        }/`,
+                                        query: `parentCategory=${
+                                            product?.category_data?.parent
+                                                ?.replace(/\s+/g, '-')
+                                                .toLowerCase() || ''
+                                        }&childCategory=${
+                                            product?.category_data?.slug?.toLowerCase() ||
+                                            ''
+                                        }`,
                                     }}
-                                    onClick={(e) => e.stopPropagation()}
-                                >
-                                    <span style={{ cursor: 'pointer' }}>{product?.category_data?.category || ''}</span>
+                                    onClick={e => e.stopPropagation()}>
+                                    <span style={{ cursor: 'pointer' }}>
+                                        {product?.category_data?.category || ''}
+                                    </span>
                                 </Link>
-                            )
+                            ),
                         },
                     ]}
                 />
 
                 {/* Title */}
                 <p className='Search_Results_Products_card_title'>
-                    <Link href={`/product/${product.slug}`} onClick={(e) => e.stopPropagation()}>
+                    <Link
+                        href={`/product/${product.slug}`}
+                        onClick={e => e.stopPropagation()}>
                         {product.title}
                     </Link>
                 </p>
@@ -72,7 +91,12 @@ export default function SearchResultsProducts_Card({ product }) {
                 </p>
 
                 {/* Extra info */}
-                <div onClick={() => router.push({ pathname: `/product/${product.slug}` })} style={{ cursor: 'pointer' }} className='Search_Results_Products_card_info'>
+                <div
+                    onClick={() =>
+                        router.push({ pathname: `/product/${product.slug}` })
+                    }
+                    style={{ cursor: 'pointer' }}
+                    className='Search_Results_Products_card_info'>
                     <p className='Search_Results_Products_card_type'>
                         Fayl turi:{' '}
                         <span
@@ -80,10 +104,10 @@ export default function SearchResultsProducts_Card({ product }) {
                                 color: 'white',
                                 padding: '4px 9px',
                                 borderRadius: '4px',
-                                backgroundColor: fileColors[product?.file_type] || '#007DFF'
+                                backgroundColor:
+                                    fileColors[product?.file_type] || '#007DFF',
                             }}
-                            className='Search_Results_Products_card_boldtype'
-                        >
+                            className='Search_Results_Products_card_boldtype'>
                             {product.file_type}
                         </span>
                     </p>
@@ -97,7 +121,11 @@ export default function SearchResultsProducts_Card({ product }) {
             </div>
 
             {/* Image */}
-            <img style={{ cursor: 'pointer' }} onClick={() => router.push({ pathname: `/product/${product.slug}` })}
+            <img
+                style={{ cursor: 'pointer' }}
+                onClick={() =>
+                    router.push({ pathname: `/product/${product.slug}` })
+                }
                 className='Search_Results_Products_card_img'
                 src={product.poster}
                 alt={product.title}
@@ -105,4 +133,3 @@ export default function SearchResultsProducts_Card({ product }) {
         </div>
     );
 }
-

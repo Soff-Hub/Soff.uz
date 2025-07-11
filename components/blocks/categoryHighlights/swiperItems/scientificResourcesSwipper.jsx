@@ -22,7 +22,6 @@ export default function ScientificResourcesSwipper () {
             });
     }, []);
 
-    console.log(products);
     return (
         <div className='container'>
             {Array.isArray(products) && products.length > 0 && (

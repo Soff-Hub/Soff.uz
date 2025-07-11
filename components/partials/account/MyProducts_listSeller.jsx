@@ -14,11 +14,6 @@ export default function PurchasedProducts() {
   const [currPage, setCurrPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
   const [loading, setLoading] = useState(null);
-
-  console.log(" ->> ", process.env.NEXT_PUBLIC_BASE_URL);
-  console.log(" ->> ", process.env.NEXT_PUBLIC_BASE_URL_SOFFNEW);
-  
-
   const { data, isLoading } = useGet("approved-product", `seller/approved-product/?page=1&category=&start_date=&end_date=&search=`, undefined, { enabled: Boolean('approved-product') });
 
   if (!data) return null;
