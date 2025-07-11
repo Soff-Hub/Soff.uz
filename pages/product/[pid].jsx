@@ -134,7 +134,6 @@ export default function ProductDefaultPage ({ defaultProducts }) {
             <VideosProductsDetails
                 isPlay={isPlay}
                 setIsPlay={setIsPlay}
-                // similar={similar}
                 product={defaultProducts}
             />
         ),

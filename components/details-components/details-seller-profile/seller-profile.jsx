@@ -2,8 +2,10 @@ import { Button, Rate } from 'antd';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
+import { useRouter } from 'next/router';
 
-function SellerProfile({ product }) {
+function SellerProfile ({ product }) {
+    const router = useRouter()
     return (
         <div className='seller_products_actions_secound'>
             <div className='seller_profile'>
@@ -57,7 +59,8 @@ function SellerProfile({ product }) {
                 type='primary'
                 className='w-100 seller_profile_button'
                 icon={<i className='fa-solid fa-rocket'></i>}
-                size={'large'}>
+                size={'large'}
+                onClick={() => router.push('/orders')}>
                 Buyurtma berish
             </Button>
         </div>
