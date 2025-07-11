@@ -3,17 +3,13 @@ import { useRouter } from 'next/router';
 import { Spin } from 'antd';
 import Link from 'next/link';
 import Head from 'next/head';
-
 import NextImageCard from '~/components/nextImagecard';
 import Search_Results_Products from '~/components/elements/search-page-details/products';
 import { baseUrlUseApi } from '~/repositories/useApi';
 import useDebounce from '~/hooks/useDebounce';
-import Search_Results_Specialists from '~/components/elements/search-page-details/specialists';
-
 const Search_Results = ({ fourChildData, childCategoryData }) => {
     const inputEl = useRef(null);
     const router = useRouter();
-
     const {
         page = 1,
         keyword = '',
@@ -21,24 +17,19 @@ const Search_Results = ({ fourChildData, childCategoryData }) => {
         category = '',
         parentCategory = '',
         order_by = '',
-        tab = 'products'
     } = router.query;
-
     const [searchTerm, setSearchTerm] = useState(keyword || '');
     const debouncedSearchTerm = useDebounce(searchTerm, 1000);
-
     const [data, setData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
-
-    // Fetch search data
     useEffect(() => {
         const fetchData = async () => {
             setIsLoading(true);
             setError(null);
             try {
                 const res = await fetch(
-                    `${baseUrlUseApi}customer/same-google-search/?page=${page}&search=${keyword}&type=${type}&category=${category}&order_by=${order_by}&tab=${tab}`
+                    `${baseUrlUseApi}customer/same-google-search/?page=${page}&search=${keyword}&type=${type}&category=${category}&order_by=${order_by}`
                 );
                 if (!res.ok) throw new Error('Server error');
                 const json = await res.json();
@@ -50,18 +41,13 @@ const Search_Results = ({ fourChildData, childCategoryData }) => {
                 setIsLoading(false);
             }
         };
-
         fetchData();
     }, [page, keyword, type, category, order_by]);
-
-    // Sync input value with URL keyword
     useEffect(() => {
         if (typeof keyword === 'string') {
             setSearchTerm(keyword);
         }
     }, [keyword]);
-
-    // Push debounced search term to router
     useEffect(() => {
         if (
             debouncedSearchTerm &&
@@ -75,59 +61,16 @@ const Search_Results = ({ fourChildData, childCategoryData }) => {
                     keyword: debouncedSearchTerm,
                     page: 1,
                     type: 'all',
-                    tab: 'products',
                     category: '',
                     parentCategory: ''
                 }
             });
         }
     }, [debouncedSearchTerm, router.query]);
-
     const handleClearInput = () => {
         setSearchTerm('');
         inputEl.current.value = '';
     };
-
-    const menuItems = [
-        {
-            title: 'Mahsulotlar',
-            path: 'products',
-        },
-        {
-            title: 'Mutaxasislar',
-            path: 'specialists',
-        },
-    ];
-
-    const sellerTabItems = {
-        specialists: (
-            <Search_Results_Specialists
-                data={data?.results}
-                isLoading={isLoading}
-            />
-        ),
-
-        products: (
-            <Search_Results_Products
-                childData={fourChildData}
-                parentData={childCategoryData}
-                data={data?.results}
-                page={page}
-                total={data?.count}
-                isLoading={isLoading}
-            />
-        ),
-    };
-
-
-    const activeIndex = router.query.tab
-    // const notFound = () => {
-    //     if(!data || data?.results.length == 0){
-    //         return <Search_Results_NotFound />
-    //     }
-    //     return  <SearchAllProducts data={data?.results} isLoading={isLoading} />
-    // }
-
     const clearTextView = !isLoading && (
         <span className='ps-form__action'>
             {searchTerm ? (
@@ -151,7 +94,6 @@ const Search_Results = ({ fourChildData, childCategoryData }) => {
             )}
         </span>
     );
-
     const loadingView = isLoading && (
         <span className='ps-form__action'>
             <Spin size='small' />
@@ -207,36 +149,17 @@ const Search_Results = ({ fourChildData, childCategoryData }) => {
                     </div>
                 </div>
             </nav>
-            <div className='Search_Results'>
-                <div className='Search_Results_container container'>
-                    <ul className='Search_ResultsMenu'>
-                        {menuItems.map((item, index) => (
-                            <Link
-                                href={  
-                                        {
-                                            pathname: router.pathname,
-                                            query: {...router.query, tab: item.path}
-                                        }
-                                    }
-                                    key={index}
-                            >
-                                <li 
-                                    className={`activeTab ${
-                                        activeIndex === item.path
-                                            ? 'active_type'
-                                            : ''
-                                    }`}>
-                                    {item.title}
-                                </li>
-                            </Link>
-                        ))}
-                    </ul>
-                </div>
-            </div>
             {/* Natijalar */}
             <div className=''>
                 <div className='container'>
-                    {sellerTabItems[activeIndex]}
+                    <Search_Results_Products
+                        childData={fourChildData}
+                        parentData={childCategoryData}
+                        data={data?.results}
+                        page={page}
+                        total={data?.count}
+                        isLoading={isLoading}
+                    />
                     {error && <p className='text-danger text-center mt-4'>Xatolik: {error}</p>}
                 </div>
             </div>
@@ -245,10 +168,6 @@ const Search_Results = ({ fourChildData, childCategoryData }) => {
 };
 
 export default Search_Results;
-
-
-
-
 
 export async function getServerSideProps(context) {
     const {
@@ -277,108 +196,3 @@ export async function getServerSideProps(context) {
         },
     };
 }
-
-
-
-// new features
-
-
-// tabs
-
-    // const { asPath } = useRouter();
-
-    // const activeIndex = router.query.tab
-    // const notFound = () => {
-    //     if(!data || data?.results.length == 0){
-    //         return <Search_Results_NotFound />
-    //     }
-    //     return  <SearchAllProducts data={data?.results} isLoading={isLoading} />
-    // }
-    
-    
-
-    // const sellerTabItems = {
-    //     all:   notFound(),
-    //     specialists: (
-    //         <Search_Results_Specialists
-    //             data={data?.results}
-    //             isLoading={isLoading}
-    //         />
-    //     ),
-
-    //     products: (
-    //         <Search_Results_Products
-    //             childData={fourChildData}
-    //             parentData={childCategoryData}
-    //             data={data?.results}
-    //             page={page}
-    //             total={data?.count}
-    //             isLoading={isLoading}
-    //         />
-    //     ),
-    //     services: (
-    //         <Search_Results_Services
-    //             vices
-    //             data={data?.results}
-    //             isLoading={isLoading}
-    //         />
-    //     ),
-    //     notFound: <Search_Results_NotFound />,
-    // };
-
-
-
-    // const menuItems = [
-    //     {
-    //         title: 'Barchasi',
-    //         path: 'all',
-    //     },
-    //     {
-    //         title: 'Mahsulotlar',
-    //         path: 'products',
-    //     },
-    //     {
-    //         title: 'Mutaxasislar',
-    //         path: 'specialists',
-    //     },
-    //     {
-    //         title: 'Xizmatlar',
-    //         path: 'services',
-    //     },
-    //     {
-    //         title: "Don't found",
-    //         path: 'notFound',
-    //     },
-    // ];
-                    {/* <div className='Search_Results'>
-                    <div className='Search_Results_container container'>
-                        <ul className='Search_ResultsMenu'>
-                            {menuItems.map((item, index) => (
-                                <Link
-                                    href={  
-                                            {
-                                                pathname: router.pathname,
-                                                query: {...router.query, tab: item.path}
-                                            }
-                                        }
-                                        key={index}
-                                >
-                                    <li 
-                                        className={`activeTab ${
-                                            activeIndex === item.path
-                                                ? 'active_type'
-                                                : ''
-                                        }`}>
-                                        {item.title}
-                                    </li>
-                                </Link>
-                            ))}
-                        </ul>
-                    </div>
-                </div> */}
-
-// featured components
-// import Search_Results_Specialists from '~/components/elements/search-page-details/specialists';
-// import Search_Results_Services from '~/components/elements/search-page-details/services';
-// import Search_Results_NotFound from '~/components/elements/search-page-details/notFound';
-// import SearchAllProducts from '~/components/elements/search-page-details/searchAllProducts';

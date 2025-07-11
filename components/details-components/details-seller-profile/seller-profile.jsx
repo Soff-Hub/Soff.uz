@@ -20,15 +20,13 @@ function SellerProfile({ product }) {
                 </div>
                 <div>
                     <Link
-                        href='/_seller/[pid]'
-                        as={`/_seller/${product?.seller?.id}`}>
+                        href='/seller/[pid]'
+                        as={`/seller/${product?.seller?.id}`}>
                         <h3 className='sellerNameHover'>
                             {product?.seller?.first_name}{' '}
                             {product?.seller?.last_name}
                         </h3>
                     </Link>
-
-                    {/* <Rate allowHalf defaultValue={3.5} /> */}
                 </div>
             </div>
             <div className='w-100 d-flex flex-column gap-3'>

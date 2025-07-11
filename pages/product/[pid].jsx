@@ -358,14 +358,10 @@ export default function ProductDefaultPage ({ defaultProducts }) {
 export async function getServerSideProps ({ query, req }) {
     const cookies = cookie.parse(req.headers.cookie || '');
     const token = cookies.token;
-
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
-
     const resquest = await fetch(`${baseUrl}customer/documents/${query.pid}/`, {
         headers,
     });
-    console.log('req---->', resquest);
-
     const defaultProducts = await resquest.json();
     return {
         props: {

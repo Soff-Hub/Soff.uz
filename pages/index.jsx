@@ -32,15 +32,11 @@ function NewHomePage ({ tab, category }) {
                 author='Soff.uz'
                 image='/static/img/soff imkoniyatlari 2.png'
             />
-            {/* <HeroService /> */}
             <HeroSearch />
             <HomeCategories />
-
             <BestSellerStatics />
-
             <HomeCategoryHighlights />
             <ItServicesCategories />
-            {/* <HomeVideo /> */}
             <ResutsComponents />
             <SubProjects />
         </PageLayout>
