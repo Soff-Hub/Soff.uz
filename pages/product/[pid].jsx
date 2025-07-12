@@ -21,7 +21,7 @@ import * as cookie from 'cookie';
 import AISoffiaPresentation from '~/components/elements/AISoffiaPresentation';
 import ModelAndDesignProduct from '~/components/elements/products/ModelAndDesignProduct';
 import Axios from 'axios';
-import { Spin } from 'antd';
+import { Skeleton } from 'antd';
 
 export default function ProductDefaultPage ({ defaultProducts }) {
     const router = useRouter();
@@ -34,10 +34,9 @@ export default function ProductDefaultPage ({ defaultProducts }) {
 
     const fetchSimilarProducts = async () => {
         try {
-            const { data } = await Axios.get(
-                `${baseUrl}customer/similar/${pid}/`
-            );
+            const { data } = await Axios.get(`${baseUrl}customer/similar/${pid}/`);
             setSimilarProduct(data);
+            
         } catch (error) {
             console.error('Oxshash mahsulotlarni olishda xatolik:', error);
         }
@@ -324,25 +323,40 @@ export default function ProductDefaultPage ({ defaultProducts }) {
                                             className='py-4 similar_title'>
                                             O’xshash mahsulotlar
                                         </h3>
-                                        {hasLoadedSimilar ? (
-                                            <SwiperPages
-                                                type={
-                                                    defaultProducts?.document
-                                                        ?.content_type
-                                                }>
-                                                {
-                                                    productsDetailsSimilar[
-                                                        defaultProducts
-                                                            ?.document
+                                        {hasLoadedSimilar ? 
+                                            (
+                                                <SwiperPages
+                                                    type={
+                                                        defaultProducts?.document
                                                             ?.content_type
-                                                    ]
-                                                }
-                                            </SwiperPages>
-                                        ) : (
-                                            <div className=' d-flex justify-content-center align-items-center py-5'>
-                                                <Spin size='large' />
-                                            </div>
-                                        )}
+                                                    }>
+                                                    {
+                                                        productsDetailsSimilar[
+                                                            defaultProducts
+                                                                ?.document
+                                                                ?.content_type
+                                                        ]
+                                                    }
+                                                </SwiperPages>
+                                            ) : (
+                                                <div className='row g-3 py-3'>
+                                                    {Array.from({ length: 4 }).map((_, index) => (
+                                                        <div
+                                                            key={index}
+                                                            className='col-12 col-sm-6 col-lg-3 d-flex justify-content-center'>
+                                                            <Skeleton.Input
+                                                                active
+                                                                style={{
+                                                                    width: 250,
+                                                                    height: 300,
+                                                                    borderRadius: 8,
+                                                                }}
+                                                            />
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            )
+                                        }
                                     </div>
                                 )}
                             </div>

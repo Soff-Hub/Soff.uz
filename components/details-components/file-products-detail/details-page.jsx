@@ -46,8 +46,8 @@ function FileProductsDetails({ product }) {
           <div className='ps-product__header_seller_secound'>
             <Description description={product?.description} />
             
-            {/* <SellerProfile product={product}/> */}
-            <OrderCardBtn product={product}/>
+            <SellerProfile product={product}/>
+            {/* <OrderCardBtn product={product}/> */}
           </div>
           {/* comment section */}
           <div>

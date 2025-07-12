@@ -23,13 +23,13 @@ export default function DesignDevelopmentSwipper () {
     }, []);
 
     return (
-        <div className='container'>
+        <div className='container mb-5'>
             {Array.isArray(product) && product.length > 0 && (
                 <div className='categoryHighlightsSwipper'>
                     <h3 className='SwipperTitle'>Dizayn shablonlar</h3>
 
                     {product ? (
-                        <Swiper_Pages type='design'>
+                        <Swiper_Pages  type='design'>
                             {product.map((item, index) => (
                                 <div>
                                     <RedesignProduct
