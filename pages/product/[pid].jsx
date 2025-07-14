@@ -28,10 +28,19 @@ export default function ProductDefaultPage({ defaultProducts }) {
     const { pid } = router.query;
     const [isPlay, setIsPlay] = useState(null);
 
+    const [initialDelayPassed, setInitialDelayPassed] = useState(false);
     const [similarProduct, setSimilarProduct] = useState([]);
     const [hasLoadedSimilar, setHasLoadedSimilar] = useState(false);
     const similarRef = useRef();
 
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setInitialDelayPassed(true); // faqat 2 sekunddan keyin observer ishlasin
+        }, 2000);
+
+        return () => clearTimeout(timer);
+    }, []);
     const fetchSimilarProducts = async () => {
         try {
             const { data } = await Axios.get(`${baseUrl}customer/similar/${pid}/`);
@@ -43,15 +52,19 @@ export default function ProductDefaultPage({ defaultProducts }) {
     };
 
     useEffect(() => {
+        if (!initialDelayPassed) return; // delay tugamaguncha observer ishlamasin
+
         const observer = new IntersectionObserver(
-            entries => {
+            (entries) => {
                 const entry = entries[0];
                 if (entry.isIntersecting && !hasLoadedSimilar) {
                     fetchSimilarProducts();
                     setHasLoadedSimilar(true);
                 }
             },
-            { threshold: 0.2 }
+            {
+                threshold: 0.2,
+            }
         );
 
         if (similarRef.current) {
@@ -63,10 +76,8 @@ export default function ProductDefaultPage({ defaultProducts }) {
                 observer.unobserve(similarRef.current);
             }
         };
-    }, [pid]);
+    }, [initialDelayPassed, pid]); // observer faqat delaydan keyin ishga tushadi
 
-    const { user } = useSelector(state => state.auth);
-    const dispatch = useDispatch();
 
     const removeHTMLTags = html => {
         return html.replace(/<[^>]+>/g, '');
