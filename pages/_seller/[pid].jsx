@@ -64,18 +64,18 @@ export default function SellersPage () {
     }, [isReady, pid]);
 
     const sellerTabItems = {
-        about_author: <SellerInfo pid={seller} />,
-        services: <SellerServices pid={pid} />,
+        about_author: <SellerInfo pid={pid} />,
         portfolio: <SellerPortfolio pid={pid} />,
-        comments: <SellerComments pid={pid} />,
+        services: <SellerServices pid={pid} />,
         products: <SellerProduct pid={pid} />,
+        comments: <SellerComments pid={pid} />,
     };
 
     return (
         <PageContainer>
             <div className='container bg-gray-999 '>
                 <div className='SellersPageWrap'>
-                    <div className=''>
+                    <div className='SellerShortInfo'>
                         <SellerShortInfo sellerInfo={seller} />
                     </div>
                     <div className='SellerCollapseMenu'>

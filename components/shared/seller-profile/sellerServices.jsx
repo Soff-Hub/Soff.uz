@@ -10,10 +10,9 @@ export default function SellerServices (pid) {
 
         setIsLoading(true);
 
-        // fetch(`http://176.96.241.219:8005/api/v1/services/1/`)
-        fetch(
-            `http://176.96.241.219:8005/api/v1/services/option-values/?category_id=1`
-        )
+        fetch(fetch(`http://176.96.241.219:8005/api/v1/services/3`
+                    // `http://176.96.241.219:8005/api/v1/services/3/`
+        ))
             .then(res => {
                 if (!res.ok) {
                     throw new Error(`HTTP error! status: ${res.status}`);
