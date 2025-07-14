@@ -21,12 +21,12 @@ export default function SellerProduct (pid) {
             setIsLoading(true);
             try {
                 const res = await fetch(
+                    // `${baseURL}customer/seller-products/10889/?direction=file&category=${menuItems.path}`
                     `${baseURL}customer/seller-products/10889`
                     // `http://176.96.241.219:8006/api/v1/customer/seller-products/${pid}`
                     // `${baseUrlUseApi}customer/products/?direction=file&category=${categoryParam}&page=${page}&page_size=48`;
                 );
                 const text = await res.text();
-                console.log('Raw response:', text);
                 const data = JSON.parse(text);
                 setProduct(data);
             } catch (err) {
@@ -65,11 +65,6 @@ export default function SellerProduct (pid) {
                 return <Templates data={product} />;
             case 'VideoLessons':
                 return <VideoLessons data={product} />;
-            // case 'ServiceIsUnavailable':
-            //     return <ServiceIsUnavailable />;
-            // case 'DontWork':
-            //     return <DontWork />;
-
             default:
                 return null;
         }
@@ -81,28 +76,28 @@ export default function SellerProduct (pid) {
         },
         {
             title: 'Ilmiy ishlar',
-            path: 'ScientificResources',
+            path: `${product.file}`,
         },
         {
             title: '3D moddellar va Interier dizaynlar',
-            path: 'ModelAndDesign',
+            path: `${product['3d']}`,
         },
         {
             title: 'Dizayn shablonlari',
-            path: 'DesignDevelopment',
+            path: `${product.design}`,
         },
         {
             title: 'Veb saytlar',
-            path: 'WebSites',
+            path: `${product.webSites}`,
         },
         {
             title: 'Tayyor shablonlar',
-            path: 'Templates',
+            path: `${product.templates}`,
         },
         {
             title: 'Video darsliklar',
-            path: 'VideoLessons',
-        }
+            path: `${product.video}`,
+        },
     ];
     return (
         <div className='SellerProduct'>
