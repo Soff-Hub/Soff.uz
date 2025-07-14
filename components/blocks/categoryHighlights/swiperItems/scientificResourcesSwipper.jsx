@@ -23,7 +23,7 @@ export default function ScientificResourcesSwipper () {
     }, []);
 
     return (
-        <div className='container'>
+        <div className='container mb-4'>
             {Array.isArray(products) && products.length > 0 && (
                 <div className='categoryHighlightsSwipper'>
                     <h3 className='SwipperTitle'>Ilmiy ishlar</h3>

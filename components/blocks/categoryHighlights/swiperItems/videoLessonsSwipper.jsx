@@ -25,7 +25,7 @@ export default function VideoLessonsSwipper () {
     }, []);
 
     return (
-        <div className='container'>
+        <div className='container mb-4'>
             {Array.isArray(product) && product.length > 0 && (
                 <div className='categoryHighlightsSwipper'>
                     <h3 className='SwipperTitle'>Video ishlanmalar</h3>
