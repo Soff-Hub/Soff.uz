@@ -9,9 +9,7 @@ export default function SellerComments ({ pid }) {
     useEffect(() => {
         setIsLoading(true);
         if (pid) {
-            fetch(
-                `http://176.96.241.219:8006/api/v1/customer/reviews/${pid}`
-            )
+            fetch(`http://176.96.241.219:8006/api/v1/customer/reviews/${pid}`)
                 .then(res => res.json())
                 .then(data => {
                     setComments(data?.results);

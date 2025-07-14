@@ -6,35 +6,34 @@ import SellerComments from './sellerComments';
 import SellerProduct from './sellerProduct';
 import SellerPortfolio from './sellerPortfolio';
 
-const items = [
-    {
-        key: '1',
-        label: 'Muallif Haqida',
-        children: <SellerInfo />,
-    },
-    {
-        key: '2',
-        label: 'Portfolio',
-        children: <SellerPortfolio />,
-    },
-    {
-        key: '3',
-        label: 'Xizmatlar',
-        children: <SellerServices />,
-    },
-    {
-        key: '4',
-        label: 'Mahsulotlar',
-        children: <SellerProduct />,
-    },
-    {
-        key: '5',
-        label: 'Kamentariyalar',
-        children: <SellerComments />,
-    },
-];
-
-const SellerCollapseMenu = () => {
+const SellerCollapseMenu = ({ pid }) => {
+    const items = [
+        {
+            key: '1',
+            label: 'Muallif Haqida',
+            children: <SellerInfo pid={pid} />,
+        },
+        {
+            key: '2',
+            label: 'Portfolio',
+            children: <SellerPortfolio pid={pid} />,
+        },
+        {
+            key: '3',
+            label: 'Xizmatlar',
+            children: <SellerServices pid={pid} />,
+        },
+        {
+            key: '4',
+            label: 'Mahsulotlar',
+            children: <SellerProduct pid={pid} />,
+        },
+        {
+            key: '5',
+            label: 'Kamentariyalar',
+            children: <SellerComments pid={pid} />,
+        },
+    ];
     const [activeKey, setActiveKey] = useState(['1']); // boshlang‘ich holat
 
     return (
