@@ -1,49 +1,74 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ScientificResources from '../seller-products-types/scientific-resources';
 import ModelAndDesign from '../seller-products-types/model-and-design';
 import DesignDevelopment from '../seller-products-types/design-development';
 import WebSites from '../seller-products-types/webSites';
 import Templates from '../seller-products-types/templates';
 import VideoLessons from '../seller-products-types/video-lessons';
-import ServiceIsUnavailable from './ServiceIsUnavailable';
-import DontWork from './dontWork';
-import useApi from '~/repositories/useApi';
 import { Skeleton } from 'antd';
+import { useRouter } from 'next/router';
+import { baseURL } from '~/repositories/api';
 
-export default function SellerProduct () {
-    const { isLoading } = useApi();
+export default function SellerProduct (pid) {
+    const router = useRouter();
+    const [product, setProduct] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+    console.log('product=>>>>', product);
 
+    useEffect(() => {
+        if (!pid) return;
+        const fetchProducts = async () => {
+            setIsLoading(true);
+            try {
+                const res = await fetch(
+                    `${baseURL}customer/seller-products/10889`
+                    // `http://176.96.241.219:8006/api/v1/customer/seller-products/${pid}`
+                    // `${baseUrlUseApi}customer/products/?direction=file&category=${categoryParam}&page=${page}&page_size=48`;
+                );
+                const text = await res.text();
+                console.log('Raw response:', text);
+                const data = JSON.parse(text);
+                setProduct(data);
+            } catch (err) {
+                console.error('Error fetching seller:', err);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchProducts();
+    }, [pid]);
     const [selectedOption, setSelectedOption] = useState('All');
 
     const renderComponent = () => {
         switch (selectedOption) {
             case 'All':
                 return (
-                    <>
-                        <ScientificResources />
-                        <ModelAndDesign />
-                        <DesignDevelopment />
-                        <WebSites />
-                        <Templates />
-                        <VideoLessons />
-                    </>
+                    <div>
+                        <ScientificResources data={product} />
+                        <ModelAndDesign data={product} />
+                        <DesignDevelopment data={product} />
+                        <WebSites data={product} />
+                        <Templates data={product} />
+                        <VideoLessons data={product} />
+                    </div>
                 );
             case 'ScientificResources':
-                return <ScientificResources />;
+                return <ScientificResources data={product} />;
             case 'ModelAndDesign':
-                return <ModelAndDesign />;
+                return <ModelAndDesign data={product} />;
             case 'DesignDevelopment':
-                return <DesignDevelopment />;
+                return <DesignDevelopment data={product} />;
             case 'WebSites':
-                return <WebSites />;
+                return <WebSites data={product} />;
             case 'Templates':
-                return <Templates />;
+                return <Templates data={product} />;
             case 'VideoLessons':
-                return <VideoLessons />;
-            case 'ServiceIsUnavailable':
-                return <ServiceIsUnavailable />;
-            case 'DontWork':
-                return <DontWork />;
+                return <VideoLessons data={product} />;
+            // case 'ServiceIsUnavailable':
+            //     return <ServiceIsUnavailable />;
+            // case 'DontWork':
+            //     return <DontWork />;
 
             default:
                 return null;
@@ -77,15 +102,7 @@ export default function SellerProduct () {
         {
             title: 'Video darsliklar',
             path: 'VideoLessons',
-        },
-        {
-            title: 'Xizmat mavjud emas',
-            path: 'ServiceIsUnavailable',
-        },
-        {
-            title: 'DontWork',
-            path: 'DontWork',
-        },
+        }
     ];
     return (
         <div className='SellerProduct'>

@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
-import FooterComponents from '~/components/blocks/footer/FooterComponents';
+import { useEffect, useState } from 'react';
 import PageContainer from '~/components/layouts/PageContainer';
 import SellerCollapseMenu from '~/components/shared/seller-profile/sellerCollapseMenu';
 import SellerComments from '~/components/shared/seller-profile/sellerComments';
@@ -12,16 +11,14 @@ import SellerServices from '~/components/shared/seller-profile/sellerServices';
 import SellerShortInfo from '~/components/shared/seller-profile/sellerShortInfo';
 
 export default function SellersPage () {
-    const { asPath } = useRouter();
+    const router = useRouter();
+    const { query, asPath, isReady } = router;
     const activeIndex = asPath.slice(asPath.indexOf('#') + 1, asPath.length);
+    const [seller, setSeller] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
 
-    const sellerTabItems = {
-        about_author: <SellerInfo />,
-        services: <SellerServices />,
-        portfolio: <SellerPortfolio />,
-        comments: <SellerComments />,
-        products: <SellerProduct />,
-    };
+    const pid = 8;
+    // const pid = query.pid;
 
     const menuItems = [
         {
@@ -45,12 +42,41 @@ export default function SellersPage () {
             path: 'comments',
         },
     ];
+
+    useEffect(() => {
+        if (!isReady || !pid) return;
+
+        setIsLoading(true);
+
+        fetch(
+            `http://176.96.241.219:8006/api/v1/customer/freelance-profile/${pid}`
+        )
+            .then(res => res.json())
+            .then(data => {
+                setSeller(data);
+            })
+            .catch(error => {
+                console.error('Error fetching seller:', error);
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
+    }, [isReady, pid]);
+
+    const sellerTabItems = {
+        about_author: <SellerInfo pid={seller} />,
+        services: <SellerServices pid={pid} />,
+        portfolio: <SellerPortfolio pid={pid} />,
+        comments: <SellerComments pid={pid} />,
+        products: <SellerProduct pid={pid} />,
+    };
+
     return (
         <PageContainer>
             <div className='container bg-gray-999 '>
                 <div className='SellersPageWrap'>
                     <div className=''>
-                        <SellerShortInfo />
+                        <SellerShortInfo sellerInfo={seller} />
                     </div>
                     <div className='SellerCollapseMenu'>
                         <SellerCollapseMenu />

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Collapse } from 'antd';
 import SellerInfo from './sellerInfo';
 import SellerServices from './sellerServices';
@@ -35,12 +35,14 @@ const items = [
 ];
 
 const SellerCollapseMenu = () => {
+    const [activeKey, setActiveKey] = useState(['1']); // boshlang‘ich holat
+
     return (
         <Collapse
             className='mt-5 bg-white m-0'
             items={items}
             bordered={false}
-            activeKey
+            activeKey={activeKey}
             onChange={keys => setActiveKey(keys)}
             style={{ padding: '0px' }}
         />

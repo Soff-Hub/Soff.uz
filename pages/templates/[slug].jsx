@@ -19,7 +19,6 @@ export default function Templates ({
     page,
 }) {
     const router = useRouter();
-    console.log('productsData=>>', productsData);
 
     // Pagination tugmalari uchun funksiya
     const handlePageChange = newPage => {

@@ -13,7 +13,7 @@ export default function ServiceIsUnavailable () {
                     sotuvchilarni ko‘rib chiqing!
                 </p>
                 <img src='/static/img/feedbacks.png' alt='' />
-                <p className='ServiceIsUnavailableBtn'>Boshqa sotuvchilar</p>
+                <a href='https://soff.uz/' className='ServiceIsUnavailableBtn'>Boshqa sotuvchilar</a>
             </div>
         </div>
     );

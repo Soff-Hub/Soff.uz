@@ -1,130 +1,32 @@
 import { Skeleton } from 'antd';
-import Link from 'next/link';
-import React from 'react';
-import useApi from '~/repositories/useApi';
+import React, { useEffect, useState } from 'react';
+import CalculateTimeDifference from '~/components/partials/account/DateFormatter';
 
-const comments = [
-    {
-        isName: 'Jack Ma',
-        avatar: 'https://picsum.photos/id/237/200/300',
-        activity: '1 soat ilgari',
-        rating: '/static/img/SellerCommentsCardSellerRating.png',
-        comment:
-            '        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt nisi quia minus fuga vitae voluptatem soluta libero minima temporibus aut deserunt pariatur maiores ipsam aliquam officia hic ab quos numquam, eveniet itaque, tempora omnis! Dolorum deserunt cumque commodi, vero accusamus consequatur harum in dignissimos ut, quo explicabo, neque non odio?',
-        path: '/product',
-    },
-    {
-        isName: 'Jack Ma',
-        avatar: 'https://picsum.photos/id/237/200/300',
-        activity: '1 soat ilgari',
-        rating: '/static/img/SellerCommentsCardSellerRating.png',
-        comment:
-            '        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt nisi quia minus fuga vitae voluptatem soluta libero minima temporibus aut deserunt pariatur maiores ipsam aliquam officia hic ab quos numquam, eveniet itaque, tempora omnis! Dolorum deserunt cumque commodi, vero accusamus consequatur harum in dignissimos ut, quo explicabo, neque non odio?',
-        path: '/product',
-    },
-    {
-        isName: 'Jack Ma',
-        avatar: 'https://picsum.photos/id/237/200/300',
-        activity: '1 soat ilgari',
-        rating: '/static/img/SellerCommentsCardSellerRating.png',
-        comment:
-            '        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt nisi quia minus fuga vitae voluptatem soluta libero minima temporibus aut deserunt pariatur maiores ipsam aliquam officia hic ab quos numquam, eveniet itaque, tempora omnis! Dolorum deserunt cumque commodi, vero accusamus consequatur harum in dignissimos ut, quo explicabo, neque non odio?',
-        path: '/product',
-    },
-    {
-        isName: 'Jack Ma',
-        avatar: 'https://picsum.photos/id/237/200/300',
-        activity: '1 soat ilgari',
-        rating: '/static/img/SellerCommentsCardSellerRating.png',
-        comment:
-            '        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt nisi quia minus fuga vitae voluptatem soluta libero minima temporibus aut deserunt pariatur maiores ipsam aliquam officia hic ab quos numquam, eveniet itaque, tempora omnis! Dolorum deserunt cumque commodi, vero accusamus consequatur harum in dignissimos ut, quo explicabo, neque non odio?',
-        path: '/product',
-    },
-    {
-        isName: 'Jack Ma',
-        avatar: 'https://picsum.photos/id/237/200/300',
-        activity: '1 soat ilgari',
-        rating: '/static/img/SellerCommentsCardSellerRating.png',
-        comment:
-            '        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt nisi quia minus fuga vitae voluptatem soluta libero minima temporibus aut deserunt pariatur maiores ipsam aliquam officia hic ab quos numquam, eveniet itaque, tempora omnis! Dolorum deserunt cumque commodi, vero accusamus consequatur harum in dignissimos ut, quo explicabo, neque non odio?',
-        path: '/product',
-    },
-    {
-        isName: 'Jack Ma',
-        avatar: 'https://picsum.photos/id/237/200/300',
-        activity: '1 soat ilgari',
-        rating: '/static/img/SellerCommentsCardSellerRating.png',
-        comment:
-            '        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt nisi quia minus fuga vitae voluptatem soluta libero minima temporibus aut deserunt pariatur maiores ipsam aliquam officia hic ab quos numquam, eveniet itaque, tempora omnis! Dolorum deserunt cumque commodi, vero accusamus consequatur harum in dignissimos ut, quo explicabo, neque non odio?',
-        path: '/product',
-    },
-    {
-        isName: 'Jack Ma',
-        avatar: 'https://picsum.photos/id/237/200/300',
-        activity: '1 soat ilgari',
-        rating: '/static/img/SellerCommentsCardSellerRating.png',
-        comment:
-            '        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt nisi quia minus fuga vitae voluptatem soluta libero minima temporibus aut deserunt pariatur maiores ipsam aliquam officia hic ab quos numquam, eveniet itaque, tempora omnis! Dolorum deserunt cumque commodi, vero accusamus consequatur harum in dignissimos ut, quo explicabo, neque non odio?',
-        path: '/product',
-    },
-    {
-        isName: 'Jack Ma',
-        avatar: 'https://picsum.photos/id/237/200/300',
-        activity: '1 soat ilgari',
-        rating: '/static/img/SellerCommentsCardSellerRating.png',
-        comment:
-            '        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt nisi quia minus fuga vitae voluptatem soluta libero minima temporibus aut deserunt pariatur maiores ipsam aliquam officia hic ab quos numquam, eveniet itaque, tempora omnis! Dolorum deserunt cumque commodi, vero accusamus consequatur harum in dignissimos ut, quo explicabo, neque non odio?',
-        path: '/product',
-    },
-    {
-        isName: 'Jack Ma',
-        avatar: 'https://picsum.photos/id/237/200/300',
-        activity: '1 soat ilgari',
-        rating: '/static/img/SellerCommentsCardSellerRating.png',
-        comment:
-            '        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt nisi quia minus fuga vitae voluptatem soluta libero minima temporibus aut deserunt pariatur maiores ipsam aliquam officia hic ab quos numquam, eveniet itaque, tempora omnis! Dolorum deserunt cumque commodi, vero accusamus consequatur harum in dignissimos ut, quo explicabo, neque non odio?',
-        path: '/product',
-    },
-    {
-        isName: 'Jack Ma',
-        avatar: 'https://picsum.photos/id/237/200/300',
-        activity: '1 soat ilgari',
-        rating: '/static/img/SellerCommentsCardSellerRating.png',
-        comment:
-            '        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt nisi quia minus fuga vitae voluptatem soluta libero minima temporibus aut deserunt pariatur maiores ipsam aliquam officia hic ab quos numquam, eveniet itaque, tempora omnis! Dolorum deserunt cumque commodi, vero accusamus consequatur harum in dignissimos ut, quo explicabo, neque non odio?',
-        path: '/product',
-    },
-    {
-        isName: 'Jack Ma',
-        avatar: 'https://picsum.photos/id/237/200/300',
-        activity: '1 soat ilgari',
-        rating: '/static/img/SellerCommentsCardSellerRating.png',
-        comment:
-            '        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt nisi quia minus fuga vitae voluptatem soluta libero minima temporibus aut deserunt pariatur maiores ipsam aliquam officia hic ab quos numquam, eveniet itaque, tempora omnis! Dolorum deserunt cumque commodi, vero accusamus consequatur harum in dignissimos ut, quo explicabo, neque non odio?',
-        path: '/product',
-    },
-    {
-        isName: 'Jack Ma',
-        avatar: 'https://picsum.photos/id/237/200/300',
-        activity: '1 soat ilgari',
-        rating: '/static/img/SellerCommentsCardSellerRating.png',
-        comment:
-            '        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt nisi quia minus fuga vitae voluptatem soluta libero minima temporibus aut deserunt pariatur maiores ipsam aliquam officia hic ab quos numquam, eveniet itaque, tempora omnis! Dolorum deserunt cumque commodi, vero accusamus consequatur harum in dignissimos ut, quo explicabo, neque non odio?',
-        path: '/product',
-    },
-    {
-        isName: 'Jack Ma',
-        avatar: 'https://picsum.photos/id/237/200/300',
-        activity: '1 soat ilgari',
-        rating: '/static/img/SellerCommentsCardSellerRating.png',
-        comment:
-            '        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt nisi quia minus fuga vitae voluptatem soluta libero minima temporibus aut deserunt pariatur maiores ipsam aliquam officia hic ab quos numquam, eveniet itaque, tempora omnis! Dolorum deserunt cumque commodi, vero accusamus consequatur harum in dignissimos ut, quo explicabo, neque non odio?',
-        path: '/product',
-    },
-];
+export default function SellerComments ({ pid }) {
+    const [comments, setComments] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
 
-export default function SellerComments () {
-    const { isLoading } = useApi();
+    console.log('pid=>>>>>', pid);
+
+    useEffect(() => {
+        setIsLoading(true);
+        if (pid) {
+            fetch(
+                `http://176.96.241.219:8006/api/v1/customer/reviews/${pid}`
+            )
+                .then(res => res.json())
+                .then(data => {
+                    setComments(data?.results);
+                })
+                .catch(error => {
+                    console.error('Error fetching seller:', error);
+                })
+                .finally(() => {
+                    setIsLoading(false);
+                });
+        }
+    }, [pid]);
+
     return (
         <div className='SellerComments'>
             {isLoading && (
@@ -140,16 +42,25 @@ export default function SellerComments () {
                         ))}
                 </>
             )}
-            {comments.map((item, index) => (
-                <div className='SellerCommentsCard'>
+            {comments?.map((item, index) => (
+                <div key={index} className='SellerCommentsCard'>
                     <div className='SellerCommentsCardAboutSeller'>
                         <div className='SellerCommentsCardAboutSellerinfo'>
                             <div className='SellerCommentsCardSellerAvatar'>
-                                <img src={item.avatar} alt={item.isName} />
-                                <p>{item.isName}</p>
+                                <img
+                                    src={
+                                        item.user_image
+                                            ? item.user_image
+                                            : '/static/img/user_without_img.png'
+                                    }
+                                    alt={item.isName}
+                                />
+                                <p>{item.user_full_name}</p>
                             </div>
                             <p className='SellerCommentsCardSellerActivety'>
-                                {item.activity}{' '}
+                                <CalculateTimeDifference
+                                    targetDate={item.created_at}
+                                />
                             </p>
                         </div>
                         <img
@@ -159,10 +70,12 @@ export default function SellerComments () {
                         />
                     </div>
                     <div className='SellerCommentsCardSellerCommentWrap'>
-                        <p className='SellerCommentsCardComment'>
-                            {item.comment}
-                        </p>
-                        <a href={item.path} className='SellerCommentsCardBtn'>
+                        <p className='SellerCommentsCardComment'>{item.text}</p>
+                    </div>
+                    <div className='SellerCommentsCardBtnWrap'>
+                        <a
+                            href={`/product/${item.document_slug}`}
+                            className='SellerCommentsCardBtn'>
                             Mahsulotni ko'rish
                         </a>
                     </div>
