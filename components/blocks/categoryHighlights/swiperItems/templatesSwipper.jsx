@@ -23,13 +23,16 @@ export default function TemplatesSwipper () {
     }, []);
 
     return (
-        <div className='categoryHighlightsSwippercontainer'>
+
+        <div className='categoryHighlightsSwippercontainer '>
             {Array.isArray(product) && product.length > 0 && (
                 <div className='categoryHighlightsSwipper'>
                     <div className='SwipperTitlewrap'>
-                        <a className='SwipperTitle' href='/templates/all'>
-                            Tayyor shablonlar{' '}
-                        </a>
+                        <a
+                            className='SwipperTitle'
+                            href='/templates/all'>
+                            Tayyor shablonlar
+                        </a> 
                     </div>
 
                     {product ? (
