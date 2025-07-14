@@ -1,8 +1,11 @@
 import React from 'react';
 import { Button } from 'antd';
-import { soffiaIconSVG2, soffiaIconSVG3 } from '../blocks/header/HeaderActions/HeaderAIIcon';
+import {
+    soffiaIconSVG2,
+    soffiaIconSVG3,
+} from '../blocks/header/HeaderActions/HeaderAIIcon';
 
-export default function AISoffiaPresentation() {
+export default function AISoffiaPresentation () {
     return (
         <div
             className='mt-5 mt-sm-0'
@@ -18,8 +21,7 @@ export default function AISoffiaPresentation() {
                 flexWrap: 'wrap',
                 gap: '16px',
                 flexDirection: 'row',
-            }}
-        >
+            }}>
             <div
                 style={{
                     display: 'flex',
@@ -27,8 +29,7 @@ export default function AISoffiaPresentation() {
                     gap: '16px',
                     flex: 1,
                     minWidth: '250px',
-                }}
-            >
+                }}>
                 <div
                     style={{
                         background: 'rgb(0, 164, 79)',
@@ -41,22 +42,32 @@ export default function AISoffiaPresentation() {
                         alignItems: 'center',
                         justifyContent: 'center',
                         flexShrink: 0,
-                    }}
-                >
+                    }}>
                     {soffiaIconSVG3}
                 </div>
                 <div>
                     <a
-                        href="https://t.me/soffia_ai_bot"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{ textDecoration: 'none' }}
-                    >
-                        <h3 style={{ margin: 0, color: '#312f30', fontSize: '18px' }}>
+                        href='https://t.me/soffia_ai_bot'
+                        target='_blank'
+                        rel='noopener noreferrer'
+                        style={{ textDecoration: 'none' }}>
+                        <h3
+                            style={{
+                                margin: 0,
+                                color: '#312f30',
+                                fontSize: '18px',
+                            }}>
                             AI yordamida prezentatsiya yarating
                         </h3>
-                        <p className='d-md-block d-none' style={{ margin: 0, color: '#312f30a0', fontSize: '14px' }}>
-                            Prezentatsiya tayyorlashni aqlli botga topshiring – tez, qulay va samarali.
+                        <p
+                            className='d-md-block d-none'
+                            style={{
+                                margin: 0,
+                                color: '#312f30a0',
+                                fontSize: '14px',
+                            }}>
+                            Prezentatsiya tayyorlashni aqlli botga topshiring –
+                            tez, qulay va samarali.
                         </p>
                     </a>
                 </div>
@@ -64,21 +75,19 @@ export default function AISoffiaPresentation() {
 
             <div style={{ flexShrink: 0 }} className='d-md-block d-none'>
                 <a
-                    href="https://t.me/soffia_ai_bot"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
+                    href='https://t.me/soffia_ai_bot'
+                    target='_blank'
+                    rel='noopener noreferrer'>
                     <Button
-                        type="primary"
-                        size="large"
+                        type='primary'
+                        size='large'
                         style={{
                             borderRadius: '10px',
                             padding: '0 24px',
                             backgroundColor: 'rgb(0, 164, 79)',
                             border: 'none',
                             width: '100%',
-                        }}
-                    >
+                        }}>
                         {soffiaIconSVG3} Boshlash
                     </Button>
                 </a>
@@ -87,17 +96,20 @@ export default function AISoffiaPresentation() {
     );
 }
 
-
-
 export const AISoffiaPresentationNotFoundProduct = () => {
     return (
         <>
-
-            <div className="bg-white p-5 rounded vh-100">
-                <div className="container">
-                    <div className="text-center">
-                        <img src="/static/img/noinfo.svg" className='mb-5' alt="Ma'lumot topilmadi" />
-                        <p className='display-6'>So'rovingiz bo'yicha ma'lumot topilmadi...</p>
+            <div className='bg-white p-5 rounded vh-100'>
+                <div className='container'>
+                    <div className='text-center'>
+                        <img
+                            src='/static/img/noinfo.svg'
+                            className='mb-5'
+                            alt="Ma'lumot topilmadi"
+                        />
+                        <p className='display-6'>
+                            So'rovingiz bo'yicha ma'lumot topilmadi...
+                        </p>
                     </div>
                     <div
                         className='mt-5'
@@ -108,8 +120,7 @@ export const AISoffiaPresentationNotFoundProduct = () => {
                             borderRadius: '16px',
                             border: '1px solid rgba(0, 164, 79, 0.2)',
                             boxShadow: '0 4px 12px rgba(0,0,0,0.04)',
-                        }}
-                    >
+                        }}>
                         <div
                             style={{
                                 display: 'flex',
@@ -117,9 +128,8 @@ export const AISoffiaPresentationNotFoundProduct = () => {
                                 gap: '16px',
                                 flex: 1,
                                 minWidth: '250px',
-                                justifyContent: "center"
-                            }}
-                        >
+                                justifyContent: 'center',
+                            }}>
                             <div
                                 style={{
                                     background: 'rgb(0, 164, 79)',
@@ -132,22 +142,31 @@ export const AISoffiaPresentationNotFoundProduct = () => {
                                     alignItems: 'center',
                                     justifyContent: 'center',
                                     flexShrink: 0,
-                                }}
-                            >
+                                }}>
                                 ✨
                             </div>
                             <div className='d-flex'>
                                 <a
-                                    href="https://t.me/soffia_ai_bot"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    style={{ textDecoration: 'none' }}
-                                >
-                                    <h3 style={{ margin: 0, color: '#312f30', fontSize: '18px' }}>
+                                    href='https://t.me/soffia_ai_bot'
+                                    target='_blank'
+                                    rel='noopener noreferrer'
+                                    style={{ textDecoration: 'none' }}>
+                                    <h3
+                                        style={{
+                                            margin: 0,
+                                            color: '#312f30',
+                                            fontSize: '18px',
+                                        }}>
                                         AI yordamida prezentatsiya yarating
                                     </h3>
-                                    <p style={{ margin: 0, color: '#312f30a0', fontSize: '14px' }}>
-                                        Prezentatsiya tayyorlashni aqlli botga topshiring – tez, qulay va samarali.
+                                    <p
+                                        style={{
+                                            margin: 0,
+                                            color: '#312f30a0',
+                                            fontSize: '14px',
+                                        }}>
+                                        Prezentatsiya tayyorlashni aqlli botga
+                                        topshiring – tez, qulay va samarali.
                                     </p>
                                 </a>
                             </div>
@@ -178,6 +197,5 @@ export const AISoffiaPresentationNotFoundProduct = () => {
                 </div>
             </div>
         </>
-
     );
-}
+};

@@ -7,11 +7,12 @@ import Axios from 'axios';
 import { useRouter } from 'next/router';
 import { baseUrlAuth } from '~/repositories/Repository';
 
-export default function LoginForm() {
+export default function LoginForm () {
     const [type, setType] = useState('t'); // t, e
     const [loading, setLoading] = useState(false);
 
     const router = useRouter();
+    console.log('setLoading', setLoading);
 
     const handleSubmit = async ({ phone, email }) => {
         setLoading(true);
@@ -44,16 +45,16 @@ export default function LoginForm() {
 
     return (
         <div style={{ backgroundColor: '#f1f1f1', padding: '50px 20px' }}>
-            <div className="container p-0">
-                <div className="ps-form--account">
+            <div className='container p-0'>
+                <div className='ps-form--account'>
                     <Form onFinish={handleSubmit}>
-                        <div className="d-flex justify-content-center align-items-center flex-column mb-4">
+                        <div className='d-flex justify-content-center align-items-center flex-column mb-4'>
                             <span style={{ fontSize: '28px', fontWeight: 700 }}>
                                 Kirish
                             </span>
                         </div>
                         <Segmented
-                            onChange={(value) => setType(value)}
+                            onChange={value => setType(value)}
                             options={[
                                 {
                                     label: 'Telefon raqam',
@@ -67,16 +68,16 @@ export default function LoginForm() {
                                 },
                             ]}
                             block
-                            className="mb-5"
-                            size="small"
+                            className='mb-5'
+                            size='small'
                             style={{ height: '38px' }}
                             value={type}
                         />
 
                         {type === 'e' ? (
                             <Form.Item
-                                name="email"
-                                className="mb-4"
+                                name='email'
+                                className='mb-4'
                                 rules={[
                                     {
                                         required: true,
@@ -99,13 +100,13 @@ export default function LoginForm() {
                                             }}
                                         />
                                     }
-                                    type="email"
-                                    placeholder="Elektron pochta"
+                                    type='email'
+                                    placeholder='Elektron pochta'
                                 />
                             </Form.Item>
                         ) : (
                             <Form.Item
-                                name="phone"
+                                name='phone'
                                 rules={[
                                     {
                                         required: true,
@@ -118,41 +119,35 @@ export default function LoginForm() {
                                             'Iltimos, haqiqiy telefon raqam kiriting',
                                     },
                                 ]}
-                                normalize={(value) => value.replace(/\D/g, "").slice(0, 9)}
-                                >
+                                normalize={value =>
+                                    value.replace(/\D/g, '').slice(0, 9)
+                                }>
                                 <Input
-                                    autoComplete="off"
+                                    autoComplete='off'
                                     style={{ height: '50px', fontSize: '16px' }}
-                                    type="text"
-                                    placeholder="Telefon raqam"
-                                    addonBefore="+998"
+                                    type='text'
+                                    placeholder='Telefon raqam'
+                                    addonBefore='+998'
                                 />
                             </Form.Item>
                         )}
 
-                        <div className="form-group submit mt-5">
+                        <div className='form-group submit mt-5'>
                             {loading ? (
                                 <button
                                     disabled={true}
-                                    type="submit"
-                                    className="ps-btn ps-btn--fullwidth">
-                                    <BeatLoader color="#fff" />
+                                    type='submit'
+                                    className='ps-btn ps-btn--fullwidth'>
+                                    <BeatLoader color='#fff' />
                                 </button>
                             ) : (
                                 <button
-                                    type="submit"
-                                    className="ps-btn ps-btn--fullwidth">
+                                    type='submit'
+                                    className='ps-btn ps-btn--fullwidth'>
                                     Davom etish
                                 </button>
                             )}
                         </div>
-
-                        {/* <div className="or_google mt-2 mb-3">
-                            <span></span>
-                            <span>YOKI</span>
-                            <span></span>
-                        </div> */}
-
                         <GoogleBox
                             params={
                                 router.query?.id ? `?id=${router.query.id}` : ''

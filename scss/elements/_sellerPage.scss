@@ -120,6 +120,52 @@
     }
 }
 
+// __________________________AcceptFreelanceInvite page styles_______________________
+
+.AcceptFreelanceInvite_modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+
+    .AcceptFreelanceInvite_modal_inner {
+        background: white;
+        padding: 5rem;
+        border-radius: 10px;
+        width: 60vw;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+}
+
+.AcceptFreelanceInviteModalBtn {
+    padding: 10px 20px;
+    border-radius: 5px;
+    background: rgb(40, 167, 69);
+    color: #f1f1f1;
+    border: none;
+    transition: ease 0.1ms;
+    margin-top: 24px;
+    &:hover {
+        background: rgb(40, 167, 69, 0.8);
+        color: #fff;
+    }
+    &:active {
+        background: rgb(40, 167, 69);
+        color: #fff;
+    }
+}
+
+// ⬇️ BUNI QO‘SHISH SHART
+body.no-scroll {
+    overflow: hidden;
+}
+
 // _________________________Sellers page styles_______________________
 
 .SellersPageWrap {
@@ -128,7 +174,7 @@
     grid-template-columns: 25% 75%;
     gap: 20px;
     @media (max-width: 1125px) {
-        grid-template-columns: 30% 70%;
+        grid-template-columns: repeat(1, 100%);
     }
     @media (max-width: 768px) {
         grid-template-columns: repeat(1, 100%);
@@ -668,14 +714,12 @@
         }
     }
     .SellerCommentsCard {
-        display: flex;
         padding: 21px 40px;
-        flex-direction: column;
-        align-items: flex-start;
         gap: 10px;
         border-radius: 20px 20px 20px 5.6px;
         background: #fff;
         box-shadow: 0px 0px 3.5px 0px rgba(0, 0, 0, 0.2);
+        width: 100%;
         @media (max-width: 768px) {
             padding: 21px;
         }
@@ -734,11 +778,8 @@
 
         .SellerCommentsCardSellerCommentWrap {
             display: flex;
-            align-items: flex-end;
+            align-items: flex-start;
             flex-direction: column;
-            // @media (max-width: 700px) {
-            //     align-items: flex-start;
-            // }
             .SellerCommentsCardComment {
                 color: #7b7b7b;
                 font-family: 'Poppins';
@@ -752,31 +793,26 @@
                     width: 100%;
                 }
             }
+        }
+        .SellerCommentsCardBtnWrap {
+            display: flex;
+            justify-content: flex-end;
+
             .SellerCommentsCardBtn {
+                background: rgba(0, 164, 79, 1);
+                padding: 7px 15px;
+                border-radius: 10px;
                 color: #fff;
+                text-align: end;
                 font-family: 'Poppins';
                 font-size: 10px;
                 font-style: normal;
                 font-weight: 500;
                 line-height: normal;
                 letter-spacing: 0.1px;
-                background: rgba(0, 164, 79, 1);
-                padding: 7px 15px;
-                border-radius: 10px;
-                width: 15%;
+
                 @media (max-width: 700px) {
-                    text-wrap: nowrap;
-                    text-align: center;
-                    width: 30%;
-                }
-                @media (max-width: 580px) {
-                    text-wrap: nowrap;
-                    width: 50%;
-                    text-align: center;
-                }
-                @media (max-width: 320px) {
-                    text-wrap: nowrap;
-                    width: 100%;
+                    white-space: nowrap;
                     text-align: center;
                 }
             }
@@ -1098,7 +1134,7 @@
     .sellerpageTitleBox {
         display: flex;
         align-items: center;
-        margin: 0 0 31px;
+        margin: 31px 0;
         gap: 10px;
         .sellerpageTitle {
             color: #312f30;
@@ -1223,12 +1259,12 @@
         .SellerPortfolioSelect {
             width: 30%;
             padding: 7px 17px 7px 16px;
-            border: none;
+            border: 1px solid hsl(0, 0%, 48%,.6);
             border-radius: 4px;
             box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.15);
-            color: #7b7b7b;
+            color: hsl(0, 0%, 0%,.6);
             font-family: 'Poppins';
-            font-size: 12px;
+            font-size: 15px;
             font-style: normal;
             font-weight: 500;
             line-height: normal;

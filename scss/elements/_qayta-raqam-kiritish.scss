@@ -148,6 +148,14 @@ input[type='number']::-webkit-outer-spin-button {
     cursor: pointer;
 }
 
+.sellerNameHover {
+    cursor: pointer;
+}
+
+.sellerNameHover:hover {
+    text-decoration: underline;
+}
+
 .categoryCard {
     padding: 9.58px 28.33px 9.58px 20.83px;
 }
@@ -200,16 +208,18 @@ input[type='number']::-webkit-outer-spin-button {
     }
 }
 
-.VideoLessonsWrap {
+// _____________________________scientificResources styles____________________________
+.scientificResourcesWrap {
     margin-top: clamp(0.938rem, 1.875vw + 0.563rem, 2.813rem);
     display: grid;
     grid-template-columns: repeat(
         auto-fit,
-        minmax(clamp(9.375rem, 18.75vw + 5.625rem, 28.125rem), 1fr)
+        minmax(clamp(14rem, 15.625vw + 6.25rem, 25rem), 1fr)
     );
     gap: clamp(0.625rem, 1.563vw + 0.313rem, 2.188rem);
     row-gap: clamp(0.625rem, 1.563vw + 0.313rem, 2.188rem);
     padding: 0px !important;
+
 
     @media screen and (max-width: 1250px) {
         padding: 0 15px;
@@ -245,6 +255,7 @@ input[type='number']::-webkit-outer-spin-button {
     width: 100%;
     height: 100%;
     background: #fff;
+    border: 1px solid #f1f1f1;
     border-radius: 12.5px;
     position: relative;
     display: flex;
@@ -1000,4 +1011,14 @@ input[type='number']::-webkit-outer-spin-button {
     @media screen and (max-width: 400px) {
         height: 180px;
     }
+}
+
+.designDevelopmentCardheard {
+    z-index: 100;
+    top: 20px;
+    background: white;
+    padding: 10px 10px;
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
 }
