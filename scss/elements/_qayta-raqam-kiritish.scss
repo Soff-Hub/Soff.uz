@@ -260,6 +260,11 @@ input[type='number']::-webkit-outer-spin-button {
     flex-direction: column;
     justify-content: space-between;
 
+    &:hover {
+        transition: ease-in-out;
+        box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.1);
+    }
+
     .scientificResourcesCardImgBox {
         display: flex;
         align-items: center;
@@ -672,10 +677,10 @@ input[type='number']::-webkit-outer-spin-button {
     margin-top: clamp(0.938rem, 2.063vw + 0.525rem, 3rem);
     padding: 0 !important;
     align-items: stretch;
-    justify-content: center;
+    justify-content: start;
     grid-template-columns: repeat(
         auto-fit,
-        minmax(clamp(14rem, 21.875vw + 5rem, 33rem), 1fr)
+        minmax(clamp(14rem, 21.875vw + 5rem, 33rem), max-content)
     );
 }
 

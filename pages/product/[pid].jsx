@@ -21,38 +21,50 @@ import * as cookie from 'cookie';
 import AISoffiaPresentation from '~/components/elements/AISoffiaPresentation';
 import ModelAndDesignProduct from '~/components/elements/products/ModelAndDesignProduct';
 import Axios from 'axios';
-import { Spin } from 'antd';
+import { Skeleton } from 'antd';
 
-export default function ProductDefaultPage ({ defaultProducts }) {
+export default function ProductDefaultPage({ defaultProducts }) {
     const router = useRouter();
     const { pid } = router.query;
     const [isPlay, setIsPlay] = useState(null);
 
+    const [initialDelayPassed, setInitialDelayPassed] = useState(false);
     const [similarProduct, setSimilarProduct] = useState([]);
     const [hasLoadedSimilar, setHasLoadedSimilar] = useState(false);
     const similarRef = useRef();
 
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setInitialDelayPassed(true); // faqat 2 sekunddan keyin observer ishlasin
+        }, 2000);
+
+        return () => clearTimeout(timer);
+    }, []);
     const fetchSimilarProducts = async () => {
         try {
-            const { data } = await Axios.get(
-                `${baseUrl}customer/similar/${pid}/`
-            );
+            const { data } = await Axios.get(`${baseUrl}customer/similar/${pid}/`);
             setSimilarProduct(data);
+
         } catch (error) {
             console.error('Oxshash mahsulotlarni olishda xatolik:', error);
         }
     };
 
     useEffect(() => {
+        if (!initialDelayPassed) return; // delay tugamaguncha observer ishlamasin
+
         const observer = new IntersectionObserver(
-            entries => {
+            (entries) => {
                 const entry = entries[0];
                 if (entry.isIntersecting && !hasLoadedSimilar) {
                     fetchSimilarProducts();
                     setHasLoadedSimilar(true);
                 }
             },
-            { threshold: 0.2 }
+            {
+                threshold: 0.2,
+            }
         );
 
         if (similarRef.current) {
@@ -64,10 +76,8 @@ export default function ProductDefaultPage ({ defaultProducts }) {
                 observer.unobserve(similarRef.current);
             }
         };
-    }, [pid]);
+    }, [initialDelayPassed, pid]); // observer faqat delaydan keyin ishga tushadi
 
-    const { user } = useSelector(state => state.auth);
-    const dispatch = useDispatch();
 
     const removeHTMLTags = html => {
         return html.replace(/<[^>]+>/g, '');
@@ -182,12 +192,11 @@ export default function ProductDefaultPage ({ defaultProducts }) {
                         content={
                             defaultProducts?.description
                                 ? removeHTMLTags(defaultProducts?.description)
-                                : `${defaultProducts?.title} + ${
-                                      defaultProducts?.tag
-                                          ?.map(e => e?.name)
-                                          ?.join(', ') ||
-                                      'soff.uz - Intellektual mulk marketi'
-                                  } `
+                                : `${defaultProducts?.title} + ${defaultProducts?.tag
+                                    ?.map(e => e?.name)
+                                    ?.join(', ') ||
+                                'soff.uz - Intellektual mulk marketi'
+                                } `
                         }
                     />
                     <meta name='robots' content='index, follow' />
@@ -203,8 +212,8 @@ export default function ProductDefaultPage ({ defaultProducts }) {
                         content={
                             defaultProducts?.tag
                                 ? defaultProducts?.tag
-                                      ?.map(e => e?.name)
-                                      ?.join(', ')
+                                    ?.map(e => e?.name)
+                                    ?.join(', ')
                                 : 'kurs ishi, taqdimotlar, slaydlar, diplom ishi, prezentatsiya'
                         }
                     />
@@ -222,12 +231,11 @@ export default function ProductDefaultPage ({ defaultProducts }) {
                         content={
                             defaultProducts?.description
                                 ? removeHTMLTags(defaultProducts?.description)
-                                : `${defaultProducts?.title} + ${
-                                      defaultProducts?.tag
-                                          ?.map(e => e?.name)
-                                          ?.join(', ') ||
-                                      'soff.uz - Intellektual mulk marketi'
-                                  } `
+                                : `${defaultProducts?.title} + ${defaultProducts?.tag
+                                    ?.map(e => e?.name)
+                                    ?.join(', ') ||
+                                'soff.uz - Intellektual mulk marketi'
+                                } `
                         }
                     />
                     <meta
@@ -244,8 +252,8 @@ export default function ProductDefaultPage ({ defaultProducts }) {
                         content={
                             defaultProducts?.tag
                                 ? defaultProducts?.tag
-                                      ?.map(e => e?.name)
-                                      ?.join(', ')
+                                    ?.map(e => e?.name)
+                                    ?.join(', ')
                                 : 'kurs ishi, taqdimotlar, slaydlar, diplom ishi, prezentatsiya'
                         }
                     />
@@ -269,12 +277,11 @@ export default function ProductDefaultPage ({ defaultProducts }) {
                         content={
                             defaultProducts?.description
                                 ? removeHTMLTags(defaultProducts?.description)
-                                : `${defaultProducts?.title} + ${
-                                      defaultProducts?.tag
-                                          ?.map(e => e?.name)
-                                          ?.join(', ') ||
-                                      'soff.uz - Intellektual mulk marketi'
-                                  } `
+                                : `${defaultProducts?.title} + ${defaultProducts?.tag
+                                    ?.map(e => e?.name)
+                                    ?.join(', ') ||
+                                'soff.uz - Intellektual mulk marketi'
+                                } `
                         }
                     />
                     <meta property='twitter:url' content='https://soff.uz' />
@@ -284,8 +291,8 @@ export default function ProductDefaultPage ({ defaultProducts }) {
                         content={
                             defaultProducts?.tag
                                 ? defaultProducts?.tag
-                                      ?.map(e => e?.name)
-                                      ?.join(', ')
+                                    ?.map(e => e?.name)
+                                    ?.join(', ')
                                 : 'kurs ishi, taqdimotlar, slaydlar, diplom ishi, prezentatsiya'
                         }
                     />
@@ -293,12 +300,11 @@ export default function ProductDefaultPage ({ defaultProducts }) {
 
                 {joyrideFeature}
 
-                <div>
+                <div >
                     <div className='container' style={{ position: 'relative' }}>
                         <div
-                            className={`ps-page--product ${
-                                defaultProducts?.price === 0 ? '' : 'pt-2'
-                            }`}>
+                            className={`ps-page--product ${defaultProducts?.price === 0 ? '' : 'pt-2'
+                                }`}>
                             <div className='ps-container p-0'>
                                 <div className='ps-page__container'>
                                     {!defaultProducts && (
@@ -306,8 +312,8 @@ export default function ProductDefaultPage ({ defaultProducts }) {
                                     )}
                                     {
                                         productsDetails[
-                                            defaultProducts?.document
-                                                ?.content_type
+                                        defaultProducts?.document
+                                            ?.content_type
                                         ]
                                     }
                                 </div>
@@ -324,25 +330,40 @@ export default function ProductDefaultPage ({ defaultProducts }) {
                                             className='py-4 similar_title'>
                                             O’xshash mahsulotlar
                                         </h3>
-                                        {hasLoadedSimilar ? (
-                                            <SwiperPages
-                                                type={
-                                                    defaultProducts?.document
-                                                        ?.content_type
-                                                }>
-                                                {
-                                                    productsDetailsSimilar[
+                                        {hasLoadedSimilar ?
+                                            (
+                                                <SwiperPages
+                                                    type={
+                                                        defaultProducts?.document
+                                                            ?.content_type
+                                                    }>
+                                                    {
+                                                        productsDetailsSimilar[
                                                         defaultProducts
                                                             ?.document
                                                             ?.content_type
-                                                    ]
-                                                }
-                                            </SwiperPages>
-                                        ) : (
-                                            <div className=' d-flex justify-content-center align-items-center py-5'>
-                                                <Spin size='large' />
-                                            </div>
-                                        )}
+                                                        ]
+                                                    }
+                                                </SwiperPages>
+                                            ) : (
+                                                <div className='row g-3 py-3'>
+                                                    {Array.from({ length: 4 }).map((_, index) => (
+                                                        <div
+                                                            key={index}
+                                                            className='col-12 col-sm-6 col-lg-3 d-flex justify-content-center'>
+                                                            <Skeleton.Input
+                                                                active
+                                                                style={{
+                                                                    width: 250,
+                                                                    height: 300,
+                                                                    borderRadius: 8,
+                                                                }}
+                                                            />
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            )
+                                        }
                                     </div>
                                 )}
                             </div>
@@ -354,7 +375,7 @@ export default function ProductDefaultPage ({ defaultProducts }) {
     );
 }
 
-export async function getServerSideProps ({ query, req }) {
+export async function getServerSideProps({ query, req }) {
     const cookies = cookie.parse(req.headers.cookie || '');
     const token = cookies.token;
 

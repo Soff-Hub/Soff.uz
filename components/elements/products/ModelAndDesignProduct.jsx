@@ -11,7 +11,7 @@ const ModelAndDesignProduct = ({ product }) => {
     const [countShow, setCountShow] = useState(false);
     const { thumbnailImage, title } = useProduct();
 
-    function handleAddItemToWishlist (e) {
+    function handleAddItemToWishlist(e) {
         e.preventDefault();
         addSavedItem(product.id);
         if (wishlist?.find(item => item.id === ModelAndDesignProduct?.id)) {
@@ -25,7 +25,7 @@ const ModelAndDesignProduct = ({ product }) => {
     const { setCartOneItem, removeCartOneItem } = useCart();
     const [basket, setBasket] = useState(false);
 
-    function handleAddItemToCart (e) {
+    function handleAddItemToCart(e) {
         showModal();
         e.preventDefault();
         if (basket) {
@@ -37,7 +37,7 @@ const ModelAndDesignProduct = ({ product }) => {
         setBasket(prev => !prev); // Holatni almashtirish
     }
 
-    function handleAddItemToWishlist (e) {
+    function handleAddItemToWishlist(e) {
         e.preventDefault();
         addSavedItem(product.id);
         if (wishlist?.find(item => item.id === product?.id)) {
@@ -73,6 +73,7 @@ const ModelAndDesignProduct = ({ product }) => {
                     <Link
                         href='/product/[pid]'
                         as={`/product/${product.slug}`}
+                        scroll={true}
                         className='w-100'>
                         {ModelAndDesignProduct.poster_url ? (
                             thumbnailImage(ModelAndDesignProduct)
@@ -145,15 +146,14 @@ const ModelAndDesignProduct = ({ product }) => {
                             title="Tanlanganlarga qo'shish"
                             onClick={handleAddItemToWishlist}>
                             <img
-                                src={`${
-                                    wishlist?.some(
-                                        item =>
-                                            Number(item.id) ===
-                                            Number(product?.id)
-                                    )
+                                src={`${wishlist?.some(
+                                    item =>
+                                        Number(item.id) ===
+                                        Number(product?.id)
+                                )
                                         ? '/static/img/onclickHeard.png'
                                         : '/static/img/heard.png'
-                                } `}
+                                    } `}
                                 alt=''
                             />
                         </a>

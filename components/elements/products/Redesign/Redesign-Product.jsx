@@ -80,7 +80,7 @@ const   RedesignProduct = ({ product }) => {
                     href='/product/[pid]'
                     className='p-0'
                     as={`/product/${product.slug}`}>
-                    <p className='scientificResourcesCardTitle'>
+                    <p className='scientificResourcesCardTitle text-nowrap'>
                         {product.title.slice(0, 35)}
                     </p>
                 </Link>
