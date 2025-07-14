@@ -8,60 +8,75 @@ export default function SellerPortfolio ({ pid }) {
     const [parentCategory, setParentCategory] = useState('all');
     const [childCategory, setChildCategory] = useState('all');
     const [portfolioData, setPortfolioData] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
-
-    console.log('parentCategory', parentCategory);
-    console.log('childCategory', childCategory);
+    const [isLoading, setIsLoading] = useState(true); // start as true
+    const [showUnavailable, setShowUnavailable] = useState(false);
 
     const uniqueCategories = Array.from(
         new Map(
-            portfolioData?.items
-                ?.filter(item => item?.category || item?.category_id != null)
-                ?.map(item => [
-                    item.category_id,
-                    { id: item.category_id, name: item.category },
+            (portfolioData?.items || [])
+                .filter(
+                    item => item?.category?.id != null && item?.category?.title
+                )
+                .map(item => [
+                    item.category.id,
+                    { id: item.category.id, name: item.category.title },
                 ])
         ).values()
     );
 
     const uniqueSubCategories = Array.from(
         new Map(
-            portfolioData?.items
-                ?.filter(
-                    item => item?.sub_category || item?.sub_category_id != null
+            (portfolioData?.items || [])
+                .filter(
+                    item =>
+                        item?.sub_category?.id != null &&
+                        item?.sub_category?.title
                 )
-                ?.map(item => [
-                    item.sub_category_id,
-                    { id: item.sub_category_id, name: item.sub_category },
+                .map(item => [
+                    item.sub_category.id,
+                    { id: item.sub_category.id, name: item.sub_category.title },
                 ])
         ).values()
     );
-    console.log('uniqueSubCategories', uniqueSubCategories);
-    console.log('uniqueCategories', uniqueCategories);
 
     useEffect(() => {
         if (!pid) return;
 
         setIsLoading(true);
+        setShowUnavailable(false);
+
+        const timer = setTimeout(() => {
+            setIsLoading(false);
+            if (!portfolioData || portfolioData?.items?.length === 0) {
+                setShowUnavailable(true);
+            }
+        }, 2000); // 2 seconds timeout
 
         const query = new URLSearchParams();
         query.append('soff_seller_id', pid);
-
-        if (parentCategory !== 'all') {
+        if (parentCategory !== 'all')
             query.append('category_id', parentCategory);
-        }
-        if (childCategory !== 'all') {
+        if (childCategory !== 'all')
             query.append('subcategory_id', childCategory);
-        }
 
         fetch(
-            `http://176.96.241.219:8005/api/v1/categories/portfolio?${query.toString()}`,
-            { method: 'GET' }
+            `http://176.96.241.219:8005/api/v1/categories/portfolio?${query.toString()}`
         )
             .then(res => res.json())
-            .then(data => setPortfolioData(data))
-            .catch(error => console.error('Error fetching seller:', error))
-            .finally(() => setIsLoading(false));
+            .then(data => {
+                setPortfolioData(data);
+                clearTimeout(timer);
+                setIsLoading(false);
+                setShowUnavailable(data?.items?.length === 0);
+            })
+            .catch(error => {
+                console.error('Error fetching seller:', error);
+                clearTimeout(timer);
+                setIsLoading(false);
+                setShowUnavailable(true);
+            });
+
+        return () => clearTimeout(timer);
     }, [pid, parentCategory, childCategory]);
 
     useEffect(() => {
@@ -70,10 +85,24 @@ export default function SellerPortfolio ({ pid }) {
 
     return (
         <div>
-            {portfolioData?.items?.length > 0 ? (
+            {true ? (
+                <div className='SellerPortfolioWrap'>
+                    {Array(16)
+                        .fill(0)
+                        .map((_, i) => (
+                            <Skeleton.Image
+                                key={i}
+                                active
+                                className='SellerPortfolioSkeleton shadow'
+                            />
+                        ))}
+                </div>
+            ) : showUnavailable ? (
+                <ServiceIsUnavailable />
+            ) : (
                 <div className='SellerPortfolio'>
-                    <form action='' className='SellerPortfolioForm'>
-                        {uniqueCategories && (
+                    <form className='SellerPortfolioForm'>
+                        {uniqueCategories.length > 0 && (
                             <select
                                 className='SellerPortfolioSelect'
                                 value={parentCategory}
@@ -88,7 +117,7 @@ export default function SellerPortfolio ({ pid }) {
                                 ))}
                             </select>
                         )}
-                        {uniqueSubCategories && (
+                        {uniqueSubCategories.length > 0 && (
                             <select
                                 className='SellerPortfolioSelect'
                                 value={childCategory}
@@ -105,20 +134,7 @@ export default function SellerPortfolio ({ pid }) {
                         )}
                     </form>
                     <div className='SellerPortfolioWrap'>
-                        {isLoading && (
-                            <>
-                                {Array(32)
-                                    .fill(0)
-                                    .map((d, i) => (
-                                        <Skeleton.Image
-                                            key={i}
-                                            active
-                                            className='SellerPortfolioSkeleton shadow'
-                                        />
-                                    ))}
-                            </>
-                        )}
-                        {portfolioData?.items?.map((item, index) => (
+                        {portfolioData.items.map((item, index) => (
                             <div key={index} className='SellerPortfolioCard'>
                                 <img
                                     src={item?.cover_image}
@@ -130,10 +146,9 @@ export default function SellerPortfolio ({ pid }) {
                                         {item?.title}
                                     </p>
                                     <div className='SellerPortfolioCardEnd d-flex justify-content-between'>
-                                        <p className=''>{item?.sub_category}</p>
+                                        <p>{item?.sub_category?.title}</p>
                                         <div className='d-flex align-items-center gap-2'>
                                             <svg
-                                                xmlns='http://www.w3.org/2000/svg'
                                                 width='18'
                                                 height='10'
                                                 viewBox='0 0 18 10'
@@ -153,8 +168,6 @@ export default function SellerPortfolio ({ pid }) {
                         ))}
                     </div>
                 </div>
-            ) : (
-                <ServiceIsUnavailable />
             )}
         </div>
     );

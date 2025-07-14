@@ -1,43 +1,40 @@
+import React, { useState } from 'react';
 import RedesignProduct from '~/components/elements/products/Redesign/Redesign-Product';
 
-export default function ScientificResources (product) {
-    const data = product?.data?.file;
+export default function ScientificResources ({ data, setCategoryValue }) {
+    const [showAll, setShowAll] = useState(false);
 
-    console.log('ScientificResources', data);
+    const allItems = data?.file || [];
+    const visibleItems = showAll ? allItems : allItems.slice(0, 5);
+
+    const handleShowMore = () => {
+        // Bu yerda kategoriya bo‘yicha API ga qayta so‘rov yuboriladi
+        setCategoryValue('file');
+        setShowAll(true);
+    };
 
     return (
         <div className='sellerpage'>
-            {product && (
+            {allItems.length > 0 && (
                 <>
                     <div className='sellerpageTitleBox'>
                         <p className='sellerpageTitle'>Ilmiy ishlar</p>
-                        <svg
-                            xmlns='http://www.w3.org/2000/svg'
-                            width='8'
-                            height='10'
-                            viewBox='0 0 8 10'
-                            fill='none'>
-                            <path
-                                d='M1.875 1.5L6.12488 4.63195L2 8.5'
-                                stroke='#312F30'
-                                stroke-width='2'
-                                stroke-linecap='round'
-                            />
-                        </svg>
                     </div>
+
                     <div className='scientificResourcesWrap'>
-                        {data?.map((item, index) => (
-                            <div className='' key={index}>
+                        {visibleItems.map((item, index) => (
+                            <div key={index}>
                                 <RedesignProduct product={item} />
                             </div>
                         ))}
                     </div>
+
+                    {allItems.length > 5 && !showAll && (
+                        <div className='showMoreBox' onClick={handleShowMore}>
+                            <p className='showMore'>Yana ko’rsatish</p>
+                        </div>
+                    )}
                 </>
-            )}
-            {product?.length + 1 < 8 && (
-                <div className='showMoreBox'>
-                    <p className='showMore'>Yana ko’rsatish</p>
-                </div>
             )}
         </div>
     );
