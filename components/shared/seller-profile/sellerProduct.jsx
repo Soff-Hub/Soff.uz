@@ -7,22 +7,23 @@ import Templates from '../seller-products-types/templates';
 import VideoLessons from '../seller-products-types/video-lessons';
 import { Skeleton } from 'antd';
 import { useRouter } from 'next/router';
-import ProductsByCategory from '~/components/partials/category/ProductsByCategory';
+import { baseURL } from '~/repositories/api';
 
 export default function SellerProduct (pid) {
     const router = useRouter();
-    const { query, asPath, isReady } = router;
     const [product, setProduct] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+    console.log('product=>>>>', product);
 
     useEffect(() => {
-        if (!isReady || !query.pid) return;
+        if (!pid) return;
         const fetchProducts = async () => {
             setIsLoading(true);
             try {
                 const res = await fetch(
-                    `http://176.96.241.219:8006/api/v1/customer/seller-products/${pid}`
-                    // `http://176.96.241.219:8006/api/v1/customer/seller-products/${query.pid}/`
+                    `${baseURL}customer/seller-products/10889`
+                    // `http://176.96.241.219:8006/api/v1/customer/seller-products/${pid}`
+                    // `${baseUrlUseApi}customer/products/?direction=file&category=${categoryParam}&page=${page}&page_size=48`;
                 );
                 const text = await res.text();
                 console.log('Raw response:', text);
@@ -36,7 +37,7 @@ export default function SellerProduct (pid) {
         };
 
         fetchProducts();
-    }, [isReady, query.pid]);
+    }, [pid]);
     const [selectedOption, setSelectedOption] = useState('All');
 
     const renderComponent = () => {
@@ -44,7 +45,6 @@ export default function SellerProduct (pid) {
             case 'All':
                 return (
                     <div>
-                        <ProductsByCategory data={product?.data?.['3d']} />
                         <ScientificResources data={product} />
                         <ModelAndDesign data={product} />
                         <DesignDevelopment data={product} />
@@ -102,15 +102,7 @@ export default function SellerProduct (pid) {
         {
             title: 'Video darsliklar',
             path: 'VideoLessons',
-        },
-        // {
-        //     title: 'Xizmat mavjud emas',
-        //     path: 'ServiceIsUnavailable',
-        // },
-        // {
-        //     title: 'DontWork',
-        //     path: 'DontWork',
-        // },
+        }
     ];
     return (
         <div className='SellerProduct'>

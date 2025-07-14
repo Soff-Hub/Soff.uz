@@ -13,7 +13,6 @@ export default function SellerComments ({ pid }) {
         if (pid) {
             fetch(
                 `http://176.96.241.219:8006/api/v1/customer/reviews/${pid}`
-                // `http://176.96.241.219:8006/api/v1/customer/freelance-profile/${pid}`
             )
                 .then(res => res.json())
                 .then(data => {
