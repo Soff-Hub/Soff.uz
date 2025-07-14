@@ -23,10 +23,16 @@ export default function ScientificResourcesSwipper () {
     }, []);
 
     return (
-        <div className='container'>
+        <div className='categoryHighlightsSwippercontainer'>
             {Array.isArray(products) && products.length > 0 && (
                 <div className='categoryHighlightsSwipper'>
-                    <h3 className='SwipperTitle'>Ilmiy ishlar</h3>
+                    <div className='SwipperTitlewrap'>
+                        <a
+                            className='SwipperTitle'
+                            href='/scientific-resources/all'>
+                            Ilmiy ishlar{' '}
+                        </a>
+                    </div>
 
                     {products ? (
                         <Swiper_Pages categoryName type='template'>
