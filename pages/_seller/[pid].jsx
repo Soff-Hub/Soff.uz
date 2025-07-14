@@ -79,7 +79,7 @@ export default function SellersPage () {
                         <SellerShortInfo sellerInfo={seller} />
                     </div>
                     <div className='SellerCollapseMenu'>
-                        <SellerCollapseMenu pid={pid} />
+                        <SellerCollapseMenu   pid={pid}/>
                     </div>
                     <div className='sellerProduct '>
                         <div className='shadow-sm'>

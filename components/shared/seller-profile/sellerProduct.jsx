@@ -6,119 +6,137 @@ import WebSites from '../seller-products-types/webSites';
 import Templates from '../seller-products-types/templates';
 import VideoLessons from '../seller-products-types/video-lessons';
 import { Skeleton } from 'antd';
-import { useRouter } from 'next/router';
 import { baseURL } from '~/repositories/api';
 
-export default function SellerProduct (pid) {
-    const router = useRouter();
+export default function SellerProduct ({ pid }) {
     const [product, setProduct] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
-    console.log('product=>>>>', product);
+    const [categoryValue, setCategoryValue] = useState(''); // default: all
+    const [selectedOption, setSelectedOption] = useState('');
+
+    const menuItems = [
+        { title: 'Barchasi', path: '' },
+        { title: 'Ilmiy ishlar', path: 'file' },
+        { title: '3D moddellar va Interier dizaynlar', path: '3d' },
+        { title: 'Dizayn shablonlari', path: 'design' },
+        { title: 'Veb saytlar', path: 'websites' },
+        { title: 'Tayyor shablonlar', path: 'templates' },
+        { title: 'Video darsliklar', path: 'video' },
+    ];
 
     useEffect(() => {
-        if (!pid) return;
+        if (!pid || categoryValue === null) return;
+
         const fetchProducts = async () => {
             setIsLoading(true);
             try {
-                const res = await fetch(
-                    // `${baseURL}customer/seller-products/10889/?direction=file&category=${menuItems.path}`
-                    `${baseURL}customer/seller-products/10889`
-                    // `http://176.96.241.219:8006/api/v1/customer/seller-products/${pid}`
-                    // `${baseUrlUseApi}customer/products/?direction=file&category=${categoryParam}&page=${page}&page_size=48`;
-                );
-                const text = await res.text();
-                const data = JSON.parse(text);
+                let url = `${baseURL}customer/seller-products/10889/`;
+                if (categoryValue) {
+                    url += `?direction=${categoryValue}`;
+                }
+
+                const res = await fetch(url);
+                const data = await res.json();
                 setProduct(data);
             } catch (err) {
-                console.error('Error fetching seller:', err);
+                console.error('Error fetching products:', err);
             } finally {
                 setIsLoading(false);
             }
         };
 
         fetchProducts();
-    }, [pid]);
-    const [selectedOption, setSelectedOption] = useState('All');
+    }, [pid, categoryValue]);
 
     const renderComponent = () => {
         switch (selectedOption) {
-            case 'All':
+            case 'file':
+                return (
+                    <ScientificResources
+                        data={product}
+                        categoryValue={categoryValue}
+                    />
+                );
+            case '3d':
+                return (
+                    <ModelAndDesign
+                        data={product}
+                        categoryValue={categoryValue}
+                    />
+                );
+            case 'design':
+                return (
+                    <DesignDevelopment
+                        data={product}
+                        categoryValue={categoryValue}
+                    />
+                );
+            case 'websites':
+                return (
+                    <WebSites data={product} categoryValue={categoryValue} />
+                );
+            case 'templates':
+                return (
+                    <Templates data={product} categoryValue={categoryValue} />
+                );
+            case 'video':
+                return (
+                    <VideoLessons
+                        data={product}
+                        categoryValue={categoryValue}
+                    />
+                );
+            default:
                 return (
                     <div>
-                        <ScientificResources data={product} />
-                        <ModelAndDesign data={product} />
-                        <DesignDevelopment data={product} />
-                        <WebSites data={product} />
-                        <Templates data={product} />
-                        <VideoLessons data={product} />
+                        <ScientificResources
+                            data={product}
+                            categoryValue={categoryValue}
+                        />
+                        <ModelAndDesign
+                            data={product}
+                            categoryValue={categoryValue}
+                        />
+                        <DesignDevelopment
+                            data={product}
+                            categoryValue={categoryValue}
+                        />
+                        <WebSites
+                            data={product}
+                            categoryValue={categoryValue}
+                        />
+                        <Templates
+                            data={product}
+                            categoryValue={categoryValue}
+                        />
+                        <VideoLessons
+                            data={product}
+                            categoryValue={categoryValue}
+                        />
                     </div>
                 );
-            case 'ScientificResources':
-                return <ScientificResources data={product} />;
-            case 'ModelAndDesign':
-                return <ModelAndDesign data={product} />;
-            case 'DesignDevelopment':
-                return <DesignDevelopment data={product} />;
-            case 'WebSites':
-                return <WebSites data={product} />;
-            case 'Templates':
-                return <Templates data={product} />;
-            case 'VideoLessons':
-                return <VideoLessons data={product} />;
-            default:
-                return null;
         }
     };
-    const menuItems = [
-        {
-            title: 'Barchasi',
-            path: 'All',
-        },
-        {
-            title: 'Ilmiy ishlar',
-            path: `${product.file}`,
-        },
-        {
-            title: '3D moddellar va Interier dizaynlar',
-            path: `${product['3d']}`,
-        },
-        {
-            title: 'Dizayn shablonlari',
-            path: `${product.design}`,
-        },
-        {
-            title: 'Veb saytlar',
-            path: `${product.webSites}`,
-        },
-        {
-            title: 'Tayyor shablonlar',
-            path: `${product.templates}`,
-        },
-        {
-            title: 'Video darsliklar',
-            path: `${product.video}`,
-        },
-    ];
+
     return (
         <div className='SellerProduct'>
-            <form action='' className='SellerProductForm'>
-                <div className='SellerProductInputBox '>
+            <form className='SellerProductForm'>
+                <div className='SellerProductInputBox'>
                     <input
                         type='text'
                         placeholder='Xizmat turini izlang'
-                        name=''
-                        id=''
                         className='SellerProductInput'
                     />
                     <img src='/static/img/searchIcon.png' alt='' />
                 </div>
                 <select
-                    className='SellerProductSelect '
-                    value={selectedOption}
-                    onChange={e => setSelectedOption(e.target.value)}
-                    name=''
-                    id=''>
-                    <option value='' selected hidden>
+                    className='SellerProductSelect'
+                    onChange={e => {
+                        const value = e.target.value;
+                        setSelectedOption(value);
+                        setCategoryValue(value);
+                    }}>
+                    <option value='' hidden>
                         Xizmat turlari
                     </option>
                     {menuItems.map((item, index) => (
@@ -127,30 +145,23 @@ export default function SellerProduct (pid) {
                         </option>
                     ))}
                 </select>
-                <select className='SellerProductSelect ' name='' id=''>
-                    <option value='' selected hidden>
-                        Xizmat turlari
-                    </option>
-                </select>
             </form>
 
             <div className='sellerProductSkeletonWrap'>
-                {isLoading && (
-                    <>
-                        {Array(16)
-                            .fill(0)
-                            .map((d, i) => (
-                                <Skeleton.Image
-                                    key={i}
-                                    active
-                                    className='sellerProductSkeleton shadow'
-                                    style={{ width: '100%' }}
-                                />
-                            ))}
-                    </>
-                )}
+                {isLoading &&
+                    Array(16)
+                        .fill(0)
+                        .map((_, i) => (
+                            <Skeleton.Image
+                                key={i}
+                                active
+                                className='sellerProductSkeleton shadow'
+                                style={{ width: '100%' }}
+                            />
+                        ))}
             </div>
-            <div className=''>{renderComponent()}</div>
+
+            <div>{renderComponent()}</div>
         </div>
     );
 }

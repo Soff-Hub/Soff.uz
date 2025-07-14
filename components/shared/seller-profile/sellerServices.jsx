@@ -1,7 +1,7 @@
 import { Skeleton } from 'antd';
 import React, { useEffect, useState } from 'react';
 
-export default function SellerServices (pid) {
+export default function SellerServices ({ pid }) {
     const [isLoading, setIsLoading] = useState(false);
     const [comments, setComments] = useState('');
 
@@ -10,9 +10,11 @@ export default function SellerServices (pid) {
 
         setIsLoading(true);
 
-        fetch(fetch(`http://176.96.241.219:8005/api/v1/services/3`
-                    // `http://176.96.241.219:8005/api/v1/services/3/`
-        ))
+        fetch(
+            fetch(
+                `http://176.96.241.219:8005/api/v1/services/my/?user_id=${pid}`
+            )
+        )
             .then(res => {
                 if (!res.ok) {
                     throw new Error(`HTTP error! status: ${res.status}`);
