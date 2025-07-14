@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Swiper_Pages from '../swipper/swiper';
 import RedesignProduct from '~/components/elements/products/Redesign/Redesign-Product';
 
-export default function ScientificResourcesSwipper () {
+export default function ScientificResourcesSwipper() {
     const [products, setProducts] = useState();
     const [isLoading, setIsLoading] = useState(false);
 
@@ -23,11 +23,16 @@ export default function ScientificResourcesSwipper () {
     }, []);
 
     return (
-        <div className='container mb-4'>
+        <div className='categoryHighlightsSwippercontainer mb-5'>
             {Array.isArray(products) && products.length > 0 && (
                 <div className='categoryHighlightsSwipper'>
-                    <h3 className='SwipperTitle'>Ilmiy ishlar</h3>
-
+                    <div className='SwipperTitlewrap'>
+                        <a
+                            className='SwipperTitle'
+                            href='/scientific-resources/all'>
+                            Ilmiy ishlar
+                        </a> 
+                    </div>
                     {products ? (
                         <Swiper_Pages categoryName type='template'>
                             {products?.map((item, index) => (
