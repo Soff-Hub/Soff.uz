@@ -23,7 +23,9 @@ export default function DesignDevelopmentSwipper() {
     }, []);
 
     return (
+
         <div className='categoryHighlightsSwippercontainer mb-5'>
+
             {Array.isArray(product) && product.length > 0 && (
                 <div className='categoryHighlightsSwipper'>
                     <div className='SwipperTitlewrap'>
@@ -33,6 +35,7 @@ export default function DesignDevelopmentSwipper() {
                             Dizayn shablonlar
                         </a>
                     </div>
+
                     {product ? (
                         <Swiper_Pages type='design'>
                             {product.map((item, index) => (

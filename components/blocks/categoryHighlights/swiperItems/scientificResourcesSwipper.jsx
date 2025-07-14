@@ -23,6 +23,7 @@ export default function ScientificResourcesSwipper() {
     }, []);
 
     return (
+
         <div className='categoryHighlightsSwippercontainer mb-5'>
             {Array.isArray(products) && products.length > 0 && (
                 <div className='categoryHighlightsSwipper'>
@@ -33,6 +34,7 @@ export default function ScientificResourcesSwipper() {
                             Ilmiy ishlar
                         </a> 
                     </div>
+
                     {products ? (
                         <Swiper_Pages categoryName type='template'>
                             {products?.map((item, index) => (

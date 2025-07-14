@@ -23,6 +23,7 @@ export default function TemplatesSwipper () {
     }, []);
 
     return (
+
         <div className='categoryHighlightsSwippercontainer '>
             {Array.isArray(product) && product.length > 0 && (
                 <div className='categoryHighlightsSwipper'>
@@ -33,6 +34,7 @@ export default function TemplatesSwipper () {
                             Tayyor shablonlar
                         </a> 
                     </div>
+
                     {product ? (
                         <Swiper_Pages type='design'>
                             {product.map((item, index) => (
