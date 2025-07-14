@@ -35,7 +35,7 @@ export default function PurchasedProducts() {
           },
           params: {
             page: currPage,
-            category: category || '',
+            direction: category || '',
             start_date: '',
             end_date: '',
             search: search || ''
@@ -165,7 +165,7 @@ export default function PurchasedProducts() {
             />
           </div>
             ) : (
-          Array.from({ length: 5 }).map((_, index) => (
+          Array.from({ length: 3 }).map((_, index) => (
             <div className="mb-3 px-2" key={index}>
               <Skeleton active paragraph={{ rows: 1, width: "100%" }} />
             </div>
