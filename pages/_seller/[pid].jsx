@@ -9,7 +9,6 @@ import SellerPortfolio from '~/components/shared/seller-profile/sellerPortfolio'
 import SellerProduct from '~/components/shared/seller-profile/sellerProduct';
 import SellerServices from '~/components/shared/seller-profile/sellerServices';
 import SellerShortInfo from '~/components/shared/seller-profile/sellerShortInfo';
-import { soffApi } from '~/service/soffApi';
 
 export default function SellersPage () {
     const router = useRouter();

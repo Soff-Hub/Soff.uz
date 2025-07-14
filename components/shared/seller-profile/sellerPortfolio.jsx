@@ -5,113 +5,104 @@ import { useEffect, useState } from 'react';
 import ServiceIsUnavailable from './ServiceIsUnavailable';
 
 export default function SellerPortfolio ({ pid }) {
-    const [parentCategory, setParentCategory] = useState('');
-    const [childCategory, setChildCategory] = useState('');
-
+    const [parentCategory, setParentCategory] = useState('all');
+    const [childCategory, setChildCategory] = useState('all');
     const [portfolioData, setPortfolioData] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
-    console.log('parentCategory', portfolioData?.items);
+
+    console.log('parentCategory', parentCategory);
+    console.log('childCategory', childCategory);
+
+    const uniqueCategories = Array.from(
+        new Map(
+            portfolioData?.items
+                ?.filter(item => item?.category || item?.category_id != null)
+                ?.map(item => [
+                    item.category_id,
+                    { id: item.category_id, name: item.category },
+                ])
+        ).values()
+    );
+
+    const uniqueSubCategories = Array.from(
+        new Map(
+            portfolioData?.items
+                ?.filter(
+                    item => item?.sub_category || item?.sub_category_id != null
+                )
+                ?.map(item => [
+                    item.sub_category_id,
+                    { id: item.sub_category_id, name: item.sub_category },
+                ])
+        ).values()
+    );
+    console.log('uniqueSubCategories', uniqueSubCategories);
+    console.log('uniqueCategories', uniqueCategories);
 
     useEffect(() => {
         if (!pid) return;
 
         setIsLoading(true);
 
-        const query = new URLSearchParams({
-            soff_seller_id: pid,
-        });
+        const query = new URLSearchParams();
+        query.append('soff_seller_id', pid);
 
-        if (parentCategory) query.append('category', parentCategory);
-        if (childCategory) query.append('sub_category', childCategory);
+        if (parentCategory !== 'all') {
+            query.append('category_id', parentCategory);
+        }
+        if (childCategory !== 'all') {
+            query.append('subcategory_id', childCategory);
+        }
 
         fetch(
             `http://176.96.241.219:8005/api/v1/categories/portfolio?${query.toString()}`,
-            {
-                method: 'GET',
-            }
+            { method: 'GET' }
         )
             .then(res => res.json())
-            .then(data => {
-                setPortfolioData(data);
-            })
-            .catch(error => {
-                console.error('Error fetching seller:', error);
-            })
-            .finally(() => {
-                setIsLoading(false);
-            });
+            .then(data => setPortfolioData(data))
+            .catch(error => console.error('Error fetching seller:', error))
+            .finally(() => setIsLoading(false));
     }, [pid, parentCategory, childCategory]);
 
-    const uniqueContentType = Array.from(
-        new Set(portfolioData?.items?.map(item => item?.content_type))
-    );
-    const uniqueCategories = Array.from(
-        new Set(portfolioData?.items?.map(item => item?.category))
-    );
-
-    const uniqueSubCategories = Array.from(
-        new Set(portfolioData?.items?.map(item => item?.sub_category))
-    );
+    useEffect(() => {
+        setChildCategory('all');
+    }, [parentCategory]);
 
     return (
         <div>
             {portfolioData?.items?.length > 0 ? (
                 <div className='SellerPortfolio'>
                     <form action='' className='SellerPortfolioForm'>
-                        {portfolioData?.items?.content_type?.length > 0 && (
+                        {uniqueCategories && (
                             <select
                                 className='SellerPortfolioSelect'
+                                value={parentCategory}
                                 onChange={e =>
-                                    setParentCategory(e?.target?.value)
+                                    setParentCategory(e.target.value)
                                 }>
-                                {uniqueContentType?.map((item, index) => {
-                                    return (
-                                        <option
-                                            value={item?.category}
-                                            key={index}>
-                                            {item?.category}
-                                        </option>
-                                    );
-                                })}
+                                <option value='all'>Barchasi</option>
+                                {uniqueCategories.map(cat => (
+                                    <option key={cat.id} value={cat.id}>
+                                        {cat.name}
+                                    </option>
+                                ))}
                             </select>
                         )}
-                        {/* {portfolioData?.items?.category?.length > 0 && (
-                         */}
-                        {portfolioData?.items?.some(
-                            item => item?.category !== null
-                        ) && (
+                        {uniqueSubCategories && (
                             <select
                                 className='SellerPortfolioSelect'
+                                value={childCategory}
                                 onChange={e =>
-                                    setParentCategory(e?.target?.value)
+                                    setChildCategory(e.target.value)
                                 }>
-                                {uniqueCategories?.map((item, index) => {
-                                    return <option key={index}>{item}</option>;
-                                })}
+                                <option value='all'>Barchasi</option>
+                                {uniqueSubCategories.map(sub => (
+                                    <option key={sub.id} value={sub.id}>
+                                        {sub.name}
+                                    </option>
+                                ))}
                             </select>
                         )}
-                        {parentCategory &&
-                            portfolioData?.items?.some(
-                                item => item?.sub_category
-                            ) && (
-                                <select
-                                    className='SellerPortfolioSelect '
-                                    name=''
-                                    id=''
-                                    onChange={e =>
-                                        setChildCategory(e?.target?.value)
-                                    }>
-                                    {uniqueSubCategories.map(
-                                        (subCategory, index) => (
-                                            <option
-                                                key={index}
-                                                value={subCategory}>
-                                                {subCategory}
-                                            </option>
-                                        )
-                                    )}
-                                </select>
-                            )}
                     </form>
                     <div className='SellerPortfolioWrap'>
                         {isLoading && (
