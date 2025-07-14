@@ -1279,11 +1279,11 @@ body.no-scroll {
             auto-fit,
             minmax(clamp(9rem, 12.5vw + 3.75rem, 18.75rem), 1fr)
         );
-        gap: 8px;
+        gap: 15px;
         row-gap: 15px;
 
         .SellerPortfolioSkeleton {
-            width: clamp(9rem, 12.5vw + 3.75rem, 18.75rem);
+            max-width: clamp(9rem, 12.5vw + 3.75rem, 18.75rem) !important;
             width: 100%;
             height: clamp(5rem, 6.25vw + 3.75rem, 11.25rem);
             border-radius: 15px;
