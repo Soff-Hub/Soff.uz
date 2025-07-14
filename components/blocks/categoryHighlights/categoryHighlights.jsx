@@ -7,7 +7,7 @@ import TemplatesSwipper from './swiperItems/templatesSwipper';
 
 export default function CategoryHighlights () {
     return (
-        <div className='products mt-1'>
+        <div className='mt-1'>
             <div className='container  p-0'>
                 <div className={`product-list`}>
                     <ScientificResourcesSwipper />
