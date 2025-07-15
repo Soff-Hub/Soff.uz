@@ -3,6 +3,7 @@
 import { Skeleton } from 'antd';
 import { useEffect, useState } from 'react';
 import ServiceIsUnavailable from './ServiceIsUnavailable';
+import ProtfolioModal from './porfolioModal';
 
 export default function SellerPortfolio ({ pid }) {
     const [parentCategory, setParentCategory] = useState('all');
@@ -10,6 +11,8 @@ export default function SellerPortfolio ({ pid }) {
     const [portfolioData, setPortfolioData] = useState(null);
     const [isLoading, setIsLoading] = useState(true); // start as true
     const [showUnavailable, setShowUnavailable] = useState(false);
+    const [openModal, setOpenModal] = useState(false);
+    const [cardId, setCardId] = useState(null);
 
     const uniqueCategories = Array.from(
         new Map(
@@ -83,6 +86,16 @@ export default function SellerPortfolio ({ pid }) {
         setChildCategory('all');
     }, [parentCategory]);
 
+    useEffect(() => {
+        if (openModal) {
+            document.body.classList.add('no-scroll');
+        } else {
+            document.body.classList.remove('no-scroll');
+        }
+        return () => {
+            document.body.classList.remove('no-scroll');
+        };
+    }, [openModal]);
     return (
         <div>
             {isLoading ? (
@@ -136,9 +149,15 @@ export default function SellerPortfolio ({ pid }) {
                     </form>
                     <div className='SellerPortfolioWrap'>
                         {portfolioData.items.map((item, index) => (
-                            <div key={index} className='SellerPortfolioCard'>
+                            <div
+                                key={index}
+                                className='SellerPortfolioCard'
+                                onClick={() => {
+                                    setOpenModal(true);
+                                    setCardId(item.id);
+                                }}>
                                 <img
-                                    src={item?.cover_image}
+                                    src={item?.cover_image?.[0]}
                                     alt={item?.title}
                                     className='SellerPortfolioCardImg'
                                 />
@@ -147,15 +166,16 @@ export default function SellerPortfolio ({ pid }) {
                                         {item?.title}
                                     </p>
                                     <div className='SellerPortfolioCardEnd d-flex justify-content-between'>
-                                        <p>{item?.sub_category?.title}</p>
-                                        <div className='d-flex align-items-center gap-2'>
-                                            <svg
-                                                width='18'
-                                                height='10'
-                                                viewBox='0 0 18 10'
-                                                fill='none'>
-                                                <path d='...' fill='white' />
-                                            </svg>
+                                        <p className='SellerPortfolioCardEndTitle'>
+                                            {item?.sub_category?.title}
+                                        </p>
+
+                                        <div className='SellerPortfolioCard_view_count'>
+                                            <img
+                                                src='/static/img/eye.png'
+                                                width={'20px'}
+                                            />
+
                                             <p className='text-white p-0 m-0'>
                                                 {item?.view_count}
                                             </p>
@@ -165,6 +185,17 @@ export default function SellerPortfolio ({ pid }) {
                             </div>
                         ))}
                     </div>
+                </div>
+            )}
+            {openModal === true && (
+                <div className='modal-overlay'>
+                    {' '}
+                    <ProtfolioModal
+                        data={portfolioData?.items.find(
+                            item => item.id === cardId
+                        )}
+                        setOpenModal={setOpenModal}
+                    />
                 </div>
             )}
         </div>
