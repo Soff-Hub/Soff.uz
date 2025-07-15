@@ -32,6 +32,7 @@ const Search_Results = ({ fourChildData, childCategoryData }) => {
     const [error, setError] = useState(null);
     const [productData, setProductData] = useState(null);
     const [specialistsData, setSpecialistsData] = useState(null)
+    const [servicesData, setServicesData] = useState(null);
 
     // search useEffect _________________________________________________________________
     useEffect(() => {
@@ -64,6 +65,21 @@ const Search_Results = ({ fourChildData, childCategoryData }) => {
         };
         fetchSpecialists();
     }, [keyword, position]);
+
+    useEffect(() => {
+        const fetchServices = async () => {
+            setIsLoading(true)
+            try {
+                const res = await Axios.get(`${temporaryBaseUrl}users/sellers/service?limit=24&offset=0&search=${keyword}`);
+                setServicesData(res.data);
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setIsLoading(false)
+            }
+        };
+        fetchServices();
+    }, [keyword]);
 
     // get searchTerm useEffect__________________________________________________________________________________
     useEffect(() => {
