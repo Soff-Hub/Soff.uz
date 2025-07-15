@@ -1777,18 +1777,19 @@
                 }
             }
         }
-        select {
-            border-radius: 4.404px;
-            background: #fff;
-            box-shadow: 0px 0px 4.404px 0px rgba(0, 0, 0, 0.15);
-            padding: 10px 16px;
-            border: none;
-            color: #7b7b7b;
-            font-family: 'Poppins';
-            font-size: 13.213px;
-            font-style: normal;
-            font-weight: 500;
-            line-height: normal;
+        .select_specalist {
+            // border-radius: 4.404px;
+            // background: #fff;
+            // box-shadow: 0px 0px 4.404px 0px rgba(0, 0, 0, 0.15);
+            // padding: 10px 16px;
+            // border: none;
+            // color: #7b7b7b;
+            // font-family: 'Poppins';
+            // font-size: 13.213px;
+            // font-style: normal;
+            // font-weight: 500;
+            // line-height: normal;
+            width: 200px;
             @media (max-width: 600px) {
                 width: 45%;
             }
@@ -1875,13 +1876,17 @@
         }
         .Search_Results_Specialists_Card_img {
             width: 126px;
-            border-radius: 126px;
+            height: 126px;
+            border-radius: 100%;
             box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.15);
+            object-fit: cover;
             @media (max-width: 450px) {
                 width: 100px;
+                height: 100px;
             }
             @media (max-width: 350px) {
                 width: 80px;
+                height: 80px;
             }
         }
         .Search_Results_Specialists_Card_status_box {
@@ -1915,7 +1920,8 @@
                 }
             }
             .Search_Results_Specialists_Card_status_img {
-                width: 24.33px;
+                width: 25px;
+                height: auto;
                 flex-shrink: 0;
                 @media (max-width: 450px) {
                     width: 18px;
