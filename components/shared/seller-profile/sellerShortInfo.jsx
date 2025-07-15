@@ -1,8 +1,16 @@
-import React from 'react';
+import { Modal } from 'antd';
+import React, { useState } from 'react';
 import CalculateTimeDifference from '~/components/partials/account/DateFormatter';
 
 export default function SellerShortInfo ({ sellerInfo }) {
+    const [nameModal, setNameModal] = useState(false);
+    const [fullName, setFullName] = useState(false);
+    const [surName, setSurname] = useState(false);
 
+    function handleChange (params) {
+        setFullName(params);
+        setSurname(!countTogle);
+    }
 
     return (
         <div className='sellerInfo'>
@@ -21,6 +29,9 @@ export default function SellerShortInfo ({ sellerInfo }) {
                     <p className='sellerName m-0'>
                         {sellerInfo?.seller?.full_name}
                     </p>
+                    <i
+                        onClick={() => setNameModal(true)}
+                        class='fa-solid fa-pen fs-4 mx-3 text-primary'></i>
                 </div>
                 <div className='sellerStatusContainer'>
                     <img src='/static/img/Ritsar.png' alt='' />
@@ -77,6 +88,41 @@ export default function SellerShortInfo ({ sellerInfo }) {
                     </li>
                 </ul>
             </div>
+            <Modal
+                title={"Profil ma'lumotlarni tahrirlash"}
+                open={nameModal}
+                onCancel={() => setNameModal(false)}
+                footer={null}
+                className={'mobile'}>
+                <form>
+                    <div class='form-group'>
+                        <input
+                            type='text'
+                            placeholder='Ismingiz'
+                            class='form-control'
+                            aria-describedby='emailHelp'
+                        />
+                    </div>
+                    <div class='form-group'>
+                        <input
+                            type='text'
+                            placeholder='Familiyangiz'
+                            class='form-control'
+                        />
+                    </div>
+                    <div className='d-flex gap-3 justify-content-end'>
+                        {' '}
+                        <button
+                            className='btn p-2 fs-5 btn-danger'
+                            onClick={() => setNameModal(false)}>
+                            Yopish
+                        </button>
+                        <button className='btn p-2 fs-5 btn-success'>
+                            Saqlash
+                        </button>
+                    </div>
+                </form>
+            </Modal>
         </div>
     );
 }

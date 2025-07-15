@@ -3,18 +3,15 @@ import React, { useEffect, useState } from 'react';
 
 export default function SellerServices ({ pid }) {
     const [isLoading, setIsLoading] = useState(false);
-    const [comments, setComments] = useState('');
+    const [serviseProduct, setServiseProduct] = useState('');
+    console.log('serviseProduct=>>>', serviseProduct);
 
     useEffect(() => {
         if (!pid) return;
 
         setIsLoading(true);
 
-        fetch(
-            fetch(
-                `http://176.96.241.219:8005/api/v1/services/my/?user_id=${pid}`
-            )
-        )
+        fetch(`http://176.96.241.219:8005/api/v1/services/my/?user_id=${pid}`)
             .then(res => {
                 if (!res.ok) {
                     throw new Error(`HTTP error! status: ${res.status}`);
@@ -22,7 +19,7 @@ export default function SellerServices ({ pid }) {
                 return res.json();
             })
             .then(data => {
-                setComments(data?.results || []);
+                setServiseProduct(data);
             })
             .catch(error => {
                 console.error('Error fetching seller:', error);
@@ -32,170 +29,6 @@ export default function SellerServices ({ pid }) {
             });
     }, [pid]);
 
-    const data = [
-        {
-            image: ' https://picsum.photos/204/184',
-            title: 'Graphic, Logo, Packaging and brand design',
-            ratingImg: '/static/img/servicesSectionCardStar.svg',
-            rating: '4.8',
-            countComment: '164 sharxlar',
-            price: '898 687',
-            path: '#',
-        },
-        {
-            image: ' https://picsum.photos/204/184',
-            title: 'Graphic, Logo, Packaging and brand design',
-            ratingImg: '/static/img/servicesSectionCardStar.svg',
-            rating: '4.8',
-            countComment: '164 sharxlar',
-            price: '898 687',
-            path: '#',
-        },
-        {
-            image: ' https://picsum.photos/204/184',
-            title: 'Graphic, Logo, Packaging and brand design',
-            ratingImg: '/static/img/servicesSectionCardStar.svg',
-            rating: '4.8',
-            countComment: '164 sharxlar',
-            price: '898 687',
-            path: '#',
-        },
-        {
-            image: ' https://picsum.photos/204/184',
-            title: 'Graphic, Logo, Packaging and brand design',
-            ratingImg: '/static/img/servicesSectionCardStar.svg',
-            rating: '4.8',
-            countComment: '164 sharxlar',
-            price: '898 687',
-            path: '#',
-        },
-        {
-            image: ' https://picsum.photos/204/184',
-            title: 'Graphic, Logo, Packaging and brand design',
-            ratingImg: '/static/img/servicesSectionCardStar.svg',
-            rating: '4.8',
-            countComment: '164 sharxlar',
-            price: '898 687',
-            path: '#',
-        },
-        {
-            image: ' https://picsum.photos/204/184',
-            title: 'Graphic, Logo, Packaging and brand design',
-            ratingImg: '/static/img/servicesSectionCardStar.svg',
-            rating: '4.8',
-            countComment: '164 sharxlar',
-            price: '898 687',
-            path: '#',
-        },
-        {
-            image: ' https://picsum.photos/204/184',
-            title: 'Graphic, Logo, Packaging and brand design',
-            ratingImg: '/static/img/servicesSectionCardStar.svg',
-            rating: '4.8',
-            countComment: '164 sharxlar',
-            price: '898 687',
-            path: '#',
-        },
-        {
-            image: ' https://picsum.photos/204/184',
-            title: 'Graphic, Logo, Packaging and brand design',
-            ratingImg: '/static/img/servicesSectionCardStar.svg',
-            rating: '4.8',
-            countComment: '164 sharxlar',
-            price: '898 687',
-            path: '#',
-        },
-        {
-            image: ' https://picsum.photos/204/184',
-            title: 'Graphic, Logo, Packaging and brand design',
-            ratingImg: '/static/img/servicesSectionCardStar.svg',
-            rating: '4.8',
-            countComment: '164 sharxlar',
-            price: '898 687',
-            path: '#',
-        },
-        {
-            image: ' https://picsum.photos/204/184',
-            title: 'Graphic, Logo, Packaging and brand design',
-            ratingImg: '/static/img/servicesSectionCardStar.svg',
-            rating: '4.8',
-            countComment: '164 sharxlar',
-            price: '898 687',
-            path: '#',
-        },
-        {
-            image: ' https://picsum.photos/204/184',
-            title: 'Graphic, Logo, Packaging and brand design',
-            ratingImg: '/static/img/servicesSectionCardStar.svg',
-            rating: '4.8',
-            countComment: '164 sharxlar',
-            price: '898 687',
-            path: '#',
-        },
-        {
-            image: ' https://picsum.photos/204/184',
-            title: 'Graphic, Logo, Packaging and brand design',
-            ratingImg: '/static/img/servicesSectionCardStar.svg',
-            rating: '4.8',
-            countComment: '164 sharxlar',
-            price: '898 687',
-            path: '#',
-        },
-        {
-            image: ' https://picsum.photos/204/184',
-            title: 'Graphic, Logo, Packaging and brand design',
-            ratingImg: '/static/img/servicesSectionCardStar.svg',
-            rating: '4.8',
-            countComment: '164 sharxlar',
-            price: '898 687',
-            path: '#',
-        },
-        {
-            image: ' https://picsum.photos/204/184',
-            title: 'Graphic, Logo, Packaging and brand design',
-            ratingImg: '/static/img/servicesSectionCardStar.svg',
-            rating: '4.8',
-            countComment: '164 sharxlar',
-            price: '898 687',
-            path: '#',
-        },
-        {
-            image: ' https://picsum.photos/204/184',
-            title: 'Graphic, Logo, Packaging and brand design',
-            ratingImg: '/static/img/servicesSectionCardStar.svg',
-            rating: '4.8',
-            countComment: '164 sharxlar',
-            price: '898 687',
-            path: '#',
-        },
-        {
-            image: ' https://picsum.photos/204/184',
-            title: 'Graphic, Logo, Packaging and brand design',
-            ratingImg: '/static/img/servicesSectionCardStar.svg',
-            rating: '4.8',
-            countComment: '164 sharxlar',
-            price: '898 687',
-            path: '#',
-        },
-        {
-            image: ' https://picsum.photos/204/184',
-            title: 'Graphic, Logo, Packaging and brand design',
-            ratingImg: '/static/img/servicesSectionCardStar.svg',
-            rating: '4.8',
-            countComment: '164 sharxlar',
-            price: '898 687',
-            path: '#',
-        },
-        {
-            image: ' https://picsum.photos/204/184',
-            title: 'Graphic, Logo, Packaging and brand design',
-            ratingImg: '/static/img/servicesSectionCardStar.svg',
-            rating: '4.8',
-            countComment: '164 sharxlar',
-            price: '898 687',
-            path: '#',
-        },
-    ];
     return (
         <div>
             <div className='servicesSection '>
@@ -289,28 +122,28 @@ export default function SellerServices ({ pid }) {
                                 ))}
                         </>
                     )}
-
-                    {data.map((item, index) => (
-                        <div className='servicesSectionCard' key={index}>
-                            <div className='servicesSectionCardImg'>
-                                <img src={item.image} alt='' />
-                            </div>
-                            <div className='servicesSectionCardbody'>
-                                <p className='servicesSectionCardTitle'>
-                                    {item.title}{' '}
-                                </p>
-                                <div className='servicesSectionCardRating'>
-                                    <img src={item.ratingImg} alt='' />
-                                    <p>{item.rating}</p>
-                                    <span>({item.countComment})</span>
+                    {Array.isArray(serviseProduct) &&
+                        serviseProduct?.map((item, index) => (
+                            <div className='servicesSectionCard' key={index}>
+                                <div className='servicesSectionCardImg'>
+                                    <img src={item?.file} alt={item?.title} />
                                 </div>
-                                <div className='servicesSectionCardPrice'>
-                                    <p>{item.price} so’m</p>
-                                    <a href={item.path}>Tafsilotlar</a>
+                                <div className='servicesSectionCardbody'>
+                                    <p className='servicesSectionCardTitle'>
+                                        {item?.title}{' '}
+                                    </p>
+                                    <div className='servicesSectionCardRating'>
+                                        <img src={item?.ratingImg} alt='' />
+                                        <p>{item?.rating}</p>
+                                        <span>({item?.countComment})</span>
+                                    </div>
+                                    <div className='servicesSectionCardPrice'>
+                                        <p>{item?.price} so’m</p>
+                                        <a href={item?.path}>Tafsilotlar</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    ))}
+                        ))}
                 </div>
                 <div className='showMoreBox'>
                     <p className='showMore'> Yana ko’rsatish</p>

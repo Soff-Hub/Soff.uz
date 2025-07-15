@@ -1279,8 +1279,8 @@ body.no-scroll {
             auto-fit,
             minmax(clamp(9rem, 12.5vw + 3.75rem, 18.75rem), 1fr)
         );
-        gap: 15px;
-        row-gap: 15px;
+        gap: 10px;
+        row-gap: 10px;
 
         .SellerPortfolioSkeleton {
             max-width: clamp(9rem, 12.5vw + 3.75rem, 18.75rem) !important;
@@ -1294,7 +1294,8 @@ body.no-scroll {
 .SellerPortfolioCard {
     max-height: 180px;
     max-width: 230px;
-    height: clamp(5rem, 6.25vw + 3.75rem, 11.25rem);
+    // height: clamp(5rem, 6.25vw + 3.75rem, 15.2rem);
+    height: 150px;
     background-color: #fff;
     border-radius: 10px;
     display: flex;
@@ -1316,7 +1317,13 @@ body.no-scroll {
         }
 
         .SellerPortfolioCardbody {
-            display: block;
+            .SellerPortfolioCardEnd {
+                .SellerPortfolioCard_view_count {
+                    display: flex;
+                    align-items: center;
+                    gap: 5px;
+                }
+            }
         }
     }
 
@@ -1325,12 +1332,11 @@ body.no-scroll {
         bottom: 0;
         left: 0;
         width: 100%;
-        padding: 10px;
-        display: none;
+        padding: 5px;
+        // display: none;
         z-index: 2;
 
-        .SellerPortfolioCardTitle,
-        .SellerPortfolioCardEnd p {
+        .SellerPortfolioCardTitle {
             color: #fff;
             font-family: 'Poppins';
             font-size: 12px;
@@ -1338,15 +1344,28 @@ body.no-scroll {
             font-weight: 500;
             line-height: normal;
             letter-spacing: 0.24px;
-            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8); /* Makes text readable on dark bg */
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+        }
+
+        .SellerPortfolioCardEnd {
+            .SellerPortfolioCardEndTitle {
+                color: #fff;
+                font-family: 'Poppins';
+                font-size: 12px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+                letter-spacing: 0.24px;
+                text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8); /* Makes text readable on dark bg */
+            }
+            .SellerPortfolioCard_view_count {
+                display: none;
+            }
         }
     }
 }
 
 /* Optional: Ensure content is above the image if needed */
-.SellerPortfolioCardbody {
-    pointer-events: none;
-}
 
 .ServiceIsUnavailable {
     padding: 48px 221px;
@@ -1795,4 +1814,78 @@ body.no-scroll {
 
 .image-wrapper:hover img {
     filter: brightness(0.5); /* 0.5 = 50% yorqinlik — qoraroq ko‘rinadi */
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6); /* yarim shaffof qora fon */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    overflow: hidden;
+}
+.ProtfolioModal_wrap {
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    max-height: 60%;
+    max-width: 50vw;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    background-color: #f1f1f1;
+    border-radius: 10px;
+    padding: 10px;
+    overflow-y: scroll;
+    @media (max-width: 768px) {
+        flex-direction: column;
+        max-width: 90vw;
+    }
+    .closeICon {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        left: end;
+        z-index: 10;
+        padding: 1px;
+        border-radius: 5px;
+        cursor: pointer;
+        background-color: #fff;
+    }
+
+    .ProtfolioModal_wrap_swipper {
+        width: 100%;
+        max-height: 100%;
+        height: auto;
+        display: flex;
+        justify-content: center;
+        align-items: start;
+        border-radius: 10px;
+        overflow-y: scroll;
+        position: relative;
+        .ProtfolioModal_wrap_swipper_btn {
+            position: fixed;
+            bottom: center;
+            z-index: 10;
+
+        }
+        .ProtfolioModal_wrap_swipper_image {
+            max-height: 100%;
+            max-width: 100%;
+        }
+    }
+    .ProtfolioModal_wrap_info {
+        padding: 10px;
+        width: 30%;
+        @media (max-width: 768px) {
+            width: 100%;
+            height: 30%;
+            overflow: scroll;
+        }
+    }
 }

@@ -12,7 +12,7 @@ export default function SellerProduct ({ pid }) {
     const [product, setProduct] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [categoryValue, setCategoryValue] = useState(''); // default: all
-    const [selectedOption, setSelectedOption] = useState('');
+    const [selectedOption, setSelectedOption] = useState(null);
 
     const menuItems = [
         { title: 'Barchasi', path: '' },

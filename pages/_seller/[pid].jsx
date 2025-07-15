@@ -1,3 +1,4 @@
+import { Modal } from 'antd';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -71,6 +72,9 @@ export default function SellersPage () {
         comments: <SellerComments pid={pid} />,
     };
 
+
+    
+
     return (
         <PageContainer>
             <div className='container bg-gray-999 '>
@@ -79,7 +83,7 @@ export default function SellersPage () {
                         <SellerShortInfo sellerInfo={seller} />
                     </div>
                     <div className='SellerCollapseMenu'>
-                        <SellerCollapseMenu   pid={pid}/>
+                        <SellerCollapseMenu pid={pid} />
                     </div>
                     <div className='sellerProduct '>
                         <div className='shadow-sm'>
@@ -101,6 +105,7 @@ export default function SellersPage () {
                         {sellerTabItems[activeIndex]}
                     </div>
                 </div>
+                
             </div>
         </PageContainer>
     );
