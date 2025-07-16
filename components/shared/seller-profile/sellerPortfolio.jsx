@@ -1,18 +1,33 @@
 'use client';
-
-import { Skeleton } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
+import { Skeleton, Modal, Button } from 'antd';
 import { useEffect, useState } from 'react';
 import ServiceIsUnavailable from './ServiceIsUnavailable';
 import ProtfolioModal from './porfolioModal';
+import PortfolioForm from '~/components/form/portfolioForm';
+import PortfolioEditForm from '~/components/form/poerfolioEsitForm';
 
-export default function SellerPortfolio ({ pid }) {
+export default function SellerPortfolio({ pid }) {
+    // categoires
     const [parentCategory, setParentCategory] = useState('all');
     const [childCategory, setChildCategory] = useState('all');
     const [portfolioData, setPortfolioData] = useState(null);
+
+    // loaders
     const [isLoading, setIsLoading] = useState(true); // start as true
     const [showUnavailable, setShowUnavailable] = useState(false);
+    
+    // edit portfolio modal
     const [openModal, setOpenModal] = useState(false);
     const [cardId, setCardId] = useState(null);
+
+    // create portfolio modal
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const showModal = () => setIsModalOpen(true);
+    const handleCancel = () => setIsModalOpen(false);
+
+    // portfolio detail
+    const [openDetailModal, setOpenDetailModel] = useState(false)
 
     const uniqueCategories = Array.from(
         new Map(
@@ -148,16 +163,33 @@ export default function SellerPortfolio ({ pid }) {
                         )}
                     </form>
                     <div className='SellerPortfolioWrap'>
+                        <div
+                            onClick={showModal}
+                            style={{
+                                border: '2px dashed #d9d9d9',
+                                backgroundColor: 'rgba(0,0,0,0.1)',
+                                borderRadius: '12px',
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                cursor: 'pointer',
+                                transition: 'all 0.3s',
+                            }}
+                            onMouseEnter={(e) => (e.currentTarget.style.borderColor = '#1890ff')}
+                            onMouseLeave={(e) => (e.currentTarget.style.borderColor = '#d9d9d9')}
+                        >
+                            <PlusOutlined style={{ fontSize: '48px', color: '#1890ff' }} />
+                        </div>
                         {portfolioData.items.map((item, index) => (
                             <div
                                 key={index}
                                 className='SellerPortfolioCard'
                                 onClick={() => {
-                                    setOpenModal(true);
+                                    setOpenDetailModel(true);
                                     setCardId(item.id);
                                 }}>
                                 <img
-                                    src={item?.cover_image?.[0]}
+                                    src={item?.cover_image[0]}
                                     alt={item?.title}
                                     className='SellerPortfolioCardImg'
                                 />
@@ -171,6 +203,12 @@ export default function SellerPortfolio ({ pid }) {
                                         </p>
 
                                         <div className='SellerPortfolioCard_view_count'>
+                                            <i onClick={() => {
+                                                setCardId(item.id);
+                                                setOpenModal(true);
+                                            }}
+                                                className='fa-solid fa-pen fs-4 mx-3 text-white'>
+                                            </i>
                                             <img
                                                 src='/static/img/eye.png'
                                                 width={'20px'}
@@ -187,17 +225,40 @@ export default function SellerPortfolio ({ pid }) {
                     </div>
                 </div>
             )}
-            {openModal === true && (
-                <div className='modal-overlay'>
-                    {' '}
-                    <ProtfolioModal
-                        data={portfolioData?.items.find(
-                            item => item.id === cardId
-                        )}
-                        setOpenModal={setOpenModal}
-                    />
-                </div>
-            )}
+
+
+            <Modal
+                open={openDetailModal}
+                title="Portfolio"
+                onCancel={() => setOpenDetailModel(false)}
+                width={800}
+                footer={null}
+            >
+                <ProtfolioModal data={
+                    portfolioData?.items?.find(item => item.id === cardId)
+                }/>
+            </Modal>
+
+            <Modal
+                open={openModal}
+                title="Portfolioni tahrirlash"
+                onCancel={() => setOpenModal(false)}
+                width={800}
+                footer={null}
+            >
+                <PortfolioEditForm setOpenModal={setOpenModal} portId={cardId} data={portfolioData?.items} />
+            </Modal>
+
+            <Modal
+                title="Yangi element qo‘shish"
+                open={isModalOpen}
+                onCancel={handleCancel}
+                footer={null}
+                width={800}
+            >
+                {/* Bu yerga formani joylashtirasan */}
+                <PortfolioForm />
+            </Modal>
         </div>
     );
 }
