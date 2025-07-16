@@ -1,82 +1,108 @@
 import React, { useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination } from 'swiper/modules'; // faqat kerakli modullar
-
+import { Navigation, Thumbs } from 'swiper/modules';
 import 'swiper/css';
-import 'swiper/css/navigation'; // 🔁 BU MUHIM
-import 'swiper/css/pagination';
-const ProtfolioModal = ({ data, setOpenModal }) => {
+import 'swiper/css/navigation';
+import 'swiper/css/thumbs';
+import Axios from 'axios';
+import { message } from 'antd';
+
+const ProtfolioModal = ({ data }) => {
     const images = Array.isArray(data?.cover_image)
         ? data.cover_image
         : [data?.cover_image];
-    console.log('data=>>>>', data);
-    const swiperRef = useRef(null);
+    
+    const deletePortfolio = async (id) => {
+        try {
+            await Axios.delete(`http://176.96.241.219:8005/api/v1/categories/portfolio-delete/${id}`)
+            message.success("Portfolio muvaffaqiyatli o'chirildi!")
+        } catch (error) {
+            message.error("portfolioni o'chirib bolmadi!")
+        }
+    }
+
+    const prevRef = useRef(null);
+    const nextRef = useRef(null);
 
     return (
-        <div className='ProtfolioModal_wrap'>
-            <div className='closeICon' onClick={() => setOpenModal(false)}>
-                <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    x='0px'
-                    y='0px'
-                    width='25'
-                    height='25'
-                    viewBox='0 0 48 48'>
-                    <path
-                        fill='#F44336'
-                        d='M21.5 4.5H26.501V43.5H21.5z'
-                        transform='rotate(45.001 24 24)'></path>
-                    <path
-                        fill='#F44336'
-                        d='M21.5 4.5H26.5V43.501H21.5z'
-                        transform='rotate(135.008 24 24)'></path>
-                </svg>
-            </div>
-            <div
-                style={{ maxWidth: '600px', margin: '0 auto' }}
-                className='ProtfolioModal_wrap_swipper'>
-                {images?.length > 1 && (
-                    <div className='ProtfolioModal_wrap_swipper_btn'>
-                        <button
-                            className='border-1 rounded-5 align-i'
-                            onClick={() =>
-                                swiperRef?.current?.swiper?.slidePrev()
-                            }>
-                            <i class='fa-solid fa-arrow-left'></i>
-                        </button>
-                        <button
-                            className='border-1 rounded-5 align-i'
-                            onClick={() =>
-                                swiperRef?.current?.swiper?.slideNext()
-                            }>
-                            <i class='fa-solid fa-arrow-right'></i>{' '}
-                        </button>
-                    </div>
-                )}
+        <div className="container py-3">
+            {/* Swiper karusel */}
+            <div className="mx-auto position-relative" style={{ maxWidth: '600px' }}>
+                <i
+                    ref={prevRef}
+                    className="fa-solid fa-chevron-left"
+                    style={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '-25px',
+                        zIndex: 10,
+                        fontSize: '24px',
+                        cursor: 'pointer',
+                        color: '#1890ff',
+                    }}
+                ></i>
+
+                <i
+                    ref={nextRef}
+                    className="fa-solid fa-chevron-right"
+                    style={{
+                        position: 'absolute',
+                        top: '50%',
+                        right: '-25px',
+                        zIndex: 10,
+                        fontSize: '24px',
+                        cursor: 'pointer',
+                        color: '#1890ff',
+                    }}
+                ></i>
+
                 <Swiper
-                    ref={swiperRef}
-                    modules={[Navigation, Pagination]} // Autoplay yo‘q!
-                    navigation
-                    pagination={{ clickable: true }}
-                    loop={true}>
+                    modules={[Navigation, Thumbs]}
+                    navigation={{
+                        prevEl: prevRef.current,
+                        nextEl: nextRef.current,
+                    }}
+                    onBeforeInit={(swiper) => {
+                        swiper.params.navigation.prevEl = prevRef.current;
+                        swiper.params.navigation.nextEl = nextRef.current;
+                    }}
+                    loop={true}
+                >
                     {images.map((img, index) => (
                         <SwiperSlide key={index}>
                             <img
                                 src={img}
                                 alt={`slide-${index}`}
-                                className='ProtfolioModal_wrap_swipper_image'
+                                className="img-fluid rounded"
+                                style={{
+                                    width: '100%',
+                                    height: '350px',
+                                    objectFit: 'cover',
+                                }}
                             />
                         </SwiperSlide>
                     ))}
                 </Swiper>
             </div>
-            <div className=' ProtfolioModal_wrap_info'>
-                <h3>{data?.title}</h3>
-                <div className='d-flex gap-2 align-items-center'>
-                    <p>{data?.category?.title}</p>
-                    <p>{data?.sub_category?.title}</p>
+
+            {/* Info qismi */}
+            <div className="text-center mt-4" style={{ maxWidth: '600px', margin: '0 auto' }}>
+                <h3 className="fw-semibold">{data?.title}</h3>
+
+                <div className="d-flex justify-content-center gap-3 text-muted small mt-2">
+                    <p className="mb-0">{data?.category?.title}</p>
+                    {data?.sub_category?.title && (
+                        <p className="mb-0">{data?.sub_category?.title}</p>
+                    )}
                 </div>
-                {data?.description && <p>{data?.description}</p>}
+
+                {data?.description && (
+                    <p className="mt-3" style={{ fontSize: '15px' }}>
+                        {data.description}
+                    </p>
+                )}
+
+                <button onClick={() => deletePortfolio(data?.id)} className='btn btn-danger btn-lg'>Portfolioni o'chirish</button>
             </div>
         </div>
     );
