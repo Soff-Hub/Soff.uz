@@ -1,5 +1,5 @@
 import { Skeleton } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useGet } from '~/repositories/https';
 import { getTimeAgo } from '~/utilities/calculateTime';
 export default function SellerComments ({ pid }) {
@@ -51,7 +51,7 @@ export default function SellerComments ({ pid }) {
                     </div>
                     <div className='SellerCommentsCardBtnWrap'>
                         <a
-                            href={`/product/${item.document_slug}`}
+                            href={`/product/${item.slug}`}
                             className='SellerCommentsCardBtn'>
                             Mahsulotni ko'rish
                         </a>
