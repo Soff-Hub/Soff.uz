@@ -70,7 +70,7 @@ const PortfolioForm = ({ onClose }) => {
 
     createPortfolio(payload)
   };
-  console.log('Kategoriyalar:', categories);
+
 
   return (
     <Form
