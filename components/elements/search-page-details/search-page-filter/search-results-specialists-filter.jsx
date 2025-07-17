@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import Axios from 'axios';
 
-export default function SearchResultsSpecialists_Filter(data) {
+export default function SearchResultsSpecialists_Filter({total}) {
     const [positions, setPositions] = useState([])
     const router = useRouter();
 
@@ -27,13 +27,11 @@ export default function SearchResultsSpecialists_Filter(data) {
         });
     };
 
-   
 
     return (
         <div className='Search_Results_Specialists_form_box'>
-            <p className='countSpecialist'>{data?.count?.count > 0 ? `${data?.count?.count} ta mutaxassis` : ''} </p>
+            <p className='countSpecialist'>{total > 0 ? `${total} ta mutaxassis` : ''} </p>
             <form action='' className='Search_Results_Specialists_form'>
-
                 <Select
                     className="select_specalist"
                     value={router.position}

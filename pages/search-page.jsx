@@ -20,7 +20,9 @@ const Search_Results = ({ fourChildData, childCategoryData }) => {
         category = '',
         order_by = '',
         tab = 'products',
-        position = ''
+        position = '',
+        pCategory = '',
+        subCategory = ''
     } = router.query;
 
     const temporaryBaseUrl = 'http://176.96.241.219:8005/api/v1/'
@@ -55,7 +57,7 @@ const Search_Results = ({ fourChildData, childCategoryData }) => {
         const fetchSpecialists = async () => {
             setIsLoading(true)
             try {
-                const res = await Axios.get(`${temporaryBaseUrl}users/sellers?limit=32&offset=0&search=${keyword}&position=${position}`);
+                const res = await Axios.get(`${temporaryBaseUrl}users/sellers?limit=32&offset=0&search=${keyword}&position=${position}&page=${page}`);
                 setSpecialistsData(res.data);
             } catch (err) {
                 setError(err.message);
@@ -64,14 +66,14 @@ const Search_Results = ({ fourChildData, childCategoryData }) => {
             }
         };
         fetchSpecialists();
-    }, [keyword, position]);
+    }, [keyword, position, page]);
 
     // Services
     useEffect(() => {
         const fetchServices = async () => {
             setIsLoading(true)
             try {
-                const res = await Axios.get(`${temporaryBaseUrl}users/sellers/service?limit=24&offset=0&search=${keyword}`);
+                const res = await Axios.get(`${temporaryBaseUrl}users/sellers/service?limit=24&offset=0&search=${keyword}&category_id=${pCategory}&sub_category=${subCategory}`);
                 setServicesData(res.data);
             } catch (err) {
                 setError(err.message);
@@ -80,7 +82,7 @@ const Search_Results = ({ fourChildData, childCategoryData }) => {
             }
         };
         fetchServices();
-    }, [keyword]);
+    }, [keyword, pCategory, subCategory]);
 
     // get searchTerm useEffect__________________________________________________________________________________
     useEffect(() => {

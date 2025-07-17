@@ -3,13 +3,15 @@ import React from 'react';
 import SearchResultsSpecialists_Filter from './search-page-filter/search-results-specialists-filter';
 import SearchResultsSpecialists_Card from './search-page-card/searchResultsSpecialists_Card';
 import Search_Results_NotFound from './notFound';
+import { useRouter } from 'next/router';
 
 export default function Search_Results_Specialists({ data, isLoading, page, total }) {
     const showResults = !isLoading && Array.isArray(data?.results) && data?.results?.length > 0;
-    console.log(data)
+    const router = useRouter()
+    
     return (
         <div>
-            <SearchResultsSpecialists_Filter count={data} />
+            <SearchResultsSpecialists_Filter total={total} />
             <div className='Search_Results_Specialists'>
                 <div>
                     <div className='Search_Results_Specialists_Wrap'>
@@ -39,7 +41,7 @@ export default function Search_Results_Specialists({ data, isLoading, page, tota
                         <Pagination
                             className='mt-3'
                             current={page}
-                            pageSize={10}
+                            pageSize={32}
                             total={total}
                             onChange={(newPage) => {
                                 router.push({
