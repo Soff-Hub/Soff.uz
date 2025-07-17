@@ -1,6 +1,6 @@
 import { Select } from 'antd';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useState } from 'react';
 import {
     AppstoreOutlined,
     FileTextOutlined,
@@ -11,10 +11,14 @@ import {
     LayoutOutlined,
     CloseCircleOutlined
 } from '@ant-design/icons';
+import { useGet } from '~/repositories/https';
 
-export default function SearchResultsProductsFilter({ total, parentData, childData }) {
+export default function SearchResultsProductsFilter({ total }) {
     const router = useRouter();
     const { Option } = Select;
+    const {data: categories} = useGet("parentCat", "http://176.96.241.219:8005/api/v1/categories/?parent_only=false")
+
+    const {pCategory} = router.query
 
     const orders = [
         { label: 'Narx (arzon)', value: 'price' },
@@ -41,7 +45,7 @@ export default function SearchResultsProductsFilter({ total, parentData, childDa
                 ...newQuery,
                 page: 1,
             },
-        }, undefined, { scroll: false });
+        }, undefined, { scroll: false });  
     };
 
     const handleClearAll = () => {
@@ -71,7 +75,7 @@ export default function SearchResultsProductsFilter({ total, parentData, childDa
                     {/* Dynamic col class hisoblash */}
                     {(() => {
                         const hasType = router.query.type && router.query.type !== 'all';
-                        const hasParent = !!router.query.parentCategory;
+                        const hasParent = !!router.query.pCategory;
                         const hasChild = !!router.query.category;
 
                         // Nechta Select borligini aniqlaymiz
@@ -116,17 +120,16 @@ export default function SearchResultsProductsFilter({ total, parentData, childDa
                                             placeholder="Katta kategoriya"
                                             value={router.query.parentCategory || undefined}
                                             allowClear
-                                            onClear={() => handleChange({ parentCategory: '', category: '' })}
+                                            onClear={() => handleChange({ pCategory: '', subCategory: '' })}
                                             onChange={(value) => {
-                                                const selected = childData?.results?.find(cat => cat.slug === value);
                                                 handleChange({
-                                                    parentCategory: selected?.slug || '',
-                                                    category: selected?.id,
+                                                    pCategory: value || '',
+                                                    category: ''
                                                 });
                                             }}
-                                            options={childData?.results?.map(cat => ({
-                                                value: cat.slug,
-                                                label: cat.name,
+                                            options={categories?.filter(c => c.parent_id == null)?.map(cat => ({
+                                                value: cat.id,
+                                                label: cat.title,
                                             }))}
                                         />
                                     </div>
@@ -139,11 +142,11 @@ export default function SearchResultsProductsFilter({ total, parentData, childDa
                                             style={{ width: '150px' }}
                                             placeholder="Kategoriya"
                                             allowClear
-                                            onClear={() => handleChange({ category: '' })}
-                                            onChange={(value) => handleChange({ category: value })}
-                                            options={parentData?.results?.map(cat => ({
-                                                value: String(cat.id),
-                                                label: cat.name,
+                                            onClear={() => handleChange({ subCategory: '' })}
+                                            onChange={(value) => handleChange({ subCategory: value })}
+                                            options={categories?.find(c => c.id == pCategory)?.children?.map(cat => ({
+                                                value: cat.id,
+                                                label: cat.title,
                                             }))}
                                         />
                                     </div>
