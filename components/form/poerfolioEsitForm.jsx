@@ -71,7 +71,7 @@ const PortfolioEditForm = ({ data, portId, onClose }) => {
       title: values.title,
       description: values.description,
       cover_image: coverImageList.map(f => f.url),
-      media_files: mediaFilesList.map(f => f.url),
+      // media_files: mediaFilesList.map(f => f.url),
     };
     mutate({id :portId, upDatedDate})
   };
@@ -107,7 +107,7 @@ const PortfolioEditForm = ({ data, portId, onClose }) => {
         </Upload>
       </Form.Item>
 
-      <Form.Item label="Qo‘shimcha fayllar">
+      {/* <Form.Item label="Qo‘shimcha fayllar">
         <Upload
           action="http://176.96.241.219:8005/api/v1/upload/file"
           name="file"
@@ -119,7 +119,7 @@ const PortfolioEditForm = ({ data, portId, onClose }) => {
         >
           <Button icon={<UploadOutlined />}>Qo‘shimcha fayllarni yuklash</Button>
         </Upload>
-      </Form.Item>
+      </Form.Item> */}
 
       <Form.Item>
         <Button type="primary" htmlType="submit">

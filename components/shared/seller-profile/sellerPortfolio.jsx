@@ -7,12 +7,14 @@ import ProtfolioModal from './porfolioModal';
 import PortfolioForm from '~/components/form/portfolioForm';
 import PortfolioEditForm from '~/components/form/poerfolioEsitForm';
 import { useSellerPortfolios } from '~/hooks/useSellerPortfolios';
+import { useGet } from '~/repositories/https';
 
 export default function SellerPortfolio({ pid }) {
     // categoires
     const [parentCategory, setParentCategory] = useState('all');
     const [childCategory, setChildCategory] = useState('all');
     const [showUnavailable, setShowUnavailable] = useState(false);
+    const [childCategories, setChildCategories] = useState([]);
 
     // edit portfolio modal
     const [openModal, setOpenModal] = useState(false);
@@ -23,6 +25,21 @@ export default function SellerPortfolio({ pid }) {
     const showModal = () => setIsModalOpen(true);
     const handleCancel = () => setIsModalOpen(false);
 
+    const { data: categories, isLoading: catLoading } = useGet(
+        'category',
+        'http://176.96.241.219:8005/api/v1/categories/?parent_only=false'
+    );
+    console.log(parentCategory)
+    console.log(childCategories)
+    useEffect(() => {
+        if (typeof parentCategory === 'number') {
+            const parent = categories?.find(cat => cat.id === parentCategory);
+            setChildCategories(parent?.children || []);
+        } else {
+            setChildCategories([]);
+        }
+    }, [parentCategory, categories]);
+
     // portfolio detail
     const [openDetailModal, setOpenDetailModel] = useState(false)
 
@@ -31,40 +48,6 @@ export default function SellerPortfolio({ pid }) {
         isLoading,
         isError,
     } = useSellerPortfolios(pid, parentCategory, childCategory);
-
-    const uniqueCategories = Array.from(
-        new Map(
-            (portfolioData?.items || [])
-                .filter(
-                    item => item?.category?.id != null && item?.category?.title
-                )
-                .map(item => [
-                    item.category.id,
-                    { id: item.category.id, name: item.category.title },
-                ])
-        ).values()
-    );
-
-    const uniqueSubCategories = Array.from(
-        new Map(
-            (portfolioData?.items || [])
-                .filter(
-                    item =>
-                        item?.sub_category?.id != null &&
-                        item?.sub_category?.title
-                )
-                .map(item => [
-                    item.sub_category.id,
-                    { id: item.sub_category.id, name: item.sub_category.title },
-                ])
-        ).values()
-    );
-
-
-
-    useEffect(() => {
-        setChildCategory('all');
-    }, [parentCategory]);
 
     useEffect(() => {
         if (openModal) {
@@ -78,120 +61,108 @@ export default function SellerPortfolio({ pid }) {
     }, [openModal]);
     return (
         <div>
-            {isLoading ? (
-                <div className='sellerProductSkeletonWrap'>
-                    {Array(16)
-                        .fill(0)
-                        .map((_, i) => (
-                            <Skeleton.Image
-                                key={i}
-                                active
-                                className='sellerProductSkeleton shadow'
-                                style={{ width: '100%' }}
-                            />
-                        ))}
-                </div>
-            ) : showUnavailable ? (
+            {showUnavailable ? (
                 <ServiceIsUnavailable />
             ) : (
                 <div className='SellerPortfolio'>
                     <form className='SellerPortfolioForm'>
-                        {uniqueCategories.length > 0 && (
+                        {categories?.length > 0 && (
                             <select
                                 className='SellerPortfolioSelect'
-                                value={parentCategory}
-                                onChange={e =>
-                                    setParentCategory(e.target.value)
-                                }>
+                                onChange={e => setParentCategory(e.target.value === 'all' ? 'all' : Number(e.target.value))}>
                                 <option value='all'>Barchasi</option>
-                                {uniqueCategories.map(cat => (
+                                {categories.filter(c => c.parent_id == null).map(cat => (
                                     <option key={cat.id} value={cat.id}>
-                                        {cat.name}
+                                        {cat.title}
                                     </option>
                                 ))}
                             </select>
                         )}
-                        {uniqueSubCategories.length > 0 && (
+                        {parentCategory && (
                             <select
                                 className='SellerPortfolioSelect'
                                 value={childCategory}
-                                onChange={e =>
-                                    setChildCategory(e.target.value)
-                                }>
+                                onChange={e => setChildCategory(e.target.value === 'all' ? 'all' : Number(e.target.value))}>
                                 <option value='all'>Barchasi</option>
-                                {uniqueSubCategories.map(sub => (
+                                {childCategories.map(sub => (
                                     <option key={sub.id} value={sub.id}>
-                                        {sub.name}
+                                        {sub.title}
                                     </option>
                                 ))}
                             </select>
                         )}
                     </form>
-                    <div className='SellerPortfolioWrap'>
-                        <div
-                            onClick={showModal}
-                            style={{
-                                border: '2px dashed #d9d9d9',
-                                backgroundColor: 'rgba(0,0,0,0.1)',
-                                borderRadius: '12px',
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                cursor: 'pointer',
-                                transition: 'all 0.3s',
-                            }}
-                            onMouseEnter={(e) => (e.currentTarget.style.borderColor = '#1890ff')}
-                            onMouseLeave={(e) => (e.currentTarget.style.borderColor = '#d9d9d9')}
-                        >
-                            <PlusOutlined style={{ fontSize: '48px', color: '#1890ff' }} />
+                    {isLoading ? (
+                        <div className='sellerProductSkeletonWrap'>
+                            {Array(16)
+                                .fill(0)
+                                .map((_, i) => (
+                                    <Skeleton.Image
+                                        key={i}
+                                        active
+                                        className='sellerProductSkeleton shadow'
+                                        style={{ width: '100%' }}
+                                    />
+                                ))}
                         </div>
-                        {portfolioData.items.map((item, index) => (
+                    ) : portfolioData?.items?.length === 0 ? (
+                        <ServiceIsUnavailable />
+                    ) : (
+                        <div className='SellerPortfolioWrap'>
                             <div
-                                key={index}
-                                className='SellerPortfolioCard'
+                                onClick={showModal}
+                                style={{
+                                    border: '2px dashed #d9d9d9',
+                                    backgroundColor: 'rgba(0,0,0,0.1)',
+                                    borderRadius: '12px',
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    cursor: 'pointer',
+                                    transition: 'all 0.3s',
+                                }}
+                                onMouseEnter={(e) => (e.currentTarget.style.borderColor = '#1890ff')}
+                                onMouseLeave={(e) => (e.currentTarget.style.borderColor = '#d9d9d9')}
                             >
-                                <img
-                                    src={item?.cover_image[0]}
-                                    alt={item?.title}
-                                    className='SellerPortfolioCardImg'
-                                    onClick={() => {
-                                        setOpenDetailModel(true);
-                                        setCardId(item.id);
-                                    }}
-                                />
-                                <div className='SellerPortfolioCardbody'>
-                                    <p className='SellerPortfolioCardTitle'>
-                                        {item?.title}
-                                    </p>
-                                    <div className='SellerPortfolioCardEnd d-flex justify-content-between'>
-                                        <p className='SellerPortfolioCardEndTitle'>
-                                            {item?.sub_category?.title}
-                                        </p>
+                                <PlusOutlined style={{ fontSize: '48px', color: '#1890ff' }} />
+                            </div>
 
-                                        <div className='SellerPortfolioCard_view_count'>
-                                            <i onClick={() => {
-                                                setCardId(item.id);
-                                                setOpenModal(true);
-                                            }}
-                                                className='fa-solid fa-pen fs-4 mx-3 text-white'>
-                                            </i>
-                                            <img
-                                                src='/static/img/eye.png'
-                                                width={'20px'}
-                                            />
-
-                                            <p className='text-white p-0 m-0'>
-                                                {item?.view_count}
+                            {portfolioData.items.map((item, index) => (
+                                <div key={index} className='SellerPortfolioCard'>
+                                    <img
+                                        src={item?.cover_image[0]}
+                                        alt={item?.title}
+                                        className='SellerPortfolioCardImg'
+                                        onClick={() => {
+                                            setOpenDetailModel(true);
+                                            setCardId(item.id);
+                                        }}
+                                    />
+                                    <div className='SellerPortfolioCardbody'>
+                                        <p className='SellerPortfolioCardTitle'>{item?.title}</p>
+                                        <div className='SellerPortfolioCardEnd d-flex justify-content-between'>
+                                            <p className='SellerPortfolioCardEndTitle'>
+                                                {item?.sub_category?.title}
                                             </p>
+                                            <div className='SellerPortfolioCard_view_count'>
+                                                <i
+                                                    onClick={() => {
+                                                        setCardId(item.id);
+                                                        setOpenModal(true);
+                                                    }}
+                                                    className='fa-solid fa-pen fs-4 mx-3 text-white'
+                                                ></i>
+                                                <img src='/static/img/eye.png' width={'20px'} />
+                                                <p className='text-white p-0 m-0'>{item?.view_count}</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
-                    </div>
+                            ))}
+                        </div>
+                    )}
                 </div>
             )}
-
 
             <Modal
                 open={openDetailModal}
@@ -202,7 +173,7 @@ export default function SellerPortfolio({ pid }) {
             >
                 <ProtfolioModal data={
                     portfolioData?.items?.find(item => item.id === cardId)
-                } onClose={setOpenDetailModel}/>
+                } onClose={setOpenDetailModel} />
             </Modal>
 
             <Modal
