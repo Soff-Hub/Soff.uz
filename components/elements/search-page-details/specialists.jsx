@@ -5,7 +5,7 @@ import SearchResultsSpecialists_Card from './search-page-card/searchResultsSpeci
 import Search_Results_NotFound from './notFound';
 
 export default function Search_Results_Specialists({ data, isLoading, page, total }) {
-    const showResults = !isLoading && Array.isArray(data.results) && data.results.length > 0;
+    const showResults = !isLoading && Array.isArray(data?.results) && data?.results?.length > 0;
     console.log(data)
     return (
         <div>

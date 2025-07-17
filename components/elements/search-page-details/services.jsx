@@ -1,17 +1,20 @@
 import React from 'react';
 import Search_Results_Services_filter from './search-page-filter/search-results-services-filter';
 import SearchResultsServices_Card from './search-page-card/searchResultsServices_Card';
-import { Skeleton } from 'antd';
+import { Pagination, Skeleton } from 'antd';
+import Search_Results_NotFound from './notFound';
 
-export default function Search_Results_Services({ data }) {
+export default function Search_Results_Services({ data, page, total, isLoading, childData, parentData }) {
+    const showResults = !isLoading && Array.isArray(data) && data?.length > 0;
     return (
         <div className='Search_Results_Services'>
-            <Search_Results_Services_filter count={data} />
+            <div className='mb-5'>
+                <Search_Results_Services_filter total={total} parentData={parentData} childData={childData} count={data} />
+            </div>
             <div className='Search_Results_Services_product'>
                 <div>
-                    {' '}
                     <div className='Search_Results_Services_wrap'>
-                        {false ? (
+                        {isLoading && (
                             <>
                                 {Array(12)
                                     .fill(0)
@@ -22,8 +25,8 @@ export default function Search_Results_Services({ data }) {
                                             className='Search_Results_Wrap_skeleton'
                                         />
                                     ))}
-                            </> 
-                        ) : (
+                            </>
+                        )}{showResults && (
                             data?.map((item, index) => (
                                 <div key={index}>
                                     <SearchResultsServices_Card
@@ -33,6 +36,21 @@ export default function Search_Results_Services({ data }) {
                             ))
                         )}
                     </div>
+                    {showResults && (
+                        <Pagination
+                            className='mt-3'
+                            current={page}
+                            pageSize={10}
+                            total={total}
+                            onChange={(newPage) => {
+                                router.push({
+                                    pathname: router.pathname,
+                                    query: { ...router.query, page: newPage },
+                                });
+                            }}
+                        />
+                    )}
+                    {!showResults && <Search_Results_NotFound />}
                 </div>
                 <div className='forAdds'></div>
             </div>
