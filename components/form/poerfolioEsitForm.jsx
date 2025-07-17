@@ -2,15 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { Form, Input, Upload, Button, message } from 'antd';
 import { PlusOutlined, UploadOutlined } from '@ant-design/icons';
 import Axios from 'axios';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const { TextArea } = Input;
 
-const PortfolioEditForm = ({ data, portId, onSuccess }) => {
+const PortfolioEditForm = ({ data, portId, onClose }) => {
   const [form] = Form.useForm();
   const [coverImageList, setCoverImageList] = useState([]);
   const [mediaFilesList, setMediaFilesList] = useState([]);
 
   const portfolio = data?.find(item => item.id === portId);
+  const queryClient = useQueryClient()
 
   useEffect(() => {
     if (portfolio) {
@@ -48,22 +50,32 @@ const PortfolioEditForm = ({ data, portId, onSuccess }) => {
     setter(updatedList);
   };
 
-  const handleSubmit = async (values) => {
-    try {
-      const payload = {
-        title: values.title,
-        description: values.description,
-        cover_image: coverImageList.map(f => f.url),
-        media_files: mediaFilesList.map(f => f.url),
-      };
 
-      await Axios.patch(`http://176.96.241.219:8005/api/v1/categories/portfolio-update/${portId}`, payload);
-      message.success('Portfolio muvaffaqiyatli yangilandi');
-      onSuccess?.();
-    } catch (err) {
-      message.error("Xatolik: " + (err?.response?.data?.detail || "Server xatosi"));
+  const editPortfolioMutation = useMutation({
+    mutationFn: async ({ id, upDatedDate }) => Axios.patch(`http://176.96.241.219:8005/api/v1/categories/portfolio-update/${id}`, upDatedDate),
+    onSuccess: () => {
+      message.success('Portfolio muvaffaqiyatli yangilandi!');
+      queryClient.invalidateQueries({ queryKey: ['portfolios'] })
+      onClose(false)
+    },
+    onError: () => {
+      message.error("Portfolio yangilanmadi")
+      onClose(false)
     }
+  })
+
+  const { mutate, isLoding } = editPortfolioMutation
+
+  const handleSubmit = async (values) => {
+    const upDatedDate = {
+      title: values.title,
+      description: values.description,
+      cover_image: coverImageList.map(f => f.url),
+      media_files: mediaFilesList.map(f => f.url),
+    };
+    mutate({id :portId, upDatedDate})
   };
+
 
   return (
     <Form form={form} layout="vertical" onFinish={handleSubmit}>
@@ -75,7 +87,7 @@ const PortfolioEditForm = ({ data, portId, onSuccess }) => {
         <TextArea rows={3} />
       </Form.Item>
 
-      <Form.Item style={{marginBottom: '50px'}} label="Muqova rasmlari">
+      <Form.Item style={{ marginBottom: '50px' }} label="Muqova rasmlari">
         <Upload
           action="http://176.96.241.219:8005/api/v1/upload/"
           listType="picture-card"
@@ -84,10 +96,10 @@ const PortfolioEditForm = ({ data, portId, onSuccess }) => {
           multiple
           fileList={coverImageList}
           onChange={(info) => handleChange(info, setCoverImageList)}
-          style={{minHeight: '100px'}}
+          style={{ minHeight: '100px' }}
         >
           {coverImageList.length >= 3 ? null : (
-            <div style={{marginTop: '40px'}}>
+            <div style={{ marginTop: '40px' }}>
               <PlusOutlined />
               <div style={{ marginTop: 8 }}>Yuklash</div>
             </div>

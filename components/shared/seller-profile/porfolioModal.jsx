@@ -6,19 +6,29 @@ import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
 import Axios from 'axios';
 import { message } from 'antd';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-const ProtfolioModal = ({ data }) => {
+const ProtfolioModal = ({ data, onClose }) => {
     const images = Array.isArray(data?.cover_image)
         ? data.cover_image
         : [data?.cover_image];
+
+    const queryClient = useQueryClient()
     
-    const deletePortfolio = async (id) => {
-        try {
-            await Axios.delete(`http://176.96.241.219:8005/api/v1/categories/portfolio-delete/${id}`)
+    const deleteMutation = useMutation({
+        mutationFn: (id) => Axios.delete(`http://176.96.241.219:8005/api/v1/categories/portfolio-delete/${id}`),
+        onSuccess: () => {
             message.success("Portfolio muvaffaqiyatli o'chirildi!")
-        } catch (error) {
-            message.error("portfolioni o'chirib bolmadi!")
+            queryClient.invalidateQueries(['portfolios'])
+            onClose(false)
+        },
+        onError: () => {
+            message.error("Portfolioni o'chirib bo'lmadi!")
         }
+    })
+
+    const handleDelete = () => {
+        if (data?.id) deleteMutation.mutate(data?.id)
     }
 
     const prevRef = useRef(null);
@@ -102,7 +112,7 @@ const ProtfolioModal = ({ data }) => {
                     </p>
                 )}
 
-                <button onClick={() => deletePortfolio(data?.id)} className='btn btn-danger btn-lg'>Portfolioni o'chirish</button>
+                <button disabled={deleteMutation.isLoading} onClick={handleDelete} className='btn btn-danger btn-lg'>{deleteMutation.isLoading ? "O'chirilmoqda" : "Portfolioni o'chirish"}</button>
             </div>
         </div>
     );

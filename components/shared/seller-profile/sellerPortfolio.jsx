@@ -6,17 +6,14 @@ import ServiceIsUnavailable from './ServiceIsUnavailable';
 import ProtfolioModal from './porfolioModal';
 import PortfolioForm from '~/components/form/portfolioForm';
 import PortfolioEditForm from '~/components/form/poerfolioEsitForm';
+import { useSellerPortfolios } from '~/hooks/useSellerPortfolios';
 
 export default function SellerPortfolio({ pid }) {
     // categoires
     const [parentCategory, setParentCategory] = useState('all');
     const [childCategory, setChildCategory] = useState('all');
-    const [portfolioData, setPortfolioData] = useState(null);
-
-    // loaders
-    const [isLoading, setIsLoading] = useState(true); // start as true
     const [showUnavailable, setShowUnavailable] = useState(false);
-    
+
     // edit portfolio modal
     const [openModal, setOpenModal] = useState(false);
     const [cardId, setCardId] = useState(null);
@@ -28,6 +25,12 @@ export default function SellerPortfolio({ pid }) {
 
     // portfolio detail
     const [openDetailModal, setOpenDetailModel] = useState(false)
+
+    const {
+        data: portfolioData,
+        isLoading,
+        isError,
+    } = useSellerPortfolios(pid, parentCategory, childCategory);
 
     const uniqueCategories = Array.from(
         new Map(
@@ -57,45 +60,7 @@ export default function SellerPortfolio({ pid }) {
         ).values()
     );
 
-    useEffect(() => {
-        if (!pid) return;
 
-        setIsLoading(true);
-        setShowUnavailable(false);
-
-        const timer = setTimeout(() => {
-            setIsLoading(false);
-            if (!portfolioData || portfolioData?.items?.length === 0) {
-                setShowUnavailable(true);
-            }
-        }, 2000); // 2 seconds timeout
-
-        const query = new URLSearchParams();
-        query.append('soff_seller_id', pid);
-        if (parentCategory !== 'all')
-            query.append('category_id', parentCategory);
-        if (childCategory !== 'all')
-            query.append('subcategory_id', childCategory);
-
-        fetch(
-            `http://176.96.241.219:8005/api/v1/categories/portfolio?${query.toString()}`
-        )
-            .then(res => res.json())
-            .then(data => {
-                setPortfolioData(data);
-                clearTimeout(timer);
-                setIsLoading(false);
-                setShowUnavailable(data?.items?.length === 0);
-            })
-            .catch(error => {
-                console.error('Error fetching seller:', error);
-                clearTimeout(timer);
-                setIsLoading(false);
-                setShowUnavailable(true);
-            });
-
-        return () => clearTimeout(timer);
-    }, [pid, parentCategory, childCategory]);
 
     useEffect(() => {
         setChildCategory('all');
@@ -184,14 +149,15 @@ export default function SellerPortfolio({ pid }) {
                             <div
                                 key={index}
                                 className='SellerPortfolioCard'
-                                onClick={() => {
-                                    setOpenDetailModel(true);
-                                    setCardId(item.id);
-                                }}>
+                            >
                                 <img
                                     src={item?.cover_image[0]}
                                     alt={item?.title}
                                     className='SellerPortfolioCardImg'
+                                    onClick={() => {
+                                        setOpenDetailModel(true);
+                                        setCardId(item.id);
+                                    }}
                                 />
                                 <div className='SellerPortfolioCardbody'>
                                     <p className='SellerPortfolioCardTitle'>
@@ -236,7 +202,7 @@ export default function SellerPortfolio({ pid }) {
             >
                 <ProtfolioModal data={
                     portfolioData?.items?.find(item => item.id === cardId)
-                }/>
+                } onClose={setOpenDetailModel}/>
             </Modal>
 
             <Modal
@@ -246,18 +212,17 @@ export default function SellerPortfolio({ pid }) {
                 width={800}
                 footer={null}
             >
-                <PortfolioEditForm setOpenModal={setOpenModal} portId={cardId} data={portfolioData?.items} />
+                <PortfolioEditForm onClose={setOpenModal} portId={cardId} data={portfolioData?.items} />
             </Modal>
 
             <Modal
-                title="Yangi element qo‘shish"
+                title="Yangi portfolio qo‘shish"
                 open={isModalOpen}
                 onCancel={handleCancel}
                 footer={null}
                 width={800}
             >
-                {/* Bu yerga formani joylashtirasan */}
-                <PortfolioForm />
+                <PortfolioForm onClose={handleCancel} />
             </Modal>
         </div>
     );
