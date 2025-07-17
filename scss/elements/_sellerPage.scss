@@ -1292,77 +1292,82 @@ body.no-scroll {
     }
 }
 .SellerPortfolioCard {
-    max-height: 180px;
-    max-width: 230px;
-    // height: clamp(5rem, 6.25vw + 3.75rem, 15.2rem);
-    height: 150px;
-    background-color: #fff;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
+  max-height: 180px;
+  max-width: 230px;
+  height: 150px;
+  background-color: #fff;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
 
-    .SellerPortfolioCardImg {
-        width: 100%;
-        max-height: 200px;
-        border-radius: 10px;
-        transition: filter 0.3s ease;
+  .SellerPortfolioCardImg {
+    width: 100%;
+    max-height: 200px;
+    border-radius: 10px;
+    transition: filter 0.3s ease, transform 0.3s ease;
+    object-fit: cover;
+  }
+
+  .SellerPortfolioCardbody {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    z-index: 20;
+    transform: translateY(100%);
+    opacity: 0;
+    transition: all 0.4s ease;
+
+    .SellerPortfolioCardTitle {
+      font-family: 'Poppins';
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.24px;
+      color: #fff;
+      margin-bottom: 4px;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
     }
 
-    &:hover {
-        .SellerPortfolioCardImg {
-            filter: brightness(30%);
-        }
+    .SellerPortfolioCardEnd {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
 
-        .SellerPortfolioCardbody {
-            .SellerPortfolioCardEnd {
-                .SellerPortfolioCard_view_count {
-                    display: flex;
-                    align-items: center;
-                    gap: 5px;
-                }
-            }
-        }
+      .SellerPortfolioCardEndTitle {
+        font-family: 'Poppins';
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 0.24px;
+        color: #fff;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+      }
+
+      .SellerPortfolioCard_view_count {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+    }
+  }
+
+  &:hover {
+    .SellerPortfolioCardImg {
+      filter: brightness(50%);
+      transform: scale(1.03);
     }
 
     .SellerPortfolioCardbody {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        padding: 5px;
-        // display: none;
-        z-index: 2;
-
-        .SellerPortfolioCardTitle {
-            color: #fff;
-            font-family: 'Poppins';
-            font-size: 12px;
-            font-style: normal;
-            font-weight: 500;
-            line-height: normal;
-            letter-spacing: 0.24px;
-            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
-        }
-
-        .SellerPortfolioCardEnd {
-            .SellerPortfolioCardEndTitle {
-                color: #fff;
-                font-family: 'Poppins';
-                font-size: 12px;
-                font-style: normal;
-                font-weight: 500;
-                line-height: normal;
-                letter-spacing: 0.24px;
-                text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8); /* Makes text readable on dark bg */
-            }
-            .SellerPortfolioCard_view_count {
-                display: none;
-            }
-        }
+      transform: translateY(0);
+      opacity: 1;
     }
+  }
 }
 
 /* Optional: Ensure content is above the image if needed */

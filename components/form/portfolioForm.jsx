@@ -4,10 +4,11 @@ import { PlusOutlined, UploadOutlined } from '@ant-design/icons';
 import Axios from 'axios';
 import { useRouter } from 'next/router';
 import { useGet } from '~/repositories/https';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const { TextArea } = Input;
 
-const PortfolioForm = () => {
+const PortfolioForm = ({ onClose }) => {
   const [form] = Form.useForm();
   const [coverImageList, setCoverImageList] = useState([]);
   const [mediaFilesList, setMediaFilesList] = useState([]);
@@ -18,12 +19,32 @@ const PortfolioForm = () => {
     'http://176.96.241.219:8005/api/v1/categories/?parent_only=false'
   );
   const router = useRouter();
+  const queryClient = useQueryClient()
   const sellerId = router.query.pid;
 
   useEffect(() => {
     const parent = categories?.find((cat) => cat.id === parentCategory);
     setChildCategories(parent?.children || []);
   }, [parentCategory, categories]);
+
+
+  const { mutate: createPortfolio, isPending } = useMutation({
+    mutationFn: async (payload) => await Axios.post('http://176.96.241.219:8005/api/v1/categories/portfolio-create', payload),
+    onSuccess: () => {
+      message.success("Portfolio muvaffaqiyatli qo'shildi!")
+      form.resetFields()
+      setCoverImageList([])
+      setMediaFilesList([])
+      setParentCategory(undefined)
+      queryClient.invalidateQueries({ queryKey: ['portfolios'] })
+      onClose()
+    },
+    onError: () => {
+      message.error("Portfolio qo'shilmadi")
+      onClose()
+    }
+  })
+
 
   const handleUploadChange = (info, setter) => {
     const newList = info.fileList.map((file) => {
@@ -36,30 +57,20 @@ const PortfolioForm = () => {
   };
 
   const onFinish = async (values) => {
-    console.log(values)
-    try {
-      const payload = {
-        soff_seller_id: sellerId,
-        service_id: values.service_id,
-        sub_category_id: values.sub_category_id,
-        category_id: values.category_id,
-        title: values.title,
-        description: values.description,
-        cover_image: values.cover_image.fileList.map((file) => file.response.url),
-        media_files: values.media_files.fileList.map((file) => file.response.url),
-      };
+    const payload = {
+      soff_seller_id: sellerId,
+      service_id: values.service_id,
+      sub_category_id: values.sub_category_id,
+      category_id: values.category_id,
+      title: values.title,
+      description: values.description,
+      cover_image: coverImageList.map((file) => file.response?.url || file.url),
+      media_files: mediaFilesList.map((file) => file.response?.url || file.url),
+    };
 
-      await Axios.post(
-        'http://176.96.241.219:8005/api/v1/categories/portfolio-create',
-        payload
-      );
-
-      message.success('Portfolio muvaffaqiyatli qo‘shildi!');
-      form.resetFields();
-    } catch (err) {
-      message.error('Xatolik: ' + (err.response?.data?.detail || 'Server xatosi'));
-    }
+    createPortfolio(payload)
   };
+  console.log('Kategoriyalar:', categories);
 
   return (
     <Form
@@ -81,15 +92,16 @@ const PortfolioForm = () => {
           <Form.Item
             name="cover_image"
             label="Muqova rasmlari"
-            // rules={[{ required: true, message: 'Kamida 1ta rasm yuklang' }]}
-          
+            rules={[{ required: true, message: 'Kamida 1ta rasm yuklang' }]}
+
           >
             <Upload
               action="http://176.96.241.219:8005/api/v1/upload/"
               listType="picture-card"
               accept=".png,.jpg,.jpeg,.webp"
               fileList={coverImageList}
-              style={{minHeight: '100px'}}
+              style={{ minHeight: '100px' }}
+              valuePropName="fileList"
               onChange={(info) => {
                 const newList = info.fileList.map((file) => {
                   if (file.response?.url && !file.url) {
@@ -104,7 +116,7 @@ const PortfolioForm = () => {
               className='mb-5'
             >
               {coverImageList.length >= 3 ? null : (
-                <div style={{marginTop: '40px'}}>
+                <div style={{ marginTop: '40px' }}>
                   <PlusOutlined />
                   <div style={{ marginTop: 8 }}>Yuklash</div>
                 </div>
@@ -174,7 +186,7 @@ const PortfolioForm = () => {
           )}
 
           <Form.Item>
-            <Button type="primary" htmlType="submit" block>
+            <Button loading={isPending} type="primary" htmlType="submit" block>
               Yuborish
             </Button>
           </Form.Item>
