@@ -1,27 +1,10 @@
 import { Skeleton } from 'antd';
 import React, { useEffect, useState } from 'react';
-import CalculateTimeDifference from '~/components/partials/account/DateFormatter';
-
+import { useGet } from '~/repositories/https';
+import { getTimeAgo } from '~/utilities/calculateTime';
 export default function SellerComments ({ pid }) {
-    const [comments, setComments] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
+    const {data: comments, isLoading} = useGet("comments", `http://176.96.241.219:8005/api/v1/comments/service-comments?service_id=9`)
 
-    useEffect(() => {
-        setIsLoading(true);
-        if (pid) {
-            fetch(`http://176.96.241.219:8006/api/v1/customer/reviews/${pid}`)
-                .then(res => res.json())
-                .then(data => {
-                    setComments(data?.results);
-                })
-                .catch(error => {
-                    console.error('Error fetching seller:', error);
-                })
-                .finally(() => {
-                    setIsLoading(false);
-                });
-        }
-    }, [pid]);
 
     return (
         <div className='SellerComments'>
@@ -38,7 +21,7 @@ export default function SellerComments ({ pid }) {
                         ))}
                 </>
             )}
-            {comments?.map((item, index) => (
+            {comments?.comments?.map((item, index) => (
                 <div key={index} className='SellerCommentsCard'>
                     <div className='SellerCommentsCardAboutSeller'>
                         <div className='SellerCommentsCardAboutSellerinfo'>
@@ -51,13 +34,11 @@ export default function SellerComments ({ pid }) {
                                     }
                                     alt={item.isName}
                                 />
-                                <p>{item.user_full_name}</p>
+                                <p>{item.user.full_name}</p>
+                                <p className='SellerCommentsCardSellerActivety'>
+                                    {getTimeAgo(item.created_at)}
+                                </p>
                             </div>
-                            <p className='SellerCommentsCardSellerActivety'>
-                                <CalculateTimeDifference
-                                    targetDate={item.created_at}
-                                />
-                            </p>
                         </div>
                         <img
                             src={item.rating}
@@ -66,7 +47,7 @@ export default function SellerComments ({ pid }) {
                         />
                     </div>
                     <div className='SellerCommentsCardSellerCommentWrap'>
-                        <p className='SellerCommentsCardComment'>{item.text}</p>
+                        <p className='SellerCommentsCardComment'>{item.content}</p>
                     </div>
                     <div className='SellerCommentsCardBtnWrap'>
                         <a
