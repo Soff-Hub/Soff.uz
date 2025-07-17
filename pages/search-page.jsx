@@ -34,7 +34,7 @@ const Search_Results = ({ fourChildData, childCategoryData }) => {
     const [specialistsData, setSpecialistsData] = useState(null)
     const [servicesData, setServicesData] = useState(null);
 
-    // search useEffect _________________________________________________________________
+    // Products _________________________________________________________________
     useEffect(() => {
         const fetchProducts = async () => {
             setIsLoading(true)
@@ -66,6 +66,7 @@ const Search_Results = ({ fourChildData, childCategoryData }) => {
         fetchSpecialists();
     }, [keyword, position]);
 
+    // Services
     useEffect(() => {
         const fetchServices = async () => {
             setIsLoading(true)
@@ -170,7 +171,14 @@ const Search_Results = ({ fourChildData, childCategoryData }) => {
             />
         ),
         services: (
-            <Search_Results_Services />
+            <Search_Results_Services 
+                childData={fourChildData}
+                parentData={childCategoryData}
+                data={servicesData?.results}
+                page={page}
+                total={servicesData?.count}
+                isLoading={isLoading}
+            />
         ),
     };
 

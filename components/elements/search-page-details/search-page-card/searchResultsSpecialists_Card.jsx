@@ -1,9 +1,14 @@
+import { useRouter } from 'next/router';
 import React from 'react';
 
-export default function SearchResultsSpecialists_Card ({data}) {
-    
+export default function SearchResultsSpecialists_Card({ data }) {
+    const router = useRouter()
     return (
-        <div className='Search_Results_Specialists_Card'>
+        <div onClick={() => {
+            router.push({
+                pathname: `_seller/${data?.id}`
+            })
+        }} className='Search_Results_Specialists_Card'>
             <img
                 className='Search_Results_Specialists_Card_img'
                 src={data.photo_url}
@@ -24,6 +29,6 @@ export default function SearchResultsSpecialists_Card ({data}) {
             </p>
             <p className='Search_Results_Specialists_Card_job'>{data.position}</p>
         </div>
-        
+
     );
 }
