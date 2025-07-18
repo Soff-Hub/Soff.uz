@@ -1,6 +1,4 @@
-import { Spin } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { baseURL } from '~/repositories/api';
 import Swiper_Pages from '../swipper/swiper';
 import RedesignProduct from '~/components/elements/products/Redesign/Redesign-Product';
 
@@ -25,16 +23,20 @@ export default function TemplatesSwipper () {
     }, []);
 
     return (
-        <div className=' categoryHighlightsSwippercontainer'>
+
+        <div className='categoryHighlightsSwippercontainer '>
             {Array.isArray(product) && product.length > 0 && (
                 <div className='categoryHighlightsSwipper'>
                     <div className='SwipperTitlewrap'>
-                        <a className='SwipperTitle' href='/templates/all'>
-                            Tayyor shablonlar{' '}
-                        </a>
+                        <a
+                            className='SwipperTitle'
+                            href='/templates/all'>
+                            Tayyor shablonlar
+                        </a> 
                     </div>
+
                     {product ? (
-                        <Swiper_Pages type='template'>
+                        <Swiper_Pages type='design'>
                             {product.map((item, index) => (
                                 <div>
                                     <RedesignProduct

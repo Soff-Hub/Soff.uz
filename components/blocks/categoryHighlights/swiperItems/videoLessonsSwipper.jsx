@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { baseURL } from '~/repositories/api';
 import Swiper_Pages from '../swipper/swiper';
 import RedesignProduct from '~/components/elements/products/Redesign/Redesign-Product';
-import DesignDevelopmentProducts from '~/components/elements/products/DesignDevelopmentProducts';
 
 export default function VideoLessonsSwipper () {
     const [product, setProduct] = useState(null);
@@ -12,7 +11,7 @@ export default function VideoLessonsSwipper () {
     useEffect(() => {
         setIsLoading(true);
 
-        fetch(`${baseURL}customer/products?direction=video`)
+        fetch(`https://api.soff.uz/api/v1/customer/products?direction=video`)
             .then(res => res.json())
             .then(data => {
                 setProduct(data.results);
@@ -26,21 +25,24 @@ export default function VideoLessonsSwipper () {
     }, []);
 
     return (
-        <div className=' categoryHighlightsSwippercontainer'>
+
+        <div className='categoryHighlightsSwippercontainer mb-5'>
             {Array.isArray(product) && product.length > 0 && (
                 <div className='categoryHighlightsSwipper'>
                     <div className='SwipperTitlewrap'>
-                        <a className='SwipperTitle' href='/video-lessons/all'>
+                        <a
+                            className='SwipperTitle'
+                            href='/video-lessons/all'>
                             Video ishlanmalar
-                        </a>
+                        </a> 
                     </div>
                     {product ? (
-                        <Swiper_Pages type='video'>
+                        <Swiper_Pages type='design'>
                             {product.map((item, index) => (
                                 <div>
-                                    <DesignDevelopmentProducts
-                                        key={index}
+                                    <RedesignProduct
                                         product={item}
+                                        key={index}
                                     />
                                 </div>
                             ))}

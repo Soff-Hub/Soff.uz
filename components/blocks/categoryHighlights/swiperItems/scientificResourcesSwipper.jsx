@@ -1,21 +1,18 @@
-import { Spin } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { baseURL } from '~/repositories/api';
 import Swiper_Pages from '../swipper/swiper';
 import RedesignProduct from '~/components/elements/products/Redesign/Redesign-Product';
-import DesignDevelopmentProducts from '~/components/elements/products/DesignDevelopmentProducts';
 
-export default function ScientificResourcesSwipper () {
-    const [product, setProduct] = useState();
+export default function ScientificResourcesSwipper() {
+    const [products, setProducts] = useState();
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         setIsLoading(true);
 
-        fetch(`${baseURL}customer/products?direction=file`)
+        fetch(`https://api.soff.uz/api/v1/customer/products/?direction=file`)
             .then(res => res.json())
             .then(data => {
-                setProduct(data?.results);
+                setProducts(data?.results);
             })
             .catch(error => {
                 console.error('Error fetching products:', error);
@@ -26,19 +23,21 @@ export default function ScientificResourcesSwipper () {
     }, []);
 
     return (
-        <div className=' categoryHighlightsSwippercontainer'>
-            {Array.isArray(product) && product.length > 0 && (
+
+        <div className='categoryHighlightsSwippercontainer mb-5'>
+            {Array.isArray(products) && products.length > 0 && (
                 <div className='categoryHighlightsSwipper'>
                     <div className='SwipperTitlewrap'>
                         <a
                             className='SwipperTitle'
                             href='/scientific-resources/all'>
-                            Ilmiy ishlar{' '}
-                        </a>
+                            Ilmiy ishlar
+                        </a> 
                     </div>
-                    {product ? (
-                        <Swiper_Pages categoryName type='file'>
-                            {product?.map((item, index) => (
+
+                    {products ? (
+                        <Swiper_Pages categoryName type='template'>
+                            {products?.map((item, index) => (
                                 <div>
                                     <RedesignProduct
                                         product={item}

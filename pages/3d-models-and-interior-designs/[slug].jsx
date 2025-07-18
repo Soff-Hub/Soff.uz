@@ -5,6 +5,7 @@ import PageContainer from '~/components/layouts/PageContainer';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
 import Meta from '~/components/shared/headers/Meta';
 import ProductsByModelsAndDesignCategory from '~/components/partials/category/ProductsByModelsAndDesignCategory';
+import { baseUrlUseApi } from '~/repositories/useApi';
 
 export default function ModelsAndInteriorDesign ({
     productsData,
