@@ -121,10 +121,10 @@ export default function SellerPortfolio({ pid }) {
                                     cursor: 'pointer',
                                     transition: 'all 0.3s',
                                 }}
-                                onMouseEnter={(e) => (e.currentTarget.style.borderColor = '#1890ff')}
+                                onMouseEnter={(e) => (e.currentTarget.style.borderColor = 'rgba(0, 164, 79, 1)')}
                                 onMouseLeave={(e) => (e.currentTarget.style.borderColor = '#d9d9d9')}
                             >
-                                <PlusOutlined style={{ fontSize: '48px', color: '#1890ff' }} />
+                                <PlusOutlined style={{ fontSize: '48px', color: 'rgba(0, 164, 79, 1)' }} />
                             </div>
 
                             {portfolioData.items.map((item, index) => (

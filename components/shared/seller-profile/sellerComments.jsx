@@ -1,4 +1,4 @@
-import { Skeleton } from 'antd';
+import { Rate, Skeleton } from 'antd';
 import React from 'react';
 import { useGet } from '~/repositories/https';
 import { getTimeAgo } from '~/utilities/calculateTime';
@@ -24,7 +24,7 @@ export default function SellerComments ({ pid }) {
             {comments?.comments?.map((item, index) => (
                 <div key={index} className='SellerCommentsCard'>
                     <div className='SellerCommentsCardAboutSeller'>
-                        <div className='SellerCommentsCardAboutSellerinfo'>
+                        <div className='SellerCommentsCardAboutSellerinfo mb-4'>
                             <div className='SellerCommentsCardSellerAvatar'>
                                 <img
                                     src={
@@ -39,6 +39,7 @@ export default function SellerComments ({ pid }) {
                                     {getTimeAgo(item.created_at)}
                                 </p>
                             </div>
+                            <Rate style={{fontSize: '16px', color: 'orange'}} value={item.rating}  disabled/>
                         </div>
                         <img
                             src={item.rating}
