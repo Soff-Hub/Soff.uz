@@ -12,7 +12,7 @@ export default function Search_Results_Products({ data, page, total, isLoading, 
     return (
         <>  
             <div className='mb-5'>
-                <SearchResultsProductsFilter total={total} parentData={parentData} childData={childData}   count={data} />
+                <SearchResultsProductsFilter total={total} parentData={parentData} childData={childData} count={data} />
             </div>
             <>
                 <div className='Search_Results_Products container'>

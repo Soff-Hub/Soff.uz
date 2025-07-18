@@ -12,8 +12,6 @@ export default function LoginForm () {
     const [loading, setLoading] = useState(false);
 
     const router = useRouter();
-    console.log('setLoading', setLoading);
-
     const handleSubmit = async ({ phone, email }) => {
         setLoading(true);
 

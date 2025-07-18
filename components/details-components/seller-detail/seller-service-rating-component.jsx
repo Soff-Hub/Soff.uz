@@ -2,8 +2,6 @@ import React from 'react';
 import { Rating } from 'react-simple-star-rating';
 
 export default function SellerRating ({ data }) {
-    console.log('SellerRating', data);
-
     return (
         <div className='mt-2'>
             <p className='fs-3'>Mezonlar bo‘yicha reytinglar</p>

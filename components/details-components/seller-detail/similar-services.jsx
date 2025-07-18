@@ -8,7 +8,7 @@ export default function SimilarServices ({ portfoiloData }) {
             {Array.isArray(portfoiloData) && portfoiloData.length > 0 && (
                 <div className='categoryHighlightsSwipper'>
                     <div className='SwipperTitlewrap'>
-                        <h2 className='SwipperTitle mt-md-5 mt-xl-0 mt-lg-0 mt-5'>
+                        <h2 className='SwipperTitle mt-md-5 mt-xl-0 mt-lg-0 mt-5 w-75'>
                             O‘xshash xizmatlar va takliflar{' '}
                         </h2>
                     </div>

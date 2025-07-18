@@ -2,7 +2,6 @@ import React from 'react';
 import PageContainer from '~/components/layouts/PageContainer';
 import Meta from '~/components/shared/headers/Meta';
 import ProductsByCategory from '~/components/partials/category/ProductsByCategory';
-import FooterComponents from '~/components/blocks/footer/FooterComponents';
 import ScientificResourcesFilterSection, {
     getTitleFromSlug,
 } from '~/components/elements/ScientificResourcesFilterSection';
@@ -119,7 +118,7 @@ export async function getServerSideProps (context) {
     const [productsData, fourChildData, childCategoryData] = await Promise.all([
         fetchJson(productsUrl),
         fetchJson(fourChildUrl),
-        fetchJson(childCategoryUrl)
+        fetchJson(childCategoryUrl),
         
     ]);
     return {

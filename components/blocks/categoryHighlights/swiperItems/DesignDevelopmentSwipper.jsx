@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Swiper_Pages from '../swipper/swiper';
 import RedesignProduct from '~/components/elements/products/Redesign/Redesign-Product';
-import DesignDevelopmentProducts from '~/components/elements/products/DesignDevelopmentProducts';
 
-export default function DesignDevelopmentSwipper () {
+export default function DesignDevelopmentSwipper() {
     const [product, setProduct] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -24,7 +23,9 @@ export default function DesignDevelopmentSwipper () {
     }, []);
 
     return (
-        <div className=' categoryHighlightsSwippercontainer'>
+
+        <div className='categoryHighlightsSwippercontainer mb-5'>
+
             {Array.isArray(product) && product.length > 0 && (
                 <div className='categoryHighlightsSwipper'>
                     <div className='SwipperTitlewrap'>
@@ -34,13 +35,14 @@ export default function DesignDevelopmentSwipper () {
                             Dizayn shablonlar
                         </a>
                     </div>
+
                     {product ? (
-                        <Swiper_Pages categoryName type='design'>
-                            {product?.map((item, index) => (
+                        <Swiper_Pages type='design'>
+                            {product.map((item, index) => (
                                 <div>
-                                    <DesignDevelopmentProducts
-                                        key={index}
+                                    <RedesignProduct
                                         product={item}
+                                        key={index}
                                     />
                                 </div>
                             ))}

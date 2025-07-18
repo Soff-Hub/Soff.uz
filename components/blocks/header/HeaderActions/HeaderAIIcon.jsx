@@ -20,7 +20,7 @@ export const soffiaIconSVG3 = <svg width="22" height="23" viewBox="0 0 22 23" fi
 
 export default function HeaderAIIcon() {
     return (
-        <Link href={`/soffia`}>
+        <Link href={`/soffia`} legacyBehavior>
             <a className="fs-3">
                 {soffiaIconSVG} Soffia
             </a>

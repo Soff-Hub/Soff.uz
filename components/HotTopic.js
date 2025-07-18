@@ -17,29 +17,24 @@ export default () => {
     }, []);
     return (
         <Swiper
-            // install Swiper modules
             modules={[Navigation, Pagination, Scrollbar, A11y]}
             spaceBetween={50}
             slidesPerView={1}
             navigation
             controller={{ control: Swiper }}
-            pagination={{ clickable: true }}
-            // scrollbar={{ draggable: true }}
-            // onSwiper={(swiper) => console.log(swiper)}
-            // onSlideChange={() => console.log('slide change')}
-        >
-            {data?.map((el) => (
+            pagination={{ clickable: true }}>
+            {data?.map(el => (
                 <SwiperSlide>
                     <div
                         key={el.id}
-                        className="modal-vedio-tutorial_container-carousel">
+                        className='modal-vedio-tutorial_container-carousel'>
                         <iframe
-                            width="100%"
-                            height="300px"
+                            width='100%'
+                            height='300px'
                             src={`${el.vedioUrl}`}
-                            title="YouTube video player"
-                            frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
+                            title='YouTube video player'
+                            frameborder='0'
+                            allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen'
                             allowfullscreen></iframe>
                     </div>
                 </SwiperSlide>

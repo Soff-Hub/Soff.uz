@@ -10,8 +10,6 @@ export default function ProductsByCategory ({
     handlePagination,
     isLoading,
 }) {
-    console.log('ProductsByCategory', data);
-
     return (
         <>
             <div id='products' className='container scientificResourcesWrap'>

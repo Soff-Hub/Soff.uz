@@ -37,7 +37,6 @@ const HeaderActions = ({ auth, isDark }) => {
             )}
 
             {data?.length > 0 && <MiniCart />}
-
             <HeaderUserDropdown
                 color={isDark ? 'text-black' : 'text-white'}
                 isLoggedIn={auth.isLoggedIn && Boolean(auth.isLoggedIn)}

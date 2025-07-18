@@ -1,12 +1,12 @@
 import React from 'react';
 
 export default function SearchResultsServices_Card ({product}) {
-
+    console.log('product', product)
     return (
-        <div className='Search_Results_Services_card'>
+        <div className='Search_Results_Services_card '>
             <img
                 className='Search_Results_Services_card_img'
-                src={product.img}
+                src={product.file}
                 alt=''
             />
             <svg
@@ -33,15 +33,15 @@ export default function SearchResultsServices_Card ({product}) {
                 <div className='Search_Results_Services_card_infoPerson'>
                     <img
                         className='Search_Results_Services_card_infoPerson_avatar'
-                        src={product.avatar}
+                        src={product?.seller?.photo_url}
                         alt=''
                     />
                     <p className='Search_Results_Services_card_infoPerson_isname'>
-                        {product.title.slice(0, 15)}
+                        {product?.seller?.full_name}
                     </p>
                     <img
                         className='Search_Results_Services_card_infoPerson_status'
-                        src={product.statusImg}
+                        src='/static/img/Ritsar.png'
                         alt=''
                     />
                 </div>
@@ -49,7 +49,7 @@ export default function SearchResultsServices_Card ({product}) {
                     {product.title}
                 </p>
                 <p className='Search_Results_Services_card_price'>
-                    {product.price} so'm
+                    {product.packages[0]?.price} so'm
                 </p>
             </div>
         </div>

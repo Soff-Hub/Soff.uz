@@ -1501,16 +1501,14 @@ body.no-scroll {
         }
     }
 }
-
+.SwipperTitlewrap {
+    margin: 15px 0 !important;
+}
 .categoryHighlightsSwippercontainer {
-    // margin: 0 auto;
     width: clamp(18.75rem, 100.858vw - 1.422rem, 165.625rem) !important;
     overflow: hidden !important;
     .categoryHighlightsSwipper {
-        margin-top: clamp(0.313rem, 0.58vw + 0.196rem, 1.125rem);
-        .SwipperTitlewrap {
-            margin: 15px 0 15px 0 !important;
-        }
+
         .categoryHighlightsSwipperWrap {
             display: flex;
             align-items: center;

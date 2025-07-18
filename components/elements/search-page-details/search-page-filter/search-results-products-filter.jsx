@@ -55,128 +55,128 @@ export default function SearchResultsProductsFilter({ total, parentData, childDa
     }, undefined, { scroll: false });
   };
 
-return (
-  <div className='Search_Results_Products_form_box container'>
-    <div className="row align-items-center mb-3">
-      <div className="col-12 col-md-3">
-        <p className='countProduct text-nowrap m-0'>
-          {total ? `${total} ta mahsulot` : ''}
-        </p>
+  return (
+    <div className='Search_Results_Products_form_box container'>
+      <div className="row align-items-center mb-3">
+        <div className="col-12 col-md-3">
+          <p className='countProduct text-nowrap m-0'>
+            {total ? `${total} ta mahsulot` : ''}
+          </p>
+        </div>
       </div>
-    </div>
 
-    <form className="Search_Results_Products_form">
-      <div className="row g-3">
+      <form className="Search_Results_Products_form">
+        <div className="row g-3">
 
-        {/* Dynamic col class hisoblash */}
-        {(() => {
-          const hasType = router.query.type && router.query.type !== 'all';
-          const hasParent = !!router.query.parentCategory;
-          const hasChild = !!router.query.category;
+          {/* Dynamic col class hisoblash */}
+          {(() => {
+            const hasType = router.query.type && router.query.type !== 'all';
+            const hasParent = !!router.query.parentCategory;
+            const hasChild = !!router.query.category;
 
-          // Nechta Select borligini aniqlaymiz
-          const totalCount = 1 + (hasType ? 1 : 0) + (hasParent ? 1 : 0) + 1; // type + parent + child + order_by
-          let colLg = '4'; // default
+            // Nechta Select borligini aniqlaymiz
+            const totalCount = 1 + (hasType ? 1 : 0) + (hasParent ? 1 : 0) + 1; // type + parent + child + order_by
+            let colLg = '4'; // default
 
-          if (totalCount <= 2) colLg = '6';
-          else if (totalCount === 3) colLg = '4';
-          else colLg = '3';
+            if (totalCount <= 2) colLg = '6';
+            else if (totalCount === 3) colLg = '4';
+            else colLg = '3';
 
-          const commonCol = `col-6 col-lg-${colLg}`;
+            const commonCol = `col-6 col-lg-${colLg}`;
 
-          return (
-            <>
-              {/* type */}
-              <div className={commonCol}>
-                <Select
-                  // className="w-100"
-                  style={{width: '150px'}}
-                  value={router.query.type || 'all'}
-                  allowClear
-                  onClear={handleClearAll}
-                  onChange={(value) =>
-                    handleChange({ type: value, parentCategory: '', category: '' })
-                  }
-                >
-                  {allTypes.map((item) => (
-                    <Option key={item.value} value={item.value}>
-                      <span className="d-flex align-items-center gap-2">
-                        {item.icon} {item.title}
-                      </span>
-                    </Option>
-                  ))}
-                </Select>
-              </div>
-
-              {/* Katta kategoriya */}
-              {hasType && (
+            return (
+              <>
+                {/* type */}
                 <div className={commonCol}>
                   <Select
-                    style={{width: '150px'}}
-                    placeholder="Katta kategoriya"
-                    value={router.query.parentCategory || undefined}
+                    // className="w-100"
+                    style={{ width: '150px' }}
+                    value={router.query.type || 'all'}
                     allowClear
-                    onClear={() => handleChange({ parentCategory: '', category: '' })}
-                    onChange={(value) => {
-                      const selected = childData?.results?.find(cat => cat.slug === value);
-                      handleChange({
-                        parentCategory: selected?.slug || '',
-                        category: selected?.id,
-                      });
-                    }}
-                    options={childData?.results?.map(cat => ({
-                      value: cat.slug,
-                      label: cat.name,
-                    }))}
-                  />
+                    onClear={handleClearAll}
+                    onChange={(value) =>
+                      handleChange({ type: value, parentCategory: '', category: '' })
+                    }
+                  >
+                    {allTypes.map((item) => (
+                      <Option key={item.value} value={item.value}>
+                        <span className="d-flex align-items-center gap-2">
+                          {item.icon} {item.title}
+                        </span>
+                      </Option>
+                    ))}
+                  </Select>
                 </div>
-              )}
 
-              {/* Child kategoriya */}
-              {hasParent && (
-                <div className={commonCol}>
-                  <Select
-                    style={{width: '150px'}}
-                    placeholder="Kategoriya"
-                    allowClear
-                    onClear={() => handleChange({ category: '' })}
-                    onChange={(value) => handleChange({ category: value })}
-                    options={parentData?.results?.map(cat => ({
-                      value: String(cat.id),
-                      label: cat.name,
-                    }))}
-                  />
-                </div>
-              )}
-
-              {/* Saralash + Tozalash */}
-              <div className={commonCol}>
-                <div className="d-flex align-items-center gap-2">
-                  <Select
-                    style={{width: '150px'}}
-                    placeholder="Saralash"
-                    value={router.query.order_by || undefined}
-                    allowClear
-                    onClear={() => handleChange({ order_by: '' })}
-                    onChange={(value) => handleChange({ order_by: value })}
-                    options={orders}
-                  />
-                  {(hasType || hasParent || hasChild || router.query.order_by) && (
-                    <CloseCircleOutlined
-                      style={{ fontSize: 20, cursor: 'pointer', color: 'gray' }}
-                      title="Barchasini tozalash"
-                      onClick={handleClearAll}
+                {/* Katta kategoriya */}
+                {hasType && (
+                  <div className={commonCol}>
+                    <Select
+                      style={{ width: '150px' }}
+                      placeholder="Katta kategoriya"
+                      value={router.query.parentCategory || undefined}
+                      allowClear
+                      onClear={() => handleChange({ parentCategory: '', category: '' })}
+                      onChange={(value) => {
+                        const selected = childData?.results?.find(cat => cat.slug === value);
+                        handleChange({
+                          parentCategory: selected?.slug || '',
+                          category: selected?.id,
+                        });
+                      }}
+                      options={childData?.results?.map(cat => ({
+                        value: cat.slug,
+                        label: cat.name,
+                      }))}
                     />
-                  )}
+                  </div>
+                )}
+
+                {/* Child kategoriya */}
+                {hasParent && (
+                  <div className={commonCol}>
+                    <Select
+                      style={{ width: '150px' }}
+                      placeholder="Kategoriya"
+                      allowClear
+                      onClear={() => handleChange({ category: '' })}
+                      onChange={(value) => handleChange({ category: value })}
+                      options={parentData?.results?.map(cat => ({
+                        value: String(cat.id),
+                        label: cat.name,
+                      }))}
+                    />
+                  </div>
+                )}
+
+                {/* Saralash + Tozalash */}
+                <div className={commonCol}>
+                  <div className="d-flex align-items-center gap-2">
+                    <Select
+                      style={{ width: '150px' }}
+                      placeholder="Saralash"
+                      value={router.query.order_by || undefined}
+                      allowClear
+                      onClear={() => handleChange({ order_by: '' })}
+                      onChange={(value) => handleChange({ order_by: value })}
+                      options={orders}
+                    />
+                    {(hasType || hasParent || hasChild || router.query.order_by) && (
+                      <CloseCircleOutlined
+                        style={{ fontSize: 20, cursor: 'pointer', color: 'gray' }}
+                        title="Barchasini tozalash"
+                        onClick={handleClearAll}
+                      />
+                    )}
+                  </div>
                 </div>
-              </div>
-            </>
-          );
-        })()}
-      </div>
-    </form>
-  </div>
-);
+              </>
+            );
+          })()}
+        </div>
+      </form>
+    </div>
+  );
 
 
 }
