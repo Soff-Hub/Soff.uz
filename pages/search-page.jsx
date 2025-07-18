@@ -71,14 +71,23 @@ const Search_Results = ({ fourChildData, childCategoryData }) => {
     // Services
     useEffect(() => {
         const fetchServices = async () => {
-            setIsLoading(true)
+            setIsLoading(true);
             try {
-                const res = await Axios.get(`${temporaryBaseUrl}users/sellers/service?limit=24&offset=0&search=${keyword}&category_id=${pCategory}&sub_category=${subCategory}`);
+                const queryParams = new URLSearchParams({
+                    limit: 24,
+                    offset: 0,
+                });
+
+                if (keyword) queryParams.append('search', keyword);
+                if (pCategory) queryParams.append('category_id', pCategory);
+                if (subCategory) queryParams.append('sub_category', subCategory);
+
+                const res = await Axios.get(`${temporaryBaseUrl}users/sellers/service?${queryParams.toString()}`);
                 setServicesData(res.data);
             } catch (err) {
                 setError(err.message);
             } finally {
-                setIsLoading(false)
+                setIsLoading(false);
             }
         };
         fetchServices();
@@ -173,7 +182,7 @@ const Search_Results = ({ fourChildData, childCategoryData }) => {
             />
         ),
         services: (
-            <Search_Results_Services 
+            <Search_Results_Services
                 childData={fourChildData}
                 parentData={childCategoryData}
                 data={servicesData?.results}

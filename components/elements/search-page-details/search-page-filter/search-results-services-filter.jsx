@@ -95,7 +95,7 @@ export default function SearchResultsProductsFilter({ total }) {
                                     <Select
                                         // className="w-100"
                                         style={{ width: '150px' }}
-                                        value={router.query.type || 'all'}
+                                        value={router.query.type || ''}
                                         allowClear
                                         onClear={handleClearAll}
                                         onChange={(value) =>
