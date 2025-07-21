@@ -1895,3 +1895,26 @@ body.no-scroll {
         }
     }
 }
+
+
+// custom preview card 
+.custom-upload .ant-upload-list-picture-card {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 60px !important;
+}
+
+.custom-upload .ant-upload-list-item {
+  height: 100px !important;
+  width: 100px !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.custom-upload .ant-upload.ant-upload-select {
+  height: 100px !important;
+  width: 100px !important;
+//   margin-top: 0 !important;
+}

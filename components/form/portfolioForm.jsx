@@ -113,9 +113,9 @@ const PortfolioForm = ({ onClose }) => {
               }}
               name="file"
               multiple
-              className='mb-5'
+              className='mb-5 custom-upload'
             >
-              {coverImageList.length >= 3 ? null : (
+              {coverImageList.length >= 5 ? null : (
                 <div style={{ marginTop: '40px' }}>
                   <PlusOutlined />
                   <div style={{ marginTop: 8 }}>Yuklash</div>
