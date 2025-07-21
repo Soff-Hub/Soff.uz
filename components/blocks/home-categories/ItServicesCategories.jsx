@@ -6,31 +6,31 @@ const itServicesCategoriesData = [
         title: 'Ilmiy va Akademik Xizmatlar',
         imgUrl: '/static/img/Biznes-&-Hayot.png',
         bgColor: '#697200',
-        path: '/orders',
+        path: '/orders?direction=Ilmiy va Akademik Xizmatlar',
     },
     {
         title: '3D Dizayn va Vizualizatsiya',
         imgUrl: '/static/img/3d-design.png',
         bgColor: '#02732f',
-        path: '/orders',
+        path: '/orders?direction=3D Dizayn va Vizualizatsiya',
     },
     {
         title: 'Grafik Dizayn va Shablonlar',
         imgUrl: '/static/img/dizayn-2.png',
         bgColor: '#4d1727',
-        path: '/orders',
+        path: '/orders?direction=Grafik Dizayn va Shablonlar',
     },
     {
         title: 'Veb Dasturlash va IT Xizmatlari',
         imgUrl: '/static/img/Rivojlanish-&-IT.png',
         bgColor: '#ff7641',
-        path: '/orders',
+        path: '/orders?direction=Veb Dasturlash va IT Xizmatlari',
     },
     {
         title: 'Hujjatlar va Professional Shablonlar',
         imgUrl: '/static/img/Matnlar-&-Tarjimalar.png',
         bgColor: '#421300',
-        path: '/orders',
+        path: '/orders?direction=Hujjatlar va Professional Shablonlar',
     },
 ];
 export default function ItServicesCategories () {

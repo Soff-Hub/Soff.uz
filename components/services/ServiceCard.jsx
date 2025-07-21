@@ -1,8 +1,8 @@
-import React from 'react';
+import React from 'react'
 
-export default function SearchResultsServices_Card ({product}) {
+const ServiceCard = ({product}) => {
     return (
-        <div className='Search_Results_Services_card '>
+        <div className='Services_card '>
             <img
                 className='Search_Results_Services_card_img'
                 src={product.file}
@@ -52,5 +52,7 @@ export default function SearchResultsServices_Card ({product}) {
                 </p>
             </div>
         </div>
-    );
+    )
 }
+
+export default ServiceCard

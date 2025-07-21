@@ -5,7 +5,7 @@
 // import Meta from "~/components/shared/headers/Meta";
 // import FooterDefault from "~/components/shared/footers/FooterDefault";
 // import FooterComponents from "~/components/blocks/footer/FooterComponents";
-  
+
 // const categories = [    
 //     { name: "Taqdimot", icon: <FilePptOutlined /> },
 //     { name: "Kurs ishi", icon: <FileWordOutlined /> },
@@ -62,11 +62,11 @@
 //         navigator?.clipboard.writeText(formattedText);
 //         setCopied(true);
 //         message.success("Buyurtma nusxalandi! Endi Telegram moderatoriga yuborishingiz mumkin.");
-    
+
 //         setTimeout(() => {
 //             setCopied(false);
 //             const newWindow = window.open(MODERATOR_TELEGRAM, "_blank");
-    
+
 //             if (!newWindow || newWindow.closed || typeof newWindow.closed === "undefined") {
 //                 setIsBlocked(true); // Agar bloklansa, modalni ochish
 //             }
@@ -170,143 +170,184 @@ import React from 'react';
 import { Button } from 'antd';
 import PageContainer from '~/components/layouts/PageContainer';
 import Meta from '~/components/shared/headers/Meta';
+import ServicesFilterSection from '~/components/services/ServicesFilterSection';
+import ServicesCardSection from '~/components/services/ServicesCardSection';
 
-const steps = [
-    {
-      emoji: "📲",
-      title: "Botni ishga tushiring",
-      description: "Telegram bot orqali tez va oson buyurtma berish jarayonini boshlang.",
-    },
-    {
-      emoji: "📝",
-      title: "Buyurtma yarating",
-      description: "Qanday ish kerakligini, sohani, byudjet va muddatni ko‘rsating.",
-    },
-    {
-      emoji: "👨‍💻",
-      title: "Mutaxassislardan birini tanlang",
-      description: "Tajribali ijodkor va mutaxassislar o'z takliflarini sizga yuboradi.",
-    },
-    {
-      emoji: "✅",
-      title: "Kelishuv va topshiriq bajarilishi",
-      description: "Ishning bajarilishini kuting va qabul qilib oling.",
-    },
-  ];
-  
 
-export default function SoffFreelancerPage() {
+
+
+export default function SoffFreelancerPage({servicesData}) {
+  console.log(servicesData)
   return (
     <PageContainer>
-        <Meta
-            title={'Raqamli mahsulot buyurtma berish - Soff.uz'}
-            description={'Soff.uz orqali raqamli mahsulotlarga buyurtma bering. Ishonchli sotuvchilar va sifatli kontent bilan tez va oson xizmatlardan foydalaning.'}
-            image="/static/img/video-darsliklar-2.png" 
-            keywords={[{name: "Biznes rejalar buyurtma berish"}, {name:"Taqdimotlar buyurtma berish"}, {name: "Kurs ishlari buyurtma berish"}, {name: "Diplom ishlari buyurtma berish"}, {name: "Referatlar buyurtma berish"}, {name: "Mustaqil ishlar buyurtma berish"}, {name: "Labaratoriya Ishlari buyurtma berish"}, {name: "Dissertatsiya ishlari buyurtma berish"}, {name: "Testlar buyurtma berish"}, {name: "O'quv qo'llanmalar buyurtma berish"}, {name: "MustDars ishlanmalaraqil buyurtma berish"}, {name: "Tarqatma materiallar buyurtma berish"}, {name: "Amaliy ishlar buyurtma berish"}, {name: "Blankalar buyurtma berish"}, {name: "Ijodiy Ishlar buyurtma berish"}, {name: "Loyihalar buyurtma berish"}, {name: "Plakatlar buyurtma berish"}, {name: "Elektron kitoblar buyurtma berish"}, {name: "Dasturlash tillari"}]} 
-            author="Soff.uz"
-        />
+      <Meta
+        title={'Raqamli mahsulot buyurtma berish - Soff.uz'}
+        description={'Soff.uz orqali raqamli mahsulotlarga buyurtma bering. Ishonchli sotuvchilar va sifatli kontent bilan tez va oson xizmatlardan foydalaning.'}
+        image="/static/img/video-darsliklar-2.png"
+        keywords={[{ name: "Biznes rejalar buyurtma berish" }, { name: "Taqdimotlar buyurtma berish" }, { name: "Kurs ishlari buyurtma berish" }, { name: "Diplom ishlari buyurtma berish" }, { name: "Referatlar buyurtma berish" }, { name: "Mustaqil ishlar buyurtma berish" }, { name: "Labaratoriya Ishlari buyurtma berish" }, { name: "Dissertatsiya ishlari buyurtma berish" }, { name: "Testlar buyurtma berish" }, { name: "O'quv qo'llanmalar buyurtma berish" }, { name: "MustDars ishlanmalaraqil buyurtma berish" }, { name: "Tarqatma materiallar buyurtma berish" }, { name: "Amaliy ishlar buyurtma berish" }, { name: "Blankalar buyurtma berish" }, { name: "Ijodiy Ishlar buyurtma berish" }, { name: "Loyihalar buyurtma berish" }, { name: "Plakatlar buyurtma berish" }, { name: "Elektron kitoblar buyurtma berish" }, { name: "Dasturlash tillari" }]}
+        author="Soff.uz"
+      />
 
-      <div className="container py-5">
-        {/* Hero section */}
-        <div className="text-center mb-5" style={{
-          background: 'linear-gradient(135deg, rgb(0 164 79 / 32%), rgb(49 47 48 / 0%))',
-          borderRadius: '10px',
-          padding: '50px 20px',
-          boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
-          color: '#fff',
-        }}>
-        <h1 className="display-6 mb-4">
-        <strong>Soff Freelancer</strong> — Mutaxassislar sizga kerakli topshiriqlarni tez va sifatli bajarib beradi
-        </h1>
-        <p className="mb-4 mx-auto" style={{ maxWidth: '800px' }}>
-            O‘quv va ilmiy ishlari, hujjatlar yoki IT xizmatlar bo‘yicha topshiriqlaringiz bormi? Soha, muddat va talablaringizni yozing — mutaxassislar siz uchun sifatli bajarib berishadi. Telegram bot orqali tez, qulay va oson.
-        </p>
-          <a
-            href="https://t.me/soff_freelancing_bot"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Button
-              type="primary"
-              size="large"
-              className="btn btn-light btn-lg text-white rounded-3 px-5"
-              style={{
-                background: 'rgb(0, 164, 79)',
-                border: 'none',
-                fontSize: '16px',
-                letterSpacing: '1px',
-                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-              }}
-            >
-              Botni ishga tushurish
-            </Button>
-          </a>
-        </div>
+      <div className='ps-page--shop my-5 container p-xl-0 p-l-0'>
+        <ServicesFilterSection />
 
-        {/* Steps section */}
-        <div className="row justify-content-center mb-5">
-          {steps.map((step, index) => (
-            <div className="col-md-6 col-lg-3 mb-4" key={index}>
-              <div
-                className="card shadow-lg border-0"
-                style={{
-                  borderRadius: '20px',
-                  padding: '30px 20px',
-                  backgroundColor: '#f9f9f9',
-                  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)',
-                  textAlign: 'center',
-                }}
-              >
-                <div style={{
-                  color: '#fff',
-                  borderRadius: '50%',
-                  width: '50px',
-                  height: '50px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  margin: '0 auto 20px',
-                }}>
-                  <span style={{ fontSize: '28px' }}>{step.emoji}</span>
-                </div>
-                <h4 style={{ color: 'rgb(0, 164, 79)', fontWeight: '600', fontSize: '18px' }}>
-                  {step.title}
-                </h4>
-                <p style={{ color: '#312f30', fontSize: '14px', fontWeight: '400' }}>
-                  {step.description}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
 
-        {/* CTA */}
-        <div className="text-center">
-          <a
-            href="https://t.me/soff_freelancing_bot"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Button
-                type="primary"
-                size="large"
-                className="btn btn-success btn-lg rounded-3 py-3 px-5"
-                style={{
-                    backgroundColor: 'rgb(0, 164, 79)',
-                    border: 'none',
-                    fontSize: '16px',
-                    letterSpacing: '1px',
-                    transition: 'transform 0.3s ease-in-out',
-                    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-                }}
-                onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'}
-                onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
-                >
-                Endi buyurtma berishni boshlang 🚀
-                </Button>
-          </a>
-        </div>
+        <ServicesCardSection services={servicesData} />
       </div>
+
+
+
     </PageContainer>
   );
 }
+
+export async function getServerSideProps(context) {
+  const {
+    direction,
+  } = context.query
+
+  const fetchJson = async url => {
+    const res = await fetch(url);
+    if (!res.ok) {
+      return null;
+    }
+    return res.json();
+  };
+
+  const servicesUrl = `http://176.96.241.219:8005/api/v1/users/sellers/service?direction=${direction}`
+
+  const [servicesData] = await Promise.all([
+    fetchJson(servicesUrl)
+  ])
+
+  return {
+    props: {
+      servicesData: servicesData || null
+    }
+  }
+}
+
+// old design
+// <div className="container py-5">
+//   {/* Hero section */}
+//   <div className="text-center mb-5" style={{
+//     background: 'linear-gradient(135deg, rgb(0 164 79 / 32%), rgb(49 47 48 / 0%))',
+//     borderRadius: '10px',
+//     padding: '50px 20px',
+//     boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+//     color: '#fff',
+//   }}>
+//   <h1 className="display-6 mb-4">
+//   <strong>Soff Freelancer</strong> — Mutaxassislar sizga kerakli topshiriqlarni tez va sifatli bajarib beradi
+//   </h1>
+//   <p className="mb-4 mx-auto" style={{ maxWidth: '800px' }}>
+//       O‘quv va ilmiy ishlari, hujjatlar yoki IT xizmatlar bo‘yicha topshiriqlaringiz bormi? Soha, muddat va talablaringizni yozing — mutaxassislar siz uchun sifatli bajarib berishadi. Telegram bot orqali tez, qulay va oson.
+//   </p>
+//     <a
+//       href="https://t.me/soff_freelancing_bot"
+//       target="_blank"
+//       rel="noopener noreferrer"
+//     >
+//       <Button
+//         type="primary"
+//         size="large"
+//         className="btn btn-light btn-lg text-white rounded-3 px-5"
+//         style={{
+//           background: 'rgb(0, 164, 79)',
+//           border: 'none',
+//           fontSize: '16px',
+//           letterSpacing: '1px',
+//           boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+//         }}
+//       >
+//         Botni ishga tushurish
+//       </Button>
+//     </a>
+//   </div>
+
+//   {/* Steps section */}
+//   <div className="row justify-content-center mb-5">
+//     {steps.map((step, index) => (
+//       <div className="col-md-6 col-lg-3 mb-4" key={index}>
+//         <div
+//           className="card shadow-lg border-0"
+//           style={{
+//             borderRadius: '20px',
+//             padding: '30px 20px',
+//             backgroundColor: '#f9f9f9',
+//             boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)',
+//             textAlign: 'center',
+//           }}
+//         >
+//           <div style={{
+//             color: '#fff',
+//             borderRadius: '50%',
+//             width: '50px',
+//             height: '50px',
+//             display: 'flex',
+//             alignItems: 'center',
+//             justifyContent: 'center',
+//             margin: '0 auto 20px',
+//           }}>
+//             <span style={{ fontSize: '28px' }}>{step.emoji}</span>
+//           </div>
+//           <h4 style={{ color: 'rgb(0, 164, 79)', fontWeight: '600', fontSize: '18px' }}>
+//             {step.title}
+//           </h4>
+//           <p style={{ color: '#312f30', fontSize: '14px', fontWeight: '400' }}>
+//             {step.description}
+//           </p>
+//         </div>
+//       </div>
+//     ))}
+//   </div>
+
+//   {/* CTA */}
+//   <div className="text-center">
+//     <a
+//       href="https://t.me/soff_freelancing_bot"
+//       target="_blank"
+//       rel="noopener noreferrer"
+//     >
+//       <Button
+//           type="primary"
+//           size="large"
+//           className="btn btn-success btn-lg rounded-3 py-3 px-5"
+//           style={{
+//               backgroundColor: 'rgb(0, 164, 79)',
+//               border: 'none',
+//               fontSize: '16px',
+//               letterSpacing: '1px',
+//               transition: 'transform 0.3s ease-in-out',
+//               boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+//           }}
+//           onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'}
+//           onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
+//           >
+//           Endi buyurtma berishni boshlang 🚀
+//           </Button>
+//     </a>
+//   </div>
+// </div>
+//     const steps = [
+//   {
+//     emoji: "📲",
+//     title: "Botni ishga tushiring",
+//     description: "Telegram bot orqali tez va oson buyurtma berish jarayonini boshlang.",
+//   },
+//   {
+//     emoji: "📝",
+//     title: "Buyurtma yarating",
+//     description: "Qanday ish kerakligini, sohani, byudjet va muddatni ko‘rsating.",
+//   },
+//   {
+//     emoji: "👨‍💻",
+//     title: "Mutaxassislardan birini tanlang",
+//     description: "Tajribali ijodkor va mutaxassislar o'z takliflarini sizga yuboradi.",
+//   },
+//   {
+//     emoji: "✅",
+//     title: "Kelishuv va topshiriq bajarilishi",
+//     description: "Ishning bajarilishini kuting va qabul qilib oling.",
+//   },
+// ];
