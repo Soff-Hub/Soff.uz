@@ -87,18 +87,20 @@ const PortfolioEditForm = ({ data, portId, onClose }) => {
         <TextArea rows={3} />
       </Form.Item>
 
-      <Form.Item style={{ marginBottom: '50px' }} label="Muqova rasmlari">
+      <Form.Item  label="Muqova rasmlari">
         <Upload
+        className='custom-upload mb-5'
           action="http://176.96.241.219:8005/api/v1/upload/"
           listType="picture-card"
           accept=".jpg,.png,.webp"
+          
           name="file"
           multiple
           fileList={coverImageList}
           onChange={(info) => handleChange(info, setCoverImageList)}
           style={{ minHeight: '100px' }}
         >
-          {coverImageList.length >= 3 ? null : (
+          {coverImageList.length >= 5 ? null : (
             <div style={{ marginTop: '40px' }}>
               <PlusOutlined />
               <div style={{ marginTop: 8 }}>Yuklash</div>
