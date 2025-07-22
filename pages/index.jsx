@@ -30,7 +30,7 @@ function NewHomePage ({ tab, category }) {
                     { name: 'Soff.uz' },
                 ]}
                 author='Soff.uz'
-                image='/static/img/soff imkoniyatlari 2.png'
+                image='/static/img/soff imkoniyatlari 2.webp'
             />
             <HeroSearch />
             <HomeCategories />

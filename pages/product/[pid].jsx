@@ -149,25 +149,34 @@ export default function ProductDefaultPage({ defaultProducts }) {
         ),
     };
     const productsDetailsSimilar = {
-        file: similarProduct?.map((item, index) => (
+        file: similarProduct?.slice(0, 12).map((item, index) => (
             <RedesignProduct product={item} key={index} />
         )),
-        '3d': similarProduct?.map((item, index) => (
+        '3d': similarProduct?.slice(0, 6).map((item, index) => (
             <ModelAndDesignProduct product={item} key={index} />
         )),
-        template: similarProduct?.map((item, index) => (
+        template: similarProduct?.slice(0, 12).map((item, index) => (
             <RedesignProduct product={item} key={index} />
         )),
-        website: similarProduct?.map((item, index) => (
-            <RedesignProduct key={index} product={item} />
+        website: similarProduct?.slice(0, 12).map((item, index) => (
+            <RedesignProduct product={item} key={index} />
         )),
-        design: similarProduct?.map((item, index) => (
-            <RedesignProduct key={index} product={item} />
+        design: similarProduct?.slice(0, 12).map((item, index) => (
+            <RedesignProduct product={item} key={index} />
         )),
-        video: similarProduct?.map((item, index) => (
+        video: similarProduct?.slice(0, 12).map((item, index) => (
             <RedesignProduct product={item} key={index} />
         )),
     };
+    const contentType = defaultProducts?.document?.content_type;
+    const productComponents = productsDetailsSimilar[contentType] || [];
+
+    const getColClass = () => {
+        return contentType === '3d'
+            ? 'col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4' // 3 tadan
+            : 'col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2'; // 6 tadan
+    };
+
 
     return (
         <>
@@ -332,25 +341,19 @@ export default function ProductDefaultPage({ defaultProducts }) {
                                         </h3>
                                         {hasLoadedSimilar ?
                                             (
-                                                <SwiperPages
-                                                    type={
-                                                        defaultProducts?.document
-                                                            ?.content_type
-                                                    }>
-                                                    {
-                                                        productsDetailsSimilar[
-                                                        defaultProducts
-                                                            ?.document
-                                                            ?.content_type
-                                                        ]
-                                                    }
-                                                </SwiperPages>
+                                                <div className='row'>
+                                                    {productComponents.map((component, index) => (
+                                                        <div className={`${getColClass()} mb-4`} key={index}>
+                                                            {component}
+                                                        </div>
+                                                    ))}
+                                                </div>
                                             ) : (
                                                 <div className='row g-3 py-3'>
-                                                    {Array.from({ length: 4 }).map((_, index) => (
+                                                    {Array.from({ length: 6 }).map((_, index) => (
                                                         <div
                                                             key={index}
-                                                            className='col-12 col-sm-6 col-lg-3 d-flex justify-content-center'>
+                                                            className='col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-4 d-flex justify-content-center'>
                                                             <Skeleton.Input
                                                                 active
                                                                 style={{

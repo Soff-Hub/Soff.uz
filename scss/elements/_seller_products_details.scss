@@ -51,7 +51,11 @@
     max-width: 550px;
     width: 100%;
 }
+
 .seller_products_actions_container {
+    max-height: 100%;
+    overflow-y: auto;
+
     .seller_products_actions {
         background-color: white;
         height: 100%;
@@ -669,6 +673,7 @@
                         gap: 10px;
                     }
                 }
+
                 .seller_products_actions {
                     background-color: white;
                     height: 100%;
@@ -1137,6 +1142,7 @@
     display: grid;
     grid-template-columns: 65% 35%;
     gap: 30px;
+
     @media (max-width: 1024px) {
         display: block;
     }
@@ -1146,10 +1152,12 @@
         background-color: #fff;
         border: 1px solid #f1f1f1;
         border-radius: 20px;
+
         @media (max-width: 1024px) {
             margin-bottom: 48px;
         }
     }
+
     .ServiseDetail_sideBar {
         padding: clamp(1.25rem, 1.875vw + 0.875rem, 3.125rem);
         background-color: #fff;
@@ -1163,10 +1171,12 @@
         width: 100%;
         border-radius: 20px;
     }
+
     .ServiseDetailAbout_aboutService {
         margin-top: 20px;
-        h2 {
-        }
+
+        h2 {}
+
         p {
             // font-size: clamp(0.938rem, 1.119vw + 0.22rem, 1.563rem);
         }

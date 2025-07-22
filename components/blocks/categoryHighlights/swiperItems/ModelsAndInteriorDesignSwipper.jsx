@@ -35,18 +35,18 @@ export default function ModelsAndInteriorDesignSwipper () {
                             3D moddellar va Interier dizaynlar
                         </a>
                     </div>
-                    {product ? (
-                        <Swiper_Pages type='3d'>
-                            {product?.map((item, index) => (
-                                <div>
-                                    <ModelAndDesignProduct
-                                        product={item}
-                                        key={index}
-                                    />
-                                </div>
-                            ))}
-                        </Swiper_Pages>
-                    ) : null}
+                    <div className='row'>
+                        {product ? (
+                            product?.slice(0, 3).map((item, index) => (
+                                    <div className='col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4 mb-4'>
+                                        <ModelAndDesignProduct
+                                            product={item}
+                                            key={index}
+                                        />
+                                    </div>
+                                ))
+                        ) : null}
+                    </div>
                 </div>
             )}
         </div>

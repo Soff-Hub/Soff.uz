@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Swiper_Pages from '../swipper/swiper';
 import RedesignProduct from '~/components/elements/products/Redesign/Redesign-Product';
 
-export default function TemplatesSwipper () {
+export default function TemplatesSwipper() {
     const [product, setProduct] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -32,21 +32,20 @@ export default function TemplatesSwipper () {
                             className='SwipperTitle'
                             href='/templates/all'>
                             Tayyor shablonlar
-                        </a> 
+                        </a>
                     </div>
-
-                    {product ? (
-                        <Swiper_Pages type='design'>
-                            {product.map((item, index) => (
-                                <div>
+                    <div className='row'>
+                        {product ? (
+                            product.slice(0, 6).map((item, index) => (
+                                <div className='col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-4'>
                                     <RedesignProduct
                                         product={item}
                                         key={index}
                                     />
                                 </div>
-                            ))}
-                        </Swiper_Pages>
-                    ) : null}
+                            ))
+                        ) : null}
+                    </div>
                 </div>
             )}
         </div>
