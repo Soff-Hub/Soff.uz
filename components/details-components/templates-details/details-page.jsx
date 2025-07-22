@@ -37,9 +37,9 @@ function ThreeDesignProductsDetails ({ product, template }) {
                         <div className='seller_products_right_section '>
                             <div 
                                 className='seller_products_actions_container m-auto'
-                                style={{height:!(product?.tag.length > 0) && '100%'}}>
+                                style={{height:'auto'}}>
                                 <FileActions product={product} />
-                                <Tags tag={product?.tag} />
+                                <Tags tag={product?.tag}/>                            
                             </div>
                         </div>
                     </div>

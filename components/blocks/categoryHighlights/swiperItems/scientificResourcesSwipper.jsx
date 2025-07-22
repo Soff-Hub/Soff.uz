@@ -9,7 +9,7 @@ export default function ScientificResourcesSwipper() {
     useEffect(() => {
         setIsLoading(true);
 
-        fetch(`https://api.soff.uz/api/v1/customer/products/?direction=file`)
+        fetch(`https://api.soff.uz/api/v1/customer/products/?direction=file&limit=6`)
             .then(res => res.json())
             .then(data => {
                 setProducts(data?.results);
@@ -34,19 +34,18 @@ export default function ScientificResourcesSwipper() {
                             Ilmiy ishlar
                         </a> 
                     </div>
-
-                    {products ? (
-                        <Swiper_Pages categoryName type='template'>
-                            {products?.map((item, index) => (
-                                <div>
-                                    <RedesignProduct
-                                        product={item}
-                                        key={index}
-                                    />
-                                </div>
-                            ))}
-                        </Swiper_Pages>
-                    ) : null}
+                    <div className='row'>
+                        {products ? (
+                            products?.slice(0, 6).map((item, index) => (
+                                    <div className='col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-4'>
+                                        <RedesignProduct
+                                            product={item}
+                                            key={index}
+                                        />
+                                    </div>
+                                ))
+                        ) : null}
+                    </div>
                 </div>
             )}
         </div>

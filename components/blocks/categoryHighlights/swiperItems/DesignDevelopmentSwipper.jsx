@@ -35,19 +35,18 @@ export default function DesignDevelopmentSwipper() {
                             Dizayn shablonlar
                         </a>
                     </div>
-
-                    {product ? (
-                        <Swiper_Pages type='design'>
-                            {product.map((item, index) => (
-                                <div>
+                    <div className='row'>
+                        {product ? (
+                            product.slice(0, 6).map((item, index) => (
+                                <div className='col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-4'>
                                     <RedesignProduct
                                         product={item}
                                         key={index}
                                     />
                                 </div>
-                            ))}
-                        </Swiper_Pages>
-                    ) : null}
+                            ))
+                        ) : null}
+                    </div>
                 </div>
             )}
         </div>
