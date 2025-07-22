@@ -1,14 +1,19 @@
+import { useRouter } from 'next/router'
 import React from 'react'
 
 const ServiceCard = ({product}) => {
+    const router = useRouter()
     return (
         <div className='Services_card '>
             <img
+                style={{cursor: 'pointer'}}
+                onClick={() => router.push(`/service/${product.slug}`)}
                 className='Search_Results_Services_card_img'
                 src={product.file}
                 alt=''
             />
             <svg
+                style={{cursor: 'pointer'}}
                 className='likeBtn'
                 xmlns='http://www.w3.org/2000/svg'
                 width='25'
@@ -29,13 +34,15 @@ const ServiceCard = ({product}) => {
                 />
             </svg>
             <div className='Search_Results_Services_card_body'>
-                <div className='Search_Results_Services_card_infoPerson'>
+                <div onClick={() => router.push(`/_seller/${product?.seller?.id}#about_author`)} className='Search_Results_Services_card_infoPerson'>
                     <img
+                        style={{cursor: 'pointer'}}
+                        onClick={() => router.push(`/_seller/${product?.seller?.id}#about_author`)}
                         className='Search_Results_Services_card_infoPerson_avatar'
                         src={product?.seller?.photo_url}
                         alt=''
                     />
-                    <p className='Search_Results_Services_card_infoPerson_isname'>
+                    <p  className='Search_Results_Services_card_infoPerson_isname'>
                         {product?.seller?.full_name}
                     </p>
                     <img
@@ -44,7 +51,7 @@ const ServiceCard = ({product}) => {
                         alt=''
                     />
                 </div>
-                <p className='Search_Results_Services_card_title'>
+                <p onClick={() => router.push(`/service/${product.slug}`)} className='Search_Results_Services_card_title'>
                     {product.title}
                 </p>
                 <p className='Search_Results_Services_card_price'>
