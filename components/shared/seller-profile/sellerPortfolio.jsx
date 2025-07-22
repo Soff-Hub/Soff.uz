@@ -29,8 +29,7 @@ export default function SellerPortfolio({ pid }) {
         'category',
         'http://176.96.241.219:8005/api/v1/categories/?parent_only=false'
     );
-    console.log(parentCategory)
-    console.log(childCategories)
+
     useEffect(() => {
         if (typeof parentCategory === 'number') {
             const parent = categories?.find(cat => cat.id === parentCategory);

@@ -189,7 +189,7 @@ export default function SoffFreelancerPage({servicesData}) {
       />
 
       <div className='ps-page--shop my-5 container p-xl-0 p-l-0'>
-        <ServicesFilterSection />
+        <ServicesFilterSection count={servicesData.count} />
 
 
         <ServicesCardSection services={servicesData} />
