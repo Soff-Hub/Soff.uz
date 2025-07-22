@@ -12,7 +12,6 @@ import ServiceCard from '~/components/services/ServiceCard'
 
 const ServiceDetail = ({ data }) => {
     const { service, similar_services } = data
-    console.log(data)
     return (
         <PageContainer>
             <div className='container my-5'>
@@ -22,30 +21,30 @@ const ServiceDetail = ({ data }) => {
                     <p className='m-0'>5.0 ({service?.comments?.length} sharh)</p>
                 </div>
                 <div className='row'>
-                    <div className='col-7'>
+                    <div className='col-12 col-lg-7'>
                         <ServiceImgCorusel
                             images={service?.gallery}
                         />
                     </div>
-                    <div className='col-5'>
+                    <div className='col-12 col-lg-5'>
                         <ServicePackagesAccordion />
                     </div>
                 </div>
                 <div className='row my-5'>
-                    <div className='col-7'>
+                    <div className='col-12 col-lg-7'>
                         <ServiceDescription description={service?.description} />
                     </div>
-                    <div className='col-5'>
+                    <div className='col-12 col-lg-5'>
                         <ServiceSellerProfile />
                     </div>
                 </div>
                 <div className='row'>
-                    <div className='col-7'>
+                    <div className='col-12 col-lg-7'>
                         <ServicePortfolio portfolios={service?.portfolio} />
                     </div>
                 </div>
                 <div className='row my-5'>
-                    <div className='col-7'>
+                    <div className='col-12 col-lg-7'>
                         <ServiceComments comments={service?.comments}/>
                     </div>
                 </div>

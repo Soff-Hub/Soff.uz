@@ -1308,7 +1308,7 @@ body.no-scroll {
   cursor: pointer;
 
   .SellerPortfolioCardImg {
-    width: 100%;
+    max-width: 230px !important;
     max-height: 200px;
     border-radius: 10px;
     transition: filter 0.3s ease, transform 0.3s ease;

@@ -17,7 +17,7 @@ const ServiceImgCorusel = ({ images = [] }) => {
             {images?.length > 0 && (
                 <div
                     className="imageLigthbox"
-                    style={{ position: "absolute", top: "70px", right: "70px", zIndex: "999" }}
+                    style={{ position: "absolute", top: "10px", right: "10px", zIndex: "999" }}
                 >
                     <ImageLightBox gallery={images.map(img => ({ image_url: img.image }))} />
                 </div>

@@ -39,7 +39,7 @@ const ServiceCard = ({product}) => {
                         style={{cursor: 'pointer'}}
                         onClick={() => router.push(`/_seller/${product?.seller?.id}#about_author`)}
                         className='Search_Results_Services_card_infoPerson_avatar'
-                        src={product?.seller?.photo_url}
+                        src={product?.seller?.photo_url || "/static/img/ozodbek.png"}
                         alt=''
                     />
                     <p  className='Search_Results_Services_card_infoPerson_isname'>

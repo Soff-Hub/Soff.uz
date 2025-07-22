@@ -3,7 +3,6 @@ import ServiceCard from './ServiceCard';
 
 
 const ServicesCardSection = ({services}) => {
-    console.log(services)
     return (
         <div className='container'>
             <div className='row'>

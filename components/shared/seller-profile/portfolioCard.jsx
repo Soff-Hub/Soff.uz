@@ -42,7 +42,7 @@ const PortfolioCard = ({ item, portfolioData }) => {
                 footer={null}
             >
                 <ProtfolioModal data={
-                    portfolioData?.items?.find(i => i.id === item.id)
+                    portfolioData?.find(i => i.id === item.id)
                 } onClose={setOpenDetailModel} />
             </Modal>
         </div>

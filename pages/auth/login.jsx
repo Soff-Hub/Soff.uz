@@ -19,7 +19,7 @@ const RegisterPage = () => {
             text: 'Kirish',
         },
     ];
-    console.log('user', user);
+
 
     return user?.access ? (
         <Page404 />

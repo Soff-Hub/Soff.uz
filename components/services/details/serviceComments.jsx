@@ -8,7 +8,7 @@ const ServiceComments = ({comments}) => {
         <div>
             {comments?.map(comment => (
                 <div className='d-flex gap-3 align-items-start'>
-                    <img src={comment?.user?.image} alt="user image" />
+                    <img src={comment?.user?.image || "/static/img/ozodbek.png"} alt="user image" />
                     <div className='border-bottom mb-3'>
                         <h5>{comment?.user?.full_name}</h5>
                         <p className='coment_time'>{getTimeAgo(comment?.created_at)}</p>
