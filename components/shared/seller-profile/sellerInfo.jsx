@@ -232,7 +232,6 @@ export default function SellerInfo ({ sellerInfo }) {
                     <span
                         className='SellerInfoDescriptionForMore pointer'
                         onClick={() => {
-                            console.log('clicked');
                             setOpenDonateModal(true);
                         }}>
                         Qo’llab quvvatlash

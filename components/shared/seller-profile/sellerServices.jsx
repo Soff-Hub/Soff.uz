@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react';
 export default function SellerServices ({ pid }) {
     const [isLoading, setIsLoading] = useState(false);
     const [serviseProduct, setServiseProduct] = useState('');
-    console.log('serviseProduct=>>>', serviseProduct);
 
     useEffect(() => {
         if (!pid) return;

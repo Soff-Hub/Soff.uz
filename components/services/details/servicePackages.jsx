@@ -3,7 +3,7 @@ import React from 'react'
 const ServicePackages = () => {
     return (
         <div className='row'>
-            <div className='col-4'>
+            <div className='col-12 col-sm-6 col-lg-4 mb-3'>
                 <div className='service_package'>
                     <div>
                         <h2>Standart</h2>
@@ -30,7 +30,7 @@ const ServicePackages = () => {
                     <button>Buyurtma berish</button>
                 </div>
             </div>
-            <div className='col-4'>
+            <div className='col-12 col-sm-6 col-lg-4 mb-3'>
                 <div className='service_package'>
                     <div>
                         <h2>Standart</h2>
@@ -57,7 +57,7 @@ const ServicePackages = () => {
                     <button>Buyurtma berish</button>
                 </div>
             </div>
-            <div className='col-4'>
+            <div className='col-12 col-sm-6 col-lg-4 mb-3'>
                 <div className='service_package'>
                     <div>
                         <h2>Standart</h2>

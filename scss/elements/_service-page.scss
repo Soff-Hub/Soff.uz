@@ -1,3 +1,4 @@
+// service card______________________________________________________________________
 .Services_card {
     padding: 10px;
     border-radius: 5.072px;
@@ -153,7 +154,7 @@
     }
 }
 
-
+// swipper ______________________________________________________________________________________________
 .slider_swiper_wrapper_container {
     width: 100%;
     background-color: white;
@@ -193,11 +194,12 @@
         right: 10px;
     }
 
-    // Katta rasm slaydi
+    // Katta rasm slaydi (responsive)
     .swiper-container.product-short-view {
         width: 100%;
         border-radius: 8px;
         overflow: hidden;
+        min-height: 200px;
 
         .swiper-slide {
             display: flex;
@@ -209,6 +211,7 @@
             width: 100%;
             display: flex;
             justify-content: center;
+            align-items: center;
 
             img.swiper-image {
                 width: 100%;
@@ -216,11 +219,19 @@
                 max-height: 460px;
                 object-fit: contain;
                 border-radius: 10px;
+
+                @media (max-width: 768px) {
+                    max-height: 320px;
+                }
+
+                @media (max-width: 576px) {
+                    max-height: 240px;
+                }
             }
         }
     }
 
-    // Thumb (kichik rasmlar)
+    // Thumb (kichik rasmlar) responsive
     .thumb-slide {
         width: 75px !important;
         height: 45px !important;
@@ -239,6 +250,16 @@
             object-fit: cover;
             border-radius: 4px;
         }
+
+        @media (max-width: 768px) {
+            width: 60px !important;
+            height: 36px !important;
+        }
+
+        @media (max-width: 576px) {
+            width: 50px !important;
+            height: 30px !important;
+        }
     }
 
     .thumb-slide.swiper-slide-thumb-active {
@@ -253,7 +274,7 @@
         z-index: 99;
     }
 
-    // Views (agar qoldirmoqchi bo‘lsang)
+    // Views (ixtiyoriy)
     .views {
         position: absolute;
         top: 10px;
@@ -268,6 +289,7 @@
 }
 
 
+// packages _________________________________________________________________________________________________________________
 .service_package {
     border: 1px black solid;
     border-radius: 20px;
@@ -312,34 +334,77 @@
         padding: 13px 7px;
         white-space: nowrap;
 
-        &:hover{
+        &:hover {
             background: #00D265;
         }
     }
 }
 
-.detail_h2{
+// accordian package _____________________________________________________________________________
+.accordian_package {
+    p {
+        margin: 0;
+        font-size: 18px;
+        line-height: 100%;
+        letter-spacing: 0%;
+    }
+
+    span {
+        margin: 0;
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 100%;
+        letter-spacing: 0%;
+    }
+
+    h4 {
+        font-weight: 500;
+        font-size: 22px;
+        line-height: 100%;
+        letter-spacing: 0%;
+        margin: 0;
+    }
+
+    h3 {
+        font-weight: 600;
+        font-size: 22px;
+        line-height: 100%;
+        letter-spacing: 0%;
+        margin: 0;
+    }
+
+    img {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+
+
+// dateil______________________________________________________________
+.detail_h2 {
     font-size: 25px;
     font-weight: 500;
     line-height: 100%;
     letter-spacing: 2%;
 }
 
-.service_comments{
-    img{
+// comments________________________________________________________________________________
+.service_comments {
+    img {
         width: 81px;
         height: 81px;
         border-radius: 100%;
     }
 
-    .comment_content{
+    .comment_content {
         font-size: 14px;
         line-height: 100%;
         letter-spacing: 2%;
         color: #000;
     }
 
-    .comment_time{
+    .comment_time {
         font-weight: 500;
         font-size: 14px;
         line-height: 100%;
@@ -347,10 +412,42 @@
         color: #989898E5;
     }
 
-    h5{
+    h5 {
         font-weight: 600;
         font-size: 15px;
         line-height: 100%;
         letter-spacing: 2%;
+    }
+}
+
+
+// profile _______________________________________________________________________________________
+.service_seller_profile {
+    h3 {
+        font-weight: 500;
+        font-size: 25px;
+        line-height: 100%;
+        letter-spacing: 2%;
+    }
+
+    h2 {
+        font-weight: 600;
+        font-size: 25px;
+        line-height: 100%;
+        letter-spacing: 2%;
+    }
+
+    .status {
+        font-size: 14px;
+        line-height: 100%;
+        letter-spacing: 0%;
+        color: #00A44F;
+
+        div {
+            background: #00A44F;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
     }
 }
