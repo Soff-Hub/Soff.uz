@@ -31,7 +31,11 @@ export default function ProductDefaultPage({ defaultProducts }) {
     const [initialDelayPassed, setInitialDelayPassed] = useState(false);
     const [similarProduct, setSimilarProduct] = useState([]);
     const [hasLoadedSimilar, setHasLoadedSimilar] = useState(false);
+    const [lastAdded, setLastAdded] = useState()
+    const [lastLoading, setLastLoading] = useState(false)
     const similarRef = useRef();
+
+    const contentType = defaultProducts?.document?.content_type;
 
 
     useEffect(() => {
@@ -78,6 +82,20 @@ export default function ProductDefaultPage({ defaultProducts }) {
         };
     }, [initialDelayPassed, pid]); // observer faqat delaydan keyin ishga tushadi
 
+    useEffect(() => {
+        const fetchLastAdded = async () => {
+            setLastLoading(true)
+            try {
+                const { data } = await Axios.get(`${baseUrl}customer/last-added?direction=${contentType}&limit=${contentType == "3d"? "4" : '6'}`)
+                setLastAdded(data)
+            } catch (error) {
+            }
+            finally {
+                setLastLoading(false)
+            }
+        }
+        fetchLastAdded()
+    }, [])
 
     const removeHTMLTags = html => {
         return html.replace(/<[^>]+>/g, '');
@@ -159,15 +177,24 @@ export default function ProductDefaultPage({ defaultProducts }) {
             <RedesignProduct product={item} key={index} />
         )),
         website: similarProduct?.map((item, index) => (
-            <RedesignProduct key={index} product={item} />
+            <RedesignProduct product={item} key={index} />
         )),
         design: similarProduct?.map((item, index) => (
-            <RedesignProduct key={index} product={item} />
+            <RedesignProduct product={item} key={index} />
         )),
         video: similarProduct?.map((item, index) => (
             <RedesignProduct product={item} key={index} />
         )),
     };
+
+    const productComponents = productsDetailsSimilar[contentType] || [];
+
+    const getColClass = () => {
+        return contentType === '3d'
+            ? 'col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3' // 3 tadan
+            : 'col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2'; // 6 tadan
+    };
+
 
     return (
         <>
@@ -332,25 +359,19 @@ export default function ProductDefaultPage({ defaultProducts }) {
                                         </h3>
                                         {hasLoadedSimilar ?
                                             (
-                                                <SwiperPages
-                                                    type={
-                                                        defaultProducts?.document
-                                                            ?.content_type
-                                                    }>
-                                                    {
-                                                        productsDetailsSimilar[
-                                                        defaultProducts
-                                                            ?.document
-                                                            ?.content_type
-                                                        ]
-                                                    }
-                                                </SwiperPages>
+                                                <div className='row'>
+                                                    {productComponents.map((component, index) => (
+                                                        <div className={`${getColClass()} mb-4`} key={index}>
+                                                            {component}
+                                                        </div>
+                                                    ))}
+                                                </div>
                                             ) : (
                                                 <div className='row g-3 py-3'>
-                                                    {Array.from({ length: 4 }).map((_, index) => (
+                                                    {Array.from({ length: 6 }).map((_, index) => (
                                                         <div
                                                             key={index}
-                                                            className='col-12 col-sm-6 col-lg-3 d-flex justify-content-center'>
+                                                            className='col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-4 d-flex justify-content-center'>
                                                             <Skeleton.Input
                                                                 active
                                                                 style={{
@@ -364,8 +385,47 @@ export default function ProductDefaultPage({ defaultProducts }) {
                                                 </div>
                                             )
                                         }
+
                                     </div>
                                 )}
+                                <h3
+                                    style={{
+                                        fontSize: '25px',
+                                        fontWeight: 400,
+                                    }}
+                                    className='py-4 similar_title'>
+                                    So'ngi yuklangan mahsulotlar
+                                </h3>
+                                {
+                                    lastLoading ? (
+                                        <div className='row g-3 py-3'>
+                                            {Array.from({ length: 6 }).map((_, index) => (
+                                                <div
+                                                    key={index}
+                                                    className='col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-4 d-flex justify-content-center'>
+                                                    <Skeleton.Input
+                                                        active
+                                                        style={{
+                                                            width: 250,
+                                                            height: 300,
+                                                            borderRadius: 8,
+                                                        }}
+                                                    />
+                                                </div>
+                                            ))}
+                                        </div>
+                                    ) : (
+                                        lastAdded && (
+                                            <div className='row'>
+                                                {lastAdded?.results?.map((p, i) => (
+                                                    <div className={contentType !== "3d" ? 'col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-4' : 'col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3 mb-4'}>
+                                                        {contentType !== "3d" ? <RedesignProduct product={p} key={i} /> : <ModelAndDesignProduct product={p} key={i}/>}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )
+                                    )
+                                }
                             </div>
                         </div>
                     </div>

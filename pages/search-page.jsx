@@ -1,3 +1,4 @@
+// pages/search-results.js
 import React, { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Spin } from 'antd';
@@ -7,47 +8,25 @@ import NextImageCard from '~/components/nextImagecard';
 import Search_Results_Products from '~/components/elements/search-page-details/products';
 import { baseUrlUseApi } from '~/repositories/useApi';
 import useDebounce from '~/hooks/useDebounce';
-const Search_Results = ({ fourChildData, childCategoryData }) => {
+import { baseURL } from '~/repositories/api';
+
+const Search_Results = ({
+    fourChildData,
+    childCategoryData,
+    searchData,
+    keyword,
+    page,
+    type,
+    category,
+    order_by,
+    error,
+    lastProducts
+}) => {
     const inputEl = useRef(null);
     const router = useRouter();
-    const {
-        page = 1,
-        keyword = '',
-        type = 'all',
-        category = '',
-        parentCategory = '',
-        order_by = '',
-    } = router.query;
     const [searchTerm, setSearchTerm] = useState(keyword || '');
     const debouncedSearchTerm = useDebounce(searchTerm, 1000);
-    const [data, setData] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
-    useEffect(() => {
-        const fetchData = async () => {
-            setIsLoading(true);
-            setError(null);
-            try {
-                const res = await fetch(
-                    `${baseUrlUseApi}customer/same-google-search/?page=${page}&search=${keyword}&type=${type}&category=${category}&order_by=${order_by}`
-                );
-                if (!res.ok) throw new Error('Server error');
-                const json = await res.json();
-                setData(json);
-            } catch (err) {
-                setError(err.message);
-                setData(null);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-        fetchData();
-    }, [page, keyword, type, category, order_by]);
-    useEffect(() => {
-        if (typeof keyword === 'string') {
-            setSearchTerm(keyword);
-        }
-    }, [keyword]);
+
     useEffect(() => {
         if (
             debouncedSearchTerm &&
@@ -67,11 +46,13 @@ const Search_Results = ({ fourChildData, childCategoryData }) => {
             });
         }
     }, [debouncedSearchTerm, router.query]);
+
     const handleClearInput = () => {
         setSearchTerm('');
         inputEl.current.value = '';
     };
-    const clearTextView = !isLoading && (
+
+    const clearTextView = (
         <span className='ps-form__action'>
             {searchTerm ? (
                 <p
@@ -94,20 +75,21 @@ const Search_Results = ({ fourChildData, childCategoryData }) => {
             )}
         </span>
     );
-    const loadingView = isLoading && (
-        <span className='ps-form__action'>
-            <Spin size='small' />
-        </span>
-    );
 
     return (
         <div className='global_search_results'>
             <Head>
-                <title>Soff.uz - Qidiruv natijalar</title>
+                <title>
+                    {keyword ? `“${keyword}”` : 'Soff.uz - Qidiruv natijalar'}
+                </title>
                 <meta name='robots' content='index, follow' />
                 <meta
                     name='description'
-                    content="Soff.uz qidiruv tizimi orqali o'zingizga kerakli bo'lgan istalgan turdagi intellektual mulklaringizni toping"
+                    content={
+                        keyword
+                            ? `“${keyword}” bo‘yicha ${searchData?.count || 0} ta mahsulot topildi. Soff.uz orqali kerakli bo'lgan raqamli mahsulotlarni yuklab olishingiz mumkin`
+                            : "Soff.uz orqali kerakli bo'lgan raqamli mahsulotlarni yuklab olishingiz mumkin"
+                    }
                 />
             </Head>
 
@@ -125,10 +107,8 @@ const Search_Results = ({ fourChildData, childCategoryData }) => {
                                 />
                             </a>
                         </Link>
-
-                        {/* Search bar */}
                         <div className='ps-form--quick-search'>
-                            <div className={keyword === '' ? 'ps-form__input' : 'ps-form__input active_search_input'}>
+                            <div style={{background: 'white'}} className={keyword === '' ? 'ps-form__input' : 'ps-form__input active_search_input'}>
                                 <input
                                     ref={inputEl}
                                     autoFocus
@@ -143,24 +123,24 @@ const Search_Results = ({ fourChildData, childCategoryData }) => {
                                     onInput={e => setSearchTerm(e.target.value)}
                                 />
                                 {clearTextView}
-                                {loadingView}
                             </div>
                         </div>
                     </div>
                 </div>
             </nav>
-            {/* Natijalar */}
+
+            {/* Search Results */}
             <div className=''>
-                <div className='container'>
+                <div className='container my-5'>
                     <Search_Results_Products
                         childData={fourChildData}
                         parentData={childCategoryData}
-                        data={data?.results}
+                        data={searchData?.results}
                         page={page}
-                        total={data?.count}
-                        isLoading={isLoading}
+                        total={searchData?.count}
+                        isLoading={false}
+                        lastProducts={lastProducts}
                     />
-                    {error && <p className='text-danger text-center mt-4'>Xatolik: {error}</p>}
                 </div>
             </div>
         </div>
@@ -169,30 +149,51 @@ const Search_Results = ({ fourChildData, childCategoryData }) => {
 
 export default Search_Results;
 
+// SSR part
 export async function getServerSideProps(context) {
     const {
-        parentCategory = '',
+        keyword = '',
+        page = 1,
         type = 'all',
+        category = '',
+        parentCategory = '',
+        order_by = ''
     } = context.query;
 
     const fetchJson = async url => {
-        const res = await fetch(url);
-        if (!res.ok) return null;
-        return res.json();
+        try {
+            const res = await fetch(url);
+            if (!res.ok) throw new Error('Failed to fetch');
+            return await res.json();
+        } catch (err) {
+            return { error: err.message };
+        }
     };
 
     const fourChildUrl = `${baseUrlUseApi}customer/four-child?direction=${type}`;
     const childCategoryUrl = `${baseUrlUseApi}customer/four-child?direction=${type}&parent__slug=${parentCategory}`;
+    const searchUrl = `${baseUrlUseApi}customer/same-google-search/?page=${page}&search=${keyword}&type=${type}&category=${category}&order_by=${order_by}`;
+    const lastProductsUrl = `${baseURL}customer/last-added?limit=10`
 
-    const [fourChildData, childCategoryData] = await Promise.all([
+    const [fourChildData, childCategoryData, searchData, lastProducts] = await Promise.all([
         fetchJson(fourChildUrl),
         fetchJson(childCategoryUrl),
+        fetchJson(searchUrl),
+        fetchJson(lastProductsUrl)
     ]);
-
+    const searchError = searchData?.error || null;
     return {
         props: {
             fourChildData: fourChildData || null,
             childCategoryData: childCategoryData || null,
+            searchData: searchData?.results ? searchData : null,
+            keyword,
+            page,
+            type,
+            category,
+            order_by,
+            error: searchError,
+            lastProducts
         },
     };
 }

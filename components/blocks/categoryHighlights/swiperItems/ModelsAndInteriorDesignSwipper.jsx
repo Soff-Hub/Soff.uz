@@ -11,7 +11,7 @@ export default function ModelsAndInteriorDesignSwipper () {
     useEffect(() => {
         setIsLoading(true);
 
-        fetch(`https://api.soff.uz/api/v1/customer/products?direction=3d`)
+        fetch(`https://api.soff.uz/api/v1/customer/last-added?direction=3d&limit=4`)
             .then(res => res.json())
             .then(data => {
                 setProduct(data.results);
@@ -35,18 +35,18 @@ export default function ModelsAndInteriorDesignSwipper () {
                             3D moddellar va Interier dizaynlar
                         </a>
                     </div>
-                    {product ? (
-                        <Swiper_Pages type='3d'>
-                            {product?.map((item, index) => (
-                                <div>
-                                    <ModelAndDesignProduct
-                                        product={item}
-                                        key={index}
-                                    />
-                                </div>
-                            ))}
-                        </Swiper_Pages>
-                    ) : null}
+                    <div className='row'>
+                        {product ? (
+                            product?.slice(0, 4).map((item, index) => (
+                                    <div className='col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3 mb-4'>
+                                        <ModelAndDesignProduct
+                                            product={item}
+                                            key={index}
+                                        />
+                                    </div>
+                                ))
+                        ) : null}
+                    </div>
                 </div>
             )}
         </div>
