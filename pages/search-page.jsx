@@ -8,6 +8,7 @@ import NextImageCard from '~/components/nextImagecard';
 import Search_Results_Products from '~/components/elements/search-page-details/products';
 import { baseUrlUseApi } from '~/repositories/useApi';
 import useDebounce from '~/hooks/useDebounce';
+import { baseURL } from '~/repositories/api';
 
 const Search_Results = ({
     fourChildData,
@@ -18,7 +19,8 @@ const Search_Results = ({
     type,
     category,
     order_by,
-    error
+    error,
+    lastProducts
 }) => {
     const inputEl = useRef(null);
     const router = useRouter();
@@ -78,7 +80,7 @@ const Search_Results = ({
         <div className='global_search_results'>
             <Head>
                 <title>
-                    {keyword ? `“${keyword}” bo‘yicha qidiruv natijalari - Soff.uz` : 'Soff.uz - Qidiruv natijalar'}
+                    {keyword ? `“${keyword}”` : 'Soff.uz - Qidiruv natijalar'}
                 </title>
                 <meta name='robots' content='index, follow' />
                 <meta
@@ -106,7 +108,7 @@ const Search_Results = ({
                             </a>
                         </Link>
                         <div className='ps-form--quick-search'>
-                            <div className={keyword === '' ? 'ps-form__input' : 'ps-form__input active_search_input'}>
+                            <div style={{background: 'white'}} className={keyword === '' ? 'ps-form__input' : 'ps-form__input active_search_input'}>
                                 <input
                                     ref={inputEl}
                                     autoFocus
@@ -129,7 +131,7 @@ const Search_Results = ({
 
             {/* Search Results */}
             <div className=''>
-                <div className='container'>
+                <div className='container my-5'>
                     <Search_Results_Products
                         childData={fourChildData}
                         parentData={childCategoryData}
@@ -137,6 +139,7 @@ const Search_Results = ({
                         page={page}
                         total={searchData?.count}
                         isLoading={false}
+                        lastProducts={lastProducts}
                     />
                 </div>
             </div>
@@ -170,15 +173,15 @@ export async function getServerSideProps(context) {
     const fourChildUrl = `${baseUrlUseApi}customer/four-child?direction=${type}`;
     const childCategoryUrl = `${baseUrlUseApi}customer/four-child?direction=${type}&parent__slug=${parentCategory}`;
     const searchUrl = `${baseUrlUseApi}customer/same-google-search/?page=${page}&search=${keyword}&type=${type}&category=${category}&order_by=${order_by}`;
+    const lastProductsUrl = `${baseURL}customer/last-added?limit=10`
 
-    const [fourChildData, childCategoryData, searchData] = await Promise.all([
+    const [fourChildData, childCategoryData, searchData, lastProducts] = await Promise.all([
         fetchJson(fourChildUrl),
         fetchJson(childCategoryUrl),
         fetchJson(searchUrl),
+        fetchJson(lastProductsUrl)
     ]);
-
     const searchError = searchData?.error || null;
-
     return {
         props: {
             fourChildData: fourChildData || null,
@@ -190,6 +193,7 @@ export async function getServerSideProps(context) {
             category,
             order_by,
             error: searchError,
+            lastProducts
         },
     };
 }

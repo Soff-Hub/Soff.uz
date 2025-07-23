@@ -53,8 +53,7 @@
 }
 
 .seller_products_actions_container {
-    max-height: 100%;
-    overflow-y: auto;
+
 
     .seller_products_actions {
         background-color: white;
@@ -373,7 +372,7 @@
 
             .ps-product__header_seller_three_design {
                 width: 100%;
-                height: 554px;
+                height: 600px;
                 display: flex;
                 justify-content: space-between;
                 gap: 34px;
@@ -382,11 +381,11 @@
                     width: 100%;
                     height: 100%;
                     background-color: white;
-                    padding: 60px;
+                    padding: 30px;
                     box-sizing: border-box;
                     border-radius: 12px;
                     position: relative;
-                    gap: 23px;
+                    gap: 10px;
                     display: flex;
                     flex-direction: column;
                     justify-content: space-between;
