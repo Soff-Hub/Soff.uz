@@ -5,7 +5,7 @@ import { fileColors } from '~/components/details-components/details-actions/file
 import { useRouter } from 'next/router';
 import { addPeriodToThousands } from '~/components/partials/account/price-formatter';
 
-export default function SearchResultsProducts_Card ({ product }) {
+export default function SearchResultsProducts_Card({ product }) {
     const paths = {
         file: 'scientific-resources',
         '3d': '3d-models-and-interior-designs',
@@ -16,9 +16,8 @@ export default function SearchResultsProducts_Card ({ product }) {
     };
 
     const router = useRouter();
-
     return (
-        <div className='Search_Results_Products_card'>
+        <div onClick={() => router.push(`product/${product.slug}`)} className='Search_Results_Products_card'>
             <div className='Search_Results_Products_card_body'>
                 {/* Breadcrumb with Links */}
                 <Breadcrumb
@@ -28,18 +27,15 @@ export default function SearchResultsProducts_Card ({ product }) {
                             title: (
                                 <Link
                                     href={{
-                                        pathname: `/${
-                                            paths[product.content_type]
-                                        }/${
-                                            product?.category_data?.parent
+                                        pathname: `/${paths[product.content_type]
+                                            }/${product?.category_data?.parent
                                                 ?.replace(/\s+/g, '-')
                                                 .toLowerCase() || ''
-                                        }/`,
-                                        query: `parentCategory=${
-                                            product?.category_data?.parent
-                                                ?.replace(/\s+/g, '-')
-                                                .toLowerCase() || ''
-                                        }`,
+                                            }/`,
+                                        query: `parentCategory=${product?.category_data?.parent
+                                            ?.replace(/\s+/g, '-')
+                                            .toLowerCase() || ''
+                                            }`,
                                     }}
                                     onClick={e => e.stopPropagation()}>
                                     <span style={{ cursor: 'pointer' }}>
@@ -52,19 +48,15 @@ export default function SearchResultsProducts_Card ({ product }) {
                             title: (
                                 <Link
                                     href={{
-                                        pathname: `/${
-                                            paths[product.content_type]
-                                        }/${
-                                            product?.category_data?.slug || ''
-                                        }/`,
-                                        query: `parentCategory=${
-                                            product?.category_data?.parent
-                                                ?.replace(/\s+/g, '-')
-                                                .toLowerCase() || ''
-                                        }&childCategory=${
-                                            product?.category_data?.slug?.toLowerCase() ||
+                                        pathname: `/${paths[product.content_type]
+                                            }/${product?.category_data?.slug || ''
+                                            }/`,
+                                        query: `parentCategory=${product?.category_data?.parent
+                                            ?.replace(/\s+/g, '-')
+                                            .toLowerCase() || ''
+                                            }&childCategory=${product?.category_data?.slug?.toLowerCase() ||
                                             ''
-                                        }`,
+                                            }`,
                                     }}
                                     onClick={e => e.stopPropagation()}>
                                     <span style={{ cursor: 'pointer' }}>
@@ -85,38 +77,47 @@ export default function SearchResultsProducts_Card ({ product }) {
                     </Link>
                 </p>
 
-                {/* Description */}
-                <p className='Search_Results_Products_card_description'>
-                    {product.description}
-                </p>
-
-                {/* Extra info */}
                 <div
                     onClick={() =>
                         router.push({ pathname: `/product/${product.slug}` })
                     }
                     style={{ cursor: 'pointer' }}
                     className='Search_Results_Products_card_info'>
-                    <p className='Search_Results_Products_card_type'>
-                        Fayl turi:{' '}
-                        <span
-                            style={{
-                                color: 'white',
-                                padding: '4px 9px',
-                                borderRadius: '4px',
-                                backgroundColor:
-                                    fileColors[product?.file_type] || '#007DFF',
-                            }}
-                            className='Search_Results_Products_card_boldtype'>
-                            {product.file_type}
-                        </span>
-                    </p>
-                    <p className='Search_Results_Products_card_price'>
-                        Narxi:{' '}
-                        <span className='Search_Results_Products_card_price_boldspan'>
-                            {addPeriodToThousands(product.discount_price)} so'm
-                        </span>
-                    </p>
+                        <div>
+                            <p className='Search_Results_Products_card_price'>
+                                <i class="fas fa-money-bill price_icon"></i>
+                                <span className='Search_Results_Products_card_price_boldspan'>
+                                    {addPeriodToThousands(product.discount_price)}
+                                </span>
+                            </p>
+                        </div>
+                        <div className='search_main_info'>
+                            <p className='Search_Results_Products_card_type'>
+                                <span
+                                    style={{
+                                        color: 'white',
+                                        padding: '2px 7px',
+                                        borderRadius: '4px',
+                                        backgroundColor:
+                                            fileColors[product?.file_type] || '#007DFF',
+                                    }}
+                                    className='Search_Results_Products_card_boldtype'>
+                                    {product.file_type}
+                                </span>
+                            </p>
+                            <p className='Search_Results_Products_card_price '>
+                                <i class="fas fa-file file_icon "></i>
+                                <span className='Search_Results_Products_card_price_boldspan'>
+                                    {product?.page_count}
+                                </span>
+                            </p>
+                            <p className='Search_Results_Products_card_price '>
+                                    <i class="fas fa-file-archive price_icon "></i>
+                                <span className='Search_Results_Products_card_price_boldspan'>
+                                    {product?.file_size}
+                                </span>
+                            </p>
+                        </div>
                 </div>
             </div>
 

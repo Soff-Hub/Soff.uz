@@ -67,7 +67,7 @@ const ImageCarousel = ({ images, views, demo_link }) => {
             </div>
       
             
-            <div className='d-flex align-items-center gap-5 mt-5 flex-wrap justify-content-center'>
+            <div className='d-flex align-items-center gap-5 mt-2 flex-wrap justify-content-center'>
                 { demo_link &&
                     <DemoButton demo_link={demo_link}/> 
                 }

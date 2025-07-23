@@ -6,10 +6,12 @@ import HeroSearch from '~/components/blocks/hero';
 import HomeCategories from '~/components/blocks/home-categories';
 import ItServicesCategories from '~/components/blocks/home-categories/ItServicesCategories';
 import SubProjects from '~/components/blocks/home-products/sub-projects';
+import LastAddedProducts from '~/components/blocks/lastAddedProducts/lastAddedProducts';
 import PageLayout from '~/components/layouts/PageLayout';
 import Meta from '~/components/shared/headers/Meta';
+import { baseURL } from '~/repositories/api';
 
-function NewHomePage ({ tab, category }) {
+function NewHomePage ({ tab, category, lastProductsData }) {
     return (
         <PageLayout>
             <Meta
@@ -30,11 +32,12 @@ function NewHomePage ({ tab, category }) {
                     { name: 'Soff.uz' },
                 ]}
                 author='Soff.uz'
-                image='/static/img/soff imkoniyatlari 2.png'
+                image='c'
             />
             <HeroSearch />
             <HomeCategories />
             <BestSellerStatics />
+            {/* <LastAddedProducts lastAdded={lastProductsData}/> */}
             <HomeCategoryHighlights />
             <ItServicesCategories />
             <ResutsComponents />
@@ -45,11 +48,14 @@ function NewHomePage ({ tab, category }) {
 
 export async function getServerSideProps (context) {
     const { query } = context;
-
+    const res = await fetch(`${baseURL}customer/last-added?limit=6`)
+    const lastProductsData = await res.json()
+ 
     return {
         props: {
             tab: query?.tab || 'file',
             category: query?.category || null,
+            lastProductsData,
         },
     };
 }
