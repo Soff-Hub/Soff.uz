@@ -167,22 +167,22 @@ export default function ProductDefaultPage({ defaultProducts }) {
         ),
     };
     const productsDetailsSimilar = {
-        file: similarProduct?.slice(0, 12).map((item, index) => (
+        file: similarProduct?.map((item, index) => (
             <RedesignProduct product={item} key={index} />
         )),
-        '3d': similarProduct?.slice(0, 8).map((item, index) => (
+        '3d': similarProduct?.map((item, index) => (
             <ModelAndDesignProduct product={item} key={index} />
         )),
-        template: similarProduct?.slice(0, 12).map((item, index) => (
+        template: similarProduct?.map((item, index) => (
             <RedesignProduct product={item} key={index} />
         )),
-        website: similarProduct?.slice(0, 12).map((item, index) => (
+        website: similarProduct?.map((item, index) => (
             <RedesignProduct product={item} key={index} />
         )),
-        design: similarProduct?.slice(0, 12).map((item, index) => (
+        design: similarProduct?.map((item, index) => (
             <RedesignProduct product={item} key={index} />
         )),
-        video: similarProduct?.slice(0, 12).map((item, index) => (
+        video: similarProduct?.map((item, index) => (
             <RedesignProduct product={item} key={index} />
         )),
     };
