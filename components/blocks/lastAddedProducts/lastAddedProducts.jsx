@@ -3,7 +3,6 @@ import RedesignProduct from '~/components/elements/products/Redesign/Redesign-Pr
 import PageContainer from '~/components/layouts/PageContainer'
 
 const LastAddedProducts = ({lastAdded}) => {
-    console.log(lastAdded)
     return (
         <div className='container'>
             <h3

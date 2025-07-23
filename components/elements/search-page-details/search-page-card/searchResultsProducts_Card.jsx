@@ -16,16 +16,6 @@ export default function SearchResultsProducts_Card({ product }) {
     };
 
     const router = useRouter();
-    console.log(product)
-    console.log(product)
-    console.log(product)
-    console.log(product)
-    console.log(product)
-    console.log(product)
-    console.log(product)
-    console.log(product)
-    console.log(product)
-    console.log(product)
     return (
         <div onClick={() => router.push(`product/${product.slug}`)} className='Search_Results_Products_card'>
             <div className='Search_Results_Products_card_body'>
