@@ -9,7 +9,7 @@ export default function TemplatesSwipper() {
     useEffect(() => {
         setIsLoading(true);
 
-        fetch(`https://api.soff.uz/api/v1/customer/products?direction=template`)
+        fetch(`https://api.soff.uz/api/v1/customer/last-added?direction=template&limit=6`)
             .then(res => res.json())
             .then(data => {
                 setProduct(data.results);

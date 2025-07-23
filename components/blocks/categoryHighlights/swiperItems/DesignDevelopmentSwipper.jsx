@@ -9,7 +9,7 @@ export default function DesignDevelopmentSwipper() {
     useEffect(() => {
         setIsLoading(true);
 
-        fetch(`https://api.soff.uz/api/v1/customer/products?direction=design`)
+        fetch(`https://api.soff.uz/api/v1/customer/last-added?direction=design&limit=6`)
             .then(res => res.json())
             .then(data => {
                 setProduct(data.results);

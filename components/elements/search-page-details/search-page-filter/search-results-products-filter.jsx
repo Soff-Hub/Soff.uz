@@ -56,11 +56,11 @@ export default function SearchResultsProductsFilter({ total, parentData, childDa
   };
 
 return (
-  <div className='Search_Results_Products_form_box container'>
+  <div className='Search_Results_Products_form_box '>
     <div className="row align-items-center mb-3">
       <div className="col-12 col-md-3">
         <p className='countProduct text-nowrap m-0'>
-          {total ? `${total} ta mahsulot` : ''}
+          {total ? `${total} ta mahsulot topildi` : ''}
         </p>
       </div>
     </div>
@@ -78,7 +78,7 @@ return (
           const totalCount = 1 + (hasType ? 1 : 0) + (hasParent ? 1 : 0) + 1; // type + parent + child + order_by
           let colLg = '4'; // default
 
-          if (totalCount <= 2) colLg = '6';
+          if (totalCount <= 2) colLg = '3';
           else if (totalCount === 3) colLg = '4';
           else colLg = '3';
 

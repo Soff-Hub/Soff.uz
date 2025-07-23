@@ -9,7 +9,7 @@ export default function ScientificResourcesSwipper() {
     useEffect(() => {
         setIsLoading(true);
 
-        fetch(`https://api.soff.uz/api/v1/customer/products/?direction=file&limit=6`)
+        fetch(`https://api.soff.uz/api/v1/customer/last-added/?direction=file&limit=6`)
             .then(res => res.json())
             .then(data => {
                 setProducts(data?.results);

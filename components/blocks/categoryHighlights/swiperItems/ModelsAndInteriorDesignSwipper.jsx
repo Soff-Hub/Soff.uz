@@ -11,7 +11,7 @@ export default function ModelsAndInteriorDesignSwipper () {
     useEffect(() => {
         setIsLoading(true);
 
-        fetch(`https://api.soff.uz/api/v1/customer/products?direction=3d`)
+        fetch(`https://api.soff.uz/api/v1/customer/last-added?direction=3d&limit=4`)
             .then(res => res.json())
             .then(data => {
                 setProduct(data.results);
@@ -37,8 +37,8 @@ export default function ModelsAndInteriorDesignSwipper () {
                     </div>
                     <div className='row'>
                         {product ? (
-                            product?.slice(0, 3).map((item, index) => (
-                                    <div className='col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4 mb-4'>
+                            product?.slice(0, 4).map((item, index) => (
+                                    <div className='col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3 mb-4'>
                                         <ModelAndDesignProduct
                                             product={item}
                                             key={index}
