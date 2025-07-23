@@ -87,8 +87,8 @@ const Search_Results = ({
                     name='description'
                     content={
                         keyword
-                            ? `“${keyword}” bo‘yicha ${searchData?.count || 0} ta mahsulot topildi. Soff.uz orqali kerakli intellektual mulklaringizni toping.`
-                            : "Soff.uz qidiruv tizimi orqali o'zingizga kerakli bo'lgan istalgan turdagi intellektual mulklaringizni toping"
+                            ? `“${keyword}” bo‘yicha ${searchData?.count || 0} ta mahsulot topildi. Soff.uz orqali kerakli bo'lgan raqamli mahsulotlarni yuklab olishingiz mumkin`
+                            : "Soff.uz orqali kerakli bo'lgan raqamli mahsulotlarni yuklab olishingiz mumkin"
                     }
                 />
             </Head>
