@@ -56,7 +56,7 @@ const ImageCarousel = ({ images, views, demo_link }) => {
             >
                 {images?.map((item) => (
                     <SwiperSlide key={item.id} className="thumb-slide">
-                        <Image objectFit={"cover"} src={item?.image_url || item?.thumbUrl} alt="Thumbnail" width={75} height={44} className="rounded img-thumbnail" />
+                        <Image objectFit={"contain"} src={item?.image_url || item?.thumbUrl} alt="Thumbnail" width={75} height={44} className="rounded img-thumbnail" />
                     </SwiperSlide>
                 ))}
             </Swiper>
