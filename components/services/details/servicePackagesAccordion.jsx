@@ -39,7 +39,7 @@ const packages = [
     },
 ];
 
-const ServicePackagesAccordion = () => {
+const ServicePackagesAccordion = ({openModal}) => {
     const { token } = theme.useToken();
 
     const panelStyle = {
@@ -77,7 +77,7 @@ const ServicePackagesAccordion = () => {
                     ))}
                 </ul>
 
-                <Button type='primary' block className='bg-success border-success'>
+                <Button onClick={openModal} type='primary' block className='bg-success border-success'>
                     Buyurma berish <ArrowRightOutlined />
                 </Button>
             </div>

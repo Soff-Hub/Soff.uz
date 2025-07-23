@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ServicePackages = () => {
+const ServicePackages = ({openModal}) => {
     return (
         <div className='row'>
             <div className='col-12 col-sm-6 col-lg-4 mb-3'>
@@ -27,7 +27,7 @@ const ServicePackages = () => {
                         </div>
                         <h2 className='mt-5'>20,000 so'm</h2>
                     </div>
-                    <button>Buyurtma berish</button>
+                    <button onClick={openModal}>Buyurtma berish</button>
                 </div>
             </div>
             <div className='col-12 col-sm-6 col-lg-4 mb-3'>

@@ -1,7 +1,8 @@
-import { Rate } from 'antd'
-import React from 'react'
+import { Modal, Rate } from 'antd'
+import React, { useState } from 'react'
 import SwiperPages from '~/components/details-components/swiper/swiper-page'
 import PageContainer from '~/components/layouts/PageContainer'
+import LoginForm from '~/components/partials/account/auth/LoginForm'
 import ServiceComments from '~/components/services/details/serviceComments'
 import ServiceDescription from '~/components/services/details/serviceDescription'
 import ServiceImgCorusel from '~/components/services/details/serviceImgCorusel'
@@ -12,6 +13,10 @@ import ServiceCard from '~/components/services/ServiceCard'
 
 const ServiceDetail = ({ data }) => {
     const { service, similar_services } = data
+    const [isModalOpen, setIsModalOpen] = useState(false)
+
+    const openLoginModal = () => setIsModalOpen(true)
+    const closeLoginModal = () => setIsModalOpen(false)
     return (
         <PageContainer>
             <div className='container my-5'>
@@ -27,12 +32,12 @@ const ServiceDetail = ({ data }) => {
                         />
                     </div>
                     <div className='col-12 col-lg-5'>
-                        <ServicePackagesAccordion />
+                        <ServicePackagesAccordion openModal={openLoginModal}/>
                     </div>
                 </div>
                 <div className='row my-5'>
                     <div className='col-12 col-lg-7'>
-                        <ServiceDescription description={service?.description} />
+                        <ServiceDescription openModal={openLoginModal} description={service?.description} />
                     </div>
                     <div className='col-12 col-lg-5'>
                         <ServiceSellerProfile />
@@ -45,7 +50,7 @@ const ServiceDetail = ({ data }) => {
                 </div>
                 <div className='row my-5'>
                     <div className='col-12 col-lg-7'>
-                        <ServiceComments comments={service?.comments}/>
+                        <ServiceComments comments={service?.comments} />
                     </div>
                 </div>
                 <div>
@@ -56,6 +61,15 @@ const ServiceDetail = ({ data }) => {
                         ))}
                     </SwiperPages>
                 </div>
+                <Modal
+                    open={isModalOpen}
+                    onCancel={closeLoginModal}
+                    footer={null}
+                    className='custom-login-modal'
+                    width={700}
+                >
+                    <LoginForm  />
+                </Modal>
             </div>
         </PageContainer>
     )
