@@ -4,129 +4,129 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
   xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 
                       http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-  
+
   <url>
-    <loc>https://soff.uz/category/taqdimotlar</loc>
+    <loc>https://soff.uz/scientific-resources/taqdimotlar?parentCategory=taqdimotlar</loc>
     <lastmod>2024-01-08T07:27:21+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://soff.uz/category/kurs-ishlari</loc>
+    <loc>https://soff.uz/scientific-resources/kurs-ishlari?parentCategory=kurs-ishlari</loc>
     <lastmod>2024-01-08T07:27:21+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://soff.uz/category/diplom-ishlari</loc>
+    <loc>https://soff.uz/scientific-resources/diplom-ishlari?parentCategory=diplom-ishlari</loc>
     <lastmod>2024-01-08T07:27:21+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://soff.uz/category/referatlar</loc>
+    <loc>https://soff.uz/scientific-resources/referatlar?parentCategory=referatlar</loc>
     <lastmod>2024-01-08T07:27:21+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://soff.uz/category/mustaqil-ishlar</loc>
+    <loc>https://soff.uz/scientific-resources/mustaqil-ishlar?parentCategory=mustaqil-ishlar</loc>
     <lastmod>2024-01-08T07:27:21+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://soff.uz/category/labaratoriya-ishlari</loc>
+    <loc>https://soff.uz/scientific-resources/labaratoriya-ishlari?parentCategory=labaratoriya-ishlari</loc>
     <lastmod>2024-01-08T07:27:21+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://soff.uz/category/dissertatsiya-ishlari</loc>
+    <loc>https://soff.uz/scientific-resources/dissertatsiya-ishlari?parentCategory=dissertatsiya-ishlari</loc>
     <lastmod>2024-01-08T07:27:21+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://soff.uz/category/testlar</loc>
+    <loc>https://soff.uz/scientific-resources/testlar?parentCategory=testlar</loc>
     <lastmod>2024-01-08T07:27:21+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://soff.uz/category/oquv-qollanmalar</loc>
+    <loc>https://soff.uz/scientific-resources/oquv-qollanmalar?parentCategory=oquv-qollanmalar</loc>
     <lastmod>2024-01-08T07:27:21+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://soff.uz/category/dars-ishlanmalar</loc>
+    <loc>https://soff.uz/scientific-resources/dars-ishlanmalar?parentCategory=dars-ishlanmalar</loc>
     <lastmod>2024-01-08T07:27:21+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://soff.uz/category/tarqatma-materiallar</loc>
+    <loc>https://soff.uz/scientific-resources/tarqatma-materiallar?parentCategory=tarqatma-materiallar</loc>
     <lastmod>2024-01-08T07:27:21+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://soff.uz/category/amaliy-ishlar</loc>
+    <loc>https://soff.uz/scientific-resources/amaliy-ishlar?parentCategory=amaliy-ishlar</loc>
     <lastmod>2024-01-08T07:27:21+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://soff.uz/category/namunaviy-hujjatlar</loc>
+    <loc>https://soff.uz/scientific-resources/namunaviy-hujjatlar?parentCategory=namunaviy-hujjatlar</loc>
     <lastmod>2024-01-08T07:27:21+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://soff.uz/category/kitoblar</loc>
+    <loc>https://soff.uz/scientific-resources/kitoblar?parentCategory=kitoblar</loc>
     <lastmod>2024-01-08T07:27:21+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://soff.uz/category/loyihalar</loc>
+    <loc>https://soff.uz/scientific-resources/loyihalar?parentCategory=loyihalar</loc>
     <lastmod>2024-01-08T07:27:21+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://soff.uz/category/maqola</loc>
+    <loc>https://soff.uz/scientific-resources/maqola?parentCategory=maqola</loc>
     <lastmod>2024-01-08T07:27:21+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://soff.uz/category/plakatlar</loc>
+    <loc>https://soff.uz/scientific-resources/plakatlar?parentCategory=plakatlar</loc>
     <lastmod>2024-01-08T07:27:21+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://soff.uz/category/ijodiy-ishlar</loc>
+    <loc>https://soff.uz/scientific-resources/ijodiy-ishlar?parentCategory=ijodiy-ishlar</loc>
     <lastmod>2024-01-08T07:27:21+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://soff.uz/category/biznes-rejalar</loc>
+    <loc>https://soff.uz/scientific-resources/biznes-rejalar?parentCategory=biznes-rejalar</loc>
     <lastmod>2024-01-08T07:27:21+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>https://soff.uz/category/blankalar</loc>
+    <loc>https://soff.uz/scientific-resources/blankalar?parentCategory=blankalar</loc>
     <lastmod>2024-01-08T07:27:21+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>https://soff.uz/category/dastur-kodlari</loc>
+    <loc>https://soff.uz/scientific-resources/dastur-kodlari?parentCategory=dastur-kodlari</loc>
     <lastmod>2024-01-08T07:27:21+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>https://soff.uz/category/dasturlar-2</loc>
+    <loc>https://soff.uz/scientific-resources/dasturlar-2?parentCategory=dasturlar-2</loc>
     <lastmod>2024-01-08T07:27:21+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>https://soff.uz/category/ixtiro-patenti</loc>
+    <loc>https://soff.uz/scientific-resources/ixtiro-patenti?parentCategory=ixtiro-patenti</loc>
     <lastmod>2024-01-08T07:27:21+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>https://soff.uz/category/video-darslik</loc>
+    <loc>https://soff.uz/scientific-resources/video-darslik?parentCategory=video-darslik</loc>
     <lastmod>2024-01-08T07:27:21+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>https://soff.uz/category/statistika</loc>
+    <loc>https://soff.uz/scientific-resources/statistika?parentCategory=statistika</loc>
     <lastmod>2024-01-08T07:27:21+00:00</lastmod>
     <priority>0.64</priority>
   </url>
