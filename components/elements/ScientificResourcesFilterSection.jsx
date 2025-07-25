@@ -37,10 +37,10 @@ const ScientificResourcesFilterSection = ({
             <div className='d-xl-none d-block my-4 container'>
                 <div className='row mx-auto gap-3'>
                     <Select
-                        className=' col-md-6  col-12  p-0 m-0 mr-md-2'
+                        className='col-md-6 col-12 p-0 m-0 mr-md-2'
                         onChange={value => {
                             router.push({
-                                pathname: `/scientific-resources/${value}`,
+                                pathname: `/category/${value}`,
                                 query: { page: 1 },
                             });
                         }}
@@ -68,12 +68,11 @@ const ScientificResourcesFilterSection = ({
 
                     {subCategory && (
                         <Select
-                            className=' col-md-6  col-12  p-0 m-0 ml-md-2'
+                            className='col-md-6 col-12 p-0 m-0 ml-md-2'
                             onChange={value => {
                                 router.push({
-                                    pathname: '/scientific-resources/[slug]',
+                                    pathname: `/category/${slug}`,
                                     query: {
-                                        slug: value,
                                         page: 1,
                                         childCategory: value,
                                     },
@@ -99,22 +98,26 @@ const ScientificResourcesFilterSection = ({
             {/* Desktop menu */}
             <div className='d-none d-lg-block'>
                 <div className='subcategoryMenu d-xl-block d-lg-none p-lg-0'>
-                    <div className='mb-3  pointer top_search_category justify-content-between'>
+                    <div className='mb-3 pointer top_search_category justify-content-between'>
                         <div
                             onClick={() => setDropdownMenu(!dropDownMenu)}
                             className='Models_category_menu'
                         >
                             <img src='/static/img/list-category.svg' alt='' />
                             <h1 style={{ whiteSpace: 'nowrap' }}>
-                                {slug
-                                    ? breacrumb?.results.find(item => item.slug === slug)?.name
-                                    : 'Barcha Katalog'}
+                                {(!slug || slug === 'all')
+                                    ? 'Barcha Katalog'
+                                    : breacrumb?.results.find(item => item.slug === slug)?.name
+                                }
                             </h1>
-                            {dropDownMenu ? (
-                                <img src='/static/img/up-icon.svg' alt='' />
-                            ) : (
-                                <img src='/static/img/down-icon.svg' alt='' />
-                            )}
+                            <img
+                                src={
+                                    dropDownMenu
+                                        ? '/static/img/up-icon.svg'
+                                        : '/static/img/down-icon.svg'
+                                }
+                                alt=''
+                            />
                         </div>
 
                         <div className='d-flex gap-3'>
@@ -124,12 +127,11 @@ const ScientificResourcesFilterSection = ({
                                 .map((item, index) => (
                                     <div className='my-2' key={index}>
                                         <div
-                                            className={`${
-                                                slug === item.slug ? 'bg-success' : ''
-                                            } category-btn card p-3 shadow-sm rounded-3`}
+                                            className={`${slug === item.slug ? 'bg-success' : ''
+                                                } category-btn card p-3 shadow-sm rounded-3`}
                                             onClick={() =>
                                                 router.push({
-                                                    pathname: `/scientific-resources/${item.slug}`,
+                                                    pathname: `/category/${item.slug}`,
                                                     query: { page: 1 },
                                                 })
                                             }
@@ -137,11 +139,10 @@ const ScientificResourcesFilterSection = ({
                                         >
                                             <div className='d-flex justify-content-between'>
                                                 <p
-                                                    className={`${
-                                                        slug === item.slug
+                                                    className={`${slug === item.slug
                                                             ? 'bg-success text-white'
                                                             : ''
-                                                    } category-btn-title m-0 p-0`}
+                                                        } category-btn-title m-0 p-0`}
                                                 >
                                                     {item.name}
                                                 </p>
@@ -163,24 +164,23 @@ const ScientificResourcesFilterSection = ({
                                 {breacrumb?.results?.map((item, index) => (
                                     <div className='col-2 my-2' key={index}>
                                         <div
-                                            className={`${
-                                                slug === item.slug ? 'bg-success' : ''
-                                            } category-btn card p-3 shadow-sm rounded-3`}
-                                            onClick={() =>
+                                            className={`${slug === item.slug ? 'bg-success' : ''
+                                                } category-btn card p-3 shadow-sm rounded-3`}
+                                            onClick={() => {
                                                 router.push({
-                                                    pathname: `/scientific-resources/${item.slug}`,
+                                                    pathname: `/category/${item.slug}`,
                                                     query: { page: 1 },
-                                                }) && setDropdownMenu(false)
-                                            }
+                                                });
+                                                setDropdownMenu(false);
+                                            }}
                                             style={{ cursor: 'pointer' }}
                                         >
                                             <div className='d-flex justify-content-between'>
                                                 <p
-                                                    className={`${
-                                                        slug === item.slug
+                                                    className={`${slug === item.slug
                                                             ? 'bg-success text-white'
                                                             : ''
-                                                    } category-btn-title m-0 p-0`}
+                                                        } category-btn-title m-0 p-0`}
                                                 >
                                                     {item.name}
                                                 </p>
@@ -198,7 +198,7 @@ const ScientificResourcesFilterSection = ({
                     )}
 
                     {subCategory?.length > 0 && (
-                        <div className='ps-breadcrumb-2 py-3 px-xl-0 px-l-0 '>
+                        <div className='ps-breadcrumb-2 py-3 px-xl-0 px-l-0'>
                             <div className='subCategoryContainer'>
                                 <div className='pointer top_search_category justify-content-between'>
                                     <div
@@ -210,20 +210,17 @@ const ScientificResourcesFilterSection = ({
                                         (<span>{subCategory.length}+</span>) {` `}
                                         {childCategory
                                             ? subCategory.find(
-                                                  item => item.slug === childCategory
-                                              )?.name || 'Barchasini korish'
+                                                item => item.slug === childCategory
+                                            )?.name || 'Barchasini korish'
                                             : 'Barchasini korish'}
-                                        {childCategoryOpen ? (
-                                            <img
-                                                src='/static/img/up-icon-green.svg'
-                                                alt=''
-                                            />
-                                        ) : (
-                                            <img
-                                                src='/static/img/down-icon-green.svg'
-                                                alt=''
-                                            />
-                                        )}
+                                        <img
+                                            src={
+                                                childCategoryOpen
+                                                    ? '/static/img/up-icon-green.svg'
+                                                    : '/static/img/down-icon-green.svg'
+                                            }
+                                            alt=''
+                                        />
                                     </div>
 
                                     <div className='d-flex gap-3'>
@@ -233,10 +230,8 @@ const ScientificResourcesFilterSection = ({
                                                     className='sub-category-btn p-3'
                                                     onClick={() =>
                                                         router.push({
-                                                            pathname:
-                                                                '/scientific-resources/[slug]',
+                                                            pathname: `/category/${slug}`,
                                                             query: {
-                                                                slug: item.slug,
                                                                 page: 1,
                                                                 childCategory: item.slug,
                                                             },
@@ -246,11 +241,10 @@ const ScientificResourcesFilterSection = ({
                                                 >
                                                     <div className='d-flex justify-content-between'>
                                                         <p
-                                                            className={`${
-                                                                childCategory === item.slug
+                                                            className={`${childCategory === item.slug
                                                                     ? 'text-success text-white'
                                                                     : ''
-                                                            } text-capitalize sub-category-btn-title m-0 p-0`}
+                                                                } text-capitalize sub-category-btn-title m-0 p-0`}
                                                         >
                                                             {item.name}
                                                         </p>
@@ -265,20 +259,18 @@ const ScientificResourcesFilterSection = ({
                                     <div className='d-flex flex-wrap bg-white shadow-sm rounded-3 p-4'>
                                         {subCategory.map((item, index) => (
                                             <div
-                                                onClick={() =>
+                                                onClick={() => {
                                                     router.push({
-                                                        pathname:
-                                                            '/scientific-resources/[slug]',
+                                                        pathname: `/category/${slug}`,
                                                         query: {
-                                                            slug: item.slug,
                                                             page: 1,
                                                             childCategory: item.slug,
                                                         },
-                                                    }) && setChildCategoryOpen(false)
-                                                }
-                                                className={`${
-                                                    slug === item.slug ? 'active' : ''
-                                                } pointer text-capitalize col-2 my-1 border`}
+                                                    });
+                                                    setChildCategoryOpen(false);
+                                                }}
+                                                className={`${slug === item.slug ? 'active' : ''
+                                                    } pointer text-capitalize col-2 my-1 border`}
                                                 key={index}
                                             >
                                                 {item.name}
@@ -293,7 +285,7 @@ const ScientificResourcesFilterSection = ({
                     {isLoading && (
                         <Skeleton.Node
                             active
-                            className={`skeletion-card small-full-card mb-3`}
+                            className='skeletion-card small-full-card mb-3'
                         />
                     )}
                 </div>

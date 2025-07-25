@@ -9,6 +9,7 @@ import SubProjects from '~/components/blocks/home-products/sub-projects';
 import LastAddedProducts from '~/components/blocks/lastAddedProducts/lastAddedProducts';
 import PageLayout from '~/components/layouts/PageLayout';
 import Meta from '~/components/shared/headers/Meta';
+import { TelegramLink } from '~/components/shared/telegramLink';
 import { baseURL } from '~/repositories/api';
 
 function NewHomePage ({ tab, category, lastProductsData }) {
@@ -42,6 +43,7 @@ function NewHomePage ({ tab, category, lastProductsData }) {
             <ItServicesCategories />
             <ResutsComponents />
             <SubProjects />
+            <TelegramLink/>
         </PageLayout>
     );
 }

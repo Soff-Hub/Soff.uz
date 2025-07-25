@@ -45,11 +45,8 @@ export default function ProductCategoryScreen({
     });
   };
 
-  const title = getTitleFromSlug(fourChildData?.results, slug); // <- o‘zgarish
-  const subTitle = getTitleFromSlug(
-    childCategoryData?.results,
-    childCategory
-  );
+  const title = getTitleFromSlug(fourChildData?.results, slug);
+  const subTitle = getTitleFromSlug(childCategoryData?.results, childCategory);
 
   const fullTitle =
     title && subTitle
@@ -110,31 +107,34 @@ export default function ProductCategoryScreen({
   );
 }
 
+// ✅ getServerSideProps to'g'rilangan
 export async function getServerSideProps(context) {
   const {
-    slug,
+    slug = '',
     page = 1,
     childCategory = '',
   } = context.query;
 
   const fetchJson = async url => {
     const res = await fetch(url);
-    if (!res.ok) {
-      return null;
-    }
+    if (!res.ok) return null;
     return res.json();
   };
 
-  const categoryParam = childCategory || slug;
+  // Agar slug === 'all' bo‘lsa, category bo‘sh bo‘lishi kerak
+  const categoryParam = slug === 'all' ? '' : (childCategory || slug);
 
   const productsUrl = `${baseUrlUseApi}customer/products/?direction=file&category=${categoryParam}&page=${page}&page_size=48`;
   const fourChildUrl = `${baseUrlUseApi}customer/four-child?direction=file`;
-  const childCategoryUrl = `${baseUrlUseApi}customer/four-child?direction=file&parent__slug=${slug}`;
+  const childCategoryUrl =
+    slug && slug !== 'all'
+      ? `${baseUrlUseApi}customer/four-child?direction=file&parent__slug=${slug}`
+      : null;
 
   const [productsData, fourChildData, childCategoryData] = await Promise.all([
     fetchJson(productsUrl),
     fetchJson(fourChildUrl),
-    fetchJson(childCategoryUrl),
+    childCategoryUrl ? fetchJson(childCategoryUrl) : Promise.resolve(null),
   ]);
 
   return {
@@ -148,4 +148,3 @@ export async function getServerSideProps(context) {
     },
   };
 }
-

@@ -175,8 +175,22 @@ function FileActions({ product }) {
                             {product?.document?.file_type}
                         </span>
                     </li>}
-
-
+                    {/* <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
+                        <span>Still:</span>
+                        <span>new style</span>
+                    </li>
+                    <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
+                        <span>O'lcham:</span>
+                        <span>2h x 3w x 4l</span>
+                    </li>
+                    <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
+                        <span>Rang:</span>
+                        <span>new style</span>
+                    </li>
+                    <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
+                        <span>Materiallar:</span>
+                        <span>new style</span>
+                    </li> */}
                 </ul>
 
                 <div className='d-flex flex-column gap-3 '>

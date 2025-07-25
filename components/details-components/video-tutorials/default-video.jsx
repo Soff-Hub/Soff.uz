@@ -1,14 +1,11 @@
 import React, { useEffect } from 'react';
+import { LockOutlined } from '@ant-design/icons';
 
-export default function DefaultVideoContent({
-    product,
-    isPlay,
-    setIsPlay,
-    type,
-}) {
-
-
-
+export default function DefaultVideoContent({ product, isPlay, setIsPlay, type }) {
+    const url = product?.document?.file_url;
+    const poster = product?.poster_url || product?.poster;
+    const hasPoster = !!poster;
+    const hasVideo = !!url;
 
     useEffect(() => {
         const player = document.getElementById(`videoPlayer-${product?.id}`);
@@ -21,55 +18,56 @@ export default function DefaultVideoContent({
         }
     }, [isPlay, product]);
 
-
-
-    const url = product?.document?.file_url
-        ? product?.document?.file_url
-        : product?.document?.short_content_url
-
-
     return (
-        <div className='video_iframe'
+        <div
+            className='video_iframe'
             style={{
                 backgroundSize: 'cover',
                 borderRadius: '5px',
-                backgroundImage: `url("${product?.poster_url}")`,
-                padding: '0', maxHeight: '450px',
+                backgroundImage: hasPoster ? `url("${poster}")` : 'none',
+                backgroundColor: hasPoster ? 'transparent' : '#111',
+                maxHeight: '450px',
                 overflow: 'hidden',
                 position: 'relative',
-                width:'100%',
-                height:'100%'
+                width: '100%',
+                height: '100%',
             }}
         >
-            <video
-                id={`videoPlayer-${product?.id}`}
-                onPlay={(e) => {
-                    if (type === 'playlists') {
-                        e.target.pause()
-                    } else {
-                        setIsPlay?.(product?.id)
-                    }
-                }
-                }
+            {hasVideo ? (
+                <video
+                    id={`videoPlayer-${product?.id}`}
+                    onContextMenu={(e) => e.preventDefault()}
+                    controls={false}
+                    controlsList="nodownload"
+                    preload="none"
+                    style={{
+                        maxHeight: '450px',
+                        height: '100%',
+                        width: '100%',
+                        position: 'relative',
+                        zIndex: 1,
+                        pointerEvents: 'none',
+                        backgroundColor: hasPoster ? 'transparent' : '#000',
+                    }}
+                    poster={poster}
+                    src={url}
+                />
+            ) : null}
 
-                onContextMenu={(e) => e.preventDefault()}
-                controls={!(type === 'playlists')}
-                controlsList="nodownload"
-                preload='none'
-
+            {/* Qulf ikoni doim chiqadi, lekin agar video yo‘q bo‘lsa — u markazda, katta; agar video bo‘lsa — ustida chiqadi */}
+            <div
                 style={{
-                    maxHeight: '450px',
-                    height:'100%',
-                    width: '100%',
-                    position: 'relative',
-                    zIndex: 2
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    zIndex: 3,
+                    color: 'white',
+                    display: hasVideo ? 'none' : 'block',
                 }}
-                poster={product?.poster_url ? product?.poster_url : product?.poster}
-                src={url}
             >
-
-
-            </video>
-        </div >
+                <LockOutlined style={{ fontSize: '48px', color: 'white' }} />
+            </div>
+        </div>
     );
 }
