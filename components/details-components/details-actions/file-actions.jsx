@@ -70,6 +70,7 @@ function FileActions({ product }) {
             removeSavedItem(product.id);
         }
     }
+    
 
     const showModal = () => {
         setOpen(true);

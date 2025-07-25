@@ -27,6 +27,7 @@ import ScientificResourcesFilterSection, {
 import { useRouter } from 'next/router';
 import { baseUrlUseApi } from '~/repositories/useApi';
 import AISoffiaPresentation from '~/components/elements/AISoffiaPresentation';
+import CategoryFilterSecion from '~/components/elements/CategoryFilterSecion';
 
 export default function ProductCategoryScreen({
   productsData,
@@ -90,7 +91,7 @@ export default function ProductCategoryScreen({
 
       <div className='ps-page--shop container p-lg-1'>
         <AISoffiaPresentation />
-        <ScientificResourcesFilterSection
+        <CategoryFilterSecion
           breacrumb={fourChildData}
           count={productsData?.count}
           isLoading={false}
