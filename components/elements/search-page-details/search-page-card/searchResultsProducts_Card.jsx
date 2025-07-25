@@ -106,13 +106,13 @@ export default function SearchResultsProducts_Card({ product }) {
                                 </span>
                             </p>
                             <p className='Search_Results_Products_card_price '>
-                                <i class="fas fa-file file_icon "></i>
+                                <i class="fas fa-copy file_icon "></i>
                                 <span className='Search_Results_Products_card_price_boldspan'>
                                     {product?.page_count}
                                 </span>
                             </p>
                             <p className='Search_Results_Products_card_price '>
-                                    <i class="fas fa-file-archive price_icon "></i>
+                                    <i class="fas fa-database price_icon "></i>
                                 <span className='Search_Results_Products_card_price_boldspan'>
                                     {product?.file_size}
                                 </span>
