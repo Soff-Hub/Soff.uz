@@ -16,11 +16,26 @@ export const fileColors = {
     ".ppt": "#DC8452",
     ".pdf": "#E22C2F",
     ".avi": "#6EB5E9",
-    "mp3": "#88549E",
-    "html": "#6D96A",
-    "zip": "#E4BD3E",
+    ".mp3": "#88549E",
+    ".html": "#6D96A",
+    ".zip": "#E4BD3E",
     ".psd": "#0053BD",
     ".pptx": "#DD7657"
+};
+
+export const fileIcons = {
+    ".doc": "fa-file-word",     // Word hujjati
+    ".xls": "fa-file-excel",    // Excel eski format
+    ".xlsx": "fa-file-excel",   // Excel yangi format
+    ".ppt": "fa-file-powerpoint", // PowerPoint
+    ".pdf": "fa-file-pdf",      // PDF
+    ".avi": "fa-file-video",    // Video format
+    ".mp3": "fa-file-audio",     // Audio format
+    ".html": "fa-file-code",     // Kod (html)
+    ".zip": "fa-file-archive",   // Zip arxiv
+    ".psd": "fa-file-image",    // PSD - rasm/foto format
+    ".pptx": "fa-file-powerpoint", // PowerPoint yangi format
+    ".mp4": "fas fa-file-video"
 };
 
 function FileActions({ product }) {
@@ -55,6 +70,7 @@ function FileActions({ product }) {
             removeSavedItem(product.id);
         }
     }
+    
 
     const showModal = () => {
         setOpen(true);
@@ -87,15 +103,10 @@ function FileActions({ product }) {
         }
 
         const videoUrl = `https://soff.uz${pid}`;
-        navigator.clipboard
-            .writeText(videoUrl)
-            .then(() => {
-                infoSuccess(videoUrl);
-            })
-            .catch((error) => {
-                infoError(error);
-            });
+        const telegramUrl = `https://t.me/share/url?url=${encodeURIComponent(videoUrl)}`;
 
+        // Telegramga yo‘naltirish
+        window.open(telegramUrl, '_blank');
     };
 
     //  Hoziroq xarid qilish
@@ -111,7 +122,7 @@ function FileActions({ product }) {
 
 
     // content_type colors
-    
+
     return (
         <>
             {contextHolder}
@@ -138,22 +149,22 @@ function FileActions({ product }) {
                 </div>
                 <ul className='fs-2 p-0 d-flex flex-column gap-3' style={{ listStyle: "none" }}>
                     {(product?.sold_count > 0) && <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
-                        <span>Mahsulotni sotilgan soni:</span> <span>{product?.sold_count} ta</span>
+                        <span><i class="fas fa-shopping-bag" style={{ color: '#00a44f' }}></i> Mahsulotni sotilgan soni:</span> <span>{product?.sold_count} ta</span>
                     </li>}
                     {product?.document?.content_duration && <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
-                        <span>Video davomiyligi:</span> <span>
+                        <span><i class="fas fa-stopwatch" style={{ color: '#00a44f' }}></i> Video davomiyligi:</span> <span>
                             {' '}
                             {product?.document?.content_duration}
                         </span>
                     </li>}
                     {product?.document?.page_count && <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
-                        <span>Betlar soni:</span> <span>{product?.document?.page_count} ta</span>
+                        <span><i class="fas fa-copy" style={{ color: '#00a44f' }}></i> Betlar soni:</span> <span>{product?.document?.page_count} ta</span>
                     </li>}
                     {product?.document?.file_size && <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
-                        <span>Fayl hajmi :</span>  <span>{product?.document?.file_size}</span>
+                        <span>	<i class="fas fa-database" style={{ color: '#00a44f' }}></i> Fayl hajmi :</span>  <span>{product?.document?.file_size}</span>
                     </li>}
                     {product?.document?.file_type && <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
-                        <span>Fayl turi:</span> <span
+                        <span><i className={`fas ${fileIcons[product?.document?.file_type] || "fa-file-archive"}`} style={{ color: '#00a44f' }}></i> Fayl turi:</span> <span
 
                             style={{
                                 color: "white",
@@ -165,8 +176,22 @@ function FileActions({ product }) {
                             {product?.document?.file_type}
                         </span>
                     </li>}
-
-
+                    {/* <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
+                        <span>Still:</span>
+                        <span>new style</span>
+                    </li>
+                    <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
+                        <span>O'lcham:</span>
+                        <span>2h x 3w x 4l</span>
+                    </li>
+                    <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
+                        <span>Rang:</span>
+                        <span>new style</span>
+                    </li>
+                    <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
+                        <span>Materiallar:</span>
+                        <span>new style</span>
+                    </li> */}
                 </ul>
 
                 <div className='d-flex flex-column gap-3 '>

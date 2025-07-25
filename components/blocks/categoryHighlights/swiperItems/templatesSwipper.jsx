@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Swiper_Pages from '../swipper/swiper';
 import RedesignProduct from '~/components/elements/products/Redesign/Redesign-Product';
+import { baseURL } from '~/repositories/api';
 
 export default function TemplatesSwipper() {
     const [product, setProduct] = useState(null);
@@ -9,7 +10,7 @@ export default function TemplatesSwipper() {
     useEffect(() => {
         setIsLoading(true);
 
-        fetch(`https://api.soff.uz/api/v1/customer/last-added?direction=template&limit=6`)
+        fetch(`${baseURL}customer/last-added?direction=template&limit=6`)
             .then(res => res.json())
             .then(data => {
                 setProduct(data.results);

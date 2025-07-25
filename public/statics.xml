@@ -1,0 +1,85 @@
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 
+        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+  <url>
+    <loc>https://soff.uz/</loc>
+    <lastmod>2024-01-08T07:27:21+00:00</lastmod>
+    <priority>1.00</priority>
+  </url>
+
+  <url>
+    <loc>https://soff.uz/scientific-resources/all</loc>
+    <lastmod>2024-01-08T07:27:21+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+
+  <url>
+    <loc>https://soff.uz/3d-models-and-interior-designs/all</loc>
+    <lastmod>2024-01-08T07:27:21+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+
+  <url>
+    <loc>https://soff.uz/design-developments/all</loc>
+    <lastmod>2024-01-08T07:27:21+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+
+  <url>
+    <loc>https://soff.uz/websites/all</loc>
+    <lastmod>2024-01-08T07:27:21+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+
+  <url>
+    <loc>https://soff.uz/templates/all</loc>
+    <lastmod>2024-01-08T07:27:21+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+
+  <url>
+    <loc>https://soff.uz/video-lessons/all</loc>
+    <lastmod>2024-01-08T07:27:21+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+
+  <url>
+    <loc>https://soff.uz/search-page</loc>
+    <lastmod>2024-01-08T07:27:21+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+
+  <url>
+    <loc>https://soff.uz/auth/login</loc>
+    <lastmod>2024-01-08T07:27:21+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+
+  <url>
+    <loc>https://soff.uz/page/video-list</loc>
+    <lastmod>2024-01-08T07:27:21+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+
+  <url>
+    <loc>https://soff.uz/page/oferta</loc>
+    <lastmod>2024-01-08T07:27:21+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+
+  <url>
+    <loc>https://soff.uz/page/faq</loc>
+    <lastmod>2024-01-08T07:27:21+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+
+  <url>
+    <loc>https://soff.uz/soffia</loc>
+    <lastmod>2024-01-08T07:27:21+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+
+</urlset>
+
