@@ -157,13 +157,13 @@ function FileActions({ product }) {
                         </span>
                     </li>}
                     {product?.document?.page_count && <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
-                        <span><i class="fas fa-file-alt" style={{ color: '#00a44f' }}></i> Betlar soni:</span> <span>{product?.document?.page_count} ta</span>
+                        <span><i class="fas fa-copy" style={{ color: '#00a44f' }}></i> Betlar soni:</span> <span>{product?.document?.page_count} ta</span>
                     </li>}
                     {product?.document?.file_size && <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
-                        <span>	<i class="fas fa-file-archive" style={{ color: '#00a44f' }}></i> Fayl hajmi :</span>  <span>{product?.document?.file_size}</span>
+                        <span>	<i class="fas fa-database" style={{ color: '#00a44f' }}></i> Fayl hajmi :</span>  <span>{product?.document?.file_size}</span>
                     </li>}
                     {product?.document?.file_type && <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
-                        <span><i className={`fas ${fileIcons[product?.document?.file_type] || "fa-file-archive"}`} style={{ color: fileColors[product?.document?.file_type] || "#007DFF" }}></i> Fayl turi:</span> <span
+                        <span><i className={`fas ${fileIcons[product?.document?.file_type] || "fa-file-archive"}`} style={{ color: '#00a44f' }}></i> Fayl turi:</span> <span
 
                             style={{
                                 color: "white",
