@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Swiper_Pages from '../swipper/swiper';
 import RedesignProduct from '~/components/elements/products/Redesign/Redesign-Product';
 import ModelAndDesignProduct from '~/components/elements/products/ModelAndDesignProduct';
+import { baseURL } from '~/repositories/api';
 
 export default function ModelsAndInteriorDesignSwipper () {
     const [product, setProduct] = useState(null);
@@ -11,7 +12,7 @@ export default function ModelsAndInteriorDesignSwipper () {
     useEffect(() => {
         setIsLoading(true);
 
-        fetch(`https://api.soff.uz/api/v1/customer/last-added?direction=3d&limit=4`)
+        fetch(`${baseURL}customer/last-added?direction=3d&limit=4`)
             .then(res => res.json())
             .then(data => {
                 setProduct(data.results);

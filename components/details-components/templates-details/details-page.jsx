@@ -34,7 +34,7 @@ function ThreeDesignProductsDetails ({ product, template }) {
                             images={product?.document?.images}
                             views={product?.view_count}
                         />
-                        <div className='seller_products_right_section '>
+                        <div  className='seller_products_right_section '>
                             <div 
                                 className='seller_products_actions_container m-auto'
                                 style={{height:'auto'}}>
