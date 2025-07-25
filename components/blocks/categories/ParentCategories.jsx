@@ -6,7 +6,7 @@ const parentCategoriesData = [
     {
         title: 'Ilmiy ishlar',
         imgUrl: '/static/img/ilmiy-ishlar-2.webp',
-        path: '/scientific-resources/all',
+        path: '/category/all',
     },
     {
         title: '3D moddellar va Interier dizaynlar',
