@@ -32,7 +32,7 @@ export default function Websites ({
             title={'Kategoriya'}
             boxed={true}>
             <Meta
-                title={`${'asdf'}`}
+                title={`${'Veb saytlar'}`}
                 description={`Biz siz qidirayotgan mahsulotlarni Soff.uz saytimizning kategoriyasida topdik`}
             />
 
