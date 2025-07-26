@@ -33,7 +33,7 @@ export default function DesignDevelopments ({
             title={'Kategoriya'}
             boxed={true}>
             <Meta
-                title={`${'asdf'}`}
+                title={`${'Dizayn shablonlar'}`}
                 description={`Biz siz qidirayotgan mahsulotlarni Soff.uz saytimizning kategoriyasida topdik`}
             />
 

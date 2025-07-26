@@ -34,7 +34,7 @@ export default function Templates ({
             title={'Kategoriya'}
             boxed={true}>
             <Meta
-                title={`${'asdf'}`}
+                title={`${'Tayyor shablonlar'}`}
                 description={`Biz siz qidirayotgan mahsulotlarni Soff.uz saytimizning kategoriyasida topdik`}
             />
 

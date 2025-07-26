@@ -36,7 +36,7 @@ export default function VideoLessons ({
             title={'Kategoriya'}
             boxed={true}>
             <Meta
-                title={`${'asdf'}`}
+                title={`${'Video darsliklar'}`}
                 description={`Biz siz qidirayotgan mahsulotlarni Soff.uz saytimizning kategoriyasida topdik`}
             />
 
