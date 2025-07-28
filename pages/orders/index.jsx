@@ -33,27 +33,33 @@ export default function SoffFreelancerPage({ servicesData }) {
 }
 
 export async function getServerSideProps(context) {
+  const { query } = context;
   const {
+    direction = '',
+    search = '',
+    category = '',
+    budget = '',
+    delivery_time = '',
+    rating = ''
+  } = query;
+
+  const queryParams = new URLSearchParams({
     direction,
-  } = context.query
+    search,
+    category,
+    budget,
+    delivery_time,
+    rating
+  });
 
-  const fetchJson = async url => {
-    const res = await fetch(url);
-    if (!res.ok) {
-      return null;
-    }
-    return res.json();
-  };
+  const url = `http://176.96.241.219:8005/api/v1/users/sellers/service?${queryParams.toString()}`;
 
-  const servicesUrl = `http://176.96.241.219:8005/api/v1/users/sellers/service?direction=${direction}`
-
-  const [servicesData] = await Promise.all([
-    fetchJson(servicesUrl)
-  ])
+  const res = await fetch(url);
+  const servicesData = res.ok ? await res.json() : null;
 
   return {
     props: {
-      servicesData: servicesData || null
-    }
-  }
+      servicesData,
+    },
+  };
 }
