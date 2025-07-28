@@ -47,7 +47,6 @@ function FileActions({ product }) {
     const [basket, setBasket] = useState(false);
     const [messageApi, contextHolder] = message.useMessage();
     const state = useSelector((state) => state.auth.user?.access);
-    const dispatch = useDispatch();
 
     // Savatga qo'shish
     function handleAddItemToCart(e) {
@@ -70,7 +69,7 @@ function FileActions({ product }) {
             removeSavedItem(product.id);
         }
     }
-    
+
 
     const showModal = () => {
         setOpen(true);
@@ -114,9 +113,9 @@ function FileActions({ product }) {
         e.preventDefault();
         setCartOneItem(product.id);
         if (state) {
-            Router.push(`/account/checkout?id=${product?.id}`);
+            Router.push(`/account/checkout?id=${product?.id}&ref=${Router?.query?.ref}`);
         } else {
-            Router.push(`/auth/login?id=${product?.id}`);
+            Router.push(`/auth/login?id=${product?.id}&ref=${Router?.query?.ref}`);
         }
     }
 
@@ -176,22 +175,44 @@ function FileActions({ product }) {
                             {product?.document?.file_type}
                         </span>
                     </li>}
-                    {/* <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
-                        <span>Still:</span>
+                    <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
+                        <span className="d-flex align-items-center gap-2">
+                            <i className="fas fa-cube" style={{ color: '#00a44f' }}></i>
+                            Still:
+                        </span>
                         <span>new style</span>
                     </li>
+
                     <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
-                        <span>O'lcham:</span>
+                        <span className="d-flex align-items-center gap-2">
+                            <i className="fas fa-ruler-combined" style={{ color: '#00a44f' }}></i>
+                            O'lcham:
+                        </span>
                         <span>2h x 3w x 4l</span>
                     </li>
+
                     <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
-                        <span>Rang:</span>
+                        <span className="d-flex align-items-center gap-2">
+                            <i className="fas fa-palette" style={{ color: '#00a44f' }}></i>
+                            Rang:
+                        </span>
+                        <span>new style</span>
+                    </li>
+
+                    <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
+                        <span className="d-flex align-items-center gap-2">
+                            <i className="fas fa-layer-group" style={{ color: '#00a44f' }}></i>
+                            Materiallar:
+                        </span>
                         <span>new style</span>
                     </li>
                     <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
-                        <span>Materiallar:</span>
-                        <span>new style</span>
-                    </li> */}
+                        <span className="d-flex align-items-center gap-2">
+                            <i className="fas fa-shapes" style={{ color: '#00a44f' }}></i>
+                            Shakl:
+                        </span>
+                        <span>doira, tortburchak</span>
+                    </li>
                 </ul>
 
                 <div className='d-flex flex-column gap-3 '>

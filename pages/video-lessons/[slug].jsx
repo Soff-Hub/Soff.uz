@@ -9,6 +9,7 @@ import VideoLessonsFilterSection from '~/components/elements/VideoLessonsFilterS
 import ProductsByVideoLessons from '~/components/partials/category/ProductsByVideoLessons';
 import ProductsByCategory from '~/components/partials/category/ProductsByCategory';
 import ProductsByDesignDevelopment from '~/components/partials/category/ProductsByDesignDevelopment';
+import CategorySearchSection from '~/components/elements/CategorySearchSection';
 
 export default function VideoLessons ({
     productsData,
@@ -41,6 +42,7 @@ export default function VideoLessons ({
             />
 
             <div className='ps-page--shop container my-5 p-l-0 p-xl-0'>
+                <CategorySearchSection />
                 <VideoLessonsFilterSection
                     breacrumb={fourChildData}
                     count={productsData?.count}
@@ -66,6 +68,7 @@ export async function getServerSideProps (context) {
         page = 1,
         parentCategory = '',
         childCategory = '',
+        search = '',
     } = context.query;
 
     const fetchJson = async url => {
@@ -78,7 +81,7 @@ export async function getServerSideProps (context) {
 
     const categoryParam = childCategory ? childCategory : parentCategory;
 
-    const productsUrl = `${baseUrlUseApi}customer/products/?direction=video&category=${categoryParam}&page=${page}&page_size=48`;
+    const productsUrl = `${baseUrlUseApi}customer/products/?direction=video&category=${categoryParam}&page=${page}&page_size=48&search=${search}`;
     const fourChildUrl = `${baseUrlUseApi}customer/four-child?direction=video`;
     const childCategoryUrl = `${baseUrlUseApi}customer/four-child?direction=video&parent__slug=${parentCategory}`;
 
