@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Modal, Tabs } from 'antd';
 import PostRepository from '~/repositories/PostRepository';
 import { BeatLoader } from 'react-spinners';
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
 import useCart from '~/hooks/useCart';
 
 const CreditCard2 = ({ document, type }) => {
@@ -20,6 +20,9 @@ const CreditCard2 = ({ document, type }) => {
     const { removeAll } = useCart();
     const [buttonOk, setButtonOk] = useState(false);
     const [tab, setTab] = useState(false);
+    const router = useRouter()
+
+    const affiliate_code = router.query.affiliate
 
     const numberTyper = value => {
         SetNumberCardVal(value);
@@ -41,7 +44,8 @@ const CreditCard2 = ({ document, type }) => {
             document,
             'click',
             `${type || 'document'}`,
-            user?.access
+            user?.access,
+            affiliate_code
         );
         if (ItemsData?.status === 201) {
             setMessage(true);
@@ -64,7 +68,8 @@ const CreditCard2 = ({ document, type }) => {
             document,
             'payme',
             `${type || 'document'}`,
-            user?.access
+            user?.access,
+            affiliate_code
         );
         if (ItemsData?.status === 201) {
             setMessage(true);
@@ -88,7 +93,8 @@ const CreditCard2 = ({ document, type }) => {
             numberCardVal,
             cardDate,
             `${type || 'document'}`,
-            user?.access
+            user?.access,
+            affiliate_code
         );
         if (ItemsData?.status === 201) {
             setMessage(true);
