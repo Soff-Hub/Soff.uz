@@ -8,6 +8,7 @@ import CategoriesFilterForDesignDevelopmentsSection from '~/components/elements/
 import ProductsByCategory from '~/components/partials/category/ProductsByCategory';
 import ProductsByDesignDevelopment from '~/components/partials/category/ProductsByDesignDevelopment';
 import ScientificResourcesFilterSection from '~/components/elements/DesignDevelopmentsFilterSection';
+import CategorySearchSection from '~/components/elements/CategorySearchSection';
 
 export default function DesignDevelopments ({
     productsData,
@@ -38,6 +39,7 @@ export default function DesignDevelopments ({
             />
 
             <div className='ps-page--shop container my-5 p-xl-0 p-l-0'>
+                <CategorySearchSection />
                 <ScientificResourcesFilterSection
                     breacrumb={fourChildData}
                     count={productsData?.count}
@@ -63,6 +65,7 @@ export async function getServerSideProps (context) {
         page = 1,
         parentCategory = '',
         childCategory = '',
+        search = '',
     } = context.query;
 
     const fetchJson = async url => {
@@ -75,7 +78,7 @@ export async function getServerSideProps (context) {
 
     const categoryParam = childCategory ? childCategory : parentCategory;
 
-    const productsUrl = `${baseUrlUseApi}customer/products/?direction=design&category=${categoryParam}&page=${page}&page_size=48`;
+    const productsUrl = `${baseUrlUseApi}customer/products/?direction=design&category=${categoryParam}&page=${page}&page_size=48&search=${search}`;
     const fourChildUrl = `${baseUrlUseApi}customer/four-child?direction=design`;
     const childCategoryUrl = `${baseUrlUseApi}customer/four-child?direction=design&parent__slug=${parentCategory}`;
 

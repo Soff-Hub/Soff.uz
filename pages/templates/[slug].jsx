@@ -9,6 +9,7 @@ import CategoriesFilterForDesignDevelopmentsSection from '~/components/elements/
 import FooterComponents from '~/components/blocks/footer/FooterComponents';
 import TemplatesFilterSection from '~/components/elements/TemplatesFilterSection';
 import ProductsByCategory from '~/components/partials/category/ProductsByCategory';
+import CategorySearchSection from '~/components/elements/CategorySearchSection';
 
 export default function Templates ({
     productsData,
@@ -39,6 +40,7 @@ export default function Templates ({
             />
 
             <div className='ps-page--shop container my-5 p-xl-0 p-l-0'>
+                <CategorySearchSection />
                 <TemplatesFilterSection
                     breacrumb={fourChildData}
                     count={productsData?.count}
@@ -64,6 +66,7 @@ export async function getServerSideProps (context) {
         page = 1,
         parentCategory = '',
         childCategory = '',
+        search = '',
     } = context.query;
 
     const fetchJson = async url => {
@@ -76,7 +79,7 @@ export async function getServerSideProps (context) {
 
     const categoryParam = childCategory ? childCategory : parentCategory;
 
-    const productsUrl = `${baseUrlUseApi}customer/products/?direction=template&category=${categoryParam}&page=${page}&page_size=48`;
+    const productsUrl = `${baseUrlUseApi}customer/products/?direction=template&category=${categoryParam}&page=${page}&page_size=48&search=${search}`;
     const fourChildUrl = `${baseUrlUseApi}customer/four-child?direction=template`;
     const childCategoryUrl = `${baseUrlUseApi}customer/four-child?direction=template&parent__slug=${parentCategory}`;
 

@@ -6,6 +6,7 @@ import FooterDefault from '~/components/shared/footers/FooterDefault';
 import Meta from '~/components/shared/headers/Meta';
 import ProductsByModelsAndDesignCategory from '~/components/partials/category/ProductsByModelsAndDesignCategory';
 import { baseUrlUseApi } from '~/repositories/useApi';
+import CategorySearchSection from '~/components/elements/CategorySearchSection';
 
 export default function ModelsAndInteriorDesign ({
     productsData,
@@ -32,6 +33,7 @@ export default function ModelsAndInteriorDesign ({
                 description={`3D moddellar va Interier dizaynlar kategoriyasi: Taqdimotlar Tayyor shablonlar Kurs ishlari Diplom ishlari Referatlar Mustaqil ishlar Labaratoriya Ishlari Dissertatsiya ishlari Testlar O'quv qo'llanmalar Dars ishlanmalar Tarqatma materiallar Amaliy ishlar Blankalar Ijodiy Ishlar Loyihalar Plakatlar Maqola Ixtiro patenti Namunaviy hujjatlar Statistika Elektron kitoblar Dasturlash tillari `}
             />
             <div className='ps-page--shop my-5 container p-xl-0 p-l-0'>
+                <CategorySearchSection />
                 <ThreeDCategoriesFilterSecion
                     breacrumb={fourChildData}
                     count={productsData?.count}
@@ -76,6 +78,7 @@ export async function getServerSideProps (context) {
         page = 1,
         parentCategory = '',
         childCategory = '',
+        search = '',
     } = context.query;
 
     const fetchJson = async url => {
@@ -88,7 +91,7 @@ export async function getServerSideProps (context) {
 
     const categoryParam = childCategory ? childCategory : parentCategory;
 
-    const productsUrl = `${baseUrlUseApi}customer/products/?direction=3d&category=${categoryParam}&page=${page}&page_size=48`;
+    const productsUrl = `${baseUrlUseApi}customer/products/?direction=3d&category=${categoryParam}&page=${page}&page_size=48&search=${search}`;
     const fourChildUrl = `${baseUrlUseApi}customer/four-child?direction=3d`;
     const childCategoryUrl = `${baseUrlUseApi}customer/four-child?direction=3d&parent__slug=${parentCategory}`;
 

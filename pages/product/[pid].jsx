@@ -151,6 +151,7 @@ export default function ProductDefaultPage({ defaultProducts }) {
             }}
         />
     );
+    
 
     const productsDetails = {
         file: <FileProductsDetails product={defaultProducts} />,
