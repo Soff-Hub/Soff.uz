@@ -16,12 +16,12 @@ const AffiliateExplainSection = () => {
                         Soff.uz yangi foydalanuvchilarga tushuntirish
                     </h2>
                     <p className="mb-4 text-muted">
-                        Hech kim vaqtni behuda sarflashni yoqtirmaydi. Shuning uchun Kwork tadbirkorlarga qisqa vaqt ichida ko'proq yutuqlarga erishishda yordam beradigan professionallar bilan bog'lanish imkoniyatini beradi. Freelance xizmatlar samaradorlikni qanday oshirishi mumkinligini allaqachon bilib oldingiz. Hamkorlik dasturimiz orqali endi siz o'z bilimlaringizni baham ko'rishingiz va ro'yxatdan o'tgan va buyurtma bergan har bir referal uchun daromad olishingiz mumkin.
+                        Hech kim vaqtni behuda sarflashni yoqtirmaydi. Shuning uchun Soff.uz tadbirkorlarga qisqa vaqt ichida ko'proq yutuqlarga erishishda yordam beradigan professionallar bilan bog'lanish imkoniyatini beradi. Freelance xizmatlar samaradorlikni qanday oshirishi mumkinligini allaqachon bilib oldingiz. Hamkorlik dasturimiz orqali endi siz o'z bilimlaringizni baham ko'rishingiz va ro'yxatdan o'tgan va buyurtma bergan har bir referal uchun daromad olishingiz mumkin.
                     </p>
                 </div>
                 <div className="explain_image col-lg-5">
                     <img
-                        src="/static/img/affiliate_program/promote-bottom-en.png"
+                        src="/static/img/affiliate_program/a.png"
                         alt="Affiliate qanday ishlaydi"
                         className="img-fluid rounded-4 shadow"
                     />
