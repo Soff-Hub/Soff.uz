@@ -22,7 +22,8 @@ const footerMenu = {
             { name: '3D modellar', url: '/orders' },
             { name: 'Dizayn shablonlari', url: '/orders' },
             { name: 'Veb saytlar', url: '/orders' },
-            { name: 'Video darsliklar', url: '/orders' }
+            { name: 'Video darsliklar', url: '/orders' },
+            {name : "Hamkorlik dasturi", url: '/affiliate_program'}
         ],
     },
     social: {
