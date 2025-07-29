@@ -5,7 +5,7 @@ import CodeVerifyForm from '~/components/partials/account/auth/CodeVerifyForm.js
 const CodeVerifyModal = ({ open, onClose, authCode }) => {
     return (
         <Modal className="custom-auth-modal" open={open}  onCancel={onClose} footer={null} centered>
-            <CodeVerifyForm authCode={authCode}/>
+            <CodeVerifyForm  onClose={onClose} authCode={authCode}/>
         </Modal>
     );
 };

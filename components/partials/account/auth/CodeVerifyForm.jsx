@@ -13,7 +13,7 @@ export const formatTime = (seconds) => {
     return `${String(minutes).padStart(2, '0')}:${String(secondsLeft).padStart(2, '0')}`;
 };
 
-export default function CodeVerifyForm({authCode}) {
+export default function CodeVerifyForm({authCode, onClose}) {
     const [loading, setLoading] = useState(false);
     const [secondsRemaining, setSecondsRemaining] = useState(120);
     const [msg, SetMsg] = useState(null);
@@ -55,6 +55,10 @@ export default function CodeVerifyForm({authCode}) {
             }));
             if (resp.data?.role === 'seller') {
                 localStorage.setItem('is_seller', '1');
+            }
+
+            if (typeof onClose === 'function') {
+                onClose();
             }
 
             if (router?.query?.returnUrl) {
