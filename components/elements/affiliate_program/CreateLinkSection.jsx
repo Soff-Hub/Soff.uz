@@ -22,7 +22,7 @@ const CreateLinkSection = () => {
             message.warning('Iltimos, havolani kiriting!');
             return;
         }
-        if (isLoggedIn) {
+        if (!isLoggedIn) {
             setAuthModalOpen(true);
             return;
         }
