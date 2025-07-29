@@ -21,8 +21,10 @@ const CreditCard2 = ({ document, type }) => {
     const [buttonOk, setButtonOk] = useState(false);
     const [tab, setTab] = useState(false);
     const router = useRouter()
+    const {  affiliateId  } = useSelector(state => state.affiliate);
 
-    const affiliate_code = router.query.affiliate
+    const affiliate_code = affiliateId
+    console.log('affiliate_code', affiliate_code);
 
     const numberTyper = value => {
         SetNumberCardVal(value);

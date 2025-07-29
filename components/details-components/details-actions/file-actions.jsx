@@ -39,7 +39,6 @@ export const fileIcons = {
 };
 
 function FileActions({ product }) {
-    console.log(JSON.stringify(product))
     const { addSavedItem, wishlist, removeSavedItem } = useWishlist();
     const [open, setOpen] = useState(false);
     const Router = useRouter();
@@ -114,9 +113,9 @@ function FileActions({ product }) {
         e.preventDefault();
         setCartOneItem(product.id);
         if (state) {
-            Router.push(`/account/checkout?id=${product?.id}&affiliate=${Router?.query?.affiliate}`);
+            Router.push(`/account/checkout?id=${product?.id}`);
         } else {
-            Router.push(`/auth/login?id=${product?.id}&affiliate=${Router?.query?.affiliate}`);
+            Router.push(`/auth/login?id=${product?.id}`);
         }
     }
 
