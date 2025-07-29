@@ -12,6 +12,7 @@ const CreateLinkSection = () => {
     const [loading, setLoading] = useState(false);
     const [authModalOpen, setAuthModalOpen] = useState(false);
     const [inputError, setInputError] = useState('');
+    const [copied, setCopied] = useState(false);
     const token = Cookies.get('token');
     const isLoggedIn = useIsLoggedIn();
 
@@ -21,7 +22,7 @@ const CreateLinkSection = () => {
             message.warning('Iltimos, havolani kiriting!');
             return;
         }
-        if (!isLoggedIn) {
+        if (isLoggedIn) {
             setAuthModalOpen(true);
             return;
         }
@@ -41,6 +42,7 @@ const CreateLinkSection = () => {
 
             if (newLink) {
                 setUserLink(newLink); // Update input with new link
+                setCopied(true);
                 await navigator.clipboard.writeText(newLink); // Copy to clipboard
                 message.success('Havola yaratildi va nusxalandi!');
             } else {
@@ -59,13 +61,21 @@ const CreateLinkSection = () => {
         }
     };
 
+    const handleCopy = async () => {
+        if (userLink) {
+            await navigator.clipboard.writeText(userLink);
+            message.success('Link nusxalandi!');
+        }
+    };
+
     return (
         <div className='container py-5'>
             <div className='create_link_section'>
                 <h2>Hamkorlik havolangizni yarating</h2>
                 <div className='link_box d-flex gap-3 align-items-center'>
                     <Input
-                        onChange={(e) => { setUserLink(e.target.value); setInputError(''); }}
+                        onChange={(e) => { setUserLink(e.target.value); setInputError(''); setCopied(false); }}
+                        value={userLink}
                         placeholder='https://soff.uz'
                         size="large"
                         status={inputError ? 'error' : ''}
@@ -73,11 +83,11 @@ const CreateLinkSection = () => {
                     <Button
                         type="primary"
                         icon={<LinkOutlined />}
-                        onClick={generateAndCopy}
+                        onClick={copied ? handleCopy : generateAndCopy}
                         loading={loading}
                         size="large"
                     >
-                        Yaratish
+                        {copied ? 'Nusxalash' : 'Yaratish'}
                     </Button>
                 </div>
                 {inputError && <p style={{color:'red',marginTop:'4px',fontSize:'13px', textAlign: "left", marginLeft: "60px"}}>{inputError}</p>}

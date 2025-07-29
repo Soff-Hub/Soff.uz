@@ -1,7 +1,9 @@
 import { Card, Button } from "antd";
-import { WalletOutlined } from "@ant-design/icons"; // yoki FontAwesome orqali
+import { useGet } from "~/repositories/https";
+import { baseUrl } from "~/repositories/Repository";
 
 export default function AffiliateEarningsSection() {
+    // const {data} = useGet('affiliate/earnings', `${baseUrl}auth/user-affiliate-wallet/`)
     return (
         <Card className="p-4 mt-4 bg-white rounded-lg shadow-md border border-gray-200">
             <div className="d-flex justify-content-between align-items-center flex-wrap gap-3">
@@ -14,12 +16,13 @@ export default function AffiliateEarningsSection() {
                     </div>
                     <div>
                         <div className="text-muted fw-medium">Affiliate orqali daromad</div>
-                        <div className="fw-bold fs-4 text-success">120 000 so‘m</div>
+                        <div className="fw-bold fs-4 text-success"> 120 000 so‘m</div>
                     </div>
                 </div>
 
                 {/* 2. Pulni yechish tugmasi */}
                 <Button
+                    disabled
                     type="primary"
                     size="large"
                     className="bg-green-500 hover:bg-green-600 text-white fw-semibold"
