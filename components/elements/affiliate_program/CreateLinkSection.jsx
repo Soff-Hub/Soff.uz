@@ -8,7 +8,7 @@ import AuthModal from '~/components/AuthModal';
 import { useIsLoggedIn } from '~/hooks/useIsLoggedIn';
 
 const CreateLinkSection = () => {
-    const [userLink, setUserLink] = useState(''); // Initialize with empty string
+    const [userLink, setUserLink] = useState(''); 
     const [loading, setLoading] = useState(false);
     const [authModalOpen, setAuthModalOpen] = useState(false);
     const [inputError, setInputError] = useState('');

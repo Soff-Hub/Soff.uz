@@ -41,12 +41,13 @@ export default function CategorySearchSection() {
     }, [debouncedSearch]);
 
     return (
-        <div className="my-5">
+        <div className="">
             <Input.Search
                 placeholder="Mahsulot qidirish..."
                 size="large"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
+                style={{height: '50px', fontSize: '18px'}}
             />
         </div>
     );

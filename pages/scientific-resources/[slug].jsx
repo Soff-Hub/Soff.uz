@@ -78,7 +78,9 @@ export default function ProductCategoryScreen ({
             />
 
             <div className='ps-page--shop container p-lg-1'>
-                <AISoffiaPresentation />
+                <div className='mb-4'>
+                    <AISoffiaPresentation />
+                </div>
                 <CategorySearchSection />
                 <ScientificResourcesFilterSection
                     breacrumb={fourChildData}
