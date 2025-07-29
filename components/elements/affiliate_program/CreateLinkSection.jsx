@@ -4,18 +4,27 @@ import { LinkOutlined } from '@ant-design/icons';
 import Axios from 'axios';
 import { baseURL } from '~/repositories/api';
 import Cookies from 'js-cookie';
+import AuthModal from '~/components/AuthModal';
+import { useIsLoggedIn } from '~/hooks/useIsLoggedIn';
 
 const CreateLinkSection = () => {
     const [userLink, setUserLink] = useState(''); // Initialize with empty string
     const [loading, setLoading] = useState(false);
+    const [authModalOpen, setAuthModalOpen] = useState(false);
+    const [inputError, setInputError] = useState('');
     const token = Cookies.get('token');
+    const isLoggedIn = useIsLoggedIn();
 
     const generateAndCopy = async () => {
+        setInputError('');
         if (!userLink) {
             message.warning('Iltimos, havolani kiriting!');
             return;
         }
-
+        if (!isLoggedIn) {
+            setAuthModalOpen(true);
+            return;
+        }
         setLoading(true);
         try {
             const response = await Axios.post(
@@ -35,11 +44,16 @@ const CreateLinkSection = () => {
                 await navigator.clipboard.writeText(newLink); // Copy to clipboard
                 message.success('Havola yaratildi va nusxalandi!');
             } else {
-                message.error('Havola yaratilmadi.');
+                setInputError('Havola yaratilmadi.');
             }
         } catch (error) {
             console.error(error);
-            message.error('Xatolik yuz berdi.');
+            if (error?.response?.data && typeof error.response.data === 'object') {
+                const messages = Object.values(error.response.data).join(' ');
+                setInputError(messages || 'Xatolik yuz berdi.');
+            } else {
+                setInputError(error?.response?.data?.message || error?.message || 'Xatolik yuz berdi.');
+            }
         } finally {
             setLoading(false);
         }
@@ -51,10 +65,10 @@ const CreateLinkSection = () => {
                 <h2>Hamkorlik havolangizni yarating</h2>
                 <div className='link_box d-flex gap-3 align-items-center'>
                     <Input
-                        onChange={(e) => setUserLink(e.target.value)}
-                        value={userLink}
-                        placeholder='https://soff.uz/username'
+                        onChange={(e) => { setUserLink(e.target.value); setInputError(''); }}
+                        placeholder='https://soff.uz'
                         size="large"
+                        status={inputError ? 'error' : ''}
                     />
                     <Button
                         type="primary"
@@ -66,7 +80,9 @@ const CreateLinkSection = () => {
                         Yaratish
                     </Button>
                 </div>
+                {inputError && <p style={{color:'red',marginTop:'4px',fontSize:'13px', textAlign: "left", marginLeft: "60px"}}>{inputError}</p>}
             </div>
+            <AuthModal open={authModalOpen} onClose={() => setAuthModalOpen(false)} />
         </div>
     );
 };
