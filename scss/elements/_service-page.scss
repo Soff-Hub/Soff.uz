@@ -291,12 +291,16 @@
 
 // packages _________________________________________________________________________________________________________________
 .service_package {
-    border: 1px black solid;
+    border: 1px solid black;
     border-radius: 20px;
     padding: 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    background-color: #fff;
+    transition: all 0.3s ease;
+    max-width: 400px;
+    width: 100%;
 
     h2 {
         margin: 0;
@@ -304,38 +308,48 @@
         font-weight: 700;
         text-align: center;
         line-height: 40px;
-        letter-spacing: 0%;
     }
 
     img {
         width: 20px;
         height: 20px;
+        object-fit: contain;
     }
 
     p {
         margin: 0;
         font-size: 18px;
         font-weight: 400;
-        color: #35353F;
-        line-height: 100%;
-        letter-spacing: 0%;
+        color: #35353f;
     }
 
     button {
         border: none;
         border-radius: 5px;
-        background: #00A44F;
+        background: #00a44f;
         color: white;
         font-weight: 500;
-        font-size: 20px;
-        line-height: 100%;
-        letter-spacing: 1%;
-        margin-top: 50px;
-        padding: 13px 7px;
+        font-size: 18px;
+        padding: 12px 10px;
         white-space: nowrap;
 
         &:hover {
-            background: #00D265;
+            background: #00d265;
+        }
+    }
+
+    @media (max-width: 768px) {
+        h2 {
+            font-size: 20px;
+        }
+
+        p {
+            font-size: 16px;
+        }
+
+        button {
+            font-size: 16px;
+            padding: 10px;
         }
     }
 }

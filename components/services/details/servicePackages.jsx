@@ -1,91 +1,50 @@
-import React from 'react'
+import React from 'react';
 
-const ServicePackages = ({openModal}) => {
+const ServicePackages = ({ openModal, packages }) => {
     return (
-        <div className='row'>
-            <div className='col-12 col-sm-6 col-lg-4 mb-3'>
-                <div className='service_package'>
-                    <div>
-                        <h2>Standart</h2>
-                        <div className='d-flex flex-column gap-5' style={{ borderBottom: "2px dashed black", padding: '40px 0' }}>
-                            <div className='d-flex align-items-center gap-3'>
-                                <img src="/static/img/services_images/Vector.png" alt="" />
-                                <p>2ta logo</p>
-                            </div>
-                            <div className='d-flex align-items-center gap-3'>
-                                <img src="/static/img/services_images/Vector.png" alt="" />
-                                <p>2ta logo</p>
-                            </div >
-                            <div className='d-flex align-items-center gap-3'>
-                                <img src="/static/img/services_images/Vector.png" alt="" />
-                                <p>2ta logo</p>
-                            </div>
-                            <div className='d-flex align-items-center gap-3'>
-                                <img src="/static/img/services_images/Vector.png" alt="" />
-                                <p>2ta logo</p>
-                            </div>
-                        </div>
-                        <h2 className='mt-5'>20,000 so'm</h2>
-                    </div>
-                    <button onClick={openModal}>Buyurtma berish</button>
-                </div>
-            </div>
-            <div className='col-12 col-sm-6 col-lg-4 mb-3'>
-                <div className='service_package'>
-                    <div>
-                        <h2>Standart</h2>
-                        <div className='d-flex flex-column gap-5' style={{ borderBottom: "2px dashed black", padding: '40px 0' }}>
-                            <div className='d-flex align-items-center gap-3'>
-                                <img src="/static/img/services_images/Vector.png" alt="" />
-                                <p>2ta logo</p>
-                            </div>
-                            <div className='d-flex align-items-center gap-3'>
-                                <img src="/static/img/services_images/Vector.png" alt="" />
-                                <p>2ta logo</p>
-                            </div >
-                            <div className='d-flex align-items-center gap-3'>
-                                <img src="/static/img/services_images/Vector.png" alt="" />
-                                <p>2ta logo</p>
-                            </div>
-                            <div className='d-flex align-items-center gap-3'>
-                                <img src="/static/img/services_images/Vector.png" alt="" />
-                                <p>2ta logo</p>
-                            </div>
-                        </div>
-                        <h2 className='mt-5'>20,000 so'm</h2>
-                    </div>
-                    <button>Buyurtma berish</button>
-                </div>
-            </div>
-            <div className='col-12 col-sm-6 col-lg-4 mb-3'>
-                <div className='service_package'>
-                    <div>
-                        <h2>Standart</h2>
-                        <div className='d-flex flex-column gap-5' style={{ borderBottom: "2px dashed black", padding: '40px 0' }}>
-                            <div className='d-flex align-items-center gap-3'>
-                                <img src="/static/img/services_images/Vector.png" alt="" />
-                                <p>2ta logo</p>
-                            </div>
-                            <div className='d-flex align-items-center gap-3'>
-                                <img src="/static/img/services_images/Vector.png" alt="" />
-                                <p>2ta logo</p>
-                            </div >
-                            <div className='d-flex align-items-center gap-3'>
-                                <img src="/static/img/services_images/Vector.png" alt="" />
-                                <p>2ta logo</p>
-                            </div>
-                            <div className='d-flex align-items-center gap-3'>
-                                <img src="/static/img/services_images/Vector.png" alt="" />
-                                <p>2ta logo</p>
-                            </div>
-                        </div>
-                        <h2 className='mt-5'>20,000 so'm</h2>
-                    </div>
-                    <button>Buyurtma berish</button>
-                </div>
-            </div>
-        </div>
-    )
-}
+        <div className="row">
+            {packages?.map((pkg, idx) => (
+                <div
+                    key={idx}
+                    className="col-12 col-sm-12 col-md-6 col-lg-4 mb-4 d-flex justify-content-center"
+                >
+                    <div className="service_package w-100">
+                        <div>
+                            <h2>{pkg?.package_type}</h2>
 
-export default ServicePackages
+                            <div
+                                className="d-flex flex-column gap-4 py-4"
+                                style={{
+                                    borderBottom: '2px dashed black',
+                                }}
+                            >
+                                {pkg?.options?.map((option, index) => (
+                                    <div
+                                        key={index}
+                                        className="d-flex align-items-center gap-3"
+                                    >
+                                        <img
+                                            src="/static/img/services_images/Vector.png"
+                                            alt="check img"
+                                        />
+                                        <p className="flex-grow-1">
+                                            {option?.option?.name}
+                                        </p>
+                                    </div>
+                                ))}
+                            </div>
+
+                            <h2 className="mt-4">20,000 so'm</h2>
+                        </div>
+
+                        <button onClick={openModal} className="w-100 mt-4">
+                            Buyurtma berish
+                        </button>
+                    </div>
+                </div>
+            ))}
+        </div>
+    );
+};
+
+export default ServicePackages;
