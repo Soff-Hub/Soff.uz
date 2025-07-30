@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Input, Button, message } from 'antd';
-import { LinkOutlined } from '@ant-design/icons';
+import { CopyOutlined, LinkOutlined } from '@ant-design/icons';
 import Axios from 'axios';
 import { baseURL } from '~/repositories/api';
 import Cookies from 'js-cookie';
@@ -86,11 +86,10 @@ const CreateLinkSection = () => {
                         placeholder='https://soff.uz'
                         size="large"
                         status={inputError ? 'error' : ''}
-                        readOnly={copied} // ✅ Agar link yaratildi bo‘lsa, readonly
                     />
                     <Button
                         type="primary"
-                        icon={<LinkOutlined />}
+                        icon={copied ? <CopyOutlined /> : <LinkOutlined />}
                         onClick={copied ? handleCopy : generateAndCopy}
                         loading={loading}
                         size="large"

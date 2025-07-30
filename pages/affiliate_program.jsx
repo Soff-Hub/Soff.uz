@@ -12,7 +12,7 @@ import PageLayout from '~/components/layouts/PageLayout'
 const AffiliateProgram = () => {
     return (
         <PageLayout>
-            <div style={{background: 'yellow'}}>
+            <div style={{background: '#00ba3f'}}>
                 <HeroSection />
             </div>
             <CreateLinkSection />
@@ -21,7 +21,7 @@ const AffiliateProgram = () => {
             <AffiliateBenefitsSection />
             <AffiliateExplainSection/>
             <WithSoffYouGet/>
-            <div style={{background: 'yellow'}}>
+            <div style={{background: '#00ba3f'}}>
                 <JoinSoffSection />
             </div>
         </PageLayout>

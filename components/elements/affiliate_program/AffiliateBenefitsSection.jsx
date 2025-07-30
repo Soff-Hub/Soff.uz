@@ -16,7 +16,7 @@ const AffiliateBenefitsSection = () => {
             <div className='container py-5'>
                 <div className='affiliate_benefits_section'>
                     <div className='benefits_image'>
-                        <img src="/static/img/affiliate_program/happy-woman.jpg" alt="Affiliate advantages" />
+                        <img  src="/static/img/affiliate_program/benefist.svg" alt="Affiliate advantages" />
                     </div>
                     <div className='benefits_text'>
                         <h2>Soff.uz hamkorlik dasturining afzalliklari</h2>
