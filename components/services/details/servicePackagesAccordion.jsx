@@ -6,11 +6,11 @@ import {
     SyncOutlined,
 } from '@ant-design/icons';
 import { Button, Collapse, theme } from 'antd';
+import { formatCurrencyWithSpace } from '~/utilities/product-helper';
 
 
-const ServicePackagesAccordion = ({openModal, packages}) => {
+const ServicePackagesAccordion = ({openModal, packages, setPkg}) => {
     const { token } = theme.useToken();
-    console.log("packages", packages);
 
     const panelStyle = {
         marginBottom: 16,
@@ -20,11 +20,16 @@ const ServicePackagesAccordion = ({openModal, packages}) => {
         boxShadow: '0px 0px 4.4px 0px #00000026'
     };
 
+    const handleClick = (pkg) => {
+        setPkg(pkg);
+        openModal(true);
+    };
+
     const items = packages.map(pkg => ({
         key: pkg.id,
         label: (
             <div className='d-flex  justify-content-between accordian_package'>
-                <h4>{pkg.price}</h4>
+                <h4>{formatCurrencyWithSpace(pkg.price)}</h4>
                 <h3>{pkg.package_type}</h3>
                 <div></div>
             </div>
@@ -47,7 +52,7 @@ const ServicePackagesAccordion = ({openModal, packages}) => {
                     ))}
                 </ul>
 
-                <Button onClick={openModal} type='primary' block className='bg-success border-success'>
+                <Button onClick={() => handleClick(pkg)} type='primary' block className='bg-success border-success'>
                     Buyurma berish <ArrowRightOutlined />
                 </Button>
             </div>

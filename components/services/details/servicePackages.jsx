@@ -1,6 +1,11 @@
 import React from 'react';
+import { formatCurrencyWithSpace } from '~/utilities/product-helper';
 
-const ServicePackages = ({ openModal, packages }) => {
+const ServicePackages = ({ openModal, packages, setPkg }) => {
+    const handleClick = (pkg) => {
+        setPkg(pkg);
+        openModal(true);
+    };
     return (
         <div className="row">
             {packages?.map((pkg, idx) => (
@@ -34,10 +39,10 @@ const ServicePackages = ({ openModal, packages }) => {
                                 ))}
                             </div>
 
-                            <h2 className="mt-4">20,000 so'm</h2>
+                            <h2 className="mt-4">{formatCurrencyWithSpace(pkg?.price)} so'm</h2>
                         </div>
 
-                        <button onClick={openModal} className="w-100 mt-4">
+                        <button onClick={() => handleClick(pkg)} className="w-100 mt-4">
                             Buyurtma berish
                         </button>
                     </div>

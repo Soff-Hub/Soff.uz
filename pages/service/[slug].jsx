@@ -1,5 +1,7 @@
 import { Modal, Rate } from 'antd'
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
+import AuthModal from '~/components/AuthModal'
 import SwiperPages from '~/components/details-components/swiper/swiper-page'
 import PageContainer from '~/components/layouts/PageContainer'
 import LoginForm from '~/components/partials/account/auth/LoginForm'
@@ -9,21 +11,24 @@ import ServiceImgCorusel from '~/components/services/details/serviceImgCorusel'
 import ServicePackagesAccordion from '~/components/services/details/servicePackagesAccordion'
 import ServicePortfolio from '~/components/services/details/servicePortfolio'
 import ServiceSellerProfile from '~/components/services/details/serviceSellerProfile'
+import OrderCreateContent from '~/components/services/OrderCreateContent'
 import ServiceCard from '~/components/services/ServiceCard'
 
 const ServiceDetail = ({ data }) => {
     const { service, similar_services, seller_portfolio } = data
-    const [isModalOpen, setIsModalOpen] = useState(false)
-    console.log("data_________________________________", data)
-    const openLoginModal = () => setIsModalOpen(true)
-    const closeLoginModal = () => setIsModalOpen(false)
+    const [authModalOpen, setAuthModalOpen] = useState(false);
+    const [orderModalOpen, setOrderModalOpen] = useState(false);
+    const [pkg, setPkg] = useState();
+    const { isLoggedIn } = useSelector(state => state.auth)
+
+
     return (
         <PageContainer>
             <div className='container my-5'>
                 <h1 className='fs-1'>{service?.title}</h1>
                 <div className='d-flex align-items-center gap-3 mb-4'>
-                    <img style={{width: '27px', borderRadius: "50%"}} src={service?.user?.photo_url || "/static/img/ozodbek.png"} alt="user img" />
-                    <p style={{fontSize: '16px'}} className='m-0 text-black'>{service?.user?.full_name}</p>
+                    <img style={{ width: '27px', borderRadius: "50%" }} src={service?.user?.photo_url || "/static/img/ozodbek.png"} alt="user img" />
+                    <p style={{ fontSize: '16px' }} className='m-0 text-black'>{service?.user?.full_name}</p>
                     <Rate disabled value={service?.rating} allowHalf style={{ color: 'orange', fontSize: '16px' }} />
                     <p className='m-0'>5.0 ({service?.comments?.length} sharh)</p>
                 </div>
@@ -34,12 +39,12 @@ const ServiceDetail = ({ data }) => {
                         />
                     </div>
                     <div className='col-12 col-lg-5'>
-                        <ServicePackagesAccordion packages={service?.packages} openModal={openLoginModal}/>
+                        <ServicePackagesAccordion packages={service?.packages}  setPkg={setPkg} openModal={isLoggedIn ? setOrderModalOpen : setAuthModalOpen} />
                     </div>
                 </div>
                 <div className='row my-5'>
                     <div className='col-12 col-lg-7'>
-                        <ServiceDescription packages={service?.packages} openModal={openLoginModal} description={service?.description} />
+                        <ServiceDescription setPkg={setPkg} packages={service?.packages} openModal={isLoggedIn ? setOrderModalOpen : setAuthModalOpen} description={service?.description} />
                     </div>
                     <div className='col-12 col-lg-5'>
                         <ServiceSellerProfile user={service?.user} />
@@ -63,14 +68,14 @@ const ServiceDetail = ({ data }) => {
                         ))}
                     </SwiperPages>
                 </div>
+                <AuthModal open={authModalOpen} onClose={() => setAuthModalOpen(false)} />
                 <Modal
-                    open={isModalOpen}
-                    onCancel={closeLoginModal}
+                    open={orderModalOpen}
+                    onCancel={() => setOrderModalOpen(false)}
+                    width={750}
                     footer={null}
-                    className='custom-login-modal'
-                    width={700}
                 >
-                    <LoginForm  />
+                    <OrderCreateContent serviceName={service?.title} pkg={pkg} />
                 </Modal>
             </div>
         </PageContainer>

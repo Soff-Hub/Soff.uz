@@ -20,7 +20,7 @@ export default function SoffFreelancerPage({ servicesData }) {
       />
 
       <div className='ps-page--shop my-5 container p-xl-0 p-l-0'>
-        <ServicesFilterSection count={servicesData.count} />
+        <ServicesFilterSection count={servicesData?.count} />
 
 
         <ServicesCardSection services={servicesData} />
@@ -37,9 +37,9 @@ export async function getServerSideProps(context) {
   const {
     direction = '',
     search = '',
-    category = '',
+    category,
     budget = '',
-    delivery_time = '',
+    delivary = '',
     rating = ''
   } = query;
 
@@ -48,7 +48,7 @@ export async function getServerSideProps(context) {
     search,
     category,
     budget,
-    delivery_time,
+    delivary,
     rating
   });
 
