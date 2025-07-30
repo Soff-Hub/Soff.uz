@@ -15,6 +15,7 @@ import { Provider } from 'react-redux';
 import { store } from '~/store';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from 'react-hot-toast';
+import AffiliateListener from '~/components/AffiliateListener';
 const queryClient = new QueryClient()
 
 
@@ -105,6 +106,7 @@ function App({ Component, pageProps }) {
                         <CookiesProvider>
                             <ProductProvider>
                                 <AudioProvider>
+                                    <AffiliateListener />
                                     <Component {...pageProps} />
                                     <Toaster position="top-center" />
                                 </AudioProvider>

@@ -47,7 +47,6 @@ function FileActions({ product }) {
     const [basket, setBasket] = useState(false);
     const [messageApi, contextHolder] = message.useMessage();
     const state = useSelector((state) => state.auth.user?.access);
-    const dispatch = useDispatch();
 
     // Savatga qo'shish
     function handleAddItemToCart(e) {
@@ -70,7 +69,7 @@ function FileActions({ product }) {
             removeSavedItem(product.id);
         }
     }
-    
+
 
     const showModal = () => {
         setOpen(true);
@@ -176,22 +175,89 @@ function FileActions({ product }) {
                             {product?.document?.file_type}
                         </span>
                     </li>}
-                    {/* <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
-                        <span>Still:</span>
-                        <span>new style</span>
-                    </li>
-                    <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
-                        <span>O'lcham:</span>
-                        <span>2h x 3w x 4l</span>
-                    </li>
-                    <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
-                        <span>Rang:</span>
-                        <span>new style</span>
-                    </li>
-                    <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
-                        <span>Materiallar:</span>
-                        <span>new style</span>
-                    </li> */}
+                    {product?.three_d_features?.style?.name && (
+                        <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
+                            <span>
+                                <i className="fas fa-cube" style={{ color: '#00a44f' }}></i> Uslub:
+                            </span>
+                            <span>{product.three_d_features.style.name}</span>
+                        </li>
+                    )}
+
+
+
+                    {product?.three_d_features?.height_value && product?.three_d_features?.height_unit && (
+                        <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
+                            <span>
+                                <i className="fas fa-ruler-vertical" style={{ color: '#00a44f' }}></i> Balandlik:
+                            </span>
+                            <span>{product.three_d_features.height_value} {product.three_d_features.height_unit}</span>
+                        </li>
+                    )}
+
+                    {product?.three_d_features?.width_value && product?.three_d_features?.width_unit && (
+                        <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
+                            <span>
+                                <i className="fas fa-arrows-alt-h" style={{ color: '#00a44f' }}></i> Eni:
+                            </span>
+                            <span>{product.three_d_features.width_value} {product.three_d_features.width_unit}</span>
+                        </li>
+                    )}
+
+                    {product?.three_d_features?.length_value && product?.three_d_features?.length_unit && (
+                        <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
+                            <span>
+                                <i className="fas fa-ruler-horizontal" style={{ color: '#00a44f' }}></i> Uzunlik:
+                            </span>
+                            <span>{product.three_d_features.length_value} {product.three_d_features.length_unit}</span>
+                        </li>
+                    )}
+
+                    {product?.three_d_features?.colors?.length > 0 && (
+                        <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
+                            <span>
+                                <i className="fas fa-palette" style={{ color: '#00a44f' }}></i> Rang:
+                            </span>
+                            <span>
+                                {product.three_d_features.colors.map((color, idx) => (
+                                    <span
+                                        key={idx}
+                                        style={{
+                                            display: 'inline-block',
+                                            width: '16px',
+                                            height: '16px',
+                                            backgroundColor: color.exec_code,
+                                            borderRadius: '50%',
+                                            marginRight: '4px',
+                                        }}
+                                    ></span>
+                                ))}
+                            </span>
+                        </li>
+                    )}
+
+                    {product?.three_d_features?.materials?.length > 0 && (
+                        <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
+                            <span>
+                                <i className="fas fa-layer-group" style={{ color: '#00a44f' }}></i> Materiallar:
+                            </span>
+                            <span>{product.three_d_features.materials.map(m => m.name).join(', ')}</span>
+                        </li>
+                    )}
+
+
+
+                    {product?.three_d_features?.product_form?.icon && (
+                        <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
+                            <span className="d-flex align-items-center gap-2">
+                                <i className="fas fa-shapes" style={{ color: '#00a44f' }}></i>
+                                Shakl:
+                            </span>
+                            <span>
+                                <img width="20px" src={product.three_d_features.product_form.form_image} alt='icon' />
+                            </span>
+                        </li>
+                    )}
                 </ul>
 
                 <div className='d-flex flex-column gap-3 '>

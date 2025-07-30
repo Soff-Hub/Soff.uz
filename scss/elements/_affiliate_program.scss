@@ -1,0 +1,735 @@
+.hero_section {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    padding: 20px;
+
+    .hero_content {
+        max-width: 700px;
+        flex: 1;
+
+        h1 {
+            font-size: 34px;
+            font-weight: 600;
+            line-height: 40px;
+            color: #fff;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 24px;
+            margin: 16px 0 32px;
+            color: #fff;
+        }
+
+        .hero_btn {
+            background-color: #00A44F;
+            border: none;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            padding: 14px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+
+            &:hover {
+                background-color: #05cc0c !important;
+            }
+        }
+    }
+
+    .hero_img {
+        flex: 1;
+        display: flex;
+        justify-content: flex-end;
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    }
+}
+
+.create_link_section {
+    text-align: center;
+    margin: -100px auto 0;
+    background: #fff;
+    border-radius: 12px;
+    padding: 25px;
+
+    h2 {
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 18px;
+    }
+
+    p {
+        font-size: 16px;
+        color: #555;
+        margin-bottom: 24px;
+    }
+
+    .link_box {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        flex-wrap: wrap;
+        align-items: center;
+
+        input {
+            max-width: 400px;
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+        }
+
+        button {
+            background-color: #00A44F;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+
+            @media (max-width: 700px) {
+                margin-bottom: 20px;
+            }
+
+            &:hover {
+                background-color: #05cc0c !important;
+            }
+        }
+    }
+}
+
+.money_card {
+    button {
+        background-color: #00A44F;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 6px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #05cc0c !important;
+        }
+    }
+}
+
+.three_steps_section {
+    text-align: center;
+    padding: 40px 20px;
+
+    h2 {
+        font-size: 28px;
+        font-weight: 600;
+        margin-bottom: 40px;
+    }
+
+    .steps_wrapper {
+        display: flex;
+        gap: 24px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .step_card {
+        background: #f9f9f9;
+        border-radius: 12px;
+        padding: 24px;
+        max-width: 300px;
+        flex: 1;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s;
+
+        &:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .step_number {
+            width: 48px;
+            height: 48px;
+            background: #00A44F;
+            color: white;
+            border-radius: 50%;
+            font-size: 20px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+        }
+
+        h4 {
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        p {
+            font-size: 15px;
+            color: #666;
+        }
+    }
+}
+
+.promote_options_section {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    margin: 20px;
+
+    .promote_text {
+        flex: 1;
+        max-width: 600px;
+
+        h2 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        p {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        ul {
+            padding-left: 20px;
+
+            li {
+                font-size: 15px;
+                margin-bottom: 10px;
+                list-style: disc;
+                color: #333;
+            }
+        }
+    }
+
+    .promote_image {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+
+        img {
+            max-width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+    }
+}
+
+.affiliate_benefits_wrapper {
+    background-color: #fff;
+    padding: 80px 20px;
+
+    .affiliate_benefits_section {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 60px;
+
+        .benefits_image {
+            flex: 1;
+            min-width: 280px;
+            display: flex;
+            justify-content: center;
+            padding: 1rem;
+
+            img {
+                max-width: 100%;
+                width: 550px;
+                height: auto;
+                border-radius: 12px;
+                object-fit: cover;
+                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+                transition: all 0.3s ease;
+            }
+
+            @media (max-width: 768px) {
+                justify-content: center;
+                padding: 0.5rem;
+
+                img {
+                    border-radius: 8px;
+                    max-width: 90%;
+                }
+            }
+
+            @media (max-width: 480px) {
+                min-width: 100%;
+                padding: 0;
+
+                img {
+                    max-width: 100%;
+                    border-radius: 6px;
+                }
+            }
+        }
+
+        .benefits_text {
+            flex: 1;
+            min-width: 300px;
+            max-width: 550px;
+
+            h2 {
+                font-size: 32px;
+                font-weight: 700;
+                margin-bottom: 20px;
+                color: #222;
+            }
+
+            p {
+                font-size: 16px;
+                color: #555;
+                margin-bottom: 28px;
+                line-height: 1.6;
+            }
+
+            ul {
+                padding: 0;
+                margin: 0;
+                list-style: none;
+
+                li {
+                    display: flex;
+                    align-items: center;
+                    font-size: 15.5px;
+                    color: #333;
+                    margin-bottom: 16px;
+                    line-height: 1.6;
+
+                    svg {
+                        flex-shrink: 0;
+                    }
+
+                    span {
+                        display: inline-block;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.affiliate_explain_wrapper {
+    padding: 20px;
+
+    .affiliate_explain {
+        background: #fff;
+        padding: 25px;
+        border-radius: 12px;
+
+        h2 {
+            font-weight: 700;
+            font-size: 32px;
+            color: #1a1a1a;
+        }
+
+        p {
+            font-size: 16px;
+            color: #666;
+        }
+
+        ul {
+            padding-left: 0;
+
+            li {
+                font-size: 16px;
+                color: #333;
+            }
+        }
+
+        img {
+            max-width: 100%;
+            border-radius: 1rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        }
+    }
+}
+
+.soff_card {
+    transition: all 0.3s ease;
+
+    &:hover {
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        transform: translateY(-4px);
+    }
+}
+
+.JoinSoffSection {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px 20px;
+    gap: 16px;
+
+    h3 {
+        color: #fff;
+        max-width: 800px;
+        font-size: 24px;
+        text-align: center;
+    }
+
+    a {
+        background-color: #00A44F;
+        border: none;
+        color: white;
+        font-size: 14px;
+        font-weight: 600;
+        padding: 8px;
+        border-radius: 6px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #05cc0c !important;
+        }
+    }
+}
+
+/* Responsive Design - Kwork Style */
+@media (max-width: 1200px) {
+    .hero_section {
+        gap: 30px;
+    }
+
+    .affiliate_benefits_wrapper .affiliate_benefits_section {
+        gap: 40px;
+    }
+}
+
+@media (max-width: 992px) {
+    .hero_section {
+        flex-direction: column;
+        gap: 20px;
+        padding: 15px;
+
+        .hero_img {
+            justify-content: center;
+        }
+    }
+
+    .create_link_section {
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .three_steps_section {
+        .steps_wrapper {
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .step_card {
+            max-width: 100%;
+            flex: 1 1 100%;
+        }
+    }
+
+    .promote_options_section {
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .affiliate_benefits_wrapper .affiliate_benefits_section {
+        flex-direction: column;
+        gap: 30px;
+
+        .benefits_image,
+        .benefits_text {
+            min-width: 100%;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .hero_section {
+        padding: 10px;
+
+        .hero_content {
+            h1 {
+                font-size: 28px;
+                line-height: 34px;
+            }
+
+            p {
+                font-size: 14px;
+                line-height: 22px;
+            }
+
+            .hero_btn {
+                font-size: 16px;
+                padding: 12px 20px;
+            }
+        }
+    }
+
+    .create_link_section {
+        padding: 15px;
+
+        h2 {
+            font-size: 20px;
+        }
+
+        .link_box {
+            flex-direction: column;
+            gap: 10px;
+
+            input,
+            button {
+                max-width: 100%;
+            }
+        }
+    }
+
+    .three_steps_section {
+        padding: 20px;
+
+        h2 {
+            font-size: 24px;
+        }
+
+        .step_card {
+            padding: 20px;
+
+            .step_number {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+
+            h4 {
+                font-size: 18px;
+            }
+
+            p {
+                font-size: 14px;
+            }
+        }
+    }
+
+    .promote_options_section {
+        padding: 15px;
+        margin: 15px;
+
+        .promote_text {
+            h2 {
+                font-size: 24px;
+            }
+
+            p {
+                font-size: 14px;
+            }
+
+            ul li {
+                font-size: 14px;
+            }
+        }
+    }
+
+    .affiliate_benefits_wrapper {
+        padding: 40px 10px;
+
+        .affiliate_benefits_section {
+            .benefits_text {
+                h2 {
+                    font-size: 28px;
+                }
+
+                p {
+                    font-size: 14px;
+                }
+
+                ul li {
+                    font-size: 14px;
+                }
+            }
+        }
+    }
+
+    .affiliate_explain_wrapper {
+        padding: 15px;
+
+        .affiliate_explain {
+            padding: 15px;
+
+            h2 {
+                font-size: 28px;
+            }
+
+            p,
+            ul li {
+                font-size: 14px;
+            }
+        }
+    }
+
+    .JoinSoffSection {
+        padding: 30px 10px;
+
+        h3 {
+            font-size: 20px;
+        }
+
+        button {
+            font-size: 12px;
+            padding: 6px 12px;
+        }
+    }
+}
+
+@media (max-width: 576px) {
+    .hero_section {
+        padding: 8px;
+
+        .hero_content {
+            h1 {
+                font-size: 24px;
+                line-height: 30px;
+            }
+
+            p {
+                font-size: 13px;
+                line-height: 20px;
+            }
+
+            .hero_btn {
+                font-size: 14px;
+                padding: 10px 16px;
+            }
+        }
+    }
+
+    .create_link_section {
+        margin: 10px auto;
+        padding: 12px;
+
+        h2 {
+            font-size: 18px;
+        }
+
+        p {
+            font-size: 13px;
+        }
+    }
+
+    .three_steps_section {
+        padding: 15px;
+
+        h2 {
+            font-size: 20px;
+        }
+
+        .step_card {
+            padding: 15px;
+
+            .step_number {
+                width: 36px;
+                height: 36px;
+                font-size: 16px;
+            }
+
+            h4 {
+                font-size: 16px;
+            }
+        }
+    }
+
+    .promote_options_section {
+        padding: 10px;
+        margin: 10px;
+    }
+
+    .affiliate_benefits_wrapper {
+        padding: 20px 8px;
+    }
+
+    .affiliate_explain_wrapper {
+        padding: 10px;
+
+        .affiliate_explain {
+            padding: 12px;
+
+            h2 {
+                font-size: 24px;
+            }
+        }
+    }
+
+    .JoinSoffSection {
+        padding: 20px 8px;
+
+        h3 {
+            font-size: 18px;
+        }
+    }
+}
+
+@media (max-width: 360px) {
+    .hero_section {
+        .hero_content {
+            h1 {
+                font-size: 20px;
+                line-height: 26px;
+            }
+
+            p {
+                font-size: 12px;
+                line-height: 18px;
+            }
+
+            .hero_btn {
+                font-size: 12px;
+                padding: 8px 12px;
+            }
+        }
+    }
+
+    .create_link_section {
+        padding: 10px;
+
+        h2 {
+            font-size: 16px;
+        }
+
+        p {
+            font-size: 12px;
+        }
+    }
+
+    .three_steps_section {
+        h2 {
+            font-size: 18px;
+        }
+    }
+
+    .promote_options_section {
+        .promote_text h2 {
+            font-size: 20px;
+        }
+    }
+
+    .affiliate_benefits_wrapper {
+        .affiliate_benefits_section .benefits_text h2 {
+            font-size: 24px;
+        }
+    }
+
+    .affiliate_explain_wrapper .affiliate_explain h2 {
+        font-size: 20px;
+    }
+
+    .JoinSoffSection h3 {
+        font-size: 16px;
+    }
+}
