@@ -7,28 +7,30 @@ import Axios from 'axios';
 import { useRouter } from 'next/router';
 import { baseUrlAuth } from '~/repositories/Repository';
 
-export default function LoginForm () {
+export default function LoginForm ({ onSuccess, setCode }) {
     const [type, setType] = useState('t'); // t, e
     const [loading, setLoading] = useState(false);
-
     const router = useRouter();
     const handleSubmit = async ({ phone, email }) => {
         setLoading(true);
-
         const data = {
             phone_or_email: type === 't' ? '+998' + phone : email,
             role: 'customer',
         };
-
         try {
             const resp = await Axios.post(baseUrlAuth + 'auth/register/', data);
             localStorage.setItem('via_', resp?.data?.via_);
             localStorage.setItem('msg', resp?.data?.msg);
             localStorage.setItem('data', JSON.stringify(data));
-            router.push({
-                query: { ...router.query, user: resp.data?.user },
-                pathname: '/auth/code-verify',
-            });
+            if (typeof onSuccess === 'function') {
+                onSuccess(resp.data?.user);
+                setCode(resp.data?.user);
+            } else {
+                router.push({
+                    query: { ...router.query, user: resp.data?.user },
+                    pathname: '/auth/code-verify',
+                });
+            }
         } catch (err) {
             setLoading(false);
             const modal = Modal.error({
