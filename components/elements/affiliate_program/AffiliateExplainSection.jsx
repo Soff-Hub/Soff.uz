@@ -21,7 +21,7 @@ const AffiliateExplainSection = () => {
                 </div>
                 <div className="explain_image col-lg-5">
                     <img
-                        src="/static/img/affiliate_program/a.png"
+                        src="/static/img/affiliate_program/main.png"
                         alt="Affiliate qanday ishlaydi"
                         className="img-fluid rounded-4 shadow"
                     />
