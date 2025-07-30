@@ -11,7 +11,7 @@ const HeroSection = () => {
                     <button className='hero_btn'>Bugundan daromad olishni boshlang</button>
                 </div>
                 <div className='hero_img'>
-                    <img src="/static/img/affiliate_program/happy-man.png" alt="happy man" />
+                    <img src="/static/img/affiliate_program/hero.webp" alt="happy man" />
                 </div>
             </div>
         </div>

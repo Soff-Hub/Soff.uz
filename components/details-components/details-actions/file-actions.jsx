@@ -177,9 +177,8 @@ function FileActions({ product }) {
                     </li>}
                     {product?.three_d_features?.style?.name && (
                         <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
-                            <span className="d-flex align-items-center gap-2">
-                                <i className="fas fa-cube" style={{ color: '#00a44f' }}></i>
-                                Uslub:
+                            <span>
+                                <i className="fas fa-cube" style={{ color: '#00a44f' }}></i> Uslub:
                             </span>
                             <span>{product.three_d_features.style.name}</span>
                         </li>
@@ -189,9 +188,8 @@ function FileActions({ product }) {
 
                     {product?.three_d_features?.height_value && product?.three_d_features?.height_unit && (
                         <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
-                            <span className="d-flex align-items-center gap-2">
-                                <i className="fas fa-ruler-vertical" style={{ color: '#00a44f' }}></i>
-                                Balandlik:
+                            <span>
+                                <i className="fas fa-ruler-vertical" style={{ color: '#00a44f' }}></i> Balandlik:
                             </span>
                             <span>{product.three_d_features.height_value} {product.three_d_features.height_unit}</span>
                         </li>
@@ -199,9 +197,8 @@ function FileActions({ product }) {
 
                     {product?.three_d_features?.width_value && product?.three_d_features?.width_unit && (
                         <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
-                            <span className="d-flex align-items-center gap-2">
-                                <i className="fas fa-arrows-alt-h" style={{ color: '#00a44f' }}></i>
-                                Eni:
+                            <span>
+                                <i className="fas fa-arrows-alt-h" style={{ color: '#00a44f' }}></i> Eni:
                             </span>
                             <span>{product.three_d_features.width_value} {product.three_d_features.width_unit}</span>
                         </li>
@@ -209,9 +206,8 @@ function FileActions({ product }) {
 
                     {product?.three_d_features?.length_value && product?.three_d_features?.length_unit && (
                         <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
-                            <span className="d-flex align-items-center gap-2">
-                                <i className="fas fa-ruler-horizontal" style={{ color: '#00a44f' }}></i>
-                                Uzunlik:
+                            <span>
+                                <i className="fas fa-ruler-horizontal" style={{ color: '#00a44f' }}></i> Uzunlik:
                             </span>
                             <span>{product.three_d_features.length_value} {product.three_d_features.length_unit}</span>
                         </li>
@@ -219,9 +215,8 @@ function FileActions({ product }) {
 
                     {product?.three_d_features?.colors?.length > 0 && (
                         <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
-                            <span className="d-flex align-items-center gap-2">
-                                <i className="fas fa-palette" style={{ color: '#00a44f' }}></i>
-                                Rang:
+                            <span>
+                                <i className="fas fa-palette" style={{ color: '#00a44f' }}></i> Rang:
                             </span>
                             <span>
                                 {product.three_d_features.colors.map((color, idx) => (
@@ -243,9 +238,8 @@ function FileActions({ product }) {
 
                     {product?.three_d_features?.materials?.length > 0 && (
                         <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
-                            <span className="d-flex align-items-center gap-2">
-                                <i className="fas fa-layer-group" style={{ color: '#00a44f' }}></i>
-                                Materiallar:
+                            <span>
+                                <i className="fas fa-layer-group" style={{ color: '#00a44f' }}></i> Materiallar:
                             </span>
                             <span>{product.three_d_features.materials.map(m => m.name).join(', ')}</span>
                         </li>
