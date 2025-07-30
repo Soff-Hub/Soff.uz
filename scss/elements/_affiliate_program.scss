@@ -92,6 +92,10 @@
             border-radius: 6px;
             cursor: pointer;
 
+            @media (max-width: 700px) {
+                margin-bottom: 20px;
+            }
+
             &:hover {
                 background-color: #05cc0c !important;
             }
@@ -107,7 +111,7 @@
         padding: 10px 20px;
         border-radius: 6px;
         cursor: pointer;
-        margin-right: 10px;
+
         &:hover {
             background-color: #05cc0c !important;
         }

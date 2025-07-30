@@ -23,7 +23,7 @@ export default function AffiliateEarningsSection() {
     }, []);
     return (
         <Card className="rounded-lg money_card shadow-md border">
-            <div className="d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div className="d-flex justify-content-center py-1 align-items-center flex-wrap gap-5">
 
                 {/* 1. Hamyoncha + daromad */}
                 <div className="d-flex align-items-center gap-3">
@@ -44,6 +44,7 @@ export default function AffiliateEarningsSection() {
                     type="primary"
                     icon={<i className="fas fa-money-bill-wave"></i>}
                     size="large"
+                    className="d-flex justify-content-center"
                 >
                     Pulni yechib olish
                 </Button>
