@@ -13,9 +13,15 @@ const steps = [
     },
     {
         title: "Daromad oling",
-        description: "Har bir tranzaksiya orqali sizga mukofotlar to‘lanadi.",
+        description: "Taklif havolangiz orqali kelgan sotuvdan 5% ulush.",
         number: "3"
+    },
+    {
+        title: "Yig'ilgan summani qulay yechish",
+        description: "Taklif havolasi orqali yig'ilgan summani tezko'r yechish imkoniyati.",
+        number: "4"
     }
+
 ]
 
 const ThreeStepsSection = () => {
