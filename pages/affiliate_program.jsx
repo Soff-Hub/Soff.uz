@@ -19,8 +19,8 @@ const AffiliateProgram = () => {
             <ThreeStepsSection />
             <PromoteOptionsSection />
             <AffiliateBenefitsSection />
-            <AffiliateExplainSection/>
-            <WithSoffYouGet/>
+            {/* <AffiliateExplainSection/> */}
+            {/* <WithSoffYouGet/> */}
             <div style={{background: '#00ba3f'}}>
                 <JoinSoffSection />
             </div>
