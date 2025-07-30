@@ -43,12 +43,12 @@ const ServicesFilterSection = ({ count }) => {
             placeholder='Kategoriya'
             className='w-100'
             defaultValue={query.category}
-            onChange={val => updateQuery('category', val)}
+            onChange={val => updateQuery('category_id', val)}
             allowClear
           >
             {/* Optionlarni backenddan yoki frontendda qattiq belgilab berish mumkin */}
-            <Select.Option value="design">Design</Select.Option>
-            <Select.Option value="video">Video</Select.Option>
+            <Select.Option value="1">Design</Select.Option>
+            <Select.Option value="2">Video</Select.Option>
           </Select>
         </div>
         <div className='col-6 col-md-4 col-lg-2 mb-3'>
@@ -59,10 +59,10 @@ const ServicesFilterSection = ({ count }) => {
           </Select>
         </div>
         <div className='col-6 col-md-4 col-lg-2 mb-3'>
-          <Select placeholder='Yetkazish vaqti' className='w-100' defaultValue={query.delivery_time} onChange={val => updateQuery('delivery_time', val)} allowClear>
-            <Select.Option value="24h">24 soat</Select.Option>
-            <Select.Option value="3d">3 kun</Select.Option>
-            <Select.Option value="7d">7 kun</Select.Option>
+          <Select placeholder='Yetkazish vaqti' className='w-100' defaultValue={query.delivery_time} onChange={val => updateQuery('delivary_day', val)} allowClear>
+            <Select.Option value="1">1 kun</Select.Option>
+            <Select.Option value="3">3 kun</Select.Option>
+            <Select.Option value="7">7 kun</Select.Option>
           </Select>
         </div>
         <div className='col-6 col-md-4 col-lg-2 mb-3'>

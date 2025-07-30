@@ -465,3 +465,118 @@
         }
     }
 }
+
+// order_create_content_____________________________________________________________________________________
+.order_create_content {
+    padding: 50px;
+
+    h3 {
+        font-weight: 600;
+        font-size: 22px;
+        line-height: 100%;
+        letter-spacing: 0%;
+        color: #312F30;
+        margin-bottom: 15px;
+    }
+
+    .security_info {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+
+        p {
+            font-size: 15px;
+            line-height: 100%;
+            letter-spacing: 0%;
+            color: #312F30;
+            margin: 0;
+        }
+
+        img {
+            width: 45px;
+            height: 50px;
+            object-fit: contain;
+        }
+    }
+
+    .order_package {
+        padding: 10px;
+        border: .75px solid #7B7B7B;
+        border-radius: 8px;
+        gap: 10px;
+        display: flex;
+        flex-direction: column;
+        margin-top: 20px;
+
+        .order_package_info {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            .order_type {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+
+                h3 {
+                    font-weight: 700;
+                    font-size: 22px;
+                    line-height: 39px;
+                    letter-spacing: 0%;
+                    color: #312F30;
+                    margin: 0;
+                }
+
+                img {
+                    width: 20px;
+                    height: 20px;
+                    object-fit: contain;
+                }
+            }
+
+            h3 {
+                font-weight: 400;
+                font-size: 22px;
+                line-height: 39px;
+                letter-spacing: 0%;
+                color: #312F30;
+                margin: 0;
+            }
+        }
+
+        h3 {
+            font-weight: 400;
+            font-size: 20px;
+            line-height: 100%;
+            letter-spacing: 2%;
+            color: #312F30;
+        }
+    }
+
+
+    .order_create_btn{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 30px;
+
+        button {
+            font-size: 20px;
+            font-weight: 500;
+            line-height: 100%;
+            letter-spacing: 1%;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            background: #00A44F;
+            width: 500px;
+            height: 58px;
+            padding: 15px 60px;
+
+            &:hover {
+                background: #00D265;
+            }
+        }
+    }
+    
+}
