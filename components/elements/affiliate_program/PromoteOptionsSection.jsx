@@ -8,12 +8,12 @@ const PromoteOptionsSection = () => {
                     <h2>Qanday xizmatlarni targ‘ib qila olasiz?</h2>
                     <p>Siz Soff.uz dagi turli xil raqamli mahsulotlarni reklama qilib, har bir xariddan daromad olishingiz mumkin.</p>
                     <ul>
-                        <li>3D modellari</li>
-                        <li>UI/UX dizayn shablonlari</li>
-                        <li>Veb-sayt shablonlari va loyihalar</li>
-                        <li>Video montaj uchun elementlar</li>
-                        <li>PDF hujjatlar va digital fayllar</li>
-                        <li>Yoki o‘z mahsulotlaringiz!</li>
+                        <li>Ilmiy ishlar</li>
+                        <li>3D modellar va interier dizaynlar</li>
+                        <li>Dizayn shablonlar</li>
+                        <li>Veb saytlar</li>
+                        <li>Turli sohalar uchun shablonlar</li>
+                        <li>Video darsliklar</li>
                     </ul>
                 </div>
                 <div className='promote_image'>
