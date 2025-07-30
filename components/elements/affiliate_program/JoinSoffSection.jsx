@@ -4,7 +4,7 @@ const JoinSoffSection = () => {
   return (
     <div className='JoinSoffSection'>
         <h3>Soff.uz Hamkorlik dasturiga qo'shiling va bugundan daromad olishni boshlang!</h3>
-        <button>Daromad Olishni Boshlang</button>
+        <a href='#link'>Daromad Olishni Boshlang</a>
     </div>
   )
 }

@@ -12,7 +12,7 @@ import PageLayout from '~/components/layouts/PageLayout'
 const AffiliateProgram = () => {
     return (
         <PageLayout>
-            <div style={{background: '#00ba3f'}}>
+            <div id='link' style={{background: '#00ba3f'}}>
                 <HeroSection />
             </div>
             <CreateLinkSection />
