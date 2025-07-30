@@ -22,7 +22,7 @@ const ServiceDetail = ({ data }) => {
             <div className='container my-5'>
                 <h1 className='fs-1'>{service?.title}</h1>
                 <div className='d-flex align-items-center gap-3 mb-4'>
-                    <img src={service?.user?.photo_url || "/static/img/ozodbek.png"} alt="user img" />
+                    <img style={{width: '27px', borderRadius: "50%"}} src={service?.user?.photo_url || "/static/img/ozodbek.png"} alt="user img" />
                     <p style={{fontSize: '16px'}} className='m-0 text-black'>{service?.user?.full_name}</p>
                     <Rate disabled value={service?.rating} allowHalf style={{ color: 'orange', fontSize: '16px' }} />
                     <p className='m-0'>5.0 ({service?.comments?.length} sharh)</p>
@@ -34,12 +34,12 @@ const ServiceDetail = ({ data }) => {
                         />
                     </div>
                     <div className='col-12 col-lg-5'>
-                        <ServicePackagesAccordion openModal={openLoginModal}/>
+                        <ServicePackagesAccordion packages={service?.packages} openModal={openLoginModal}/>
                     </div>
                 </div>
                 <div className='row my-5'>
                     <div className='col-12 col-lg-7'>
-                        <ServiceDescription openModal={openLoginModal} description={service?.description} />
+                        <ServiceDescription packages={service?.packages} openModal={openLoginModal} description={service?.description} />
                     </div>
                     <div className='col-12 col-lg-5'>
                         <ServiceSellerProfile user={service?.user} />
