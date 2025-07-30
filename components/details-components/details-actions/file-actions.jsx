@@ -254,7 +254,7 @@ function FileActions({ product }) {
                                 Shakl:
                             </span>
                             <span>
-                                <i className={product.three_d_features.product_form.icon} style={{ fontSize: '18px' }}></i>
+                                <img width="20px" src={product.three_d_features.product_form.form_image} alt='icon' />
                             </span>
                         </li>
                     )}
