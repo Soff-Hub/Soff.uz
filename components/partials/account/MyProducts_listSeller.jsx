@@ -128,9 +128,6 @@ export default function PurchasedProducts() {
   return (
     <Card className="p-4 mb-3">
       <div className="container mt-4">
-        <div style={{ marginBottom: '20px' }}>
-          <AffiliateEarningsSection />
-        </div>
         <div className="d-flex align-items-center gap-2 fs-4 my-3">
           <ShoppingCartOutlined />
           <span className="fw-bold">Xarid Qilingan Materiallar</span>

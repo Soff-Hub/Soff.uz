@@ -6,6 +6,7 @@ import { baseURL } from '~/repositories/api';
 import Cookies from 'js-cookie';
 import AuthModal from '~/components/AuthModal';
 import { useIsLoggedIn } from '~/hooks/useIsLoggedIn';
+import AffiliateEarningsSection from './AffiliateEarningsSection';
 
 const CreateLinkSection = () => {
     const [userLink, setUserLink] = useState('');
@@ -72,30 +73,36 @@ const CreateLinkSection = () => {
 
     return (
         <div className='container py-5'>
-            <div className='create_link_section'>
+            <div style={{maxWidth: !isLoggedIn && "700px"}} className='create_link_section'>
                 <h2>Hamkorlik havolangizni yarating</h2>
-
-                <div className='link_box d-flex gap-3 align-items-center'>
-                    <Input
-                        onChange={(e) => {
-                            setUserLink(e.target.value);
-                            setInputError('');
-                            setCopied(false);
-                        }}
-                        value={userLink}
-                        placeholder='https://soff.uz'
-                        size="large"
-                        status={inputError ? 'error' : ''}
-                    />
-                    <Button
-                        type="primary"
-                        icon={copied ? <CopyOutlined /> : <LinkOutlined />}
-                        onClick={copied ? handleCopy : generateAndCopy}
-                        loading={loading}
-                        size="large"
-                    >
-                        {copied ? 'Nusxalash' : 'Yaratish'}
-                    </Button>
+                <div className={`${isLoggedIn && "row d-flex align-items-center justify-content-between" }`}>
+                    <div className={`link_box ${isLoggedIn && "col-12 col-md-6"} `}>
+                        <Input
+                            onChange={(e) => {
+                                setUserLink(e.target.value);
+                                setInputError('');
+                                setCopied(false);
+                            }}
+                            value={userLink}
+                            placeholder='https://soff.uz'
+                            size="large"
+                            status={inputError ? 'error' : ''}
+                        />
+                        <Button
+                            type="primary"
+                            icon={copied ? <CopyOutlined /> : <LinkOutlined />}
+                            onClick={copied ? handleCopy : generateAndCopy}
+                            loading={loading}
+                            size="large"
+                        >
+                            {copied ? 'Nusxalash' : 'Yaratish'}
+                        </Button>
+                    </div>
+                    {isLoggedIn && 
+                        <div className='col-12 col-md-6'>
+                            <AffiliateEarningsSection />
+                        </div>
+                    }
                 </div>
 
                 {inputError && (

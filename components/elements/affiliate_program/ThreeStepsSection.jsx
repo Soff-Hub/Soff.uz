@@ -3,7 +3,7 @@ import React from 'react'
 const steps = [
     {
         title: "Ro'yxatdan o'ting",
-        description: "Soff.uz saytida hisob yarating va hamkorlik havolangizni oling.",
+        description: "Soff.uz saytida profil yarating va hamkorlik havolangizni oling.",
         number: "1"
     },
     {
@@ -28,7 +28,7 @@ const ThreeStepsSection = () => {
     return (
         <div className="container py-5">
             <div className="three_steps_section">
-                <h2>3 qadamda daromad oling</h2>
+                <h2>4 qadamda daromad oling</h2>
                 <div className="steps_wrapper">
                     {steps.map((step, index) => (
                         <div className="step_card" key={index}>
