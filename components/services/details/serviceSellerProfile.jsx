@@ -1,7 +1,7 @@
 import React from 'react'
 import { DownOutlined } from '@ant-design/icons';
 
-const ServiceSellerProfile = () => {
+const ServiceSellerProfile = ({user}) => {
   return (
     <div className='service_seller_profile'>
         <div className='d-flex bg-white p-5 rounded-4 gap-3 align-items-center'>
@@ -13,10 +13,10 @@ const ServiceSellerProfile = () => {
             </div>
         </div>
         <div className='d-flex bg-white p-5 rounded-4 mt-5 gap-3  align-items-center'>
-            <img style={{width: '69px', height: '69px', borderRadius: '100%'}} src="/static/img/ozodbek.png"/>
+            <img style={{width: '69px', height: '69px', borderRadius: '100%'}} src={user?.photo_url || "/static/img/ozodbek.png"}/>
             <div>
-              <h2 >Shavkat Mirziyoyev</h2>
-              <p className='status d-flex align-items-center gap-1'><div></div> Onlayn</p>
+              <h2>{user?.full_name}</h2>
+              {/* <p className='status d-flex align-items-center gap-1'><div></div> Onlayn</p> */}
             </div>
         </div>
     </div>

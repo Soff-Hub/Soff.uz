@@ -12,9 +12,9 @@ import ServiceSellerProfile from '~/components/services/details/serviceSellerPro
 import ServiceCard from '~/components/services/ServiceCard'
 
 const ServiceDetail = ({ data }) => {
-    const { service, similar_services } = data
+    const { service, similar_services, seller_portfolio } = data
     const [isModalOpen, setIsModalOpen] = useState(false)
-
+    console.log("data_________________________________", data)
     const openLoginModal = () => setIsModalOpen(true)
     const closeLoginModal = () => setIsModalOpen(false)
     return (
@@ -22,7 +22,9 @@ const ServiceDetail = ({ data }) => {
             <div className='container my-5'>
                 <h1 className='fs-1'>{service?.title}</h1>
                 <div className='d-flex align-items-center gap-3 mb-4'>
-                    <Rate disabled value={4} allowHalf style={{ color: 'orange', fontSize: '16px' }} />
+                    <img src={service?.user?.photo_url || "/static/img/ozodbek.png"} alt="user img" />
+                    <p style={{fontSize: '16px'}} className='m-0 text-black'>{service?.user?.full_name}</p>
+                    <Rate disabled value={service?.rating} allowHalf style={{ color: 'orange', fontSize: '16px' }} />
                     <p className='m-0'>5.0 ({service?.comments?.length} sharh)</p>
                 </div>
                 <div className='row'>
@@ -40,12 +42,12 @@ const ServiceDetail = ({ data }) => {
                         <ServiceDescription openModal={openLoginModal} description={service?.description} />
                     </div>
                     <div className='col-12 col-lg-5'>
-                        <ServiceSellerProfile />
+                        <ServiceSellerProfile user={service?.user} />
                     </div>
                 </div>
                 <div className='row'>
                     <div className='col-12 col-lg-7'>
-                        <ServicePortfolio portfolios={service?.portfolio} />
+                        <ServicePortfolio portfolios={seller_portfolio} />
                     </div>
                 </div>
                 <div className='row my-5'>
