@@ -8,6 +8,8 @@ import ScientificResourcesFilterSection, {
 import { useRouter } from 'next/router';
 import { baseUrlUseApi } from '~/repositories/useApi';
 import AISoffiaPresentation from '~/components/elements/AISoffiaPresentation';
+import CategorySearchSection from '~/components/elements/CategorySearchSection';
+import { serialize } from 'cookie';
 
 export default function ProductCategoryScreen ({
     productsData,
@@ -16,7 +18,10 @@ export default function ProductCategoryScreen ({
     parentCategory,
     childCategory,
     page,
+    search,
+    productsUrl
 }) {
+    console.log("productsData", productsData, search, productsUrl)
     const router = useRouter();
 
     const handlePageChange = newPage => {
@@ -73,7 +78,10 @@ export default function ProductCategoryScreen ({
             />
 
             <div className='ps-page--shop container p-lg-1'>
-                <AISoffiaPresentation />
+                <div className='mb-4'>
+                    <AISoffiaPresentation />
+                </div>
+                <CategorySearchSection />
                 <ScientificResourcesFilterSection
                     breacrumb={fourChildData}
                     count={productsData?.count}
@@ -99,6 +107,7 @@ export async function getServerSideProps (context) {
         page = 1,
         parentCategory = '',
         childCategory = '',
+        search = '',
     } = context.query;
 
     const fetchJson = async url => {
@@ -111,7 +120,7 @@ export async function getServerSideProps (context) {
 
     const categoryParam = childCategory ? childCategory : parentCategory;
 
-    const productsUrl = `${baseUrlUseApi}customer/products/?direction=file&category=${categoryParam}&page=${page}&page_size=48`;
+    const productsUrl = `${baseUrlUseApi}customer/products/?direction=file&category=${categoryParam}&page=${page}&page_size=48&search=${search}`;
     const fourChildUrl = `${baseUrlUseApi}customer/four-child?direction=file`;
     const childCategoryUrl = `${baseUrlUseApi}customer/four-child?direction=file&parent__slug=${parentCategory}`;
 
@@ -129,6 +138,8 @@ export async function getServerSideProps (context) {
             parentCategory,
             childCategory,
             page,
+            search,
+            productsUrl
         },
     };
 }

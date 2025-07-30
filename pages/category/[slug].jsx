@@ -28,6 +28,7 @@ import { useRouter } from 'next/router';
 import { baseUrlUseApi } from '~/repositories/useApi';
 import AISoffiaPresentation from '~/components/elements/AISoffiaPresentation';
 import CategoryFilterSecion from '~/components/elements/CategoryFilterSecion';
+import CategorySearchSection from '~/components/elements/CategorySearchSection';
 
 export default function ProductCategoryScreen({
   productsData,
@@ -91,6 +92,7 @@ export default function ProductCategoryScreen({
 
       <div className='ps-page--shop container p-lg-1'>
         <AISoffiaPresentation />
+        <CategorySearchSection />
         <CategoryFilterSecion
           breacrumb={fourChildData}
           count={productsData?.count}
@@ -114,6 +116,7 @@ export async function getServerSideProps(context) {
     slug = '',
     page = 1,
     childCategory = '',
+    search = '',
   } = context.query;
 
   const fetchJson = async url => {
@@ -125,7 +128,7 @@ export async function getServerSideProps(context) {
   // Agar slug === 'all' bo‘lsa, category bo‘sh bo‘lishi kerak
   const categoryParam = slug === 'all' ? '' : (childCategory || slug);
 
-  const productsUrl = `${baseUrlUseApi}customer/products/?direction=file&category=${categoryParam}&page=${page}&page_size=48`;
+  const productsUrl = `${baseUrlUseApi}customer/products/?direction=file&category=${categoryParam}&page=${page}&page_size=48&search=${search}`;
   const fourChildUrl = `${baseUrlUseApi}customer/four-child?direction=file`;
   const childCategoryUrl =
     slug && slug !== 'all'

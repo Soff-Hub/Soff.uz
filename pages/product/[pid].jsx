@@ -86,7 +86,7 @@ export default function ProductDefaultPage({ defaultProducts }) {
         const fetchLastAdded = async () => {
             setLastLoading(true)
             try {
-                const { data } = await Axios.get(`${baseUrl}customer/last-added?direction=${contentType}&limit=${contentType == "3d"? "4" : '6'}`)
+                const { data } = await Axios.get(`${baseUrl}customer/last-added?direction=${contentType}&limit=${contentType == "3d" ? "4" : '6'}`)
                 setLastAdded(data)
             } catch (error) {
             }
@@ -151,6 +151,7 @@ export default function ProductDefaultPage({ defaultProducts }) {
             }}
         />
     );
+
 
     const productsDetails = {
         file: <FileProductsDetails product={defaultProducts} />,
@@ -348,18 +349,19 @@ export default function ProductDefaultPage({ defaultProducts }) {
                                     'file' && <AISoffiaPresentation />}
 
                                 {similarProduct && (
-                                    <div ref={similarRef} className=' my-5'>
+                                    <div ref={similarRef} className="my-5">
                                         <h3
                                             style={{
                                                 fontSize: '25px',
                                                 fontWeight: 400,
                                             }}
-                                            className='py-4 similar_title'>
+                                            className="py-4 similar_title"
+                                        >
                                             O’xshash mahsulotlar
                                         </h3>
-                                        {hasLoadedSimilar ?
-                                            (
-                                                <div className='row'>
+                                        {hasLoadedSimilar ? (
+                                            productComponents.length > 0 ? (
+                                                <div className="row">
                                                     {productComponents.map((component, index) => (
                                                         <div className={`${getColClass()} mb-4`} key={index}>
                                                             {component}
@@ -367,25 +369,32 @@ export default function ProductDefaultPage({ defaultProducts }) {
                                                     ))}
                                                 </div>
                                             ) : (
-                                                <div className='row g-3 py-3'>
-                                                    {Array.from({ length: 6 }).map((_, index) => (
-                                                        <div
-                                                            key={index}
-                                                            className='col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-4 d-flex justify-content-center'>
-                                                            <Skeleton.Input
-                                                                active
-                                                                style={{
-                                                                    width: 250,
-                                                                    height: 300,
-                                                                    borderRadius: 8,
-                                                                }}
-                                                            />
-                                                        </div>
-                                                    ))}
+                                                <div className="text-center text-muted py-5" style={{ fontSize: 18 }}>
+                                                    O‘xshash mahsulotlar topilmadi.
                                                 </div>
                                             )
-                                        }
-
+                                        ) : (
+                                            <div className="row g-5 py-3 justify-content-center">
+                                                {Array.from({ length: 12 }).map((_, index) => (
+                                                    <div
+                                                        key={index}
+                                                        className="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2  mb-3 d-flex justify-content-center"
+                                                    >
+                                                        <Skeleton.Input
+                                                            active
+                                                            style={{
+                                                                width: '100%',
+                                                                maxWidth: 170,
+                                                                height: '38vw', 
+                                                                maxHeight: 230,
+                                                                minHeight: 120,
+                                                                borderRadius: 8,
+                                                            }}
+                                                        />
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
                                     </div>
                                 )}
                                 <h3
@@ -419,7 +428,7 @@ export default function ProductDefaultPage({ defaultProducts }) {
                                             <div className='row'>
                                                 {lastAdded?.results?.map((p, i) => (
                                                     <div className={contentType !== "3d" ? 'col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-4' : 'col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3 mb-4'}>
-                                                        {contentType !== "3d" ? <RedesignProduct product={p} key={i} /> : <ModelAndDesignProduct product={p} key={i}/>}
+                                                        {contentType !== "3d" ? <RedesignProduct product={p} key={i} /> : <ModelAndDesignProduct product={p} key={i} />}
                                                     </div>
                                                 ))}
                                             </div>

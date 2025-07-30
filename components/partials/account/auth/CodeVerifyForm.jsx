@@ -13,7 +13,7 @@ export const formatTime = (seconds) => {
     return `${String(minutes).padStart(2, '0')}:${String(secondsLeft).padStart(2, '0')}`;
 };
 
-export default function CodeVerifyForm() {
+export default function CodeVerifyForm({authCode, onClose}) {
     const [loading, setLoading] = useState(false);
     const [secondsRemaining, setSecondsRemaining] = useState(120);
     const [msg, SetMsg] = useState(null);
@@ -45,10 +45,10 @@ export default function CodeVerifyForm() {
 
     const handleSubmit = async ({ code }) => {
         setLoading(true);
-        const data = { user: router?.query?.user, code };
+        const data = { user: router?.query?.user || authCode, code   };
 
         try {
-            const resp = await Axios.post(baseUrlAuth + 'auth/verify/', data);
+            const resp = await Axios.post(baseUrlAuth + 'auth/verify/', data );
             dispatch(login({
                 user: { ...resp.data, role: 'customer' },
                 data: JSON.parse(localStorage.getItem('data'))
@@ -57,13 +57,20 @@ export default function CodeVerifyForm() {
                 localStorage.setItem('is_seller', '1');
             }
 
+            if (typeof onClose === 'function') {
+                onClose();
+            }
+
             if (router?.query?.returnUrl) {
                 router.push(router?.query?.returnUrl);
             } else if (router?.query?.id) {
                 router.push(`/account/checkout?id=${router?.query?.id}`);
             } else if (router?.query?.deal) {
                 router.push(`/account/all-orders`);
-            } else {
+            }else if (authCode){
+                router.push('/affiliate_program');
+            }
+             else {
                 router.push('/account/sellerproducts');
             }
         } catch (err) {

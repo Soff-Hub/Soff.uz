@@ -109,7 +109,7 @@ class PostRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return response;
     }
-    async postClickCardNumber(documents, provider, type, token) {
+    async postClickCardNumber(documents, provider, type, token, affiliate_code) {
         const endPoint = `seller/payment/create/`;
         const response = await Repository({
             url: baseUrl + endPoint,
@@ -117,7 +117,8 @@ class PostRepository {
             data: {
                 documents: documents,
                 provider: provider,
-                purchase_type: type
+                purchase_type: type,
+                affiliate_code
             },
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -131,7 +132,7 @@ class PostRepository {
             });
         return response;
     }
-    async postClickCard(documents, card_number, expire_date, type, token) {
+    async postClickCard(documents, card_number, expire_date, type, token, affiliate_code) {
         const endPoint = `seller/payment/create/`;
         const response = await Repository({
             url: baseUrl + endPoint,
@@ -141,7 +142,8 @@ class PostRepository {
                 expire_date: expire_date,
                 card_number: card_number,
                 provider: 'card_data',
-                purchase_type: type
+                purchase_type: type,
+                affiliate_code
             },
             headers: {
                 Authorization: `Bearer ${token}`,
