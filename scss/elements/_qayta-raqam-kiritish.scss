@@ -5,14 +5,17 @@
     border: 1px solid #dddddd;
     width: 100%;
     margin-bottom: 20px;
+
     &:focus {
         border-color: $color-1st;
         outline: none;
         box-shadow: 0 0 0 transparent;
     }
+
     &:valid {
         font-size: 18px;
     }
+
     &::placeholder {
         font-size: 14px;
     }
@@ -25,11 +28,13 @@
     border: 1px solid #dddddd;
     width: 100%;
     margin-bottom: 20px;
+
     &:focus {
         border-color: $color-1st;
         outline: none;
         box-shadow: 0 0 0 transparent;
     }
+
     &:valid {
         font-size: 18px;
     }
@@ -47,6 +52,7 @@
         align-items: center;
         padding: 35px;
         transition: all 0.6s;
+
         & .register-choose-button {
             display: flex;
             flex-direction: column;
@@ -54,6 +60,7 @@
             align-items: center;
             gap: 10px;
             margin-top: 30px !important;
+
             & h3 {
                 margin-top: 20%;
                 font-size: 15px;
@@ -61,22 +68,27 @@
                 width: 110px;
                 text-align: center;
             }
+
             & div {
                 display: flex;
                 justify-content: center;
                 align-items: center;
+
                 & i {
                     font-size: 50px;
                     color: $color-1st;
                 }
             }
         }
+
         &:hover {
             background-color: $color-1st;
+
             & .register-choose-button {
                 & h3 {
                     color: #fff;
                 }
+
                 & div {
                     & i {
                         font-size: 50px;
@@ -93,6 +105,7 @@
         display: flex !important;
         max-width: 280px !important;
         gap: 8px !important;
+
         .register-choose-button-parent_div {
             width: 120px;
             height: 120px;
@@ -114,6 +127,7 @@
     display: flex;
     align-items: center;
     flex-wrap: wrap;
+
     .yaxshi-categoriyalar-image {
         height: 100px;
         width: 100%;
@@ -172,13 +186,16 @@ input[type='number']::-webkit-outer-spin-button {
     &:hover {
         background: #00a44f !important;
         color: #fff !important;
+
         .subcategory_btn_title {
             color: #fff !important;
         }
     }
+
     &:active {
         background: #00a44f !important;
         color: #fff !important;
+
         .subcategory_btn_title {
             color: #fff !important;
         }
@@ -203,6 +220,7 @@ input[type='number']::-webkit-outer-spin-button {
     display: flex;
     align-items: center;
     gap: 38px;
+
     @media screen and (max-width: 1300px) {
         gap: 5px;
     }
@@ -211,10 +229,8 @@ input[type='number']::-webkit-outer-spin-button {
 .VideoLessonsWrap {
     margin-top: clamp(0.938rem, 1.875vw + 0.563rem, 2.813rem);
     display: grid;
-    grid-template-columns: repeat(
-        auto-fit,
-        minmax(clamp(9.375rem, 18.75vw + 5.625rem, 28.125rem), 1fr)
-    );
+    grid-template-columns: repeat(auto-fit,
+            minmax(clamp(9.375rem, 18.75vw + 5.625rem, 28.125rem), 1fr));
     gap: clamp(0.625rem, 1.563vw + 0.313rem, 2.188rem);
     row-gap: clamp(0.625rem, 1.563vw + 0.313rem, 2.188rem);
     padding: 0px !important;
@@ -222,19 +238,19 @@ input[type='number']::-webkit-outer-spin-button {
     @media screen and (max-width: 1250px) {
         padding: 0 15px;
     }
+
     .VideoLessonsWrapSkeleton {
         width: 100% !important;
         height: clamp(12.5rem, 12.5vw + 10rem, 25rem) !important;
     }
 }
+
 // _____________________________scientificResources styles____________________________
 .scientificResourcesWrap {
     margin-top: clamp(0.938rem, 1.875vw + 0.563rem, 2.813rem);
     display: grid;
-    grid-template-columns: repeat(
-        auto-fit,
-        minmax(clamp(14rem, 15.625vw + 6.25rem, 25rem), 1fr)
-    );
+    grid-template-columns: repeat(auto-fit,
+            minmax(clamp(14rem, 15.625vw + 6.25rem, 25rem), 1fr));
     gap: clamp(0.625rem, 1.563vw + 0.313rem, 2.188rem);
     row-gap: clamp(0.625rem, 1.563vw + 0.313rem, 2.188rem);
     padding: 0px !important;
@@ -242,6 +258,7 @@ input[type='number']::-webkit-outer-spin-button {
     @media screen and (max-width: 1250px) {
         padding: 0 15px;
     }
+
     .scientificResourcesSkeleton {
         width: 100% !important;
         height: clamp(12.5rem, 12.5vw + 10rem, 25rem) !important;
@@ -270,11 +287,17 @@ input[type='number']::-webkit-outer-spin-button {
         align-items: center;
         justify-content: center;
         padding: clamp(0.313rem, 0.938vw + 0.125rem, 1.25rem);
+
         .scientificResourcesCardImg {
             height: clamp(9.375rem, 6.25vw + 8.125rem, 15.625rem);
             border-radius: 12.5px;
+
+            &:hover {
+                cursor: pointer;
+            }
         }
     }
+
     .scientificResourcesCardHeard {
         position: absolute;
         right: clamp(0.625rem, 0.625vw + 0.5rem, 1.25rem);
@@ -282,12 +305,20 @@ input[type='number']::-webkit-outer-spin-button {
         padding: clamp(0.25rem, 0.375vw + 0.175rem, 0.625rem);
         background: #fff;
         border-radius: 100%;
+
         img {
             @media (max-width: 450px) {
                 width: 15px;
             }
         }
+
+        &:hover {
+            cursor: pointer;
+            transform: scale(1.1);
+            transition: transform 0.3s ease;
+        }
     }
+
     .scientificResourcesCardBody {
         display: flex;
         justify-content: space-between;
@@ -295,6 +326,7 @@ input[type='number']::-webkit-outer-spin-button {
         flex-grow: 1;
         padding: clamp(0.313rem, 0.938vw + 0.125rem, 1.25rem);
         gap: clamp(0.313rem, 0.938vw + 0.125rem, 1.25rem);
+
         .scientificResourcesCardTitle {
             color: #000;
             font-family: 'Poppins';
@@ -311,11 +343,19 @@ input[type='number']::-webkit-outer-spin-button {
             -webkit-box-orient: vertical;
             overflow: hidden;
             text-overflow: ellipsis;
+            transition: all 0.3s ease;
+
+            &:hover {
+                color: #00a44f;
+                cursor: pointer;
+            }
         }
+
         .scientificResourcesCardPriceBox {
             display: flex;
             justify-content: space-between;
             align-items: center;
+
             .scientificResourcesCardPrice {
                 p {
                     color: #000;
@@ -326,6 +366,7 @@ input[type='number']::-webkit-outer-spin-button {
                     margin: 0;
                     padding: 0;
                 }
+
                 .scientificResourcesCardPrice_discount_price {
                     font-size: clamp(1rem, 2.5vw, 1.8rem);
                     margin: 0;
@@ -333,33 +374,70 @@ input[type='number']::-webkit-outer-spin-button {
                 }
             }
         }
+
+        .scientificResourcesCardOptions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 10px;
+
+            .scientificResourcesCardFileType {
+                color: white;
+                padding: 2px 6px;
+                border-radius: 4px;
+            }
+
+            p {
+                margin: 0;
+                display: flex;
+                align-items: center;
+                gap: 2px;
+                justify-content: center;
+                font-size: 12px;
+
+                i {
+                    color: #00a44f;
+                    font-size: 14px;
+                }
+            }
+        }
     }
 }
+
 .cart-img {
     width: clamp(2rem, 1.563vw + 0.625rem, 5rem);
 }
+
 // _____________________________scientificResources styles end____________________________
 
 // -----------------------------------------------ThreeDCategoriesFilterSecion style
 .category-btn:hover {
     background-color: #00a44f;
 }
+
 .category-btn:hover .category-btn-title {
     color: white;
 }
+
 .category-btn .category-btn-title {
     color: #312f30;
 }
+
 .sub-category-btn:hover .sub-category-btn-title {
     color: #00a44f;
 }
+
 .Models_category_btn_wrap {
     display: flex;
     justify-content: start;
     gap: 15px !important;
+
     @media screen and (max-width: 1300px) {
         gap: 10px !important;
     }
+
     .Models_category_btn {
         display: flex;
         align-items: center;
@@ -374,13 +452,16 @@ input[type='number']::-webkit-outer-spin-button {
         &:hover {
             background: #00a44f !important;
             color: #fff !important;
+
             .subcategory_btn_title {
                 color: #fff !important;
             }
         }
+
         &:active {
             background: #00a44f !important;
             color: #fff !important;
+
             .subcategory_btn_title {
                 color: #fff !important;
             }
@@ -392,15 +473,18 @@ input[type='number']::-webkit-outer-spin-button {
             font-size: 14.17px;
             line-height: 21.25px;
             letter-spacing: 0%;
+
             @media screen and (max-width: 1300px) {
                 // padding: 10px;
             }
         }
+
         .Models_category_btn_img {
             width: 26px !important;
             height: 21px !important;
             // border-radius: 0 7px 7px 0;
             background: #fff;
+
             @media screen and (max-width: 1300px) {
                 width: 55px !important;
                 height: 50px !important;
@@ -408,6 +492,7 @@ input[type='number']::-webkit-outer-spin-button {
         }
     }
 }
+
 .CategoryOpen {
     .Models_category_btn {
         display: flex;
@@ -423,13 +508,16 @@ input[type='number']::-webkit-outer-spin-button {
         &:hover {
             background: #00a44f !important;
             color: #fff !important;
+
             .subcategory_btn_title {
                 color: #fff !important;
             }
         }
+
         &:active {
             background: #00a44f !important;
             color: #fff !important;
+
             .subcategory_btn_title {
                 color: #fff !important;
             }
@@ -441,11 +529,13 @@ input[type='number']::-webkit-outer-spin-button {
             font-size: 14.17px;
             line-height: 21.25px;
             letter-spacing: 0%;
+
             // padding: 12px 14.5px;
             @media screen and (max-width: 1300px) {
                 // padding: 10px;
             }
         }
+
         .Models_category_btn_img {
             width: 45px !important;
             height: 100% !important;
@@ -453,6 +543,7 @@ input[type='number']::-webkit-outer-spin-button {
             background: #fff;
             width: 26px !important;
             height: 21px !important;
+
             @media screen and (max-width: 1300px) {
                 width: 55px !important;
                 height: 50px !important;
@@ -474,13 +565,16 @@ input[type='number']::-webkit-outer-spin-button {
     &:hover {
         background: #00a44f !important;
         color: #fff !important;
+
         .subcategory_btn_title {
             color: #fff !important;
         }
     }
+
     &:active {
         background: #00a44f !important;
         color: #fff !important;
+
         .subcategory_btn_title {
             color: #fff !important;
         }
@@ -494,6 +588,7 @@ input[type='number']::-webkit-outer-spin-button {
         letter-spacing: 0%;
         // padding: 14.5px;
     }
+
     .Models_category_btn_img {
         width: 64px !important;
         height: 50px !important;
@@ -524,10 +619,12 @@ input[type='number']::-webkit-outer-spin-button {
         padding: 0;
         margin: 0;
     }
+
     &:active {
         background: rgba(0, 164, 79, 0.8);
         border: 1px solid rgba(0, 164, 79, 1);
     }
+
     @media screen and (max-width: 1300px) {
         padding: 12.5px 20.83px;
         display: flex;
@@ -539,13 +636,12 @@ input[type='number']::-webkit-outer-spin-button {
         border-radius: 8.33px;
     }
 }
+
 // ________________________________ProductsByModelsAndDesignCategory styles____________________________
 .modelAndDesignProduct {
     display: grid;
-    grid-template-columns: repeat(
-        auto-fit,
-        minmax(clamp(10rem, 27.5vw + 4.5rem, 37.5rem), 1fr)
-    );
+    grid-template-columns: repeat(auto-fit,
+            minmax(clamp(10rem, 27.5vw + 4.5rem, 37.5rem), 1fr));
     gap: clamp(0.625rem, 1.875vw + 0.25rem, 2.5rem);
     row-gap: clamp(0.625rem, 1.875vw + 0.25rem, 2.5rem);
     padding: 0 !important;
@@ -556,6 +652,7 @@ input[type='number']::-webkit-outer-spin-button {
     max-width: 500px;
     border-radius: 9px !important;
     box-shadow: 0px 0px 5.906px 0px rgba(0, 0, 0, 0.2);
+
     &:hover {
         transition: ease-in-out;
         box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.1);
@@ -565,6 +662,7 @@ input[type='number']::-webkit-outer-spin-button {
         position: relative;
         background: #fff;
         border-radius: 6.76px 6.76px 0 0;
+
         img {
             height: clamp(6.25rem, 18.75vw + 2.5rem, 25rem);
             object-fit: contain;
@@ -572,6 +670,7 @@ input[type='number']::-webkit-outer-spin-button {
             transition: all 0.3s ease;
             border-radius: 6.76px 6.76px 0 0;
         }
+
         .modelAndDesignCardTopSide {
             position: absolute;
             top: 6.55px;
@@ -580,9 +679,11 @@ input[type='number']::-webkit-outer-spin-button {
             display: flex;
             justify-content: space-between;
             align-items: start;
+
             @media screen and (max-width: 800px) {
                 padding: 0 8px;
             }
+
             .modelAndDesignCardPriceBox {
                 white-space: 'nowrap';
                 display: flex;
@@ -603,11 +704,13 @@ input[type='number']::-webkit-outer-spin-button {
                     line-height: 8px;
                 }
             }
+
             .aboutModel {
                 .aboutModelItem {
                     @media screen and (max-width: 550px) {
                         display: none;
                     }
+
                     border-radius: 28px;
                     background: #fff;
                     padding: 3px 8px;
@@ -618,12 +721,14 @@ input[type='number']::-webkit-outer-spin-button {
                     line-height: 11.25px;
                     letter-spacing: 2%;
                 }
+
                 @media screen and (max-width: 600px) {
                     display: none;
                 }
             }
         }
     }
+
     .modelAndDesignCardBody {
         display: flex;
         justify-content: space-between;
@@ -635,6 +740,7 @@ input[type='number']::-webkit-outer-spin-button {
         @media screen and (max-width: 550px) {
             padding: 4.5px 6.5px;
         }
+
         .modelAndDesignCardTitle {
             font-family: 'Poppins';
             font-weight: 500;
@@ -643,19 +749,52 @@ input[type='number']::-webkit-outer-spin-button {
             letter-spacing: 2%;
             cursor: pointer;
         }
+
         .modelAndDesignCardBtn {
             display: flex;
             align-items: center;
             gap: 9px;
         }
+
         a {
             img {
                 width: clamp(0.75rem, 1.5vw + 0.45rem, 2.25rem);
                 height: clamp(0.75rem, 1.5vw + 0.45rem, 2.25rem);
             }
         }
+
+    }
+    .modelsCardOptions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 5px;
+        margin-bottom: 10px;
+        padding: 20px;
+
+        .scientificResourcesCardFileType {
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        p {
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            justify-content: center;
+            font-size: 12px;
+
+            i {
+                color: #00a44f;
+                font-size: 14px;
+            }
+        }
     }
 }
+
 @media screen and (max-width: 550px) {
     .aboutModel {
         display: none;
@@ -678,10 +817,8 @@ input[type='number']::-webkit-outer-spin-button {
     padding: 0 !important;
     align-items: stretch;
     justify-content: start;
-    grid-template-columns: repeat(
-        auto-fit,
-        minmax(clamp(14rem, 21.875vw + 5rem, 33rem), max-content)
-    );
+    grid-template-columns: repeat(auto-fit,
+            minmax(clamp(14rem, 21.875vw + 5rem, 33rem), max-content));
 }
 
 .designDevelopmentCard {
@@ -701,6 +838,7 @@ input[type='number']::-webkit-outer-spin-button {
     &:hover {
         box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
     }
+
     .designDevelopmentCardImgBox {
         object-fit: contain;
         object-position: center;
@@ -712,6 +850,7 @@ input[type='number']::-webkit-outer-spin-button {
 
         height: 100%;
         width: 100%;
+
         .designDevelopmentCardImg {
             width: auto;
             height: clamp(6.25rem, 21.875vw + 1.875rem, 26.8rem);
@@ -719,6 +858,7 @@ input[type='number']::-webkit-outer-spin-button {
             border-radius: 0;
             border-radius: 11px;
         }
+
         .designDevelopmentCardheard {
             position: absolute;
             top: clamp(0.313rem, 0.625vw + 0.188rem, 1rem);
@@ -739,6 +879,7 @@ input[type='number']::-webkit-outer-spin-button {
             }
         }
     }
+
     .designDevelopmentCardBody {
         background: #fff;
         border-radius: 0 0 10px 10px;
@@ -749,6 +890,7 @@ input[type='number']::-webkit-outer-spin-button {
         width: 100%;
         padding: 5px;
         gap: 10px;
+
         .designDevelopmentCardTitle {
             font-family: 'Poppins';
             font-weight: 400;
@@ -776,6 +918,7 @@ input[type='number']::-webkit-outer-spin-button {
             align-items: center;
             padding: 0;
             margin: 0;
+
             .designDevelopmentCardPrice {
                 font-family: 'Poppins';
                 font-weight: 600;
@@ -784,16 +927,19 @@ input[type='number']::-webkit-outer-spin-button {
                 padding: 0;
                 margin: 0;
             }
+
             .buyIcon {
                 padding: 0;
                 margin: 0;
+
                 img {
-                    @media screen and (max-width: 650px) {
-                    }
+                    @media screen and (max-width: 650px) {}
+
                     @media screen and (max-width: 500px) {
                         width: 25px !important;
                         height: 25px !important;
                     }
+
                     @media screen and (max-width: 350px) {
                         width: 20px !important;
                         height: 20px !important;
@@ -820,24 +966,29 @@ input[type='number']::-webkit-outer-spin-button {
         grid-template-columns: repeat(4, 320px);
         justify-content: center;
     }
+
     @media (max-width: 1300px) {
         // LG: 3 ta ustun
         grid-template-columns: repeat(4, 290px);
         justify-content: center;
     }
+
     @media (max-width: 1200px) {
         // LG: 3 ta ustun
         grid-template-columns: repeat(4, 1fr);
         justify-content: center;
     }
+
     @media (max-width: 992px) {
         // MD: 2 ta ustun
         grid-template-columns: repeat(3, 1fr);
     }
+
     @media (max-width: 768px) {
         // SM: 2 ta ustun
         grid-template-columns: repeat(2, 1fr);
     }
+
     @media (max-width: 576px) {
         // XS: 2 ta ustun
         grid-template-columns: repeat(2, 1fr);
@@ -850,6 +1001,7 @@ input[type='number']::-webkit-outer-spin-button {
     height: 100%;
     flex-direction: column;
     border-radius: 11px;
+
     .videoLessonsCardImgBox {
         display: flex;
         justify-content: center;
@@ -862,22 +1014,28 @@ input[type='number']::-webkit-outer-spin-button {
             object-fit: contain;
             object-position: center;
             border-radius: 10px 10px 0 0;
+
             @media screen and (max-width: 700px) {
                 height: 180px;
             }
+
             @media screen and (max-width: 600px) {
                 height: 150px;
             }
+
             @media screen and (max-width: 500px) {
                 height: 125px;
             }
+
             @media screen and (max-width: 400px) {
                 height: 100px;
             }
+
             @media screen and (max-width: 300px) {
                 height: 100px;
             }
         }
+
         .videoLessonsCardheard {
             position: absolute;
             top: 14px;
@@ -900,9 +1058,11 @@ input[type='number']::-webkit-outer-spin-button {
         @media screen and (max-width: 650px) {
             padding: 8px 14px 12px 14px;
         }
+
         @media screen and (max-width: 500px) {
             padding: 6px 10px 11px 10px;
         }
+
         @media screen and (max-width: 350px) {
             padding: 5px;
         }
@@ -913,16 +1073,19 @@ input[type='number']::-webkit-outer-spin-button {
             font-size: 15px;
             line-height: 22.5px;
             letter-spacing: 2%;
+
             @media screen and (max-width: 650px) {
                 font-weight: 400;
                 font-size: 13px;
                 line-height: 18px;
             }
+
             @media screen and (max-width: 500px) {
                 font-weight: 400;
                 font-size: 12px;
                 line-height: 15px;
             }
+
             @media screen and (max-width: 350px) {
                 font-weight: 300;
                 font-size: 8px;
@@ -935,15 +1098,19 @@ input[type='number']::-webkit-outer-spin-button {
             justify-content: space-between;
             align-items: center;
             margin-top: 18px;
+
             @media screen and (max-width: 650px) {
                 margin-top: 12px;
             }
+
             @media screen and (max-width: 500px) {
                 margin-top: 8px;
             }
+
             @media screen and (max-width: 350px) {
                 margin-top: 3px;
             }
+
             .videoLessonsCardPrice {
                 font-family: 'Poppins' !important;
                 font-weight: 600 !important;
@@ -957,25 +1124,29 @@ input[type='number']::-webkit-outer-spin-button {
                     font-size: 18px;
                     line-height: 12px;
                 }
+
                 @media screen and (max-width: 500px) {
                     font-weight: 600;
                     font-size: 12px;
                     line-height: 12px;
                 }
+
                 @media screen and (max-width: 350px) {
                     font-weight: 400;
                     font-size: 10px;
                     line-height: 12px;
                 }
             }
+
             .buyIcon {
                 img {
-                    @media screen and (max-width: 650px) {
-                    }
+                    @media screen and (max-width: 650px) {}
+
                     @media screen and (max-width: 500px) {
                         width: 25px !important;
                         height: 25px !important;
                     }
+
                     @media screen and (max-width: 350px) {
                         width: 20px !important;
                         height: 20px !important;
@@ -984,6 +1155,7 @@ input[type='number']::-webkit-outer-spin-button {
             }
         }
     }
+
     &:hover {
         transition: ease-in-out;
         box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.1);
@@ -1030,6 +1202,7 @@ input[type='number']::-webkit-outer-spin-button {
 
 .DevelopmentAndItFilterSecion {
     margin-top: 30px;
+
     .DevelopmentAndItFilterSeciontitle {
         color: #312f30;
         font-family: 'Poppins';
@@ -1040,10 +1213,12 @@ input[type='number']::-webkit-outer-spin-button {
         letter-spacing: 0.3px;
         margin-bottom: 20px;
     }
+
     .DevelopmentAndItFilterSecionWrap {
         display: flex;
         justify-content: space-between;
         align-items: center;
+
         @media screen and (max-width: 1270px) {
             flex-direction: column;
             align-items: start;
@@ -1062,27 +1237,33 @@ input[type='number']::-webkit-outer-spin-button {
             padding: 0;
             margin: 0;
         }
+
         .DevelopmentAndItFilterSecionForm {
             display: flex;
             justify-content: flex-end;
             align-items: center;
             gap: 20px;
+
             @media screen and (max-width: 1270px) {
                 display: grid;
                 grid-template-columns: repeat(6, 1fr);
                 width: 100%;
             }
+
             @media screen and (max-width: 1100px) {
                 display: grid;
                 grid-template-columns: repeat(3, 1fr);
                 width: 100%;
             }
+
             @media screen and (max-width: 600px) {
                 grid-template-columns: repeat(2, 1fr);
             }
+
             @media screen and (max-width: 400px) {
                 grid-template-columns: repeat(1, 1fr);
             }
+
             .DevelopmentAndItFilterSecionFormInputBox {
                 border-radius: 4px;
                 background: #fff;
@@ -1097,6 +1278,7 @@ input[type='number']::-webkit-outer-spin-button {
                     outline: none;
                     background: none;
                     width: 70%;
+
                     &::placeholder {
                         color: #7b7b7b;
                         font-family: 'Poppins';
@@ -1105,11 +1287,13 @@ input[type='number']::-webkit-outer-spin-button {
                         font-weight: 500;
                         line-height: normal;
                     }
+
                     svg {
                         cursor: pointer;
                     }
                 }
             }
+
             .DevelopmentAndItFilterSecionFormCategegory {
                 border-radius: 4.404px;
                 background: #fff;
@@ -1117,6 +1301,7 @@ input[type='number']::-webkit-outer-spin-button {
                 padding: 12px 13px;
                 border: none;
             }
+
             .DevelopmentAndItFilterSecionFormSelect {
                 border-radius: 4.404px;
                 background: #fff;
@@ -1134,19 +1319,24 @@ input[type='number']::-webkit-outer-spin-button {
     gap: 14px;
     row-gap: 22px;
     margin-top: 31px;
+
     @media screen and (max-width: 1350px) {
         grid-template-columns: repeat(5, 1fr);
     }
+
     @media screen and (max-width: 1250px) {
         grid-template-columns: repeat(4, 1fr);
     }
+
     @media screen and (max-width: 1000px) {
         grid-template-columns: repeat(3, 1fr);
     }
+
     @media screen and (max-width: 630px) {
         grid-template-columns: repeat(2, 1fr);
         padding: 0;
     }
+
     @media screen and (max-width: 280px) {
         grid-template-columns: repeat(1, 1fr);
         padding: 0;
@@ -1155,24 +1345,31 @@ input[type='number']::-webkit-outer-spin-button {
     .DevelopmentAndItCategorySkeleton {
         width: 100% !important;
         height: 400px !important;
+
         @media screen and (max-width: 1000px) {
             height: 350px !important;
         }
+
         @media screen and (max-width: 800px) {
             height: 320px !important;
         }
+
         @media screen and (max-width: 700px) {
             height: 300px !important;
         }
+
         @media screen and (max-width: 600px) {
             height: 280px !important;
         }
+
         @media screen and (max-width: 500px) {
             height: 250px !important;
         }
+
         @media screen and (max-width: 400px) {
             height: 200px !important;
         }
+
         @media screen and (max-width: 280px) {
             height: 250px !important;
         }
@@ -1185,6 +1382,7 @@ input[type='number']::-webkit-outer-spin-button {
     justify-content: center;
     cursor: pointer;
     margin-top: 45px;
+
     .showMore {
         color: #312f30;
         font-family: 'Poppins';
@@ -1197,6 +1395,7 @@ input[type='number']::-webkit-outer-spin-button {
         padding: 13px 81px;
         border-radius: 5px;
         background: #e0e2e7;
+
         &:hover {
             background: #b7b7b7;
         }
@@ -1208,8 +1407,9 @@ input[type='number']::-webkit-outer-spin-button {
     justify-content: space-between;
     align-items: center;
     flex-direction: column;
-    .DevelopmentAndItCategory_DontWorkImg {
-    }
+
+    .DevelopmentAndItCategory_DontWorkImg {}
+
     .DevelopmentAndItCategory_DontWorkTitle {
         color: #000;
         font-family: 'Poppins';
@@ -1220,19 +1420,23 @@ input[type='number']::-webkit-outer-spin-button {
         letter-spacing: 0.25px;
         margin: 23px 0 74px;
         text-align: center;
+
         @media screen and (max-width: 550px) {
             margin: 20px;
             font-size: 20px;
         }
+
         @media screen and (max-width: 400px) {
             margin: 12px;
             font-size: 20px;
         }
+
         @media screen and (max-width: 300px) {
             margin: 10px;
             font-size: 12px;
         }
     }
+
     .DevelopmentAndItCategory_DontWorkDescription {
         color: #000;
         text-align: center;
@@ -1243,19 +1447,23 @@ input[type='number']::-webkit-outer-spin-button {
         line-height: normal;
         letter-spacing: 0.15px;
         width: 50%;
+
         @media screen and (max-width: 550px) {
             font-size: 12px;
             width: 80%;
         }
+
         @media screen and (max-width: 400px) {
             font-size: 10px;
             width: 80%;
         }
+
         @media screen and (max-width: 300px) {
             font-size: 8px;
             width: 80%;
         }
     }
+
     .DevelopmentAndItCategory_DontWorkBtn {
         color: #fff;
         font-family: 'Poppins';
@@ -1269,10 +1477,12 @@ input[type='number']::-webkit-outer-spin-button {
         padding: 10px 20px;
         background: #00a44f;
         cursor: pointer;
+
         &:hover {
             background: #00d265;
             color: #fff;
         }
+
         @media screen and (max-width: 550px) {
             font-size: 10px;
             padding: 5px 10px;
@@ -1290,41 +1500,52 @@ input[type='number']::-webkit-outer-spin-button {
     flex-direction: column;
     gap: 16px;
     height: 100%;
+
     @media screen and (max-width: 800px) {
         gap: 10px;
     }
+
     @media screen and (max-width: 600px) {
         padding: 10px;
     }
+
     @media screen and (max-width: 400px) {
         padding: 5px;
         gap: 5px;
     }
+
     &:hover {
         box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
     }
+
     .DevelopmentAndItCardImgBox {
         display: flex;
         align-items: center;
         justify-content: center;
         position: relative;
+
         .DevelopmentAndItCardImg {
             // width: 100%;
             height: 221.2px;
             border-radius: 6.011px;
+
             @media screen and (max-width: 800px) {
                 height: 200px;
             }
+
             @media screen and (max-width: 600px) {
                 height: 180px;
             }
+
             @media screen and (max-width: 600px) {
                 height: 150px;
             }
+
             @media screen and (max-width: 400px) {
                 height: 120px;
             }
         }
+
         .DevelopmentAndItCardheard {
             position: absolute;
             top: 8.5px;
@@ -1332,14 +1553,17 @@ input[type='number']::-webkit-outer-spin-button {
             padding: 7.5px;
             background: #fff;
             border-radius: 100%;
+
             @media screen and (max-width: 600px) {
                 padding: 5.5px;
+
                 img {
                     height: 15px;
                 }
             }
         }
     }
+
     .DevelopmentAndItCardBody {
         display: flex;
         align-items: stretch;
@@ -1347,31 +1571,38 @@ input[type='number']::-webkit-outer-spin-button {
         flex-direction: column;
         flex-grow: 1;
         gap: 10px;
+
         @media screen and (max-width: 400px) {
             gap: 5px;
         }
+
         .DevelopmentAndItCardSeller {
             display: flex;
             align-items: center;
             gap: 5px;
             cursor: pointer;
+
             .DevelopmentAndItCardSellerAvatar {
                 width: 35px;
                 height: 35px;
                 border-radius: 100%;
+
                 @media screen and (max-width: 800px) {
                     width: 30px;
                     height: 30px;
                 }
+
                 @media screen and (max-width: 600px) {
                     width: 25px;
                     height: 25px;
                 }
+
                 @media screen and (max-width: 400px) {
                     width: 18px;
                     height: 18px;
                 }
             }
+
             .DevelopmentAndItCardSellerName {
                 color: #000;
                 font-family: 'Poppins';
@@ -1381,32 +1612,40 @@ input[type='number']::-webkit-outer-spin-button {
                 line-height: normal;
                 letter-spacing: 0.171px;
                 margin: 0 !important;
+
                 @media screen and (max-width: 800px) {
                     font-size: 15px;
                 }
+
                 @media screen and (max-width: 600px) {
                     font-size: 12px;
                 }
+
                 @media screen and (max-width: 400px) {
                     font-size: 10px;
                 }
             }
+
             .DevelopmentAndItCardSellerStatus {
                 width: 20px;
                 height: 20px;
+
                 @media screen and (max-width: 800px) {
                     width: 15px;
                     height: 15px;
                 }
+
                 @media screen and (max-width: 600px) {
                     width: 12px;
                     height: 12px;
                 }
+
                 @media screen and (max-width: 600px) {
                     width: 10px;
                     height: 10px;
                 }
             }
+
             &:hover {
                 .DevelopmentAndItCardSellerName {
                     color: rgba(123, 123, 123, 1);
@@ -1422,20 +1661,25 @@ input[type='number']::-webkit-outer-spin-button {
             font-weight: 400;
             line-height: 150%;
             letter-spacing: 0.3px;
+
             @media screen and (max-width: 800px) {
                 font-size: 12px;
             }
+
             @media screen and (max-width: 600px) {
                 font-size: 10px;
             }
+
             @media screen and (max-width: 400px) {
                 font-size: 8px;
             }
+
             &:hover {
                 color: rgba(123, 123, 123, 1) !important;
                 text-decoration: underline !important;
             }
         }
+
         .DevelopmentAndItCardPriceBox {
             .DevelopmentAndItCardPrice {
                 color: #312f30;
@@ -1445,12 +1689,15 @@ input[type='number']::-webkit-outer-spin-button {
                 font-weight: 600;
                 line-height: normal;
                 letter-spacing: 0.193px;
+
                 @media screen and (max-width: 800px) {
                     font-size: 15px;
                 }
+
                 @media screen and (max-width: 600px) {
                     font-size: 13px;
                 }
+
                 @media screen and (max-width: 400px) {
                     font-size: 10px;
                 }
