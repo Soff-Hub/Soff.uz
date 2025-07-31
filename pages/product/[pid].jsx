@@ -360,7 +360,7 @@ export default function ProductDefaultPage({ defaultProducts }) {
                                             O’xshash mahsulotlar
                                         </h3>
                                         {hasLoadedSimilar ? (
-                                            productComponents.length > 0 ? (
+                                            productComponents.length > 0 && (
                                                 <div className="row">
                                                     {productComponents.map((component, index) => (
                                                         <div className={`${getColClass()} mb-4`} key={index}>
@@ -368,11 +368,7 @@ export default function ProductDefaultPage({ defaultProducts }) {
                                                         </div>
                                                     ))}
                                                 </div>
-                                            ) : (
-                                                <div className="text-center text-muted py-5" style={{ fontSize: 18 }}>
-                                                    O‘xshash mahsulotlar topilmadi.
-                                                </div>
-                                            )
+                                            ) 
                                         ) : (
                                             <div className="row g-5 py-3 justify-content-center">
                                                 {Array.from({ length: 12 }).map((_, index) => (
