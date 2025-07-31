@@ -96,7 +96,7 @@ const CreditCard2 = ({ document, type }) => {
             cardDate,
             `${type || 'document'}`,
             user?.access,
-            affiliate_code
+            affiliate_code 
         );
         if (ItemsData?.status === 201) {
             setMessage(true);
