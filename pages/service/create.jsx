@@ -1,11 +1,14 @@
 import React from 'react'
+import PageContainer from '~/components/layouts/PageContainer'
+import CreateServiceForm from '~/components/services/create/CreateServiceForm'
 
 const Create = () => {
   return (
-    <div className='add_sevice_page'>
-        <h1>Yangi xizmat qo'shish</h1>
-        
-    </div>
+    <PageContainer>
+      <div className='container my-5'>
+        <CreateServiceForm/>
+      </div>
+    </PageContainer>
   )
 }
 
