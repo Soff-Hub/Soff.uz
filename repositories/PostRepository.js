@@ -111,15 +111,19 @@ class PostRepository {
     }
     async postClickCardNumber(documents, provider, type, token, affiliate_code) {
         const endPoint = `seller/payment/create/`;
+        const data = {
+            documents: documents,
+            provider: provider,
+            purchase_type: type,
+        }
+
+        if (affiliate_code) {
+            data.affiliate_code = affiliate_code;
+        }
         const response = await Repository({
             url: baseUrl + endPoint,
             method: 'POST',
-            data: {
-                documents: documents,
-                provider: provider,
-                purchase_type: type,
-                affiliate_code
-            },
+            data,
             headers: {
                 Authorization: `Bearer ${token}`,
             }
@@ -134,17 +138,21 @@ class PostRepository {
     }
     async postClickCard(documents, card_number, expire_date, type, token, affiliate_code) {
         const endPoint = `seller/payment/create/`;
+        const data = {
+            documents,
+            expire_date,
+            card_number,
+            provider: 'card_data',
+            purchase_type: type,
+        }
+
+        if (affiliate_code) {
+            data.affiliate_code = affiliate_code;
+        }
         const response = await Repository({
             url: baseUrl + endPoint,
             method: 'POST',
-            data: {
-                documents: documents,
-                expire_date: expire_date,
-                card_number: card_number,
-                provider: 'card_data',
-                purchase_type: type,
-                affiliate_code
-            },
+            data,
             headers: {
                 Authorization: `Bearer ${token}`,
             }
