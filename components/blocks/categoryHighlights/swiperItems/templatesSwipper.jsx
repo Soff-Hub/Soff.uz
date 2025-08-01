@@ -35,7 +35,7 @@ export default function TemplatesSwipper() {
                             Tayyor shablonlar
                         </a>
                     </div>
-                    <div className='row'>
+                    <div className='row px-3'>
                         {product ? (
                             product.slice(0, 6).map((item, index) => (
                                 <div className='col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2 p-1 mb-4'>
