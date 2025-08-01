@@ -9,8 +9,8 @@ const SecondStep = ({ setDescription }) => {
         setEditorLoaded(true)
     }, [])
     return (
-        <div className='service_card'>
-            <div className='col-12 col-md-6'>
+        <div className='service_card row'>
+            <div className='col-12 col-md-8'>
                 <div className='service_title'>
                     <h2>2</h2>
                     <h3>Tavsif</h3>

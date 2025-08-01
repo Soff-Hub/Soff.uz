@@ -1,12 +1,15 @@
 import { Form, Input, Select } from 'antd';
 import React from 'react';
 import ImageCropper from '../fields/CropImage';
+import { useRouter } from 'next/router';
 
 
-const FirstStep = () => {
+const FirstStep = ({childCategory, form}) => {
+    const router = useRouter();
+    const { category } = router.query;
     return (
         <div className='service_card row'>
-            <div className="col-12 col-md-6">
+            <div className="col-12 col-md-8">
                 <div className='service_title'>
                     <h2>1</h2>
                     <h3>Asosiy ma'lumotlar</h3>
@@ -20,31 +23,49 @@ const FirstStep = () => {
                         <Input placeholder='Men Logotip ishlab chiqaman' />
                     </Form.Item>
 
-                    <div className='row'>
+
+                    <Form.Item
+                        label="Kategoriya"
+                        name="category"
+                        rules={[{ required: true, message: 'Kategoriya tanlang!' }]}
+                    >
+                        <Select
+                            options={[
+                                { value: '1', label: 'Ilmiy va Akademik Xizmatlar' },
+                                { value: '3', label: 'Grafik Dizayn va Shablonlar' },
+                            ]}
+                            onChange={(val) => {
+                                router.push({
+                                    pathname: router.pathname,
+                                    query: { ...router.query, category: val }
+                                })
+                            }}
+                        />
+                    </Form.Item>
+
+                    {category && childCategory &&
                         <Form.Item
-                            label="Kategoriya"
-                            className='col-6'
-                            name="category"
-                            rules={[{ required: true, message: 'Kategoriya tanlang!' }]}
-                        >
-                            <Select />
-                        </Form.Item>
-                        <Form.Item
-                            className='col-6'
                             name="subCategory"
                             rules={[{ required: true, message: 'Sub Kategoriyani tanlang!' }]}
                             label="Sub Kategoriya"
                         >
-                            <Select />
+                            <Select 
+                                options={childCategory?.map((item) => ({
+                                value: item.id,
+                                label: item.title
+                            }))}
+                            />
                         </Form.Item>
-                    </div>
+                    }
 
-                    <Form.Item 
-                        name="poster" 
+
+                    <Form.Item
+                        name="poster"
                         label="Rasmni tanlang"
                         rules={[{ required: true, message: 'Rasm yuklang!' }]}
+                        className='w-100'
                     >
-                        <ImageCropper/>
+                        <ImageCropper form={form} />
                     </Form.Item>
                 </div>
             </div>

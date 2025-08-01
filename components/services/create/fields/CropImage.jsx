@@ -5,7 +5,7 @@ import { UploadOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import 'react-easy-crop/react-easy-crop.css';
 
-const ImageCropper = () => {
+const ImageCropper = ({form}) => {
     const [image, setImage] = useState(null);
     const [crop, setCrop] = useState({ x: 0, y: 0 });
     const [zoom, setZoom] = useState(1);
@@ -70,19 +70,18 @@ const ImageCropper = () => {
             // Backendga yuborish
             const formData = new FormData();
             formData.append('file', croppedImageBlob, 'cropped-image.jpg');
-
+            
             // Backend API endpoint'ini o'zingizga moslashtiring
-            const response = await axios.post('YOUR_BACKEND_API_ENDPOINT', formData, {
+            const response = await axios.post('http://176.96.241.219:8005/api/v1/upload/', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
             });
 
             message.success('Rasm muvaffaqiyatli yuborildi!');
-            console.log('Server javobi:', response.data);
+            form.setFieldsValue({ poster: response.data.url });
         } catch (error) {
             message.error('Xatolik yuz berdi!');
-            console.error('Xatolik:', error);
         }
     };
 
@@ -119,8 +118,8 @@ const ImageCropper = () => {
 
     return (
         <div style={{ margin: '0 auto' }}>
-            <Upload {...uploadProps}>
-                <Button icon={<UploadOutlined />} onClick={handleNewUpload}>
+            <Upload {...uploadProps} style={{ width: '100%', height: "45px" }}>
+                <Button style={{width: '100%',  height: "45px"}} icon={<UploadOutlined />} onClick={handleNewUpload}>
                     {croppedImage ? 'Yangi rasm tanlash' : 'Rasm tanlash'}
                 </Button>
             </Upload>
