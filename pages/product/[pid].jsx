@@ -192,8 +192,8 @@ export default function ProductDefaultPage({ defaultProducts }) {
 
     const getColClass = () => {
         return contentType === '3d'
-            ? 'col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3' // 3 tadan
-            : 'col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2'; // 6 tadan
+            ? 'col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3 p-2' // 3 tadan
+            : 'col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2 p-2' ; // 6 tadan
     };
 
 
@@ -423,7 +423,7 @@ export default function ProductDefaultPage({ defaultProducts }) {
                                         lastAdded && (
                                             <div className='row'>
                                                 {lastAdded?.results?.map((p, i) => (
-                                                    <div className={contentType !== "3d" ? 'col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-4' : 'col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3 mb-4'}>
+                                                    <div className={contentType !== "3d" ? 'col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-4 p-2' : 'p-2 col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3 mb-4'}>
                                                         {contentType !== "3d" ? <RedesignProduct product={p} key={i} /> : <ModelAndDesignProduct product={p} key={i} />}
                                                     </div>
                                                 ))}
