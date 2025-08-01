@@ -38,7 +38,7 @@ export default function TemplatesSwipper() {
                     <div className='row'>
                         {product ? (
                             product.slice(0, 6).map((item, index) => (
-                                <div className='col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-4'>
+                                <div className='col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2 p-1 mb-4'>
                                     <RedesignProduct
                                         product={item}
                                         key={index}

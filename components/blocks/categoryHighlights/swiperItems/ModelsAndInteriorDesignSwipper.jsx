@@ -39,7 +39,7 @@ export default function ModelsAndInteriorDesignSwipper () {
                     <div className='row'>
                         {product ? (
                             product?.slice(0, 4).map((item, index) => (
-                                    <div className='col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3 mb-4'>
+                                    <div className='col-6 col-sm-6 col-md-3 col-lg-3  col-xl-3 mb-4'>
                                         <ModelAndDesignProduct
                                             product={item}
                                             key={index}

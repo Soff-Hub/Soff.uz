@@ -21,7 +21,6 @@ export default function ProductCategoryScreen ({
     search,
     productsUrl
 }) {
-    console.log("productsData", productsData, search, productsUrl)
     const router = useRouter();
 
     const handlePageChange = newPage => {

@@ -11,7 +11,6 @@ import { fileColors } from '~/components/details-components/details-actions/file
 const ModelAndDesignProduct = ({ product }) => {
     const [countShow, setCountShow] = useState(false);
     const { thumbnailImage, title } = useProduct();
-    console.log('ModelAndDesignProduct', product);
     function handleAddItemToWishlist(e) {
         e.preventDefault();
         addSavedItem(product.id);
