@@ -9,21 +9,29 @@ import FifthStep from './formComponents/FifthStep'
 const CreateServiceForm = ({ childCategory }) => {
     const [current, setCurrent] = useState(1)
     const [description, setDescription] = useState('')
+    const [requirements, setRequirements] = useState('')
     const [faqs, setFaqs] = useState([]);
     const [form] = Form.useForm()
 
     const handleNext = async () => {
         try {
-            await form.validateFields();
+            // await form.validateFields();
             if (current < steps.length) {
-                setCurrent((prev) => prev + 1);
+                setCurrent((prev) => prev + 5);
             } else {
                 const formData = new FormData();
                 const values = form.getFieldsValue();
-                let obj = { ...values, description };
+                let obj = { ...values, description, faqs };
 
                 for (const [key, value] of Object.entries(obj)) {
-                    formData.append(key, value);
+                    if (key === "faqs" || key === "packages") {
+                        formData.append(key, JSON.stringify(value));
+                    } else {
+                        formData.append(key, value);
+                    }
+                }
+                for (let pair of formData.entries()) {
+                    console.log(`${pair[0]}: ${pair[1]}`);
                 }
                 console.log('Form Data:', Object.fromEntries(formData.entries()));
                 message.success('Forma muvaffaqiyatli yuborildi!');
@@ -39,7 +47,7 @@ const CreateServiceForm = ({ childCategory }) => {
         },
         {
             id: 2,
-            content: <SecondStep setDescription={setDescription} />
+            content: <SecondStep setRequirements={setRequirements} setDescription={setDescription} />
         },
         {
             id: 3,
@@ -55,7 +63,7 @@ const CreateServiceForm = ({ childCategory }) => {
         }
     ]
 
-    const newSteps = [
+    const nextSteps = [
         {
             id: 2,
             title: 'Tavsif',
@@ -66,7 +74,7 @@ const CreateServiceForm = ({ childCategory }) => {
         },
         {
             id: 4,
-            title: 'Qo‘shimcha Fayllar',
+            title: 'Portfolio',
         },
         {
             id: 5,
@@ -84,13 +92,13 @@ const CreateServiceForm = ({ childCategory }) => {
                 ))}
             </div>
             <div className='service_form_buttons'>
-                <button className='service_form_next_btn' onClick={handleNext}>Next</button>
+                <button className='service_form_next_btn' onClick={handleNext}>Keyingisi</button>
             </div>
             <div style={{ marginTop: '20px' }}>
-                {newSteps.map((step) => (
+                {nextSteps.slice(current - 1, 4).map((step) => (
                     <div key={step.id} className='next_service_card'>
                         <div className='col-12 col-md-8'>
-                            <div className='next_steps_title'>
+                            <div className='next_steps_title'>  
                                 <h2>{step.id}</h2>
                                 <h3>{step.title}</h3>
                             </div>

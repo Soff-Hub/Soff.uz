@@ -1,0 +1,20 @@
+.order_name_link {
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+        color: #00a44f;
+    }
+}
+
+
+.order_detail_main{
+    .order_pay_card{
+        display: flex;
+        align-items: center;
+        background: #fff;
+        padding: 16px;
+        border-radius: 12px;
+        border: solid 1px #00a44f;
+    }   
+}

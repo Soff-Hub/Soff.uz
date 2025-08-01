@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import Editor from '../fields/Editor';
 import { UploadOutlined } from '@ant-design/icons';
 
-const SecondStep = ({ setDescription }) => {
+const SecondStep = ({ setDescription, setRequirements }) => {
     const [editorLoaded, setEditorLoaded] = useState(false)
     useEffect(() => {
         setEditorLoaded(true)
@@ -36,22 +36,45 @@ const SecondStep = ({ setDescription }) => {
                             />
                         </div>
                     </div>
+                    <div className='col-12 p-0'>
+                        <div className="d-flex p-0">
+                            <p>Xizmat talablari: </p>{' '}
+                            <Tooltip title="Xizmat talablari mijoz sizdan nimani kutishini tushunishi uchun yoziladi. Aniq, qisqa va tushunarli qilib yozing — masalan, qanday fayllar kerak, formatlari, o‘lchamlar yoki boshqa talablar. Bu noaniqliklarning oldini oladi.">
+                                <i
+                                    style={{ cursor: 'pointer' }}
+                                    className="fa-regular fa-circle-question px-4 mt-2"></i>
+                            </Tooltip>
+                        </div>
+                        <div className="p-0 rounded-3 mb-3">
+                            <Editor
+                                name="description"
+                                onChange={(value) => {
+                                    setRequirements(value)
+                                }}
+                                editorLoaded={editorLoaded}
+                                placeholder={"Xizmat talablarini yozing..."}
+                            />
+                        </div>
+                    </div>
                     <Form.Item
-                        label='Xizmat talablari'
-                        name='requirements'
-                        rules={[{ required: true, message: 'Xizmat talablari kiriting!' }]}
-                    >
-                        <Input.TextArea rows={5} />
-                    </Form.Item>
-                    <Form.Item
-                        label='Qo’shimcha Fayllar'
-                        name='file'
+                        label={
+                            <span>
+                                Qo‘shimcha Fayllar:{' '}
+                                <Tooltip title="Agar mijozlarga yordam beradigan, loyihangizni yaxshiroq tushunishga yordam beradigan qo‘shimcha fayllar (masalan, eskizlar, misollar, texnik hujjatlar) bo‘lsa, shu yerga yuklang.">
+                                    <i
+                                        style={{ cursor: 'pointer' }}
+                                        className="fa-regular fa-circle-question px-2"
+                                    ></i>
+                                </Tooltip>
+                            </span>
+                        }
+                        name="file"
                         style={{ width: '100%' }}
                     >
                         <Upload style={{ width: '100%' }}>
                             <Button
                                 icon={<UploadOutlined />}
-                                style={{ width: '100%' }} // Button to‘liq kenglikni egallasin
+                                style={{ width: '100%' }}
                             >
                                 Fayl yuklash
                             </Button>
