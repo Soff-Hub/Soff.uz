@@ -46,7 +46,7 @@ function SellerProfile ({ product }) {
                     <i className='text-success fs-3 fa-solid fa-briefcase'></i>
                     <span>Sotilgan mahsulotlar soni:</span>
                     <span>
-                        {product.seller.total_sold_documents < 0
+                        {product.seller.total_sold_documents > 0
                             ? product.seller.total_sold_documents
                             : 0}{' '}
                         ta
