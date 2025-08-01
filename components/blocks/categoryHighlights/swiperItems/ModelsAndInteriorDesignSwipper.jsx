@@ -36,10 +36,10 @@ export default function ModelsAndInteriorDesignSwipper () {
                             3D moddellar va Interier dizaynlar
                         </a>
                     </div>
-                    <div className='row'>
+                    <div className='row px-3'>
                         {product ? (
                             product?.slice(0, 4).map((item, index) => (
-                                    <div className='col-6 col-sm-6 col-md-3 col-lg-3  col-xl-3 mb-4'>
+                                    <div className='col-12 col-sm-6 col-md-6 col-lg-3 p-2 mb-4'>
                                         <ModelAndDesignProduct
                                             product={item}
                                             key={index}
