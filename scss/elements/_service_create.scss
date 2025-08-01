@@ -1,10 +1,12 @@
-
-.create_service_form{
-    .service_title{
+.create_service_form {
+    .service_title {
         display: flex;
         align-items: center;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 12px;
         gap: 20px;
-        h2{
+
+        h2 {
             background: #00a44f;
             color: white;
             width: 50px;
@@ -12,18 +14,53 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            border-radius: 50%; 
+            border-radius: 50%;
             font-size: 24px;
             margin: 0;
             font-weight: 600;
         }
-    
-        h3{
+
+        h3 {
             font-size: 24px;
             margin: 0;
         }
     }
-    .service_card{
+
+    .next_service_card {
+        display: flex;
+        align-items: center;
+        border: 1px solid #ddd;
+        padding: 12px;
+        gap: 20px;
+        opacity: 0.5;
+    }
+
+    .next_steps_title {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+
+        h2 {
+            background: #00a44f;
+            color: white;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            font-size: 24px;
+            margin: 0;
+            font-weight: 600;
+        }
+
+        h3 {
+            font-size: 24px;
+            margin: 0;
+        }
+    }
+
+    .service_card {
         background: #fff;
         display: flex;
         justify-content: center;
@@ -31,8 +68,8 @@
         border-radius: 20px;
         margin-top: 40px;
     }
-    
-    .service_form_next_btn{
+
+    .service_form_next_btn {
         color: #fff;
         background: #00a44f;
         border: none;
@@ -43,14 +80,14 @@
         cursor: pointer;
         transition: all 0.3s ease;
     }
-    .service_form_buttons{
+
+    .service_form_buttons {
         display: flex;
         justify-content: end;
         margin-top: 20px;
     }
 
-    .service_content{
+    .service_content {
         margin-top: 20px;
     }
 }
-
