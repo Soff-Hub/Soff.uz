@@ -48,16 +48,6 @@ export default function SellerPortfolio({ pid }) {
         isError,
     } = useSellerPortfolios(pid, parentCategory, childCategory);
 
-    useEffect(() => {
-        if (openModal) {
-            document.body.classList.add('no-scroll');
-        } else {
-            document.body.classList.remove('no-scroll');
-        }
-        return () => {
-            document.body.classList.remove('no-scroll');
-        };
-    }, [openModal]);
     return (
         <div>
             {showUnavailable ? (
