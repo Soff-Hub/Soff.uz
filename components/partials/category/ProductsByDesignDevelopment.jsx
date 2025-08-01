@@ -28,7 +28,7 @@ export default function ProductsByDesignDevelopment ({
                     </>
                 )}
                 {data?.results?.map((item, index) => (
-                    <DesignDevelopmentProducts key={index} product={item} />
+                    <RedesignProduct key={index} product={item} />
                 ))}
             </div>
             {data?.results?.length == 0 && (

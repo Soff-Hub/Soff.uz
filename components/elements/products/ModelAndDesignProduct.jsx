@@ -178,7 +178,7 @@ const ModelAndDesignProduct = ({ product }) => {
                     {product?.document?.file_type &&
                         <p
                             className='scientificResourcesCardFileType'
-                            style={{ backgroundColor: fileColors[product?.file_type] || '#007DFF', }}
+                            style={{ backgroundColor: fileColors[product?.document?.file_type] || '#007DFF', }}
                         >
                             {product?.document?.file_type}
                         </p>
@@ -189,7 +189,7 @@ const ModelAndDesignProduct = ({ product }) => {
                     {product?.document?.page_count &&
                         <p><i class="fas fa-copy"></i>{product?.document?.page_count}</p>
                     }
-                    {product?.views_count &&
+                    {product?.views_count !== 0 &&
                         <p><i className='fa-solid fa-eye'></i>{product?.views_count}</p>
                     }
                 </div>
