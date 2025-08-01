@@ -21,7 +21,7 @@ export default function VideoLessons ({
 }) {
     const router = useRouter();
 
-    console.log('productsData -> ', productsData);
+
 
     // Pagination tugmalari uchun funksiya
     const handlePageChange = newPage => {

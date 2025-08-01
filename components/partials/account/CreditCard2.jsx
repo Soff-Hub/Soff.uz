@@ -24,7 +24,6 @@ const CreditCard2 = ({ document, type }) => {
     const {  affiliateId  } = useSelector(state => state.affiliate);
 
     const affiliate_code = affiliateId
-    console.log('affiliate_code', affiliate_code);
 
     const numberTyper = value => {
         SetNumberCardVal(value);

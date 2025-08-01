@@ -330,7 +330,7 @@ input[type='number']::-webkit-outer-spin-button {
         .scientificResourcesCardTitle {
             color: #000;
             font-family: 'Poppins';
-            font-size: clamp(1rem, 2.5vw, 1.8rem);
+            font-size: 16px;
             font-style: normal;
             font-weight: 400;
             line-height: normal;
@@ -395,11 +395,11 @@ input[type='number']::-webkit-outer-spin-button {
                 align-items: center;
                 gap: 2px;
                 justify-content: center;
-                font-size: 12px;
+                font-size: 15px;
 
                 i {
                     color: #00a44f;
-                    font-size: 14px;
+                    font-size: 15px;
                 }
             }
         }
@@ -785,11 +785,11 @@ input[type='number']::-webkit-outer-spin-button {
             align-items: center;
             gap: 2px;
             justify-content: center;
-            font-size: 12px;
+            font-size: 15px;
 
             i {
                 color: #00a44f;
-                font-size: 14px;
+                font-size: 15px;
             }
         }
     }
