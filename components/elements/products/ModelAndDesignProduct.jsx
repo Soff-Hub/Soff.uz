@@ -6,11 +6,11 @@ import useWishlist from '~/hooks/useWishlist';
 import useCart from '~/hooks/useCart';
 import { useRouter } from 'next/router';
 import { Modal } from 'antd';
+import { fileColors } from '~/components/details-components/details-actions/file-actions';
 
 const ModelAndDesignProduct = ({ product }) => {
     const [countShow, setCountShow] = useState(false);
     const { thumbnailImage, title } = useProduct();
-
     function handleAddItemToWishlist(e) {
         e.preventDefault();
         addSavedItem(product.id);
@@ -151,8 +151,8 @@ const ModelAndDesignProduct = ({ product }) => {
                                         Number(item.id) ===
                                         Number(product?.id)
                                 )
-                                        ? '/static/img/onclickHeard.png'
-                                        : '/static/img/heard.png'
+                                    ? '/static/img/onclickHeard.png'
+                                    : '/static/img/heard.png'
                                     } `}
                                 alt=''
                             />
@@ -173,6 +173,25 @@ const ModelAndDesignProduct = ({ product }) => {
                             />
                         </a>
                     </div>
+                </div>
+                <div className='modelsCardOptions'>
+                    {product?.document?.file_type &&
+                        <p
+                            className='scientificResourcesCardFileType'
+                            style={{ backgroundColor: fileColors[product?.file_type] || '#007DFF', }}
+                        >
+                            {product?.document?.file_type}
+                        </p>
+                    }
+                    {product?.document?.file_size &&
+                        <p><i class="fas fa-database"></i>{product?.document?.file_size}</p>
+                    }
+                    {product?.document?.page_count &&
+                        <p><i class="fas fa-copy"></i>{product?.document?.page_count}</p>
+                    }
+                    {product?.views_count &&
+                        <p><i className='fa-solid fa-eye'></i>{product?.views_count}</p>
+                    }
                 </div>
             </div>
             <Modal

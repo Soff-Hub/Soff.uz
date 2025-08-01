@@ -3,17 +3,18 @@ import { addPeriodToThousands } from '~/components/partials/account/price-format
 import useWishlist from '~/hooks/useWishlist';
 import { useState } from 'react';
 import useCart from '~/hooks/useCart';
-    import { Modal } from 'antd';
+import { Modal } from 'antd';
 import { useRouter } from 'next/router';
+import { fileColors } from '~/components/details-components/details-actions/file-actions';
 
-const   RedesignProduct = ({ product }) => {
+const RedesignProduct = ({ product }) => {
     const { addSavedItem, wishlist, removeSavedItem } = useWishlist();
     const [open, setOpen] = useState(false);
     const Router = useRouter();
     const { setCartOneItem, removeCartOneItem } = useCart();
     const [basket, setBasket] = useState(false);
 
-    function handleAddItemToCart (e) {
+    function handleAddItemToCart(e) {
         showModal();
         e.preventDefault();
         if (basket) {
@@ -25,7 +26,7 @@ const   RedesignProduct = ({ product }) => {
         setBasket(prev => !prev); // Holatni almashtirish
     }
 
-    function handleAddItemToWishlist (e) {
+    function handleAddItemToWishlist(e) {
         e.preventDefault();
         addSavedItem(product.id);
         if (wishlist?.find(item => item.id === product?.id)) {
@@ -65,13 +66,12 @@ const   RedesignProduct = ({ product }) => {
                 title="Tanlanganlarga qo'shish"
                 onClick={handleAddItemToWishlist}>
                 <img
-                    src={`${
-                        wishlist?.some(
-                            item => Number(item.id) === Number(product?.id)
-                        )
-                            ? '/static/img/heart-full.svg'
-                            : '/static/img/heart.svg'
-                    } `}
+                    src={`${wishlist?.some(
+                        item => Number(item.id) === Number(product?.id)
+                    )
+                        ? '/static/img/heart-full.svg'
+                        : '/static/img/heart.svg'
+                        } `}
                     alt=''
                 />
             </a>
@@ -80,50 +80,71 @@ const   RedesignProduct = ({ product }) => {
                     href='/product/[pid]'
                     className='p-0'
                     as={`/product/${product.slug}`}>
-                    <p className='scientificResourcesCardTitle text-nowrap'>
-                        {product.title.slice(0, 35)}
+                    <p className='scientificResourcesCardTitle'>
+                        {product.title}
                     </p>
                 </Link>
-                <div className='scientificResourcesCardPriceBox'>
-                    <div className='scientificResourcesCardPrice'>
-                        {+product.discount_price === 0 ? (
-                            <p className='free-product-text'>Bepul</p>
-                        ) : product.discount === 0 ? (
-                            <p className='scientificResourcesCardPrice_discount_price'>
-                                {addPeriodToThousands(product.discount_price)}{' '}
-                                so'm
-                            </p >
-                        ) : (
-                            <>
-                                <del className='scientificResourcesCardPrice_discount_price'>
-                                    {addPeriodToThousands(product.price)} so'm
-                                </del>
-                                <p className='scientificResourcesCardPrice_discount_price'>
-                                    {addPeriodToThousands(
-                                        product.discount_price
-                                    )}
-                                    so'm
-                                </p>
-                            </>
-                        )}
+                <div>
+                    <div className='scientificResourcesCardOptions'>
+                        {product?.document?.file_type &&
+                            <p
+                                className='scientificResourcesCardFileType'
+                                style={{ backgroundColor: fileColors[product?.file_type] || '#007DFF', }}
+                            >
+                                {product?.document?.file_type}
+                            </p>
+                        }
+                        {product?.document?.file_size &&
+                            <p><i class="fas fa-database"></i>{product?.document?.file_size}</p>
+                        }
+                        {product?.document?.page_count &&
+                            <p><i class="fas fa-copy"></i>{product?.document?.page_count}</p>
+                        }
+                        {product?.views_count !== 0 &&
+                            <p><i className='fa-solid fa-eye'></i>{product?.views_count}</p>
+                        }
                     </div>
-                    <a
-                    className='scientificBuyIconBox'
-                        href='#'
-                        data-toggle='tooltip'
-                        data-placement='top'
-                        title="Savatga qo'shish"
-                        onClick={handleAddItemToCart}>
-                        <img
-                            src={
-                                basket
-                                    ? '/static/img/cart.svg'
-                                    : '/static/img/cart-outlet.svg'
-                            }
-                            alt=''
-                            className='cart-img'
-                        />
-                    </a>
+                    <div className='scientificResourcesCardPriceBox'>
+                        <div className='scientificResourcesCardPrice'>
+                            {+product.discount_price === 0 ? (
+                                <p className='free-product-text'>Bepul</p>
+                            ) : product.discount === 0 ? (
+                                <p className='scientificResourcesCardPrice_discount_price'>
+                                    {addPeriodToThousands(product.discount_price)}{' '}
+                                    so'm
+                                </p >
+                            ) : (
+                                <>
+                                    <del className='scientificResourcesCardPrice_discount_price'>
+                                        {addPeriodToThousands(product.price)} so'm
+                                    </del>
+                                    <p className='scientificResourcesCardPrice_discount_price'>
+                                        {addPeriodToThousands(
+                                            product.discount_price
+                                        )}
+                                        so'm
+                                    </p>
+                                </>
+                            )}
+                        </div>
+                        <a
+                            className='scientificBuyIconBox'
+                            href='#'
+                            data-toggle='tooltip'
+                            data-placement='top'
+                            title="Savatga qo'shish"
+                            onClick={handleAddItemToCart}>
+                            <img
+                                src={
+                                    basket
+                                        ? '/static/img/cart.svg'
+                                        : '/static/img/cart-outlet.svg'
+                                }
+                                alt=''
+                                className='cart-img'
+                            />
+                        </a>
+                    </div>
                 </div>
             </div>
 
