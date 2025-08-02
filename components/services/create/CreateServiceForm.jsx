@@ -15,9 +15,9 @@ const CreateServiceForm = ({ childCategory }) => {
 
     const handleNext = async () => {
         try {
-            // await form.validateFields();
+            await form.validateFields();
             if (current < steps.length) {
-                setCurrent((prev) => prev + 5);
+                setCurrent((prev) => prev + 1);
             } else {
                 const formData = new FormData();
                 const values = form.getFieldsValue();
