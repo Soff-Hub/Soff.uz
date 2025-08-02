@@ -9,6 +9,7 @@ import Header from '../blocks/header';
 import { GoogleLogin } from '@react-oauth/google';
 import SiteFooter from '../shared/footers/SiteFooter';
 import FooterComponents from '../blocks/footer/FooterComponents';
+import FastDowloadSection from '../shared/headers/fast-dowload/FastDowloadSection';
 
 export let cutomerAccountLink = [
     {
@@ -62,6 +63,7 @@ const PageLayout = ({
                 <title>{title}</title>
             </Head>
             <Header />
+            <FastDowloadSection/>
             {children}
             <HeaderMobileBottom />
             <FooterComponents />
