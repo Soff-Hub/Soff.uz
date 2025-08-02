@@ -75,11 +75,19 @@ const RedesignProduct = ({ product }) => {
                     alt=''
                 />
             </a>
-            {product?.views_count !== 0 &&
+
+            {product?.document?.file_type &&
                 <div className='scientificResourcesCardView'>
-                    <p><i className='fa-solid fa-eye'></i>{product?.views_count}</p>
+
+                    <p
+                        className='scientificResourcesCardFileType'
+                        style={{ backgroundColor: fileColors[product?.document?.file_type] || '#007DFF', }}
+                    >
+                        {product?.document?.file_type}
+                    </p>
                 </div>
             }
+
             <div className='scientificResourcesCardBody'>
                 <Link
                     href='/product/[pid]'
@@ -91,19 +99,14 @@ const RedesignProduct = ({ product }) => {
                 </Link>
                 <div>
                     <div className='scientificResourcesCardOptions'>
-                        {product?.document?.file_type &&
-                            <p
-                                className='scientificResourcesCardFileType'
-                                style={{ backgroundColor: fileColors[product?.document?.file_type] || '#007DFF', }}
-                            >
-                                {product?.document?.file_type}
-                            </p>
-                        }
                         {product?.document?.file_size &&
                             <p><i class="fas fa-database"></i>{product?.document?.file_size}</p>
                         }
                         {product?.document?.page_count &&
                             <p><i class="fas fa-copy"></i>{product?.document?.page_count}</p>
+                        }
+                        {product?.views_count !== 0 &&
+                            <p><i className='fa-solid fa-eye'></i>{product?.views_count}</p>
                         }
                     </div>
                     <div className='scientificResourcesCardPriceBox'>
