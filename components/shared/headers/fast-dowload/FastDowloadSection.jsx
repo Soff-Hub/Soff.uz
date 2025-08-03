@@ -12,9 +12,9 @@ const FastDownloadSection = () => {
         enabled: typeof window !== 'undefined',
         staleTime: 1000 * 60 * 5,
     });
-    console.log(product)
+
     if (isLoading) return null;
-    if (isError || !product || Boolean(product)) return null;
+    if (isError || !product || Object.keys(product).length == 0) return null;
 
     const handleDowload = async (id) => {
         try {
