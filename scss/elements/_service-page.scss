@@ -1,158 +1,189 @@
-// service card______________________________________________________________________
+// variables
+$card-bg: #fff;
+$card-radius: 5px; // 5.072 -> round
+$shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.08);
+$muted: #7b7b7b;
+$text: #312f30;
+$accent: #00A44F;
+$avatar-size: 36px;
+
 .Services_card {
     padding: 10px;
-    border-radius: 5.072px;
+    border-radius: $card-radius;
     position: relative;
-    background: #fff;
+    background: $card-bg;
+    transition: transform .12s ease, box-shadow .18s ease;
 
-    &:hover {
-        border-radius: 5.072px;
-        background: #fff;
-        box-shadow: 0px 0px 10px 0px #00000033;
+    // subtle lift on hover/focus
+    &:hover,
+    &:focus-within {
+        transform: translateY(-4px);
+        box-shadow: $shadow-hover;
     }
 
+    // like button (use <button> in JSX)
     .likeBtn {
-        border-radius: 100%;
         position: absolute;
         top: 10px;
         right: 10px;
-        width: 24px !important;
+        width: 36px;
+        height: 36px;
+        padding: 6px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.95);
+        border: none;
+        cursor: pointer;
+        transition: transform .12s ease, background .12s ease;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
 
-        @media (max-width: 650px) {
-            width: 20px !important;
+        &:hover {
+            transform: scale(1.04);
+        }
+
+        &:focus {
+            outline: 2px solid rgba(0, 164, 79, 0.12);
+        }
+
+        svg {
+            display: block;
+            width: 18px;
+            height: 18px;
         }
     }
 
+    // image: use aspect-ratio so image scales nicely
     .Search_Results_Services_card_img {
-        display: flex;
-        align-items: center;
-        justify-content: center;
         width: 100%;
-        height: 186.638px;
-        flex-shrink: 0;
+        aspect-ratio: 16 / 10; // flexible responsive ratio
         object-fit: cover;
-        border-radius: 5.072px;
-
-        @media (max-width: 650px) {
-            height: 150px;
-        }
-
-        @media (max-width: 380px) {
-            height: 100px;
-        }
+        border-radius: $card-radius;
+        display: block;
+        overflow: hidden;
+        background: #f6f6f6; // placeholder bg while loading
+        cursor: pointer;
     }
 
     .Search_Results_Services_card_body {
+        padding-top: 10px;
+
         .Search_Results_Services_card_infoPerson {
             margin: 10px 0;
             display: flex;
             align-items: center;
-            justify-content: start;
-            gap: 5px;
+            gap: 8px;
+            cursor: pointer;
 
             .Search_Results_Services_card_infoPerson_avatar {
-                height: 35.7px;
-                width: 35.7px;
+                width: $avatar-size;
+                height: $avatar-size;
+                border-radius: 50%;
+                object-fit: cover;
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
                 flex-shrink: 0;
-                aspect-ratio: 26/25;
-                border-radius: 100%;
-                box-shadow: 0px 0px 2.835px 0px rgba(0, 0, 0, 0.25);
-
-                @media (max-width: 500px) {
-                    height: 20px;
-                }
             }
 
             .Search_Results_Services_card_infoPerson_isname {
                 margin: 0;
-                color: #312f30;
+                color: $text;
                 font-family: 'Poppins', sans-serif;
-                font-size: 17.14px;
-                font-weight: 400;
-                line-height: normal;
-                letter-spacing: 0.01em;
+                font-size: 15px;
+                font-weight: 500;
+                line-height: 1;
                 display: -webkit-box;
                 -webkit-line-clamp: 1;
                 -webkit-box-orient: vertical;
                 overflow: hidden;
-                cursor: pointer;
+                text-overflow: ellipsis;
 
                 &:hover {
-                    color: #7b7b7b;
-                }
-
-                @media (max-width: 500px) {
-                    font-size: 12px;
-                }
-
-                @media (max-width: 350px) {
-                    font-size: 10px;
+                    color: $muted;
                 }
             }
 
             .Search_Results_Services_card_infoPerson_status {
-                width: 20.44px;
-                height: 20.44px;
-                flex-shrink: 0;
-                cursor: pointer;
+                width: 20px;
+                height: 20px;
+                margin-left: auto;
             }
         }
     }
 
     .Search_Results_Services_card_title {
-        color: #7b7b7b;
-        font-family: 'Poppins';
-        font-size: 15px;
-        font-style: normal;
+        color: $muted;
+        font-family: 'Poppins', sans-serif;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.3;
+        margin: 6px 0;
         display: -webkit-box;
         -webkit-line-clamp: 1;
-        overflow: hidden;
         -webkit-box-orient: vertical;
-        font-weight: 400;
-        line-height: 150%;
-        letter-spacing: 0.3px;
+        overflow: hidden;
+        text-overflow: ellipsis;
         cursor: pointer;
+        transition: color .12s;
 
         &:hover {
-            color: #929292;
+            color: darken($muted, 6%);
             text-decoration: underline;
-        }
-
-        @media (max-width: 500px) {
-            font-size: 12px;
-        }
-
-        @media (max-width: 350px) {
-            font-size: 10px;
         }
     }
 
     .Search_Results_Services_card_price {
-        color: #312f30;
-        font-family: 'Poppins';
-        font-size: 20px;
-        font-style: normal;
+        color: $text;
+        font-family: 'Poppins', sans-serif;
+        font-size: 18px;
         font-weight: 600;
-        line-height: 100%;
-        letter-spacing: 1%;
-        margin-top: 10px;
+        margin-top: 6px;
+    }
+}
 
-        @media (max-width: 500px) {
-            font-size: 12px;
+/* responsive tweaks */
+@media (max-width: 650px) {
+    .Services_card {
+        .likeBtn {
+            width: 30px;
+            height: 30px;
         }
 
-        @media (max-width: 350px) {
-            font-size: 10px;
+        .Search_Results_Services_card_img {
+            aspect-ratio: 4 / 3;
+        }
+
+        .Search_Results_Services_card_infoPerson_avatar {
+            width: 28px;
+            height: 28px;
+        }
+
+        .Search_Results_Services_card_infoPerson_isname {
+            font-size: 13px;
+        }
+
+        .Search_Results_Services_card_price {
+            font-size: 13px;
         }
     }
 }
 
+/* large grid column helper (kechagi kodda bor edi) */
 @media (min-width: 1200px) {
     .custom-col-5 {
         flex: 0 0 auto;
         width: 20%;
     }
 }
+
+/* respect user reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+    .Services_card {
+        transition: none !important;
+        transform: none !important;
+    }
+}
+
 
 // swipper ______________________________________________________________________________________________
 .slider_swiper_wrapper_container {
@@ -554,7 +585,7 @@
     }
 
 
-    .order_create_btn{
+    .order_create_btn {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -578,5 +609,5 @@
             }
         }
     }
-    
+
 }
