@@ -1,19 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styles from '../style/chat.module.scss';
 import { Input, Button, Avatar, Empty } from 'antd';
 import { SendOutlined } from '@ant-design/icons';
 import useSendMessage from '../api/useSendMessage';
+import useGetChatById from '../api/useGetChatById';
 
-const ChatWindow = ({ chatId }) => {
-    const [messages, setMessages] = useState([]);
+const ChatWindow = ({ chatId, opponentId }) => {
     const [newMessage, setNewMessage] = useState('');
-    const { mutate: sendMessage } = useSendMessage()
+    const { mutate: sendMessage } = useSendMessage();
+    const { data: messages } = useGetChatById(chatId);
+
+    // Chat messages container ref
+    const messagesContainerRef = useRef(null);
 
     const handleSend = () => {
         if (!newMessage.trim()) return;
-        sendMessage({chat_id: chatId, content: newMessage})
+        sendMessage({ chat_id: chatId, content: newMessage });
         setNewMessage('');
     };
+
+    // Xabarlar o'zgarganda faqat chat oynasining ichida scroll pastga tushsin
+    useEffect(() => {
+        if (messagesContainerRef.current) {
+            messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+        }
+    }, [messages]);
 
     if (!chatId) {
         return (
@@ -39,20 +50,23 @@ const ChatWindow = ({ chatId }) => {
                         <p>user full_name</p>
                         <span>9:01</span>
                     </div>
-                    {/* <span>...is typing</span> */}
                 </div>
             </div>
 
-            <div className={styles.chat_messages}>
-                {messages.length > 0 ? (
-                    messages.map((msg) => (
+            {/* Chat messages container */}
+            <div
+                className={styles.chat_messages}
+                ref={messagesContainerRef}
+            >
+                {messages?.messages?.length > 0 ? (
+                    messages.messages.map((msg) => (
                         <div
                             key={msg.id}
                             className={`${styles.chat_message} ${
-                                msg.sender === 'me' ? styles.my_message : styles.other_message
+                                msg.sender_id !== opponentId ? styles.my_message : styles.other_message
                             }`}
                         >
-                            {msg.text}
+                            {msg.content}
                         </div>
                     ))
                 ) : (
