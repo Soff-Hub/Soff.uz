@@ -5,7 +5,7 @@ import ProtfolioModal from './porfolioModal';
 const PortfolioCard = ({ item, portfolioData }) => {
     const [openDetailModal, setOpenDetailModel] = useState(false)
     return (
-        <div key={portfolioData.id} className='SellerPortfolioCard'>
+        <div key={portfolioData?.id} className='SellerPortfolioCard'>
             <img
                 src={item?.cover_image[0]}
                 alt={item?.title}

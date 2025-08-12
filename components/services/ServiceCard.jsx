@@ -3,13 +3,14 @@ import React from 'react'
 
 const ServiceCard = ({product}) => {
     const router = useRouter()
+    // console.log(product)
     return (
         <div className='Services_card '>
             <img
                 style={{cursor: 'pointer'}}
                 onClick={() => router.push(`/service/${product.slug}`)}
                 className='Search_Results_Services_card_img'
-                src={product.file}
+                src={product.poster}
                 alt=''
             />
             <svg
@@ -55,7 +56,7 @@ const ServiceCard = ({product}) => {
                     {product.title}
                 </p>
                 <p className='Search_Results_Services_card_price'>
-                    {product.packages[0]?.price} so'm
+                    {product?.price} so'm
                 </p>
             </div>
         </div>

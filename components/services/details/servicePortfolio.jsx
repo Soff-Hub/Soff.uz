@@ -10,7 +10,6 @@ const ServicePortfolio = ({portfolios}) => {
               <div className='col-12 col-sm-6 col-lg-4 mb-3 justify-content-center d-flex'>
                 <PortfolioCard portfolioData={portfolios} item={item}/>
               </div>
-
             ))}
         </div>
     </div>
