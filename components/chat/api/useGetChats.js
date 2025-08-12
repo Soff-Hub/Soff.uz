@@ -9,7 +9,7 @@ const useGetChats = () => {
     return useQuery({
         queryKey: ["chats"],
         queryFn: async () => {
-            const { data } = await axios.get('chats/list');
+            const { data } = await axios.get('chats');
             return data;
         },
         enabled: !!user?.access,

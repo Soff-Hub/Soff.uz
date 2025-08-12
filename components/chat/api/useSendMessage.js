@@ -21,7 +21,7 @@ const useSendMessage = () => {
             });
         },
         onSuccess: () => {
-            queryClient.invalidateQueries(['chats']);
+            queryClient.invalidateQueries(['chat']);
             message.success("Muvaffaqiyatli");
         }
     });

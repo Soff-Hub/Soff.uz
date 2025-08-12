@@ -9,10 +9,10 @@ const useGetChatById = (id) => {
     return useQuery({
         queryKey: ["chat"],
         queryFn: async () => {
-            const { data } = await axios.get('chats/list');
+            const { data } = await axios.get(`chats/${id}`);
             return data;
         },
-        enabled: !!user?.access,
+        enabled: !!id,
         staleTime: 1000 * 60 * 5,
         cacheTime: 1000 * 60 * 10,
     });
