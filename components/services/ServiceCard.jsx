@@ -3,7 +3,7 @@ import React from 'react'
 
 const ServiceCard = ({product}) => {
     const router = useRouter()
-    // console.log(product)
+    console.log(product)
     return (
         <div className='Services_card '>
             <img
@@ -35,16 +35,16 @@ const ServiceCard = ({product}) => {
                 />
             </svg>
             <div className='Search_Results_Services_card_body'>
-                <div onClick={() => router.push(`/_seller/${product?.seller?.id}#about_author`)} className='Search_Results_Services_card_infoPerson'>
+                <div onClick={() => router.push(`/_seller/${product?.user?.id}#about_author`)} className='Search_Results_Services_card_infoPerson'>
                     <img
                         style={{cursor: 'pointer'}}
-                        onClick={() => router.push(`/_seller/${product?.seller?.id}#about_author`)}
+                        onClick={() => router.push(`/_seller/${product?.user?.id}#about_author`)}
                         className='Search_Results_Services_card_infoPerson_avatar'
-                        src={product?.seller?.photo_url || "/static/img/ozodbek.png"}
+                        src={product?.user?.photo_url || "/static/img/ozodbek.png"}
                         alt=''
                     />
                     <p  className='Search_Results_Services_card_infoPerson_isname'>
-                        {product?.seller?.full_name}
+                        {product?.user?.full_name}
                     </p>
                     <img
                         className='Search_Results_Services_card_infoPerson_status'
