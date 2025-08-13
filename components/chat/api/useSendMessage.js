@@ -21,6 +21,7 @@ const useSendMessage = () => {
         },
         onSuccess: () => {
             queryClient.invalidateQueries(['chat']);
+            queryClient.invalidateQueries(['chats']);
         }
     });
 };

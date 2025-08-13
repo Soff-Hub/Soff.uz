@@ -2,7 +2,7 @@ import { EllipsisOutlined, DeleteOutlined, EditOutlined, CopyOutlined, Exclamati
 import styles from "../style/message.module.scss";
 import { Dropdown, message as AntMessage, Modal } from "antd";
 import useDeleteMessage from "../api/useDeleteMessage";
-import dayjs from "dayjs"; // vaqt formatlash uchun
+import dayjs from "dayjs";
 
 const { confirm } = Modal;
 
@@ -62,12 +62,22 @@ const ChatMessage = ({ msg, chat, onEdit }) => {
             )}
 
             <div className={`${styles.chat_message} ${isMyMessage ? styles.my_message : styles.other_message}`}>
-                <span>{msg.content}</span>
-
-                {/* Vaqt ko‘rsatish */}
-                <div style={{ fontSize: "11px", color: isMyMessage ? "white" : "black", marginTop: "4px", textAlign: isMyMessage ? "right" : "left" }}>
-                    {dayjs(msg.created_at).format("HH:mm")}
-                </div>
+                <span style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "flex-end",
+                    gap: "6px"
+                }}>
+                    <span>{msg.content}</span>
+                    <span style={{
+                        fontSize: "9.5px",
+                        color: isMyMessage ? "white" : "black",
+                        opacity: 0.7,
+                        whiteSpace: "nowrap"
+                    }}>
+                        {dayjs(msg.created_at).format("HH:mm")}
+                    </span>
+                </span>
 
                 <div
                     style={isMyMessage ? { left: "-20px" } : { right: "-20px" }}

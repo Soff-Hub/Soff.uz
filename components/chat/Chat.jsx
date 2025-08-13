@@ -26,7 +26,7 @@ const Chat = () => {
                         <ChatSidebar setChatId={setChatId} />
                     </div>
                     <div className='col-9 p-0'>
-                        <ChatWindow chatId={chatId} />
+                        <ChatWindow  goBack={() => setChatId(null)} chatId={chatId} />
                     </div>
                 </>
             )}
