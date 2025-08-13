@@ -7,7 +7,7 @@ const useGetChatById = (id) => {
     const axios = axiosInstance(user?.access);
 
     return useQuery({
-        queryKey: ["chat"],
+        queryKey: ["chat", id],
         queryFn: async () => {
             const { data } = await axios.get(`chats/${id}`);
             return data;

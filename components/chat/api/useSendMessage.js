@@ -1,7 +1,6 @@
 import { useSelector } from 'react-redux';
 import axiosInstance from './axiosInstance';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { message } from 'antd';
 
 const useSendMessage = () => {
     const { user } = useSelector(state => state.auth);
@@ -22,7 +21,6 @@ const useSendMessage = () => {
         },
         onSuccess: () => {
             queryClient.invalidateQueries(['chat']);
-            message.success("Muvaffaqiyatli");
         }
     });
 };
