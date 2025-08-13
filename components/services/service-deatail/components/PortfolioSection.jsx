@@ -1,6 +1,6 @@
 import React from 'react'
-import PortfolioCard from '~/components/shared/seller-profile/portfolioCard'
 import styles from "../styles/detail.module.scss";
+import PortfolioCard from './PortfolioCard';
 
 const PortfolioSection = ({portfolios}) => {
     return (
@@ -9,7 +9,7 @@ const PortfolioSection = ({portfolios}) => {
             <div className='row row-gap-5'>
                 {portfolios?.map(portfolio => 
                     <div className='col-4'>
-                        <PortfolioCard item={portfolio} />
+                        <PortfolioCard portfolio={portfolio} />
                     </div>
                 )}
             </div>

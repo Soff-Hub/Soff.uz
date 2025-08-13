@@ -96,8 +96,7 @@ const ChatWindow = ({ chatId }) => {
             <div className={styles.chat_input_box}>
                 {editingMessage && (
                     <div className="text-warning mb-1">
-                        Tahrirlash rejimi —
-                        <Button type="link" onClick={() => {
+                        <Button  onClick={() => {
                             setEditingMessage(null)
                             setNewMessage('')
                         }}>
@@ -117,7 +116,7 @@ const ChatWindow = ({ chatId }) => {
                     type="primary"
                     onClick={handleSend}
                 >
-                    Yuborish <SendOutlined />
+                    {editingMessage ? "Tahrirlash" : "Yuborish"} <SendOutlined />
                 </Button>
             </div>
         </div>
