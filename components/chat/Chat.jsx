@@ -3,11 +3,12 @@ import ChatSidebar from './ui/ChatSidebar'
 import ChatWindow from './ui/ChatWindow'
 import useResponsive from '~/utilities/useResponsive'
 import { useRouter } from 'next/router'
+import { Button } from 'antd'
 
 const Chat = () => {
     const [chatId, setChatId] = useState(null)
     const { isMobile, isTablet } = useResponsive()
-    const { query } = useRouter()
+    const { query, back } = useRouter()
 
 
     useEffect(() => {
@@ -20,13 +21,20 @@ const Chat = () => {
 
     return (
         <div className='row'>
+            <Button
+                onClick={() => back()}
+                icon={<i className="fa-solid fa-arrow-left"></i>}
+                style={{ marginBottom: '16px' }}
+            >
+                Ortga
+            </Button>
             {!isSmallScreen && (
                 <>
                     <div className='col-3 p-0'>
                         <ChatSidebar setChatId={setChatId} />
                     </div>
                     <div className='col-9 p-0'>
-                        <ChatWindow  goBack={() => setChatId(null)} chatId={chatId} />
+                        <ChatWindow goBack={() => setChatId(null)} chatId={chatId} />
                     </div>
                 </>
             )}
