@@ -1,14 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styles from '../style/chat.module.scss';
 import { Input, Button, Avatar, Empty } from 'antd';
-import { SendOutlined } from '@ant-design/icons';
+import { ArrowLeftOutlined, SendOutlined } from '@ant-design/icons';
 import useSendMessage from '../api/useSendMessage';
 import useGetChatById from '../api/useGetChatById';
 import ChatMessage from './ChatMessage';
 import useEditMessage from '../api/useEditMessage';
 import dayjs from 'dayjs';
 
-const ChatWindow = ({ chatId }) => {
+const ChatWindow = ({ chatId, goBack }) => {
     const [editingMessage, setEditingMessage] = useState(null);
     const [newMessage, setNewMessage] = useState('');
     const { mutate: sendMessage } = useSendMessage();
@@ -50,16 +50,20 @@ const ChatWindow = ({ chatId }) => {
     return (
         <div className={styles.chat_window}>
             <div className={styles.chat_user}>
+                {goBack &&
+                    <ArrowLeftOutlined style={{cursor: "pointer"}} onClick={goBack}/>
+                }
                 <Avatar
                     size={50}
                     src={<img src="/static/img/ozodbek.png" alt="user img" />}
                 />
                 <div className={styles.user_box}>
                     <div className={styles.user_names}>
-                        <h4>Username</h4>
-                        <p>user full_name</p>
-                        <span>9:01</span>
+                        <h4>{chat?.opponent_name}</h4>
+                        {/* <p>user full_name</p> */}
+                        {/* <span>9:01</span> */}
                     </div>
+                    <span>{chat?.opponent_last_seen}</span>
                 </div>
             </div>
 
@@ -96,7 +100,7 @@ const ChatWindow = ({ chatId }) => {
             <div className={styles.chat_input_box}>
                 {editingMessage && (
                     <div className="text-warning mb-1">
-                        <Button  onClick={() => {
+                        <Button onClick={() => {
                             setEditingMessage(null)
                             setNewMessage('')
                         }}>

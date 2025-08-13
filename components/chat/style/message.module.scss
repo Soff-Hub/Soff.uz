@@ -22,7 +22,7 @@
 
 .chat_message {
     position: relative;
-    padding: 10px 14px;
+    padding: 4px 14px;
     border-radius: 6px;
     max-width: 70%;
     height: auto;
@@ -33,7 +33,7 @@
 
     .moreWrapper {
         position: absolute;
-        top: 8px;
+        top: 4px;
         opacity: 0;
         transition: opacity 0.2s ease;
     }

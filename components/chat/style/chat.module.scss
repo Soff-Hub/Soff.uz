@@ -54,9 +54,10 @@
                     }
 
                     span {
-                        color: #00a44f;
-                        font-size: 13px;
+                        color: black;
+                        font-size: 12px;
                         font-weight: 500;
+                        opacity: .5;
                     }
                 }
 
@@ -248,9 +249,10 @@
         }
 
         span {
-            color: #00A44F;
-            font-size: 14px;
+            color: black;
+            font-size: 12px;
             font-weight: 500;
+            opacity: 0.5;
         }
     }
 }

@@ -2,14 +2,14 @@ import { useQuery } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
 import axiosInstance from './axiosInstance';
 
-const useGetChats = () => {
+const useGetChats = (search = '') => {
     const { user } = useSelector(state => state.auth);
     const axios = axiosInstance(user?.access);
 
     return useQuery({
-        queryKey: ["chats"],
+        queryKey: ["chats", search],
         queryFn: async () => {
-            const { data } = await axios.get('chats');
+            const { data } = await axios.get(`chats?search=${encodeURIComponent(search)}`);
             return data;
         },
         enabled: !!user?.access,
