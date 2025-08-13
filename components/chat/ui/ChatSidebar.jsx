@@ -3,7 +3,7 @@ import styles from '../style/chat.module.scss'
 import { Input } from 'antd'
 import useGetChats from '../api/useGetChats'
 
-const ChatSidebar = ({ setChatId, setOpponentId }) => {
+const ChatSidebar = ({ setChatId }) => {
     const { data: chats } = useGetChats()
     return (
         <div className={styles.chat_sidebar}>
@@ -17,7 +17,6 @@ const ChatSidebar = ({ setChatId, setOpponentId }) => {
                     <div 
                         onClick={() => {
                             setChatId(chat?.chat_id) 
-                            setOpponentId(chat?.opponent_id)
                         }} 
                         className={styles.sidebar_chat}>
                         <img src='/static/img/ozodbek.png' alt="user img" />

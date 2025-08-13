@@ -31,8 +31,12 @@ const ServiceDetail = ({ data }) => {
                 <div style={{ background: "white", padding: "20px", borderRadius: "12px" }} className='col-12 col-md-8'>
                     <h1 className={styles.title}>{service?.title}</h1>
                     <div className={styles.userBox}>
-                        <img className={styles.avatar} src={service?.user?.photo_url || "/static/img/ozodbek.png"} alt="user img" />
-                        <span className={styles.username}>{service?.user?.full_name}</span>
+                        <img
+                            className={styles.avatar}
+                            src={service?.user?.photo_url || "/static/img/ozodbek.png"}
+                            alt={service?.user?.full_name || "User"}
+                        />
+                        <span className={styles.username}>{service?.user?.full_name || "No Name"}</span>
                     </div>
                     <ImageCarousel images={service?.poster} />
                     <ServiceDescription priceBox={priceBox} description={description} />
@@ -40,7 +44,7 @@ const ServiceDetail = ({ data }) => {
                 <div className='col-12 col-md-4'>
                     <PriceBox priceBox={priceBox} />
                     <MoneyBack />
-                    <UserBox user={service?.user} />
+                    <UserBox user={service?.seller[0]} />
                 </div>
             </div>
             <div className='row'>

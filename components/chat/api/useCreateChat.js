@@ -2,32 +2,33 @@ import { useSelector } from 'react-redux';
 import axiosInstance from './axiosInstance';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { message } from 'antd';
+import { useRouter } from 'next/router';
 
-const useEditMessage = () => {
+const useCreateChat = () => {
     const { user } = useSelector(state => state.auth);
     const axios = axiosInstance(user?.access);
     const queryClient = useQueryClient();
+    const { push } = useRouter()
 
     return useMutation({
-        mutationFn: async ({ id, content }) => {
+        mutationFn: async (id) => {
             const formData = new FormData();
-            formData.append('message_id', id);
-            formData.append('content', content);
+            formData.append('participant_id', id);
 
-            await axios.put("chats/messages", formData, {
+            const {data} = await axios.post("chats/create", formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 }
             });
+            return data
         },
-        onSuccess: () => {
-            queryClient.invalidateQueries(['chat']);
-            message.success("Xabar tahrirlandi");
-        },
-        onError: () => {
-            message.error("Xabar tahrirlanmadi");
+        onSuccess: (data) => {
+            queryClient.invalidateQueries(['chats']);
+            message.success("Chat yaratildi");
+            push(`/chat${data?.chat_id ? `?id=${data?.chat_id}` : ''}`);
+            console.log(data)
         }
     });
 };
 
-export default useEditMessage;
+export default useCreateChat;

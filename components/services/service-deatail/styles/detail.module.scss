@@ -128,15 +128,39 @@
     gap: 12px;
     border-radius: 12px;
 
-    h3 {
-        font-size: 18px;
-        margin: 0;
-    }
-
     img {
         width: 60px;
         height: 60px;
-        border-radius: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .userInfo {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
+
+        h3 {
+            font-size: 18px;
+            margin: 0;
+        }
+
+        .chatBtn {
+            padding: 8px 16px;
+            width: 100%;
+            background: #00A44F;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+
+            &:hover {
+                background: #008e43;
+            }
+        }
     }
 }
 
@@ -146,12 +170,24 @@
 
     h2 {
         font-size: 28px;
-        margin: 0;
+        margin-bottom: 12px;
     }
 
     h3 {
         font-size: 20px;
-        margin: 0;
+        margin: 12px 0;
+    }
+
+    .downloadBtn {
+        margin-top: 12px;
+        background: #00A44F;
+        color: #fff;
+        border-color: #00A44F;
+
+        &:hover {
+            background: #008e43;
+            border-color: #008e43;
+        }
     }
 
     .serviceBox {
@@ -162,63 +198,71 @@
         }
 
         .serviceItem {
-            margin: 0;
+            margin: 4px 0;
         }
     }
 
     .pricing {
         margin-top: 20px;
-        
+
         .infoBox {
             display: flex;
-            align-items: center;
             gap: 12px;
             margin-bottom: 16px;
 
             .info {
                 font-size: 14px;
                 margin: 0;
+                display: flex;
+                align-items: center;
+                gap: 6px;
             }
         }
 
         .btnWrapper {
             display: flex;
-            justify-content: end;
+            justify-content: flex-end;
 
             .btn {
-                background: #00A44F !important;
-                color: #fff !important;
-                border-color: #00A44F !important;
-                padding: 25px 70px;
-                font-size: 20px;
+                background: #00A44F;
+                color: #fff;
+                border-color: #00A44F;
+                padding: 16px 40px;
+                font-size: 18px;
+
+                &:hover {
+                    background: #008e43;
+                    border-color: #008e43;
+                }
             }
         }
     }
 }
 
-.faq{
+
+.faq {
     padding: 20px;
     background: #fff;
     margin-top: 30px;
     border-radius: 12px;
-    
-    h2{
+
+    h2 {
         margin-bottom: 20px;
         font-size: 20px;
     }
 }
 
-.portfolioSection{
+.portfolioSection {
     padding: 20px;
     background: #fff;
     margin-top: 30px;
     border-radius: 12px;
 
-    h2{
+    h2 {
         margin-bottom: 20px;
         font-size: 20px;
 
-        span{
+        span {
             color: #00A44F;
             font-weight: 500;
             margin-left: 5px;
