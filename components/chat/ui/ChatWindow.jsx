@@ -6,6 +6,7 @@ import useSendMessage from '../api/useSendMessage';
 import useGetChatById from '../api/useGetChatById';
 import ChatMessage from './ChatMessage';
 import useEditMessage from '../api/useEditMessage';
+import dayjs from 'dayjs';
 
 const ChatWindow = ({ chatId }) => {
     const [editingMessage, setEditingMessage] = useState(null);
@@ -14,7 +15,6 @@ const ChatWindow = ({ chatId }) => {
     const { data: chat } = useGetChatById(chatId);
     const { mutate: editMessage } = useEditMessage();
 
-    // Chat messages container ref
     const messagesContainerRef = useRef(null);
 
     const handleSend = () => {
@@ -30,7 +30,6 @@ const ChatWindow = ({ chatId }) => {
         setNewMessage('');
     };
 
-    // Xabarlar o'zgarganda faqat chat oynasining ichida scroll pastga tushsin
     useEffect(() => {
         if (messagesContainerRef.current) {
             messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
@@ -68,9 +67,17 @@ const ChatWindow = ({ chatId }) => {
                 className={styles.chat_messages}
                 ref={messagesContainerRef}
             >
+                {/* Chat yaratilgan vaqti */}
+                {chat?.created_at && (
+                    <div className={styles.chat_created_time}>
+                        {dayjs(chat.created_at).format("YYYY-MM-DD HH:mm")}
+                    </div>
+                )}
+
                 {chat?.messages?.length > 0 ? (
                     chat.messages.map((msg) => (
                         <ChatMessage
+                            key={msg.id}
                             msg={msg}
                             chat={chat}
                             onEdit={(message) => {
@@ -86,7 +93,6 @@ const ChatWindow = ({ chatId }) => {
                 )}
             </div>
 
-            {/* Input Box */}
             <div className={styles.chat_input_box}>
                 {editingMessage && (
                     <div className="text-warning mb-1">
