@@ -7,7 +7,7 @@ import ServicesCardSection from '~/components/services/ServicesCardSection';
 
 
 
-export default function SoffFreelancerPage({ servicesData }) {
+export default function SoffFreelancerPage({ servicesData, parentCategory, childCategory }) {
     console.log(servicesData)
     return (
         <PageContainer>
@@ -20,7 +20,7 @@ export default function SoffFreelancerPage({ servicesData }) {
             />
 
             <div className='ps-page--shop my-5 container p-xl-0 p-l-0'>
-                <ServicesFilterSection count={servicesData?.total_service} />
+                <ServicesFilterSection parentCategory={parentCategory} childCategory={childCategory} count={servicesData?.total_service} />
 
 
                 <ServicesCardSection services={servicesData} />
@@ -36,13 +36,14 @@ export async function getServerSideProps(context) {
     const { query } = context;
     const {
         category_id = '',
+        parent_category_id = '',
         search = '',
         direction = '',
         limit = 20,
         offset = 0
     } = query;
 
-    const queryParams = new URLSearchParams({
+    const servicesQuery = new URLSearchParams({
         ...(category_id && { category_id }),
         ...(search && { search }),
         ...(direction && { direction }),
@@ -50,13 +51,31 @@ export async function getServerSideProps(context) {
         offset
     });
 
-    const url = `http://176.96.241.219:8005/api/v1/customer?${queryParams.toString()}`;
-    const res = await fetch(url);
-    const servicesData = res.ok ? await res.json() : null;
+    const servicesUrl = `http://176.96.241.219:8005/api/v1/customer?${servicesQuery.toString()}`;
+    const parentCategoryUrl = `http://176.96.241.219:8005/api/v1/categories/`;
+    console.log(servicesUrl)
+
+    const [servicesRes, parentCategoryRes] = await Promise.all([
+        fetch(servicesUrl),
+        fetch(parentCategoryUrl)
+    ]);
+
+    const servicesData = servicesRes.ok ? await servicesRes.json() : null;
+    const parentCategory = parentCategoryRes.ok ? await parentCategoryRes.json() : null;
+
+    let childCategory = [];
+    if (parent_category_id) {
+        const childCategoryRes = await fetch(
+            `http://176.96.241.219:8005/api/v1/categories?parent_id=${parent_category_id}`
+        );
+        childCategory = childCategoryRes.ok ? await childCategoryRes.json() : [];
+    }
 
     return {
         props: {
             servicesData,
+            parentCategory,
+            childCategory, 
         },
     };
 }

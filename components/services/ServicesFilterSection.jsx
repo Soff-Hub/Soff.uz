@@ -3,11 +3,12 @@ import { SearchOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
-const ServicesFilterSection = ({ count }) => {
+const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
     const router = useRouter();
     const { query } = router;
 
     const [searchValue, setSearchValue] = useState(query.search || '');
+    const [selectedParentCategory, setSelectedParentCategory] = useState(query.parent_category_id || '');
 
     const updateQuery = (key, value) => {
         const newQuery = { ...query, [key]: value };
@@ -28,10 +29,16 @@ const ServicesFilterSection = ({ count }) => {
     useEffect(() => {
         const delay = setTimeout(() => {
             updateQuery('search', searchValue);
-        }, 1000); // 0.5 soniya kutadi
+        }, 1000);
 
         return () => clearTimeout(delay);
     }, [searchValue]);
+
+    // Parent category select o'zgarganda URL update qilish
+    const onParentCategoryChange = (val) => {
+        setSelectedParentCategory(val);
+        updateQuery('parent_category_id', val);
+    };
 
     return (
         <div className="container mb-3">
@@ -54,16 +61,36 @@ const ServicesFilterSection = ({ count }) => {
                         allowClear
                     />
 
-                    {/* Kategoriya */}
+                    {/* Kategoriya (existing) */}
+                    {selectedParentCategory && (
+                        <Select
+                            placeholder="Kategoriya"
+                            style={{ minWidth: '150px' }}
+                            value={query.category_id || undefined}
+                            onChange={(val) => updateQuery('category_id', val)}
+                            allowClear
+                        >
+                            {childCategory && childCategory.map((cat) => (
+                                <Select.Option key={cat.id} value={String(cat.id)}>
+                                    {cat.title}
+                                </Select.Option>
+                            ))}
+                        </Select>
+                    )}
+
+                    {/* Yangi parent category select */}
                     <Select
-                        placeholder="Kategoriya"
-                        style={{ minWidth: '150px' }}
-                        defaultValue={query.category_id}
-                        onChange={(val) => updateQuery('category_id', val)}
+                        placeholder="Parent Category"
+                        style={{ minWidth: '180px' }}
+                        value={selectedParentCategory || undefined}
+                        onChange={onParentCategoryChange}
                         allowClear
                     >
-                        <Select.Option value="1">Design</Select.Option>
-                        <Select.Option value="2">Video</Select.Option>
+                        {parentCategory && parentCategory.map((cat) => (
+                            <Select.Option key={cat.id} value={String(cat.id)}>
+                                {cat.title}
+                            </Select.Option>
+                        ))}
                     </Select>
                 </Space>
             </div>
