@@ -23,7 +23,7 @@ export let cutomerAccountLink = [
     },
     {
         text: 'Buyurtmalar',
-        url: '/orders/my-orders',
+        url: '/order/my-orders',
         icon: 'fas fa-truck',
     },
     // {

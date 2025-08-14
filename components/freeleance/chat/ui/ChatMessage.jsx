@@ -3,19 +3,19 @@ import styles from "../style/message.module.scss";
 import { Dropdown, message as AntMessage, Modal, Tooltip } from "antd";
 import useDeleteMessage from "../api/useDeleteMessage";
 import dayjs from "dayjs";
+import React, { useCallback, useMemo } from "react";
 
 const { confirm } = Modal;
 
 const ChatMessage = ({ msg, onEdit }) => {
-    const isMyMessage = msg.is_mine
+    const isMyMessage = msg.is_mine;
     const { mutate: deleteMsg } = useDeleteMessage();
 
-    const handleEdit = () => {
+    const handleEdit = useCallback(() => {
         onEdit(msg);
-    };
+    }, [msg, onEdit]);
 
-
-    const handleDeleteConfirm = () => {
+    const handleDeleteConfirm = useCallback(() => {
         confirm({
             title: "Xabarni o‘chirishni tasdiqlang",
             icon: <ExclamationCircleOutlined />,
@@ -27,45 +27,38 @@ const ChatMessage = ({ msg, onEdit }) => {
                 deleteMsg(msg.id);
             }
         });
-    };
+    }, [deleteMsg, msg.id]);
 
-    const handleCopy = (text) => {
+    const handleCopy = useCallback((text) => {
         navigator.clipboard.writeText(text)
-            .then(() => {
-                AntMessage.success("Xabar nusxalandi");
-            })
-            .catch(() => {
-                AntMessage.error("Nusxalashda xatolik yuz berdi");
-            });
-    };
+            .then(() => AntMessage.success("Xabar nusxalandi"))
+            .catch(() => AntMessage.error("Nusxalashda xatolik yuz berdi"));
+    }, []);
 
-    const myMenuItems = [
+    const myMenuItems = useMemo(() => [
         { key: "edit", label: "Tahrirlash", icon: <EditOutlined />, onClick: handleEdit },
         { key: "copy", label: "Nusxalash", icon: <CopyOutlined />, onClick: () => handleCopy(msg.content) },
-        { key: "delete", label: "O'chirish", icon: <DeleteOutlined />, danger: true, onClick: handleDeleteConfirm }
-    ];
+        { key: "delete", label: "O‘chirish", icon: <DeleteOutlined />, danger: true, onClick: handleDeleteConfirm }
+    ], [msg.content, handleEdit, handleDeleteConfirm, handleCopy]);
 
-    const opponentMenuItems = [
+    const opponentMenuItems = useMemo(() => [
         { key: "copy", label: "Nusxalash", icon: <CopyOutlined />, onClick: () => handleCopy(msg.content) }
-    ];
+    ], [msg.content, handleCopy]);
 
-    const renderReadStatus = () => {
+    const readStatus = useMemo(() => {
         if (!isMyMessage) return null;
 
-        if (msg.is_read) {
-            return (
-                <Tooltip title="O‘qildi">
-                    <CheckOutlined style={{ fontSize: "8px", color: "white", marginLeft: 4 }} />
-                    <CheckOutlined style={{ fontSize: "8px", color: "white", marginLeft: -4 }} />
-                </Tooltip>
-            );
-        }
-        return (
+        return msg.is_read ? (
+            <Tooltip title="O‘qildi">
+                <CheckOutlined style={{ fontSize: "8px", color: "white", marginLeft: 4 }} />
+                <CheckOutlined style={{ fontSize: "8px", color: "white", marginLeft: -4 }} />
+            </Tooltip>
+        ) : (
             <Tooltip title="Yetib bordi">
                 <CheckOutlined style={{ fontSize: "8px", color: "white", marginLeft: 4 }} />
             </Tooltip>
         );
-    };
+    }, [isMyMessage, msg.is_read]);
 
     return (
         <div
@@ -97,7 +90,7 @@ const ChatMessage = ({ msg, onEdit }) => {
                         whiteSpace: "nowrap"
                     }}>
                         {dayjs(msg.created_at).format("HH:mm")}
-                        {renderReadStatus()}
+                        {readStatus}
                     </span>
                 </span>
 
@@ -126,4 +119,4 @@ const ChatMessage = ({ msg, onEdit }) => {
     );
 };
 
-export default ChatMessage;
+export default React.memo(ChatMessage);
