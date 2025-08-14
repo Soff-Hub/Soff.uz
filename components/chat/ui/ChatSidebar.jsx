@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import styles from '../style/chat.module.scss';
-import { Input } from 'antd';
+import { Button, Empty, Input } from 'antd';
 import useGetChats from '../api/useGetChats';
 import { truncateTitle } from '~/utilities/TruncateTitle';
+import { useRouter } from 'next/router';
 
 const ChatSidebar = ({ setChatId }) => {
     const [search, setSearch] = useState('');
     const [debouncedSearch, setDebouncedSearch] = useState('');
+    const { back } = useRouter()
 
-    // Debounce — har 300ms dan keyin qidiruv so‘rovi o‘zgaradi
     useEffect(() => {
         const handler = setTimeout(() => {
             setDebouncedSearch(search);
@@ -21,6 +22,12 @@ const ChatSidebar = ({ setChatId }) => {
     return (
         <div className={styles.chat_sidebar}>
             <div className={styles.chat_search}>
+                <Button
+                    onClick={() => back()}
+                    icon={<i className="fa-solid fa-arrow-left"></i>}
+                >
+                    
+                </Button>
                 <Input.Search
                     placeholder="Chatlarni qidirish"
                     value={search}
@@ -30,7 +37,12 @@ const ChatSidebar = ({ setChatId }) => {
             </div>
             <div className={styles.sidebar_chats}>
                 {isLoading && <p>Qidirilmoqda...</p>}
-                {!isLoading && chats?.length === 0 && <p>Chat topilmadi</p>}
+                {!isLoading && chats?.length === 0 && (
+                    <Empty
+                        description="Chat topilmadi"
+                        image={Empty.PRESENTED_IMAGE_SIMPLE}
+                    />
+                )}
                 {chats?.map(chat => (
                     <div
                         key={chat.chat_id}
@@ -45,7 +57,9 @@ const ChatSidebar = ({ setChatId }) => {
                             </div>
                             <div className={styles.box2}>
                                 <p></p>
-                                {/* <span></span> */}
+                                {chat?.unread_count > 0 &&
+                                    <span>{chat?.unread_count}</span>
+                                }
                             </div>
                         </div>
                     </div>

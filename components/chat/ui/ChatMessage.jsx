@@ -1,18 +1,19 @@
-import { EllipsisOutlined, DeleteOutlined, EditOutlined, CopyOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
+import { EllipsisOutlined, DeleteOutlined, EditOutlined, CopyOutlined, ExclamationCircleOutlined, CheckOutlined } from "@ant-design/icons";
 import styles from "../style/message.module.scss";
-import { Dropdown, message as AntMessage, Modal } from "antd";
+import { Dropdown, message as AntMessage, Modal, Tooltip } from "antd";
 import useDeleteMessage from "../api/useDeleteMessage";
 import dayjs from "dayjs";
 
 const { confirm } = Modal;
 
-const ChatMessage = ({ msg, chat, onEdit }) => {
-    const isMyMessage = msg.sender_id !== chat.opponent_id;
+const ChatMessage = ({ msg, onEdit }) => {
+    const isMyMessage = msg.is_mine
     const { mutate: deleteMsg } = useDeleteMessage();
 
     const handleEdit = () => {
         onEdit(msg);
     };
+
 
     const handleDeleteConfirm = () => {
         confirm({
@@ -48,6 +49,24 @@ const ChatMessage = ({ msg, chat, onEdit }) => {
         { key: "copy", label: "Nusxalash", icon: <CopyOutlined />, onClick: () => handleCopy(msg.content) }
     ];
 
+    const renderReadStatus = () => {
+        if (!isMyMessage) return null;
+
+        if (msg.is_read) {
+            return (
+                <Tooltip title="O‘qildi">
+                    <CheckOutlined style={{ fontSize: "8px", color: "white", marginLeft: 4 }} />
+                    <CheckOutlined style={{ fontSize: "8px", color: "white", marginLeft: -4 }} />
+                </Tooltip>
+            );
+        }
+        return (
+            <Tooltip title="Yetib bordi">
+                <CheckOutlined style={{ fontSize: "8px", color: "white", marginLeft: 4 }} />
+            </Tooltip>
+        );
+    };
+
     return (
         <div
             key={msg.id}
@@ -70,12 +89,15 @@ const ChatMessage = ({ msg, chat, onEdit }) => {
                 }}>
                     <span>{msg.content}</span>
                     <span style={{
+                        display: "flex",
+                        alignItems: "center",
                         fontSize: "9.5px",
                         color: isMyMessage ? "white" : "black",
                         opacity: 0.7,
                         whiteSpace: "nowrap"
                     }}>
                         {dayjs(msg.created_at).format("HH:mm")}
+                        {renderReadStatus()}
                     </span>
                 </span>
 
