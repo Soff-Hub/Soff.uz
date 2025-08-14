@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux';
-import axiosInstance from './axiosInstance';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { message } from 'antd';
 import { useRouter } from 'next/router';
+import axiosInstance from '../../api/freeleanceApi';
 
 const useCreateChat = () => {
     const { user } = useSelector(state => state.auth);

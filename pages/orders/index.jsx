@@ -1,8 +1,8 @@
 import React from 'react';
 import PageContainer from '~/components/layouts/PageContainer';
 import Meta from '~/components/shared/headers/Meta';
-import ServicesFilterSection from '~/components/services/ServicesFilterSection';
-import ServicesCardSection from '~/components/services/ServicesCardSection';
+import ServicesFilterSection from '~/components/freeleance/services/ServicesFilterSection';
+import ServicesCardSection from '~/components/freeleance/services/ServicesCardSection';
 
 
 

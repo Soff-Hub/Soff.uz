@@ -1,5 +1,5 @@
 import React from 'react'
-import Chat from '~/components/chat/Chat';
+import Chat from '~/components/freeleance/chat/Chat';
 import PageContainer from '~/components/layouts/PageContainer'
 
 const ChatPage = () => {
