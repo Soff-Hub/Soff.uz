@@ -7,6 +7,8 @@ import useGetChatById from '../api/useGetChatById';
 import ChatMessage from './ChatMessage';
 import useEditMessage from '../api/useEditMessage';
 import dayjs from 'dayjs';
+import { useQueryClient } from '@tanstack/react-query';
+import useReadMessage from '../api/useReadMessage';
 
 const ChatWindow = ({ chatId, goBack }) => {
     const [editingMessage, setEditingMessage] = useState(null);
@@ -14,6 +16,9 @@ const ChatWindow = ({ chatId, goBack }) => {
     const { mutate: sendMessage } = useSendMessage();
     const { data: chat } = useGetChatById(chatId);
     const { mutate: editMessage } = useEditMessage();
+    const { mutate: readMsg } = useReadMessage();
+    const wsRef = useRef(null);
+    const queryClient = useQueryClient()
 
     const messagesContainerRef = useRef(null);
 
@@ -36,6 +41,53 @@ const ChatWindow = ({ chatId, goBack }) => {
         }
     }, [chat]);
 
+    useEffect(() => {
+        if (!chat?.messages) return;
+
+        const unreadMessages = chat.messages.filter(
+            (m) => !m.is_mine && !m.is_read
+        );
+
+        if (unreadMessages.length === 0) return;
+
+        unreadMessages.forEach((m) => {
+            readMsg({ id: m.id });
+        });
+    }, [chat?.messages]);
+
+    console.log(chat?.chat?.opponent?.id, "_________________________________________")
+
+    useEffect(() => {
+        if (!chatId || !chat?.chat?.opponent?.id) return;
+
+        const ws = new WebSocket(
+            `ws://192.168.1.60:8000/api/v1/ws/${chatId}/${chat.chat.opponent.id}`
+        );
+        wsRef.current = ws;
+
+        ws.onopen = () => {
+            console.log("✅ WebSocket ulandi");
+        };
+
+        ws.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            console.log("📩 Yangi xabar:", data);
+            queryClient.invalidateQueries(['chat']);
+        };
+
+        ws.onerror = (err) => {
+            console.error("❌ WebSocket xatosi:", err);
+        };
+
+        ws.onclose = () => {
+            console.log("🔌 WebSocket yopildi");
+        };
+
+        return () => {
+            ws.close();
+        };
+    }, [chatId, chat?.chat?.opponent?.id]);
+
     if (!chatId) {
         return (
             <div className={`${styles.chat_window} d-flex align-items-center justify-content-center`}>
@@ -51,7 +103,7 @@ const ChatWindow = ({ chatId, goBack }) => {
         <div className={styles.chat_window}>
             <div className={styles.chat_user}>
                 {goBack &&
-                    <ArrowLeftOutlined style={{cursor: "pointer"}} onClick={goBack}/>
+                    <ArrowLeftOutlined style={{ cursor: "pointer" }} onClick={goBack} />
                 }
                 <Avatar
                     size={50}
@@ -59,11 +111,11 @@ const ChatWindow = ({ chatId, goBack }) => {
                 />
                 <div className={styles.user_box}>
                     <div className={styles.user_names}>
-                        <h4>{chat?.opponent_name}</h4>
+                        <h4>{chat?.chat?.opponent?.name}</h4>
                         {/* <p>user full_name</p> */}
                         {/* <span>9:01</span> */}
                     </div>
-                    <span>{chat?.opponent_last_seen}</span>
+                    <span>{chat?.chat?.opponent?.last_seen}</span>
                 </div>
             </div>
 
@@ -71,8 +123,7 @@ const ChatWindow = ({ chatId, goBack }) => {
                 className={styles.chat_messages}
                 ref={messagesContainerRef}
             >
-                {/* Chat yaratilgan vaqti */}
-                {chat?.created_at && (
+                {chat?.chat?.created_at && (
                     <div className={styles.chat_created_time}>
                         {dayjs(chat.created_at).format("YYYY-MM-DD HH:mm")}
                     </div>
@@ -83,11 +134,11 @@ const ChatWindow = ({ chatId, goBack }) => {
                         <ChatMessage
                             key={msg.id}
                             msg={msg}
-                            chat={chat}
                             onEdit={(message) => {
                                 setEditingMessage(message);
                                 setNewMessage(message.content);
                             }}
+
                         />
                     ))
                 ) : (
@@ -119,8 +170,9 @@ const ChatWindow = ({ chatId, goBack }) => {
                     style={{ background: '#00A44F' }}
                     type="primary"
                     onClick={handleSend}
+                    // icon={}
                 >
-                    {editingMessage ? "Tahrirlash" : "Yuborish"} <SendOutlined />
+                    <SendOutlined style={{fontSize: "20px"}}/>
                 </Button>
             </div>
         </div>

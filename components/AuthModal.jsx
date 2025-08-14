@@ -9,7 +9,7 @@ const AuthModal = ({ open, onClose }) => {
 
     const closeAllModals = () => {
         setCodeModalOpen(false);
-        onClose(); // AuthModal ham yopiladi
+        onClose();
     };
 
     return (
@@ -27,7 +27,7 @@ const AuthModal = ({ open, onClose }) => {
             <CodeVerifyModal
                 authCode={authCode}
                 open={codeModalOpen}
-                onClose={closeAllModals} // 👉 bu yerga
+                onClose={closeAllModals} 
             />
         </>
     );

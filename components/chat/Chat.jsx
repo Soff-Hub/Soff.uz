@@ -17,17 +17,12 @@ const Chat = () => {
         }
     }, [query?.id])
 
+
+
     const isSmallScreen = isMobile || isTablet
 
     return (
         <div className='row'>
-            <Button
-                onClick={() => back()}
-                icon={<i className="fa-solid fa-arrow-left"></i>}
-                style={{ marginBottom: '16px' }}
-            >
-                Ortga
-            </Button>
             {!isSmallScreen && (
                 <>
                     <div className='col-3 p-0'>

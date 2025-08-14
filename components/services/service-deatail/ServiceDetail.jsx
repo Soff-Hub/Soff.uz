@@ -16,7 +16,8 @@ const ServiceDetail = ({ data }) => {
         days: service?.delivery_days,
         price: service?.price,
         revisions: service?.right_to_change,
-        id: service?.id
+        id: service?.id,
+        title: service?.title
     }
 
     const description = {
