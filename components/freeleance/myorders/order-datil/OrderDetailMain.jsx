@@ -1,6 +1,6 @@
 import React from 'react'
-import OrderMain from './order-cols/OrderMain'
-import OrderStatus from './order-cols/OrderStatus'
+import OrderMain from './ui/OrderMain'
+import OrderStatus from './ui/OrderStatus'
 
 const OrderDetailMain = () => {
   return (

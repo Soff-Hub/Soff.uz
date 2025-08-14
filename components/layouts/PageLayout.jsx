@@ -21,9 +21,14 @@ export let cutomerAccountLink = [
         url: '/chat',
         icon: 'fa-solid fa-comment-dots',
     },
+    {
+        text: 'Buyurtmalar',
+        url: '/orders/my-orders',
+        icon: 'fas fa-truck',
+    },
     // {
     //     text: 'Profil',
-    //     url: '/account/settings',
+    //     url: '/account/settings',<i class="fas fa-file-invoice"></i>
     //     icon: 'fa-solid fa-gear',
     // },
 ];

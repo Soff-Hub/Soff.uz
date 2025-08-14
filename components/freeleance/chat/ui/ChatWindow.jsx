@@ -9,6 +9,7 @@ import useEditMessage from '../api/useEditMessage';
 import dayjs from 'dayjs';
 import { useQueryClient } from '@tanstack/react-query';
 import useReadMessage from '../api/useReadMessage';
+import { useSelector } from 'react-redux';
 
 const ChatWindow = ({ chatId, goBack }) => {
     const [editingMessage, setEditingMessage] = useState(null);
@@ -19,6 +20,7 @@ const ChatWindow = ({ chatId, goBack }) => {
     const { mutate: readMsg } = useReadMessage();
     const wsRef = useRef(null);
     const queryClient = useQueryClient()
+    const { user } = useSelector(state => state.auth)
 
     const messagesContainerRef = useRef(null);
 
@@ -55,32 +57,31 @@ const ChatWindow = ({ chatId, goBack }) => {
         });
     }, [chat?.messages]);
 
-    console.log(chat?.chat?.opponent?.id, "_________________________________________")
 
     useEffect(() => {
         if (!chatId || !chat?.chat?.opponent?.id) return;
 
         const ws = new WebSocket(
-            `${process.env.NEXT_PUBLIC_WS_FREELEANCE_URL}${chatId}/${chat.chat.opponent.id}`
+            `${process.env.NEXT_PUBLIC_WS_FREELEANCE_URL}${chatId}/?token=${user?.access}`
         );
         wsRef.current = ws;
 
         ws.onopen = () => {
-            console.log("✅ WebSocket ulandi");
+            console.log("✅ichki chat WebSocket ulandi");
         };
 
         ws.onmessage = (event) => {
             const data = JSON.parse(event.data);
-            console.log("📩 Yangi xabar:", data);
+            console.log("📩 ichki chat Yangi xabar:", data);
             queryClient.invalidateQueries(['chat']);
         };
 
         ws.onerror = (err) => {
-            console.error("❌ WebSocket xatosi:", err);
+            console.error("❌ichki chat WebSocket xatosi:", err);
         };
 
         ws.onclose = () => {
-            console.log("🔌 WebSocket yopildi");
+            console.log("🔌ichki chat WebSocket yopildi");
         };
 
         return () => {

@@ -1,0 +1,54 @@
+.orderNameLink {
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+        color: #00a44f;
+    }
+}
+
+.orderDetailMain {
+    .orderPayCard {
+        display: flex;
+        align-items: center;
+        background: #fff;
+        padding: 16px;
+        border-radius: 12px;
+        border: solid 1px #00a44f;
+    }
+
+    .order{
+        background: #fff;
+        margin-top: 20px;
+        padding: 16px;
+        border: 1px solid #ddd;
+
+        .order_info{
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+
+            img{
+                width: 60px;
+                height: 60px;
+                border-radius: 100%;
+            }
+            h2{
+                margin: 0;
+                font-size: 26px;
+            }
+        }
+
+        .order_date{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+
+            span{
+                font-size: 14px;
+            }
+        }
+    }
+}
