@@ -2,9 +2,18 @@ import { useSelector } from 'react-redux';
 import { useMutation } from '@tanstack/react-query';
 import axiosInstance from '~/components/freeleance/api/freeleanceApi';
 
-const createOrderRequest = async ({ token, id, type, card_number, expire_date }) => {
+const createOrderRequest = async ({ token, service_id, payment_type, card_number, expire_date }) => {
     const axios = axiosInstance(token);
-    const payload = { id, type, card_number, expire_date };
+    const payload = { service_id, payment_type };
+
+    if(card_number){
+        payload.card_number = card_number
+    }
+
+    if(expire_date){
+        payload.expire_date = expire_date
+    }
+
     const { data } = await axios.post("payment/create-service-order/", payload);
     return data;
 };

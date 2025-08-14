@@ -38,23 +38,19 @@ const ServiceCheckout = ({ document }) => {
 
 
 
-    // 📌 CLICK kartasi bilan to'lov
     async function handleClickCardPostsclick(e) {
         e.preventDefault();
         setMessage(false);
 
         createOrder.mutate(
             {
-                id: document?.id, // yoki kerakli id
-                type, // state’dan keladi (click yoki humo)
-                card_number: formattedCardNumber.replace(/\s/g, ''), // probellarni olib tashlash
-                expire_date: numberDate
+                service_id: document,
+                payment_type: type,
             },
             {
                 onSuccess: (data) => {
                     console.log("✅ Click payment success:", data);
                     setMessage(true);
-                    // agar kerak bo‘lsa modal ochish yoki Router.push()
                 },
                 onError: (err) => {
                     console.error("❌ Click payment error:", err);

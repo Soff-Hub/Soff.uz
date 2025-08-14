@@ -1,14 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styles from '../style/chat.module.scss';
-import { Button, Empty, Input } from 'antd';
+import { Button, Empty, Input, Spin } from 'antd';
 import useGetChats from '../api/useGetChats';
 import { truncateTitle } from '~/utilities/TruncateTitle';
 import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
+import { useQueryClient } from '@tanstack/react-query';
 
 const ChatSidebar = ({ setChatId }) => {
     const [search, setSearch] = useState('');
     const [debouncedSearch, setDebouncedSearch] = useState('');
     const { back } = useRouter()
+    const { user } = useSelector(state => state.auth)
+    const queryClient = useQueryClient()
+    const wsRef = useRef(null);
 
     useEffect(() => {
         const handler = setTimeout(() => {
@@ -16,6 +21,37 @@ const ChatSidebar = ({ setChatId }) => {
         }, 300);
         return () => clearTimeout(handler);
     }, [search]);
+
+    useEffect(() => {
+        if (!user?.access) return;
+
+        const ws = new WebSocket(
+            `${process.env.NEXT_PUBLIC_WS_FREELEANCE_URL}?token=${user?.access}`
+        );
+        wsRef.current = ws;
+
+        ws.onopen = () => {
+            console.log("✅chatlar WebSocket ulandi");
+        };
+
+        ws.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            console.log("📩 chatlar Yangi xabar:", data);
+            queryClient.invalidateQueries(['chats']);
+        };
+
+        ws.onerror = (err) => {
+            console.error("❌ chatlar WebSocket xatosi:", err);
+        };
+
+        ws.onclose = () => {
+            console.log("🔌 chatlar WebSocket yopildi");
+        };
+
+        return () => {
+            ws.close();
+        };
+    }, [user?.access]);
 
     const { data: chats, isLoading } = useGetChats(debouncedSearch);
 
@@ -26,7 +62,7 @@ const ChatSidebar = ({ setChatId }) => {
                     onClick={() => back()}
                     icon={<i className="fa-solid fa-arrow-left"></i>}
                 >
-                    
+
                 </Button>
                 <Input.Search
                     placeholder="Chatlarni qidirish"
@@ -36,7 +72,11 @@ const ChatSidebar = ({ setChatId }) => {
                 />
             </div>
             <div className={styles.sidebar_chats}>
-                {isLoading && <p>Qidirilmoqda...</p>}
+                {isLoading && (
+                    <div style={{ textAlign: 'center', padding: '20px' }}>
+                        <Spin size='large' tip="Qidirilmoqda..." />
+                    </div>
+                )}
                 {!isLoading && chats?.length === 0 && (
                     <Empty
                         description="Chat topilmadi"

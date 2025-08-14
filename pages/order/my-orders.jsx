@@ -1,6 +1,6 @@
 import React from 'react'
 import PageLayout from '~/components/layouts/PageLayout'
-import MyOrdersMain from '~/components/myorders/MyOrdersMain'
+import MyOrdersMain from '~/components/freeleance/myorders/MyOrdersMain'
 
 const MyOrders = () => {
   return (
