@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import axiosInstance from './axiosInstance';
+import axiosInstance from '../../api/freeleanceApi';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const useSendMessage = () => {

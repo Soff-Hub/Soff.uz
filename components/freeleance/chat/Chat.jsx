@@ -3,12 +3,11 @@ import ChatSidebar from './ui/ChatSidebar'
 import ChatWindow from './ui/ChatWindow'
 import useResponsive from '~/utilities/useResponsive'
 import { useRouter } from 'next/router'
-import { Button } from 'antd'
 
 const Chat = () => {
     const [chatId, setChatId] = useState(null)
     const { isMobile, isTablet } = useResponsive()
-    const { query, back } = useRouter()
+    const { query } = useRouter()
 
 
     useEffect(() => {

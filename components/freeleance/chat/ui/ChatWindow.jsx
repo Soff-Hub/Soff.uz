@@ -61,7 +61,7 @@ const ChatWindow = ({ chatId, goBack }) => {
         if (!chatId || !chat?.chat?.opponent?.id) return;
 
         const ws = new WebSocket(
-            `ws://192.168.1.60:8000/api/v1/ws/${chatId}/${chat.chat.opponent.id}`
+            `${process.env.NEXT_PUBLIC_WS_FREELEANCE_URL}${chatId}/${chat.chat.opponent.id}`
         );
         wsRef.current = ws;
 

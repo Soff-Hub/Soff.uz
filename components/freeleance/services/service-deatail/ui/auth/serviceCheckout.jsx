@@ -4,8 +4,9 @@ import { Modal, Tabs } from 'antd';
 import { BeatLoader } from 'react-spinners';
 import Router from 'next/router';
 import useCart from '~/hooks/useCart';
+import useCreateOrder from './api/createOrder';
 
-const ServiceCheckout = ({ document, type }) => {
+const ServiceCheckout = ({ document }) => {
     const { user } = useSelector(state => state.auth);
     const [numberCardVal, SetNumberCardVal] = useState(null);
     const [message, setMessage] = useState(true);
@@ -19,6 +20,8 @@ const ServiceCheckout = ({ document, type }) => {
     const { removeAll } = useCart();
     const [buttonOk, setButtonOk] = useState(false);
     const [tab, setTab] = useState(false);
+    const [type, setType] = useState('humo');
+    const createOrder = useCreateOrder();
 
     const numberTyper = value => {
         SetNumberCardVal(value);
@@ -33,16 +36,32 @@ const ServiceCheckout = ({ document, type }) => {
         }
     };
 
+
+
     // 📌 CLICK kartasi bilan to'lov
     async function handleClickCardPostsclick(e) {
         e.preventDefault();
         setMessage(false);
 
-        // API ulaysan
-        // const ItemsData = await PostRepository.postClickCardNumber(...)
-
-        setMessage(true);
-        // API dan kelgan response bo'yicha modal yoki Router.push(...)
+        createOrder.mutate(
+            {
+                id: document?.id, // yoki kerakli id
+                type, // state’dan keladi (click yoki humo)
+                card_number: formattedCardNumber.replace(/\s/g, ''), // probellarni olib tashlash
+                expire_date: numberDate
+            },
+            {
+                onSuccess: (data) => {
+                    console.log("✅ Click payment success:", data);
+                    setMessage(true);
+                    // agar kerak bo‘lsa modal ochish yoki Router.push()
+                },
+                onError: (err) => {
+                    console.error("❌ Click payment error:", err);
+                    setMessage(true);
+                }
+            }
+        );
     }
 
     // 📌 Oddiy karta raqami orqali to'lov
@@ -131,6 +150,11 @@ const ServiceCheckout = ({ document, type }) => {
 
     const onChange = key => {
         setTab(key);
+        if (key === '1') {
+            setType('humo');
+        } else if (key === '2') {
+            setType('click');
+        }
     };
 
     const items = [
