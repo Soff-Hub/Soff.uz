@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback, useDeferredValue } from 'react';
 import styles from '../style/chat.module.scss';
 import { Input, Button, Avatar, Empty } from 'antd';
 import { ArrowLeftOutlined, SendOutlined } from '@ant-design/icons';
@@ -14,17 +14,25 @@ import { useSelector } from 'react-redux';
 const ChatWindow = ({ chatId, goBack }) => {
     const [editingMessage, setEditingMessage] = useState(null);
     const [newMessage, setNewMessage] = useState('');
+    // const deferredMessage = useDeferredValue(newMessage); // typing lag kamaytirish
+
     const { mutate: sendMessage } = useSendMessage();
     const { data: chat } = useGetChatById(chatId);
     const { mutate: editMessage } = useEditMessage();
     const { mutate: readMsg } = useReadMessage();
-    const wsRef = useRef(null);
-    const queryClient = useQueryClient()
-    const { user } = useSelector(state => state.auth)
+    const { user } = useSelector(state => state.auth);
 
+    const wsRef = useRef(null);
+    const queryClient = useQueryClient();
     const messagesContainerRef = useRef(null);
 
-    const handleSend = () => {
+    const scrollToBottom = useCallback(() => {
+        if (messagesContainerRef.current) {
+            messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+        }
+    }, []);
+
+    const handleSend = useCallback(() => {
         if (!newMessage.trim()) return;
 
         if (editingMessage) {
@@ -33,31 +41,35 @@ const ChatWindow = ({ chatId, goBack }) => {
         } else {
             sendMessage({ chat_id: chatId, content: newMessage });
         }
-
         setNewMessage('');
-    };
+    }, [newMessage, editingMessage, chatId, sendMessage, editMessage]);
+
+    const handleEdit = useCallback((message) => {
+        setEditingMessage(message);
+        setNewMessage(message.content);
+    }, []);
 
     useEffect(() => {
-        if (messagesContainerRef.current) {
-            messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
-        }
-    }, [chat]);
+        scrollToBottom();
+    }, [chat?.messages?.length, scrollToBottom]);
 
+    // ✅ Unread messages uchun debounce
     useEffect(() => {
         if (!chat?.messages) return;
 
-        const unreadMessages = chat.messages.filter(
-            (m) => !m.is_mine && !m.is_read
-        );
-
+        const unreadMessages = chat.messages.filter(m => !m.is_mine && !m.is_read);
         if (unreadMessages.length === 0) return;
 
-        unreadMessages.forEach((m) => {
-            readMsg({ id: m.id });
-        });
-    }, [chat?.messages]);
+        const timer = setTimeout(() => {
+            unreadMessages.forEach((m) => {
+                readMsg({ id: m.id });
+            });
+        }, 300);
 
+        return () => clearTimeout(timer);
+    }, [chat?.messages, readMsg]);
 
+    // ✅ WebSocket bilan faqat yangi xabar qo‘shish
     useEffect(() => {
         if (!chatId || !chat?.chat?.opponent?.id) return;
 
@@ -66,28 +78,24 @@ const ChatWindow = ({ chatId, goBack }) => {
         );
         wsRef.current = ws;
 
-        ws.onopen = () => {
-            console.log("✅ichki chat WebSocket ulandi");
-        };
+        ws.onopen = () => console.log("✅ WebSocket ulandi");
 
         ws.onmessage = (event) => {
             const data = JSON.parse(event.data);
-            console.log("📩 ichki chat Yangi xabar:", data);
-            queryClient.invalidateQueries(['chat']);
+            queryClient.setQueryData(['chat'], old => {
+                if (!old) return { messages: [data] };
+                return {
+                    ...old,
+                    messages: [...(old.messages || []), data]
+                };
+            });
         };
 
-        ws.onerror = (err) => {
-            console.error("❌ichki chat WebSocket xatosi:", err);
-        };
+        ws.onerror = (err) => console.error("❌ WebSocket xatosi:", err);
+        ws.onclose = () => console.log("🔌 WebSocket yopildi");
 
-        ws.onclose = () => {
-            console.log("🔌ichki chat WebSocket yopildi");
-        };
-
-        return () => {
-            ws.close();
-        };
-    }, [chatId, chat?.chat?.opponent?.id]);
+        return () => ws.close();
+    }, [chatId, chat?.chat?.opponent?.id, user?.access, queryClient]);
 
     if (!chatId) {
         return (
@@ -103,9 +111,9 @@ const ChatWindow = ({ chatId, goBack }) => {
     return (
         <div className={styles.chat_window}>
             <div className={styles.chat_user}>
-                {goBack &&
+                {goBack && (
                     <ArrowLeftOutlined style={{ cursor: "pointer" }} onClick={goBack} />
-                }
+                )}
                 <Avatar
                     size={50}
                     src={<img src="/static/img/ozodbek.png" alt="user img" />}
@@ -113,17 +121,12 @@ const ChatWindow = ({ chatId, goBack }) => {
                 <div className={styles.user_box}>
                     <div className={styles.user_names}>
                         <h4>{chat?.chat?.opponent?.name}</h4>
-                        {/* <p>user full_name</p> */}
-                        {/* <span>9:01</span> */}
                     </div>
                     <span>{chat?.chat?.opponent?.last_seen}</span>
                 </div>
             </div>
 
-            <div
-                className={styles.chat_messages}
-                ref={messagesContainerRef}
-            >
+            <div className={styles.chat_messages} ref={messagesContainerRef}>
                 {chat?.chat?.created_at && (
                     <div className={styles.chat_created_time}>
                         {dayjs(chat.created_at).format("YYYY-MM-DD HH:mm")}
@@ -135,27 +138,18 @@ const ChatWindow = ({ chatId, goBack }) => {
                         <ChatMessage
                             key={msg.id}
                             msg={msg}
-                            onEdit={(message) => {
-                                setEditingMessage(message);
-                                setNewMessage(message.content);
-                            }}
-
+                            onEdit={handleEdit}
                         />
                     ))
                 ) : (
-                    <div className="text-center text-muted py-3">
-                        Xabarlar yo‘q
-                    </div>
+                    <div className="text-center text-muted py-3">Xabarlar yo‘q</div>
                 )}
             </div>
 
             <div className={styles.chat_input_box}>
                 {editingMessage && (
                     <div className="text-warning mb-1">
-                        <Button onClick={() => {
-                            setEditingMessage(null)
-                            setNewMessage('')
-                        }}>
+                        <Button onClick={() => { setEditingMessage(null); setNewMessage(''); }}>
                             Bekor qilish
                         </Button>
                     </div>
@@ -171,9 +165,8 @@ const ChatWindow = ({ chatId, goBack }) => {
                     style={{ background: '#00A44F' }}
                     type="primary"
                     onClick={handleSend}
-                    // icon={}
                 >
-                    <SendOutlined style={{fontSize: "20px"}}/>
+                    <SendOutlined style={{ fontSize: "20px" }} />
                 </Button>
             </div>
         </div>

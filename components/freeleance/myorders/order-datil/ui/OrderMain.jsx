@@ -38,7 +38,7 @@ const OrderMain = () => {
     ]
 
     return (
-        <div className='col-md-9 col-12'>
+        <div className='col-lg-9 col-12 mb-5'>
             <div className={styles.orderDetailMain}>
                 <div className={styles.orderPayCard}>
                     <div>
