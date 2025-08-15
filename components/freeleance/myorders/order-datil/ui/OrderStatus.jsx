@@ -5,6 +5,27 @@ import { Steps } from 'antd'
 const OrderStatus = ({ order }) => {
     const priceFormatted = new Intl.NumberFormat('uz-UZ').format(order?.service?.price) + " so'm"
 
+    const orderStatus = {
+        "pending": 1,
+        "approved": 2,
+        "requirement_file": 3,
+        "requirement_file_rejected": 3,
+        "order_accepted": 4,
+        "order_file_sent": 5,
+        "completed": 6,
+    }  //requirement_file_rejected
+
+
+    const orderStatusName = {
+        "pending": "Buyurtma yaratildi",
+        "approved": "To'lov qilindi" ,
+        "requirement_file": "Buyurtma talablari jo'natildi",
+        "requirement_file_rejected": "Buyurma talablari toliq emas",
+        "order_accepted": "Buyurtma qabul qilindi" ,
+        "order_file_sent": "Tasdiqlash uchun topshirildi",
+        "completed": "Buyurtma tugallandi",
+    }  //requirement_file_rejected
+
     return (
         <div className='col-12 col-lg-3'>
             {/* Order info */}
@@ -12,9 +33,7 @@ const OrderStatus = ({ order }) => {
                 <div className={styles.status_info}>
                     <span>Buyurtma holati</span>
                     <p>
-                        {order?.transaction_status === 'pending'
-                            ? "To'lov kutilmoqda"
-                            : order?.transaction_status}
+                        {orderStatusName[order?.order_status_doing?.status]}
                     </p>
                 </div>
                 <div className={styles.status_price}>
@@ -44,7 +63,8 @@ const OrderStatus = ({ order }) => {
                 <Steps
                     direction="vertical"
                     className={styles.greenSteps}
-                    current={order?.transaction_status === 'pending' ? 0 : 1}
+                    current={orderStatus[order?.order_status_doing?.status]}
+                    status={order?.order_status_doing?.status == "requirement_file_rejected" && "error"}
                     items={[
                         { title: `Buyurtma yaratildi` },
                         { title: "To'lov qilindi" },

@@ -1,17 +1,35 @@
-import { Breadcrumb, Button, Table } from 'antd'
-import React from 'react'
-import styles from '../style/style.module.scss'
-import Link from 'next/link'
-import dayjs from 'dayjs'
-import 'dayjs/locale/uz-latn'; // lotincha o‘zbekcha locale
+import { Breadcrumb, Button, Table, Modal, message, Input, Rate } from 'antd';
+import { DownloadOutlined } from '@ant-design/icons';
+import React, { useState } from 'react';
+import styles from '../style/style.module.scss';
+import Link from 'next/link';
+import dayjs from 'dayjs';
+import 'dayjs/locale/uz-latn';
+import RequirementModal from './modals/RequirementModal';
+import { formatCurrencyWithSpace } from '~/utilities/product-helper';
+import ServiceCheckout from '~/components/freeleance/services/service-deatail/ui/auth/serviceCheckout';
+import useGetFile from '../api/useGetFile';
+import useSubmit from '../api/useSubmit';
 
 dayjs.locale('uz-latn');
 
 const OrderMain = ({ order }) => {
+    const [open, setOpen] = useState(false);
+    const [feedbackOpen, setFeedbackOpen] = useState(false);
+    const [text, setText] = useState('')
+    const [res, setRes] = useState('')
+    const [isOpen, setIsOpen] = useState(false);
+    const [showPayment, setShowPayment] = useState(false);
+    const [rate, setRate] = useState()
+    const { data: file } = useGetFile(order?.id)
+    const  submit  = useSubmit()
+
     const items = [
         { title: <Link href={"/order/my-orders"}>Mening buyurtmalarim</Link> },
         { title: `#${order?.id}` }
-    ]
+    ];
+
+    const { TextArea } = Input
 
     const columns = [
         {
@@ -40,9 +58,8 @@ const OrderMain = ({ order }) => {
             key: 'price',
             render: (price) => `${price.toLocaleString('uz-UZ')} so'm`,
         }
-    ]
+    ];
 
-    // Table ma'lumotlari — API'dan to‘g‘ridan-to‘g‘ri keladi
     const data = [
         {
             key: order?.id,
@@ -51,12 +68,15 @@ const OrderMain = ({ order }) => {
             delivery: `${order?.service?.delivery_days || 0} kun`,
             price: order?.service?.price || 0,
         },
-    ]
+    ];
+
 
     return (
         <div className='col-lg-9 col-12 mb-5'>
             <div className={styles.orderDetailMain}>
-                {order?.transaction_status === "pending" &&
+
+                {/* Oldingi kartochkalar */}
+                {order?.order_status_doing?.status === "pending" &&
                     <div className={styles.orderPayCard}>
                         <div>
                             <h3 className={styles.orderNameLink}>To'lov kutilmoqda</h3>
@@ -73,9 +93,73 @@ const OrderMain = ({ order }) => {
                                 borderColor: '#00a44f',
                                 padding: '16px 28px',
                             }}
+                            onClick={() => setIsOpen(true)}
                         >
                             To'lash
                         </Button>
+                    </div>
+                }
+
+                {(order?.order_status_doing?.status === "approved" || order?.order_status_doing?.status === "requirement_file_rejected") &&
+                    <div className={styles.orderPayCard}>
+                        <div>
+                            <h3 className={styles.orderNameLink}>Buyurtma talablari kutilmoqda</h3>
+                            {order?.status_doing === "approved" &&
+                                <p>
+                                    Siz to‘lovni amalga oshirdingiz. Endi sotuvchi ishni boshlashi uchun
+                                    kerakli materiallar va ko‘rsatmalarni yuboring.
+                                </p>
+                            }
+                            {order?.status_doing === "requirement_file_rejected" &&
+                                <p>
+                                    Siz yuborgan materiallar yoki ko‘rsatmalar yetarli emasligi sababli
+                                    sotuvchi ularni rad etdi. Iltimos, ishni boshlash uchun barcha
+                                    kerakli fayllar va aniq ko‘rsatmalarni qayta yuboring.
+                                </p>
+                            }
+                        </div>
+                        <Button
+                            type="primary"
+                            style={{
+                                backgroundColor: '#00a44f',
+                                borderColor: '#00a44f',
+                                padding: '16px 28px',
+                            }}
+                            onClick={() => setOpen(true)}
+                        >
+                            Talablarni yuborish
+                        </Button>
+                    </div>
+                }
+
+                {/* Seller ishni tugatganda */}
+                {order?.order_status_doing?.status === "order_file_sent" &&
+                    <div className={styles.orderPayCard}>
+                        <div>
+                            <h3 className={styles.orderNameLink}>Ishni qabul qilish</h3>
+                            <p>
+                                Sotuvchi buyurtmani yakunladi va natijani sizga jo‘natdi.
+                                Natijani yuklab olib ko‘rib chiqing va tasdiqlang yoki rad eting.
+                            </p>
+                        </div>
+                        <div style={{ display: 'flex', gap: 12 }}>
+                            <Button
+                                icon={<DownloadOutlined />}
+                                onClick={() => window.open(file?.file, "_blank")}
+                            >
+                                Faylni  yuklab olish
+                            </Button>
+                            <Button
+                                type="primary"
+                                style={{
+                                    backgroundColor: '#00a44f',
+                                    borderColor: '#00a44f'
+                                }}
+                                onClick={() => setFeedbackOpen(true)}
+                            >
+                                Natijani baholash
+                            </Button>
+                        </div>
                     </div>
                 }
 
@@ -100,8 +184,198 @@ const OrderMain = ({ order }) => {
                     <Table columns={columns} dataSource={data} pagination={false} />
                 </div>
             </div>
-        </div>
-    )
-}
 
-export default OrderMain
+            {/* Talab yuborish modali */}
+            <RequirementModal
+                visible={open}
+                onClose={() => setOpen(false)}
+                orderId={order?.id}
+            />
+
+            {/* Fikr bildirish modali */}
+            <Modal
+                title="Natija bo‘yicha fikringiz"
+                open={feedbackOpen}
+                onCancel={() => {
+                    setFeedbackOpen(false)
+                    setRes('')
+                    setText('')
+                }}
+                footer={
+                    res === "" ? [
+                        <Button key="rejected" danger onClick={() => setRes("rejected")}>
+                            Kamchilik aniqlandi
+                        </Button>,
+                        <Button key="complected" type="primary" onClick={() => setRes("complected")}>
+                            Qabul qilish
+                        </Button>
+                    ] : [
+                        <Button
+                            key="submit"
+                            type="primary"
+                            loading={submit.isPending} // yuklanish animatsiyasi
+                            onClick={() => {
+                                if (res === "rejected" && !text.trim()) {
+                                    message.error("Kamchiliklarni yozishingiz kerak");
+                                    return;
+                                } else if (res === "complected" && (!text.trim() || !rate)) {
+                                    message.error("Fikr va bahoni yozishingiz kerak");
+                                    return;
+                                }
+
+                                const payload = { id: order?.id };
+
+                                // Status har doim bo'ladi
+                                payload.status = res === "rejected" ? "rejected" : "completed";
+
+                                // Faqat kerak bo'lsa qo'shamiz
+                                if (res === "rejected" && text) {
+                                    payload.reason = text;
+                                }
+                                if (res === "complected" && rate) {
+                                    payload.rating = rate;
+                                }
+                                if (res === "complected" && text) {
+                                    payload.comment = text;
+                                }
+
+                                submit.mutate(
+                                    payload,
+                                    {
+                                        onSuccess: () => {
+                                            message.success("Fikringiz yuborildi");
+                                            setFeedbackOpen(false);
+                                            setRes('');
+                                            setText('');
+                                            setRate(undefined);
+                                        },
+                                        onError: () => {
+                                            message.error("Fikr yuborishda xatolik yuz berdi");
+                                        }
+                                    }
+                                );
+                            }}
+                        >
+                            Yuborish
+                        </Button>
+                    ]
+                }
+            >
+                {res === "" && (
+                    <p>
+                        Natijani diqqat bilan ko‘rib chiqing.
+                        Agar hammasi siz kutgandek bo‘lsa — <b>“Qabul qilish”</b> tugmasini bosing.
+                        Agar muammolar bo‘lsa yoki to‘liq bo‘lmasa — <b>“Kamchilik aniqlandi”</b> tugmasini bosing.
+                    </p>
+                )}
+
+                {res === "complected" && (
+                    <>
+                        <p>
+                            Siz natijani qabul qildingiz. <br />
+                            Endi xizmat haqida oz fikringizni yozib qoldiring va ishni yakunlang.
+                        </p>
+                        <Rate allowHalf={false} value={rate} onChange={(val) => setRate(val)} />
+                        <TextArea
+                            placeholder="Xizmat haqida fikrlaringizni yozib qoldiring"
+                            rows={3}
+                            value={text}
+                            onChange={(e) => setText(e.target.value)}
+                        />
+                    </>
+
+                )}
+
+                {res === "rejected" && (
+                    <>
+                        <p>
+                            Kamchiliklarni iloji boricha batafsil yozing.
+                            Bu sotuvchiga tezroq tuzatish kiritishga yordam beradi.
+                        </p>
+                        <TextArea
+                            placeholder="Ishning aniqlangan kamchiliklarini yozing"
+                            rows={3}
+                            value={text}
+                            onChange={(e) => setText(e.target.value)}
+                        />
+                    </>
+                )}
+            </Modal>
+
+            <Modal
+                open={isOpen}
+                onCancel={() => {
+                    setIsOpen(false);
+                    setShowPayment(false);
+                }}
+                footer={null}
+                width={600}>
+                <div className="type_payment p-lg-5 p-md-5 p-4">
+                    {!showPayment ? (
+                        <>
+                            <h3 className="type_payment_h3 text-center mb-4">
+                                Buyurtma uchun to'lovni amalga oshiring
+                            </h3>
+
+                            <div className="security-message mb-4 text-center">
+                                <i className="fa-solid fa-shield-halved text-success fs-4 mb-2"></i>
+                                <p className="text-muted mb-0">
+                                    Sizning to'lovingiz Soff tizimi tomonidan xavfsiz saqlanadi.
+                                    Mutaxassisga to'lov faqat siz ishni ko'rib chiqib, tasdiqlaganingizdan so'ng amalga oshiriladi.
+                                </p>
+                            </div>
+
+                            <div className="service-details-box bg-white border rounded p-3 mb-4">
+                                <div className="d-flex justify-content-between align-items-center">
+                                    <div className="d-flex align-items-center">
+                                        <i className="fa-solid fa-file-lines text-primary me-3 fs-4"></i>
+                                        <div>
+                                            {/* <h5 className="mb-1 fw-bold">{title}</h5> */}
+                                            <p className="text-muted mb-0 small">{order?.service?.title}</p>
+                                        </div>
+                                    </div>
+                                    <div className="text-end">
+                                        <h4 className="text-primary mb-0 fw-bold">
+                                            {formatCurrencyWithSpace(order?.service?.price)} so'm
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="text-center">
+                                <Button
+                                    type="primary"
+                                    size="large"
+                                    className="px-5 py-2"
+                                    style={{ backgroundColor: '#28a745', borderColor: '#28a745' }}
+                                    onClick={() => setShowPayment(true)}>
+                                    Buyurma berish
+                                    <i className="fa-solid fa-arrow-right ms-2"></i>
+                                </Button>
+                            </div>
+                        </>
+                    ) : (
+                        <>
+                            <div className="d-flex justify-content-between align-items-center mb-4">
+                                <h3 className="type_payment_h3 mb-0">
+                                    To'lov turini tanlang:
+                                </h3>
+                                <Button
+                                    type="text"
+                                    icon={<i className="fa-solid fa-arrow-left"></i>}
+                                    onClick={() => setShowPayment(false)}>
+                                    Orqaga
+                                </Button>
+                            </div>
+                            <div className="bg-white">
+                                <ServiceCheckout document={order?.service?.id} order_id={order?.id} />
+                            </div>
+                        </>
+                    )}
+                </div>
+            </Modal>
+        </div>
+    );
+};
+
+export default OrderMain;

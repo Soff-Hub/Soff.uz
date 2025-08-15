@@ -15,7 +15,7 @@ export async function getServerSideProps(context) {
     const { slug } = context.params
     const axios = axiosInstance()
 
-    const { data } = await axios.get(`http://176.96.241.219:8005/api/v1/customer/${slug}/`)
+    const { data } = await axios.get(`${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/customer/${slug}/`)
 
     return {
         props: {

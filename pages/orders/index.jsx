@@ -51,8 +51,8 @@ export async function getServerSideProps(context) {
         offset
     });
 
-    const servicesUrl = `http://176.96.241.219:8005/api/v1/customer?${servicesQuery.toString()}`;
-    const parentCategoryUrl = `http://176.96.241.219:8005/api/v1/categories/`;
+    const servicesUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/customer?${servicesQuery.toString()}`;
+    const parentCategoryUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/categories/`;
     console.log(servicesUrl)
 
     const [servicesRes, parentCategoryRes] = await Promise.all([
@@ -66,7 +66,7 @@ export async function getServerSideProps(context) {
     let childCategory = [];
     if (parent_category_id) {
         const childCategoryRes = await fetch(
-            `http://176.96.241.219:8005/api/v1/categories?parent_id=${parent_category_id}`
+            `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/categories?parent_id=${parent_category_id}`
         );
         childCategory = childCategoryRes.ok ? await childCategoryRes.json() : [];
     }
