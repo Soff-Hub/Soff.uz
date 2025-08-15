@@ -1,7 +1,7 @@
 import { Tabs, Dropdown, Menu, Button } from 'antd';
 import React, { useState, useEffect } from 'react';
 import { MoreOutlined } from '@ant-design/icons';
-import { AllOrdersTable, AwaitPayOrdersTable, CancelledOrdersTable, CompletedOrdersTable } from './MyOrderTable';
+import { AllOrdersTable } from './MyOrderTable';
 
 const MyOrderTabs = () => {
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 500);
@@ -18,9 +18,9 @@ const MyOrderTabs = () => {
 
     const items = [
         { key: '1', label: 'Barchasi', children: <AllOrdersTable /> },
-        { key: '2', label: 'Bekor qilingan', children: <CancelledOrdersTable /> },
-        { key: '3', label: 'To‘lash kutilyotgan', children: <AwaitPayOrdersTable /> },
-        { key: '4', label: 'Tugatilgan', children: <CompletedOrdersTable /> },
+        { key: '2', label: 'Bekor qilingan', children: <AllOrdersTable /> },
+        { key: '3', label: 'To‘lash kutilyotgan', children: <AllOrdersTable /> },
+        { key: '4', label: 'Tugatilgan', children: <AllOrdersTable /> },
     ];
 
     const menuItems = items.map(item => ({
@@ -41,7 +41,7 @@ const MyOrderTabs = () => {
             {isMobile ? (
                 <>
                     <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
-                        <Button style={{marginBottom: "20px"}} iconPosition='end' icon={<MoreOutlined />} className="dropdown-button">
+                        <Button style={{ marginBottom: '20px' }} iconPosition='end' icon={<MoreOutlined />} className="dropdown-button">
                             {items.find(item => item.key === activeKey)?.label}
                         </Button>
                     </Dropdown>

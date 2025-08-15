@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect, useCallback, useDeferredValue } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import styles from '../style/chat.module.scss';
-import { Input, Button, Avatar, Empty } from 'antd';
+import { Input, Button, Avatar, Empty, Spin } from 'antd';
 import { ArrowLeftOutlined, SendOutlined } from '@ant-design/icons';
 import useSendMessage from '../api/useSendMessage';
 import useGetChatById from '../api/useGetChatById';
@@ -14,10 +14,9 @@ import { useSelector } from 'react-redux';
 const ChatWindow = ({ chatId, goBack }) => {
     const [editingMessage, setEditingMessage] = useState(null);
     const [newMessage, setNewMessage] = useState('');
-    // const deferredMessage = useDeferredValue(newMessage); // typing lag kamaytirish
 
     const { mutate: sendMessage } = useSendMessage();
-    const { data: chat } = useGetChatById(chatId);
+    const { data: chat, isLoading, isError } = useGetChatById(chatId);
     const { mutate: editMessage } = useEditMessage();
     const { mutate: readMsg } = useReadMessage();
     const { user } = useSelector(state => state.auth);
@@ -53,7 +52,6 @@ const ChatWindow = ({ chatId, goBack }) => {
         scrollToBottom();
     }, [chat?.messages?.length, scrollToBottom]);
 
-    // ✅ Unread messages uchun debounce
     useEffect(() => {
         if (!chat?.messages) return;
 
@@ -69,7 +67,6 @@ const ChatWindow = ({ chatId, goBack }) => {
         return () => clearTimeout(timer);
     }, [chat?.messages, readMsg]);
 
-    // ✅ WebSocket bilan faqat yangi xabar qo‘shish
     useEffect(() => {
         if (!chatId || !chat?.chat?.opponent?.id) return;
 
@@ -133,7 +130,13 @@ const ChatWindow = ({ chatId, goBack }) => {
                     </div>
                 )}
 
-                {chat?.messages?.length > 0 ? (
+                {isLoading && (
+                    <div style={{ textAlign: 'center', padding: '20px' }}>
+                        <Spin size='large' tip="Qidirilmoqda..." />
+                    </div>
+                )}
+
+                {chat?.messages?.length > 0 && !isLoading && (
                     chat.messages.map((msg) => (
                         <ChatMessage
                             key={msg.id}
@@ -141,8 +144,13 @@ const ChatWindow = ({ chatId, goBack }) => {
                             onEdit={handleEdit}
                         />
                     ))
-                ) : (
-                    <div className="text-center text-muted py-3">Xabarlar yo‘q</div>
+                )}
+
+                {!isLoading && chat?.messages?.length === 0 && (
+                    <Empty
+                        description="Hozircha xabarlar yo'q"
+                        image={Empty.PRESENTED_IMAGE_SIMPLE}
+                    />
                 )}
             </div>
 
