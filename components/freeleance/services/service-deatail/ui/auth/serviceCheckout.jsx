@@ -5,6 +5,7 @@ import { BeatLoader } from 'react-spinners';
 import Router from 'next/router';
 import useCart from '~/hooks/useCart';
 import useCreateOrder from './api/createOrder';
+import { useVerifyCode } from './api/verifyCode';
 
 const ServiceCheckout = ({ document }) => {
     const { user } = useSelector(state => state.auth);
@@ -20,8 +21,12 @@ const ServiceCheckout = ({ document }) => {
     const { removeAll } = useCart();
     const [buttonOk, setButtonOk] = useState(false);
     const [tab, setTab] = useState(false);
-    const [type, setType] = useState('humo');
+    const [type, setType] = useState('card');
     const createOrder = useCreateOrder();
+    const [formattedCardNumber, setFormattedCardNumber] = useState('');
+    const [numberDate, setNumberDate] = useState('');
+
+    const verifyCode = useVerifyCode()
 
     const numberTyper = value => {
         SetNumberCardVal(value);
@@ -65,39 +70,68 @@ const ServiceCheckout = ({ document }) => {
         e.preventDefault();
         setMessage(false);
 
-        // API ulaysan
-        // const ItemsData = await PostRepository.postClickCard(...)
-
-        setMessage(true);
-        // API dan kelgan response bo'yicha modal ochish yoki error ko'rsatish
+        createOrder.mutate(
+            {
+                service_id: document,
+                payment_type: type,
+                card_number: formattedCardNumber.replace(/\s/g, ""),
+                expire_date: numberDate.replace("/", "")
+            },
+            {
+                onSuccess: (data) => {
+                    console.log("✅ Click payment success:", data);
+                    setMessage(true);
+                    setOpen(true)
+                    setResData(data)
+                },
+                onError: (err) => {
+                    console.error("❌ Click payment error:", err);
+                    setMessage(true);
+                }
+            }
+        );
     }
+
 
     // 📌 SMS kodi tasdiqlash
     async function handleSubmitCode() {
         setButtonOk(true);
-
-        // API ulaysan
-        // const dataNews = await PostRepository.postClickCode(...)
-
+        verifyCode.mutate(
+            {
+                transaction_id: resData?.transaction_id,
+                code
+            },
+            {
+                onSuccess: (data) => {
+                    setResDataCode(data);
+                },
+                onError: (error) => {
+                    // Agar backend detail yuborsa
+                    const errorMessage = error?.response?.data || { detail: "Noma'lum xato" };
+                    setResDataCode(errorMessage);
+                }
+            }
+        );
         setButtonOk(false);
-        // API javobiga qarab success yoki error modal
     }
 
     useEffect(() => {
         if (resData?.status === 201) {
-            setTime(120);
+            setTime(120); // 2 daqiqa
+
             const timerID = setInterval(() => {
-                setTime(prevTime => {
-                    if (prevTime <= 0) {
+                setTime(prev => {
+                    if (prev <= 1) {
                         clearInterval(timerID);
                         setResData(null);
                         setOpen(false);
                         return 0;
-                    } else {
-                        return prevTime - 1;
                     }
+                    return prev - 1;
                 });
             }, 1000);
+
+            return () => clearInterval(timerID);
         }
     }, [resData]);
 
@@ -106,10 +140,10 @@ const ServiceCheckout = ({ document }) => {
         setResData(null);
     }
 
-    const formattedTime = new Date(time * 1000).toISOString().substr(14, 5);
+    const formattedTime = `${String(Math.floor(time / 60)).padStart(2, '0')}:${String(time % 60).padStart(2, '0')}`;
 
-    const [formattedCardNumber, setFormattedCardNumber] = useState('');
-    const [numberDate, setNumberDate] = useState('');
+
+
 
     const handleCardNumberChange = e => {
         const inputValue = e.target.value.replace(/\D/g, '');
@@ -147,7 +181,7 @@ const ServiceCheckout = ({ document }) => {
     const onChange = key => {
         setTab(key);
         if (key === '1') {
-            setType('humo');
+            setType('card');
         } else if (key === '2') {
             setType('click');
         }
@@ -223,7 +257,7 @@ const ServiceCheckout = ({ document }) => {
                         cancelText='Orqaga'
                     >
                         <>
-                            <p>Kod quyidagi raqamga yuborildi: {resData?.data?.phone_number}</p>
+                            <p>Kod quyidagi raqamga yuborildi: {resData?.phone_number}</p>
                             <input
                                 onChange={e => setCode(e.target.value)}
                                 type='tel'
@@ -232,9 +266,9 @@ const ServiceCheckout = ({ document }) => {
                                 className='form-control text-center rounded-3 fs-3'
                             />
                             <strong className='text-danger'>{formattedTime}</strong>
-                            <p className='text-danger'>
-                                {resDataCode?.data?.msg?.[0] === 'Parol xato' && resDataCode?.data?.msg}
-                            </p>
+                            {resDataCode?.detail && (
+                                <p className='text-danger'>{resDataCode.detail}</p>
+                            )}
                         </>
                     </Modal>
                 </div>

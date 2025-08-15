@@ -1,9 +1,10 @@
 import { Table, Modal, Button, Space } from 'antd';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
+import useGetOrders from './api/useGetOrders';
 
 const getColumns = ({ onCancel }) => {
-    const router = useRouter()
+    const router = useRouter();
     return [
         {
             title: 'Buyurtma nomi',
@@ -11,7 +12,10 @@ const getColumns = ({ onCancel }) => {
             render: (text, record) => (
                 <span
                     onClick={() => router.push(`/order/${record.key}`)}
-                    className='order_name_link '
+                    className='order_name_link'
+                    style={{
+                        cursor: "pointer"
+                    }}
                 >
                     {text}
                 </span>
@@ -28,147 +32,47 @@ const getColumns = ({ onCancel }) => {
         {
             title: 'Narx',
             dataIndex: 'price',
-            render: (price) => `$${price}`,
+            render: (price) => `${price} so'm`,
         },
         {
-            title: 'Xolati',
+            title: 'Holati',
             dataIndex: 'status',
             render: (_, record) => {
-                if (record.status === 'pay') {
+                if (record.status !== 'pay') {
                     return (
-                        <Space direction="vertical" size={6} style={{ width: '100%' }}>
+                        <Space direction="vertical" size={6} >
                             <Button
-                                type="primary"
                                 block
+                                type="primary"
+                                
                                 style={{ backgroundColor: '#00a44f', borderColor: '#00a44f' }}
                             >
-                                To‘lash
+                                <i class="fa-solid fa-money-bill-transfer"></i>
                             </Button>
                             <Button
                                 block
-                                type="default"
+                                type="primary"
+                                danger
                                 onClick={() => onCancel(record)}
-                                style={{
-                                    color: '#1890ff',
-                                    borderColor: '#1890ff',
-                                }}
                                 className="cancel-btn"
                             >
-                                Bekor qilish
+                               <i class="fa-solid fa-xmark "></i>
                             </Button>
                         </Space>
                     );
                 }
-                return record.status.charAt(0).toUpperCase() + record.status.slice(1);
+                return record.status
+                    ? record.status.charAt(0).toUpperCase() + record.status.slice(1)
+                    : '-';
             },
         },
     ];
-
-}
-
-const allOrders = [
-    {
-        key: '1',
-        order_name: 'Logo Design',
-        seller: 'John Doe',
-        ordered_at: '2025-08-01',
-        price: 50,
-        status: 'active',
-    },
-    {
-        key: '2',
-        order_name: 'Video Editing',
-        seller: 'Bob Brown',
-        ordered_at: '2025-06-20',
-        price: 80,
-        status: 'pay',
-    },
-    {
-        key: '3',
-        order_name: 'Website Development',
-        seller: 'Jane Smith',
-        ordered_at: '2025-07-15',
-        price: 300,
-        status: 'completed',
-    },
-];
-
-const completedOrders = [
-    {
-        key: '2',
-        order_name: 'Website Development',
-        seller: 'Jane Smith',
-        ordered_at: '2025-07-15',
-        price: 300,
-        status: 'completed',
-    },
-];
-
-const cancelledOrders = [
-    {
-        key: '3',
-        order_name: 'Video Editing',
-        seller: 'Bob Brown',
-        ordered_at: '2025-06-20',
-        price: 80,
-        status: 'cancelled',
-    },
-];
-
-const awaitPayOrdersTable = [
-    {
-        key: '3',
-        order_name: 'Video Editing',
-        seller: 'Bob Brown',
-        ordered_at: '2025-06-20',
-        price: 80,
-        status: 'pay',
-    }
-]
-
-export const AwaitPayOrdersTable = () => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedOrder, setSelectedOrder] = useState(null);
-
-    const handleCancelClick = (record) => {
-        setSelectedOrder(record);
-        setIsModalOpen(true);
-    };
-
-    const handleModalOk = () => {
-        console.log('Bekor qilindi:', selectedOrder);
-        setIsModalOpen(false);
-    };
-
-    const handleModalCancel = () => {
-        setIsModalOpen(false);
-    };
-
-    return (
-        <>
-            <Table
-                columns={getColumns({ onCancel: handleCancelClick })}
-                pagination={false}
-                dataSource={awaitPayOrdersTable}
-                scroll={{ x: 'max-content' }}
-            />
-            <Modal
-                title='Buyurtmani bekor qilish'
-                open={isModalOpen}
-                onOk={handleModalOk}
-                onCancel={handleModalCancel}
-                okText='Bekor qilish'
-                cancelText='Yopish'
-            >
-                <p>Haqiqatan ham “{selectedOrder?.order_name}” buyurtmasini bekor qilmoqchimisiz?</p>
-            </Modal>
-        </>
-    );
 };
 
 export const AllOrdersTable = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState(null);
+    const { data: orders } = useGetOrders();
 
     const handleCancelClick = (record) => {
         setSelectedOrder(record);
@@ -183,12 +87,24 @@ export const AllOrdersTable = () => {
     const handleModalCancel = () => {
         setIsModalOpen(false);
     };
+
+    // API ma'lumotlarini table formatiga o‘tkazish
+    const dataSource =
+        orders?.map((order) => ({
+            key: order.id,
+            order_name: order.service?.title || '-',
+            seller: '-', // API-da hozircha yo'q
+            ordered_at: new Date(order.created_at).toLocaleDateString('uz-UZ'),
+            price: order.service?.price || 0,
+            status: order.transaction_status || 'active', // null bo‘lsa 'active' deb qo‘yamiz
+        })) || [];
+
     return (
         <>
             <Table
                 columns={getColumns({ onCancel: handleCancelClick })}
                 pagination={false}
-                dataSource={allOrders}
+                dataSource={dataSource}
                 scroll={{ x: 'max-content' }}
             />
             <Modal
@@ -202,28 +118,5 @@ export const AllOrdersTable = () => {
                 <p>Haqiqatan ham “{selectedOrder?.order_name}” buyurtmasini bekor qilmoqchimisiz?</p>
             </Modal>
         </>
-
-    );
-};
-
-export const CompletedOrdersTable = () => {
-    return (
-        <Table
-            columns={getColumns({ onCancel: () => { } })}
-            pagination={false}
-            dataSource={completedOrders}
-            scroll={{ x: 'max-content' }}
-        />
-    );
-};
-
-export const CancelledOrdersTable = () => {
-    return (
-        <Table
-            columns={getColumns({ onCancel: () => { } })}
-            pagination={false}
-            dataSource={cancelledOrders}
-            scroll={{ x: 'max-content' }}
-        />
     );
 };
