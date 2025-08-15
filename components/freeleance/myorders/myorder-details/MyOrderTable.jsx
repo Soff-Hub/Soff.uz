@@ -1,10 +1,13 @@
-import { Table, Modal, Button, Space } from 'antd';
+import { Table, Modal, Button, Space, Select } from 'antd';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import useGetOrders from './api/useGetOrders';
+import useCancelOrder from './api/useCancelOrder';
+import useGetReasons from './api/useGetReasons';
 
 const getColumns = ({ onCancel }) => {
     const router = useRouter();
+
     return [
         {
             title: 'Buyurtma nomi',
@@ -44,10 +47,9 @@ const getColumns = ({ onCancel }) => {
                             <Button
                                 block
                                 type="primary"
-                                
                                 style={{ backgroundColor: '#00a44f', borderColor: '#00a44f' }}
                             >
-                                <i class="fa-solid fa-money-bill-transfer"></i>
+                                <i className="fa-solid fa-money-bill-transfer"></i>
                             </Button>
                             <Button
                                 block
@@ -56,7 +58,7 @@ const getColumns = ({ onCancel }) => {
                                 onClick={() => onCancel(record)}
                                 className="cancel-btn"
                             >
-                               <i class="fa-solid fa-xmark "></i>
+                               <i className="fa-solid fa-xmark"></i>
                             </Button>
                         </Space>
                     );
@@ -72,7 +74,10 @@ const getColumns = ({ onCancel }) => {
 export const AllOrdersTable = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState(null);
+    const [reason, setReason] = useState('');
     const { data: orders } = useGetOrders();
+    const { mutate: cancelOrder, isLoading: isCancelling } = useCancelOrder();
+    const { data: reasons } = useGetReasons()
 
     const handleCancelClick = (record) => {
         setSelectedOrder(record);
@@ -80,12 +85,24 @@ export const AllOrdersTable = () => {
     };
 
     const handleModalOk = () => {
-        console.log('Bekor qilindi:', selectedOrder);
-        setIsModalOpen(false);
+        if (selectedOrder) {
+            cancelOrder(
+                { id: selectedOrder.key, reason },
+                {
+                    onSuccess: () => {
+                        setIsModalOpen(false);
+                        setReason('');
+                        setSelectedOrder(null);
+                    }
+                }
+            );
+        }
     };
 
     const handleModalCancel = () => {
         setIsModalOpen(false);
+        setReason('');
+        setSelectedOrder(null);
     };
 
     // API ma'lumotlarini table formatiga o‘tkazish
@@ -96,7 +113,7 @@ export const AllOrdersTable = () => {
             seller: '-', // API-da hozircha yo'q
             ordered_at: new Date(order.created_at).toLocaleDateString('uz-UZ'),
             price: order.service?.price || 0,
-            status: order.transaction_status || 'active', // null bo‘lsa 'active' deb qo‘yamiz
+            status: order.transaction_status || 'active',
         })) || [];
 
     return (
@@ -114,8 +131,20 @@ export const AllOrdersTable = () => {
                 onCancel={handleModalCancel}
                 okText='Bekor qilish'
                 cancelText='Yopish'
+                confirmLoading={isCancelling}
             >
                 <p>Haqiqatan ham “{selectedOrder?.order_name}” buyurtmasini bekor qilmoqchimisiz?</p>
+                <h5>Sababni tanlang</h5>
+                <Select
+                    className='w-100'
+                    placeholder="Bekor qilish sababini tanlang..."
+                    value={reason}
+                    onChange={(val) => setReason(val)}
+                    options={reasons?.map(reason => ({
+                        value: reason.id,
+                        label: reason.label
+                    }))}
+                />
             </Modal>
         </>
     );

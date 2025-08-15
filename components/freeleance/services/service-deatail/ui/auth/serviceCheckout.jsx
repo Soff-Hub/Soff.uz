@@ -2,13 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Modal, Tabs } from 'antd';
 import { BeatLoader } from 'react-spinners';
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
 import useCart from '~/hooks/useCart';
 import useCreateOrder from './api/createOrder';
 import { useVerifyCode } from './api/verifyCode';
 
-const ServiceCheckout = ({ document }) => {
-    const { user } = useSelector(state => state.auth);
+const ServiceCheckout = ({ document, order_id }) => {
     const [numberCardVal, SetNumberCardVal] = useState(null);
     const [message, setMessage] = useState(true);
     const [cardDate, setCardDate] = useState(null);
@@ -16,15 +15,14 @@ const ServiceCheckout = ({ document }) => {
     const [time, setTime] = useState(120);
     const [code, setCode] = useState(null);
     const [resData, setResData] = useState(null);
-    const [cart, setCart] = useState(0);
     const [resDataCode, setResDataCode] = useState(null);
-    const { removeAll } = useCart();
     const [buttonOk, setButtonOk] = useState(false);
     const [tab, setTab] = useState(false);
     const [type, setType] = useState('card');
     const createOrder = useCreateOrder();
     const [formattedCardNumber, setFormattedCardNumber] = useState('');
     const [numberDate, setNumberDate] = useState('');
+    const { push } = useRouter()
 
     const verifyCode = useVerifyCode()
 
@@ -70,13 +68,17 @@ const ServiceCheckout = ({ document }) => {
         e.preventDefault();
         setMessage(false);
 
+        const payload = {
+            service_id: document,
+            payment_type: type,
+            card_number: formattedCardNumber.replace(/\s/g, ""),
+            expire_date: numberDate.replace("/", "")
+        }
+
+        if(order_id)payload.order_id = order_id
+
         createOrder.mutate(
-            {
-                service_id: document,
-                payment_type: type,
-                card_number: formattedCardNumber.replace(/\s/g, ""),
-                expire_date: numberDate.replace("/", "")
-            },
+            payload,
             {
                 onSuccess: (data) => {
                     console.log("✅ Click payment success:", data);
@@ -98,12 +100,13 @@ const ServiceCheckout = ({ document }) => {
         setButtonOk(true);
         verifyCode.mutate(
             {
-                transaction_id: resData?.transaction_id,
+                transaction_id: resData?.transaction_id,    
                 code
             },
             {
                 onSuccess: (data) => {
                     setResDataCode(data);
+                    if(!order_id) push("/order/my-orders")
                 },
                 onError: (error) => {
                     // Agar backend detail yuborsa
