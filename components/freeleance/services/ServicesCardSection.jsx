@@ -13,13 +13,13 @@ const ServicesCardSection = ({ services }) => {
                 className="row"
                 style={{
                     minHeight: isFewProducts ? '50vh' : 'auto',
-                    alignItems: isFewProducts ? 'center' : 'flex-start',
+                    alignItems: isFewProducts ? 'center' : 'stretch',
                     display: 'flex'
                 }}
             >
                 {hasProducts ? (
                     services.items.map((service, index) => (
-                        <div key={index} className="col-6 col-md-4 col-lg-3 custom-col-5 mb-4">
+                        <div key={index} className="col-6 col-md-4 col-lg-3 px-1 custom-col-5 mb-4">
                             <ServiceCard product={service} />
                         </div>
                     ))

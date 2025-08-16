@@ -1,33 +1,50 @@
 import React from 'react';
+import { Pagination } from 'antd';
+import { useRouter } from 'next/router';
 import PageContainer from '~/components/layouts/PageContainer';
 import Meta from '~/components/shared/headers/Meta';
 import ServicesFilterSection from '~/components/freeleance/services/ServicesFilterSection';
 import ServicesCardSection from '~/components/freeleance/services/ServicesCardSection';
 
+export default function SoffFreelancerPage({ servicesData, parentCategory, childCategory, offset, limit }) {
+    const router = useRouter();
+    const currentPage = Math.floor(offset / limit) + 1; // hozirgi page
 
+    const onChangePage = (page, pageSize) => {
+        router.push({
+            pathname: router.pathname,
+            query: {
+                ...router.query,
+                offset: (page - 1) * pageSize,
+                limit: pageSize
+            }
+        });
+    };
 
-
-export default function SoffFreelancerPage({ servicesData, parentCategory, childCategory }) {
-    console.log(servicesData)
     return (
         <PageContainer>
-            <Meta
-                title={'Raqamli mahsulot buyurtma berish - Soff.uz'}
-                description={'Soff.uz orqali raqamli mahsulotlarga buyurtma bering. Ishonchli sotuvchilar va sifatli kontent bilan tez va oson xizmatlardan foydalaning.'}
-                image="/static/img/video-darsliklar-2.png"
-                keywords={[{ name: "Biznes rejalar buyurtma berish" }, { name: "Taqdimotlar buyurtma berish" }, { name: "Kurs ishlari buyurtma berish" }, { name: "Diplom ishlari buyurtma berish" }, { name: "Referatlar buyurtma berish" }, { name: "Mustaqil ishlar buyurtma berish" }, { name: "Labaratoriya Ishlari buyurtma berish" }, { name: "Dissertatsiya ishlari buyurtma berish" }, { name: "Testlar buyurtma berish" }, { name: "O'quv qo'llanmalar buyurtma berish" }, { name: "MustDars ishlanmalaraqil buyurtma berish" }, { name: "Tarqatma materiallar buyurtma berish" }, { name: "Amaliy ishlar buyurtma berish" }, { name: "Blankalar buyurtma berish" }, { name: "Ijodiy Ishlar buyurtma berish" }, { name: "Loyihalar buyurtma berish" }, { name: "Plakatlar buyurtma berish" }, { name: "Elektron kitoblar buyurtma berish" }, { name: "Dasturlash tillari" }]}
-                author="Soff.uz"
-            />
+            <Meta title="Raqamli mahsulot buyurtma berish - Soff.uz" />
 
-            <div className='ps-page--shop my-5 container p-xl-0 p-l-0'>
-                <ServicesFilterSection parentCategory={parentCategory} childCategory={childCategory} count={servicesData?.total_service} />
-
+            <div className="ps-page--shop my-5 container p-xl-0 p-l-0">
+                <ServicesFilterSection
+                    parentCategory={parentCategory}
+                    childCategory={childCategory}
+                    count={servicesData?.total_service}
+                />
 
                 <ServicesCardSection services={servicesData} />
+
+                <div className="d-flex justify-content-center mt-5">
+                    <Pagination
+                        current={currentPage}
+                        pageSize={Number(limit)}
+                        total={servicesData?.total_service || 0}
+                        showSizeChanger
+                        pageSizeOptions={['10', '20', '50']}
+                        onChange={onChangePage}
+                    />
+                </div>
             </div>
-
-
-
         </PageContainer>
     );
 }
@@ -53,7 +70,6 @@ export async function getServerSideProps(context) {
 
     const servicesUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/customer?${servicesQuery.toString()}`;
     const parentCategoryUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/categories/`;
-    console.log(servicesUrl)
 
     const [servicesRes, parentCategoryRes] = await Promise.all([
         fetch(servicesUrl),
@@ -75,7 +91,9 @@ export async function getServerSideProps(context) {
         props: {
             servicesData,
             parentCategory,
-            childCategory, 
+            childCategory,
+            offset: Number(offset),
+            limit: Number(limit)
         },
     };
 }

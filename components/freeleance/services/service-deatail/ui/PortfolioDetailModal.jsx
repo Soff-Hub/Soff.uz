@@ -9,7 +9,6 @@ import 'swiper/css/pagination';
 import styles from './styles/detail.module.scss';
 
 const PortfolioDetailModal = ({ open, onClose, portfolio }) => {
-    console.log(portfolio)
     return (
         <Modal
             open={open}
