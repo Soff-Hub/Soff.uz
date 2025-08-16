@@ -258,6 +258,44 @@ function FileActions({ product }) {
                             </span>
                         </li>
                     )}
+
+                    {product?.three_d_features?.render_obj?.length > 0 && (
+                        <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
+                            <span className="d-flex align-items-center gap-2">
+                                <i className="fas fa-shapes" style={{ color: '#00a44f' }}></i>
+                                Render:
+                            </span>
+
+                            <div className="d-flex gap-2 flex-wrap">
+                                {product.three_d_features.render_obj.map((r) => (
+                                    <span
+                                        key={r.id}
+                                        className="d-flex align-items-center gap-2 px-2 rounded"
+                                        style={{ backgroundColor: r.color || "#f0f0f0" }}
+                                    >
+                                        {r.logo && (
+                                            <img
+                                                src={r.logo}
+                                                alt={r.title}
+                                                style={{ width: 20, height: 20, objectFit: "contain" }}
+                                            />
+                                        )}
+                                        <span>{r.title}</span>
+                                    </span>
+                                ))}
+                            </div>
+                        </li>
+                    )}
+
+                    {product?.three_d_features?.platform && (
+                        <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
+                            <span className="d-flex align-items-center gap-2">
+                                <i className="fas fa-cube" style={{ color: '#00a44f' }}></i>
+                                Platforma:
+                            </span>
+                            <span>{product.three_d_features.platform}</span>
+                        </li>
+                    )}
                 </ul>
 
                 <div className='d-flex flex-column gap-3 '>
