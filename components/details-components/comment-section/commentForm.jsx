@@ -1,19 +1,18 @@
 import { useState } from 'react';
-import { Rating } from 'react-simple-star-rating';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import { baseURL } from '~/repositories/api';
 import toast from 'react-hot-toast';
+import { Rate } from 'antd';
 
 export default function CommentForm({ documentId, fComment }) {
   const [text, setText] = useState('');
   const [rating, setRating] = useState(0);
-  const [ratingKey, setRatingKey] = useState(0);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
-    // e.preventDefault();
-    if (!text.trim() ) return;
+    e.preventDefault();
+    if (!text.trim()) return;
 
     const token = Cookies.get('token');
     if (!token) {
@@ -23,7 +22,7 @@ export default function CommentForm({ documentId, fComment }) {
 
     try {
       setLoading(true);
-      const res = await axios.post(
+      await axios.post(
         `${baseURL}seller/document-review/${documentId}`,
         {
           text,
@@ -38,18 +37,13 @@ export default function CommentForm({ documentId, fComment }) {
       );
 
       setText('');
-      setRating(0);
-      setRatingKey(prev => prev + 1); // reset star rating
-      toast.success("Izoh muvaffaqiyatli yuborildi!")
+      setRating(0); // Rate reset
+      toast.success("Izoh muvaffaqiyatli yuborildi!");
     } catch (err) {
-      toast.error("Izoh yuborilmadi.")
+      toast.error("Izoh yuborilmadi.");
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleRating = (rate) => {
-    setRating(rate);
   };
 
   return (
@@ -65,11 +59,11 @@ export default function CommentForm({ documentId, fComment }) {
         />
         <div className="d-flex justify-content-between align-items-center mt-3">
           {!fComment ? (
-            <Rating
-              key={ratingKey}
-              onClick={handleRating}
-              size={25}
-              initialValue={rating}
+            <Rate
+              value={rating}
+              onChange={(value) => setRating(value)}
+              style={{ fontSize: 25 }}
+              allowHalf
             />
           ) : (
             <div></div>
