@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
-import Image from 'next/image'; 
+import Image from 'next/image';
 import { useRouter } from 'next/router';
+import styles from './ServiceCard.module.scss';
 
 const ServiceCard = ({ product }) => {
     const router = useRouter();
@@ -15,8 +16,7 @@ const ServiceCard = ({ product }) => {
     }, [product?.user?.id, router]);
 
     const handleLike = useCallback((e) => {
-        e.stopPropagation(); 
-
+        e.stopPropagation();
     }, []);
 
     const formattedPrice = product?.price
@@ -25,7 +25,7 @@ const ServiceCard = ({ product }) => {
 
     return (
         <article
-            className="Services_card"
+            className={styles.card}
             role="article"
             aria-label={product?.title || 'Service'}
             onClick={goToService}
@@ -34,7 +34,7 @@ const ServiceCard = ({ product }) => {
         >
             <button
                 type="button"
-                className="likeBtn"
+                className={styles.likeBtn}
                 aria-pressed="false"
                 aria-label="Sevimlilarga qo'shish"
                 onClick={handleLike}
@@ -45,19 +45,19 @@ const ServiceCard = ({ product }) => {
                 </svg>
             </button>
 
-            <div style={{ cursor: 'pointer' }}>
+            <div>
                 {product?.poster ? (
                     <Image
                         src={product.poster}
                         alt={product.title || 'service image'}
                         width={640}
                         height={500}
-                        className="Search_Results_Services_card_img"
+                        className={styles.img}
                         priority={false}
                     />
                 ) : (
                     <img
-                        className="Search_Results_Services_card_img"
+                        className={styles.img}
                         src="/static/img/default-service.png"
                         alt={product.title || 'service image'}
                         loading="lazy"
@@ -66,9 +66,17 @@ const ServiceCard = ({ product }) => {
                 )}
             </div>
 
-            <div className="Search_Results_Services_card_body">
+            <div className={styles.body}>
+                <h3 className={styles.title} title={product?.title}>
+                    {product?.title}
+                </h3>
+
+                <p className={styles.price}>
+                    {formattedPrice} so'm
+                </p>
+
                 <div
-                    className="Search_Results_Services_card_infoPerson"
+                    className={styles.seller}
                     role="link"
                     tabIndex={0}
                     onClick={goToSeller}
@@ -76,30 +84,16 @@ const ServiceCard = ({ product }) => {
                     aria-label={`Seller ${product?.user?.full_name || ''}`}
                 >
                     <img
-                        className="Search_Results_Services_card_infoPerson_avatar"
+                        className={styles.seller_avatar}
                         src={product?.user?.photo_url || '/static/img/ozodbek.png'}
                         alt={product?.user?.full_name || 'Seller avatar'}
                         loading="lazy"
                         decoding="async"
                     />
-                    <p className="Search_Results_Services_card_infoPerson_isname">
+                    <p className={styles.seller_name}>
                         {product?.user?.full_name || '—'}
                     </p>
-                    <img
-                        className="Search_Results_Services_card_infoPerson_status"
-                        src="/static/img/Ritsar.png"
-                        alt=""
-                        aria-hidden
-                    />
                 </div>
-
-                <h3 className="Search_Results_Services_card_title" title={product?.title}>
-                    {product?.title}
-                </h3>
-
-                <p className="Search_Results_Services_card_price">
-                    {formattedPrice} so'm
-                </p>
             </div>
         </article>
     );

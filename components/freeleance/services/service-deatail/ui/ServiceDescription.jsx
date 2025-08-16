@@ -1,19 +1,36 @@
-import React from 'react'
-import { Button } from 'antd'
-import { DownloadOutlined } from '@ant-design/icons'
+import React, { useState } from 'react';
+import { Button, Modal } from 'antd';
+import { DownloadOutlined } from '@ant-design/icons';
 import styles from "../styles/detail.module.scss";
+import { useSelector } from 'react-redux';
+import { formatCurrencyWithSpace } from '~/utilities/product-helper';
+import ServiceCheckout from './auth/serviceCheckout';
+import AuthModal from '~/components/AuthModal';
 
 const ServiceDescription = ({ description = {}, priceBox = {} }) => {
-    const { price, id, days, revisions } = priceBox;
+    const { price, id, days, revisions, title } = priceBox;
     const { requirements = '', file = '', serviceItems = [], description: descText = '' } = description;
+
+    const [isOpen, setIsOpen] = useState(false);
+    const [showPayment, setShowPayment] = useState(false);
+    const [openAuth, setOpenAuth] = useState(false);
+    const { isLoggedIn } = useSelector(state => state.auth);
+
+    const handleOrderClick = () => {
+        if (isLoggedIn) {
+            setIsOpen(true);
+        } else {
+            setOpenAuth(true);
+        }
+    };
 
     return (
         <div className={styles.serviceDescription}>
             <h2>Xizmat tavsifi</h2>
-            {descText && <div dangerouslySetInnerHTML={{ __html: descText }} />}
+            {descText && <div style={{ borderBottom: "1px solid gray" }} dangerouslySetInnerHTML={{ __html: descText }} />}
 
             <h3>Boshlash uchun sotuvchiga kerak</h3>
-            {requirements && <div dangerouslySetInnerHTML={{ __html: requirements }} />}
+            {requirements && <div style={{ borderBottom: "1px solid gray" }} dangerouslySetInnerHTML={{ __html: requirements }} />}
 
             <h3>Fayllar</h3>
             {file ? (
@@ -32,7 +49,7 @@ const ServiceDescription = ({ description = {}, priceBox = {} }) => {
             )}
 
             <div className={styles.serviceBox}>
-                <h3>Qo'shimcha xizmatlar</h3>
+                <h3>Bu xizmat ichiga nimalar kiradi</h3>
                 {serviceItems.map((item, idx) => (
                     <p key={idx} className={styles.serviceItem}>
                         {idx + 1}. {item}
@@ -46,11 +63,92 @@ const ServiceDescription = ({ description = {}, priceBox = {} }) => {
                     <p className={styles.info}><i className="fa-solid fa-pen-to-square"></i> {revisions} marta tahrirlash huquqi</p>
                 </div>
                 <div className={styles.btnWrapper}>
-                    <Button className={styles.btn}>Buyurtma berish</Button>
+                    <Button className={styles.btn} onClick={handleOrderClick}>
+                        Buyurtma berish
+                    </Button>
                 </div>
             </div>
+
+            {/* Modal */}
+            <Modal
+                open={isOpen}
+                onCancel={() => {
+                    setIsOpen(false);
+                    setShowPayment(false);
+                }}
+                footer={null}
+                width={600}
+            >
+                <div className="type_payment p-lg-5 p-md-5 p-4">
+                    {!showPayment ? (
+                        <>
+                            <h3 className="type_payment_h3 text-center mb-4">
+                                Buyurtma uchun to'lovni amalga oshiring
+                            </h3>
+
+                            <div className="security-message mb-4 text-center">
+                                <i className="fa-solid fa-shield-halved text-success fs-4 mb-2"></i>
+                                <p className="text-muted mb-0">
+                                    Sizning to'lovingiz Soff tizimi tomonidan xavfsiz saqlanadi.
+                                    Mutaxassisga to'lov faqat siz ishni ko'rib chiqib, tasdiqlaganingizdan so'ng amalga oshiriladi.
+                                </p>
+                            </div>
+
+                            <div className="service-details-box bg-white border rounded p-3 mb-4">
+                                <div className="d-flex justify-content-between align-items-center">
+                                    <div className="d-flex align-items-center">
+                                        <i className="fa-solid fa-file-lines text-primary me-3 fs-4"></i>
+                                        <div>
+                                            <h5 className="mb-1 fw-bold">{title}</h5>
+                                        </div>
+                                    </div>
+                                    <div className="text-end">
+                                        <h4 className="text-primary mb-0 fw-bold">
+                                            {formatCurrencyWithSpace(price)} so'm
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="text-center">
+                                <Button
+                                    type="primary"
+                                    size="large"
+                                    className="px-5 py-2"
+                                    style={{ backgroundColor: '#28a745', borderColor: '#28a745' }}
+                                    onClick={() => setShowPayment(true)}
+                                >
+                                    Buyurma berish
+                                    <i className="fa-solid fa-arrow-right ms-2"></i>
+                                </Button>
+                            </div>
+                        </>
+                    ) : (
+                        <>
+                            <div className="d-flex justify-content-between align-items-center mb-4">
+                                <h3 className="type_payment_h3 mb-0">
+                                    To'lov turini tanlang:
+                                </h3>
+                                <Button
+                                    type="text"
+                                    icon={<i className="fa-solid fa-arrow-left"></i>}
+                                    onClick={() => setShowPayment(false)}
+                                >
+                                    Orqaga
+                                </Button>
+                            </div>
+                            <div className="bg-white">
+                                <ServiceCheckout document={id} />
+                            </div>
+                        </>
+                    )}
+                </div>
+            </Modal>
+
+            {/* Auth Modal */}
+            <AuthModal open={openAuth} onClose={() => setOpenAuth(false)} />
         </div>
-    )
-}
+    );
+};
 
 export default ServiceDescription;

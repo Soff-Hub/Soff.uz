@@ -19,6 +19,7 @@ const ServiceDetail = ({ data }) => {
         id: service?.id,
         title: service?.title
     }
+    console.log(data)
 
     const description = {
         description: service?.description,
