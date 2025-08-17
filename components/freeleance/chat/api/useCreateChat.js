@@ -15,7 +15,7 @@ const useCreateChat = () => {
             const formData = new FormData();
             formData.append('participant_id', id);
 
-            const {data} = await axios.post("chats/create", formData, {
+            const { data } = await axios.post("chats/create", formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 }
@@ -26,7 +26,10 @@ const useCreateChat = () => {
             queryClient.invalidateQueries(['chats']);
             message.success("Chat yaratildi");
             push(`/chat${data?.chat_id ? `?id=${data?.chat_id}` : ''}`);
-            console.log(data)
+        },
+        onError: (error) => {
+            const errorMsg = error?.response?.data?.detail || "Xatolik yuz berdi";
+            message.error(errorMsg);
         }
     });
 };

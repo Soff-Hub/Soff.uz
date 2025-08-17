@@ -10,6 +10,7 @@ import { formatCurrencyWithSpace } from '~/utilities/product-helper';
 import ServiceCheckout from '~/components/freeleance/services/service-deatail/ui/auth/serviceCheckout';
 import useGetFile from '../api/useGetFile';
 import useSubmit from '../api/useSubmit';
+import { useQueryClient } from '@tanstack/react-query';
 
 dayjs.locale('uz-latn');
 
@@ -23,6 +24,7 @@ const OrderMain = ({ order }) => {
     const [rate, setRate] = useState()
     const { data: file } = useGetFile(order?.id)
     const  submit  = useSubmit()
+    const queryClient = useQueryClient()
 
     const items = [
         { title: <Link href={"/order/my-orders"}>Mening buyurtmalarim</Link> },
@@ -33,6 +35,7 @@ const OrderMain = ({ order }) => {
 
     const onClose = () => {
         setIsOpen(false)
+        queryClient.invalidateQueries(['order'])
     }
 
     const columns = [

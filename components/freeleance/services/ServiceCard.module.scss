@@ -115,7 +115,7 @@ $avatar-size: 36px;
     align-items: center;
     gap: 8px;
     cursor: pointer;
-    border-top: 1px $muted solid;
+    border-top: 1px rgba(0,0,0,0.1) solid;
     padding-top: 5px;
 
     &_avatar {

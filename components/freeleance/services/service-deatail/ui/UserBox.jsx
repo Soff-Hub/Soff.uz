@@ -4,7 +4,6 @@ import { Button } from 'antd';
 import { MessageOutlined } from '@ant-design/icons';
 import useCreateChat from '~/components/freeleance/chat/api/useCreateChat';
 import { useSelector } from 'react-redux';
-import { useRouter } from 'next/router';
 import AuthModal from '~/components/AuthModal';
 
 const UserBox = ({ user }) => {

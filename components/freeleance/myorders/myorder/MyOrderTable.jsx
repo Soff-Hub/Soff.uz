@@ -1,9 +1,10 @@
-import { Table, Modal, Button, Space, Select } from 'antd';
+import { Table, Modal, Button, Space, Select, message } from 'antd';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import useGetOrders from './api/useGetOrders';
 import useCancelOrder from './api/useCancelOrder';
 import useGetReasons from './api/useGetReasons';
+import { formatCurrencyWithSpace } from '~/utilities/product-helper';
 
 const getColumns = ({ onCancel }) => {
     const router = useRouter();
@@ -59,7 +60,7 @@ const getColumns = ({ onCancel }) => {
         {
             title: 'Narx',
             dataIndex: 'price',
-            render: (price) => `${price} so'm`,
+            render: (price) => `${formatCurrencyWithSpace(price)} so'm`,
         },
         {
             title: 'Holati',
@@ -115,6 +116,7 @@ export const AllOrdersTable = () => {
                         setIsModalOpen(false);
                         setReason('');
                         setSelectedOrder(null);
+                        message.success("Buyurtma muvaffaqiyatli bekor qilindi!")
                     }
                 }
             );
@@ -150,7 +152,7 @@ export const AllOrdersTable = () => {
                 columns={getColumns({ onCancel: handleCancelClick })}
                 pagination={false}
                 dataSource={dataSource}
-                scroll={{ x: 'max-content' }}
+                tabBarStyle={{ overflowX: 'auto', overflowY: 'hidden', whiteSpace: 'nowrap' }}
             />
             <Modal
                 title='Buyurtmani bekor qilish'
@@ -170,7 +172,7 @@ export const AllOrdersTable = () => {
                     onChange={(val) => setReason(val)}
                     options={reasons?.map(reason => ({
                         value: reason.id,
-                        label: reason.label
+                        label: reason.reason
                     }))}
                 />
             </Modal>
