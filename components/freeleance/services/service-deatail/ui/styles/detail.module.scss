@@ -25,6 +25,27 @@
     .swiper {
         border-radius: 12px;
         overflow: hidden;
+        position: relative;
+    }
+
+    .swiper-button-prev::after,
+    .swiper-button-next::after {
+        content: '' !important; // agar default chiqmayapti desa
+    }
+
+    .swiper-button-prev::after {
+        content: '‹' !important; // chapga belgi
+    }
+
+    .swiper-button-next::after {
+        content: '›' !important; // o‘ngga belgi
+    }
+
+    .swiper-button-prev,
+    .swiper-button-next {
+        color: #000 !important;
+        font-size: 28px !important;
+        z-index: 9999 !important;
     }
 
     .swiper-slide {

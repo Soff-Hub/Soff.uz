@@ -27,10 +27,10 @@ const ServiceDescription = ({ description = {}, priceBox = {} }) => {
     return (
         <div className={styles.serviceDescription}>
             <h2>Xizmat tavsifi</h2>
-            {descText && <div style={{ borderBottom: "1px solid gray" }} dangerouslySetInnerHTML={{ __html: descText }} />}
+            {descText && <div style={{ borderBottom: "1px solid rgba(0,0,0,0.1)" }} dangerouslySetInnerHTML={{ __html: descText }} />}
 
             <h3>Boshlash uchun sotuvchiga kerak</h3>
-            {requirements && <div style={{ borderBottom: "1px solid gray" }} dangerouslySetInnerHTML={{ __html: requirements }} />}
+            {requirements && <div style={{ borderBottom: "1px solid rgba(0,0,0,0.1)" }} dangerouslySetInnerHTML={{ __html: requirements }} />}
 
             <h3>Fayllar</h3>
             {file ? (
