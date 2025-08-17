@@ -8,6 +8,16 @@ import useGetReasons from './api/useGetReasons';
 const getColumns = ({ onCancel }) => {
     const router = useRouter();
 
+    const orderStatusName = {
+        "pending": "Yaratildi",
+        "approved": "To'lov qilindi",
+        "requirement_file": "Buyurtma talablari jo'natildi",
+        "requirement_file_rejected": "Buyurma talablari toliq emas",
+        "order_accepted": "Buyurtma qabul qilindi",
+        "order_file_sent": "Tasdiqlash uchun topshirildi",
+        "completed": "Buyurtma tugallandi",
+    }
+
     return [
         {
             title: 'Buyurtma nomi',
@@ -27,6 +37,20 @@ const getColumns = ({ onCancel }) => {
         {
             title: 'Sotuvchi',
             dataIndex: 'seller',
+            render: (_, record) => (
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    {record.userPhoto ? (
+                        <img
+                            src={record.userPhoto}
+                            alt={record.seller}
+                            style={{ width: 28, height: 28, borderRadius: '50%' }}
+                        />
+                    ) : (
+                        <i className="fa-solid fa-user" style={{ fontSize: 20, color: '#999' }}></i>
+                    )}
+                    <span>{record.seller}</span>
+                </div>
+            )
         },
         {
             title: 'Buyurtma sanasi',
@@ -41,7 +65,7 @@ const getColumns = ({ onCancel }) => {
             title: 'Holati',
             dataIndex: 'status',
             render: (_, record) => {
-                if (record.status !== 'pay') {
+                if (record.status == 'pending') {
                     return (
                         <Space direction="vertical" size={6} >
                             <Button
@@ -58,14 +82,12 @@ const getColumns = ({ onCancel }) => {
                                 onClick={() => onCancel(record)}
                                 className="cancel-btn"
                             >
-                               <i className="fa-solid fa-xmark"></i>
+                                <i className="fa-solid fa-xmark"></i>
                             </Button>
                         </Space>
                     );
                 }
-                return record.status
-                    ? record.status.charAt(0).toUpperCase() + record.status.slice(1)
-                    : '-';
+                return orderStatusName[record.status]
             },
         },
     ];
@@ -110,10 +132,16 @@ export const AllOrdersTable = () => {
         orders?.map((order) => ({
             key: order.id,
             order_name: order.service?.title || '-',
-            seller: '-', // API-da hozircha yo'q
-            ordered_at: new Date(order.created_at).toLocaleDateString('uz-UZ'),
+            seller: order.user?.full_name || '-',
+            ordered_at: new Date(order.created_at).toLocaleString('uz-UZ', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+            }),
             price: order.service?.price || 0,
-            status: order.transaction_status || 'active',
+            status: order.order_status_doing?.status || 'pending',
         })) || [];
 
     return (

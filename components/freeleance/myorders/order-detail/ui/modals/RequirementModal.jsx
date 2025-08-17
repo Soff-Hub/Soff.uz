@@ -13,16 +13,10 @@ const RequirementModal = ({ visible, onClose, orderId }) => {
         // Faqat bitta fayl qoldiramiz
         const limitedList = newFileList.slice(-1);
         setFileList(limitedList);
-        if (limitedList.length > 0) {
-            setContent('');
-        }
     };
 
     const handleContentChange = (e) => {
         setContent(e.target.value);
-        if (e.target.value.trim() !== '') {
-            setFileList([]);
-        }
     };
 
     const handleOk = () => {
@@ -55,8 +49,7 @@ const RequirementModal = ({ visible, onClose, orderId }) => {
             confirmLoading={sendReq.isLoading}
         >
             <p>
-                Fayl yoki matn yuborishingiz mumkin, lekin ikkalasini bir vaqtda yuborib bo‘lmaydi.
-                Agar birini tanlasangiz, boshqasi avtomatik o‘chirib qo‘yiladi.
+                Buyurtma talablarini to'liq yuboring
             </p>
 
             <Upload
@@ -64,11 +57,10 @@ const RequirementModal = ({ visible, onClose, orderId }) => {
                 beforeUpload={() => false}
                 fileList={fileList}
                 onChange={handleFileChange}
-                disabled={content.trim() !== ''}
-                maxCount={1}         // faqat bitta fayl
-                multiple={false}     // ko‘p yuklash o‘chiriladi
+                maxCount={1}    
+                multiple={false}  
             >
-                <Button className='w-100' icon={<UploadOutlined />} disabled={content.trim() !== ''}>
+                <Button className='w-100' icon={<UploadOutlined />} >
                     Fayl yuklash
                 </Button>
             </Upload>
@@ -79,7 +71,6 @@ const RequirementModal = ({ visible, onClose, orderId }) => {
                 value={content}
                 onChange={handleContentChange}
                 style={{ marginTop: 16 }}
-                disabled={fileList.length > 0}
             />
         </Modal>
     );

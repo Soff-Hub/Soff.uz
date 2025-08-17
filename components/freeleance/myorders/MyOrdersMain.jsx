@@ -2,7 +2,7 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 
 // MyOrderTabs faqat client-side'da yuklanadi
-const MyOrderTabs = dynamic(() => import('./myorder-details/MyOrderTabs'), {
+const MyOrderTabs = dynamic(() => import('./myorder/MyOrderTabs'), {
   ssr: false,
   loading: () => <p>Yuklanmoqda...</p>, // ixtiyoriy: loading paytida ko‘rsatish uchun
 });

@@ -11,20 +11,22 @@ const OrderStatus = ({ order }) => {
         "requirement_file": 3,
         "requirement_file_rejected": 3,
         "order_accepted": 4,
+        "rejected": 5,
         "order_file_sent": 5,
         "completed": 6,
-    }  //requirement_file_rejected
+    }
 
 
     const orderStatusName = {
         "pending": "Buyurtma yaratildi",
-        "approved": "To'lov qilindi" ,
+        "approved": "To'lov amalga oshirildi",
         "requirement_file": "Buyurtma talablari jo'natildi",
-        "requirement_file_rejected": "Buyurma talablari toliq emas",
-        "order_accepted": "Buyurtma qabul qilindi" ,
+        "requirement_file_rejected": "Buyurma talablari to'liq emas",
+        "order_accepted": "Buyurtma qabul qilindi",
         "order_file_sent": "Tasdiqlash uchun topshirildi",
         "completed": "Buyurtma tugallandi",
-    }  //requirement_file_rejected
+        "rejected": "Fayl to'liq emas"
+    }
 
     return (
         <div className='col-12 col-lg-3'>
@@ -64,7 +66,11 @@ const OrderStatus = ({ order }) => {
                     direction="vertical"
                     className={styles.greenSteps}
                     current={orderStatus[order?.order_status_doing?.status]}
-                    status={order?.order_status_doing?.status == "requirement_file_rejected" && "error"}
+                    status={
+                        order?.order_status_doing?.status === "requirement_file_rejected" || order?.order_status_doing?.status === "rejected"
+                            ? "error"
+                            : "process"
+                    }
                     items={[
                         { title: `Buyurtma yaratildi` },
                         { title: "To'lov qilindi" },
