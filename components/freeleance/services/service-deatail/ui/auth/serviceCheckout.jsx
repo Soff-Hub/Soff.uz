@@ -7,7 +7,7 @@ import useCart from '~/hooks/useCart';
 import useCreateOrder from './api/createOrder';
 import { useVerifyCode } from './api/verifyCode';
 
-const ServiceCheckout = ({ document, order_id }) => {
+const ServiceCheckout = ({ document, order_id, onClose }) => {
     const [numberCardVal, SetNumberCardVal] = useState(null);
     const [message, setMessage] = useState(true);
     const [cardDate, setCardDate] = useState(null);
@@ -107,6 +107,8 @@ const ServiceCheckout = ({ document, order_id }) => {
                 onSuccess: (data) => {
                     setResDataCode(data);
                     if(!order_id) push("/order/my-orders")
+                    if(onClose)onClose()
+                    setOpen(false)
                 },
                 onError: (error) => {
                     // Agar backend detail yuborsa

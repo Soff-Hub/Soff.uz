@@ -31,6 +31,10 @@ const OrderMain = ({ order }) => {
 
     const { TextArea } = Input
 
+    const onClose = () => {
+        setIsOpen(false)
+    }
+
     const columns = [
         {
             title: 'Xizmat',
@@ -104,13 +108,13 @@ const OrderMain = ({ order }) => {
                     <div className={styles.orderPayCard}>
                         <div>
                             <h3 className={styles.orderNameLink}>Buyurtma talablari kutilmoqda</h3>
-                            {order?.status_doing === "approved" &&
+                            {order?.order_status_doing?.status === "approved" &&
                                 <p>
                                     Siz to‘lovni amalga oshirdingiz. Endi sotuvchi ishni boshlashi uchun
                                     kerakli materiallar va ko‘rsatmalarni yuboring.
                                 </p>
                             }
-                            {order?.status_doing === "requirement_file_rejected" &&
+                            {order?.order_status_doing?.status === "requirement_file_rejected" &&
                                 <p>
                                     Siz yuborgan materiallar yoki ko‘rsatmalar yetarli emasligi sababli
                                     sotuvchi ularni rad etdi. Iltimos, ishni boshlash uchun barcha
@@ -368,7 +372,7 @@ const OrderMain = ({ order }) => {
                                 </Button>
                             </div>
                             <div className="bg-white">
-                                <ServiceCheckout document={order?.service?.id} order_id={order?.id} />
+                                <ServiceCheckout onClose={onClose} document={order?.service?.id} order_id={order?.id} />
                             </div>
                         </>
                     )}
