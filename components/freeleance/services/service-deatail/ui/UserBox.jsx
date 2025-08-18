@@ -5,26 +5,38 @@ import { MessageOutlined } from '@ant-design/icons';
 import useCreateChat from '~/components/freeleance/chat/api/useCreateChat';
 import { useSelector } from 'react-redux';
 import AuthModal from '~/components/AuthModal';
+import dayjs from 'dayjs';
+import 'dayjs/locale/uz-latn';
 
-const UserBox = ({ user }) => {
+const UserBox = ({ pushUser, priceBox }) => {
     const { mutate } = useCreateChat();
-    const { isLoggedIn } = useSelector(state => state.auth)
-    const [ open, setOpen ] = useState(false)
+    const { isLoggedIn } = useSelector(state => state.auth);
+    const [open, setOpen] = useState(false);
+
+    const { price, id, days, revisions, title, user: seller } = priceBox; 
+    const { full_name, last_active, photo_url, status, soff_seller_id } = seller[0]; 
 
     const handleClick = () => {
-        if(isLoggedIn){
-            mutate(user?.soff_seller_id)
-        }else{
-            setOpen(true)
+        if (isLoggedIn) {
+            mutate(soff_seller_id);
+        } else {
+            setOpen(true);
         }
-    }
+    };
+
+    const formattedLastActive = last_active 
+        ? dayjs(last_active).locale('uz-latn').format('DD-MMMM YYYY, HH:mm') 
+        : "Faol emas";
 
     return (
         <>
             <div className={styles.userBox}>
-                <img src={user?.photo_url || "/static/img/ozodbek.png"} alt={user?.full_name || "User"} />
+                <img style={{cursor: "pointer"}} onClick={pushUser} src={photo_url || "/static/img/ozodbek.png"} alt={full_name || "User"} />
                 <div className={styles.userInfo}>
-                    <h3>{user?.full_name || "No Name"}</h3>
+                    <div>
+                        <h3 style={{cursor: "pointer"}} onClick={pushUser}>{full_name || "No Name"}</h3>
+                        <p>Oxirgi faollik: {formattedLastActive}</p>
+                    </div>
                     <Button
                         onClick={handleClick}
                         icon={<MessageOutlined />}
@@ -34,9 +46,9 @@ const UserBox = ({ user }) => {
                     </Button>
                 </div>
             </div>
-        <AuthModal open={open} onClose={() => setOpen(false)}/>
+            <AuthModal open={open} onClose={() => setOpen(false)} />
         </>
-    )
-}
+    );
+};
 
 export default UserBox;

@@ -2,14 +2,13 @@ import React, { useState } from 'react';
 import styles from '../styles/detail.module.scss';
 import { Button, Modal } from 'antd';
 import { formatCurrencyWithSpace } from '~/utilities/product-helper';
-import FormCheckoutInformation from '~/components/partials/account/modules/FormCheckoutInformation';
-import CreditCard2 from '~/components/partials/account/CreditCard2';
 import AuthModal from '~/components/AuthModal';
 import { useSelector } from 'react-redux';
 import ServiceCheckout from './auth/serviceCheckout';
 
 const PriceBox = ({ priceBox }) => {
-    const { price, id, days, revisions, title } = priceBox;
+    const { price, id, days, revisions, title, user } = priceBox;
+    const { full_name, last_active, photo_url, status } = user[0]
     const [isOpen, setIsOpen] = useState(false);
     const [showPayment, setShowPayment] = useState(false);
     const [open, setOpen] = useState(false)
@@ -29,14 +28,13 @@ const PriceBox = ({ priceBox }) => {
                 <h2 className={styles.price}>
                     {formatCurrencyWithSpace(price)} so'm
                 </h2>
-                {/* <h2 className={styles.priceTitle}>Xizmat haqida</h2> */}
             </div>
             <div className={styles.infoBox}>
                 <p className={styles.info}>
-                    <i class="fa-solid fa-clock"></i> {days} kunda yetkazish
+                    <i className="fa-solid fa-clock"></i> {days} kunda yetkazish
                 </p>
                 <p className={styles.info}>
-                    <i class="fa-solid fa-pen-to-square"></i> {revisions} marta
+                    <i className="fa-solid fa-pen-to-square"></i> {revisions} marta
                     tahrirlash huquqi
                 </p>
             </div>

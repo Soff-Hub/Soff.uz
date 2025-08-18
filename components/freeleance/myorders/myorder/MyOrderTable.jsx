@@ -38,18 +38,18 @@ const getColumns = ({ onCancel }) => {
         {
             title: 'Sotuvchi',
             dataIndex: 'seller',
-            render: (_, record) => (
-                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                    {record.userPhoto ? (
+            render: (record ) => (
+                <div  style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: "pointer" }}>
+                    {record?.photo_url ? (
                         <img
-                            src={record.userPhoto}
-                            alt={record.seller}
+                            src={record?.photo_url}
+                            alt={record?.full_name}
                             style={{ width: 28, height: 28, borderRadius: '50%' }}
                         />
                     ) : (
                         <i className="fa-solid fa-user" style={{ fontSize: 20, color: '#999' }}></i>
                     )}
-                    <span>{record.seller}</span>
+                    <span>{record?.full_name}</span>
                 </div>
             )
         },
@@ -68,20 +68,18 @@ const getColumns = ({ onCancel }) => {
             render: (_, record) => {
                 if (record.status == 'pending') {
                     return (
-                        <Space direction="vertical" size={6} >
+                        <Space direction="" size={6} >
                             <Button
-                                block
                                 type="primary"
                                 style={{ backgroundColor: '#00a44f', borderColor: '#00a44f' }}
+
                             >
                                 <i className="fa-solid fa-money-bill-transfer"></i>
                             </Button>
                             <Button
-                                block
                                 type="primary"
                                 danger
                                 onClick={() => onCancel(record)}
-                                className="cancel-btn"
                             >
                                 <i className="fa-solid fa-xmark"></i>
                             </Button>
@@ -134,7 +132,7 @@ export const AllOrdersTable = () => {
         orders?.map((order) => ({
             key: order.id,
             order_name: order.service?.title || '-',
-            seller: order.user?.full_name || '-',
+            seller: order?.user || '-',
             ordered_at: new Date(order.created_at).toLocaleString('uz-UZ', {
                 year: 'numeric',
                 month: '2-digit',

@@ -1,19 +1,19 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from '../style/chat.module.scss';
 import { Button, Empty, Input, Spin } from 'antd';
-import useGetChats from '../api/useGetChats';
 import { truncateTitle } from '~/utilities/TruncateTitle';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
-import { useQueryClient } from '@tanstack/react-query';
+import useChats from '../api/useChats'; // 🔥 endi shu hookdan foydalanamiz
 
 const ChatSidebar = ({ setChatId }) => {
     const [search, setSearch] = useState('');
     const [debouncedSearch, setDebouncedSearch] = useState('');
-    const { back } = useRouter()
-    const { user } = useSelector(state => state.auth)
-    const queryClient = useQueryClient()
-    const wsRef = useRef(null);
+    const { back } = useRouter();
+    const { user } = useSelector(state => state.auth);
+
+    // ✅ endi useChats dan chats va isLoading olamiz
+    const { chats, isLoading } = useChats(debouncedSearch);
 
     useEffect(() => {
         const handler = setTimeout(() => {
@@ -22,48 +22,13 @@ const ChatSidebar = ({ setChatId }) => {
         return () => clearTimeout(handler);
     }, [search]);
 
-    useEffect(() => {
-        if (!user?.access) return;
-
-        const ws = new WebSocket(
-            `${process.env.NEXT_PUBLIC_WS_FREELEANCE_URL}?token=${user?.access}`
-        );
-        wsRef.current = ws;
-
-        ws.onopen = () => {
-            console.log("✅chatlar WebSocket ulandi");
-        };
-
-        ws.onmessage = (event) => {
-            const data = JSON.parse(event.data);
-            console.log("📩 chatlar Yangi xabar:", data);
-            queryClient.invalidateQueries(['chats']);
-        };
-
-        ws.onerror = (err) => {
-            console.error("❌ chatlar WebSocket xatosi:", err);
-        };
-
-        ws.onclose = () => {
-            console.log("🔌 chatlar WebSocket yopildi");
-        };
-
-        return () => {
-            ws.close();
-        };
-    }, [user?.access]);
-
-    const { data: chats, isLoading } = useGetChats(debouncedSearch);
-
     return (
         <div className={styles.chat_sidebar}>
             <div className={styles.chat_search}>
                 <Button
                     onClick={() => back()}
                     icon={<i className="fa-solid fa-arrow-left"></i>}
-                >
-
-                </Button>
+                />
                 <Input.Search
                     placeholder="Chatlarni qidirish"
                     value={search}

@@ -7,7 +7,7 @@ import React, { useCallback, useMemo } from "react";
 
 const { confirm } = Modal;
 
-const ChatMessage = ({ msg, onEdit }) => {
+const ChatMessage = ({ msg, onEdit, pushUser }) => {
     const isMyMessage = msg.is_mine;
     const { mutate: deleteMsg } = useDeleteMessage();
 
@@ -70,6 +70,8 @@ const ChatMessage = ({ msg, onEdit }) => {
                     className={styles.avatar}
                     src={msg.sender_photo || "/static/img/ozodbek.png"}
                     alt="avatar"
+                    style={{cursor: "pointer"}}
+                    onClick={pushUser}
                 />
             )}
 

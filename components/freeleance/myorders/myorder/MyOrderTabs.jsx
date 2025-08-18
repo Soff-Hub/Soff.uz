@@ -55,7 +55,7 @@ const MyOrderTabs = () => {
                     className="order_tabs"
                     items={items}
                     tabPosition="top"
-                    tabBarStyle={{ overflowX: 'auto', whiteSpace: 'nowrap' }}
+                    tabBarStyle={{ overflowX: 'auto', overflowY: 'hidden', whiteSpace: 'nowrap' }}
                 />
             )}
         </div>

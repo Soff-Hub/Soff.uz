@@ -9,8 +9,8 @@ const FaqSection = ({ faqs }) => {
         <div className={styles.faq}>
             <h2 >Ko‘p beriladigan savollar</h2>
             <Collapse accordion>
-                {faqs?.map((faq, index) => (
-                    <Panel header={faq.question} key={index}>
+                {faqs?.map((faq) => (
+                    <Panel header={faq.question} key={faq.answer}>
                         <p>{faq.answer}</p>
                     </Panel>
                 ))}
