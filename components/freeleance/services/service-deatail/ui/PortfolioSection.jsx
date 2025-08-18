@@ -5,10 +5,10 @@ import PortfolioCard from './PortfolioCard';
 const PortfolioSection = ({portfolios}) => {
     return (
         <div className={styles.portfolioSection}>
-            <h2>Portfolio <span>(5 ta portfolio)</span></h2>
+            <h2>Portfolio <span>({portfolios.length} ta portfolio)</span></h2>
             <div className='row row-gap-5'>
                 {portfolios?.map(portfolio => 
-                    <div className='col-4'>
+                    <div key={portfolio?.id} className='col-4'>
                         <PortfolioCard portfolio={portfolio} />
                     </div>
                 )}

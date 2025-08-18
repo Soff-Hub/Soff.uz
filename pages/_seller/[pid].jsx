@@ -18,8 +18,8 @@ export default function SellersPage () {
     const [seller, setSeller] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
 
-    const pid = 8;
-    // const pid = query.pid;
+    // const pid = 8;
+    const pid = query.pid;
 
     const menuItems = [
         {

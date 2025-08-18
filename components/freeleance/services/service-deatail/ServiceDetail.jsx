@@ -9,18 +9,22 @@ import FaqSection from './ui/FaqSection'
 import PortfolioSection from './ui/PortfolioSection'
 import SwiperPages from '~/components/details-components/swiper/swiper-page'
 import ServiceCard from '../ServiceCard'
+import { useRouter } from 'next/router'
 
 const ServiceDetail = ({ data }) => {
-    const { service, seller_portfolio, similar_services, faqs, order_requirements } = data
+    const { push } = useRouter()
+    const pushUser = () => push(`/_seller/${service?.seller[0]?.soff_seller_id}#about_author`)
+    const { service, seller_portfolio, similar_services, faqs, order_requirements, user } = data
     const priceBox = {
         days: service?.delivery_days,
         price: service?.price,
         revisions: service?.right_to_change,
         id: service?.id,
-        title: service?.title
+        title: service?.title,
+        user: user
     }
+    const { full_name, photo_url } = user[0]
     console.log(data)
-
     const description = {
         description: service?.description,
         requirements: order_requirements[0]?.order_requirement_description,
@@ -35,10 +39,12 @@ const ServiceDetail = ({ data }) => {
                     <div className={styles.userBox}>
                         <img
                             className={styles.avatar}
-                            src={service?.user?.photo_url || "/static/img/ozodbek.png"}
+                            src={photo_url || "/static/img/ozodbek.png"}
                             alt={service?.user?.full_name || "User"}
+                            style={{cursor: "pointer"}}
+                            onClick={pushUser}
                         />
-                        <span className={styles.username}>{service?.user?.full_name || "No Name"}</span>
+                        <span style={{cursor: "pointer"}} onClick={pushUser} className={styles.username}>{full_name || "No Name"}</span>
                     </div>
                     <ImageCarousel images={service?.poster} />
                     <ServiceDescription priceBox={priceBox} description={description} />
@@ -46,7 +52,7 @@ const ServiceDetail = ({ data }) => {
                 <div className='col-12 col-md-4'>
                     <PriceBox priceBox={priceBox} />
                     <MoneyBack />
-                    <UserBox user={service?.seller[0]} />
+                    <UserBox priceBox={priceBox} pushUser={pushUser} />
                 </div>
             </div>
             <div className='row'>

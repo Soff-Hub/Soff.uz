@@ -1,0 +1,66 @@
+import { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
+import useGetChats from './useGetChats';
+
+const useChats = () => {
+    const [chats, setChats] = useState([]);
+    const { user } = useSelector(state => state.auth);
+    const wsRef = useRef();
+    const { data } = useGetChats();
+
+    // initial load
+    useEffect(() => {
+        if (data) setChats(data);
+    }, [data]);
+
+    useEffect(() => {
+        if (!user?.access) return;
+
+        const ws = new WebSocket(
+            `${process.env.NEXT_PUBLIC_WS_FREELEANCE_URL}?token=${user.access}`
+        );
+        wsRef.current = ws;
+
+        ws.onopen = () => console.log("✅ WS connected");
+
+        ws.onmessage = (event) => {
+            if (!event.data) return;
+            console.log(event.data)
+            let msg;
+            try {
+                msg = JSON.parse(event.data);
+            } catch (e) {
+                console.warn("⚠️ JSON emas data:", event.data);
+                return;
+            }
+
+            // 🔥 chat update qilish
+            setChats(prev => {
+                if (!Array.isArray(prev)) prev = [];
+
+                const index = prev.findIndex(c => c.chat_id === msg.chat_id);
+
+                if (index !== -1) {
+                    // bor bo‘lsa – update qilamiz (listning boshiga olib chiqib qo‘yish ham mumkin)
+                    const updated = [...prev];
+                    updated.splice(index, 1); 
+                    return [msg, ...updated]; 
+                } else {
+                    // yo‘q bo‘lsa – qo‘shamiz
+                    return [msg, ...prev];
+                }
+            });
+        };
+
+        ws.onclose = () => console.log("🔌 WS closed");
+        ws.onerror = (err) => console.error("❌ WS error:", err);
+
+        return () => ws.close();
+    }, [user?.access]);
+
+    return {
+        chats,
+    };
+};
+
+export default useChats;
