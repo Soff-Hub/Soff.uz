@@ -1,20 +1,18 @@
 import Image from 'next/image';
-import { Rating } from 'react-simple-star-rating';
-import { Tooltip } from 'antd';
+import { Tooltip, Rate } from 'antd';
 import { CheckCircleFilled, MessageOutlined } from '@ant-design/icons';
 import { useEffect, useRef, useState } from 'react';
 import { baseURL } from '~/repositories/api';
 import { getTimeAgo } from '~/utilities/calculateTime';
 import ReplyForm from '../comment-section/replysForm';
 
-export function Comment_List ({ slug }) {
+export function Comment_List({ slug }) {
     const [comments, setComments] = useState({ count: 0, results: [] });
     const [nextUrl, setNextUrl] = useState(null);
     const [activeReplyId, setActiveReplyId] = useState(null);
     const [loading, setLoading] = useState(false);
 
     const loadMoreRef = useRef();
-
 
     return (
         <div className='border rounded-5 p-5 bg-white'>
@@ -59,13 +57,11 @@ export function Comment_List ({ slug }) {
                                             </span>
                                         </div>
                                         {comment.rating !== 0 && (
-                                            <Rating
-                                                readonly
-                                                allowFraction
-                                                initialValue={comment.rating}
-                                                size={20}
-                                                fillColor='orange'
-                                                emptyColor='gray'
+                                            <Rate
+                                                disabled
+                                                allowHalf
+                                                value={comment.rating}
+                                                style={{ fontSize: 18 }}
                                             />
                                         )}
                                     </div>

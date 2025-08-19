@@ -17,14 +17,19 @@ export let cutomerAccountLink = [
         url: '/account/sellerproducts',
         icon: 'fa-solid fa-bag-shopping',
     },
-    // {
-    //     text: 'Buyurtma berish',
-    //     url: 'b',
-    //     icon: 'fa-regular fa-handshake',
-    // },
+    {
+        text: 'Chatlar',
+        url: '/chat',
+        icon: 'fa-solid fa-comment-dots',
+    },
+    {
+        text: 'Buyurtmalar',
+        url: '/order/my-orders',
+        icon: 'fas fa-truck',
+    },
     // {
     //     text: 'Profil',
-    //     url: '/account/settings',
+    //     url: '/account/settings',<i class="fas fa-file-invoice"></i>
     //     icon: 'fa-solid fa-gear',
     // },
 ];
