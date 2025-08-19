@@ -68,7 +68,7 @@ export default function CodeVerifyForm({authCode, onClose}) {
             } else if (router?.query?.deal) {
                 router.push(`/account/all-orders`);
             }else if (authCode){
-                router.push('/affiliate_program');
+                
             }
              else {
                 router.push('/account/sellerproducts');

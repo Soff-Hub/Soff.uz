@@ -1,4 +1,4 @@
-import CategoryHighlights from "./categoryHighlights";
+import CategoryHighlights from './CategoryHighlights';
 
 export default function HomeCategoryHighlights () {
     return (

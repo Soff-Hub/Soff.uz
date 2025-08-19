@@ -151,10 +151,12 @@
     border: none;
     transition: ease 0.1ms;
     margin-top: 24px;
+
     &:hover {
         background: rgb(40, 167, 69, 0.8);
         color: #fff;
     }
+
     &:active {
         background: rgb(40, 167, 69);
         color: #fff;
@@ -173,16 +175,20 @@ body.no-scroll {
     display: grid;
     grid-template-columns: 25% 75%;
     gap: 20px;
+
     @media (max-width: 1125px) {
         grid-template-columns: repeat(1, 100%);
     }
+
     @media (max-width: 768px) {
         grid-template-columns: repeat(1, 100%);
     }
+
     @media (max-width: 675px) {
         margin-top: 50px;
     }
 }
+
 // ___________________________sellerInfo STYLE START_______________________________
 .sellerInfo {
     padding: 37px 36px 50px;
@@ -193,6 +199,7 @@ body.no-scroll {
     border-radius: 10px;
     background: #fff;
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.05);
+
     @media (max-width: 1000px) {
         padding: 20px;
     }
@@ -207,24 +214,28 @@ body.no-scroll {
             width: 143px;
             height: 143px;
             border-radius: 100%;
+
             @media (max-width: 950px) {
                 width: 143px;
                 height: 143px;
                 border-radius: 100%;
             }
         }
+
         .sellerNameContainer {
             display: flex;
             justify-content: space-between;
             align-items: center;
             gap: 5px;
             margin-top: 25px;
+
             img {
                 @media (max-width: 950px) {
                     width: 15px;
                     height: 15px;
                 }
             }
+
             .sellerName {
                 font-family: 'Poppins';
                 font-weight: 600;
@@ -232,6 +243,7 @@ body.no-scroll {
                 line-height: 100%;
                 letter-spacing: 2%;
                 color: #000;
+
                 @media (max-width: 950px) {
                     font-weight: 500;
                     font-size: 15px;
@@ -245,17 +257,20 @@ body.no-scroll {
             align-items: center;
             margin-top: 10px;
             gap: 5px;
+
             img {
                 @media (max-width: 950px) {
                     width: 15px;
                     height: 15px;
                 }
+
                 .sellerStatus {
                     font-family: 'Poppins';
                     font-weight: 600;
                     font-size: 16px;
                     line-height: 100%;
                     color: #000;
+
                     @media (max-width: 950px) {
                         font-weight: 500;
                         font-size: 14px;
@@ -264,6 +279,7 @@ body.no-scroll {
             }
         }
     }
+
     .VerifiedInformation {
         .VerifiedInformationTitle {
             font-family: 'Poppins';
@@ -272,13 +288,16 @@ body.no-scroll {
             font-size: 16px;
             line-height: 100%;
             letter-spacing: 0%;
+
             @media (max-width: 950px) {
                 font-size: 14px;
             }
+
             @media (max-width: 950px) {
                 font-size: 14px;
             }
         }
+
         .VerifiedInformationInfoWrap {
             margin: 21.5px 0 0 0;
             padding: 0;
@@ -303,10 +322,12 @@ body.no-scroll {
     font-size: 14px;
     line-height: 100%;
     color: (49, 47, 48, 1);
+
     @media (max-width: 950px) {
         font-size: 12px;
     }
 }
+
 .titleInfo {
     font-family: 'Poppins';
     font-weight: 400;
@@ -314,6 +335,7 @@ body.no-scroll {
     line-height: 100%;
     letter-spacing: 0%;
     color: rgba(49, 47, 48, 1);
+
     @media (max-width: 950px) {
         font-size: 12px;
     }
@@ -325,6 +347,7 @@ body.no-scroll {
 
 .SellerCollapseMenu {
     display: none;
+
     @media (max-width: 600px) {
         display: block;
     }
@@ -339,9 +362,11 @@ body.no-scroll {
     padding: 14px 50px;
     background: white;
     border-radius: 10px;
+
     @media (max-width: 600px) {
         display: none;
     }
+
     .activeTab {
         color: #7b7b7b;
         padding: 0 10px;
@@ -353,17 +378,21 @@ body.no-scroll {
         list-style: none;
         position: relative;
         transition: color 0.3s ease;
+
         @media (max-width: 850px) {
             font-size: 12px;
         }
+
         &:hover {
             color: #000;
         }
     }
 }
+
 .active {
     color: #000 !important;
     font-weight: bold;
+
     &::before {
         content: url(/static/img/beforeRec.png);
         position: absolute;
@@ -377,24 +406,31 @@ body.no-scroll {
     grid-template-columns: repeat(4, 1fr);
     gap: 15px;
     row-gap: 20px;
+
     @media (max-width: 768px) {
         grid-template-columns: repeat(3, 1fr);
     }
+
     @media (max-width: 500px) {
         grid-template-columns: repeat(2, 1fr);
     }
+
     .sellerProductSkeleton {
         width: 100%;
         height: 200px !important;
+
         @media (max-width: 768px) {
             height: 150px !important;
         }
+
         @media (max-width: 500px) {
             height: 120px !important;
         }
+
         @media (max-width: 400px) {
             height: 100px !important;
         }
+
         @media (max-width: 300px) {
             height: 80px !important;
         }
@@ -409,9 +445,11 @@ body.no-scroll {
     border-radius: 10px;
     background: #fff;
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.05);
+
     @media (max-width: 1200px) {
         padding: 30px;
     }
+
     @media (max-width: 550px) {
         background: none;
         padding: 0;
@@ -422,14 +460,17 @@ body.no-scroll {
         align-items: center;
         justify-content: space-between;
         padding: 20px 28px;
+
         @media (max-width: 1000px) {
             display: none;
         }
+
         .servicesSectionInfoCard {
             display: flex;
             align-items: center;
             justify-content: center;
             flex-direction: column;
+
             .servicesSectionInfoCardImg {
                 width: 58.852px;
                 height: 48.617px;
@@ -446,6 +487,7 @@ body.no-scroll {
                 line-height: normal;
                 letter-spacing: 0.3px;
             }
+
             .servicesSectionInfoCardDescription {
                 color: #312f30;
                 text-align: center;
@@ -455,6 +497,7 @@ body.no-scroll {
                 font-weight: 300;
                 line-height: normal;
                 width: 206px;
+
                 @media (max-width: 1000px) {
                     font-size: 10px;
                     width: 180px;
@@ -468,14 +511,17 @@ body.no-scroll {
         grid-template-columns: repeat(4, 1fr);
         gap: 18px;
         margin-top: 32px;
+
         @media (max-width: 1000px) {
             grid-template-columns: repeat(2, 1fr);
             margin-top: 0;
         }
+
         @media (max-width: 450px) {
             grid-template-columns: repeat(1, 1fr);
             margin-top: 0;
         }
+
         .servicesSectionInputBox {
             width: 100%;
             background: #fff;
@@ -486,10 +532,12 @@ body.no-scroll {
             flex-shrink: 0;
             border-radius: 4px;
             box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.15);
+
             .servicesSectionInput {
                 border: none;
                 outline: none;
                 background: none;
+
                 &::placeholder {
                     color: #7b7b7b;
                     font-family: Poppins;
@@ -500,6 +548,7 @@ body.no-scroll {
                 }
             }
         }
+
         .servicesSectionSelect {
             width: 100%;
             padding: 7px 17px 7px 16px;
@@ -521,10 +570,12 @@ body.no-scroll {
             border-radius: 6.549px;
             background: #a020f0;
             gap: 10px;
+
             @media (max-width: 1200px) {
                 padding: 7px 15px;
                 gap: 8px;
             }
+
             .servicesSectionBtnTitle {
                 color: #fff;
                 font-family: 'Poppins';
@@ -536,6 +587,7 @@ body.no-scroll {
                 margin: 0;
                 text-wrap: nowrap;
                 width: 108px;
+
                 @media (max-width: 1200px) {
                     font-size: 12px;
                 }
@@ -546,10 +598,8 @@ body.no-scroll {
     .servicesSectionWrap {
         display: grid;
 
-        grid-template-columns: repeat(
-            auto-fit,
-            minmax(clamp(5rem, 13.75vw + 2.25rem, 18.75rem), 1fr)
-        );
+        grid-template-columns: repeat(auto-fit,
+                minmax(clamp(5rem, 13.75vw + 2.25rem, 18.75rem), 1fr));
         gap: 10px;
         row-gap: 29px;
         margin-top: 41.5px;
@@ -572,6 +622,7 @@ body.no-scroll {
         }
     }
 }
+
 .servicesSectionCard {
     display: flex;
     align-items: center;
@@ -591,29 +642,35 @@ body.no-scroll {
             width: 100%;
         }
     }
+
     .servicesSectionCardbody {
         margin-top: 7.5px;
         width: 100%;
+
         .servicesSectionCardTitle {
             color: #312f30;
             font-family: 'Poppins';
             font-size: 12px;
             font-style: normal;
             font-weight: 500;
-            line-height: 150%; /* 18px */
+            line-height: 150%;
+            /* 18px */
             letter-spacing: 0.24px;
             margin-bottom: 5.5px;
+
             @media (max-width: 480px) {
                 font-size: 10px;
             }
         }
+
         .servicesSectionCardRating {
             display: flex;
             align-items: center;
             gap: 2px;
             margin-bottom: 10px;
-            img {
-            }
+
+            img {}
+
             p {
                 color: #312f30;
                 font-family: 'Poppins';
@@ -625,6 +682,7 @@ body.no-scroll {
                 margin: 0;
                 padding: 0;
             }
+
             span {
                 color: #555;
                 font-family: 'Poppins';
@@ -637,10 +695,12 @@ body.no-scroll {
                 margin: 0;
             }
         }
+
         .servicesSectionCardPrice {
             display: flex;
             align-items: center;
             justify-content: space-between;
+
             p {
                 color: #312f30;
                 font-family: 'Poppins';
@@ -650,10 +710,12 @@ body.no-scroll {
                 line-height: normal;
                 letter-spacing: 0.12px;
                 margin: 0;
+
                 @media (max-width: 480px) {
                     font-size: 8px;
                 }
             }
+
             a {
                 color: #fff;
                 font-family: 'Poppins';
@@ -666,10 +728,12 @@ body.no-scroll {
                 background: rgba(0, 210, 101, 1);
                 border-radius: 3px;
                 margin: 0;
+
                 @media (max-width: 480px) {
                     font-size: 8px;
                     padding: 2px 4px;
                 }
+
                 &:hover {
                     background: rgba(0, 210, 101, 0.5);
                 }
@@ -683,16 +747,19 @@ body.no-scroll {
 .SellerComments {
     padding: 38px 36px;
     display: flex;
-    align-items: center;
+    align-items: start;
     justify-content: space-between;
-    flex-direction: column;
+    // flex-direction: column;
     gap: 16px;
     border-radius: 10px;
     background: #fff;
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.05);
+
     @media (max-width: 768px) {
         padding: 20px;
+        display: block;
     }
+
     @media (max-width: 550px) {
         padding: 0px;
         box-shadow: none;
@@ -704,15 +771,18 @@ body.no-scroll {
         height: 150px;
         border-radius: 15px;
         padding: 20px;
+
         @media (max-width: 550px) {
             padding: 10px;
             height: 250px;
         }
+
         @media (max-width: 400px) {
             padding: 5px;
             height: 200px;
         }
     }
+
     .SellerCommentsCard {
         padding: 21px 40px;
         gap: 10px;
@@ -720,39 +790,50 @@ body.no-scroll {
         background: #fff;
         box-shadow: 0px 0px 3.5px 0px rgba(0, 0, 0, 0.2);
         width: 100%;
+
         @media (max-width: 768px) {
             padding: 21px;
         }
+
         @media (max-width: 500px) {
             padding: 10px;
         }
+
         .SellerCommentsCardAboutSeller {
             display: flex;
             align-items: center;
             justify-content: space-between;
             width: 100%;
+
             @media (max-width: 520px) {
                 flex-direction: column;
                 align-items: start;
             }
+
             .SellerCommentsCardAboutSellerinfo {
                 display: flex;
+                width: 100%;
                 align-items: center;
+                justify-content: space-between;
                 gap: 30px;
+
                 @media (max-width: 520px) {
                     flex-direction: column;
                     align-items: start;
                     gap: 10px;
                 }
+
                 .SellerCommentsCardSellerAvatar {
                     display: flex;
                     align-items: center;
                     gap: 7px;
+
                     img {
                         height: 35px;
                         width: 35px;
                         border-radius: 100%;
                     }
+
                     p {
                         color: #312f30;
                         font-family: 'Poppins';
@@ -763,15 +844,16 @@ body.no-scroll {
                         letter-spacing: 0.28px;
                         margin: 0;
                     }
-                }
-                .SellerCommentsCardSellerActivety {
-                    color: rgba(152, 152, 152, 0.9);
-                    font-family: 'Poppins';
-                    font-size: 12px;
-                    font-style: normal;
-                    font-weight: 500;
-                    line-height: normal;
-                    margin: 0;
+
+                    .SellerCommentsCardSellerActivety {
+                        color: rgba(152, 152, 152, 0.9);
+                        font-family: 'Poppins';
+                        font-size: 12px;
+                        font-style: normal;
+                        font-weight: 500;
+                        line-height: normal;
+                        margin: 0;
+                    }
                 }
             }
         }
@@ -780,6 +862,7 @@ body.no-scroll {
             display: flex;
             align-items: flex-start;
             flex-direction: column;
+
             .SellerCommentsCardComment {
                 color: #7b7b7b;
                 font-family: 'Poppins';
@@ -789,11 +872,13 @@ body.no-scroll {
                 line-height: normal;
                 letter-spacing: 0.24px;
                 width: 90%;
+
                 @media (max-width: 520px) {
                     width: 100%;
                 }
             }
         }
+
         .SellerCommentsCardBtnWrap {
             display: flex;
             justify-content: flex-end;
@@ -819,6 +904,7 @@ body.no-scroll {
         }
     }
 }
+
 // _____________________________SellerComments end_________________________
 
 .SellerInfo {
@@ -828,14 +914,17 @@ body.no-scroll {
     background: #fff;
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.05);
     padding: 36px 47px;
+
     @media (max-width: 600px) {
         padding: 20px;
     }
+
     @media (max-width: 550px) {
         background: none;
         box-shadow: none;
         padding: 0px;
     }
+
     .SellerInfoTitle {
         color: #312f30;
         font-family: 'Poppins';
@@ -844,20 +933,25 @@ body.no-scroll {
         font-weight: 500;
         line-height: normal;
     }
+
     .SellerInfoCardWrap {
         display: grid;
         grid-template-columns: repeat(5, 172px);
         gap: 18px;
         margin-top: 20px;
+
         @media (max-width: 1300px) {
             grid-template-columns: repeat(5, 1fr);
         }
+
         @media (max-width: 1250px) {
             grid-template-columns: repeat(3, 1fr);
         }
+
         @media (max-width: 768px) {
             grid-template-columns: repeat(3, 1fr);
         }
+
         @media (max-width: 500px) {
             grid-template-columns: repeat(2, 1fr);
         }
@@ -871,13 +965,16 @@ body.no-scroll {
             justify-content: space-between;
             flex-direction: column;
             gap: 18px;
+
             @media (max-width: 600px) {
                 padding: 10px;
             }
+
             @media (max-width: 400px) {
                 padding: 8px;
                 gap: 10px;
             }
+
             @media (max-width: 350px) {
                 padding: 5px;
                 gap: 5px;
@@ -887,39 +984,46 @@ body.no-scroll {
                 display: flex;
                 align-items: center;
                 gap: 10px;
+
                 @media (max-width: 300px) {
                     flex-direction: column;
                     justify-content: center;
                 }
+
                 .SellerInfoCardImg {
                     @media (max-width: 600px) {
                         width: 20px;
                         height: 20px;
                     }
+
                     @media (max-width: 350px) {
                         width: 12px;
                         height: 12px;
                     }
                 }
+
                 .SellerInfoCardTitle {
                     color: #312f30;
                     font-family: 'Poppins';
                     font-size: 12px;
                     font-style: normal;
                     font-weight: 400;
-                    line-height: 120%; /* 14.4px */
+                    line-height: 120%;
+                    /* 14.4px */
                     letter-spacing: 0.24px;
                     margin: 0 !important;
 
                     @media (max-width: 600px) {
                         font-size: 10px;
                     }
+
                     @media (max-width: 400px) {
                         font-size: 8px;
                         text-align: center;
                     }
                 }
             }
+
             .SellerInfoCardCount {
                 color: #312f30;
                 font-family: 'Poppins';
@@ -933,6 +1037,7 @@ body.no-scroll {
                 @media (max-width: 600px) {
                     font-size: 12px;
                 }
+
                 @media (max-width: 400px) {
                     font-size: 10px;
                     text-align: center;
@@ -940,6 +1045,7 @@ body.no-scroll {
             }
         }
     }
+
     .SellerInfoSecondTitle {
         color: #312f30;
         font-family: 'Poppins';
@@ -949,6 +1055,7 @@ body.no-scroll {
         line-height: normal;
         margin-top: 60px;
     }
+
     .SellerInfoDescription {
         color: #312f30;
         font-family: 'Poppins';
@@ -957,6 +1064,7 @@ body.no-scroll {
         font-weight: 300;
         line-height: normal;
         margin-top: 20px;
+
         .SellerInfoDescriptionForMore {
             color: #00a44f;
             font-family: 'Poppins';
@@ -966,23 +1074,28 @@ body.no-scroll {
             line-height: normal;
         }
     }
+
     .SellerInfoEnd {
         margin-top: 70px;
         display: flex;
         align-items: center;
         gap: 57px;
+
         .SellerInfoSecondCardWrap {
             display: flex;
             align-items: center;
             gap: 32px;
+
             @media (max-width: 768px) {
                 display: none;
             }
+
             .SellerInfoSecondCard {
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 flex-direction: column;
+
                 .SellerInfoSecondCardTitle {
                     margin-top: 18px;
                     color: #312f30;
@@ -993,6 +1106,7 @@ body.no-scroll {
                     line-height: normal;
                     letter-spacing: 0.252px;
                 }
+
                 .SellerInfoSecondCardDescription {
                     color: #312f30;
                     text-align: center;
@@ -1005,6 +1119,7 @@ body.no-scroll {
                 }
             }
         }
+
         .SellerInfoSecondCardBtn {
             display: flex;
             align-items: center;
@@ -1012,6 +1127,7 @@ body.no-scroll {
             border-radius: 6.549px;
             background: #a020f0;
             gap: 10px;
+
             .SellerInfoSecondCardBtnTitle {
                 color: #fff;
                 font-family: 'Poppins';
@@ -1032,13 +1148,16 @@ body.no-scroll {
 .SellerProduct {
     background-color: #fff;
     padding: 40px;
+
     @media (max-width: 800px) {
         padding: 20px;
     }
+
     @media (max-width: 768px) {
         padding: 0px;
         background: none;
     }
+
     .SellerProductForm {
         // display: grid;
         // grid-template-columns: repeat(4, 1fr);
@@ -1046,11 +1165,13 @@ body.no-scroll {
         justify-content: end;
         gap: 18px;
         margin-bottom: 35px;
+
         @media (max-width: 600px) {
             flex-wrap: wrap;
             justify-content: space-between;
             gap: 10px;
         }
+
         .SellerProductInputBox {
             width: 50%;
             background: #fff;
@@ -1061,13 +1182,16 @@ body.no-scroll {
             flex-shrink: 0;
             border-radius: 4px;
             box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.15);
+
             @media (max-width: 600px) {
                 width: 100%;
             }
+
             .SellerProductInput {
                 border: none;
                 outline: none;
                 background: none;
+
                 &::placeholder {
                     color: #7b7b7b;
                     font-family: Poppins;
@@ -1078,6 +1202,7 @@ body.no-scroll {
                 }
             }
         }
+
         .SellerProductSelect {
             width: 25%;
             padding: 7px 17px 7px 16px;
@@ -1090,9 +1215,11 @@ body.no-scroll {
             font-style: normal;
             font-weight: 500;
             line-height: normal;
+
             @media (max-width: 600px) {
                 width: 48%;
             }
+
             @media (max-width: 260px) {
                 width: 100%;
             }
@@ -1105,10 +1232,12 @@ body.no-scroll {
             border-radius: 6.549px;
             background: #a020f0;
             gap: 10px;
+
             @media (max-width: 1200px) {
                 padding: 7px 15px;
                 gap: 8px;
             }
+
             .SellerProductBtnTitle {
                 color: #fff;
                 font-family: 'Poppins';
@@ -1120,6 +1249,7 @@ body.no-scroll {
                 margin: 0;
                 text-wrap: nowrap;
                 width: 108px;
+
                 @media (max-width: 1200px) {
                     font-size: 12px;
                 }
@@ -1131,11 +1261,13 @@ body.no-scroll {
 // ________________________________________SellerProduct_end____________________
 .sellerpage {
     width: 100%;
+
     .sellerpageTitleBox {
         display: flex;
         align-items: center;
         margin: 31px 0;
         gap: 10px;
+
         .sellerpageTitle {
             color: #312f30;
             font-family: 'Poppins';
@@ -1147,6 +1279,7 @@ body.no-scroll {
             color: (49, 47, 48, 1);
         }
     }
+
     .ScientificResourcesCardWrap {
         display: grid;
         grid-template-columns: repeat(4, 226px);
@@ -1154,10 +1287,12 @@ body.no-scroll {
         row-gap: 31px;
         align-items: stretch;
         margin-top: 50px;
+
         @media (max-width: 1300px) {
             grid-template-columns: repeat(4, 1fr);
         }
     }
+
     .VideoLessonsCardWrap {
         display: grid;
         grid-template-columns: repeat(4, 226px);
@@ -1165,10 +1300,12 @@ body.no-scroll {
         row-gap: 25px;
         align-items: stretch;
         margin-top: 50px;
+
         @media (max-width: 1300px) {
             grid-template-columns: repeat(4, 1fr);
         }
     }
+
     .ModelAndDesignCardWrap {
         display: grid;
         grid-template-columns: repeat(3, 306px);
@@ -1182,6 +1319,7 @@ body.no-scroll {
             grid-template-columns: repeat(4, 1fr);
         }
     }
+
     .WebSitesCardWrap {
         display: grid;
         grid-template-columns: repeat(4, 228px);
@@ -1189,10 +1327,12 @@ body.no-scroll {
         row-gap: 25px;
         align-items: stretch;
         margin-top: 50px;
+
         @media (max-width: 1300px) {
             grid-template-columns: repeat(4, 1fr);
         }
     }
+
     .DesignDevelopmentCardWrap {
         display: grid;
         grid-template-columns: repeat(4, 228px);
@@ -1200,16 +1340,19 @@ body.no-scroll {
         row-gap: 25px;
         align-items: stretch;
         margin-top: 50px;
+
         @media (max-width: 1300px) {
             grid-template-columns: repeat(4, 1fr);
         }
     }
 }
+
 .showMoreBox {
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
+
     .showMore {
         color: #312f30;
         font-family: 'Poppins';
@@ -1224,31 +1367,38 @@ body.no-scroll {
         margin-top: 31px;
         width: 280px;
         text-align: center;
+
         & :hover {
             background: #e0e2e7;
         }
     }
 }
+
 // ____________________________________________________________
 .SellerPortfolio {
     background: #fff;
     border-radius: 10px;
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.05);
     padding: 40px 47px;
+
     @media (max-width: 1000px) {
         padding: 30px;
     }
+
     @media (max-width: 768px) {
         padding: 20px;
         background: none;
         box-shadow: none;
     }
+
     @media (max-width: 500px) {
         padding: 15px;
     }
+
     @media (max-width: 400px) {
         padding: 10px;
     }
+
     .SellerPortfolioForm {
         display: flex;
         justify-content: flex-end;
@@ -1259,98 +1409,139 @@ body.no-scroll {
         .SellerPortfolioSelect {
             width: 30%;
             padding: 7px 17px 7px 16px;
-            border: none;
+            border: 1px solid hsl(0, 0%, 48%, 0.6);
             border-radius: 4px;
             box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.15);
-            color: #7b7b7b;
+            color: hsl(0, 0%, 0%, 0.6);
             font-family: 'Poppins';
-            font-size: 12px;
+            font-size: 15px;
             font-style: normal;
             font-weight: 500;
             line-height: normal;
+
             @media (max-width: 768px) {
                 width: 50%;
             }
         }
     }
+
     .SellerPortfolioWrap {
         display: grid;
-
-        grid-template-columns: repeat(
-            auto-fit,
-            minmax(clamp(9rem, 12.5vw + 3.75rem, 18.75rem), 1fr)
-        );
-        gap: 8px;
-        row-gap: 15px;
+        grid-template-columns: repeat(auto-fit,
+                minmax(clamp(9rem, 12.5vw + 3.75rem, 18.75rem), 1fr));
+        gap: 10px;
+        row-gap: 10px;
 
         .SellerPortfolioSkeleton {
+            max-width: clamp(9rem, 12.5vw + 3.75rem, 18.75rem) !important;
             width: 100%;
-            height: 164px;
+            height: clamp(5rem, 6.25vw + 3.75rem, 11.25rem);
             border-radius: 15px;
-            @media (max-width: 350px) {
-                height: 120px;
-            }
-            @media (max-width: 300px) {
-                height: 80px;
-            }
+            object-fit: cover;
         }
     }
 }
+
 .SellerPortfolioCard {
+    max-height: 180px;
+    max-width: 230px;
+    height: 150px;
+    background-color: #f5f6f7;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: relative;
+    overflow: hidden;
+    cursor: pointer;
+
     .SellerPortfolioCardImg {
-        width: 100%;
+        // max-width: 230px !important;
+        // max-height: 200px;
+        border-radius: 10px;
+        transition: filter 0.3s ease, transform 0.3s ease;
+        object-fit: cover;
     }
-    &:hover {
-        .SellerPortfolioCardbody {
-            display: block;
-        }
-    }
+
     .SellerPortfolioCardbody {
         position: absolute;
-        display: none;
         bottom: 0;
-        padding: 0 9px;
+        left: 0;
         width: 100%;
+        padding: 8px;
+        background: rgba(0, 0, 0, 0.5);
+        color: #fff;
+        z-index: 20;
+        transform: translateY(100%);
+        opacity: 0;
+        transition: all 0.4s ease;
+
         .SellerPortfolioCardTitle {
-            color: #fff;
             font-family: 'Poppins';
             font-size: 12px;
-            font-style: normal;
             font-weight: 500;
-            line-height: normal;
             letter-spacing: 0.24px;
+            color: #fff;
+            margin-bottom: 4px;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
         }
+
         .SellerPortfolioCardEnd {
-            p {
-                color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .SellerPortfolioCardEndTitle {
                 font-family: 'Poppins';
                 font-size: 12px;
-                font-style: normal;
-                font-weight: 400;
-                line-height: normal;
+                font-weight: 500;
                 letter-spacing: 0.24px;
+                color: #fff;
+                text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+            }
+
+            .SellerPortfolioCard_view_count {
+                display: flex;
+                align-items: center;
+                gap: 5px;
             }
         }
     }
+
+    &:hover {
+        .SellerPortfolioCardImg {
+            filter: brightness(50%);
+            transform: scale(1.03);
+        }
+
+        .SellerPortfolioCardbody {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
 }
+
+/* Optional: Ensure content is above the image if needed */
 
 .ServiceIsUnavailable {
     padding: 48px 221px;
     border-radius: 10px;
     background: #fff;
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.05);
+
     .ServiceIsUnavailableImg {
         display: flex;
         justify-content: center;
         align-items: center;
     }
+
     .ServiceIsUnavailableBody {
         margin-top: 71px;
         display: flex;
         align-items: center;
         justify-content: center;
         flex-direction: column;
+
         .ServiceIsUnavailableTitle {
             color: #000;
             text-align: center;
@@ -1358,8 +1549,10 @@ body.no-scroll {
             font-size: 20px;
             font-style: normal;
             font-weight: 600;
-            line-height: 150%; /* 30px */
+            line-height: 150%;
+            /* 30px */
         }
+
         .ServiceIsUnavailableDescription {
             color: #312f30;
             text-align: center;
@@ -1367,11 +1560,13 @@ body.no-scroll {
             font-size: 14px;
             font-style: normal;
             font-weight: 400;
-            line-height: 150%; /* 21px */
+            line-height: 150%;
+            /* 21px */
             margin-top: 8px;
             text-wrap: nowrap;
             margin-bottom: 40px;
         }
+
         .ServiceIsUnavailableBtn {
             color: #fff;
             text-align: center;
@@ -1379,7 +1574,8 @@ body.no-scroll {
             font-size: 12px;
             font-style: normal;
             font-weight: 500;
-            line-height: 150%; /* 18px */
+            line-height: 150%;
+            /* 18px */
             margin-top: 40px;
             padding: 8px 15px;
             border-radius: 5px;
@@ -1387,22 +1583,26 @@ body.no-scroll {
         }
     }
 }
+
 .dontWork {
     padding: 48px 171px;
     border-radius: 10px;
     background: #fff;
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.05);
+
     .dontWorkImg {
         display: flex;
         justify-content: center;
         align-items: center;
     }
+
     .dontWorkBody {
         margin-top: 71px;
         display: flex;
         align-items: center;
         justify-content: center;
         flex-direction: column;
+
         .dontWorkTitle {
             color: #000;
             text-align: center;
@@ -1414,6 +1614,7 @@ body.no-scroll {
             width: 633px;
         }
     }
+
     .dontWorkCardWrap {
         display: flex;
         align-items: center;
@@ -1421,14 +1622,17 @@ body.no-scroll {
         padding: 20px 28px;
         margin-top: 47px;
         gap: 32px;
+
         @media (max-width: 1000px) {
             display: none;
         }
+
         .dontWorkCard {
             display: flex;
             align-items: center;
             justify-content: center;
             flex-direction: column;
+
             .dontWorkCardImg {
                 width: 58.852px;
                 height: 48.617px;
@@ -1445,6 +1649,7 @@ body.no-scroll {
                 line-height: normal;
                 letter-spacing: 0.3px;
             }
+
             .dontWorkCardDescription {
                 color: #312f30;
                 text-align: center;
@@ -1454,6 +1659,7 @@ body.no-scroll {
                 font-weight: 300;
                 line-height: normal;
                 width: 206px;
+
                 @media (max-width: 1000px) {
                     font-size: 10px;
                     width: 180px;
@@ -1462,12 +1668,15 @@ body.no-scroll {
         }
     }
 }
+
 .SwipperTitlewrap {
     margin: 15px 0 !important;
 }
+
 .categoryHighlightsSwippercontainer {
     width: clamp(18.75rem, 100.858vw - 1.422rem, 165.625rem) !important;
     overflow: hidden !important;
+
     .categoryHighlightsSwipper {
 
         .categoryHighlightsSwipperWrap {
@@ -1476,17 +1685,21 @@ body.no-scroll {
         }
     }
 }
+
 .SwipperTitle {
     font-weight: 600;
     font-size: clamp(2rem, 2.5vw, 2.5rem);
 }
+
 .SwipperTitlE {
     font-weight: 600;
     font-size: clamp(2rem, 2.5vw, 2.5rem);
+
     @media (max-width: 320px) {
         margin-top: 40px;
     }
 }
+
 .scientificResourcesCardForcarousel {
     // min-width: clamp(8.125rem, 11.588vw + 5.807rem, 25rem);
     // height: 100%;
@@ -1499,9 +1712,11 @@ body.no-scroll {
     // margin: 0;
 
     width: 100%;
-    max-width: clamp(10rem, 30vw, 18rem); /* 160–288px oralig‘ida */
+    max-width: clamp(10rem, 30vw, 18rem);
+    /* 160–288px oralig‘ida */
     margin: 0 auto;
     box-sizing: border-box;
+
     &:hover {
         filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.2));
     }
@@ -1511,22 +1726,26 @@ body.no-scroll {
         align-items: center;
         justify-content: center;
         padding: clamp(0.313rem, 0.858vw + 0.141rem, 1.563rem);
+
         .scientificResourcesCardImg {
             height: clamp(6.25rem, 4.292vw + 5.392rem, 12.5rem);
             border-radius: 12.5px;
         }
     }
+
     .scientificResourcesCardHeard {
         position: absolute;
         right: clamp(0.625rem, 0.429vw + 0.539rem, 1.25rem);
         top: clamp(0.625rem, 0.429vw + 0.539rem, 1.25rem);
         padding: clamp(0.188rem, 0.3vw + 0.127rem, 0.625rem);
+
         img {
             @media (max-width: 450px) {
                 width: 15px;
             }
         }
     }
+
     .scientificResourcesCardBody {
         display: flex;
         justify-content: space-between;
@@ -1534,6 +1753,7 @@ body.no-scroll {
         flex-grow: 1;
         padding: clamp(0.5rem, 0.515vw + 0.397rem, 1.25rem);
         gap: clamp(0.5rem, 0.515vw + 0.397rem, 1.25rem);
+
         .scientificResourcesCardTitle {
             color: #000;
             font-family: 'Poppins';
@@ -1543,10 +1763,12 @@ body.no-scroll {
             line-height: normal;
             letter-spacing: 0.25px;
         }
+
         .scientificResourcesCardPriceBox {
             display: flex;
             justify-content: space-between;
             align-items: center;
+
             .scientificResourcesCardPrice {
                 p {
                     color: #000;
@@ -1559,10 +1781,12 @@ body.no-scroll {
                     margin: 0;
                 }
             }
+
             .scientificBuyIcon {
                 @media (max-width: 768px) {
                     width: 25px;
                 }
+
                 @media (max-width: 450px) {
                     width: 20px;
                 }
@@ -1580,14 +1804,17 @@ body.no-scroll {
     align-items: center;
     gap: 20px;
     z-index: 9999;
+
     @media (max-width: 768px) {
         // display: none;
         right: -35px;
     }
+
     .swipperICon {
         font-size: clamp(0.938rem, 0.446vw + 0.848rem, 1.563rem);
         cursor: pointer;
         color: #00a44f;
+
         &:active {
             color: #312f30;
         }
@@ -1600,20 +1827,25 @@ body.no-scroll {
         width: 95vw;
         margin: 0 auto;
     }
+
     .BestSellerStaticsTableTab {
         display: none;
+
         @media (max-width: 768px) {
             display: block;
 
             background-color: #fff;
             padding: 40px;
+
             @media (max-width: 800px) {
                 padding: 20px;
             }
+
             @media (max-width: 768px) {
                 padding: 0px;
                 background: none;
             }
+
             .SellerProductForm {
                 // display: grid;
                 // grid-template-columns: repeat(4, 1fr);
@@ -1621,11 +1853,13 @@ body.no-scroll {
                 justify-content: end;
                 gap: 18px;
                 margin-bottom: 35px;
+
                 @media (max-width: 600px) {
                     flex-wrap: wrap;
                     justify-content: space-between;
                     gap: 10px;
                 }
+
                 .SellerProductInputBox {
                     width: 50%;
                     background: #fff;
@@ -1636,13 +1870,16 @@ body.no-scroll {
                     flex-shrink: 0;
                     border-radius: 4px;
                     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.15);
+
                     @media (max-width: 600px) {
                         width: 100%;
                     }
+
                     .SellerProductInput {
                         border: none;
                         outline: none;
                         background: none;
+
                         &::placeholder {
                             color: #7b7b7b;
                             font-family: Poppins;
@@ -1653,6 +1890,7 @@ body.no-scroll {
                         }
                     }
                 }
+
                 .SellerProductSelect {
                     width: 25%;
                     padding: 7px 17px 7px 16px;
@@ -1665,9 +1903,11 @@ body.no-scroll {
                     font-style: normal;
                     font-weight: 500;
                     line-height: normal;
+
                     @media (max-width: 600px) {
                         width: 48%;
                     }
+
                     @media (max-width: 260px) {
                         width: 100%;
                     }
@@ -1680,10 +1920,12 @@ body.no-scroll {
                     border-radius: 6.549px;
                     background: #a020f0;
                     gap: 10px;
+
                     @media (max-width: 1200px) {
                         padding: 7px 15px;
                         gap: 8px;
                     }
+
                     .SellerProductBtnTitle {
                         color: #fff;
                         font-family: 'Poppins';
@@ -1695,6 +1937,7 @@ body.no-scroll {
                         margin: 0;
                         text-wrap: nowrap;
                         width: 108px;
+
                         @media (max-width: 1200px) {
                             font-size: 12px;
                         }
@@ -1703,18 +1946,22 @@ body.no-scroll {
             }
         }
     }
+
     .BestSellerStaticsTableWrap {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         width: 100%;
         gap: 50px;
+
         @media (max-width: 768px) {
             grid-template-columns: repeat(1, 1fr);
         }
     }
 }
+
 .BestSellerStaticsTable {
     width: 100%;
+
     .BestSellerStaticsTable_titleWrap {
         .BestSellerStaticsTable_titleWrap_select {
             border: 1px solid #f1f1f1;
@@ -1724,6 +1971,7 @@ body.no-scroll {
             color: #000;
             font-weight: 600;
         }
+
         .BestSellerStaticsTable_titleWrap_title {
             font-size: clamp(1.8rem, 2.5vw, 2rem);
             padding: 0;
@@ -1732,12 +1980,14 @@ body.no-scroll {
             font-weight: 600;
         }
     }
+
     .BestSellerStaticsTableCardWrap {
         margin: 20px auto 0 !important;
         display: flex;
         width: 100%;
         flex-direction: column;
         gap: 20px;
+
         .BestSellerStaticsTableCard {
             cursor: pointer;
             display: flex;
@@ -1748,15 +1998,18 @@ body.no-scroll {
             min-width: 100%;
             border-radius: 10px;
             background-color: #fff;
+
             .BestSellerStaticsTableCard_Avatar {
                 width: 50px;
                 height: 50px;
                 border-radius: 50%;
             }
+
             .BestSellerStaticsTableCard_ProductView {
                 width: 50px;
                 height: 50px;
             }
+
             .BestSellerStaticsTableCard_infoWrap {
                 .BestSellerStaticsTableCard_fullname {
                     font-size: clamp(0.8rem, 0.75vw + 0.975rem, 1.2rem);
@@ -1764,6 +2017,7 @@ body.no-scroll {
                     padding: 0;
                     margin: 0;
                 }
+
                 .BestSellerStaticsTableCard_statics {
                     padding: 0;
                     margin: 0;
@@ -1779,5 +2033,111 @@ body.no-scroll {
 }
 
 .image-wrapper:hover img {
-    filter: brightness(0.5); /* 0.5 = 50% yorqinlik — qoraroq ko‘rinadi */
+    filter: brightness(0.5);
+    /* 0.5 = 50% yorqinlik — qoraroq ko‘rinadi */
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    /* yarim shaffof qora fon */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    overflow: hidden;
+}
+
+.ProtfolioModal_wrap {
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    max-height: 60%;
+    max-width: 50vw;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    background-color: #f1f1f1;
+    border-radius: 10px;
+    padding: 10px;
+    overflow-y: scroll;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        max-width: 90vw;
+    }
+
+    .closeICon {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        left: end;
+        z-index: 10;
+        padding: 1px;
+        border-radius: 5px;
+        cursor: pointer;
+        background-color: #fff;
+    }
+
+    .ProtfolioModal_wrap_swipper {
+        width: 100%;
+        max-height: 100%;
+        height: auto;
+        display: flex;
+        justify-content: center;
+        align-items: start;
+        border-radius: 10px;
+        overflow-y: scroll;
+        position: relative;
+
+        .ProtfolioModal_wrap_swipper_btn {
+            position: fixed;
+            bottom: center;
+            z-index: 10;
+
+        }
+
+        .ProtfolioModal_wrap_swipper_image {
+            max-height: 100%;
+            max-width: 100%;
+        }
+    }
+
+    .ProtfolioModal_wrap_info {
+        padding: 10px;
+        width: 30%;
+
+        @media (max-width: 768px) {
+            width: 100%;
+            height: 30%;
+            overflow: scroll;
+        }
+    }
+}
+
+
+// custom preview card 
+.custom-upload .ant-upload-list-picture-card {
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 60px !important;
+}
+
+.custom-upload .ant-upload-list-item {
+    height: 100px !important;
+    width: 100px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.custom-upload .ant-upload.ant-upload-select {
+    height: 100px !important;
+    width: 100px !important;
+    //   margin-top: 0 !important;
 }

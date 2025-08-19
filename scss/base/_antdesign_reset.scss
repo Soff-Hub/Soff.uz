@@ -5,3 +5,27 @@
 .custom-auth-modal .ant-modal-content {
     background-color: #f1f1f1 !important;
 }
+
+.order_tabs {
+
+    /* optional */
+    .ant-tabs-nav-list {
+        gap: 20px
+    }
+
+    .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+        color: #00a44f !important;
+
+        &:hover {
+            color: #00a44f !important;
+        }
+    }
+
+    .ant-tabs-ink-bar {
+        background-color: #00a44f !important;
+    }
+
+    .ant-tabs-tab:hover .ant-tabs-tab-btn {
+        color: #00a44f;
+    }
+}

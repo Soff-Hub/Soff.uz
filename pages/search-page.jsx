@@ -142,6 +142,7 @@ const Search_Results = ({
                         lastProducts={lastProducts}
                     />
                 </div>
+                <div className='container'>{sellerTabItems[activeIndex]}</div>
             </div>
         </div>
     );

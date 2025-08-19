@@ -8,19 +8,20 @@ import { addPeriodToThousands } from '~/components/partials/account/price-format
 import { Badge } from 'antd';
 
 const MiniCart = () => {
-    const state = useSelector(state => state.auth.user);
-    const data = useSelector(state => state.ecomerce.cartDataItems);
+    const state = useSelector((state) => state.auth.user);
+    const data = useSelector((state) => state.ecomerce.cartDataItems);
 
     const { removeCartOneItem } = useCart();
 
-    function handleRemoveItem (e, item) {
+    function handleRemoveItem(e, item) {
         e.preventDefault();
         removeCartOneItem(item.id);
     }
 
     const amount = calculateAmount(data);
-
+ 
     const hisob = addPeriodToThousands(amount);
+
 
     return (
         <div className='ps-cart--mini'>
@@ -40,47 +41,47 @@ const MiniCart = () => {
                 ''
             )}
             {data && data.length > 0 ? (
-                <div className='ps-cart__content'>
-                    <div className='ps-cart__items'>
-                        {data?.map(item => {
+                <div className="ps-cart__content">
+                    <div className="ps-cart__items">
+                        {data?.map((item) => {
                             return (
-                                <ProductOnCart product={item}>
+                                <ProductOnCart product={item} key={item?.id}>
                                     <a
-                                        className='ps-product__remove'
+                                        className="ps-product__remove"
                                         style={{ cursor: 'pointer' }}
-                                        onClick={e =>
+                                        onClick={(e) =>
                                             handleRemoveItem(e, item)
                                         }>
-                                        <i className='icon-cross'></i>
+                                        <i className="icon-cross"></i>
                                     </a>
                                 </ProductOnCart>
                             );
                         })}
                     </div>
-                    <div className='ps-cart__footer'>
+                    <div className="ps-cart__footer">
                         <h3>
                             Jami:
                             <strong>{hisob ? hisob : 0} so'm</strong>
                         </h3>
                         <figure>
-                            <Link href='/account/shopping-cart'>
-                                <a className='ps-btn'>Savat</a>
+                            <Link href="/account/shopping-cart">
+                                <a className="ps-btn">Savat</a>
                             </Link>
                             {state !== null ? (
-                                <Link href='/account/checkout'>
-                                    <a className='ps-btn'>Sotib olish</a>
+                                <Link href="/account/checkout">
+                                    <a className="ps-btn">Sotib olish</a>
                                 </Link>
                             ) : (
-                                <Link href='/auth/login?returnUrl=/account/checkout'>
-                                    <a className='ps-btn'>Sotib olish</a>
+                                <Link href="/auth/login?returnUrl=/account/checkout">
+                                    <a className="ps-btn">Sotib olish</a>
                                 </Link>
                             )}
                         </figure>
                     </div>
                 </div>
             ) : (
-                <div className='ps-cart__content'>
-                    <div className='ps-cart__items'>
+                <div className="ps-cart__content">
+                    <div className="ps-cart__items">
                         <span>Savatda mahsulot yo'q</span>
                     </div>
                 </div>
