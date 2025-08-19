@@ -49,12 +49,11 @@ const OrderStatus = ({ order }) => {
                 <span>Sotuvchi</span>
                 <div className={styles.seller_box}>
                     <div>
-                        <p>{order?.service?.title}</p>
-                        <span>offline</span>
+                        <p>{order?.user?.full_name}</p>
                     </div>
                     <img
-                        src={order?.service?.poster}
-                        alt={order?.service?.title}
+                        src={order?.user?.photo_url}
+                        alt={order?.user?.full_name}
                         style={{ objectFit: 'cover' }}
                     />
                 </div>
