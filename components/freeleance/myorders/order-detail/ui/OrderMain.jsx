@@ -1,4 +1,4 @@
-import { Breadcrumb, Button, Table, Modal, message, Input, Rate } from 'antd';
+import { Breadcrumb, Button, Table, Modal, message, Input, Rate, Collapse } from 'antd';
 import { DownloadOutlined } from '@ant-design/icons';
 import React, { useState } from 'react';
 import styles from '../style/style.module.scss';
@@ -23,8 +23,10 @@ const OrderMain = ({ order }) => {
     const [showPayment, setShowPayment] = useState(false);
     const [rate, setRate] = useState()
     const { data: file } = useGetFile(order?.id)
-    const  submit  = useSubmit()
+    const submit = useSubmit()
     const queryClient = useQueryClient()
+
+    const { Panel } = Collapse;
 
     const items = [
         { title: <Link href={"/order/my-orders"}>Mening buyurtmalarim</Link> },
@@ -188,7 +190,21 @@ const OrderMain = ({ order }) => {
                         </span>
                     </div>
 
-                    <Table columns={columns} dataSource={data} pagination={false} />
+                    {/* <Table columns={columns} dataSource={data} pagination={false} /> */}
+                    <Collapse accordion>
+                        <Panel header="Buyurtma tafsilotlari" key="1">
+                            <div className="d-flex align-items-center mb-3">
+                                <img
+                                    src={order?.service?.poster || '/static/img/default-service.png'}
+                                    alt={order?.service?.title}
+                                    style={{ width: 60, height: 60, objectFit: 'cover', borderRadius: 8 }}
+                                />
+                                <span className="ms-3 fw-bold">{order?.service?.title}</span>
+                            </div>
+                            <p><b>Yetkazish:</b> {order?.service?.delivery_days || 0} kun</p>
+                            <p><b>Narx:</b> {order?.service?.price?.toLocaleString('uz-UZ')} so'm</p>
+                        </Panel>
+                    </Collapse>
                 </div>
             </div>
 
