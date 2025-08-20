@@ -52,7 +52,7 @@
 
 // hooks/useApi.js
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { api, apiForFreelance } from '../repositories/api'; // ikkala instanceni import qilamiz
+import { api } from '../repositories/api'; // ikkala instanceni import qilamiz
 
 // Helperlar — istalgan axios instance bilan ishlaydi
 const getRequest = (url, config, instance = api) =>

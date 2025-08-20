@@ -12,7 +12,8 @@ const ServiceCard = ({ product }) => {
 
     const goToSeller = useCallback((e) => {
         e?.stopPropagation();
-        if (product?.user?.id) router.push(`/_seller/${product.user.id}#about_author`);
+        if (product?.user?.id)
+            router.push(`/_seller/${product.user.soff_seller_id}#about_author`);
     }, [product?.user?.id, router]);
 
     const handleLike = useCallback((e) => {
