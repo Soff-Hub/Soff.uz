@@ -186,8 +186,11 @@ const OrderMain = ({ order }) => {
                         <Breadcrumb items={items} />
 
                         <span>
-                            {dayjs(order?.created_at).format('D MMMM YYYY')}
+                            {order?.created_at
+                                ? dayjs(order.created_at).format('D MMMM YYYY')
+                                : "-"}
                         </span>
+
                     </div>
 
                     {/* <Table columns={columns} dataSource={data} pagination={false} /> */}
