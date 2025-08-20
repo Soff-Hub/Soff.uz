@@ -50,7 +50,7 @@ export default function SellerServices({ pid }) {
                     <img src="/static/img/RocketLaunch.svg" alt="" />
                 </div>
             </form> */}
-            <div className="servicesSectionWrap">
+            <div className="servicesSectionWrap m-0">
                 {isLoading && (
                     <>
                         {Array(16)
@@ -64,22 +64,15 @@ export default function SellerServices({ pid }) {
                             ))}
                     </>
                 )}
-                {Array.isArray(data) &&
-                    data?.map((item, index) => <ServiceCard product={item} />)}
-                {/* <div className="servicesSectionCard" key={index}>
-                            <div className="servicesSectionCardImg">
-                                <img src={item?.poster} alt={item?.title} />
+                {Array.isArray(data) && (
+                    <div className="row">
+                        {data?.map((item, index) => (
+                            <div className="col-6 col-md-4">
+                                <ServiceCard product={item} />
                             </div>
-                            <div className="servicesSectionCardbody">
-                                <p className="servicesSectionCardTitle">
-                                    {item?.title}{' '}
-                                </p>
-                                <div className="servicesSectionCardPrice">
-                                    <p>{item?.price} so'm</p>
-                                    <a href={item?.path}>Tafsilotlar</a>
-                                </div>
-                            </div>
-                        </div> */}
+                        ))}
+                    </div>
+                )}
             </div>
             {/* <div className="showMoreBox">
                 <p className="showMore"> Yana ko'rsatish</p>

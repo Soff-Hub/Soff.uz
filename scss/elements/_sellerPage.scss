@@ -600,20 +600,7 @@ body.no-scroll {
 
         grid-template-columns: repeat(auto-fit,
                 minmax(clamp(5rem, 13.75vw + 2.25rem, 18.75rem), 1fr));
-        gap: 10px; 
-        margin-top: 41.5px;
-        // @media (max-width: 1390px) {
-        //     grid-template-columns: repeat(4, 1fr);
-        // }
-        // @media (max-width: 1200px) {
-        //     grid-template-columns: repeat(3, 1fr);
-        // }
-        // @media (max-width: 950px) {
-        //     grid-template-columns: repeat(2, 1fr);
-        // }
-        // @media (max-width: 300px) {
-        //     grid-template-columns: repeat(1, 1fr);
-        // }
+        gap: 10px;   
 
         .servicesSectionCardSkeleton {
             height: clamp(5rem, 7.5vw + 3.5rem, 12.5rem);

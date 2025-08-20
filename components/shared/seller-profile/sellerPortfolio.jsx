@@ -11,7 +11,7 @@ import { useGet } from '~/repositories/https';
 import { useQuery } from '@tanstack/react-query';
 import { apiForFreelance } from '~/repositories/api';
 import PortfolioCard from '~/components/freeleance/services/service-deatail/ui/PortfolioCard';
- 
+
 export default function SellerPortfolio({ pid }) {
     // categoires
     const [parentCategory, setParentCategory] = useState('all');
@@ -51,7 +51,6 @@ export default function SellerPortfolio({ pid }) {
         },
         enabled: !!pid,
     });
- 
 
     return (
         <div>
@@ -74,9 +73,11 @@ export default function SellerPortfolio({ pid }) {
                 ) : portfolios.length == 0 ? (
                     <ServiceIsUnavailable />
                 ) : (
-                    <div className="SellerPortfolioWrap">
+                    <div className="row">
                         {portfolios?.map((item, index) => (
-                            <PortfolioCard portfolio={item} />
+                            <div className="col-6 col-md-4 p-1">
+                                <PortfolioCard portfolio={item} />
+                            </div>
                         ))}
                     </div>
                 )}
