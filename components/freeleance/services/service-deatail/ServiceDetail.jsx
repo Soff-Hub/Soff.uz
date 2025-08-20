@@ -24,7 +24,6 @@ const ServiceDetail = ({ data }) => {
         user: user
     }
     const { full_name, photo_url } = user[0]
-    console.log(data)
     const description = {
         description: service?.description,
         requirements: order_requirements[0]?.order_requirement_description,
