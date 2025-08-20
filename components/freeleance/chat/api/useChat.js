@@ -67,8 +67,6 @@ const useChat = (chatId) => {
             }, 1000);
         };
 
-        ws.onclose = () => console.log("🔌 WS closed");
-        ws.onerror = (err) => console.error("❌ WS error:", err);
 
         return () => ws.close();
     }, [chatId, user?.access]);
@@ -82,7 +80,6 @@ const useChat = (chatId) => {
                 event: "message_read",
                 message_ids: unreadIds
             }));
-            console.log("📤 message_read yuborildi:", unreadIds);
         }
     };
 

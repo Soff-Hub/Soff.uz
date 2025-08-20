@@ -194,7 +194,7 @@ const OrderMain = ({ order }) => {
                     </div>
 
                     {/* <Table columns={columns} dataSource={data} pagination={false} /> */}
-                    <Collapse accordion>
+                    {/* <Collapse accordion>
                         <Panel header="Buyurtma tafsilotlari" key="1">
                             <div className="d-flex align-items-center mb-3">
                                 <img
@@ -207,6 +207,23 @@ const OrderMain = ({ order }) => {
                             <p><b>Yetkazish:</b> {order?.service?.delivery_days || 0} kun</p>
                             <p><b>Narx:</b> {order?.service?.price?.toLocaleString('uz-UZ')} so'm</p>
                         </Panel>
+                    </Collapse> */}
+                    <Collapse accordion>
+                        <Collapse.Panel header="Buyurtma tafsilotlari" key="1">
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 }}>
+                                <img
+                                    src={order?.service?.poster || '/static/img/default-service.png'}
+                                    alt="service"
+                                    style={{ width: 60, height: 60, objectFit: 'cover', borderRadius: 8 }}
+                                />
+                                <span><b>Xizmat:</b> {order?.service?.title || '-'}</span>
+                            </div>
+                            <p><b>Yetkazish:</b> {order?.service?.delivery_days || 0} kun</p>
+                            <p><b>Narx:</b> {(order?.service?.price || 0).toLocaleString('uz-UZ')} so'm</p>
+                            {order?.order_requirement &&
+                                <p><b>Xizmat Talablar:</b><br /><div dangerouslySetInnerHTML={{ __html: order?.order_requirement[0]?.order_requirement_description }} /></p>
+                            }
+                        </Collapse.Panel>
                     </Collapse>
                 </div>
             </div>
