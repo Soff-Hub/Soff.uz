@@ -1,9 +1,13 @@
 import React from 'react'
 import styles from '../style/style.module.scss'
-import { Steps } from 'antd'
+import { Button, Steps } from 'antd'
+import { MessageOutlined } from "@ant-design/icons";
+import useCreateChat from '~/components/freeleance/chat/api/useCreateChat';
+
 
 const OrderStatus = ({ order }) => {
     const priceFormatted = new Intl.NumberFormat('uz-UZ').format(order?.service?.price) + " so'm"
+    const { mutate: createChat } = useCreateChat()
 
     const orderStatus = {
         "pending": 1,
@@ -58,6 +62,19 @@ const OrderStatus = ({ order }) => {
                     />
                 </div>
             </div>
+            {order?.user?.soff_seller_id &&
+                <div className="mb-0">
+                    <Button
+                        onClick={() => createChat(order?.user?.soff_seller_id)}
+                        icon={<MessageOutlined />}
+                        size="large"
+                        className="w-100 rounded-0"
+                    >
+                        Chat
+                    </Button>
+                </div>
+            }
+
 
             {/* Steps */}
             <div className={styles.status_steps}>
