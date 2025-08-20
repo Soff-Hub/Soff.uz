@@ -79,6 +79,16 @@ const OrderMain = ({ order }) => {
         },
     ];
 
+    // deadline hisoblash
+    const deadline = dayjs(order?.created_at).add(order?.service?.delivery_days, 'day');
+
+    // hozirgi vaqt
+    const now = dayjs();
+
+    // qancha vaqt qolganini aniqlash
+    const diffDays = deadline.diff(now, 'day'); // butun kunlar
+    const diffHours = deadline.diff(now, 'hour'); // umumiy soatlar
+
 
     return (
         <div className='col-lg-9 col-12 mb-5'>
@@ -192,22 +202,17 @@ const OrderMain = ({ order }) => {
                         </span>
 
                     </div>
+                    <div className='d-flex justify-content-end align-items-center'>
+                        {order?.service?.delivery_days && (
+                            <p style={{ marginTop: 8, fontWeight: 500 }}>
+                                {diffDays >= 0
+                                    ? `Yetkazib berish muddati tugashiga ${diffDays} kun qoldi`
+                                    : "Yetkazib berish muddati tugadi"}
+                            </p>
+                        )}
+                    </div>
 
                     {/* <Table columns={columns} dataSource={data} pagination={false} /> */}
-                    {/* <Collapse accordion>
-                        <Panel header="Buyurtma tafsilotlari" key="1">
-                            <div className="d-flex align-items-center mb-3">
-                                <img
-                                    src={order?.service?.poster || '/static/img/default-service.png'}
-                                    alt={order?.service?.title}
-                                    style={{ width: 60, height: 60, objectFit: 'cover', borderRadius: 8 }}
-                                />
-                                <span className="ms-3 fw-bold">{order?.service?.title}</span>
-                            </div>
-                            <p><b>Yetkazish:</b> {order?.service?.delivery_days || 0} kun</p>
-                            <p><b>Narx:</b> {order?.service?.price?.toLocaleString('uz-UZ')} so'm</p>
-                        </Panel>
-                    </Collapse> */}
                     <Collapse accordion>
                         <Collapse.Panel header="Buyurtma tafsilotlari" key="1">
                             <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 }}>
