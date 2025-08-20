@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query';
 import { Modal } from 'antd';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -10,16 +11,16 @@ import SellerPortfolio from '~/components/shared/seller-profile/sellerPortfolio'
 import SellerProduct from '~/components/shared/seller-profile/sellerProduct';
 import SellerServices from '~/components/shared/seller-profile/sellerServices';
 import SellerShortInfo from '~/components/shared/seller-profile/sellerShortInfo';
+import { api } from '~/repositories/api';
+import { authAxios } from '~/repositories/authApi';
 
-export default function SellersPage () {
+export default function SellersPage() {
     const router = useRouter();
     const { query, asPath, isReady } = router;
     const activeIndex = asPath.slice(asPath.indexOf('#') + 1, asPath.length);
-    const [seller, setSeller] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
 
-    // const pid = 8;
     const pid = query.pid;
+    console.log('pid', pid);
 
     const menuItems = [
         {
@@ -43,51 +44,40 @@ export default function SellersPage () {
             path: 'comments',
         },
     ];
+    const { data, isLoading: getDetailsLoading } = useQuery({
+        queryKey: ['getSellerDetails'],
+        queryFn: async () => {
+            const response = await authAxios.get(
+                `/auth/freelance-profile/${pid}/`
+            );
 
-    useEffect(() => {
-        if (!isReady || !pid) return;
-
-        setIsLoading(true);
-
-        fetch(
-            `http://176.96.241.219:8006/api/v1/customer/freelance-profile/${pid}`
-        )
-            .then(res => res.json())
-            .then(data => {
-                setSeller(data);
-            })
-            .catch(error => {
-                console.error('Error fetching seller:', error);
-            })
-            .finally(() => {
-                setIsLoading(false);
-            });
-    }, [isReady, pid]);
+            return response.data;
+        },
+        enabled: !!pid,
+    });
+    console.log('data', data);
 
     const sellerTabItems = {
-        about_author: <SellerInfo pid={pid} />,
+        about_author: <SellerInfo pid={pid} sellerInfo={data} />,
         portfolio: <SellerPortfolio pid={pid} />,
         services: <SellerServices pid={pid} />,
         products: <SellerProduct pid={pid} />,
         comments: <SellerComments pid={pid} />,
     };
 
-
-    
-
     return (
         <PageContainer>
-            <div className='container bg-gray-999 '>
-                <div className='SellersPageWrap'>
-                    <div className='SellerShortInfo'>
-                        <SellerShortInfo sellerInfo={seller} />
+            <div className="container bg-gray-999 ">
+                <div className="SellersPageWrap">
+                    <div className="SellerShortInfo">
+                        <SellerShortInfo sellerInfo={data} />
                     </div>
-                    <div className='SellerCollapseMenu'>
+                    <div className="SellerCollapseMenu">
                         <SellerCollapseMenu pid={pid} />
                     </div>
-                    <div className='sellerProduct '>
-                        <div className='shadow-sm'>
-                            <div className='sellerProductMenu'>
+                    <div className="sellerProduct ">
+                        <div className="shadow-sm">
+                            <div className="sellerProductMenu">
                                 {menuItems.map((item, index) => (
                                     <Link href={`#${item.path}`} key={index}>
                                         <a
@@ -105,7 +95,6 @@ export default function SellersPage () {
                         {sellerTabItems[activeIndex]}
                     </div>
                 </div>
-                
             </div>
         </PageContainer>
     );
