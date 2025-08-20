@@ -1,18 +1,12 @@
-import axios from 'axios';
-export const baseURL = `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/`;
-export const baseURLFreelance = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/`;
+import axios from 'axios'; 
+export const authBaseUrl = process.env.NEXT_PUBLIC_BASE_URL
 
-export const api = axios.create({
-    baseURL: baseURL,
+export const authAxios = axios.create({
+    baseURL: authBaseUrl,
     timeout: 30000,
-});
+}); 
 
-export const apiForFreelance = axios.create({
-    baseURL: baseURLFreelance,
-    timeout: 30000,
-});
-
-api.interceptors.request.use(
+authAxios.interceptors.request.use(
     config => {
         const storedToken = localStorage.getItem('user');
         if (storedToken && JSON.parse(storedToken).access) {
@@ -26,7 +20,7 @@ api.interceptors.request.use(
     }
 );
 
-api.interceptors.response.use(
+authAxios.interceptors.response.use(
     response => {
         return response;
     },

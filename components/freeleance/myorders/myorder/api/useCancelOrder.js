@@ -9,11 +9,11 @@ const useCancelOrder = () => {
     const queryClient = useQueryClient()
 
     return useMutation({
-        mutationFn: async ({ id, reason }) => {
+        mutationFn: async (data) => {
             const formData = new FormData();
-            formData.append("reason_id", reason);
-
-            await axios.post(`order/${id}/cancel`, formData, {
+            formData.append("cancel_reason_id", data.id);
+            formData.append("status", 'cancelled');
+            await axios.post(`order/${data.id}/status`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 }
