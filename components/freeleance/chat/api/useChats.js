@@ -21,11 +21,9 @@ const useChats = () => {
         );
         wsRef.current = ws;
 
-        ws.onopen = () => console.log("✅ WS connected");
 
         ws.onmessage = (event) => {
             if (!event.data) return;
-            console.log(event.data)
             let msg;
             try {
                 msg = JSON.parse(event.data);
@@ -52,8 +50,6 @@ const useChats = () => {
             });
         };
 
-        ws.onclose = () => console.log("🔌 WS closed");
-        ws.onerror = (err) => console.error("❌ WS error:", err);
 
         return () => ws.close();
     }, [user?.access]);
