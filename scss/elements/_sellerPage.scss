@@ -441,7 +441,7 @@ body.no-scroll {
 
 .servicesSection {
     height: 100%;
-    padding: 30px 47px;
+    padding: 30px;
     border-radius: 10px;
     background: #fff;
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.05);
@@ -509,8 +509,7 @@ body.no-scroll {
     .servicesSectionForm {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        gap: 18px;
-        margin-top: 32px;
+        gap: 18px; 
 
         @media (max-width: 1000px) {
             grid-template-columns: repeat(2, 1fr);
@@ -566,6 +565,7 @@ body.no-scroll {
         .servicesSectionBtn {
             display: flex;
             align-items: center;
+            justify-content: center;
             padding: 7px 17px 7px 16px;
             border-radius: 6.549px;
             background: #a020f0;
@@ -600,8 +600,7 @@ body.no-scroll {
 
         grid-template-columns: repeat(auto-fit,
                 minmax(clamp(5rem, 13.75vw + 2.25rem, 18.75rem), 1fr));
-        gap: 10px;
-        row-gap: 29px;
+        gap: 10px; 
         margin-top: 41.5px;
         // @media (max-width: 1390px) {
         //     grid-template-columns: repeat(4, 1fr);
@@ -667,9 +666,7 @@ body.no-scroll {
             display: flex;
             align-items: center;
             gap: 2px;
-            margin-bottom: 10px;
-
-            img {}
+            margin-bottom: 10px; 
 
             p {
                 color: #312f30;
@@ -700,7 +697,7 @@ body.no-scroll {
             display: flex;
             align-items: center;
             justify-content: space-between;
-
+            cursor: pointer;
             p {
                 color: #312f30;
                 font-family: 'Poppins';
@@ -913,7 +910,7 @@ body.no-scroll {
     border-radius: 10px;
     background: #fff;
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.05);
-    padding: 36px 47px;
+    padding: 30px;
 
     @media (max-width: 600px) {
         padding: 20px;
@@ -1147,7 +1144,7 @@ body.no-scroll {
 
 .SellerProduct {
     background-color: #fff;
-    padding: 40px;
+    padding: 30px;
 
     @media (max-width: 800px) {
         padding: 20px;
@@ -1158,13 +1155,10 @@ body.no-scroll {
         background: none;
     }
 
-    .SellerProductForm {
-        // display: grid;
-        // grid-template-columns: repeat(4, 1fr);
+    .SellerProductForm { 
         display: flex;
         justify-content: end;
         gap: 18px;
-        margin-bottom: 35px;
 
         @media (max-width: 600px) {
             flex-wrap: wrap;
@@ -1379,7 +1373,7 @@ body.no-scroll {
     background: #fff;
     border-radius: 10px;
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.05);
-    padding: 40px 47px;
+    padding: 30px;
 
     @media (max-width: 1000px) {
         padding: 30px;

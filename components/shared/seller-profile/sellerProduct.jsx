@@ -30,7 +30,7 @@ export default function SellerProduct ({ pid }) {
         const fetchProducts = async () => {
             setIsLoading(true);
             try {
-                let url = `${baseURL}customer/seller-products/10889/`;
+                let url = `${baseURL}customer/seller-products/${pid}/`;
                 if (categoryValue) {
                     url += `?direction=${categoryValue}`;
                 }
@@ -117,6 +117,9 @@ export default function SellerProduct ({ pid }) {
                 );
         }
     };
+
+    console.log('product', product);
+    
 
     return (
         <div className='SellerProduct'>

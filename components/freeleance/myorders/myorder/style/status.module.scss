@@ -1,0 +1,46 @@
+@import "/scss/utils/variable";
+.statusPending{
+  border: 1px solid $pending-dark;
+  border-radius: 4px; 
+  display: inline-block;
+  padding: 2px 4px;
+  text-align: center;
+  color: $pending-color;
+  background-color: $pending-light;
+}
+.statusApproved{
+  border: 1px solid $approved-dark;
+  border-radius: 4px;
+  display: inline-block;
+  padding: 2px 4px;
+  text-align: center;
+  color: $approved-color;
+  background-color: $approved-light;
+}
+.statusProcess{
+  border: 1px solid $process-dark;
+  border-radius: 4px;
+  display: inline-block;
+  padding: 2px 4px;
+  text-align: center;
+  color: $process-color;
+  background-color: $process-light;
+}
+.statusCompleted{
+  border: 1px solid $completed-dark;
+  border-radius: 4px;
+  display: inline-block;
+  padding: 2px 4px;
+  text-align: center;
+  color: $completed-color;
+  background-color: $completed-light;
+}
+.statusCancelled{
+  border: 1px solid $cancelled-dark;
+  border-radius: 4px;
+  display: inline-block;
+  padding: 2px 4px;
+  text-align: center;
+  color: $cancelled-color;
+  background-color: $cancelled-light;
+}
