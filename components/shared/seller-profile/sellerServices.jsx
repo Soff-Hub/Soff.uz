@@ -22,7 +22,7 @@ export default function SellerServices({ pid }) {
 
     return (
         <div className="servicesSection ">
-            <form action="" className="servicesSectionForm">
+            {/* <form action="" className="servicesSectionForm">
                 <div className="servicesSectionInputBox ">
                     <input
                         type="text"
@@ -49,7 +49,7 @@ export default function SellerServices({ pid }) {
                     </a>
                     <img src="/static/img/RocketLaunch.svg" alt="" />
                 </div>
-            </form>
+            </form> */}
             <div className="servicesSectionWrap">
                 {isLoading && (
                     <>
@@ -81,9 +81,9 @@ export default function SellerServices({ pid }) {
                             </div>
                         </div> */}
             </div>
-            <div className="showMoreBox">
+            {/* <div className="showMoreBox">
                 <p className="showMore"> Yana ko'rsatish</p>
-            </div>
+            </div> */}
         </div>
     );
 }

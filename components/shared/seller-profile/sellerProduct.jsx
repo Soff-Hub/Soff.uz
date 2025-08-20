@@ -124,14 +124,14 @@ export default function SellerProduct ({ pid }) {
     return (
         <div className='SellerProduct'>
             <form className='SellerProductForm'>
-                <div className='SellerProductInputBox'>
+                {/* <div className='SellerProductInputBox'>
                     <input
                         type='text'
                         placeholder='Xizmat turini izlang'
                         className='SellerProductInput'
                     />
                     <img src='/static/img/searchIcon.png' alt='' />
-                </div>
+                </div> */}
                 <select
                     className='SellerProductSelect'
                     onChange={e => {
