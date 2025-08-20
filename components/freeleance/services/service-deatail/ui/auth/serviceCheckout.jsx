@@ -52,11 +52,9 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
             },
             {
                 onSuccess: (data) => {
-                    console.log("✅ Click payment success:", data);
                     setMessage(true);
                 },
                 onError: (err) => {
-                    console.error("❌ Click payment error:", err);
                     setMessage(true);
                 }
             }
@@ -81,7 +79,6 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
             payload,
             {
                 onSuccess: (data) => {
-                    console.log("✅ Click payment success:", data);
                     setMessage(true);
                     setOpen(true)
                     setResData(data)

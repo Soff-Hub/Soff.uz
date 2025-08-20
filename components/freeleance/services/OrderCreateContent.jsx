@@ -4,7 +4,6 @@ import { formatCurrencyWithSpace } from '~/utilities/product-helper';
 import { ArrowRightOutlined } from '@ant-design/icons';
 
 const OrderCreateContent = ({ pkg, serviceName }) => {
-    console.log("pkg", pkg);
     return (
         <div className='order_create_content'>
             <h3>Buyurtma uchun to‘lovni amalga oshiring</h3>
