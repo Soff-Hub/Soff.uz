@@ -10,6 +10,7 @@ import PortfolioSection from './ui/PortfolioSection'
 import SwiperPages from '~/components/details-components/swiper/swiper-page'
 import ServiceCard from '../ServiceCard'
 import { useRouter } from 'next/router'
+import CommentSection from './ui/CommentSection'
 
 const ServiceDetail = ({ data }) => {
     const { push } = useRouter()
@@ -61,6 +62,9 @@ const ServiceDetail = ({ data }) => {
                     <PortfolioSection portfolios={seller_portfolio} />
                 </div>
             </div>
+       
+            <CommentSection type={"service_id"} id={service?.id} />
+            
             {
                 similar_services.length > 0 &&
                 <div>

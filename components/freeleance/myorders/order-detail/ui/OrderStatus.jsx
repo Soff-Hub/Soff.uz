@@ -59,7 +59,7 @@ const OrderStatus = ({ order }) => {
                     <div>
                         <Link href={`/_seller/${order?.user?.soff_seller_id}#about_author`}>{order?.user?.full_name || ''}</Link>
                     </div>
-                    <Image
+                    <img
                         src={order?.user?.photo_url || '/static/img/default-user.png'}
                         alt={'USER PHOTO'}
                         width={60}
