@@ -73,8 +73,9 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
             expire_date: numberDate.replace("/", "")
         }
 
-        if(order_id)payload.order_id = order_id
-
+        if (order_id) payload.order_id = order_id
+        console.log("📦 Click payment payload:", payload);
+        console.log(order_id)
         createOrder.mutate(
             payload,
             {
@@ -85,7 +86,10 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
                 },
                 onError: (err) => {
                     console.error("❌ Click payment error:", err);
-                    setMessage(true);
+                    setMessage(true)
+                    setResData({
+                        detail: err?.response?.data?.detail || "Noma'lum xato"
+                    });
                 }
             }
         );
@@ -97,14 +101,14 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
         setButtonOk(true);
         verifyCode.mutate(
             {
-                transaction_id: resData?.transaction_id,    
+                transaction_id: resData?.transaction_id,
                 code
             },
             {
                 onSuccess: (data) => {
                     setResDataCode(data);
-                    if(!order_id) push("/order/my-orders")
-                    if(onClose)onClose()
+                    if (!order_id) push("/order/my-orders")
+                    if (onClose) onClose()
                     setOpen(false)
                 },
                 onError: (error) => {
@@ -232,7 +236,13 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
                                         />
                                     </label>
                                 </div>
+
                                 <div className='col-12 p-0'>
+                                    {resData?.detail && (
+                                        <p style={{ color: "red", marginBottom: "0px" }}>
+                                            {resData.detail}
+                                        </p>
+                                    )}
                                     {message ? (
                                         <button type='submit' className='ps-btn w-100 btn_color'>Davom etish</button>
                                     ) : (
