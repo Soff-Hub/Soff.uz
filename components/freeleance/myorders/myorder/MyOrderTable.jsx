@@ -160,7 +160,6 @@ const getColumns = ({ onCancel }) => {
             title: 'Holati',
             dataIndex: 'status',
             render: (_, record) => {
-                console.log(record);
 
                 if (record.status == 'pending') {
                     return (
@@ -271,7 +270,6 @@ export const AllOrdersTable = ({ type }) => {
         })) || [];
 
     const statusFilter = dataSource.filter(item => type?.includes(item.status));
-    console.log('orders', orders);
 
     return (
         <>

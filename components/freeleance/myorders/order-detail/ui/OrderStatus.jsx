@@ -33,6 +33,8 @@ const OrderStatus = ({ order }) => {
         "completed": "Buyurtma tugallandi",
         "rejected": "Fayl to'liq emas"
     }
+    console.log('order', order);
+    
 
     return (
         <div className='col-12 col-lg-3'>
@@ -55,7 +57,7 @@ const OrderStatus = ({ order }) => {
                 <span>Sotuvchi</span>
                 <div className={styles.seller_box}>
                     <div>
-                        <Link href={`/user/${order?.user?.id}`}>{order?.user?.full_name || ''}</Link>
+                        <Link href={`/_seller/${order?.user?.soff_seller_id}#about_author`}>{order?.user?.full_name || ''}</Link>
                     </div>
                     <Image
                         src={order?.user?.photo_url || '/static/img/default-user.png'}
