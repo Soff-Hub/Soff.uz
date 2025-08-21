@@ -15,7 +15,7 @@ const useSubmit = () => {
             if (reason) formData.append("reason", reason)
             if (rating) formData.append("rating", rating)
             if (comment) formData.append("comment", comment)
-            await axios.patch(`order/${id}/decision`, formData);
+            await axios.post(`order/${id}/status`, formData);
         },
         onSuccess: () => {
             queryClient.invalidateQueries(['order']);

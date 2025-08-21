@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { Modal, Tabs } from 'antd';
 import { BeatLoader } from 'react-spinners';
-import Router, { useRouter } from 'next/router';
-import useCart from '~/hooks/useCart';
+import { useRouter } from 'next/router';
 import useCreateOrder from './api/createOrder';
 import { useVerifyCode } from './api/verifyCode';
 
@@ -22,9 +20,9 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
     const createOrder = useCreateOrder();
     const [formattedCardNumber, setFormattedCardNumber] = useState('');
     const [numberDate, setNumberDate] = useState('');
-    const { push } = useRouter()
+    const { push } = useRouter();
 
-    const verifyCode = useVerifyCode()
+    const verifyCode = useVerifyCode();
 
     const numberTyper = value => {
         SetNumberCardVal(value);
@@ -39,8 +37,6 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
         }
     };
 
-
-
     async function handleClickCardPostsclick(e) {
         e.preventDefault();
         setMessage(false);
@@ -51,12 +47,12 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
                 payment_type: type,
             },
             {
-                onSuccess: (data) => {
+                onSuccess: data => {
                     setMessage(true);
                 },
-                onError: (err) => {
+                onError: err => {
                     setMessage(true);
-                }
+                },
             }
         );
     }
@@ -69,32 +65,28 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
         const payload = {
             service_id: document,
             payment_type: type,
-            card_number: formattedCardNumber.replace(/\s/g, ""),
-            expire_date: numberDate.replace("/", "")
-        }
+            card_number: formattedCardNumber.replace(/\s/g, ''),
+            expire_date: numberDate.replace('/', ''),
+        };
 
-        if (order_id) payload.order_id = order_id
-        console.log("📦 Click payment payload:", payload);
-        console.log(order_id)
-        createOrder.mutate(
-            payload,
-            {
-                onSuccess: (data) => {
-                    setMessage(true);
-                    setOpen(true)
-                    setResData(data)
-                },
-                onError: (err) => {
-                    console.error("❌ Click payment error:", err);
-                    setMessage(true)
-                    setResData({
-                        detail: err?.response?.data?.detail || "Noma'lum xato"
-                    });
-                }
-            }
-        );
+        if (order_id) payload.order_id = order_id;
+        console.log('📦 Click payment payload:', payload);
+        console.log(order_id);
+        createOrder.mutate(payload, {
+            onSuccess: data => {
+                setMessage(true);
+                setOpen(true);
+                setResData(data);
+            },
+            onError: err => {
+                console.error('❌ Click payment error:', err);
+                setMessage(true);
+                setResData({
+                    detail: err?.response?.data?.detail || "Noma'lum xato",
+                });
+            },
+        });
     }
-
 
     // 📌 SMS kodi tasdiqlash
     async function handleSubmitCode() {
@@ -102,20 +94,22 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
         verifyCode.mutate(
             {
                 transaction_id: resData?.transaction_id,
-                code
+                code,
             },
             {
-                onSuccess: (data) => {
+                onSuccess: data => {
                     setResDataCode(data);
-                    if (!order_id) push("/order/my-orders")
-                    if (onClose) onClose()
-                    setOpen(false)
+                    if (!order_id) push('/order/my-orders');
+                    if (onClose) onClose();
+                    setOpen(false);
                 },
-                onError: (error) => {
+                onError: error => {
                     // Agar backend detail yuborsa
-                    const errorMessage = error?.response?.data || { detail: "Noma'lum xato" };
+                    const errorMessage = error?.response?.data || {
+                        detail: "Noma'lum xato",
+                    };
                     setResDataCode(errorMessage);
-                }
+                },
             }
         );
         setButtonOk(false);
@@ -146,10 +140,10 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
         setResData(null);
     }
 
-    const formattedTime = `${String(Math.floor(time / 60)).padStart(2, '0')}:${String(time % 60).padStart(2, '0')}`;
-
-
-
+    const formattedTime = `${String(Math.floor(time / 60)).padStart(
+        2,
+        '0'
+    )}:${String(time % 60).padStart(2, '0')}`;
 
     const handleCardNumberChange = e => {
         const inputValue = e.target.value.replace(/\D/g, '');
@@ -197,57 +191,67 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
         {
             key: '1',
             label: (
-                <div className='click'>
-                    <img src='/static/img/uzcard_humo.png' alt='' />
+                <div className="click">
+                    <img src="/static/img/uzcard_humo.png" alt="" />
                 </div>
             ),
             children: (
-                <div className='row mx-auto m-0'>
-                    <div className='px-4 mx-md-auto rounded click-b'>
+                <div className="row mx-auto m-0">
+                    <div className="px-4 mx-md-auto rounded click-b">
                         <div>
-                            <form onSubmit={handleClickCardPosts} className='pb-3 d-flex align-items-end justify-content-between row gap-3 bg-white'>
-                                <div className='col-xl-7 col-lg-12 p-0 col-md-7 col-sm-6 click-form-item my-2'>
-                                    <p className='cardNumber'>Karta raqam</p>
-                                    <label htmlFor='ccn' className='m-0'>
-                                        <i className='fa-regular fa-credit-card i'></i>
+                            <form
+                                onSubmit={handleClickCardPosts}
+                                className="pb-3 d-flex align-items-end justify-content-between row gap-3 bg-white">
+                                <div className="col-xl-7 col-lg-12 p-0 col-md-7 col-sm-6 click-form-item my-2">
+                                    <p className="cardNumber">Karta raqam</p>
+                                    <label htmlFor="ccn" className="m-0">
+                                        <i className="fa-regular fa-credit-card i"></i>
                                         <input
                                             required
-                                            type='tel'
-                                            className='form-control rounded-3 card__number'
-                                            inputMode='numeric'
-                                            maxLength='19'
-                                            placeholder='0000 0000 0000 0000'
+                                            type="tel"
+                                            className="form-control rounded-3 card__number"
+                                            inputMode="numeric"
+                                            maxLength="19"
+                                            placeholder="0000 0000 0000 0000"
                                             value={formattedCardNumber}
                                             onChange={handleCardNumberChange}
                                         />
                                     </label>
                                 </div>
-                                <div className='col-xl-4 col-lg-6 p-0 col-md-4 col-sm-6 click-form-item my-2'>
-                                    <label className='m-0'>
-                                        <i className='fa-regular fa-calendar-days'></i>
+                                <div className="col-xl-4 col-lg-6 p-0 col-md-4 col-sm-6 click-form-item my-2">
+                                    <label className="m-0">
+                                        <i className="fa-regular fa-calendar-days"></i>
                                         <input
                                             required
-                                            className='form-control rounded-3 card__number'
-                                            inputMode='numeric'
-                                            maxLength='5'
-                                            placeholder='MM/YY'
+                                            className="form-control rounded-3 card__number"
+                                            inputMode="numeric"
+                                            maxLength="5"
+                                            placeholder="MM/YY"
                                             value={numberDate}
                                             onChange={handleCardNumberDate}
                                         />
                                     </label>
                                 </div>
 
-                                <div className='col-12 p-0'>
+                                <div className="col-12 p-0">
                                     {resData?.detail && (
-                                        <p style={{ color: "red", marginBottom: "0px" }}>
+                                        <p
+                                            style={{
+                                                color: 'red',
+                                                marginBottom: '0px',
+                                            }}>
                                             {resData.detail}
                                         </p>
                                     )}
                                     {message ? (
-                                        <button type='submit' className='ps-btn w-100 btn_color'>Davom etish</button>
+                                        <button
+                                            type="submit"
+                                            className="ps-btn w-100 btn_color">
+                                            Davom etish
+                                        </button>
                                     ) : (
-                                        <button className='ps-btn w-100'>
-                                            <BeatLoader color='#fff' />
+                                        <button className="ps-btn w-100">
+                                            <BeatLoader color="#fff" />
                                         </button>
                                     )}
                                 </div>
@@ -257,7 +261,7 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
 
                     <Modal
                         width={500}
-                        title='Kodni kiriting!'
+                        title="Kodni kiriting!"
                         centered
                         open={open}
                         onOk={handleSubmitCode}
@@ -265,21 +269,33 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
                         okButtonProps={{
                             style: { backgroundColor: 'green', color: 'white' },
                         }}
-                        okText={buttonOk ? <BeatLoader color='#fff' /> : "To'lov qilish"}
-                        cancelText='Orqaga'
-                    >
+                        okText={
+                            buttonOk ? (
+                                <BeatLoader color="#fff" />
+                            ) : (
+                                "To'lov qilish"
+                            )
+                        }
+                        cancelText="Orqaga">
                         <>
-                            <p>Kod quyidagi raqamga yuborildi: {resData?.phone_number}</p>
+                            <p>
+                                Kod quyidagi raqamga yuborildi:{' '}
+                                {resData?.phone_number}
+                            </p>
                             <input
                                 onChange={e => setCode(e.target.value)}
-                                type='tel'
-                                placeholder='000000'
+                                type="tel"
+                                placeholder="000000"
                                 maxLength={6}
-                                className='form-control text-center rounded-3 fs-3'
+                                className="form-control text-center rounded-3 fs-3"
                             />
-                            <strong className='text-danger'>{formattedTime}</strong>
+                            <strong className="text-danger">
+                                {formattedTime}
+                            </strong>
                             {resDataCode?.detail && (
-                                <p className='text-danger'>{resDataCode.detail}</p>
+                                <p className="text-danger">
+                                    {resDataCode.detail}
+                                </p>
                             )}
                         </>
                     </Modal>
@@ -289,20 +305,26 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
         {
             key: '2',
             label: (
-                <div className='click'>
-                    <img src='/static/img/click.png' alt='' />
+                <div className="click">
+                    <img src="/static/img/click.png" alt="" />
                 </div>
             ),
             children: (
-                <div className='row mx-auto m-0'>
-                    <div className='px-4 rounded click-b'>
-                        <form onSubmit={handleClickCardPostsclick} className='pt-3 pb-3 d-flex row gap-3'>
-                            <div className='col-12 p-0 px-4 my-3'>
+                <div className="row mx-auto m-0">
+                    <div className="px-4 rounded click-b">
+                        <form
+                            onSubmit={handleClickCardPostsclick}
+                            className="pt-3 pb-3 d-flex row gap-3">
+                            <div className="col-12 p-0 px-4 my-3">
                                 {message ? (
-                                    <button type='submit' className='ps-btn w-100 btn_color'>Davom etish</button>
+                                    <button
+                                        type="submit"
+                                        className="ps-btn w-100 btn_color">
+                                        Davom etish
+                                    </button>
                                 ) : (
-                                    <button className='ps-btn w-100'>
-                                        <BeatLoader color='#fff' />
+                                    <button className="ps-btn w-100">
+                                        <BeatLoader color="#fff" />
                                     </button>
                                 )}
                             </div>
@@ -315,8 +337,8 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
 
     return (
         <Tabs
-            className='bg-white checkoutstep-1'
-            defaultActiveKey='1'
+            className="bg-white checkoutstep-1"
+            defaultActiveKey="1"
             items={items}
             onChange={onChange}
         />

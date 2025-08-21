@@ -8,7 +8,7 @@ const nextSettings = {
         titleDescription: 'Soff.uz - Intellektual mulk marketi, Intellektual mahsulotlarini soting va xarid qiling.',
     },
     images: {
-        domains: ['eu2.contabostorage.com', 'd2co7bxjtnp5o.cloudfront.net', 'api.soff.uz', 'test-soffuz.s3.amazonaws.com', "176.96.241.219", "encrypted-tbn0.gstatic.com",  "www.bukhari.uz", "encrypted-tbn0.gstatic.com", "localhost", "192.168.1.15" ],
+        domains: ['eu2.contabostorage.com', 'd2co7bxjtnp5o.cloudfront.net', 'api.soff.uz', 'test-soffuz.s3.amazonaws.com', "176.96.241.219", "encrypted-tbn0.gstatic.com",  "www.bukhari.uz", "encrypted-tbn0.gstatic.com", "localhost", "192.168.1.15", 'media.licdn.com' ],
     },
 };
 

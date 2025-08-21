@@ -8,7 +8,6 @@ const MyOrderTabs = () => {
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 500);
     const [activeKey, setActiveKey] = useState('1');
     const { data } = useOrdersStatus();
-    console.log(data);
 
     useEffect(() => {
         const handleResize = () => {
@@ -43,7 +42,7 @@ const MyOrderTabs = () => {
             key: '3',
             label: `Jarayonda ${data?.requirement_process}`,
             children: (
-                <AllOrdersTable type={['order_accepted', 'order_file_sent']} />
+                <AllOrdersTable type={['order_accepted', 'order_file_sent', 'rejected']} />
             ),
         },
         {

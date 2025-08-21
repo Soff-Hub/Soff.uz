@@ -13,7 +13,8 @@ import { useRouter } from 'next/router'
 
 const ServiceDetail = ({ data }) => {
     const { push } = useRouter()
-    const { service, seller_portfolio, similar_services, faqs, order_requirements, user } = data
+    const { service, seller_portfolio, similar_services, faqs, order_requirements, user, service_items } = data 
+    
     const pushUser = () => push(`/_seller/${data?.user[0]?.soff_seller_id}#about_author`)
     const priceBox = {
         days: service?.delivery_days,
@@ -28,9 +29,8 @@ const ServiceDetail = ({ data }) => {
         description: service?.description,
         requirements: order_requirements[0]?.order_requirement_description,
         file: order_requirements[0]?.order_requirement_file,
-        serviceItems: service?.service_items
-    }
-    console.log(data)
+        serviceItems: service_items
+    } 
     return (
         <div style={{ maxWidth: "1400px" }} className='container my-5'>
             <div className='row'>

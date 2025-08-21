@@ -10,7 +10,7 @@ import AuthModal from '~/components/AuthModal';
 const ServiceDescription = ({ description = {}, priceBox = {} }) => {
     const { price, id, days, revisions, title } = priceBox;
     const { requirements = '', file = '', serviceItems = [], description: descText = '' } = description;
-
+    
     const [isOpen, setIsOpen] = useState(false);
     const [showPayment, setShowPayment] = useState(false);
     const [openAuth, setOpenAuth] = useState(false);
@@ -23,7 +23,7 @@ const ServiceDescription = ({ description = {}, priceBox = {} }) => {
             setOpenAuth(true);
         }
     };
-    console.log(description, priceBox);
+
 
     return (
         <div className={styles.serviceDescription}>
@@ -53,7 +53,7 @@ const ServiceDescription = ({ description = {}, priceBox = {} }) => {
                     <h3>Bu xizmat ichiga nimalar kiradi</h3>
                     {serviceItems.map((item, idx) => (
                         <p key={idx} className={styles.serviceItem}>
-                            {idx + 1}. {item}
+                            {idx + 1}. {item.service_item}
                         </p>
                     ))}
                 </div>
