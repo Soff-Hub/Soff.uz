@@ -3,6 +3,8 @@ import styles from '../style/style.module.scss'
 import { Button, Steps } from 'antd'
 import { MessageOutlined } from "@ant-design/icons";
 import useCreateChat from '~/components/freeleance/chat/api/useCreateChat';
+import Link from 'next/link';
+import Image from 'next/image';
 
 
 const OrderStatus = ({ order }) => {
@@ -15,7 +17,7 @@ const OrderStatus = ({ order }) => {
         "requirement_file": 3,
         "requirement_file_rejected": 2,
         "order_accepted": 4,
-        "rejected": 5,
+        "rejected": 4,
         "order_file_sent": 5,
         "completed": 6,
     }
@@ -53,11 +55,13 @@ const OrderStatus = ({ order }) => {
                 <span>Sotuvchi</span>
                 <div className={styles.seller_box}>
                     <div>
-                        <p>{order?.user?.full_name}</p>
+                        <Link href={`/user/${order?.user?.id}`}>{order?.user?.full_name || ''}</Link>
                     </div>
-                    <img
-                        src={order?.user?.photo_url}
-                        alt={order?.user?.full_name}
+                    <Image
+                        src={order?.user?.photo_url || '/static/img/default-user.png'}
+                        alt={'USER PHOTO'}
+                        width={60}
+                        height={60}
                         style={{ objectFit: 'cover' }}
                     />
                 </div>

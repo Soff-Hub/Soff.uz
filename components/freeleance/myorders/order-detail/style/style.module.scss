@@ -8,6 +8,7 @@
 }
 
 .orderDetailMain {
+    
     .orderPayCard {
         display: flex;
         align-items: center;
@@ -16,30 +17,26 @@
         border-radius: 12px;
         border: solid 1px #00a44f;
         justify-content: space-between;
+        margin-bottom: 20px;
         gap: 10px;
     }
-
+    
     .order {
         background: #fff;
-        margin-top: 20px;
+        border-radius: 10px;
         padding: 16px;
         border: 1px solid #ddd;
+        margin-top: 20px;
 
+    
         .order_info {
             display: flex;
-            align-items: center;
+            align-items: start;
             gap: 10px;
-            margin-bottom: 20px;
-
-            img {
-                width: 60px;
-                height: 60px;
-                border-radius: 100%;
-            }
-
-            h2 {
-                margin: 0;
-                font-size: 26px;
+            margin-bottom: 20px; 
+            .titleSize {
+                font-size: 30px;
+                font-weight: 700; 
             }
         }
 
@@ -62,7 +59,7 @@
     padding: 12px;
     border: 1px solid #ddd;
     border-radius: 8px 8px 0 0;
-    margin-bottom: 0;
+    margin-top: 20px;
 
     .status_info {
         display: flex;

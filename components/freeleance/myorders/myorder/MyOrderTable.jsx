@@ -8,6 +8,8 @@ import { useMobile } from '~/hooks/useMobile';
 import Link from 'next/link';
 import styles from './style/status.module.scss';
 import { getRemainingDays } from '~/utilities/calculateTime';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import ServiceCheckout from '../../services/service-deatail/ui/auth/serviceCheckout';
 
 const Status = ({ status }) => {
     switch (status) {
@@ -68,6 +70,13 @@ const orderStatusName = {
 };
 const getColumns = ({ onCancel }) => {
     const { isMobile } = useMobile();
+    const [showPayment, setShowPayment] = useState(false);
+    const queryClient = useQueryClient();
+
+    const onClose = () => {
+        setShowPayment(false);
+        queryClient.invalidateQueries(['order']);
+    };
     return [
         {
             title: 'ID',
@@ -151,11 +160,14 @@ const getColumns = ({ onCancel }) => {
             title: 'Holati',
             dataIndex: 'status',
             render: (_, record) => {
+                console.log(record);
+
                 if (record.status == 'pending') {
                     return (
                         <Space direction="" size={6}>
                             <Tooltip title="To'lash">
                                 <Button
+                                    onClick={() => setShowPayment(true)}
                                     type="primary"
                                     style={{
                                         backgroundColor: '#00a44f',
@@ -172,6 +184,26 @@ const getColumns = ({ onCancel }) => {
                                     <i className="fa-solid fa-xmark"></i>
                                 </Button>
                             </Tooltip>
+                            <Modal
+                                title="Buyurtmaga to'lov qilish"
+                                open={showPayment}
+                                onCancel={() => setShowPayment(false)}
+                                footer={null}>
+                                <>
+                                    <div className="d-flex justify-content-between align-items-center mb-4">
+                                        <h3 className="type_payment_h3 mb-0">
+                                            To'lov turini tanlang:
+                                        </h3>
+                                    </div>
+                                    <div className="bg-white">
+                                        <ServiceCheckout
+                                            onClose={onClose}
+                                            order_id={record?.key}
+                                            document={record?.serviceId}
+                                        />
+                                    </div>
+                                </>
+                            </Modal>
                         </Space>
                     );
                 }
@@ -235,9 +267,11 @@ export const AllOrdersTable = ({ type }) => {
             deliveryDay: order.service?.delivery_days,
             price: order.service?.price || 0,
             status: order.order_status_doing?.status || 'pending',
+            serviceId: order?.service?.id,
         })) || [];
 
     const statusFilter = dataSource.filter(item => type?.includes(item.status));
+    console.log('orders', orders);
 
     return (
         <>
