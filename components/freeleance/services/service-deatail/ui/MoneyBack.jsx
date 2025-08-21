@@ -6,23 +6,23 @@ const { Panel } = Collapse
 
 const MoneyBack = () => {
   return (
-    <div 
-      className="card shadow-sm border-0 mb-4" 
+    <div
+      className="card shadow-sm border-0 mb-4"
       style={{
         borderRadius: "12px",
         overflow: "hidden",
         backgroundColor: "#fff"
       }}
     >
-      <div 
-        className={`${styles.moneyBox} d-flex align-items-center p-3`} 
+      <div
+        className={`${styles.moneyBox} d-flex align-items-center p-3`}
         style={{
           gap: "16px"
         }}
       >
-        <img 
-          src="/static/img/services_images/garant.png" 
-          alt="money garant img" 
+        <img
+          src="/static/img/services_images/garant.png"
+          alt="money garant img"
           style={{
             width: "70px",
             height: "70px",
@@ -49,18 +49,19 @@ const MoneyBack = () => {
           backgroundColor: "#fff"
         }}
       >
-        <Panel 
-          header={<span className='text-success'  style={{ fontWeight: 500 }}>Batafsil ma’lumot</span>} 
+        <Panel
+          header={<span className='text-success' style={{ fontWeight: 500 }}>Batafsil ma’lumot</span>}
           key="1"
         >
           <p style={{ fontSize: "14px", color: "#555", lineHeight: "1.6" }}>
-            Pulni qaytarish kafolati bizning mijozlarimizni himoya qilishga qaratilgan.
-            Agar xizmat sifati siz kutgandek bo‘lmasa yoki kelishilgan shartlarga
-            mos kelmasa, biz pulingizni to‘liq qaytarib beramiz.
+            Agar siz qoniqmasangiz, biz ham qoniqmadik. Shuning uchun sizda pulingiz o'zgarmasdan oldin sotuvchining yetkazib berishini ko'rib chiqish va tasdiqlash imkoniyati mavjud.
           </p>
           <p style={{ fontSize: "14px", color: "#555", lineHeight: "1.6" }}>
-            Jarayon oddiy: ariza topshirasiz, biz tekshiramiz va tasdiqlangandan
-            so‘ng 3–5 ish kuni ichida mablag‘ingizni qaytarib olasiz.
+            Siz pulingizni qaytarib olasiz
+            Agar siz buyurtma berganingizdan keyin 20 daqiqa ichida bekor qilsangiz, darhol
+            Agar sotuvchi belgilangan muddatni o'tkazib yuborsa va siz buyurtmani bekor qilishni tanlasangiz, darhol
+            agar xaridor va sotuvchi o'zaro kelishuvni bekor qilishga rozi bo'lsa, darhol
+            buyurtma yomon yoki to'liq bajarilmagan bo'lsa, bir necha soat ichida.
           </p>
         </Panel>
       </Collapse>

@@ -23,13 +23,14 @@ const ServiceDescription = ({ description = {}, priceBox = {} }) => {
             setOpenAuth(true);
         }
     };
+    console.log(description, priceBox);
 
     return (
         <div className={styles.serviceDescription}>
             <h2>Xizmat tavsifi</h2>
             {descText && <div style={{ borderBottom: "1px solid rgba(0,0,0,0.1)" }} dangerouslySetInnerHTML={{ __html: descText }} />}
 
-            <h3>Boshlash uchun sotuvchiga kerak</h3>
+            <h3>Boshlash uchun mutaxasisga kerak</h3>
             {requirements && <div style={{ borderBottom: "1px solid rgba(0,0,0,0.1)" }} dangerouslySetInnerHTML={{ __html: requirements }} />}
 
             <h3>Fayllar</h3>
@@ -47,15 +48,16 @@ const ServiceDescription = ({ description = {}, priceBox = {} }) => {
             ) : (
                 <p>Fayl mavjud emas</p>
             )}
-
-            <div className={styles.serviceBox}>
-                <h3>Bu xizmat ichiga nimalar kiradi</h3>
-                {serviceItems.map((item, idx) => (
-                    <p key={idx} className={styles.serviceItem}>
-                        {idx + 1}. {item}
-                    </p>
-                ))}
-            </div>
+            {serviceItems?.length > 0 && 
+                <div className={styles.serviceBox}>
+                    <h3>Bu xizmat ichiga nimalar kiradi</h3>
+                    {serviceItems.map((item, idx) => (
+                        <p key={idx} className={styles.serviceItem}>
+                            {idx + 1}. {item}
+                        </p>
+                    ))}
+                </div>
+            }
 
             <div className={styles.pricing}>
                 <div className={styles.infoBox}>

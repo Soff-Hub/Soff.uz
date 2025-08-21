@@ -13,7 +13,7 @@ const OrderStatus = ({ order }) => {
         "pending": 1,
         "approved": 2,
         "requirement_file": 3,
-        "requirement_file_rejected": 3,
+        "requirement_file_rejected": 2,
         "order_accepted": 4,
         "rejected": 5,
         "order_file_sent": 5,

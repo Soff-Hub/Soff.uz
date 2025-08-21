@@ -9,8 +9,7 @@ import useChat from '../api/useChat';
 
 const ChatWindow = ({ chatId, goBack }) => {
     const [newMessage, setNewMessage] = useState('');
-    const [edit, setEdit] = useState(null); // ✨ tahrirlanayotgan xabar
-
+    const [edit, setEdit] = useState(null); 
     const messagesContainerRef = useRef(null);
     const { push } = useRouter();
 
@@ -26,7 +25,6 @@ const ChatWindow = ({ chatId, goBack }) => {
         scrollToBottom();
     }, [messages.length, scrollToBottom]);
 
-    // ✨ Agar edit o‘zgarsa inputga qiymat tushadi
     useEffect(() => {
         if (edit) {
             setNewMessage(edit.content);
@@ -68,7 +66,7 @@ const ChatWindow = ({ chatId, goBack }) => {
                 )}
                 <Avatar
                     size={50}
-                    src={<img src="/static/img/ozodbek.png" alt="user img" />}
+                    src={<img src={chat?.opponent?.photo_url  ||  "/static/img/ozodbek.png"} alt="user img" />}
                     onClick={() => push(`_seller/${chat?.opponent?.id}`)}
                     style={{ cursor: "pointer" }}
                 />

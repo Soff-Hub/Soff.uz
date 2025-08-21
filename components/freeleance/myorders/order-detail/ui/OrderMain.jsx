@@ -196,8 +196,9 @@ const OrderMain = ({ order }) => {
                         <Breadcrumb items={items} />
 
                         <span>
+                            Buyurtma yaratilgan vaqt: {" "}
                             {order?.created_at
-                                ? dayjs(order.created_at).format('D MMMM YYYY')
+                                ? dayjs(order.created_at)?.format('D MMMM YYYY, hh:mm')
                                 : "-"}
                         </span>
 
