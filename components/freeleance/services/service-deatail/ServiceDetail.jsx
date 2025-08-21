@@ -32,6 +32,9 @@ const ServiceDetail = ({ data }) => {
         file: order_requirements[0]?.order_requirement_file,
         serviceItems: service_items
     } 
+
+    console.log('data', data);
+
     return (
         <div style={{ maxWidth: "1400px" }} className='container my-5'>
             <div className='row'>

@@ -56,7 +56,7 @@ const Status = ({ status }) => {
         case 'cancelled':
             return (
                 <span className={styles.statusCancelled}>
-                    Buyurtma bekorqilindi
+                    Buyurtma bekor qilindi
                 </span>
             );
         default:
@@ -82,7 +82,7 @@ const getColumns = ({ onCancel }) => {
 
     const onClose = () => {
         setShowPayment(false);
-        queryClient.invalidateQueries(['order']);
+        queryClient.invalidateQueries(['orders']);
     };
     return [
         {
@@ -151,7 +151,9 @@ const getColumns = ({ onCancel }) => {
         },
         {
             title: 'Qoldi',
-            render: (_, record) =>
+            render: (_, record) => record.status === 'completed' ? '-' :
+                record.status === 'cancelled' ? '-' : record.acceptedDate == null ?
+            'Ish boshlanmadi' :
                 `${getRemainingDays(record.ordered_at, record.deliveryDay)}`,
             align: 'center',
             hidden: isMobile < 768,
@@ -274,10 +276,11 @@ export const AllOrdersTable = ({ type }) => {
             price: order.service?.price || 0,
             status: order.order_status_doing?.status || 'pending',
             serviceId: order?.service?.id,
+            acceptedDate: order?.order_status_doing?.accepted_date,
         })) || [];
 
-    const statusFilter = dataSource.filter(item => type?.includes(item.status));
-
+    const statusFilter = dataSource.filter(item => type?.includes(item.status)); 
+    
     return (
         <>
             <Table

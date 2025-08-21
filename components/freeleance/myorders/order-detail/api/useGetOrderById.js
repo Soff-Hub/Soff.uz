@@ -10,9 +10,13 @@ const useGetOrderById = (id) => {
         queryKey: ["order", id],
         queryFn: async () => {
             const { data } = await axios.get(`order/${id}`);
+            console.log(data);
+
             return data;
         },
         enabled: !!id,
+        retry: 1,
+        refetchOnWindowFocus: false,
     });
 };
 
