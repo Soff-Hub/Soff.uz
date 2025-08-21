@@ -35,6 +35,12 @@ const Status = ({ status }) => {
                     Buyurtma qabul qilindi
                 </span>
             );
+        case 'rejected':
+            return (
+                <span className={styles.statusProcess}>
+                    Kamchilik topildi
+                </span> 
+            );
         case 'order_file_sent':
             return (
                 <span className={styles.statusProcess}>
@@ -67,6 +73,7 @@ const orderStatusName = {
     order_file_sent: <Status status={'order_file_sent'} />,
     completed: <Status status={'completed'} />,
     cancelled: <Status status={'cancelled'} />,
+    rejected: <Status status={'rejected'} />,
 };
 const getColumns = ({ onCancel }) => {
     const { isMobile } = useMobile();
