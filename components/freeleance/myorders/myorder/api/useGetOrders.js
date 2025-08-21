@@ -13,8 +13,7 @@ const useGetOrders = () => {
             return data;
         },
         enabled: !!user?.access,
-        staleTime: 1000 * 60 * 5,
-        cacheTime: 1000 * 60 * 10,
+         refetchOnWindowFocus: true,
     });
 };
 

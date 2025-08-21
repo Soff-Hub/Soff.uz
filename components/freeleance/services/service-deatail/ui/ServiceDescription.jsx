@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Modal } from 'antd';
 import { DownloadOutlined } from '@ant-design/icons';
-import styles from "../styles/detail.module.scss";
+import styles from '../styles/detail.module.scss';
 import { useSelector } from 'react-redux';
 import { formatCurrencyWithSpace } from '~/utilities/product-helper';
 import ServiceCheckout from './auth/serviceCheckout';
@@ -9,8 +9,13 @@ import AuthModal from '~/components/AuthModal';
 
 const ServiceDescription = ({ description = {}, priceBox = {} }) => {
     const { price, id, days, revisions, title } = priceBox;
-    const { requirements = '', file = '', serviceItems = [], description: descText = '' } = description;
-    
+    const {
+        requirements = '',
+        file = '',
+        serviceItems = [],
+        description: descText = '',
+    } = description;
+
     const [isOpen, setIsOpen] = useState(false);
     const [showPayment, setShowPayment] = useState(false);
     const [openAuth, setOpenAuth] = useState(false);
@@ -24,16 +29,25 @@ const ServiceDescription = ({ description = {}, priceBox = {} }) => {
         }
     };
 
-
     return (
         <div className={styles.serviceDescription}>
             <h2>Xizmat tavsifi</h2>
-            {descText && <div style={{ borderBottom: "1px solid rgba(0,0,0,0.1)" }} dangerouslySetInnerHTML={{ __html: descText }} />}
+            {descText && (
+                <div
+                    style={{ borderBottom: '1px solid rgba(0,0,0,0.1)' }}
+                    dangerouslySetInnerHTML={{ __html: descText }}
+                />
+            )}
 
             <h3>Boshlash uchun mutaxasisga kerak</h3>
-            {requirements && <div style={{ borderBottom: "1px solid rgba(0,0,0,0.1)" }} dangerouslySetInnerHTML={{ __html: requirements }} />}
+            {requirements && (
+                <div
+                    style={{ borderBottom: '1px solid rgba(0,0,0,0.1)' }}
+                    dangerouslySetInnerHTML={{ __html: requirements }}
+                />
+            )}
 
-            <h3>Fayllar</h3>
+            <h3>Xizmat talablari uchun shablon fayl</h3>
             {file ? (
                 <Button
                     type="primary"
@@ -41,14 +55,13 @@ const ServiceDescription = ({ description = {}, priceBox = {} }) => {
                     href={file}
                     target="_blank"
                     download
-                    className={styles.downloadBtn}
-                >
-                    Faylni yuklab olish
+                    className={styles.downloadBtn}>
+                    Fayllarni yuklab olish
                 </Button>
             ) : (
                 <p>Fayl mavjud emas</p>
             )}
-            {serviceItems?.length > 0 && 
+            {serviceItems?.length > 0 && (
                 <div className={styles.serviceBox}>
                     <h3>Bu xizmat ichiga nimalar kiradi</h3>
                     {serviceItems.map((item, idx) => (
@@ -57,12 +70,18 @@ const ServiceDescription = ({ description = {}, priceBox = {} }) => {
                         </p>
                     ))}
                 </div>
-            }
+            )}
 
             <div className={styles.pricing}>
                 <div className={styles.infoBox}>
-                    <p className={styles.info}><i className="fa-solid fa-clock"></i> {days} kunda yetkazish</p>
-                    <p className={styles.info}><i className="fa-solid fa-pen-to-square"></i> {revisions} marta tahrirlash huquqi</p>
+                    <p className={styles.info}>
+                        <i className="fa-solid fa-clock"></i> {days} kunda
+                        yetkazish
+                    </p>
+                    <p className={styles.info}>
+                        <i className="fa-solid fa-pen-to-square"></i>{' '}
+                        {revisions} marta tahrirlash huquqi
+                    </p>
                 </div>
                 <div className={styles.btnWrapper}>
                     <Button className={styles.btn} onClick={handleOrderClick}>
@@ -79,8 +98,7 @@ const ServiceDescription = ({ description = {}, priceBox = {} }) => {
                     setShowPayment(false);
                 }}
                 footer={null}
-                width={600}
-            >
+                width={600}>
                 <div className="type_payment p-lg-5 p-md-5 p-4">
                     {!showPayment ? (
                         <>
@@ -91,8 +109,10 @@ const ServiceDescription = ({ description = {}, priceBox = {} }) => {
                             <div className="security-message mb-4 text-center">
                                 <i className="fa-solid fa-shield-halved text-success fs-4 mb-2"></i>
                                 <p className="text-muted mb-0">
-                                    Sizning to'lovingiz Soff tizimi tomonidan xavfsiz saqlanadi.
-                                    Mutaxassisga to'lov faqat siz ishni ko'rib chiqib, tasdiqlaganingizdan so'ng amalga oshiriladi.
+                                    Sizning to'lovingiz Soff tizimi tomonidan
+                                    xavfsiz saqlanadi. Mutaxassisga to'lov faqat
+                                    siz ishni ko'rib chiqib, tasdiqlaganingizdan
+                                    so'ng amalga oshiriladi.
                                 </p>
                             </div>
 
@@ -101,12 +121,15 @@ const ServiceDescription = ({ description = {}, priceBox = {} }) => {
                                     <div className="d-flex align-items-center">
                                         <i className="fa-solid fa-file-lines text-primary me-3 fs-4"></i>
                                         <div>
-                                            <h5 className="mb-1 fw-bold">{title}</h5>
+                                            <h5 className="mb-1 fw-bold">
+                                                {title}
+                                            </h5>
                                         </div>
                                     </div>
                                     <div className="text-end">
                                         <h4 className="text-primary mb-0 fw-bold">
-                                            {formatCurrencyWithSpace(price)} so'm
+                                            {formatCurrencyWithSpace(price)}{' '}
+                                            so'm
                                         </h4>
                                     </div>
                                 </div>
@@ -117,9 +140,11 @@ const ServiceDescription = ({ description = {}, priceBox = {} }) => {
                                     type="primary"
                                     size="large"
                                     className="px-5 py-2"
-                                    style={{ backgroundColor: '#28a745', borderColor: '#28a745' }}
-                                    onClick={() => setShowPayment(true)}
-                                >
+                                    style={{
+                                        backgroundColor: '#28a745',
+                                        borderColor: '#28a745',
+                                    }}
+                                    onClick={() => setShowPayment(true)}>
                                     Buyurma berish
                                     <i className="fa-solid fa-arrow-right ms-2"></i>
                                 </Button>
@@ -133,9 +158,10 @@ const ServiceDescription = ({ description = {}, priceBox = {} }) => {
                                 </h3>
                                 <Button
                                     type="text"
-                                    icon={<i className="fa-solid fa-arrow-left"></i>}
-                                    onClick={() => setShowPayment(false)}
-                                >
+                                    icon={
+                                        <i className="fa-solid fa-arrow-left"></i>
+                                    }
+                                    onClick={() => setShowPayment(false)}>
                                     Orqaga
                                 </Button>
                             </div>

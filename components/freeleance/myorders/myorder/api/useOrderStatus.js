@@ -12,9 +12,8 @@ const useOrdersStatus = () => {
       const { data } = await axios.get(`order/order-status-doing/`);
       return data;
     },
-    enabled: !!user?.access,
-    staleTime: 1000 * 60 * 5,
-    cacheTime: 1000 * 60 * 10,
+    enabled: !!user?.access, 
+    refetchOnWindowFocus: true,
   });
 };
 

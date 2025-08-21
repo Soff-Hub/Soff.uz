@@ -1,7 +1,6 @@
 import {
     Breadcrumb,
     Button,
-    Table,
     Modal,
     message,
     Input,
@@ -20,8 +19,7 @@ import ServiceCheckout from '~/components/freeleance/services/service-deatail/ui
 import useGetFile from '../api/useGetFile';
 import useSubmit from '../api/useSubmit';
 import { useQueryClient } from '@tanstack/react-query';
-import { getDate } from '~/utilities/calculateTime';
-import Image from 'next/image';
+import { getDate, getRemainingDays } from '~/utilities/calculateTime';
 
 dayjs.locale('uz-latn');
 
@@ -37,8 +35,6 @@ const OrderMain = ({ order }) => {
     const submit = useSubmit();
     const queryClient = useQueryClient();
 
-    const { Panel } = Collapse;
-
     const items = [
         { title: <Link href={'/order/my-orders'}>Mening buyurtmalarim</Link> },
         { title: `#${order?.id}` },
@@ -50,63 +46,52 @@ const OrderMain = ({ order }) => {
         setIsOpen(false);
         queryClient.invalidateQueries(['order']);
     };
+    // foydalanilmagan kodlar
+    // const columns = [
+    //     {
+    //         title: 'Xizmat',
+    //         dataIndex: 'service',
+    //         key: 'service',
+    //         render: (text, record) => (
+    //             <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+    //                 <img
+    //                     src={record.poster}
+    //                     alt={record.service}
+    //                     style={{
+    //                         width: 60,
+    //                         height: 60,
+    //                         objectFit: 'cover',
+    //                         borderRadius: 8,
+    //                     }}
+    //                 />
+    //                 <span>{text}</span>
+    //             </div>
+    //         ),
+    //     },
+    //     {
+    //         title: 'Yetkazish',
+    //         dataIndex: 'delivery',
+    //         key: 'delivery',
+    //     },
+    //     {
+    //         title: 'Narx',
+    //         dataIndex: 'price',
+    //         key: 'price',
+    //         render: price => `${price.toLocaleString('uz-UZ')} so'm`,
+    //     },
+    // ];
 
-    const columns = [
-        {
-            title: 'Xizmat',
-            dataIndex: 'service',
-            key: 'service',
-            render: (text, record) => (
-                <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                    <img
-                        src={record.poster}
-                        alt={record.service}
-                        style={{
-                            width: 60,
-                            height: 60,
-                            objectFit: 'cover',
-                            borderRadius: 8,
-                        }}
-                    />
-                    <span>{text}</span>
-                </div>
-            ),
-        },
-        {
-            title: 'Yetkazish',
-            dataIndex: 'delivery',
-            key: 'delivery',
-        },
-        {
-            title: 'Narx',
-            dataIndex: 'price',
-            key: 'price',
-            render: price => `${price.toLocaleString('uz-UZ')} so'm`,
-        },
-    ];
-
-    const data = [
-        {
-            key: order?.id,
-            service: order?.service?.title || '-',
-            poster: order?.service?.poster || '/static/img/default-service.png',
-            delivery: `${order?.service?.delivery_days || 0} kun`,
-            price: order?.service?.price || 0,
-        },
-    ];
+    // const data = [
+    //     {
+    //         key: order?.id,
+    //         service: order?.service?.title || '-',
+    //         poster: order?.service?.poster || '/static/img/default-service.png',
+    //         delivery: `${order?.service?.delivery_days || 0} kun`,
+    //         price: order?.service?.price || 0,
+    //     },
+    // ];
 
     // deadline hisoblash
-    const deadline = dayjs(order?.created_at).add(
-        order?.service?.delivery_days,
-        'day'
-    );
-
-    // hozirgi vaqt
-    const now = dayjs();
-
-    // qancha vaqt qolganini aniqlash
-    const diffDays = deadline.diff(now, 'day'); // butun kunlar
-    const diffHours = deadline.diff(now, 'hour'); // umumiy soatlar
 
     return (
         <div className="col-lg-9 col-12 mb-5 rounded-2">
@@ -119,9 +104,9 @@ const OrderMain = ({ order }) => {
                                 To'lov kutilmoqda
                             </h3>
                             <p>
-                                Buyurtma yaratildi, lekin hozirda sotuvchidan
+                                Buyurtma yaratildi, lekin hozirda mutahasisdan
                                 yashirilgan. Buyurtmani moliyalashtiring va
-                                sotuvchi ishga kirishishi uchun buyurtma
+                                mutahasis ishga kirishishi uchun buyurtma
                                 talablarini yuboring.
                             </p>
                         </div>
@@ -150,7 +135,7 @@ const OrderMain = ({ order }) => {
                                 'approved' && (
                                 <p>
                                     Siz to‘lovni amalga oshirdingiz. Endi
-                                    sotuvchi ishni boshlashi uchun kerakli
+                                    mutahasis ishni boshlashi uchun kerakli
                                     materiallar va ko‘rsatmalarni yuboring.
                                 </p>
                             )}
@@ -158,10 +143,10 @@ const OrderMain = ({ order }) => {
                                 'requirement_file_rejected' && (
                                 <p>
                                     Siz yuborgan materiallar yoki ko‘rsatmalar
-                                    yetarli emasligi sababli sotuvchi ularni rad
-                                    etdi. Iltimos, ishni boshlash uchun barcha
-                                    kerakli fayllar va aniq ko‘rsatmalarni qayta
-                                    yuboring.
+                                    yetarli emasligi sababli mutahasis ularni
+                                    rad etdi. Iltimos, ishni boshlash uchun
+                                    barcha kerakli fayllar va aniq
+                                    ko‘rsatmalarni qayta yuboring.
                                 </p>
                             )}
                         </div>
@@ -186,7 +171,7 @@ const OrderMain = ({ order }) => {
                                 Ishni qabul qilish
                             </h3>
                             <p>
-                                Sotuvchi buyurtmani yakunladi va natijani sizga
+                                Mutahasis buyurtmani yakunladi va natijani sizga
                                 jo‘natdi. Natijani yuklab olib ko‘rib chiqing va
                                 tasdiqlang yoki rad eting.
                             </p>
@@ -216,14 +201,18 @@ const OrderMain = ({ order }) => {
                     <div className={styles.order_info}>
                         <img
                             src={
-                                order?.service?.poster ||
-                                '/static/img/default-service.png'
+                                order?.service?.poster || '/static/img/doc.png'
                             }
                             width={100}
                             height={100}
-                            alt="service" 
+                            alt="service"
                         />
-                        <a className={styles.titleSize} target='_blank' href={order?.service?.slug || '#'}>{order?.service?.title || 'Noma’lum xizmat'}</a>
+                        <a
+                            className={styles.titleSize}
+                            target="_blank"
+                            href={`/service/${order?.service?.slug}` || '#'}>
+                            {order?.service?.title || 'Noma’lum xizmat'}
+                        </a>
                     </div>
 
                     <div className={styles.order_date}>
@@ -237,11 +226,17 @@ const OrderMain = ({ order }) => {
                         </span>
                     </div>
                     <div className="d-flex justify-content-end align-items-center">
-                        {order?.service?.delivery_days && (
+                        {order?.service?.delivery_days &&
+                        order?.order_status_doing?.accepted_date ? (
                             <p style={{ marginTop: 8, fontWeight: 500 }}>
-                                {diffDays >= 0
-                                    ? `Yetkazib berish muddati tugashiga ${diffDays} kun qoldi`
-                                    : 'Yetkazib berish muddati tugadi'}
+                                {`Yetkazib berish muddati tugashiga ${getRemainingDays(
+                                    order?.order_status_doing?.accepted_date,
+                                    order?.service?.delivery_days
+                                )} kun qoldi`}
+                            </p>
+                        ) : (
+                            <p style={{ marginTop: 8, fontWeight: 500 }}>
+                                {`Yetkazib berish muddati: ${order?.service?.delivery_days} kun, Buyurtma hali qabul qilinmadi`}
                             </p>
                         )}
                     </div>
@@ -297,8 +292,25 @@ const OrderMain = ({ order }) => {
                                                         ?.order_requirement_description,
                                             }}
                                         />
-                                    </p> 
+                                    </p>
                                 </div>
+                            )}
+                            {order?.order_requirement[0]
+                                ?.order_requirement_file && (
+                                <p className="d-flex align-items-center gap-2">
+                                    <Button
+                                        type="primary"
+                                        icon={<DownloadOutlined />}
+                                        href={
+                                            order?.order_requirement[0]
+                                                ?.order_requirement_file
+                                        }
+                                        target="_blank"
+                                        download
+                                        className={styles.downloadBtn}>
+                                        Fayllarni yuklab olish
+                                    </Button>
+                                </p>
                             )}
                         </Collapse.Panel>
                     </Collapse>

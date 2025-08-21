@@ -23,6 +23,7 @@ const UserBox = ({ pushUser, priceBox }) => {
             setOpen(true);
         }
     };
+    
 
     const formattedLastActive = last_active 
         ? dayjs(last_active).locale('uz-latn').format('DD-MMMM YYYY, HH:mm') 

@@ -40,6 +40,13 @@
                 font-weight: 700; 
             }
         }
+        .downloadBtn{
+            background-color: #00a44f;
+            color: #fff;
+            &:hover {
+                background-color: #008f3c;
+            }
+        }
 
         .order_date {
             display: flex;

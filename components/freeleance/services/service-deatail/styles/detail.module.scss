@@ -60,7 +60,7 @@
         .price {
             margin: 0;
             font-size: 28px;
-            color: #00A44F;
+            color: #00a44f;
             font-weight: 500;
         }
 
@@ -84,9 +84,9 @@
     }
 
     .btn {
-        background: #00A44F !important;
+        background: #00a44f !important;
         color: #fff !important;
-        border-color: #00A44F !important;
+        border-color: #00a44f !important;
         width: 100%;
         padding: 20px;
         font-size: 20px;
@@ -108,7 +108,6 @@
     }
 
     div {
-
         h3 {
             font-size: 20px;
             margin: 0;
@@ -150,7 +149,7 @@
         .chatBtn {
             padding: 8px 16px;
             width: 100%;
-            background: #00A44F;
+            background: #00a44f;
             color: #fff;
             border: none;
             border-radius: 8px;
@@ -180,20 +179,16 @@
     }
 
     .downloadBtn {
-        margin-top: 12px;
-        background: #00A44F !important;
+        background-color: #00a44f !important;
         color: #fff;
-        border-color: #00A44F !important;
-
         &:hover {
-            background: #008e43;
-            border-color: #008e43;
+            background-color: #008f3c !important;
         }
     }
 
     .serviceBox {
         margin-top: 20px;
-        border-bottom: 1px rgba(0,0,0,0.1) solid;
+        border-bottom: 1px rgba(0, 0, 0, 0.1) solid;
 
         h3 {
             margin-bottom: 12px;
@@ -226,9 +221,9 @@
             justify-content: flex-end;
 
             .btn {
-                background: #00A44F;
+                background: #00a44f;
                 color: #fff;
-                border-color: #00A44F;
+                border-color: #00a44f;
                 padding: 16px 40px;
                 font-size: 18px;
 
@@ -240,7 +235,6 @@
         }
     }
 }
-
 
 .faq {
     padding: 20px;
@@ -265,11 +259,10 @@
         font-size: 20px;
 
         span {
-            color: #00A44F;
+            color: #00a44f;
             font-weight: 500;
             margin-left: 5px;
             font-size: 12px;
         }
     }
-
 }

@@ -46,8 +46,11 @@ export const getStatus = (timestamp) => {
 
   const diffMinutes = dayjs().diff(dayjs(timestamp), "minute");
 
-  if (diffMinutes < 5) {
-    return "Online";
+  if (1 < diffMinutes && diffMinutes < 5) {
+    return "Yaqinda online edi";
+  }
+  if (diffMinutes < 1) {
+    return `Online`;
   }
 
   return dayjs(new Date(timestamp)).format('YYYY-MM-DD HH:mm')
