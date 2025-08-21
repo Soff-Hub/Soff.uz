@@ -214,7 +214,7 @@ const OrderMain = ({ order }) => {
 
                 <div className={styles.order}>
                     <div className={styles.order_info}>
-                        <Image
+                        <img
                             src={
                                 order?.service?.poster ||
                                 '/static/img/default-service.png'

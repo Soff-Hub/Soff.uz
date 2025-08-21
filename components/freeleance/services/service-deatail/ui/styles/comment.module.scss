@@ -1,0 +1,52 @@
+.commentSection {
+    background: #f9fdf9;
+    border: 1px solid #e6f4e6;
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: #1d5c2e; // yashil ohang
+}
+
+.commentItem {
+    border-bottom: 1px solid #e6f4e6;
+    padding: 12px 0;
+
+    &:last-child {
+        border-bottom: none;
+    }
+}
+
+.avatar {
+    cursor: pointer;
+    border: 2px solid #52c41a;
+}
+
+.userName {
+    font-weight: 500;
+    font-size: 16px;
+    color: #1d5c2e;
+    cursor: pointer;
+
+    &:hover {
+        text-decoration: underline;
+        color: #52c41a;
+    }
+}
+
+.commentText {
+    margin: 4px 0 6px;
+    font-size: 14px;
+    color: #444;
+}
+
+.rating {
+    color: #52c41a !important; // antd star rangini yashilga almashtirish
+    font-size: 14px;
+}
