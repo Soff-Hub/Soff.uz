@@ -42,6 +42,9 @@ export default function ItServicesCategories () {
             </h2>
             <div className='it-services-grid-container'>
                 {itServicesCategoriesData.map((item, index) => {
+
+                    console.log('item', item);
+                    
                     return (
                         <div
                             className='it-services-card'

@@ -8,17 +8,62 @@ const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
     const { query } = router;
 
     const [searchValue, setSearchValue] = useState(query.search || '');
-    const [selectedParentCategory, setSelectedParentCategory] = useState(query.parent_category_id || '');
+    const [selectedParentCategory, setSelectedParentCategory] = useState(
+        query.parent_category_id || ''
+    );
 
     const updateQuery = (key, value) => {
-        const newQuery = { ...query, [key]: value };
-        if (!value) {
+        // Avval query object nusxasini olamiz
+        const newQuery = { ...router.query };
+
+        if (key === 'direction') {
+            // Faqat direction qoladi
+            router.push(
+                {
+                    pathname: router.pathname,
+                    query: { direction: value },
+                },
+                undefined,
+                { shallow: false }
+            );
+            return;
+        }
+
+        if (key === 'parent_category_id') {
+            // faqat direction + parent_category_id qoldiramiz
+            const q = {
+                direction: newQuery.direction,
+                parent_category_id: value,
+            };
+            router.push({ pathname: router.pathname, query: q }, undefined, {
+                shallow: false,
+            });
+            return;
+        }
+
+        if (key === 'category_id') {
+            // faqat category_id yangilanadi
+            const q = {
+                ...newQuery,
+                category_id: value,
+            };
+            router.push({ pathname: router.pathname, query: q }, undefined, {
+                shallow: false,
+            });
+            return;
+        }
+
+        // default fallback (boshqa keylar uchun)
+        if (value) {
+            newQuery[key] = value;
+        } else {
             delete newQuery[key];
         }
+
         router.push(
             {
                 pathname: router.pathname,
-                query: newQuery
+                query: newQuery,
             },
             undefined,
             { shallow: false }
@@ -35,17 +80,22 @@ const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
     }, [searchValue]);
 
     // Parent category select o'zgarganda URL update qilish
-    const onParentCategoryChange = (val) => {
+    const onParentCategoryChange = val => {
         setSelectedParentCategory(val);
         updateQuery('parent_category_id', val);
+    };
+
+    // Direction qismini o'zgartirish
+    const updateDirection = value => {
+        updateQuery('direction', value);
+        setSelectedParentCategory('');
     };
 
     return (
         <div className="container mb-3">
             <div
                 className="d-flex flex-wrap justify-content-between align-items-center gap-2"
-                style={{ rowGap: '10px' }}
-            >
+                style={{ rowGap: '10px' }}>
                 {/* Chap taraf - mahsulot soni */}
                 <p className="fs-5 m-0">{count || 0} ta xizmatlar</p>
 
@@ -53,11 +103,11 @@ const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
                 <Space wrap>
                     {/* Search */}
                     <Input
-                        style={{ height: '32px', minWidth: '200px' }}
-                        suffix={<SearchOutlined style={{ color: '#aaa' }} />}
+                        style={{ height: '32px'}}
+                        prefix={<SearchOutlined style={{ color: '#aaa', margin: '0px 4px' }} />}
                         placeholder="Xizmatlarni izlash"
                         value={searchValue}
-                        onChange={(e) => setSearchValue(e.target.value)}
+                        onChange={e => setSearchValue(e.target.value)}
                         allowClear
                     />
 
@@ -67,28 +117,65 @@ const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
                             placeholder="Kategoriya"
                             style={{ minWidth: '150px' }}
                             value={query.category_id || undefined}
-                            onChange={(val) => updateQuery('category_id', val)}
-                            allowClear
-                        >
-                            {childCategory && childCategory.map((cat) => (
-                                <Select.Option key={cat.id} value={String(cat.id)}>
-                                    {cat.title}
-                                </Select.Option>
-                            ))}
+                            onChange={val => updateQuery('category_id', val)}
+                            allowClear>
+                            {childCategory &&
+                                childCategory.map(cat => (
+                                    <Select.Option
+                                        key={cat.id}
+                                        value={String(cat.id)}>
+                                        {cat.title}
+                                    </Select.Option>
+                                ))}
                         </Select>
                     )}
 
                     {/* Yangi parent category select */}
                     <Select
-                        placeholder="Parent Category"
+                        placeholder="Muvjud xizmatlar"
                         style={{ minWidth: '180px' }}
                         value={selectedParentCategory || undefined}
                         onChange={onParentCategoryChange}
-                        allowClear
-                    >
-                        {parentCategory && parentCategory.map((cat) => (
-                            <Select.Option key={cat.id} value={String(cat.id)}>
-                                {cat.title}
+                        allowClear>
+                        {parentCategory &&
+                            parentCategory.map(cat => (
+                                <Select.Option
+                                    key={cat.id}
+                                    value={String(cat.id)}>
+                                    {cat.title}
+                                </Select.Option>
+                            ))}
+                    </Select>
+                    <Select
+                        placeholder="Yo'nalishlar"
+                        style={{ minWidth: '180px' }}
+                        value={router.query.direction || ''}
+                        onChange={updateDirection}
+                        allowClear>
+                        {[
+                            {
+                                label: 'Ilmiy ishlar',
+                                value: 'scientific_work',
+                            },
+                            {
+                                label: '3D Dizayn va Vizualizatsiya',
+                                value: 'three_d',
+                            },
+                            {
+                                label: 'Grafik Dizayn va Shablonlar',
+                                value: 'dizayn',
+                            },
+                            {
+                                label: 'Veb Dasturlash va IT Xizmatlari',
+                                value: 'web',
+                            },
+                            {
+                                label: 'Hujjatlar va Professional Shablonlar',
+                                value: 'document',
+                            },
+                        ].map(cat => (
+                            <Select.Option key={cat.value} value={cat.value}>
+                                {cat.label}
                             </Select.Option>
                         ))}
                     </Select>

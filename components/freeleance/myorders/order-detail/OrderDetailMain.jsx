@@ -25,7 +25,7 @@ const OrderDetailMain = () => {
                 </>
             )}
             {order?.feedback && (
-                <CommentSection id={query?.id} type={'order_id'} />
+                <CommentSection id={router.query?.id} type={'order_id'} />
             )}
         </div>
     );
