@@ -4,11 +4,12 @@ import ModelsAndInteriorDesignSwipper from './swiperItems/ModelsAndInteriorDesig
 import DesignDevelopmentSwipper from './swiperItems/DesignDevelopmentSwipper';
 import VideoLessonsSwipper from './swiperItems/videoLessonsSwipper';
 import TemplatesSwipper from './swiperItems/templatesSwipper';
+import CatalogsSection from '../catalogsSection';
 
-export default function CategoryHighlights () {
+export default function CategoryHighlights() {
     return (
-        <div className='mt-1'>
-            <div className='container  p-0'>
+        <div className="mt-1">
+            <div className="container  p-0">
                 <div className={`product-list`}>
                     <ScientificResourcesSwipper />
                     <ModelsAndInteriorDesignSwipper />
