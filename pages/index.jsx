@@ -7,6 +7,8 @@ import HomeCategories from '~/components/blocks/home-categories';
 import ItServicesCategories from '~/components/blocks/home-categories/ItServicesCategories';
 import SubProjects from '~/components/blocks/home-products/sub-projects';
 import LastAddedProducts from '~/components/blocks/lastAddedProducts/lastAddedProducts';
+import HomePage from '~/components/freeleance/home/HomePage';
+import Faqs from '~/components/freeleance/home/widgets/Faqs';
 import PageLayout from '~/components/layouts/PageLayout';
 import Meta from '~/components/shared/headers/Meta';
 import { TelegramLink } from '~/components/shared/telegramLink';
@@ -33,15 +35,17 @@ function NewHomePage ({ tab, category, lastProductsData }) {
                 author='Soff.uz'
                 image='c'
             />
-            <HeroSearch />
-            <HomeCategories />
+            <HomePage/>
             <BestSellerStatics />
-            {/* <LastAddedProducts lastAdded={lastProductsData}/> */}
             <HomeCategoryHighlights />
-            <ItServicesCategories />
+            {/* <HeroSearch /> */}
+            {/* <HomeCategories /> */}
+            {/* <LastAddedProducts lastAdded={lastProductsData}/> */}
+            {/* <ItServicesCategories />
             <ResutsComponents />
-            <SubProjects />
+            <SubProjects /> */}
             <TelegramLink/>
+            <Faqs/>
         </PageLayout>
     );
 }

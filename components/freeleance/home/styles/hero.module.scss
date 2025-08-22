@@ -1,0 +1,162 @@
+.heroRow {
+    padding: 50px 0;
+    align-items: center;
+    position: relative;
+    overflow: hidden; // dog chiqib ketmasligi uchun
+
+    .bgBlob {
+        position: absolute;
+        top: 100px;
+        right: 100px;
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle, #00A44F 0%, transparent 80%);
+        filter: blur(80px);
+        border-radius: 50%;
+        transition: all 0.3s ease;
+    }
+
+    .heroTitle {
+        font-size: 56px;
+        line-height: 1.3;
+        font-weight: 700;
+        color: #24282B;
+        margin-bottom: 1rem;
+    }
+
+    .heroParagraph {
+        font-size: 18px;
+        line-height: 1.6;
+        color: #555;
+        margin-bottom: 2rem;
+    }
+
+    .heroButtons {
+        .heroBtn {
+            color: #24282B;
+            font-size: 16px;
+            padding: 5px 8px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+
+            &:hover {
+                background: #00A44F;
+                color: white;
+            }
+        }
+
+        .activeHeroBtn {
+            background: #00A44F;
+            color: white;
+            font-size: 16px;
+            padding: 5px 8px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+    }
+}
+
+.searchBox{
+    border: 1px solid #00A44F;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2px 10px;
+
+    .input {
+        font-size: 15px;
+        outline: none;
+        border: none;
+        width: 100%;
+    }
+    
+    .searchIcon {
+        font-size: 18px;
+        background: #00A44F;
+        cursor: pointer;
+        color: white;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+/* Large Tablets (≤1200px) */
+@media (max-width: 1200px) {
+    .heroRow {
+        .heroTitle {
+            font-size: 48px;
+        }
+
+        .heroParagraph {
+            font-size: 17px;
+        }
+
+        .bgBlob {
+            width: 300px;
+            height: 300px;
+            top: 80px;
+            right: 50px;
+        }
+    }
+}
+
+/* Tablets (≤992px) */
+@media (max-width: 992px) {
+    .heroRow {
+        .heroTitle {
+            font-size: 36px;
+        }
+
+        .heroParagraph {
+            font-size: 16px;
+        }
+
+        .bgBlob {
+            width: 250px;
+            height: 250px;
+            top: 50px;
+            right: 30px;
+        }
+    }
+}
+
+/* Mobile (≤576px) */
+@media (max-width: 576px) {
+    .heroRow {
+        text-align: center;
+
+        .heroTitle {
+            font-size: 28px;
+        }
+
+        .heroParagraph {
+            font-size: 14px;
+        }
+
+        .heroButtons {
+            align-items: center;
+
+            .primaryButton,
+            .dashedButton {
+                width: 100%;
+                font-size: 16px;
+                padding: 14px;
+            }
+        }
+
+        .bgBlob {
+            width: 180px;
+            height: 180px;
+            top: 20px;
+            right: 10px;
+        }
+    }
+}

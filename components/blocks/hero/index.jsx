@@ -15,7 +15,7 @@ export default function HeroMain() {
                     </div>
 
                     <div className="hero-search-form">
-                        <HeroSearchInput />
+                        <HeroSearchInput /> 
 
                         {/* <Select
                                 value={'all'}
