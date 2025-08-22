@@ -1,0 +1,48 @@
+.card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 12px;
+    transition: box-shadow 0.2s ease;
+    cursor: pointer;
+    text-align: center;
+    min-height: 300px; // barcha cardlar bir xil bo'lishi uchun
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    &:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .ant-row {
+        flex: 1; // rasmlar bo'sh joyni to'ldirsin
+    }
+
+    img {
+        width: 100%;
+        height: auto; // 🔑 cho'zilmasligi uchun
+        aspect-ratio: 1/1; // rasmlarni kvadrat qilib ushlab turadi
+        object-fit: cover;
+        border-radius: 6px;
+    }
+
+    .longImage {
+        height: 100%; // chap tarafdagi uzun rasm
+        object-fit: cover;
+        border-radius: 6px;
+    }
+
+    .smallImage {
+        height: 100px; // tagma-tag rasm balandligi
+        object-fit: cover;
+        border-radius: 6px;
+    }
+
+    .title {
+        font-size: 16px;
+        font-weight: 600;
+        color: #333;
+        margin-top: 12px;
+    }
+}
