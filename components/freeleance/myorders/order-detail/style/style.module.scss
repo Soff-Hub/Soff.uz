@@ -1,3 +1,5 @@
+@import '/scss/utils/variable';
+
 .orderNameLink {
     cursor: pointer;
     transition: all 0.2s;
@@ -8,7 +10,6 @@
 }
 
 .orderDetailMain {
-    
     .orderPayCard {
         display: flex;
         align-items: center;
@@ -21,7 +22,7 @@
         margin-bottom: 30px;
         gap: 10px;
     }
-    
+
     .order {
         background: #fff;
         border-radius: 10px;
@@ -29,18 +30,17 @@
         border: 1px solid #ddd;
         margin-top: 20px;
 
-    
         .order_info {
             display: flex;
             align-items: start;
             gap: 10px;
-            margin-bottom: 20px; 
+            margin-bottom: 20px;
             .titleSize {
                 font-size: 30px;
-                font-weight: 700; 
+                font-weight: 700;
             }
         }
-        .downloadBtn{
+        .downloadBtn {
             background-color: #00a44f;
             color: #fff;
             &:hover {
@@ -59,8 +59,14 @@
             }
         }
     }
+    .downloadBtn {
+        background-color: #00a44f;
+        color: #fff;
+        &:hover {
+            background-color: #008f3c;
+        }
+    }
 }
-
 
 .status {
     background: #fff;
@@ -155,7 +161,6 @@
 
     .greenSteps {
         :global {
-
             // Active step
             .ant-steps-item-active .ant-steps-item-icon {
                 background-color: #fff !important;
@@ -189,6 +194,15 @@
                 background-color: #ff4d4f !important; // qizil
                 border-color: #ff4d4f !important;
             }
+            .ant-steps-item-error.rejected .ant-steps-item-icon {
+                background-color: $process-dark !important; // qizil
+                border-color: $process-dark !important;
+            }
+            .ant-steps-item-error.requirement_file_rejected
+                .ant-steps-item-icon {
+                background-color: $process-dark !important; // qizil
+                border-color: $process-dark !important;
+            }
 
             .ant-steps-item-error .ant-steps-item-icon .ant-steps-icon {
                 color: #fff !important;
@@ -197,7 +211,14 @@
             .ant-steps-item-error .ant-steps-item-title {
                 color: #ff4d4f !important;
             }
+
+            .ant-steps-item-error.rejected .ant-steps-item-title {
+                color: $process-dark !important; // qizil
+            }
+            .ant-steps-item-error.requirement_file_rejected
+                .ant-steps-item-title {
+                color: $process-dark !important; // qizil
+            }
         }
     }
-
 }

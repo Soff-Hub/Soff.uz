@@ -2,7 +2,7 @@ import { Input, Select, Space } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-
+import styles from './ServiceFilterSection.module.scss';
 const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
     const router = useRouter();
     const { query } = router;
@@ -91,20 +91,39 @@ const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
         setSelectedParentCategory('');
     };
 
+    const bannerTitle = {
+        scientific_work:
+            'Ilmiy maqolalar, tadqiqotlar va akademik ishlar uchun materiallar',
+        three_d:
+            '3D modellashtirish, animatsiya va vizualizatsiya bo‘yicha kreativ yechimlar',
+        dizayn: 'Grafik dizayn, brending, logotip va banner shablonlari',
+        web: 'Veb dasturlash, mobil ilovalar va IT xizmatlari',
+        document: 'Rasmiy hujjatlar va biznes shablonlari',
+    };
+
     return (
-        <div className="container mb-3">
-            <div
-                className="d-flex flex-wrap justify-content-between align-items-center gap-2"
-                style={{ rowGap: '10px' }}>
+        <div className="container">
+            <div className={styles.headlineWrapper}>
+                <h1 className={styles.headline}>
+                    {bannerTitle[query.direction] || 'Barcha xizmatlar'}
+                </h1>
+            </div>
+            <div className={styles.serviceFilterTab}>
                 {/* Chap taraf - mahsulot soni */}
-                <p className="fs-5 m-0">{count || 0} ta xizmatlar</p>
+                <p className={styles.servicesCount}>
+                    {count || 0} ta xizmatlar
+                </p>
 
                 {/* O'ng taraf - filterlar */}
                 <Space wrap>
                     {/* Search */}
                     <Input
-                        style={{ height: '32px'}}
-                        prefix={<SearchOutlined style={{ color: '#aaa', margin: '0px 4px' }} />}
+                        style={{ height: '32px' }}
+                        prefix={
+                            <SearchOutlined
+                                style={{ color: '#aaa', margin: '0px 4px' }}
+                            />
+                        }
                         placeholder="Xizmatlarni izlash"
                         value={searchValue}
                         onChange={e => setSearchValue(e.target.value)}
