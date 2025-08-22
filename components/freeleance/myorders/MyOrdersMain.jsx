@@ -18,7 +18,10 @@ const MyOrdersMain = () => {
         <div style={{ marginTop: '40px', maxWidth: '100%' }}>
             <div className="d-flex align-items-center mb-4 justify-content-between">
                 <h1 className="fs-1 m-0">Mening buyurtmalarim</h1>
-                <span className="fs-3">Balance - {data?.wallet}</span>
+                <span className="fs-3">
+                    Balance -{' '}
+                    {Number(data?.wallet || 0).toLocaleString('en-US')} o'm
+                </span>
             </div>
             <MyOrderTabs />
         </div>

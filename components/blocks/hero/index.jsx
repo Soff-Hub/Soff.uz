@@ -1,16 +1,19 @@
-import React from 'react'
+import React from 'react';
 import HeroSearchInput from './HeroSearchInput';
 import { useRouter } from 'next/router';
+import CatalogCard from '../cards/catalogCard';
 
 export default function HeroMain() {
-    const { query } = useRouter()
+    const { query } = useRouter();
 
     return (
         <div className={`container mt-4 hero ${query?.tab}`}>
             <div className="hero-inner">
                 <div className="hero-search-form">
                     <div className="hero-content">
-                        <h1 className='hero-title'>Soff.uz – raqamli xizmatlar bozori! </h1>
+                        <h1 className="hero-title">
+                            Soff.uz – raqamli xizmatlar bozori!{' '}
+                        </h1>
                         {/* <p className='hero-text'>Malakali mutaxassislar yordamida jamoangizni kengaytiring va biznesingizni rivojlantiring!</p> */}
                     </div>
 
@@ -49,5 +52,5 @@ export default function HeroMain() {
                 </div>
             </div>
         </div>
-    )
+    );
 }
