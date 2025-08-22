@@ -1,19 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import dynamic from 'next/dynamic';
+import Loader from '~/components/shared/loader';
+import { useQuery } from '@tanstack/react-query';
+import axiosInstance from '../api/freeleanceApi';
+import useGetCustomBalance from './myorder/api/useGetCustomBalance';
 
 // MyOrderTabs faqat client-side'da yuklanadi
 const MyOrderTabs = dynamic(() => import('./myorder/MyOrderTabs'), {
-  ssr: false,
-  loading: () => <p>Yuklanmoqda...</p>, // ixtiyoriy: loading paytida ko‘rsatish uchun
+    ssr: false,
+    loading: () => <Loader />, // ixtiyoriy: loading paytida ko‘rsatish uchun
 });
 
 const MyOrdersMain = () => {
-  return (
-    <div style={{ marginTop: '40px', maxWidth: '100%' }}>
-      <h1 style={{ fontSize: '30px' }}>Mening buyurtmalarim</h1>
-      <MyOrderTabs />
-    </div>
-  );
+    const { data } = useGetCustomBalance();
+
+    return (
+        <div style={{ marginTop: '40px', maxWidth: '100%' }}>
+            <div className="d-flex align-items-center mb-4 justify-content-between">
+                <h1 className="fs-1 m-0">Mening buyurtmalarim</h1>
+                <span className="fs-3">Balance - {data?.wallet}</span>
+            </div>
+            <MyOrderTabs />
+        </div>
+    );
 };
 
 export default MyOrdersMain;

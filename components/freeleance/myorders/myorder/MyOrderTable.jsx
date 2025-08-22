@@ -37,9 +37,7 @@ const Status = ({ status }) => {
             );
         case 'rejected':
             return (
-                <span className={styles.statusProcess}>
-                    Kamchilik topildi
-                </span> 
+                <span className={styles.statusProcess}>Kamchilik topildi</span>
             );
         case 'order_file_sent':
             return (
@@ -82,7 +80,7 @@ const getColumns = ({ onCancel }) => {
 
     const onClose = () => {
         setShowPayment(false);
-        queryClient.invalidateQueries(['orders']);
+        queryClient.invalidateQueries({ queryKey: ['orders'] });
     };
     return [
         {
@@ -151,10 +149,17 @@ const getColumns = ({ onCancel }) => {
         },
         {
             title: 'Qoldi',
-            render: (_, record) => record.status === 'completed' ? '-' :
-                record.status === 'cancelled' ? '-' : record.acceptedDate == null ?
-            'Ish boshlanmadi' :
-                `${getRemainingDays(record.ordered_at, record.deliveryDay)}`,
+            render: (_, record) =>
+                record.status === 'completed'
+                    ? '-'
+                    : record.status === 'cancelled'
+                    ? '-'
+                    : record.acceptedDate == null
+                    ? 'Ish boshlanmadi'
+                    : `${getRemainingDays(
+                          record.ordered_at,
+                          record.deliveryDay
+                      )}`,
             align: 'center',
             hidden: isMobile < 768,
         },
@@ -169,7 +174,6 @@ const getColumns = ({ onCancel }) => {
             title: 'Holati',
             dataIndex: 'status',
             render: (_, record) => {
-
                 if (record.status == 'pending') {
                     return (
                         <Space direction="" size={6}>
@@ -226,7 +230,7 @@ export const AllOrdersTable = ({ type }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState(null);
     const [reason, setReason] = useState('');
-    const { data: orders } = useGetOrders();
+    const { data: orders, refetch } = useGetOrders();
     const { mutate: cancelOrder, isPending: isCancelling } = useCancelOrder();
     const { data: reasons } = useGetReasons();
 
@@ -279,8 +283,8 @@ export const AllOrdersTable = ({ type }) => {
             acceptedDate: order?.order_status_doing?.accepted_date,
         })) || [];
 
-    const statusFilter = dataSource.filter(item => type?.includes(item.status)); 
-    
+    const statusFilter = dataSource.filter(item => type?.includes(item.status));
+
     return (
         <>
             <Table

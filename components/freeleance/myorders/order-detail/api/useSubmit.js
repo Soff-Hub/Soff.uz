@@ -18,7 +18,7 @@ const useSubmit = () => {
             await axios.post(`order/${id}/status`, formData);
         },
         onSuccess: () => {
-            queryClient.invalidateQueries(['order']);
+            queryClient.invalidateQueries({ queryKey: ['orders'] });
         }
     });
 

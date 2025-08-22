@@ -21,7 +21,7 @@ const useEditMessage = () => {
             });
         },
         onSuccess: () => {
-            queryClient.invalidateQueries(['chat']);
+            queryClient.invalidateQueries({ queryKey: ['chats'] });
             message.success("Xabar tahrirlandi");
         },
         onError: () => {

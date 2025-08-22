@@ -3,11 +3,12 @@ import React, { useState, useEffect } from 'react';
 import { MoreOutlined } from '@ant-design/icons';
 import { AllOrdersTable } from './MyOrderTable';
 import useOrdersStatus from './api/useOrderStatus';
+import Loader from '~/components/shared/loader';
 
 const MyOrderTabs = () => {
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 500);
     const [activeKey, setActiveKey] = useState('1');
-    const { data } = useOrdersStatus();
+    const { data, isLoading } = useOrdersStatus();
 
     useEffect(() => {
         const handleResize = () => {
@@ -42,7 +43,9 @@ const MyOrderTabs = () => {
             key: '3',
             label: `Jarayonda ${data?.requirement_process}`,
             children: (
-                <AllOrdersTable type={['order_accepted', 'order_file_sent', 'rejected']} />
+                <AllOrdersTable
+                    type={['order_accepted', 'order_file_sent', 'rejected']}
+                />
             ),
         },
         {
@@ -61,6 +64,8 @@ const MyOrderTabs = () => {
         key: item.key,
         label: item.label,
     }));
+
+    if (isLoading) return <Loader />;
 
     const menu = (
         <Menu

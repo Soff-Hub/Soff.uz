@@ -23,7 +23,7 @@ const useCreateChat = () => {
             return data
         },
         onSuccess: (data) => {
-            queryClient.invalidateQueries(['chats']);
+            queryClient.invalidateQueries({ queryKey: ['chats'] });
             message.success("Chat yaratildi");
             push(`/chat${data?.chat_id ? `?id=${data?.chat_id}` : ''}`);
         },

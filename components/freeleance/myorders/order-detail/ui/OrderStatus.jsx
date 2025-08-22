@@ -1,15 +1,9 @@
 import React from 'react';
 import styles from '../style/style.module.scss';
 import { Button, Steps, Tooltip } from 'antd';
-import {
-    CheckCircleOutlined,
-    CheckOutlined,
-    CheckSquareOutlined,
-    MessageOutlined,
-} from '@ant-design/icons';
+import { MessageOutlined } from '@ant-design/icons';
 import useCreateChat from '~/components/freeleance/chat/api/useCreateChat';
 import Link from 'next/link';
-import Image from 'next/image';
 
 const OrderStatus = ({ order }) => {
     const priceFormatted =
@@ -74,12 +68,17 @@ const OrderStatus = ({ order }) => {
                 </div>
             </div>
             {order?.user?.soff_seller_id && (
-                <div className="mb-0">
+                <div className="mb-0 ">
                     <Button
                         onClick={() => createChat(order?.user?.soff_seller_id)}
-                        icon={<MessageOutlined />}
                         size="large"
                         className="w-100 rounded-0">
+                        <span className={styles.unreadChatsWrapper}>
+                            <span className={styles.unreadChats}>
+                                {order?.unread_messages_count}
+                            </span>
+                            <MessageOutlined />
+                        </span>
                         Chat
                     </Button>
                 </div>
