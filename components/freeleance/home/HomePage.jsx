@@ -6,6 +6,8 @@ import SoffTypes from './widgets/SoffTypes'
 import TwoCard from './widgets/TwoCard'
 import FaqSection from './widgets/FaqSection'
 import SoffStats from './widgets/SoffStats'
+import CatalogsSection from '~/components/blocks/catalogsSection'
+import HomeCategoryHighlights from '~/components/blocks/categoryHighlights'
 
 const HomePage = () => {
     return (
@@ -17,11 +19,8 @@ const HomePage = () => {
                     <StepsSection />
                 </div>
             </div>
-            {/* <div style={{ background: "#24282B" }}>
-                <div className='container'>
-                    <SoffTypes />
-                </div>
-            </div> */}
+            <CatalogsSection />
+            <HomeCategoryHighlights />
             <div className='bg-white py-1'>
                 <div className='container'>
                     {/* <TwoCard/> */}
