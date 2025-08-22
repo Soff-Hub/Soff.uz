@@ -6,7 +6,13 @@ import Meta from '~/components/shared/headers/Meta';
 import ServicesFilterSection from '~/components/freeleance/services/ServicesFilterSection';
 import ServicesCardSection from '~/components/freeleance/services/ServicesCardSection';
 
-export default function SoffFreelancerPage({ servicesData, parentCategory, childCategory, offset, limit }) {
+export default function SoffFreelancerPage({
+    servicesData,
+    parentCategory,
+    childCategory,
+    offset,
+    limit,
+}) {
     const router = useRouter();
     const currentPage = Math.floor(offset / limit) + 1; // hozirgi page
 
@@ -16,8 +22,8 @@ export default function SoffFreelancerPage({ servicesData, parentCategory, child
             query: {
                 ...router.query,
                 offset: (page - 1) * pageSize,
-                limit: pageSize
-            }
+                limit: pageSize,
+            },
         });
     };
 
@@ -57,7 +63,7 @@ export async function getServerSideProps(context) {
         search = '',
         direction = '',
         limit = 20,
-        offset = 0
+        offset = 0,
     } = query;
 
     const servicesQuery = new URLSearchParams({
@@ -65,26 +71,32 @@ export async function getServerSideProps(context) {
         ...(search && { search }),
         ...(direction && { direction }),
         limit,
-        offset
+        offset,
     });
 
-    const servicesUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/customer?${servicesQuery.toString()}`;
-    const parentCategoryUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/categories/`;
+    const servicesUrl = `${
+        process.env.NEXT_PUBLIC_FREELEANCE_URL
+    }/api/v1/customer?${servicesQuery.toString()}`;
+    const parentCategoryUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/categories/?direction=${query.direction}`;
 
     const [servicesRes, parentCategoryRes] = await Promise.all([
         fetch(servicesUrl),
-        fetch(parentCategoryUrl)
+        fetch(parentCategoryUrl),
     ]);
 
     const servicesData = servicesRes.ok ? await servicesRes.json() : null;
-    const parentCategory = parentCategoryRes.ok ? await parentCategoryRes.json() : null;
+    const parentCategory = parentCategoryRes.ok
+        ? await parentCategoryRes.json()
+        : null;
 
     let childCategory = [];
     if (parent_category_id) {
         const childCategoryRes = await fetch(
             `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/categories?parent_id=${parent_category_id}`
         );
-        childCategory = childCategoryRes.ok ? await childCategoryRes.json() : [];
+        childCategory = childCategoryRes.ok
+            ? await childCategoryRes.json()
+            : [];
     }
 
     return {
@@ -93,7 +105,7 @@ export async function getServerSideProps(context) {
             parentCategory,
             childCategory,
             offset: Number(offset),
-            limit: Number(limit)
+            limit: Number(limit),
         },
     };
 }

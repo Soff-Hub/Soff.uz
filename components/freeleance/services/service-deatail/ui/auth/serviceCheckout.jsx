@@ -4,6 +4,7 @@ import { BeatLoader } from 'react-spinners';
 import { useRouter } from 'next/router';
 import useCreateOrder from './api/createOrder';
 import { useVerifyCode } from './api/verifyCode';
+import { useCountdown } from '~/hooks/useCountDown';
 
 const ServiceCheckout = ({ document, order_id, onClose }) => {
     const [numberCardVal, SetNumberCardVal] = useState(null);
@@ -21,6 +22,8 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
     const [formattedCardNumber, setFormattedCardNumber] = useState('');
     const [numberDate, setNumberDate] = useState('');
     const { push } = useRouter();
+    // sms uchun vaqt orqaga sanash
+    const { display, left, reset } = useCountdown(120);
 
     const verifyCode = useVerifyCode();
 
@@ -56,6 +59,8 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
             }
         );
     }
+    // Vaqtni formatlash
+    let formattedTime = '02:00'; 
 
     // 📌 Oddiy karta raqami orqali to'lov
     async function handleClickCardPosts(e) {
@@ -70,13 +75,14 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
         };
 
         if (order_id) payload.order_id = order_id;
-        console.log('📦 Click payment payload:', payload);
-        console.log(order_id);
+        // console.log('📦 Click payment payload:', payload);
+        // console.log(order_id);
         createOrder.mutate(payload, {
             onSuccess: data => {
                 setMessage(true);
                 setOpen(true);
                 setResData(data);
+                reset()
             },
             onError: err => {
                 console.error('❌ Click payment error:', err);
@@ -140,10 +146,7 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
         setResData(null);
     }
 
-    const formattedTime = `${String(Math.floor(time / 60)).padStart(
-        2,
-        '0'
-    )}:${String(time % 60).padStart(2, '0')}`;
+    
 
     const handleCardNumberChange = e => {
         const inputValue = e.target.value.replace(/\D/g, '');
@@ -290,7 +293,7 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
                                 className="form-control text-center rounded-3 fs-3"
                             />
                             <strong className="text-danger">
-                                {formattedTime}
+                                {display}
                             </strong>
                             {resDataCode?.detail && (
                                 <p className="text-danger">
