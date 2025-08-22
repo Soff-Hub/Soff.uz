@@ -33,31 +33,28 @@ const itServicesCategoriesData = [
         path: '/orders?direction=document',
     },
 ];
-export default function ItServicesCategories () {
+export default function ItServicesCategories() {
     const router = useRouter();
     return (
-        <div className='container p-md-0 mt-3'>
-            <h2 className='product-list-title'>
+        <div className="container p-md-0 mt-3">
+            <h2 className="product-list-title">
                 Xizmatni Tanlang – Buyurtma Bering
             </h2>
-            <div className='it-services-grid-container'>
+            <div className="it-services-grid-container">
                 {itServicesCategoriesData.map((item, index) => {
-
-                    console.log('item', item);
-                    
                     return (
                         <div
-                            className='it-services-card'
+                            className="it-services-card"
                             key={index}
                             onClick={() => router.push(item.path)}>
-                            <div className='it-services-card-inner'>
+                            <div className="it-services-card-inner">
                                 <img
                                     src={item.imgUrl}
-                                    className='it-services-card-image'
+                                    className="it-services-card-image"
                                     alt={item.title}
                                 />
-                                <div className='it-services-card-title-box'>
-                                    <h3 className='it-services-card-title'>
+                                <div className="it-services-card-title-box">
+                                    <h3 className="it-services-card-title">
                                         {item.title}
                                     </h3>
                                 </div>
