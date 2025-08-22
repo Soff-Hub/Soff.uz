@@ -1,12 +1,5 @@
 import React from 'react';
 import BestSellerStatics from '~/components/blocks/bestSellerStatics';
-import HomeCategoryHighlights from '~/components/blocks/categoryHighlights';
-import ResutsComponents from '~/components/blocks/header/Results/ResutsComponents';
-import HeroSearch from '~/components/blocks/hero';
-import HomeCategories from '~/components/blocks/home-categories';
-import ItServicesCategories from '~/components/blocks/home-categories/ItServicesCategories';
-import SubProjects from '~/components/blocks/home-products/sub-projects';
-import LastAddedProducts from '~/components/blocks/lastAddedProducts/lastAddedProducts';
 import HomePage from '~/components/freeleance/home/HomePage';
 import Faqs from '~/components/freeleance/home/widgets/Faqs';
 import PageLayout from '~/components/layouts/PageLayout';
@@ -37,7 +30,6 @@ function NewHomePage ({ tab, category, lastProductsData }) {
             />
             <HomePage/>
             <BestSellerStatics />
-            <HomeCategoryHighlights />
             {/* <HeroSearch /> */}
             {/* <HomeCategories /> */}
             {/* <LastAddedProducts lastAdded={lastProductsData}/> */}

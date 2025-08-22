@@ -1,4 +1,3 @@
-import CatalogsSection from '../catalogsSection';
 import CategoryHighlights from './CategoryHighlights';
 
 export default function HomeCategoryHighlights() {
@@ -11,7 +10,6 @@ export default function HomeCategoryHighlights() {
                     </div>
                 </div>
             </div>
-            <CatalogsSection />
         </div>
     );
 }
