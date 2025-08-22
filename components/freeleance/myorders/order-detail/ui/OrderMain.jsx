@@ -52,14 +52,14 @@ const STATUS_CONFIG = {
             'Mutahasis buyurtmani yakunladi va natijani sizga jo‘natdi. Natijani yuklab olib ko‘rib chiqing va tasdiqlang yoki rad eting.',
         buttons: [
             {
+                key: 'download',
                 text: 'Faylni yuklab olish',
                 icon: <DownloadOutlined />,
-                onClick: file => () => window.open(file?.file, '_blank'),
             },
             {
+                key: 'order_file_sent',
                 text: 'Natijani baholash',
                 type: 'primary',
-                onClick: setFeedbackOpen => () => setFeedbackOpen(true),
             },
         ],
     },
@@ -110,7 +110,8 @@ const OrderMain = ({ order }) => {
                 setRes('');
                 setText('');
                 setRate(null);
-                setCongratModal(true);
+                if (res === 'complected') setCongratModal(true);
+                queryClient.invalidateQueries(['order']);
             },
             onError: () => {
                 message.error('Fikr yuborishda xatolik yuz berdi');
@@ -156,11 +157,11 @@ const OrderMain = ({ order }) => {
                                           }
                                         : {}
                                 }
-                                onClick={btn.onClick(
-                                    status === 'order_file_sent'
-                                        ? file
-                                        : setFeedbackOpen
-                                )}>
+                                onClick={() =>
+                                    btn.key === 'download'
+                                        ? window.open(file?.file)
+                                        : setFeedbackOpen(true)
+                                }>
                                 {btn.text}
                             </Button>
                         ))}

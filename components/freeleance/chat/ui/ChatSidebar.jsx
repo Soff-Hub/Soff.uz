@@ -32,14 +32,14 @@ const ChatSidebar = ({ setChatId }) => {
                 <Input.Search
                     placeholder="Chatlarni qidirish"
                     value={search}
-                    onChange={(e) => setSearch(e.target.value)}
+                    onChange={e => setSearch(e.target.value)}
                     allowClear
                 />
             </div>
             <div className={styles.sidebar_chats}>
                 {isLoading && (
                     <div style={{ textAlign: 'center', padding: '20px' }}>
-                        <Spin size='large' tip="Qidirilmoqda..." />
+                        <Spin size="large" tip="Qidirilmoqda..." />
                     </div>
                 )}
                 {!isLoading && chats?.length === 0 && (
@@ -52,19 +52,29 @@ const ChatSidebar = ({ setChatId }) => {
                     <div
                         key={chat.chat_id}
                         onClick={() => setChatId(chat?.chat_id)}
-                        className={styles.sidebar_chat}
-                    >
-                        <img src="/static/img/ozodbek.png" alt="user img" />
+                        className={styles.sidebar_chat}>
+                        <img
+                            src={
+                                chat?.opponent_photo_url ||
+                                '/static/img/ozodbek.png'
+                            }
+                            alt="user img"
+                        />
                         <div className={styles.sidebar_chat_wrapper}>
                             <div className={styles.box1}>
                                 <h4>{chat?.opponent_name}</h4>
-                                <span>{truncateTitle(chat?.last_message?.content, 15)}</span>
+                                <span>
+                                    {truncateTitle(
+                                        chat?.last_message?.content,
+                                        15
+                                    )}
+                                </span>
                             </div>
                             <div className={styles.box2}>
                                 <p></p>
-                                {chat?.unread_count > 0 &&
+                                {chat?.unread_count > 0 && (
                                     <span>{chat?.unread_count}</span>
-                                }
+                                )}
                             </div>
                         </div>
                     </div>
