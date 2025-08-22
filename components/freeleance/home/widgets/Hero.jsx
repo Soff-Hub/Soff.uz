@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react'
 import styles from "../styles/hero.module.scss"
 import HeroCard from '../ui/HeroCard'
 import { useRouter } from 'next/router'
+import useResponsive from '~/utilities/useResponsive'
 
 const cards = [
     { title: "Dizayn", img: "/static/img/HomePage/pen-tool-1.png" },
@@ -16,6 +17,7 @@ const Hero = () => {
     const { push } = useRouter()
     const [type, setType] = useState("m")
     const [search, setSearch] = useState("")
+    const { isMobile } = useResponsive()
 
     // searchni debounce bilan ishlatamiz
     useEffect(() => {
@@ -44,7 +46,7 @@ const Hero = () => {
                         Bizning mutaxassislar va sotuvchilar sizga kerakli tayyor raqamli mahsulot yoki xizmatni tez va sifatli taqdim etadi.
                     </p>
                     <div className={styles.heroButtons}>
-                        <div className='d-flex align-items-center gap-3 mb-3'>
+                        <div style={{justifyContent: isMobile ? "center" : ""}} className='d-flex align-items-center gap-3 mb-3'>
                             <span
                                 onClick={() => setType("m")}
                                 className={type == "m" ? styles.activeHeroBtn : styles.heroBtn}
@@ -63,7 +65,7 @@ const Hero = () => {
                             <input
                                 type="text"
                                 placeholder={type === "m"
-                                    ? "Qaysi turdagi tayyor mahsulot qidirmoqdasiz?"
+                                    ? "Qanday mahsulot izlamoqdasiz?"
                                     : "Qanday xizmat kerak?"
                                 }
                                 className={styles.input}

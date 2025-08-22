@@ -135,7 +135,7 @@ const CatalogsSection = () => {
                             onClick={goProducts}
                             className={styles.catalogSeeAll}>
                             Barcha mahsulotlar{' '}
-                            <i class="fa-solid fa-arrow-right"></i>
+                            <i style={{marginLeft: "12px"}} class="fa-solid fa-arrow-right"></i>
                         </button>
                     </div>
                 </section>

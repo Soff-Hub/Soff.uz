@@ -8,6 +8,7 @@
     .catalogHealine {
         display: flex;
         align-items: start;
+
         .catalogLabel {
             font-size: 36px;
             font-weight: 600;
@@ -30,9 +31,11 @@
                 font-size: 20px;
             }
         }
+
         @media (max-width: 1080px) {
             flex-direction: column;
         }
+
         .catalogSubLabel {
             font-size: 24px;
             font-weight: 400;
@@ -65,6 +68,7 @@
             font-size: 20px;
             font-weight: 600;
             padding: 13px 24px;
+
             @media (max-width: 1200px) {
                 font-size: 18px;
                 padding: 10px 21px;
@@ -87,6 +91,7 @@
             }
         }
     }
+
     .catalogCardsSection {
         // shu yerga yoz
         display: grid;
@@ -105,6 +110,7 @@
             grid-template-columns: 1fr;
         }
     }
+
     .howItWorksSection {
         padding: 60px 20px;
 
@@ -129,10 +135,12 @@
                 display: flex;
                 align-items: start;
                 gap: 4px;
+
                 img {
                     width: 50px;
                     height: 40px;
                 }
+
                 h3 {
                     font-size: 20px;
                     font-weight: 600;
@@ -162,9 +170,11 @@
             }
         }
     }
+
     .readyProducts {
         display: flex;
         justify-content: center;
+
         .block {
             position: relative;
             bottom: -100px;
@@ -174,28 +184,54 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding: 100px 0px;
+            padding: 100px 0;
+            margin: 0 auto; // markazga qo‘yish uchun
+
             .title {
                 font-size: 64px;
+                line-height: 1.2;
                 text-align: center;
                 color: $textColorWhite;
+
+                @media (max-width: 1200px) {
+                    font-size: 48px;
+                }
+
+                @media (max-width: 992px) {
+                    font-size: 40px;
+                }
+
+                @media (max-width: 768px) {
+                    font-size: 32px;
+                }
+
+                @media (max-width: 576px) {
+                    font-size: 24px;
+                }
             }
+
             .catalogSeeAll {
                 background-color: $textColorWhite;
                 border-radius: 50px;
                 color: $textColor;
                 display: flex;
                 align-items: center;
+                justify-content: center;
                 border: none;
                 align-self: center;
                 width: fit-content;
                 font-size: 20px;
                 font-weight: 600;
                 padding: 13px 24px;
+                transition: all 0.3s ease;
+
+                &:hover {
+                    background: darken($textColorWhite, 5%);
+                }
+
                 @media (max-width: 1200px) {
                     font-size: 18px;
                     padding: 10px 21px;
-                    width: 100%;
                 }
 
                 @media (max-width: 992px) {
@@ -206,6 +242,7 @@
                 @media (max-width: 768px) {
                     font-size: 14px;
                     padding: 6px 14px;
+                    width: 100%; // mobil uchun to‘liq chiqadi
                 }
 
                 @media (max-width: 576px) {
@@ -213,6 +250,29 @@
                     padding: 5px 11px;
                 }
             }
+
+            /* Blockning o‘zi uchun responsive */
+            @media (max-width: 1200px) {
+                width: 85%;
+                padding: 80px 0;
+            }
+
+            @media (max-width: 992px) {
+                width: 90%;
+                padding: 60px 0;
+            }
+
+            @media (max-width: 768px) {
+                width: 95%;
+                padding: 40px 0;
+            }
+
+            @media (max-width: 576px) {
+                width: 100%;
+                padding: 20px;
+                bottom: 0px; // pastga siljishini kamaytirish
+            }
         }
+
     }
 }
