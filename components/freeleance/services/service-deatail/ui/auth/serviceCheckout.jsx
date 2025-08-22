@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import useCreateOrder from './api/createOrder';
 import { useVerifyCode } from './api/verifyCode';
 import { useCountdown } from '~/hooks/useCountDown';
+import { useQueryClient } from '@tanstack/react-query';
 
 const ServiceCheckout = ({ document, order_id, onClose }) => {
     const [numberCardVal, SetNumberCardVal] = useState(null);
@@ -22,6 +23,7 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
     const [formattedCardNumber, setFormattedCardNumber] = useState('');
     const [numberDate, setNumberDate] = useState('');
     const { push } = useRouter();
+    const queryClient = useQueryClient();
     // sms uchun vaqt orqaga sanash
     const { display, left, reset } = useCountdown(120);
 
@@ -59,8 +61,6 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
             }
         );
     }
-    // Vaqtni formatlash
-    let formattedTime = '02:00'; 
 
     // 📌 Oddiy karta raqami orqali to'lov
     async function handleClickCardPosts(e) {
@@ -82,7 +82,7 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
                 setMessage(true);
                 setOpen(true);
                 setResData(data);
-                reset()
+                reset();
             },
             onError: err => {
                 console.error('❌ Click payment error:', err);
@@ -108,6 +108,7 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
                     if (!order_id) push('/order/my-orders');
                     if (onClose) onClose();
                     setOpen(false);
+                    queryClient.invalidateQueries(['orders']);
                 },
                 onError: error => {
                     // Agar backend detail yuborsa
@@ -145,8 +146,6 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
         setOpen(false);
         setResData(null);
     }
-
-    
 
     const handleCardNumberChange = e => {
         const inputValue = e.target.value.replace(/\D/g, '');
@@ -292,9 +291,7 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
                                 maxLength={6}
                                 className="form-control text-center rounded-3 fs-3"
                             />
-                            <strong className="text-danger">
-                                {display}
-                            </strong>
+                            <strong className="text-danger">{display}</strong>
                             {resDataCode?.detail && (
                                 <p className="text-danger">
                                     {resDataCode.detail}

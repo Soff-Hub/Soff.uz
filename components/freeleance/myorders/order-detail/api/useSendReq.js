@@ -24,7 +24,7 @@ const useSendReq = () => {
             });
         },
         onSuccess: () => {
-            queryClient.invalidateQueries(['order']);
+            queryClient.invalidateQueries({ queryKey: ['order'] });
             message.success("Buyurtma talablari muvaffaqiyatli yuborildi!")
         }
     });

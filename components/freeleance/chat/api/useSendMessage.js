@@ -20,8 +20,8 @@ const useSendMessage = () => {
             });
         },
         onSuccess: () => {
-            queryClient.invalidateQueries(['chat']);
-            queryClient.invalidateQueries(['chats']);
+            queryClient.invalidateQueries({ queryKey: ['chat'] });
+            queryClient.invalidateQueries({ queryKey: ['chats'] });
         }
     });
 };

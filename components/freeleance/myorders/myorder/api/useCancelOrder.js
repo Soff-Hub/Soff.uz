@@ -20,7 +20,7 @@ const useCancelOrder = () => {
             });
         },
         onSuccess: () => {
-            queryClient.invalidateQueries(['orders']);
+            queryClient.invalidateQueries({ queryKey: ['orders'] });
         }
     });
 

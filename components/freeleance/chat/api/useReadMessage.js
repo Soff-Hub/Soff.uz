@@ -12,7 +12,7 @@ const useReadMessage = () => {
             await axios.patch(`chats/messages/${id}/read`,);
         },
         onSuccess: () => {
-            queryClient.invalidateQueries(['chat']);
+            queryClient.invalidateQueries({ queryKey: ['chats'] });
         }
     });
 };
