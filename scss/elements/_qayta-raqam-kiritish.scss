@@ -6,18 +6,15 @@
     width: 100%;
     margin-bottom: 20px;
 
-
     &:focus {
         border-color: $color-1st;
         outline: none;
         box-shadow: 0 0 0 transparent;
     }
 
-
     &:valid {
         font-size: 18px;
     }
-
 
     &::placeholder {
         font-size: 14px;
@@ -32,13 +29,11 @@
     width: 100%;
     margin-bottom: 20px;
 
-
     &:focus {
         border-color: $color-1st;
         outline: none;
         box-shadow: 0 0 0 transparent;
     }
-
 
     &:valid {
         font-size: 18px;
@@ -58,7 +53,6 @@
         padding: 35px;
         transition: all 0.6s;
 
-
         & .register-choose-button {
             display: flex;
             flex-direction: column;
@@ -66,7 +60,6 @@
             align-items: center;
             gap: 10px;
             margin-top: 30px !important;
-
 
             & h3 {
                 margin-top: 20%;
@@ -76,12 +69,10 @@
                 text-align: center;
             }
 
-
             & div {
                 display: flex;
                 justify-content: center;
                 align-items: center;
-
 
                 & i {
                     font-size: 50px;
@@ -90,16 +81,13 @@
             }
         }
 
-
         &:hover {
             background-color: $color-1st;
-
 
             & .register-choose-button {
                 & h3 {
                     color: #fff;
                 }
-
 
                 & div {
                     & i {
@@ -117,7 +105,6 @@
         display: flex !important;
         max-width: 280px !important;
         gap: 8px !important;
-
 
         .register-choose-button-parent_div {
             width: 120px;
@@ -140,7 +127,6 @@
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-
 
     .yaxshi-categoriyalar-image {
         height: 100px;
@@ -201,17 +187,14 @@ input[type='number']::-webkit-outer-spin-button {
         background: #00a44f !important;
         color: #fff !important;
 
-
         .subcategory_btn_title {
             color: #fff !important;
         }
     }
 
-
     &:active {
         background: #00a44f !important;
         color: #fff !important;
-
 
         .subcategory_btn_title {
             color: #fff !important;
@@ -238,7 +221,6 @@ input[type='number']::-webkit-outer-spin-button {
     align-items: center;
     gap: 38px;
 
-
     @media screen and (max-width: 1300px) {
         gap: 5px;
     }
@@ -248,8 +230,10 @@ input[type='number']::-webkit-outer-spin-button {
 .scientificResourcesWrap {
     margin-top: clamp(0.938rem, 1.875vw + 0.563rem, 2.813rem);
     display: grid;
-    grid-template-columns: repeat(auto-fit,
-            minmax(clamp(9.375rem, 18.75vw + 5.625rem, 28.125rem), 1fr));
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(clamp(9.375rem, 18.75vw + 5.625rem, 28.125rem), 1fr)
+    );
     gap: clamp(0.625rem, 1.563vw + 0.313rem, 2.188rem);
     row-gap: clamp(0.625rem, 1.563vw + 0.313rem, 2.188rem);
     padding: 0px !important;
@@ -268,8 +252,10 @@ input[type='number']::-webkit-outer-spin-button {
 .scientificResourcesWrap {
     margin-top: clamp(0.938rem, 1.875vw + 0.563rem, 2.813rem);
     display: grid;
-    grid-template-columns: repeat(auto-fit,
-            minmax(clamp(14rem, 15.625vw + 6.25rem, 25rem), 1fr));
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(clamp(14rem, 15.625vw + 6.25rem, 25rem), 1fr)
+    );
     gap: clamp(0.625rem, 1.563vw + 0.313rem, 2.188rem);
     row-gap: clamp(0.625rem, 1.563vw + 0.313rem, 2.188rem);
     padding: 0px !important;
@@ -285,7 +271,7 @@ input[type='number']::-webkit-outer-spin-button {
 }
 
 .scientificResourcesCard {
-    max-width: 25rem;
+    // max-width: 25rem;
     width: 100%;
     height: 100%;
     background: #fff;
@@ -306,7 +292,6 @@ input[type='number']::-webkit-outer-spin-button {
         align-items: center;
         justify-content: center;
         padding: clamp(0.313rem, 0.938vw + 0.125rem, 1.25rem);
-
 
         .scientificResourcesCardImg {
             height: clamp(9.375rem, 6.25vw + 8.125rem, 15.625rem);
@@ -370,7 +355,6 @@ input[type='number']::-webkit-outer-spin-button {
         padding: clamp(0.313rem, 0.938vw + 0.125rem, 1.25rem);
         gap: clamp(0.313rem, 0.938vw + 0.125rem, 1.25rem);
 
-
         .scientificResourcesCardTitle {
             color: #000;
             font-family: 'Poppins';
@@ -382,12 +366,10 @@ input[type='number']::-webkit-outer-spin-button {
             margin: 0;
             padding: 0;
             display: -webkit-box;
-            -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
             text-overflow: ellipsis;
             transition: all 0.3s ease;
-
 
             &:hover {
                 color: #00a44f;
@@ -395,12 +377,10 @@ input[type='number']::-webkit-outer-spin-button {
             }
         }
 
-
         .scientificResourcesCardPriceBox {
             display: flex;
             justify-content: space-between;
             align-items: center;
-
 
             .scientificResourcesCardPrice {
                 p {
@@ -412,7 +392,6 @@ input[type='number']::-webkit-outer-spin-button {
                     margin: 0;
                     padding: 0;
                 }
-
 
                 .scientificResourcesCardPrice_discount_price {
                     font-size: 1.8rem;
@@ -431,7 +410,6 @@ input[type='number']::-webkit-outer-spin-button {
             margin-bottom: 10px;
             border-top: 1px solid rgba(0, 0, 0, 0.1);
             padding-top: 5px;
-
 
             p {
                 margin: 0;
@@ -466,7 +444,6 @@ input[type='number']::-webkit-outer-spin-button {
     width: clamp(2rem, 1.563vw + 0.625rem, 5rem);
 }
 
-
 // _____________________________scientificResources styles end____________________________
 
 // -----------------------------------------------ThreeDCategoriesFilterSecion style
@@ -474,32 +451,26 @@ input[type='number']::-webkit-outer-spin-button {
     background-color: #00a44f;
 }
 
-
 .category-btn:hover .category-btn-title {
     color: white;
 }
-
 
 .category-btn .category-btn-title {
     color: #312f30;
 }
 
-
 .sub-category-btn:hover .sub-category-btn-title {
     color: #00a44f;
 }
-
 
 .Models_category_btn_wrap {
     display: flex;
     justify-content: start;
     gap: 15px !important;
 
-
     @media screen and (max-width: 1300px) {
         gap: 10px !important;
     }
-
 
     .Models_category_btn {
         display: flex;
@@ -516,17 +487,14 @@ input[type='number']::-webkit-outer-spin-button {
             background: #00a44f !important;
             color: #fff !important;
 
-
             .subcategory_btn_title {
                 color: #fff !important;
             }
         }
 
-
         &:active {
             background: #00a44f !important;
             color: #fff !important;
-
 
             .subcategory_btn_title {
                 color: #fff !important;
@@ -540,19 +508,16 @@ input[type='number']::-webkit-outer-spin-button {
             line-height: 21.25px;
             letter-spacing: 0%;
 
-
             @media screen and (max-width: 1300px) {
                 // padding: 10px;
             }
         }
-
 
         .Models_category_btn_img {
             width: 26px !important;
             height: 21px !important;
             // border-radius: 0 7px 7px 0;
             background: #fff;
-
 
             @media screen and (max-width: 1300px) {
                 width: 55px !important;
@@ -561,7 +526,6 @@ input[type='number']::-webkit-outer-spin-button {
         }
     }
 }
-
 
 .CategoryOpen {
     .Models_category_btn {
@@ -579,17 +543,14 @@ input[type='number']::-webkit-outer-spin-button {
             background: #00a44f !important;
             color: #fff !important;
 
-
             .subcategory_btn_title {
                 color: #fff !important;
             }
         }
 
-
         &:active {
             background: #00a44f !important;
             color: #fff !important;
-
 
             .subcategory_btn_title {
                 color: #fff !important;
@@ -603,13 +564,11 @@ input[type='number']::-webkit-outer-spin-button {
             line-height: 21.25px;
             letter-spacing: 0%;
 
-
             // padding: 12px 14.5px;
             @media screen and (max-width: 1300px) {
                 // padding: 10px;
             }
         }
-
 
         .Models_category_btn_img {
             width: 45px !important;
@@ -618,7 +577,6 @@ input[type='number']::-webkit-outer-spin-button {
             background: #fff;
             width: 26px !important;
             height: 21px !important;
-
 
             @media screen and (max-width: 1300px) {
                 width: 55px !important;
@@ -642,17 +600,14 @@ input[type='number']::-webkit-outer-spin-button {
         background: #00a44f !important;
         color: #fff !important;
 
-
         .subcategory_btn_title {
             color: #fff !important;
         }
     }
 
-
     &:active {
         background: #00a44f !important;
         color: #fff !important;
-
 
         .subcategory_btn_title {
             color: #fff !important;
@@ -667,7 +622,6 @@ input[type='number']::-webkit-outer-spin-button {
         letter-spacing: 0%;
         // padding: 14.5px;
     }
-
 
     .Models_category_btn_img {
         width: 64px !important;
@@ -700,12 +654,10 @@ input[type='number']::-webkit-outer-spin-button {
         margin: 0;
     }
 
-
     &:active {
         background: rgba(0, 164, 79, 0.8);
         border: 1px solid rgba(0, 164, 79, 1);
     }
-
 
     @media screen and (max-width: 1300px) {
         padding: 12.5px 20.83px;
@@ -718,7 +670,6 @@ input[type='number']::-webkit-outer-spin-button {
         border-radius: 8.33px;
     }
 }
-
 
 // ________________________________ProductsByModelsAndDesignCategory styles____________________________
 .modelAndDesignProduct {
@@ -752,7 +703,6 @@ input[type='number']::-webkit-outer-spin-button {
         background: #fff;
         border-radius: 6.76px 6.76px 0 0;
 
-
         img {
             height: clamp(12rem, 18.75vw + 2.5rem, 25rem);
             object-fit: contain;
@@ -760,7 +710,6 @@ input[type='number']::-webkit-outer-spin-button {
             transition: all 0.3s ease;
             border-radius: 6.76px 6.76px 0 0;
         }
-
 
         .modelAndDesignCardTopSide {
             position: absolute;
@@ -771,11 +720,9 @@ input[type='number']::-webkit-outer-spin-button {
             justify-content: space-between;
             align-items: start;
 
-
             @media screen and (max-width: 800px) {
                 padding: 0 8px;
             }
-
 
             .modelAndDesignCardPriceBox {
                 white-space: 'nowrap';
@@ -798,13 +745,11 @@ input[type='number']::-webkit-outer-spin-button {
                 }
             }
 
-
             .aboutModel {
                 .aboutModelItem {
                     @media screen and (max-width: 550px) {
                         display: none;
                     }
-
 
                     border-radius: 28px;
                     background: #fff;
@@ -817,14 +762,12 @@ input[type='number']::-webkit-outer-spin-button {
                     letter-spacing: 2%;
                 }
 
-
                 @media screen and (max-width: 600px) {
                     display: none;
                 }
             }
         }
     }
-
 
     .modelAndDesignCardBody {
         display: flex;
@@ -837,7 +780,6 @@ input[type='number']::-webkit-outer-spin-button {
         @media screen and (max-width: 550px) {
             padding: 4.5px 6.5px;
         }
-
 
         .modelAndDesignCardTitle {
             font-family: 'Poppins';
@@ -854,13 +796,11 @@ input[type='number']::-webkit-outer-spin-button {
             }
         }
 
-
         .modelAndDesignCardBtn {
             display: flex;
             align-items: center;
             gap: 9px;
         }
-
 
         a {
             img {
@@ -868,7 +808,6 @@ input[type='number']::-webkit-outer-spin-button {
                 height: clamp(1rem, 2vw + 0.5rem, 2.5rem);
             }
         }
-
     }
 
     .modelsCardOptions {
@@ -941,8 +880,10 @@ input[type='number']::-webkit-outer-spin-button {
 .designDevelopmentProduct {
     margin-top: clamp(0.938rem, 1.875vw + 0.563rem, 2.813rem);
     display: grid;
-    grid-template-columns: repeat(auto-fit,
-            minmax(clamp(14rem, 15.625vw + 6.25rem, 25rem), 1fr));
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(clamp(14rem, 15.625vw + 6.25rem, 25rem), 1fr)
+    );
     gap: clamp(0.625rem, 1.563vw + 0.313rem, 2.188rem);
     row-gap: clamp(0.625rem, 1.563vw + 0.313rem, 2.188rem);
     padding: 0px !important;
@@ -966,7 +907,6 @@ input[type='number']::-webkit-outer-spin-button {
         box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
     }
 
-
     .designDevelopmentCardImgBox {
         object-fit: contain;
         object-position: center;
@@ -978,7 +918,6 @@ input[type='number']::-webkit-outer-spin-button {
 
         height: 100%;
         width: 100%;
-
 
         .designDevelopmentCardImg {
             width: auto;
@@ -1009,7 +948,6 @@ input[type='number']::-webkit-outer-spin-button {
         }
     }
 
-
     .designDevelopmentCardBody {
         background: #fff;
         border-radius: 0 0 10px 10px;
@@ -1029,7 +967,6 @@ input[type='number']::-webkit-outer-spin-button {
             line-height: 1.4;
             height: calc(1.4em * 2); // 2 qator balandligi
             display: -webkit-box;
-            -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -1049,7 +986,6 @@ input[type='number']::-webkit-outer-spin-button {
             padding: 0;
             margin: 0;
 
-
             .designDevelopmentCardPrice {
                 font-family: 'Poppins';
                 font-weight: 600;
@@ -1059,22 +995,21 @@ input[type='number']::-webkit-outer-spin-button {
                 margin: 0;
             }
 
-
             .buyIcon {
                 padding: 0;
                 margin: 0;
 
-
                 img {
-                    @media screen and (max-width: 650px) {}
+                    @media screen and (max-width: 650px) {
+                    }
 
-                    @media screen and (max-width: 650px) {}
+                    @media screen and (max-width: 650px) {
+                    }
 
                     @media screen and (max-width: 500px) {
                         width: 25px !important;
                         height: 25px !important;
                     }
-
 
                     @media screen and (max-width: 350px) {
                         width: 20px !important;
@@ -1103,13 +1038,11 @@ input[type='number']::-webkit-outer-spin-button {
         justify-content: center;
     }
 
-
     @media (max-width: 1300px) {
         // LG: 3 ta ustun
         grid-template-columns: repeat(4, 290px);
         justify-content: center;
     }
-
 
     @media (max-width: 1200px) {
         // LG: 3 ta ustun
@@ -1117,18 +1050,15 @@ input[type='number']::-webkit-outer-spin-button {
         justify-content: center;
     }
 
-
     @media (max-width: 992px) {
         // MD: 2 ta ustun
         grid-template-columns: repeat(3, 1fr);
     }
 
-
     @media (max-width: 768px) {
         // SM: 2 ta ustun
         grid-template-columns: repeat(2, 1fr);
     }
-
 
     @media (max-width: 576px) {
         // XS: 2 ta ustun
@@ -1143,7 +1073,6 @@ input[type='number']::-webkit-outer-spin-button {
     flex-direction: column;
     border-radius: 11px;
 
-
     .videoLessonsCardImgBox {
         display: flex;
         justify-content: center;
@@ -1157,32 +1086,26 @@ input[type='number']::-webkit-outer-spin-button {
             object-position: center;
             border-radius: 10px 10px 0 0;
 
-
             @media screen and (max-width: 700px) {
                 height: 180px;
             }
-
 
             @media screen and (max-width: 600px) {
                 height: 150px;
             }
 
-
             @media screen and (max-width: 500px) {
                 height: 125px;
             }
-
 
             @media screen and (max-width: 400px) {
                 height: 100px;
             }
 
-
             @media screen and (max-width: 300px) {
                 height: 100px;
             }
         }
-
 
         .videoLessonsCardheard {
             position: absolute;
@@ -1207,11 +1130,9 @@ input[type='number']::-webkit-outer-spin-button {
             padding: 8px 14px 12px 14px;
         }
 
-
         @media screen and (max-width: 500px) {
             padding: 6px 10px 11px 10px;
         }
-
 
         @media screen and (max-width: 350px) {
             padding: 5px;
@@ -1224,20 +1145,17 @@ input[type='number']::-webkit-outer-spin-button {
             line-height: 22.5px;
             letter-spacing: 2%;
 
-
             @media screen and (max-width: 650px) {
                 font-weight: 400;
                 font-size: 13px;
                 line-height: 18px;
             }
 
-
             @media screen and (max-width: 500px) {
                 font-weight: 400;
                 font-size: 12px;
                 line-height: 15px;
             }
-
 
             @media screen and (max-width: 350px) {
                 font-weight: 300;
@@ -1252,21 +1170,17 @@ input[type='number']::-webkit-outer-spin-button {
             align-items: center;
             margin-top: 18px;
 
-
             @media screen and (max-width: 650px) {
                 margin-top: 12px;
             }
-
 
             @media screen and (max-width: 500px) {
                 margin-top: 8px;
             }
 
-
             @media screen and (max-width: 350px) {
                 margin-top: 3px;
             }
-
 
             .videoLessonsCardPrice {
                 font-family: 'Poppins' !important;
@@ -1282,13 +1196,11 @@ input[type='number']::-webkit-outer-spin-button {
                     line-height: 12px;
                 }
 
-
                 @media screen and (max-width: 500px) {
                     font-weight: 600;
                     font-size: 12px;
                     line-height: 12px;
                 }
-
 
                 @media screen and (max-width: 350px) {
                     font-weight: 400;
@@ -1297,18 +1209,18 @@ input[type='number']::-webkit-outer-spin-button {
                 }
             }
 
-
             .buyIcon {
                 img {
-                    @media screen and (max-width: 650px) {}
+                    @media screen and (max-width: 650px) {
+                    }
 
-                    @media screen and (max-width: 650px) {}
+                    @media screen and (max-width: 650px) {
+                    }
 
                     @media screen and (max-width: 500px) {
                         width: 25px !important;
                         height: 25px !important;
                     }
-
 
                     @media screen and (max-width: 350px) {
                         width: 20px !important;
@@ -1318,7 +1230,6 @@ input[type='number']::-webkit-outer-spin-button {
             }
         }
     }
-
 
     &:hover {
         transition: ease-in-out;
@@ -1572,7 +1483,9 @@ input[type='number']::-webkit-outer-spin-button {
     align-items: center;
     flex-direction: column;
 
-    .DevelopmentAndItCategory_DontWorkImg {}
+    .DevelopmentAndItCategory_DontWorkImg {
+        display: inline-block;
+    }
 
     .DevelopmentAndItCategory_DontWorkTitle {
         color: #000;

@@ -3,8 +3,9 @@
 .catalogSectionBlock {
     background-color: $mainbg;
     padding: 40px 0px;
-    margin-bottom: 100px;
-
+    margin-bottom: 250px;
+    position: relative;
+    z-index: 200;
     .catalogHealine {
         display: flex;
         align-items: start;
@@ -96,7 +97,7 @@
         // shu yerga yoz
         display: grid;
         gap: 20px;
-        margin: 40px 0px;
+        margin: 100px 0px;
         // Katta ekranlarda (>=1200px) 3 ta card
         grid-template-columns: repeat(3, 1fr);
 
@@ -174,10 +175,11 @@
     .readyProducts {
         display: flex;
         justify-content: center;
-
+        position: relative;
+        height: 150px;
         .block {
-            position: relative;
-            bottom: -100px;
+            position: absolute;
+            bottom: -300px;
             border-radius: 16px;
             background: #b5b6b6;
             width: 75%;
@@ -209,6 +211,29 @@
                     font-size: 24px;
                 }
             }
+            .title2 {
+                font-size: 36px;
+                line-height: 1.2;
+                font-weight: 400;
+                text-align: center;
+                color: $textColorWhite;
+
+                @media (max-width: 1200px) {
+                    font-size: 28px;
+                }
+
+                @media (max-width: 992px) {
+                    font-size: 24px;
+                }
+
+                @media (max-width: 768px) {
+                    font-size: 18px;
+                }
+
+                @media (max-width: 576px) {
+                    font-size: 14px;
+                }
+            }
 
             .catalogSeeAll {
                 background-color: $textColorWhite;
@@ -221,6 +246,7 @@
                 align-self: center;
                 width: fit-content;
                 font-size: 20px;
+                margin-top: 20px;
                 font-weight: 600;
                 padding: 13px 24px;
                 transition: all 0.3s ease;
@@ -273,6 +299,5 @@
                 bottom: 0px; // pastga siljishini kamaytirish
             }
         }
-
     }
 }

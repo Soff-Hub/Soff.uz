@@ -2,6 +2,15 @@ import Image from 'next/image';
 import React from 'react';
 import styles from './card.module.scss';
 import { useRouter } from 'next/router';
+
+const service = {
+    '3d': '/3d-models-and-interior-designs/all',
+    website: '/websites/all',
+    design: '/design-developments/all',
+    video: '/video-lessons/all',
+    template: '/templates/all',
+    file: '/scientific-resources/all',
+};
 const CatalogCard = ({ content_type, title, count, items }) => {
     const router = useRouter();
     const [first, second, third, fourth] = items;
@@ -9,7 +18,7 @@ const CatalogCard = ({ content_type, title, count, items }) => {
     return (
         <div
             className={styles.catalogCard}
-            onClick={() => router.push('/orders?direction=scientific_work')}>
+            onClick={() => router.push(service[content_type])}>
             <div className="d-flex gap-3 align-items-center">
                 <div className={styles.cardIcon}>
                     <Image

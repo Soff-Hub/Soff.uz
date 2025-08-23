@@ -1,0 +1,15 @@
+@import '/scss/utils/variable';
+
+.mainblock {
+    background-color: $mainbg;
+    padding: 57px 20px;
+    margin-top: 20px;
+    .footerMainTitle {
+        color: #fff;
+        font-size: 36px;
+        display: block;
+        font-weight: 600;
+        flex: 1;
+        margin-bottom: 30px;
+    }
+}

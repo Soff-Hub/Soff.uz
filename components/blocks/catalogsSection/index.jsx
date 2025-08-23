@@ -9,7 +9,7 @@ import { useRouter } from 'next/router';
 
 const title = {
     '3d': '3D moddellar',
-    web: 'Veb saytlar',
+    website: 'Veb saytlar',
     design: 'Dizayn shablonlari',
     video: 'Video darsliklar',
     template: 'Shablonlar',

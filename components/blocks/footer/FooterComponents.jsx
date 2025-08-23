@@ -1,161 +1,137 @@
 import React from 'react';
-
+import styles from './footer.module.scss';
 const footerMenu = {
     soff: {
         logoImg: '/static/img/soff.svg',
         title: 'Raqamli xizmatlar bozori!',
         path: '#',
     },
-    companies: {
-        title: 'Soff Loyihalari',
-        links: [
-            { name: 'Soff Birja', url: 'https://birja.soff.uz/' },
-            { name: 'Soff Study', url: 'https://soffstudy.uz/' },
-            { name: 'Soff CRM', url: 'https://soffcrm.uz/' },
-            { name: 'Soff Hub', url: 'https://soffhub.uz/' }
-        ],
-    },
     services: {
-        title: 'Soff.uz xizmatlari',
-        links: [    
-            { name: 'Ilmiy ishlar', url: '/orders' },
-            { name: '3D modellar', url: '/orders' },
-            { name: 'Dizayn shablonlari', url: '/orders' },
-            { name: 'Veb saytlar', url: '/orders' },
-            { name: 'Video darsliklar', url: '/orders' },
-            {name : "Hamkorlik dasturi", url: '/affiliate_program'}
+        links: [
+            { name: 'Sotib olish va moderatsiya bo‘yicha' },
+            { name: '+998 (99) 266 30 29 | @soff_moderator' },
+            { name: 'Texnik muammolar uchun: ' },
+            { name: '+998 (91) 008 67 89 | @hr_soffhub' },
         ],
     },
     social: {
         title: 'Ijtimoiy tarmoqlarimiz',
         items: [
-            { name: 'YouTube', icon: '/static/img/youtube.svg', username: '@soffuz', url: 'https://www.youtube.com/@soffuz' },
-            { name: 'Telegram', icon: '/static/img/telegram.svg', username: 't.me/soff_uz', url: 'https://t.me/soff_uz' },
-            { name: 'Instagram', icon: '/static/img/instagram.svg', username: 'soffuz_', url: 'https://www.instagram.com/soffuz_?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==' },
-            { name: 'LinkedIn', icon: '/static/img/linkedin.svg', username: 'Soff Hub', url: 'https://www.linkedin.com/company/soffhub/posts/?feedView=all' }
+            {
+                name: 'FaceBook',
+                icon: '/static/img/faceb.png',
+                username: '@soffuz',
+                url: 'https://www.facebook.com/profile.php?id=61579052952962#',
+            },
+            {
+                name: 'Twitter',
+                icon: '/static/img/x.png',
+                username: 't.me/soff_uz',
+                url: 'https://t.me/soff_uz',
+            },
+            {
+                name: 'Instagram',
+                icon: '/static/img/insta.png',
+                username: 'soffuz_',
+                url:
+                    'https://www.instagram.com/soffuz_?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==',
+            },
         ],
     },
     contactTech: {
         title: 'Texnik muammolar uchun:',
         items: [
-            { icon: 'fa-solid fa-phone-volume', contact: '+998 (91) 008 67 89', url: 'tel:+998910086789' },
-            { icon: 'fa-solid fa-paper-plane', contact: '@hr_soffhub', url: 'https://t.me/hr_soffhub' },
-        ]
+            {
+                icon: 'fa-solid fa-phone-volume',
+                contact: '+998 (91) 008 67 89',
+                url: 'tel:+998910086789',
+            },
+            {
+                icon: 'fa-solid fa-paper-plane',
+                contact: '@hr_soffhub',
+                url: 'https://t.me/hr_soffhub',
+            },
+        ],
     },
     contactModeration: {
         title: 'Sotib olish va moderatsiya bo‘yicha:',
         items: [
-            { icon: 'fa-solid fa-phone-volume', contact: '+998 (99) 266 30 29', url: 'tel:+998910086789' },
-            { icon: 'fa-solid fa-paper-plane', contact: '@soff_moderator', url: 'https://t.me/soff_moderator' },
-        ]
+            {
+                contact: 'Barcha xizmatlar',
+                url: 'tel:+998910086789',
+            },
+            {
+                contact: 'Buyurtma berish',
+                url: 'https://t.me/soff_moderator',
+            },
+            {
+                contact: 'Mahsulotlar',
+                url: 'https://t.me/soff_moderator',
+            },
+            {
+                contact: 'Frilancerlar uchun',
+                url: 'https://seller.soff.uz/',
+            },
+        ],
     },
 };
 
-export default function FooterComponents () {
+export default function FooterComponents() {
     return (
-        <div
-            className='bg-white'
-            style={{
-                // marginTop: '116.52px',
-                marginTop: '20px',
-                padding: '57px 0 20px',
-                borderBottom: '1px solid rgba(0, 164, 79, 1)',
-            }}>
-            <footer className=' bg-white container p-lg-0 d-flex  justify-content-between align-items-start flex-wrap '>
-                <div className='logo col-xl-3 col-lg-3 col-md-6 mb-5 col-sm-12 col-12'>
-                    <img
-                        src='/static/img/soff/logo-dark.png'
-                        alt='logo'
-                        className='mb-5'
-                        style={{ width: '192px' }}
-                    />
-                    <a
-                        href={footerMenu.soff.path}
-                        className='fs-2 text-dark fw-bold text-decoration-none d-block'>
-                        {footerMenu.soff.title}
-                    </a>
-                </div>
+        <div className={styles.mainblock}>
+            <footer className="  bg-transparent container p-lg-0 d-flex  justify-content-between align-items-start flex-wrap ">
+                <a
+                    href={footerMenu.soff.path}
+                    className={styles.footerMainTitle}>
+                    Tayyor mahsulotlar va xizmatlar bir joyda
+                </a>
 
-                {/* <div className='company col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12'>
-                    <h5 className='fw-semibold fs-2 mb-5'>
-                        {footerMenu.companies.title}
-                    </h5>
-                    {footerMenu.companies.links.map((link, i) => (
-                        <a
-                            target='_blank'
-                            key={i}
-                            href={link.url}
-                            className='footer-link d-block hover:text-success fs-4 mb-3'>
-                            {link.name}
-                        </a>
-                    ))}
-                </div> */}
-
-                {/* Bog‘lanish bo‘limi */}
-                <div className='col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 mb-5'>
-                    <h5 className='fw-semibold fs-2 mb-5'>
-                        {footerMenu.contactTech.title}
-                    </h5>
-                    {footerMenu.contactTech.items.map((item, i) => (
-                        <a
-                            target='_blank'
-                            key={i}
-                            href={item.url}
-                            className='d-flex align-items-center footer-link gap-3 footer-link fs-4 mb-3'>
-                            <i className={`${item.icon} text-success`}></i>
-                            {item.contact}
-                        </a>
-                    ))}
-                </div>
-
-                <div className='col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 mb-5'>
-                    <h5 className='fw-semibold fs-2 mb-5'>
-                        {footerMenu.contactModeration.title}
-                    </h5>
+                <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 mb-5">
                     {footerMenu.contactModeration.items.map((item, i) => (
                         <a
-                            target='_blank'
+                            target="_blank"
                             key={i}
                             href={item.url}
-                            className='d-flex align-items-center footer-link gap-3 footer-link fs-4 mb-3'>
-                            <i className={`${item.icon} text-success`}></i>
+                            className="d-flex text-white align-items-center footer-link gap-3 footer-link fs-4 mb-3">
                             {item.contact}
                         </a>
                     ))}
                 </div>
-                
+
                 {/* Xizmatlar bo‘limi */}
-                <div className='col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12'>
-                    <h5 className='fw-semibold fs-2 mb-5'>
-                        {footerMenu.services.title}
-                    </h5>
+                <div className="col-xl-3 text-white col-lg-3 col-md-6 col-sm-12 col-12">
+                    <h5 className="fw-semibold fs-2 text-white">Aloqa</h5>
                     {footerMenu.services.links.map((link, i) => (
-                        <a
-                            target='_blank'
+                        <p
+                            target="_blank"
                             key={i}
-                            href={link.url}
-                            className='footer-link d-block fs-4 mb-3'>
+                            className="footer-link d-block fs-4 mb-3">
                             {link.name}
-                        </a>
+                        </p>
                     ))}
                 </div>
             </footer>
-            <div className='d-flex gap-4 justify-content-center mt-5 border-top pt-5 flex-wrap container'>
-                {footerMenu.social.items.map((item, i) => (
-                    <a
-                        target='_blank'
-                        key={i}
-                        href={item.url}
-                        className='d-flex align-items-center gap-3 footer-link fs-4 mb-3'>
-                        <img
-                            src={item.icon}
-                            alt={item.name}
-                            className='me-2'
-                            style={{ width: '20px' }}
-                        />
-                        {item.name}
-                    </a>
-                ))}
+            <div className="d-flex gap-4 justify-content-between mt-5 border-top pt-5 flex-wrap container">
+                <img
+                    src="/static/img/soff_green.png"
+                    alt="logo"
+                    className="mb-5"
+                    style={{ width: '192px' }}
+                />
+                <div className="d-flex gap-4 align-items-center">
+                    {footerMenu.social.items.map((item, i) => (
+                        <a
+                            target="_blank"
+                            key={i}
+                            href={item.url}
+                            className=" ">
+                            <img
+                                src={item.icon}
+                                style={{ width: '50px', height: '50px' }}
+                            />
+                        </a>
+                    ))}
+                </div>
             </div>
         </div>
     );
