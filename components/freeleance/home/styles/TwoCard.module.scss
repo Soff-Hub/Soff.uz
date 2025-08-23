@@ -3,62 +3,82 @@
     grid-template-columns: 1fr 1fr;
     gap: 16px;
     padding: 20px;
-    margin-top: -100px;
+    margin-top: -150px;
 
-    /* 📱 Telefon (xs <576px) */
+    @media (max-width: 1199px) {
+        margin-top: -80px;
+        gap: 14px;
+        padding: 16px;
+    }
+
+    @media (max-width: 991px) {
+        grid-template-columns: 1fr 1fr;
+        margin-top: -80px;
+        gap: 12px;
+        padding: 16px;
+    }
+
     @media (max-width: 575px) {
         grid-template-columns: 1fr;
-        margin-top: -50px;
-    }
-
-    /* 📲 Planshet (sm) */
-    @media (min-width: 576px) and (max-width: 767px) {
-        grid-template-columns: 1fr;
-    }
-
-    /* 💻 Desktop (lg) */
-    @media (min-width: 992px) {
-        grid-template-columns: 1fr 1fr;
+        margin-top: 0;
+        gap: 12px;
+        padding: 10px;
     }
 }
 
 .card {
-    background: #999696;
+    background: #b5b6b6;
+    padding: 70px 20px;
+    gap: 40px;
+    border-radius: 25px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 20px;
-    gap: 40px;
-    border-radius: 25px;
     align-items: center;
     text-align: center;
 
+    @media (max-width: 1199px) {
+        padding: 25px;
+        gap: 36px;
+    }
+
+    @media (max-width: 991px) {
+        padding: 22px;
+        gap: 32px;
+    }
+
+    @media (max-width: 767px) {
+        padding: 18px;
+        gap: 28px;
+    }
+
     @media (max-width: 575px) {
-        gap: 20px;
         padding: 16px;
+        gap: 20px;
     }
 }
 
 .title {
     color: #fefefe;
-    font-size: 36px;
+    font-size: 30px;
     font-weight: 600;
     margin: 0;
     text-align: center;
 
-    /* 📱 Telefon */
-    @media (max-width: 575px) {
-        font-size: 20px;
+    @media (max-width: 1199px) {
+        font-size: 28px;
     }
 
-    /* 📲 Planshet */
-    @media (min-width: 576px) and (max-width: 767px) {
+    @media (max-width: 991px) {
+        font-size: 26px;
+    }
+
+    @media (max-width: 767px) {
         font-size: 24px;
     }
 
-    /* 💻 O‘rtacha ekran */
-    @media (min-width: 768px) and (max-width: 991px) {
-        font-size: 28px;
+    @media (max-width: 575px) {
+        font-size: 20px;
     }
 }
 
@@ -66,23 +86,36 @@
     display: flex;
     justify-content: center;
     width: 100%;
-
-    @media (max-width: 575px) {
-        justify-content: center;
-    }
 }
 
 .btn {
-    background: #fefefe !important;
-    color: #000 !important;
-    border: none !important;
+    background: #fefefe;
+    color: #000;
+    border: none;
     font-weight: 600;
     font-size: 20px;
     border-radius: 50px;
+    padding: 10px 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+        background: #e0e0e0;
+    }
+
+    @media (max-width: 991px) {
+        font-size: 18px;
+        padding: 9px 28px;
+    }
+
+    @media (max-width: 767px) {
+        font-size: 16px;
+        padding: 8px 24px;
+    }
 
     @media (max-width: 575px) {
         font-size: 16px;
-        padding: 0 20px;
+        padding: 8px 20px;
         height: 40px;
     }
 }

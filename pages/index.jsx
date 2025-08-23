@@ -29,7 +29,7 @@ function NewHomePage ({ tab, category, lastProductsData }) {
                 image='c'
             />
             <HomePage/>
-            <BestSellerStatics />
+            {/* <BestSellerStatics /> */}
             {/* <HeroSearch /> */}
             {/* <HomeCategories /> */}
             {/* <LastAddedProducts lastAdded={lastProductsData}/> */}
@@ -37,7 +37,7 @@ function NewHomePage ({ tab, category, lastProductsData }) {
             <ResutsComponents />
             <SubProjects /> */}
             <TelegramLink/>
-            <Faqs/>
+            {/* <Faqs/> */}
         </PageLayout>
     );
 }

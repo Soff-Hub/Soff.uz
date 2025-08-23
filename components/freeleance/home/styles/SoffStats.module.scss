@@ -2,11 +2,51 @@
     padding: 60px 20px;
     text-align: center;
 
+    .icon {
+        margin-bottom: 48px;
+        width: 30px;
+        height: 30px;
+        object-fit: contain;
+    }
+
     .title {
         font-size: 36px;
         font-weight: 600;
-        margin-bottom: 40px;
-        color: #222;
+        margin-bottom: 45px;
+        color: rgba(36, 40, 43, 1);
+        
+
+        @media (max-width: 767px) {
+            font-size: 28px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 575px) {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+    }
+}
+
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    justify-items: center;
+
+    @media (max-width: 991px) {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+
+    @media (max-width: 575px) {
+        // grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    @media (max-width: 450px) {
+        grid-template-columns: 1fr;
     }
 }
 
@@ -14,28 +54,40 @@
     background: #fff;
     padding: 30px 20px;
     border-radius: 20px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    height: 100%;
+    box-shadow: 5px 10px 30px 0px rgba(0, 0, 0, 0.05);
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
 
-    &:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
-    }
+    width: 100%;
+    max-width: 250px;
 }
 
 .value {
-    font-size: 32px;
-    font-weight: 700;
-    color: #222;
+    font-size: 24px;
+    font-weight: 600;
+    color: rgba(36, 40, 43, 1);
+    text-align: left;
+
+    @media (max-width: 767px) {
+        font-size: 20px;
+    }
+
+    @media (max-width: 575px) {
+        font-size: 18px;
+    }
 }
 
 .label {
-    margin-top: 8px;
-    font-size: 18px;
-    color: #555;
+    font-weight: 400;
+    font-size: 16px;
+    color: rgba(112, 111, 111, 1);
+    text-align: left;
+
+    @media (max-width: 767px) {
+        font-size: 14px;
+    }
+
+    @media (max-width: 575px) {
+        font-size: 12px;
+    }
 }
