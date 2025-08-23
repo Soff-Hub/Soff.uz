@@ -4,7 +4,7 @@ export default function HomeCategoryHighlights() {
     return (
         <div>
             <div className="products mt-1">
-                <div className="container  p-0">
+                <div className="container">
                     <div className={`product-list`}>
                         <CategoryHighlights />
                     </div>

@@ -1,0 +1,31 @@
+.wrapper {
+    text-align: center;
+    height: 60vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    .subtitle {
+        font-weight: 600;
+        font-size: 36px;
+        line-height: 100%;
+        letter-spacing: 0%;
+        color: #FEFEFE;
+    }
+
+    img {
+        width: 30px;
+        height: 30px;
+        margin-bottom: 48px;
+    }
+
+    .title {
+        font-weight: 600;
+        font-size: 80px;
+        line-height: 100%;
+        letter-spacing: 0%;
+        color: #FEFEFE;
+        margin-bottom: 150px;
+    }
+}

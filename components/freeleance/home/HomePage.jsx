@@ -9,6 +9,8 @@ import CatalogsSection from '~/components/blocks/catalogsSection';
 import HomeCategoryHighlights from '~/components/blocks/categoryHighlights';
 import InfoSection from './_components/InfoSection';
 import LastOpened from './_components/LastOpened';
+import Bests from './widgets/Bests';
+import SoffTittle from './widgets/SoffTittle';
 
 const HomePage = () => {
     return (
@@ -25,9 +27,19 @@ const HomePage = () => {
             <HomeCategoryHighlights />
             <div className="bg-white py-1">
                 <div className="container">
-                    {/* <TwoCard/> */}
                     <SoffStats />
-                    {/* <FaqSection/> */}
+                    <Bests />
+                </div>
+            </div>
+            <div style={{ background: "#24282B" }}>
+                <div className="container">
+                    <SoffTittle />
+                </div>
+            </div>
+            <div className="bg-white py-1">
+                <div className="container">
+                    <TwoCard />
+                    <FaqSection />
                 </div>
             </div>
         </div>

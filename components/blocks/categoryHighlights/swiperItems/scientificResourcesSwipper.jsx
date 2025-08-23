@@ -11,7 +11,7 @@ export default function ScientificResourcesSwipper() {
     useEffect(() => {
         setIsLoading(true);
 
-        fetch(`${baseURL}customer/last-added/?direction=file&limit=12`)
+        fetch(`${baseURL}customer/last-added/?direction=file&limit=6`)
             .then(res => res.json())
             .then(data => {
                 setProducts(data?.results);
@@ -25,7 +25,7 @@ export default function ScientificResourcesSwipper() {
     }, []);
 
     return (
-        <div className="categoryHighlightsSwippercontainer mb-5 px-5">
+        <div className="categoryHighlightsSwippercontainer">
             {Array.isArray(products) && products.length > 0 && (
                 <div className="categoryHighlightsSwipper">
                     <div className="SwipperTitlewrap">

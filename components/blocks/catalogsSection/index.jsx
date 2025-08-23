@@ -28,7 +28,7 @@ const CatalogsSection = () => {
     if (isLoading && !data) return <Loader />;
 
     const goProducts = () => {
-        router.push('/orders?direction=scientific_work');
+        router.push('/scientific-resources/all');
     };
 
     return (
@@ -63,7 +63,7 @@ const CatalogsSection = () => {
                     </div>
                 </div>
                 <div className={styles.catalogCardsSection}>
-                    {data.map(item => (
+                    {data?.map(item => (
                         <CatalogCard
                             key={item.direction}
                             content_type={item.direction}

@@ -25,7 +25,7 @@ export default function DesignDevelopmentSwipper() {
 
     return (
 
-        <div className='categoryHighlightsSwippercontainer mb-5'>
+        <div className='categoryHighlightsSwippercontainer'>
 
             {Array.isArray(product) && product.length > 0 && (
                 <div className='categoryHighlightsSwipper'>
