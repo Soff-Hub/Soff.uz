@@ -44,18 +44,14 @@ const Header = () => {
                     <div className="container px-lg-0 pt-lg-2">
                         <div className="header-inner">
                             <HeaderLogo mode={'dark'} />
-                            <div className="d-flex gap-5">
-                                <div className="header__items">
-                                    <HeaderAIIcon/>
-                                    <MenuCategoriesDropdown />
-                                </div>
-                                <HeaderActions isDark={true} />
-                            </div>
+                            <HeaderActions isDark={true} />
                         </div>
                     </div>
                 </div>
             </div>
-            <div style={{ height: '80px', width: '100%' }}></div>
+            <div
+                className="bg-white"
+                style={{ height: '80px', width: '100%' }}></div>
         </header>
     );
 };

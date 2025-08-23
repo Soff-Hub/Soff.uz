@@ -1,0 +1,129 @@
+@import '/scss/utils/variable';
+.readyProducts {
+    display: flex;
+    justify-content: center;
+
+    .block {
+        position: relative;
+        bottom: -80px;
+        border-radius: 16px;
+        background: #b5b6b6;
+        width: 75%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 100px 0;
+        margin: 0 auto; // markazga qo‘yish uchun
+
+        .title {
+            font-size: 36px;
+            line-height: 1.2;
+            font-weight: 500;
+            text-align: center;
+            color: $textColorWhite;
+            margin-bottom: 20px;
+
+            @media (max-width: 1200px) {
+                font-size: 48px;
+            }
+
+            @media (max-width: 992px) {
+                font-size: 40px;
+            }
+
+            @media (max-width: 768px) {
+                font-size: 32px;
+            }
+
+            @media (max-width: 576px) {
+                font-size: 24px;
+            }
+        }
+        .title2 {
+            font-size: 36px;
+            line-height: 1.2;
+            font-weight: 400;
+            text-align: center;
+            color: $textColorWhite;
+
+            @media (max-width: 1200px) {
+                font-size: 28px;
+            }
+
+            @media (max-width: 992px) {
+                font-size: 24px;
+            }
+
+            @media (max-width: 768px) {
+                font-size: 18px;
+            }
+
+            @media (max-width: 576px) {
+                font-size: 14px;
+            }
+        }
+
+        .catalogSeeAll {
+            background-color: $textColorWhite;
+            border-radius: 50px;
+            color: $textColor;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            align-self: center;
+            width: fit-content;
+            font-size: 20px;
+            font-weight: 600;
+            padding: 13px 24px;
+            transition: all 0.3s ease;
+
+            &:hover {
+                background: darken($textColorWhite, 5%);
+            }
+
+            @media (max-width: 1200px) {
+                font-size: 18px;
+                padding: 10px 21px;
+            }
+
+            @media (max-width: 992px) {
+                font-size: 16px;
+                padding: 8px 18px;
+            }
+
+            @media (max-width: 768px) {
+                font-size: 14px;
+                padding: 6px 14px;
+                width: 100%; // mobil uchun to‘liq chiqadi
+            }
+
+            @media (max-width: 576px) {
+                font-size: 12px;
+                padding: 5px 11px;
+            }
+        }
+
+        /* Blockning o‘zi uchun responsive */
+        @media (max-width: 1200px) {
+            width: 85%;
+            padding: 80px 0;
+        }
+
+        @media (max-width: 992px) {
+            width: 90%;
+            padding: 60px 0;
+        }
+
+        @media (max-width: 768px) {
+            width: 95%;
+            padding: 40px 0;
+        }
+
+        @media (max-width: 576px) {
+            width: 100%;
+            padding: 20px;
+            bottom: 0px; // pastga siljishini kamaytirish
+        }
+    }
+}

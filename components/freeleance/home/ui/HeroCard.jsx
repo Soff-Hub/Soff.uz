@@ -1,15 +1,20 @@
-import React from 'react'
-import styles from "../styles/HeroCard.module.scss"
+import React from 'react';
+import styles from '../styles/HeroCard.module.scss';
 
-const HeroCard = ({title, img}) => {
+const HeroCard = ({ title, img }) => {
     return (
         <div className={styles.hero_card}>
-            <div className='d-flex justify-content-center'>
-                <img className={styles.card_img} src={img} alt="card_image" />
-            </div>
-            <p className={styles.card_title}>{title}</p>
+            <img
+                className={styles.card_img}
+                src={
+                    img ||
+                    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7Js_bPZeyn0QE7oSrUlpmgI8ckIdYgm5doA&s'
+                }
+                alt="card_image"
+            />
+            <p className={styles.card_title}>{title || 'Dizayn'}</p>
         </div>
-    )
-}
+    );
+};
 
-export default HeroCard
+export default HeroCard;

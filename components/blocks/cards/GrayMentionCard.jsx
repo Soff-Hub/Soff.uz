@@ -1,0 +1,27 @@
+import React from 'react';
+import styles from './GrayMentionCard.module.scss';
+const GrayMentionCard = ({
+    title = '',
+    btn = '',
+    goProducts = () => {},
+    link = '',
+}) => {
+    return (
+        <section className={styles.readyProducts}>
+            <div className={styles.block}>
+                <h1 className={styles.title}>{title}</h1>
+                <a
+                    onClick={goProducts}
+                    href={link}
+                    className={styles.catalogSeeAll}>
+                    {btn}{' '}
+                    <i
+                        style={{ marginLeft: '12px' }}
+                        class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+        </section>
+    );
+};
+
+export default GrayMentionCard;

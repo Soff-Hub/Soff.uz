@@ -1,33 +1,37 @@
+@import '/scss/utils/variable';
 .hero_card {
-    padding: 30px 20px;
+    padding: 16px;
     background: #fff;
-    border-radius: 16px;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.08);
+    border-radius: 25px;
+    box-shadow: 9px 35px 70px -2px rgba(99, 99, 99, 0.118);
     text-align: center;
     cursor: pointer;
     transition: all 0.3s ease;
-
+    width: 295px;
+    height: 314px;
     display: flex;
+    z-index: 10;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    // &:hover {
-    //     border: 2px solid #00A44F;
-    //     transform: translateY(-5px);
-    // }
+    align-items: start; 
+    justify-content: start;
 
     .card_img {
-        width: 80px;
-        height: 80px;
+        width: 150px;
+        height: 150px;
+        height: 235px;
+        place-self: center;
         object-fit: contain;
-        margin-bottom: 16px;
+        border-radius: 10px;
     }
 
     .card_title {
-        font-size: 18px;
+        font-size: 24px;
         font-weight: 600;
-        color: #24282B;
+        width: 100%;
+        color: $textColor;
+        text-align: start;
+        flex: 1;
+        place-content: end;
         margin: 0;
     }
 }

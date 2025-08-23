@@ -25,7 +25,6 @@
     top: 0;
     z-index: 1000;
     background-color: white;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .nprogress {
@@ -55,14 +54,13 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 35px;
+    gap: 20px;
     margin: 14px 0px;
 }
 
 .site-header-actions {
     display: flex;
-    align-items: center;
-    gap: 20px;
+    align-items: center; 
 }
 
 .site-header-searchbar {

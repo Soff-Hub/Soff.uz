@@ -2,12 +2,11 @@ import React, { useEffect } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import { logOut } from '~/store/auth/slice';
-import { Badge, Card } from 'antd';
 import useAuth from '~/hooks/useAuth';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import Router, { useRouter } from 'next/router';
 import { setSavedPrfileData } from '~/store/ecomerce/slice';
-
+import styles from '../../../landingStyles/landingStyles.module.scss';
 const HeaderUserDropdown = props => {
     const dispatch = useDispatch();
     const { accountLinks, user } = useSelector(state => state.auth);
@@ -65,20 +64,17 @@ const HeaderUserDropdown = props => {
 
     // View
     const linksView = accountLinks.map((item, index) => (
-            (
-                <li key={index}>
-                    <Link href={item.url}>
-                        <a>
-                            {' '}
-                            <span>
-                                <i
-                                    className={` text-dark fs-4 me-2  ${item.icon}`}></i>{' '}
-                            </span>{' '}
-                            {item.text}{' '}
-                        </a>
-                    </Link>
-                </li>
-            )
+        <li key={index}>
+            <Link href={item.url}>
+                <a>
+                    {' '}
+                    <span>
+                        <i className={` text-dark fs-4 me-2  ${item.icon}`}></i>{' '}
+                    </span>{' '}
+                    {item.text}{' '}
+                </a>
+            </Link>
+        </li>
     ));
 
     if (isLoggedIn === true) {
@@ -101,7 +97,7 @@ const HeaderUserDropdown = props => {
                             <i
                                 className={`fa-regular fa-user fs-2 me-1 ${color}`}></i>
                         )}
-                        <span className='username_title'>
+                        <span className="username_title">
                             {profile?.email?.slice(
                                 0,
                                 profile?.email.indexOf('@')
@@ -126,23 +122,17 @@ const HeaderUserDropdown = props => {
         );
     } else {
         return (
-            <div className="ps-block--user-header">
-                <div className="ps-block__left">
-                    <i className="icon-user fs-2"></i>
-                </div>
-                <div className="ps-block__right d-flex align-items-center">
-                    <Link
-                        href={
-                            id
-                                ? `/auth/login?id=${id}`
-                                : deal
-                                ? `/auth/login?deal=${deal}`
-                                : '/auth/login'
-                        }>
-                        <a className="fs-3">Kirish</a>
-                    </Link>
-                </div>
-            </div>
+            <a
+                href={
+                    id
+                        ? `/auth/login?id=${id}`
+                        : deal
+                        ? `/auth/login?deal=${deal}`
+                        : '/auth/login'
+                }
+                className={styles.loginEntrance}>
+                Kirish
+            </a>
         );
     }
 };

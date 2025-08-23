@@ -14,11 +14,10 @@ export default function HeroMain() {
                         <h1 className="hero-title">
                             Soff.uz – raqamli xizmatlar bozori!{' '}
                         </h1>
-                        {/* <p className='hero-text'>Malakali mutaxassislar yordamida jamoangizni kengaytiring va biznesingizni rivojlantiring!</p> */}
                     </div>
 
                     <div className="hero-search-form">
-                        <HeroSearchInput /> 
+                        <HeroSearchInput />
 
                         {/* <Select
                                 value={'all'}

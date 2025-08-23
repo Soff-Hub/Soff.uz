@@ -9,9 +9,13 @@ import { useRouter } from 'next/router';
 import { baseUrlUseApi } from '~/repositories/useApi';
 import AISoffiaPresentation from '~/components/elements/AISoffiaPresentation';
 import CategorySearchSection from '~/components/elements/CategorySearchSection';
-import { serialize } from 'cookie';
+import styles from '../../components/blocks/catalogsSection/catalogs.module.scss';
 
-export default function ProductCategoryScreen ({
+import { serialize } from 'cookie';
+import Image from 'next/image';
+import GrayMentionCard from '~/components/blocks/cards/GrayMentionCard';
+
+export default function ProductCategoryScreen({
     productsData,
     fourChildData,
     childCategoryData,
@@ -19,7 +23,7 @@ export default function ProductCategoryScreen ({
     childCategory,
     page,
     search,
-    productsUrl
+    productsUrl,
 }) {
     const router = useRouter();
 
@@ -51,7 +55,7 @@ export default function ProductCategoryScreen ({
                     fullTitle +
                     ' bo‘yicha eng yaxshi raqamli mahsulotlarni Soff.uz da toping. Ishonchli sotuvchilar va sifatli kontent!'
                 }
-                image='/static/img/ilmiy-ishlar-2.png'
+                image="/static/img/ilmiy-ishlar-2.png"
                 keywords={[
                     { name: 'Biznes rejalar' },
                     { name: 'Taqdimotlar' },
@@ -73,11 +77,11 @@ export default function ProductCategoryScreen ({
                     { name: 'Elektron kitoblar' },
                     { name: 'Dasturlash tillari' },
                 ]}
-                author='Soff.uz'
+                author="Soff.uz"
             />
 
-            <div className='ps-page--shop container p-lg-1'>
-                <div className='mb-4'>
+            <div className="ps-page--shop container p-lg-1 my-5">
+                <div className="mb-4">
                     <AISoffiaPresentation />
                 </div>
                 <CategorySearchSection />
@@ -96,11 +100,78 @@ export default function ProductCategoryScreen ({
                     isLoading={false}
                 />
             </div>
+            <div className={styles.catalogSectionBlock}>
+                <div className="container mx-auto px-5">
+                    <section className={styles.howItWorksSection}>
+                        <div className="d-flex justify-content-center my-5">
+                            <Image
+                                width={30}
+                                height={30}
+                                src={'/static/img/star.png'}
+                                alt="starts"
+                            />
+                        </div>
+                        <h2>
+                            Tayyor mahsulotlardan foydalanish qanday ishlaydi?
+                        </h2>
+                        <div className={styles.steps}>
+                            <div className={styles.stepItem}>
+                                <img
+                                    src={'/static/img/catalogMenu.png'}
+                                    alt="starts"
+                                />
+                                <div>
+                                    <h3>Qidiring va tanlang</h3>
+                                    <p>
+                                        Katalogdan yoki qidiruv orqali sizga
+                                        kerakli tayyor mahsulotni toping.
+                                    </p>
+                                </div>
+                            </div>
+                            <div className={styles.stepItem}>
+                                <img
+                                    src={'/static/img/catalogCoin.png'}
+                                    alt="starts"
+                                />
+                                <div>
+                                    <h3>Sotib oling</h3>
+                                    <p>
+                                        Xavfsiz to‘lov tizimi orqali mahsulotni
+                                        sotib oling — narx va shartlar oldindan
+                                        ko‘rinadi.
+                                    </p>
+                                </div>
+                            </div>
+                            <div className={styles.stepItem}>
+                                <img
+                                    src={'/static/img/catalogSecure.png'}
+                                    alt="starts"
+                                />
+                                <div>
+                                    <h3>Yuklab oling va foydalaning</h3>
+                                    <p>
+                                        Mahsulotni darhol yuklab oling va
+                                        ishlatishni boshlang.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <div>
+                        <GrayMentionCard
+                            title="Kerakli mahsulotni topa olmadingizmi? Buyurtma
+                                berishingiz mumkin."
+                            btn="Buyurtmar berish"
+                            link="/orders?direction=scientific_work"
+                        />
+                    </div>
+                </div>
+            </div>
         </PageContainer>
     );
 }
 
-export async function getServerSideProps (context) {
+export async function getServerSideProps(context) {
     const {
         slug,
         page = 1,
@@ -127,7 +198,6 @@ export async function getServerSideProps (context) {
         fetchJson(productsUrl),
         fetchJson(fourChildUrl),
         fetchJson(childCategoryUrl),
-        
     ]);
     return {
         props: {
@@ -138,7 +208,7 @@ export async function getServerSideProps (context) {
             childCategory,
             page,
             search,
-            productsUrl
+            productsUrl,
         },
     };
 }
