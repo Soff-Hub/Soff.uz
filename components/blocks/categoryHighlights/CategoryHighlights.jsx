@@ -11,10 +11,10 @@ export default function CategoryHighlights () {
             <div className='container  p-0'>
                 <div className={`product-list`}>
                     <ScientificResourcesSwipper />
-                    <ModelsAndInteriorDesignSwipper />
+                    {/* <ModelsAndInteriorDesignSwipper />
                     <DesignDevelopmentSwipper />
                     <VideoLessonsSwipper />
-                    <TemplatesSwipper />
+                    <TemplatesSwipper /> */}
                 </div>
             </div>
         </div>

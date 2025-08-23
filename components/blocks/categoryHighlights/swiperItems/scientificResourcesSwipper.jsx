@@ -11,7 +11,7 @@ export default function ScientificResourcesSwipper() {
     useEffect(() => {
         setIsLoading(true);
 
-        fetch(`${baseURL}customer/last-added/?direction=file&limit=6`)
+        fetch(`${baseURL}customer/last-added/?direction=file&limit=12`)
             .then(res => res.json())
             .then(data => {
                 setProducts(data?.results);

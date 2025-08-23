@@ -30,14 +30,21 @@ const steps = [
 
 const InfoSection = () => {
     return (
-        <div className={styles.stepsSection}>
-            {steps.map(step => (
-                <InfoCard
-                    id={step.id}
-                    title={step.title}
-                    subtitle={step.description}
-                />
-            ))}
+        <div>
+            <div className={styles.titleWrapper}>
+                <img src="/static/img/HomePage/icon.png" alt="" />
+                <h3>Xizmatlardan foydalanish juda oson</h3>
+                <h1>SOFF.UZ</h1>
+            </div>
+            <div className={styles.stepsSection}>
+                {steps.map(step => (
+                    <InfoCard
+                        id={step.id}
+                        title={step.title}
+                        subtitle={step.description}
+                    />
+                ))}
+            </div>
         </div>
     );
 };
