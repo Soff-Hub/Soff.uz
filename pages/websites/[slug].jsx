@@ -8,6 +8,7 @@ import WebsitesProductsByCategory from '~/components/partials/category/WebsitesP
 import WebsitesCategoriesFilterSecion from '~/components/elements/WebsitesCategoriesFilterSecion';
 import ProductsByCategory from '~/components/partials/category/ProductsByCategory';
 import CategorySearchSection from '~/components/elements/CategorySearchSection';
+import ProductFilterSection from '~/components/elements/product-filter-section/ProductFilterSection';
 
 export default function Websites ({
     productsData,
@@ -36,15 +37,19 @@ export default function Websites ({
                 title={`${'Veb saytlar'}`}
                 description={`Biz siz qidirayotgan mahsulotlarni Soff.uz saytimizning kategoriyasida topdik`}
             />
-
+            <ProductFilterSection
+                child={childCategoryData.results}
+                parent={fourChildData.results}
+                path={"/websites/"}
+            />
             <div className='ps-page--shop container my-5'>
-                <CategorySearchSection />
+                {/* <CategorySearchSection />
                 <WebsitesCategoriesFilterSecion
                     breacrumb={fourChildData}
                     count={productsData?.count}
                     isLoading={false}
                     childCategoryData={childCategoryData}
-                />
+                /> */}
                 <ProductsByCategory
                     data={productsData}
                     page={page}

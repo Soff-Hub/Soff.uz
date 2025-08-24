@@ -7,6 +7,7 @@ import Meta from '~/components/shared/headers/Meta';
 import ProductsByModelsAndDesignCategory from '~/components/partials/category/ProductsByModelsAndDesignCategory';
 import { baseUrlUseApi } from '~/repositories/useApi';
 import CategorySearchSection from '~/components/elements/CategorySearchSection';
+import ProductFilterSection from '~/components/elements/product-filter-section/ProductFilterSection';
 
 export default function ModelsAndInteriorDesign ({
     productsData,
@@ -32,15 +33,21 @@ export default function ModelsAndInteriorDesign ({
                 title={`${'3D moddellar va Interier dizaynlar'}`}
                 description={`3D moddellar va Interier dizaynlar kategoriyasi: Taqdimotlar Tayyor shablonlar Kurs ishlari Diplom ishlari Referatlar Mustaqil ishlar Labaratoriya Ishlari Dissertatsiya ishlari Testlar O'quv qo'llanmalar Dars ishlanmalar Tarqatma materiallar Amaliy ishlar Blankalar Ijodiy Ishlar Loyihalar Plakatlar Maqola Ixtiro patenti Namunaviy hujjatlar Statistika Elektron kitoblar Dasturlash tillari `}
             />
+
+            <ProductFilterSection
+                child={childCategoryData.results}
+                parent={fourChildData.results}
+                path={"/3d-models-and-interior-designs/"}
+            />
             <div className='ps-page--shop my-5 container p-xl-0 p-l-0'>
-                <CategorySearchSection />
+                {/* <CategorySearchSection />
                 <ThreeDCategoriesFilterSecion
                     breacrumb={fourChildData}
                     count={productsData?.count}
                     isLoading={false}
                     childCategoryData={childCategoryData}
                     route='/3d-models-and-interior-designs'
-                />
+                /> */}
                 <ProductsByModelsAndDesignCategory
                     data={productsData}
                     page={page}

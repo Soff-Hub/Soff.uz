@@ -10,6 +10,7 @@ import ProductsByVideoLessons from '~/components/partials/category/ProductsByVid
 import ProductsByCategory from '~/components/partials/category/ProductsByCategory';
 import ProductsByDesignDevelopment from '~/components/partials/category/ProductsByDesignDevelopment';
 import CategorySearchSection from '~/components/elements/CategorySearchSection';
+import ProductFilterSection from '~/components/elements/product-filter-section/ProductFilterSection';
 
 export default function VideoLessons ({
     productsData,
@@ -40,15 +41,19 @@ export default function VideoLessons ({
                 title={`${'Video darsliklar'}`}
                 description={`Biz siz qidirayotgan mahsulotlarni Soff.uz saytimizning kategoriyasida topdik`}
             />
-
+            <ProductFilterSection
+                child={childCategoryData.results}
+                parent={fourChildData.results}
+                path={"/video-lessons/"}
+            />
             <div className='ps-page--shop container my-5 p-l-0 p-xl-0'>
-                <CategorySearchSection />
+                {/* <CategorySearchSection />
                 <VideoLessonsFilterSection
                     breacrumb={fourChildData}
                     count={productsData?.count}
                     isLoading={false}
                     childCategoryData={childCategoryData}
-                />
+                /> */}
                 <ProductsByDesignDevelopment
                     data={productsData}
                     page={page}
