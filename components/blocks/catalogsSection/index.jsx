@@ -56,7 +56,7 @@ const CatalogsSection = () => {
                         </div>
                     </div>
                     <div className="d-flex flex-fill h-100 align-items-center justify-content-end">
-                        <button className={styles.catalogSeeAll}>
+                        <button onClick={goProducts} className={styles.catalogSeeAll}>
                             Barcha mahsulotlar{' '}
                             <i style={{marginLeft: "12px"}} class="fa-solid fa-arrow-right"></i>
                         </button>

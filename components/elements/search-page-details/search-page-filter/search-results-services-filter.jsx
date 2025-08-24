@@ -13,6 +13,7 @@ export default function SearchResultsProductsFilter({ parentData, childData, tot
         { label: "Grafik Dizayn va Shablonlar", value: "dizayn" },
         { label: "Veb Dasturlash va IT Xizmatlari", value: "web" },
         { label: "Hujjatlar va Professional Shablonlar", value: "document" },
+        {label: "Barchasi", value: ""}
     ];
 
     const handleChange = (newQuery) => {
@@ -69,23 +70,25 @@ export default function SearchResultsProductsFilter({ parentData, childData, tot
                     </div>
 
                     {/* Parent category select */}
-                    <div className="col-6 col-lg-3">
-                        <Select
-                            style={{ width: '100%' }}
-                            placeholder="Katta kategoriya"
-                            value={service_parent ? Number(service_parent) : undefined}
-                            allowClear
-                            disabled={!parentData?.length} // 🔑 parentData bo‘sh bo‘lsa disable
-                            onClear={() => handleChange({ service_parent: '', category_id: '' })}
-                            onChange={(value) =>
-                                handleChange({ service_parent: value, category_id: '' })
-                            }
-                            options={(parentData || [])?.map((cat) => ({
-                                value: cat.id,
-                                label: cat.title,
-                            }))}
-                        />
-                    </div>
+                    {direction &&
+                        <div className="col-6 col-lg-3">
+                            <Select
+                                style={{ width: '100%' }}
+                                placeholder="Katta kategoriya"
+                                value={service_parent ? Number(service_parent) : undefined}
+                                allowClear
+                                disabled={!parentData?.length} // 🔑 parentData bo‘sh bo‘lsa disable
+                                onClear={() => handleChange({ service_parent: '', category_id: '' })}
+                                onChange={(value) =>
+                                    handleChange({ service_parent: value, category_id: '' })
+                                }
+                                options={(parentData || [])?.map((cat) => ({
+                                    value: cat.id,
+                                    label: cat.title,
+                                }))}
+                            />
+                        </div>
+                    }
 
                     {/* Child category select */}
                     {service_parent && childData?.length > 0 && (

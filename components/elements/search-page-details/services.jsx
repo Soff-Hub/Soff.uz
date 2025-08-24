@@ -10,9 +10,9 @@ import LastOpenedCard from '~/components/freeleance/home/ui/LastOpenedCard';
 export default function Search_Results_Services({ data, isLoading, childData, parentData, lastProducts }) {
     const router = useRouter();
 
-    const limit = 10; // 🔑 har bir sahifada nechta xizmat chiqishini belgilash
+    const limit = 10; 
     const offset = Number(router.query.offset || 0);
-    const currentPage = Math.floor(offset / limit) + 1; // jory sahifa hisoblanadi
+    const currentPage = Math.floor(offset / limit) + 1; 
 
     const showResults = Array.isArray(data?.items) && data?.items?.length > 0;
 
@@ -45,20 +45,11 @@ export default function Search_Results_Services({ data, isLoading, childData, pa
                             data?.items?.map((item, index) => (
                                 <div key={index}>
                                     <ServiceCard product={item} />
-                                    {/* <LastOpenedCard
-                                        title={item.title}
-                                        image={item.poster}
-                                        author={item.user.full_name}
-                                        price={item.price}
-                                        slug={item.slug}
-                                        userImage={item.user.photo_url}
-                                    /> */}
                                 </div>
                             ))
                         )}
                     </div>
 
-                    {/* ✅ Pagination */}
                     {showResults && (
                         <Pagination
                             className='mt-3'
@@ -78,7 +69,6 @@ export default function Search_Results_Services({ data, isLoading, childData, pa
                     {!showResults && <Search_Results_NotFound />}
                 </div>
 
-                {/* Right side last products */}
                 <div className='forAdds p-5'>
                     {lastProducts?.results &&
                         <h3
