@@ -190,7 +190,7 @@ export async function getServerSideProps(context) {
         category = '',
         parentCategory = '',
         order_by = '',
-        direction = 'scientific_work',
+        direction = '',
         limit = 20,
         offset = 0,
         category_id = "",
@@ -199,7 +199,7 @@ export async function getServerSideProps(context) {
 
     const servicesQuery = new URLSearchParams({
         ...(category_id && { category_id }),
-        ...(direction && { direction }),
+        ...(direction && {direction}),
         limit,
         offset,
     });
@@ -219,7 +219,7 @@ export async function getServerSideProps(context) {
     const searchUrl = `${baseUrlUseApi}customer/same-google-search/?page=${page}&search=${keyword}&type=${type}&category=${category}&order_by=${order_by}`;
     const lastProductsUrl = `${baseURL}customer/last-added?limit=10`
     const servicesUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/customer?${servicesQuery.toString()}&search=${keyword}`
-    const serviceParentUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/categories/?direction=${direction}`
+    const serviceParentUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/categories/?direction=${direction || ""}`
     const serviceChildUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/categories/?parent_id=${service_parent}`
     const sellersUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/users/sellers?limit=${limit}&offset=${offset}&search=${keyword}`
 

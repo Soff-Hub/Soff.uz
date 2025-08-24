@@ -27,7 +27,7 @@ const Hero = () => {
             } else if (type === "mutaxasislar") {
                 push(`/search-page?keyword=${search}&tab=3`);
             } else {
-                push(`/search-page?keyword=${search}&tab=2&direction=scientific_work`);
+                push(`/search-page?keyword=${search}&tab=2`);
             }
         }, 500); // 0.5s ichida yozmasa qidiruv
 
