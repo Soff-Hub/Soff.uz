@@ -18,22 +18,27 @@ const Hero = () => {
     const [search, setSearch] = useState('');
     const { isMobile } = useResponsive();
 
-    // searchni debounce bilan ishlatamiz
-    useEffect(() => {
+    useEffect(() => {   
         if (search.trim().length === 0) return;
 
         const timeout = setTimeout(() => {
             if (type === 'mahsulotlar') {
-                push(
-                    `/search-page?keyword=${search}&type=all&tab=products&page=1`
-                );
+                push(`/search-page?keyword=${search}&tab=1&page=1`);
+            } else if (type === "mutaxasislar") {
+                push(`/search-page?keyword=${search}&tab=3`);
             } else {
-                push(`/orders/?direction=scientific_work&search=${search}`);
+                push(`/search-page?keyword=${search}&tab=2&direction=scientific_work`);
             }
         }, 500); // 0.5s ichida yozmasa qidiruv
 
         return () => clearTimeout(timeout); // cleanup
     }, [search, type, push]);
+
+    const placeholders = {
+        mahsulotlar: "Qanday mahsulot izlamoqdasiz?",
+        xizmatlar: "Qanday xizmat kerak?",
+        mutaxasislar: "Qaysi freelancer kerak?",
+    };
 
     return (
         <div className={styles.heroMainBlock} gutter={32}>
@@ -66,16 +71,21 @@ const Hero = () => {
                             }>
                             <i className="fa-solid fa-briefcase"></i> Xizmatlar
                         </span>
+                        <span
+                            onClick={() => setType('mutaxasislar')}
+                            className={
+                                type == 'mutaxasislar'
+                                    ? styles.activeHeroBtn
+                                    : styles.heroBtn
+                            }>
+                            <i class="fa-solid fa-users"></i> Mutaxasislar
+                        </span>
                     </div>
 
                     <div className={styles.searchBox}>
                         <input
                             type="text"
-                            placeholder={
-                                type === 'mahsulotlar'
-                                    ? 'Qanday mahsulot izlamoqdasiz?'
-                                    : 'Qanday xizmat kerak?'
-                            }
+                            placeholder={placeholders[type]}
                             className={styles.input}
                             value={search}
                             onChange={e => setSearch(e.target.value)}

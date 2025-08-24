@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { use, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Head from 'next/head';
@@ -21,12 +21,17 @@ const Search_Results = ({
     service,
     serviceChild,
     serviceParent,
-    sellers
+    sellers,
 }) => {
     const inputEl = useRef(null);
     const router = useRouter();
     const [searchTerm, setSearchTerm] = useState(keyword || '');
     const debouncedSearchTerm = useDebounce(searchTerm, 1000);
+    const { query } = useRouter()
+
+
+
+
 
     useEffect(() => {
         if (
@@ -80,7 +85,7 @@ const Search_Results = ({
 
     const tabItems = [
         {
-            key: 1,
+            key: "1",
             label: "Mahsulotlar",
             children: <Search_Results_Products
                 childData={fourChildData}
@@ -93,7 +98,7 @@ const Search_Results = ({
             />
         },
         {
-            key: 2,
+            key: "2",
             label: "Xizmatlar",
             children: <Search_Results_Services
                 childData={serviceChild}
@@ -103,7 +108,7 @@ const Search_Results = ({
             />
         },
         {
-            key: 3,
+            key: "3",
             label: "Mutahasislar",
             children: <Search_Results_Specialists
                 data={sellers}
@@ -168,7 +173,11 @@ const Search_Results = ({
             {/* Search Results */}
 
             <div className='container '>
-                <Tabs className='order_tabs' defaultActiveKey='1' items={tabItems} />
+                <Tabs
+                    className='order_tabs'
+                    defaultActiveKey={String(query?.tab)}
+                    items={tabItems}
+                />
             </div>
         </div>
     );
@@ -189,7 +198,7 @@ export async function getServerSideProps(context) {
         limit = 20,
         offset = 0,
         category_id = "",
-        service_parent = ""
+        service_parent = "",
     } = context.query;
 
     const servicesQuery = new URLSearchParams({
@@ -244,7 +253,7 @@ export async function getServerSideProps(context) {
             service,
             serviceParent,
             serviceChild,
-            sellers
+            sellers,
         },
     };
 }
