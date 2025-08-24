@@ -66,7 +66,7 @@ export default function HeaderNotifications({ color }) {
                 <Link href={`/account/notification`}>
                     <Badge count={notificationsCount} color='#00a44f'>
                         <a className="header__extra fs-1" style={{ cursor: 'pointer' }}>
-                            <i className={`fa-regular fa-bell ${color}`}></i>
+                            <i style={{marginRight: "10px"}} className={`fa-regular fa-bell ${color}`}></i>
                         </a>
                     </Badge>
                 </Link>
