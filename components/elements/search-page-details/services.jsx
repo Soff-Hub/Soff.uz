@@ -1,15 +1,28 @@
 import React from 'react';
 import Search_Results_Services_filter from './search-page-filter/search-results-services-filter';
-import SearchResultsServices_Card from './search-page-card/searchResultsServices_Card';
 import { Pagination, Skeleton } from 'antd';
 import Search_Results_NotFound from './notFound';
+import ServiceCard from '~/components/freeleance/services/ServiceCard';
+import { useRouter } from 'next/router';
+import LastAddedProductCard from './search-page-card/lastAddedProductCard';
 
-export default function Search_Results_Services({ data, page, total, isLoading, childData, parentData }) {
-    const showResults = !isLoading && Array.isArray(data) && data?.length > 0;
+export default function Search_Results_Services({ data, isLoading, childData, parentData, lastProducts }) {
+    const router = useRouter();
+
+    const limit = 10; // 🔑 har bir sahifada nechta xizmat chiqishini belgilash
+    const offset = Number(router.query.offset || 0); 
+    const currentPage = Math.floor(offset / limit) + 1; // jory sahifa hisoblanadi
+
+    const showResults = Array.isArray(data?.items) && data?.items?.length > 0;
+
     return (
         <div className='Search_Results_Services'>
             <div className='mb-5'>
-                <Search_Results_Services_filter total={total} parentData={parentData} childData={childData} count={data} />
+                <Search_Results_Services_filter 
+                    total={data?.total_service} 
+                    parentData={parentData} 
+                    childData={childData} 
+                />
             </div>
             <div className='Search_Results_Services_product'>
                 <div>
@@ -26,52 +39,55 @@ export default function Search_Results_Services({ data, page, total, isLoading, 
                                         />
                                     ))}
                             </>
-                        )}{showResults && (
-                            data?.map((item, index) => (
+                        )}
+                        {showResults && (
+                            data?.items?.map((item, index) => (
                                 <div key={index}>
-                                    <SearchResultsServices_Card
-                                        product={item}
-                                    />
+                                    <ServiceCard product={item} />
                                 </div>
                             ))
                         )}
                     </div>
+
+                    {/* ✅ Pagination */}
                     {showResults && (
                         <Pagination
                             className='mt-3'
-                            current={page}
-                            pageSize={10}
-                            total={total}
+                            pageSize={limit}
+                            current={currentPage}
+                            total={data?.total_service}
                             onChange={(newPage) => {
+                                const newOffset = (newPage - 1) * limit;
                                 router.push({
                                     pathname: router.pathname,
-                                    query: { ...router.query, page: newPage },
+                                    query: { ...router.query, offset: newOffset, limit },
                                 });
                             }}
                         />
                     )}
+
                     {!showResults && <Search_Results_NotFound />}
                 </div>
-                <div className='forAdds'></div>
+
+                {/* Right side last products */}
+                <div className='forAdds p-5'>
+                    {lastProducts?.results &&
+                        <h3
+                            style={{
+                                fontSize: '20px',
+                                fontWeight: 400,
+                            }}
+                            className='similar_title'>
+                            So'ngi yuklangan mahsulotlar
+                        </h3>
+                    }
+                    {lastProducts?.results?.map((p, i) =>
+                        <div className='mb-4' key={i}>
+                            <LastAddedProductCard product={p} />
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     );
 }
-
-
-// featured items
-
-{/* <button className='forMoreBox'>
-    Ko‘proq ko‘rish
-    <svg
-        xmlns='http://www.w3.org/2000/svg'
-        width='18'
-        height='18'
-        viewBox='0 0 18 18'
-        fill='none'>
-        <path
-            d='M11.6243 7.97984L7.86833 4.22389L8.85857 3.23364L14.305 8.68005L8.85857 14.1264L7.86833 13.1361L11.6243 9.38027H3.10156V7.97984H11.6243Z'
-            fill='#312F30'
-        />
-    </svg>
-</button> */}

@@ -114,8 +114,7 @@ export default function SellerInfo({ sellerInfo }) {
                                 Buyurtma bering
                             </p>
                             <p className="SellerInfoSecondCardDescription">
-                                Lorem Ipsum is simply dummy text of the printing
-                                and typesetting industry.
+               
                             </p>
                         </div>
                         <img src="/static/img/ArrowRight.svg" alt="" />
@@ -125,8 +124,7 @@ export default function SellerInfo({ sellerInfo }) {
                                 To’lov qiling
                             </p>
                             <p className="SellerInfoSecondCardDescription">
-                                Lorem Ipsum is simply dummy text of the printing
-                                and typesetting industry.
+                           
                             </p>
                         </div>
                         <img src="/static/img/ArrowRight.svg" alt="" />
@@ -137,8 +135,7 @@ export default function SellerInfo({ sellerInfo }) {
                                 Yuklab oling
                             </p>
                             <p className="SellerInfoSecondCardDescription">
-                                Lorem Ipsum is simply dummy text of the printing
-                                and typesetting industry.
+           
                             </p>
                         </div>
                     </div>

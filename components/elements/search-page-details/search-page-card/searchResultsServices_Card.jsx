@@ -48,7 +48,7 @@ export default function SearchResultsServices_Card ({product}) {
                     {product.title}
                 </p>
                 <p className='Search_Results_Services_card_price'>
-                    {product.packages[0]?.price} so'm
+                    {product?.price} so'm
                 </p>
             </div>
         </div>
