@@ -34,11 +34,7 @@ const Search_Results = ({
 
 
     useEffect(() => {
-        if (
-            debouncedSearchTerm &&
-            debouncedSearchTerm.length >= 1 &&
-            debouncedSearchTerm !== String(keyword || '')
-        ) {
+        if (debouncedSearchTerm !== String(keyword || '')) {
             router.push({
                 pathname: router.pathname,
                 query: {

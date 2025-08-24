@@ -37,7 +37,7 @@ const Hero = () => {
     const placeholders = {
         mahsulotlar: "Qanday mahsulot izlamoqdasiz?",
         xizmatlar: "Qanday xizmat kerak?",
-        mutaxasislar: "Qaysi freelancer kerak?",
+        mutaxasislar: "Qanday mutaxasis kerak?",
     };
 
     return (
