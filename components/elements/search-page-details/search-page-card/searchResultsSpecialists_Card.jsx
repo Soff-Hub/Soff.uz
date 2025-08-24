@@ -11,7 +11,7 @@ export default function SearchResultsSpecialists_Card({ data }) {
         }} className='Search_Results_Specialists_Card'>
             <img
                 className='Search_Results_Specialists_Card_img'
-                src={data.photo_url}
+                src={data.photo_url || '/static/img/ozodbek.png'}
                 alt=''
             />
             <div className='Search_Results_Specialists_Card_status_box'>

@@ -1,7 +1,5 @@
-// pages/search-results.js
 import React, { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
-import { Spin } from 'antd';
 import Link from 'next/link';
 import Head from 'next/head';
 import NextImageCard from '~/components/nextImagecard';
@@ -9,6 +7,9 @@ import Search_Results_Products from '~/components/elements/search-page-details/p
 import { baseUrlUseApi } from '~/repositories/useApi';
 import useDebounce from '~/hooks/useDebounce';
 import { baseURL } from '~/repositories/api';
+import { Tabs } from 'antd';
+import Search_Results_Services from '~/components/elements/search-page-details/services';
+import Search_Results_Specialists from '~/components/elements/search-page-details/specialists';
 
 const Search_Results = ({
     fourChildData,
@@ -16,11 +17,11 @@ const Search_Results = ({
     searchData,
     keyword,
     page,
-    type,
-    category,
-    order_by,
-    error,
-    lastProducts
+    lastProducts,
+    service,
+    serviceChild,
+    serviceParent,
+    sellers
 }) => {
     const inputEl = useRef(null);
     const router = useRouter();
@@ -76,6 +77,41 @@ const Search_Results = ({
         </span>
     );
 
+
+    const tabItems = [
+        {
+            key: 1,
+            label: "Mahsulotlar",
+            children: <Search_Results_Products
+                childData={fourChildData}
+                parentData={childCategoryData}
+                data={searchData?.results}
+                page={page}
+                total={searchData?.count}
+                isLoading={false}
+                lastProducts={lastProducts}
+            />
+        },
+        {
+            key: 2,
+            label: "Xizmatlar",
+            children: <Search_Results_Services
+                childData={serviceChild}
+                parentData={serviceParent}
+                data={service}
+                lastProducts={lastProducts}
+            />
+        },
+        {
+            key: 3,
+            label: "Mutahasislar",
+            children: <Search_Results_Specialists
+                data={sellers}
+                lastProducts={lastProducts}
+            />
+        }
+    ]
+
     return (
         <div className='global_search_results'>
             <Head>
@@ -108,7 +144,7 @@ const Search_Results = ({
                             </a>
                         </Link>
                         <div className='ps-form--quick-search'>
-                            <div style={{background: 'white'}} className={keyword === '' ? 'ps-form__input' : 'ps-form__input active_search_input'}>
+                            <div style={{ background: 'white' }} className={keyword === '' ? 'ps-form__input' : 'ps-form__input active_search_input'}>
                                 <input
                                     ref={inputEl}
                                     autoFocus
@@ -130,18 +166,9 @@ const Search_Results = ({
             </nav>
 
             {/* Search Results */}
-            <div className=''>
-                <div className='container my-5'>
-                    <Search_Results_Products
-                        childData={fourChildData}
-                        parentData={childCategoryData}
-                        data={searchData?.results}
-                        page={page}
-                        total={searchData?.count}
-                        isLoading={false}
-                        lastProducts={lastProducts}
-                    />
-                </div>
+
+            <div className='container '>
+                <Tabs className='order_tabs' defaultActiveKey='1' items={tabItems} />
             </div>
         </div>
     );
@@ -157,8 +184,20 @@ export async function getServerSideProps(context) {
         type = 'all',
         category = '',
         parentCategory = '',
-        order_by = ''
+        order_by = '',
+        direction = 'scientific_work',
+        limit = 20,
+        offset = 0,
+        category_id = "",
+        service_parent = ""
     } = context.query;
+
+    const servicesQuery = new URLSearchParams({
+        ...(category_id && { category_id }),
+        ...(direction && { direction }),
+        limit,
+        offset,
+    });
 
     const fetchJson = async url => {
         try {
@@ -174,12 +213,20 @@ export async function getServerSideProps(context) {
     const childCategoryUrl = `${baseUrlUseApi}customer/four-child?direction=${type}&parent__slug=${parentCategory}`;
     const searchUrl = `${baseUrlUseApi}customer/same-google-search/?page=${page}&search=${keyword}&type=${type}&category=${category}&order_by=${order_by}`;
     const lastProductsUrl = `${baseURL}customer/last-added?limit=10`
+    const servicesUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/customer?${servicesQuery.toString()}&search=${keyword}`
+    const serviceParentUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/categories/?direction=${direction}`
+    const serviceChildUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/categories/?parent_id=${service_parent}`
+    const sellersUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/users/sellers?limit=${limit}&offset=${offset}&search=${keyword}`
 
-    const [fourChildData, childCategoryData, searchData, lastProducts] = await Promise.all([
+    const [fourChildData, childCategoryData, searchData, lastProducts, service, serviceParent, serviceChild, sellers] = await Promise.all([
         fetchJson(fourChildUrl),
         fetchJson(childCategoryUrl),
         fetchJson(searchUrl),
-        fetchJson(lastProductsUrl)
+        fetchJson(lastProductsUrl),
+        fetchJson(servicesUrl),
+        fetchJson(serviceParentUrl),
+        fetchJson(serviceChildUrl),
+        fetchJson(sellersUrl)
     ]);
     const searchError = searchData?.error || null;
     return {
@@ -193,7 +240,11 @@ export async function getServerSideProps(context) {
             category,
             order_by,
             error: searchError,
-            lastProducts
+            lastProducts,
+            service,
+            serviceParent,
+            serviceChild,
+            sellers
         },
     };
 }

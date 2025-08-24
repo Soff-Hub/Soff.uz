@@ -4,14 +4,21 @@ import SearchResultsSpecialists_Filter from './search-page-filter/search-results
 import SearchResultsSpecialists_Card from './search-page-card/searchResultsSpecialists_Card';
 import Search_Results_NotFound from './notFound';
 import { useRouter } from 'next/router';
+import LastAddedProductCard from './search-page-card/lastAddedProductCard';
 
-export default function Search_Results_Specialists({ data, isLoading, page, total }) {
-    const showResults = !isLoading && Array.isArray(data?.results) && data?.results?.length > 0;
-    const router = useRouter()
-    
+export default function Search_Results_Specialists({ data, lastProducts }) {
+    const router = useRouter();
+    const isLoading = false;
+
+    const limit = 32; // 🔑 nechta specialist chiqishi
+    const offset = Number(router.query.offset || 0);
+    const currentPage = Math.floor(offset / limit) + 1;
+
+    const showResults = Array.isArray(data?.results) && data?.results?.length > 0;
+
     return (
         <div>
-            <SearchResultsSpecialists_Filter total={total} />
+            <SearchResultsSpecialists_Filter total={data?.count} />
             <div className='Search_Results_Specialists'>
                 <div>
                     <div className='Search_Results_Specialists_Wrap'>
@@ -27,50 +34,55 @@ export default function Search_Results_Specialists({ data, isLoading, page, tota
                                         />
                                     ))}
                             </>
-                        )}{showResults && (
+                        )}
+                        {showResults && (
                             data?.results?.map((item, index) => (
                                 <div key={index}>
-                                    <SearchResultsSpecialists_Card
-                                        data={item}
-                                    />
+                                    <SearchResultsSpecialists_Card data={item} />
                                 </div>
                             ))
                         )}
                     </div>
+
+                    {/* ✅ Pagination */}
                     {showResults && (
                         <Pagination
                             className='mt-3'
-                            current={page}
-                            pageSize={32}
-                            total={total}
+                            pageSize={limit}
+                            current={currentPage}
+                            total={data?.count}
                             onChange={(newPage) => {
+                                const newOffset = (newPage - 1) * limit;
                                 router.push({
                                     pathname: router.pathname,
-                                    query: { ...router.query, page: newPage },
+                                    query: { ...router.query, offset: newOffset, limit },
                                 });
                             }}
                         />
                     )}
+
                     {!showResults && <Search_Results_NotFound />}
                 </div>
-                <div className='forAdds'></div>
+
+                {/* 👉 Oxirgi yuklangan mahsulotlar */}
+                <div className='forAdds p-5'>
+                    {lastProducts?.results &&
+                        <h3
+                            style={{
+                                fontSize: '20px',
+                                fontWeight: 400,
+                            }}
+                            className='similar_title'>
+                            So‘ngi yuklangan mahsulotlar
+                        </h3>
+                    }
+                    {lastProducts?.results?.map((p, i) =>
+                        <div className='mb-4' key={i}>
+                            <LastAddedProductCard product={p} />
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     );
 }
-
-// featured items
-{/* <button className='forMoreBox'>
-    Ko‘proq ko‘rish
-    <svg
-        xmlns='http://www.w3.org/2000/svg'
-        width='18'
-        height='18'
-        viewBox='0 0 18 18'
-        fill='none'>
-        <path
-            d='M11.6243 7.97984L7.86833 4.22389L8.85857 3.23364L14.305 8.68005L8.85857 14.1264L7.86833 13.1361L11.6243 9.38027H3.10156V7.97984H11.6243Z'
-            fill='#312F30'
-        />
-    </svg>
-</button> */}

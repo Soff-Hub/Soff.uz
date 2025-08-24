@@ -23,7 +23,7 @@ const Hero = () => {
         if (search.trim().length === 0) return;
 
         const timeout = setTimeout(() => {
-            if (type === 'm') {
+            if (type === 'mahsulotlar') {
                 push(
                     `/search-page?keyword=${search}&type=all&tab=products&page=1`
                 );
