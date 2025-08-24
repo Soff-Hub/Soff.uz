@@ -5,12 +5,13 @@ import Search_Results_NotFound from './notFound';
 import ServiceCard from '~/components/freeleance/services/ServiceCard';
 import { useRouter } from 'next/router';
 import LastAddedProductCard from './search-page-card/lastAddedProductCard';
+import LastOpenedCard from '~/components/freeleance/home/ui/LastOpenedCard';
 
 export default function Search_Results_Services({ data, isLoading, childData, parentData, lastProducts }) {
     const router = useRouter();
 
     const limit = 10; // 🔑 har bir sahifada nechta xizmat chiqishini belgilash
-    const offset = Number(router.query.offset || 0); 
+    const offset = Number(router.query.offset || 0);
     const currentPage = Math.floor(offset / limit) + 1; // jory sahifa hisoblanadi
 
     const showResults = Array.isArray(data?.items) && data?.items?.length > 0;
@@ -18,10 +19,10 @@ export default function Search_Results_Services({ data, isLoading, childData, pa
     return (
         <div className='Search_Results_Services'>
             <div className='mb-5'>
-                <Search_Results_Services_filter 
-                    total={data?.total_service} 
-                    parentData={parentData} 
-                    childData={childData} 
+                <Search_Results_Services_filter
+                    total={data?.total_service}
+                    parentData={parentData}
+                    childData={childData}
                 />
             </div>
             <div className='Search_Results_Services_product'>
@@ -44,6 +45,14 @@ export default function Search_Results_Services({ data, isLoading, childData, pa
                             data?.items?.map((item, index) => (
                                 <div key={index}>
                                     <ServiceCard product={item} />
+                                    {/* <LastOpenedCard
+                                        title={item.title}
+                                        image={item.poster}
+                                        author={item.user.full_name}
+                                        price={item.price}
+                                        slug={item.slug}
+                                        userImage={item.user.photo_url}
+                                    /> */}
                                 </div>
                             ))
                         )}
