@@ -9,6 +9,7 @@ import ProductsByCategory from '~/components/partials/category/ProductsByCategor
 import ProductsByDesignDevelopment from '~/components/partials/category/ProductsByDesignDevelopment';
 import ScientificResourcesFilterSection from '~/components/elements/DesignDevelopmentsFilterSection';
 import CategorySearchSection from '~/components/elements/CategorySearchSection';
+import ProductFilterSection from '~/components/elements/product-filter-section/ProductFilterSection';
 
 export default function DesignDevelopments ({
     productsData,
@@ -37,15 +38,19 @@ export default function DesignDevelopments ({
                 title={`${'Dizayn shablonlar'}`}
                 description={`Biz siz qidirayotgan mahsulotlarni Soff.uz saytimizning kategoriyasida topdik`}
             />
-
+            <ProductFilterSection
+                child={childCategoryData.results}
+                parent={fourChildData.results}
+                path={"/design-developments/"}
+            />
             <div className='ps-page--shop container my-5 p-xl-0 p-l-0'>
-                <CategorySearchSection />
+                {/* <CategorySearchSection />
                 <ScientificResourcesFilterSection
                     breacrumb={fourChildData}
                     count={productsData?.count}
                     isLoading={false}
                     childCategoryData={childCategoryData}
-                />
+                /> */}
                 <ProductsByDesignDevelopment
                     data={productsData}
                     page={page}

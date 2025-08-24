@@ -14,6 +14,7 @@ import styles from '../../components/blocks/catalogsSection/catalogs.module.scss
 import { serialize } from 'cookie';
 import Image from 'next/image';
 import GrayMentionCard from '~/components/blocks/cards/GrayMentionCard';
+import ProductFilterSection from '~/components/elements/product-filter-section/ProductFilterSection';
 
 export default function ProductCategoryScreen({
     productsData,
@@ -80,17 +81,22 @@ export default function ProductCategoryScreen({
                 author="Soff.uz"
             />
 
+            <ProductFilterSection
+                child={childCategoryData.results}
+                parent={fourChildData.results}
+                path={"/scientific-resources/"}
+            />
             <div className="ps-page--shop container p-lg-1 my-5">
-                <div className="mb-4">
+                {/* <div className="mb-4">
                     <AISoffiaPresentation />
-                </div>
-                <CategorySearchSection />
-                <ScientificResourcesFilterSection
+                    </div> */}
+                {/* <CategorySearchSection /> */}
+                {/* <ScientificResourcesFilterSection
                     breacrumb={fourChildData}
                     count={productsData?.count}
                     isLoading={false}
                     childCategoryData={childCategoryData}
-                />
+                    /> */}
                 <ProductsByCategory
                     data={productsData}
                     page={page}

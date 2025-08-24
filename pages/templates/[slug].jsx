@@ -10,6 +10,7 @@ import FooterComponents from '~/components/blocks/footer/FooterComponents';
 import TemplatesFilterSection from '~/components/elements/TemplatesFilterSection';
 import ProductsByCategory from '~/components/partials/category/ProductsByCategory';
 import CategorySearchSection from '~/components/elements/CategorySearchSection';
+import ProductFilterSection from '~/components/elements/product-filter-section/ProductFilterSection';
 
 export default function Templates ({
     productsData,
@@ -38,15 +39,19 @@ export default function Templates ({
                 title={`${'Tayyor shablonlar'}`}
                 description={`Biz siz qidirayotgan mahsulotlarni Soff.uz saytimizning kategoriyasida topdik`}
             />
-
+            <ProductFilterSection
+                child={childCategoryData.results}
+                parent={fourChildData.results}
+                path={"/templates/"}
+            />
             <div className='ps-page--shop container my-5 p-xl-0 p-l-0'>
-                <CategorySearchSection />
+                {/* <CategorySearchSection />
                 <TemplatesFilterSection
                     breacrumb={fourChildData}
                     count={productsData?.count}
                     isLoading={false}
                     childCategoryData={childCategoryData}
-                />
+                /> */}
                 <ProductsByCategory
                     data={productsData}
                     page={page}
