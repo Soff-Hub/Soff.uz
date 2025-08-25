@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import RedesignProduct from '~/components/elements/products/Redesign/Redesign-Product';
+import ServiceIsUnavailable from '../seller-profile/ServiceIsUnavailable';
 
 export default function ScientificResources ({ data, setCategoryValue }) {
     const [showAll, setShowAll] = useState(false);
@@ -8,14 +9,13 @@ export default function ScientificResources ({ data, setCategoryValue }) {
     const visibleItems = showAll ? allItems : allItems.slice(0, 5);
 
     const handleShowMore = () => {
-        // Bu yerda kategoriya bo‘yicha API ga qayta so‘rov yuboriladi
         setCategoryValue('file');
         setShowAll(true);
     };
 
     return (
         <div className='sellerpage'>
-            {allItems.length > 0 && (
+            {allItems.length > 0 ? (
                 <>
                     <div className='sellerpageTitleBox'>
                         <p className='sellerpageTitle'>Ilmiy ishlar</p>
@@ -35,6 +35,8 @@ export default function ScientificResources ({ data, setCategoryValue }) {
                         </div>
                     )}
                 </>
+            ): (
+                <ServiceIsUnavailable/>
             )}
         </div>
     );

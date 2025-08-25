@@ -1,14 +1,15 @@
 import React from 'react';
 import ModelAndDesignProduct from '~/components/elements/products/ModelAndDesignProduct';
+import ServiceIsUnavailable from '../seller-profile/ServiceIsUnavailable';
 
-export default function ModelAndDesign (product) {
+export default function ModelAndDesign(product) {
     const data = product?.data?.['3d'];
 
     return (
         <div className='sellerpage'>
             {product && (
                 <>
-                    {data?.length > 0 && (
+                    {data?.length > 0 ? (
                         <div className='sellerpageTitleBox'>
                             <p className='sellerpageTitle'>
                                 3D modellar va interier dizaynlar
@@ -27,6 +28,8 @@ export default function ModelAndDesign (product) {
                                 />
                             </svg>
                         </div>
+                    ) : (
+                        <ServiceIsUnavailable />
                     )}
                     <div className='scientificResourcesWrap'>
                         {data?.map((item, index) => (
@@ -37,11 +40,11 @@ export default function ModelAndDesign (product) {
                     </div>
                 </>
             )}
-            {product?.length > 8 && (
+            {/* {product?.length > 8 && (
                 <div className='showMoreBox'>
                     <p className='showMore'>Yana ko’rsatish</p>
                 </div>
-            )}
+            )} */}
         </div>
     );
 }

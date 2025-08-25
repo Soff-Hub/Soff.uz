@@ -11,11 +11,11 @@ import { baseURL } from '~/repositories/api';
 export default function SellerProduct ({ pid }) {
     const [product, setProduct] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
-    const [categoryValue, setCategoryValue] = useState(''); // default: all
-    const [selectedOption, setSelectedOption] = useState(null);
+    const [categoryValue, setCategoryValue] = useState('file');
+    const [selectedOption, setSelectedOption] = useState("file");
 
     const menuItems = [
-        { title: 'Barchasi', path: '' },
+        // { title: 'Barchasi', path: '' },
         { title: 'Ilmiy ishlar', path: 'file' },
         { title: '3D moddellar va Interier dizaynlar', path: '3d' },
         { title: 'Dizayn shablonlari', path: 'design' },
@@ -164,7 +164,7 @@ export default function SellerProduct ({ pid }) {
                         ))}
             </div>
 
-            <div>{renderComponent()}</div>
+            <div>{renderComponent(selectedOption)}</div>
         </div>
     );
 }

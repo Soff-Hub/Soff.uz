@@ -1,14 +1,15 @@
 import React from 'react';
 import WebsitesProduct from '~/components/elements/products/WebsitesProduct';
+import ServiceIsUnavailable from '../seller-profile/ServiceIsUnavailable';
 
-export default function WebSites (product) {
+export default function WebSites(product) {
     const data = product?.data?.website;
 
     return (
         <div className='sellerpage'>
             {product && (
                 <>
-                    {data?.length > 0 && (
+                    {data?.length > 0 ? (
                         <div className='sellerpageTitleBox'>
                             <p className='sellerpageTitle'>Veb saytlar</p>
                             <svg
@@ -25,6 +26,8 @@ export default function WebSites (product) {
                                 />
                             </svg>
                         </div>
+                    ) : (
+                        <ServiceIsUnavailable />
                     )}
                     <div className='WebSitesCardWrap'>
                         {data?.map((item, index) => (

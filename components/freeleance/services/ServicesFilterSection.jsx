@@ -1,101 +1,76 @@
-import { Input, Select, Space } from 'antd';
-import { SearchOutlined } from '@ant-design/icons';
+import { Select } from 'antd';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import styles from './ServiceFilterSection.module.scss';
+import { DeleteOutlined, DownOutlined, SearchOutlined } from '@ant-design/icons';
+
+const { Option } = Select;
+
+const directions = [
+    { label: 'Ilmiy ishlar', value: 'scientific_work' },
+    { label: '3D Dizayn va Vizualizatsiya', value: 'three_d' },
+    { label: 'Grafik Dizayn va Shablonlar', value: 'dizayn' },
+    { label: 'Veb Dasturlash va IT Xizmatlari', value: 'web' },
+    { label: 'Hujjatlar va Professional Shablonlar', value: 'document' },
+    { label: "Barchasi", value: "" }
+];
+
 const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
     const router = useRouter();
     const { query } = router;
 
     const [searchValue, setSearchValue] = useState(query.search || '');
-    const [selectedParentCategory, setSelectedParentCategory] = useState(
-        query.parent_category_id || ''
-    );
+    const [selectedDirection, setSelectedDirection] = useState(query.direction || '');
+    const [selectedParentCategory, setSelectedParentCategory] = useState(query.parent_category_id || '');
+    const [selectedChildCategory, setSelectedChildCategory] = useState(query.category_id || '');
 
-    const updateQuery = (key, value) => {
-        // Avval query object nusxasini olamiz
-        const newQuery = { ...router.query };
-
-        if (key === 'direction') {
-            // Faqat direction qoladi
-            router.push(
-                {
-                    pathname: router.pathname,
-                    query: { direction: value },
-                },
-                undefined,
-                { shallow: false }
-            );
-            return;
-        }
-
-        if (key === 'parent_category_id') {
-            // faqat direction + parent_category_id qoldiramiz
-            const q = {
-                direction: newQuery.direction,
-                parent_category_id: value,
-            };
-            router.push({ pathname: router.pathname, query: q }, undefined, {
-                shallow: false,
-            });
-            return;
-        }
-
-        if (key === 'category_id') {
-            // faqat category_id yangilanadi
-            const q = {
-                ...newQuery,
-                category_id: value,
-            };
-            router.push({ pathname: router.pathname, query: q }, undefined, {
-                shallow: false,
-            });
-            return;
-        }
-
-        // default fallback (boshqa keylar uchun)
-        if (value) {
-            newQuery[key] = value;
-        } else {
-            delete newQuery[key];
-        }
-
+    const updateQuery = (newQuery) => {
         router.push(
-            {
-                pathname: router.pathname,
-                query: newQuery,
-            },
+            { pathname: router.pathname, query: newQuery },
             undefined,
             { shallow: false }
         );
     };
 
-    // Debounce search
     useEffect(() => {
         const delay = setTimeout(() => {
-            updateQuery('search', searchValue);
-        }, 1000);
-
+            updateQuery({
+                ...router.query,
+                search: searchValue || undefined,
+                direction: selectedDirection || undefined,
+                parent_category_id: selectedParentCategory || undefined,
+                category_id: selectedChildCategory || undefined,
+            });
+        }, 800);
         return () => clearTimeout(delay);
-    }, [searchValue]);
+    }, [searchValue, selectedDirection, selectedParentCategory, selectedChildCategory]);
 
-    // Parent category select o'zgarganda URL update qilish
-    const onParentCategoryChange = val => {
-        setSelectedParentCategory(val);
-        updateQuery('parent_category_id', val);
+    const updateDirection = (value) => {
+        setSelectedDirection(value);
+        setSelectedParentCategory('');
+        setSelectedChildCategory('');
     };
 
-    // Direction qismini o'zgartirish
-    const updateDirection = value => {
-        updateQuery('direction', value);
+    const onParentCategoryChange = (value) => {
+        setSelectedParentCategory(value);
+        setSelectedChildCategory('');
+    };
+
+    const onChildCategoryChange = (value) => {
+        setSelectedChildCategory(value);
+    };
+
+    const clearFilters = () => {
+        setSearchValue('');
+        setSelectedDirection('');
         setSelectedParentCategory('');
+        setSelectedChildCategory('');
+        updateQuery({});
     };
 
     const bannerTitle = {
-        scientific_work:
-            'Ilmiy maqolalar, tadqiqotlar va akademik ishlar uchun materiallar',
-        three_d:
-            '3D modellashtirish, animatsiya va vizualizatsiya bo‘yicha kreativ yechimlar',
+        scientific_work: 'Ilmiy maqolalar, tadqiqotlar va akademik ishlar uchun materiallar',
+        three_d: '3D modellashtirish, animatsiya va vizualizatsiya bo‘yicha kreativ yechimlar',
         dizayn: 'Grafik dizayn, brending, logotip va banner shablonlari',
         web: 'Veb dasturlash, mobil ilovalar va IT xizmatlari',
         document: 'Rasmiy hujjatlar va biznes shablonlari',
@@ -105,100 +80,66 @@ const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
         <div className="container">
             <div className={styles.headlineWrapper}>
                 <h1 className={styles.headline}>
-                    {bannerTitle[query.direction] || 'Barcha xizmatlar'}
+                    {bannerTitle[selectedDirection] || 'Barcha xizmatlar'}
                 </h1>
             </div>
             <div className={styles.serviceFilterTab}>
-                {/* Chap taraf - mahsulot soni */}
-                <p className={styles.servicesCount}>
-                    {count || 0} ta xizmatlar
-                </p>
+                <div className={styles.filterRow}>
+                    <div className={styles.searchBox}>
+                        <input
+                            value={searchValue}
+                            onChange={(e) => setSearchValue(e.target.value)}
+                            placeholder="Xizmatlarni izlash"
+                            className={styles.input}
+                            type="text"
+                        />
+                        <span className={styles.searchIcon}>
+                            <SearchOutlined />
+                        </span>
+                    </div>
 
-                {/* O'ng taraf - filterlar */}
-                <Space wrap>
-                    {/* Search */}
-                    <Input
-                        style={{ height: '32px' }}
-                        prefix={
-                            <SearchOutlined
-                                style={{ color: '#aaa', margin: '0px 4px' }}
-                            />
-                        }
-                        placeholder="Xizmatlarni izlash"
-                        value={searchValue}
-                        onChange={e => setSearchValue(e.target.value)}
-                        allowClear
-                    />
-
-                    {/* Kategoriya (existing) */}
-                    {selectedParentCategory && (
+                    <div className={styles.filterSelects}>
                         <Select
-                            placeholder="Kategoriya"
-                            style={{ minWidth: '150px' }}
-                            value={query.category_id || undefined}
-                            onChange={val => updateQuery('category_id', val)}
-                            allowClear>
-                            {childCategory &&
-                                childCategory.map(cat => (
-                                    <Select.Option
-                                        key={cat.id}
-                                        value={String(cat.id)}>
-                                        {cat.title}
-                                    </Select.Option>
-                                ))}
-                        </Select>
-                    )}
-
-                    {/* Yangi parent category select */}
-                    <Select
-                        placeholder="Muvjud xizmatlar"
-                        style={{ minWidth: '180px' }}
-                        value={selectedParentCategory || undefined}
-                        onChange={onParentCategoryChange}
-                        allowClear>
-                        {parentCategory &&
-                            parentCategory.map(cat => (
-                                <Select.Option
-                                    key={cat.id}
-                                    value={String(cat.id)}>
-                                    {cat.title}
-                                </Select.Option>
+                            className={styles.filter_select}
+                            suffixIcon={<DownOutlined style={{ color: "green" }} />}
+                            placeholder="Yo'nalish"
+                            value={selectedDirection || undefined}
+                            onChange={updateDirection}
+                        >
+                            {directions.map((d) => (
+                                <Option key={d.value} value={d.value}>{d.label}</Option>
                             ))}
-                    </Select>
-                    <Select
-                        placeholder="Yo'nalishlar"
-                        style={{ minWidth: '180px' }}
-                        value={router.query.direction || ''}
-                        onChange={updateDirection}
-                        allowClear>
-                        {[
-                            {
-                                label: 'Ilmiy ishlar',
-                                value: 'scientific_work',
-                            },
-                            {
-                                label: '3D Dizayn va Vizualizatsiya',
-                                value: 'three_d',
-                            },
-                            {
-                                label: 'Grafik Dizayn va Shablonlar',
-                                value: 'dizayn',
-                            },
-                            {
-                                label: 'Veb Dasturlash va IT Xizmatlari',
-                                value: 'web',
-                            },
-                            {
-                                label: 'Hujjatlar va Professional Shablonlar',
-                                value: 'document',
-                            },
-                        ].map(cat => (
-                            <Select.Option key={cat.value} value={cat.value}>
-                                {cat.label}
-                            </Select.Option>
-                        ))}
-                    </Select>
-                </Space>
+                        </Select>
+
+                        <Select
+                            className={styles.filter_select}
+                            suffixIcon={<DownOutlined style={{ color: "green" }} />}
+                            placeholder="Kategoriya"
+                            value={selectedParentCategory || undefined}
+                            onChange={onParentCategoryChange}
+                        >
+                            {parentCategory?.map((cat) => (
+                                <Option key={cat.id} value={String(cat.id)}>{cat.title}</Option>
+                            ))}
+                        </Select>
+
+                        <Select
+                            className={styles.filter_select}
+                            suffixIcon={<DownOutlined style={{ color: "green" }} />}
+                            placeholder="Sub kategoriya"
+                            value={selectedChildCategory || undefined}
+                            onChange={onChildCategoryChange}
+                        >
+                            {childCategory?.map((cat) => (
+                                <Option key={cat.id} value={String(cat.id)}>{cat.title}</Option>
+                            ))}
+                        </Select>
+
+                        <button onClick={clearFilters}>
+                            <DeleteOutlined />
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     );
