@@ -8,12 +8,12 @@ import Loader from '~/components/shared/loader';
 import { useRouter } from 'next/router';
 
 const title = {
-    '3d': '3D moddellar',
-    website: 'Veb saytlar',
-    design: 'Dizayn shablonlari',
-    video: 'Video darsliklar',
+    '3d': '3D Moddellar',
+    website: 'Veb Saytlar',
+    design: 'Grafik Dizaynlar',
+    video: 'Video Darslar',
     template: 'Shablonlar',
-    file: 'Ilmiy ishlar',
+    file: 'Ilmiy Ishlar',
 };
 const CatalogsSection = () => {
     const router = useRouter();

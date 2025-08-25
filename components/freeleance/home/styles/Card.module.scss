@@ -10,14 +10,17 @@
     &::after {
         content: '';
         top: 0;
-        right: -120px;
-        top: -170px;
+        right: -130px;
+        top: -180px;
         position: absolute;
         width: 200px;
         height: 200px;
         background-color: #fff;
         transform: rotate(45deg);
         border: 1px solid #ccc;
+    }
+    @media (max-width: 768px) {
+        height: 400px;
     }
 
     .title {
@@ -26,10 +29,14 @@
         color: #111;
         padding-right: 20px;
         margin-bottom: 39px;
+        @media (max-width: 768px) {
+           margin-bottom: 19px;
+        }
     }
 
     .image {
         width: 100%;
+        border: 1px solid #ccc;
         background: #e0e0e0;
         background-size: cover;
         background-position: center;

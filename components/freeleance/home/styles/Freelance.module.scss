@@ -126,16 +126,14 @@
 
 .serviceCardSection {
     display: grid;
-    grid-template-columns: 1fr; /* <= 480px: 1 ta */
+    grid-template-columns: repeat(4, 1fr); /* <= 480px: 1 ta */
     gap: 10px;
-
-    @media (min-width: 481px) {
-        grid-template-columns: repeat(2, 1fr); /* 481–991px: 2 ta */
+    @media (max-width: 856px) {
+        grid-template-columns: repeat(2, 1fr); /* >= 992px: 4 ta */
         gap: 10px;
     }
 
-    @media (min-width: 992px) {
-        grid-template-columns: repeat(4, 1fr); /* >= 992px: 4 ta */
-        gap:10px;
+    @media (max-width: 568px) {
+        gap: 5px;
     }
 }
