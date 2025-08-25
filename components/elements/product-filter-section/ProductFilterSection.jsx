@@ -91,7 +91,7 @@ const ProductFilterSection = ({ child, parent, path }) => {
             </div>
 
             {/* Parent carousel */}
-            <div style={{ position: "relative" }}>
+            <div className={styles.carousel} style={{ position: "relative" }}>
                 {showParentArrow && <LeftOutlined className={`${styles.arrow} ${styles.left}`} onClick={() => scrollLeft(parentRef)} />}
                 <div className={styles.parent} ref={parentRef}>
                     {parent.map(cat => (
@@ -102,7 +102,7 @@ const ProductFilterSection = ({ child, parent, path }) => {
             </div>
 
             {/* Child carousel */}
-            <div style={{ position: "relative" }}>
+            <div className={styles.carousel} style={{ position: "relative" }}>
                 {showChildArrow && <LeftOutlined className={`${styles.arrow} ${styles.left}`} onClick={() => scrollLeft(childRef)} />}
                 {query?.parentCategory &&
                     <div className={styles.child} ref={childRef}>

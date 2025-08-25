@@ -1,34 +1,43 @@
+import { Badge } from 'antd';
 import { useRouter } from 'next/router';
 import React from 'react';
 
 export default function SearchResultsSpecialists_Card({ data }) {
-    const router = useRouter()
+    const router = useRouter();
+
+    // Last active vaqti hozirgi vaqtdan 5 daqiqa ichida bo'lsa "online"
+    const isOnline = () => {
+        if (!data.last_active) return false;
+        const lastActiveDate = new Date(data.last_active);
+        const now = new Date();
+        const diffInMinutes = (now - lastActiveDate) / 1000 / 60;
+        return diffInMinutes <= 5;
+    }
+
     return (
-        <div onClick={() => {
-            router.push({
-                pathname: `_seller/${data?.id}`
-            })
-        }} className='Search_Results_Specialists_Card'>
+        <div
+            onClick={() => router.push({ pathname: `_seller/${data?.soff_seller_id}` })}
+            className='Search_Results_Specialists_Card'
+        >
             <img
                 className='Search_Results_Specialists_Card_img'
-                src={data.photo_url || '/static/img/ozodbek.png'}
-                alt=''
+                src={data.photo_url?.trim() || '/static/img/ozodbek.png'}
+                alt={data.full_name || ''}
             />
+
             <div className='Search_Results_Specialists_Card_status_box'>
-                <img
-                    className='Search_Results_Specialists_Card_status_img'
-                    src={data.statusImg || 'static/img/Ritsar.png'}
-                    alt=''
-                />
                 <p className='Search_Results_Specialists_Card_status'>
-                    {data.status}
+                    {data?.position}
                 </p>
+                {isOnline() && (
+                    <Badge color="green" text="Online" />
+                )}
             </div>
+
             <p className='Search_Results_Specialists_Card_isName'>
                 {data.full_name}
             </p>
             <p className='Search_Results_Specialists_Card_job'>{data.position}</p>
         </div>
-
     );
 }

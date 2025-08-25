@@ -16,7 +16,7 @@ export default function SoffFreelancerPage({
     limit,
 }) {
     const router = useRouter();
-    const currentPage = Math.floor(offset / limit) + 1; // hozirgi page
+    const currentPage = Math.floor(offset / limit) + 1; 
 
     const onChangePage = (page, pageSize) => {
         router.push({
@@ -55,8 +55,7 @@ export default function SoffFreelancerPage({
                 <InfoSection />
                 <div>
                     <GrayMentionCard
-                        title="Izlaganingiz yo’qmi? 
-O'z buyurtmangizni joylashtiring!"
+                        title="Izlaganingiz yo’qmi? O'z buyurtmangizni joylashtiring!"
                         btn="Buyurtmar berish"
                         link="/orders?direction=scientific_work"
                     />
@@ -77,6 +76,18 @@ export async function getServerSideProps(context) {
         offset = 0,
     } = query;
 
+    // 🔹 Helper funksiya
+    const fetchJson = async (url) => {
+        try {
+            const res = await fetch(url);
+            if (!res.ok) return null;
+            return await res.json();
+        } catch {
+            return null;
+        }
+    };
+
+    // 🔹 Query param yig‘ish
     const servicesQuery = new URLSearchParams({
         ...(category_id && { category_id }),
         ...(search && { search }),
@@ -85,34 +96,24 @@ export async function getServerSideProps(context) {
         offset,
     });
 
-    const servicesUrl = `${
-        process.env.NEXT_PUBLIC_FREELEANCE_URL
-    }/api/v1/customer?${servicesQuery.toString()}`;
-    const parentCategoryUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/categories/?direction=${query.direction}`;
-
-    const [servicesRes, parentCategoryRes] = await Promise.all([
-        fetch(servicesUrl),
-        fetch(parentCategoryUrl),
-    ]);
-
-    const servicesData = servicesRes.ok ? await servicesRes.json() : null;
-    const parentCategory = parentCategoryRes.ok
-        ? await parentCategoryRes.json()
+    const servicesUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/customer?${servicesQuery}`;
+    const parentCategoryUrl = direction
+        ? `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/categories/?direction=${direction}`
+        : null;
+    const childCategoryUrl = parent_category_id
+        ? `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/categories?parent_id=${parent_category_id}`
         : null;
 
-    let childCategory = [];
-    if (parent_category_id) {
-        const childCategoryRes = await fetch(
-            `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/categories?parent_id=${parent_category_id}`
-        );
-        childCategory = childCategoryRes.ok
-            ? await childCategoryRes.json()
-            : [];
-    }
+    // 🔹 Parallel fetch
+    const [servicesData, parentCategory, childCategory] = await Promise.all([
+        fetchJson(servicesUrl),
+        parentCategoryUrl ? fetchJson(parentCategoryUrl) : Promise.resolve([]),
+        childCategoryUrl ? fetchJson(childCategoryUrl) : Promise.resolve([]),
+    ]);
 
     return {
         props: {
-            servicesData,
+            servicesData: servicesData || { results: [], total_service: 0 },
             parentCategory,
             childCategory,
             offset: Number(offset),

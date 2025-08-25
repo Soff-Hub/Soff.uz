@@ -1,14 +1,15 @@
 import React from 'react';
 import VideoLessonsProducts from '~/components/elements/products/VideoLessonsProducts';
+import ServiceIsUnavailable from '../seller-profile/ServiceIsUnavailable';
 
-export default function VideoLessons (product) {
+export default function VideoLessons(product) {
     const data = product?.data?.video;
 
     return (
         <div className='sellerpage'>
             {product && (
                 <>
-                    {data?.length > 0 && (
+                    {data?.length > 0 ? (
                         <div className='sellerpageTitleBox'>
                             <p className='sellerpageTitle'>Video darsliklar</p>
                             <svg
@@ -25,6 +26,8 @@ export default function VideoLessons (product) {
                                 />
                             </svg>
                         </div>
+                    ) : (
+                        <ServiceIsUnavailable />
                     )}
 
                     <div className='VideoLessonsCardWrap'>

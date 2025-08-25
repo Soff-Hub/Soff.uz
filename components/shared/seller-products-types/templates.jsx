@@ -1,14 +1,15 @@
 import React from 'react';
 import RedesignProduct from '~/components/elements/products/Redesign/Redesign-Product';
 import VideoLessonsProducts from '~/components/elements/products/VideoLessonsProducts';
+import ServiceIsUnavailable from '../seller-profile/ServiceIsUnavailable';
 
-export default function Templates (product) {
+export default function Templates(product) {
     const data = product?.data?.template;
     return (
         <div className='sellerpage'>
             {product && (
                 <>
-                    {data?.length > 0 && (
+                    {data?.length > 0 ? (
                         <div className='sellerpageTitleBox'>
                             <p className='sellerpageTitle'>Tayyor shablonlar</p>
                             <svg
@@ -25,6 +26,8 @@ export default function Templates (product) {
                                 />
                             </svg>
                         </div>
+                    ) : (
+                        <ServiceIsUnavailable />
                     )}
                     <div className='ScientificResourcesCardWrap'>
                         {data?.map((item, index) => (

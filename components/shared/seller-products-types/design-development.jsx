@@ -1,14 +1,15 @@
 import React from 'react';
 import DesignDevelopmentProducts from '~/components/elements/products/DesignDevelopmentProducts';
+import ServiceIsUnavailable from '../seller-profile/ServiceIsUnavailable';
 
-export default function DesignDevelopment (product) {
+export default function DesignDevelopment(product) {
     const data = product?.data?.design;
 
     return (
         <div className='sellerpage'>
             {product && (
                 <>
-                    {data?.length > 0 && (
+                    {data?.length > 0 ? (
                         <div className='sellerpageTitleBox'>
                             <p className='sellerpageTitle'>
                                 Dizayn shablonlari
@@ -27,6 +28,8 @@ export default function DesignDevelopment (product) {
                                 />
                             </svg>
                         </div>
+                    ) : (
+                        <ServiceIsUnavailable />
                     )}
 
                     <div className='scientificResourcesWrap'>
