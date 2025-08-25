@@ -3,6 +3,7 @@ import { Pagination } from 'antd';
 import { Skeleton } from 'antd';
 import RedesignProduct from '~/components/elements/products/Redesign/Redesign-Product';
 import Link from 'next/link';
+import ProductCard from '~/components/freeleance/home/ui/ProductCard';
 
 export default function ProductsByCategory ({
     data = [],
@@ -12,23 +13,28 @@ export default function ProductsByCategory ({
 }) {
     return (
         <>
-            <div id='products' className='container scientificResourcesWrap'>
-                {isLoading && (
-                    <>
-                        {Array(15)
-                            .fill(0)
-                            .map((d, i) => (
-                                <Skeleton.Image
-                                    key={i}
-                                    active
-                                    className={`scientificResourcesSkeleton`}
-                                />
-                            ))}
-                    </>
-                )}
-                {data?.results?.map((item, index) => (
-                    <RedesignProduct key={index} product={item} />
-                ))}
+            <div id='products' className='container '> 
+                <div className='row row-gap-4'>
+                    {isLoading && (
+                        <>
+                            {Array(15)
+                                .fill(0)
+                                .map((d, i) => (
+                                    <Skeleton.Image
+                                        key={i}
+                                        active
+                                        className={`col-md-3 col-6`}
+                                    />
+                                ))}
+                        </>
+                    )}
+                    {data?.results?.map((item, index) => (
+                        <div key={item.id} className="col-md-3 col-6 p-2">
+                            <ProductCard product={item}/>
+                        </div>
+                        // <RedesignProduct key={index} product={item} />
+                    ))}
+                </div>
             </div>
 
             {data?.results?.length == 0 && (
@@ -73,3 +79,4 @@ export default function ProductsByCategory ({
         </>
     );
 }
+//scientificResourcesWrap

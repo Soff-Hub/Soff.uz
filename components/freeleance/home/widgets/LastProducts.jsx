@@ -42,7 +42,7 @@ const LastProducts = () => {
             </div>
             <div className={styles.productBox}>
                 <h3>📚 Ilmiy ishlar</h3>
-                <div className='row'>
+                <div className='row px-1'>
                     {fileData?.results?.map(p =>
                         <div className='col-md-3 col-6 p-2'>
                             <ProductCard product={p} />
@@ -52,7 +52,7 @@ const LastProducts = () => {
             </div>
             <div className={styles.productBox}>
                 <h3>🏠 3D moddellar</h3>
-                <div className='row'>
+                <div className='row px-1'>
                     {threeDData?.results?.map(p =>
                         <div className='col-md-3 col-6 p-2'>
                             <ProductCard product={p} />
@@ -62,7 +62,7 @@ const LastProducts = () => {
             </div>
             <div className={styles.productBox}>
                 <h3>🎨 Dizayn shablonlari</h3>
-                <div className='row'>
+                <div className='row px-1'>
                     {designData?.results?.map(p =>
                         <div className='col-md-3 col-6 p-2'>
                             <ProductCard product={p} />
@@ -72,7 +72,7 @@ const LastProducts = () => {
             </div>
             <div className={styles.productBox}>
                 <h3>🎥 Video ishlanmalar</h3>
-                <div className='row'>
+                <div className='row px-1'>
                     {videoData?.results?.map(p =>
                         <div className='col-md-3 col-6 p-2'>
                             <ProductCard product={p} />
@@ -82,7 +82,7 @@ const LastProducts = () => {
             </div>
             <div className={styles.productBox}>
                 <h3>📝 Tayyor shablonlar</h3>
-                <div className='row'>
+                <div className='row px-1'>
                     {templateData?.results?.map(p =>
                         <div className='col-md-3 col-6 p-2'>
                             <ProductCard product={p} />
@@ -92,7 +92,7 @@ const LastProducts = () => {
             </div>
             <div className={styles.productBox}>
                 <h3>🌐 Vebsaytlar</h3>
-                <div className='row'>
+                <div className='row px-1'>
                     {websiteData?.results?.map(p =>
                         <div className='col-md-3 col-6 p-2'>
                             <ProductCard product={p} />
