@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import Swiper_Pages from '../swipper/swiper';
 import RedesignProduct from '~/components/elements/products/Redesign/Redesign-Product';
 import { baseURL } from '~/repositories/api';
-import { Col, Row } from 'antd';
-import Image from 'next/image';
 
 export default function ScientificResourcesSwipper() {
     const [products, setProducts] = useState();
@@ -26,35 +24,28 @@ export default function ScientificResourcesSwipper() {
     }, []);
 
     return (
-        <div className="categoryHighlightsSwippercontainer">
+
+        <div className='categoryHighlightsSwippercontainer mb-5'>
             {Array.isArray(products) && products.length > 0 && (
-                <div className="categoryHighlightsSwipper">
-                    <div className="SwipperTitlewrap">
-                        <img
-                            className="m-0 pb-4 pr-2"
-                            src="/static/img/star.svg"
-                            alt="badge"
-                        />
+                <div className='categoryHighlightsSwipper'>
+                    <div className='SwipperTitlewrap'>
                         <a
-                            className="SwipperTitle"
-                            href="/scientific-resources/all">
-                            So’ngi yuklangan mahsulotlar
-                        </a>
+                            className='SwipperTitle'
+                            href='/scientific-resources/all'>
+                            Ilmiy ishlar
+                        </a> 
                     </div>
-                    <div className="sectionLabel">
-                        <Image
-                            src={'/static/img/file.png'}
-                            width={30}
-                            height={30}
-                            alt="file"
-                        />
-                        <h4>Ilmiy ishlar</h4>
-                    </div>
-                    <div className="scientificWorksCards">
-                        {products &&
-                            products?.map((item, index) => (
-                                <RedesignProduct product={item} key={index} />
-                            ))}
+                    <div className='row px-3'>
+                        {products ? (
+                            products?.slice(0, 6).map((item, index) => (
+                                    <div className='col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2 p-1 mb-4'>
+                                        <RedesignProduct
+                                            product={item}
+                                            key={index}
+                                        />
+                                    </div>
+                                ))
+                        ) : null}
                     </div>
                 </div>
             )}

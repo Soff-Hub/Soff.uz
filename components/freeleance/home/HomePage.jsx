@@ -12,6 +12,7 @@ import LastOpened from './_components/LastOpened';
 import Bests from './widgets/Bests';
 import SoffTittle from './widgets/SoffTittle';
 import NavbarMenu from '~/components/freeleance/home/widgets/NavbarMenu';
+import LastProducts from './widgets/LastProducts';
 
 const HomePage = () => {
     return (
@@ -25,9 +26,10 @@ const HomePage = () => {
                 </div>
             </div>
             <CatalogsSection />
-            <HomeCategoryHighlights />
+            {/* <HomeCategoryHighlights /> */}
             <div className="bg-white py-1">
                 <div className="container">
+                    <LastProducts/>
                     <SoffStats />
                     <Bests />
                 </div>
