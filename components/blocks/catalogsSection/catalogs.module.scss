@@ -97,15 +97,9 @@
         // Katta ekranlarda (>=1200px) 3 ta card
         grid-template-columns: repeat(3, 1fr);
 
-        @media (max-width: 1199px) {
-            // O‘rta va kichik ekranlarda 2 ta card
+        @media (max-width: 992px) {
             gap: 10px;
             grid-template-columns: repeat(2, 1fr);
-        }
-
-        @media (max-width: 568px) {
-            // Juda kichik ekranlarda 1 ta card
-            grid-template-columns: 1fr;
         }
     }
 

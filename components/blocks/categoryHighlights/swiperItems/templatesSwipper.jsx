@@ -25,7 +25,7 @@ export default function TemplatesSwipper() {
     }, []);
 
     return (
-        <div className="categoryHighlightsSwippercontainer ">
+        <div className="categoryHighlightsSwippercontainer mb-5 ">
             {Array.isArray(product) && product.length > 0 && (
                 <div className="categoryHighlightsSwipper">
                     <div className="sectionLabel">

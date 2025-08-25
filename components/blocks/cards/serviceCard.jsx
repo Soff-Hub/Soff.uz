@@ -31,9 +31,7 @@ const ServiceCard = ({ content_type = 'file', items = {} }) => {
                         backgroundSize: 'contain',
                         backgroundRepeat: 'no-repeat',
                         backgroundPosition: 'center',
-                    }}>
-                    {/* <img src={'/static/img/not-found.png'} /> */}
-                    &nbsp;
+                    }}> 
                 </div>
                 <div className={styles.cardBlockRight}>
                     <div

@@ -12,6 +12,19 @@
     cursor: pointer;
     display: flex;
     flex-direction: column;
+    @media (max-width: 1199px) {
+        padding: 14px;
+        height: 300px;
+    }
+    @media (max-width: 992px) {
+        padding: 12px;
+        height: 250px;
+    }
+
+    @media (max-width: 576px) {
+        padding: 10px;
+        height: 200px;
+    }
 }
 .cardIcon {
     width: 67px;
@@ -22,18 +35,36 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    @media (max-width: 992px) {
+        width: 34px;
+        height: 34px;
+        padding: 4px;
+    }
 }
 .cardLabel {
     font-weight: 600;
     font-size: 24px;
     color: $textColor;
     margin: 0;
+    @media (max-width: 992px) {
+        font-size: 20px;
+    }
+    @media (max-width: 756px) {
+        font-size: 16px;
+    }
 }
 .cardDesc {
     font-weight: 400;
     font-size: 16px;
     margin: 0;
+    text-align: start;
     color: $subTextColor;
+    @media (max-width: 992px) {
+        font-size: 12px;
+    }
+    @media (max-width: 756px) {
+        font-size: 10px;
+    }
 }
 .cardImage {
     flex: 1;
