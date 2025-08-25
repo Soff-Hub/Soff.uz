@@ -4,8 +4,9 @@ import Swiper_Pages from '../swipper/swiper';
 import RedesignProduct from '~/components/elements/products/Redesign/Redesign-Product';
 import ModelAndDesignProduct from '~/components/elements/products/ModelAndDesignProduct';
 import { baseURL } from '~/repositories/api';
+import Image from 'next/image';
 
-export default function ModelsAndInteriorDesignSwipper () {
+export default function ModelsAndInteriorDesignSwipper() {
     const [product, setProduct] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -26,27 +27,30 @@ export default function ModelsAndInteriorDesignSwipper () {
     }, []);
 
     return (
-        <div className=' categoryHighlightsSwippercontainer'>
+        <div className=" categoryHighlightsSwippercontainer">
             {Array.isArray(product) && product.length > 0 && (
-                <div className='categoryHighlightsSwipper'>
-                    <div className='SwipperTitlewrap'>
+                <div className="categoryHighlightsSwipper">
+                    <div className="sectionLabel">
+                        <Image
+                            src={'/static/img/3d.png'}
+                            width={30}
+                            height={30}
+                            alt="file"
+                        />
                         <a
-                            className='SwipperTitle'
-                            href='/3d-models-and-interior-designs/all'>
-                            3D moddellar va Interier dizaynlar
+                            className="SwipperTitle"
+                            href="/3d-models-and-interior-designs/all">
+                            3D Moddellar
                         </a>
                     </div>
-                    <div className='row px-3'>
-                        {product ? (
-                            product?.slice(0, 4).map((item, index) => (
-                                    <div className='col-6 col-sm-6 col-md-6 col-lg-3 p-2 mb-4'>
-                                        <ModelAndDesignProduct
-                                            product={item}
-                                            key={index}
-                                        />
-                                    </div>
-                                ))
-                        ) : null}
+                    <div className="scientificWorksCards">
+                        {product &&
+                            product.map((item, index) => (
+                                <ModelAndDesignProduct
+                                    product={item}
+                                    key={index}
+                                />
+                            ))}
                     </div>
                 </div>
             )}

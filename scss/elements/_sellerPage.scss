@@ -1,3 +1,5 @@
+@import '/scss/utils/variable';
+
 .color-seller-background {
     background-color: #f1f1f1;
 }
@@ -509,7 +511,7 @@ body.no-scroll {
     .servicesSectionForm {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        gap: 18px; 
+        gap: 18px;
 
         @media (max-width: 1000px) {
             grid-template-columns: repeat(2, 1fr);
@@ -598,9 +600,11 @@ body.no-scroll {
     .servicesSectionWrap {
         display: grid;
 
-        grid-template-columns: repeat(auto-fit,
-                minmax(clamp(5rem, 13.75vw + 2.25rem, 18.75rem), 1fr));
-        gap: 10px;   
+        grid-template-columns: repeat(
+            auto-fit,
+            minmax(clamp(5rem, 13.75vw + 2.25rem, 18.75rem), 1fr)
+        );
+        gap: 10px;
 
         .servicesSectionCardSkeleton {
             height: clamp(5rem, 7.5vw + 3.5rem, 12.5rem);
@@ -653,7 +657,7 @@ body.no-scroll {
             display: flex;
             align-items: center;
             gap: 2px;
-            margin-bottom: 10px; 
+            margin-bottom: 10px;
 
             p {
                 color: #312f30;
@@ -1142,7 +1146,7 @@ body.no-scroll {
         background: none;
     }
 
-    .SellerProductForm { 
+    .SellerProductForm {
         display: flex;
         justify-content: end;
         gap: 18px;
@@ -1408,8 +1412,10 @@ body.no-scroll {
 
     .SellerPortfolioWrap {
         display: grid;
-        grid-template-columns: repeat(auto-fit,
-                minmax(clamp(9rem, 12.5vw + 3.75rem, 18.75rem), 1fr));
+        grid-template-columns: repeat(
+            auto-fit,
+            minmax(clamp(9rem, 12.5vw + 3.75rem, 18.75rem), 1fr)
+        );
         gap: 10px;
         row-gap: 10px;
 
@@ -1655,14 +1661,43 @@ body.no-scroll {
 }
 
 .categoryHighlightsSwippercontainer {
-    width: clamp(18.75rem, 100.858vw - 1.422rem, 165.625rem) !important;
-    overflow: hidden !important;
-
+    margin-top: 40px;
     .categoryHighlightsSwipper {
-
         .categoryHighlightsSwipperWrap {
             display: flex;
             align-items: center;
+        }
+        .sectionLabel {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 15px;
+            h4, a {
+                color: $textColor;
+                font-size: 24px;
+                font-weight: 500;
+                margin: 0;
+            }
+        }
+        .scientificWorksCards {
+            display: grid;
+            grid-template-columns: 1fr; /* <= 480px: 1 ta */
+            gap: 10px;
+
+            @media (min-width: 481px) {
+                grid-template-columns: repeat(2, 1fr); /* 481–991px: 2 ta */
+                gap: 10px;
+            }
+
+            @media (min-width: 768px) {
+                grid-template-columns: repeat(3, 1fr); /* >= 992px: 4 ta */
+                gap: 10px;
+            }
+
+            @media (min-width: 992px) {
+                grid-template-columns: repeat(4, 1fr); /* >= 992px: 4 ta */
+                gap: 10px;
+            }
         }
     }
 }
@@ -2079,7 +2114,6 @@ body.no-scroll {
             position: fixed;
             bottom: center;
             z-index: 10;
-
         }
 
         .ProtfolioModal_wrap_swipper_image {
@@ -2100,8 +2134,7 @@ body.no-scroll {
     }
 }
 
-
-// custom preview card 
+// custom preview card
 .custom-upload .ant-upload-list-picture-card {
     display: flex;
     flex-wrap: wrap;

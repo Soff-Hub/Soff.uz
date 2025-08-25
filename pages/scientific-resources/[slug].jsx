@@ -113,7 +113,7 @@ export default function ProductCategoryScreen({
                             <Image
                                 width={30}
                                 height={30}
-                                src={'/static/img/star.png'}
+                                src={'/static/img/star.svg'}
                                 alt="starts"
                             />
                         </div>

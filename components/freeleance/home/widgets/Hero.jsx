@@ -4,13 +4,9 @@ import styles from '../styles/hero.module.scss';
 import HeroCard from '../ui/HeroCard';
 import { useRouter } from 'next/router';
 import useResponsive from '~/utilities/useResponsive';
-
-const cards = [
-    { title: 'Dizayn', img: '/static/img/HomePage/pen-tool-1.png' },
-    { title: 'Ilmiy ishlar', img: '/static/img/HomePage/Main Photo.png' },
-    { title: 'Dasturlash', img: '/static/img/HomePage/code.png' },
-    { title: '3D modellar', img: '/static/img/HomePage/Cube.png' },
-];
+import { useQuery } from '@tanstack/react-query';
+import { AutoComplete } from 'antd';
+import { api, apiForFreelance } from '~/repositories/api';
 
 const Hero = () => {
     const { push } = useRouter();
@@ -18,30 +14,67 @@ const Hero = () => {
     const [search, setSearch] = useState('');
     const { isMobile } = useResponsive();
 
-    useEffect(() => {   
-        if (search.trim().length === 0) return;
+    const { data } = useQuery({
+        queryKey: ['searchResults'],
+        queryFn: async () => {
+            const [mahsulotlar, serviceUsers] = await Promise.all([
+                api.get('doc-search/'),
+                apiForFreelance.get('customer/search-page'),
+            ]);
 
-        const timeout = setTimeout(() => {
-            if (type === 'mahsulotlar') {
-                push(`/search-page?keyword=${search}&tab=1&page=1`);
-            } else if (type === "mutaxasislar") {
-                push(`/search-page?keyword=${search}&tab=3`);
-            } else {
-                push(`/search-page?keyword=${search}&tab=2`);
-            }
-        }, 500); // 0.5s ichida yozmasa qidiruv
+            return {
+                products: mahsulotlar.data,
+                freelancers: serviceUsers.data.position,
+                services: serviceUsers.data.services,
+            };
+        },
+        cacheTime: 10000,
+        refetchOnMount: true,
+    });
 
-        return () => clearTimeout(timeout); // cleanup
-    }, [search, type, push]);
+    // useEffect(() => {
+    //     if (search.trim().length === 0) return;
+
+    //     const timeout = setTimeout(() => {
+    //         if (type === 'mahsulotlar') {
+    //             push(`/search-page?keyword=${search}&tab=1&page=1`);
+    //         } else if (type === 'mutaxasislar') {
+    //             push(`/search-page?keyword=${search}&tab=3`);
+    //         } else {
+    //             push(`/search-page?keyword=${search}&tab=2`);
+    //         }
+    //     }, 500); // 0.5s ichida yozmasa qidiruv
+
+    //     return () => clearTimeout(timeout); // cleanup
+    // }, []);
 
     const placeholders = {
-        mahsulotlar: "Qanday mahsulot izlamoqdasiz?",
-        xizmatlar: "Qanday xizmat kerak?",
-        mutaxasislar: "Qanday mutaxasis kerak?",
+        mahsulotlar: 'Qanday mahsulot izlamoqdasiz?',
+        xizmatlar: 'Qanday xizmat kerak?',
+        mutaxasislar: 'Qanday mutaxasis kerak?',
     };
+    useEffect(() => {
+        const handleKeyDown = e => {
+            if (e.key === 'Enter' && search !== '') {
+                if (type === 'mahsulotlar') {
+                    push(`/search-page?keyword=${search}&tab=1&page=1`);
+                } else if (type === 'mutaxasislar') {
+                    push(`/search-page?keyword=${search}&tab=3`);
+                } else {
+                    push(`/search-page?keyword=${search}&tab=2`);
+                }
+            }
+        };
 
+        window.addEventListener('keydown', handleKeyDown);
+
+        // cleanup
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [search, type, push]);
     return (
-        <div className={styles.heroMainBlock} gutter={32}>
+        <div className={styles.heroMainBlock}>
             <div className={styles.heroInfoSection}>
                 <h1 className={styles.heroTitle}>
                     Raqamli mahsulotlar va onlayn xizmatlar bozori
@@ -51,7 +84,7 @@ const Hero = () => {
                     raqamli mahsulot yoki xizmatni tez va sifatli taqdim etadi.
                 </p>
                 <div className={styles.heroButtons}>
-                    <div className="d-flex align-items-center gap-3 mb-3">
+                    <div className={styles.heroFilterButtons}>
                         <span
                             onClick={() => setType('mahsulotlar')}
                             className={
@@ -84,10 +117,9 @@ const Hero = () => {
 
                     <div className={styles.searchBox}>
                         <input
-                            type="text"
-                            placeholder={placeholders[type]}
                             className={styles.input}
                             value={search}
+                            placeholder={placeholders[type]}
                             onChange={e => setSearch(e.target.value)}
                         />
                         <span className={styles.searchIcon}>
@@ -100,21 +132,25 @@ const Hero = () => {
                 <div className={styles.cardWrapperOne}>
                     <HeroCard
                         title={'Dizayn'}
-                        img={'/static/img/land-design.png'}
+                        link="/orders?direction=dizayn"
+                        img={'/static/img/land-design.svg'}
                     />
                     <HeroCard
                         title={'Dasturlash'}
-                        img={'/static/img/land-dev.png'}
+                        link={'/orders?direction=web'}
+                        img={'/static/img/land-dev.svg'}
                     />
                 </div>
                 <div className={styles.cardWrapperTwo}>
                     <HeroCard
                         title={'Ilmiy ishlar'}
-                        img={'/static/img/land-file.png'}
+                        link={'/orders?direction=scientific_work'}
+                        img={'/static/img/land-file.svg'}
                     />
                     <HeroCard
                         title={'3D Modellar'}
-                        img={'/static/img/land-3d.png'}
+                        link={'/orders?direction=three_d'}
+                        img={'/static/img/land-3d.svg'}
                     />
                 </div>
             </div>

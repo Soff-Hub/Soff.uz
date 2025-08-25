@@ -6,4 +6,10 @@ export const customBreakPoints = {
   xl: 1200,
   xxl: 1480,
   xxxl: 1920, // Custom breakpoint
+  components: {
+    ActoComplete: {
+      activeBorderColor: '#fff',
+      activeOutlineColor: '#fff'
+    },
+  },
 };

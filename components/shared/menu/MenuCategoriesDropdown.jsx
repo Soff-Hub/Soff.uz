@@ -64,14 +64,6 @@ const items = [
 const MenuCategoriesDropdown = () => {
     return (
         <div className="menu--product-categories">
-            <Dropdown menu={{ items }}>
-                <a onClick={e => e.preventDefault()}>
-                    <Space className={styles.navLink}>
-                        Ko'rib chiqish
-                        <i class="fa-solid fa-angle-down"></i>
-                    </Space>
-                </a>
-            </Dropdown>
             <a
                 className={styles.navLink}
                 href={'https://seller.soff.uz/'}

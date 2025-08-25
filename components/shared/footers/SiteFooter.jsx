@@ -4,36 +4,36 @@ import { Button, Input, Modal } from 'antd';
 import NextImageCard from '~/components/nextImagecard';
 
 const SiteFooter = () => {
-    const [email, setEmail] = useState('')
+    const [email, setEmail] = useState('');
     const contacts = [
         {
-            link: "https://t.me/soff_uz",
-            text: "t.me/soff_uz",
-            icon: "fa-regular fa-paper-plane"
+            link: 'https://t.me/soff_uz',
+            text: 't.me/soff_uz',
+            icon: 'fa-regular fa-paper-plane',
         },
         {
-            link: "tel:+998910086789",
-            text: "+998 (91) 008 67 89",
-            icon: "fa-solid fa-phone"
+            link: 'tel:+998910086789',
+            text: '+998 (91) 008 67 89',
+            icon: 'fa-solid fa-phone',
         },
         {
-            link: "https://yandex.uz/maps/-/CDxfY-1C",
-            text: "8/1 Bunyodkor Avenue, Toshkent shahri",
-            icon: "fa-solid fa-location-dot"
-        }
-    ]
+            link: 'https://yandex.uz/maps/-/CDxfY-1C',
+            text: '8/1 Bunyodkor Avenue, Toshkent shahri',
+            icon: 'fa-solid fa-location-dot',
+        },
+    ];
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
+    const handleSubmit = e => {
+        e.preventDefault();
         Modal.success({
-            title: "Muvaffaqiyatli",
-            content: "Yangiliklarga ubuna bo'ldingiz"
-        })
-        setEmail('')
-    }
+            title: 'Muvaffaqiyatli',
+            content: "Yangiliklarga ubuna bo'ldingiz",
+        });
+        setEmail('');
+    };
 
     return (
-        <div className='site-footer'>
+        <div className="site-footer">
             <div className="container">
                 <div className="row">
                     <div className="col-lg-5 col-sm-12">
@@ -48,29 +48,27 @@ const SiteFooter = () => {
                                     />
                                 </a>
                             </Link>
-                            <p className='fs-3'> - raqamli xizmatlar bozori! </p>
+                            <p className="fs-3">
+                                {' '}
+                                - raqamli xizmatlar bozori!{' '}
+                            </p>
                         </div>
                     </div>
                     <div className="site-footer-right col-lg-7 col-sm-12 ">
-                        {
-                            contacts.map((el, index) => (
-                                <div key={index} className='site-footer-item'>
-                                    <div className="site-footer-icon">
-                                        <i className={el.icon}></i>
-                                    </div>
-                                    <Link href={el.link}>
-                                        <a className="site-footer-text" target='_blank'>
-                                            {el.text}
-                                        </a>
-                                    </Link>
+                        {contacts.map((el, index) => (
+                            <div key={index} className="site-footer-item">
+                                <div className="site-footer-icon">
+                                    <i className={el.icon}></i>
                                 </div>
-                            ))
-                        }
-                        {/* <p className='m-0'>Yangiliklarga obuna bo'lish</p>
-                        <form onSubmit={handleSubmit} className='subscribe-box'>
-                            <Input value={email} placeholder='Email' onChange={e => setEmail(e.target.value)} className='subscribe-input' />
-                            <Button htmlType='submit'>Obuna bo'lish</Button>
-                        </form> */}
+                                <Link href={el.link}>
+                                    <a
+                                        className="site-footer-text"
+                                        target="_blank">
+                                        {el.text}
+                                    </a>
+                                </Link>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>

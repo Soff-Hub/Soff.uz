@@ -1,17 +1,16 @@
 .wrapper {
     text-align: center;
-    height: 60vh;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-
+    padding-top: 81px;
     .subtitle {
         font-weight: 600;
         font-size: 36px;
         line-height: 100%;
         letter-spacing: 0%;
-        color: #FEFEFE;
+        color: #fefefe;
     }
 
     img {
@@ -25,7 +24,7 @@
         font-size: 80px;
         line-height: 100%;
         letter-spacing: 0%;
-        color: #FEFEFE;
+        color: #fefefe;
         margin-bottom: 150px;
     }
 }

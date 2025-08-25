@@ -3,6 +3,7 @@ import Swiper_Pages from '../swipper/swiper';
 import RedesignProduct from '~/components/elements/products/Redesign/Redesign-Product';
 import { baseURL } from '~/repositories/api';
 import { Col, Row } from 'antd';
+import Image from 'next/image';
 
 export default function ScientificResourcesSwipper() {
     const [products, setProducts] = useState();
@@ -11,7 +12,7 @@ export default function ScientificResourcesSwipper() {
     useEffect(() => {
         setIsLoading(true);
 
-        fetch(`${baseURL}customer/last-added/?direction=file&limit=12`)
+        fetch(`${baseURL}customer/last-added/?direction=file&limit=6`)
             .then(res => res.json())
             .then(data => {
                 setProducts(data?.results);
@@ -31,7 +32,7 @@ export default function ScientificResourcesSwipper() {
                     <div className="SwipperTitlewrap">
                         <img
                             className="m-0 pb-4 pr-2"
-                            src="/static/img/HomePage/icon.png"
+                            src="/static/img/star.svg"
                             alt="badge"
                         />
                         <a
@@ -40,18 +41,21 @@ export default function ScientificResourcesSwipper() {
                             So’ngi yuklangan mahsulotlar
                         </a>
                     </div>
-                    <Row gutter={[5,5]}>
-                        {products
-                            ? products?.map((item, index) => (
-                                  <Col xs={24} sm={12} md={12} lg={6} xxl={4}>
-                                      <RedesignProduct
-                                          product={item}
-                                          key={index}
-                                      />
-                                  </Col>
-                              ))
-                            : null}
-                    </Row>
+                    <div className="sectionLabel">
+                        <Image
+                            src={'/static/img/file.png'}
+                            width={30}
+                            height={30}
+                            alt="file"
+                        />
+                        <h4>Ilmiy ishlar</h4>
+                    </div>
+                    <div className="scientificWorksCards">
+                        {products &&
+                            products?.map((item, index) => (
+                                <RedesignProduct product={item} key={index} />
+                            ))}
+                    </div>
                 </div>
             )}
         </div>

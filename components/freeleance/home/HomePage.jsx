@@ -11,6 +11,7 @@ import InfoSection from './_components/InfoSection';
 import LastOpened from './_components/LastOpened';
 import Bests from './widgets/Bests';
 import SoffTittle from './widgets/SoffTittle';
+import NavbarMenu from '~/components/freeleance/home/widgets/NavbarMenu';
 
 const HomePage = () => {
     return (
@@ -31,7 +32,7 @@ const HomePage = () => {
                     <Bests />
                 </div>
             </div>
-            <div style={{ background: "#24282B" }}>
+            <div style={{ background: '#24282B' }}>
                 <div className="container">
                     <SoffTittle />
                 </div>

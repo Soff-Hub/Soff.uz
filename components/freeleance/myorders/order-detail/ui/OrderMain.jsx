@@ -50,7 +50,7 @@ const OrderMain = ({ order }) => {
 
     const onClose = () => {
         setIsOpen(false);
-        queryClient.invalidateQueries(['order']);
+        queryClient.invalidateQueries({ queryKey: ['order'] });
     };
     return (
         <div className="col-lg-9 col-12 mb-5 rounded-2">
@@ -190,7 +190,7 @@ const OrderMain = ({ order }) => {
                                 {`Tugash muddatiga ${days} kun ${hours} soat ${minutes} daqiqa ${seconds} soniya qoldi`}
                             </p>
                         ) : (
-                            <p style={{ marginTop: 8}}>
+                            <p style={{ marginTop: 8 }}>
                                 {`Tugash muddati: ${order?.service?.delivery_days} kun, Buyurtma hali qabul qilinmadi`}
                             </p>
                         )}
@@ -363,9 +363,17 @@ const OrderMain = ({ order }) => {
                                               );
                                               setFeedbackOpen(false);
                                               setRes('');
+                                              queryClient.invalidateQueries({
+                                                  queryKey: ['order'],
+                                              });
                                               setText('');
                                               setRate(undefined);
-                                              setCongratModal(true);
+                                              if (
+                                                  payload.status == 'completed'
+                                              ) {
+                                                  setCongratModal(true);
+                                              }
+                                              console.log('payload', payload);
                                           },
                                           onError: () => {
                                               message.error(
