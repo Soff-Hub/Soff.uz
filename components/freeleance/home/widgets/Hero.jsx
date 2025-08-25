@@ -8,71 +8,80 @@ import { useQuery } from '@tanstack/react-query';
 import { AutoComplete } from 'antd';
 import { api, apiForFreelance } from '~/repositories/api';
 
+const option = {
+    mahsulotlar: [
+        { value: '3D Models Details' },
+        { value: 'UI Kit Figma' },
+        { value: 'React Components Pack' },
+        { value: 'E-commerce Template' },
+        { value: 'Mobile App UI' },
+        { value: 'Illustrations Pack' },
+        { value: 'Business Card Template' },
+        { value: 'Landing Page Design' },
+        { value: 'WordPress Theme' },
+        { value: 'Dashboard Template' },
+    ],
+    xizmatlar: [
+        { value: 'Web Development' },
+        { value: 'Mobile App Development' },
+        { value: 'UI/UX Design' },
+        { value: 'SEO Optimization' },
+        { value: 'Logo Design' },
+        { value: 'Translation Service' },
+        { value: 'Video Editing' },
+        { value: 'Copywriting' },
+        { value: '3D Modeling' },
+        { value: 'Digital Marketing' },
+    ],
+    mutaxasislar: [
+        { value: 'Frontend Developer' },
+        { value: 'Backend Developer' },
+        { value: 'Fullstack Developer' },
+        { value: 'UI/UX Designer' },
+        { value: 'Project Manager' },
+        { value: 'QA Engineer' },
+        { value: 'Data Scientist' },
+        { value: 'DevOps Engineer' },
+        { value: 'Content Writer' },
+        { value: '3D Artist' },
+    ],
+};
+const placeholders = {
+    mahsulotlar: 'Qanday mahsulot izlamoqdasiz?',
+    xizmatlar: 'Qanday xizmat kerak?',
+    mutaxasislar: 'Qanday mutaxasis kerak?',
+};
+
 const Hero = () => {
     const { push } = useRouter();
     const [type, setType] = useState('mahsulotlar');
     const [search, setSearch] = useState('');
+    const [options, setOptions] = useState(option);
+    useState;
     const { isMobile } = useResponsive();
 
-    const { data } = useQuery({
+    const { data, status, isSuccess } = useQuery({
         queryKey: ['searchResults'],
         queryFn: async () => {
-            const [mahsulotlar, serviceUsers] = await Promise.all([
-                api.get('doc-search/'),
-                apiForFreelance.get('customer/search-page'),
-            ]);
+            const mahsulotlar = await api.get('doc-search/'); 
 
             return {
                 products: mahsulotlar.data,
-                freelancers: serviceUsers.data.position,
-                services: serviceUsers.data.services,
             };
         },
+
         cacheTime: 10000,
         refetchOnMount: true,
+        retry: 1,
     });
 
-    // useEffect(() => {
-    //     if (search.trim().length === 0) return;
+    // if (isSuccess && status === 'success') {
+    //     setOptions({
+    //         mahsulotlar: data.products.map(item => ({ value: item })),
+    //     });
+    //     console.log(options);
+    // }
 
-    //     const timeout = setTimeout(() => {
-    //         if (type === 'mahsulotlar') {
-    //             push(`/search-page?keyword=${search}&tab=1&page=1`);
-    //         } else if (type === 'mutaxasislar') {
-    //             push(`/search-page?keyword=${search}&tab=3`);
-    //         } else {
-    //             push(`/search-page?keyword=${search}&tab=2`);
-    //         }
-    //     }, 500); // 0.5s ichida yozmasa qidiruv
-
-    //     return () => clearTimeout(timeout); // cleanup
-    // }, []);
-
-    const placeholders = {
-        mahsulotlar: 'Qanday mahsulot izlamoqdasiz?',
-        xizmatlar: 'Qanday xizmat kerak?',
-        mutaxasislar: 'Qanday mutaxasis kerak?',
-    };
-    useEffect(() => {
-        const handleKeyDown = e => {
-            if (e.key === 'Enter' && search !== '') {
-                if (type === 'mahsulotlar') {
-                    push(`/search-page?keyword=${search}&tab=1&page=1`);
-                } else if (type === 'mutaxasislar') {
-                    push(`/search-page?keyword=${search}&tab=3`);
-                } else {
-                    push(`/search-page?keyword=${search}&tab=2`);
-                }
-            }
-        };
-
-        window.addEventListener('keydown', handleKeyDown);
-
-        // cleanup
-        return () => {
-            window.removeEventListener('keydown', handleKeyDown);
-        };
-    }, [search, type, push]);
     return (
         <div className={styles.heroMainBlock}>
             <div className={styles.heroInfoSection}>
@@ -116,12 +125,17 @@ const Hero = () => {
                     </div>
 
                     <div className={styles.searchBox}>
-                        <input
-                            className={styles.input}
+                        <AutoComplete
                             value={search}
+                            style={{ width: '100%' }}
                             placeholder={placeholders[type]}
                             onChange={e => setSearch(e.target.value)}
-                        />
+                            options={option[type]}>
+                            <input
+                                className={styles.input}
+                                style={{ width: '100%' }}
+                            />
+                        </AutoComplete>
                         <span className={styles.searchIcon}>
                             <SearchOutlined />
                         </span>

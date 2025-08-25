@@ -27,18 +27,8 @@
     }
     .statSection {
         display: grid;
-        grid-template-columns: 1fr; /* <= 480px: 1 ta */
+        grid-template-columns: repeat(2, 1fr); /* <= 480px: 1 ta */
         gap: 10px;
-
-        @media (min-width: 481px) {
-            grid-template-columns: repeat(2, 1fr); /* 481–991px: 2 ta */
-            gap: 10px;
-        }
-
-        @media (min-width: 768px) {
-            grid-template-columns: repeat(3, 1fr); /* >= 992px: 4 ta */
-            gap: 10px;
-        }
 
         @media (min-width: 992px) {
             grid-template-columns: repeat(4, 1fr); /* >= 992px: 4 ta */
