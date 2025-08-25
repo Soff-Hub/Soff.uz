@@ -6,7 +6,6 @@ import HeaderAIIcon from './HeaderActions/HeaderAIIcon';
 import useResponsive from '~/utilities/useResponsive';
 
 export default function HeaderLogo({ mode }) {
-    const { isMobile } = useResponsive();
     return (
         <div className="d-flex gap-5 align-items-center">
             <div
@@ -20,12 +19,6 @@ export default function HeaderLogo({ mode }) {
                     alt="Logo of Soff.uz"
                 />
             </div>
-            {!isMobile && (
-                <>
-                    <HeaderAIIcon />
-                    <MenuCategoriesDropdown />
-                </>
-            )}
         </div>
     );
 }

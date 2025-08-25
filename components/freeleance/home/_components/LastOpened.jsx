@@ -4,30 +4,42 @@ import LastOpenedCard from '../ui/LastOpenedCard';
 import { Col, Row } from 'antd';
 import useLastOpened from '../../chat/api/useLastOpened';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 const LastOpened = () => {
     const { push } = useRouter();
     const { data } = useLastOpened();
-    console.log('data', data);
 
     return (
-        <div className="px-5">
+        <>
             <div className={styles.freelance_section}>
                 <div className={styles.freelance_text}>
-                    <div className={styles.titleWrapper}>
-                        <span>
-                            <h1>So’ngi ochilgan xizmatlar</h1>
-                            <p>Xizmatni tanlang – Buyurtma bering</p>
-                        </span>
+                    <div className="d-flex  gap-2 flex-fill align-items-start">
+                        <div className="d-none d-md-flex ">
+                            <Image
+                                src={'/static/img/star.svg'}
+                                width={30}
+                                height={30}
+                                alt="starts"
+                            />
+                        </div>
+                        <div className={styles.titleWrapper}>
+                            <h1 className={styles.labelWrapperH1}>
+                                So’ngi ochilgan xizmatlar
+                            </h1>
+                            <p className={styles.labelWrapperP}>
+                                Xizmatni tanlang – Buyurtma bering
+                            </p>
+                        </div>
                     </div>
                 </div>
                 <button
                     className={styles.freelance_button}
                     size="large"
-                    onClick={() => push('/orders')}>
+                    onClick={() => push('orders?direction=scientific_work')}>
                     <span>Barcha xizmatlar</span>
 
                     <img
-                        src={'/static/img/arrowfig.png'}
+                        src={'/static/img/arrowwhite.svg'}
                         width={45}
                         height={5}
                         alt="arrow"
@@ -36,22 +48,20 @@ const LastOpened = () => {
             </div>
 
             {/* Cardlar */}
-            <Row className="py-5 justify-content-center" gutter={[15, 15]}>
+            <div className={styles.cardSection}>
                 {data &&
                     data.map(item => (
-                        <Col md={12} xs={24} lg={8} xl={6}>
-                            <LastOpenedCard
-                                title={item.title}
-                                image={item.poster}
-                                author={item.user.full_name}
-                                price={item.price}
-                                slug={item.slug}
-                                userImage={item.user.photo_url}
-                            />
-                        </Col>
+                        <LastOpenedCard
+                            title={item.title}
+                            image={item.poster}
+                            author={item.user.full_name}
+                            price={item.price}
+                            slug={item.slug}
+                            userImage={item.user.photo_url}
+                        />
                     ))}
-            </Row>
-        </div>
+            </div>
+        </>
     );
 };
 

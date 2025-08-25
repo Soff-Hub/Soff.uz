@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Swiper_Pages from '../swipper/swiper';
 import RedesignProduct from '~/components/elements/products/Redesign/Redesign-Product';
 import { baseURL } from '~/repositories/api';
+import Image from 'next/image';
 
 export default function TemplatesSwipper() {
     const [product, setProduct] = useState(null);
@@ -24,28 +25,25 @@ export default function TemplatesSwipper() {
     }, []);
 
     return (
-
-        <div className='categoryHighlightsSwippercontainer '>
+        <div className="categoryHighlightsSwippercontainer ">
             {Array.isArray(product) && product.length > 0 && (
-                <div className='categoryHighlightsSwipper'>
-                    <div className='SwipperTitlewrap'>
-                        <a
-                            className='SwipperTitle'
-                            href='/templates/all'>
+                <div className="categoryHighlightsSwipper">
+                    <div className="sectionLabel">
+                        <Image
+                            src={'/static/img/template.png'}
+                            width={30}
+                            height={30}
+                            alt="file"
+                        />
+                        <a className="" href="/templates/all">
                             Tayyor shablonlar
                         </a>
                     </div>
-                    <div className='row px-3'>
-                        {product ? (
-                            product.slice(0, 6).map((item, index) => (
-                                <div className='col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2 p-1 mb-4'>
-                                    <RedesignProduct
-                                        product={item}
-                                        key={index}
-                                    />
-                                </div>
-                            ))
-                        ) : null}
+                    <div className="scientificWorksCards">
+                        {product &&
+                            product.map((item, index) => (
+                                <RedesignProduct product={item} key={index} />
+                            ))}
                     </div>
                 </div>
             )}

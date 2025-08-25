@@ -1,18 +1,18 @@
 // FreelanceSection.jsx
 import React from 'react';
 import styles from '../styles/Freelance.module.scss';
-import { Col, Row } from 'antd';
 import { useRouter } from 'next/router';
 import ServiceCard from '~/components/blocks/cards/serviceCard';
+import { Image as AntImage } from 'antd';
 
 const items = [
     {
         label: 'Ilmiy va Akademik Xizmatlar',
         content_type: 'file',
         images: {
-            left: '/static/img/land-design.png',
-            rightTop: '/static/img/land-dev.png',
-            rightBot: '/static/img/land-file.png',
+            left: '/static/img/land-design.svg',
+            rightTop: '/static/img/land-dev.svg',
+            rightBot: '/static/img/land-file.svg',
         },
     },
     {
@@ -47,49 +47,51 @@ const items = [
 const FreelanceSection = () => {
     const { push } = useRouter();
     return (
-        <div>
+        <>
             <div className={styles.freelance_section}>
                 <div className={styles.freelance_text}>
-                    <div className={styles.titleWrapper}>
-                        <img
-                            src="/static/img/HomePage/icon.png"
-                            alt="badge"
-                            className={styles.badge}
-                        />
-                        <span>
-                            <h1>Xizmatni tanlang – Buyurtma bering</h1>
+                    <div className="d-flex  gap-2 flex-fill">
+                        <div className="d-none d-md-flex">
+                            <AntImage
+                                src={'/static/img/star.svg'}
+                                width={30}
+                                height={30}
+                                alt="starts"
+                            />
+                        </div>
+                        <div className={styles.titleWrapper}>
+                            <h1 className={styles.labelWrapperH1}>
+                                Xizmatni tanlang – Buyurtma bering
+                            </h1>
 
-                            <p>
+                            <p className={styles.labelWrapperP}>
                                 Tajribali frilanserlar bilan ishlang va sifatli
                                 natijaga erishing.
                             </p>
-                        </span>
+                        </div>
                     </div>
                 </div>
                 <button
                     className={styles.freelance_button}
                     size="large"
-                    onClick={() => push('/orders')}>
-                    <span>Barcha xizmatlar</span>
-
-                    <img
-                        src={'/static/img/arrowfig.png'}
-                        width={45}
-                        height={5}
+                    onClick={() => push('orders?direction=scientific_work')}>
+                    Barcha xizmatlar
+                    <AntImage
+                        src={'/static/img/arrowwhite.svg'}
+                        sizes="15"
                         alt="arrow"
                     />
                 </button>
             </div>
-
-            {/* Cardlar */}
-            <Row className="py-5 justify-content-center" gutter={[16, 16]}>
+            <div className={styles.serviceCardSection}>
                 {items.map(item => (
-                    <Col md={12} xs={24} lg={8} xl={6}>
-                        <ServiceCard content_type="file" items={item.images} />
-                    </Col>
+                    <ServiceCard
+                        content_type={item.content_type}
+                        items={item.images}
+                    />
                 ))}
-            </Row>
-        </div>
+            </div>
+        </>
     );
 };
 

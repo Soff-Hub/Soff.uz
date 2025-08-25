@@ -1,7 +1,6 @@
 import React from 'react';
 import styles from './service.module.scss';
 import { useRouter } from 'next/router';
-import Image from 'next/image';
 
 const title = {
     '3d': '3D Dizayn va Vizualizatsiya',

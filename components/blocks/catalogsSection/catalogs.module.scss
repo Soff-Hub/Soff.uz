@@ -8,88 +8,84 @@
     z-index: 200;
     .catalogHealine {
         display: flex;
-        align-items: start;
+        align-items: end;
 
-        .catalogLabel {
-            font-size: 36px;
-            font-weight: 600;
-            color: #fff;
-            letter-spacing: 2px;
-
-            @media (max-width: 1200px) {
-                font-size: 32px;
-            }
-
-            @media (max-width: 992px) {
-                font-size: 28px;
-            }
-
-            @media (max-width: 768px) {
-                font-size: 24px;
-            }
-
-            @media (max-width: 576px) {
-                font-size: 20px;
-            }
-        }
-
-        @media (max-width: 1080px) {
+        .catalogWrapper {
+            display: flex;
             flex-direction: column;
-        }
+            text-align: start;
+            .catalogLabel {
+                font-size: 36px;
+                font-weight: 600;
+                color: #fff;
+                letter-spacing: 2px;
 
-        .catalogSubLabel {
-            font-size: 24px;
-            font-weight: 400;
-            color: #bbbbbb;
+                @media (max-width: 1200px) {
+                    font-size: 32px;
+                }
 
-            @media (max-width: 1200px) {
-                font-size: 22px;
+                @media (max-width: 992px) {
+                    font-size: 28px;
+                }
+
+                @media (max-width: 768px) {
+                    font-size: 24px;
+                }
+
+                @media (max-width: 576px) {
+                    font-size: 20px;
+                }
             }
 
-            @media (max-width: 992px) {
+            @media (max-width: 1080px) {
+                flex-direction: column;
+            }
+
+            .catalogSubLabel {
                 font-size: 20px;
-            }
+                font-weight: 400;
+                color: #bbbbbb;
 
-            @media (max-width: 768px) {
-                font-size: 18px;
-            }
+                @media (max-width: 1200px) {
+                    font-size: 18px;
+                }
 
-            @media (max-width: 576px) {
-                font-size: 16px;
+                @media (max-width: 992px) {
+                    font-size: 16px;
+                }
+
+                @media (max-width: 768px) {
+                    font-size: 16px;
+                }
+
+                @media (max-width: 576px) {
+                    font-size: 12px;
+                }
             }
         }
 
         .catalogSeeAll {
-            background-color: $color-1st;
+            background: $color-1st !important;
+            color: $textColorWhite !important;
             border-radius: 50px;
-            color: $textColor;
+            font-size: 20px;
+            font-weight: 400;
+            gap: 10px;
+            border: none;
+            justify-content: center;
             display: flex;
             align-items: center;
-            border: none;
-            font-size: 20px;
-            font-weight: 600;
-            padding: 13px 24px;
-
-            @media (max-width: 1200px) {
-                font-size: 18px;
-                padding: 10px 21px;
-                width: 100%;
+            padding: 5px 14px;
+            img {
+                margin-left: 10px;
+                height: 15px;
             }
-
-            @media (max-width: 992px) {
-                font-size: 16px;
-                padding: 8px 18px;
-            }
-
-            @media (max-width: 768px) {
-                font-size: 14px;
-                padding: 6px 14px;
-            }
-
-            @media (max-width: 576px) {
-                font-size: 12px;
-                padding: 5px 11px;
-            }
+        }
+        @media (max-width: 992px) {
+            flex-direction: column;
+            text-align: center;
+            align-items: center;
+            gap: 24px;
         }
     }
 
@@ -103,24 +99,25 @@
 
         @media (max-width: 1199px) {
             // O‘rta va kichik ekranlarda 2 ta card
+            gap: 10px;
             grid-template-columns: repeat(2, 1fr);
         }
 
-        @media (max-width: 767px) {
+        @media (max-width: 568px) {
             // Juda kichik ekranlarda 1 ta card
             grid-template-columns: 1fr;
         }
     }
 
     .howItWorksSection {
-        padding: 60px 20px;
+        padding: 0px 20px;
 
         h2 {
             text-align: center;
             font-size: 28px;
             font-weight: 600;
             color: #fff;
-            margin-bottom: 50px;
+            margin-bottom: 121px;
         }
 
         .steps {
@@ -135,7 +132,7 @@
                 color: #bbbbbb;
                 display: flex;
                 align-items: start;
-                gap: 4px;
+                gap: 15px;
 
                 img {
                     width: 50px;
@@ -147,11 +144,15 @@
                     font-weight: 600;
                     margin-bottom: 10px;
                     color: #fff;
+                    text-align: start;
                 }
 
                 p {
                     font-size: 16px;
                     line-height: 1.5;
+                    text-align: start;
+                    margin-top: 20px;
+                    color: $paragraphColor;
                 }
             }
         }
@@ -186,7 +187,7 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding: 100px 0;
+            padding: 100px 60px;
             margin: 0 auto; // markazga qo‘yish uchun
 
             .title {
@@ -280,24 +281,31 @@
             /* Blockning o‘zi uchun responsive */
             @media (max-width: 1200px) {
                 width: 85%;
-                padding: 80px 0;
+                padding: 60px;
             }
 
             @media (max-width: 992px) {
                 width: 90%;
-                padding: 60px 0;
+                padding: 60px;
+                bottom: -200px;
             }
 
             @media (max-width: 768px) {
                 width: 95%;
-                padding: 40px 0;
+                padding: 40px;
             }
 
             @media (max-width: 576px) {
                 width: 100%;
                 padding: 20px;
-                bottom: 0px; // pastga siljishini kamaytirish
+                bottom: -100px;
             }
         }
+    }
+
+    @media (max-width: 992px) {
+        flex-direction: column;
+        text-align: center;
+        gap: 24px;
     }
 }

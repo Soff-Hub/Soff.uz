@@ -68,9 +68,6 @@
 }
 
 .stepsSection {
-    display: grid;
-    grid-template-columns: repeat(4, 295px);
-    gap: 20px;
     position: relative;
     margin: auto;
     z-index: 5;
@@ -97,23 +94,18 @@
         filter: blur(80px);
         opacity: 0.7;
     }
+    display: grid;
+    grid-template-columns: 1fr; /* <= 480px: 1 ta */
+    gap: 10px;
 
-    // 📱 Responsive
-    @media (max-width: 1200px) {
-        grid-template-columns: repeat(2, 1fr);
+    @media (min-width: 481px) {
+        grid-template-columns: repeat(2, 1fr); /* 481–991px: 2 ta */
+        gap: 10px;
     }
 
-    @media (max-width: 992px) {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-    }
-
-    @media (max-width: 576px) {
-        grid-template-columns: 1fr;
-        gap: 20px;
-        &::after {
-            display: none;
-        }
+    @media (min-width: 992px) {
+        grid-template-columns: repeat(4, 1fr); /* >= 992px: 4 ta */
+        gap: 15px;
     }
 }
 
@@ -123,7 +115,6 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     padding: 20px;
     height: 307px;
-    // cursor: pointer;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -165,13 +156,25 @@
         font-weight: 400;
         color: $subTextColor;
         text-align: center;
+    }
 
-        @media (max-width: 992px) {
-            font-size: 12px;
+    @media (max-width: 1200px) {
+        .title {
+            font-size: 22px;
         }
 
-        @media (max-width: 576px) {
-            font-size: 10px;
+        .subtitle {
+            font-size: 14px;
+        }
+    }
+
+    @media (max-width: 992px) {
+        .title {
+            font-size: 24px;
+        }
+
+        .subtitle {
+            font-size: 16px;
         }
     }
     .two {
@@ -181,6 +184,9 @@
         height: 150px;
         left: -150px;
         top: 120px;
+        @media (max-width: 1200px) {
+            display: none; // kichik ekranlarda margin-top olib tashlanadi
+        }
     }
     .three {
         position: absolute;
@@ -189,6 +195,9 @@
         height: 150px;
         left: -160px;
         top: 50px;
+        @media (max-width: 1200px) {
+            display: none; // kichik ekranlarda margin-top olib tashlanadi
+        }
     }
 
     @media (max-width: 992px) {

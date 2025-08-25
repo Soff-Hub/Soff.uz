@@ -27,25 +27,23 @@ const CatalogsSection = () => {
 
     if (isLoading && !data) return <Loader />;
 
-    const goProducts = () => {
-        router.push('/scientific-resources/all');
-    };
+    const goProducts = () => {};
 
     return (
         <div className={styles.catalogSectionBlock}>
-            <div className="container mx-auto px-5">
+            <div className="container mx-auto">
                 <div className={styles.catalogHealine}>
                     <div className="d-flex gap-2 flex-fill">
                         {' '}
                         <div>
                             <Image
-                                src={'/static/img/star.png'}
+                                src={'/static/img/star.svg'}
                                 width={40}
                                 height={40}
                                 alt="starts"
                             />
                         </div>
-                        <div className="d-flex flex-column">
+                        <div className={styles.catalogWrapper}>
                             <h1 className={styles.catalogLabel}>
                                 Tayyor mahsulotlar katalogi
                             </h1>
@@ -55,12 +53,17 @@ const CatalogsSection = () => {
                             </p>
                         </div>
                     </div>
-                    <div className="d-flex flex-fill h-100 align-items-center justify-content-end">
-                        <button onClick={goProducts} className={styles.catalogSeeAll}>
-                            Barcha mahsulotlar{' '}
-                            <i style={{marginLeft: "12px"}} class="fa-solid fa-arrow-right"></i>
-                        </button>
-                    </div>
+                    <button
+                        onClick={() => router.push('/scientific-resources/all')}
+                        className={styles.catalogSeeAll}>
+                        Barcha mahsulotlar{' '}
+                        <Image
+                            src={'/static/img/arrowwhite.svg'}
+                            width={40}
+                            height={20}
+                            alt="arrow"
+                        />
+                    </button>
                 </div>
                 <div className={styles.catalogCardsSection}>
                     {data?.map(item => (
@@ -78,7 +81,7 @@ const CatalogsSection = () => {
                         <Image
                             width={30}
                             height={30}
-                            src={'/static/img/star.png'}
+                            src={'/static/img/star.svg'}
                             alt="starts"
                         />
                     </div>
@@ -135,7 +138,9 @@ const CatalogsSection = () => {
                             onClick={goProducts}
                             className={styles.catalogSeeAll}>
                             Barcha mahsulotlar{' '}
-                            <i style={{marginLeft: "12px"}} class="fa-solid fa-arrow-right"></i>
+                            <i
+                                style={{ marginLeft: '12px' }}
+                                class="fa-solid fa-arrow-right"></i>
                         </button>
                     </div>
                 </section>

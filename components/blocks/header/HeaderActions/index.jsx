@@ -6,9 +6,12 @@ import MiniCart from '~/components/shared/headers/modules/MiniCart';
 import HeaderNotifications from './HeaderNotifications';
 import HeaderUserDropdown from './HeaderUserDropdown';
 import { Badge } from 'antd';
+import MenuCategoriesDropdown from '~/components/shared/menu/MenuCategoriesDropdown';
+import useResponsive from '~/utilities/useResponsive';
 
 const HeaderActions = ({ auth, isDark }) => {
     const { wishlist } = useWishlist();
+    const { isMobile } = useResponsive();
     const data = useSelector(state => state.ecomerce.cartDataItems);
 
     return (
@@ -19,14 +22,14 @@ const HeaderActions = ({ auth, isDark }) => {
             <HeaderNotifications color={isDark ? 'text-black' : 'text-white'} />
 
             {wishlist?.length > 0 ? (
-                <Link href='/account/wishlist'>
-                    <a className='header__extra'>
-                        <a href='#'>
+                <Link href="/account/wishlist">
+                    <a className="header__extra">
+                        <a href="#">
                             <Badge count={wishlist.length}>
                                 <img
-                                    src='/static/img/heart1.png'
+                                    src="/static/img/heart1.png"
                                     width={'25px'}
-                                    alt=''
+                                    alt=""
                                 />{' '}
                             </Badge>
                         </a>
@@ -37,6 +40,7 @@ const HeaderActions = ({ auth, isDark }) => {
             )}
 
             {data?.length > 0 && <MiniCart />}
+            {!isMobile && <MenuCategoriesDropdown />}
             <HeaderUserDropdown
                 color={isDark ? 'text-black' : 'text-white'}
                 isLoggedIn={auth.isLoggedIn && Boolean(auth.isLoggedIn)}
