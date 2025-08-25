@@ -129,7 +129,7 @@ const Hero = () => {
                             value={search}
                             style={{ width: '100%' }}
                             placeholder={placeholders[type]}
-                            onChange={e => setSearch(e.target.value)}
+                            onChange={val => setSearch(val)}
                             options={option[type]}>
                             <input
                                 className={styles.input}
