@@ -149,7 +149,7 @@ const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
                             ))}
                         </Select>
 
-                        <Select
+                        {/* <Select
                             className={styles.filter_select}
                             suffixIcon={
                                 <DownOutlined style={{ color: 'green' }} />
@@ -162,7 +162,7 @@ const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
                                     {cat.title}
                                 </Option>
                             ))}
-                        </Select>
+                        </Select> */}
 
                         <button onClick={clearFilters}>
                             <DeleteOutlined />
