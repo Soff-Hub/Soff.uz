@@ -47,14 +47,7 @@ export default function VideoLessons ({
                 path={"/video-lessons/"}
             />
             <div className='ps-page--shop container my-5 p-l-0 p-xl-0'>
-                {/* <CategorySearchSection />
-                <VideoLessonsFilterSection
-                    breacrumb={fourChildData}
-                    count={productsData?.count}
-                    isLoading={false}
-                    childCategoryData={childCategoryData}
-                /> */}
-                <ProductsByDesignDevelopment
+                <ProductsByCategory
                     data={productsData}
                     page={page}
                     handlePagination={number => {

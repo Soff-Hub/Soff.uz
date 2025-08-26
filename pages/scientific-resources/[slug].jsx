@@ -87,16 +87,6 @@ export default function ProductCategoryScreen({
                 path={"/scientific-resources/"}
             />
             <div className="ps-page--shop container p-lg-1 my-5">
-                {/* <div className="mb-4">
-                    <AISoffiaPresentation />
-                    </div> */}
-                {/* <CategorySearchSection /> */}
-                {/* <ScientificResourcesFilterSection
-                    breacrumb={fourChildData}
-                    count={productsData?.count}
-                    isLoading={false}
-                    childCategoryData={childCategoryData}
-                    /> */}
                 <ProductsByCategory
                     data={productsData}
                     page={page}

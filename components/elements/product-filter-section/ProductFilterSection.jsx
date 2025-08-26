@@ -70,12 +70,10 @@ const ProductFilterSection = ({ child, parent, path }) => {
     }, [parent])
 
     useEffect(() => {
-        if (debouncedSearch) {
-            push({
-                pathname: `${path}all`,
-                query: {...query, search: debouncedSearch}
-            })
-        }
+        push({
+            pathname: `${path}all`,
+            query: { ...query, search: debouncedSearch }
+        })
     }, [debouncedSearch]);
 
 

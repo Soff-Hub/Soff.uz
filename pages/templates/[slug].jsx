@@ -45,13 +45,6 @@ export default function Templates ({
                 path={"/templates/"}
             />
             <div className='ps-page--shop container my-5 p-xl-0 p-l-0'>
-                {/* <CategorySearchSection />
-                <TemplatesFilterSection
-                    breacrumb={fourChildData}
-                    count={productsData?.count}
-                    isLoading={false}
-                    childCategoryData={childCategoryData}
-                /> */}
                 <ProductsByCategory
                     data={productsData}
                     page={page}

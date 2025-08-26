@@ -8,6 +8,7 @@
     }
 
     .cardHead {
+        position: relative;
         .cardHeadInfo {
             position: absolute;
             top: 10px;
@@ -36,7 +37,7 @@
             .cardActions {
                 display: flex;
                 position: absolute;
-                right: 15px;
+                right: 10px;
                 gap: 4px;
 
                 @media (max-width: 768px) {
