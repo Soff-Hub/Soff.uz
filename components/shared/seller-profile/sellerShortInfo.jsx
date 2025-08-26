@@ -63,7 +63,7 @@ export default function SellerShortInfo({ sellerInfo }) {
                 <div className="d-flex align-items-center gap-3">
                     <i className="fa-solid fa-circle-info fs-2"></i>
                     <p className="m-0">
-                        FreeGrafik dizayn, Veb & UX/UI dizayner, Art direktor
+                        {sellerInfo?.position}
                     </p>
                 </div>
                 <div className="d-flex align-items-center gap-3">
@@ -167,22 +167,23 @@ export default function SellerShortInfo({ sellerInfo }) {
                     </span>
                 </div>
             </div>
-
-            <div className="d-flex flex-column gap-3">
-                <h4
-                    style={{
-                        fontWeight: 500,
-                        fontSize: '16px',
-                        marginBottom: 0,
-                    }}>
-                    Muallif haqida
-                </h4>
-                <p
-                    style={{ fontWeight: 300, fontSize: '13px' }}
-                    className="m-0">
-                    {sellerInfo?.bio}
-                </p>
-            </div>
+            {sellerInfo?.bio && 
+                <div className="d-flex flex-column gap-3">
+                    <h4
+                        style={{
+                            fontWeight: 500,
+                            fontSize: '16px',
+                            marginBottom: 0,
+                        }}>
+                        Muallif haqida
+                    </h4>
+                    <p
+                        style={{ fontWeight: 300, fontSize: '13px' }}
+                        className="m-0">
+                        {sellerInfo?.bio}
+                    </p>
+                </div>
+            }
 
             <div className="d-flex flex-column gap-3">
                 <h4
