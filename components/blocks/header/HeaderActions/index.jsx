@@ -13,7 +13,7 @@ import SideBar from '../SiderBar/sidebar';
 
 const HeaderActions = ({ auth, isDark }) => {
     const { wishlist } = useWishlist();
-    const { isMobile } = useResponsive();
+    const { isMobile, isTablet, si } = useResponsive();
     const data = useSelector(state => state.ecomerce.cartDataItems);
 
     return (
@@ -21,27 +21,29 @@ const HeaderActions = ({ auth, isDark }) => {
             className={`site-header-actions ${
                 isDark ? 'text-black' : 'text-white'
             }`}>
-            {wishlist?.length > 0 ? (
-                <Link href="/account/wishlist">
-                    <a className="header__extra">
-                        <a href="#">
-                            <Badge count={wishlist.length}>
-                                <img
-                                    src="/static/img/heart1.png"
-                                    width={'25px'}
-                                    alt=""
-                                />{' '}
-                            </Badge>
+            {!isMobile && !isTablet &&  <HeaderCatergories />}
+            {!isMobile && !isTablet && <MenuCategoriesDropdown />}
+            <div className="d-flex gap-4">
+                {wishlist?.length > 0 ? (
+                    <Link href="/account/wishlist">
+                        <a className="header__extra">
+                            <a href="#">
+                                <Badge count={wishlist.length}>
+                                    <img
+                                        src="/static/img/heart1.png"
+                                        width={'25px'}
+                                        alt=""
+                                    />{' '}
+                                </Badge>
+                            </a>
                         </a>
-                    </a>
-                </Link>
-            ) : (
-                ''
-            )}
+                    </Link>
+                ) : (
+                    ''
+                )}
 
-            {data?.length > 0 && <MiniCart />}
-            {!isMobile && <HeaderCatergories />}
-            {!isMobile && <MenuCategoriesDropdown />}
+                {data?.length > 0 && <MiniCart />}
+            </div>
             <HeaderNotifications color={isDark ? 'text-black' : 'text-white'} />
             <HeaderUserDropdown
                 color={isDark ? 'text-black' : 'text-white'}
