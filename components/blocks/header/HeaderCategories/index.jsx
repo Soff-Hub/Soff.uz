@@ -65,59 +65,63 @@ const HeaderCatergories = () => {
     const { isMobile, isTablet } = useResponsive();
     return (
         <div className={styles.dropBlock}>
-            <div className={styles.dropBox}>
-                <p className={styles.dropLabel}>
-                    <span className="flex-md-fill"> Mahsulotlar</span>
+            <div>
+                <div className={styles.dropBox}>
+                    <p className={styles.dropLabel}>
+                        <span className="flex-md-fill"> Mahsulotlar</span>
 
-                    <Image
-                        src="/static/svg/arrowdown.svg"
-                        alt="arrow"
-                        width={15}
-                        height={8}
-                    />
-                </p>
-                <ul className={styles.dropSubBox}>
-                    {options.products.map(item => (
-                        <li className={styles.dropSubBoxItem}>
-                            <Image
-                                src={item.icon}
-                                alt="direction"
-                                width={25}
-                                height={25}
-                            />
-                            <Link href={item.link}>{item.label}</Link>
-                        </li>
-                    ))}
-                </ul>
+                        <Image
+                            src="/static/svg/arrowdown.svg"
+                            alt="arrow"
+                            width={15}
+                            height={8}
+                        />
+                    </p>
+                    <ul className={styles.dropSubBox}>
+                        {options.products.map(item => (
+                            <li className={styles.dropSubBoxItem}>
+                                <Image
+                                    src={item.icon}
+                                    alt="direction"
+                                    width={25}
+                                    height={25}
+                                />
+                                <Link href={item.link}>{item.label}</Link>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
             </div>
 
-            <div className={styles.dropBox}>
-                <p className={styles.dropLabel}>
-                    <span className="flex-md-fill">Buyurtma berish</span>{' '}
-                    <Image
-                        src="/static/svg/arrowdown.svg"
-                        alt="arrow"
-                        width={15}
-                        height={8}
-                    />
-                </p>
-                <ul className={styles.dropSubBox}>
-                    {options.tempates.map(item => (
-                        <li className={styles.dropSubBoxItem}>
-                            <img
-                                src={item.icon}
-                                alt="direction"
-                                style={{
-                                    color: '#534534',
-                                    width: '25px',
-                                    height: '25px',
-                                }}
-                            />
-                            <Link href={item.link}>{item.label}</Link>
-                        </li>
-                    ))}
-                </ul>
-            </div>
+            {!isMobile && (
+                <div className={styles.dropBox}>
+                    <p className={styles.dropLabel}>
+                        <span className="flex-fill">Buyurtma berish</span>{' '}
+                        <Image
+                            src="/static/svg/arrowdown.svg"
+                            alt="arrow"
+                            width={15}
+                            height={8}
+                        />
+                    </p>
+                    <ul className={styles.dropSubBox}>
+                        {options.tempates.map(item => (
+                            <li className={styles.dropSubBoxItem}>
+                                <img
+                                    src={item.icon}
+                                    alt="direction"
+                                    style={{
+                                        color: '#534534',
+                                        width: '25px',
+                                        height: '25px',
+                                    }}
+                                />
+                                <Link href={item.link}>{item.label}</Link>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            )}
         </div>
     );
 };
