@@ -27,27 +27,36 @@
         transition: all 1s;
         position: absolute;
         background: #fff;
-        align-items: center;
+        align-items: start;
         padding: 20px 0px;
         border: 1px solid $paragraphColor;
         top: 100%;
         left: -20px !important;
-        transition: all .5s;
-
+        transition: all 0.5s;
+        max-height: 400px;
+        overflow-x: hidden;
+        .detailsTitle {
+            padding-left: 20px;
+            font-weight: 500;
+            font-size: 16px;
+            border: 2px solid transparent;
+        }
         .details {
             display: flex;
             flex-direction: column;
-            gap: 5px;
             width: 300px;
             padding: 0;
+            list-style: none;
+            overflow-y: auto;
+            flex: 1;
             .detail {
                 color: $grayColor;
-                font-size: 16px;
+                font-size: 14px !important;
                 font-weight: 400;
                 text-align: start;
                 cursor: pointer;
                 list-style: none;
-                padding: 0px 20px !important;
+                padding-left: 25px !important;
                 box-sizing: border-box;
                 border: 3px solid transparent;
                 transition: all 0.5s;
@@ -57,6 +66,11 @@
                 }
             }
         }
+        .templates .orders {
+            display: flex !important;
+            flex-direction: column !important;
+        }
+
         .templates {
             border-left: 1px solid $paragraphColor;
         }
