@@ -15,9 +15,9 @@ const TwoCard = () => {
                     Tayyor mahsulotlar bilan vaqtingizni tejang
                 </h2>
                 <div className={styles.actions}>
-                    <button
-                        className={styles.btn}
-                        onClick={() => push('/scientific-resources/all')}>
+                    <button className={styles.btn}>
+                        {/* 
+                        onClick={() => push('/scientific-resources/all')} */}
                         Barcha mahsulotlar{' '}
                         <img
                             src="/static/img/arrowfig.png"
@@ -43,7 +43,7 @@ const TwoCard = () => {
                         onClick={() =>
                             push('/orders?direction=scientific_work')
                         }>
-                        Buyurtmar berish{' '}
+                        Buyurtma berish{' '}
                         <img
                             src="/static/img/arrowfig.png"
                             height={15}

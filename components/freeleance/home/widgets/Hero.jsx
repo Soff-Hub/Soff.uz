@@ -9,9 +9,9 @@ import { api } from '~/repositories/api';
 import useDebounce from '~/hooks/useDebounce';
 
 const placeholders = {
-    mahsulotlar: 'Qanday mahsulot izlamoqdasiz?',
-    xizmatlar: 'Qanday xizmat kerak?',
-    mutaxasislar: 'Qanday mutaxasis kerak?',
+    mahsulotlar: 'Qaysi turdagi tayyor mahsulot qidirmoqdasiz?',
+    xizmatlar: 'Qaysi turdagi  xizmat  qidirmoqdasiz?',
+    mutaxasislar: 'Qaysi turdagi tayyor mutaxassis qidirmoqdasiz?',
 };
 
 const staticOptions = {
@@ -41,7 +41,9 @@ const Hero = () => {
     const { data, isSuccess } = useQuery({
         queryKey: ['searchResults', debounceSearch],
         queryFn: async () => {
-            const { data } = await api.get(`doc-search/?search=${debounceSearch}`);
+            const { data } = await api.get(
+                `doc-search/?search=${debounceSearch}`
+            );
             return data;
         },
         enabled: type === 'mahsulotlar' && debounceSearch.length > 0,
@@ -58,14 +60,14 @@ const Hero = () => {
     };
 
     const handleSearch = () => {
-        if (type === "mahsulotlar") {
-            push(`/search-page/?keyword=${search}`)
-        } else if (type === "xizmatlar") {
-            push(`/search-page/?keyword=${search}&tab=2`)
-        } else if (type === "mutaxasislar") {
-            push(`/search-page/?keyword=${search}&tab=3`)
+        if (type === 'mahsulotlar') {
+            push(`/search-page/?keyword=${search}`);
+        } else if (type === 'xizmatlar') {
+            push(`/search-page/?keyword=${search}&tab=2`);
+        } else if (type === 'mutaxasislar') {
+            push(`/search-page/?keyword=${search}&tab=3`);
         }
-    }
+    };
 
     return (
         <div className={styles.heroMainBlock}>
@@ -82,20 +84,29 @@ const Hero = () => {
                     <div className={styles.heroFilterButtons}>
                         <span
                             onClick={() => setType('mahsulotlar')}
-                            className={type === 'mahsulotlar' ? styles.activeHeroBtn : styles.heroBtn}
-                        >
+                            className={
+                                type === 'mahsulotlar'
+                                    ? styles.activeHeroBtn
+                                    : styles.heroBtn
+                            }>
                             <i className="fa-solid fa-download"></i> Mahsulotlar
                         </span>
                         <span
                             onClick={() => setType('xizmatlar')}
-                            className={type === 'xizmatlar' ? styles.activeHeroBtn : styles.heroBtn}
-                        >
+                            className={
+                                type === 'xizmatlar'
+                                    ? styles.activeHeroBtn
+                                    : styles.heroBtn
+                            }>
                             <i className="fa-solid fa-briefcase"></i> Xizmatlar
                         </span>
                         <span
                             onClick={() => setType('mutaxasislar')}
-                            className={type === 'mutaxasislar' ? styles.activeHeroBtn : styles.heroBtn}
-                        >
+                            className={
+                                type === 'mutaxasislar'
+                                    ? styles.activeHeroBtn
+                                    : styles.heroBtn
+                            }>
                             <i className="fa-solid fa-users"></i> Mutaxasislar
                         </span>
                     </div>
@@ -106,12 +117,11 @@ const Hero = () => {
                             style={{ width: '100%' }}
                             placeholder={placeholders[type]}
                             onChange={val => setSearch(val)}
-                            options={getOptions()}
-                        >
+                            options={getOptions()}>
                             <input
                                 className={styles.input}
                                 style={{ width: '100%' }}
-                                onKeyDown={(e) => {
+                                onKeyDown={e => {
                                     if (e.key === 'Enter') {
                                         handleSearch();
                                     }
@@ -119,7 +129,9 @@ const Hero = () => {
                             />
                         </AutoComplete>
 
-                        <span className={styles.searchIcon} onClick={handleSearch}>
+                        <span
+                            className={styles.searchIcon}
+                            onClick={handleSearch}>
                             <SearchOutlined />
                         </span>
                     </div>
