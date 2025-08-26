@@ -54,7 +54,7 @@ const LastProducts = () => {
                         <div className='col p-2'>
                             <ProductCard product={p} />
                         </div>
-                    ))}
+                    )}
                 </div>
             </div>
             <div className={styles.productBox}>
@@ -64,7 +64,7 @@ const LastProducts = () => {
                         <div className='col p-2'>
                             <ProductCard product={p} />
                         </div>
-                    ))}
+                    )}
                 </div>
             </div>
             <div className={styles.productBox}>
@@ -74,7 +74,7 @@ const LastProducts = () => {
                         <div className='col p-2'>
                             <ProductCard product={p} />
                         </div>
-                    ))}
+                    )}
                 </div>
             </div>
             <div className={styles.productBox}>
@@ -84,7 +84,7 @@ const LastProducts = () => {
                         <div className='col p-2'>
                             <ProductCard product={p} />
                         </div>
-                    ))}
+                    )}
                 </div>
             </div>
             <div className={styles.productBox}>
@@ -94,7 +94,7 @@ const LastProducts = () => {
                         <div className='col p-2'>
                             <ProductCard product={p} />
                         </div>
-                    ))}
+                    )}
                 </div>
             </div>
             <div className={styles.productBox}>
@@ -104,7 +104,7 @@ const LastProducts = () => {
                         <div className='col p-2'>
                             <ProductCard product={p} />
                         </div>
-                    ))}
+                    )}
                 </div>
             </div>
         </section>
