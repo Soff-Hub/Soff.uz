@@ -131,6 +131,7 @@ const CatalogsSection = () => {
                 </section>
                 <section className={styles.readyProducts}>
                     <div className={styles.block}>
+                        <span className={styles.backdrop} />
                         <h1 className={styles.title}>
                             Tayyor mahsulotlar bilan vaqtingizni tejang
                         </h1>
@@ -140,7 +141,7 @@ const CatalogsSection = () => {
                             Barcha mahsulotlar{' '}
                             <i
                                 style={{ marginLeft: '12px' }}
-                                class="fa-solid fa-arrow-right"></i>
+                                className="fa-solid fa-arrow-right"></i>
                         </button>
                     </div>
                 </section>

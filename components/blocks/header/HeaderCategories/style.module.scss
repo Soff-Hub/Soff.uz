@@ -1,0 +1,59 @@
+@import '/scss/utils/variable';
+.dropBlock {
+    display: flex;
+    gap: 10px;
+    margin: 0px 10px;
+    .dropBox {
+        position: relative;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        .dropLabel {
+            font-size: 16px;
+            color: $textColor;
+            font-weight: 400;
+            letter-spacing: 0%;
+            line-height: 26px;
+            margin: 0;
+            cursor: pointer;
+            display: flex;
+            gap: 5px;
+            align-items: center;
+        }
+        &:hover {
+            .dropLabel {
+                color: $color-1st;
+            }
+            .dropSubBox {
+                display: flex;
+            }
+        }
+        .dropSubBox {
+            top: 100% !important;
+            min-width: 350px;
+            background-color: #fff;
+            position: absolute;
+            padding: 16px;
+            top: 100%;
+            z-index: 10;
+            display: none;
+            flex-direction: column;
+            gap: 17px;
+            list-style: none;
+            border: 1px solid $paragraphColor;
+            .dropSubBoxItem {
+                display: flex;
+                gap: 10px;
+                font-size: 16px;
+                font-weight: 400;
+                align-items: center;
+                .link {
+                    color: $textColor;
+                }
+            }
+        }
+    }
+    @media (max-width: 768px) {
+        display: none;
+    }
+}

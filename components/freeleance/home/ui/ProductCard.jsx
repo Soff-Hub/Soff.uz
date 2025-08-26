@@ -60,17 +60,17 @@ const ProductCard = ({ product }) => {
                         <div className={styles.cardActions}>
                             <div onClick={handleAddItemToWishlist} className={styles.likeIcon}>
                                 {wishlist?.some(item => Number(item.id) === Number(product?.id)) ?
-                                    <i style={{color: "#00a44f"}} class="fa-solid fa-heart"></i> : <i class="fa-regular fa-heart"></i>
+                                    <i style={{color: "#00a44f"}} className="fa-solid fa-heart"></i> : <i className="fa-regular fa-heart"></i>
                                 }
                             </div>
                             <div onClick={handleAddItemToCart} className={styles.cartIcon}>
                                 {basket ?
-                                    <i style={{color: "#00a44f"}} class="fa-solid fa-cart-shopping"></i> : <i class="fa-solid fa-cart-shopping"></i>
+                                    <i style={{color: "#00a44f"}} className="fa-solid fa-cart-shopping"></i> : <i className="fa-solid fa-cart-shopping"></i>
                                 }
                             </div>
                         </div>
                     </div>
-                    <img onClick={handleNavigate} className={styles.cardImg} src={product?.poster_url} alt="card img" />
+                    <img onClick={handleNavigate} className={styles.cardImg} src={product?.poster_url || '/static/img/not-found.png'} alt="card img" />
                 </div>
                 <div className={styles.cardBody}>
                     <h2 onClick={handleNavigate} className={styles.cardTitle}>{product?.title}</h2>
@@ -78,10 +78,10 @@ const ProductCard = ({ product }) => {
                 </div>
                 <div className={styles.cardInfo}>
                     {product?.document?.file_size && 
-                        <span><i class="fas fa-database"></i>{product?.document?.file_size}</span>
+                        <span><i className="fas fa-database"></i>{product?.document?.file_size}</span>
                     }
                     {product?.document?.page_count &&
-                        <span><i class="fas fa-copy"></i>{product?.document?.page_count}</span>
+                        <span><i className="fas fa-copy"></i>{product?.document?.page_count}</span>
                     }
                     {product?.views_count !== 0 &&
                         <span><i className='fa-solid fa-eye'></i>{product?.views_count}</span>

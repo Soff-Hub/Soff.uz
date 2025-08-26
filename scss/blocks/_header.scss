@@ -19,9 +19,9 @@
 
 .header-bottom {
     position: fixed;
-    width: 100vw; 
-    left: 0; 
-    right: 0; 
+    width: 100vw;
+    left: 0;
+    right: 0;
     top: 0;
     z-index: 1000;
     background-color: white;
@@ -36,8 +36,6 @@
     transition: all 0.3s ease;
     top: 0;
 }
-
-
 
 .other-header {
     background-color: white;
@@ -55,12 +53,18 @@
     align-items: center;
     justify-content: space-between;
     gap: 20px;
+    padding: 5px 0px;
     margin: 14px 0px;
+    @media (max-width: 576px) {
+        border-top: 1px solid #ccc;
+        margin: 0px 0px;
+        padding: 10px 0px;
+    }
 }
 
 .site-header-actions {
     display: flex;
-    align-items: center; 
+    align-items: center;
 }
 
 .site-header-searchbar {
@@ -158,7 +162,7 @@
         display: none;
     }
 
-    .username_title{
+    .username_title {
         display: none;
     }
 }

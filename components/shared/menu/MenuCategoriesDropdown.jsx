@@ -68,7 +68,7 @@ const MenuCategoriesDropdown = () => {
                 className={styles.navLink}
                 href={'https://seller.soff.uz/'}
                 target="_blank">
-                Freelance bo'lish
+                Frilanser bo'lish
             </a>
         </div>
     );

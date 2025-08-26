@@ -9,28 +9,22 @@
     gap: 3px;
     margin-right: 20px;
     cursor: pointer;
-    @media (max-width: 992px) {
-        font-size: 14px;
-    }
     @media (max-width: 768px) {
-        font-size: 12px;
-    }
-    @media (max-width: 576px) {
         font-size: 14px;
     }
 }
 // kirish tugmasi
 .loginEntrance {
-    background-color: $textColor;
+    background-color: $color-1st;
     font-size: 16px;
     font-weight: 400;
     color: $textColorWhite;
     border-radius: 30px;
-    padding: 15px 59px;
+    padding: 10px 28px;
     cursor: pointer;
     transition: all 0.3s;
     box-sizing: border-box;
-    border: 1px solid $textColor;
+    border: 1px solid $color-1st;
     &:hover {
         box-sizing: border-box;
         background: #fff;
@@ -38,6 +32,9 @@
     }
     @media (max-width: 768px) {
         padding: 10px 28px;
+    }
+    @media (max-width: 768px) {
+        padding: 8px 18px;
     }
 }
 

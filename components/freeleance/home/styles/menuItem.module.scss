@@ -1,0 +1,74 @@
+@import '/scss/utils/variable';
+
+.menuItem {
+    position: relative;
+    background: #fff;
+    .label {
+        padding: 10px 20px 10px 0px;
+        color: $grayColor;
+        font-size: 16px;
+        font-weight: 400;
+        border: none;
+        outline: none;
+        background: transparent;
+        border-bottom: 2px solid transparent;
+    }
+    &:hover {
+        .label {
+            color: $color-1st;
+            border-bottom: 2px solid $color-1st;
+        }
+        .dropDown {
+            display: flex;
+        }
+    }
+    .dropDown {
+        display: none;
+        transition: all 1s;
+        position: absolute;
+        background: #fff;
+        align-items: center;
+        padding: 20px 0px;
+        border: 1px solid $paragraphColor;
+        top: 100%;
+        left: -20px !important;
+        transition: all .5s;
+
+        .details {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            width: 300px;
+            padding: 0;
+            .detail {
+                color: $grayColor;
+                font-size: 16px;
+                font-weight: 400;
+                text-align: start;
+                cursor: pointer;
+                list-style: none;
+                padding: 0px 20px !important;
+                box-sizing: border-box;
+                border: 3px solid transparent;
+                transition: all 0.5s;
+                &:hover {
+                    border-left: 3px solid $color-1st;
+                    color: $color-1st !important;
+                }
+            }
+        }
+        .templates {
+            border-left: 1px solid $paragraphColor;
+        }
+        .sectionLabel {
+            color: $textColor;
+            font-size: 16px;
+            font-weight: 700;
+            text-align: start;
+            line-height: 26px;
+            padding: 0px 20px 10px 20px;
+            margin: 0;
+            border-left: 3px solid transparent;
+        }
+    }
+}

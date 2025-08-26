@@ -11,5 +11,23 @@
         font-weight: 600;
         flex: 1;
         margin-bottom: 30px;
+        @media (max-width: 992px) {
+            font-size: 28px;
+        }
+        @media (max-width: 576px) {
+            font-size: 24px;
+        }
+    }
+    .footerLogo {
+        width: 200px;
+        @media (max-width: 1200px) {
+            width: 180px;
+        }
+        @media (max-width: 992px) {
+            width: 160px;
+        }
+        @media (max-width: 576px) {
+            width: 140px;
+        }
     }
 }

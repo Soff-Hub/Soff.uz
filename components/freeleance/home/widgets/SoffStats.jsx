@@ -19,7 +19,7 @@ const SoffStats = () => {
             <h1 className={styles.title}>Statistik ma’lumotlar</h1>
             <div className={styles.statSection}>
                 {stats.map((item, idx) => (
-                    <div className={styles.statCard}>
+                    <div key={item.title} className={styles.statCard}>
                         <div className={styles.value}>
                             {item.value.toLocaleString()}+
                         </div>

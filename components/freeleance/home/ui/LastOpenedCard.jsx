@@ -5,17 +5,20 @@ import { useRouter } from 'next/router';
 const LastOpenedCard = ({ title, image, author, price, slug, userImage }) => {
     const router = useRouter();
     return (
-        <div className=' overflow-hidden'>
+        <div className=" overflow-hidden flex-fill">
             <div
                 className={styles.card}
                 onClick={() => router.push(`/service/${slug}`)}>
-                <h3 className={styles.title}>{title}</h3>
+                <p className={styles.title}>{title}</p>
                 <div
-                    className={styles.image}
                     style={{
-                        backgroundImage: `url(${image ||
+                        background: `url(${image ||
                             '/static/img/not-found.png'})`,
-                    }}></div>
+                        backgroundPosition: 'center',
+                        backgroundSize: 'cover', 
+                    }}
+                    className={styles.image}
+                /> 
                 <div className={styles.footer}>
                     <div
                         className={styles.avatar}

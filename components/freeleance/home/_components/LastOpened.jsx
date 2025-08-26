@@ -52,6 +52,7 @@ const LastOpened = () => {
                 {data &&
                     data.map(item => (
                         <LastOpenedCard
+                            key={item.title}
                             title={item.title}
                             image={item.poster}
                             author={item.user.full_name}

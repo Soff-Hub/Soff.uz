@@ -1,8 +1,8 @@
 .card {
-    background: #FEFEFE;
-    border: 1px solid #D9D9D9;
+    background: #fefefe;
+    border: 1px solid #d9d9d9;
     transition: all 0.3s ease;
-
+    width: 100%;
     &:hover {
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     }
@@ -19,7 +19,7 @@
             .cardType {
                 position: absolute;
                 left: 10px;
-                background: #FEFEFE;
+                background: #fefefe;
                 padding: 4px 8px;
                 border-radius: 35px;
                 font-size: 16px;
@@ -46,7 +46,7 @@
 
                 .likeIcon {
                     border-radius: 35px;
-                    background: #FEFEFE;
+                    background: #fefefe;
                     padding: 4px 8px;
                     cursor: pointer;
 
@@ -59,7 +59,7 @@
 
                 .cartIcon {
                     border-radius: 35px;
-                    background: #FEFEFE;
+                    background: #fefefe;
                     padding: 4px 8px;
                     cursor: pointer;
 
@@ -70,7 +70,6 @@
                     }
                 }
             }
-
         }
 
         .cardImg {
@@ -105,7 +104,7 @@
             font-weight: 400;
             font-size: 20px;
             line-height: 30px;
-            color: #24282B;
+            color: #24282b;
             margin-bottom: 14px;
 
             display: -webkit-box;
@@ -135,15 +134,13 @@
                 min-height: 48px;
                 margin-bottom: 5px;
             }
-
-
         }
 
         .cardPrice {
             font-weight: 600;
             font-size: 20px;
             line-height: 30px;
-            color: #24282B;
+            color: #24282b;
             margin-bottom: 0;
 
             @media (max-width: 1199px) {
@@ -172,7 +169,7 @@
             font-size: 16px;
             line-height: 20px;
             letter-spacing: 0%;
-            color: #24282B;
+            color: #24282b;
 
             i {
                 margin-right: 5px;
