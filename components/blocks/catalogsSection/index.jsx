@@ -53,7 +53,7 @@ const CatalogsSection = () => {
                             </p>
                         </div>
                     </div>
-                    <button
+                    {/* <button
                         onClick={() => router.push('/scientific-resources/all')}
                         className={styles.catalogSeeAll}>
                         Barcha mahsulotlar{' '}
@@ -63,7 +63,7 @@ const CatalogsSection = () => {
                             height={20}
                             alt="arrow"
                         />
-                    </button>
+                    </button> */}
                 </div>
                 <div className={styles.catalogCardsSection}>
                     {data?.map(item => (

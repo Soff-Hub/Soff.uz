@@ -57,5 +57,11 @@
         line-height: 100%;
         color: #24282B;
         margin-bottom: 15px;
+        cursor: pointer;
+        transition: all .4s ;
+
+        &:hover{
+            color: #00a44f;
+        }
     }
 }
