@@ -3,28 +3,22 @@ import PageContainer from '~/components/layouts/PageContainer';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
 import Meta from '~/components/shared/headers/Meta';
 import { useRouter } from 'next/router';
-import useApi, { baseUrlUseApi } from '~/repositories/useApi';
-import WebsitesProductsByCategory from '~/components/partials/category/WebsitesProductsByCategory';
-import WebsitesCategoriesFilterSecion from '~/components/elements/WebsitesCategoriesFilterSecion';
+import { baseUrlUseApi } from '~/repositories/useApi';
 import ProductsByCategory from '~/components/partials/category/ProductsByCategory';
-import CategorySearchSection from '~/components/elements/CategorySearchSection';
 import ProductFilterSection from '~/components/elements/product-filter-section/ProductFilterSection';
 
 export default function Websites ({
     productsData,
     fourChildData,
     childCategoryData,
-    parentCategory,
-    childCategory,
     page,
 }) {
     const router = useRouter();
 
-    // Pagination tugmalari uchun funksiya
     const handlePageChange = newPage => {
         router.push({
             pathname: router.pathname,
-            query: { ...router.query, page: newPage }, // URL'ga yangi page qo'shish
+            query: { ...router.query, page: newPage }, 
         });
     };
 
@@ -43,13 +37,6 @@ export default function Websites ({
                 path={"/websites/"}
             />
             <div className='ps-page--shop container my-5'>
-                {/* <CategorySearchSection />
-                <WebsitesCategoriesFilterSecion
-                    breacrumb={fourChildData}
-                    count={productsData?.count}
-                    isLoading={false}
-                    childCategoryData={childCategoryData}
-                /> */}
                 <ProductsByCategory
                     data={productsData}
                     page={page}

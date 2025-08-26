@@ -8,6 +8,7 @@ import ProductsByModelsAndDesignCategory from '~/components/partials/category/Pr
 import { baseUrlUseApi } from '~/repositories/useApi';
 import CategorySearchSection from '~/components/elements/CategorySearchSection';
 import ProductFilterSection from '~/components/elements/product-filter-section/ProductFilterSection';
+import ProductsByCategory from '~/components/partials/category/ProductsByCategory';
 
 export default function ModelsAndInteriorDesign ({
     productsData,
@@ -20,7 +21,7 @@ export default function ModelsAndInteriorDesign ({
     const handlePageChange = newPage => {
         router.push({
             pathname: router.pathname,
-            query: { ...router.query, page: newPage }, // URL'ga yangi page qo'shish
+            query: { ...router.query, page: newPage },
         });
     };
 
@@ -40,15 +41,7 @@ export default function ModelsAndInteriorDesign ({
                 path={"/3d-models-and-interior-designs/"}
             />
             <div className='ps-page--shop my-5 container p-xl-0 p-l-0'>
-                {/* <CategorySearchSection />
-                <ThreeDCategoriesFilterSecion
-                    breacrumb={fourChildData}
-                    count={productsData?.count}
-                    isLoading={false}
-                    childCategoryData={childCategoryData}
-                    route='/3d-models-and-interior-designs'
-                /> */}
-                <ProductsByModelsAndDesignCategory
+                <ProductsByCategory
                     data={productsData}
                     page={page}
                     handlePagination={number => {
@@ -56,22 +49,6 @@ export default function ModelsAndInteriorDesign ({
                     }}
                     isLoading={false}
                 />
-                
-                {/* <FilterSection
-                    breacrumb={fourChildData}
-                    count={productsData?.count}
-                    isLoading={false}
-                    childCategoryData={childCategoryData}
-                    route='/3d-models-and-interior-designs'
-                /> */}
-                {/* <DynamicProductList
-                    data={productsData}
-                    page={page}
-                    handlePagination={number => {
-                        handlePageChange(number);
-                    }}
-                    isLoading={false}
-                /> */}
             </div>
         </PageContainer>
     );

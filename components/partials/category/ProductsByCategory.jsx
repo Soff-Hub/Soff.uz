@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Pagination } from 'antd';
-import { Skeleton } from 'antd';
-import RedesignProduct from '~/components/elements/products/Redesign/Redesign-Product';
 import Link from 'next/link';
 import ProductCard from '~/components/freeleance/home/ui/ProductCard';
 
@@ -9,35 +7,17 @@ export default function ProductsByCategory ({
     data = [],
     page,
     handlePagination,
-    isLoading,
-}) {
+}){
     return (
-        <>
-            <div id='products' className='container '> 
-                <div className='row row-gap-4'>
-                    {isLoading && (
-                        <>
-                            {Array(15)
-                                .fill(0)
-                                .map((d, i) => (
-                                    <Skeleton.Image
-                                        key={i}
-                                        active
-                                        className={`col-md-3 col-6`}
-                                    />
-                                ))}
-                        </>
-                    )}
-                    {data?.results?.map((item, index) => (
-                        <div key={item.id} className="col-md-3 col-6 p-2">
+        <section>
+            <div className="row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-gap-4">
+                {data?.results?.map((item) => (
+                        <div key={item.id} className="col px-1 px-md-3">
                             <ProductCard product={item}/>
                         </div>
-                        // <RedesignProduct key={index} product={item} />
                     ))}
-                </div>
             </div>
-
-            {data?.results?.length == 0 && (
+            {(data?.count == 0 || !data) && (
                 <div className='ps-page-status'>
                     <div className='container'>
                         <div className='ps-section__content'>
@@ -76,7 +56,6 @@ export default function ProductsByCategory ({
                     />
                 </div>
             )}
-        </>
+        </section>
     );
 }
-//scientificResourcesWrap

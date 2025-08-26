@@ -122,6 +122,18 @@
     font-weight: 600;
     color: #24282B;
     margin: 40px 0;
+
+    @media (max-width: 912px) {
+        font-size: 50px;
+    }
+
+    @media (max-width: 768px) {
+        font-size: 40px;
+    }
+
+    @media (max-width: 480px) {
+        font-size: 28px;
+    }
 }
 
 .filter {
@@ -139,6 +151,12 @@
         background-image: radial-gradient(circle, #018f45 0%, #038843 40%, white 100%);
         filter: blur(80px);
         opacity: 0.7;
+
+        @media (max-width: 768px) {
+            left: 0;
+            width: 100px;
+            height: 100px;
+        }
     }
 
     &::before {
@@ -156,6 +174,14 @@
 }
 
 
-.carousel{
+.carousel {
     margin: 0 40px;
+
+    @media (max-width: 768px){
+        margin: 20px;
+    }
+
+    @media (max-width: 480px){
+        margin: 5px;
+    }
 }
