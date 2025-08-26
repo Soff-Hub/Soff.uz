@@ -51,7 +51,7 @@ const Header = () => {
             </div>
             <div
                 className="bg-white"
-                style={{ height: '140px', width: '100%' }}></div>
+                style={{ height: '110px', width: '100%' }}></div>
         </header>
     );
 };

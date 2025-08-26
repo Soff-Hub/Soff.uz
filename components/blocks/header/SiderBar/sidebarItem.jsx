@@ -1,16 +1,10 @@
 import React, { useState } from 'react';
-import styles from '../styles/menuItem.module.scss';
+import styles from './style.module.scss';
+import Link from 'next/link';
+import { Collapse } from 'antd';
 import { useRouter } from 'next/router';
 
 const option = {
-    scientific_work: 'Ilmiy va Akademik Xizmatlar',
-    three_d: '3D Dizayn va Vizualizatsiya',
-    web: 'Dasturlash xizmatlari',
-    dizyn: 'Dizayn',
-    document: 'Shablonlar',
-};
-
-const templateLink = {
     scientific_work: 'scientific-resources',
     three_d: '3d-models-and-interior-designs',
     web: 'websites',
@@ -18,24 +12,21 @@ const templateLink = {
     document: 'templates',
 };
 
-export const MenuItem = ({ products, templates, label }) => {
-    const router = useRouter(); 
-
+const SideBarItem = ({ products, templates, direction, onClick }) => {
+    const router = useRouter();
     return (
         <div className={styles.menuItem}>
-            <button type="button" className={styles.label}>
-                {option[label]}
-            </button>
-            <div className={styles.dropDown}>
+            <div className={styles.accordion}>
                 <div className={styles.orders}>
                     <h3 className={styles.sectionLabel}>Buyurtma berish</h3>
                     <ul className={styles.details}>
-                        {products.map(item => (
+                        {products?.map(item => (
                             <li
                                 onClick={() => {
                                     router.push(
-                                        `/orders?direction=${label}&parent_category_id=${item.id}`
+                                        `/orders?direction=${direction}&parent_category_id=${item.id}`
                                     );
+                                    onClick();
                                 }}
                                 key={item.id}
                                 className={styles.detail}>
@@ -47,12 +38,13 @@ export const MenuItem = ({ products, templates, label }) => {
                 <div className={styles.templates}>
                     <h3 className={styles.sectionLabel}>Tayyor mahsulotlar</h3>
                     <ul className={styles.details}>
-                        {templates.map(item => (
+                        {templates?.map(item => (
                             <li
                                 onClick={() => {
                                     router.push(
-                                        `/${templateLink[label]}/${item.slug}?slug=${item.slug}&search=&parentCategory=${item.slug}`
+                                        `/${option[direction]}/${item.slug}?slug=${item.slug}&search=&parentCategory=${item.slug}`
                                     );
+                                    onClick();
                                 }}
                                 key={item.id}
                                 className={styles.detail}>
@@ -66,17 +58,4 @@ export const MenuItem = ({ products, templates, label }) => {
     );
 };
 
-{
-    /* {items.map(item => (
-                        <div key={item.title}>
-                            <p className={styles.detailsTitle}>{item.title}</p>
-                            <ul className={styles.details}>
-                                {item.children.map(child => (
-                                    <li key={child} className={styles.detail}>
-                                        {child}
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    ))} */
-}
+export default SideBarItem;
