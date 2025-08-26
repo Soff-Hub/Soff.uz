@@ -11,7 +11,7 @@ const useCancelOrder = () => {
     return useMutation({
         mutationFn: async (data) => {
             const formData = new FormData();
-            formData.append("cancel_reason_id", data.id);
+            formData.append("cancel_reason_id", data.reason);
             formData.append("status", 'cancelled');
             await axios.post(`order/${data.id}/status`, formData, {
                 headers: {
