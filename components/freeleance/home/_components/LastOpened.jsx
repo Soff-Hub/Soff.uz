@@ -35,7 +35,7 @@ const LastOpened = () => {
                 <button
                     className={styles.freelance_button}
                     size="large"
-                    onClick={() => push('orders?direction=scientific_work')}>
+                    onClick={() => push('orders')}>
                     <span>Barcha xizmatlar</span>
 
                     <img

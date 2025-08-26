@@ -3,18 +3,12 @@ import PageContainer from '~/components/layouts/PageContainer';
 import { baseUrl } from '~/repositories/Repository';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import Head from 'next/head';
 import Joyride from 'react-joyride';
 import FileProductsDetails from '~/components/details-components/file-products-detail/details-page';
 import ThreeDesignProductsDetails from '~/components/details-components/templates-details/details-page';
-import WebSitesProductsDetails from '~/components/details-components/website-products-details/details-page';
 import VideosProductsDetails from '~/components/details-components/video-tutorials/details-page';
 import RedesignProduct from '~/components/elements/products/Redesign/Redesign-Product';
-import WebsitesProduct from '~/components/elements/products/WebsitesProduct';
-import DesignDevelopmentProducts from '~/components/elements/products/DesignDevelopmentProducts';
-import VideoLessonsProducts from '~/components/elements/products/VideoLessonsProducts';
-import SwiperPages from '~/components/details-components/swiper/swiper-page';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
 import SkeletonProductDetail from '~/components/elements/skeletons/SkeletonProductDetail';
 import * as cookie from 'cookie';
@@ -22,6 +16,7 @@ import AISoffiaPresentation from '~/components/elements/AISoffiaPresentation';
 import ModelAndDesignProduct from '~/components/elements/products/ModelAndDesignProduct';
 import Axios from 'axios';
 import { Skeleton } from 'antd';
+import ProductCard from '~/components/freeleance/home/ui/ProductCard';
 
 export default function ProductDefaultPage({ defaultProducts }) {
     const router = useRouter();
@@ -166,34 +161,6 @@ export default function ProductDefaultPage({ defaultProducts }) {
                 product={defaultProducts}
             />
         ),
-    };
-    const productsDetailsSimilar = {
-        file: similarProduct?.map((item, index) => (
-            <RedesignProduct product={item} key={index} />
-        )),
-        '3d': similarProduct?.map((item, index) => (
-            <ModelAndDesignProduct product={item} key={index} />
-        )),
-        template: similarProduct?.map((item, index) => (
-            <RedesignProduct product={item} key={index} />
-        )),
-        website: similarProduct?.map((item, index) => (
-            <RedesignProduct product={item} key={index} />
-        )),
-        design: similarProduct?.map((item, index) => (
-            <RedesignProduct product={item} key={index} />
-        )),
-        video: similarProduct?.map((item, index) => (
-            <RedesignProduct product={item} key={index} />
-        )),
-    };
-
-    const productComponents = productsDetailsSimilar[contentType] || [];
-
-    const getColClass = () => {
-        return contentType === '3d'
-            ? 'col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3 p-2' // 3 tadan
-            : 'col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2 p-2' ; // 6 tadan
     };
 
 
@@ -360,15 +327,13 @@ export default function ProductDefaultPage({ defaultProducts }) {
                                             O’xshash mahsulotlar
                                         </h3>
                                         {hasLoadedSimilar ? (
-                                            productComponents.length > 0 && (
-                                                <div className="row">
-                                                    {productComponents.map((component, index) => (
-                                                        <div className={`${getColClass()} mb-4`} key={index}>
-                                                            {component}
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            ) 
+                                            <div className='row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-gap-4'>
+                                                {similarProduct?.map((item, index) => 
+                                                    <div className='col-3 px-3' key={item?.id}>
+                                                        <ProductCard product={item}/>
+                                                    </div>
+                                                )}
+                                            </div>
                                         ) : (
                                             <div className="row g-5 py-3 justify-content-center">
                                                 {Array.from({ length: 12 }).map((_, index) => (
@@ -421,10 +386,10 @@ export default function ProductDefaultPage({ defaultProducts }) {
                                         </div>
                                     ) : (
                                         lastAdded && (
-                                            <div className='row'>
+                                            <div className='row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-gap-4'>
                                                 {lastAdded?.results?.map((p, i) => (
-                                                    <div className={contentType !== "3d" ? 'col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-4 p-2' : 'p-2 col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3 mb-4'}>
-                                                        {contentType !== "3d" ? <RedesignProduct product={p} key={i} /> : <ModelAndDesignProduct product={p} key={i} />}
+                                                    <div key={p?.id} className="col px-3">
+                                                        <ProductCard product={p}/>
                                                     </div>
                                                 ))}
                                             </div>
