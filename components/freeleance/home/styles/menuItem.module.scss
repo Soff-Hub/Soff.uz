@@ -69,9 +69,10 @@
         .templates .orders {
             display: flex !important;
             flex-direction: column !important;
+            flex: 1;
         }
 
-        .templates {
+        .orders {
             border-left: 1px solid $paragraphColor;
         }
         .sectionLabel {

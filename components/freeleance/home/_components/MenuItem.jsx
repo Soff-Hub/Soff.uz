@@ -6,7 +6,7 @@ const option = {
     scientific_work: 'Ilmiy va Akademik Xizmatlar',
     three_d: '3D Dizayn va Vizualizatsiya',
     web: 'Dasturlash xizmatlari',
-    dizyn: 'Dizayn',
+    dizayn: 'Dizayn',
     document: 'Shablonlar',
 };
 
@@ -14,12 +14,12 @@ const templateLink = {
     scientific_work: 'scientific-resources',
     three_d: '3d-models-and-interior-designs',
     web: 'websites',
-    dizyn: 'design-developments',
+    dizayn: 'design-developments',
     document: 'templates',
 };
 
 export const MenuItem = ({ products, templates, label }) => {
-    const router = useRouter(); 
+    const router = useRouter();
 
     return (
         <div className={styles.menuItem}>
@@ -27,14 +27,14 @@ export const MenuItem = ({ products, templates, label }) => {
                 {option[label]}
             </button>
             <div className={styles.dropDown}>
-                <div className={styles.orders}>
-                    <h3 className={styles.sectionLabel}>Buyurtma berish</h3>
+                <div className={styles.templates}>
+                    <h3 className={styles.sectionLabel}>Tayyor mahsulotlar</h3>
                     <ul className={styles.details}>
-                        {products.map(item => (
+                        {templates.map(item => (
                             <li
                                 onClick={() => {
                                     router.push(
-                                        `/orders?direction=${label}&parent_category_id=${item.id}`
+                                        `/${templateLink[label]}/${item.slug}?slug=${item.slug}&search=&parentCategory=${item.slug}`
                                     );
                                 }}
                                 key={item.id}
@@ -44,14 +44,14 @@ export const MenuItem = ({ products, templates, label }) => {
                         ))}
                     </ul>
                 </div>
-                <div className={styles.templates}>
-                    <h3 className={styles.sectionLabel}>Tayyor mahsulotlar</h3>
+                <div className={styles.orders}>
+                    <h3 className={styles.sectionLabel}>Buyurtma berish</h3>
                     <ul className={styles.details}>
-                        {templates.map(item => (
+                        {products.map(item => (
                             <li
                                 onClick={() => {
                                     router.push(
-                                        `/${templateLink[label]}/${item.slug}?slug=${item.slug}&search=&parentCategory=${item.slug}`
+                                        `/orders?direction=${label}&parent_category_id=${item.id}`
                                     );
                                 }}
                                 key={item.id}

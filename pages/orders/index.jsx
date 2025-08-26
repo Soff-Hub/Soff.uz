@@ -67,9 +67,8 @@ export default function SoffFreelancerPage({
 
 export async function getServerSideProps(context) {
     const { query } = context;
-    const {
+    const { 
         category_id = '',
-        parent_category_id = '',
         search = '',
         direction = '',
         limit = 20,
@@ -100,8 +99,8 @@ export async function getServerSideProps(context) {
     const parentCategoryUrl = direction
         ? `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/categories/?direction=${direction}`
         : null;
-    const childCategoryUrl = parent_category_id
-        ? `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/categories?parent_id=${parent_category_id}`
+    const childCategoryUrl = category_id
+        ? `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/categories?parent_id=${category_id}`
         : null;
 
     // 🔹 Parallel fetch

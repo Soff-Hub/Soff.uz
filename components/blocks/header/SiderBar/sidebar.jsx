@@ -1,6 +1,10 @@
 import React, { useEffect } from 'react';
 import styles from './style.module.scss';
-import { CaretRightOutlined, CloseOutlined } from '@ant-design/icons';
+import {
+    CaretRightOutlined,
+    CloseOutlined,
+    MenuOutlined,
+} from '@ant-design/icons';
 import { useState } from 'react';
 import useNavCategories from '~/components/freeleance/chat/api/useNavCatergories';
 import SideBarItem from './sidebarItem';
@@ -142,7 +146,7 @@ const option = {
     scientific_work: 'Ilmiy va Akademik Xizmatlar',
     three_d: '3D Dizayn va Vizualizatsiya',
     web: 'Dasturlash xizmatlari',
-    dizyn: 'Dizayn',
+    dizayn: 'Dizayn',
     document: 'Shablonlar',
 };
 
@@ -172,7 +176,7 @@ const SideBar = () => {
     return (
         <div className=" d-lg-none position-relative">
             <button onClick={() => setOpen(true)} className={styles.barIcon}>
-                <i className="fa-solid fa-bars-staggered"></i>
+                <MenuOutlined />
             </button>
             <Drawer
                 style={panelStyle}

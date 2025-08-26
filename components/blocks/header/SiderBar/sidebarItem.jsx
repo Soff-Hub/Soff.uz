@@ -8,7 +8,7 @@ const option = {
     scientific_work: 'scientific-resources',
     three_d: '3d-models-and-interior-designs',
     web: 'websites',
-    dizyn: 'design-developments',
+    dizayn: 'design-developments',
     document: 'templates',
 };
 
