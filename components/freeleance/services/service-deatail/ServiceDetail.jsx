@@ -58,7 +58,7 @@ const ServiceDetail = ({ data }) => {
     );
 
     return (
-        <div style={{ maxWidth: '1400px' }} className="container my-5">
+        <div style={{ maxWidth: '1400px' }} className="container my-5 navTabsPadding">
             <div className="row">
                 <div className="col-12 col-md-8">
                     <Breadcrumb
@@ -103,8 +103,12 @@ const ServiceDetail = ({ data }) => {
             </div>
             <div className="row">
                 <div className="col-12 col-md-8 p-0">
-                    <FaqSection faqs={faqs} />
-                    <PortfolioSection portfolios={seller_portfolio} />
+                    {faqs?.length !== 0 &&
+                        <FaqSection faqs={faqs} />
+                    }
+                    {seller_portfolio?.length !== 0 &&
+                        <PortfolioSection portfolios={seller_portfolio} />
+                    }
                 </div>
             </div>
 

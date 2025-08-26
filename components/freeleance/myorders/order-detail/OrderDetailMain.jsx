@@ -17,7 +17,7 @@ const OrderDetailMain = () => {
         router.push('/404');
     }
     return (
-        <div className="row">
+        <div className="row navTabsPadding">
             {order && (
                 <>
                     <OrderMain order={order} />

@@ -131,24 +131,24 @@ const Hero = () => {
                     <HeroCard
                         title="Dizayn"
                         link="/orders?direction=dizayn"
-                        img="/static/img/land-design.svg"
+                        img="/static/img/HomePage/design.webp"
                     />
                     <HeroCard
                         title="Dasturlash"
                         link="/orders?direction=web"
-                        img="/static/img/land-dev.svg"
+                        img="/static/img/HomePage/web.webp"
                     />
                 </div>
                 <div className={styles.cardWrapperTwo}>
                     <HeroCard
                         title="Ilmiy ishlar"
                         link="/orders?direction=scientific_work"
-                        img="/static/img/land-file.svg"
+                        img="/static/img/HomePage/file.webp"
                     />
                     <HeroCard
                         title="3D Modellar"
                         link="/orders?direction=three_d"
-                        img="/static/img/land-3d.svg"
+                        img="/static/img/HomePage/3d.webp"
                     />
                 </div>
             </div>

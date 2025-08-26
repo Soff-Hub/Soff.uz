@@ -10,36 +10,36 @@ const items = [
         label: 'Ilmiy va Akademik Xizmatlar',
         content_type: 'file',
         images: {
-            left: '/static/img/land-design.svg',
-            rightTop: '/static/img/land-dev.svg',
-            rightBot: '/static/img/land-file.svg',
-        },
-    },
-    {
-        label: '3D Dizayn va Vizualizatsiya',
-        content_type: '3d',
-        images: {
-            left: '/static/img/landb-3d3.png',
-            rightTop: '/static/img/landb-3d1.png',
-            rightBot: '/static/img/landb-3d2.png',
+            left: '/static/img/HomePage/file1.webp',
+            rightTop: '/static/img/HomePage/file2.webp',
+            rightBot: '/static/img/HomePage/file3.webp',
         },
     },
     {
         label: 'Grafik va & UI, UX Dizayn xizmatlari',
         content_type: 'design',
         images: {
-            left: '/static/img/landb-design2.png',
-            rightTop: '/static/img/landb-design1.png',
-            rightBot: '/static/img/landb-design3.png',
+            left: '/static/img/HomePage/design1.webp',
+            rightTop: '/static/img/HomePage/design3.webp',
+            rightBot: '/static/img/HomePage/design2.webp',
         },
     },
     {
         label: 'IT & Dasturlash xizmatlari',
         content_type: 'website',
         images: {
-            left: '/static/img/landb-dev1.png',
-            rightTop: '/static/img/landb-dev2.png',
-            rightBot: '/static/img/landb-dev3.png',
+            left: '/static/img/HomePage/web3.webp',
+            rightTop: '/static/img/HomePage/web1.webp',
+            rightBot: '/static/img/HomePage/web2.webp',
+        },
+    },
+    {
+        label: '3D Dizayn va Vizualizatsiya',
+        content_type: '3d',
+        images: {
+            left: '/static/img/HomePage/3d2.webp',
+            rightTop: '/static/img/HomePage/3d1.webp',
+            rightBot: '/static/img/HomePage/3d3.webp',
         },
     },
 ];
@@ -74,7 +74,7 @@ const FreelanceSection = () => {
                 <button
                     className={styles.freelance_button}
                     size="large"
-                    onClick={() => push('orders?direction=scientific_work')}>
+                    onClick={() => push('orders')}>
                     Barcha xizmatlar
                     <AntImage
                         src={'/static/img/arrowwhite.svg'}
