@@ -63,7 +63,7 @@ export default function HeaderNotifications({ color }) {
             {contextHolder}
 
             {token ? (
-                <Link href={`/account/notification`}>
+                <Link href={`/account/notification`} style={{paddingRight:'10px'}}>
                     <Badge count={notificationsCount} color='#00a44f'>
                         <a className="header__extra fs-1" style={{ cursor: 'pointer' }}>
                             <i style={{marginRight: "10px"}} className={`fa-regular fa-bell ${color}`}></i>

@@ -86,6 +86,7 @@ const FreelanceSection = () => {
             <div className={styles.serviceCardSection}>
                 {items.map(item => (
                     <ServiceCard
+                        key={item.content_type}
                         content_type={item.content_type}
                         items={item.images}
                     />

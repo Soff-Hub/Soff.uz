@@ -29,7 +29,7 @@ export let cutomerAccountLink = [
     },
     // {
     //     text: 'Profil',
-    //     url: '/account/settings',<i class="fas fa-file-invoice"></i>
+    //     url: '/account/settings',<i className="fas fa-file-invoice"></i>
     //     icon: 'fa-solid fa-gear',
     // },
 ];

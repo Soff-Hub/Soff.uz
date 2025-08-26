@@ -46,10 +46,12 @@ const option = {
         { value: '3D Artist' },
     ],
 };
+
+
 const placeholders = {
-    mahsulotlar: 'Qanday mahsulot izlamoqdasiz?',
-    xizmatlar: 'Qanday xizmat kerak?',
-    mutaxasislar: 'Qanday mutaxasis kerak?',
+    mahsulotlar: 'Qaysi turdagi tayyor mahsulot qidirmoqdasiz?',
+    xizmatlar: 'Qaysi turdagi xizmar qidirmoqdasiz?',
+    mutaxasislar: 'Qaysi turdagi tayyor mutaxassis qidirmoqdasiz?',
 };
 
 const Hero = () => {
@@ -63,7 +65,7 @@ const Hero = () => {
     const { data, status, isSuccess } = useQuery({
         queryKey: ['searchResults'],
         queryFn: async () => {
-            const mahsulotlar = await api.get('doc-search/'); 
+            const mahsulotlar = await api.get('doc-search/');
 
             return {
                 products: mahsulotlar.data,
@@ -101,7 +103,7 @@ const Hero = () => {
                                     ? styles.activeHeroBtn
                                     : styles.heroBtn
                             }>
-                            <i class="fa-solid fa-download"></i>
+                            <i className="fa-solid fa-download"></i>
                             Mahsulotlar
                         </span>
                         <span
@@ -120,7 +122,7 @@ const Hero = () => {
                                     ? styles.activeHeroBtn
                                     : styles.heroBtn
                             }>
-                            <i class="fa-solid fa-users"></i> Mutaxasislar
+                            <i className="fa-solid fa-users"></i> Mutaxasislar
                         </span>
                     </div>
 

@@ -8,6 +8,8 @@ import HeaderUserDropdown from './HeaderUserDropdown';
 import { Badge } from 'antd';
 import MenuCategoriesDropdown from '~/components/shared/menu/MenuCategoriesDropdown';
 import useResponsive from '~/utilities/useResponsive';
+import HeaderCatergories from '../HeaderCategories';
+import SideBar from '../SiderBar/sidebar';
 
 const HeaderActions = ({ auth, isDark }) => {
     const { wishlist } = useWishlist();
@@ -19,8 +21,6 @@ const HeaderActions = ({ auth, isDark }) => {
             className={`site-header-actions ${
                 isDark ? 'text-black' : 'text-white'
             }`}>
-            <HeaderNotifications color={isDark ? 'text-black' : 'text-white'} />
-
             {wishlist?.length > 0 ? (
                 <Link href="/account/wishlist">
                     <a className="header__extra">
@@ -40,11 +40,14 @@ const HeaderActions = ({ auth, isDark }) => {
             )}
 
             {data?.length > 0 && <MiniCart />}
+            {!isMobile && <HeaderCatergories />}
             {!isMobile && <MenuCategoriesDropdown />}
+            <HeaderNotifications color={isDark ? 'text-black' : 'text-white'} />
             <HeaderUserDropdown
                 color={isDark ? 'text-black' : 'text-white'}
                 isLoggedIn={auth.isLoggedIn && Boolean(auth.isLoggedIn)}
             />
+            <SideBar />
         </div>
     );
 };

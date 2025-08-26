@@ -1,8 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
-import MenuCategoriesDropdown from '~/components/shared/menu/MenuCategoriesDropdown';
-import HeaderAIIcon from './HeaderActions/HeaderAIIcon';
-import NavbarMenu from '../../freeleance/home/widgets/NavbarMenu';
+import MenuCategoriesDropdown from '~/components/shared/menu/MenuCategoriesDropdown'; 
 import useResponsive from '~/utilities/useResponsive';
 
 export default function HeaderTop() {
