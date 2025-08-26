@@ -129,7 +129,7 @@ const CatalogsSection = () => {
                         </div>
                     </div>
                 </section>
-                <section className={styles.readyProducts}>
+                {/* <section className={styles.readyProducts}>
                     <div className={styles.block}>
                         <span className={styles.backdrop} />
                         <h1 className={styles.title}>
@@ -144,7 +144,7 @@ const CatalogsSection = () => {
                                 className="fa-solid fa-arrow-right"></i>
                         </button>
                     </div>
-                </section>
+                </section> */}
             </div>
         </div>
     );

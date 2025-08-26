@@ -15,7 +15,7 @@ const MyOrdersMain = () => {
     const { data } = useGetCustomBalance();
 
     return (
-        <div style={{ marginTop: '40px', maxWidth: '100%' }}>
+        <div className='navTabsPadding' style={{ marginTop: '40px', maxWidth: '100%' }}>
             <div className="d-flex align-items-center mb-4 justify-content-between">
                 <h1 className="fs-1 m-0">Mening buyurtmalarim</h1>
                 <span className="fs-3">

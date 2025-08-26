@@ -11,6 +11,39 @@ const service = {
     template: '/templates/all',
     file: '/scientific-resources/all',
 };
+
+const cardImages = {
+    '3d': [
+        '/static/img/HomePage/3d1.webp',
+        '/static/img/HomePage/3d2.webp',
+        '/static/img/HomePage/3d3.webp'
+    ],
+    website: [
+        '/static/img/HomePage/web1.webp',
+        '/static/img/HomePage/web2.webp',
+        '/static/img/HomePage/web3.webp',
+    ],
+    design: [
+        '/static/img/HomePage/design1.webp',
+        '/static/img/HomePage/design2.webp',
+        '/static/img/HomePage/design3.webp',
+    ],
+    video: [
+        null,
+        null,
+        null
+    ],
+    template: [
+        null,
+        null,
+        null
+    ],
+    file: [
+        '/static/img/HomePage/file1.webp',
+        '/static/img/HomePage/file2.webp',
+        '/static/img/HomePage/file3.webp',
+    ],
+}
 const CatalogCard = ({ content_type, title, count, items }) => {
     const router = useRouter();
     const [first, second, third, fourth] = items;
@@ -34,20 +67,40 @@ const CatalogCard = ({ content_type, title, count, items }) => {
                 </div>
             </div>
             <div className={styles.cardImageBlock}>
-                <div
+                {/* <div
                     className={styles.cardBlockLeft}
                     style={{
                         backgroundImage: `url(${first?.poster_url ||
                             '/static/img/not-found.png'})`,
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
-                    }}></div>
+                    }}>
+
+                </div> */}
                 <div className={styles.cardBlockRight}>
                     <div className={styles.cardBlockRightTop}>
-                        <div
+                        {/* <div
                             className={styles.cardBlockRightTopLeft}
                             style={{
                                 backgroundImage: `url(${second?.poster_url ||
+                                    '/static/img/not-found.png'})`,
+                                backgroundSize: 'cover',
+                                backgroundPosition: 'center',
+                            }}></div> */}
+                        {cardImages[content_type]?.map(img => 
+                            <div
+                                className={styles.cardBlockRightTopRight}
+                                style={{
+                                    backgroundImage: `url(${img ||
+                                        '/static/img/not-found.png'})`,
+                                    backgroundSize: 'cover',
+                                    backgroundPosition: 'center',
+                                }}></div>
+                        )}
+                        {/* <div
+                            className={styles.cardBlockRightTopRight}
+                            style={{
+                                backgroundImage: `url(${third?.poster_url ||
                                     '/static/img/not-found.png'})`,
                                 backgroundSize: 'cover',
                                 backgroundPosition: 'center',
@@ -59,16 +112,17 @@ const CatalogCard = ({ content_type, title, count, items }) => {
                                     '/static/img/not-found.png'})`,
                                 backgroundSize: 'cover',
                                 backgroundPosition: 'center',
-                            }}></div>
+                            }}></div> */}
                     </div>
-                    <div
+                    {/* <div
                         className={styles.cardBlockRightBottom}
                         style={{
                             backgroundImage: `url(${fourth?.poster_url ||
                                 '/static/img/not-found.png'})`,
                             backgroundSize: 'cover',
                             backgroundPosition: 'center',
-                        }}></div>
+                        }}>
+                    </div> */}
                 </div>
             </div>
         </div>
