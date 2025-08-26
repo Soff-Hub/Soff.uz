@@ -13,7 +13,9 @@ const MyOrderTabs = () => {
     const { query } = useRouter()
 
     useEffect(() => {   
-        setActiveKey(String(query?.tab))
+        if(query?.tab){
+            setActiveKey(String(query?.tab))
+        }
     }, query?.tab)
 
 
