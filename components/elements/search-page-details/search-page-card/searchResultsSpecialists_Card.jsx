@@ -29,9 +29,9 @@ export default function SearchResultsSpecialists_Card({ data }) {
                 <p className='Search_Results_Specialists_Card_status'>
                     {data?.position}
                 </p>
-                {isOnline() && (
+                {isOnline() ? (
                     <Badge color="green" text="Online" />
-                )}
+                ): <Badge color="" text="Ofline" /> }
             </div>
 
             <p className='Search_Results_Specialists_Card_isName'>
