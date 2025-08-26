@@ -74,9 +74,11 @@ const OrderStatus = ({ order }) => {
                         size="large"
                         className="w-100 rounded-0">
                         <span className={styles.unreadChatsWrapper}>
-                            <span className={styles.unreadChats}>
-                                {order?.unread_messages_count}
-                            </span>
+                            {order?.unread_messages_count !== 0 &&
+                                <span className={styles.unreadChats}>
+                                    {order?.unread_messages_count}
+                                </span>
+                            }
                             <MessageOutlined />
                         </span>
                         Chat

@@ -105,7 +105,7 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
             {
                 onSuccess: data => {
                     setResDataCode(data);
-                    if (!order_id) push('/order/my-orders');
+                    if (!order_id) push('/order/my-orders?tab=2');
                     if (onClose) onClose();
                     setOpen(false);
                     queryClient.invalidateQueries(['orders']);
@@ -302,37 +302,37 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
                 </div>
             ),
         },
-        {
-            key: '2',
-            label: (
-                <div className="click">
-                    <img src="/static/img/click.png" alt="" />
-                </div>
-            ),
-            children: (
-                <div className="row mx-auto m-0">
-                    <div className="px-4 rounded click-b">
-                        <form
-                            onSubmit={handleClickCardPostsclick}
-                            className="pt-3 pb-3 d-flex row gap-3">
-                            <div className="col-12 p-0 px-4 my-3">
-                                {message ? (
-                                    <button
-                                        type="submit"
-                                        className="ps-btn w-100 btn_color">
-                                        Davom etish
-                                    </button>
-                                ) : (
-                                    <button className="ps-btn w-100">
-                                        <BeatLoader color="#fff" />
-                                    </button>
-                                )}
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            ),
-        },
+        // {
+        //     key: '2',
+        //     label: (
+        //         <div className="click">
+        //             <img src="/static/img/click.png" alt="" />
+        //         </div>
+        //     ),
+        //     children: (
+        //         <div className="row mx-auto m-0">
+        //             <div className="px-4 rounded click-b">
+        //                 <form
+        //                     onSubmit={handleClickCardPostsclick}
+        //                     className="pt-3 pb-3 d-flex row gap-3">
+        //                     <div className="col-12 p-0 px-4 my-3">
+        //                         {message ? (
+        //                             <button
+        //                                 type="submit"
+        //                                 className="ps-btn w-100 btn_color">
+        //                                 Davom etish
+        //                             </button>
+        //                         ) : (
+        //                             <button className="ps-btn w-100">
+        //                                 <BeatLoader color="#fff" />
+        //                             </button>
+        //                         )}
+        //                     </div>
+        //                 </form>
+        //             </div>
+        //         </div>
+        //     ),
+        // },
     ];
 
     return (
