@@ -28,7 +28,7 @@ const ServiceCard = ({ content_type = 'file', items = {} }) => {
                     style={{
                         backgroundImage: `url(${items.left ||
                             '/static/img/not-found.png'})`,
-                        backgroundSize: 'contain',
+                        backgroundSize: 'cover',
                         backgroundRepeat: 'no-repeat',
                         backgroundPosition: 'center',
                     }}> 
@@ -39,7 +39,7 @@ const ServiceCard = ({ content_type = 'file', items = {} }) => {
                         style={{
                             backgroundImage: `url(${items.rightTop ||
                                 '/static/img/not-found.png'})`,
-                            backgroundSize: 'contain',
+                            backgroundSize: 'cover',
                             backgroundRepeat: 'no-repeat',
                             backgroundPosition: 'center',
                         }}></div>
@@ -48,7 +48,7 @@ const ServiceCard = ({ content_type = 'file', items = {} }) => {
                         style={{
                             backgroundImage: `url(${items.rightBot ||
                                 '/static/img/not-found.png'})`,
-                            backgroundSize: 'contain',
+                            backgroundSize: 'cover',
                             backgroundRepeat: 'no-repeat',
                             backgroundPosition: 'center',
                         }}></div>

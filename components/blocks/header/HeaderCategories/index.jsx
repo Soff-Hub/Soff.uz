@@ -1,7 +1,8 @@
 import React from 'react';
 import styles from './style.module.scss';
 import Image from 'next/image';
-import Link from 'next/link'; 
+import Link from 'next/link';
+import useResponsive from '~/utilities/useResponsive';
 
 const options = {
     products: [
@@ -61,11 +62,13 @@ const options = {
 };
 
 const HeaderCatergories = () => {
+    const { isMobile, isTablet } = useResponsive();
     return (
         <div className={styles.dropBlock}>
             <div className={styles.dropBox}>
                 <p className={styles.dropLabel}>
-                    Mahsulotlar{' '}
+                    <span className="flex-md-fill"> Mahsulotlar</span>
+
                     <Image
                         src="/static/svg/arrowdown.svg"
                         alt="arrow"
@@ -87,9 +90,10 @@ const HeaderCatergories = () => {
                     ))}
                 </ul>
             </div>
+
             <div className={styles.dropBox}>
                 <p className={styles.dropLabel}>
-                    Buyurtma berish{' '}
+                    <span className="flex-md-fill">Buyurtma berish</span>{' '}
                     <Image
                         src="/static/svg/arrowdown.svg"
                         alt="arrow"
