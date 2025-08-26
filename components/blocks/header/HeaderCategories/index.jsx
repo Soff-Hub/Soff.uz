@@ -1,72 +1,61 @@
 import React from 'react';
 import styles from './style.module.scss';
 import Image from 'next/image';
-import Link from 'next/link';
+import Link from 'next/link'; 
 
 const options = {
     products: [
         {
             icon: '/static/svg/book-saved.svg',
             label: 'Ilmiy ishlar',
-            link: '/',
+            link: '/scientific-resources/all?slug=all',
         },
         {
             icon: '/static/svg/3dcube.svg',
             label: '3D moddellar va Interier dizaynlar',
-            link: '/',
+            link: '/3d-models-and-interior-designs/all?slug=all',
         },
         {
             icon: '/static/svg/image.svg',
             label: 'Dizayn shablonlari',
-            link: '/',
+            link: '/design-developments/all?slug=all',
         },
         {
             icon: '/static/svg/monitor.svg',
             label: 'Veb saytlar',
-            link: '/',
+            link: '/websites/all?slug=all',
         },
         {
             icon: '/static/svg/chart.svg',
             label: 'Turli sohalar uchun shablonlar',
-            link: '/',
+            link: '/templates/all?slug=all',
         },
         {
             icon: '/static/svg/video-square.svg',
             label: 'Video darsliklar',
-            link: '/',
+            link: '/video-lessons/all?slug=all',
         },
     ],
     tempates: [
         {
             icon: '/static/svg/book-saved.svg',
             label: 'Ilmiy va Akademik Xizmatlar',
-            link: '/',
+            link: '/orders?direction=scientific_work',
         },
         {
             icon: '/static/svg/image.svg',
             label: 'Dizayn',
-            link: '/',
+            link: '/orders?direction=dizayn',
         },
         {
             icon: '/static/svg/monitor.svg',
             label: 'Veb saytlar',
-            link: '/',
+            link: '/orders?direction=web',
         },
         {
             icon: '/static/svg/3dcube.svg',
             label: '3D Dizayn va Vizualizatsiya',
-            link: '/',
-        },
-
-        {
-            icon: '/static/svg/chart.svg',
-            label: 'Marketing',
-            link: '/',
-        },
-        {
-            icon: '/static/svg/edit.svg',
-            label: 'Biznes',
-            link: '/',
+            link: '/orders?direction=three_d',
         },
     ],
 };

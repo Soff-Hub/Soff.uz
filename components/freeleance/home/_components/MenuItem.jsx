@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styles from '../styles/menuItem.module.scss';
+import { useRouter } from 'next/router';
 
 const option = {
     scientific_work: 'Ilmiy va Akademik Xizmatlar',
@@ -9,14 +10,17 @@ const option = {
     document: 'Shablonlar',
 };
 
-const link = {
-    templates:
-        'scientific-resources/?slug=all&search=&parentCategory=dars-1&childCategory=',
-    orders:
-        'orders?direction=scientific_work&search=&parent_category_id=&category_id=',
+const templateLink = {
+    scientific_work: 'scientific-resources',
+    three_d: '3d-models-and-interior-designs',
+    web: 'websites',
+    dizyn: 'design-developments',
+    document: 'templates',
 };
 
 export const MenuItem = ({ products, templates, label }) => {
+    const router = useRouter(); 
+
     return (
         <div className={styles.menuItem}>
             <button type="button" className={styles.label}>
@@ -27,7 +31,14 @@ export const MenuItem = ({ products, templates, label }) => {
                     <h3 className={styles.sectionLabel}>Buyurtma berish</h3>
                     <ul className={styles.details}>
                         {products.map(item => (
-                            <li key={item.id} className={styles.detail}>
+                            <li
+                                onClick={() => {
+                                    router.push(
+                                        `/orders?direction=${label}&parent_category_id=${item.id}`
+                                    );
+                                }}
+                                key={item.id}
+                                className={styles.detail}>
                                 {item.title}
                             </li>
                         ))}
@@ -37,7 +48,14 @@ export const MenuItem = ({ products, templates, label }) => {
                     <h3 className={styles.sectionLabel}>Tayyor mahsulotlar</h3>
                     <ul className={styles.details}>
                         {templates.map(item => (
-                            <li key={item.id} className={styles.detail}>
+                            <li
+                                onClick={() => {
+                                    router.push(
+                                        `/${templateLink[label]}/${item.slug}?slug=${item.slug}&search=&parentCategory=${item.slug}`
+                                    );
+                                }}
+                                key={item.id}
+                                className={styles.detail}>
                                 {item.title}
                             </li>
                         ))}

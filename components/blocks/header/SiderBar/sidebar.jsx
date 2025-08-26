@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import styles from './style.module.scss';
-import { CloseOutlined } from '@ant-design/icons';
+import { CaretRightOutlined, CloseOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import useNavCategories from '~/components/freeleance/chat/api/useNavCatergories';
 import SideBarItem from './sidebarItem';
-import { Drawer } from 'antd';
-const data = [
+import { Collapse, Drawer } from 'antd';
+const datas = [
     {
         direction: 'Web Dasturlash',
         freelance_categories: [
@@ -138,30 +138,74 @@ const data = [
     },
 ];
 
+const option = {
+    scientific_work: 'Ilmiy va Akademik Xizmatlar',
+    three_d: '3D Dizayn va Vizualizatsiya',
+    web: 'Dasturlash xizmatlari',
+    dizyn: 'Dizayn',
+    document: 'Shablonlar',
+};
+
 const SideBar = () => {
     const [open, setOpen] = useState(false);
-    const { isLoading } = useNavCategories();
-
-    
+    const { data, isLoading } = useNavCategories();
+    const panelStyle = {
+        background: '#fff',
+        padding: '0px',
+    };
+    const getItems = (items, onClick) =>
+        items &&
+        items.map(item => ({
+            key: item.id,
+            label: option[item.direction],
+            children: (
+                <SideBarItem
+                    products={item.freelance_categories}
+                    templates={item.soff_categories}
+                    direction={item.direction}
+                    onClick={onClick}
+                />
+            ),
+            style: panelStyle,
+        }));
 
     return (
         <div className=" d-lg-none position-relative">
             <button onClick={() => setOpen(true)} className={styles.barIcon}>
                 <i className="fa-solid fa-bars-staggered"></i>
             </button>
-            <Drawer style={{padding:'0px'}}  placement="left" onClose={() => setOpen(false)} open={open}>
+            <Drawer
+                style={panelStyle}
+                placement="left"
+                closeIcon={
+                    <>
+                        <div className="d-flex justify-content-between">
+                            <span>&nbsp;</span>
+                            <CloseOutlined className=" align-self-end" />
+                        </div>
+                    </>
+                }
+                onClose={() => setOpen(false)}
+                open={open}>
                 <div className="  overflow-auto p-0">
-                    {data?.map(item => (
-                        <SideBarItem
-                            products={item.freelance_categories}
-                            templates={item.soff_categories}
-                            label={item.direction}
-                        />
-                    ))}
+                    <Collapse
+                        style={{ backgroundColor: '#fff' }}
+                        bordered={false}
+                        defaultActiveKey={['1']}
+                        expandIcon={({ isActive }) => (
+                            <CaretRightOutlined rotate={isActive ? 90 : 0} />
+                        )}
+                        items={getItems(data, () => setOpen(false))}
+                    />
                 </div>
             </Drawer>
         </div>
     );
 };
+// <SideBarItem
+//     products={item.freelance_categories}
+//     templates={item.soff_categories}
+//     label={item.direction}
+// />
 
 export default SideBar;
