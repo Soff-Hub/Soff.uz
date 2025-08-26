@@ -10,6 +10,8 @@ const useNavCategories = () => {
       );
       return response.data
     },
+    staleTime: 1000 * 60 * 10,
+    cacheTime: 1000 * 60 * 10,
   });
 }
 
