@@ -56,7 +56,7 @@ const ServiceCard = ({ content_type = 'file', items = {} }) => {
             </div>
             <div className="d-flex flex-column flex-fill">
                 <h3 className={styles.cardTile}>{title[content_type]}</h3>
-                <p className={styles.cardSubTitle}>200+ mahsulot</p>
+                {/* <p className={styles.cardSubTitle}>200+ mahsulot</p> */}
             </div>
         </div>
     );

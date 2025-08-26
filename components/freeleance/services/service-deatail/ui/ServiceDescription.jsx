@@ -154,7 +154,7 @@ const ServiceDescription = ({ description = {}, priceBox = {} }) => {
                         <>
                             <div className="d-flex justify-content-between align-items-center mb-4">
                                 <h3 className="type_payment_h3 mb-0">
-                                    To'lov turini tanlang:
+                                    {/* To'lov turini tanlang: */}
                                 </h3>
                                 <Button
                                     type="text"

@@ -4,11 +4,19 @@ import { MoreOutlined } from '@ant-design/icons';
 import { AllOrdersTable } from './MyOrderTable';
 import useOrdersStatus from './api/useOrderStatus';
 import Loader from '~/components/shared/loader';
+import { useRouter } from 'next/router';
 
 const MyOrderTabs = () => {
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 500);
     const [activeKey, setActiveKey] = useState('1');
     const { data, isLoading } = useOrdersStatus();
+    const { query } = useRouter()
+
+    useEffect(() => {   
+        setActiveKey(String(query?.tab))
+    }, query?.tab)
+
+
 
     useEffect(() => {
         const handleResize = () => {
@@ -18,6 +26,8 @@ const MyOrderTabs = () => {
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
+
+
 
     const items = [
         {
