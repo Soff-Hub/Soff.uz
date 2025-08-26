@@ -184,10 +184,10 @@ const ModelAndDesignProduct = ({ product }) => {
                         </p>
                     }
                     {product?.document?.file_size &&
-                        <p><i class="fas fa-database"></i>{product?.document?.file_size}</p>
+                        <p><i className="fas fa-database"></i>{product?.document?.file_size}</p>
                     }
                     {product?.document?.page_count &&
-                        <p><i class="fas fa-copy"></i>{product?.document?.page_count}</p>
+                        <p><i className="fas fa-copy"></i>{product?.document?.page_count}</p>
                     }
                     {product?.views_count !== 0 &&
                         <p><i className='fa-solid fa-eye'></i>{product?.views_count}</p>

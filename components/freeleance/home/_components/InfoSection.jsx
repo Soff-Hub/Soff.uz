@@ -39,6 +39,7 @@ const InfoSection = () => {
             <div className={styles.stepsSection}>
                 {steps.map(step => (
                     <InfoCard
+                        key={step.title}
                         id={step.id}
                         title={step.title}
                         subtitle={step.description}

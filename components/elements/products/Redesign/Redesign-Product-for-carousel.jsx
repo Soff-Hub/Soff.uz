@@ -13,7 +13,7 @@ const RedesignProductCardForcarousel = ({ product }) => {
     const { setCartOneItem, removeCartOneItem } = useCart();
     const [basket, setBasket] = useState(false);
 
-    function handleAddItemToCart (e) {
+    function handleAddItemToCart(e) {
         showModal();
         e.preventDefault();
         if (basket) {
@@ -25,7 +25,7 @@ const RedesignProductCardForcarousel = ({ product }) => {
         setBasket(prev => !prev); // Holatni almashtirish
     }
 
-    function handleAddItemToWishlist (e) {
+    function handleAddItemToWishlist(e) {
         e.preventDefault();
         addSavedItem(product.id);
         if (wishlist?.find(item => item.id === product?.id)) {
@@ -47,21 +47,21 @@ const RedesignProductCardForcarousel = ({ product }) => {
     };
 
     return (
-        <div className='scientificResourcesCardForcarousel'>
-            <Link href='/product/[pid]' as={`/product/${product.slug}`}>
-                <div className='scientificResourcesCardImgBox'>
+        <div className="scientificResourcesCardForcarousel">
+            <Link href="/product/[pid]" as={`/product/${product.slug}`}>
+                <div className="scientificResourcesCardImgBox">
                     <img
-                        src={product.poster_url}
-                        alt=''
-                        className='scientificResourcesCardImg'
+                        src={product.poster_url || '/static/img/not-found.png'}
+                        alt=""
+                        className="scientificResourcesCardImg"
                     />
                 </div>
             </Link>
             <a
-                className='scientificResourcesCardHeard'
-                href='#'
-                data-toggle='tooltip'
-                data-placement='top'
+                className="scientificResourcesCardHeard"
+                href="#"
+                data-toggle="tooltip"
+                data-placement="top"
                 title="Tanlanganlarga qo'shish"
                 onClick={handleAddItemToWishlist}>
                 <img
@@ -72,22 +72,22 @@ const RedesignProductCardForcarousel = ({ product }) => {
                             ? '/static/img/heart-full.svg'
                             : '/static/img/heart.svg'
                     } `}
-                    alt=''
+                    alt=""
                 />
             </a>
-            <div className='scientificResourcesCardBody'>
+            <div className="scientificResourcesCardBody">
                 <Link
-                    href='/product/[pid]'
-                    className='p-0'
+                    href="/product/[pid]"
+                    className="p-0"
                     as={`/product/${product.slug}`}>
-                    <p className='scientificResourcesCardTitle'>
+                    <p className="scientificResourcesCardTitle">
                         {product.title.slice(0, 35)}
                     </p>
                 </Link>
-                <div className='scientificResourcesCardPriceBox'>
-                    <div className='scientificResourcesCardPrice'>
+                <div className="scientificResourcesCardPriceBox">
+                    <div className="scientificResourcesCardPrice">
                         {+product.discount_price === 0 ? (
-                            <p className='free-product-text'>Bepul</p>
+                            <p className="free-product-text">Bepul</p>
                         ) : product.discount === 0 ? (
                             <p>
                                 {addPeriodToThousands(product.discount_price)}{' '}
@@ -108,9 +108,9 @@ const RedesignProductCardForcarousel = ({ product }) => {
                         )}
                     </div>
                     <a
-                        href='#'
-                        data-toggle='tooltip'
-                        data-placement='top'
+                        href="#"
+                        data-toggle="tooltip"
+                        data-placement="top"
                         title="Savatga qo'shish"
                         onClick={handleAddItemToCart}>
                         <img
@@ -119,15 +119,15 @@ const RedesignProductCardForcarousel = ({ product }) => {
                                     ? '/static/img/cart.svg'
                                     : '/static/img/cart-outlet.svg'
                             }
-                            alt=''
-                            className='scientificBuyIcon'
+                            alt=""
+                            className="scientificBuyIcon"
                         />
                     </a>
                 </div>
             </div>
 
             <Modal
-                title='Muvaffaqqiyatli'
+                title="Muvaffaqqiyatli"
                 open={open}
                 onOk={hideModalOk}
                 onCancel={hideModal}
@@ -142,7 +142,7 @@ const RedesignProductCardForcarousel = ({ product }) => {
                     },
                 }}
                 okText="Savatga o'tish"
-                cancelText='Xaridlarni davom etirish'>
+                cancelText="Xaridlarni davom etirish">
                 <p></p>
                 <p>Mahsulotingizni savatga qo'shdingiz!</p>
                 <p></p>

@@ -40,14 +40,14 @@ const Header = () => {
             <div className={`header-bottom top-0 bg-white`}>
                 <div className="container">
                     <HeaderTop />
-                    <div className=" px-lg-0 pt-lg-2">
+                    <div className="">
                         <div className="header-inner">
                             <HeaderLogo mode={'dark'} />
                             <HeaderActions isDark={true} />
                         </div>
                     </div>
                 </div>
-                {/* {!isMobile && <NavbarMenu />} */}
+                {!isMobile && <NavbarMenu />}
             </div>
             <div
                 className="bg-white"

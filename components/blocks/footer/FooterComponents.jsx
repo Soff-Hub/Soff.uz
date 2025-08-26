@@ -86,7 +86,7 @@ export default function FooterComponents() {
                     Tayyor mahsulotlar va xizmatlar bir joyda
                 </a>
 
-                <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 mb-5">
+                <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 p-0 mb-5">
                     {footerMenu.contactModeration.items.map((item, i) => (
                         <a
                             target="_blank"
@@ -99,7 +99,7 @@ export default function FooterComponents() {
                 </div>
 
                 {/* Xizmatlar bo‘limi */}
-                <div className="col-xl-3 text-white col-lg-3 col-md-6 col-sm-12 col-12">
+                <div className="col-xl-3 text-white col-lg-3 col-md-6 p-0 col-sm-12 col-12">
                     <h5 className="fw-semibold fs-2 text-white">Aloqa</h5>
                     {footerMenu.services.links.map((link, i) => (
                         <p
@@ -115,8 +115,7 @@ export default function FooterComponents() {
                 <img
                     src="/static/img/soff_green.png"
                     alt="logo"
-                    className="mb-5"
-                    style={{ width: '192px' }}
+                    className={styles.footerLogo}
                 />
                 <div className="d-flex gap-4 align-items-center">
                     {footerMenu.social.items.map((item, i) => (
@@ -127,7 +126,7 @@ export default function FooterComponents() {
                             className=" ">
                             <img
                                 src={item.icon}
-                                style={{ width: '50px', height: '50px' }}
+                                style={{ width: '40px', height: '40px' }}
                             />
                         </a>
                     ))}

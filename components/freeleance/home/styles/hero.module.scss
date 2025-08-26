@@ -1,6 +1,6 @@
 @import '/scss/utils/variable';
 .heroMainBlock {
-    padding-top: 120px ;
+    padding-top: 120px;
     display: flex;
     gap: 50px;
     align-items: center;
@@ -41,7 +41,8 @@
                     display: flex;
                     align-items: center;
                     gap: 10px;
-                    border: 1px solid #d2d2d2;
+                    box-sizing: border-box;
+                    border: 1px solid #00a44f;
                 }
 
                 .activeHeroBtn {
@@ -52,6 +53,7 @@
                     border-radius: 10px;
                     font-weight: 600;
                     cursor: pointer;
+                    border: 1px solid #00a44f;
                     display: flex;
                     align-items: center;
                     gap: 10px;
@@ -72,6 +74,7 @@
                 font-size: 15px;
                 outline: none;
                 border: none;
+                background-color: #fff !important;
                 width: 100% !important;
                 margin-left: 9px;
                 margin-top: 5px;
@@ -141,10 +144,10 @@
 /* Large Tablets (≤1200px) */
 @media (max-width: 1200px) {
     .heroMainBlock {
-        padding: 40px 0 0 0 ;
+        padding: 40px 0 0 0;
         flex-direction: column;
 
-        .heroRow {
+        .heroInfoSection {
             .heroTitle {
                 font-size: 48px;
             }
@@ -161,15 +164,7 @@
             }
         }
         .heroCardSection {
-            .cardWrapperOne {
-                flex-direction: row;
-                flex: 1;
-            }
-            .cardWrapperTwo {
-                flex-direction: row;
-                flex: 1;
-                margin: 0px;
-            }
+            display: none;
         }
     }
 }
@@ -177,13 +172,23 @@
 /* Tablets (≤992px) */
 @media (max-width: 992px) {
     .heroMainBlock {
-        .heroRow {
+        .heroInfoSection {
             .heroTitle {
                 font-size: 28px;
             }
 
             .heroParagraph {
                 font-size: 16px;
+            }
+
+            .heroButtons {
+                .heroFilterButtons {
+                    .heroBtn,
+                    .activeHeroBtn {
+                        padding: 5px 8px !important;
+                        font-size: 14px;
+                    }
+                }
             }
 
             .bgBlob {
@@ -200,7 +205,7 @@
     .heroMainBlock {
         flex-direction: column;
 
-        .heroRow {
+        .heroInfoSection {
             .heroTitle {
                 font-size: 36px;
             }
@@ -215,24 +220,7 @@
                 top: 50px;
                 right: 30px;
             }
-        }
-        .heroCardSection {
-            display: flex;
-            width: 100%;
-            gap: 15px;
-            .cardWrapperOne {
-                flex: 1;
-                display: flex;
-                flex-direction: column;
-                gap: 15px;
-            }
-            .cardWrapperTwo {
-                flex: 1;
-                display: flex;
-                flex-direction: column;
-                gap: 15px;
-            }
-        }
+        } 
     }
 }
 
@@ -254,23 +242,13 @@
                     display: flex;
                     .heroBtn,
                     .activeHeroBtn {
-                        font-size: 14px !important;
+                        flex: 1;
+                        font-size: 12px !important;
                         justify-content: center;
                     }
                 }
             }
-        }
-        .heroCardSection {
-            gap: 10px;
-            .cardWrapperTwo {
-                margin: 0px;
-                gap: 10px;
-            }
-            .cardWrapperOne {
-                margin: 0px;
-                gap: 10px;
-            }
-        }
+        } 
     }
 }
 
@@ -291,7 +269,6 @@
                     // flex-direction: column;
                     .heroBtn,
                     .activeHeroBtn {
-                        font-size: 10px !important;
                         justify-content: center;
                     }
                 }
