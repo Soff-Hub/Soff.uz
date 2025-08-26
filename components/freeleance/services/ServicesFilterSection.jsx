@@ -42,21 +42,22 @@ const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
 
     useEffect(() => {
         const delay = setTimeout(() => {
-            updateQuery({
+            const newQuery = {
                 ...router.query,
                 search: searchValue || undefined,
                 direction: selectedDirection || undefined,
                 parent_category_id: selectedParentCategory || undefined,
                 category_id: selectedChildCategory || undefined,
-            });
+            };
+
+            // faqat query farq qilsa update
+            if (JSON.stringify(newQuery) !== JSON.stringify(router.query)) {
+                updateQuery(newQuery);
+            }
         }, 800);
+
         return () => clearTimeout(delay);
-    }, [
-        searchValue,
-        selectedDirection,
-        selectedParentCategory,
-        selectedChildCategory,
-    ]);
+    }, [searchValue, selectedDirection, selectedParentCategory, selectedChildCategory]);
 
     const updateDirection = value => {
         setSelectedDirection(value);

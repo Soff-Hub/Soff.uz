@@ -138,6 +138,7 @@
 
 .filter {
     position: relative;
+    width: 100%;
 
     &::after {
         content: '';
@@ -175,13 +176,13 @@
 
 
 .carousel {
-    margin: 0 40px;
+    padding: 0 40px;
 
     @media (max-width: 768px){
-        margin: 20px;
+        padding: 0 20px;
     }
 
     @media (max-width: 480px){
-        margin: 5px;
+        padding: 0 5px;
     }
 }

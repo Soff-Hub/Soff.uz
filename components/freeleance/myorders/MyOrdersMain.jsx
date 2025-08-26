@@ -20,7 +20,7 @@ const MyOrdersMain = () => {
                 <h1 className="fs-1 m-0">Mening buyurtmalarim</h1>
                 <span className="fs-3">
                     Balance -{' '}
-                    {Number(data?.wallet || 0).toLocaleString('en-US')} o'm
+                    {Number(data?.wallet || 0).toLocaleString('en-US')} so'm
                 </span>
             </div>
             <MyOrderTabs />
