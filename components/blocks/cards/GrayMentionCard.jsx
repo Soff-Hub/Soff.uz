@@ -17,7 +17,7 @@ const GrayMentionCard = ({
                     {btn}{' '}
                     <i
                         style={{ marginLeft: '12px' }}
-                        class="fa-solid fa-arrow-right"></i>
+                        className="fa-solid fa-arrow-right"></i>
                 </a>
             </div>
         </section>

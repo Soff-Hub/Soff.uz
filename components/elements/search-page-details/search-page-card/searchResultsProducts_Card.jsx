@@ -85,7 +85,7 @@ export default function SearchResultsProducts_Card({ product }) {
                     className='Search_Results_Products_card_info'>
                         <div>
                             <p className='Search_Results_Products_card_price'>
-                                <i class="fas fa-money-bill price_icon"></i>
+                                <i className="fas fa-money-bill price_icon"></i>
                                 <span className='Search_Results_Products_card_price_boldspan'>
                                     {addPeriodToThousands(product.discount_price)}
                                 </span>
@@ -106,13 +106,13 @@ export default function SearchResultsProducts_Card({ product }) {
                                 </span>
                             </p>
                             <p className='Search_Results_Products_card_price '>
-                                <i class="fas fa-copy file_icon "></i>
+                                <i className="fas fa-copy file_icon "></i>
                                 <span className='Search_Results_Products_card_price_boldspan'>
                                     {product?.page_count}
                                 </span>
                             </p>
                             <p className='Search_Results_Products_card_price '>
-                                    <i class="fas fa-database price_icon "></i>
+                                    <i className="fas fa-database price_icon "></i>
                                 <span className='Search_Results_Products_card_price_boldspan'>
                                     {product?.file_size}
                                 </span>

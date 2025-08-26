@@ -1,6 +1,6 @@
-import React from 'react'
-import styles from "../styles/LastProducts.module.scss"
-import { useGet } from '~/repositories/https'
+import React from 'react';
+import styles from '../styles/LastProducts.module.scss';
+import { useGet } from '~/repositories/https';
 import ProductCard from '../ui/ProductCard';
 import { useRouter } from 'next/router';
 
@@ -40,7 +40,11 @@ const LastProducts = () => {
     return (
         <section className={styles.wrapper}>
             <div className={styles.titleWrapper}>
-                <img src="/static/img/HomePage/icon.png" alt="badge" className={styles.badge} />
+                <img
+                    src="/static/img/star.svg"
+                    alt="badge"
+                    className={styles.badge}
+                />
                 <h1>So’ngi yuklangan mahsulotlar</h1>
             </div>
             <div className={styles.productBox}>
@@ -50,7 +54,7 @@ const LastProducts = () => {
                         <div className='col p-2'>
                             <ProductCard product={p} />
                         </div>
-                    )}
+                    ))}
                 </div>
             </div>
             <div className={styles.productBox}>
@@ -60,7 +64,7 @@ const LastProducts = () => {
                         <div className='col p-2'>
                             <ProductCard product={p} />
                         </div>
-                    )}
+                    ))}
                 </div>
             </div>
             <div className={styles.productBox}>
@@ -70,7 +74,7 @@ const LastProducts = () => {
                         <div className='col p-2'>
                             <ProductCard product={p} />
                         </div>
-                    )}
+                    ))}
                 </div>
             </div>
             <div className={styles.productBox}>
@@ -80,7 +84,7 @@ const LastProducts = () => {
                         <div className='col p-2'>
                             <ProductCard product={p} />
                         </div>
-                    )}
+                    ))}
                 </div>
             </div>
             <div className={styles.productBox}>
@@ -90,7 +94,7 @@ const LastProducts = () => {
                         <div className='col p-2'>
                             <ProductCard product={p} />
                         </div>
-                    )}
+                    ))}
                 </div>
             </div>
             <div className={styles.productBox}>
@@ -100,11 +104,11 @@ const LastProducts = () => {
                         <div className='col p-2'>
                             <ProductCard product={p} />
                         </div>
-                    )}
+                    ))}
                 </div>
             </div>
         </section>
-    )
-}
+    );
+};
 
-export default LastProducts
+export default LastProducts;

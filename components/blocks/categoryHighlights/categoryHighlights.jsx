@@ -5,15 +5,15 @@ import DesignDevelopmentSwipper from './swiperItems/DesignDevelopmentSwipper';
 import VideoLessonsSwipper from './swiperItems/videoLessonsSwipper';
 import TemplatesSwipper from './swiperItems/templatesSwipper';
 
-export default function CategoryHighlights() {
+export default function CategoryHighlights () {
     return (
-        <div className="mt-1">
-            <div className="container  p-0">
-                <ScientificResourcesSwipper />
-                <ModelsAndInteriorDesignSwipper />
-                <DesignDevelopmentSwipper />
-                <VideoLessonsSwipper />
-                <TemplatesSwipper />
+        <div className='mt-1'>
+            <div className='container  p-0'>
+                    <ScientificResourcesSwipper />
+                    <ModelsAndInteriorDesignSwipper />
+                    <DesignDevelopmentSwipper />
+                    <VideoLessonsSwipper />
+                    <TemplatesSwipper />
             </div>
         </div>
     );

@@ -148,19 +148,19 @@ function FileActions({ product }) {
                 </div>
                 <ul className='fs-2 p-0 d-flex flex-column gap-3' style={{ listStyle: "none" }}>
                     {(product?.sold_count > 0) && <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
-                        <span><i class="fas fa-shopping-bag" style={{ color: '#00a44f' }}></i> Mahsulotni sotilgan soni:</span> <span>{product?.sold_count} ta</span>
+                        <span><i className="fas fa-shopping-bag" style={{ color: '#00a44f' }}></i> Mahsulotni sotilgan soni:</span> <span>{product?.sold_count} ta</span>
                     </li>}
                     {product?.document?.content_duration && <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
-                        <span><i class="fas fa-stopwatch" style={{ color: '#00a44f' }}></i> Video davomiyligi:</span> <span>
+                        <span><i className="fas fa-stopwatch" style={{ color: '#00a44f' }}></i> Video davomiyligi:</span> <span>
                             {' '}
                             {product?.document?.content_duration}
                         </span>
                     </li>}
                     {product?.document?.page_count && <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
-                        <span><i class="fas fa-copy" style={{ color: '#00a44f' }}></i> Betlar soni:</span> <span>{product?.document?.page_count} ta</span>
+                        <span><i className="fas fa-copy" style={{ color: '#00a44f' }}></i> Betlar soni:</span> <span>{product?.document?.page_count} ta</span>
                     </li>}
                     {product?.document?.file_size && <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
-                        <span>	<i class="fas fa-database" style={{ color: '#00a44f' }}></i> Fayl hajmi :</span>  <span>{product?.document?.file_size}</span>
+                        <span>	<i className="fas fa-database" style={{ color: '#00a44f' }}></i> Fayl hajmi :</span>  <span>{product?.document?.file_size}</span>
                     </li>}
                     {product?.document?.file_type && <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
                         <span><i className={`fas ${fileIcons[product?.document?.file_type] || "fa-file-archive"}`} style={{ color: '#00a44f' }}></i> Fayl turi:</span> <span

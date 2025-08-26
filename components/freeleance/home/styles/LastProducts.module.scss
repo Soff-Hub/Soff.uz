@@ -1,7 +1,17 @@
-.wrapper{
-    padding: 80px 0;
-}
+.wrapper {
+    padding: 30px 0;
+    padding-top: 400px;
 
+    @media (max-width: 1200px) {
+        padding-top: 300px;
+    }
+    @media (max-width: 768px) {
+        padding-top: 230px;
+    }
+    @media (max-width: 576px) {
+        padding-top: 50px;
+    }
+}
 
 .titleWrapper {
     display: flex;
@@ -9,6 +19,10 @@
     gap: 6px;
     justify-content: flex-start;
     margin-bottom: 20px;
+
+    @media (max-width: 1200px) {
+        justify-content: center;
+    }
 
     @media (max-width: 992px) {
         justify-content: center;
@@ -27,7 +41,7 @@
     h1 {
         font-size: 40px;
         font-weight: 600;
-        color: #24282B;
+        color: #24282b;
         line-height: 1.3;
 
         @media (max-width: 1200px) {
@@ -49,13 +63,13 @@
     }
 }
 
-.productBox{
+.productBox {
     margin-bottom: 20px;
-    h3{
+    h3 {
         font-weight: 600;
         font-size: 24px;
         line-height: 100%;
-        color: #24282B;
+        color: #24282b;
         margin-bottom: 15px;
         cursor: pointer;
         transition: all .4s ;
@@ -63,5 +77,26 @@
         &:hover{
             color: #00a44f;
         }
+    }
+}
+
+.cardWrapper {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* <= 480px: 1 ta */
+    gap: 5px;
+
+    @media (max-width: 1200px) {
+        grid-template-columns: repeat(4, 1fr); /* >= 992px: 4 ta */
+        gap: 5px;
+    }
+
+    @media (max-width: 992px) {
+        grid-template-columns: repeat(3, 1fr); /* >= 992px: 4 ta */
+        gap: 5px;
+    } 
+
+    @media (max-width: 576px) {
+        grid-template-columns: repeat(2, 1fr); /* >= 992px: 4 ta */
+        gap: 5px;
     }
 }

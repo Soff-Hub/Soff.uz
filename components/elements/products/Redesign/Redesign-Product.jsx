@@ -47,83 +47,100 @@ const RedesignProduct = ({ product }) => {
         Router.push('/account/shopping-cart');
     };
 
+    console.log('product', product);
+
     return (
-        <div className='scientificResourcesCard'>
-            <Link href='/product/[pid]' as={`/product/${product.slug}`}>
-                <div className='scientificResourcesCardImgBox'>
+        <div className="scientificResourcesCard">
+            <Link href="/product/[pid]" as={`/product/${product?.slug}`}>
+                <div className="scientificResourcesCardImgBox">
                     <img
-                        src={product.poster_url}
-                        alt=''
-                        className='scientificResourcesCardImg'
+                        src={'/static/img/not-found.png'}
+                        alt=""
+                        className="scientificResourcesCardImg"
                     />
                 </div>
             </Link>
             <a
-                className='scientificResourcesCardHeard'
-                href='#'
-                data-toggle='tooltip'
-                data-placement='top'
+                className="scientificResourcesCardHeard"
+                href="#"
+                data-toggle="tooltip"
+                data-placement="top"
                 title="Tanlanganlarga qo'shish"
                 onClick={handleAddItemToWishlist}>
                 <img
-                    src={`${wishlist?.some(
-                        item => Number(item.id) === Number(product?.id)
-                    )
-                        ? '/static/img/heart-full.svg'
-                        : '/static/img/heart.svg'
-                        } `}
-                    alt=''
+                    src={`${
+                        wishlist?.some(
+                            item => Number(item.id) === Number(product?.id)
+                        )
+                            ? '/static/img/heart-full.svg'
+                            : '/static/img/heart.svg'
+                    } `}
+                    alt=""
                 />
             </a>
 
-            {product?.document?.file_type &&
-                <div className='scientificResourcesCardView'>
-
+            {product?.document?.file_type && (
+                <div className="scientificResourcesCardView">
                     <p
-                        className='scientificResourcesCardFileType'
-                        style={{ backgroundColor: fileColors[product?.document?.file_type] || '#007DFF', }}
-                    >
+                        className="scientificResourcesCardFileType"
+                        style={{
+                            backgroundColor:
+                                fileColors[product?.document?.file_type] ||
+                                '#007DFF',
+                        }}>
                         {product?.document?.file_type}
                     </p>
                 </div>
-            }
+            )}
 
-            <div className='scientificResourcesCardBody'>
+            <div className="scientificResourcesCardBody">
                 <Link
-                    href='/product/[pid]'
-                    className='p-0'
+                    href="/product/[pid]"
+                    className="p-0"
                     as={`/product/${product.slug}`}>
-                    <p className='scientificResourcesCardTitle'>
+                    <p className="scientificResourcesCardTitle">
                         {product.title}
                     </p>
                 </Link>
                 <div>
-                    <div className='scientificResourcesCardOptions'>
-                        {product?.document?.file_size &&
-                            <p><i class="fas fa-database"></i>{product?.document?.file_size}</p>
-                        }
-                        {product?.document?.page_count &&
-                            <p><i class="fas fa-copy"></i>{product?.document?.page_count}</p>
-                        }
-                        {product?.views_count !== 0 &&
-                            <p><i className='fa-solid fa-eye'></i>{product?.views_count}</p>
-                        }
+                    <div className="scientificResourcesCardOptions">
+                        {product?.document?.file_size && (
+                            <p>
+                                <i className="fas fa-database"></i>
+                                {product?.document?.file_size}
+                            </p>
+                        )}
+                        {product?.document?.page_count && (
+                            <p>
+                                <i className="fas fa-copy"></i>
+                                {product?.document?.page_count}
+                            </p>
+                        )}
+                        {product?.views_count !== 0 && (
+                            <p>
+                                <i className="fa-solid fa-eye"></i>
+                                {product?.views_count}
+                            </p>
+                        )}
                     </div>
-                    <div className='scientificResourcesCardPriceBox'>
-                        <div className='scientificResourcesCardPrice'>
+                    <div className="scientificResourcesCardPriceBox">
+                        <div className="scientificResourcesCardPrice">
                             {+product.discount_price === 0 ? (
-                                <p className='free-product-text'>Bepul</p>
+                                <p className="free-product-text">Bepul</p>
                             ) : product.discount === 0 ? (
-                                <p className='scientificResourcesCardPrice_discount_price'>
-                                    {addPeriodToThousands(product.discount_price)}{' '}
+                                <p className="scientificResourcesCardPrice_discount_price">
+                                    {addPeriodToThousands(
+                                        product.discount_price
+                                    )}{' '}
                                     so'm
-                                </p >
+                                </p>
                             ) : (
                                 <>
-                                    <del className='scientificResourcesCardPrice_discount_price'>
-                                        {addPeriodToThousands(product.price)} so'm
+                                    <del className="scientificResourcesCardPrice_discount_price">
+                                        {addPeriodToThousands(product.price)}{' '}
+                                        so'm
                                     </del>
-                                    <p className='scientificResourcesCardPrice_discount_price'>
+                                    <p className="scientificResourcesCardPrice_discount_price">
                                         {addPeriodToThousands(
                                             product.discount_price
                                         )}
@@ -133,10 +150,10 @@ const RedesignProduct = ({ product }) => {
                             )}
                         </div>
                         <a
-                            className='scientificBuyIconBox'
-                            href='#'
-                            data-toggle='tooltip'
-                            data-placement='top'
+                            className="scientificBuyIconBox"
+                            href="#"
+                            data-toggle="tooltip"
+                            data-placement="top"
                             title="Savatga qo'shish"
                             onClick={handleAddItemToCart}>
                             <img
@@ -145,8 +162,8 @@ const RedesignProduct = ({ product }) => {
                                         ? '/static/img/cart.svg'
                                         : '/static/img/cart-outlet.svg'
                                 }
-                                alt=''
-                                className='cart-img'
+                                alt=""
+                                className="cart-img"
                             />
                         </a>
                     </div>
@@ -154,7 +171,7 @@ const RedesignProduct = ({ product }) => {
             </div>
 
             <Modal
-                title='Muvaffaqqiyatli'
+                title="Muvaffaqqiyatli"
                 open={open}
                 onOk={hideModalOk}
                 onCancel={hideModal}
@@ -169,7 +186,7 @@ const RedesignProduct = ({ product }) => {
                     },
                 }}
                 okText="Savatga o'tish"
-                cancelText='Xaridlarni davom etirish'>
+                cancelText="Xaridlarni davom etirish">
                 <p></p>
                 <p>Mahsulotingizni savatga qo'shdingiz!</p>
                 <p></p>
