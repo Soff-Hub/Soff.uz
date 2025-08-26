@@ -1,120 +1,32 @@
 import React, { useState } from 'react';
 import styles from '../styles/navbarmenu.module.scss';
 import { MenuItem } from '../_components/MenuItem';
-import { useQuery } from '@tanstack/react-query';
+import useNavCategories from '../../chat/api/useNavCatergories';
 
-const items = [
-    {
-        label: 'Ilmiy ishlar',
-        items: {
-            orders: [
-                {
-                    label: 'Slaydlar',
-                    slug: 'name',
-                },
-                {
-                    label: 'Referatlar',
-                    slug: 'fullname',
-                },
-                {
-                    label: 'Ilmiy ishlar',
-                    slug: 'username',
-                },
-            ],
-            templates: [
-                {
-                    label: 'Cards',
-                    slug: 'card',
-                },
-                {
-                    label: 'Elements',
-                    slug: 'elements',
-                },
-                {
-                    label: 'Designs',
-                    slug: 'designs',
-                },
-            ],
-        },
-    },
-    {
-        label: 'Dizayn ishlar',
-        items: {
-            orders: [
-                {
-                    label: 'Logo',
-                    slug: 'name',
-                },
-                {
-                    label: 'Smm',
-                    slug: 'fullname',
-                },
-                {
-                    label: 'Animatsiyalar',
-                    slug: 'username',
-                },
-            ],
-            templates: [
-                {
-                    label: 'Cards',
-                    slug: 'card',
-                },
-                {
-                    label: 'Elements',
-                    slug: 'elements',
-                },
-                {
-                    label: 'Designs',
-                    slug: 'designs',
-                },
-            ],
-        },
-    },
-    {
-        label: '3D ishlar',
-        items: {
-            orders: [
-                {
-                    label: 'Modellar',
-                    slug: 'name',
-                },
-                {
-                    label: 'Interior',
-                    slug: 'fullname',
-                },
-                {
-                    label: 'Exterior',
-                    slug: 'username',
-                },
-            ],
-            templates: [
-                {
-                    label: 'Cards',
-                    slug: 'card',
-                },
-                {
-                    label: 'Elements',
-                    slug: 'elements',
-                },
-                {
-                    label: 'Designs',
-                    slug: 'designs',
-                },
-            ],
-        },
-    },
-];
 const NavbarMenu = () => {
+    const { data, isLoading } = useNavCategories();
+
+    if (isLoading && !data) return null;
+    // console.log('data', data);
+
     return (
-        <nav className={styles.navSectionBlock}>
-            <div className="container">
-                <div className={styles.navbarWrapper}>
-                    {items.map(item => (
-                        <MenuItem items={item.items} label={item.label} />
-                    ))}
-                </div>
-            </div>
-        </nav>
+        <>
+            {data && (
+                <nav className={styles.navSectionBlock}>
+                    <div className="container">
+                        <div className={styles.navbarWrapper}>
+                            {data?.map(item => (
+                                <MenuItem
+                                    products={item.freelance_categories}
+                                    templates={item.soff_categories}
+                                    label={item.direction}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                </nav>
+            )}
+        </>
     );
 };
 
