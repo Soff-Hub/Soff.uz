@@ -110,7 +110,7 @@ const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
             </div>
             <div className={styles.serviceFilterTab}>
                 <div className={styles.filterRow}>
-                    <div className="d-flex gap-3">
+                    <div className="d-flex gap-3 flex-fill">
                         <div className={styles.searchBox}>
                             <input
                                 value={searchValue}
@@ -123,7 +123,7 @@ const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
                                 <SearchOutlined />
                             </span>
                         </div>
-                        <div className='d-flex align-items-center'>
+                        <div className='d-flex d-md-none align-items-center'>
                             <button
                                 className={styles.deleteMob}
                                 onClick={clearFilters}>
