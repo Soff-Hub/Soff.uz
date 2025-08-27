@@ -86,7 +86,7 @@ const HeaderUserDropdown = props => {
                             ? '/account/dashbord'
                             : '/account/sellerproducts'
                     }>
-                    <a className="fs-3 d-flex align-items-center gap-2">
+                    <a className="fs-3 d-flex align-items-center gap-3">
                         {profile?.image ? (
                             <img
                                 alt="soff"

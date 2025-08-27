@@ -1,9 +1,6 @@
 import Image from 'next/image';
 import Router from 'next/router';
-import React from 'react';
-import MenuCategoriesDropdown from '~/components/shared/menu/MenuCategoriesDropdown';
-import HeaderAIIcon from './HeaderActions/HeaderAIIcon';
-import useResponsive from '~/utilities/useResponsive';
+import React from 'react'; 
 
 export default function HeaderLogo({ mode }) {
     return (
@@ -14,8 +11,8 @@ export default function HeaderLogo({ mode }) {
                 onClick={() => Router.push('/')}>
                 <Image
                     src={`/static/img/soff/logo-${mode}.png`}
-                    width={'130.37px'}
-                    height={'36.67px'}
+                    width={'100px'}
+                    height={'30px'}
                     alt="Logo of Soff.uz"
                 />
             </div>

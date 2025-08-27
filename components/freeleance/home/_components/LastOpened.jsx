@@ -1,7 +1,6 @@
 import React from 'react';
 import styles from '../styles/LastOpened.module.scss';
 import LastOpenedCard from '../ui/LastOpenedCard';
-import { Col, Row } from 'antd';
 import useLastOpened from '../../chat/api/useLastOpened';
 import { useRouter } from 'next/router';
 import Image from 'next/image';

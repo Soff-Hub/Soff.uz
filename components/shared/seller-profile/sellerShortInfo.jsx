@@ -50,7 +50,12 @@ export default function SellerShortInfo({ sellerInfo }) {
                     <p className="sellerName m-0">{sellerInfo?.full_name}</p>
                     <p className=" m-0">{sellerInfo?.position || ''}</p>
                     <p style={{ color: '#312F30' }}>
-                        Oxirgi faollik: {getStatus(sellerInfo?.last_login)}
+                        Oxirgi faollik:{' '}
+                        {0 < Number(getStatus(sellerInfo?.last_login)) < 5 ? (
+                            <span className=" text-success">Online</span>
+                        ) : (
+                            <span>getStatus(sellerInfo?.last_login)</span>
+                        )}
                     </p>
                 </div>
             </div>
@@ -60,12 +65,12 @@ export default function SellerShortInfo({ sellerInfo }) {
                     <i className="fa-solid fa-clipboard-list fs-2"></i>
                     <p className="m-0">Freelance xizmatlari uchun ochiq</p>
                 </div>
-                <div className="d-flex align-items-center gap-3">
-                    <i className="fa-solid fa-circle-info fs-2"></i>
-                    <p className="m-0">
-                        {sellerInfo?.position}
-                    </p>
-                </div>
+                {sellerInfo?.position && (
+                    <div className="d-flex align-items-center gap-3">
+                        <i className="fa-solid fa-circle-info fs-2"></i>
+                        <p className="m-0">{sellerInfo?.position}</p>
+                    </div>
+                )}
                 <div className="d-flex align-items-center gap-3">
                     <i className="fa-solid fa-globe fs-2"></i>
                     <p className="m-0">
@@ -167,7 +172,7 @@ export default function SellerShortInfo({ sellerInfo }) {
                     </span>
                 </div>
             </div>
-            {sellerInfo?.bio && 
+            {sellerInfo?.bio && (
                 <div className="d-flex flex-column gap-3">
                     <h4
                         style={{
@@ -183,7 +188,7 @@ export default function SellerShortInfo({ sellerInfo }) {
                         {sellerInfo?.bio}
                     </p>
                 </div>
-            }
+            )}
 
             <div className="d-flex flex-column gap-3">
                 <h4

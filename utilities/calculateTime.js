@@ -40,10 +40,9 @@ export const getDate = (date) => {
 };
 
 export const getStatus = (timestamp) => {
-  if (!timestamp || !dayjs(timestamp).isValid()) {
-    return "Noto‘g‘ri sana";
+  if (!timestamp || !dayjs(timestamp).isValid()) { 
+    return dayjs().diff(dayjs(timestamp), "minute");
   }
-
   const diffMinutes = dayjs().diff(dayjs(timestamp), "minute");
 
   if (1 < diffMinutes && diffMinutes < 5) {
