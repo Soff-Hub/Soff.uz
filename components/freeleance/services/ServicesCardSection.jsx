@@ -6,7 +6,7 @@ import styles from './ServiceFilterSection.module.scss';
 import LastOpenedCard from '../home/ui/LastOpenedCard';
 const ServicesCardSection = ({ services }) => {
     const hasProducts = services?.items?.length > 0;
-    const isFewProducts = services?.items?.length < 4; // Kam bo‘lsa ham 100vh qilamiz 
+    const isFewProducts = services?.items?.length < 4; // Kam bo‘lsa ham 100vh qilamiz
 
     return (
         <div className={styles.servicesSection}>
@@ -17,24 +17,24 @@ const ServicesCardSection = ({ services }) => {
                         minHeight: isFewProducts ? '50vh' : 'auto',
                         alignItems: isFewProducts ? 'center' : 'stretch',
                         display: 'flex',
-                        padding:'0px 10px'
+                        padding: '0px 10px',
                     }}>
                     {hasProducts ? (
-                        services.items.map((service, index) => (
-                            <div
-                                key={index}
-                                className="col-6 col-md-4 col-lg-3 px-1 custom-col-5 mb-4">
-                                {/* <ServiceCard product={service} /> */}
-                                <LastOpenedCard
-                                    title={service.title}
-                                    image={service.poster}
-                                    author={service.user.full_name}
-                                    price={service.price}
-                                    slug={service.slug}
-                                    userImage={service.user.photo_url}
-                                />
-                            </div>
-                        ))
+                        <div className={styles.serviceCardSections}>
+                            {services.items.map((service, index) => (
+                                <div key={index}>
+                                    <LastOpenedCard
+                                        title={service.title}
+                                        image={service.poster}
+                                        author={service.user.full_name}
+                                        price={service.price}
+                                        slug={service.slug}
+                                        userImage={service.user.photo_url}
+                                    />
+                                </div>
+                            ))}
+                            {/*  className="col-6  col-md-4 col-lg-3 px-1 custom-col-5 mb-4" */}
+                        </div>
                     ) : (
                         <div className="col-12">
                             <div
