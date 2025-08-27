@@ -74,7 +74,6 @@
 .servicesSection {
     position: relative;
     margin-top: 50px;
-    
 }
 
 .servicesCount {
@@ -185,21 +184,6 @@
     align-items: center;
     flex-wrap: wrap; // kichik ekranda selectlar pastga tushsin
 
-    button {
-        border: #24282b solid 1px;
-        background: none;
-        border-radius: 50%;
-        width: 30px;
-        height: 30px;
-        place-content: center;
-        cursor: pointer;
-
-        &:hover {
-            color: red;
-            border-color: red;
-        }
-    }
-
     @media (max-width: 992px) {
         width: 100%;
         justify-content: flex-start;
@@ -261,5 +245,32 @@
         .ant-select-focused .ant-select-selector {
             box-shadow: 0 0 0 2px rgba(0, 128, 0, 0.5) !important;
         }
+    }
+}
+
+.deleteBtn,
+.deleteMob {
+    border: #24282b solid 1px;
+    background: none;
+    border-radius: 20px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    &:hover {
+        color: red;
+        border-color: red;
+    }
+}
+.deleteBtn {
+    display: block;
+    @media (max-width: 768px) {
+        display: none;
+    }
+}
+
+.deleteMob {
+    display: none;
+    @media (max-width: 768px) {
+        display: block;
     }
 }
