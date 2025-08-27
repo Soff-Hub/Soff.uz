@@ -57,7 +57,12 @@ const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
         }, 800);
 
         return () => clearTimeout(delay);
-    }, [searchValue, selectedDirection, selectedParentCategory, selectedChildCategory]);
+    }, [
+        searchValue,
+        selectedDirection,
+        selectedParentCategory,
+        selectedChildCategory,
+    ]);
 
     const updateDirection = value => {
         setSelectedDirection(value);
@@ -105,17 +110,26 @@ const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
             </div>
             <div className={styles.serviceFilterTab}>
                 <div className={styles.filterRow}>
-                    <div className={styles.searchBox}>
-                        <input
-                            value={searchValue}
-                            onChange={e => setSearchValue(e.target.value)}
-                            placeholder="Xizmatlarni izlash"
-                            className={styles.input}
-                            type="text"
-                        />
-                        <span className={styles.searchIcon}>
-                            <SearchOutlined />
-                        </span>
+                    <div className="d-flex gap-3">
+                        <div className={styles.searchBox}>
+                            <input
+                                value={searchValue}
+                                onChange={e => setSearchValue(e.target.value)}
+                                placeholder="Xizmatlarni izlash"
+                                className={styles.input}
+                                type="text"
+                            />
+                            <span className={styles.searchIcon}>
+                                <SearchOutlined />
+                            </span>
+                        </div>
+                        <div className='d-flex align-items-center'>
+                            <button
+                                className={styles.deleteMob}
+                                onClick={clearFilters}>
+                                <DeleteOutlined />
+                            </button>
+                        </div>
                     </div>
 
                     <div className={styles.filterSelects}>
@@ -164,7 +178,9 @@ const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
                             ))}
                         </Select> */}
 
-                        <button onClick={clearFilters}>
+                        <button
+                            className={styles.deleteBtn}
+                            onClick={clearFilters}>
                             <DeleteOutlined />
                         </button>
                     </div>
