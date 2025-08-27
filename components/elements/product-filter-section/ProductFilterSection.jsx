@@ -2,8 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import styles from './ProductFilter.module.scss';
 import { SearchOutlined, RightOutlined, LeftOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
-import useDebounce from '~/hooks/useDebounce';
-import 'pure-react-carousel/dist/react-carousel.es.css';
+import useDebounce from '~/hooks/useDebounce'; 
 
 const childC = [
     'Texnika fanlari',
