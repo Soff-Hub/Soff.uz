@@ -18,7 +18,7 @@ const HeaderActions = ({ auth, isDark }) => {
 
     return (
         <div
-            className={`site-header-actions ${
+            className={`site-header-actions gap-3 ${
                 isDark ? 'text-black' : 'text-white'
             }`}>
             {!isMobile && !isTablet &&  <HeaderCatergories />}
@@ -31,7 +31,7 @@ const HeaderActions = ({ auth, isDark }) => {
                                 <Badge count={wishlist.length}>
                                     <img
                                         src="/static/img/heart1.png"
-                                        width={'25px'}
+                                        width={'20px'}
                                         alt=""
                                     />{' '}
                                 </Badge>

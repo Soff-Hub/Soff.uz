@@ -2,27 +2,37 @@ import React from 'react';
 import ServiceCard from './ServiceCard';
 import { Empty } from 'antd';
 import { SmileOutlined } from '@ant-design/icons';
-import styles from './ServiceFilterSection.module.scss'
+import styles from './ServiceFilterSection.module.scss';
+import LastOpenedCard from '../home/ui/LastOpenedCard';
 const ServicesCardSection = ({ services }) => {
     const hasProducts = services?.items?.length > 0;
-    const isFewProducts = services?.items?.length < 4; // Kam bo‘lsa ham 100vh qilamiz
+    const isFewProducts = services?.items?.length < 4; // Kam bo‘lsa ham 100vh qilamiz 
 
     return (
         <div className={styles.servicesSection}>
-            <div className="container z-3 position-relative">
+            <div className="container ">
                 <div
                     className="row"
                     style={{
                         minHeight: isFewProducts ? '50vh' : 'auto',
                         alignItems: isFewProducts ? 'center' : 'stretch',
                         display: 'flex',
+                        padding:'0px 10px'
                     }}>
                     {hasProducts ? (
                         services.items.map((service, index) => (
                             <div
                                 key={index}
                                 className="col-6 col-md-4 col-lg-3 px-1 custom-col-5 mb-4">
-                                <ServiceCard product={service} />
+                                {/* <ServiceCard product={service} /> */}
+                                <LastOpenedCard
+                                    title={service.title}
+                                    image={service.poster}
+                                    author={service.user.full_name}
+                                    price={service.price}
+                                    slug={service.slug}
+                                    userImage={service.user.photo_url}
+                                />
                             </div>
                         ))
                     ) : (

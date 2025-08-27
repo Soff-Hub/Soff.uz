@@ -58,7 +58,7 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr); /* <= 480px: 1 ta */
     gap: 10px;
-    margin-bottom: 80px;
+    padding-bottom: 80px;
 
     @media (max-width: 768px) {
         grid-template-columns: repeat(2, 1fr); /* 481–991px: 2 ta */

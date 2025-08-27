@@ -47,39 +47,46 @@
     }
 
     .parentCat,
-    .childCat {
-        flex: 0 0 auto;
-        scroll-snap-align: start;
+    .childCat { 
+        // scroll-snap-align: start;
         white-space: nowrap;
         cursor: pointer;
         transition: all 0.3s;
-        background: #FEFEFE;
+        background: #fefefe;
         border-radius: 10px;
         font-weight: 600;
-        line-height: 26px;
+        line-height: 26px; 
 
         &:hover {
-            background: #00A44F26;
-            color: #00A44F;
-            border: 1px solid #00A44F;
+            background: #00a44f26;
+            color: #00a44f;
+            border: 1px solid #00a44f;
         }
 
         &.active {
-            background: #00A44F26;
-            color: #00A44F;
-            border: 1px solid #00A44F;
+            background: #00a44f26;
+            color: #00a44f;
+            border: 1px solid #00a44f;
         }
     }
 }
 
 .parent {
     margin: 24px 0 15px;
-
+    padding: 0px 0px;
     .parentCat {
         font-size: 16px;
         padding: 10px;
-        color: #24282B;
-        border: 1px solid #FEFEFE;
+        color: #24282b;
+        border: 1px solid #fefefe;
+        @media (max-width: 992px) {
+            padding: 4px 6px;
+            font-size: 14px;
+        }
+        @media (max-width: 768px) {
+            padding: 4px 6px;
+            font-size: 12px;
+        }
     }
 }
 
@@ -89,8 +96,14 @@
     .childCat {
         padding: 5px 7px;
         font-size: 16px;
-        color: #24282B;
-        border: 1px solid #D9D9D9;
+        color: #24282b;
+        border: 1px solid #d9d9d9;
+        @media (max-width: 992px) {
+            padding: 4px 6px;
+        }
+        @media (max-width: 768px) {
+            padding: 3px 5px;
+        }
     }
 }
 
@@ -120,7 +133,7 @@
     text-align: center;
     font-size: 64px;
     font-weight: 600;
-    color: #24282B;
+    color: #24282b;
     margin: 40px 0;
 
     @media (max-width: 912px) {
@@ -149,7 +162,12 @@
         left: 200px;
         top: 100px;
         z-index: 1;
-        background-image: radial-gradient(circle, #018f45 0%, #038843 40%, white 100%);
+        background-image: radial-gradient(
+            circle,
+            #018f45 0%,
+            #038843 40%,
+            white 100%
+        );
         filter: blur(80px);
         opacity: 0.7;
 
@@ -168,21 +186,51 @@
         border-radius: 50%;
         right: 0;
         top: -300px;
-        background-image: radial-gradient(circle, #00a44f 0%, #57aa7f 60%, white 100%);
+        background-image: radial-gradient(
+            circle,
+            #00a44f 0%,
+            #57aa7f 60%,
+            white 100%
+        );
         filter: blur(200px);
         opacity: 0.7;
     }
 }
 
-
 .carousel {
-    padding: 0 40px;
+    margin: 0px;
+    position: relative;
 
-    @media (max-width: 768px){
+    @media (max-width: 768px) {
         padding: 0 20px;
     }
 
-    @media (max-width: 480px){
+    @media (max-width: 480px) {
         padding: 0 5px;
+    }
+}
+
+//  sliderCategories
+
+.wrapperBlock {
+    width: 100%;
+    margin: auto;
+
+    .block {
+        margin-top: 30px;
+        .detail {
+            background-color: #fff;
+            font-size: 16px;
+            font-weight: 500;
+            padding: 10px;
+            @media (max-width: 992px) {
+                font-size: 14px;
+                padding: 7px;
+            }
+            @media (max-width: 576px) {
+                font-size: 12px;
+                padding: 5px;
+            }
+        }
     }
 }

@@ -4,42 +4,122 @@
     cursor: pointer;
     height: 450px;
     background: #fff;
+
     position: relative;
     display: flex;
+    overflow: hidden;
     flex-direction: column;
+    mask: linear-gradient(
+        45deg,
+        #000 25%,
+        #fffffff5 25% 50%,
+        #000 50% 95%,
+        #0000 95% 100%
+    );
+
     &::after {
         content: '';
         top: 0;
-        right: -130px;
-        top: -180px;
+        right: -78px;
+        top: -10px;
         position: absolute;
         width: 200px;
-        height: 200px;
-        background-color: #fff;
+        height: 20px;
+        background-color: #ccc;
         transform: rotate(45deg);
         border: 1px solid #ccc;
+        @media (max-width: 1350px) {
+            right: -83px;
+        }
+        @media (max-width: 1250px) {
+            right: -83px;
+        }
+        @media (max-width: 1150px) {
+            right: -82px;
+        }
+        @media (max-width: 1050px) {
+            right: -85px;
+        }
+        @media (max-width: 1000px) {
+            right: -80px;
+        }
+        @media (max-width: 950px) {
+            right: -81px;
+        }
+        @media (max-width: 900px) {
+            right: -82px;
+        }
+        @media (max-width: 850px) {
+            right: -83px;
+        }
+        @media (max-width: 800px) {
+            right: -82px;
+        }
+        @media (max-width: 750px) {
+            right: -83px;
+        }
+        @media (max-width: 700px) {
+            right: -85px;
+        }
+        @media (max-width: 650px) {
+            right: -85px;
+        }
+        @media (max-width: 600px) {
+            right: -87px;
+        }
+
+        @media (max-width: 550px) {
+            right: -88px;
+        }
+        @media (max-width: 500px) {
+            right: -90px;
+        }
+
+        @media (max-width: 450px) {
+            right: -90px;
+        }
+        @media (max-width: 400px) {
+            right: -92px;
+        }
+        @media (max-width: 344px) {
+            right: -93px;
+        }
+    }
+    @media (max-width: 1440px) {
+        height: 400px !important;
+    }
+    @media (max-width: 1200px) {
+        height: 350px !important;
     }
     @media (max-width: 768px) {
-        height: 400px;
+        height: 280px !important;
+        padding: 14px 10px;
     }
 
     .title {
-        font-size: 16px;
+        font-size: 20px;
         font-weight: 600;
-        height: 50px;
         display: -webkit-box;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
         text-overflow: ellipsis;
+        @media (max-width: 1200px) {
+            font-size: 16px;
+        }
+        @media (max-width: 768px) {
+            font-size: 14px;
+        }
     }
 
     .image {
         flex: 1;
-        border: 1px solid green;
-        height: 350px !important;
+        height: 240px !important;
+        @media (max-width: 1440px) {
+            height: 180px !important;
+        }
         @media (max-width: 768px) {
-            height: 300px;
+            height: 160px !important;
         }
     }
 
@@ -50,31 +130,68 @@
         padding-top: 24px;
 
         .avatar {
-            width: 40px;
-            height: 40px;
+            width: 56px;
+            height: 56px;
+            border: 1px solid #ccc;
             border-radius: 50%;
             background: #ddd;
+            @media (max-width: 1440px) {
+                width: 46px;
+                height: 46px;
+            }
+            @media (max-width: 678px) {
+                width: 36px;
+                height: 36px;
+            }
+            @media (max-width: 576px) {
+                width: 32px;
+                height: 32px;
+            }
         }
 
         .info {
             display: flex;
             flex-direction: column;
             .author {
-                font-size: 14px;
+                font-size: 20px;
                 color: #333;
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 max-width: 120px;
                 margin: 0;
+                text-wrap: wrap;
+                display: -webkit-box;
+                -webkit-line-clamp: 1;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                @media (max-width: 1440px) {
+                    font-size: 16px;
+                }
+                @media (max-width: 576px) {
+                    font-size: 10px;
+                }
             }
 
             .price {
-                font-size: 14px;
+                font-size: 20px;
                 font-weight: 600;
                 color: #00a651;
                 margin: 0;
+                @media (max-width: 1440px) {
+                    font-size: 16px;
+                }
+                @media (max-width: 576px) {
+                    font-size: 10px;
+                }
             }
+        }
+        @media (max-width: 1440px) {
+            font-size: 16px;
+        }
+        @media (max-width: 576px) {
+            padding-top: 14px;
         }
     }
 }

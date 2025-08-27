@@ -3,6 +3,7 @@ import styles from './ProductFilter.module.scss';
 import { SearchOutlined, RightOutlined, LeftOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import useDebounce from '~/hooks/useDebounce';
+import 'pure-react-carousel/dist/react-carousel.es.css';
 
 const childC = [
     'Texnika fanlari',
@@ -43,6 +44,7 @@ const ProductFilterSection = ({ child, parent, path }) => {
     const [showParentArrow, setShowParentArrow] = useState(false);
     const [showChildArrow, setShowChildArrow] = useState(false);
     const [title, setTitle] = useState('Barchasi');
+    const [sybTitle, setSybTitle] = useState('');
     const [search, setSearch] = useState('');
 
     const debouncedSearch = useDebounce(search, 500);
@@ -53,14 +55,15 @@ const ProductFilterSection = ({ child, parent, path }) => {
             query: { ...query, parentCategory: slug, childCategory: '' },
         });
         setTitle(name);
+        setSybTitle('')
     };
 
     const handleChild = (slug, name) => {
         push({
             pathname: `${path}${slug}`,
             query: { ...query, childCategory: slug },
-        });
-        setTitle(name);
+        }); 
+        setSybTitle(name)
     };
 
     const scrollLeft = ref => {
@@ -90,12 +93,15 @@ const ProductFilterSection = ({ child, parent, path }) => {
             pathname: `${path}all`,
             query: { ...query, search: debouncedSearch },
         });
-    }, [debouncedSearch]); 
+    }, [debouncedSearch]);
 
     return (
-        <div className={styles.filter}>
-            <h1 className={styles.title}>{title}</h1>
-            <div className={`${styles.searchBox} container`}>
+        <div className={`${styles.filter} px-xxl-0 px-5`}>
+            <h1 className={styles.title}>
+                {title}
+                {sybTitle && ` & ${sybTitle}`}
+            </h1>
+            <div className={`${styles.searchBox} container `}>
                 <input
                     onChange={e => setSearch(e.target.value)}
                     placeholder="Qanday mahsulot izlamoqdasiz?"
@@ -108,7 +114,7 @@ const ProductFilterSection = ({ child, parent, path }) => {
             </div>
 
             {/* Parent carousel */}
-            <div className={styles.carousel} style={{ position: 'relative' }}>
+            <div className={styles.carousel}>
                 {showParentArrow && (
                     <LeftOutlined
                         className={`${styles.arrow} ${styles.left}`}
@@ -116,7 +122,7 @@ const ProductFilterSection = ({ child, parent, path }) => {
                     />
                 )}
                 <div className={styles.parent} ref={parentRef}>
-                    {parent.map(cat => (
+                    {parent.map((cat, index) => (
                         <span
                             key={cat.slug}
                             onClick={() => handleParent(cat?.slug, cat?.name)}

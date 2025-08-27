@@ -15,17 +15,16 @@ const LastOpenedCard = ({ title, image, author, price, slug, userImage }) => {
                         background: `url(${image ||
                             '/static/img/not-found.png'})`,
                         backgroundPosition: 'center',
-                        backgroundSize: 'cover', 
+                        backgroundSize: 'cover',
                     }}
                     className={styles.image}
-                /> 
+                />
                 <div className={styles.footer}>
-                    <div
+                    <img
+                        src={userImage}
                         className={styles.avatar}
-                        style={{
-                            backgroundImage: `url(${userImage})`,
-                            objectFit: 'cover',
-                        }}></div>
+                        alt="userimage"
+                    />
                     <div className={styles.info}>
                         <p className={styles.author}>{author}</p>
                         <p className={styles.price}>
@@ -33,6 +32,7 @@ const LastOpenedCard = ({ title, image, author, price, slug, userImage }) => {
                         </p>
                     </div>
                 </div>
+                <span className={styles.corner} />
             </div>
         </div>
     );

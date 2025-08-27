@@ -17,14 +17,14 @@ const SideBarItem = ({ products, templates, direction, onClick }) => {
     return (
         <div className={styles.menuItem}>
             <div className={styles.accordion}>
-                <div className={styles.orders}>
-                    <h3 className={styles.sectionLabel}>Buyurtma berish</h3>
+                <div className={styles.templates}>
+                    <h3 className={styles.sectionLabel}>Tayyor mahsulotlar</h3>
                     <ul className={styles.details}>
-                        {products?.map(item => (
+                        {templates?.map(item => (
                             <li
                                 onClick={() => {
                                     router.push(
-                                        `/orders?direction=${direction}&parent_category_id=${item.id}`
+                                        `/${option[direction]}/${item.slug}?slug=${item.slug}&search=&parentCategory=${item.slug}`
                                     );
                                     onClick();
                                 }}
@@ -35,14 +35,14 @@ const SideBarItem = ({ products, templates, direction, onClick }) => {
                         ))}
                     </ul>
                 </div>
-                <div className={styles.templates}>
-                    <h3 className={styles.sectionLabel}>Tayyor mahsulotlar</h3>
+                <div className={styles.orders}>
+                    <h3 className={styles.sectionLabel}>Buyurtma berish</h3>
                     <ul className={styles.details}>
-                        {templates?.map(item => (
+                        {products?.map(item => (
                             <li
                                 onClick={() => {
                                     router.push(
-                                        `/${option[direction]}/${item.slug}?slug=${item.slug}&search=&parentCategory=${item.slug}`
+                                        `/orders?direction=${direction}&parent_category_id=${item.id}`
                                     );
                                     onClick();
                                 }}

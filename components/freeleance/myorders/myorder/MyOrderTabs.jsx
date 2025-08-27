@@ -10,15 +10,13 @@ const MyOrderTabs = () => {
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 500);
     const [activeKey, setActiveKey] = useState('1');
     const { data, isLoading } = useOrdersStatus();
-    const { query } = useRouter()
+    const { query } = useRouter();
 
-    useEffect(() => {   
-        if(query?.tab){
-            setActiveKey(String(query?.tab))
+    useEffect(() => {
+        if (query?.tab) {
+            setActiveKey(String(query?.tab));
         }
-    }, query?.tab)
-
-
+    }, query?.tab);
 
     useEffect(() => {
         const handleResize = () => {
@@ -29,17 +27,15 @@ const MyOrderTabs = () => {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-
-
     const items = [
         {
             key: '1',
-            label: `Yangi ${data?.pending}`,
+            label: `Yangi ${data?.pending || 0}`,
             children: <AllOrdersTable type={['pending']} />,
         },
         {
             key: '2',
-            label: `To'langan ${data?.requirement_approved}`,
+            label: `To'langan ${data?.requirement_approved || 0}`,
             children: (
                 <AllOrdersTable
                     type={[
@@ -53,7 +49,7 @@ const MyOrderTabs = () => {
         },
         {
             key: '3',
-            label: `Jarayonda ${data?.requirement_process}`,
+            label: `Jarayonda ${data?.requirement_process || 0}`,
             children: (
                 <AllOrdersTable
                     type={['order_accepted', 'order_file_sent', 'rejected']}
@@ -62,7 +58,7 @@ const MyOrderTabs = () => {
         },
         {
             key: '4',
-            label: `Tugallandi ${data?.completed}`,
+            label: `Tugallandi ${data?.completed || 0}`,
             children: <AllOrdersTable type={'completed'} />,
         },
         // {
