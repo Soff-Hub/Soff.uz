@@ -3,12 +3,8 @@ import PageContainer from '~/components/layouts/PageContainer';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
 import Meta from '~/components/shared/headers/Meta';
 import { useRouter } from 'next/router';
-import { baseUrlUseApi } from '~/repositories/useApi';
-import CategoriesFilterForDesignDevelopmentsSection from '~/components/elements/DesignDevelopmentsFilterSection';
-import ProductsByCategory from '~/components/partials/category/ProductsByCategory';
-import ProductsByDesignDevelopment from '~/components/partials/category/ProductsByDesignDevelopment';
-import ScientificResourcesFilterSection from '~/components/elements/DesignDevelopmentsFilterSection';
-import CategorySearchSection from '~/components/elements/CategorySearchSection';
+import { baseUrlUseApi } from '~/repositories/useApi'; 
+import ProductsByCategory from '~/components/partials/category/ProductsByCategory'; 
 import ProductFilterSection from '~/components/elements/product-filter-section/ProductFilterSection';
 
 export default function DesignDevelopments ({
