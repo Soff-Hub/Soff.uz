@@ -5,35 +5,34 @@ import { useRouter } from 'next/router';
 const LastOpenedCard = ({ title, image, author, price, slug, userImage }) => {
     const router = useRouter();
     return (
-        <div className=" overflow-hidden flex-fill">
+        <div
+            className={styles.card}
+            onClick={() => router.push(`/service/${slug}`)}>
+            <p className={styles.title}>
+                <span>{title}</span>
+            </p>
             <div
-                className={styles.card}
-                onClick={() => router.push(`/service/${slug}`)}>
-                <p className={styles.title}>{title}</p>
-                <div
-                    style={{
-                        background: `url(${image ||
-                            '/static/img/not-found.png'})`,
-                        backgroundPosition: 'center',
-                        backgroundSize: 'cover',
-                    }}
-                    className={styles.image}
+                className={styles.image}
+                style={{
+                    background: `url(${image || '/static/img/not-found.png'})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                }}
+            />
+            <div className={styles.footer}>
+                <img
+                    src={userImage}
+                    className={styles.avatar}
+                    alt="userimage"
                 />
-                <div className={styles.footer}>
-                    <img
-                        src={userImage}
-                        className={styles.avatar}
-                        alt="userimage"
-                    />
-                    <div className={styles.info}>
-                        <p className={styles.author}>{author}</p>
-                        <p className={styles.price}>
-                            {Number(price).toLocaleString('en-US')} so’m
-                        </p>
-                    </div>
+                <div className={styles.info}>
+                    <p className={styles.author}>{author}</p>
+                    <p className={styles.price}>
+                        {Number(price).toLocaleString('en-US')} so’m
+                    </p>
                 </div>
-                <span className={styles.corner} />
             </div>
+            <span className={styles.corner} />
         </div>
     );
 };
