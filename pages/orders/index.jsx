@@ -16,7 +16,7 @@ export default function SoffFreelancerPage({
     limit,
 }) {
     const router = useRouter();
-    const currentPage = Math.floor(offset / limit) + 1; 
+    const currentPage = Math.floor(offset / limit) + 1;
 
     const onChangePage = (page, pageSize) => {
         router.push({
@@ -28,6 +28,8 @@ export default function SoffFreelancerPage({
             },
         });
     };
+
+    console.log('servicesData', servicesData);
 
     return (
         <PageContainer>
@@ -42,16 +44,18 @@ export default function SoffFreelancerPage({
 
                 <ServicesCardSection services={servicesData} />
 
-                <div className="d-flex justify-content-center mt-5">
-                    <Pagination
-                        current={currentPage}
-                        pageSize={Number(limit)}
-                        total={servicesData?.total_service || 0}
-                        showSizeChanger
-                        pageSizeOptions={['10', '20', '50']}
-                        onChange={onChangePage}
-                    />
-                </div>
+                {servicesData.total_service != 0 && (
+                    <div className="d-flex justify-content-center mt-5">
+                        <Pagination
+                            current={currentPage}
+                            pageSize={Number(limit)}
+                            total={servicesData?.total_service || 0}
+                            showSizeChanger
+                            pageSizeOptions={['10', '20', '50']}
+                            onChange={onChangePage}
+                        />
+                    </div>
+                )}
                 <InfoSection />
                 <div>
                     <GrayMentionCard
@@ -67,7 +71,7 @@ export default function SoffFreelancerPage({
 
 export async function getServerSideProps(context) {
     const { query } = context;
-    const { 
+    const {
         category_id = '',
         search = '',
         direction = '',
@@ -76,7 +80,7 @@ export async function getServerSideProps(context) {
     } = query;
 
     // 🔹 Helper funksiya
-    const fetchJson = async (url) => {
+    const fetchJson = async url => {
         try {
             const res = await fetch(url);
             if (!res.ok) return null;
