@@ -2,11 +2,11 @@ import { useQuery } from '@tanstack/react-query';
 import { Button, Modal } from 'antd';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import useCreateChat from '~/components/freeleance/chat/api/useCreateChat';
 import CalculateTimeDifference from '~/components/partials/account/DateFormatter';
 import { getDate, getStatus, getTimeAgo } from '~/utilities/calculateTime';
-
+import { setActiveIndex } from '../../../store/seller/slice';
 export default function SellerShortInfo({ sellerInfo }) {
     const [nameModal, setNameModal] = useState(false);
     const [fullName, setFullName] = useState(false);
@@ -14,6 +14,7 @@ export default function SellerShortInfo({ sellerInfo }) {
     const { mutate: createChat } = useCreateChat();
     const { isLoggedIn } = useSelector(state => state.auth);
     const { push } = useRouter();
+    const dispatch = useDispatch();
     const { data: servicesCat, isLoading } = useQuery({
         queryKey: ['seller_services', sellerInfo?.id],
         queryFn: () =>
@@ -36,6 +37,9 @@ export default function SellerShortInfo({ sellerInfo }) {
         }
     };
 
+    const handleChangeMenu = () => {
+        dispatch(setActiveIndex('services'));
+    };
 
     return (
         <div className="sellerInfo">
@@ -87,7 +91,7 @@ export default function SellerShortInfo({ sellerInfo }) {
                     <i className="fa-solid fa-comment-dots"></i> Xabar yuborish
                 </button>
                 <button
-                    onClick={() => push('#services')}
+                    onClick={handleChangeMenu}
                     style={{
                         background: '#00A44F1A',
                         borderColor: '#00A44F80',

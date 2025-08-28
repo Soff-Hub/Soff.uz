@@ -3,6 +3,7 @@ import { Modal } from 'antd';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import PageContainer from '~/components/layouts/PageContainer';
 import SellerCollapseMenu from '~/components/shared/seller-profile/sellerCollapseMenu';
 import SellerComments from '~/components/shared/seller-profile/sellerComments';
@@ -11,13 +12,15 @@ import SellerPortfolio from '~/components/shared/seller-profile/sellerPortfolio'
 import SellerProduct from '~/components/shared/seller-profile/sellerProduct';
 import SellerServices from '~/components/shared/seller-profile/sellerServices';
 import SellerShortInfo from '~/components/shared/seller-profile/sellerShortInfo';
-import { api } from '~/repositories/api';
+import { setActiveIndex } from '../../store/seller/slice';
 import { authAxios } from '~/repositories/authApi';
 
 export default function SellersPage() {
     const router = useRouter();
+    const dispatch = useDispatch();
     const { query, asPath, isReady } = router;
-    const activeIndex = asPath.slice(asPath.indexOf('#') + 1, asPath.length);
+    const { activeIndex } = useSelector(state => state.user);
+    // const activeIndex = asPath.slice(asPath.indexOf('#') + 1, asPath.length);
 
     const pid = query.pid;
 
@@ -53,13 +56,10 @@ export default function SellersPage() {
             return response.data;
         },
         enabled: !!pid,
+        refetchOnWindowFocus: true,
+        refetchOnMount: true,
     });
-
-    useEffect(() => {
-        if (!activeIndex.includes('#')) {
-            router.replace(`${activeIndex}/#about_author`);
-        }
-    }, []);
+ 
 
     const sellerTabItems = {
         about_author: <SellerInfo pid={pid} sellerInfo={data} />,
@@ -67,6 +67,10 @@ export default function SellersPage() {
         services: <SellerServices pid={pid} />,
         products: <SellerProduct pid={pid} />,
         // comments: <SellerComments pid={pid} />,
+    };
+
+    const handleChangeMenu = item => {
+        dispatch(setActiveIndex(item));
     };
 
     return (
@@ -83,7 +87,11 @@ export default function SellersPage() {
                         <div className="shadow-sm">
                             <div className="sellerProductMenu">
                                 {menuItems.map((item, index) => (
-                                    <Link href={`#${item.path}`} key={index}>
+                                    <div
+                                        onClick={() =>
+                                            handleChangeMenu(item.path)
+                                        }
+                                        key={index}>
                                         <a
                                             className={`activeTab ${
                                                 activeIndex === item.path
@@ -92,7 +100,7 @@ export default function SellersPage() {
                                             }`}>
                                             {item.title}
                                         </a>
-                                    </Link>
+                                    </div>
                                 ))}
                             </div>
                         </div>
