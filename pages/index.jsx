@@ -1,7 +1,6 @@
 import React from 'react';
 import BestSellerStatics from '~/components/blocks/bestSellerStatics';
 import HomePage from '~/components/freeleance/home/HomePage';
-import Faqs from '~/components/freeleance/home/widgets/Faqs';
 import PageLayout from '~/components/layouts/PageLayout';
 import Meta from '~/components/shared/headers/Meta';
 import { TelegramLink } from '~/components/shared/telegramLink';
