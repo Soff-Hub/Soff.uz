@@ -40,9 +40,9 @@ export default function SellerServices({ pid }) {
                     </>
                 )}
                 {Array.isArray(data) && (
-                    <div className="row">
+                    <div className="row row-gap-4">
                         {data?.map((item, index) => (
-                            <div className="col-6 col-md-4">
+                            <div className="col-6 col-md-4 px-2">
                                 <LastOpenedCard
                                     title={item.title}
                                     image={item.poster}

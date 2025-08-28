@@ -600,10 +600,8 @@ body.no-scroll {
     .servicesSectionWrap {
         display: grid;
 
-        grid-template-columns: repeat(
-            auto-fit,
-            minmax(clamp(5rem, 13.75vw + 2.25rem, 18.75rem), 1fr)
-        );
+        grid-template-columns: repeat(auto-fit,
+                minmax(clamp(5rem, 13.75vw + 2.25rem, 18.75rem), 1fr));
         gap: 10px;
 
         .servicesSectionCardSkeleton {
@@ -689,6 +687,7 @@ body.no-scroll {
             align-items: center;
             justify-content: space-between;
             cursor: pointer;
+
             p {
                 color: #312f30;
                 font-family: 'Poppins';
@@ -1116,6 +1115,10 @@ body.no-scroll {
             background: #a020f0;
             gap: 10px;
 
+            @media (max-width: 767px) {
+                display: none;
+            }
+
             .SellerInfoSecondCardBtnTitle {
                 color: #fff;
                 font-family: 'Poppins';
@@ -1273,23 +1276,27 @@ body.no-scroll {
         row-gap: 10px;
         align-items: stretch;
         margin-top: 50px;
+
         @media (max-width: 1440px) {
             grid-template-columns: repeat(3, 1fr);
             gap: 5px;
             row-gap: 5px;
-        } 
+        }
+
         @media (max-width: 768px) {
             grid-template-columns: repeat(3, 1fr);
         }
+
         @media (max-width: 576px) {
             grid-template-columns: repeat(2, 1fr);
         }
+
         @media (max-width: 374px) {
             grid-template-columns: repeat(1, 1fr);
         }
     }
 
-     
+
 }
 
 .showMoreBox {
@@ -1372,10 +1379,8 @@ body.no-scroll {
 
     .SellerPortfolioWrap {
         display: grid;
-        grid-template-columns: repeat(
-            auto-fit,
-            minmax(clamp(9rem, 12.5vw + 3.75rem, 18.75rem), 1fr)
-        );
+        grid-template-columns: repeat(auto-fit,
+                minmax(clamp(9rem, 12.5vw + 3.75rem, 18.75rem), 1fr));
         gap: 10px;
         row-gap: 10px;
 
@@ -1475,6 +1480,22 @@ body.no-scroll {
     border-radius: 10px;
     background: #fff;
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.05);
+
+    @media (max-width: 1199px) {
+        padding: 40px 120px;
+    }
+
+    @media (max-width: 991px) {
+        padding: 32px 60px;
+    }
+
+    @media (max-width: 767px) {
+        padding: 24px 30px;
+    }
+
+    @media (max-width: 575px) {
+        padding: 16px 15px;
+    }
 
     .ServiceIsUnavailableImg {
         display: flex;
@@ -1622,16 +1643,19 @@ body.no-scroll {
 
 .categoryHighlightsSwippercontainer {
     margin-top: 40px;
+
     .categoryHighlightsSwipper {
         .categoryHighlightsSwipperWrap {
             display: flex;
             align-items: center;
         }
+
         .sectionLabel {
             display: flex;
             align-items: center;
             gap: 5px;
             margin-bottom: 15px;
+
             h4,
             a {
                 color: $textColor;
@@ -1640,28 +1664,34 @@ body.no-scroll {
                 margin: 0;
             }
         }
+
         .scientificWorksCards {
             display: grid;
-            grid-template-columns: repeat(6, 1fr); /* <= 480px: 1 ta */
+            grid-template-columns: repeat(6, 1fr);
+            /* <= 480px: 1 ta */
             gap: 5px;
 
             @media (max-width: 1200px) {
-                grid-template-columns: repeat(5, 1fr); /* >= 992px: 4 ta */
+                grid-template-columns: repeat(5, 1fr);
+                /* >= 992px: 4 ta */
                 gap: 5px;
             }
 
             @media (max-width: 992px) {
-                grid-template-columns: repeat(4, 1fr); /* >= 992px: 4 ta */
+                grid-template-columns: repeat(4, 1fr);
+                /* >= 992px: 4 ta */
                 gap: 5px;
             }
 
             @media (max-width: 768px) {
-                grid-template-columns: repeat(3, 1fr); /* >= 992px: 4 ta */
+                grid-template-columns: repeat(3, 1fr);
+                /* >= 992px: 4 ta */
                 gap: 5px;
             }
 
             @media (max-width: 576px) {
-                grid-template-columns: repeat(2, 1fr); /* >= 992px: 4 ta */
+                grid-template-columns: repeat(2, 1fr);
+                /* >= 992px: 4 ta */
                 gap: 5px;
             }
         }

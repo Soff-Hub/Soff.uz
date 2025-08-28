@@ -2,8 +2,10 @@ import React from 'react';
 import { Modal, Descriptions, Tag } from 'antd';
 
 import styles from '../styles/detail.module.scss';
+import useResponsive from '~/utilities/useResponsive';
 
 const PortfolioDetailModal = ({ open, onClose, portfolio }) => {
+    const {isMobile} = useResponsive()
     return (
         <Modal
             open={open}
@@ -26,10 +28,18 @@ const PortfolioDetailModal = ({ open, onClose, portfolio }) => {
                         <Descriptions.Item label="Kategoriya">
                             <Tag color="blue">{portfolio?.category?.title}</Tag>
                         </Descriptions.Item>
-                        <Descriptions.Item label="Tavsif">
-                            {portfolio?.description}
-                        </Descriptions.Item>
+                        {!isMobile &&
+                            <Descriptions.Item label="Tavsif">
+                                {portfolio?.description}
+                            </Descriptions.Item>
+                        }
                     </Descriptions>
+                    {isMobile &&
+                        <div className='border rounded-3 p-2 mt-3'>
+                            <h4 className="my-2">Tavsif</h4>
+                            <p>{portfolio?.description}</p>
+                        </div>
+                    }
                 </div>
                 <div className={styles.galleryBox}>
                     {portfolio?.portfolio_images?.map((img, idx) => (

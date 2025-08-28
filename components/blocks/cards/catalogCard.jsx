@@ -64,7 +64,7 @@ const CatalogCard = ({ content_type, title, count, items }) => {
                 </div>
                 <div>
                     <h2 className={styles.cardLabel}>{title}</h2>
-                    <p className={styles.cardDesc}>{count}+ mahsulot</p>
+                    {/* <p className={styles.cardDesc}>{count}+ mahsulot</p> */}
                 </div>
             </div>
             <div className={styles.cardImageBlock}>
