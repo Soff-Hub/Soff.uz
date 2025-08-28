@@ -29,14 +29,14 @@ const cardImages = {
         '/static/img/HomePage/design3.webp',
     ],
     video: [
-        null,
-        null,
-        null
+        '/static/img/HomePage/video1.webp',
+        '/static/img/HomePage/video2.webp',
+        '/static/img/HomePage/video3.webp',
     ],
     template: [
-        null,
-        null,
-        null
+        '/static/img/HomePage/template1.webp',
+        '/static/img/HomePage/template2.webp',
+        '/static/img/HomePage/template3.webp',
     ],
     file: [
         '/static/img/HomePage/file1.webp',
