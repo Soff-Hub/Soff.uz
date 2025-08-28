@@ -7,7 +7,6 @@ const NavbarMenu = () => {
     const { data, isLoading } = useNavCategories();
 
     if (isLoading && !data) return null;
-    // console.log('data', data);
 
     return (
         <>
