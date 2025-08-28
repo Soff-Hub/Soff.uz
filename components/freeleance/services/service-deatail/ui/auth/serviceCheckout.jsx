@@ -276,9 +276,8 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
                                 "To'lov qilish"
                             )
                         }
-                        cancelText="Orqaga"
-                        >
-                            {/* <p>To'lov tez orada ishga tushadi</p> */}
+                        cancelText="Orqaga">
+                        {/* <p>To'lov tez orada ishga tushadi</p> */}
                         <>
                             <p>
                                 Kod quyidagi raqamga yuborildi:{' '}
@@ -302,37 +301,37 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
                 </div>
             ),
         },
-        // {
-        //     key: '2',
-        //     label: (
-        //         <div className="click">
-        //             <img src="/static/img/click.png" alt="" />
-        //         </div>
-        //     ),
-        //     children: (
-        //         <div className="row mx-auto m-0">
-        //             <div className="px-4 rounded click-b">
-        //                 <form
-        //                     onSubmit={handleClickCardPostsclick}
-        //                     className="pt-3 pb-3 d-flex row gap-3">
-        //                     <div className="col-12 p-0 px-4 my-3">
-        //                         {message ? (
-        //                             <button
-        //                                 type="submit"
-        //                                 className="ps-btn w-100 btn_color">
-        //                                 Davom etish
-        //                             </button>
-        //                         ) : (
-        //                             <button className="ps-btn w-100">
-        //                                 <BeatLoader color="#fff" />
-        //                             </button>
-        //                         )}
-        //                     </div>
-        //                 </form>
-        //             </div>
-        //         </div>
-        //     ),
-        // },
+        {
+            key: '2',
+            label: (
+                <div className="click">
+                    <img src="/static/img/click.png" alt="" />
+                </div>
+            ),
+            children: (
+                <div className="row mx-auto m-0">
+                    <div className="px-4 rounded click-b">
+                        <form
+                            onSubmit={handleClickCardPostsclick}
+                            className="pt-3 pb-3 d-flex row gap-3">
+                            <div className="col-12 p-0 px-4 my-3">
+                                {message ? (
+                                    <button
+                                        type="submit"
+                                        className="ps-btn w-100 btn_color">
+                                        Davom etish
+                                    </button>
+                                ) : (
+                                    <button className="ps-btn w-100">
+                                        <BeatLoader color="#fff" />
+                                    </button>
+                                )}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            ),
+        },
     ];
 
     return (
