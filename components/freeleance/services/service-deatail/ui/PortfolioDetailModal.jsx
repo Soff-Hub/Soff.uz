@@ -16,6 +16,21 @@ const PortfolioDetailModal = ({ open, onClose, portfolio }) => {
         >
             <div className={styles.wrapper}>
                 {/* Gallery o‘rniga oddiy mapping */}
+                <div className={styles.infoBox}>
+                    <Descriptions
+                        title="Portfolio Ma'lumotlari"
+                        bordered
+                        size="small"
+                        column={1}
+                    >
+                        <Descriptions.Item label="Kategoriya">
+                            <Tag color="blue">{portfolio?.category?.title}</Tag>
+                        </Descriptions.Item>
+                        <Descriptions.Item label="Tavsif">
+                            {portfolio?.description}
+                        </Descriptions.Item>
+                    </Descriptions>
+                </div>
                 <div className={styles.galleryBox}>
                     {portfolio?.portfolio_images?.map((img, idx) => (
                         <img
@@ -25,27 +40,6 @@ const PortfolioDetailModal = ({ open, onClose, portfolio }) => {
                             alt={`Image ${idx}`}
                         />
                     ))}
-                </div>
-
-                <div className={styles.infoBox}>
-                    <Descriptions
-                        title="Portfolio Ma'lumotlari"
-                        bordered
-                        size="small"
-                        column={1}
-                    >
-                        {portfolio?.admin_cancel_reason && 
-                            <Descriptions.Item label="Bekor qilinish sababi">
-                                <Tag color="red">{portfolio?.admin_cancel_reason}</Tag>
-                            </Descriptions.Item>
-                        }
-                        <Descriptions.Item label="Kategoriya">
-                            <Tag color="blue">{portfolio?.category?.title}</Tag>
-                        </Descriptions.Item>
-                        <Descriptions.Item label="Tavsif">
-                            {portfolio?.description}
-                        </Descriptions.Item>
-                    </Descriptions>
                 </div>
             </div>
         </Modal>
