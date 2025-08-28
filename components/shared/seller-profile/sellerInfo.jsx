@@ -7,7 +7,7 @@ export default function SellerInfo({ sellerInfo }) {
     const router = useRouter();
 
     const replaceHash = newHash => {
-        const { pathname, query } = router; 
+        const { pathname, query } = router;
 
         router.push(
             {

@@ -10,13 +10,24 @@ const ServiceCard = ({ product }) => {
         if (product?.slug) router.push(`/service/${product.slug}`);
     }, [product?.slug, router]);
 
-    const goToSeller = useCallback((e) => {
-        e?.stopPropagation();
-        if (product?.user?.id)
-            router.push(`/seller/${product.user.soff_seller_id}#about_author`);
-    }, [product?.user?.id, router]);
+    const goToSeller = useCallback(
+        e => {
+            e?.stopPropagation();
+            if (product?.user?.id) {
+                router.push(
+                    {
+                        pathname: `/seller/[pid]`,
+                        query: { pid: product.user.soff_seller_id },
+                    },
+                    `/seller/${product.user.soff_seller_id}`,
+                    { shallow: true }
+                );
+            }
+        },
+        [product?.user?.id, router]
+    );
 
-    const handleLike = useCallback((e) => {
+    const handleLike = useCallback(e => {
         e.stopPropagation();
     }, []);
 
@@ -31,17 +42,28 @@ const ServiceCard = ({ product }) => {
             aria-label={product?.title || 'Service'}
             onClick={goToService}
             tabIndex={0}
-            onKeyDown={(e) => { if (e.key === 'Enter') goToService(); }}
-        >
+            onKeyDown={e => {
+                if (e.key === 'Enter') goToService();
+            }}>
             <button
                 type="button"
                 className={styles.likeBtn}
                 aria-pressed="false"
                 aria-label="Sevimlilarga qo'shish"
-                onClick={handleLike}
-            >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" fill="none" aria-hidden>
-                    <rect x="0.1875" y="0.176758" width="24.4023" height="24.4023" rx="12.2011" fill="white" />
+                onClick={handleLike}>
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 25 25"
+                    fill="none"
+                    aria-hidden>
+                    <rect
+                        x="0.1875"
+                        y="0.176758"
+                        width="24.4023"
+                        height="24.4023"
+                        rx="12.2011"
+                        fill="white"
+                    />
                     <path d="M19.3134 7.70788C..." fill="#00A44F" />
                 </svg>
             </button>
@@ -72,21 +94,23 @@ const ServiceCard = ({ product }) => {
                     {product?.title}
                 </h3>
 
-                <p className={styles.price}>
-                    {formattedPrice} so'm
-                </p>
+                <p className={styles.price}>{formattedPrice} so'm</p>
 
                 <div
                     className={styles.seller}
                     role="link"
                     tabIndex={0}
                     onClick={goToSeller}
-                    onKeyDown={(e) => { if (e.key === 'Enter') goToSeller(e); }}
-                    aria-label={`Seller ${product?.user?.full_name || ''}`}
-                >
+                    onKeyDown={e => {
+                        if (e.key === 'Enter') goToSeller(e);
+                    }}
+                    aria-label={`Seller ${product?.user?.full_name || ''}`}>
                     <img
                         className={styles.seller_avatar}
-                        src={product?.user?.photo_url || '/static/img/ozodbek.png'}
+                        src={
+                            product?.user?.photo_url ||
+                            '/static/img/ozodbek.png'
+                        }
                         alt={product?.user?.full_name || 'Seller avatar'}
                         loading="lazy"
                         decoding="async"
