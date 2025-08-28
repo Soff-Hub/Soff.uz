@@ -19,6 +19,7 @@ const OrderStatus = ({ order }) => {
         rejected: 4,
         order_file_sent: 5,
         completed: 6,
+        cancelled: 0
     };
 
     const orderStatusName = {
@@ -30,6 +31,7 @@ const OrderStatus = ({ order }) => {
         order_file_sent: 'Tasdiqlash uchun topshirildi',
         completed: 'Buyurtma tugallandi',
         rejected: "Fayl to'liq emas",
+        cancelled: "Buyurtma bekor qilindi"
     };
 
     return (
@@ -38,7 +40,7 @@ const OrderStatus = ({ order }) => {
             <div className={styles.status}>
                 <div className={styles.status_info}>
                     <span>Buyurtma holati</span>
-                    <p>{orderStatusName[order?.order_status_doing?.status]}</p>
+                    <p style={{background: order?.order_status_doing?.status == "cancelled" && "red"}}>{orderStatusName[order?.order_status_doing?.status]}</p>
                 </div>
                 <div className={styles.status_price}>
                     <span>Buyurtma narxi</span>
@@ -95,12 +97,13 @@ const OrderStatus = ({ order }) => {
                     status={
                         order?.order_status_doing?.status ===
                             'requirement_file_rejected' ||
-                        order?.order_status_doing?.status === 'rejected'
+                        order?.order_status_doing?.status === 'rejected' ||
+                        order?.order_status_doing?.status === 'cancelled'
                             ? 'error'
                             : 'process'
                     }
                     items={[
-                        { title: `Buyurtma yaratildi` },
+                        { title: `${order?.order_status_doing?.status == "cancelled" ? "Buyurtma bekor qilindi" : "Buyurtma yaratildi"}  ` },
                         { title: "To'lov amalga oshirildi" },
                         {
                             title:
