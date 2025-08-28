@@ -77,7 +77,7 @@ const ServiceDetail = ({ data }) => {
     } = data;
 
     const pushUser = () =>
-        push(`/_seller/${data?.user[0]?.soff_seller_id}#about_author`);
+        push(`/_seller/${data?.user[0]?.soff_seller_id}`);
     const priceBox = {
         days: service?.delivery_days,
         price: service?.price,
@@ -98,7 +98,7 @@ const ServiceDetail = ({ data }) => {
         () => [
             {
                 title: 'Buyurtmalar',
-                href: '/orders?direction=scientific_work',
+                href: '/orders',
             },
             {
                 title: <span>{service?.title}</span>,
@@ -106,6 +106,7 @@ const ServiceDetail = ({ data }) => {
         ],
         [data]
     );
+    console.log(data)
 
     return (
         <div className="container my-5 navTabsPadding">

@@ -1,12 +1,7 @@
 import React from 'react';
 import { Modal, Descriptions, Tag } from 'antd';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Autoplay } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
 
-import styles from './styles/detail.module.scss';
+import styles from '../styles/detail.module.scss';
 
 const PortfolioDetailModal = ({ open, onClose, portfolio }) => {
     return (
@@ -15,27 +10,21 @@ const PortfolioDetailModal = ({ open, onClose, portfolio }) => {
             onCancel={onClose}
             footer={null}
             title={<span className={styles.title}>{portfolio?.title}</span>}
-            width={900}
+            width={"90%"}
             centered
             className={styles.modal}
         >
             <div className={styles.wrapper}>
-                <div className={styles.carouselBox}>
-                    <Swiper
-                        modules={[Navigation, Pagination, Autoplay]}
-                        spaceBetween={20}
-                        slidesPerView={1}
-                        navigation
-                        pagination={{ clickable: true }}
-                        loop={true}
-                        autoplay={{ delay: 3000, disableOnInteraction: false }}
-                    >
-                        {portfolio?.portfolio_images?.map((img, idx) => (
-                            <SwiperSlide key={idx}>
-                                <img className={styles.image} src={img?.image} alt={`Slide ${idx}`} />
-                            </SwiperSlide>
-                        ))}
-                    </Swiper>
+                {/* Gallery o‘rniga oddiy mapping */}
+                <div className={styles.galleryBox}>
+                    {portfolio?.portfolio_images?.map((img, idx) => (
+                        <img
+                            key={idx}
+                            className={styles.image}
+                            src={img?.image}
+                            alt={`Image ${idx}`}
+                        />
+                    ))}
                 </div>
 
                 <div className={styles.infoBox}>
@@ -45,6 +34,11 @@ const PortfolioDetailModal = ({ open, onClose, portfolio }) => {
                         size="small"
                         column={1}
                     >
+                        {portfolio?.admin_cancel_reason && 
+                            <Descriptions.Item label="Bekor qilinish sababi">
+                                <Tag color="red">{portfolio?.admin_cancel_reason}</Tag>
+                            </Descriptions.Item>
+                        }
                         <Descriptions.Item label="Kategoriya">
                             <Tag color="blue">{portfolio?.category?.title}</Tag>
                         </Descriptions.Item>

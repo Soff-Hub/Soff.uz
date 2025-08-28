@@ -43,7 +43,7 @@ const UserBox = ({ pushUser, priceBox }) => {
                         icon={<MessageOutlined />}
                         className='w-100'
                     >
-                        Chatlashish
+                        Xabar yuborish
                     </Button>
                 </div>
             </div>
