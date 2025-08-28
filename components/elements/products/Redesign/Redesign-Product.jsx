@@ -47,7 +47,6 @@ const RedesignProduct = ({ product }) => {
         Router.push('/account/shopping-cart');
     };
 
-    console.log('product', product);
 
     return (
         <div className="scientificResourcesCard">

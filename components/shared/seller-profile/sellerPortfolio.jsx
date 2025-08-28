@@ -43,7 +43,6 @@ export default function SellerPortfolio({ pid }) {
     const { data: portfolios, isLoading } = useQuery({
         queryFn: ['sellerPorfolios'],
         queryFn: async () => {
-            console.log(pid);
             const response = await apiForFreelance.get(
                 `customer/portfolios/${pid}`
             );
