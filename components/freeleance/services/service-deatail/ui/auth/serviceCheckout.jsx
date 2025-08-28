@@ -75,8 +75,6 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
         };
 
         if (order_id) payload.order_id = order_id;
-        // console.log('📦 Click payment payload:', payload);
-        // console.log(order_id);
         createOrder.mutate(payload, {
             onSuccess: data => {
                 setMessage(true);
@@ -263,7 +261,7 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
 
                     <Modal
                         width={500}
-                        title="Kodni kiriting!"
+                        title="Tez orada!"
                         centered
                         open={open}
                         onOk={handleSubmitCode}
@@ -278,8 +276,11 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
                                 "To'lov qilish"
                             )
                         }
-                        cancelText="Orqaga">
-                        <>
+                        cancelText="Orqaga"
+                        footer={null}
+                        >
+                            <p>To'lov tez orada ishga tushadi</p>
+                        {/* <>
                             <p>
                                 Kod quyidagi raqamga yuborildi:{' '}
                                 {resData?.phone_number}
@@ -297,7 +298,7 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
                                     {resDataCode.detail}
                                 </p>
                             )}
-                        </>
+                        </> */}
                     </Modal>
                 </div>
             ),
