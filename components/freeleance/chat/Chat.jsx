@@ -36,12 +36,12 @@ const Chat = () => {
             {isSmallScreen && (
                 <>
                     {!chatId && (
-                        <div className='col-12 p-0 mt-5'>
+                        <div className='col-12 p-0 mt-2 mt-lg-5'>
                             <ChatSidebar setChatId={setChatId} />
                         </div>
                     )}
                     {chatId && (
-                        <div className='col-12 p-0 mt-5'>
+                        <div className='col-12 p-0 mt-2 mt-lg-5'>
                             <ChatWindow chatId={chatId} goBack={() => setChatId(null)} />
                         </div>
                     )}

@@ -69,7 +69,7 @@ export default function SellerPortfolio({ pid }) {
                                 />
                             ))}
                     </div>
-                ) : portfolios.length == 0 ? (
+                ) : portfolios?.length == 0 ? (
                     <ServiceIsUnavailable type='portfolio' />
                 ) : (
                     <div className="row">

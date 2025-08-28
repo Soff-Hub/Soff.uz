@@ -29,7 +29,7 @@ export default function SwiperPages({ children, type }) {
     }
 
     const breakpoints = {
-        320: { slidesPerView: 1.5 },
+        320: { slidesPerView: 1 },
         480: { slidesPerView: 2 },
         768: { slidesPerView: 3 },
         1024: { slidesPerView: desiredCount },

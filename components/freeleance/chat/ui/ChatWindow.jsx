@@ -94,7 +94,7 @@ const ChatWindow = ({ chatId, goBack }) => {
                 {messages?.length > 0 ? (
                     messages.map((msg) => (
                         <ChatMessage
-                            pushUser={() => push(`seller/${chat?.chat?.opponent?.id}#about_author`)}
+                            pushUser={() => push(`seller/${chat?.chat?.opponent?.id}`)}
                             key={msg.id}
                             msg={msg}
                             onEdit={setEdit}

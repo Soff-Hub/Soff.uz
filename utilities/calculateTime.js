@@ -41,15 +41,32 @@ export const getDate = (date) => {
 
 export const getStatus = (timestamp) => {
   if (!timestamp || !dayjs(timestamp).isValid()) {
-    return dayjs().diff(dayjs(timestamp), "minute");
+    return "Noma’lum vaqt";
   }
-  const diffMinutes = dayjs().diff(dayjs(timestamp), "minute");
 
+  const now = dayjs();
+  const diffMinutes = now.diff(dayjs(timestamp), "minute");
+  const diffHours = now.diff(dayjs(timestamp), "hour");
+  const diffDays = now.diff(dayjs(timestamp), "day");
+
+  // 5 minut ichida
   if (diffMinutes < 5) {
-    return <span style={{ color: '#02a214' }}>Online</span>;
+    return <span style={{ color: "#02a214" }}>Online</span>;
   }
 
-  return dayjs(new Date(timestamp)).format('DD/MM/YYYY HH:mm')
+  // 1 soatdan kam
+  if (diffMinutes < 60) {
+    return `${diffMinutes} daqiqa oldin `;
+  }
+
+  // 24 soatdan kam
+  if (diffHours < 24) {
+    const minutes = diffMinutes % 60;
+    return `${diffHours} soat ${minutes} daqiqa oldin `;
+  }
+
+  // 1 kundan katta
+  return dayjs(timestamp).format("DD.MM.YYYY HH:mm [da online edi]");
 }
 
 export function getRemainingDays(createdAt, deliveryDay) {

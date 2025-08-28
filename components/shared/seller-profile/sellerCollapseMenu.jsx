@@ -7,11 +7,14 @@ import SellerProduct from './sellerProduct';
 import SellerPortfolio from './sellerPortfolio';
 
 const SellerCollapseMenu = ({ pid }) => {
+    const [activeKey, setActiveKey] = useState(['1']);
     const items = [
         {
             key: '1',
             label: 'Muallif Haqida',
-            children: <SellerInfo pid={pid} />,
+            children: (
+                <SellerInfo pid={pid} onChange={() => setActiveKey([3])} />
+            ),
         },
         {
             key: '2',
@@ -34,11 +37,11 @@ const SellerCollapseMenu = ({ pid }) => {
             children: <SellerComments pid={pid} />,
         },
     ];
-    const [activeKey, setActiveKey] = useState(['1']); // boshlang‘ich holat
+    // boshlang‘ich holat
 
     return (
         <Collapse
-            className='mt-5 bg-white m-0'
+            className="mt-5 bg-white m-0"
             items={items}
             bordered={false}
             activeKey={activeKey}

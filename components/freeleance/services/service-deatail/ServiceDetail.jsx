@@ -110,7 +110,7 @@ const ServiceDetail = ({ data }) => {
     return (
         <div className="container my-5 navTabsPadding">
             <div className="row">
-                <div className="col-12 col-md-8">
+                <div className="col-12 col-lg-8">
                     <Breadcrumb
                         className="mb-3 d-flex align-items-center"
                         items={breadcrumbItems}
@@ -145,7 +145,7 @@ const ServiceDetail = ({ data }) => {
                         />
                     </div>
                 </div>
-                <div className="col-12 col-md-4">
+                <div className="col-12 col-lg-4 mt-5 mt-lg-0">
                     <PriceBox priceBox={priceBox} />
                     <MoneyBack />
                     <UserBox priceBox={priceBox} pushUser={pushUser} />
