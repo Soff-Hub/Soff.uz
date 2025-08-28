@@ -27,7 +27,8 @@ const ServiceDescription = ({ description = {}, priceBox = {} }) => {
         } else {
             setOpenAuth(true);
         }
-    };
+    }; 
+    
 
     return (
         <div className={styles.serviceDescription}>
@@ -72,7 +73,7 @@ const ServiceDescription = ({ description = {}, priceBox = {} }) => {
                 </div>
             )}
 
-            <div className={styles.pricing}>
+            {/* <div className={styles.pricing}>
                 <div className={styles.infoBox}>
                     <p className={styles.info}>
                         <i className="fa-solid fa-clock"></i> {days} kunda
@@ -88,7 +89,7 @@ const ServiceDescription = ({ description = {}, priceBox = {} }) => {
                         Buyurtma berish
                     </Button>
                 </div>
-            </div>
+            </div> */}
 
             {/* Modal */}
             <Modal

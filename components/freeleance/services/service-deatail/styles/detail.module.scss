@@ -12,7 +12,6 @@
         justify-content: center;
         align-items: center;
         background: #000;
- 
     }
 }
 .imageItem {
@@ -44,6 +43,12 @@
 
 .title {
     font-size: 36px;
+    @media (max-width: 992px) {
+        font-size: 28px;
+    }
+    @media (max-width: 576px) {
+        font-size: 24px;
+    }
 }
 
 // pricebox_______________________________________
@@ -98,11 +103,11 @@
 .moneyBox {
     background: #fff;
     border-radius: 12px;
-    padding: 20px;
+    padding: 20px !important;
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-bottom: 30px;
+    // margin-bottom: 30px;
 
     img {
         width: 100px;

@@ -60,6 +60,9 @@ const ChatMessage = ({ msg, onEdit, pushUser }) => {
         );
     }, [isMyMessage, msg.is_read]);
 
+    console.log('user',msg);
+    
+
     return (
         <div
             key={msg.id}

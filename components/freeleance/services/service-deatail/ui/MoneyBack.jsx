@@ -7,7 +7,7 @@ const { Panel } = Collapse;
 const MoneyBack = () => {
     return (
         <div
-            className="card shadow-sm border-0 mb-4"
+            className="card shadow-sm border-0 my-4"
             style={{
                 borderRadius: '12px',
                 overflow: 'hidden',
