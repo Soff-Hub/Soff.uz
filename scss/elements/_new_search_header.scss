@@ -2332,14 +2332,14 @@
 
 .Search_Results_Services_wrap {
     display: grid;
-    grid-template-columns: repeat(4, 226px);
+    grid-template-columns: repeat(3, 1fr);
     gap: 13px;
     row-gap: 30px;
 
 
-    @media (max-width: 1300px) {
-        grid-template-columns: repeat(4, 1fr);
-    }
+    // @media (max-width: 1300px) {
+    //     grid-template-columns: repeat(4, 1fr);
+    // }
 
 
     @media (max-width: 1250px) {

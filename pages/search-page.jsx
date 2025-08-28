@@ -218,7 +218,7 @@ export async function getServerSideProps(context) {
     const childCategoryUrl = `${baseUrlUseApi}customer/four-child?direction=${type}&parent__slug=${parentCategory}`;
     const searchUrl = `${baseUrlUseApi}customer/same-google-search/?page=${page}&search=${keyword}&type=${type}&category=${category}&order_by=${order_by}`;
     const lastProductsUrl = `${baseURL}customer/last-added?limit=10`
-    const servicesUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/customer?${servicesQuery.toString()}&search=${keyword}&category_id=${service_parent}`
+    const servicesUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/customer?${servicesQuery.toString()}&search=${keyword}${service_parent ? `&category_id=${service_parent}` : ""}`
     const serviceParentUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/categories/?direction=${direction || ""}`
     const serviceChildUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/categories/?parent_id=${service_parent}`
     const sellersUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/users/sellers?limit=${limit}&offset=${offset}&search=${keyword}`

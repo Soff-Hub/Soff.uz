@@ -76,7 +76,7 @@ const FreelanceSection = () => {
                     size="large"
                     onClick={() => push('orders')}>
                     Barcha xizmatlar
-                    <AntImage
+                    <img
                         src={'/static/img/arrowwhite.svg'}
                         sizes="15"
                         alt="arrow"

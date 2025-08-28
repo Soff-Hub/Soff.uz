@@ -329,7 +329,7 @@ export default function ProductDefaultPage({ defaultProducts }) {
                                         {hasLoadedSimilar ? (
                                             <div className='row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-gap-4'>
                                                 {similarProduct?.map((item, index) => 
-                                                    <div className='col-3 px-3' key={item?.id}>
+                                                    <div className='col px-3' key={item?.id}>
                                                         <ProductCard product={item}/>
                                                     </div>
                                                 )}

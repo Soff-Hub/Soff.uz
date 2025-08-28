@@ -47,21 +47,20 @@ const ServiceDescription = ({ description = {}, priceBox = {} }) => {
                     dangerouslySetInnerHTML={{ __html: requirements }}
                 />
             )}
-
-            <h3>Xizmat talablari uchun shablon fayl</h3>
-            {file ? (
-                <Button
-                    type="primary"
-                    icon={<DownloadOutlined />}
-                    href={file}
-                    target="_blank"
-                    download
-                    className={styles.downloadBtn}>
-                    Fayllarni yuklab olish
-                </Button>
-            ) : (
-                <p>Fayl mavjud emas</p>
-            )}
+            {file && 
+                <>
+                    <h3>Xizmat talablari uchun shablon fayl</h3>
+                    <Button
+                        type="primary"
+                        icon={<DownloadOutlined />}
+                        href={file}
+                        target="_blank"
+                        download
+                        className={styles.downloadBtn}>
+                        Fayllarni yuklab olish
+                    </Button>
+                </>
+            }
             {serviceItems?.length > 0 && (
                 <div className={styles.serviceBox}>
                     <h3>Bu xizmat ichiga nimalar kiradi</h3>

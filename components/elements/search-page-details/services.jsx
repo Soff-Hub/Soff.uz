@@ -10,9 +10,9 @@ import LastOpenedCard from '~/components/freeleance/home/ui/LastOpenedCard';
 export default function Search_Results_Services({ data, isLoading, childData, parentData, lastProducts }) {
     const router = useRouter();
 
-    const limit = 10; 
+    const limit = 10;
     const offset = Number(router.query.offset || 0);
-    const currentPage = Math.floor(offset / limit) + 1; 
+    const currentPage = Math.floor(offset / limit) + 1;
 
     const showResults = Array.isArray(data?.items) && data?.items?.length > 0;
 
@@ -44,7 +44,16 @@ export default function Search_Results_Services({ data, isLoading, childData, pa
                         {showResults && (
                             data?.items?.map((item, index) => (
                                 <div key={index}>
-                                    <ServiceCard product={item} />
+                                    {/* <ServiceCard product={item} /> */}
+                                    <LastOpenedCard
+                                        key={item.title}
+                                        title={item.title}
+                                        image={item.poster}
+                                        author={item.user.full_name}
+                                        price={item.price}
+                                        slug={item.slug}
+                                        userImage={item.user.photo_url}
+                                    />
                                 </div>
                             ))
                         )}
