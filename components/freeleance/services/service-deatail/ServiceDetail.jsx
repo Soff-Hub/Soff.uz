@@ -110,7 +110,7 @@ const ServiceDetail = ({ data }) => {
     return (
         <div className="container my-5 navTabsPadding">
             <div className="row">
-                <div className="col-12 col-md-8">
+                <div className="col-12 col-lg-8 mb-5">
                     <Breadcrumb
                         className="mb-3 d-flex align-items-center"
                         items={breadcrumbItems}
@@ -145,14 +145,14 @@ const ServiceDetail = ({ data }) => {
                         />
                     </div>
                 </div>
-                <div className="col-12 col-md-4">
+                <div className="col-12 col-lg-4">
                     <PriceBox priceBox={priceBox} />
                     <MoneyBack />
                     <UserBox priceBox={priceBox} pushUser={pushUser} />
                 </div>
             </div>
             <div className="row">
-                <div className="col-12 col-md-8">
+                <div className="col-12 col-lg-8">
                     {faqs?.length !== 0 && <FaqSection faqs={faqs} />}
                     {seller_portfolio?.length !== 0 && (
                         <PortfolioSection portfolios={seller_portfolio} />
@@ -165,18 +165,22 @@ const ServiceDetail = ({ data }) => {
             {similar_services.length > 0 && (
                 <div>
                     <h3>O'xshash xizmatlar</h3>
-                    <SwiperPages type={'file'}>
+                    {/* <SwiperPages type={'file'}> */}
+                    <div className='row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-gap-2 row-gap-md-5 row-gap-lg-3'>
                         {similar_services?.map(item => (
-                            <LastOpenedCard
-                                title={item.title}
-                                image={item.poster}
-                                author={item.user.full_name}
-                                price={item.price}
-                                slug={item.slug}
-                                userImage={item.user.photo_url}
-                            />
+                            <div key={item?.title} className='col'>
+                                <LastOpenedCard
+                                    title={item.title}
+                                    image={item.poster}
+                                    author={item.user.full_name}
+                                    price={item.price}
+                                    slug={item.slug}
+                                    userImage={item.user.photo_url}
+                                />
+                            </div>
                         ))}
-                    </SwiperPages>
+                    </div>
+                    {/* </SwiperPages> */}
                 </div>
             )}
         </div>

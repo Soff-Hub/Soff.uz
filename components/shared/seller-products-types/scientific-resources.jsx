@@ -30,11 +30,11 @@ export default function ScientificResources ({ data, setCategoryValue }) {
                         ))}
                     </div>
 
-                    {allItems.length > 5 && !showAll && (
+                    {/* {allItems.length > 5 && !showAll && (
                         <div className='showMoreBox' onClick={handleShowMore}>
                             <p className='showMore'>Yana ko’rsatish</p>
                         </div>
-                    )}
+                    )} */}
                 </>
             ): (
                 <ServiceIsUnavailable/>

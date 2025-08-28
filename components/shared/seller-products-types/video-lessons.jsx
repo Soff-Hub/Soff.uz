@@ -41,11 +41,11 @@ export default function VideoLessons(product) {
                 </>
             )}
 
-            {product?.length < 8 && (
+            {/* {product?.length < 8 && (
                 <div className="showMoreBox">
                     <p className="showMore">Yana ko’rsatish</p>
                 </div>
-            )}
+            )} */}
         </div>
     );
 }

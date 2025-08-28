@@ -28,16 +28,17 @@ const SellerCollapseMenu = ({ pid }) => {
             label: 'Mahsulotlar',
             children: <SellerProduct pid={pid} />,
         },
-        {
-            key: '5',
-            label: 'Kamentariyalar',
-            children: <SellerComments pid={pid} />,
-        },
+        // {
+        //     key: '5',
+        //     label: 'Kamentariyalar',
+        //     children: <SellerComments pid={pid} />,
+        // },
     ];
     const [activeKey, setActiveKey] = useState(['1']); // boshlang‘ich holat
 
     return (
         <Collapse
+            accordion
             className='mt-5 bg-white m-0'
             items={items}
             bordered={false}
