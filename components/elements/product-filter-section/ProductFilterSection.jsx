@@ -42,7 +42,7 @@ const ProductFilterSection = ({ child, parent, path }) => {
     const childRef = useRef(null);
     const [showParentArrow, setShowParentArrow] = useState(false);
     const [showChildArrow, setShowChildArrow] = useState(false);
-    const [title, setTitle] = useState(query.slug || 'Barchasi');
+    const [title, setTitle] = useState('Barchasi');
     const [sybTitle, setSybTitle] = useState('');
     const [search, setSearch] = useState('');
 
@@ -51,7 +51,12 @@ const ProductFilterSection = ({ child, parent, path }) => {
     const handleParent = (slug, name) => {
         push({
             pathname: `${path}${slug}`,
-            query: { ...query, parentCategory: slug, childCategory: '' },
+            query: {
+                ...query,
+                parentCategory: slug,
+                childCategory: '',
+                title: name,
+            },
         });
         setTitle(name);
         setSybTitle('');
@@ -60,7 +65,7 @@ const ProductFilterSection = ({ child, parent, path }) => {
     const handleChild = (slug, name) => {
         push({
             pathname: `${path}${slug}`,
-            query: { ...query, childCategory: slug },
+            query: { ...query, childCategory: slug, title: title },
         });
         setSybTitle(name);
     };
@@ -85,18 +90,26 @@ const ProductFilterSection = ({ child, parent, path }) => {
         if (!parentCont) return;
 
         setShowParentArrow(parentCont.scrollWidth > parentCont.clientWidth);
-    }, [parent]); 
-    
+    }, [parent]);
+
     useEffect(() => {
-        if (query.slug) {
-            setTitle(query.slug);
+        push({
+            pathname: `${path}all`,
+            query: { ...query, search: debouncedSearch },
+        });
+    }, [debouncedSearch]);
+
+    useEffect(() => {
+        if (query.title) {
+            setTitle(query.title);
         }
     }, [query]);
+
     return (
         <div className={`${styles.filter}  container`}>
             <h1 className={styles.title}>
-                {title.replace('-', ' ')}
-                {sybTitle && ` & ${sybTitle}`}
+                {(title || 'Barchasi').replace('-', ' ')}
+                {sybTitle && ` & ${sybTitle.replace(`${title}-`, ' ')}`}
             </h1>
             <div className={`${styles.searchBox} container `}>
                 <input

@@ -10,7 +10,7 @@ const steps = [
     },
     {
         id: 2,
-        title: 'Xizmat tafsilotibilan tanishing',
+        title: 'Xizmat tafsiloti bilan tanishing',
         description:
             'Talablaringizga mos xizmat ekanligiga amin bo’ling va kerak bo’lsa frilanser bilan muloqot qilib kelishib oling',
     },
@@ -18,13 +18,13 @@ const steps = [
         id: 3,
         title: 'To‘lov qiling - xavfsiz',
         description:
-            'To‘lov faqat ish yakunlangandan so‘ng ijrochiga o‘tkaziladi.Sizning pulingiz platforma kafolati ostida saqlanadi.',
+            'To‘lov faqat ish yakunlangandan so‘ng ijrochiga o‘tkaziladi. Sizning pulingiz platforma kafolati ostida saqlanadi.',
     },
     {
         id: 4,
         title: 'Sifatli natijani oling',
         description:
-            'Ishni qabul qiling va kerak bo‘lsa tuzatishlar so‘rang.100% qoniqish kafolati.',
+            'Ishni qabul qiling va kerak bo‘lsa tuzatishlar so‘rang. 100% qoniqish kafolati.',
     },
 ];
 

@@ -34,7 +34,7 @@ export const MenuItem = ({ products, templates, label }) => {
                             <li
                                 onClick={() => {
                                     router.push(
-                                        `/${templateLink[label]}/${item.slug}?slug=${item.slug}&search=&parentCategory=${item.slug}`
+                                        `/${templateLink[label]}/${item.slug}?slug=${item.slug}&search=&parentCategory=${item.slug}&title=${item.title}`
                                     );
                                 }}
                                 key={item.id}
@@ -51,7 +51,7 @@ export const MenuItem = ({ products, templates, label }) => {
                             <li
                                 onClick={() => {
                                     router.push(
-                                        `/orders?direction=${label}&parent_category_id=${item.id}`
+                                        `/orders?direction=${label}&parent_category_id=${item.id}&title=${item.title}`
                                     );
                                 }}
                                 key={item.id}

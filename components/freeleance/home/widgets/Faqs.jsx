@@ -38,7 +38,7 @@ const Faqs = ({ faq = [] }) => {
                             </div>
 
                             <div className={`${styles.faqContent} ${acc === 1 ? styles.faqContentActive : ''}`}>
-                                <p>Soff.uz’da ishlashni boshlash uchun Soff-seller.uz platformasida ro‘yxatdan o‘tishingiz kerak. Ro‘yxatdan o‘tganingizdan so‘ng, profil yaratishingiz va o‘z xizmatlaringizni qo‘shishingiz mumkin. Shundan so‘ng, siz mijozlardan ish buyurtmalarini qabul qila boshlaysiz va o‘z xizmatlaringizni onlayn tarzda sotishingiz mumkin.</p>
+                                <p>Soff.uz’da ishlashni boshlash uchun seller.soff.uz platformasida ro‘yxatdan o‘tishingiz kerak. Ro‘yxatdan o‘tganingizdan so‘ng, profil yaratishingiz va o‘z xizmatlaringizni qo‘shishingiz mumkin. Shundan so‘ng, siz mijozlardan ish buyurtmalarini qabul qila boshlaysiz va o‘z xizmatlaringizni onlayn tarzda sotishingiz mumkin.</p>
                             </div>
                         </div>
                     </div>
