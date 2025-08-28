@@ -18,12 +18,12 @@ const HeaderActions = ({ auth, isDark }) => {
 
     return (
         <div
-            className={`site-header-actions gap-3 ${
+            className={`site-header-actions  ${
                 isDark ? 'text-black' : 'text-white'
             }`}>
-            {!isMobile && !isTablet &&  <HeaderCatergories />}
+            {!isMobile && !isTablet && <HeaderCatergories />}
             {!isMobile && !isTablet && <MenuCategoriesDropdown />}
-            <div className="d-flex gap-4">
+            <div className="d-flex">
                 {wishlist?.length > 0 ? (
                     <Link href="/account/wishlist">
                         <a className="header__extra">

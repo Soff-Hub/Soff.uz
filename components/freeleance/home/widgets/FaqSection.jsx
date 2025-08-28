@@ -11,7 +11,7 @@ const faqs = [
     },
     {
         question: "Soff.uz’da qanday ishlashni boshlayman?",
-        answer: "Soff.uz’da ishlashni boshlash uchun Soff-seller.uz platformasida ro‘yxatdan o‘tishingiz kerak. Ro‘yxatdan o‘tganingizdan so‘ng, profil yaratishingiz va o‘z xizmatlaringizni qo‘shishingiz mumkin. Shundan so‘ng, siz mijozlardan ish buyurtmalarini qabul qila boshlaysiz va o‘z xizmatlaringizni onlayn tarzda sotishingiz mumkin."
+        answer: "Soff.uz’da ishlashni boshlash uchun seller.soff.uz platformasida ro‘yxatdan o‘tishingiz kerak. Ro‘yxatdan o‘tganingizdan so‘ng, profil yaratishingiz va o‘z xizmatlaringizni qo‘shishingiz mumkin. Shundan so‘ng, siz mijozlardan ish buyurtmalarini qabul qila boshlaysiz va o‘z xizmatlaringizni onlayn tarzda sotishingiz mumkin."
     },
     {
         question: "Soff.uz’da qanday qilib yaxshi natijalarga erishishim mumkin?",

@@ -29,8 +29,6 @@ export default function SoffFreelancerPage({
         });
     };
 
-    console.log('servicesData', servicesData);
-
     return (
         <PageContainer>
             <Meta title="Raqamli mahsulot buyurtma berish - Soff.uz" />

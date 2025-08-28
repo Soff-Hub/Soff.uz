@@ -2,8 +2,7 @@
 
 .mainblock {
     background-color: $mainbg;
-    padding: 57px 20px;
-    margin-top: 20px;
+    padding: 57px 20px; 
     .footerMainTitle {
         color: #fff;
         font-size: 36px;
@@ -29,5 +28,5 @@
         @media (max-width: 576px) {
             width: 140px;
         }
-    }
+    } 
 }
