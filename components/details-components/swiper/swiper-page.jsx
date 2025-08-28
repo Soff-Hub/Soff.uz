@@ -36,18 +36,17 @@ export default function SwiperPages({ children, type }) {
     };
 
     return (
-        <div className='swiper-wrapper' style={{ position: 'relative' }}>
+        <div className="swiper-wrapper" style={{ position: 'relative' }}>
             <Swiper
                 slidesPerView={desiredCount}
-                spaceBetween={30}
+                spaceBetween={10}
                 navigation={{
                     nextEl: '.swiper-button-next',
                     prevEl: '.swiper-button-prev',
                 }}
                 modules={[Navigation]}
-                className='mySwiper'
-                breakpoints={breakpoints}
-            >
+                className="mySwiper"
+                breakpoints={breakpoints}>
                 {paddedChildren.map((child, index) => (
                     <SwiperSlide key={index} style={{ height: '100%' }}>
                         {child}
@@ -55,12 +54,12 @@ export default function SwiperPages({ children, type }) {
                 ))}
             </Swiper>
 
-            <div className='swiper-navigation'>
-                <div className='swiper-button-prev'>
-                    <i className='fa-solid fa-chevron-left fa-2x'></i>
+            <div className="swiper-navigation mt-4">
+                <div className="swiper-button-prev">
+                    <i className="fa-solid fa-chevron-left fa-2x"></i>
                 </div>
-                <div className='swiper-button-next'>
-                    <i className='fa-solid fa-chevron-right fa-2x'></i>
+                <div className="swiper-button-next">
+                    <i className="fa-solid fa-chevron-right fa-2x"></i>
                 </div>
             </div>
         </div>

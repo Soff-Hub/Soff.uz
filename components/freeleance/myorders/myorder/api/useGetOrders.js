@@ -12,8 +12,9 @@ const useGetOrders = () => {
             const { data } = await axios.get(`order/`);
             return data;
         },
+        retry: 1,
         enabled: !!user?.access,
-         refetchOnWindowFocus: true,
+        refetchOnWindowFocus: true,
     });
 };
 

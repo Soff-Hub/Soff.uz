@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import RedesignProduct from '~/components/elements/products/Redesign/Redesign-Product';
 import ServiceIsUnavailable from '../seller-profile/ServiceIsUnavailable';
+import ProductCard from '~/components/freeleance/home/ui/ProductCard';
 
 export default function ScientificResources ({ data, setCategoryValue }) {
     const [showAll, setShowAll] = useState(false);
@@ -21,10 +22,10 @@ export default function ScientificResources ({ data, setCategoryValue }) {
                         <p className='sellerpageTitle'>Ilmiy ishlar</p>
                     </div>
 
-                    <div className='scientificResourcesWrap'>
+                    <div className='SellerProductsCardWrapper'>
                         {visibleItems.map((item, index) => (
                             <div key={index}>
-                                <RedesignProduct product={item} />
+                                <ProductCard product={item} />
                             </div>
                         ))}
                     </div>

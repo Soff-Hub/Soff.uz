@@ -13,6 +13,56 @@ import { useRouter } from 'next/router';
 import CommentSection from './ui/CommentSection';
 import Link from 'next/link';
 import { Breadcrumb, Button } from 'antd';
+import LastOpenedCard from '../../home/ui/LastOpenedCard';
+
+const defaultData = [
+    {
+        id: 1,
+        title: 'Soff uz’da qanday pul ishlash mumkin? To‘liq qo‘llanma!',
+        vedioUrl: 'KQq9wKKJkFs',
+    },
+    {
+        id: 2,
+        title:
+            'Soff uz’da sotuvchi bo‘lish – qanday ro‘yxatdan o‘tish va savdo qilish?',
+        vedioUrl: 'l0nDo1mbhf8',
+    },
+    {
+        id: 3,
+        title:
+            'Soff uz sotuvchi profili – barcha imkoniyatlar va funktsiyalar!',
+        vedioUrl: 'H6REqhC_NYM',
+    },
+    {
+        id: 4,
+        title:
+            'Soff uz’da birinchi mahsulotingizni qanday yuklash va sotishni boshlash?',
+        vedioUrl: '_c9CB7Hs50E',
+    },
+    {
+        id: 1,
+        title: 'Soff uz’da qanday pul ishlash mumkin? To‘liq qo‘llanma!',
+        vedioUrl: 'KQq9wKKJkFs',
+    },
+    {
+        id: 2,
+        title:
+            'Soff uz’da sotuvchi bo‘lish – qanday ro‘yxatdan o‘tish va savdo qilish?',
+        vedioUrl: 'l0nDo1mbhf8',
+    },
+    {
+        id: 3,
+        title:
+            'Soff uz sotuvchi profili – barcha imkoniyatlar va funktsiyalar!',
+        vedioUrl: 'H6REqhC_NYM',
+    },
+    {
+        id: 4,
+        title:
+            'Soff uz’da birinchi mahsulotingizni qanday yuklash va sotishni boshlash?',
+        vedioUrl: '_c9CB7Hs50E',
+    },
+];
 
 const ServiceDetail = ({ data }) => {
     const { push, back } = useRouter();
@@ -58,7 +108,7 @@ const ServiceDetail = ({ data }) => {
     );
 
     return (
-        <div style={{ maxWidth: '1400px' }} className="container my-5 navTabsPadding">
+        <div className="container my-5 navTabsPadding">
             <div className="row">
                 <div className="col-12 col-md-8">
                     <Breadcrumb
@@ -102,13 +152,11 @@ const ServiceDetail = ({ data }) => {
                 </div>
             </div>
             <div className="row">
-                <div className="col-12 col-md-8 p-0">
-                    {faqs?.length !== 0 &&
-                        <FaqSection faqs={faqs} />
-                    }
-                    {seller_portfolio?.length !== 0 &&
+                <div className="col-12 col-md-8">
+                    {faqs?.length !== 0 && <FaqSection faqs={faqs} />}
+                    {seller_portfolio?.length !== 0 && (
                         <PortfolioSection portfolios={seller_portfolio} />
-                    }
+                    )}
                 </div>
             </div>
 
@@ -118,8 +166,15 @@ const ServiceDetail = ({ data }) => {
                 <div>
                     <h3>O'xshash xizmatlar</h3>
                     <SwiperPages type={'file'}>
-                        {similar_services?.map(p => (
-                            <ServiceCard product={p} />
+                        {similar_services?.map(item => (
+                            <LastOpenedCard
+                                title={item.title}
+                                image={item.poster}
+                                author={item.user.full_name}
+                                price={item.price}
+                                slug={item.slug}
+                                userImage={item.user.photo_url}
+                            />
                         ))}
                     </SwiperPages>
                 </div>

@@ -15,6 +15,13 @@
 
 .site-header {
     background-color: transparent;
+    .pagesSpace {
+        background-color: white;
+        height: 120px;
+        @media (max-width: 576px) {
+            height: 100px;
+        }
+    }
 }
 
 .header-bottom {

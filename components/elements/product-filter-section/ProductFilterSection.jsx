@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import styles from './ProductFilter.module.scss';
 import { SearchOutlined, RightOutlined, LeftOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
-import useDebounce from '~/hooks/useDebounce'; 
+import useDebounce from '~/hooks/useDebounce';
 
 const childC = [
     'Texnika fanlari',
@@ -42,7 +42,7 @@ const ProductFilterSection = ({ child, parent, path }) => {
     const childRef = useRef(null);
     const [showParentArrow, setShowParentArrow] = useState(false);
     const [showChildArrow, setShowChildArrow] = useState(false);
-    const [title, setTitle] = useState('Barchasi');
+    const [title, setTitle] = useState(query.slug || 'Barchasi');
     const [sybTitle, setSybTitle] = useState('');
     const [search, setSearch] = useState('');
 
@@ -54,15 +54,15 @@ const ProductFilterSection = ({ child, parent, path }) => {
             query: { ...query, parentCategory: slug, childCategory: '' },
         });
         setTitle(name);
-        setSybTitle('')
+        setSybTitle('');
     };
 
     const handleChild = (slug, name) => {
         push({
             pathname: `${path}${slug}`,
             query: { ...query, childCategory: slug },
-        }); 
-        setSybTitle(name)
+        });
+        setSybTitle(name);
     };
 
     const scrollLeft = ref => {
@@ -85,19 +85,17 @@ const ProductFilterSection = ({ child, parent, path }) => {
         if (!parentCont) return;
 
         setShowParentArrow(parentCont.scrollWidth > parentCont.clientWidth);
-    }, [parent]);
-
+    }, [parent]); 
+    
     useEffect(() => {
-        push({
-            pathname: `${path}all`,
-            query: { ...query, search: debouncedSearch },
-        });
-    }, [debouncedSearch]);
-
+        if (query.slug) {
+            setTitle(query.slug);
+        }
+    }, [query]);
     return (
-        <div className={`${styles.filter} px-xxl-0 px-5`}>
+        <div className={`${styles.filter}  container`}>
             <h1 className={styles.title}>
-                {title}
+                {title.replace('-', ' ')}
                 {sybTitle && ` & ${sybTitle}`}
             </h1>
             <div className={`${styles.searchBox} container `}>
@@ -113,14 +111,19 @@ const ProductFilterSection = ({ child, parent, path }) => {
             </div>
 
             {/* Parent carousel */}
-            <div className={styles.carousel}>
+            <div className={styles.carouselTestWrapper}>
                 {showParentArrow && (
                     <LeftOutlined
                         className={`${styles.arrow} ${styles.left}`}
                         onClick={() => scrollLeft(parentRef)}
                     />
                 )}
-                <div className={styles.parent} ref={parentRef}>
+                <div
+                    className={styles.carouselTest}
+                    ref={parentRef}
+                    style={{
+                        justifyContent: showParentArrow ? 'start' : 'center',
+                    }}>
                     {parent.map((cat, index) => (
                         <span
                             key={cat.slug}
@@ -143,31 +146,38 @@ const ProductFilterSection = ({ child, parent, path }) => {
             </div>
 
             {/* Child carousel */}
-            <div className={styles.carousel} style={{ position: 'relative' }}>
+            <div className={styles.carouselTestWrapper}>
                 {showChildArrow && (
                     <LeftOutlined
                         className={`${styles.arrow} ${styles.left}`}
                         onClick={() => scrollLeft(childRef)}
                     />
                 )}
-                {query?.parentCategory && (
-                    <div className={styles.child} ref={childRef}>
-                        {child.map(cat => (
-                            <span
-                                key={cat.slug}
-                                onClick={() =>
-                                    handleChild(cat?.slug, cat?.name)
-                                }
-                                className={`${
-                                    styles.childCat
-                                } ${(query.childCategory === cat.slug ||
-                                    query.slug === cat.slug) &&
-                                    styles.active}`}>
-                                {cat?.name}
-                            </span>
-                        ))}
-                    </div>
-                )}
+                <div
+                    className={styles.carouselTest}
+                    ref={childRef}
+                    style={{
+                        justifyContent: showChildArrow ? 'start' : 'center',
+                    }}>
+                    {query?.parentCategory && (
+                        <>
+                            {child.map(cat => (
+                                <span
+                                    key={cat.slug}
+                                    onClick={() =>
+                                        handleChild(cat?.slug, cat?.name)
+                                    }
+                                    className={`${
+                                        styles.childCat
+                                    } ${(query.childCategory === cat.slug ||
+                                        query.slug === cat.slug) &&
+                                        styles.active}`}>
+                                    {cat?.name}
+                                </span>
+                            ))}
+                        </>
+                    )}
+                </div>
                 {showChildArrow && (
                     <RightOutlined
                         className={`${styles.arrow} ${styles.right}`}

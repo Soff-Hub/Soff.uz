@@ -9,10 +9,10 @@ export default function ProductsByCategory ({
     handlePagination,
 }){
     return (
-        <section>
-            <div className="row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-gap-4">
+        <section className='container'>
+            <div className="row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-gap-2 row-gap-md-5 row-gap-lg-3">
                 {data?.results?.map((item) => (
-                        <div key={item.id} className="col px-1 px-md-3">
+                        <div key={item.id} className="col px-1 px-md-3 px-lg-2">
                             <ProductCard product={item}/>
                         </div>
                     ))}

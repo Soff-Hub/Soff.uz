@@ -48,10 +48,8 @@ const Header = () => {
                     </div>
                 </div>
                 {!isMobile && <NavbarMenu />}
-            </div>
-            <div
-                className="bg-white"
-                style={{ height: '110px', width: '100%' }}></div>
+            </div> 
+            <div className='pagesSpace'/>
         </header>
     );
 };

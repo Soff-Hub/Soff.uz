@@ -12,6 +12,7 @@ const useGetCustomBalance = () => {
       const { data } = await axios.get(`users/wallet`);
       return data;
     },
+    retry: 1,
     enabled: !!user?.access,
     refetchOnWindowFocus: true,
   });

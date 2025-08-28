@@ -21,7 +21,7 @@ const LastOpenedCard = ({ title, image, author, price, slug, userImage }) => {
             />
             <div className={styles.footer}>
                 <img
-                    src={userImage}
+                    src={userImage || '/static/img/ozodbek.png'}
                     className={styles.avatar}
                     alt="userimage"
                 />

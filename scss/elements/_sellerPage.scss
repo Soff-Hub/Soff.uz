@@ -1265,71 +1265,30 @@ body.no-scroll {
         }
     }
 
-    .ScientificResourcesCardWrap {
+    .SellerProductsCardWrapper {
         display: grid;
-        grid-template-columns: repeat(4, 226px);
+        grid-template-columns: repeat(4, 1fr);
         gap: 10px;
-        row-gap: 31px;
+        row-gap: 10px;
         align-items: stretch;
         margin-top: 50px;
-
-        @media (max-width: 1300px) {
-            grid-template-columns: repeat(4, 1fr);
+        @media (max-width: 1440px) {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 5px;
+            row-gap: 5px;
+        } 
+        @media (max-width: 768px) {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        @media (max-width: 576px) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        @media (max-width: 374px) {
+            grid-template-columns: repeat(1, 1fr);
         }
     }
 
-    .VideoLessonsCardWrap {
-        display: grid;
-        grid-template-columns: repeat(4, 226px);
-        gap: 9px;
-        row-gap: 25px;
-        align-items: stretch;
-        margin-top: 50px;
-
-        @media (max-width: 1300px) {
-            grid-template-columns: repeat(4, 1fr);
-        }
-    }
-
-    .ModelAndDesignCardWrap {
-        display: grid;
-        grid-template-columns: repeat(3, 306px);
-        gap: 6px;
-        row-gap: 25px;
-        align-items: stretch;
-        margin-top: 50px;
-        width: 100%;
-
-        @media (max-width: 1300px) {
-            grid-template-columns: repeat(4, 1fr);
-        }
-    }
-
-    .WebSitesCardWrap {
-        display: grid;
-        grid-template-columns: repeat(4, 228px);
-        gap: 6.5px;
-        row-gap: 25px;
-        align-items: stretch;
-        margin-top: 50px;
-
-        @media (max-width: 1300px) {
-            grid-template-columns: repeat(4, 1fr);
-        }
-    }
-
-    .DesignDevelopmentCardWrap {
-        display: grid;
-        grid-template-columns: repeat(4, 228px);
-        gap: 6.5px;
-        row-gap: 25px;
-        align-items: stretch;
-        margin-top: 50px;
-
-        @media (max-width: 1300px) {
-            grid-template-columns: repeat(4, 1fr);
-        }
-    }
+     
 }
 
 .showMoreBox {

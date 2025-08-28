@@ -52,6 +52,8 @@ const OrderMain = ({ order }) => {
         setIsOpen(false);
         queryClient.invalidateQueries({ queryKey: ['order'] });
     };
+    console.log('order', order);
+
     return (
         <div className="col-lg-9 col-12 mb-5 rounded-2">
             <div className={styles.orderDetailMain}>
@@ -185,10 +187,13 @@ const OrderMain = ({ order }) => {
                         </span>
                     </div>
                     <div className="d-flex justify-content-end align-items-center">
-                        {order?.order_status_doing?.order_accepted_date ? (
-                            <p style={{ marginTop: 8 }}>
-                                {`Tugash muddatiga ${days} kun ${hours} soat ${minutes} daqiqa ${seconds} soniya qoldi`}
-                            </p>
+                        {order?.order_status_doing?.status ===
+                        'order_accepted' ? (
+                            <>
+                                <p style={{ marginTop: 8 }}>
+                                    {`Tugash muddatiga ${days} kun ${hours} soat ${minutes} daqiqa ${seconds} soniya qoldi`}
+                                </p>
+                            </>
                         ) : (
                             <p style={{ marginTop: 8 }}>
                                 {`Tugash muddati: ${order?.service?.delivery_days} kun, Buyurtma hali qabul qilinmadi`}
