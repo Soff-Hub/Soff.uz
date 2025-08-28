@@ -8,11 +8,11 @@ import VideoLessons from '../seller-products-types/video-lessons';
 import { Skeleton } from 'antd';
 import { baseURL } from '~/repositories/api';
 
-export default function SellerProduct ({ pid }) {
+export default function SellerProduct({ pid }) {
     const [product, setProduct] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [categoryValue, setCategoryValue] = useState('file');
-    const [selectedOption, setSelectedOption] = useState("file");
+    const [selectedOption, setSelectedOption] = useState('file');
 
     const menuItems = [
         // { title: 'Barchasi', path: '' },
@@ -54,7 +54,7 @@ export default function SellerProduct ({ pid }) {
                 return (
                     <ScientificResources
                         data={product}
-                        categoryValue={categoryValue}
+                        categoryValue={setCategoryValue}
                     />
                 );
             case '3d':
@@ -118,12 +118,9 @@ export default function SellerProduct ({ pid }) {
         }
     };
 
-    console.log('product', product);
-    
-
     return (
-        <div className='SellerProduct'>
-            <form className='SellerProductForm'>
+        <div className="SellerProduct">
+            <form className="SellerProductForm">
                 {/* <div className='SellerProductInputBox'>
                     <input
                         type='text'
@@ -133,13 +130,13 @@ export default function SellerProduct ({ pid }) {
                     <img src='/static/img/searchIcon.png' alt='' />
                 </div> */}
                 <select
-                    className='SellerProductSelect'
+                    className="SellerProductSelect"
                     onChange={e => {
                         const value = e.target.value;
                         setSelectedOption(value);
                         setCategoryValue(value);
                     }}>
-                    <option value='' hidden>
+                    <option value="" hidden>
                         Xizmat turlari
                     </option>
                     {menuItems.map((item, index) => (
@@ -150,7 +147,7 @@ export default function SellerProduct ({ pid }) {
                 </select>
             </form>
 
-            <div className='sellerProductSkeletonWrap'>
+            <div className="sellerProductSkeletonWrap">
                 {isLoading &&
                     Array(16)
                         .fill(0)
@@ -158,7 +155,7 @@ export default function SellerProduct ({ pid }) {
                             <Skeleton.Image
                                 key={i}
                                 active
-                                className='sellerProductSkeleton shadow'
+                                className="sellerProductSkeleton shadow"
                                 style={{ width: '100%' }}
                             />
                         ))}

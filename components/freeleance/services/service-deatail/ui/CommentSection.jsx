@@ -10,10 +10,16 @@ const CommentSection = ({ id, type }) => {
     const router = useRouter();
     const { data: comments } = useGetComments(id, type);
 
-    const handleUserClick = (sellerId) => {
-        router.push(`/seller/${sellerId}`);
+    const handleUserClick = sellerId => {
+        router.push(
+            {
+                pathname: `/seller/[pid]`,
+                query: { pid: sellerId },
+            },
+            `/seller/${sellerId}`,
+            { shallow: true }
+        );
     };
-    
 
     return (
         <div className={styles.commentSection}>
@@ -22,35 +28,58 @@ const CommentSection = ({ id, type }) => {
                 itemLayout="horizontal"
                 dataSource={comments || []}
                 locale={{ emptyText: "Hozircha izohlar yo'q" }}
-                renderItem={(item) => (
+                renderItem={item => (
                     <List.Item className={styles.commentItem}>
                         <List.Item.Meta
                             avatar={
                                 <Avatar
-                                    src={item.user?.photo_url || "/static/img/ozodbek.png"}
+                                    src={
+                                        item.user?.photo_url ||
+                                        '/static/img/ozodbek.png'
+                                    }
                                     size={48}
                                     className={styles.avatar}
-                                    onClick={() => handleUserClick(item.user?.soff_seller_id)}
+                                    onClick={() =>
+                                        handleUserClick(
+                                            item.user?.soff_seller_id
+                                        )
+                                    }
                                 />
                             }
                             title={
                                 <div className="d-flex align-items-center justify-content-between">
-                                    <div className='d-flex align-items-center gap-4'>
+                                    <div className="d-flex align-items-center gap-4">
                                         <span
                                             className={styles.userName}
-                                            onClick={() => handleUserClick(item.user?.soff_seller_id)}
-                                        >
-                                            {item.user?.full_name}{" "}
+                                            onClick={() =>
+                                                handleUserClick(
+                                                    item.user?.soff_seller_id
+                                                )
+                                            }>
+                                            {item.user?.full_name}{' '}
                                         </span>
-                                        <Rate disabled defaultValue={item.quality} className={styles.rating} />
+                                        <Rate
+                                            disabled
+                                            defaultValue={item.quality}
+                                            className={styles.rating}
+                                        />
                                     </div>
-                                        <span style={{ color: "gray", fontSize: "12px", marginLeft: "8px" }}>
-                                            {dayjs(item.created_at).format("YYYY-MM-DD")}
-                                        </span>
+                                    <span
+                                        style={{
+                                            color: 'gray',
+                                            fontSize: '12px',
+                                            marginLeft: '8px',
+                                        }}>
+                                        {dayjs(item.created_at).format(
+                                            'YYYY-MM-DD'
+                                        )}
+                                    </span>
                                 </div>
                             }
                             description={
-                                <p className={styles.commentText}>{item.comment}</p>
+                                <p className={styles.commentText}>
+                                    {item.comment}
+                                </p>
                             }
                         />
                     </List.Item>

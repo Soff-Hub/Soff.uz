@@ -1,23 +1,11 @@
-import { useRouter } from 'next/router';
-import React, { useState } from 'react';
-import SellerDonateForm from '~/components/partials/seller/SellerDonateForm';
+ 
+import React, { useState } from 'react'; 
+import SellerDonateForm from '~/components/partials/seller/SellerDonateForm'; 
 
-export default function SellerInfo({ sellerInfo }) {
-    const [openDonateModal, setOpenDonateModal] = useState(false);
-    const router = useRouter();
+export default function SellerInfo({ sellerInfo, onChange }) {
+    const [openDonateModal, setOpenDonateModal] = useState(false); 
 
-    const replaceHash = newHash => {
-        const { pathname, query } = router; 
-
-        router.push(
-            {
-                pathname,
-                query,
-            },
-            `/seller/${query.pid}#${newHash}`,
-            { shallow: true }
-        );
-    };
+   
     return (
         <div>
             <div className="SellerInfo">
@@ -151,7 +139,7 @@ export default function SellerInfo({ sellerInfo }) {
                     </div>
                     <div className="SellerInfoSecondCardBtn">
                         <p
-                            onClick={() => replaceHash('services')}
+                            onClick={onChange}
                             href={'/seller/services'}
                             className="SellerInfoSecondCardBtnTitle">
                             Buyurtma berish
