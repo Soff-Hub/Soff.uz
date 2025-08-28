@@ -54,6 +54,7 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
             {
                 onSuccess: data => {
                     setMessage(true);
+                    window.open(data?.url, "_blank")
                 },
                 onError: err => {
                     setMessage(true);
