@@ -1,52 +1,84 @@
-import React from 'react'
-import styles from "../styles/FaqSection.module.scss"
-import { Collapse } from 'antd'
+import React from 'react';
+import styles from '../styles/FaqSection.module.scss';
+import { Collapse } from 'antd';
 
-const { Panel } = Collapse
+const { Panel } = Collapse;
 
 const faqs = [
     {
-        question: "Soff.uz nima?",
-        answer: "Soff.uz - bu mustaqil ishlashni xohlagan mutaxassislar uchun maxsus yaratilgan onlayn platformadir. Freelancerlar o‘z malakalari va xizmatlarini taqdim etib, mijozlar bilan bevosita bog‘lanib ishlashlari mumkin. Soff.uz’da turli sohalarda ishlash uchun imkoniyatlar mavjud, masalan, dizayn, yozuvchilik, tarjima, webrazrabotka va boshqa ko‘plab xizmatlar. Endilikda siz Soff Seller orqali o'z intellektual mulklaringizni joylab daromad topishingiz mumkin."
+        question: 'Soff.uz nima?',
+        answer:
+            "Soff.uz — bu onlayn raqamli mahsulotlar va xizmatlar bozori bo‘lib, bu yerda siz turli raqamli mahsulotlarni, masalan, audio fayllar, videolar, grafikalar, ta'lim ma'teriallari va boshqa raqamli mahsulotlarni osonlik bilan sotib olishingiz mumkin.",
     },
     {
-        question: "Soff.uz’da qanday ishlashni boshlayman?",
-        answer: "Soff.uz’da ishlashni boshlash uchun seller.soff.uz platformasida ro‘yxatdan o‘tishingiz kerak. Ro‘yxatdan o‘tganingizdan so‘ng, profil yaratishingiz va o‘z xizmatlaringizni qo‘shishingiz mumkin. Shundan so‘ng, siz mijozlardan ish buyurtmalarini qabul qila boshlaysiz va o‘z xizmatlaringizni onlayn tarzda sotishingiz mumkin."
+        question: 'Soff.uz’dan qanday mahsulotlarni sotib olishim mumkin?',
+        answer:
+            "Soff.uz platformasida quyidagi turdagi mahsulotlarni sotib olishingiz mumkin: Raqamli ta’lim materiallari, Grafikalar, dizaynlar va logotiplar, Audio va video fayllar, Kitoblar, maqolalar va boshqa yozma kontentlar, Veb dizayn va boshqa raqamli xizmatlar. Platformada sotilayotgan barcha mahsulotlar sifatli va foydalanuvchilarga kerakli ma'lumotlarni o‘z ichiga oladi.",
     },
     {
-        question: "Soff.uz’da qanday qilib yaxshi natijalarga erishishim mumkin?",
-        answer: "Soff.uz’da muvaffaqiyatli bo‘lish uchun quyidagi tavsiyalarga amal qilishingiz mumkin: Kengaytirilgan portfel: O‘z xizmatlaringizni to‘liq va aniq taqdim eting. Oldingi ishlangan loyihalarni qo‘shing. O‘zgaruvchan narx siyosati: Mijozlar uchun turli narx variantlari taklif qilish va ularning ehtiyojlariga moslashish. Yaxshi muloqot: Mijozlar bilan muntazam aloqada bo‘ling va so‘rovlarini tezkor hal qilishga harakat qiling. Reyting va sharhlar: Ijobiy sharhlar va reytinglar olishga intiling, bu sizning ishonchliligingizni oshiradi."
+        question: 'Soff.uz’dan mahsulotlarni qanday sotib olish mumkin?',
+        answer:
+            "Soff.uz’dan mahsulot sotib olish uchun: Platformada ro‘yxatdan o‘tishingiz kerak. Mahsulotni tanlab, unga tegishli sahifaga o‘ting. 'Hoziroq xarid qilish' tugmasini bosing va to‘lovni amalga oshiring. To‘lov tasdiqlangandan so‘ng, mahsulotni darhol yuklab olish imkoniyatiga ega bo‘lasiz.",
     },
     {
-        question: "Mijozlar Soff.uz’da qanday xizmatlar taklif etishadi?",
-        answer: "Soff.uz platformasida mijozlar turli sohalarda xizmatlar taklif qilishlari mumkin. Bu sohalar quyidagilarni o‘z ichiga oladi: Dizayn va grafika, Veb sayt ishlab chiqish, Kontent yaratish, Tarjima va transkripsiya, Videolarni tahrirlash, Marketing va SEO xizmatlari, Ma’lumotlarni tahlil qilish. Siz har bir soha bo‘yicha o‘z xizmatlaringizni taqdim etishingiz mumkin."
+        question: 'To‘lov usullari qanday?',
+        answer:
+            'Soff.uz platformasida quyidagi to‘lov usullari mavjud: Bank kartalari (Visa, MasterCard) Elektron hamyonlar (Payme, Click), Pul o‘tkazmalari orqali to‘lov. Har bir to‘lov usuli xavfsiz va qulay tarzda amalga oshiriladi.',
     },
     {
-        question: "Soff.uz platformasidan foydalanish bepulmi?",
-        answer: "Ha, Soff.uz platformasidan foydalanish bepul. Siz ro‘yxatdan o‘tganingizdan so‘ng, o‘z xizmatlaringizni taqdim etishingiz mumkin. Platforma sizning yutug‘ingizdan komissiya olish orqali daromad qiladi."
+        question: 'Sotib olingan mahsulotni qanday yuklab olish mumkin?',
+        answer:
+            "Sotib olingan mahsulotni yuklab olish juda oson. To‘lov tasdiqlanganidan so‘ng, mahsulotning sahifasida 'Yuklab olish' tugmasi paydo bo‘ladi. Ushbu tugmani bosing va mahsulotni o‘zingizning qurilmangizga yuklab oling. Ikkinchi yo'li Xaridor o'z profiliga kirganda Xarid qilingan materiallar bo'limida ham sotib olingan mahsulot qo'shilib borad. Agar mahsulotni yuklab olishda muammo yuzaga kelsa, Soff.uz mijozlarga xizmat ko‘rsatish bo‘limiga murojaat qiling.",
     },
     {
-        question: "Platforma qanday xavfsizlikni ta’minlaydi?",
-        answer: "Soff.uz mijozlar va freelancerlar uchun xavfsiz ish olib borishni ta’minlashga katta e’tibor qaratadi. To‘lovlar tizimi himoyalangan va foydalanuvchilarning shaxsiy ma’lumotlari himoya qilinadi. Shuningdek, platformada fraud detection tizimi mavjud bo‘lib, soxta akkauntlar aniqlanadi."
+        question: 'Sotib olingan mahsulotni qanday qaytarib olishim mumkin?',
+        answer:
+            "Soff.uz platformasida sotib olingan raqamli mahsulotlarni qaytarish siyosati platformaning foydalanuvchi shartnomasi asosida belgilanadi. Agar mahsulotda biror muammo yuzaga kelsa, bizning mijozlarga xizmat ko‘rsatish bo‘limiga murojaat qilishingiz mumkin. Mahsulotni qaytarish faqat ba'zi holatlarda amalga oshiriladi, masalan, mahsulot noto‘g‘ri taqdim etilgan bo‘lsa.",
     },
     {
-        question: "Soff.uz’da qanday yordam olishim mumkin",
-        answer: "Agar sizda Soff.uz platformasidan foydalanish bo‘yicha savollar yoki muammolar bo‘lsa, bizning yordam markazimizga murojaat qilishingiz mumkin. Shuningdek, platformada mavjud FAQ sahifasida ko‘plab umumiy savollarga javoblar mavjud. Boshqa yordam uchun biz bilan Telegram orqali bog‘lanishingiz mumkin."
-    }
-]
+        question: 'Soff.uz’dan mahsulotni qanday izlashim mumkin?',
+        answer:
+            'Soff.uz’da mahsulotlarni izlash juda oson. Saytning yuqori qismidagi qidiruv paneli orqali kerakli mahsulot yoki xizmat nomini kiritib qidirishingiz mumkin. Shuningdek, kategoriya bo‘yicha ham mahsulotlarni topishingiz mumkin.',
+    },
+    {
+        question: 'Soff.uz xavfsizmi?',
+        answer:
+            "Ha, Soff.uz foydalanuvchilarining shaxsiy ma'lumotlari va to‘lovlari xavfsiz tarzda himoyalangan. Platformada barcha ma’lumotlar shifrlangan va xavfsiz to‘lov tizimlari orqali amalga oshiriladi.",
+    },
+    {
+        question: 'Xarid qilishda qanday yordam olishim mumkin?',
+        answer:
+            'Agar mahsulot sotib olish jarayonida yordamga muhtoj bo‘lsangiz yoki mahsulotga oid savollaringiz bo‘lsa, Soff.uz mijozlarga xizmat ko‘rsatish bo‘limiga murojaat qilishingiz mumkin. Bizning yordam markazimizda tez-tez beriladigan savollar va batafsil javoblar mavjud.',
+    },
+    {
+        question:
+            'Soff.uz’da yangiliklar va takliflar haqida qanday xabardor bo‘lishim mumkin?',
+        answer:
+            'Soff.uz platformasida yangi mahsulotlar, chegirmalar va maxsus takliflar haqida xabardor bo‘lish uchun Soff.uzning Telegram kanali yoki email xabarnomalaridan foydalanishingiz mumkin.',
+    },
+    {
+        question: 'Soff.uz yordam markazi bilan qanday bog‘lanishim mumkin?',
+        answer:
+            'Agar Soff.uz bilan bog‘lanishingiz kerak bo‘lsa, bizning Telegram kanali orqali yoki email orqali bizga murojaat qilishingiz mumkin. Shuningdek, saytimizda mavjud Yordam markazi orqali tezkor javoblar olishingiz mumkin.',
+    },
+];
 
 const FaqSection = () => {
     const panelStyle = {
         marginBottom: 24,
-        background: "rgba(254, 254, 254, 1)",
+        background: 'rgba(254, 254, 254, 1)',
         borderRadius: 10,
         border: 'none',
         boxShadow: '5px 10px 30px 0px rgba(0, 0, 0, 0.05)',
-    }
+    };
 
     return (
         <div className={styles.faqWrapper}>
-            <img src="/static/img/HomePage/icon.png" alt="icon" style={{ marginBottom: "48px" }} />
+            <img
+                src="/static/img/star.svg"
+                alt="icon"
+                style={{ marginBottom: '48px' }}
+            />
             <h3 className={styles.subtitle}>Ko‘p so‘raladigan savollar</h3>
             <h1 className={styles.title}>SAVOLLAR</h1>
 
@@ -55,26 +87,30 @@ const FaqSection = () => {
                 bordered={false}
                 expandIcon={({ isActive }) => (
                     <img
-                        src="/static/img/HomePage/icon.png"
+                        src="/static/img/star.svg"
                         alt="badge"
-                        className={`${styles.custom_expand_icon} ${isActive ? styles.active : ""}`}
+                        className={`${styles.custom_expand_icon} ${
+                            isActive ? styles.active : ''
+                        }`}
                     />
                 )}
-                style={{ background: "transparent" }}
-            >
+                style={{ background: 'transparent' }}>
                 {faqs.map((item, idx) => (
                     <Panel
                         className={styles.accordion}
-                        header={<h1 className={styles.accordionTitle}>{item.question}</h1>}
+                        header={
+                            <h1 className={styles.accordionTitle}>
+                                {item.question}
+                            </h1>
+                        }
                         key={idx}
-                        style={panelStyle}
-                    >
+                        style={panelStyle}>
                         <p className={styles.accordionText}>{item.answer}</p>
                     </Panel>
                 ))}
             </Collapse>
         </div>
-    )
-}
+    );
+};
 
-export default FaqSection
+export default FaqSection;

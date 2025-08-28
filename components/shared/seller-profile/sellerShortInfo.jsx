@@ -36,7 +36,6 @@ export default function SellerShortInfo({ sellerInfo }) {
         }
     };
 
-    console.log('sellerInfo', sellerInfo);
 
     return (
         <div className="sellerInfo">
