@@ -62,7 +62,7 @@ const options = {
 };
 
 const HeaderCatergories = () => {
-    const { isMobile, isTablet } = useResponsive();
+    const { isMobile } = useResponsive();
     return (
         <div className={styles.dropBlock}>
             <div>

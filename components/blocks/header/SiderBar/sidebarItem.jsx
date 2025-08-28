@@ -24,7 +24,7 @@ const SideBarItem = ({ products, templates, direction, onClick }) => {
                             <li
                                 onClick={() => {
                                     router.push(
-                                        `/${option[direction]}/${item.slug}?slug=${item.slug}&search=&parentCategory=${item.slug}`
+                                        `/${option[direction]}/${item.slug}?slug=${item.slug}&search=&parentCategory=${item.slug}&title=${item.title}`
                                     );
                                     onClick();
                                 }}
@@ -42,7 +42,7 @@ const SideBarItem = ({ products, templates, direction, onClick }) => {
                             <li
                                 onClick={() => {
                                     router.push(
-                                        `/orders?direction=${direction}&parent_category_id=${item.id}`
+                                        `/orders?direction=${direction}&parent_category_id=${item.id}&title=${item.title}`
                                     );
                                     onClick();
                                 }}
