@@ -11,14 +11,7 @@ const LastOpenedCard = ({ title, image, author, price, slug, userImage }) => {
             <p className={styles.title}>
                 <span>{title}</span>
             </p>
-            <div
-                className={styles.image}
-                style={{
-                    background: `url(${image || '/static/img/not-found.png'})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                }}
-            />
+            <img src={image || '/static/img/not-found.png'} alt={title} />
             <div className={styles.footer}>
                 <img
                     src={userImage || '/static/img/ozodbek.png'}
