@@ -9,6 +9,7 @@ import styles from '../styles/detail.module.scss';
 
 const ImageCarousel = ({ images }) => {
     if (!images) return null; // rasm bo'lmasa carouselni ko'rsatmaslik
+    console.log(images);
 
     return (
         <div className={styles.carouselWrapper}>
@@ -22,19 +23,18 @@ const ImageCarousel = ({ images }) => {
                 navigation
                 pagination={{ clickable: true }}
                 loop={false} // hozir bitta rasm, loop kerak emas
-                className={styles.carousel}> 
-                <SwiperSlide className={styles.slide}>
-                   
-                </SwiperSlide>
-
-                
-        Agar kelajakda bir nechta rasm keladigan bo'lsa:
-        {images.map((src, index) => (
-          <SwiperSlide key={index} className={styles.slide}>
-            <img src={src} alt={`Slide ${index + 1}`} loading="lazy" />
-          </SwiperSlide>
-        ))}
-         
+                className={styles.carousel}>
+                <SwiperSlide className={styles.slide}></SwiperSlide>
+                Agar kelajakda bir nechta rasm keladigan bo'lsa:
+                {images.map((src, index) => (
+                    <SwiperSlide key={index} className={styles.slide}>
+                        <img
+                            src={src}
+                            alt={`Slide ${index + 1}`}
+                            loading="lazy"
+                        />
+                    </SwiperSlide>
+                ))}
             </Swiper> */}
         </div>
     );

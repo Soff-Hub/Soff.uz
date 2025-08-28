@@ -2,12 +2,12 @@ import { useQuery } from '@tanstack/react-query';
 import { Button, Modal } from 'antd';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import {  useSelector } from 'react-redux';
 import useCreateChat from '~/components/freeleance/chat/api/useCreateChat';
 import CalculateTimeDifference from '~/components/partials/account/DateFormatter';
 import { getDate, getStatus, getTimeAgo } from '~/utilities/calculateTime';
-
-export default function SellerShortInfo({ sellerInfo }) {
+import { setActiveIndex } from '../../../store/seller/slice';
+export default function SellerShortInfo({ sellerInfo }) { 
     const [nameModal, setNameModal] = useState(false);
     const [fullName, setFullName] = useState(false);
     const [surName, setSurname] = useState(false);
@@ -36,6 +36,7 @@ export default function SellerShortInfo({ sellerInfo }) {
         }
     };
 
+    
 
     return (
         <div className="sellerInfo">
