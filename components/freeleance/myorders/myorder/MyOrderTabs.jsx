@@ -61,11 +61,11 @@ const MyOrderTabs = () => {
             label: `Tugallandi ${data?.completed || 0}`,
             children: <AllOrdersTable type={'completed'} />,
         },
-        // {
-        //     key: '5',
-        //     label: `Bekor qilingan ${data?.cancelled}`,
-        //     children: <AllOrdersTable type={'cancelled'} />,
-        // },
+        {
+            key: '5',
+            label: `Bekor qilingan ${data?.cancelled}`,
+            children: <AllOrdersTable type={'cancelled'} />,
+        },
     ];
 
     const menuItems = items.map(item => ({

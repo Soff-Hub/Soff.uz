@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import ServiceCard from '~/components/freeleance/services/ServiceCard';
 import { apiForFreelance } from '~/repositories/api';
 import ServiceIsUnavailable from './ServiceIsUnavailable';
+import LastOpenedCard from '~/components/freeleance/home/ui/LastOpenedCard';
 
 export default function SellerServices({ pid }) {
     const { data, isLoading } = useQuery({
@@ -18,10 +19,8 @@ export default function SellerServices({ pid }) {
         enabled: !!pid,
     });
 
-    if(data?.length == 0){
-        return (
-            <ServiceIsUnavailable type='service'/>
-        )
+    if (data?.length == 0) {
+        return <ServiceIsUnavailable type="service" />;
     }
 
     return (
@@ -44,7 +43,14 @@ export default function SellerServices({ pid }) {
                     <div className="row">
                         {data?.map((item, index) => (
                             <div className="col-6 col-md-4">
-                                <ServiceCard product={item} />
+                                <LastOpenedCard
+                                    title={item.title}
+                                    image={item.poster}
+                                    author={item.user.full_name}
+                                    price={item.price}
+                                    slug={item.slug}
+                                    userImage={item.user.photo_url}
+                                />
                             </div>
                         ))}
                     </div>

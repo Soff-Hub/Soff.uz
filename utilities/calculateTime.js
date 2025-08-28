@@ -52,7 +52,7 @@ export const getStatus = (timestamp) => {
     return `Online`;
   }
 
-  return dayjs(new Date(timestamp)).format('YYYY-MM-DD HH:mm')
+  return dayjs(new Date(timestamp)).format('DD/MM/YYYY HH:mm')
 }
 
 export function getRemainingDays(createdAt, deliveryDay) {

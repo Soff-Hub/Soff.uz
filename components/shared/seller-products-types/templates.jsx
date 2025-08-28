@@ -2,6 +2,7 @@ import React from 'react';
 import RedesignProduct from '~/components/elements/products/Redesign/Redesign-Product';
 import VideoLessonsProducts from '~/components/elements/products/VideoLessonsProducts';
 import ServiceIsUnavailable from '../seller-profile/ServiceIsUnavailable';
+import ProductCard from '~/components/freeleance/home/ui/ProductCard';
 
 export default function Templates(product) {
     const data = product?.data?.template;
@@ -29,10 +30,10 @@ export default function Templates(product) {
                     ) : (
                         <ServiceIsUnavailable />
                     )}
-                    <div className='ScientificResourcesCardWrap'>
+                    <div className='SellerProductsCardWrapper'>
                         {data?.map((item, index) => (
                             <div className='' key={index}>
-                                <VideoLessonsProducts product={item} />
+                                <ProductCard product={item} />
                             </div>
                         ))}
                     </div>

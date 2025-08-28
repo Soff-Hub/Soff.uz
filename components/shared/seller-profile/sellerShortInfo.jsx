@@ -36,6 +36,8 @@ export default function SellerShortInfo({ sellerInfo }) {
         }
     };
 
+    console.log('sellerInfo', sellerInfo);
+
     return (
         <div className="sellerInfo">
             <div className="aboutSeller">
@@ -51,11 +53,7 @@ export default function SellerShortInfo({ sellerInfo }) {
                     <p className=" m-0">{sellerInfo?.position || ''}</p>
                     <p style={{ color: '#312F30' }}>
                         Oxirgi faollik:{' '}
-                        {0 < Number(getStatus(sellerInfo?.last_login)) < 5 ? (
-                            <span className=" text-success">Online</span>
-                        ) : (
-                            <span>getStatus(sellerInfo?.last_login)</span>
-                        )}
+                        {getStatus(new Date(sellerInfo?.last_login))}
                     </p>
                 </div>
             </div>

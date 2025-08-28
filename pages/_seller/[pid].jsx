@@ -19,7 +19,7 @@ export default function SellersPage() {
     const { query, asPath, isReady } = router;
     const activeIndex = asPath.slice(asPath.indexOf('#') + 1, asPath.length);
 
-    const pid = query.pid; 
+    const pid = query.pid;
 
     const menuItems = [
         {
@@ -53,10 +53,13 @@ export default function SellersPage() {
             return response.data;
         },
         enabled: !!pid,
-    }); 
+    });
 
-    console.log('pid', data);
-    
+    useEffect(() => {
+        if (!activeIndex.includes('#')) {
+            router.replace(`${activeIndex}/#about_author`);
+        }
+    }, []);
 
     const sellerTabItems = {
         about_author: <SellerInfo pid={pid} sellerInfo={data} />,

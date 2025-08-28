@@ -1,6 +1,7 @@
 import React from 'react';
 import WebsitesProduct from '~/components/elements/products/WebsitesProduct';
 import ServiceIsUnavailable from '../seller-profile/ServiceIsUnavailable';
+import ProductCard from '~/components/freeleance/home/ui/ProductCard';
 
 export default function WebSites(product) {
     const data = product?.data?.website;
@@ -29,10 +30,10 @@ export default function WebSites(product) {
                     ) : (
                         <ServiceIsUnavailable />
                     )}
-                    <div className='WebSitesCardWrap'>
+                    <div className='SellerProductsCardWrapper'>
                         {data?.map((item, index) => (
                             <div className='' key={index}>
-                                <WebsitesProduct product={item} />
+                                <ProductCard product={item} />
                             </div>
                         ))}
                     </div>

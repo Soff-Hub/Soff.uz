@@ -1,6 +1,7 @@
 import React from 'react';
 import DesignDevelopmentProducts from '~/components/elements/products/DesignDevelopmentProducts';
 import ServiceIsUnavailable from '../seller-profile/ServiceIsUnavailable';
+import ProductCard from '~/components/freeleance/home/ui/ProductCard';
 
 export default function DesignDevelopment(product) {
     const data = product?.data?.design;
@@ -32,10 +33,10 @@ export default function DesignDevelopment(product) {
                         <ServiceIsUnavailable />
                     )}
 
-                    <div className='scientificResourcesWrap'>
+                    <div className='SellerProductsCardWrapper'>
                         {data?.map((item, index) => (
                             <div className='' key={index}>
-                                <DesignDevelopmentProducts product={item} />
+                                <ProductCard product={item} />
                             </div>
                         ))}
                     </div>
