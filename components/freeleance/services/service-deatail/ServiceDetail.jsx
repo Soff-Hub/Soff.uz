@@ -123,7 +123,7 @@ const ServiceDetail = ({ data }) => {
                         }}
                         className="w-100">
                         <h1 className={styles.title}>{service?.title}</h1>
-                        <div className={styles.userBox}>
+                        <div className={styles.userMainBox}>
                             <img
                                 className={styles.avatar}
                                 src={photo_url || '/static/img/ozodbek.png'}

@@ -13,8 +13,8 @@ const useGetChatById = (id) => {
             return data;
         },
         enabled: !!id,
-        staleTime: 1000 * 60 * 5,
-        cacheTime: 1000 * 60 * 10,
+        refetchOnMount: "always",
+        refetchOnWindowFocus: true,
     });
 };
 

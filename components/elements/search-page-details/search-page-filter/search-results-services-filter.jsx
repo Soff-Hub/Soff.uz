@@ -66,14 +66,14 @@ export default function SearchResultsProductsFilter({ parentData, childData, tot
                                 handleChange({ direction: value, service_parent: '', category_id: '' })
                             }
                             options={directions}
-                        />
+                        />                                                                                                                                                                                                                                          
                     </div>
 
                     {/* Parent category select */}
                     {direction &&
                         <div className="col-6 col-lg-3">
                             <Select
-                                style={{ width: '100%' }}
+                                style={{ width: '100%' }}                                                                                                                                                                                                                                                                                                                                                                                                                                                       
                                 placeholder="Katta kategoriya"
                                 value={service_parent ? Number(service_parent) : undefined}
                                 allowClear

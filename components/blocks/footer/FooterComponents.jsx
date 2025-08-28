@@ -23,12 +23,12 @@ const footerMenu = {
                 username: '@soffuz',
                 url: 'https://www.facebook.com/profile.php?id=61579052952962#',
             },
-            {
-                name: 'Twitter',
-                icon: '/static/img/x.png',
-                username: 't.me/soff_uz',
-                url: 'https://t.me/soff_uz',
-            },
+            // {
+            //     name: 'Twitter',
+            //     icon: '/static/img/x.png',
+            //     username: 't.me/soff_uz',
+            //     url: 'https://t.me/soff_uz',
+            // },
             {
                 name: 'Instagram',
                 icon: '/static/img/insta.png',

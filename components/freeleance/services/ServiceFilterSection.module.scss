@@ -11,10 +11,12 @@
 
     @media (max-width: 992px) {
         font-size: 40px;
+        margin: 10px 0 ;
     }
 
     @media (max-width: 768px) {
         font-size: 32px;
+        margin: 0;
     }
 
     @media (max-width: 576px) {
@@ -25,7 +27,6 @@
 .headlineWrapper {
     position: relative;
     text-align: center;
-    padding-top: 50px;
     &::after {
         content: '';
         position: absolute;
@@ -256,6 +257,7 @@
     border-radius: 20px;
     width: 30px;
     height: 30px;
+    place-content: center;
     cursor: pointer;
     &:hover {
         color: red;
