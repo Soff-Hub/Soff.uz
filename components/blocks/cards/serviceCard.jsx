@@ -3,7 +3,7 @@ import styles from './service.module.scss';
 import { useRouter } from 'next/router';
 
 const title = {
-    '3d': 'Dasturlash xizmatlari',
+    '3d': '3D Dizayn va Vizualizatsiya',
     website: 'Dasturlash xizmatlari',
     design: 'Dizayn',
     file: 'Ilmiy va Akademik Xizmatlar',
