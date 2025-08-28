@@ -84,7 +84,7 @@ export default function ProductCategoryScreen({
             <ProductFilterSection
                 child={childCategoryData.results}
                 parent={fourChildData.results}
-                path={"/scientific-resources/"}
+                path={'/scientific-resources/'}
             />
             <div className="ps-page--shop container p-lg-1 my-5">
                 <ProductsByCategory
@@ -153,16 +153,15 @@ export default function ProductCategoryScreen({
                             </div>
                         </div>
                     </section>
-                    <div>
-                        <GrayMentionCard
-                            title="Kerakli mahsulotni topa olmadingizmi? Buyurtma
+                    <GrayMentionCard
+                        title="Kerakli mahsulotni topa olmadingizmi? Buyurtma
                                 berishingiz mumkin."
-                            btn="Buyurtmar berish"
-                            link="/orders?direction=scientific_work"
-                        />
-                    </div>
+                        btn="Buyurtmar berish"
+                        link="/orders?direction=scientific_work"
+                    />
                 </div>
             </div>
+            <div className="servicesSpace" />
         </PageContainer>
     );
 }

@@ -2,12 +2,13 @@
 .heroMainBlock { 
     display: flex;
     gap: 50px;
+    padding-top: 20px;
     align-items: center;
     .heroInfoSection {
         padding: 50px 0;
         position: relative;
         overflow: hidden; // do
-        display: flex;
+        display: flex; 
         flex-direction: column;
         .heroTitle {
             font-size: 36px;

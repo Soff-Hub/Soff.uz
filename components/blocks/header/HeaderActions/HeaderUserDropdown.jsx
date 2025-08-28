@@ -7,6 +7,7 @@ import GetRepository from '~/reositoriy-admin/GetRepository';
 import Router, { useRouter } from 'next/router';
 import { setSavedPrfileData } from '~/store/ecomerce/slice';
 import styles from '../../../landingStyles/landingStyles.module.scss';
+import HeaderNotifications from './HeaderNotifications';
 const HeaderUserDropdown = props => {
     const dispatch = useDispatch();
     const { accountLinks, user } = useSelector(state => state.auth);
@@ -122,7 +123,6 @@ const HeaderUserDropdown = props => {
         );
     } else {
         return (
-            
             <a
                 href={
                     id
