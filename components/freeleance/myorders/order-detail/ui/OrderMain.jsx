@@ -52,7 +52,6 @@ const OrderMain = ({ order }) => {
         setIsOpen(false);
         queryClient.invalidateQueries({ queryKey: ['order'] });
     };
-    console.log('order', order);
 
     return (
         <div className="col-lg-9 col-12 mb-5 rounded-2">
