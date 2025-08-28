@@ -16,7 +16,7 @@ export default function SearchResultsSpecialists_Card({ data }) {
 
     return (
         <div
-            onClick={() => router.push({ pathname: `_seller/${data?.soff_seller_id}` })}
+            onClick={() => router.push({ pathname: `seller/${data?.soff_seller_id}` })}
             className='Search_Results_Specialists_Card'
         >
             <img

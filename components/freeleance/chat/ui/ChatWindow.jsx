@@ -67,13 +67,13 @@ const ChatWindow = ({ chatId, goBack }) => {
                 <Avatar
                     size={50}
                     src={<img src={chat?.opponent?.photo_url  ||  "/static/img/ozodbek.png"} alt="user img" />}
-                    onClick={() => push(`_seller/${chat?.opponent?.id}`)}
+                    onClick={() => push(`seller/${chat?.opponent?.id}`)}
                     style={{ cursor: "pointer" }}
                 />
                 <div className={styles.user_box}>
                     <div className={styles.user_names}>
                         <h4
-                            onClick={() => push(`_seller/${chat?.opponent?.id}`)}
+                            onClick={() => push(`seller/${chat?.opponent?.id}`)}
                             style={{ cursor: "pointer" }}
                         >
                             {chat?.opponent?.name}
@@ -94,7 +94,7 @@ const ChatWindow = ({ chatId, goBack }) => {
                 {messages?.length > 0 ? (
                     messages.map((msg) => (
                         <ChatMessage
-                            pushUser={() => push(`_seller/${chat?.chat?.opponent?.id}#about_author`)}
+                            pushUser={() => push(`seller/${chat?.chat?.opponent?.id}#about_author`)}
                             key={msg.id}
                             msg={msg}
                             onEdit={setEdit}

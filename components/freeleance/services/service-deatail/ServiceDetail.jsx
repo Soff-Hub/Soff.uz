@@ -77,7 +77,7 @@ const ServiceDetail = ({ data }) => {
     } = data;
 
     const pushUser = () =>
-        push(`/_seller/${data?.user[0]?.soff_seller_id}`);
+        push(`/seller/${data?.user[0]?.soff_seller_id}`);
     const priceBox = {
         days: service?.delivery_days,
         price: service?.price,
