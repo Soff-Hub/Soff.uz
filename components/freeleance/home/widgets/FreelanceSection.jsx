@@ -52,7 +52,7 @@ const FreelanceSection = () => {
                 <div className={styles.freelance_text}>
                     <div className="d-flex  gap-2 flex-fill">
                         <div className="d-none d-md-flex">
-                            <AntImage
+                            <img
                                 src={'/static/img/star.svg'}
                                 width={30}
                                 height={30}

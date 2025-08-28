@@ -23,7 +23,7 @@ const options = {
         },
         {
             icon: '/static/svg/monitor.svg',
-            label: 'Veb saytlar',
+            label: 'Dasturlash xizmatlari',
             link: '/websites/all?slug=all',
         },
         {
@@ -50,7 +50,7 @@ const options = {
         },
         {
             icon: '/static/svg/monitor.svg',
-            label: 'Veb saytlar',
+            label: 'Dasturlash xizmatlari',
             link: '/orders?direction=web',
         },
         {
