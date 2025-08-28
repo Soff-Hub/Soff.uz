@@ -48,6 +48,7 @@ const CatalogCard = ({ content_type, title, count, items }) => {
     const router = useRouter();
     const [first, second, third, fourth] = items;
 
+    
     return (
         <div
             className={styles.catalogCard}
