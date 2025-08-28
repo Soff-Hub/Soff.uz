@@ -21,7 +21,7 @@ function SellerProfile({ product }) {
                     />
                 </div>
                 <div>
-                    <Link href={`/_seller/${product?.seller?.id}`}>
+                    <Link href={`/seller/${product?.seller?.id}`}>
                         <h3 className="sellerNameHover">
                             {product?.seller?.first_name}{' '}
                             {product?.seller?.last_name}

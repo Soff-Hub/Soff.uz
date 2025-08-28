@@ -31,7 +31,7 @@ dayjs.locale(uzLocale, null, true);
 // 2. Faollashtiramiz
 dayjs.locale('uz');
 
-export function getTimeAgo(dateString) { 
+export function getTimeAgo(dateString) {
   return dayjs(dateString, 'YYYY-MM-DD HH:mm').fromNow()
 }
 
@@ -40,16 +40,13 @@ export const getDate = (date) => {
 };
 
 export const getStatus = (timestamp) => {
-  if (!timestamp || !dayjs(timestamp).isValid()) { 
+  if (!timestamp || !dayjs(timestamp).isValid()) {
     return dayjs().diff(dayjs(timestamp), "minute");
   }
   const diffMinutes = dayjs().diff(dayjs(timestamp), "minute");
 
-  if (1 < diffMinutes && diffMinutes < 5) {
-    return "Yaqinda online edi";
-  }
-  if (diffMinutes < 1) {
-    return `Online`;
+  if (diffMinutes < 5) {
+    return <span style={{ color: '#02a214' }}>Online</span>;
   }
 
   return dayjs(new Date(timestamp)).format('DD/MM/YYYY HH:mm')

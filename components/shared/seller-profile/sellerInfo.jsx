@@ -1,8 +1,23 @@
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import SellerDonateForm from '~/components/partials/seller/SellerDonateForm';
 
 export default function SellerInfo({ sellerInfo }) {
     const [openDonateModal, setOpenDonateModal] = useState(false);
+    const router = useRouter();
+
+    const replaceHash = newHash => {
+        const { pathname, query } = router; 
+
+        router.push(
+            {
+                pathname,
+                query,
+            },
+            `/seller/${query.pid}#${newHash}`,
+            { shallow: true }
+        );
+    };
     return (
         <div>
             <div className="SellerInfo">
@@ -103,6 +118,7 @@ export default function SellerInfo({ sellerInfo }) {
                         </p>
                     </>
                 )}
+                {/* Buyurtma berish */}
                 <div className="SellerInfoEnd">
                     <div className="SellerInfoSecondCardWrap">
                         <div className="SellerInfoSecondCard">
@@ -113,9 +129,7 @@ export default function SellerInfo({ sellerInfo }) {
                             <p className="SellerInfoSecondCardTitle">
                                 Buyurtma bering
                             </p>
-                            <p className="SellerInfoSecondCardDescription">
-               
-                            </p>
+                            <p className="SellerInfoSecondCardDescription"></p>
                         </div>
                         <img src="/static/img/ArrowRight.svg" alt="" />
                         <div className="SellerInfoSecondCard">
@@ -123,9 +137,7 @@ export default function SellerInfo({ sellerInfo }) {
                             <p className="SellerInfoSecondCardTitle">
                                 To’lov qiling
                             </p>
-                            <p className="SellerInfoSecondCardDescription">
-                           
-                            </p>
+                            <p className="SellerInfoSecondCardDescription"></p>
                         </div>
                         <img src="/static/img/ArrowRight.svg" alt="" />
                         <div className="SellerInfoSecondCard">
@@ -134,13 +146,14 @@ export default function SellerInfo({ sellerInfo }) {
                                 {' '}
                                 Yuklab oling
                             </p>
-                            <p className="SellerInfoSecondCardDescription">
-           
-                            </p>
+                            <p className="SellerInfoSecondCardDescription"></p>
                         </div>
                     </div>
                     <div className="SellerInfoSecondCardBtn">
-                        <p className="SellerInfoSecondCardBtnTitle">
+                        <p
+                            onClick={() => replaceHash('services')}
+                            href={'/seller/services'}
+                            className="SellerInfoSecondCardBtnTitle">
                             Buyurtma berish
                         </p>
                         <img src="/static/img/RocketLaunch.svg" alt="" />

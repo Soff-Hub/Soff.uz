@@ -54,7 +54,7 @@ const OrderStatus = ({ order }) => {
                 <div className={styles.seller_box}>
                     <div>
                         <Link
-                            href={`/_seller/${order?.user?.soff_seller_id}#about_author`}>
+                            href={`/seller/${order?.user?.soff_seller_id}#about_author`}>
                             {order?.user?.full_name || ''}
                         </Link>
                     </div>

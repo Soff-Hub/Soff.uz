@@ -11,7 +11,7 @@ const CommentSection = ({ id, type }) => {
     const { data: comments } = useGetComments(id, type);
 
     const handleUserClick = (sellerId) => {
-        router.push(`/_seller/${sellerId}`);
+        router.push(`/seller/${sellerId}`);
     };
     
 
