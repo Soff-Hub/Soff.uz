@@ -277,10 +277,9 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
                             )
                         }
                         cancelText="Orqaga"
-                        footer={null}
                         >
-                            <p>To'lov tez orada ishga tushadi</p>
-                        {/* <>
+                            {/* <p>To'lov tez orada ishga tushadi</p> */}
+                        <>
                             <p>
                                 Kod quyidagi raqamga yuborildi:{' '}
                                 {resData?.phone_number}
@@ -298,7 +297,7 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
                                     {resDataCode.detail}
                                 </p>
                             )}
-                        </> */}
+                        </>
                     </Modal>
                 </div>
             ),
