@@ -48,7 +48,7 @@ const Hero = () => {
             );
             return data;
         },
-        enabled: type === 'mahsulotlar' && debounceSearch.length > 0,
+        enabled: type === 'mahsulotlar',
         cacheTime: 10000,
         retry: 1,
     });
@@ -59,7 +59,7 @@ const Hero = () => {
             const { data } = await axios.get(`customer/search-page?search=${debounceSearch}`)
             return data
         },
-        enabled: type !== 'mahsulotlar' && debounceSearch.length > 0,
+        enabled: type !== 'mahsulotlar',
         cacheTime: 10000,
         retry: 1,
     })
