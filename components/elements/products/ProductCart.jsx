@@ -5,13 +5,13 @@ import useProduct from '~/hooks/useProduct';
 const ProductCart = ({ product }) => {
     const { thumbnailImage, title } = useProduct();
     return (
-        <div className="ps-product--cart">
-            <div className="ps-product__thumbnail">
+        <div className="cartCardBlock">
+            <div className="cartCardBlock">
                 <Link href={`/product/[pid]`} as={`/product/${product?.slug}`}>
                     <a>{thumbnailImage(product)}</a>
                 </Link>
             </div>
-            <div className="ps-product__content">{title(product)}</div>
+            <div className="cartCardTitle">{title(product)}</div>
         </div>
     );
 };
