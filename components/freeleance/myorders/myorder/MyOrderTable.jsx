@@ -111,7 +111,7 @@ const getColumns = ({ onCancel }) => {
             dataIndex: 'seller',
             render: record => (
                 <div
-                    onClick={() => router.push(`/seller/${record.sellerId}`)}
+                    onClick={() => router.push(`/seller/${record?.soff_seller_id}`)}
                     style={{
                         display: 'flex',
                         alignItems: 'center',
