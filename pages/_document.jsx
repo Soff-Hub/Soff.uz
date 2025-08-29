@@ -5,7 +5,7 @@ import React from 'react';
 
 export default function Document() {
     return (
-        <Html lang="uz">
+        <Html lang="uz" style={{ overflowX: 'hidden' }}>
             <Head>
                 <link rel="shortcut icon" href={'/static/img/soff logo.png'} />
                 <link
@@ -96,7 +96,7 @@ export default function Document() {
                     </div>
                 </noscript>
 
-            <script>window.yaContextCb=window.yaContextCb||[]</script>
+                <script>window.yaContextCb=window.yaContextCb||[]</script>
             </Head>
             <body>
                 <Main />
