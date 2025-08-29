@@ -73,7 +73,6 @@ export default function SellerShortInfo({ sellerInfo, pid }) {
                             <p className="m-0">{sellerInfo?.position}</p>
                         </div>
                     )}
-                    <p className=" m-0">{sellerInfo?.position || ''}</p>
                     <p style={{ color: '#312F30' }}>
                         Oxirgi faollik:{' '}
                         {getStatus(new Date(sellerInfo?.last_login))}

@@ -28,7 +28,7 @@ export const MenuItem = ({ products, templates, label }) => {
             </button>
             <div className={styles.dropDown}>
                 <div className={styles.templates}>
-                    <h3 className={styles.sectionLabel}>Tayyor mahsulotlar</h3>
+                    <h3 style={{cursor: "pointer"}} onClick={() => router.push(`/${templateLink[label]}/all`)} className={styles.sectionLabel}>Tayyor mahsulotlar</h3>
                     <ul className={styles.details}>
                         {templates.map(item => (
                             <li
@@ -45,7 +45,7 @@ export const MenuItem = ({ products, templates, label }) => {
                     </ul>
                 </div>
                 <div className={styles.orders}>
-                    <h3 className={styles.sectionLabel}>Buyurtma berish</h3>
+                    <h3 style={{cursor: "pointer"}} onClick={() => router.push(`/orders?direction=${label}`)} className={styles.sectionLabel}>Buyurtma berish</h3>
                     <ul className={styles.details}>
                         {products.map(item => (
                             <li
