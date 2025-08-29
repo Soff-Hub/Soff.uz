@@ -258,6 +258,10 @@
     width: 30px;
     height: 30px;
     place-content: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #24282b;
     cursor: pointer;
     &:hover {
         color: red;

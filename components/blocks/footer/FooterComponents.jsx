@@ -58,15 +58,15 @@ const footerMenu = {
         items: [
             {
                 contact: 'Barcha xizmatlar',
-                url: 'tel:+998910086789',
+                url: '/orders',
             },
             {
                 contact: 'Buyurtma berish',
-                url: 'https://t.me/soff_moderator',
+                url: '/orders',
             },
             {
                 contact: 'Mahsulotlar',
-                url: 'https://t.me/soff_moderator',
+                url: '/scientific-resources/all?slug=all&search=',
             },
             {
                 contact: 'Frilancerlar uchun',
