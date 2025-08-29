@@ -600,8 +600,10 @@ body.no-scroll {
     .servicesSectionWrap {
         display: grid;
 
-        grid-template-columns: repeat(auto-fit,
-                minmax(clamp(5rem, 13.75vw + 2.25rem, 18.75rem), 1fr));
+        grid-template-columns: repeat(
+            auto-fit,
+            minmax(clamp(5rem, 13.75vw + 2.25rem, 18.75rem), 1fr)
+        );
         gap: 10px;
 
         .servicesSectionCardSkeleton {
@@ -1152,13 +1154,30 @@ body.no-scroll {
 
     .SellerProductForm {
         display: flex;
-        justify-content: end;
+        justify-content: space-between;
         gap: 18px;
+        margin: 15px 0px;
 
         @media (max-width: 600px) {
             flex-wrap: wrap;
             justify-content: space-between;
             gap: 10px;
+        }
+        .sellerpageTitleBox {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            .sellerpageTitle {
+                color: #312f30;
+                font-family: 'Poppins';
+                font-size: 20px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: normal;
+                margin: 0;
+                color: (49, 47, 48, 1);
+            }
         }
 
         .SellerProductInputBox {
@@ -1273,7 +1292,7 @@ body.no-scroll {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         gap: 10px;
-        row-gap: 10px; 
+        row-gap: 10px;
         margin-top: 50px;
 
         @media (max-width: 1440px) {
@@ -1292,8 +1311,6 @@ body.no-scroll {
             grid-template-columns: repeat(1, 1fr);
         }
     }
-
-
 }
 
 .showMoreBox {
@@ -1376,8 +1393,10 @@ body.no-scroll {
 
     .SellerPortfolioWrap {
         display: grid;
-        grid-template-columns: repeat(auto-fit,
-                minmax(clamp(9rem, 12.5vw + 3.75rem, 18.75rem), 1fr));
+        grid-template-columns: repeat(
+            auto-fit,
+            minmax(clamp(9rem, 12.5vw + 3.75rem, 18.75rem), 1fr)
+        );
         gap: 10px;
         row-gap: 10px;
 

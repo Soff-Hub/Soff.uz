@@ -4,7 +4,7 @@
     justify-content: center;
     .block {
         position: relative;
-        bottom: -200px;
+        bottom: -150px;
         border-radius: 16px;
         background: #b5b6b6;
         width: 85%;
@@ -107,7 +107,7 @@
         @media (max-width: 1200px) {
             width: 85%;
             padding: 50px 30px;
-            bottom: -150px;
+            bottom: -100px;
         }
 
         @media (max-width: 992px) {
