@@ -22,8 +22,7 @@ function OrderCardBtn ({ product }) {
                 </div>
                 <div>
                     <Link
-                        href='/seller/[pid]'
-                        as={`/seller/${product.seller.id}`}>
+                        href={`/seller/${product.seller.id}`} >
                         <h3 className='sellerNameHover'>
                             {product?.seller?.first_name}
                             {product?.seller?.last_name}
