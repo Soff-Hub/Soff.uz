@@ -6,14 +6,14 @@ import SellerComments from './sellerComments';
 import SellerProduct from './sellerProduct';
 import SellerPortfolio from './sellerPortfolio';
 
-const SellerCollapseMenu = ({ pid }) => {
+const SellerCollapseMenu = ({ pid, sellerInfo }) => {
     const [activeKey, setActiveKey] = useState(['1']);
     const items = [
         {
             key: '1',
             label: 'Muallif Haqida',
             children: (
-                <SellerInfo pid={pid} onChange={() => setActiveKey([3])} />
+                <SellerInfo sellerInfo={sellerInfo} pid={pid} onChange={() => setActiveKey([3])} />
             ),
         },
         {

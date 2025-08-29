@@ -213,7 +213,7 @@ export default function SellerShortInfo({ sellerInfo }) {
 
             <ul className="p-0 rowgap_16">
                 <li className=" between mt-3 ">
-                    <p className="titleInfo">Ro'yhatdan o'tgan</p>
+                    <p className="titleInfo m-0">Ro'yhatdan o'tgan</p>
                     <p className="sellerName m-0">
                         {getDate(sellerInfo?.created_at)}
                     </p>

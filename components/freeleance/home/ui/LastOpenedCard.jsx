@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 
 const LastOpenedCard = ({ title, image, author, price, slug, userImage }) => {
     const router = useRouter();
+    
     return (
         <div
             className={styles.card}

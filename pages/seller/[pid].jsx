@@ -14,12 +14,14 @@ import SellerServices from '~/components/shared/seller-profile/sellerServices';
 import SellerShortInfo from '~/components/shared/seller-profile/sellerShortInfo';
 import { setActiveIndex } from '../../store/seller/slice';
 import { authAxios } from '~/repositories/authApi';
+import useResponsive from '~/utilities/useResponsive';
 
 export default function SellersPage() {
     const router = useRouter();
     const dispatch = useDispatch();
     const { query, asPath, isReady } = router;
     const { activeIndex } = useSelector(state => state.user);
+    const { isMobile } = useResponsive()
     // const activeIndex = asPath.slice(asPath.indexOf('#') + 1, asPath.length);
 
     const pid = query.pid;
@@ -59,29 +61,35 @@ export default function SellersPage() {
         refetchOnWindowFocus: true,
         refetchOnMount: true,
     });
- 
+
+    const handleChangeMenu = item => {
+        dispatch(setActiveIndex(item));
+    };
+
 
     const sellerTabItems = {
-        about_author: <SellerInfo pid={pid} sellerInfo={data} />,
+        about_author: <SellerInfo onChange={() => dispatch(setActiveIndex("services"))} pid={pid} sellerInfo={data} />,
         portfolio: <SellerPortfolio pid={pid} />,
         services: <SellerServices pid={pid} />,
         products: <SellerProduct pid={pid} />,
         // comments: <SellerComments pid={pid} />,
     };
 
-    const handleChangeMenu = item => {
-        dispatch(setActiveIndex(item));
-    };
+
+
+    useEffect(() => {
+        if (isMobile) dispatch(setActiveIndex(null));
+    }, [isMobile])
 
     return (
         <PageContainer>
-            <div className="container bg-gray-999 ">
+            <div className="container mt-0">
                 <div className="SellersPageWrap">
                     <div className="SellerShortInfo">
                         <SellerShortInfo sellerInfo={data} />
                     </div>
                     <div className="SellerCollapseMenu">
-                        <SellerCollapseMenu pid={pid} />
+                        <SellerCollapseMenu sellerInfo={data} pid={pid} />
                     </div>
                     <div className="sellerProduct ">
                         <div className="shadow-sm">
@@ -93,11 +101,10 @@ export default function SellersPage() {
                                         }
                                         key={index}>
                                         <a
-                                            className={`activeTab ${
-                                                activeIndex === item.path
+                                            className={`activeTab ${activeIndex === item.path
                                                     ? 'active'
                                                     : ''
-                                            }`}>
+                                                }`}>
                                             {item.title}
                                         </a>
                                     </div>

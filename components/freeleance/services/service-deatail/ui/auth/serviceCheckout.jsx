@@ -6,10 +6,11 @@ import useCreateOrder from './api/createOrder';
 import { useVerifyCode } from './api/verifyCode';
 import { useCountdown } from '~/hooks/useCountDown';
 import { useQueryClient } from '@tanstack/react-query';
+import { message as AlertMessage } from 'antd';
 
 const ServiceCheckout = ({ document, order_id, onClose }) => {
     const [numberCardVal, SetNumberCardVal] = useState(null);
-    const [message, setMessage] = useState(true);
+    const [message, setMessage] = useState(false);
     const [cardDate, setCardDate] = useState(null);
     const [open, setOpen] = useState(false);
     const [time, setTime] = useState(120);
@@ -18,7 +19,7 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
     const [resDataCode, setResDataCode] = useState(null);
     const [buttonOk, setButtonOk] = useState(false);
     const [tab, setTab] = useState(false);
-    const [type, setType] = useState('card');
+    const [type, setType] = useState('click');
     const createOrder = useCreateOrder();
     const [formattedCardNumber, setFormattedCardNumber] = useState('');
     const [numberDate, setNumberDate] = useState('');
@@ -44,20 +45,22 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
 
     async function handleClickCardPostsclick(e) {
         e.preventDefault();
-        setMessage(false);
+        setMessage(true);
 
         createOrder.mutate(
             {
                 service_id: document,
                 payment_type: type,
+                order_id,
             },
             {
                 onSuccess: data => {
                     setMessage(true);
-                    window.open(data?.url, "_blank")
+                    window.open(data?.url, '_blank');
                 },
                 onError: err => {
-                    setMessage(true);
+                    AlertMessage.error(err.response.data.detail);
+                    setMessage(false);
                 },
             }
         );
@@ -316,7 +319,7 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
                             onSubmit={handleClickCardPostsclick}
                             className="pt-3 pb-3 d-flex row gap-3">
                             <div className="col-12 p-0 px-4 my-3">
-                                {message ? (
+                                {!message ? (
                                     <button
                                         type="submit"
                                         className="ps-btn w-100 btn_color">
