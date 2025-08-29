@@ -8,10 +8,14 @@ const footerMenu = {
     },
     services: {
         links: [
-            { name: 'Sotib olish va moderatsiya bo‘yicha' },
-            { name: '+998 (99) 266 30 29 | @soff_moderator' },
-            { name: 'Texnik muammolar uchun: ' },
-            { name: '+998 (91) 008 67 89 | @hr_soffhub' },
+            { name: 'Sotib olish va moderatsiya bo‘yicha', link: '' },
+            { name: '+998 (99) 266 30 29', link: 'tel:+998992663029' },
+            { name: '@soff_moderator', link: 'https://t.me/soff_moderator' },
+            {
+                name: 'Texnik muammolar uchun',
+                link: 'tel:+998910086789 ',
+            },
+            { name: '@hr_soffhub', link: 'https://t.me/hr_soffhub' },
         ],
     },
     social: {
@@ -23,12 +27,6 @@ const footerMenu = {
                 username: '@soffuz',
                 url: 'https://www.facebook.com/profile.php?id=61579052952962#',
             },
-            // {
-            //     name: 'Twitter',
-            //     icon: '/static/img/x.png',
-            //     username: 't.me/soff_uz',
-            //     url: 'https://t.me/soff_uz',
-            // },
             {
                 name: 'Instagram',
                 icon: '/static/img/insta.png',
@@ -58,7 +56,7 @@ const footerMenu = {
         items: [
             {
                 contact: 'Barcha xizmatlar',
-                url: '/orders',
+                url: '/orders/?direction=scientific_work',
             },
             {
                 contact: 'Buyurtma berish',
@@ -66,10 +64,10 @@ const footerMenu = {
             },
             {
                 contact: 'Mahsulotlar',
-                url: '/scientific-resources/all?slug=all&search=',
+                url: '/scientific-resources/all?slug=all',
             },
             {
-                contact: 'Frilancerlar uchun',
+                contact: 'Frilanserlar uchun',
                 url: 'https://seller.soff.uz/',
             },
         ],
@@ -101,14 +99,21 @@ export default function FooterComponents() {
                 {/* Xizmatlar bo‘limi */}
                 <div className="col-xl-3 text-white col-lg-3 col-md-6 p-0 col-sm-12 col-12">
                     <h5 className="fw-semibold fs-2 text-white">Aloqa</h5>
-                    {footerMenu.services.links.map((link, i) => (
-                        <p
-                            target="_blank"
-                            key={i}
-                            className="footer-link d-block fs-4 mb-3">
-                            {link.name}
-                        </p>
-                    ))}
+                    {footerMenu.services.links.map((link, i) =>
+                        link.link ? (
+                            <a
+                                href={link.link}
+                                target="_blank"
+                                key={i}
+                                className="footer-link text-white d-block fs-4 mb-3">
+                                {link.name}
+                            </a>
+                        ) : (
+                            <p className=" text-white d-block fs-4 mb-3">
+                                {link.name}
+                            </p>
+                        )
+                    )}
                 </div>
             </footer>
             <div className="d-flex gap-4 justify-content-between mt-5 border-top pt-5 flex-wrap container">
@@ -119,11 +124,7 @@ export default function FooterComponents() {
                 />
                 <div className="d-flex gap-4 align-items-center">
                     {footerMenu.social.items.map((item, i) => (
-                        <a
-                            target="_blank"
-                            key={i}
-                            href={item.url}
-                            className=" ">
+                        <a key={i} href={item.url} className=" ">
                             <img
                                 src={item.icon}
                                 style={{ width: '40px', height: '40px' }}
