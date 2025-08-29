@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Modal, Tabs } from 'antd';
 import { BeatLoader } from 'react-spinners';
-import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
 import useCreateOrder from './api/createOrder';
 import { useVerifyCode } from './api/verifyCode';
 import { useCountdown } from '~/hooks/useCountDown';
@@ -25,6 +25,7 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
     const [numberDate, setNumberDate] = useState('');
     const { push } = useRouter();
     const queryClient = useQueryClient();
+    const router = useRouter();
     // sms uchun vaqt orqaga sanash
     const { display, left, reset } = useCountdown(120);
 
@@ -56,7 +57,8 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
             {
                 onSuccess: data => {
                     setMessage(true);
-                    window.open(data?.url, '_blank');
+                    // window.open(data?.url, '_blank');
+                    router.push(data.url);
                 },
                 onError: err => {
                     AlertMessage.error(err.response.data.detail);
