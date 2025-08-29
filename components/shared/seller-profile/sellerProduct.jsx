@@ -14,6 +14,15 @@ export default function SellerProduct({ pid }) {
     const [categoryValue, setCategoryValue] = useState('file');
     const [selectedOption, setSelectedOption] = useState('file');
 
+    const names = {
+        file: 'Ilmiy ishlar',
+        '3d': '3D moddellar va Interier dizaynlar',
+        design: 'Dizayn shablonlari',
+        websites: 'Veb saytlar',
+        templates: 'Tayyor shablonlar',
+        video: 'Video darsliklar',
+    };
+
     const menuItems = [
         // { title: 'Barchasi', path: '' },
         { title: 'Ilmiy ishlar', path: 'file' },
@@ -130,6 +139,9 @@ export default function SellerProduct({ pid }) {
                     />
                     <img src='/static/img/searchIcon.png' alt='' />
                 </div> */}
+                <div className="sellerpageTitleBox">
+                    <p className="sellerpageTitle">{names[selectedOption]}</p>
+                </div>
                 <select
                     className="SellerProductSelect"
                     onChange={e => {

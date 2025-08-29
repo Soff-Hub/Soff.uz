@@ -36,10 +36,6 @@ export default function ScientificResources({ data, setCategoryValue, pid }) {
         <div className="sellerpage">
             {produts?.results?.length > 0 ? (
                 <div>
-                    <div className="sellerpageTitleBox">
-                        <p className="sellerpageTitle">Ilmiy ishlar</p>
-                    </div>
-
                     {/* SellerProductsCardWrapper */}
                     <div className="row">
                         {produts?.results.map((item, index) => (

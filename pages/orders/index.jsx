@@ -62,6 +62,7 @@ export default function SoffFreelancerPage({
                         link="/orders"
                     />
                 </div>
+                <div className="servicesOrders" />
             </div>
         </PageContainer>
     );
