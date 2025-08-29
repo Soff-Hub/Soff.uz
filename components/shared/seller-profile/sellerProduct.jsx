@@ -71,6 +71,7 @@ export default function SellerProduct({ pid }) {
                 return (
                     <ModelAndDesign
                         data={product}
+                        pid={pid}
                         categoryValue={categoryValue}
                     />
                 );
@@ -78,49 +79,64 @@ export default function SellerProduct({ pid }) {
                 return (
                     <DesignDevelopment
                         data={product}
+                        pid={pid}
                         categoryValue={categoryValue}
                     />
                 );
             case 'websites':
                 return (
-                    <WebSites data={product} categoryValue={categoryValue} />
+                    <WebSites
+                        pid={pid}
+                        data={product}
+                        categoryValue={categoryValue}
+                    />
                 );
             case 'templates':
                 return (
-                    <Templates data={product} categoryValue={categoryValue} />
+                    <Templates
+                        pid={pid}
+                        data={product}
+                        categoryValue={categoryValue}
+                    />
                 );
             case 'video':
                 return (
                     <VideoLessons
                         data={product}
+                        pid={pid}
                         categoryValue={categoryValue}
                     />
                 );
-            default:
                 return (
                     <div>
                         <ScientificResources
                             data={product}
+                            pid={pid}
                             categoryValue={categoryValue}
                         />
                         <ModelAndDesign
                             data={product}
+                            pid={pid}
                             categoryValue={categoryValue}
                         />
                         <DesignDevelopment
                             data={product}
+                            pid={pid}
                             categoryValue={categoryValue}
                         />
                         <WebSites
                             data={product}
+                            pid={pid}
                             categoryValue={categoryValue}
                         />
                         <Templates
                             data={product}
+                            pid={pid}
                             categoryValue={categoryValue}
                         />
                         <VideoLessons
                             data={product}
+                            pid={pid}
                             categoryValue={categoryValue}
                         />
                     </div>
