@@ -83,8 +83,8 @@ const HeaderCatergories = () => {
                                 <Image
                                     src={item.icon}
                                     alt="direction"
-                                    width={25}
-                                    height={25}
+                                    width={isMobile ? 20 : 25}
+                                    height={isMobile ? 20 : 25}
                                 />
                                 <Link href={item.link}>{item.label}</Link>
                             </li>
