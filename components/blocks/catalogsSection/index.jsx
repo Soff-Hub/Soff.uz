@@ -15,19 +15,28 @@ const title = {
     template: 'Shablonlar',
     file: 'Ilmiy Ishlar',
 };
-const CatalogsSection = () => {
-    const router = useRouter();
-    const { data, isLoading } = useQuery({
-        queryKey: ['catalogCards'],
-        queryFn: async () => {
-            const response = api.get('customer/last-added-for-card');
-            return (await response).data;
-        },
-    });
 
-    if (isLoading && !data) return <Loader />;
-
-    const goProducts = () => {};
+const data = [
+    {
+        direction: 'file',
+    },
+    {
+        direction: '3d',
+    },
+    {
+        direction: 'design',
+    },
+    {
+        direction: 'template',
+    },
+    {
+        direction: 'video',
+    },
+    {
+        direction: 'website',
+    },
+];
+const CatalogsSection = () => {  
 
     return (
         <div className={styles.catalogSectionBlock}>
@@ -71,8 +80,6 @@ const CatalogsSection = () => {
                             key={item.direction}
                             content_type={item.direction}
                             title={title[item.direction]}
-                            count={item.count}
-                            items={item.items}
                         />
                     ))}
                 </div>
