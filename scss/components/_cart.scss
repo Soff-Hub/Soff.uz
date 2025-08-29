@@ -40,13 +40,13 @@
         transition: all 0.4s ease;
         @include hidden;
         @media (max-width: 576px) {
-            min-width: 260px;
+            min-width: 280px;
             right: -100px;
         }
     }
 
     .ps-cart__footer {
-        padding: 10px 20px 20px;
+        padding: 10px;
         background-color: #ffffff;
         border: 1px solid #e1e1e1;
         border-top: 0;
@@ -69,12 +69,13 @@
         flex-flow: row nowrap;
         justify-content: space-between;
         align-items: center;
+        gap: 5px;
+        padding: 0px;
 
         .ps-btn {
             padding: 5px;
             flex-basis: 100%;
-            font-size: 16px;
-            max-width: calc(50% - 10px);
+            font-size: 16px; 
             text-align: center;
         }
     }
