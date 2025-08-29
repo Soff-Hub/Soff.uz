@@ -45,8 +45,7 @@ const cardImages = {
     ],
 }
 const CatalogCard = ({ content_type, title, count, items }) => {
-    const router = useRouter();
-    const [first, second, third, fourth] = items;
+    const router = useRouter(); 
 
     
     return (
