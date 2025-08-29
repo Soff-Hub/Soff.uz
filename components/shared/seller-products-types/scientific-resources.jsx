@@ -1,40 +1,69 @@
-import React, { useState } from 'react';
-import RedesignProduct from '~/components/elements/products/Redesign/Redesign-Product';
+import React, { useEffect, useState } from 'react';
 import ServiceIsUnavailable from '../seller-profile/ServiceIsUnavailable';
 import ProductCard from '~/components/freeleance/home/ui/ProductCard';
+import { useQuery } from '@tanstack/react-query';
+import { useSelector } from 'react-redux';
+import { api } from '~/repositories/api';
+import { Pagination } from 'antd'; // 🔹 Antd Pagination import qildik
 
-export default function ScientificResources({ data, setCategoryValue }) {
-    const [showAll, setShowAll] = useState(false);
+export default function ScientificResources({ data, setCategoryValue, pid }) {
+    const [page, setPage] = useState(1);
+    const { user } = useSelector(state => state.auth);
 
-    const allItems = data?.file || [];
-    const visibleItems = showAll ? allItems : allItems.slice(0, 5);
+    // ✅ API dan data olish
+    const { data: produts, isLoading } = useQuery({
+        queryKey: ['keySellerProducts', page],
+        queryFn: async ({ queryKey }) => {
+            const [_key, currentPage] = queryKey;
+            const response = await api.get(
+                `customer/seller-documents/${pid}/?page=${currentPage}&type=file`
+            );
+            return response.data;
+        },
+        keepPreviousData: true, // pagination scrollda eski datani saqlaydi
+    });
 
-    const handleShowMore = () => {
-        setShowAll(true);
+    useEffect(() => {
+        console.log('produts', produts);
+    }, [produts]);
+
+    // 🔹 Page o‘zgartirish handler
+    const handlePageChange = page => {
+        setPage(page);
     };
 
     return (
         <div className="sellerpage">
-            {allItems.length > 0 ? (
-                <>
+            {produts?.results?.length > 0 ? (
+                <div>
                     <div className="sellerpageTitleBox">
                         <p className="sellerpageTitle">Ilmiy ishlar</p>
                     </div>
 
-                    <div className="SellerProductsCardWrapper">
-                        {visibleItems.map((item, index) => (
-                            <div key={index}>
+                    {/* SellerProductsCardWrapper */}
+                    <div className="row">
+                        {produts?.results.map((item, index) => (
+                            <div
+                                key={index}
+                                className="p-2 col-12 col-sm-6 col-md-4 col-lg-3">
                                 <ProductCard product={item} />
                             </div>
                         ))}
                     </div>
 
-                    {/* {allItems.length > 5 && !showAll && (
-                        <div className='showMoreBox' onClick={handleShowMore}>
-                            <p className='showMore'>Yana ko’rsatish</p>
-                        </div>
-                    )} */}
-                </>
+                    {/* 🔹 Pagination qo‘shildi */}
+                    <div className="d-flex justify-content-center mt-4">
+                        <Pagination
+                            current={page}
+                            pageSize={produts?.results?.length || 10} // backend page size
+                            total={produts?.count || 0} // umumiy soni
+                            onChange={handlePageChange}
+                            showSizeChanger={false} // page size o‘zgartirmaslik uchun
+                        />
+                    </div>
+                </div>
+            ) : isLoading ? (
+                <p>Yuklanmoqda...</p>
             ) : (
                 <ServiceIsUnavailable />
             )}

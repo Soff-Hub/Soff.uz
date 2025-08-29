@@ -1,50 +1,86 @@
-import React from 'react';
-import RedesignProduct from '~/components/elements/products/Redesign/Redesign-Product';
-import VideoLessonsProducts from '~/components/elements/products/VideoLessonsProducts';
+import React, { useState, useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useSelector } from 'react-redux';
+import { api } from '~/repositories/api';
 import ServiceIsUnavailable from '../seller-profile/ServiceIsUnavailable';
 import ProductCard from '~/components/freeleance/home/ui/ProductCard';
+import { Pagination } from 'antd';
 
-export default function Templates(product) {
-    const data = product?.data?.template;
+export default function Templates({ pid }) {
+    const [page, setPage] = useState(1);
+    const { user } = useSelector(state => state.auth);
+
+    // 🔹 API dan data olish
+    const { data: products, isLoading } = useQuery({
+        queryKey: ['keyTemplateProducts', page],
+        queryFn: async ({ queryKey }) => {
+            const [_key, currentPage] = queryKey;
+            const response = await api.get(
+                `customer/seller-documents/${pid}/?page=${currentPage}&type=template`
+            );
+            return response.data;
+        },
+        keepPreviousData: true,
+    });
+
+    useEffect(() => {
+        console.log('Template products', products);
+    }, [products]);
+
+    // 🔹 Pagination handler
+    const handlePageChange = page => {
+        setPage(page);
+    };
+
     return (
-        <div className='sellerpage'>
-            {product && (
-                <>
-                    {data?.length > 0 ? (
-                        <div className='sellerpageTitleBox'>
-                            <p className='sellerpageTitle'>Tayyor shablonlar</p>
-                            <svg
-                                xmlns='http://www.w3.org/2000/svg'
-                                width='8'
-                                height='10'
-                                viewBox='0 0 8 10'
-                                fill='none'>
-                                <path
-                                    d='M1.875 1.5L6.12488 4.63195L2 8.5'
-                                    stroke='#312F30'
-                                    stroke-width='2'
-                                    stroke-linecap='round'
-                                />
-                            </svg>
-                        </div>
-                    ) : (
-                        <ServiceIsUnavailable />
-                    )}
-                    <div className='SellerProductsCardWrapper'>
-                        {data?.map((item, index) => (
-                            <div className='' key={index}>
+        <div className="sellerpage">
+            {products?.results?.length > 0 ? (
+                <div>
+                    {/* Title */}
+                    <div className="sellerpageTitleBox">
+                        <p className="sellerpageTitle">Tayyor shablonlar</p>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="8"
+                            height="10"
+                            viewBox="0 0 8 10"
+                            fill="none">
+                            <path
+                                d="M1.875 1.5L6.12488 4.63195L2 8.5"
+                                stroke="#312F30"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                            />
+                        </svg>
+                    </div>
+
+                    {/* Cards */}
+                    <div className="row">
+                        {products?.results.map((item, index) => (
+                            <div
+                                key={index}
+                                className="p-2 col-12 col-sm-6 col-md-4 col-lg-3">
                                 <ProductCard product={item} />
                             </div>
                         ))}
                     </div>
-                </>
-            )}
 
-            {/* {product?.length < 8 && (
-                <div className='showMoreBox'>
-                    <p className='showMore'>Yana ko’rsatish</p>
+                    {/* Pagination */}
+                    <div className="d-flex justify-content-center mt-4">
+                        <Pagination
+                            current={page}
+                            pageSize={products?.results?.length || 10}
+                            total={products?.count || 0}
+                            onChange={handlePageChange}
+                            showSizeChanger={false}
+                        />
+                    </div>
                 </div>
-            )} */}
+            ) : isLoading ? (
+                <p>Yuklanmoqda...</p>
+            ) : (
+                <ServiceIsUnavailable />
+            )}
         </div>
     );
 }

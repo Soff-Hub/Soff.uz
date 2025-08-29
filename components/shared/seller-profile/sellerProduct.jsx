@@ -54,6 +54,7 @@ export default function SellerProduct({ pid }) {
                 return (
                     <ScientificResources
                         data={product}
+                        pid={pid}
                         categoryValue={setCategoryValue}
                     />
                 );
