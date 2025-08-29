@@ -4,7 +4,6 @@ import React from 'react';
 
 export default function SearchResultsSpecialists_Card({ data }) {
     const router = useRouter();
-
     // Last active vaqti hozirgi vaqtdan 5 daqiqa ichida bo'lsa "online"
     const isOnline = () => {
         if (!data.last_active) return false;
@@ -27,7 +26,7 @@ export default function SearchResultsSpecialists_Card({ data }) {
 
             <div className='Search_Results_Specialists_Card_status_box'>
                 <p className='Search_Results_Specialists_Card_status'>
-                    {data?.position}
+                    {/* {data?.position?.title} */}
                 </p>
                 {isOnline() ? (
                     <Badge color="green" text="Online" />
@@ -37,7 +36,7 @@ export default function SearchResultsSpecialists_Card({ data }) {
             <p className='Search_Results_Specialists_Card_isName'>
                 {data.full_name}
             </p>
-            <p className='Search_Results_Specialists_Card_job'>{data.position}</p>
+            <p className='Search_Results_Specialists_Card_job'>{data.position?.title}</p>
         </div>
     );
 }
