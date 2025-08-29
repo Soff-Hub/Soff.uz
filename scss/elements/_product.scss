@@ -302,7 +302,7 @@
         --max-lines: 2;
         max-height: calc(1.2em * var(--max-lines));
         overflow: hidden;
-        padding-right: 1rem; 
+        padding-right: 1rem;
 
         &:hover {
             color: $color-1st;
@@ -1916,7 +1916,9 @@
 
 .ps-product--cart-mobile {
     display: flex;
-
+    @media (max-width:576px) {
+        flex-direction: column;
+    }
     > * {
         width: 100%;
     }

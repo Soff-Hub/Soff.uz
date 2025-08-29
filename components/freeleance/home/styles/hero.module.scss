@@ -1,5 +1,5 @@
 @import '/scss/utils/variable';
-.heroMainBlock { 
+.heroMainBlock {
     display: flex;
     gap: 50px;
     padding-top: 20px;
@@ -8,7 +8,7 @@
         padding: 50px 0;
         position: relative;
         overflow: hidden; // do
-        display: flex; 
+        display: flex;
         flex-direction: column;
         .heroTitle {
             font-size: 36px;
@@ -57,7 +57,7 @@
                     display: flex;
                     align-items: center;
                     gap: 10px;
-                    border: 1px solid #00a44f
+                    border: 1px solid #00a44f;
                 }
             }
         }
@@ -214,6 +214,15 @@
             .heroParagraph {
                 font-size: 16px;
             }
+            .heroButtons {
+                .heroFilterButtons {
+                    .heroBtn,
+                    .activeHeroBtn {
+                        padding: 5px 8px !important;
+                        font-size: 12px;
+                    }
+                }
+            }
 
             .bgBlob {
                 width: 250px;
@@ -221,7 +230,7 @@
                 top: 50px;
                 right: 30px;
             }
-        } 
+        }
     }
 }
 
@@ -249,7 +258,7 @@
                     }
                 }
             }
-        } 
+        }
     }
 }
 
