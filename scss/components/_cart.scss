@@ -1,6 +1,6 @@
 .ps-cart--mini {
     position: relative;
- margin-right: 20px;
+    margin-right: 20px;
     .ps-cart__items {
         position: relative;
         padding: 20px;
@@ -39,6 +39,9 @@
         @include transform(translate(0 20px));
         transition: all 0.4s ease;
         @include hidden;
+        @media (max-width: 576px) {
+            right: -100px;
+        }
     }
 
     .ps-cart__footer {
