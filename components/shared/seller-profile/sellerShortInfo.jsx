@@ -7,7 +7,8 @@ import useCreateChat from '~/components/freeleance/chat/api/useCreateChat';
 import CalculateTimeDifference from '~/components/partials/account/DateFormatter';
 import { getDate, getStatus, getTimeAgo } from '~/utilities/calculateTime';
 import { setActiveIndex } from '../../../store/seller/slice';
-export default function SellerShortInfo({ sellerInfo }) {
+import { apiForFreelance } from '~/repositories/api';
+export default function SellerShortInfo({ sellerInfo, pid }) {
     const [nameModal, setNameModal] = useState(false);
     const [fullName, setFullName] = useState(false);
     const [surName, setSurname] = useState(false);
@@ -22,6 +23,20 @@ export default function SellerShortInfo({ sellerInfo }) {
                 `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/customer/top-categories/${sellerInfo?.id}`
             ).then(res => res.json()),
         enabled: !!sellerInfo?.id,
+    });
+
+    const { data: services } = useQuery({
+        queryKey: ['getSellerServices'],
+        queryFn: async () => {
+            const response = await apiForFreelance.get(
+                `/customer/services/${pid}`
+            );
+
+            return response.data;
+        },
+        enabled: !!pid,
+        refetchOnWindowFocus: true,
+        refetchOnMount: true,
     });
 
     function handleChange(params) {
@@ -39,7 +54,7 @@ export default function SellerShortInfo({ sellerInfo }) {
 
     const handleChangeMenu = () => {
         dispatch(setActiveIndex('services'));
-    };
+    }; 
 
     return (
         <div className="sellerInfo">
@@ -62,22 +77,22 @@ export default function SellerShortInfo({ sellerInfo }) {
             </div>
 
             <div className="d-flex flex-column gap-3">
-                <div className="d-flex align-items-center gap-4">
+                {services && <div className="d-flex align-items-center gap-4">
                     <i className="fa-solid fa-clipboard-list fs-2"></i>
                     <p className="m-0">Freelance xizmatlari uchun ochiq</p>
-                </div>
+                </div>}
                 {sellerInfo?.position && (
                     <div className="d-flex align-items-center gap-3">
                         <i className="fa-solid fa-circle-info fs-2"></i>
                         <p className="m-0">{sellerInfo?.position}</p>
                     </div>
                 )}
-                <div className="d-flex align-items-center gap-3">
-                    <i className="fa-solid fa-globe fs-2"></i>
-                    <p className="m-0">
-                        {sellerInfo?.location || 'Tashkent, Uzbekistan'}
-                    </p>
-                </div>
+                {sellerInfo?.location && (
+                    <div className="d-flex align-items-center gap-3">
+                        <i className="fa-solid fa-globe fs-2"></i>
+                        <p className="m-0">{sellerInfo?.location}</p>
+                    </div>
+                )}
             </div>
             <div className="d-flex flex-column gap-3">
                 <button

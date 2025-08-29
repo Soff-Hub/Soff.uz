@@ -21,7 +21,7 @@ export default function SellersPage() {
     const dispatch = useDispatch();
     const { query, asPath, isReady } = router;
     const { activeIndex } = useSelector(state => state.user);
-    const { isMobile } = useResponsive()
+    const { isMobile } = useResponsive();
     // const activeIndex = asPath.slice(asPath.indexOf('#') + 1, asPath.length);
 
     const pid = query.pid;
@@ -66,27 +66,30 @@ export default function SellersPage() {
         dispatch(setActiveIndex(item));
     };
 
-
     const sellerTabItems = {
-        about_author: <SellerInfo onChange={() => dispatch(setActiveIndex("services"))} pid={pid} sellerInfo={data} />,
+        about_author: (
+            <SellerInfo
+                onChange={() => dispatch(setActiveIndex('services'))}
+                pid={pid}
+                sellerInfo={data}
+            />
+        ),
         portfolio: <SellerPortfolio pid={pid} />,
         services: <SellerServices pid={pid} />,
         products: <SellerProduct pid={pid} />,
         // comments: <SellerComments pid={pid} />,
     };
 
-
-
     useEffect(() => {
         if (isMobile) dispatch(setActiveIndex(null));
-    }, [isMobile])
+    }, [isMobile]);
 
     return (
         <PageContainer>
             <div className="container mt-0">
                 <div className="SellersPageWrap">
                     <div className="SellerShortInfo">
-                        <SellerShortInfo sellerInfo={data} />
+                        <SellerShortInfo sellerInfo={data} pid={pid} />
                     </div>
                     <div className="SellerCollapseMenu">
                         <SellerCollapseMenu sellerInfo={data} pid={pid} />
@@ -101,10 +104,11 @@ export default function SellersPage() {
                                         }
                                         key={index}>
                                         <a
-                                            className={`activeTab ${activeIndex === item.path
+                                            className={`activeTab ${
+                                                activeIndex === item.path
                                                     ? 'active'
                                                     : ''
-                                                }`}>
+                                            }`}>
                                             {item.title}
                                         </a>
                                     </div>
