@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { formatCurrencyWithSpace } from '~/utilities/product-helper';
 import ServiceCheckout from './auth/serviceCheckout';
 import AuthModal from '~/components/AuthModal';
+import { useQueryClient } from '@tanstack/react-query';
 
 const ServiceDescription = ({ description = {}, priceBox = {} }) => {
     const { price, id, days, revisions, title } = priceBox;
@@ -20,15 +21,19 @@ const ServiceDescription = ({ description = {}, priceBox = {} }) => {
     const [showPayment, setShowPayment] = useState(false);
     const [openAuth, setOpenAuth] = useState(false);
     const { isLoggedIn } = useSelector(state => state.auth);
-
+    const queyrClient = useQueryClient();
     const handleOrderClick = () => {
         if (isLoggedIn) {
             setIsOpen(true);
         } else {
             setOpenAuth(true);
         }
-    }; 
-    
+    };
+
+    const handleClose = () => {
+        setIsOpen(false);
+        queyrClient.invalidateQueries({ queryKey: ['orders'] });
+    };
 
     return (
         <div className={styles.serviceDescription}>
@@ -47,7 +52,7 @@ const ServiceDescription = ({ description = {}, priceBox = {} }) => {
                     dangerouslySetInnerHTML={{ __html: requirements }}
                 />
             )}
-            {file && 
+            {file && (
                 <>
                     <h3>Xizmat talablari uchun shablon fayl</h3>
                     <Button
@@ -60,7 +65,7 @@ const ServiceDescription = ({ description = {}, priceBox = {} }) => {
                         Fayllarni yuklab olish
                     </Button>
                 </>
-            }
+            )}
             {serviceItems?.length > 0 && (
                 <div className={styles.serviceBox}>
                     <h3>Bu xizmat ichiga nimalar kiradi</h3>
@@ -166,7 +171,10 @@ const ServiceDescription = ({ description = {}, priceBox = {} }) => {
                                 </Button>
                             </div>
                             <div className="bg-white">
-                                <ServiceCheckout document={id} />
+                                <ServiceCheckout
+                                    document={id}
+                                    onClose={handleClose}
+                                />
                             </div>
                         </>
                     )}

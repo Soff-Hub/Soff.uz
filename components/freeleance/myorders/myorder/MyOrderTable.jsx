@@ -10,6 +10,7 @@ import styles from './style/status.module.scss';
 import { getRemainingDays } from '~/utilities/calculateTime';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import ServiceCheckout from '../../services/service-deatail/ui/auth/serviceCheckout';
+import { useRouter } from 'next/router';
 
 const Status = ({ status }) => {
     switch (status) {
@@ -77,7 +78,7 @@ const getColumns = ({ onCancel }) => {
     const { isMobile } = useMobile();
     const [showPayment, setShowPayment] = useState(false);
     const queryClient = useQueryClient();
-
+    const router = useRouter();
     const onClose = () => {
         setShowPayment(false);
         queryClient.invalidateQueries({ queryKey: ['orders'] });
@@ -110,11 +111,12 @@ const getColumns = ({ onCancel }) => {
             dataIndex: 'seller',
             render: record => (
                 <div
+                    onClick={() => router.push(`/seller/${record.sellerId}`)}
                     style={{
                         display: 'flex',
                         alignItems: 'center',
                         gap: 8,
-                        justifyContent: 'center',
+                        justifyContent: 'start',
                         cursor: 'pointer',
                     }}>
                     {record?.photo_url ? (
@@ -138,7 +140,7 @@ const getColumns = ({ onCancel }) => {
                     <span>{record?.full_name}</span>
                 </div>
             ),
-            align: 'center',
+            align: 'start',
             hidden: isMobile < 992,
         },
         {
@@ -171,13 +173,13 @@ const getColumns = ({ onCancel }) => {
             hidden: isMobile < 1280,
         },
         {
-            title: 'Holati',
+            title: "O'chirish",
             dataIndex: 'status',
             render: (_, record) => {
                 if (record.status == 'pending') {
                     return (
                         <Space direction="" size={6}>
-                            <Tooltip title="To'lash">
+                            {/* <Tooltip title="To'lash">
                                 <Button
                                     onClick={() => setShowPayment(true)}
                                     type="primary"
@@ -187,7 +189,7 @@ const getColumns = ({ onCancel }) => {
                                     }}>
                                     <i className="fa-solid fa-money-bill-transfer"></i>
                                 </Button>
-                            </Tooltip>
+                            </Tooltip> */}
                             <Tooltip title="Bekor qilish">
                                 <Button
                                     type="primary"
@@ -196,7 +198,7 @@ const getColumns = ({ onCancel }) => {
                                     <i className="fa-solid fa-xmark"></i>
                                 </Button>
                             </Tooltip>
-                            <Modal
+                            {/* <Modal
                                 title="Buyurtmaga to'lov qilish"
                                 open={showPayment}
                                 onCancel={() => setShowPayment(false)}
@@ -204,7 +206,7 @@ const getColumns = ({ onCancel }) => {
                                 <>
                                     <div className="d-flex justify-content-between align-items-center mb-4">
                                         <h3 className="type_payment_h3 mb-0">
-                                            {/* To'lov turini tanlang: */}
+                                            
                                         </h3>
                                     </div>
                                     <div className="bg-white">
@@ -215,7 +217,7 @@ const getColumns = ({ onCancel }) => {
                                         />
                                     </div>
                                 </>
-                            </Modal>
+                            </Modal> */}
                         </Space>
                     );
                 }
@@ -276,6 +278,7 @@ export const AllOrdersTable = ({ type }) => {
                 hour: '2-digit',
                 minute: '2-digit',
             }),
+            sellerId: order?.user.soff_seller_id,
             deliveryDay: order.service?.delivery_days,
             price: order.service?.price || 0,
             status: order.order_status_doing?.status || 'pending',
