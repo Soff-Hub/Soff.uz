@@ -221,13 +221,19 @@
 }
 
 .cart-product {
-    .ps-product--cart {
-        .ps-product__thumbnail {
-            a {
-                .products-image1 {
-                    width: 95px;
-                }
-            }
+    width: 100%;
+    .cartCardBlock { 
+        padding: 10px;
+        display: flex;
+        
+    }
+    .cartCardTitle {
+        padding: 10px;
+        flex: 1;
+        font-size: 18px;
+        color: #06c;
+        @media (max-width:576px) {
+            font-size: 12px;
         }
     }
 }
@@ -342,8 +348,6 @@
     margin-bottom: 20px;
 }
 
-
-
 @include media('<lg') {
     .responsive-image-card {
         display: flex;
@@ -433,10 +437,6 @@
 
         > * {
             width: 100%;
-        }
-
-        .ps-product__thumbnail {
-            max-width: 126px;
         }
 
         .ps-product__content {
@@ -549,6 +549,13 @@
         .ps-product__content {
             .ps-product__title {
                 padding-left: 10px;
+                font-size: 20px;
+                @media (max-width: 992px) {
+                    font-size: 16px;
+                }
+                @media (max-width: 576px) {
+                    font-size: 14px;
+                }
             }
         }
     }
@@ -661,8 +668,6 @@
     //     width: auto !important;
     // }
 
-  
-
     .ps-block__right {
         h4 {
             font-size: 16px;
@@ -706,8 +711,6 @@
             margin: 0 auto;
         }
     }
-
-
 
     .mahsulotingiz {
         position: fixed;
