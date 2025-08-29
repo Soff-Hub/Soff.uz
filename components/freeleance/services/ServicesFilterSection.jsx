@@ -46,8 +46,7 @@ const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
                 ...router.query,
                 search: searchValue || undefined,
                 direction: selectedDirection || undefined,
-                parent_category_id: selectedParentCategory || undefined,
-                category_id: selectedChildCategory || undefined,
+                category_id: selectedParentCategory || undefined,
             };
 
             // faqat query farq qilsa update

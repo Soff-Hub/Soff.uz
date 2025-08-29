@@ -14,6 +14,7 @@ import CommentSection from './ui/CommentSection';
 import Link from 'next/link';
 import { Breadcrumb, Button } from 'antd';
 import LastOpenedCard from '../../home/ui/LastOpenedCard';
+import Meta from '~/components/shared/meta';
 
 const defaultData = [
     {
@@ -109,6 +110,7 @@ const ServiceDetail = ({ data }) => {
 
     return (
         <div className="container my-5 navTabsPadding">
+            <Meta title={service?.title} image={service?.poster} description={service?.description} author={full_name}/>
             <div className="row">
                 <div className="col-12 col-lg-8 mb-5">
                     <Breadcrumb
