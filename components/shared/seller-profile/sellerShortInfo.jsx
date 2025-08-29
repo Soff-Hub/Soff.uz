@@ -54,7 +54,7 @@ export default function SellerShortInfo({ sellerInfo, pid }) {
 
     const handleChangeMenu = () => {
         dispatch(setActiveIndex('services'));
-    }; 
+    };
 
     return (
         <div className="sellerInfo">
@@ -68,6 +68,11 @@ export default function SellerShortInfo({ sellerInfo, pid }) {
                 />
                 <div className=" sellerNameContainer d-flex flex-column ">
                     <p className="sellerName m-0">{sellerInfo?.full_name}</p>
+                    {sellerInfo?.position && (
+                        <div className="d-flex align-items-center gap-3">
+                            <p className="m-0">{sellerInfo?.position}</p>
+                        </div>
+                    )}
                     <p className=" m-0">{sellerInfo?.position || ''}</p>
                     <p style={{ color: '#312F30' }}>
                         Oxirgi faollik:{' '}
@@ -77,16 +82,13 @@ export default function SellerShortInfo({ sellerInfo, pid }) {
             </div>
 
             <div className="d-flex flex-column gap-3">
-                {services && <div className="d-flex align-items-center gap-4">
-                    <i className="fa-solid fa-clipboard-list fs-2"></i>
-                    <p className="m-0">Freelance xizmatlari uchun ochiq</p>
-                </div>}
-                {sellerInfo?.position && (
-                    <div className="d-flex align-items-center gap-3">
-                        <i className="fa-solid fa-circle-info fs-2"></i>
-                        <p className="m-0">{sellerInfo?.position}</p>
+                {services && (
+                    <div className="d-flex align-items-center gap-4">
+                        <i className="fa-solid fa-clipboard-list fs-2"></i>
+                        <p className="m-0">Freelance xizmatlari uchun ochiq</p>
                     </div>
                 )}
+
                 {sellerInfo?.location && (
                     <div className="d-flex align-items-center gap-3">
                         <i className="fa-solid fa-globe fs-2"></i>
