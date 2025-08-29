@@ -7,6 +7,7 @@ import { useQuery } from '@tanstack/react-query';
 import { AutoComplete } from 'antd';
 import { api } from '~/repositories/api';
 import useDebounce from '~/hooks/useDebounce';
+import axiosInstance from '../../api/freeleanceApi';
 
 const placeholders = {
     mahsulotlar: 'Qaysi turdagi tayyor mahsulot qidirmoqdasiz?',
@@ -16,16 +17,16 @@ const placeholders = {
 
 const staticOptions = {
     xizmatlar: [
-        { value: 'Web Development' },
-        { value: 'Mobile App Development' },
-        { value: 'UI/UX Design' },
+        { value: 'Web Dasturlash' },
+        { value: 'Mobile App Dasturlash' },
+        { value: 'UI/UX Dizayn' },
         { value: 'SEO Optimization' },
-        { value: 'Logo Design' },
+        { value: 'Logo Dizayn' },
     ],
     mutaxasislar: [
-        { value: 'Frontend Developer' },
-        { value: 'Backend Developer' },
-        { value: 'Fullstack Developer' },
+        { value: 'Frontend Dasturchi' },
+        { value: 'Backend Dasturchi' },
+        { value: 'Fullstack Dasturchi' },
         { value: 'UI/UX Designer' },
         { value: 'Project Manager' },
     ],
@@ -35,6 +36,7 @@ const Hero = () => {
     const { push } = useRouter();
     const [type, setType] = useState('mahsulotlar');
     const [search, setSearch] = useState('');
+    const axios = axiosInstance()
 
     const debounceSearch = useDebounce(search, 500);
 
@@ -51,10 +53,24 @@ const Hero = () => {
         retry: 1,
     });
 
-    // 🔹 Optionsni qaytaruvchi funksiya
+    const { data: freelanceData, isSuccess: freelanceSuccess } = useQuery({
+        queryKey: ["freelanceData", debounceSearch],
+        queryFn: async () => {
+            const { data } = await axios.get(`customer/search-page?search=${debounceSearch}`)
+            return data
+        },
+        enabled: type !== 'mahsulotlar' && debounceSearch.length > 0,
+        cacheTime: 10000,
+        retry: 1,
+    })
+
     const getOptions = () => {
         if (type === 'mahsulotlar') {
             return isSuccess ? data?.map(item => ({ value: item })) : [];
+        }else if(type === "mutaxasislar") {
+            return freelanceSuccess ? freelanceData?.position?.map(item => ({ value: item })) : [];
+        }else if(type == "xizmatlar"){
+            return freelanceSuccess ? freelanceData?.services?.map(item => ({ value: item })) : [];
         }
         return staticOptions[type] || [];
     };
