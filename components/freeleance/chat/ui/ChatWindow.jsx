@@ -6,18 +6,27 @@ import ChatMessage from './ChatMessage';
 import dayjs from 'dayjs';
 import { useRouter } from 'next/router';
 import useChat from '../api/useChat';
+import useChats from '../api/useChats';
 
 const ChatWindow = ({ chatId, goBack }) => {
     const [newMessage, setNewMessage] = useState('');
-    const [edit, setEdit] = useState(null); 
+    const [edit, setEdit] = useState(null);
+    const { wsRef } = useChats();
     const messagesContainerRef = useRef(null);
-    const { push } = useRouter();
+    const router = useRouter();
 
-    const { messages, chat, sendMessage, updateMessage } = useChat(chatId);
+    const {
+        messages,
+        chat,
+        sendMessage,
+        updateMessage, 
+        sendUnreadMessages,
+    } = useChat(chatId);
 
     const scrollToBottom = useCallback(() => {
         if (messagesContainerRef.current) {
-            messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+            messagesContainerRef.current.scrollTop =
+                messagesContainerRef.current.scrollHeight;
         }
     }, []);
 
@@ -29,14 +38,14 @@ const ChatWindow = ({ chatId, goBack }) => {
         if (edit) {
             setNewMessage(edit.content);
         }
-    }, [edit]);
+    }, [edit]); 
 
     const handleSend = useCallback(() => {
         if (!newMessage.trim()) return;
 
         if (edit) {
             // ✨ edit rejimida update
-            updateMessage(newMessage, edit.id,);
+            updateMessage(newMessage, edit.id);
             setEdit(null); // rejimdan chiqish
         } else {
             // ✨ yangi xabar
@@ -48,7 +57,8 @@ const ChatWindow = ({ chatId, goBack }) => {
 
     if (!chatId) {
         return (
-            <div className={`${styles.chat_window} d-flex align-items-center justify-content-center`}>
+            <div
+                className={`${styles.chat_window} d-flex align-items-center justify-content-center`}>
                 <Empty
                     description="Chatni tanlang"
                     image={Empty.PRESENTED_IMAGE_SIMPLE}
@@ -62,20 +72,32 @@ const ChatWindow = ({ chatId, goBack }) => {
             {/* chat header */}
             <div className={styles.chat_user}>
                 {goBack && (
-                    <ArrowLeftOutlined style={{ cursor: "pointer" }} onClick={goBack} />
+                    <ArrowLeftOutlined
+                        style={{ cursor: 'pointer' }}
+                        onClick={goBack}
+                    />
                 )}
                 <Avatar
                     size={50}
-                    src={<img src={chat?.opponent?.photo_url  ||  "/static/img/ozodbek.png"} alt="user img" />}
-                    onClick={() => push(`seller/${chat?.opponent?.id}`)}
-                    style={{ cursor: "pointer" }}
+                    src={
+                        <img
+                            src={
+                                chat?.opponent?.photo_url ||
+                                '/static/img/ozodbek.png'
+                            }
+                            alt="user img"
+                        />
+                    }
+                    onClick={() => router.push(`seller/${chat?.opponent?.id}`)}
+                    style={{ cursor: 'pointer' }}
                 />
                 <div className={styles.user_box}>
                     <div className={styles.user_names}>
                         <h4
-                            onClick={() => push(`seller/${chat?.opponent?.id}`)}
-                            style={{ cursor: "pointer" }}
-                        >
+                            onClick={() =>
+                                router.push(`seller/${chat?.opponent?.id}`)
+                            }
+                            style={{ cursor: 'pointer' }}>
                             {chat?.opponent?.name}
                         </h4>
                     </div>
@@ -87,14 +109,18 @@ const ChatWindow = ({ chatId, goBack }) => {
             <div className={styles.chat_messages} ref={messagesContainerRef}>
                 {chat?.chat?.created_at && (
                     <div className={styles.chat_created_time}>
-                        {dayjs(chat.created_at).format("YYYY-MM-DD HH:mm")}
+                        {dayjs(chat.created_at).format('YYYY-MM-DD HH:mm')}
                     </div>
                 )}
 
                 {messages?.length > 0 ? (
-                    messages.map((msg) => (
+                    messages.map(msg => (
                         <ChatMessage
-                            pushUser={() => push(`seller/${chat?.chat?.opponent?.id}`)}
+                            pushUser={() =>
+                                router.push(
+                                    `seller/${chat?.chat?.opponent?.id}`
+                                )
+                            }
                             key={msg.id}
                             msg={msg}
                             onEdit={setEdit}
@@ -112,17 +138,18 @@ const ChatWindow = ({ chatId, goBack }) => {
             <div className={styles.chat_input_box}>
                 <Input
                     value={newMessage}
-                    onChange={(e) => setNewMessage(e.target.value)}
+                    onChange={e => setNewMessage(e.target.value)}
                     onPressEnter={handleSend}
-                    placeholder={edit ? "Xabarni tahrir qilyapsiz..." : "Xabar yozing..."}
+                    placeholder={
+                        edit ? 'Xabarni tahrir qilyapsiz...' : 'Xabar yozing...'
+                    }
                     className={styles.chat_input}
                 />
                 <Button
                     style={{ background: edit ? '#f59e0b' : '#00A44F' }}
                     type="primary"
-                    onClick={handleSend}
-                >
-                    <SendOutlined style={{ fontSize: "20px" }} />
+                    onClick={handleSend}>
+                    <SendOutlined style={{ fontSize: '20px' }} />
                 </Button>
             </div>
         </div>

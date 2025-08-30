@@ -1,12 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import useGetChats from './useGetChats';
+import { setUnreadMessages } from '~/store/seller/slice';
 
 const useChats = () => {
     const [chats, setChats] = useState([]);
     const { user } = useSelector(state => state.auth);
     const wsRef = useRef();
-    const { data } = useGetChats();
+    const dispatch = useDispatch()
+    const { data, refetch } = useGetChats();
 
     // initial load
     useEffect(() => {
@@ -31,8 +33,8 @@ const useChats = () => {
                 console.warn("⚠️ JSON emas data:", event.data);
                 return;
             }
-
             // 🔥 chat update qilish
+            // refetch()
             setChats(prev => {
                 if (!Array.isArray(prev)) prev = [];
 
@@ -42,12 +44,15 @@ const useChats = () => {
                     // bor bo‘lsa – update qilamiz (listning boshiga olib chiqib qo‘yish ham mumkin)
                     const updated = [...prev];
                     updated.splice(index, 1); 
-                    return [msg, ...updated]; 
+
+                    return [msg, ...updated].filter(item => item.chat_id);
                 } else {
                     // yo‘q bo‘lsa – qo‘shamiz
                     return [msg, ...prev];
                 }
-            });
+            }); 
+
+            // dispatch(setUnreadMessages(chats.filter(item => item.type == 'chat_update').length || 0))
         };
 
 
@@ -56,6 +61,8 @@ const useChats = () => {
 
     return {
         chats,
+        setChats,
+        wsRef
     };
 };
 

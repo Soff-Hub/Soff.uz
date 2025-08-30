@@ -5,15 +5,16 @@ import { truncateTitle } from '~/utilities/TruncateTitle';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import useChats from '../api/useChats'; // 🔥 endi shu hookdan foydalanamiz
+import useChat from '../api/useChat';
 
-const ChatSidebar = ({ setChatId }) => {
+const ChatSidebar = ({ setChatId, chatId }) => {
     const [search, setSearch] = useState('');
     const [debouncedSearch, setDebouncedSearch] = useState('');
     const { back } = useRouter();
-    const { user } = useSelector(state => state.auth);
-
+    const router = useRouter();
+    const { messages, sendUnreadMessages } = useChat(chatId);
     // ✅ endi useChats dan chats va isLoading olamiz
-    const { chats, isLoading } = useChats(debouncedSearch);
+    const { chats, isLoading, setChats, wsRef } = useChats(debouncedSearch);
 
     useEffect(() => {
         const handler = setTimeout(() => {
@@ -21,6 +22,12 @@ const ChatSidebar = ({ setChatId }) => {
         }, 300);
         return () => clearTimeout(handler);
     }, [search]);
+
+    const handleChatId = id => {
+        setChatId(id);
+        sendUnreadMessages(wsRef, messages);
+        router.replace({ pathname: router.pathname, query: { chatId: id } });
+    };
 
     return (
         <div className={styles.chat_sidebar}>
@@ -51,7 +58,7 @@ const ChatSidebar = ({ setChatId }) => {
                 {chats?.map(chat => (
                     <div
                         key={chat.chat_id}
-                        onClick={() => setChatId(chat?.chat_id)}
+                        onClick={() => handleChatId(chat?.chat_id)}
                         className={styles.sidebar_chat}>
                         <img
                             src={
