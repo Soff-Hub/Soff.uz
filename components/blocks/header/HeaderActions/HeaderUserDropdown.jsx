@@ -10,6 +10,7 @@ const HeaderUserDropdown = props => {
     const dispatch = useDispatch();
     const { accountLinks, user } = useSelector(state => state.auth);
     const { profile } = useSelector(state => state.ecomerce);
+    const { unreadMessages } = useSelector(state => state.user);
     const refresh = useSelector(state => state.auth?.user?.refresh);
     const { asPath } = useRouter();
     const router = useRouter();
@@ -65,13 +66,19 @@ const HeaderUserDropdown = props => {
     const linksView = accountLinks.map((item, index) => (
         <li key={index}>
             <Link href={item.url}>
-                <a>
-                    {' '}
-                    <span>
+                <div className="d-flex align-items-center justify-content-between">
+                    <p>
                         <i className={` text-dark fs-4 me-2  ${item.icon}`}></i>{' '}
-                    </span>{' '}
-                    {item.text}{' '}
-                </a>
+                        {item.text}
+                    </p>
+                    {item.url == '/chat' && (
+                        <span
+                            style={{ width: '20px', height: '20px' }}
+                            className="fs-4 bg-warning rounded-pill d-flex justify-content-center align-items-center">
+                            {unreadMessages}
+                        </span>
+                    )}
+                </div>
             </Link>
         </li>
     ));

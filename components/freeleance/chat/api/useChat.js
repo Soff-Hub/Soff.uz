@@ -16,6 +16,39 @@ const useChat = (chatId) => {
         }
     }, [chatId, data]);
 
+
+    // 🔥 Unread message'larni yig'ib serverga yuborish
+    const sendUnreadMessages = (ws, messages) => {
+        if (!ws || ws.readyState !== WebSocket.OPEN) return;
+        const unreadIds = messages.filter(m => !m.is_read).map(m => m.id);
+        if (unreadIds.length > 0) {
+            ws.send(JSON.stringify({
+                event: "message_read",
+                message_ids: unreadIds
+            }));
+        }
+    };
+
+    // Xabar yuborish
+    const sendMessage = (content) => {
+        if (wsRef.current?.readyState === WebSocket.OPEN) {
+            wsRef.current.send(JSON.stringify({
+                event: "message",
+                content
+            }));
+        }
+    };
+
+    const updateMessage = (content, message_id) => {
+        if (wsRef.current?.readyState === WebSocket.OPEN) {
+            wsRef.current.send(JSON.stringify({
+                event: "message_update",
+                content,
+                message_id,
+            }));
+        }
+    }; 
+
     useEffect(() => {
         if (!chatId || !user?.access) return;
 
@@ -71,43 +104,12 @@ const useChat = (chatId) => {
         return () => ws.close();
     }, [chatId, user?.access]);
 
-    // 🔥 Unread message'larni yig'ib serverga yuborish
-    const sendUnreadMessages = (ws, messages) => {
-        if (!ws || ws.readyState !== WebSocket.OPEN) return;
-        const unreadIds = messages.filter(m => !m.is_read).map(m => m.id);
-        if (unreadIds.length > 0) {
-            ws.send(JSON.stringify({
-                event: "message_read",
-                message_ids: unreadIds
-            }));
-        }
-    };
-
-    // Xabar yuborish
-    const sendMessage = (content) => {
-        if (wsRef.current?.readyState === WebSocket.OPEN) {
-            wsRef.current.send(JSON.stringify({
-                event: "message",
-                content
-            }));
-        }
-    };
-
-    const updateMessage = (content, message_id) => {
-        if (wsRef.current?.readyState === WebSocket.OPEN) {
-            wsRef.current.send(JSON.stringify({
-                event: "message_update",
-                content,
-                message_id,
-            }));
-        }
-    };
-
     return {
         messages,
         chat,
         sendMessage,
-        updateMessage
+        updateMessage, 
+        sendUnreadMessages,
     };
 };
 
