@@ -101,7 +101,7 @@ const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
     };
 
     return (
-        <div className="container">
+        <div className="">
             <div className={styles.headlineWrapper}>
                 <h1 className={styles.headline}>
                     {bannerTitle[selectedDirection] || 'Barcha xizmatlar'}
