@@ -60,17 +60,17 @@ export default function SellerShortInfo({ sellerInfo, pid }) {
         <div className="sellerInfo">
             <div className="aboutSeller">
                 <img
-                    className="sellerAvatar"
+                    className="sellerAvatar object-fit-cover"
                     src={
                         sellerInfo?.image || '/static/img/user_without_img.png'
                     }
                     alt="seller-image"
                 />
                 <div className=" sellerNameContainer d-flex flex-column ">
-                    <p className="sellerName m-0">{sellerInfo?.full_name}</p>
+                    <p className="sellerName text-center m-0">{sellerInfo?.full_name}</p>
                     {sellerInfo?.position && (
                         <div className="d-flex align-items-center gap-3">
-                            <p className="m-0">{sellerInfo?.position}</p>
+                            <p className="m-0 text-center ">{sellerInfo?.position}</p>
                         </div>
                     )}
                     <p style={{ color: '#312F30' }}>

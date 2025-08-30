@@ -71,13 +71,9 @@ const HeaderUserDropdown = props => {
                         <i className={` text-dark fs-4 me-2  ${item.icon}`}></i>{' '}
                         {item.text}
                     </p>
-                    {item.url == '/chat' && (
-                        <span
-                            style={{ width: '20px', height: '20px' }}
-                            className="fs-4 bg-warning rounded-pill d-flex justify-content-center align-items-center">
-                            {unreadMessages}
-                        </span>
-                    )}
+                    {/* <span
+                        style={{ width: '20px', height: '20px' }}
+                        className="fs-4 bg-warning rounded-pill d-flex justify-content-center align-items-center"></span> */}
                 </div>
             </Link>
         </li>
