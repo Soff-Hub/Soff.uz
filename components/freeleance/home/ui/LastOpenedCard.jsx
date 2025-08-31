@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 
 const LastOpenedCard = ({ title, image, author, price, slug, userImage }) => {
     const router = useRouter();
-    
+
     return (
         <div
             className={styles.card}
@@ -12,7 +12,15 @@ const LastOpenedCard = ({ title, image, author, price, slug, userImage }) => {
             <p className={styles.title}>
                 <span>{title}</span>
             </p>
-            <img src={image || '/static/img/not-found.png'} alt={title} />
+            <div
+                className={styles.bannerBg}
+                style={{ background: image ? `url(${image})` : '#000000a3' }}>
+                <img
+                    className={styles.image}
+                    src={image || '/static/img/not-found.png'}
+                    alt={title}
+                />
+            </div>
             <div className={styles.footer}>
                 <img
                     src={userImage || '/static/img/ozodbek.png'}
