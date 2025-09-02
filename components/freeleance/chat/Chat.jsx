@@ -3,17 +3,24 @@ import ChatSidebar from './ui/ChatSidebar';
 import ChatWindow from './ui/ChatWindow';
 import useResponsive from '~/utilities/useResponsive';
 import { useRouter } from 'next/router';
+import useGetChatById from './api/useGetChatById';
 
 const Chat = () => {
     const [chatId, setChatId] = useState(null);
     const { isMobile, isTablet } = useResponsive();
     const { query } = useRouter();
-
+    const { refetch } = useGetChatById(chatId);
     useEffect(() => {
         if (query?.id) {
             setChatId(query.id);
         }
     }, [query?.id]);
+
+    useEffect(() => {
+        if (chatId) {
+            refetch();
+        }
+    }, [chatId]);
 
     const isSmallScreen = isMobile || isTablet;
 

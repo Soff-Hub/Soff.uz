@@ -1,20 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import styles from '../style/chat.module.scss';
 import { Button, Empty, Input, Spin } from 'antd';
 import { truncateTitle } from '~/utilities/TruncateTitle';
 import { useRouter } from 'next/router';
-import { useSelector } from 'react-redux';
 import useChats from '../api/useChats'; // 🔥 endi shu hookdan foydalanamiz
-import useChat from '../api/useChat';
+import useWebSocketChat from '../api/useSocketChat';
 
 const ChatSidebar = ({ setChatId, chatId }) => {
     const [search, setSearch] = useState('');
     const [debouncedSearch, setDebouncedSearch] = useState('');
     const { back } = useRouter();
     const router = useRouter();
-    const { messages, sendUnreadMessages } = useChat(chatId);
+    const { sendUnreads } = useWebSocketChat(chatId);
     // ✅ endi useChats dan chats va isLoading olamiz
-    const { chats, isLoading, setChats, wsRef } = useChats(debouncedSearch);
+    const { chats, isLoading } = useChats(debouncedSearch);
 
     useEffect(() => {
         const handler = setTimeout(() => {
@@ -23,11 +22,17 @@ const ChatSidebar = ({ setChatId, chatId }) => {
         return () => clearTimeout(handler);
     }, [search]);
 
-    const handleChatId = id => {
-        setChatId(id);
-        sendUnreadMessages(wsRef, messages);
-        router.replace({ pathname: router.pathname, query: { chatId: id } });
-    };
+    const handleChatId = useCallback(
+        id => {
+            setChatId(id);
+            sendUnreads();
+            router.replace({
+                pathname: router.pathname,
+                query: { chatId: id },
+            });
+        },
+        [chatId]
+    );
 
     return (
         <div className={styles.chat_sidebar}>

@@ -1,30 +1,24 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import useGetChats from './useGetChats';
-import { setUnreadMessages } from '~/store/seller/slice';
+import { useWebSocket } from '@shined/react-use';
 
 const useChats = () => {
     const [chats, setChats] = useState([]);
     const { user } = useSelector(state => state.auth);
-    const wsRef = useRef();
-    const dispatch = useDispatch()
     const { data, refetch } = useGetChats();
-
     // initial load
     useEffect(() => {
         if (data) setChats(data);
     }, [data]);
 
-    useEffect(() => {
-        if (!user?.access) return;
+    if (!user?.access) return;
 
-        const ws = new WebSocket(
-            `${process.env.NEXT_PUBLIC_WS_FREELEANCE_URL}?token=${user.access}`
-        );
-        wsRef.current = ws;
-
-
-        ws.onmessage = (event) => {
+    const ws = useWebSocket(`${process.env.NEXT_PUBLIC_WS_FREELEANCE_URL}?token=${user?.access}`, {
+        heartbeat: true,
+        reconnect: true,
+        immediate: true,
+        onMessage: (event) => {
             if (!event.data) return;
             let msg;
             try {
@@ -43,26 +37,19 @@ const useChats = () => {
                 if (index !== -1) {
                     // bor bo‘lsa – update qilamiz (listning boshiga olib chiqib qo‘yish ham mumkin)
                     const updated = [...prev];
-                    updated.splice(index, 1); 
-
+                    updated.splice(index, 1);
                     return [msg, ...updated].filter(item => item.chat_id);
                 } else {
                     // yo‘q bo‘lsa – qo‘shamiz
                     return [msg, ...prev];
                 }
-            }); 
-
-            // dispatch(setUnreadMessages(chats.filter(item => item.type == 'chat_update').length || 0))
-        };
-
-
-        return () => ws.close();
-    }, [user?.access]);
+            });
+        }
+    })
 
     return {
         chats,
         setChats,
-        wsRef
     };
 };
 
