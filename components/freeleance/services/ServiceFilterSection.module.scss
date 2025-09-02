@@ -11,7 +11,7 @@
 
     @media (max-width: 992px) {
         font-size: 40px;
-        margin: 10px 0 ;
+        margin: 10px 0;
     }
 
     @media (max-width: 768px) {
@@ -132,10 +132,10 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 30px;
+    gap: 20px;
 
     @media (max-width: 992px) {
-        flex-direction: column; 
+        flex-direction: column;
         align-items: stretch;
         gap: 20px;
     }
@@ -180,7 +180,7 @@
 
 .filterSelects {
     display: flex;
-    width: 50%;
+    width: 30%;
     gap: 20px;
     justify-content: space-between;
     align-items: center;
@@ -205,13 +205,14 @@
 .filter_select {
     flex: 1;
     min-width: 120px;
-
+    border: 1px solid #a9cfbb;
+    border-radius: 10px;
+    height: 40px;
     :global {
         .ant-select-selector {
             background: none !important;
             border: none !important;
             border-radius: 8px;
-            height: 40px;
             display: flex;
             align-items: center;
             transition: box-shadow 0.3s ease;
@@ -246,6 +247,7 @@
         .ant-select:hover .ant-select-selector,
         .ant-select-focused .ant-select-selector {
             box-shadow: 0 0 0 2px rgba(0, 128, 0, 0.5) !important;
+            outline: none !important;
         }
     }
 }
@@ -286,7 +288,7 @@
     display: grid;
     grid-template-columns: repeat(5, 1fr); /* <= 480px: 1 ta */
     gap: 10px;
-    padding-bottom: 80px; 
+    padding-bottom: 80px;
     @media (max-width: 1200px) {
         grid-template-columns: repeat(4, 1fr); /* 481–991px: 2 ta */
     }
