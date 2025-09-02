@@ -19,6 +19,7 @@ const ChatWindow = ({ chatId, goBack }) => {
         updateMessage,
         sendUnreads,
     } = useWebSocketChat(chatId);
+
     const scrollToBottom = useCallback(() => {
         if (messagesContainerRef.current) {
             messagesContainerRef.current.scrollTop =
