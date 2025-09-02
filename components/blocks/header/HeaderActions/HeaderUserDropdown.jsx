@@ -70,10 +70,7 @@ const HeaderUserDropdown = props => {
             </Link>
         </li>
     ));
-    useEffect(() => {
-     
-    }, []);
-
+    useEffect(() => {}, []);
 
     if (isLoggedIn === true) {
         return (
@@ -81,6 +78,7 @@ const HeaderUserDropdown = props => {
                 <div className="fs-3 d-flex align-items-center gap-3 pointer">
                     <Image
                         src={profile?.image || '/static/img/ozodbek.png'}
+                        style={{ borderRadius: '50%' }}
                         width={30}
                         height={30}
                         alt="user"
@@ -91,6 +89,7 @@ const HeaderUserDropdown = props => {
                         <div>
                             <div className="pointer d-flex pointer mb-3 gap-3 align-items-center ">
                                 <Image
+                                    style={{ borderRadius: '50%' }}
                                     src={
                                         profile?.image ||
                                         '/static/img/ozodbek.png'
