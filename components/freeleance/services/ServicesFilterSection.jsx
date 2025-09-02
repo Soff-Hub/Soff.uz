@@ -1,6 +1,6 @@
 import { Select } from 'antd';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styles from './ServiceFilterSection.module.scss';
 import {
     DeleteOutlined,
@@ -28,9 +28,6 @@ const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
         query.direction || ''
     );
     const [selectedParentCategory, setSelectedParentCategory] = useState(
-        query.parent_category_id || ''
-    );
-    const [selectedChildCategory, setSelectedChildCategory] = useState(
         query.category_id || ''
     );
 
@@ -40,7 +37,7 @@ const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
         });
     };
 
-    useEffect(() => {
+    const sendServer = useCallback(() => {
         const delay = setTimeout(() => {
             const newQuery = {
                 ...router.query,
@@ -56,33 +53,34 @@ const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
         }, 800);
 
         return () => clearTimeout(delay);
-    }, [
-        searchValue,
-        selectedDirection,
-        selectedParentCategory,
-        selectedChildCategory,
-    ]);
+    }, [searchValue, selectedDirection, selectedParentCategory]);
 
     const updateDirection = value => {
         setSelectedDirection(value);
         setSelectedParentCategory('');
-        setSelectedChildCategory('');
+        router.push({
+            pathname: router.pathname,
+            query: {
+                direction: value || undefined, // faqat direction
+            },
+        });
     };
 
     const onParentCategoryChange = value => {
         setSelectedParentCategory(value);
-        setSelectedChildCategory('');
-    };
-
-    const onChildCategoryChange = value => {
-        setSelectedChildCategory(value);
+        router.push({
+            pathname: router.pathname,
+            query: {
+                direction: selectedDirection || undefined,
+                category_id: value || undefined, // direction + parent_category_id
+            },
+        });
     };
 
     const clearFilters = () => {
         setSearchValue('');
         setSelectedDirection('');
         setSelectedParentCategory('');
-        setSelectedChildCategory('');
         updateQuery({});
     };
 
@@ -122,7 +120,7 @@ const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
                                 <SearchOutlined />
                             </span>
                         </div>
-                        <div className='d-flex d-md-none align-items-center'>
+                        <div className="d-flex d-md-none align-items-center">
                             <button
                                 className={styles.deleteMob}
                                 onClick={clearFilters}>
@@ -147,20 +145,22 @@ const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
                             ))}
                         </Select>
 
-                        <Select
-                            className={styles.filter_select}
-                            suffixIcon={
-                                <DownOutlined style={{ color: 'green' }} />
-                            }
-                            placeholder="Kategoriya"
-                            value={selectedParentCategory || undefined}
-                            onChange={onParentCategoryChange}>
-                            {parentCategory?.map(cat => (
-                                <Option key={cat.id} value={String(cat.id)}>
-                                    {cat.title}
-                                </Option>
-                            ))}
-                        </Select>
+                        {selectedDirection  && (
+                            <Select
+                                className={styles.filter_select}
+                                suffixIcon={
+                                    <DownOutlined style={{ color: 'green' }} />
+                                }
+                                placeholder="Kategoriya"
+                                value={selectedParentCategory || undefined}
+                                onChange={onParentCategoryChange}>
+                                {parentCategory?.map(cat => (
+                                    <Option key={cat.id} value={String(cat.id)}>
+                                        {cat.title}
+                                    </Option>
+                                ))}
+                            </Select>
+                        )}
 
                         {/* <Select
                             className={styles.filter_select}
