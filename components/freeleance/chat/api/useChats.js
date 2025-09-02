@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import useGetChats from './useGetChats';
 import { useWebSocket } from '@shined/react-use';
 
-const useChats = () => {
+const useChats = (search) => {
     const [chats, setChats] = useState([]);
     const { user } = useSelector(state => state.auth);
-    const { data, refetch } = useGetChats();
+    const { data } = useGetChats(search);
     // initial load
     useEffect(() => {
         if (data) setChats(data);

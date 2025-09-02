@@ -22,7 +22,7 @@ const CommentSection = ({ id, type }) => {
     };
 
     return (
-        <div className={styles.commentSection}>
+        <div className={`${styles.commentSection}`}>
             <h3 className={styles.title}>Fikrlar</h3>
             <List
                 itemLayout="horizontal"

@@ -5,16 +5,18 @@ import { truncateTitle } from '~/utilities/TruncateTitle';
 import { useRouter } from 'next/router';
 import useChats from '../api/useChats'; // 🔥 endi shu hookdan foydalanamiz
 import useWebSocketChat from '../api/useSocketChat';
+import useGetChatById from '../api/useGetChatById';
+import useGetChats from '../api/useGetChats';
+import Loader from '~/components/shared/loader';
 
 const ChatSidebar = ({ setChatId, chatId }) => {
     const [search, setSearch] = useState('');
     const [debouncedSearch, setDebouncedSearch] = useState('');
     const { back } = useRouter();
     const router = useRouter();
-    const { sendUnreads } = useWebSocketChat(chatId);
     // ✅ endi useChats dan chats va isLoading olamiz
-    const { chats, isLoading } = useChats(debouncedSearch);
-
+    const { data: chats, isLoading } = useGetChats(debouncedSearch);
+    // const { data } = useGetChatById(chatId);
     useEffect(() => {
         const handler = setTimeout(() => {
             setDebouncedSearch(search);
@@ -25,14 +27,16 @@ const ChatSidebar = ({ setChatId, chatId }) => {
     const handleChatId = useCallback(
         id => {
             setChatId(id);
-            sendUnreads();
             router.replace({
                 pathname: router.pathname,
                 query: { chatId: id },
             });
+ 
         },
         [chatId]
     );
+
+    // if (!chats) return null;
 
     return (
         <div className={styles.chat_sidebar}>
@@ -60,37 +64,38 @@ const ChatSidebar = ({ setChatId, chatId }) => {
                         image={Empty.PRESENTED_IMAGE_SIMPLE}
                     />
                 )}
-                {chats?.map(chat => (
-                    <div
-                        key={chat.chat_id}
-                        onClick={() => handleChatId(chat?.chat_id)}
-                        className={styles.sidebar_chat}>
-                        <img
-                            src={
-                                chat?.opponent_photo_url ||
-                                '/static/img/ozodbek.png'
-                            }
-                            alt="user img"
-                        />
-                        <div className={styles.sidebar_chat_wrapper}>
-                            <div className={styles.box1}>
-                                <h4>{chat?.opponent_name}</h4>
-                                <span>
-                                    {truncateTitle(
-                                        chat?.last_message?.content,
-                                        15
+                {!isLoading &&
+                    chats?.map(chat => (
+                        <div
+                            key={chat.chat_id}
+                            onClick={() => handleChatId(chat?.chat_id)}
+                            className={styles.sidebar_chat}>
+                            <img
+                                src={
+                                    chat?.opponent_photo_url ||
+                                    '/static/img/ozodbek.png'
+                                }
+                                alt="user img"
+                            />
+                            <div className={styles.sidebar_chat_wrapper}>
+                                <div className={styles.box1}>
+                                    <h4>{chat?.opponent_name}</h4>
+                                    <span>
+                                        {truncateTitle(
+                                            chat?.last_message?.content,
+                                            15
+                                        )}
+                                    </span>
+                                </div>
+                                <div className={styles.box2}>
+                                    <p></p>
+                                    {chat?.unread_count > 0 && (
+                                        <span>{chat?.unread_count}</span>
                                     )}
-                                </span>
-                            </div>
-                            <div className={styles.box2}>
-                                <p></p>
-                                {chat?.unread_count > 0 && (
-                                    <span>{chat?.unread_count}</span>
-                                )}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                ))}
+                    ))}
             </div>
         </div>
     );

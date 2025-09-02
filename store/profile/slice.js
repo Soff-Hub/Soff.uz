@@ -1,19 +1,17 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { authAxios } from "~/repositories/authApi";
 
 
 export const fetchProfile = createAsyncThunk(
   "auth/fetchProfile",
   async (_, { getState }) => {
-    const { auth } = getState();
 
-    // ✅ user agar store’da bo‘lsa qayta chaqirmaydi
-    if (auth.user) {
-      return auth.user;
+    try {
+      const response = await authAxios.get("/auth/profile");
+      return response.data;
+    } catch (error) {
+      console.log('auth/profile');
     }
-
-    const response = await authAxios.get("/auth/profile/");
-    return response.data;
   }
 );
 
