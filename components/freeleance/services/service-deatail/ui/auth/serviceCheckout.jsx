@@ -71,7 +71,7 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
     // 📌 Oddiy karta raqami orqali to'lov
     async function handleClickCardPosts(e) {
         e.preventDefault();
-        setMessage(false);
+        setMessage(true);
 
         const payload = {
             service_id: document,
@@ -83,14 +83,14 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
         if (order_id) payload.order_id = order_id;
         createOrder.mutate(payload, {
             onSuccess: data => {
-                setMessage(true);
+                setMessage(false);
                 setOpen(true);
                 setResData(data);
                 reset();
             },
             onError: err => {
                 console.error('❌ Click payment error:', err);
-                setMessage(true);
+                setMessage(false);
                 setResData({
                     detail: err?.response?.data?.detail || "Noma'lum xato",
                 });
@@ -249,7 +249,7 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
                                             {resData.detail}
                                         </p>
                                     )}
-                                    {message ? (
+                                    {!message  ? (
                                         <button
                                             type="submit"
                                             className="ps-btn w-100 btn_color">
