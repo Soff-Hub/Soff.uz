@@ -13,9 +13,9 @@ const useGetChats = (search = '') => {
             return data;
         },
         enabled: !!user?.access,
-        staleTime: 1000 * 60 * 5,
-        cacheTime: 1000 * 60 * 10,
     });
 };
 
 export default useGetChats;
+
+// 1.09.00:50 da slateTime va cache timeni o'chirib qo'ydim

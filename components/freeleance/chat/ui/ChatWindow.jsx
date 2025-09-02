@@ -4,25 +4,21 @@ import { Input, Button, Avatar, Empty } from 'antd';
 import { ArrowLeftOutlined, SendOutlined } from '@ant-design/icons';
 import ChatMessage from './ChatMessage';
 import dayjs from 'dayjs';
-import { useRouter } from 'next/router';
-import useChat from '../api/useChat';
-import useChats from '../api/useChats';
+import { useRouter } from 'next/router'; 
+import useWebSocketChat from '../api/useSocketChat';
 
 const ChatWindow = ({ chatId, goBack }) => {
     const [newMessage, setNewMessage] = useState('');
     const [edit, setEdit] = useState(null);
-    const { wsRef } = useChats();
     const messagesContainerRef = useRef(null);
-    const router = useRouter();
-
+    const router = useRouter(); 
     const {
         messages,
         chat,
         sendMessage,
-        updateMessage, 
-        sendUnreadMessages,
-    } = useChat(chatId);
-
+        updateMessage,
+        sendUnreads,
+    } = useWebSocketChat(chatId);
     const scrollToBottom = useCallback(() => {
         if (messagesContainerRef.current) {
             messagesContainerRef.current.scrollTop =
@@ -38,7 +34,13 @@ const ChatWindow = ({ chatId, goBack }) => {
         if (edit) {
             setNewMessage(edit.content);
         }
-    }, [edit]); 
+    }, [edit]);
+
+    useEffect(() => {
+        if (chatId) {
+            sendUnreads();
+        }
+    }, [router.query.chatId]);
 
     const handleSend = useCallback(() => {
         if (!newMessage.trim()) return;
@@ -51,9 +53,8 @@ const ChatWindow = ({ chatId, goBack }) => {
             // ✨ yangi xabar
             sendMessage(newMessage);
         }
-
         setNewMessage('');
-    }, [newMessage, edit, sendMessage, updateMessage]);
+    }, [newMessage, edit]);
 
     if (!chatId) {
         return (

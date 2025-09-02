@@ -25,7 +25,7 @@ const useCreateChat = () => {
         onSuccess: (data) => {
             queryClient.invalidateQueries({ queryKey: ['chats'] });
             message.success("Chat yaratildi");
-            push(`/chat${data?.chat_id ? `?id=${data?.chat_id}` : ''}`);
+            push(`/chat${data?.chat_id ? `?chatId=${data?.chat_id}` : ''}`);
         },
         onError: (error) => {
             const errorMsg = error?.response?.data?.detail || "Xatolik yuz berdi";

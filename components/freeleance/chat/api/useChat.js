@@ -16,7 +16,6 @@ const useChat = (chatId) => {
         }
     }, [chatId, data]);
 
-
     // 🔥 Unread message'larni yig'ib serverga yuborish
     const sendUnreadMessages = (ws, messages) => {
         if (!ws || ws.readyState !== WebSocket.OPEN) return;
@@ -47,7 +46,7 @@ const useChat = (chatId) => {
                 message_id,
             }));
         }
-    }; 
+    };
 
     useEffect(() => {
         if (!chatId || !user?.access) return;
@@ -66,7 +65,7 @@ const useChat = (chatId) => {
                 console.warn("⚠️ WS event.data bo‘sh:", event);
                 return;
             }
-
+ 
             let msg;
             try {
                 msg = JSON.parse(event.data);
@@ -108,7 +107,7 @@ const useChat = (chatId) => {
         messages,
         chat,
         sendMessage,
-        updateMessage, 
+        updateMessage,
         sendUnreadMessages,
     };
 };
