@@ -4,21 +4,17 @@ import { Input, Button, Avatar, Empty } from 'antd';
 import { ArrowLeftOutlined, SendOutlined } from '@ant-design/icons';
 import ChatMessage from './ChatMessage';
 import dayjs from 'dayjs';
-import { useRouter } from 'next/router'; 
-import useWebSocketChat from '../api/useSocketChat';
+import { useRouter } from 'next/router';
+import useChat from '../api/useChat';
 
 const ChatWindow = ({ chatId, goBack }) => {
     const [newMessage, setNewMessage] = useState('');
     const [edit, setEdit] = useState(null);
     const messagesContainerRef = useRef(null);
-    const router = useRouter(); 
-    const {
-        messages,
-        chat,
-        sendMessage,
-        updateMessage,
-        sendUnreads,
-    } = useWebSocketChat(chatId);
+    const router = useRouter();
+    const { messages, chat, sendMessage, updateMessage } = useChat(
+        chatId
+    );
 
     const scrollToBottom = useCallback(() => {
         if (messagesContainerRef.current) {
@@ -36,13 +32,7 @@ const ChatWindow = ({ chatId, goBack }) => {
             setNewMessage(edit.content);
         }
     }, [edit]);
-
-    useEffect(() => {
-        if (chatId) {
-            sendUnreads();
-        }
-    }, [router.query.chatId]);
-
+ 
     const handleSend = useCallback(() => {
         if (!newMessage.trim()) return;
 
