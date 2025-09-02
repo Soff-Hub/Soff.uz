@@ -1,24 +1,32 @@
 import { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import useGetChats from './useGetChats';
-import { useWebSocket } from '@shined/react-use';
 
 const useChats = (search) => {
     const [chats, setChats] = useState([]);
     const { user } = useSelector(state => state.auth);
     const { data } = useGetChats(search);
+    const wsRef = useRef()
     // initial load
     useEffect(() => {
         if (data) setChats(data);
     }, [data]);
 
-    if (!user?.access) return;
 
-    const ws = useWebSocket(`${process.env.NEXT_PUBLIC_WS_FREELEANCE_URL}?token=${user?.access}`, {
-        heartbeat: true,
-        reconnect: true,
-        immediate: true,
-        onMessage: (event) => {
+    useEffect(() => {
+        if (!user?.access) return;
+
+        if (!chatId || !user?.access) return;
+
+        const ws = new WebSocket(`${process.env.NEXT_PUBLIC_WS_FREELEANCE_URL}?token=${user?.access}`);
+        wsRef.current = ws;
+
+        ws.onopen = () => {
+            sendUnreadMessages(ws, messages);
+        };
+
+        ws.onmessage = (event) => {
+
             if (!event.data) return;
             let msg;
             try {
@@ -45,7 +53,11 @@ const useChats = (search) => {
                 }
             });
         }
-    })
+
+
+        return () => ws.close();
+
+    }, [user?.access])
 
     return {
         chats,
