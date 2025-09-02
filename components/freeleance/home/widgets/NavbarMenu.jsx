@@ -16,6 +16,7 @@ const NavbarMenu = () => {
                         <div className={styles.navbarWrapper}>
                             {data?.map(item => (
                                 <MenuItem
+                                    key={item.direction}
                                     products={item.freelance_categories}
                                     templates={item.soff_categories}
                                     label={item.direction}

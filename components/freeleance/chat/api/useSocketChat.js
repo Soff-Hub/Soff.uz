@@ -30,11 +30,8 @@ const useWebSocketChat = (chatId) => {
 
   const ws = useWebSocket(`${process.env.NEXT_PUBLIC_WS_FREELEANCE_URL}${chatId}/?token=${user?.access}`, {
     heartbeat: true,
-    reconnect: true,
+    // reconnect: true,
     immediate: true,
-    onOpen: () => {
-      sendUnreadMessages(ws, messages);
-    },
     onMessage: (event) => {
       if (!chatId || !user?.access) return;
       if (!event.data) {
@@ -95,7 +92,7 @@ const useWebSocketChat = (chatId) => {
     }
   };
 
-  const sendUnreads = () => {
+  const sendUnreads = (messages) => {
     sendUnreadMessages(ws, messages)
   }
 

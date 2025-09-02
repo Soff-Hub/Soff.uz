@@ -43,10 +43,10 @@ export default function SellersPage() {
             title: 'Mahsulotlar',
             path: 'products',
         },
-        // {
-        //     title: 'Kamentariyalar',
-        //     path: 'comments',
-        // },
+        {
+            title: 'Kamentariyalar',
+            path: 'comments',
+        },
     ];
     const { data, isLoading: getDetailsLoading } = useQuery({
         queryKey: ['getSellerDetails'],
@@ -77,7 +77,7 @@ export default function SellersPage() {
         portfolio: <SellerPortfolio pid={pid} />,
         services: <SellerServices pid={pid} />,
         products: <SellerProduct pid={pid} />,
-        // comments: <SellerComments pid={pid} />,
+        comments: <SellerComments pid={pid} />,
     };
 
     useEffect(() => {

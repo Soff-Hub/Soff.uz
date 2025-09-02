@@ -13,7 +13,11 @@ const SellerCollapseMenu = ({ pid, sellerInfo }) => {
             key: '1',
             label: 'Muallif Haqida',
             children: (
-                <SellerInfo sellerInfo={sellerInfo} pid={pid} onChange={() => setActiveKey([3])} />
+                <SellerInfo
+                    sellerInfo={sellerInfo}
+                    pid={pid}
+                    onChange={() => setActiveKey([3])}
+                />
             ),
         },
         {
@@ -31,18 +35,18 @@ const SellerCollapseMenu = ({ pid, sellerInfo }) => {
             label: 'Mahsulotlar',
             children: <SellerProduct pid={pid} />,
         },
-        // {
-        //     key: '5',
-        //     label: 'Kamentariyalar',
-        //     children: <SellerComments pid={pid} />,
-        // },
+        {
+            key: '5',
+            label: 'Kamentariyalar',
+            children: <SellerComments pid={pid} />,
+        },
     ];
     // boshlang‘ich holat
 
     return (
         <Collapse
             accordion
-            className='mt-5 bg-white m-0'
+            className="mt-5 bg-white m-0"
             items={items}
             bordered={false}
             activeKey={activeKey}

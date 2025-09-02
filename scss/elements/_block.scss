@@ -70,6 +70,8 @@
         }
 
         .ps-block__content {
+            border: 1px solid #ccc;
+
             ul {
                 li {
                     a {
@@ -2593,7 +2595,10 @@
     }
 
     .ps-list--arrow {
+        padding: 0px;
+        margin: 0px;
         li {
+            margin: 0px;
             a {
                 padding-left: 0;
                 color: $color-heading;
@@ -2627,9 +2632,12 @@
         min-width: 240px;
         right: 0;
         z-index: 10000;
+        top: 40px;
         padding-top: 10px;
+        border: 1px solid #dfdfdf;
         transform: translate(0 20px) scale3d(1, 1, 0);
         transition: all 0.4s ease;
+        border-radius: 10px;
         @include hidden;
     }
 
@@ -2662,7 +2670,6 @@
     }
     .prevev_button:hover {
         background-color: #fff;
-        
     }
 
     .shot {
@@ -2773,7 +2780,7 @@
             height: 140px !important;
         }
 
-        .sell_card_img{
+        .sell_card_img {
             object-fit: contain;
         }
         .sell_card_body {
@@ -2804,13 +2811,12 @@
         //     // top: 5 !important;/
         //     // left: 15 !important;
         // }
-        .sell_card_delete img{
+        .sell_card_delete img {
             // margin-top: 10px;
             border: 2px solid #fff;
-
         }
-        .sell_card_delete img:hover{
-            border: 2px solid #FFA5A6;
+        .sell_card_delete img:hover {
+            border: 2px solid #ffa5a6;
             // padding: 5px;
             border-radius: 50%;
         }
@@ -2832,7 +2838,6 @@
             @media (max-width: 425px) {
                 width: 100px !important;
             }
-    
         }
 
         @media (max-width: 425px) {
@@ -2843,7 +2848,8 @@
             // background: #fff;
             padding: 5px;
             border-radius: 8px;
-            position: relative; gap: 5px;
+            position: relative;
+            gap: 5px;
             // .sell_card_img {
             //     // display: none;
             // }
@@ -2924,7 +2930,6 @@
         }
     }
     @media (max-width: 425px) {
-
         padding: 10px 5px !important;
         border-radius: 10px !important;
         .product_price_click_all {
@@ -3047,10 +3052,6 @@ h3 {
         height: 60px;
     }
 }
-
-
-
-
 
 // .overflow-auto
 .hidden-scroll {

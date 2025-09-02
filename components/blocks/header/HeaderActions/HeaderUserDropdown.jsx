@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import { logOut } from '~/store/auth/slice';
@@ -6,12 +6,15 @@ import useAuth from '~/hooks/useAuth';
 import Router, { useRouter } from 'next/router';
 import { setSavedPrfileData } from '~/store/ecomerce/slice';
 import styles from '../../../landingStyles/landingStyles.module.scss';
+import Image from 'next/image';
+import useGetChats from '~/components/freeleance/chat/api/useGetChats';
+
 const HeaderUserDropdown = props => {
     const dispatch = useDispatch();
     const { accountLinks, user } = useSelector(state => state.auth);
-    const { profile } = useSelector(state => state.ecomerce);
-    const { unreadMessages } = useSelector(state => state.user);
+    const { user: profile } = useSelector(state => state.profile);
     const refresh = useSelector(state => state.auth?.user?.refresh);
+    const { data: chats } = useGetChats();
     const { asPath } = useRouter();
     const router = useRouter();
     const { id, deal } = router?.query;
@@ -44,72 +47,80 @@ const HeaderUserDropdown = props => {
         }
     };
 
+    const unreads = chats?.reduce((sum, chat) => {
+        sum += chat.unread_count;
+        return sum;
+    }, 0);
+
     const { isLoggedIn, color } = props;
-
-    // async function ProfileUsers(token) {
-    //     const ItemsData = await GetRepository.getProfile(token);
-    //     if (ItemsData) {
-    //         dispatch(setSavedPrfileData(ItemsData));
-    //         if (Number(ItemsData?.status) == 403) {
-    //             handleLogout();
-    //         }
-    //     }
-    // }
-
-    // useEffect(() => {
-    //     if (!profile && user?.access) {
-    //         ProfileUsers(user?.access);
-    //     }
-    // }, [user?.access, profile]);
-
-    // View
     const linksView = accountLinks.map((item, index) => (
         <li key={index}>
             <Link href={item.url}>
-                <div className="d-flex align-items-center justify-content-between">
-                    <p>
+                <div className="pointer d-flex pointer py-3 gap-3 align-items-center justify-content-between ">
+                    <div className="d-flex gap-3 align-items-center">
                         <i className={` text-dark fs-4 me-2  ${item.icon}`}></i>{' '}
-                        {item.text}
-                    </p>
-                    {/* <span
-                        style={{ width: '20px', height: '20px' }}
-                        className="fs-4 bg-warning rounded-pill d-flex justify-content-center align-items-center"></span> */}
+                        <p className="m-0">{item.text}</p>
+                    </div>
+                    {unreads != 0 && item.url == '/chat' && (
+                        <span className={styles.unreadsChatsCount}>
+                            {unreads}
+                        </span>
+                    )}
                 </div>
             </Link>
         </li>
     ));
+    useEffect(() => {
+     
+    }, []);
+
+    console.log('user', user);
 
     if (isLoggedIn === true) {
         return (
             <div className="ps-block--user-account ">
-                <Link
-                    href={
-                        user?.role === 'admin' || user?.role === 'seller'
-                            ? '/account/dashbord'
-                            : '/account/sellerproducts'
-                    }>
-                    <a className="fs-3 d-flex align-items-center gap-3">
-                        {profile?.image ? (
-                            <img
-                                alt="soff"
-                                src={profile?.image}
-                                className="profile__image-client"
-                            />
-                        ) : (
-                            <i
-                                className={`fa-regular fa-user fs-2 me-1 ${color}`}></i>
-                        )}
-                        <span className="username_title">
-                            {profile?.email?.slice(
-                                0,
-                                profile?.email.indexOf('@')
-                            )}
-                            {profile?.phone}
-                        </span>
-                    </a>
-                </Link>
+                <div className="fs-3 d-flex align-items-center gap-3 pointer">
+                    <Image
+                        src={profile?.image || '/static/img/ozodbek.png'}
+                        width={30}
+                        height={30}
+                        alt="user"
+                    />
+                </div>
                 <div className="ps-block__content">
                     <ul className="ps-list--arrow order">
+                        <div>
+                            <div className="pointer d-flex pointer mb-3 gap-3 align-items-center ">
+                                <Image
+                                    src={
+                                        profile?.image ||
+                                        '/static/img/ozodbek.png'
+                                    }
+                                    width={30}
+                                    height={30}
+                                    alt="user"
+                                />
+
+                                <Link
+                                    href={
+                                        user?.role === 'admin'
+                                            ? '/account/dashbord'
+                                            : user?.role === 'seller'
+                                            ? '/account/sellerproducts'
+                                            : '#'
+                                    }>
+                                    <div className="m-0">
+                                        <h4 className="m-0 fw-normal fs-3">
+                                            {profile?.first_name}{' '}
+                                            {profile?.last_name}
+                                        </h4>
+                                        <p className="m-0">{profile?.email}</p>
+                                        <p className="m-0">{profile?.phone}</p>
+                                    </div>
+                                </Link>
+                            </div>
+                        </div>
+
                         {linksView}
                         <li className="ps-block__footer">
                             <a href="#" onClick={handleLogout}>

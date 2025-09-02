@@ -17,17 +17,19 @@ const OrderDetailMain = () => {
         router.push('/404');
     }
     return (
-        <div className="row navTabsPadding">
-            {order && (
-                <>
-                    <OrderMain order={order} />
-                    <OrderStatus order={order} />
-                </>
-            )}
+        <>
+            <div className="row navTabsPadding ">
+                {order && (
+                    <>
+                        <OrderMain order={order} />
+                        <OrderStatus order={order} />
+                    </>
+                )}
+            </div>
             {order?.feedback && (
                 <CommentSection id={router.query?.id} type={'order_id'} />
             )}
-        </div>
+        </>
     );
 };
 

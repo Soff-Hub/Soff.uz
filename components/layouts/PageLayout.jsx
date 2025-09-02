@@ -10,6 +10,7 @@ import { GoogleLogin } from '@react-oauth/google';
 import SiteFooter from '../shared/footers/SiteFooter';
 import FooterComponents from '../blocks/footer/FooterComponents';
 import FastDowloadSection from '../shared/headers/fast-dowload/FastDowloadSection';
+import { fetchProfile } from '~/store/profile/slice';
 
 export let cutomerAccountLink = [
     {
@@ -34,24 +35,21 @@ export let cutomerAccountLink = [
     // },
 ];
 
-const PageLayout = ({
-    children,
-    title
-}) => {
-    const { user } = useSelector((state) => state.auth);
+const PageLayout = ({ children, title }) => {
+    const { user } = useSelector(state => state.auth);
     const dispatch = useDispatch();
     const Router = useRouter();
 
     async function handleLogin(googleData) {
-        Router.push(`/oauth/?token=${googleData}&returnUrl=${Router.asPath}`)
+        Router.push(`/oauth/?token=${googleData}&returnUrl=${Router.asPath}`);
     }
 
     useEffect(() => {
         if (user?.role === 'customer') {
             dispatch(setAccountLinks(cutomerAccountLink));
+            dispatch(fetchProfile());
         }
     }, [user?.role]);
-
 
     const defaultRoutePage = () => {
         dispatch(checkAuthorization());
@@ -61,31 +59,36 @@ const PageLayout = ({
         defaultRoutePage();
     }, []);
 
-
     return (
         <>
             <Head>
                 <title>{title}</title>
             </Head>
             <Header />
-            <FastDowloadSection/>
+            <FastDowloadSection />
             {children}
             <HeaderMobileBottom />
             <FooterComponents />
 
-
-            {user ? '' : <div style={{ height: 0, overflow: 'hidden' }}>
-                <GoogleLogin
-                    onSuccess={credentialResponse => {
-                        handleLogin(credentialResponse?.credential)
-                    }}
-                    onError={() => {
-                        console.log('Login Failed');
-                    }}
-                    intermediate_iframe_close_callback={(e) => e.preventDefault()}
-                    useOneTap
-                    prompt="select_account"
-                /></div>}
+            {user ? (
+                ''
+            ) : (
+                <div style={{ height: 0, overflow: 'hidden' }}>
+                    <GoogleLogin
+                        onSuccess={credentialResponse => {
+                            handleLogin(credentialResponse?.credential);
+                        }}
+                        onError={() => {
+                            console.log('Login Failed');
+                        }}
+                        intermediate_iframe_close_callback={e =>
+                            e.preventDefault()
+                        }
+                        useOneTap
+                        prompt="select_account"
+                    />
+                </div>
+            )}
         </>
     );
 };
