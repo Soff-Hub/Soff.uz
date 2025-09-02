@@ -3,11 +3,7 @@ import styles from '../style/chat.module.scss';
 import { Button, Empty, Input, Spin } from 'antd';
 import { truncateTitle } from '~/utilities/TruncateTitle';
 import { useRouter } from 'next/router';
-import useChats from '../api/useChats'; // 🔥 endi shu hookdan foydalanamiz
-import useWebSocketChat from '../api/useSocketChat';
-import useGetChatById from '../api/useGetChatById';
 import useGetChats from '../api/useGetChats';
-import Loader from '~/components/shared/loader';
 
 const ChatSidebar = ({ setChatId, chatId }) => {
     const [search, setSearch] = useState('');
@@ -16,7 +12,7 @@ const ChatSidebar = ({ setChatId, chatId }) => {
     const router = useRouter();
     // ✅ endi useChats dan chats va isLoading olamiz
     const { data: chats, isLoading } = useGetChats(debouncedSearch);
-    // const { data } = useGetChatById(chatId);
+    
     useEffect(() => {
         const handler = setTimeout(() => {
             setDebouncedSearch(search);

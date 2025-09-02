@@ -74,7 +74,6 @@ const HeaderUserDropdown = props => {
      
     }, []);
 
-    console.log('user', user);
 
     if (isLoggedIn === true) {
         return (
