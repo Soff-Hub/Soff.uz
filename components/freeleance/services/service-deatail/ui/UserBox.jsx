@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from "../styles/detail.module.scss";
+import styles from '../styles/detail.module.scss';
 import { Button } from 'antd';
 import { MessageOutlined } from '@ant-design/icons';
 import useCreateChat from '~/components/freeleance/chat/api/useCreateChat';
@@ -7,14 +7,21 @@ import { useSelector } from 'react-redux';
 import AuthModal from '~/components/AuthModal';
 import dayjs from 'dayjs';
 import 'dayjs/locale/uz-latn';
+import Image from 'next/image';
 
 const UserBox = ({ pushUser, priceBox }) => {
     const { mutate } = useCreateChat();
     const { isLoggedIn } = useSelector(state => state.auth);
     const [open, setOpen] = useState(false);
 
-    const { price, id, days, revisions, title, user: seller } = priceBox; 
-    const { full_name, last_active, photo_url, status, soff_seller_id } = seller[0]; 
+    const { price, id, days, revisions, title, user: seller } = priceBox;
+    const {
+        full_name,
+        last_active,
+        photo_url,
+        status,
+        soff_seller_id,
+    } = seller[0];
 
     const handleClick = () => {
         if (isLoggedIn) {
@@ -23,29 +30,39 @@ const UserBox = ({ pushUser, priceBox }) => {
             setOpen(true);
         }
     };
-    
 
-    const formattedLastActive = last_active 
-        ? dayjs(last_active).locale('uz-latn').format('DD-MMMM YYYY, HH:mm') 
-        : "Faol emas";
+    const formattedLastActive = last_active
+        ? dayjs(last_active)
+              .locale('uz-latn')
+              .format('DD-MMMM YYYY, HH:mm')
+        : 'Faol emas';
 
     return (
         <>
             <div className={styles.userBox}>
-                <img style={{cursor: "pointer"}} onClick={pushUser} src={photo_url || "/static/img/ozodbek.png"} alt={full_name || "User"} />
-                <div className={styles.userInfo}>
+                <div className={styles.imgbox}>
+                    <Image
+                        onClick={pushUser}
+                        width={50}
+                        height={50}
+                        src={photo_url || '/static/img/ozodbek.png'}
+                        alt={full_name || 'User'}
+                    />
                     <div>
-                        <h3 style={{cursor: "pointer"}} onClick={pushUser}>{full_name || "No Name"}</h3>
-                        <p>Oxirgi faollik: {formattedLastActive}</p>
+                        <h3 style={{ cursor: 'pointer' }} onClick={pushUser}>
+                            {full_name || 'No Name'}
+                        </h3>
+                        <p className="m-0">
+                            Oxirgi faollik: {formattedLastActive}
+                        </p>
                     </div>
-                    <Button
-                        onClick={handleClick}
-                        icon={<MessageOutlined />}
-                        className='w-100'
-                    >
-                        Xabar yuborish
-                    </Button>
                 </div>
+                <Button
+                    onClick={handleClick}
+                    icon={<MessageOutlined />}
+                    className="w-100">
+                    Xabar yuborish
+                </Button>
             </div>
             <AuthModal open={open} onClose={() => setOpen(false)} />
         </>

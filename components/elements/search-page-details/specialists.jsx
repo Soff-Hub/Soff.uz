@@ -14,14 +14,15 @@ export default function Search_Results_Specialists({ data, lastProducts }) {
     const offset = Number(router.query.offset || 0);
     const currentPage = Math.floor(offset / limit) + 1;
 
-    const showResults = Array.isArray(data?.results) && data?.results?.length > 0;
+    const showResults =
+        Array.isArray(data?.results) && data?.results?.length > 0;
 
     return (
         <div>
             <SearchResultsSpecialists_Filter total={data?.count} />
-            <div className='Search_Results_Specialists'>
+            <div className="Search_Results_Specialists">
                 <div>
-                    <div className='Search_Results_Specialists_Wrap'>
+                    <div className="Search_Results_Specialists_Wrap">
                         {isLoading && (
                             <>
                                 {Array(12)
@@ -30,32 +31,36 @@ export default function Search_Results_Specialists({ data, lastProducts }) {
                                         <Skeleton.Image
                                             key={i}
                                             active
-                                            className='Search_Results_Wrap_skeleton'
+                                            className="Search_Results_Wrap_skeleton"
                                         />
                                     ))}
                             </>
                         )}
-                        {showResults && (
+                        {showResults &&
                             data?.results?.map((item, index) => (
-                                <div key={index}>
-                                    <SearchResultsSpecialists_Card data={item} />
-                                </div>
-                            ))
-                        )}
+                                <SearchResultsSpecialists_Card
+                                    key={item?.soff_seller_id}
+                                    data={item}
+                                />
+                            ))}
                     </div>
 
                     {/* ✅ Pagination */}
                     {showResults && (
                         <Pagination
-                            className='mt-3'
+                            className="mt-3"
                             pageSize={limit}
                             current={currentPage}
                             total={data?.count}
-                            onChange={(newPage) => {
+                            onChange={newPage => {
                                 const newOffset = (newPage - 1) * limit;
                                 router.push({
                                     pathname: router.pathname,
-                                    query: { ...router.query, offset: newOffset, limit },
+                                    query: {
+                                        ...router.query,
+                                        offset: newOffset,
+                                        limit,
+                                    },
                                 });
                             }}
                         />
@@ -65,22 +70,22 @@ export default function Search_Results_Specialists({ data, lastProducts }) {
                 </div>
 
                 {/* 👉 Oxirgi yuklangan mahsulotlar */}
-                <div className='forAdds p-5'>
-                    {lastProducts?.results &&
+                <div className="forAdds p-5">
+                    {lastProducts?.results && (
                         <h3
                             style={{
                                 fontSize: '20px',
                                 fontWeight: 400,
                             }}
-                            className='similar_title'>
+                            className="similar_title">
                             So‘ngi yuklangan mahsulotlar
                         </h3>
-                    }
-                    {lastProducts?.results?.map((p, i) =>
-                        <div className='mb-4' key={i}>
+                    )}
+                    {lastProducts?.results?.map((p, i) => (
+                        <div className="mb-4" key={i}>
                             <LastAddedProductCard product={p} />
                         </div>
-                    )}
+                    ))}
                 </div>
             </div>
         </div>

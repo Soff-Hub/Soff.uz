@@ -37,7 +37,7 @@ const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
         });
     };
 
-    const sendServer = useCallback(() => {
+    useEffect(() => {
         const delay = setTimeout(() => {
             const newQuery = {
                 ...router.query,
@@ -53,11 +53,12 @@ const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
         }, 800);
 
         return () => clearTimeout(delay);
-    }, [searchValue, selectedDirection, selectedParentCategory]);
+    }, [searchValue]);
 
     const updateDirection = value => {
         setSelectedDirection(value);
         setSelectedParentCategory('');
+        setSearchValue('');
         router.push({
             pathname: router.pathname,
             query: {
@@ -68,6 +69,7 @@ const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
 
     const onParentCategoryChange = value => {
         setSelectedParentCategory(value);
+        setSearchValue('');
         router.push({
             pathname: router.pathname,
             query: {
@@ -145,7 +147,7 @@ const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
                             ))}
                         </Select>
 
-                        {selectedDirection  && (
+                        {selectedDirection && (
                             <Select
                                 className={styles.filter_select}
                                 suffixIcon={

@@ -8,8 +8,9 @@ export default function HeaderTop() {
     const { isMobile } = useResponsive();
     return (
         <div className=" header__top__items py-2">
-            <div className="d-flex align-items-center justify-content-end">
+            <div className="d-flex align-items-center  justify-content-end header__top__block">
                 <HeaderCatergories />
+
                 <MenuCategoriesDropdown />
             </div>
         </div>

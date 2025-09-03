@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styles from '../styles/navbarmenu.module.scss';
 import { MenuItem } from '../_components/MenuItem';
 import useNavCategories from '../../chat/api/useNavCatergories';
+import Link from 'next/link';
 
 const NavbarMenu = () => {
     const { data, isLoading } = useNavCategories();

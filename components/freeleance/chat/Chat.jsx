@@ -11,10 +11,12 @@ const Chat = () => {
     const { query } = useRouter();
     const { refetch } = useGetChatById(chatId);
     useEffect(() => {
-        if (query?.id) {
-            setChatId(query.id);
+        if (query?.chatId) {
+            console.log(query);
+
+            setChatId(query.chatId);
         }
-    }, [query?.id]);
+    }, [query?.chatId]);
 
     useEffect(() => {
         if (chatId) {
