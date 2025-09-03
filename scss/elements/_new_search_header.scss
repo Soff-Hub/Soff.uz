@@ -1920,7 +1920,7 @@
     padding: 0;
     display: grid;
     grid-template-columns: 1fr 30%;
-    gap: 45px !important;
+    gap: 30px !important;
 
 
     @media (max-width: 1000px) {
@@ -1948,9 +1948,9 @@
 
 .Search_Results_Specialists_Wrap {
     display: grid;
-    grid-template-columns: repeat(4, 221px);
-    gap: 15px;
-    row-gap: 20px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    row-gap: 10px;
 
 
     @media (max-width: 1300px) {
@@ -1997,6 +1997,7 @@
         flex-direction: column;
         justify-content: center;
         padding: 21px 27px;
+        flex: 1;
         border-radius: 10px;
         background: #fff;
         box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.1);
@@ -2023,6 +2024,7 @@
         .Search_Results_Specialists_Card_img {
             width: 126px;
             height: 126px;
+            object-fit: cover;
             border-radius: 100%;
             box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.15);
 
@@ -2303,7 +2305,7 @@
     .Search_Results_Services_product {
         display: grid;
         grid-template-columns: 1fr 30%;
-        gap: 45px;
+        gap: 30px;
 
 
         @media (max-width: 1000px) {
@@ -2333,8 +2335,8 @@
 .Search_Results_Services_wrap {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 13px;
-    row-gap: 30px;
+    gap: 15px;
+    row-gap: 15px;
 
 
     // @media (max-width: 1300px) {

@@ -12,12 +12,10 @@ export default function SellerComments({ pid }) {
         queryKey: 'sellerComments',
         queryFn: async () => {
             const serviceComments = await apiForFreelance.get(
-                `comments/service-comments?seller_id=${pid}`
+                `customer/service/feedbacks/?user_id=${pid}`
             );
 
-            const productComments = await api.get(
-                `customer/reviews/${pid}`
-            );
+            const productComments = await api.get(`customer/reviews/${pid}`);
 
             return {
                 serviceComments: serviceComments.data,
@@ -25,18 +23,22 @@ export default function SellerComments({ pid }) {
             };
         },
         enabled: !!router.query.pid,
-    }); 
-    console.log('comments', data);
+    });
 
     return (
-        <div className="SellerComments ">
-            <p style={{ fontWeight: '600' }} className="fs-4">
-                Xizmatlar uchun commentlar
-            </p>
-            {/* <div className="col-12 col-md-6 ">
-                <p style={{ fontWeight: '600' }} className="fs-4">
-                    Xizmatlar uchun commentlar
-                </p>
+        <div className="SellerComments p-5">
+            <div className="col-12 col-md-6 ">
+                <div className="d-flex align-items-center  justify-content-between">
+                    <p style={{ fontWeight: '600' }} className="fs-4">
+                        Xizmatlar uchun commentlar
+                    </p>
+                    {data?.serviceComments.total && (
+                        <span>
+                            {' '}
+                            {data?.serviceComments.total} ta izoh mavjud
+                        </span>
+                    )}
+                </div>
                 {isLoading && (
                     <>
                         {Array(15)
@@ -50,54 +52,55 @@ export default function SellerComments({ pid }) {
                             ))}
                     </>
                 )}
-                {serviceComments?.comments?.map((item, index) => (
-                    <div key={index} className="SellerCommentsCard mb-4">
+                {data?.serviceComments?.items?.map((item, index) => (
+                    <div key={index} className="SellerCommentsCard">
                         <div className="SellerCommentsCardAboutSeller">
                             <div className="SellerCommentsCardAboutSellerinfo mb-4">
                                 <div className="SellerCommentsCardSellerAvatar">
                                     <img
                                         src={
-                                            item.user_image
-                                                ? item.user_image
+                                            item.user?.photo_url
+                                                ? item.user?.photo_url
                                                 : '/static/img/user_without_img.png'
                                         }
                                         alt={item.isName}
                                     />
-                                    <p>{item.buyer_user.full_name}</p>
-                                    <p className="SellerCommentsCardSellerActivety">
-                                        {getTimeAgo(item.created_at)}
-                                    </p>
+                                    <div>
+                                        <p>{item?.user?.full_name}</p>
+                                        <p className="SellerCommentsCardSellerActivety">
+                                            {getTimeAgo(item.created_at)}
+                                        </p>
+                                    </div>
                                 </div>
                                 <Rate
                                     style={{
                                         fontSize: '16px',
                                         color: 'orange',
                                     }}
-                                    value={item.rating}
+                                    value={item.quality}
                                     disabled
                                 />
                             </div>
-                            <img
-                                src={item.rating}
-                                className="SellerCommentsCardSellerRating"
-                                alt=""
-                            />
                         </div>
                         <div className="SellerCommentsCardSellerCommentWrap">
                             <p className="SellerCommentsCardComment">
-                                {item.content}
+                                {item.comment}
                             </p>
                         </div>
                         <div className="SellerCommentsCardBtnWrap">
                             <a
-                                href={`/product/${item.slug}`}
+                                href={`/service/${item.service_id}`}
                                 className="SellerCommentsCardBtn">
                                 Xizmatni ko'rish
                             </a>
                         </div>
                     </div>
                 ))}
-                <p className="text-center mt-3 fs-5">Ko'proq ko'rish . . .</p>
+                {/* {data?.serviceComments?.total && (
+                    <p className="text-center mt-3 fs-5">
+                        Ko'proq ko'rish . . .
+                    </p>
+                )} */}
             </div>
             <div className="col-12 col-md-6 ">
                 <p style={{ fontWeight: '600' }} className="fs-4">
@@ -116,7 +119,7 @@ export default function SellerComments({ pid }) {
                             ))}
                     </>
                 )}
-                {productComments?.results?.map((item, index) => (
+                {data?.productComments?.results?.map((item, index) => (
                     <div key={index} className="SellerCommentsCard mb-4">
                         <div className="SellerCommentsCardAboutSeller">
                             <div className="SellerCommentsCardAboutSellerinfo mb-4">
@@ -164,7 +167,7 @@ export default function SellerComments({ pid }) {
                     </div>
                 ))}
                 <p className="text-center fs-5">Ko'proq ko'rish . . .</p>
-            </div> */}
+            </div>
         </div>
     );
 }

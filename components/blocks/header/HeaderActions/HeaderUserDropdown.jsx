@@ -54,10 +54,10 @@ const HeaderUserDropdown = props => {
 
     const { isLoggedIn, color } = props;
     const linksView = accountLinks.map((item, index) => (
-        <li key={index}>
+        <li key={index} className={styles.hoverAction}>
             <Link href={item.url}>
-                <div className="pointer d-flex pointer py-3 gap-3 align-items-center justify-content-between ">
-                    <div className="d-flex gap-3 align-items-center">
+                <div className="pointer  d-flex pointer p-3 gap-3 align-items-center justify-content-between ">
+                    <div className="d-flex gap-2 align-items-center">
                         <i className={` text-dark fs-4 me-2  ${item.icon}`}></i>{' '}
                         <p className="m-0">{item.text}</p>
                     </div>
@@ -119,7 +119,7 @@ const HeaderUserDropdown = props => {
                             </div>
                         </div>
 
-                        {linksView}
+                        <ul className='my-2 list-unstyled'>{linksView}</ul>
                         <li className="ps-block__footer">
                             <a href="#" onClick={handleLogout}>
                                 <i
