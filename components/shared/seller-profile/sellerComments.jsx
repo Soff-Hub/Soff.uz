@@ -1,10 +1,8 @@
-import { useUrlSearchParams } from '@shined/react-use';
 import { useQuery } from '@tanstack/react-query';
 import { Rate, Skeleton } from 'antd';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { api, apiForFreelance } from '~/repositories/api';
-import { useGet } from '~/repositories/https';
 import { getTimeAgo } from '~/utilities/calculateTime';
 export default function SellerComments({ pid }) {
     const router = useRouter();
