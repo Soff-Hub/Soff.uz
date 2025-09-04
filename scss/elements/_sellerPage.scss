@@ -874,6 +874,7 @@ body.no-scroll {
 
             .SellerCommentsCardBtn {
                 background: rgba(0, 164, 79, 1);
+                border: 1px solid rgba(0, 164, 79, 1);
                 padding: 7px 15px;
                 border-radius: 10px;
                 color: #fff;
@@ -884,6 +885,11 @@ body.no-scroll {
                 font-weight: 500;
                 line-height: normal;
                 letter-spacing: 0.1px;
+
+                &:hover {
+                    background: #fff;
+                    color: rgba(0, 164, 79, 1);
+                }
 
                 @media (max-width: 700px) {
                     white-space: nowrap;

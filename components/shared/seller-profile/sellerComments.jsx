@@ -1,19 +1,25 @@
-import { useQuery } from '@tanstack/react-query';
-import { Rate, Skeleton } from 'antd';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { Rate, Skeleton, Pagination } from 'antd';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useState } from 'react';
 import { api, apiForFreelance } from '~/repositories/api';
 import { getTimeAgo } from '~/utilities/calculateTime';
+
 export default function SellerComments({ pid }) {
     const router = useRouter();
+    const queryClient = useQueryClient();
+    const [productPage, setProductPage] = useState(1);
+
     const { data, isLoading } = useQuery({
-        queryKey: 'sellerComments',
+        queryKey: ['sellerComments', pid, productPage],
         queryFn: async () => {
             const serviceComments = await apiForFreelance.get(
                 `customer/service/feedbacks/?user_id=${pid}`
             );
 
-            const productComments = await api.get(`customer/reviews/${pid}`);
+            const productComments = await api.get(
+                `customer/reviews/${pid}?page=${productPage}`
+            );
 
             return {
                 serviceComments: serviceComments.data,
@@ -21,25 +27,28 @@ export default function SellerComments({ pid }) {
             };
         },
         enabled: !!router.query.pid,
+        keepPreviousData: true,
     });
+
+    console.log(data);
 
     return (
         <div className="SellerComments p-5">
+            {/* Xizmatlar izoh qismi */}
             <div className="col-12 col-md-6 ">
-                <div className="d-flex align-items-center  justify-content-between">
-                    <p style={{ fontWeight: '600' }} className="fs-4">
-                        Xizmatlar uchun commentlar
+                <div className="d-flex align-items-center  justify-content-between mb-3">
+                    <p style={{ fontWeight: '400' }} className="fs-4 m-0">
+                        Xizmatlar uchun izohlar
                     </p>
-                    {data?.serviceComments.total && (
+                    {data?.serviceComments?.total > 0 && (
                         <span>
-                            {' '}
                             {data?.serviceComments.total} ta izoh mavjud
                         </span>
                     )}
                 </div>
                 {isLoading && (
                     <>
-                        {Array(15)
+                        {Array(10)
                             .fill(0)
                             .map((d, i) => (
                                 <Skeleton
@@ -87,26 +96,31 @@ export default function SellerComments({ pid }) {
                         </div>
                         <div className="SellerCommentsCardBtnWrap">
                             <a
-                                href={`/service/${item.service_id}`}
+                                href={`/service/${item.slug}`}
                                 className="SellerCommentsCardBtn">
                                 Xizmatni ko'rish
                             </a>
                         </div>
                     </div>
                 ))}
-                {/* {data?.serviceComments?.total && (
-                    <p className="text-center mt-3 fs-5">
-                        Ko'proq ko'rish . . .
-                    </p>
-                )} */}
             </div>
+
+            {/* Mahsulot izoh qismi */}
             <div className="col-12 col-md-6 ">
-                <p style={{ fontWeight: '600' }} className="fs-4">
-                    Mahsulotlar uchun commentlar
-                </p>
+                <div className="d-flex align-items-center  justify-content-between mb-3">
+                    <p style={{ fontWeight: '400' }} className="fs-4 m-0">
+                        Mahsulotlar uchun izohlar
+                    </p>
+                    {data?.productComments?.count > 0 && (
+                        <span>
+                            {data?.productComments.count} ta izoh mavjud
+                        </span>
+                    )}
+                </div>
+
                 {isLoading && (
                     <>
-                        {Array(15)
+                        {Array(10)
                             .fill(0)
                             .map((d, i) => (
                                 <Skeleton
@@ -135,20 +149,17 @@ export default function SellerComments({ pid }) {
                                         {getTimeAgo(item.created_at)}
                                     </p>
                                 </div>
-                                <Rate
-                                    style={{
-                                        fontSize: '16px',
-                                        color: 'orange',
-                                    }}
-                                    value={item.rating}
-                                    disabled
-                                />
+                                {item.rating > 0 && (
+                                    <Rate
+                                        style={{
+                                            fontSize: '16px',
+                                            color: 'orange',
+                                        }}
+                                        value={item.rating}
+                                        disabled
+                                    />
+                                )}
                             </div>
-                            <img
-                                src={item.rating}
-                                className="SellerCommentsCardSellerRating"
-                                alt=""
-                            />
                         </div>
                         <div className="SellerCommentsCardSellerCommentWrap">
                             <p className="SellerCommentsCardComment">
@@ -157,14 +168,25 @@ export default function SellerComments({ pid }) {
                         </div>
                         <div className="SellerCommentsCardBtnWrap">
                             <a
-                                href={`/product/${item.slug}`}
+                                href={`/product/${item.document_slug}`}
                                 className="SellerCommentsCardBtn">
                                 Mahsulotni ko'rish
                             </a>
                         </div>
                     </div>
                 ))}
-                <p className="text-center fs-5">Ko'proq ko'rish . . .</p>
+
+                {/* ✅ Pagination qo‘shildi */}
+                {data?.productComments?.count > 0 && (
+                    <div className="d-flex justify-content-center mt-4">
+                        <Pagination
+                            current={productPage}
+                            pageSize={10} // backend qaytaradigan default limit
+                            total={data?.productComments?.count}
+                            onChange={page => setProductPage(page)}
+                        />
+                    </div>
+                )}
             </div>
         </div>
     );
