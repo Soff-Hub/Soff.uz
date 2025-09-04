@@ -37,7 +37,7 @@ const SellerCollapseMenu = ({ pid, sellerInfo }) => {
         },
         {
             key: '5',
-            label: 'Kamentariyalar',
+            label: 'Izohlar',
             children: <SellerComments pid={pid} />,
         },
     ];

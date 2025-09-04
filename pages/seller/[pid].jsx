@@ -44,7 +44,7 @@ export default function SellersPage() {
             path: 'products',
         },
         {
-            title: 'Kamentariyalar',
+            title: 'Izohlar',
             path: 'comments',
         },
     ];
