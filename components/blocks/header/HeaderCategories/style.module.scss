@@ -119,3 +119,26 @@
         margin-right: 10px;
     }
 }
+
+
+.orderAddBtn{
+    cursor: pointer;
+    color: $textColor;
+
+    &:hover{
+        color: $color-1st;
+    }
+}
+
+.add_icon{
+    width: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgba(0,0,0,0.6);
+    i{
+        font-size: 26px;
+        color: #534534;
+    }
+}
