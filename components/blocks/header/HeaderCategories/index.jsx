@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './style.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';
 import useResponsive from '~/utilities/useResponsive';
+import { Modal } from 'antd';
+import CreateOrderModal from '~/components/freeleance/custom/ui/CreateOrderModal';
 
 const options = {
     products: [
@@ -63,65 +65,77 @@ const options = {
 
 const HeaderCatergories = () => {
     const { isMobile } = useResponsive();
+    const [open, setOpen] = useState(false)
     return (
         <div className={styles.dropBlock}>
-            <div>
-                <div className={styles.dropBox}>
-                    <p className={styles.dropLabel}>
-                        <span className="flex-md-fill"> Mahsulotlar</span>
+            {!isMobile &&
+                <div>
+                    <div className={styles.dropBox}>
+                        <p className={styles.dropLabel}>
+                            <span className="flex-md-fill"> Mahsulotlar</span>
 
-                        <Image
-                            src="/static/svg/arrowdown.svg"
-                            alt="arrow"
-                            width={15}
-                            height={8}
-                        />
-                    </p>
-                    <ul className={styles.dropSubBox}>
-                        {options.products.map(item => (
-                            <li className={styles.dropSubBoxItem}>
-                                <Image
-                                    src={item.icon}
-                                    alt="direction"
-                                    width={isMobile ? 20 : 25}
-                                    height={isMobile ? 20 : 25}
-                                />
-                                <Link href={item.link}>{item.label}</Link>
-                            </li>
-                        ))}
-                    </ul>
+                            <Image
+                                src="/static/svg/arrowdown.svg"
+                                alt="arrow"
+                                width={15}
+                                height={8}
+                            />
+                        </p>
+                        <ul className={styles.dropSubBox}>
+                            {options.products.map(item => (
+                                <li className={styles.dropSubBoxItem}>
+                                    <Image
+                                        src={item.icon}
+                                        alt="direction"
+                                        width={isMobile ? 18 : 25}
+                                        height={isMobile ? 18 : 25}
+                                    />
+                                    <Link href={item.link}>{item.label}</Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
                 </div>
+            }
+            <div className={styles.dropBox}>
+                <p className={styles.dropLabel}>
+                    <span className="flex-fill">Buyurtma berish</span>{' '}
+                    <Image
+                        src="/static/svg/arrowdown.svg"
+                        alt="arrow"
+                        width={15}
+                        height={8}
+                    />
+                </p>
+                <ul className={styles.dropSubBox}>
+                    <li onClick={() => setOpen(true)} style={{ borderBottom: "1px solid rgba(0,0,0,0.2)", paddingBottom: "12px" }} className={styles.dropSubBoxItem}>
+                        <div class Name={styles.add_icon}><i style={{ fontSize: isMobile ? "18px" : "25px", color: "rgba(0,0,0,0.6)" }} className="fa-solid fa-plus"></i></div>
+                        <span className={styles.orderAddBtn}>Maxsus buyurtma berish</span>
+                    </li>
+                    {/* <Divider  style={{borderWidth: "1px", borderColor: "rgba(0,0,0,0.5)", margin: "1px"}}/> */}
+                    {options.tempates.map(item => (
+                        <li className={styles.dropSubBoxItem}>
+                            <img
+                                src={item.icon}
+                                alt="direction"
+                                style={{
+                                    color: '#534534',
+                                    width: isMobile ? "18px" : "25px",
+                                    height: isMobile ? "18px" : "25px",
+                                }}
+                            />
+                            <Link href={item.link}>{item.label}</Link>
+                        </li>
+                    ))}
+                </ul>
             </div>
-
-            {!isMobile && (
-                <div className={styles.dropBox}>
-                    <p className={styles.dropLabel}>
-                        <span className="flex-fill">Buyurtma berish</span>{' '}
-                        <Image
-                            src="/static/svg/arrowdown.svg"
-                            alt="arrow"
-                            width={15}
-                            height={8}
-                        />
-                    </p>
-                    <ul className={styles.dropSubBox}>
-                        {options.tempates.map(item => (
-                            <li className={styles.dropSubBoxItem}>
-                                <img
-                                    src={item.icon}
-                                    alt="direction"
-                                    style={{
-                                        color: '#534534',
-                                        width: '25px',
-                                        height: '25px',
-                                    }}
-                                />
-                                <Link href={item.link}>{item.label}</Link>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            )}
+            {isMobile &&
+                <div style={{ width: "10px" }}></div>
+            }
+            <CreateOrderModal
+                open={open}
+                onClose={() => setOpen(false)}
+            />
         </div>
     );
 };
