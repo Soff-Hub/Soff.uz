@@ -5,7 +5,7 @@ import SellerDonateForm from '~/components/partials/seller/SellerDonateForm';
 export default function SellerInfo({ sellerInfo, onChange }) {
     const [openDonateModal, setOpenDonateModal] = useState(false); 
 
-   
+    console.log(sellerInfo)
     return (
         <div>
             <div className="SellerInfo">
@@ -88,21 +88,19 @@ export default function SellerInfo({ sellerInfo, onChange }) {
                         </p>
                     </div>
                 </div>
-                {sellerInfo?.seller?.bio && (
+                {sellerInfo?.bio && (
                     <>
                         <p className="SellerInfoSecondTitle">Muallif Haqida</p>
                         <p
-                            className="SellerInfoDescription"
-                            dangerouslySetInnerHTML={{
-                                __html: sellerInfo?.seller?.bio,
-                            }}>
-                            <span
+                            className="SellerInfoDescription">
+                            {sellerInfo?.bio}
+                            {/* <span
                                 className="SellerInfoDescriptionForMore pointer"
                                 onClick={() => {
                                     setOpenDonateModal(true);
                                 }}>
                                 Qo’llab quvvatlash
-                            </span>
+                            </span> */}
                         </p>
                     </>
                 )}

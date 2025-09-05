@@ -3,7 +3,6 @@ import styles from './style.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';
 import useResponsive from '~/utilities/useResponsive';
-import { Modal } from 'antd';
 import CreateOrderModal from '~/components/freeleance/custom/ui/CreateOrderModal';
 
 const options = {
@@ -108,11 +107,10 @@ const HeaderCatergories = () => {
                     />
                 </p>
                 <ul className={styles.dropSubBox}>
-                    <li onClick={() => setOpen(true)} style={{ borderBottom: "1px solid rgba(0,0,0,0.2)", paddingBottom: "12px" }} className={styles.dropSubBoxItem}>
+                    {/* <li onClick={() => setOpen(true)} style={{ borderBottom: "1px solid rgba(0,0,0,0.2)", paddingBottom: "12px" }} className={styles.dropSubBoxItem}>
                         <div class Name={styles.add_icon}><i style={{ fontSize: isMobile ? "18px" : "25px", color: "rgba(0,0,0,0.6)" }} className="fa-solid fa-plus"></i></div>
                         <span className={styles.orderAddBtn}>Maxsus buyurtma berish</span>
-                    </li>
-                    {/* <Divider  style={{borderWidth: "1px", borderColor: "rgba(0,0,0,0.5)", margin: "1px"}}/> */}
+                    </li> */}
                     {options.tempates.map(item => (
                         <li className={styles.dropSubBoxItem}>
                             <img

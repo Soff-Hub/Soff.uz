@@ -94,9 +94,9 @@ export default function TelegramConfigmForm() {
                             <span>Kirish uchun </span>
                             <a
                                 onClick={handleStart}
-                                href="tg://resolve?domain=soff_uz_bot"
+                                href="tg://resolve?domain=soff_auth_bot"
                                 className="text-success">
-                                @soff_uz_bot
+                                @soff_auth_bot
                             </a>{' '}
                             <span>orqali tasdiqlash kodini oling</span>
                         </p>
