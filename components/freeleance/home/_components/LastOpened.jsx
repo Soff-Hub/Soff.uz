@@ -54,7 +54,7 @@ const LastOpened = () => {
                             key={item.title}
                             title={item.title}
                             image={item.poster}
-                            author={item.user.full_name}
+                            author={item.user}
                             price={item.price}
                             slug={item.slug}
                             userImage={item.user.photo_url}

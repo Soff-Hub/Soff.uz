@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 
 const LastOpenedCard = ({ title, image, author, price, slug, userImage }) => {
     const router = useRouter();
-
+    console.log(author)
     return (
         <div
             className={styles.card}
@@ -21,14 +21,19 @@ const LastOpenedCard = ({ title, image, author, price, slug, userImage }) => {
                     alt={title}
                 />
             </div>
-            <div className={styles.footer}>
+            <div
+                onClick={(e) => {
+                    e.stopPropagation();
+                    router.push(`/seller/${author?.soff_seller_id}`);
+                }}
+                className={styles.footer}>
                 <img
                     src={userImage || '/static/img/ozodbek.png'}
                     className={styles.avatar}
                     alt="userimage"
                 />
                 <div className={styles.info}>
-                    <p className={styles.author}>{author}</p>
+                    <p className={styles.author}>{author?.full_name}</p>
                     <p className={styles.price}>
                         {Number(price).toLocaleString('en-US')} so’m
                     </p>

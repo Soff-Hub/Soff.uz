@@ -119,7 +119,7 @@ export default function SellerShortInfo({ sellerInfo, pid }) {
                 </button>
             </div>
 
-            <div className="VerifiedInformation">
+            {/* <div className="VerifiedInformation">
                 <p className="VerifiedInformationTitle">
                     Tasdiqlangan ma'lumotlar
                 </p>
@@ -147,7 +147,7 @@ export default function SellerShortInfo({ sellerInfo, pid }) {
                         />
                     </li>
                 </ul>
-            </div>
+            </div> */}
 
             <div className="d-flex flex-column gap-3">
                 <h4
