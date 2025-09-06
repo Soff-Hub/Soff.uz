@@ -94,7 +94,7 @@ const getColumns = ({ onCancel, onOpenDrawer }) => {
                         } else {
                             if (record?.status !== "cancelled") {
                                 onOpenDrawer(record)
-                            }else{
+                            } else {
                                 message.warning("Siz bu buyurtmani bekor qilgansiz")
                             }
                         }
@@ -108,8 +108,11 @@ const getColumns = ({ onCancel, onOpenDrawer }) => {
         {
             title: 'Sotuvchi',
             dataIndex: 'seller',
-            render: (_, record) => (
-                record?.seller ? (
+            render: (_, record) => {
+                const photos = record?.offers?.map(item => item.photo_url).filter(Boolean) || [];
+                const maxVisible = 3;
+
+                return record?.seller ? (
                     <div
                         onClick={() => router.push(`/seller/${record?.soff_seller_id}`)}
                         style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }}
@@ -122,19 +125,62 @@ const getColumns = ({ onCancel, onOpenDrawer }) => {
                         <span>{record?.full_name}</span>
                     </div>
                 ) : (
-                    <img style={{ cursor: "pointer" }}
+                    <div
+                        style={{
+                            display: "flex",
+                            alignItems: "center",
+                            cursor: "pointer"
+                        }}
                         onClick={() => {
                             if (record?.status !== "cancelled") {
                                 onOpenDrawer(record)
-                            }else{
+                            } else {
                                 message.warning("Siz bu buyurtmani bekor qilgansiz")
                             }
                         }}
-                        src="/static/img/feedbacks.png"
-                        alt="user"
-                    />
+                    >
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                            {photos.slice(0, maxVisible).map((photo, idx) => (
+                                <img
+                                    key={idx}
+                                    src={photo || "/static/img/ozodbek.png"}
+                                    alt="offer user"
+                                    style={{
+                                        width: 40,
+                                        height: 40,
+                                        borderRadius: "50%",
+                                        border: "2px solid #fff",
+                                        marginLeft: idx === 0 ? 0 : -10,
+                                        boxShadow: "0 0 4px rgba(0,0,0,0.1)"
+                                    }}
+                                />
+                            ))}
+
+                            {record?.offers_count > maxVisible && (
+                                <div
+                                    style={{
+                                        width: 28,
+                                        height: 28,
+                                        borderRadius: "50%",
+                                        background: "#f0f0f0",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        marginLeft: -10,
+                                        fontSize: 12,
+                                        fontWeight: 500,
+                                        color: "#555",
+                                        border: "2px solid #fff",
+                                        boxShadow: "0 0 4px rgba(0,0,0,0.1)"
+                                    }}
+                                >
+                                    +{record?.offers_count - maxVisible}
+                                </div>
+                            )}
+                        </div>
+                    </div>
                 )
-            ),
+            },
             align: 'start',
         },
         {
@@ -249,6 +295,7 @@ export const AllOrdersTable = ({ type }) => {
             status: order.order_status_doing?.status || 'pending',
             serviceId: order?.service?.id,
             acceptedDate: order?.order_status_doing?.accepted_date,
+            offers: order?.offers
         })) || [];
 
     const statusFilter = dataSource.filter(item => type?.includes(item.status));
