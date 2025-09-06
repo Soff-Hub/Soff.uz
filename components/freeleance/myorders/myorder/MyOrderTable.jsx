@@ -278,7 +278,7 @@ export const AllOrdersTable = ({ type }) => {
                 hour: '2-digit',
                 minute: '2-digit',
             }),
-            sellerId: order?.user.soff_seller_id,
+            sellerId: order?.user?.soff_seller_id,
             deliveryDay: order.service?.delivery_days,
             price: order.service?.price || 0,
             status: order.order_status_doing?.status || 'pending',
