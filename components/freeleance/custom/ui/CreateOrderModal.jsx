@@ -33,15 +33,18 @@ const CreateOrderModal = ({ open, onClose }) => {
 
     const handleFinish = (values) => {
         console.log("Form values:", values);
-        const fd = new FormData()
+
+        const fd = new FormData();
+
         for (const [key, value] of Object.entries(values)) {
-            fd.append(key, value)
+            if (key === "deadline_date" && value) {
+                fd.append(key, dayjs(value).format("YYYY-MM-DD HH:mm"));
+            } else {
+                fd.append(key, value);
+            }
         }
-        fd.forEach((val, key) => {
-            console.log(key, val);
-        });
-        fd.append("deadline_days", 10)
-        createOrder(fd)
+
+        createOrder(fd);
     };
 
     return (
@@ -108,9 +111,10 @@ const CreateOrderModal = ({ open, onClose }) => {
                     rules={[{ required: true, message: "Yetkazib berish sanasini tanlang!" }]}
                 >
                     <DatePicker
-                        format="YYYY-MM-DD"
+                        showTime={{ format: "HH:mm" }}
+                        format="YYYY-MM-DD HH:mm" // sana + soat formatida
                         style={{ width: "100%" }}
-                        placeholder="Sana tanlang"
+                        placeholder="Yetkazib berish sanasini tanlang"
                         disabledDate={(current) => current && current < dayjs().startOf("day")}
                     />
                 </Form.Item>

@@ -4,13 +4,10 @@ import useGetOrders from './api/useGetOrders';
 import useCancelOrder from './api/useCancelOrder';
 import useGetReasons from './api/useGetReasons';
 import { formatCurrencyWithSpace } from '~/utilities/product-helper';
-import { useMobile } from '~/hooks/useMobile';
-import Link from 'next/link';
 import styles from './style/status.module.scss';
 import { getRemainingDays } from '~/utilities/calculateTime';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import ServiceCheckout from '../../services/service-deatail/ui/auth/serviceCheckout';
 import { useRouter } from 'next/router';
+import SelectOrderDrawer from './ui/SelectOrderDrawer';
 
 const Status = ({ status }) => {
     switch (status) {
@@ -74,15 +71,9 @@ const orderStatusName = {
     cancelled: <Status status={'cancelled'} />,
     rejected: <Status status={'rejected'} />,
 };
-const getColumns = ({ onCancel }) => {
-    const { isMobile } = useMobile();
-    const [showPayment, setShowPayment] = useState(false);
-    const queryClient = useQueryClient();
+
+const getColumns = ({ onCancel, onOpenDrawer }) => {
     const router = useRouter();
-    const onClose = () => {
-        setShowPayment(false);
-        queryClient.invalidateQueries({ queryKey: ['orders'] });
-    };
     return [
         {
             title: 'ID',
@@ -93,15 +84,23 @@ const getColumns = ({ onCancel }) => {
             title: 'Buyurtma nomi',
             dataIndex: 'order_name',
             render: (text, record) => (
-                <div className="d-flex flex-row gap-2 align-items-center">
-                    <Link
-                        href={`/order/${record.key}`}
-                        className="order_name_link"
-                        style={{
-                            cursor: 'pointer',
-                        }}>
-                        {text}
-                    </Link>
+                <div
+                    className="d-flex flex-row gap-2 align-items-center"
+                    style={{ cursor: 'pointer' }}
+                    onClick={(e) => {
+                        e.preventDefault();
+                        if (record.seller) {
+                            router.push(`/order/${record.key}`)
+                        } else {
+                            if (record?.status !== "cancelled") {
+                                onOpenDrawer(record)
+                            }else{
+                                message.warning("Siz bu buyurtmani bekor qilgansiz")
+                            }
+                        }
+                    }}
+                >
+                    <span className="order_name_link">{text}</span>
                     <i className="fa-solid fa-arrow-up-right-from-square" />
                 </div>
             ),
@@ -109,45 +108,39 @@ const getColumns = ({ onCancel }) => {
         {
             title: 'Sotuvchi',
             dataIndex: 'seller',
-            render: record => (
-                <div
-                    onClick={() => router.push(`/seller/${record?.soff_seller_id}`)}
-                    style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: 8,
-                        justifyContent: 'start',
-                        cursor: 'pointer',
-                    }}>
-                    {record?.photo_url ? (
-                        <img
-                            src={record?.photo_url}
-                            alt={record?.full_name}
-                            style={{
-                                width: 28,
-                                height: 28,
-                                borderRadius: '50%',
-                            }}
-                        />
-                    ) : (
-                        <i
-                            className="fa-solid fa-user"
-                            style={{
-                                fontSize: 20,
-                                color: '#999',
-                            }}></i>
-                    )}
-                    <span>{record?.full_name}</span>
-                </div>
+            render: (_, record) => (
+                record?.seller ? (
+                    <div
+                        onClick={() => router.push(`/seller/${record?.soff_seller_id}`)}
+                        style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }}
+                    >
+                        {record?.photo_url ? (
+                            <img src={record?.photo_url} alt={record?.full_name} style={{ width: 28, height: 28, borderRadius: '50%' }} />
+                        ) : (
+                            <i className="fa-solid fa-user" style={{ fontSize: 20, color: '#999' }}></i>
+                        )}
+                        <span>{record?.full_name}</span>
+                    </div>
+                ) : (
+                    <img style={{ cursor: "pointer" }}
+                        onClick={() => {
+                            if (record?.status !== "cancelled") {
+                                onOpenDrawer(record)
+                            }else{
+                                message.warning("Siz bu buyurtmani bekor qilgansiz")
+                            }
+                        }}
+                        src="/static/img/feedbacks.png"
+                        alt="user"
+                    />
+                )
             ),
             align: 'start',
-            hidden: isMobile < 992,
         },
         {
             title: 'Buyurtma sanasi',
             dataIndex: 'ordered_at',
             align: 'center',
-            hidden: isMobile < 1280,
         },
         {
             title: 'Qoldi',
@@ -155,22 +148,20 @@ const getColumns = ({ onCancel }) => {
                 record.status === 'completed'
                     ? '-'
                     : record.status === 'cancelled'
-                    ? '-'
-                    : record.acceptedDate == null
-                    ? 'Ish boshlanmadi'
-                    : `${getRemainingDays(
-                          record.ordered_at,
-                          record.deliveryDay
-                      )}`,
+                        ? '-'
+                        : record.acceptedDate == null
+                            ? 'Ish boshlanmadi'
+                            : `${getRemainingDays(
+                                record.ordered_at,
+                                record.deliveryDay
+                            )}`,
             align: 'center',
-            hidden: isMobile < 768,
         },
         {
             title: 'Narx',
             dataIndex: 'price',
             render: price => `${formatCurrencyWithSpace(price)} so'm`,
             align: 'center',
-            hidden: isMobile < 1280,
         },
         {
             title: "O'chirish",
@@ -179,17 +170,6 @@ const getColumns = ({ onCancel }) => {
                 if (record.status == 'pending') {
                     return (
                         <Space direction="" size={6}>
-                            {/* <Tooltip title="To'lash">
-                                <Button
-                                    onClick={() => setShowPayment(true)}
-                                    type="primary"
-                                    style={{
-                                        backgroundColor: '#00a44f',
-                                        borderColor: '#00a44f',
-                                    }}>
-                                    <i className="fa-solid fa-money-bill-transfer"></i>
-                                </Button>
-                            </Tooltip> */}
                             <Tooltip title="Bekor qilish">
                                 <Button
                                     type="primary"
@@ -198,26 +178,6 @@ const getColumns = ({ onCancel }) => {
                                     <i className="fa-solid fa-xmark"></i>
                                 </Button>
                             </Tooltip>
-                            {/* <Modal
-                                title="Buyurtmaga to'lov qilish"
-                                open={showPayment}
-                                onCancel={() => setShowPayment(false)}
-                                footer={null}>
-                                <>
-                                    <div className="d-flex justify-content-between align-items-center mb-4">
-                                        <h3 className="type_payment_h3 mb-0">
-                                            
-                                        </h3>
-                                    </div>
-                                    <div className="bg-white">
-                                        <ServiceCheckout
-                                            onClose={onClose}
-                                            order_id={record?.key}
-                                            document={record?.serviceId}
-                                        />
-                                    </div>
-                                </>
-                            </Modal> */}
                         </Space>
                     );
                 }
@@ -232,13 +192,19 @@ export const AllOrdersTable = ({ type }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState(null);
     const [reason, setReason] = useState('');
-    const { data: orders, refetch } = useGetOrders();
+    const { data: orders } = useGetOrders();
     const { mutate: cancelOrder, isPending: isCancelling } = useCancelOrder();
     const { data: reasons } = useGetReasons();
+    const [openDrawer, setOpenDrawer] = useState(false)
 
     const handleCancelClick = record => {
         setSelectedOrder(record);
         setIsModalOpen(true);
+    };
+
+    const handleOpenDrawer = (order) => {
+        setSelectedOrder(order);
+        setOpenDrawer(true);
     };
 
     const handleModalOk = () => {
@@ -265,12 +231,11 @@ export const AllOrdersTable = ({ type }) => {
         setSelectedOrder(null);
     };
 
-    // API ma'lumotlarini table formatiga o‘tkazish
     const dataSource =
         orders?.map(order => ({
             key: order.id,
-            order_name: order.service?.title || '-',
-            seller: order?.user || '-',
+            order_name: order.service?.title || order?.title || '-',
+            seller: order?.user,
             ordered_at: new Date(order.created_at).toLocaleString('uz-UZ', {
                 year: 'numeric',
                 month: '2-digit',
@@ -278,9 +243,9 @@ export const AllOrdersTable = ({ type }) => {
                 hour: '2-digit',
                 minute: '2-digit',
             }),
-            sellerId: order?.user.soff_seller_id,
+            sellerId: order?.user?.soff_seller_id,
             deliveryDay: order.service?.delivery_days,
-            price: order.service?.price || 0,
+            price: order.service?.price || order?.budget || 0,
             status: order.order_status_doing?.status || 'pending',
             serviceId: order?.service?.id,
             acceptedDate: order?.order_status_doing?.accepted_date,
@@ -291,14 +256,13 @@ export const AllOrdersTable = ({ type }) => {
     return (
         <>
             <Table
-                columns={getColumns({ onCancel: handleCancelClick })}
+                columns={getColumns({
+                    onCancel: handleCancelClick,
+                    onOpenDrawer: (order) => handleOpenDrawer(order),
+                })}
                 pagination={false}
                 dataSource={statusFilter}
-                tabBarStyle={{
-                    overflowX: 'auto',
-                    overflowY: 'hidden',
-                    whiteSpace: 'nowrap',
-                }}
+                scroll={{ x: "max-content" }}
             />
             <Modal
                 title="Buyurtmani bekor qilish"
@@ -324,6 +288,12 @@ export const AllOrdersTable = ({ type }) => {
                     }))}
                 />
             </Modal>
+
+            <SelectOrderDrawer
+                open={openDrawer}
+                onClose={() => setOpenDrawer(false)}
+                order={selectedOrder}
+            />
         </>
     );
 };
