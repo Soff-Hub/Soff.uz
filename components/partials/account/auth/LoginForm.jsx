@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Input, Modal, Segmented } from 'antd';
+import { Divider, Form, Input, Modal, Segmented } from 'antd';
 import { MailOutlined, PhoneOutlined } from '@ant-design/icons';
 import GoogleBox from './GoogleBox';
 import { BeatLoader } from 'react-spinners';
@@ -7,7 +7,7 @@ import Axios from 'axios';
 import { useRouter } from 'next/router';
 import { baseUrlAuth } from '~/repositories/Repository';
 
-export default function LoginForm ({ onSuccess, setCode }) {
+export default function LoginForm({ onSuccess, setCode }) {
     const [type, setType] = useState('t'); // t, e
     const [loading, setLoading] = useState(false);
     const router = useRouter();
@@ -53,6 +53,13 @@ export default function LoginForm ({ onSuccess, setCode }) {
                                 Kirish
                             </span>
                         </div>
+                        <GoogleBox
+                            params={
+                                router.query?.id ? `?id=${router.query.id}` : ''
+                            }
+                        />
+
+                        <Divider size="large" style={{borderColor: "rgba(0,0,0,0.2)"}}>Yoki</Divider>
                         <Segmented
                             onChange={value => setType(value)}
                             options={[
@@ -148,11 +155,7 @@ export default function LoginForm ({ onSuccess, setCode }) {
                                 </button>
                             )}
                         </div>
-                        <GoogleBox
-                            params={
-                                router.query?.id ? `?id=${router.query.id}` : ''
-                            }
-                        />
+
                     </Form>
                 </div>
             </div>

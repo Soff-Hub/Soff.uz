@@ -13,7 +13,7 @@ export default function GoogleBox ({ loading, params }) {
     };
 
     return (
-        <div className='d-flex align-items-center justify-content-center gap-3 mt-2 mb-5'>
+        <div className='d-flex flex-column align-items-center justify-content-center gap-4 mt-2 '>
             <div
                 onClick={() =>
                     Router.push({
@@ -26,9 +26,9 @@ export default function GoogleBox ({ loading, params }) {
                     borderRadius: '10px',
                     cursor: 'pointer',
                 }}
-                className='py-2 px-3 d-flex align-items-center gap-2 w-100 justify-content-center'>
+                className='py-3 px-3 d-flex align-items-center gap-2 w-100 justify-content-center'>
                 <img src='/static/img/telegram.png' alt='' height={20} />
-                <span>Orqali kirish</span>
+                <span>Telegram orqali kirish</span>
             </div>
 
             <div
@@ -38,9 +38,9 @@ export default function GoogleBox ({ loading, params }) {
                     borderRadius: '10px',
                     cursor: 'pointer',
                 }}
-                className='py-2 px-3 d-flex align-items-center gap-2 w-100 justify-content-center'>
+                className='py-3 px-3 d-flex align-items-center gap-2 w-100 justify-content-center'>
                 <img src='/static/img/google.png' alt='' height={20} />
-                <span>Orqali kirish</span>
+                <span>Google orqali kirish</span>
             </div>
         </div>
     );
