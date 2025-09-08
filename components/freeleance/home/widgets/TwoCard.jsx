@@ -61,8 +61,7 @@ const TwoCard = () => {
                     </div>
                 </div>
             </div>
-            <div className="mt-5 mx-lg-5">
-                {/* https://www.youtube.com/watch?v=RW65MEGen4w */}
+            {/* <div className="mt-5 mx-lg-5">
                 <iframe
                     height="300"
                     src={`https://www.youtube.com/embed/RW65MEGen4w?modestbranding=1&showinfo=0&rel=0&controls=1`}
@@ -77,7 +76,7 @@ const TwoCard = () => {
                             ? '440px'
                             : '640px',
                     }}></iframe>
-            </div>
+            </div> */}
         </>
     );
 };

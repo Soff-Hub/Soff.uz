@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal, Descriptions, Tag } from 'antd';
 
-import styles from '../styles/detail.module.scss';
+import styles from './styles/detail.module.scss';
 import useResponsive from '~/utilities/useResponsive';
 
 const PortfolioDetailModal = ({ open, onClose, portfolio }) => {
