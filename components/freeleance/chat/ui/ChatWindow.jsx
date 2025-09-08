@@ -1,20 +1,26 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import styles from '../style/chat.module.scss';
 import { Input, Button, Avatar, Empty } from 'antd';
-import { ArrowLeftOutlined, SendOutlined } from '@ant-design/icons';
+import { ArrowDownOutlined, ArrowLeftOutlined, SendOutlined } from '@ant-design/icons';
 import ChatMessage from './ChatMessage';
 import dayjs from 'dayjs';
 import { useRouter } from 'next/router';
 import useChat from '../api/useChat';
+import InfiniteScroll from "react-infinite-scroll-component";
+import { useSelector } from 'react-redux';
+import { ClipLoader } from 'react-spinners';
+import axiosInstance from '../../api/freeleanceApi';
 
 const ChatWindow = ({ chatId, goBack }) => {
     const [newMessage, setNewMessage] = useState('');
     const [edit, setEdit] = useState(null);
+    const [openDownIcon, setOpenDownIcon] = useState(false);
+    const { user } = useSelector(state => state.auth);
     const messagesContainerRef = useRef(null);
     const router = useRouter();
-    const { messages, chat, sendMessage, updateMessage } = useChat(
-        chatId
-    );
+
+    const { messages, chat, sendMessage, updateMessage, fetchNextPage, hasNextPage } = useChat(chatId);
+
 
     const scrollToBottom = useCallback(() => {
         if (messagesContainerRef.current) {
@@ -23,25 +29,37 @@ const ChatWindow = ({ chatId, goBack }) => {
         }
     }, []);
 
-    useEffect(() => {
-        scrollToBottom();
-    }, [messages.length, scrollToBottom]);
+    const handlScroll = () => {
 
+        if (messagesContainerRef.current.scrollTop < -500) {
+            setOpenDownIcon(true);
+        } else {
+            setOpenDownIcon(false);
+        }
+    };
+
+
+    // edit qilishda
     useEffect(() => {
         if (edit) {
             setNewMessage(edit.content);
         }
     }, [edit]);
- 
+
+    // useEffect(() => {
+    //     scrollToBottom();
+    // }, [messages.length]);
+
+    // yangi xabar yozilganda
     const handleSend = useCallback(() => {
+
         if (!newMessage.trim()) return;
 
         if (edit) {
-            // ✨ edit rejimida update
             updateMessage(newMessage, edit.id);
-            setEdit(null); // rejimdan chiqish
+            setEdit(null);
         } else {
-            // ✨ yangi xabar
+            // scrollToBottom();
             sendMessage(newMessage);
         }
         setNewMessage('');
@@ -59,9 +77,12 @@ const ChatWindow = ({ chatId, goBack }) => {
         );
     }
 
+
+
+
     return (
         <div className={styles.chat_window}>
-            {/* chat header */}
+            {/* header */}
             <div className={styles.chat_user}>
                 {goBack && (
                     <ArrowLeftOutlined
@@ -97,34 +118,47 @@ const ChatWindow = ({ chatId, goBack }) => {
                 </div>
             </div>
 
-            {/* chat messages */}
-            <div className={styles.chat_messages} ref={messagesContainerRef}>
-                {chat?.chat?.created_at && (
-                    <div className={styles.chat_created_time}>
-                        {dayjs(chat.created_at).format('YYYY-MM-DD HH:mm')}
-                    </div>
-                )}
+{/* messages */}
+            <div onScroll={handlScroll} ref={messagesContainerRef} id="scrollableDiv" style={{ width: "100%", height: "100vh", overflowY: "scroll", display: "flex", flexDirection: "column-reverse", margin: "auto", border: "1px solid red", overflowX: "hidden", position: "relative" }} className={`${styles.chat_messages}  p-3`}>
 
-                {messages?.length > 0 ? (
-                    messages.map(msg => (
-                        <ChatMessage
-                            pushUser={() =>
-                                router.push(
-                                    `seller/${chat?.chat?.opponent?.id}`
-                                )
-                            }
-                            key={msg.id}
-                            msg={msg}
-                            onEdit={setEdit}
-                        />
-                    ))
-                ) : (
-                    <Empty
-                        description="Hozircha xabarlar yo'q"
-                        image={Empty.PRESENTED_IMAGE_SIMPLE}
-                    />
-                )}
+                <InfiniteScroll
+                    dataLength={messages.length}
+                    next={fetchNextPage}
+                    hasMore={hasNextPage}
+                    loader={<div className="d-flex justify-content-center align-items-center py-2">
+                        <ClipLoader color='#00A44F' size={20} />
+                    </div>}
+                    style={{ display: "flex", flexDirection: "column-reverse", overflow: "visible" }}
+                    scrollableTarget="scrollableDiv"
+                    inverse={true}
+
+                >
+                    <div>
+                        {messages?.length > 0 ? (
+                            messages.map(msg => (
+                                <ChatMessage
+                                    pushUser={() =>
+                                        router.push(
+                                            `seller/${chat?.chat?.opponent?.id}`
+                                        )
+                                    }
+                                    key={msg.id}
+                                    msg={msg}
+                                    onEdit={setEdit}
+                                />
+                            ))
+                        ) : (
+                            <Empty
+                                description="Hozircha xabarlar yo'q"
+                                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                            />
+                        )}
+                    </div>
+                </InfiniteScroll>
             </div>
+            <span onClick={scrollToBottom} className={styles.chat_down_icon} style={{ transform: openDownIcon ? 'translateX(0)' : 'translateX(100px)' }}>
+                <ArrowDownOutlined size={20} />
+            </span>
 
             {/* input */}
             <div className={styles.chat_input_box}>
