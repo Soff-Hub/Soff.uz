@@ -29,7 +29,7 @@ const Bests = () => {
     )
 
     return (
-        <div className={styles.bestsWrapper}>
+        <div id='bests' className={styles.bestsWrapper}>
             <div className={styles.titleWrapper}>
                 <img src="/static/img/star.svg" alt="badge" className={styles.badge} />
                 <h2>Haftaning eng yaxshilari</h2>
