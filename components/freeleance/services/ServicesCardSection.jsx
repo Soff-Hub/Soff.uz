@@ -11,17 +11,11 @@ const ServicesCardSection = ({ services }) => {
         <div className={styles.servicesSection}>
             <div className="">
                 <div
-                    className="row"
-                    style={{
-                        minHeight: isFewProducts ? '50vh' : 'auto',
-                        alignItems: isFewProducts ? 'center' : 'stretch',
-                        display: 'flex',
-                        padding: '0px 10px',
-                    }}>
+                    className="">
                     {hasProducts ? (
-                        <div className={styles.serviceCardSections}>
+                        <div className='row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-gap-4'>
                             {services.items.map((service, index) => (
-                                <div key={index} className="h-100">
+                                <div key={index} className="col px-2">
                                     <LastOpenedCard
                                         title={service.title}
                                         image={service.poster}
@@ -32,7 +26,6 @@ const ServicesCardSection = ({ services }) => {
                                     />
                                 </div>
                             ))}
-                            {/*  className="col-6  col-md-4 col-lg-3 px-1 custom-col-5 mb-4" */}
                         </div>
                     ) : (
                         <div className="col-12">
