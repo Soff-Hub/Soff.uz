@@ -21,14 +21,13 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
+    align-items: center;
+}
 
-    .image {
-        width: 100%;
-        height: auto;
-        object-fit: contain; 
-        border-radius: 12px;
-        background: #f8f8f8;
-    }
+.galleryBox img.newImage {
+    width: 100% ;
+    border-radius: 12px ;
+    object-fit: cover;
 }
 
 .infoBox {

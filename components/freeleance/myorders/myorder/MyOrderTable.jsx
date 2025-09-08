@@ -1,4 +1,4 @@
-import { Table, Modal, Button, Space, Select, message, Tooltip } from 'antd';
+import { Table, Modal, Button, Space, Select, message, Tooltip, Avatar } from 'antd';
 import React, { useState } from 'react';
 import useGetOrders from './api/useGetOrders';
 import useCancelOrder from './api/useCancelOrder';
@@ -87,8 +87,7 @@ const getColumns = ({ onCancel, onOpenDrawer }) => {
                 <div
                     className="d-flex flex-row gap-2 align-items-center"
                     style={{ cursor: 'pointer' }}
-                    onClick={(e) => {
-                        e.preventDefault();
+                    onClick={() => {
                         if (record.seller) {
                             router.push(`/order/${record.key}`)
                         } else {
@@ -112,72 +111,46 @@ const getColumns = ({ onCancel, onOpenDrawer }) => {
                 const photos = record?.offers?.map(item => item.photo_url).filter(Boolean) || [];
                 const maxVisible = 3;
 
-                return record?.seller ? (
+                return record?.seller ? (   
                     <div
-                        onClick={() => router.push(`/seller/${record?.soff_seller_id}`)}
+                        onClick={() => router.push(`/seller/${record?.seller?.soff_seller_id}`)}
                         style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }}
                     >
                         {record?.photo_url ? (
-                            <img src={record?.photo_url} alt={record?.full_name} style={{ width: 28, height: 28, borderRadius: '50%' }} />
+                            <img src={record?.photo_url} alt={record?.seller?.full_name} style={{ width: 28, height: 28, borderRadius: '50%' }} />
                         ) : (
                             <i className="fa-solid fa-user" style={{ fontSize: 20, color: '#999' }}></i>
                         )}
-                        <span>{record?.full_name}</span>
+                        <span>{record?.seller?.full_name}</span>
                     </div>
                 ) : (
-                    <div
-                        style={{
-                            display: "flex",
-                            alignItems: "center",
-                            cursor: "pointer"
-                        }}
-                        onClick={() => {
-                            if (record?.status !== "cancelled") {
-                                onOpenDrawer(record)
-                            } else {
-                                message.warning("Siz bu buyurtmani bekor qilgansiz")
-                            }
-                        }}
-                    >
-                        <div style={{ display: "flex", alignItems: "center" }}>
-                            {photos.slice(0, maxVisible).map((photo, idx) => (
-                                <img
-                                    key={idx}
+                    <div>
+                        <Avatar.Group
+                            max={{
+                                count: 3,
+                                popover: { trigger: "click" },
+                                style: { color: '#fff', backgroundColor: '#fde3cf' },
+                            }}
+                        >
+                            {photos?.map((photo, idx) => (
+                                <Avatar
+                                    style={{cursor: "pointer"}}
                                     src={photo || "/static/img/ozodbek.png"}
-                                    alt="offer user"
-                                    style={{
-                                        width: 40,
-                                        height: 40,
-                                        borderRadius: "50%",
-                                        border: "2px solid #fff",
-                                        marginLeft: idx === 0 ? 0 : -10,
-                                        boxShadow: "0 0 4px rgba(0,0,0,0.1)"
+                                    onClick={() => {
+                                        if (record?.status !== "cancelled") {
+                                            onOpenDrawer(record)
+                                        } else {
+                                            message.warning("Siz bu buyurtmani bekor qilgansiz")
+                                        }
                                     }}
                                 />
                             ))}
-
-                            {record?.offers_count > maxVisible && (
-                                <div
-                                    style={{
-                                        width: 28,
-                                        height: 28,
-                                        borderRadius: "50%",
-                                        background: "#f0f0f0",
-                                        display: "flex",
-                                        alignItems: "center",
-                                        justifyContent: "center",
-                                        marginLeft: -10,
-                                        fontSize: 12,
-                                        fontWeight: 500,
-                                        color: "#555",
-                                        border: "2px solid #fff",
-                                        boxShadow: "0 0 4px rgba(0,0,0,0.1)"
-                                    }}
-                                >
-                                    +{record?.offers_count - maxVisible}
-                                </div>
-                            )}
-                        </div>
+                        </Avatar.Group>
+                        {photos.length === 0 &&
+                            <span>
+                                Takliflar kutilmoqda
+                            </span>
+                        }
                     </div>
                 )
             },

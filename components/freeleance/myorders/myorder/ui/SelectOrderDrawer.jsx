@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Drawer, Avatar, Typography, Button, Tag, message, Modal } from "antd";
+import { Drawer, Avatar, Typography, Button, Tag, message, Modal, Empty } from "antd";
 import styles from "../style/SelectOrderDrawer.module.scss";
 import { formatCurrencyWithSpace } from "~/utilities/product-helper";
 import TextSlicer from "~/utilities/TextSlicer";
@@ -61,7 +61,6 @@ const SelectOrderDrawer = ({ open, onClose, order }) => {
                     Ishni boshlash uchun frilanser tanlashingiz kerak
                 </Tag>
 
-                {/* Order haqida qisqacha */}
                 <div className={styles.orderCard}>
                     <div className="d-flex align-items-center justify-content-between">
                         <Title style={{ margin: 0 }} level={4}>
@@ -75,55 +74,55 @@ const SelectOrderDrawer = ({ open, onClose, order }) => {
                     <Paragraph>{order?.description}</Paragraph>
                 </div>
 
-                {/* Freelancers ro‘yxati */}
                 <div className={styles.sellerList}>
-                    {freelancers?.map((item, index) => (
-                        <div key={index} className={styles.sellerCard}>
-                            {/* Chap taraf */}
-                            <div className={styles.cardLeft}>
-                                <Avatar
-                                    style={{ cursor: "pointer" }}
-                                    onClick={() => push(`/seller/${item?.seller?.soff_seller_id}`)}
-                                    src={item.seller?.photo_url || "/static/img/ozodbek.png"}
-                                    size={64}
-                                />
-                                <div className={styles.info}>
-                                    <Title
-                                        style={{ cursor: "pointer", margin: 0 }}
+                    {freelancers?.length > 0 ? (
+                        freelancers.map((item, index) => (
+                            <div key={index} className={styles.sellerCard}>
+                                <div className={styles.cardLeft}>
+                                    <Avatar
+                                        style={{ cursor: "pointer" }}
                                         onClick={() => push(`/seller/${item?.seller?.soff_seller_id}`)}
-                                        level={5}
-                                    >
-                                        {item.seller?.full_name}
-                                    </Title>
-                                    <Text type="secondary">
-                                        {item.seller?.position || "Kasbi ko‘rsatilmagan"}
+                                        src={item.seller?.photo_url || "/static/img/ozodbek.png"}
+                                        size={64}
+                                    />
+                                    <div className={styles.info}>
+                                        <Title
+                                            style={{ cursor: "pointer", margin: 0 }}
+                                            onClick={() => push(`/seller/${item?.seller?.soff_seller_id}`)}
+                                            level={5}
+                                        >
+                                            {item.seller?.full_name}
+                                        </Title>
+                                        <Text type="secondary">
+                                            {item.seller?.position || "Kasbi ko‘rsatilmagan"}
+                                        </Text>
+                                    </div>
+                                </div>
+
+                                <div className={styles.cardRight}>
+                                    <Text strong>
+                                        <TextSlicer bio={item.comment} len={60} />
                                     </Text>
+                                    <Title level={4} style={{ margin: 0 }}>
+                                        {item.money?.toLocaleString("uz-UZ")} so‘m
+                                    </Title>
+                                    <Button
+                                        onClick={() => setSelectedOffer(item)}
+                                        type="primary"
+                                        size="small"
+                                        style={{ background: "#00a44f" }}
+                                    >
+                                        Tanlash
+                                    </Button>
                                 </div>
                             </div>
-
-                            {/* O‘ng taraf */}
-                            <div className={styles.cardRight}>
-                                <Text strong>
-                                    <TextSlicer bio={item.comment} len={60} />
-                                </Text>
-                                <Title level={4} style={{ margin: 0 }}>
-                                    {item.money?.toLocaleString("uz-UZ")} so‘m
-                                </Title>
-                                <Button
-                                    onClick={() => setSelectedOffer(item)}
-                                    type="primary"
-                                    size="small"
-                                    style={{ background: "#00a44f" }}
-                                >
-                                    Tanlash
-                                </Button>
-                            </div>
-                        </div>
-                    ))}
+                        ))
+                    ) : (
+                        <Empty description="Hozircha hech qanday frilanser taklif yubormagan" />
+                    )}
                 </div>
             </Drawer>
 
-            {/* Umumiy modal */}
             <Modal
                 title="Frilanserni tanlash"
                 open={!!selectedOffer}
