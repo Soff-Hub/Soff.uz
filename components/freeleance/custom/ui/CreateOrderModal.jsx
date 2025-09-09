@@ -112,7 +112,7 @@ const CreateOrderModal = ({ open, onClose }) => {
                 >
                     <DatePicker
                         showTime={{ format: "HH:mm" }}
-                        format="YYYY-MM-DD HH:mm" // sana + soat formatida
+                        format="YYYY-MM-DD HH:mm"
                         style={{ width: "100%" }}
                         placeholder="Yetkazib berish sanasini tanlang"
                         disabledDate={(current) => current && current < dayjs().startOf("day")}
@@ -122,15 +122,15 @@ const CreateOrderModal = ({ open, onClose }) => {
                 <Form.Item
                     name="description"
                     label="Izoh"
-                    rules={[{ required: true, message: "Izoh yozing!" }]}
+                    rules={[{ required: true, message: "Buyurtma tavsifini yozing!" }]}
                 >
-                    <TextArea rows={4} placeholder="Izoh yozing..." />
+                    <TextArea rows={4} placeholder="Buyurtma tavsifini yozing..." />
                 </Form.Item>
 
                 <Form.Item
                     name="budget"
                     label="Narx"
-                    rules={[{ required: true, message: "Miqdor kiriting!" }]}
+                    rules={[{ required: true, message: "Narx kiriting!" }]}
                 >
                     <Input
                         type="number"
