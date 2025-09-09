@@ -111,6 +111,9 @@
                 text-overflow: clip;
                 flex: 1;
                 margin: 0;
+                &:hover{
+                    color: #00a651;
+                }
 
                 @media (max-width: 1440px) {
                     font-size: 14px;

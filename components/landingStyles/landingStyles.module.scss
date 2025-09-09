@@ -17,6 +17,9 @@
         font-size: 12px;
         margin-right: 0px;
     }
+    @media (max-width: 480px) {
+        font-size: 11px; 
+    }
 }
 // kirish tugmasi
 .loginEntrance {

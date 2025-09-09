@@ -19,7 +19,7 @@ const ServicesCardSection = ({ services }) => {
                                     <LastOpenedCard
                                         title={service.title}
                                         image={service.poster}
-                                        author={service.user.full_name}
+                                        author={service.user}
                                         price={service.price}
                                         slug={service.slug}
                                         userImage={service.user.photo_url}
