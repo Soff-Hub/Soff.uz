@@ -12,7 +12,7 @@ const CreateOrderModal = ({ open, onClose }) => {
     const [direction, setDirection] = useState(null)
     const { user } = useSelector(state => state.auth)
 
-    const { data: categories } = useFGet("categories", `categories/?direction=${direction}`, { enabled: !!direction })
+    const { data: categories } = useFGet(direction, `categories/?direction=${direction}`, { enabled: !!direction })
 
     const { mutate: createOrder, isPending } = useFPost({
         url: "order/custom-order",
