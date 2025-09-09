@@ -10,7 +10,6 @@ import { useSelector } from "react-redux";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
 
-const { Title, Text, Paragraph } = Typography;
 
 const SelectOrderDrawer = ({ open, onClose, order }) => {
     const [selectedOffer, setSelectedOffer] = useState(null);
@@ -63,49 +62,49 @@ const SelectOrderDrawer = ({ open, onClose, order }) => {
 
                 <div className={styles.orderCard}>
                     <div className="d-flex align-items-center justify-content-between">
-                        <Title style={{ margin: 0 }} level={4}>
+                        <Typography.Title style={{ margin: 0 }} level={4}>
                             {order?.order_name}
-                        </Title>
-                        <Text strong>{formatCurrencyWithSpace(order?.price)} so'm</Text>
+                        </Typography.Title>
+                        <Typography.Text strong>{formatCurrencyWithSpace(order?.price)} so'm</Typography.Text>
                     </div>
-                    <Paragraph type="secondary" style={{ margin: "8px 0" }}>
-                        {order?.ordered_at} | {orderStatusName[order?.status]}
-                    </Paragraph>
-                    <Paragraph>{order?.description}</Paragraph>
+                    <Typography.Paragraph type="secondary" style={{ margin: "8px 0" }}>
+                        {order?.ordered_at} | {orderStatusName[order?.status] || ""}
+                    </Typography.Paragraph>
+                    <Typography.Paragraph>{order?.description}</Typography.Paragraph>
                 </div>
 
                 <div className={styles.sellerList}>
                     {freelancers?.length > 0 ? (
-                        freelancers.map((item, index) => (
+                        freelancers?.map((item, index) => (
                             <div key={index} className={styles.sellerCard}>
                                 <div className={styles.cardLeft}>
                                     <Avatar
                                         style={{ cursor: "pointer" }}
                                         onClick={() => push(`/seller/${item?.seller?.soff_seller_id}`)}
-                                        src={item.seller?.photo_url || "/static/img/ozodbek.png"}
+                                        src={item?.seller?.photo_url || "/static/img/ozodbek.png"}
                                         size={64}
                                     />
                                     <div className={styles.info}>
-                                        <Title
+                                        <Typography.Title
                                             style={{ cursor: "pointer", margin: 0 }}
                                             onClick={() => push(`/seller/${item?.seller?.soff_seller_id}`)}
                                             level={5}
                                         >
-                                            {item.seller?.full_name}
-                                        </Title>
-                                        <Text type="secondary">
-                                            {item.seller?.position || "Kasbi ko‘rsatilmagan"}
-                                        </Text>
+                                            {item?.seller?.full_name}
+                                        </Typography.Title>
+                                        <Typography.Text type="secondary">
+                                            {item?.seller?.position?.title || "Kasbi ko‘rsatilmagan"}
+                                        </Typography.Text>
                                     </div>
                                 </div>
 
                                 <div className={styles.cardRight}>
-                                    <Text strong>
+                                    <Typography.Text strong>
                                         <TextSlicer bio={item.comment} len={60} />
-                                    </Text>
-                                    <Title level={4} style={{ margin: 0 }}>
+                                    </Typography.Text>
+                                    <Typography.Title level={4} style={{ margin: 0 }}>
                                         {item.money?.toLocaleString("uz-UZ")} so‘m
-                                    </Title>
+                                    </Typography.Title>
                                     <Button
                                         onClick={() => setSelectedOffer(item)}
                                         type="primary"
