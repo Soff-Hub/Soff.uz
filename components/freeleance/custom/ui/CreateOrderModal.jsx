@@ -4,6 +4,7 @@ import { directions } from "../../constants";
 import { useFGet, useFPost } from "../../api/useFApi";
 import dayjs from "dayjs";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
 
 const { TextArea } = Input;
 
@@ -11,6 +12,7 @@ const CreateOrderModal = ({ open, onClose }) => {
     const [form] = Form.useForm();
     const [direction, setDirection] = useState(null)
     const { user } = useSelector(state => state.auth)
+    const { push } = useRouter()
 
     const { data: categories } = useFGet(direction, `categories/?direction=${direction}`, { enabled: !!direction })
 
@@ -21,6 +23,7 @@ const CreateOrderModal = ({ open, onClose }) => {
             form.resetFields();
             onClose();
             message.success("Buyurtma muvaffaqiyatli yaratildi!");
+            push('/order/my-orders')
         },
         onError: (err) => {
             const errorMsg =
@@ -32,8 +35,6 @@ const CreateOrderModal = ({ open, onClose }) => {
     });
 
     const handleFinish = (values) => {
-        console.log("Form values:", values);
-
         const fd = new FormData();
 
         for (const [key, value] of Object.entries(values)) {
@@ -68,7 +69,10 @@ const CreateOrderModal = ({ open, onClose }) => {
                     rules={[{ required: true, message: "Yo'nalish tanlang!" }]}
                 >
                     <Select
-                        onChange={(val) => setDirection(val)}
+                        onChange={(val) => {
+                            setDirection(val)
+                            form.resetFields(['category_id'])
+                        }}
                         placeholder="Yo'nalish tanlang"
                         options={directions}
                     />

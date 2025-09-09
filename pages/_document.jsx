@@ -115,9 +115,13 @@ export default function Document() {
                     </div>
                 </noscript>
 
-                <noscript><img height="1" width="1" style="display:none"
-                    src="https://www.facebook.com/tr?id=646399161448166&ev=PageView&noscript=1"
-                /></noscript>
+                <noscript>
+                    <img height="1" width="1" 
+                        style={{ position: 'absolute', left: '-9999px' }}
+                        src="https://www.facebook.com/tr?id=646399161448166&ev=PageView&noscript=1"
+                        alt=""
+                    />
+                </noscript>
 
                 <script>window.yaContextCb=window.yaContextCb||[]</script>
             </Head>

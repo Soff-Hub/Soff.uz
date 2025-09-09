@@ -29,6 +29,7 @@ const SelectOrderDrawer = ({ open, onClose, order }) => {
         onSuccess: () => {
             message.success("Frilanser tanlandi!");
             setSelectedOffer(null);
+            push(`/order/${order?.key}?isOpen=true`)
             onClose();
         },
         onError: () => {
@@ -68,7 +69,7 @@ const SelectOrderDrawer = ({ open, onClose, order }) => {
                 </div>
 
                 <Tag
-                    className="w-100 mb-4 fs-4"
+                    className="w-100 mb-4 fs-4 text-wrap"
                     style={{color: "orange", background: "transparent", border: "none"}}
                     icon={<ExclamationCircleOutlined />}
                 >
@@ -144,7 +145,7 @@ const SelectOrderDrawer = ({ open, onClose, order }) => {
                 <p>
                     Haqiqattanham Siz <strong>{selectedOffer?.seller?.full_name}</strong> ni tanlamoqchimisiz?
                 </p>
-                <p>Izoh: {selectedOffer?.comment}</p>
+                <p><TextSlicer title={'izoh:'} bio={selectedOffer?.comment}/></p>
             </Modal>
         </>
     );

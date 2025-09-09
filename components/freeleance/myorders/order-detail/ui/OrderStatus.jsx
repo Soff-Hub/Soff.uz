@@ -7,7 +7,7 @@ import Link from 'next/link';
 
 const OrderStatus = ({ order }) => {
     const priceFormatted =
-        new Intl.NumberFormat('uz-UZ').format(order?.service?.price) + " so'm";
+        new Intl.NumberFormat('uz-UZ').format(order?.service?.price || order?.budget || 0) + " so'm";
     const { mutate: createChat } = useCreateChat();
 
     const orderStatus = {
