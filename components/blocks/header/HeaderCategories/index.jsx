@@ -67,38 +67,38 @@ const HeaderCatergories = () => {
     const [open, setOpen] = useState(false)
     return (
         <div className={styles.dropBlock}>
-            {!isMobile &&
-                <div>
-                    <div className={styles.dropBox}>
-                        <p className={styles.dropLabel}>
-                            <span className="flex-md-fill"> Mahsulotlar</span>
-
-                            <Image
-                                src="/static/svg/arrowdown.svg"
-                                alt="arrow"
-                                width={15}
-                                height={8}
-                            />
-                        </p>
-                        <ul className={styles.dropSubBox}>
-                            {options.products.map(item => (
-                                <li className={styles.dropSubBoxItem}>
-                                    <Image
-                                        src={item.icon}
-                                        alt="direction"
-                                        width={isMobile ? 18 : 25}
-                                        height={isMobile ? 18 : 25}
-                                    />
-                                    <Link href={item.link}>{item.label}</Link>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                </div>
-            }
+            {/* {!isMobile &&
+            } */}
+            {/* <div>
+            </div> */}
             <div className={styles.dropBox}>
                 <p className={styles.dropLabel}>
-                    <span className="flex-fill">Buyurtma berish</span>{' '}
+                    <span className="flex-md-fill"> Mahsulotlar</span>
+
+                    <Image
+                        src="/static/svg/arrowdown.svg"
+                        alt="arrow"
+                        width={15}
+                        height={8}
+                    />
+                </p>
+                <ul className={styles.dropSubBox}>
+                    {options.products.map(item => (
+                        <li className={styles.dropSubBoxItem}>
+                            <Image
+                                src={item.icon}
+                                alt="direction"
+                                width={isMobile ? 18 : 25}
+                                height={isMobile ? 18 : 25}
+                            />
+                            <Link href={item.link}>{item.label}</Link>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+            <div className={`${styles.orderBox} ${styles.dropBox}`}>
+                <p className={styles.dropLabel}>
+                    <span className="">Buyurtma berish</span>{' '}
                     <Image
                         src="/static/svg/arrowdown.svg"
                         alt="arrow"
