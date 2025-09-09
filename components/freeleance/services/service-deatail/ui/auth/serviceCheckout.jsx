@@ -194,119 +194,119 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
     };
 
     const items = [
-        // {
-        //     key: '1',
-        //     label: (
-        //         <div className="click">
-        //             <img src="/static/img/uzcard_humo.png" alt="" />
-        //         </div>
-        //     ),
-        //     children: (
-        //         <div className="row mx-auto m-0">
-        //             <div className="px-4 mx-md-auto rounded click-b">
-        //                 <div>
-        //                     <form
-        //                         onSubmit={handleClickCardPosts}
-        //                         className="pb-3 d-flex align-items-end justify-content-between row gap-3 bg-white">
-        //                         <div className="col-xl-7 col-lg-12 p-0 col-md-7 col-sm-6 click-form-item my-2">
-        //                             <p className="cardNumber">Karta raqam</p>
-        //                             <label htmlFor="ccn" className="m-0">
-        //                                 <i className="fa-regular fa-credit-card i"></i>
-        //                                 <input
-        //                                     required
-        //                                     type="tel"
-        //                                     className="form-control rounded-3 card__number"
-        //                                     inputMode="numeric"
-        //                                     maxLength="19"
-        //                                     placeholder="0000 0000 0000 0000"
-        //                                     value={formattedCardNumber}
-        //                                     onChange={handleCardNumberChange}
-        //                                 />
-        //                             </label>
-        //                         </div>
-        //                         <div className="col-xl-4 col-lg-6 p-0 col-md-4 col-sm-6 click-form-item my-2">
-        //                             <label className="m-0">
-        //                                 <i className="fa-regular fa-calendar-days"></i>
-        //                                 <input
-        //                                     required
-        //                                     className="form-control rounded-3 card__number"
-        //                                     inputMode="numeric"
-        //                                     maxLength="5"
-        //                                     placeholder="MM/YY"
-        //                                     value={numberDate}
-        //                                     onChange={handleCardNumberDate}
-        //                                 />
-        //                             </label>
-        //                         </div>
+        {
+            key: '1',
+            label: (
+                <div className="click">
+                    <img src="/static/img/uzcard_humo.png" alt="" />
+                </div>
+            ),
+            children: (
+                <div className="row mx-auto m-0">
+                    <div className="px-4 mx-md-auto rounded click-b">
+                        <div>
+                            <form
+                                onSubmit={handleClickCardPosts}
+                                className="pb-3 d-flex align-items-end justify-content-between row gap-3 bg-white">
+                                <div className="col-xl-7 col-lg-12 p-0 col-md-7 col-sm-6 click-form-item my-2">
+                                    <p className="cardNumber">Karta raqam</p>
+                                    <label htmlFor="ccn" className="m-0">
+                                        <i className="fa-regular fa-credit-card i"></i>
+                                        <input
+                                            required
+                                            type="tel"
+                                            className="form-control rounded-3 card__number"
+                                            inputMode="numeric"
+                                            maxLength="19"
+                                            placeholder="0000 0000 0000 0000"
+                                            value={formattedCardNumber}
+                                            onChange={handleCardNumberChange}
+                                        />
+                                    </label>
+                                </div>
+                                <div className="col-xl-4 col-lg-6 p-0 col-md-4 col-sm-6 click-form-item my-2">
+                                    <label className="m-0">
+                                        <i className="fa-regular fa-calendar-days"></i>
+                                        <input
+                                            required
+                                            className="form-control rounded-3 card__number"
+                                            inputMode="numeric"
+                                            maxLength="5"
+                                            placeholder="MM/YY"
+                                            value={numberDate}
+                                            onChange={handleCardNumberDate}
+                                        />
+                                    </label>
+                                </div>
 
-        //                         <div className="col-12 p-0">
-        //                             {resData?.detail && (
-        //                                 <p
-        //                                     style={{
-        //                                         color: 'red',
-        //                                         marginBottom: '0px',
-        //                                     }}>
-        //                                     {resData.detail}
-        //                                 </p>
-        //                             )}
-        //                             {!message  ? (
-        //                                 <button
-        //                                     type="submit"
-        //                                     className="ps-btn w-100 btn_color">
-        //                                     Davom etish
-        //                                 </button>
-        //                             ) : (
-        //                                 <button className="ps-btn w-100">
-        //                                     <BeatLoader color="#fff" />
-        //                                 </button>
-        //                             )}
-        //                         </div>
-        //                     </form>
-        //                 </div>
-        //             </div>
+                                <div className="col-12 p-0">
+                                    {resData?.detail && (
+                                        <p
+                                            style={{
+                                                color: 'red',
+                                                marginBottom: '0px',
+                                            }}>
+                                            {resData.detail}
+                                        </p>
+                                    )}
+                                    {!message  ? (
+                                        <button
+                                            type="submit"
+                                            className="ps-btn w-100 btn_color">
+                                            Davom etish
+                                        </button>
+                                    ) : (
+                                        <button className="ps-btn w-100">
+                                            <BeatLoader color="#fff" />
+                                        </button>
+                                    )}
+                                </div>
+                            </form>
+                        </div>
+                    </div>
 
-        //             <Modal
-        //                 width={500}
-        //                 title="Tez orada!"
-        //                 centered
-        //                 open={open}
-        //                 onOk={handleSubmitCode}
-        //                 onCancel={handleCancale}
-        //                 okButtonProps={{
-        //                     style: { backgroundColor: 'green', color: 'white' },
-        //                 }}
-        //                 okText={
-        //                     buttonOk ? (
-        //                         <BeatLoader color="#fff" />
-        //                     ) : (
-        //                         "To'lov qilish"
-        //                     )
-        //                 }
-        //                 cancelText="Orqaga">
-        //                 {/* <p>To'lov tez orada ishga tushadi</p> */}
-        //                 <>
-        //                     <p>
-        //                         Kod quyidagi raqamga yuborildi:{' '}
-        //                         {resData?.phone_number}
-        //                     </p>
-        //                     <input
-        //                         onChange={e => setCode(e.target.value)}
-        //                         type="tel"
-        //                         placeholder="000000"
-        //                         maxLength={6}
-        //                         className="form-control text-center rounded-3 fs-3"
-        //                     />
-        //                     <strong className="text-danger">{display}</strong>
-        //                     {resDataCode?.detail && (
-        //                         <p className="text-danger">
-        //                             {resDataCode.detail}
-        //                         </p>
-        //                     )}
-        //                 </>
-        //             </Modal>
-        //         </div>
-        //     ),
-        // },
+                    <Modal
+                        width={500}
+                        title="Tez orada!"
+                        centered
+                        open={open}
+                        onOk={handleSubmitCode}
+                        onCancel={handleCancale}
+                        okButtonProps={{
+                            style: { backgroundColor: 'green', color: 'white' },
+                        }}
+                        okText={
+                            buttonOk ? (
+                                <BeatLoader color="#fff" />
+                            ) : (
+                                "To'lov qilish"
+                            )
+                        }
+                        cancelText="Orqaga">
+                        {/* <p>To'lov tez orada ishga tushadi</p> */}
+                        <>
+                            <p>
+                                Kod quyidagi raqamga yuborildi:{' '}
+                                {resData?.phone_number}
+                            </p>
+                            <input
+                                onChange={e => setCode(e.target.value)}
+                                type="tel"
+                                placeholder="000000"
+                                maxLength={6}
+                                className="form-control text-center rounded-3 fs-3"
+                            />
+                            <strong className="text-danger">{display}</strong>
+                            {resDataCode?.detail && (
+                                <p className="text-danger">
+                                    {resDataCode.detail}
+                                </p>
+                            )}
+                        </>
+                    </Modal>
+                </div>
+            ),
+        },
         {
             key: '2',
             label: (

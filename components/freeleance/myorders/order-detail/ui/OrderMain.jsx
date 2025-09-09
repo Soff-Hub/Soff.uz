@@ -8,7 +8,7 @@ import {
     Collapse,
 } from 'antd';
 import { DownloadOutlined, SmileOutlined } from '@ant-design/icons';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from '../style/style.module.scss';
 import Link from 'next/link';
 import dayjs from 'dayjs';
@@ -22,6 +22,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { getDate, getRemainingDays } from '~/utilities/calculateTime';
 import ReactConfetti from 'react-confetti';
 import { useCountOrderTime } from '~/hooks/useCountDown';
+import { useRouter } from 'next/router';
 dayjs.locale('uz-latn');
 
 const OrderMain = ({ order }) => {
@@ -36,6 +37,7 @@ const OrderMain = ({ order }) => {
     const { data: file } = useGetFile(order?.id);
     const submit = useSubmit();
     const queryClient = useQueryClient();
+    const { query, push } = useRouter()
     const { days, hours, minutes, seconds } = useCountOrderTime(
         order?.order_status_doing?.order_accepted_date,
         order?.service?.delivery_days
@@ -52,6 +54,13 @@ const OrderMain = ({ order }) => {
         setIsOpen(false);
         queryClient.invalidateQueries({ queryKey: ['order'] });
     };
+
+    useEffect(() => {
+        if (query?.isOpen === "true") {
+            setIsOpen(true);
+            push(`/order/${query?.id}`)
+        }
+    }, [query?.isOpen ]);
 
     return (
         <div className="col-lg-9 col-12 mb-5 rounded-2">
@@ -85,43 +94,43 @@ const OrderMain = ({ order }) => {
 
                 {(order?.order_status_doing?.status === 'approved' ||
                     order?.order_status_doing?.status ===
-                        'requirement_file_rejected') && (
-                    <div className={styles.orderPayCard}>
-                        <div>
-                            <h3 className={styles.orderNameLink}>
-                                Buyurtma talablari kutilmoqda
-                            </h3>
-                            {order?.order_status_doing?.status ===
-                                'approved' && (
-                                <p>
-                                    Siz to‘lovni amalga oshirdingiz. Endi
-                                    mutahasis ishni boshlashi uchun kerakli
-                                    materiallar va ko‘rsatmalarni yuboring.
-                                </p>
-                            )}
-                            {order?.order_status_doing?.status ===
-                                'requirement_file_rejected' && (
-                                <p>
-                                    Siz yuborgan materiallar yoki ko‘rsatmalar
-                                    yetarli emasligi sababli mutahasis ularni
-                                    rad etdi. Iltimos, ishni boshlash uchun
-                                    barcha kerakli fayllar va aniq
-                                    ko‘rsatmalarni qayta yuboring.
-                                </p>
-                            )}
+                    'requirement_file_rejected') && (
+                        <div className={styles.orderPayCard}>
+                            <div>
+                                <h3 className={styles.orderNameLink}>
+                                    Buyurtma talablari kutilmoqda
+                                </h3>
+                                {order?.order_status_doing?.status ===
+                                    'approved' && (
+                                        <p>
+                                            Siz to‘lovni amalga oshirdingiz. Endi
+                                            mutahasis ishni boshlashi uchun kerakli
+                                            materiallar va ko‘rsatmalarni yuboring.
+                                        </p>
+                                    )}
+                                {order?.order_status_doing?.status ===
+                                    'requirement_file_rejected' && (
+                                        <p>
+                                            Siz yuborgan materiallar yoki ko‘rsatmalar
+                                            yetarli emasligi sababli mutahasis ularni
+                                            rad etdi. Iltimos, ishni boshlash uchun
+                                            barcha kerakli fayllar va aniq
+                                            ko‘rsatmalarni qayta yuboring.
+                                        </p>
+                                    )}
+                            </div>
+                            <Button
+                                type="primary"
+                                style={{
+                                    backgroundColor: '#00a44f',
+                                    borderColor: '#00a44f',
+                                    padding: '16px 28px',
+                                }}
+                                onClick={() => setOpen(true)}>
+                                Talablarni yuborish
+                            </Button>
                         </div>
-                        <Button
-                            type="primary"
-                            style={{
-                                backgroundColor: '#00a44f',
-                                borderColor: '#00a44f',
-                                padding: '16px 28px',
-                            }}
-                            onClick={() => setOpen(true)}>
-                            Talablarni yuborish
-                        </Button>
-                    </div>
-                )}
+                    )}
 
                 {/* Seller ishni tugatganda */}
                 {order?.order_status_doing?.status === 'order_file_sent' && (
@@ -167,12 +176,20 @@ const OrderMain = ({ order }) => {
                             height={100}
                             alt="service"
                         />
-                        <a
-                            className={styles.titleSize}
-                            target="_blank"
-                            href={`/service/${order?.service?.slug}` || '#'}>
-                            {order?.service?.title || 'Noma’lum xizmat'}
-                        </a>
+                        {order?.order_type == "custom_order" ?
+                            <span
+                                className={styles.titleSize}
+                            >
+                                {order?.title}
+                            </span>
+                            :
+                            <a
+                                className={styles.titleSize}
+                                target="_blank"
+                                href={`/service/${order?.service?.slug}` || '#'}>
+                                {order?.service?.title || 'Noma’lum xizmat'}
+                            </a>
+                        }
                     </div>
 
                     <div className={styles.order_date}>
@@ -187,7 +204,7 @@ const OrderMain = ({ order }) => {
                     </div>
                     <div className="d-flex justify-content-end align-items-center">
                         {order?.order_status_doing?.status ===
-                        'order_accepted' ? (
+                            'order_accepted' ? (
                             <>
                                 <p style={{ marginTop: 8 }}>
                                     {`Tugash muddatiga ${days} kun ${hours} soat ${minutes} daqiqa ${seconds} soniya qoldi`}
@@ -195,7 +212,7 @@ const OrderMain = ({ order }) => {
                             </>
                         ) : (
                             <p style={{ marginTop: 8 }}>
-                                {`Tugash muddati: ${order?.service?.delivery_days} kun, Buyurtma hali qabul qilinmadi`}
+                                {`Buyurtma hali qabul qilinmadi`}
                             </p>
                         )}
                     </div>
@@ -213,7 +230,7 @@ const OrderMain = ({ order }) => {
                                 <img
                                     src={
                                         order?.service?.poster ||
-                                        '/static/img/default-service.png'
+                                        '/static/img/doc.png'
                                     }
                                     alt="service"
                                     style={{
@@ -225,21 +242,23 @@ const OrderMain = ({ order }) => {
                                 />
                                 <span>
                                     <b>Xizmat:</b>{' '}
-                                    {order?.service?.title || '-'}
+                                    {order?.service?.title || order?.title || '-'}
                                 </span>
                             </div>
-                            <p>
-                                <b>Yetkazish:</b>{' '}
-                                {order?.service?.delivery_days || 0} kun
-                            </p>
+                            {order?.order_type !== "custom_order" &&
+                                <p>
+                                    <b>Yetkazish:</b>{' '}
+                                    {order?.service?.delivery_days || 0} kun
+                                </p>
+                            }
                             <p>
                                 <b>Narx:</b>{' '}
-                                {(order?.service?.price || 0).toLocaleString(
+                                {(order?.service?.price || order?.budget || 0).toLocaleString(
                                     'uz-UZ'
                                 )}{' '}
                                 so'm
                             </p>
-                            {order?.order_requirement && (
+                            {(order?.order_type !== "custom_order" && order?.order_requirement) && (
                                 <div>
                                     <p>
                                         <b>Xizmat Talablar:</b>
@@ -256,21 +275,21 @@ const OrderMain = ({ order }) => {
                             )}
                             {order?.order_requirement[0]
                                 ?.order_requirement_file && (
-                                <p className="d-flex align-items-center gap-2">
-                                    <Button
-                                        type="primary"
-                                        icon={<DownloadOutlined />}
-                                        href={
-                                            order?.order_requirement[0]
-                                                ?.order_requirement_file
-                                        }
-                                        target="_blank"
-                                        download
-                                        className={styles.downloadBtn}>
-                                        Fayllarni yuklab olish
-                                    </Button>
-                                </p>
-                            )}
+                                    <p className="d-flex align-items-center gap-2">
+                                        <Button
+                                            type="primary"
+                                            icon={<DownloadOutlined />}
+                                            href={
+                                                order?.order_requirement[0]
+                                                    ?.order_requirement_file
+                                            }
+                                            target="_blank"
+                                            download
+                                            className={styles.downloadBtn}>
+                                            Fayllarni yuklab olish
+                                        </Button>
+                                    </p>
+                                )}
                         </Collapse.Panel>
                     </Collapse>
                 </div>
@@ -305,90 +324,90 @@ const OrderMain = ({ order }) => {
                 footer={
                     res === ''
                         ? [
-                              <Button
-                                  key="rejected"
-                                  danger
-                                  onClick={() => setRes('rejected')}>
-                                  Kamchilik aniqlandi
-                              </Button>,
-                              <Button
-                                  key="complected"
-                                  type="primary"
-                                  onClick={() => {
-                                      setRes('complected');
-                                  }}>
-                                  Qabul qilish
-                              </Button>,
-                          ]
+                            <Button
+                                key="rejected"
+                                danger
+                                onClick={() => setRes('rejected')}>
+                                Kamchilik aniqlandi
+                            </Button>,
+                            <Button
+                                key="complected"
+                                type="primary"
+                                onClick={() => {
+                                    setRes('complected');
+                                }}>
+                                Qabul qilish
+                            </Button>,
+                        ]
                         : [
-                              <Button
-                                  key="submit"
-                                  type="primary"
-                                  loading={submit.isPending} // yuklanish animatsiyasi
-                                  onClick={() => {
-                                      if (res === 'rejected' && !text.trim()) {
-                                          message.error(
-                                              'Kamchiliklarni yozishingiz kerak'
-                                          );
-                                          return;
-                                      } else if (
-                                          res === 'complected' &&
-                                          (!text.trim() || !rate)
-                                      ) {
-                                          message.error(
-                                              'Fikr va bahoni yozishingiz kerak'
-                                          );
-                                          return;
-                                      }
+                            <Button
+                                key="submit"
+                                type="primary"
+                                loading={submit.isPending} // yuklanish animatsiyasi
+                                onClick={() => {
+                                    if (res === 'rejected' && !text.trim()) {
+                                        message.error(
+                                            'Kamchiliklarni yozishingiz kerak'
+                                        );
+                                        return;
+                                    } else if (
+                                        res === 'complected' &&
+                                        (!text.trim() || !rate)
+                                    ) {
+                                        message.error(
+                                            'Fikr va bahoni yozishingiz kerak'
+                                        );
+                                        return;
+                                    }
 
-                                      const payload = { id: order?.id };
+                                    const payload = { id: order?.id };
 
-                                      // Status har doim bo'ladi
-                                      payload.status =
-                                          res === 'rejected'
-                                              ? 'rejected'
-                                              : 'completed';
+                                    // Status har doim bo'ladi
+                                    payload.status =
+                                        res === 'rejected'
+                                            ? 'rejected'
+                                            : 'completed';
 
-                                      // Faqat kerak bo'lsa qo'shamiz
-                                      if (res === 'rejected' && text) {
-                                          payload.reason = text;
-                                      }
-                                      if (res === 'complected' && rate) {
-                                          payload.rating = rate;
-                                      }
-                                      if (res === 'complected' && text) {
-                                          payload.comment = text;
-                                      }
+                                    // Faqat kerak bo'lsa qo'shamiz
+                                    if (res === 'rejected' && text) {
+                                        payload.reason = text;
+                                    }
+                                    if (res === 'complected' && rate) {
+                                        payload.rating = rate;
+                                    }
+                                    if (res === 'complected' && text) {
+                                        payload.comment = text;
+                                    }
 
-                                      submit.mutate(payload, {
-                                          onSuccess: () => {
-                                              message.success(
-                                                  'Fikringiz yuborildi'
-                                              );
-                                              setFeedbackOpen(false);
-                                              setRes('');
-                                              queryClient.invalidateQueries({
-                                                  queryKey: ['order'],
-                                              });
-                                              setText('');
-                                              setRate(undefined);
-                                              if (
-                                                  payload.status == 'completed'
-                                              ) {
-                                                  setCongratModal(true);
-                                              }
-                                              console.log('payload', payload);
-                                          },
-                                          onError: () => {
-                                              message.error(
-                                                  'Fikr yuborishda xatolik yuz berdi'
-                                              );
-                                          },
-                                      });
-                                  }}>
-                                  Yuborish
-                              </Button>,
-                          ]
+                                    submit.mutate(payload, {
+                                        onSuccess: () => {
+                                            message.success(
+                                                'Fikringiz yuborildi'
+                                            );
+                                            setFeedbackOpen(false);
+                                            setRes('');
+                                            queryClient.invalidateQueries({
+                                                queryKey: ['order'],
+                                            });
+                                            setText('');
+                                            setRate(undefined);
+                                            if (
+                                                payload.status == 'completed'
+                                            ) {
+                                                setCongratModal(true);
+                                            }
+                                            console.log('payload', payload);
+                                        },
+                                        onError: () => {
+                                            message.error(
+                                                'Fikr yuborishda xatolik yuz berdi'
+                                            );
+                                        },
+                                    });
+                                }}>
+                                Yuborish
+                            </Button>,
+                        ]
                 }>
                 {res === '' && (
                     <p>
@@ -468,14 +487,14 @@ const OrderMain = ({ order }) => {
                                         <div>
                                             {/* <h5 className="mb-1 fw-bold">{title}</h5> */}
                                             <p className="text-muted mb-0 small">
-                                                {order?.service?.title}
+                                                {(order?.service?.title || order?.title)}
                                             </p>
                                         </div>
                                     </div>
                                     <div className="text-end">
                                         <h4 className="text-primary mb-0 fw-bold">
                                             {formatCurrencyWithSpace(
-                                                order?.service?.price
+                                                order?.service?.price || order?.budget
                                             )}{' '}
                                             so'm
                                         </h4>
