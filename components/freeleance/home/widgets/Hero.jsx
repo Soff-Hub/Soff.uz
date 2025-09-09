@@ -67,9 +67,9 @@ const Hero = () => {
     const getOptions = () => {
         if (type === 'mahsulotlar') {
             return isSuccess ? data?.map(item => ({ value: item })) : [];
-        }else if(type === "mutaxasislar") {
+        } else if (type === "mutaxasislar") {
             return freelanceSuccess ? freelanceData?.position?.map(item => ({ value: item })) : [];
-        }else if(type == "xizmatlar"){
+        } else if (type == "xizmatlar") {
             return freelanceSuccess ? freelanceData?.services?.map(item => ({ value: item })) : [];
         }
         return staticOptions[type] || [];
@@ -154,7 +154,7 @@ const Hero = () => {
                 </div>
             </div>
 
-            <div className={styles.heroCardSection}>
+            {/* <div className={styles.heroCardSection}>
                 <div className={styles.cardWrapperOne}>
                     <HeroCard
                         title="Dizayn"
@@ -179,7 +179,70 @@ const Hero = () => {
                         img="/static/img/HomePage/3d.webp"
                     />
                 </div>
+            </div> */}
+
+            <div className={styles.heroCategorySection}>
+                {/* Chap blok – Tayyor mahsulotlar */}
+                <div className={styles.categoryBlock}>
+                    <div className={styles.titleWrapper}>
+                        <img
+                            src="/static/img/star.svg"
+                            alt="badge"
+                            className={styles.badge}
+                        />
+                        <h3>Tayyor yuklangan mahsulotlar</h3>
+                    </div>
+                    <div className={styles.categoryGrid}>
+                        <div onClick={() => push('/scientific-resources/all')} className={styles.categoryItem}>
+                            <img src="/static/img/HomePage/file3.webp" alt="Ilmiy ishlar" />
+                            <span>Ilmiy ishlar</span>
+                        </div>
+                        <div onClick={() => push('/3d-models-and-interior-designs/all')} className={styles.categoryItem}>
+                            <img src="/static/img/HomePage/3d2.webp" alt="3D Modellar" />
+                            <span>3D Modellar</span>
+                        </div>
+                        <div onClick={() => push('/design-developments/all')} className={styles.categoryItem}>
+                            <img src="/static/img/HomePage/design1.webp" alt="Dizayn shablonlari" />
+                            <span>Dizayn shablonlari</span>
+                        </div>
+                        <div onClick={() => push('/websites/all')} className={styles.categoryItem}>
+                            <img src="/static/img/HomePage/web2.webp" alt="Veb saytlar" />
+                            <span>Veb saytlar</span>
+                        </div>
+                        <div onClick={() => push('/templates/all')} className={styles.categoryItem}>
+                            <img src="/static/img/HomePage/template2.webp" alt="Shablonlar" />
+                            <span>Shablonlar</span>
+                        </div>
+                        <div onClick={() => push('/video-lessons/all')} className={styles.categoryItem}>
+                            <img src="/static/img/HomePage/video1.webp" alt="Video darsliklar" />
+                            <span>Video darsliklar</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div className={styles.categoryBlock}>
+                    <h3>Xizmatni tanlang – Buyurtma bering</h3>
+                    <div className={styles.categoryGrid}>
+                        <div onClick={() => push('/orders?direction=scientific_work')} className={styles.categoryItem}>
+                            <img src="/static/img/HomePage/file2.webp" alt="Ilmiy va Akademik xizmatlar" />
+                            <span>Ilmiy va Akademik Xizmatlar</span>
+                        </div>
+                        <div onClick={() => push('/orders?direction=dizayn')} className={styles.categoryItem}>
+                            <img src="/static/img/HomePage/design3.webp" alt="Dizayn xizmatlari" />
+                            <span>Dizayn xizmatlari</span>
+                        </div>
+                        <div onClick={() => push('/orders?direction=web')} className={styles.categoryItem}>
+                            <img src="/static/img/HomePage/web.webp" alt="Dasturlash xizmatlari" />
+                            <span>Dasturlash xizmatlari</span>
+                        </div>
+                        <div onClick={() => push('/orders?direction=three_d')} className={styles.categoryItem}>
+                            <img src="/static/img/HomePage/3d.webp" alt="3D Dizayn va Vizualizatsiya" />
+                            <span>3D Dizayn va Vizualizatsiya</span>
+                        </div>
+                    </div>
+                </div>
             </div>
+
         </div>
     );
 };

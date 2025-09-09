@@ -20,12 +20,16 @@ const HomePage = () => {
             <div className="bg-white ">
                 <div className="container">
                     <Hero />
+                </div>
+            </div>
+            <CatalogsSection />
+            <div className="bg-white ">
+                <div className="container">
                     <FreelanceSection />
                     <InfoSection />
                     <LastOpened />
                 </div>
             </div>
-            <CatalogsSection />
             {/* <HomeCategoryHighlights /> */}
             <div className="bg-white py-1">
                 <div className="container">
