@@ -4,24 +4,30 @@
     gap: 16px;
 }
 
+/* 🔹 Seller Card */
 .sellerCard {
     display: flex;
     justify-content: space-between;
     align-items: start;
-    padding: 16px !important;
+    padding: 16px;
     border-radius: 12px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-    border: solid #00a44f 1px;
-    gap: 12px;
-    flex-wrap: wrap;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid #eaeaea;
+    gap: 16px;
+    background: #fff;
+    transition: all 0.2s ease;
+
+    &:hover {
+        border-color: #00a44f;
+        box-shadow: 0 4px 10px rgba(0, 164, 79, 0.15);
+    }
 }
 
 .cardLeft {
     display: flex;
     align-items: center;
     gap: 12px;
-    flex: 2; // chap taraf ko‘proq joy oladi
-    min-width: 200px;
+    flex: 1;
 }
 
 .info {
@@ -30,54 +36,65 @@
     gap: 4px;
 }
 
+.cardCenter {
+    flex: 1;
+}
+
 .cardRight {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     gap: 8px;
     flex: 1;
-    min-width: 140px;
+    min-width: 120px;
 }
 
-/* Order Card */
+/* 🔹 Order Card */
 .orderCard {
     margin-bottom: 20px;
-    border: 1px solid #ddd;
     border-radius: 12px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    background: #fff;
     padding: 16px;
+    border: 1px solid #f0f0f0;
 }
 
 /* 🔹 Responsive qo‘shimchalar */
 @media (max-width: 992px) {
     .sellerCard {
-        flex-direction: column; // sm va md da ustma-ust bo‘ladi
+        flex-direction: column;
         align-items: flex-start;
-    }
-
-    .cardRight {
-        align-items: flex-start;
-        width: 100%;
+        padding: 14px;
     }
 
     .cardLeft {
         width: 100%;
+    }
+
+    .cardRight {
+        width: 100%;
+        align-items: flex-start;
+        margin-top: 10px;
     }
 }
 
 @media (max-width: 576px) {
     .sellerCard {
-        padding: 12px !important;
+        padding: 12px;
+        text-align: center;
     }
 
     .cardLeft {
         flex-direction: column;
         align-items: center;
-        text-align: center;
+        width: 100%;
+    }
+
+    .info {
+        align-items: center;
     }
 
     .cardRight {
         align-items: center;
-        text-align: center;
+        width: 100%;
     }
 }

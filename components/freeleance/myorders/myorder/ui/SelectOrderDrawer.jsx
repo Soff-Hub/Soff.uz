@@ -52,26 +52,28 @@ const SelectOrderDrawer = ({ open, onClose, order }) => {
                 onClose={onClose}
                 open={open}
             >
-                <Tag
-                    className="w-100 mb-4 p-3 fs-4"
-                    color="orange"
-                    icon={<ExclamationCircleOutlined />}
-                >
-                    Ishni boshlash uchun frilanser tanlashingiz kerak
-                </Tag>
+                
 
                 <div className={styles.orderCard}>
                     <div className="d-flex align-items-center justify-content-between">
                         <Typography.Title style={{ margin: 0 }} level={4}>
                             {order?.order_name}
                         </Typography.Title>
-                        <Typography.Text strong>{formatCurrencyWithSpace(order?.price)} so'm</Typography.Text>
+                        <Typography.Title level={4} strong>{formatCurrencyWithSpace(order?.price)} so'm</Typography.Title>
                     </div>
                     <Typography.Paragraph type="secondary" style={{ margin: "8px 0" }}>
                         {order?.ordered_at} | {orderStatusName[order?.status] || ""}
                     </Typography.Paragraph>
                     <Typography.Paragraph>{order?.description}</Typography.Paragraph>
                 </div>
+
+                <Tag
+                    className="w-100 mb-4 fs-4"
+                    style={{color: "orange", background: "transparent", border: "none"}}
+                    icon={<ExclamationCircleOutlined />}
+                >
+                    Ishni boshlash uchun frilanser tanlashingiz kerak
+                </Tag>
 
                 <div className={styles.sellerList}>
                     {freelancers?.length > 0 ? (
@@ -97,14 +99,21 @@ const SelectOrderDrawer = ({ open, onClose, order }) => {
                                         </Typography.Text>
                                     </div>
                                 </div>
-
-                                <div className={styles.cardRight}>
-                                    <Typography.Text strong>
-                                        <TextSlicer bio={item.comment} len={60} />
-                                    </Typography.Text>
+                                <div className={styles.cardCenter}>
+                                    <Typography.Title type="secondary" level={5}>
+                                        Naxrxi:
+                                    </Typography.Title>
                                     <Typography.Title level={4} style={{ margin: 0 }}>
                                         {item.money?.toLocaleString("uz-UZ")} so‘m
                                     </Typography.Title>
+                                </div>
+                                <div className={styles.cardRight}>
+                                    <Typography.Text strong>
+                                        <Typography.Text type="secondary">
+                                            Taklif izohi:
+                                        </Typography.Text>
+                                        <TextSlicer bio={item.comment} len={60} />
+                                    </Typography.Text>
                                     <Button
                                         onClick={() => setSelectedOffer(item)}
                                         type="primary"
