@@ -60,7 +60,7 @@ const OrderMain = ({ order }) => {
             setIsOpen(true);
             push(`/order/${query?.id}`)
         }
-    }, [query?.isOpen ]);
+    }, [query?.isOpen]);
 
     return (
         <div className="col-lg-9 col-12 mb-5 rounded-2">
@@ -195,12 +195,12 @@ const OrderMain = ({ order }) => {
                     <div className={styles.order_date}>
                         <Breadcrumb items={items} />
 
-                        <span>
-                            Buyurtma yaratilgan vaqt:{' '}
-                            {order?.created_at
-                                ? getDate(order.created_at)
-                                : '-'}
-                        </span>
+                        {order?.created_at && (
+                            <span>
+                                Buyurtma yaratilgan vaqt:{" "}
+                                {dayjs(order.created_at).format("YYYY-MM-DD HH:mm")}
+                            </span>
+                        )}
                     </div>
                     <div className="d-flex justify-content-end align-items-center">
                         {order?.order_status_doing?.status ===
@@ -273,6 +273,15 @@ const OrderMain = ({ order }) => {
                                     </p>
                                 </div>
                             )}
+                            {order?.description &&
+                                <div>
+                                    <p>
+                                        <b>Xizmat tavsifi:</b>
+                                        <br />
+                                        {order?.description}
+                                    </p>
+                                </div>
+                            }
                             {order?.order_requirement[0]
                                 ?.order_requirement_file && (
                                     <p className="d-flex align-items-center gap-2">
