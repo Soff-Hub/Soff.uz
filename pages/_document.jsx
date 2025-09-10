@@ -80,7 +80,7 @@ export default function Document() {
                         t.src=v;s=b.getElementsByTagName(e)[0];
                         s.parentNode.insertBefore(t,s)}(window, document,'script',
                         'https://connect.facebook.net/en_US/fbevents.js');
-                        fbq('init', '646399161448166');
+                        fbq('init', '1284858666704084');
                         fbq('track', 'PageView');
                     `,
                         }}></script>
@@ -118,7 +118,7 @@ export default function Document() {
                 <noscript>
                     <img height="1" width="1" 
                         style={{ position: 'absolute', left: '-9999px' }}
-                        src="https://www.facebook.com/tr?id=646399161448166&ev=PageView&noscript=1"
+                        src="https://www.facebook.com/tr?id=1284858666704084&ev=PageView&noscript=1"
                         alt=""
                     />
                 </noscript>
