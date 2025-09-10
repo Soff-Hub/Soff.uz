@@ -92,6 +92,14 @@ const OrderMain = ({ order }) => {
                     </div>
                 )}
 
+                {(order?.order_status_doing?.status === "order_accepted") && (
+                    <div className={styles.orderPayCard}>
+                        <div>
+                            <h4 style={{ color: "yellowgreen", marginBottom: 0 }} className={styles.orderNameLink}>Buyurmangiz qabul qilindi va ishni boshladi</h4>
+                        </div>
+                    </div>
+                )}
+
                 {(order?.order_status_doing?.status === 'approved' ||
                     order?.order_status_doing?.status ===
                     'requirement_file_rejected') && (
