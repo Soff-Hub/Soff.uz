@@ -40,7 +40,7 @@ const OrderMain = ({ order }) => {
     const { query, push } = useRouter()
     const { days, hours, minutes, seconds } = useCountOrderTime(
         order?.order_status_doing?.order_accepted_date,
-        order?.service?.delivery_days
+        order?.service?.delivery_days || order?.deadline_date
     );
 
     const items = [
@@ -211,17 +211,20 @@ const OrderMain = ({ order }) => {
                         )}
                     </div>
                     <div className="d-flex justify-content-end align-items-center">
-                        {order?.order_status_doing?.status ===
-                            'order_accepted' ? (
+                        {(order?.order_status_doing?.status === 'order_accepted') ? (
                             <>
                                 <p style={{ marginTop: 8 }}>
                                     {`Tugash muddatiga ${days} kun ${hours} soat ${minutes} daqiqa ${seconds} soniya qoldi`}
                                 </p>
                             </>
                         ) : (
-                            <p style={{ marginTop: 8 }}>
-                                {`Buyurtma hali qabul qilinmadi`}
-                            </p>
+                            <>
+                                {order?.order_status_doing?.status !== 'completed' && 
+                                        <p style={{ marginTop: 8 }}>
+                                            {`Buyurtma hali qabul qilinmadi`}
+                                        </p>
+                                }
+                            </>
                         )}
                     </div>
 
