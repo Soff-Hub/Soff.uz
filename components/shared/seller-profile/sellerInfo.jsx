@@ -1,9 +1,9 @@
- 
-import React, { useState } from 'react'; 
-import SellerDonateForm from '~/components/partials/seller/SellerDonateForm'; 
+
+import React, { useState } from 'react';
+import SellerDonateForm from '~/components/partials/seller/SellerDonateForm';
 
 export default function SellerInfo({ sellerInfo, onChange }) {
-    const [openDonateModal, setOpenDonateModal] = useState(false); 
+    const [openDonateModal, setOpenDonateModal] = useState(false);
 
     console.log(sellerInfo)
     return (
@@ -92,6 +92,12 @@ export default function SellerInfo({ sellerInfo, onChange }) {
                     <>
                         <p className="SellerInfoSecondTitle">Muallif Haqida</p>
                         <p
+                            style={{
+                                fontWeight: 300,
+                                fontSize: "13px",
+                                wordBreak: "break-word",   // yoki overflowWrap: "anywhere"
+                                whiteSpace: "pre-wrap"     // agar yangi qatorlarni saqlash kerak bo‘lsa
+                            }}
                             className="SellerInfoDescription">
                             {sellerInfo?.bio}
                             {/* <span
