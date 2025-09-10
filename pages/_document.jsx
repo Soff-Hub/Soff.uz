@@ -67,7 +67,7 @@ export default function Document() {
                         }}></script>
                 )}
 
-                {process.env.NODE_ENV === 'production' && (
+                {/* {process.env.NODE_ENV === 'production' && (
                     <script
                         defer
                         dangerouslySetInnerHTML={{
@@ -84,7 +84,7 @@ export default function Document() {
                         fbq('track', 'PageView');
                     `,
                         }}></script>
-                )}
+                )} */}
 
                 {process.env.NODE_ENV === 'production' && (
                     <script
@@ -115,13 +115,13 @@ export default function Document() {
                     </div>
                 </noscript>
 
-                <noscript>
+                {/* <noscript>
                     <img height="1" width="1" 
                         style={{ position: 'absolute', left: '-9999px' }}
                         src="https://www.facebook.com/tr?id=646399161448166&ev=PageView&noscript=1"
                         alt=""
                     />
-                </noscript>
+                </noscript> */}
 
                 <script>window.yaContextCb=window.yaContextCb||[]</script>
             </Head>
