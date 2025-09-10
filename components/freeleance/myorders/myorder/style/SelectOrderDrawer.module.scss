@@ -38,7 +38,16 @@
 
 .cardCenter {
     flex: 1;
+
+    @media (max-width: 500px) {
+        display: flex; // qo‘shildi
+        flex-direction: column; // kerak bo‘lsa
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center; // matnni ham o‘rtaga olish uchun
+    }
 }
+
 
 .cardRight {
     display: flex;
