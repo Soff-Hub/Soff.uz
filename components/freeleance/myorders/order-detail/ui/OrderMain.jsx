@@ -273,7 +273,7 @@ const OrderMain = ({ order }) => {
                                     </p>
                                 </div>
                             )}
-                            {order?.description &&
+                            {(order?.description && order?.order_type == "custom_order") &&
                                 <div>
                                     <p>
                                         <b>Xizmat tavsifi:</b>
