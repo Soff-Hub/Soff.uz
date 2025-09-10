@@ -53,7 +53,7 @@ const SelectOrderDrawer = ({ open, onClose, order }) => {
                 onClose={onClose}
                 open={open}
             >
-                
+
 
                 <div className={styles.orderCard}>
                     <div className="d-flex align-items-center justify-content-between">
@@ -70,7 +70,7 @@ const SelectOrderDrawer = ({ open, onClose, order }) => {
 
                 <Tag
                     className="w-100 mb-4 fs-4 text-wrap"
-                    style={{color: "orange", background: "transparent", border: "none"}}
+                    style={{ color: "orange", background: "transparent", border: "none" }}
                     icon={<ExclamationCircleOutlined />}
                 >
                     Ishni boshlash uchun frilanser tanlashingiz kerak
@@ -102,7 +102,7 @@ const SelectOrderDrawer = ({ open, onClose, order }) => {
                                 </div>
                                 <div className={styles.cardCenter}>
                                     <Typography.Title type="secondary" level={5}>
-                                        Naxrxi:
+                                        Narxi:
                                     </Typography.Title>
                                     <Typography.Title level={4} style={{ margin: 0 }}>
                                         {item.money?.toLocaleString("uz-UZ")} so‘m
@@ -110,19 +110,21 @@ const SelectOrderDrawer = ({ open, onClose, order }) => {
                                 </div>
                                 <div className={styles.cardRight}>
                                     <Typography.Text strong>
-                                        <Typography.Text type="secondary">
+                                        <Typography.Title type="secondary" level={5}>
                                             Taklif izohi:
-                                        </Typography.Text>
+                                        </Typography.Title>
                                         <TextSlicer bio={item.comment} len={60} />
                                     </Typography.Text>
-                                    <Button
-                                        onClick={() => setSelectedOffer(item)}
-                                        type="primary"
-                                        size="small"
-                                        style={{ background: "#00a44f" }}
-                                    >
-                                        Tanlash
-                                    </Button>
+                                    <div className="d-flex justify-content-end w-100">
+                                        <Button
+                                            onClick={() => setSelectedOffer(item)}
+                                            type="primary"
+                                            size="small"
+                                            style={{ background: "#00a44f", textAlign: "end" }}
+                                        >
+                                            Tanlash
+                                        </Button>
+                                    </div>
                                 </div>
                             </div>
                         ))
@@ -145,7 +147,7 @@ const SelectOrderDrawer = ({ open, onClose, order }) => {
                 <p>
                     Haqiqattanham Siz <strong>{selectedOffer?.seller?.full_name}</strong> ni tanlamoqchimisiz?
                 </p>
-                <p><TextSlicer title={'izoh:'} bio={selectedOffer?.comment}/></p>
+                <p><TextSlicer title={'izoh:'} bio={selectedOffer?.comment} /></p>
             </Modal>
         </>
     );

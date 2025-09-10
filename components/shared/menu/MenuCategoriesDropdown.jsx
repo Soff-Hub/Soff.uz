@@ -9,7 +9,7 @@ const MenuCategoriesDropdown = () => {
         <div className="menu--product-categories">
             {!isMobile && 
                 <Link href={'/order/my-orders'} target="_blank">
-                    <p className={`${styles.navLink} mx-0 my-0`}>Buyurtmalar</p>
+                    <p className={`${styles.navLink} mx-0 my-0`}>Buyurtmalarim</p>
                 </Link>
             }
             <Link href={'https://seller.soff.uz/'} target="_blank">
