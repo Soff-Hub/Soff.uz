@@ -128,10 +128,10 @@ const getColumns = ({ onCancel, onOpenDrawer }) => {
                             max={{
                                 count: 3,
                                 popover: { trigger: "click" },
-                                style: { color: '#fff', backgroundColor: '#fde3cf' },
+                                style: { color: '#fff', backgroundColor: '#00a44f' },
                             }}
                         >
-                            {photos?.map((photo, idx) => (
+                            {photos?.map((photo) => (
                                 <Avatar
                                     style={{cursor: "pointer"}}
                                     src={photo || "/static/img/ozodbek.png"}
