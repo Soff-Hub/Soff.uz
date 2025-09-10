@@ -1,4 +1,4 @@
-import { Form, Modal, Input, Select, Button, DatePicker, message } from "antd";
+import { Form, Modal, Input, Select, Button, DatePicker, message, InputNumber } from "antd";
 import React, { useState } from "react";
 import { directions } from "../../constants";
 import { useFGet, useFPost } from "../../api/useFApi";
@@ -130,17 +130,19 @@ const CreateOrderModal = ({ open, onClose }) => {
                 >
                     <TextArea rows={4} placeholder="Buyurtma tavsifini yozing..." />
                 </Form.Item>
-
                 <Form.Item
                     name="budget"
                     label="Narx"
                     rules={[{ required: true, message: "Narx kiriting!" }]}
                 >
-                    <Input
-                        type="number"
+                    <InputNumber
                         min={2000}
                         style={{ width: "100%" }}
                         placeholder="Narx"
+                        formatter={(value) =>
+                            value ? `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ") : ""
+                        }
+                        parser={(value) => value.replace(/\s/g, "").replace(/[^\d]/g, "")}
                     />
                 </Form.Item>
 
