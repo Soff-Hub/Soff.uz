@@ -108,8 +108,7 @@ const getColumns = ({ onCancel, onOpenDrawer }) => {
             title: 'Sotuvchi',
             dataIndex: 'seller',
             render: (_, record) => {
-                const photos = record?.offers?.map(item => item.photo_url).filter(Boolean) || [];
-                const maxVisible = 3;
+                const photos = record?.offers?.map(item => item.photo_url) || [];
 
                 return record?.seller ? (   
                     <div

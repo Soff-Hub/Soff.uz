@@ -145,7 +145,7 @@ const SelectOrderDrawer = ({ open, onClose, order }) => {
                 zIndex={20000}
             >
                 <p>
-                    Haqiqattanham Siz <strong>{selectedOffer?.seller?.full_name}</strong> ni tanlamoqchimisiz?
+                    Haqiqatan ham Siz <strong>{selectedOffer?.seller?.full_name}</strong> ni tanlamoqchimisiz?
                 </p>
                 <p><TextSlicer title={'izoh:'} bio={selectedOffer?.comment} /></p>
             </Modal>
