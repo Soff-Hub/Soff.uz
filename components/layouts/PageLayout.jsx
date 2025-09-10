@@ -24,7 +24,7 @@ export let cutomerAccountLink = [
         icon: 'fa-solid fa-comment-dots',
     },
     {
-        text: 'Buyurtmalar',
+        text: 'Buyurtmalarim',
         url: '/order/my-orders',
         icon: 'fas fa-truck',
     },

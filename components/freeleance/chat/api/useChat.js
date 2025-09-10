@@ -5,22 +5,24 @@ import useGetChatById from './useGetChatById';
 const useChat = (chatId) => {
     const [messages, setMessages] = useState([]);
     const [chat, setChat] = useState();
+
     const { user } = useSelector(state => state.auth);
-    const { data } = useGetChatById(chatId);
+    const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+        useGetChatById(chatId);
     const wsRef = useRef();
 
     useEffect(() => {
         if (chatId && data) {
-            setChat(data.chat);
-            setMessages(data.messages);
+            setChat(data?.chat);
+            setMessages(prev => [...data?.pages?.at(-1)?.messages, ...prev]);
         }
     }, [chatId, data]);
 
     // 🔥 Unread message'larni yig'ib serverga yuborish
     const sendUnreadMessages = (ws, messages) => {
         if (!ws || ws.readyState !== WebSocket.OPEN) return;
-        const unreadIds = messages.filter(m => !m.is_read).map(m => m.id);
-        if (unreadIds.length > 0) {
+        const unreadIds = messages?.filter(m => !m.is_read).map(m => m.id);
+        if (unreadIds?.length > 0) {
             ws.send(JSON.stringify({
                 event: "message_read",
                 message_ids: unreadIds
@@ -38,6 +40,8 @@ const useChat = (chatId) => {
         }
     };
 
+
+
     const updateMessage = (content, message_id) => {
         if (wsRef.current?.readyState === WebSocket.OPEN) {
             wsRef.current.send(JSON.stringify({
@@ -52,7 +56,7 @@ const useChat = (chatId) => {
         if (!chatId || !user?.access) return;
 
         const ws = new WebSocket(
-            `${process.env.NEXT_PUBLIC_WS_FREELEANCE_URL}${chatId}/?token=${user.access}`
+           ` ${process.env.NEXT_PUBLIC_WS_FREELEANCE_URL}${chatId}/?token=${user.access}`
         );
         wsRef.current = ws;
 
@@ -65,7 +69,7 @@ const useChat = (chatId) => {
                 console.warn("⚠️ WS event.data bo‘sh:", event);
                 return;
             }
- 
+
             let msg;
             try {
                 msg = JSON.parse(event.data);
@@ -109,6 +113,9 @@ const useChat = (chatId) => {
         sendMessage,
         updateMessage,
         sendUnreadMessages,
+        fetchNextPage,
+        hasNextPage,
+        isFetchingNextPage,
     };
 };
 

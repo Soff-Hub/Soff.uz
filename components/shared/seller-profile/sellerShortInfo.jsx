@@ -200,8 +200,14 @@ export default function SellerShortInfo({ sellerInfo, pid }) {
                         Muallif haqida
                     </h4>
                     <p
-                        style={{ fontWeight: 300, fontSize: '13px' }}
-                        className="m-0">
+                        style={{
+                            fontWeight: 300,
+                            fontSize: "13px",
+                            wordBreak: "break-word",   // yoki overflowWrap: "anywhere"
+                            whiteSpace: "pre-wrap"     // agar yangi qatorlarni saqlash kerak bo‘lsa
+                        }}
+                        className="m-0 text-wrap"
+                    >
                         {sellerInfo?.bio}
                     </p>
                 </div>
