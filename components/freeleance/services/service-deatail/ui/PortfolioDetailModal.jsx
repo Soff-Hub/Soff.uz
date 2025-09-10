@@ -16,8 +16,8 @@ const PortfolioDetailModal = ({ open, onClose, portfolio }) => {
             centered
             className={styles.modal}
         >
+
             <div className={styles.wrapper}>
-                {/* Gallery o‘rniga oddiy mapping */}
                 <div className={styles.infoBox}>
                     <Descriptions
                         title="Portfolio Ma'lumotlari"
@@ -45,7 +45,7 @@ const PortfolioDetailModal = ({ open, onClose, portfolio }) => {
                     {portfolio?.portfolio_images?.map((img, idx) => (
                         <img
                             key={idx}
-                            className={styles.image}
+                            className={styles.newImage}
                             src={img?.image}
                             alt={`Image ${idx}`}
                         />

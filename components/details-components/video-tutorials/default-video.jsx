@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
 import { LockOutlined } from '@ant-design/icons';
+import useResponsive from '~/utilities/useResponsive';
 
 export default function DefaultVideoContent({ product, isPlay, setIsPlay, type }) {
     const url = product?.document?.file_url;
     const poster = product?.poster_url || product?.poster;
     const hasPoster = !!poster;
     const hasVideo = !!url;
+    const { isMobile, isTablet, isDesktop } = useResponsive()
 
     useEffect(() => {
         const player = document.getElementById(`videoPlayer-${product?.id}`);
@@ -26,7 +28,8 @@ export default function DefaultVideoContent({ product, isPlay, setIsPlay, type }
                 borderRadius: '5px',
                 backgroundImage: hasPoster ? `url("${poster}")` : 'none',
                 backgroundColor: hasPoster ? 'transparent' : '#111',
-                maxHeight: '450px',
+                minHeight: isMobile ? '100px' : isTablet ? '350px' : '450px',
+                maxHeight: isMobile ? '100px' : isTablet ? '350px' : '450px',
                 overflow: 'hidden',
                 position: 'relative',
                 width: '100%',

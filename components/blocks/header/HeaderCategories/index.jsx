@@ -4,6 +4,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import useResponsive from '~/utilities/useResponsive';
 import CreateOrderModal from '~/components/freeleance/custom/ui/CreateOrderModal';
+import { useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 
 const options = {
     products: [
@@ -65,6 +67,17 @@ const options = {
 const HeaderCatergories = () => {
     const { isMobile } = useResponsive();
     const [open, setOpen] = useState(false)
+    const { isLoggedIn } = useSelector(state => state.auth)
+    const { push } = useRouter()
+
+    const handleOrder = () => {
+        if(isLoggedIn){
+            setOpen(true)   
+        }else{
+            push('/auth/login')
+        }
+    }
+
     return (
         <div className={styles.dropBlock}>
             {/* {!isMobile &&
@@ -107,10 +120,10 @@ const HeaderCatergories = () => {
                     />
                 </p>
                 <ul className={styles.dropSubBox}>
-                    {/* <li onClick={() => setOpen(true)} style={{ borderBottom: "1px solid rgba(0,0,0,0.2)", paddingBottom: "12px" }} className={styles.dropSubBoxItem}>
+                    <li onClick={handleOrder} style={{ borderBottom: "1px solid rgba(0,0,0,0.2)", paddingBottom: "12px" }} className={styles.dropSubBoxItem}>
                         <div class Name={styles.add_icon}><i style={{ fontSize: isMobile ? "18px" : "25px", color: "rgba(0,0,0,0.6)" }} className="fa-solid fa-plus"></i></div>
                         <span className={styles.orderAddBtn}>Maxsus buyurtma berish</span>
-                    </li> */}
+                    </li>
                     {options.tempates.map(item => (
                         <li className={styles.dropSubBoxItem}>
                             <img

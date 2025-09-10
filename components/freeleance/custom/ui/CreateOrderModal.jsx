@@ -1,9 +1,10 @@
-import { Form, Modal, Input, Select, Button, DatePicker, message } from "antd";
+import { Form, Modal, Input, Select, Button, DatePicker, message, InputNumber } from "antd";
 import React, { useState } from "react";
 import { directions } from "../../constants";
 import { useFGet, useFPost } from "../../api/useFApi";
 import dayjs from "dayjs";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
 
 const { TextArea } = Input;
 
@@ -11,8 +12,9 @@ const CreateOrderModal = ({ open, onClose }) => {
     const [form] = Form.useForm();
     const [direction, setDirection] = useState(null)
     const { user } = useSelector(state => state.auth)
+    const { push } = useRouter()
 
-    const { data: categories } = useFGet("categories", `categories/?direction=${direction}`, { enabled: !!direction })
+    const { data: categories } = useFGet(direction, `categories/?direction=${direction}`, { enabled: !!direction })
 
     const { mutate: createOrder, isPending } = useFPost({
         url: "order/custom-order",
@@ -21,6 +23,7 @@ const CreateOrderModal = ({ open, onClose }) => {
             form.resetFields();
             onClose();
             message.success("Buyurtma muvaffaqiyatli yaratildi!");
+            push('/order/my-orders')
         },
         onError: (err) => {
             const errorMsg =
@@ -32,16 +35,17 @@ const CreateOrderModal = ({ open, onClose }) => {
     });
 
     const handleFinish = (values) => {
-        console.log("Form values:", values);
-        const fd = new FormData()
+        const fd = new FormData();
+
         for (const [key, value] of Object.entries(values)) {
-            fd.append(key, value)
+            if (key === "deadline_date" && value) {
+                fd.append(key, dayjs(value).format("YYYY-MM-DD HH:mm"));
+            } else {
+                fd.append(key, value);
+            }
         }
-        fd.forEach((val, key) => {
-            console.log(key, val);
-        });
-        fd.append("deadline_days", 10)
-        createOrder(fd)
+
+        createOrder(fd);
     };
 
     return (
@@ -65,7 +69,10 @@ const CreateOrderModal = ({ open, onClose }) => {
                     rules={[{ required: true, message: "Yo'nalish tanlang!" }]}
                 >
                     <Select
-                        onChange={(val) => setDirection(val)}
+                        onChange={(val) => {
+                            setDirection(val)
+                            form.resetFields(['category_id'])
+                        }}
                         placeholder="Yo'nalish tanlang"
                         options={directions}
                     />
@@ -108,9 +115,10 @@ const CreateOrderModal = ({ open, onClose }) => {
                     rules={[{ required: true, message: "Yetkazib berish sanasini tanlang!" }]}
                 >
                     <DatePicker
-                        format="YYYY-MM-DD"
+                        showTime={{ format: "HH:mm" }}
+                        format="YYYY-MM-DD HH:mm"
                         style={{ width: "100%" }}
-                        placeholder="Sana tanlang"
+                        placeholder="Yetkazib berish sanasini tanlang"
                         disabledDate={(current) => current && current < dayjs().startOf("day")}
                     />
                 </Form.Item>
@@ -118,21 +126,23 @@ const CreateOrderModal = ({ open, onClose }) => {
                 <Form.Item
                     name="description"
                     label="Izoh"
-                    rules={[{ required: true, message: "Izoh yozing!" }]}
+                    rules={[{ required: true, message: "Buyurtma tavsifini yozing!" }]}
                 >
-                    <TextArea rows={4} placeholder="Izoh yozing..." />
+                    <TextArea rows={4} placeholder="Buyurtma tavsifini yozing..." />
                 </Form.Item>
-
                 <Form.Item
                     name="budget"
                     label="Narx"
-                    rules={[{ required: true, message: "Miqdor kiriting!" }]}
+                    rules={[{ required: true, message: "Narx kiriting!" }]}
                 >
-                    <Input
-                        type="number"
+                    <InputNumber
                         min={2000}
                         style={{ width: "100%" }}
                         placeholder="Narx"
+                        formatter={(value) =>
+                            value ? `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ") : ""
+                        }
+                        parser={(value) => value.replace(/\s/g, "").replace(/[^\d]/g, "")}
                     />
                 </Form.Item>
 
