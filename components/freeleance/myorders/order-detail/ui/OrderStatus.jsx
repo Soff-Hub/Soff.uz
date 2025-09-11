@@ -26,7 +26,7 @@ const OrderStatus = ({ order }) => {
         pending: 'Buyurtma yaratildi',
         approved: "To'lov amalga oshirildi",
         requirement_file: "Buyurtma talablari jo'natildi",
-        requirement_file_rejected: "Buyurma talablari to'liq emas",
+        requirement_file_rejected: "Buyurtma talablari to'liq emas",
         order_accepted: 'Buyurtma qabul qilindi',
         order_file_sent: 'Tasdiqlash uchun topshirildi',
         completed: 'Buyurtma tugallandi',

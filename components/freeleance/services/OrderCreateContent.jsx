@@ -23,7 +23,7 @@ const OrderCreateContent = ({ pkg, serviceName }) => {
             </div>
             <div className='order_create_btn'>
                 <button >
-                    Buyurma berish <ArrowRightOutlined />
+                    Buyurtma berish <ArrowRightOutlined />
                 </button>
             </div>
         </div>

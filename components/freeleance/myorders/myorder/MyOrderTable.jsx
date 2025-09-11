@@ -24,7 +24,7 @@ const Status = ({ status }) => {
         case 'requirement_file_rejected':
             return (
                 <span className={styles.statusApproved}>
-                    Buyurma talablari toliq emas
+                    Buyurtma talablari toliq emas
                 </span>
             );
         case 'order_accepted':
