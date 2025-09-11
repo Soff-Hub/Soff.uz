@@ -10,6 +10,8 @@
 }
 
 .orderDetailMain {
+    margin-top: 20px;
+
     .orderPayCard {
         display: flex;
         align-items: center;
@@ -21,6 +23,9 @@
         margin-top: 20px;
         margin-bottom: 30px;
         gap: 10px;
+        @media (max-width: 768px) {
+            flex-direction: column; 
+        }
     }
 
     .order {
@@ -28,7 +33,6 @@
         border-radius: 10px;
         padding: 16px;
         border: 1px solid #ddd;
-        margin-top: 20px;
 
         .order_info {
             display: flex;
@@ -65,6 +69,9 @@
         &:hover {
             background-color: #008f3c;
         }
+    }
+    @media (max-width:992px) {
+        margin-top: 50px;
     }
 }
 

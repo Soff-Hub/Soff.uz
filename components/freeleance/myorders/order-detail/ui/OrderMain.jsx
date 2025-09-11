@@ -153,7 +153,7 @@ const OrderMain = ({ order }) => {
                                 tasdiqlang yoki rad eting.
                             </p>
                         </div>
-                        <div style={{ display: 'flex', gap: 12 }}>
+                        <div className='d-flex w-100 flex-column justify-content-end flex-sm-row' style={{ display: 'flex', gap: 12 }}>
                             <Button
                                 icon={<DownloadOutlined />}
                                 onClick={() =>
@@ -173,6 +173,7 @@ const OrderMain = ({ order }) => {
                         </div>
                     </div>
                 )}
+                 <Breadcrumb items={items} className='mb-3' />
 
                 <div className={styles.order}>
                     <div className={styles.order_info}>
@@ -201,7 +202,6 @@ const OrderMain = ({ order }) => {
                     </div>
 
                     <div className={styles.order_date}>
-                        <Breadcrumb items={items} />
 
                         {order?.created_at && (
                             <span>
