@@ -51,7 +51,7 @@ const LastProducts = () => {
                 <h3 onClick={() => push(`/scientific-resources/all`)}>📚 Ilmiy ishlar</h3>
                 <div className='row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-gap-4'>
                     {fileData?.results?.map(p =>
-                        <div className='col p-2'>
+                        <div key={p.id} className='col p-2'>
                             <ProductCard product={p} />
                         </div>
                     )}
@@ -61,7 +61,7 @@ const LastProducts = () => {
                 <h3 onClick={() => push(`/3d-models-and-interior-designs/all`)}>🏠 3D moddellar</h3>
                 <div className='row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-gap-4'>
                     {threeDData?.results?.map(p =>
-                        <div className='col p-2'>
+                        <div key={p.id} className='col p-2'>
                             <ProductCard product={p} />
                         </div>
                     )}

@@ -87,7 +87,7 @@ export default function FooterComponents() {
                 <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 p-0 mb-5">
                     {footerMenu.contactModeration.items.map((item, i) => (
                         <a
-                            key={i}
+                            key={item.url}
                             href={item.url}
                             className="d-flex text-white align-items-center footer-link gap-3 footer-link fs-4 mb-3">
                             {item.contact}

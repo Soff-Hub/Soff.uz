@@ -63,3 +63,49 @@ export const useCountOrderTime = (acceptedDate, deliveryDays) => {
 
   return timeLeft;
 };
+
+
+export const useCountTimeBack = (deadline_date) => {
+  const [timeLeft, setTimeLeft] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
+
+  useEffect(() => {
+    if (!deadline_date) {
+      setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+      return;
+    }
+
+    const deadline = dayjs(deadline_date);
+
+    const updateTime = () => {
+      const now = dayjs();
+      const diff = deadline.diff(now);
+
+      if (diff <= 0) {
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      setTimeLeft({ days, hours, minutes, seconds });
+    };
+
+    // Boshlang‘ich chaqirish
+    updateTime();
+
+    // Har 1 sekundda yangilash
+    const interval = setInterval(updateTime, 1000);
+
+    return () => clearInterval(interval);
+  }, [deadline_date]);
+
+  return timeLeft;
+};
