@@ -49,7 +49,11 @@ const CreateOrderModal = ({ open, onClose }) => {
     };
 
     return (
-        <Modal width={600} title="Maxsus buyurtma yaratish" open={open} onCancel={onClose} footer={null} destroyOnClose>
+        <Modal width={600} styles={{
+            content: {
+                padding: "15px"
+            }
+        }} title="Maxsus buyurtma yaratish" open={open} onCancel={onClose} footer={null} destroyOnClose>
             <Form
                 form={form}
                 layout="vertical"
@@ -57,15 +61,25 @@ const CreateOrderModal = ({ open, onClose }) => {
             >
                 <Form.Item
                     name="title"
-                    label="Buyurtma nomi"
+
+                    label={<div className="d-flex align-items-start text-wrap flex-column flex-sm-row align-items-sm-center">
+
+                        <p className="m-0 text-dark">Buyurtmangiz haqida qisqacha tavsif.</p>
+                        <span style={{ fontSize: '11px' }} className="text-info  ml-2">(Misol uchun: Logo dizayn tayyorlash)</span>
+                    </div>}
                     rules={[{ required: true, message: "Buyurtma nomini kiriting!" }]}
                 >
-                    <Input placeholder="Korxona uchun logo dizayn tayyorlash" />
+                    <Input placeholder="" />
                 </Form.Item>
 
                 <Form.Item
                     name="direction"
-                    label="Yo'nalish"
+                    label={
+                        <div className="d-flex align-items-start text-wrap flex-column flex-sm-row align-items-sm-center">
+                            <p className="m-0 text-dark">Qanday turdagi xizmat kerak?</p>
+                            <span style={{ fontSize: '11px' }} className="text-info  ml-2">(Misol uchun: Grafik dizayn)</span>
+                        </div>
+                    }
                     rules={[{ required: true, message: "Yo'nalish tanlang!" }]}
                 >
                     <Select
@@ -73,19 +87,22 @@ const CreateOrderModal = ({ open, onClose }) => {
                             setDirection(val)
                             form.resetFields(['category_id'])
                         }}
-                        placeholder="Grafik Dizayn"
+                        placeholder=""
                         options={directions}
                     />
                 </Form.Item>
                 {direction &&
                     <Form.Item
                         name="category_id"
-                        label="Kategoriya"
+                        label={<div className="d-flex align-items-start text-wrap flex-column flex-sm-row align-items-sm-center">
+                            <p className="m-0 text-dark">Aniq xizmat turi</p>
+                            <span style={{ fontSize: '11px' }} className="text-info ml-2">(Misol uchun: Logo dizayn)</span>
+                        </div>}
                         rules={[{ required: true, message: "Kategoriya tanlang!" }]}
                     >
                         <Select
 
-                            placeholder="Logo dizayn"
+                            placeholder=""
                             options={categories?.map(cat => ({
                                 label: cat?.title,
                                 value: cat?.id
@@ -96,11 +113,14 @@ const CreateOrderModal = ({ open, onClose }) => {
 
                 <Form.Item
                     name="language"
-                    label="Bajarilish tili"
+                    label={<div className="d-flex align-items-start text-wrap flex-column flex-sm-row align-items-sm-center">
+                        <p className="m-0 text-dark">Qaysi tilda bajarilsin?</p>
+                        <span style={{ fontSize: '11px' }} className="text-info ml-2">(Misol uchun: O'zbekcha)</span>
+                    </div>}
                     rules={[{ required: true, message: "Bajarilish tilini tanlang!" }]}
                 >
                     <Select
-                        placeholder="O'zbekcha"
+                        placeholder=""
                         options={[
                             { label: "O'zbekcha", value: "uzb" },
                             { label: "Ruscha", value: "rus" },
@@ -111,34 +131,41 @@ const CreateOrderModal = ({ open, onClose }) => {
 
                 <Form.Item
                     name="deadline_date"
-                    label="Yetkazib berish sanasi"
+                    label={<div className="d-flex align-items-start text-wrap flex-column flex-sm-row align-items-sm-center">
+                        <p className="m-0 text-dark">Qachongacha tayyor bo‘lishi kerak?</p>
+                        <span style={{ fontSize: '11px' }} className="text-info ml-2">(Misol uchun: Sep 4, 2025)</span>
+                    </div>}
                     rules={[{ required: true, message: "Yetkazib berish sanasini tanlang!" }]}
                 >
                     <DatePicker
-                        showTime={{ format: "HH:mm" }}
-                        format="YYYY-MM-DD HH:mm"
+                        format="MMM DD, YYYY"
                         style={{ width: "100%" }}
-                        placeholder="2025-09-25 06:00"
+                        placeholder=""
+                        size="small"
                         disabledDate={(current) => current && current < dayjs().startOf("day")}
                     />
                 </Form.Item>
 
                 <Form.Item
                     name="description"
-                    label="Izoh"
+                    label="Buyurtma haqida batafsil yozing"
                     rules={[{ required: true, message: "Buyurtma tavsifini yozing!" }]}
                 >
                     <TextArea rows={4} placeholder="Ishlab chiraqish korxonasi uchun logo dizayn tayyorlash kerak" />
                 </Form.Item>
                 <Form.Item
                     name="budget"
-                    label="Narx"
+
+                    label={<div className="d-flex align-items-start text-wrap flex-column flex-sm-row align-items-sm-center">
+                        <p className="m-0 text-dark">Siz to‘lashga tayyor summa</p>
+                        <span style={{ fontSize: '11px' }} className="text-info ml-2">(Misol uchun: 200 000 so’m)</span>
+                    </div>}
                     rules={[{ required: true, message: "Narx kiriting!" }]}
                 >
                     <InputNumber
                         min={2000}
                         style={{ width: "100%" }}
-                        placeholder="300 000"
+                        placeholder=""
                         formatter={(value) =>
                             value ? `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ") : ""
                         }

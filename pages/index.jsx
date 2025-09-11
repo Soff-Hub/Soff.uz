@@ -55,7 +55,11 @@ export async function getServerSideProps(context) {
             },
         };
     } catch (error) {
-        console.log('error indexjs file', error)
+        return {
+            props: {
+                err: error
+            },
+        }
     }
 }
 
