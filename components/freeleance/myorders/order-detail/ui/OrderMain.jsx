@@ -72,7 +72,7 @@ const OrderMain = ({ order }) => {
                 {/* Oldingi kartochkalar */}
                 {order?.order_status_doing?.status === 'pending' && (
                     <div className={styles.orderPayCard}>
-                        <div>
+                        <div className='w-100'>
                             <h3 className={styles.orderNameLink}>
                                 To'lov kutilmoqda
                             </h3>
@@ -88,7 +88,7 @@ const OrderMain = ({ order }) => {
                             style={{
                                 backgroundColor: '#00a44f',
                                 borderColor: '#00a44f',
-                                padding: '16px 28px',
+                                padding: '16px 36px',
                             }}
                             onClick={() => setIsOpen(true)}>
                             To'lash
@@ -104,7 +104,7 @@ const OrderMain = ({ order }) => {
                     </div>
                 )}
 
-                {(order?.order_status_doing?.status === 'approved' ||
+                {(order?.order_status_doing?.status=== 'approved' ||
                     order?.order_status_doing?.status ===
                     'requirement_file_rejected') && (
                         <div className={styles.orderPayCard}>
@@ -145,7 +145,7 @@ const OrderMain = ({ order }) => {
                     )}
 
                 {/* Seller ishni tugatganda */}
-                {order?.order_status_doing?.status === 'order_file_sent' && (
+                {order?.order_status_doing?.status== 'order_file_sent' && (
                     <>
                         <Alert icon={<WarningOutlined />} message="Buyurtma 24 soat ichida ko'rib chiqilmasa avtomatik ravishta qabul qilingan deb hisoblanadi." type="warning" />
                         <div className={styles.orderPayCard}>
@@ -548,7 +548,7 @@ const OrderMain = ({ order }) => {
                                         borderColor: '#28a745',
                                     }}
                                     onClick={() => setShowPayment(true)}>
-                                    Buyurma berish
+                                    Buyurtma berish
                                     <i className="fa-solid fa-arrow-right ms-2"></i>
                                 </Button>
                             </div>
