@@ -165,7 +165,7 @@ const SelectOrderDrawer = ({ open, onClose, order }) => {
                     Haqiqatan ham Siz <strong>{selectedOffer?.seller?.full_name}</strong> ni tanlamoqchimisiz?
                 </p>
                 
-                <p><TextSlicer title={'Izoh:'} bio={`${selectedOffer?.comment || 'Izoh yo‘q'} Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis rerum repellat fuga porro aperiam ut earum cumque! Quod earum non neque porro nihil corporis illo dolore perspiciatis eligendi, debitis voluptatem labore placeat fugit saepe qui blanditiis voluptatibus alias in! Distinctio culpa aspernatur accusantium repellat temporibus fugit facilis ex amet. Cupiditate repellat laboriosam adipisci iure magnam exercitationem assumenda quibusdam atque amet, reiciendis ducimus nostrum earum. Maxime voluptatum quam magni nostrum maiores eligendi ad eveniet error quibusdam! Nam quidem totam inventore laborum, voluptatibus est earum officiis consequatur, incidunt minus tenetur reiciendis aspernatur ea, iste sit non expedita deserunt distinctio in ipsa velit!`} /></p>
+                <p><TextSlicer title={'Izoh:'} bio={`${selectedOffer?.comment || 'Izoh yo‘q'}`} /></p>
             </Modal>
         </>
     );
