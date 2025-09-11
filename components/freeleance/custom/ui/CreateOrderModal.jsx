@@ -69,7 +69,7 @@ const CreateOrderModal = ({ open, onClose }) => {
                     </div>}
                     rules={[{ required: true, message: "Buyurtma nomini kiriting!" }]}
                 >
-                    <Input placeholder="" />
+                    <Input style={{height: '32px'}} placeholder="" />
                 </Form.Item>
 
                 <Form.Item
@@ -128,36 +128,11 @@ const CreateOrderModal = ({ open, onClose }) => {
                         ]}
                     />
                 </Form.Item>
-
-                <Form.Item
-                    name="deadline_date"
-                    label={<div className="d-flex align-items-start text-wrap flex-column flex-sm-row align-items-sm-center">
-                        <p className="m-0 text-dark">Qachongacha tayyor bo‘lishi kerak?</p>
-                        <span style={{ fontSize: '11px' }} className="text-info ml-2">(Misol uchun: Sep 4, 2025)</span>
-                    </div>}
-                    rules={[{ required: true, message: "Yetkazib berish sanasini tanlang!" }]}
-                >
-                    <DatePicker
-                        format="MMM DD, YYYY"
-                        style={{ width: "100%" }}
-                        placeholder=""
-                        size="small"
-                        disabledDate={(current) => current && current < dayjs().startOf("day")}
-                    />
-                </Form.Item>
-
-                <Form.Item
-                    name="description"
-                    label="Buyurtma haqida batafsil yozing"
-                    rules={[{ required: true, message: "Buyurtma tavsifini yozing!" }]}
-                >
-                    <TextArea rows={4} placeholder="Ishlab chiraqish korxonasi uchun logo dizayn tayyorlash kerak" />
-                </Form.Item>
                 <Form.Item
                     name="budget"
 
                     label={<div className="d-flex align-items-start text-wrap flex-column flex-sm-row align-items-sm-center">
-                        <p className="m-0 text-dark">Siz to‘lashga tayyor summa</p>
+                        <p className="m-0 text-dark">Siz bermoqchi bo'lgan summa</p>
                         <span style={{ fontSize: '11px' }} className="text-info ml-2">(Misol uchun: 200 000 so’m)</span>
                     </div>}
                     rules={[{ required: true, message: "Narx kiriting!" }]}
@@ -173,8 +148,35 @@ const CreateOrderModal = ({ open, onClose }) => {
                     />
                 </Form.Item>
 
+                <Form.Item
+                    name="deadline_date"
+                    label={<div className="d-flex align-items-start text-wrap flex-column flex-sm-row align-items-sm-center">
+                        <p className="m-0 text-dark">Qachongacha tayyor bo‘lishi kerak?</p>
+                        <span style={{ fontSize: '11px' }} className="text-info ml-2">(Misol uchun: Sep 4, 2025)</span>
+                    </div>}
+                    rules={[{ required: true, message: "Yetkazib berish sanasini tanlang!" }]}
+                >
+                    <DatePicker
+                        format="MMM DD, YYYY"
+                        style={{ width: "100%", height: "32px" }}
+                        placeholder=""
+                        size="small"
+                        disabledDate={(current) => current && current < dayjs().startOf("day")}
+                    />
+                </Form.Item>
+
+                <Form.Item
+                    name="description"
+                    label="Buyurtma haqida batafsil yozing"
+                    rules={[{ required: true, message: "Buyurtma tavsifini yozing!" }]}
+                >
+                    <TextArea style={{ resize: "none" }} rows={4} placeholder="Ishlab chiraqish korxonasi uchun logo dizayn tayyorlash kerak" />
+                </Form.Item>
+
+
+
                 <Form.Item>
-                    <Button loading={isPending} type="primary" htmlType="submit" block>
+                    <Button loading={isPending} type="primary" htmlType="submit" className="mt-3 py-4 fs-4" block>
                         Yuborish
                     </Button>
                 </Form.Item>
