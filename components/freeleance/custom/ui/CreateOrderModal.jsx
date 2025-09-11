@@ -60,7 +60,7 @@ const CreateOrderModal = ({ open, onClose }) => {
                     label="Buyurtma nomi"
                     rules={[{ required: true, message: "Buyurtma nomini kiriting!" }]}
                 >
-                    <Input placeholder="Buyurtma nomi" />
+                    <Input placeholder="Korxona uchun logo dizayn tayyorlash" />
                 </Form.Item>
 
                 <Form.Item
@@ -73,7 +73,7 @@ const CreateOrderModal = ({ open, onClose }) => {
                             setDirection(val)
                             form.resetFields(['category_id'])
                         }}
-                        placeholder="Yo'nalish tanlang"
+                        placeholder="Grafik Dizayn"
                         options={directions}
                     />
                 </Form.Item>
@@ -85,7 +85,7 @@ const CreateOrderModal = ({ open, onClose }) => {
                     >
                         <Select
 
-                            placeholder="Kategoriya tanlang"
+                            placeholder="Logo dizayn"
                             options={categories?.map(cat => ({
                                 label: cat?.title,
                                 value: cat?.id
@@ -96,11 +96,11 @@ const CreateOrderModal = ({ open, onClose }) => {
 
                 <Form.Item
                     name="language"
-                    label="Til"
-                    rules={[{ required: true, message: "Tilni tanlang!" }]}
+                    label="Bajarilish tili"
+                    rules={[{ required: true, message: "Bajarilish tilini tanlang!" }]}
                 >
                     <Select
-                        placeholder="Tilni tanlang"
+                        placeholder="O'zbekcha"
                         options={[
                             { label: "O'zbekcha", value: "uzb" },
                             { label: "Ruscha", value: "rus" },
@@ -118,7 +118,7 @@ const CreateOrderModal = ({ open, onClose }) => {
                         showTime={{ format: "HH:mm" }}
                         format="YYYY-MM-DD HH:mm"
                         style={{ width: "100%" }}
-                        placeholder="Yetkazib berish sanasini tanlang"
+                        placeholder="2025-09-25 06:00"
                         disabledDate={(current) => current && current < dayjs().startOf("day")}
                     />
                 </Form.Item>
@@ -128,7 +128,7 @@ const CreateOrderModal = ({ open, onClose }) => {
                     label="Izoh"
                     rules={[{ required: true, message: "Buyurtma tavsifini yozing!" }]}
                 >
-                    <TextArea rows={4} placeholder="Buyurtma tavsifini yozing..." />
+                    <TextArea rows={4} placeholder="Ishlab chiraqish korxonasi uchun logo dizayn tayyorlash kerak" />
                 </Form.Item>
                 <Form.Item
                     name="budget"
@@ -138,7 +138,7 @@ const CreateOrderModal = ({ open, onClose }) => {
                     <InputNumber
                         min={2000}
                         style={{ width: "100%" }}
-                        placeholder="Narx"
+                        placeholder="300 000"
                         formatter={(value) =>
                             value ? `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ") : ""
                         }

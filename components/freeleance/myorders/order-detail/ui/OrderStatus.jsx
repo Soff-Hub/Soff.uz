@@ -50,7 +50,7 @@ const OrderStatus = ({ order }) => {
 
             {/* Seller info */}
             <div className={styles.seller}>
-                <span>Sotuvchi</span>
+                <span>Frilanser</span>
                 <div className={styles.seller_box}>
                     <div>
                         <Link

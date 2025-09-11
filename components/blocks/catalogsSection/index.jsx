@@ -1,11 +1,7 @@
 import React from 'react';
 import styles from './catalogs.module.scss';
 import Image from 'next/image';
-import CatalogCard from '../cards/catalogCard';
-import { useQuery } from '@tanstack/react-query';
-import { api } from '~/repositories/api';
-import Loader from '~/components/shared/loader';
-import { useRouter } from 'next/router';
+import CatalogCard from '../cards/catalogCard'; 
 
 const title = {
     '3d': '3D Moddellar',

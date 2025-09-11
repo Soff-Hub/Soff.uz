@@ -28,16 +28,16 @@ export const MenuItem = ({ products, templates, label }) => {
             </button>
             <div className={styles.dropDown}>
                 <div className={styles.templates}>
-                    <h3 style={{cursor: "pointer"}} onClick={() => router.push(`/${templateLink[label]}/all`)} className={styles.sectionLabel}>Tayyor mahsulotlar</h3>
+                    <h3 style={{ cursor: "pointer" }} onClick={() => router.push(`/${templateLink[label]}/all`)} className={styles.sectionLabel}>Tayyor mahsulotlar</h3>
                     <ul className={styles.details}>
                         {templates.map(item => (
                             <li
+                                key={item.id}
                                 onClick={() => {
                                     router.push(
                                         `/${templateLink[label]}/${item.slug}?slug=${item.slug}&search=&parentCategory=${item.slug}&title=${item.title}`
                                     );
                                 }}
-                                key={item.id}
                                 className={styles.detail}>
                                 {item.title}
                             </li>
@@ -45,16 +45,16 @@ export const MenuItem = ({ products, templates, label }) => {
                     </ul>
                 </div>
                 <div className={styles.orders}>
-                    <h3 style={{cursor: "pointer"}} onClick={() => router.push(`/orders?direction=${label}`)} className={styles.sectionLabel}>Buyurtma berish</h3>
+                    <h3 style={{ cursor: "pointer" }} onClick={() => router.push(`/orders?direction=${label}`)} className={styles.sectionLabel}>Buyurtma berish</h3>
                     <ul className={styles.details}>
                         {products.map(item => (
                             <li
+                                key={item.id}
                                 onClick={() => {
                                     router.push(
                                         `/orders?direction=${label}&parent_category_id=${item.id}&title=${item.title}`
                                     );
                                 }}
-                                key={item.id}
                                 className={styles.detail}>
                                 {item.title}
                             </li>

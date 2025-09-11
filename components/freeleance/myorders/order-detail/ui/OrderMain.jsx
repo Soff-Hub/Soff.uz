@@ -6,8 +6,9 @@ import {
     Input,
     Rate,
     Collapse,
+    Alert,
 } from 'antd';
-import { DownloadOutlined, SmileOutlined } from '@ant-design/icons';
+import { DownloadOutlined, ExclamationCircleOutlined, SmileOutlined, WarningOutlined } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
 import styles from '../style/style.module.scss';
 import Link from 'next/link';
@@ -21,7 +22,7 @@ import useSubmit from '../api/useSubmit';
 import { useQueryClient } from '@tanstack/react-query';
 import { getDate, getRemainingDays } from '~/utilities/calculateTime';
 import ReactConfetti from 'react-confetti';
-import { useCountOrderTime } from '~/hooks/useCountDown';
+import { useCountOrderTime, useCountTimeBack } from '~/hooks/useCountDown';
 import { useRouter } from 'next/router';
 dayjs.locale('uz-latn');
 
@@ -42,6 +43,9 @@ const OrderMain = ({ order }) => {
         order?.order_status_doing?.order_accepted_date,
         order?.service?.delivery_days || order?.deadline_date
     );
+    const { days: daysBack, hours: hoursBack, minutes: minutesBack, seconds: secondsBack } = useCountTimeBack(
+        order?.deadline_date
+    );
 
     const items = [
         { title: <Link href={'/order/my-orders'}>Mening buyurtmalarim</Link> },
@@ -61,7 +65,7 @@ const OrderMain = ({ order }) => {
             push(`/order/${query?.id}`)
         }
     }, [query?.isOpen]);
-
+    console.log('order', order);
     return (
         <div className="col-lg-9 col-12 mb-5 rounded-2">
             <div className={styles.orderDetailMain}>
@@ -142,38 +146,42 @@ const OrderMain = ({ order }) => {
 
                 {/* Seller ishni tugatganda */}
                 {order?.order_status_doing?.status === 'order_file_sent' && (
-                    <div className={styles.orderPayCard}>
-                        <div>
-                            <h3 className={styles.orderNameLink}>
-                                Ishni qabul qilish
-                            </h3>
-                            <p>
-                                Mutahasis buyurtmani yakunladi va natijani sizga
-                                jo‘natdi. Natijani yuklab olib ko‘rib chiqing va
-                                tasdiqlang yoki rad eting.
-                            </p>
+                    <>
+                        <Alert icon={<WarningOutlined />} message="Buyurtma 24 soat ichida ko'rib chiqilmasa avtomatik ravishta qabul qilingan deb hisoblanadi." type="warning" />
+                        <div className={styles.orderPayCard}>
+                            <div>
+                                <h3 className={styles.orderNameLink}>
+                                    Ishni qabul qilish
+                                </h3>
+                                <p>
+                                    Mutahasis buyurtmani yakunladi va natijani sizga
+                                    jo‘natdi. Natijani yuklab olib ko‘rib chiqing va
+                                    tasdiqlang yoki rad eting.
+                                </p>
+                            </div>
+                            <div className='d-flex w-100 flex-column justify-content-end flex-sm-row' style={{ display: 'flex', gap: 12 }}>
+                                <Button
+                                    icon={<DownloadOutlined />}
+                                    onClick={() =>
+                                        window.open(file?.file, '_blank')
+                                    }>
+                                    Faylni yuklab olish
+                                </Button>
+                                <Button
+                                    type="primary"
+                                    style={{
+                                        backgroundColor: '#00a44f',
+                                        borderColor: '#00a44f',
+                                    }}
+                                    onClick={() => setFeedbackOpen(true)}>
+                                    Natijani baholash
+                                </Button>
+                            </div>
+
                         </div>
-                        <div className='d-flex w-100 flex-column justify-content-end flex-sm-row' style={{ display: 'flex', gap: 12 }}>
-                            <Button
-                                icon={<DownloadOutlined />}
-                                onClick={() =>
-                                    window.open(file?.file, '_blank')
-                                }>
-                                Faylni yuklab olish
-                            </Button>
-                            <Button
-                                type="primary"
-                                style={{
-                                    backgroundColor: '#00a44f',
-                                    borderColor: '#00a44f',
-                                }}
-                                onClick={() => setFeedbackOpen(true)}>
-                                Natijani baholash
-                            </Button>
-                        </div>
-                    </div>
+                    </>
                 )}
-                 <Breadcrumb items={items} className='mb-3' />
+                <Breadcrumb items={items} className='mb-3' />
 
                 <div className={styles.order}>
                     <div className={styles.order_info}>
@@ -211,18 +219,26 @@ const OrderMain = ({ order }) => {
                         )}
                     </div>
                     <div className="d-flex justify-content-end align-items-center">
-                        {(order?.order_status_doing?.status === 'order_accepted') ? (
+                        {order?.order_type === 'custom_order' && (order?.order_status_doing?.status === 'order_accepted' || order?.order_status_doing?.status === 'order_file_sent') ? (
                             <>
                                 <p style={{ marginTop: 8 }}>
-                                    {`Tugash muddatiga ${days} kun ${hours} soat ${minutes} daqiqa ${seconds} soniya qoldi`}
+                                    {`Tugash muddatiga ${daysBack} kun ${hoursBack} soat ${minutesBack} daqiqa ${secondsBack} soniya qoldi`}
                                 </p>
                             </>
-                        ) : (
+                        ) : order?.order_type === 'ready_service' && (order?.order_status_doing?.status === 'order_accepted' || order?.order_status_doing?.status === 'order_file_sent') ? <>
+                            <p style={{ marginTop: 8 }}>
+                                {`Tugash muddatiga ${days} kun ${hours} soat ${minutes} daqiqa ${seconds} soniya qoldi`}
+                            </p>
+                        </> : order?.order_status_doing?.status === 'completed' ? <>
+                            <p style={{ marginTop: 8 }}>
+                                {`Buyurtma tugatilgan`}
+                            </p>
+                        </> : (
                             <>
-                                {order?.order_status_doing?.status !== 'completed' && 
-                                        <p style={{ marginTop: 8 }}>
-                                            {`Buyurtma hali qabul qilinmadi`}
-                                        </p>
+                                {order?.order_status_doing?.status !== 'completed' &&
+                                    <p style={{ marginTop: 8 }}>
+                                        {`Buyurtma hali qabul qilinmadi`}
+                                    </p>
                                 }
                             </>
                         )}

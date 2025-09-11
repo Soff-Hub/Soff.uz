@@ -6,7 +6,7 @@ import Meta from '~/components/shared/headers/Meta';
 import { TelegramLink } from '~/components/shared/telegramLink';
 import { baseURL } from '~/repositories/api';
 
-function NewHomePage ({ tab, category, lastProductsData }) {
+function NewHomePage({ tab, category, lastProductsData }) {
     return (
         <PageLayout>
             <Meta
@@ -23,11 +23,11 @@ function NewHomePage ({ tab, category, lastProductsData }) {
                     { name: "grafik dizayn" },
                     { name: "akademik xizmatlar" },
                     { name: "Soff.uz" },
-                    ]}
+                ]}
                 author='Soff.uz'
                 image='c'
             />
-            <HomePage/>
+            <HomePage />
             {/* <BestSellerStatics /> */}
             {/* <HeroSearch /> */}
             {/* <HomeCategories /> */}
@@ -35,24 +35,28 @@ function NewHomePage ({ tab, category, lastProductsData }) {
             {/* <ItServicesCategories />
             <ResutsComponents />
             <SubProjects /> */}
-            <TelegramLink/>
+            <TelegramLink />
             {/* <Faqs/> */}
         </PageLayout>
     );
 }
 
-export async function getServerSideProps (context) {
-    const { query } = context;
-    const res = await fetch(`${baseURL}customer/last-added?limit=6`)
-    const lastProductsData = await res.json()
- 
-    return {
-        props: {
-            tab: query?.tab || 'file',
-            category: query?.category || null,
-            lastProductsData,
-        },
-    };
+export async function getServerSideProps(context) {
+    try {
+        const { query } = context;
+        const res = await fetch(`${baseURL}customer/last-added?limit=6`)
+        const lastProductsData = await res.json()
+
+        return {
+            props: {
+                tab: query?.tab || 'file',
+                category: query?.category || null,
+                lastProductsData,
+            },
+        };
+    } catch (error) {
+        console.log('error indexjs file', error)
+    }
 }
 
 export default NewHomePage;
