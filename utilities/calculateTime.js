@@ -39,7 +39,7 @@ export const getDate = (date) => {
   return dayjs(date).format('DD/MM/YYYY')
 };
 export const getDateTime = (date) => {
-  return dayjs(date).format('DD/MM/YYYY HH:mm')
+  return dayjs(date).format('YYYY-MM-DD HH:mm')
 };
 
 export const getStatus = (timestamp) => {
