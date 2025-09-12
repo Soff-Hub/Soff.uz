@@ -3,10 +3,11 @@ import styles from '../styles/LastProducts.module.scss';
 import { useGet } from '~/repositories/https';
 import ProductCard from '../ui/ProductCard';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 const LastProducts = () => {
     const { push } = useRouter()
-    
+
     const { data: fileData, isLoading: fileLoading } = useGet(
         'file_product',
         "customer/last-added/?direction=file&limit=5"
@@ -48,27 +49,33 @@ const LastProducts = () => {
                 <h1>So’ngi yuklangan mahsulotlar</h1>
             </div>
             <div className={styles.productBox}>
-                <h3 onClick={() => push(`/scientific-resources/all`)}>📚 Ilmiy ishlar</h3>
+                <Link href={`/scientific-resources/all`}>
+                    <h3>📚 Ilmiy ishlar</h3>
+                </Link>
                 <div className='row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-gap-4'>
                     {fileData?.results?.map(p =>
-                        <div className='col p-2'>
+                        <div key={p.id} className='col p-2'>
                             <ProductCard product={p} />
                         </div>
                     )}
                 </div>
             </div>
             <div className={styles.productBox}>
-                <h3 onClick={() => push(`/3d-models-and-interior-designs/all`)}>🏠 3D moddellar</h3>
+                <Link href={`/3d-models-and-interior-designs/all`}>
+                    <h3>🏠 3D moddellar</h3>
+                </Link>
                 <div className='row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-gap-4'>
                     {threeDData?.results?.map(p =>
-                        <div className='col p-2'>
+                        <div key={p.id} className='col p-2'>
                             <ProductCard product={p} />
                         </div>
                     )}
                 </div>
-            </div>
+            </div>  
             <div className={styles.productBox}>
-                <h3 onClick={() => push(`/design-developments/all`)}>🎨 Dizayn shablonlari</h3>
+                <Link href={`/design-developments/all`}>
+                    <h3>🎨 Dizayn shablonlari</h3>
+                </Link>
                 <div className='row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-gap-4'>
                     {designData?.results?.map(p =>
                         <div className='col p-2'>
@@ -78,7 +85,9 @@ const LastProducts = () => {
                 </div>
             </div>
             <div className={styles.productBox}>
-                <h3 onClick={() => push(`/video-lessons/all`)}>🎥 Video ishlanmalar</h3>
+                <Link href={`/video-lessons/all`}>
+                    <h3>🎥 Video ishlanmalar</h3>
+                </Link>
                 <div className='row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-gap-4'>
                     {videoData?.results?.map(p =>
                         <div className='col p-2'>
@@ -88,7 +97,9 @@ const LastProducts = () => {
                 </div>
             </div>
             <div className={styles.productBox}>
-                <h3 onClick={() => push(`/templates/all`)}>📝 Tayyor shablonlar</h3>
+                <Link href={`/templates/all`}>
+                    <h3>📝 Tayyor shablonlar</h3>
+                </Link>
                 <div className='row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-gap-4'>
                     {templateData?.results?.map(p =>
                         <div className='col p-2'>
@@ -98,7 +109,9 @@ const LastProducts = () => {
                 </div>
             </div>
             <div className={styles.productBox}>
-                <h3 onClick={() => push(`/websites/all`)}>🌐 Vebsaytlar</h3>
+                <Link href={`/websites/all`}>
+                    <h3>🌐 Vebsaytlar</h3>
+                </Link>
                 <div className='row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-gap-4'>
                     {websiteData?.results?.map(p =>
                         <div className='col p-2'>

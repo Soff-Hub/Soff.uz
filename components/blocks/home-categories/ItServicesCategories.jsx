@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
 
@@ -43,23 +44,22 @@ export default function ItServicesCategories() {
             <div className="it-services-grid-container">
                 {itServicesCategoriesData.map((item, index) => {
                     return (
-                        <div
-                            className="it-services-card"
-                            key={index}
-                            onClick={() => router.push(item.path)}>
-                            <div className="it-services-card-inner">
-                                <img
-                                    src={item.imgUrl}
-                                    className="it-services-card-image"
-                                    alt={item.title}
-                                />
-                                <div className="it-services-card-title-box">
-                                    <h3 className="it-services-card-title">
-                                        {item.title}
-                                    </h3>
+                        <Link key={index} href={item.path}>
+                            <div className="it-services-card">
+                                <div className="it-services-card-inner">
+                                    <img
+                                        src={item.imgUrl}
+                                        className="it-services-card-image"
+                                        alt={item.title}
+                                    />
+                                    <div className="it-services-card-title-box">
+                                        <h3 className="it-services-card-title">
+                                            {item.title}
+                                        </h3>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </Link>
                     );
                 })}
             </div>

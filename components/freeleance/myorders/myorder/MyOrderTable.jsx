@@ -24,7 +24,7 @@ const Status = ({ status }) => {
         case 'requirement_file_rejected':
             return (
                 <span className={styles.statusApproved}>
-                    Buyurma talablari toliq emas
+                    Buyurtma talablari toliq emas
                 </span>
             );
         case 'order_accepted':
@@ -248,7 +248,6 @@ export const AllOrdersTable = ({ type }) => {
         setReason('');
         setSelectedOrder(null);
     };
-
     const dataSource =
         orders?.map(order => ({
             key: order.id,
@@ -261,8 +260,10 @@ export const AllOrdersTable = ({ type }) => {
                 hour: '2-digit',
                 minute: '2-digit',
             }),
+            description: order?.description || '-',
             sellerId: order?.user?.soff_seller_id,
             deliveryDay: order.service?.delivery_days,
+            deadline_date: order?.deadline_date,
             price: order.service?.price || order?.budget || 0,
             status: order.order_status_doing?.status || 'pending',
             serviceId: order?.service?.id,

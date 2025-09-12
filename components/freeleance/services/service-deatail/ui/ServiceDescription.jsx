@@ -150,7 +150,7 @@ const ServiceDescription = ({ description = {}, priceBox = {} }) => {
                                         borderColor: '#28a745',
                                     }}
                                     onClick={() => setShowPayment(true)}>
-                                    Buyurma berish
+                                    Buyurtma berish
                                     <i className="fa-solid fa-arrow-right ms-2"></i>
                                 </Button>
                             </div>

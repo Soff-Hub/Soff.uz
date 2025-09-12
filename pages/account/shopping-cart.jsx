@@ -37,8 +37,8 @@ const ShoppingCartScreen = () => {
                             </Link>
                         </div>
                     </div>
-                    <div className="ps-section__footer">
-                        <div className="row justify-space-between">
+                    <div className="ps-section__footer mb-5">
+                        <div className="row justify-space-between mb-4">
                             <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 ">
                                 <ModuleCartSummary
                                     source={cartItems}
@@ -89,7 +89,7 @@ const ShoppingCartScreen = () => {
     return (
         <>
             <PageContainer footer={<FooterDefault />} title="Shopping Cart">
-                <div className="ps-page--simple">
+                <div className="ps-page--simple mb-4">
                     <Meta
                         title={"Xarid savati"}
                     />

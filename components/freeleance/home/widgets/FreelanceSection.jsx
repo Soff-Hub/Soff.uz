@@ -1,9 +1,8 @@
 // FreelanceSection.jsx
 import React from 'react';
-import styles from '../styles/Freelance.module.scss';
-import { useRouter } from 'next/router';
+import styles from '../styles/Freelance.module.scss'; 
 import ServiceCard from '~/components/blocks/cards/serviceCard';
-import { Image as AntImage } from 'antd';
+import Link from 'next/link';
 
 const items = [
     {
@@ -45,7 +44,6 @@ const items = [
 ];
 
 const FreelanceSection = () => {
-    const { push } = useRouter();
     return (
         <>
             <div className={styles.freelance_section}>
@@ -71,17 +69,16 @@ const FreelanceSection = () => {
                         </div>
                     </div>
                 </div>
-                <button
-                    className={styles.freelance_button}
-                    size="large"
-                    onClick={() => push('orders')}>
-                    Barcha xizmatlar
-                    <img
-                        src={'/static/img/arrowwhite.svg'}
-                        sizes="15"
-                        alt="arrow"
-                    />
-                </button>
+                <Link href="/orders">
+                    <button className={styles.freelance_button} size="large">
+                        Barcha xizmatlar
+                        <img
+                            src={'/static/img/arrowwhite.svg'}
+                            sizes="15"
+                            alt="arrow"
+                        />
+                    </button>
+                </Link>
             </div>
             <div className={styles.serviceCardSection}>
                 {items.map(item => (

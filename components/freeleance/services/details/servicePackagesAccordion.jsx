@@ -53,7 +53,7 @@ const ServicePackagesAccordion = ({openModal, packages, setPkg}) => {
                 </ul>
 
                 <Button onClick={() => handleClick(pkg)} type='primary' block className='bg-success border-success'>
-                    Buyurma berish <ArrowRightOutlined />
+                    Buyurtma berish <ArrowRightOutlined />
                 </Button>
             </div>
         ) ,

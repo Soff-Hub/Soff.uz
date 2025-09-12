@@ -119,7 +119,7 @@ const ChatWindow = ({ chatId, goBack }) => {
             </div>
 
 {/* messages */}
-            <div onScroll={handlScroll} ref={messagesContainerRef} id="scrollableDiv" style={{ width: "100%", height: "100vh", overflowY: "scroll", display: "flex", flexDirection: "column-reverse", margin: "auto", border: "1px solid red", overflowX: "hidden", position: "relative" }} className={`${styles.chat_messages}  p-3`}>
+            <div onScroll={handlScroll} ref={messagesContainerRef} id="scrollableDiv" style={{ width: "100%", height: "100vh", overflowY: "scroll", display: "flex", flexDirection: "column-reverse", margin: "auto", overflowX: "hidden", position: "relative" }} className={`${styles.chat_messages}  p-3`}>
 
                 <InfiniteScroll
                     dataLength={messages.length}

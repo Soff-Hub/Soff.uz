@@ -26,7 +26,7 @@ const OrderStatus = ({ order }) => {
         pending: 'Buyurtma yaratildi',
         approved: "To'lov amalga oshirildi",
         requirement_file: "Buyurtma talablari jo'natildi",
-        requirement_file_rejected: "Buyurma talablari to'liq emas",
+        requirement_file_rejected: "Buyurtma talablari to'liq emas",
         order_accepted: 'Buyurtma qabul qilindi',
         order_file_sent: 'Tasdiqlash uchun topshirildi',
         completed: 'Buyurtma tugallandi',
@@ -40,7 +40,7 @@ const OrderStatus = ({ order }) => {
             <div className={styles.status}>
                 <div className={styles.status_info}>
                     <span>Buyurtma holati</span>
-                    <p style={{background: order?.order_status_doing?.status == "cancelled" && "red"}}>{orderStatusName[order?.order_status_doing?.status]}</p>
+                    <p style={{ background: order?.order_status_doing?.status == "cancelled" && "red" }}>{orderStatusName[order?.order_status_doing?.status]}</p>
                 </div>
                 <div className={styles.status_price}>
                     <span>Buyurtma narxi</span>
@@ -50,14 +50,8 @@ const OrderStatus = ({ order }) => {
 
             {/* Seller info */}
             <div className={styles.seller}>
-                <span>Sotuvchi</span>
+
                 <div className={styles.seller_box}>
-                    <div>
-                        <Link
-                            href={`/seller/${order?.user?.soff_seller_id}#about_author`}>
-                            {order?.user?.full_name || ''}
-                        </Link>
-                    </div>
                     <img
                         src={
                             order?.user?.photo_url || '/static/img/ozodbek.png'
@@ -67,6 +61,14 @@ const OrderStatus = ({ order }) => {
                         height={60}
                         style={{ objectFit: 'cover' }}
                     />
+                    <div className="d-flex flex-column">
+                        <Link
+                            href={`/seller/${order?.user?.soff_seller_id}#about_author`}>
+                            {order?.user?.full_name || ''}
+                        </Link>
+                        <span className='text-muted fs-5'>Frilanser</span>
+                    </div>
+
                 </div>
             </div>
             {order?.user?.soff_seller_id && (
@@ -97,8 +99,8 @@ const OrderStatus = ({ order }) => {
                     status={
                         order?.order_status_doing?.status ===
                             'requirement_file_rejected' ||
-                        order?.order_status_doing?.status === 'rejected' ||
-                        order?.order_status_doing?.status === 'cancelled'
+                            order?.order_status_doing?.status === 'rejected' ||
+                            order?.order_status_doing?.status === 'cancelled'
                             ? 'error'
                             : 'process'
                     }
@@ -108,7 +110,7 @@ const OrderStatus = ({ order }) => {
                         {
                             title:
                                 order?.order_status_doing?.status ==
-                                'requirement_file_rejected' ? (
+                                    'requirement_file_rejected' ? (
                                     <Tooltip
                                         title={
                                             order?.order_status_doing?.reason
@@ -124,7 +126,7 @@ const OrderStatus = ({ order }) => {
                         {
                             title:
                                 order?.order_status_doing?.status ==
-                                'rejected' ? (
+                                    'rejected' ? (
                                     <Tooltip
                                         title={
                                             order?.order_status_doing?.reason

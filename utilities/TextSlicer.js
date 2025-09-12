@@ -8,7 +8,7 @@ function TextSlicer({ bio, len = 80, title }) {
     const shortText = bio.length > len ? bio.slice(0, len) + "..." : bio;
 
     return (
-        <p style={{ fontWeight: 600, fontSize: "18px", marginBottom: 0, color: 'black' }}>
+        <p style={{ fontWeight: 600, fontSize: "13px", marginBottom: 0, color: 'black' }}>
             {title || ""}{" "}
             <span className="">
                 {expanded ? bio : shortText}
