@@ -2,6 +2,7 @@ import React from 'react';
 import styles from '../styles/TwoCard.module.scss';
 import { useRouter } from 'next/router';
 import useResponsive from '~/utilities/useResponsive';
+import Link from 'next/link';
 
 const TwoCard = () => {
     const { push } = useRouter();
@@ -19,18 +20,18 @@ const TwoCard = () => {
                         Tayyor mahsulotlar bilan vaqtingizni tejang
                     </h2>
                     <div className={styles.actions}>
-                        <button className={styles.btn}>
-                            {/* 
-                        onClick={() => push('/scientific-resources/all')} */}
-                            Barcha mahsulotlar{' '}
-                            <img
-                                src="/static/img/arrowfig.png"
-                                height={15}
-                                width={45}
-                                alt="Arrow"
-                                className={styles.arrowIcon}
-                            />
-                        </button>
+                        <Link href="/scientific-resources/all">
+                            <button className={styles.btn}>
+                                Barcha mahsulotlar{' '}
+                                <img
+                                    src="/static/img/arrowfig.png"
+                                    height={15}
+                                    width={45}
+                                    alt="Arrow"
+                                    className={styles.arrowIcon}
+                                />
+                            </button>
+                        </Link>
                     </div>
                 </div>
 
@@ -44,20 +45,18 @@ const TwoCard = () => {
                         Loyihangizni frilanserlar bilan ishga tushiring
                     </h2>
                     <div className={styles.actions}>
-                        <button
-                            className={styles.btn}
-                            onClick={() =>
-                                push('/orders?direction=scientific_work')
-                            }>
-                            Buyurtma berish{' '}
-                            <img
-                                src="/static/img/arrowfig.png"
-                                height={15}
-                                width={45}
-                                alt="Arrow"
-                                className={styles.arrowIcon}
-                            />
-                        </button>
+                        <Link href="/orders?direction=scientific_work">
+                            <button className={styles.btn}>
+                                Buyurtma berish{' '}
+                                <img
+                                    src="/static/img/arrowfig.png"
+                                    height={15}
+                                    width={45}
+                                    alt="Arrow"
+                                    className={styles.arrowIcon}
+                                />
+                            </button>
+                        </Link>
                     </div>
                 </div>
             </div>

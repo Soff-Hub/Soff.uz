@@ -2,10 +2,9 @@ import React from 'react';
 import styles from '../styles/LastOpened.module.scss';
 import LastOpenedCard from '../ui/LastOpenedCard';
 import useLastOpened from '../../chat/api/useLastOpened';
-import { useRouter } from 'next/router';
 import Image from 'next/image';
+import Link from 'next/link';
 const LastOpened = () => {
-    const { push } = useRouter();
     const { data } = useLastOpened();
 
     return (
@@ -31,19 +30,17 @@ const LastOpened = () => {
                         </div>
                     </div>
                 </div>
-                <button
-                    className={styles.freelance_button}
-                    size="large"
-                    onClick={() => push('orders')}>
-                    <span>Barcha xizmatlar</span>
-
-                    <img
-                        src={'/static/img/arrowwhite.svg'}
-                        width={45}
-                        height={5}
-                        alt="arrow"
-                    />
-                </button>
+                <Link href="/orders">
+                    <button className={styles.freelance_button}>
+                        <span>Barcha xizmatlar</span>
+                        <img
+                            src={'/static/img/arrowwhite.svg'}
+                            width={45}
+                            height={5}
+                            alt="arrow"
+                        />
+                    </button>
+                </Link>
             </div>
 
             {/* Cardlar */}

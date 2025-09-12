@@ -2,6 +2,7 @@ import Image from 'next/image';
 import React from 'react';
 import styles from './card.module.scss';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 const service = {
     '3d': '/3d-models-and-interior-designs/all',
@@ -45,29 +46,28 @@ const cardImages = {
     ],
 }
 const CatalogCard = ({ content_type, title, count, items }) => {
-    const router = useRouter(); 
+    const router = useRouter();
 
-    
+
     return (
-        <div
-            className={styles.catalogCard}
-            onClick={() => router.push(service[content_type])}>
-            <div className="d-flex gap-3 align-items-center">
-                <div className={styles.cardIcon}>
-                    <Image
-                        src={`/static/img/${content_type}.png`}
-                        alt="Catalog Image"
-                        width={50}
-                        height={50}
-                    />
+        <Link href={service[content_type]}>
+            <div className={styles.catalogCard}>
+                <div className="d-flex gap-3 align-items-center">
+                    <div className={styles.cardIcon}>
+                        <Image
+                            src={`/static/img/${content_type}.png`}
+                            alt="Catalog Image"
+                            width={50}
+                            height={50}
+                        />
+                    </div>
+                    <div>
+                        <h2 className={styles.cardLabel}>{title}</h2>
+                        {/* <p className={styles.cardDesc}>{count}+ mahsulot</p> */}
+                    </div>
                 </div>
-                <div>
-                    <h2 className={styles.cardLabel}>{title}</h2>
-                    {/* <p className={styles.cardDesc}>{count}+ mahsulot</p> */}
-                </div>
-            </div>
-            <div className={styles.cardImageBlock}>
-                {/* <div
+                <div className={styles.cardImageBlock}>
+                    {/* <div
                     className={styles.cardBlockLeft}
                     style={{
                         backgroundImage: `url(${first?.poster_url ||
@@ -77,9 +77,9 @@ const CatalogCard = ({ content_type, title, count, items }) => {
                     }}>
 
                 </div> */}
-                <div className={styles.cardBlockRight}>
-                    <div className={styles.cardBlockRightTop}>
-                        {/* <div
+                    <div className={styles.cardBlockRight}>
+                        <div className={styles.cardBlockRightTop}>
+                            {/* <div
                             className={styles.cardBlockRightTopLeft}
                             style={{
                                 backgroundImage: `url(${second?.poster_url ||
@@ -87,17 +87,17 @@ const CatalogCard = ({ content_type, title, count, items }) => {
                                 backgroundSize: 'cover',
                                 backgroundPosition: 'center',
                             }}></div> */}
-                        {cardImages[content_type]?.map(img => 
-                            <div
-                                className={styles.cardBlockRightTopRight}
-                                style={{
-                                    backgroundImage: `url(${img ||
-                                        '/static/img/not-found.png'})`,
-                                    backgroundSize: 'cover',
-                                    backgroundPosition: 'center',
-                                }}></div>
-                        )}
-                        {/* <div
+                            {cardImages[content_type]?.map(img =>
+                                <div
+                                    className={styles.cardBlockRightTopRight}
+                                    style={{
+                                        backgroundImage: `url(${img ||
+                                            '/static/img/not-found.png'})`,
+                                        backgroundSize: 'cover',
+                                        backgroundPosition: 'center',
+                                    }}></div>
+                            )}
+                            {/* <div
                             className={styles.cardBlockRightTopRight}
                             style={{
                                 backgroundImage: `url(${third?.poster_url ||
@@ -113,8 +113,8 @@ const CatalogCard = ({ content_type, title, count, items }) => {
                                 backgroundSize: 'cover',
                                 backgroundPosition: 'center',
                             }}></div> */}
-                    </div>
-                    {/* <div
+                        </div>
+                        {/* <div
                         className={styles.cardBlockRightBottom}
                         style={{
                             backgroundImage: `url(${fourth?.poster_url ||
@@ -123,9 +123,10 @@ const CatalogCard = ({ content_type, title, count, items }) => {
                             backgroundPosition: 'center',
                         }}>
                     </div> */}
+                    </div>
                 </div>
             </div>
-        </div>
+        </Link>
     );
 };
 
