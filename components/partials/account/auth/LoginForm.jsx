@@ -150,8 +150,8 @@ export default function LoginForm({ onSuccess, setCode }) {
                             ) : (
                                 <button
                                     type='submit'
-                                    className='ps-btn ps-btn--fullwidth'>
-                                    Davom etish
+                                    className='ps-btn text-white fw-normal ps-btn--fullwidth'>
+                                    Ko'dni olish
                                 </button>
                             )}
                         </div>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styles from '../styles/menuItem.module.scss';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 const option = {
     scientific_work: 'Ilmiy va Akademik Xizmatlar',
@@ -31,16 +32,9 @@ export const MenuItem = ({ products, templates, label }) => {
                     <h3 style={{ cursor: "pointer" }} onClick={() => router.push(`/${templateLink[label]}/all`)} className={styles.sectionLabel}>Tayyor mahsulotlar</h3>
                     <ul className={styles.details}>
                         {templates.map(item => (
-                            <li
-                                key={item.id}
-                                onClick={() => {
-                                    router.push(
-                                        `/${templateLink[label]}/${item.slug}?slug=${item.slug}&search=&parentCategory=${item.slug}&title=${item.title}`
-                                    );
-                                }}
-                                className={styles.detail}>
-                                {item.title}
-                            </li>
+                            <Link key={item.id} href={`/${templateLink[label]}/${item.slug}?slug=${item.slug}&search=&parentCategory=${item.slug}&title=${item.title}`}>
+                                <p className={styles.detail}>{item.title}</p>
+                            </Link>
                         ))}
                     </ul>
                 </div>
@@ -48,16 +42,9 @@ export const MenuItem = ({ products, templates, label }) => {
                     <h3 style={{ cursor: "pointer" }} onClick={() => router.push(`/orders?direction=${label}`)} className={styles.sectionLabel}>Buyurtma berish</h3>
                     <ul className={styles.details}>
                         {products.map(item => (
-                            <li
-                                key={item.id}
-                                onClick={() => {
-                                    router.push(
-                                        `/orders?direction=${label}&parent_category_id=${item.id}&title=${item.title}`
-                                    );
-                                }}
-                                className={styles.detail}>
-                                {item.title}
-                            </li>
+                            <Link key={item.id} href={`/orders?direction=${label}&parent_category_id=${item.id}&title=${item.title}`}>
+                                <p className={styles.detail}>{item.title}</p>
+                            </Link>
                         ))}
                     </ul>
                 </div>

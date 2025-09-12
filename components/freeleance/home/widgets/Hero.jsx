@@ -8,6 +8,7 @@ import { AutoComplete } from 'antd';
 import { api } from '~/repositories/api';
 import useDebounce from '~/hooks/useDebounce';
 import axiosInstance from '../../api/freeleanceApi';
+import Link from 'next/link';
 
 const placeholders = {
     mahsulotlar: 'Qaysi turdagi tayyor mahsulot qidirmoqdasiz?',
@@ -154,33 +155,6 @@ const Hero = () => {
                 </div>
             </div>
 
-            {/* <div className={styles.heroCardSection}>
-                <div className={styles.cardWrapperOne}>
-                    <HeroCard
-                        title="Dizayn"
-                        link="/orders?direction=dizayn"
-                        img="/static/img/HomePage/design.webp"
-                    />
-                    <HeroCard
-                        title="Dasturlash"
-                        link="/orders?direction=web"
-                        img="/static/img/HomePage/web.webp"
-                    />
-                </div>
-                <div className={styles.cardWrapperTwo}>
-                    <HeroCard
-                        title="Ilmiy ishlar"
-                        link="/orders?direction=scientific_work"
-                        img="/static/img/HomePage/file.webp"
-                    />
-                    <HeroCard
-                        title="3D Modellar"
-                        link="/orders?direction=three_d"
-                        img="/static/img/HomePage/3d.webp"
-                    />
-                </div>
-            </div> */}
-
             <div className={styles.heroCategorySection}>
                 {/* Chap blok – Tayyor mahsulotlar */}
                 <div className={styles.categoryBlock}>
@@ -193,52 +167,72 @@ const Hero = () => {
                         <h3>Tayyor yuklangan mahsulotlar</h3>
                     </div>
                     <div className={styles.categoryGrid}>
-                        <div onClick={() => push('/scientific-resources/all')} className={styles.categoryItem}>
-                            <img src="/static/img/HomePage/file3.webp" alt="Ilmiy ishlar" />
-                            <span>Ilmiy ishlar</span>
-                        </div>
-                        <div onClick={() => push('/3d-models-and-interior-designs/all')} className={styles.categoryItem}>
-                            <img src="/static/img/HomePage/3d2.webp" alt="3D Modellar" />
-                            <span>3D Modellar</span>
-                        </div>
-                        <div onClick={() => push('/design-developments/all')} className={styles.categoryItem}>
-                            <img src="/static/img/HomePage/design1.webp" alt="Dizayn shablonlari" />
-                            <span>Dizayn shablonlari</span>
-                        </div>
-                        <div onClick={() => push('/websites/all')} className={styles.categoryItem}>
-                            <img src="/static/img/HomePage/web2.webp" alt="Veb saytlar" />
-                            <span>Veb saytlar</span>
-                        </div>
-                        <div onClick={() => push('/templates/all')} className={styles.categoryItem}>
-                            <img src="/static/img/HomePage/template2.webp" alt="Shablonlar" />
-                            <span>Shablonlar</span>
-                        </div>
-                        <div onClick={() => push('/video-lessons/all')} className={styles.categoryItem}>
-                            <img src="/static/img/HomePage/video1.webp" alt="Video darsliklar" />
-                            <span>Video darsliklar</span>
-                        </div>
+                        <Link href='/scientific-resources/all' >
+                            <div className={styles.categoryItem}>
+                                <img src="/static/img/HomePage/file3.webp" alt="Ilmiy ishlar" />
+                                <span>Ilmiy ishlar</span>
+                            </div>
+                        </Link>
+                        <Link href='/3d-models-and-interior-designs/all' >
+                            <div className={styles.categoryItem}>
+                                <img src="/static/img/HomePage/3d2.webp" alt="3D Modellar" />
+                                <span>3D Modellar</span>
+                            </div>
+                        </Link>
+                        <Link href='/design-developments/all' >
+                            <div className={styles.categoryItem}>
+                                <img src="/static/img/HomePage/design1.webp" alt="Dizayn shablonlari" />
+                                <span>Dizayn shablonlari</span>
+                            </div>
+                        </Link>
+                        <Link href='/websites/all' >
+                            <div className={styles.categoryItem}>
+                                <img src="/static/img/HomePage/web2.webp" alt="Veb saytlar" />
+                                <span>Veb saytlar</span>
+                            </div>
+                        </Link>
+                        <Link href='/templates/all' >
+                            <div className={styles.categoryItem}>
+                                <img src="/static/img/HomePage/template2.webp" alt="Shablonlar" />
+                                <span>Shablonlar</span>
+                            </div>
+                        </Link>
+                        <Link href='/video-lessons/all' >
+                            <div className={styles.categoryItem}>
+                                <img src="/static/img/HomePage/video1.webp" alt="Video darsliklar" />
+                                <span>Video darsliklar</span>
+                            </div>
+                        </Link>
                     </div>
                 </div>
 
                 <div className={styles.categoryBlock}>
                     <h3>Xizmatni tanlang – Buyurtma bering</h3>
                     <div className={styles.categoryGrid}>
-                        <div onClick={() => push('/orders?direction=scientific_work')} className={styles.categoryItem}>
-                            <img src="/static/img/HomePage/file2.webp" alt="Ilmiy va Akademik xizmatlar" />
-                            <span>Ilmiy va Akademik Xizmatlar</span>
-                        </div>
-                        <div onClick={() => push('/orders?direction=dizayn')} className={styles.categoryItem}>
-                            <img src="/static/img/HomePage/design3.webp" alt="Dizayn xizmatlari" />
-                            <span>Dizayn xizmatlari</span>
-                        </div>
-                        <div onClick={() => push('/orders?direction=web')} className={styles.categoryItem}>
-                            <img src="/static/img/HomePage/web.webp" alt="Dasturlash xizmatlari" />
-                            <span>Dasturlash xizmatlari</span>
-                        </div>
-                        <div onClick={() => push('/orders?direction=three_d')} className={styles.categoryItem}>
-                            <img src="/static/img/HomePage/3d.webp" alt="3D Dizayn va Vizualizatsiya" />
-                            <span>3D Dizayn va Vizualizatsiya</span>
-                        </div>
+                        <Link href='/orders?direction=scientific_work' >
+                            <div className={styles.categoryItem}>
+                                <img src="/static/img/HomePage/file2.webp" alt="Ilmiy va Akademik xizmatlar" />
+                                <span>Ilmiy va Akademik Xizmatlar</span>
+                            </div>
+                        </Link>
+                        <Link href='/orders?direction=dizayn' >
+                            <div className={styles.categoryItem}>
+                                <img src="/static/img/HomePage/design3.webp" alt="Dizayn xizmatlari" />
+                                <span>Dizayn xizmatlari</span>
+                            </div>
+                        </Link>
+                        <Link href='/orders?direction=web' >
+                            <div className={styles.categoryItem}>
+                                <img src="/static/img/HomePage/web.webp" alt="Dasturlash xizmatlari" />
+                                <span>Dasturlash xizmatlari</span>
+                            </div>
+                        </Link>
+                        <Link href='/orders?direction=three_d' >
+                            <div className={styles.categoryItem}>
+                                <img src="/static/img/HomePage/3d.webp" alt="3D Dizayn va Vizualizatsiya" />
+                                <span>3D Dizayn va Vizualizatsiya</span>
+                            </div>
+                        </Link>
                     </div>
                 </div>
             </div>
