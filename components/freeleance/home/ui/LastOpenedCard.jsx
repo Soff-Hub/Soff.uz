@@ -5,6 +5,7 @@ import Link from 'next/link';
 
 const LastOpenedCard = ({ title, image, author, price, slug, userImage }) => {
     const router = useRouter();
+    
     return (
         <div className={styles.card}>
             <p className={styles.title}>

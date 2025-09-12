@@ -77,10 +77,7 @@ const OrderMain = ({ order }) => {
                                 To'lov kutilmoqda
                             </h3>
                             <p>
-                                Buyurtma yaratildi, lekin hozirda mutahasisdan
-                                yashirilgan. Buyurtmani moliyalashtiring va
-                                mutahasis ishga kirishishi uchun buyurtma
-                                talablarini yuboring.
+                                Buyurtma muvaffaqiyatli yaratildi, ammo mutaxassis ishni boshlashi uchun avval to‘lovni amalga oshirishingiz kerak. Siz to‘lagan mablag‘ Soff platformasida xavfsiz saqlanadi va faqat ish tugallangach, siz uni qabul qilib, ma’qullaganingizdan so‘nggina mutaxassisga o‘tkaziladi.
                             </p>
                         </div>
                         <Button
@@ -104,7 +101,7 @@ const OrderMain = ({ order }) => {
                     </div>
                 )}
 
-                {(order?.order_status_doing?.status=== 'approved' ||
+                {(order?.order_status_doing?.status === 'approved' ||
                     order?.order_status_doing?.status ===
                     'requirement_file_rejected') && (
                         <div className={styles.orderPayCard}>
@@ -145,7 +142,7 @@ const OrderMain = ({ order }) => {
                     )}
 
                 {/* Seller ishni tugatganda */}
-                {order?.order_status_doing?.status== 'order_file_sent' && (
+                {order?.order_status_doing?.status == 'order_file_sent' && (
                     <>
                         <Alert icon={<WarningOutlined />} message="Buyurtma 24 soat ichida ko'rib chiqilmasa avtomatik ravishta qabul qilingan deb hisoblanadi." type="warning" />
                         <div className={styles.orderPayCard}>
