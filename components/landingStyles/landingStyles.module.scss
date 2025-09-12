@@ -11,14 +11,16 @@
     cursor: pointer;
     transition: all .3 ease-out;
     @media (max-width: 992px) {
-        font-size: 14px;
+        font-size: 15px;
         margin-right: 0px;
     }
-    @media (max-width: 576px) {
+    @media (max-width: 480px) {
         font-size: 12px;
         margin-right: 0px;
     }
-
+    @media (max-width: 340px) {
+        font-size: 11px;
+    }
     &:hover{
         color: $color-1st;
     }
