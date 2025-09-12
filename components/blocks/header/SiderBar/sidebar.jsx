@@ -61,8 +61,7 @@ const SideBar = () => {
                 <div className="  overflow-auto p-0">
                     <Collapse
                         style={{ backgroundColor: '#fff' }}
-                        bordered={false}
-                        defaultActiveKey={['1']}
+                        bordered={false} 
                         expandIcon={({ isActive }) => (
                             <CaretRightOutlined rotate={isActive ? 90 : 0} />
                         )}
