@@ -9,6 +9,8 @@ import { useFGet, useFPost } from "~/components/freeleance/api/useFApi";
 import { useSelector } from "react-redux";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
+import Link from "next/link";
+import { getDate, getDateTime } from "~/utilities/calculateTime";
 
 
 const SelectOrderDrawer = ({ open, onClose, order }) => {
@@ -37,12 +39,15 @@ const SelectOrderDrawer = ({ open, onClose, order }) => {
         },
     });
 
+    console.log('freelancers', freelancers);
+
     const handleSelect = () => {
         if (!selectedOffer) return;
         const fd = new FormData();
         fd.append("offer_id", selectedOffer.id);
         selectOffer(fd);
     };
+    console.log('order', order);
 
     return (
         <>
@@ -50,11 +55,10 @@ const SelectOrderDrawer = ({ open, onClose, order }) => {
                 title="Frilanser takliflari"
                 placement="right"
                 width={isDesktop ? "70%" : "80%"}
+                style={{ height: "100vh", overflow: "auto" }}
                 onClose={onClose}
                 open={open}
             >
-
-
                 <div className={styles.orderCard}>
                     <div className="d-flex align-items-center justify-content-between">
                         <Typography.Title style={{ margin: 0 }} level={4}>
@@ -62,10 +66,16 @@ const SelectOrderDrawer = ({ open, onClose, order }) => {
                         </Typography.Title>
                         <Typography.Title level={4} strong>{formatCurrencyWithSpace(order?.price)} so'm</Typography.Title>
                     </div>
-                    <Typography.Paragraph type="secondary" style={{ margin: "8px 0" }}>
-                        {order?.ordered_at} | {orderStatusName[order?.status] || ""}
-                    </Typography.Paragraph>
+                    <div className="d-flex align-items-center justify-content-between">
+                        <Typography.Paragraph type="secondary" style={{ margin: "8px 0" }}>
+                            {orderStatusName[order?.status] || ""} | {order?.ordered_at}
+                        </Typography.Paragraph>
+
+                    </div>
                     <Typography.Paragraph>{order?.description}</Typography.Paragraph>
+                    <Typography.Paragraph type="secondary" style={{ margin: "8px 0" }}>
+                        Topshirish sanasi | {getDateTime(order?.deadline_date)}
+                    </Typography.Paragraph>
                 </div>
 
                 <Tag
@@ -88,13 +98,16 @@ const SelectOrderDrawer = ({ open, onClose, order }) => {
                                         size={64}
                                     />
                                     <div className={styles.info}>
-                                        <Typography.Title
-                                            style={{ cursor: "pointer", margin: 0 }}
-                                            onClick={() => push(`/seller/${item?.seller?.soff_seller_id}`)}
-                                            level={5}
-                                        >
-                                            {item?.seller?.full_name}
-                                        </Typography.Title>
+                                        <Link href={`/seller/${item?.seller?.soff_seller_id}`}>
+                                            <Typography.Title
+                                                className={styles.hover_link}
+                                                style={{ cursor: "pointer", margin: 0, }}
+                                                level={5}
+                                            >
+                                                {item?.seller?.full_name}
+
+                                            </Typography.Title>
+                                        </Link>
                                         <Typography.Text type="secondary">
                                             {item?.seller?.position?.title || "Kasbi ko‘rsatilmagan"}
                                         </Typography.Text>
@@ -104,22 +117,25 @@ const SelectOrderDrawer = ({ open, onClose, order }) => {
                                     <Typography.Title type="secondary" level={5}>
                                         Narxi:
                                     </Typography.Title>
-                                    <Typography.Title level={4} style={{ margin: 0 }}>
+                                    <Typography.Title level={5} style={{ margin: 0 }}>
                                         {item.money?.toLocaleString("uz-UZ")} so‘m
                                     </Typography.Title>
                                 </div>
                                 <div className={styles.cardRight}>
-                                    <Typography.Text strong>
-                                        <Typography.Title type="secondary" level={5}>
+                                    <div className="d-flex flex-column align-items-start justify-content-start">
+                                        <p className=" m-0 p-0 fs-4 text-secondary">
                                             Taklif izohi:
-                                        </Typography.Title>
-                                        <TextSlicer bio={item.comment} len={60} />
-                                    </Typography.Text>
+                                        </p>
+                                        <p className={`${styles.recommedation} text-justify`}>
+                                            <TextSlicer bio={item.comment} len={60} />
+                                        </p>
+                                    </div>
                                     <div className="d-flex justify-content-end w-100">
                                         <Button
                                             onClick={() => setSelectedOffer(item)}
                                             type="primary"
                                             size="small"
+                                            className="px-5 py-4 fs-3"
                                             style={{ background: "#00a44f", textAlign: "end" }}
                                         >
                                             Tanlash
@@ -132,6 +148,7 @@ const SelectOrderDrawer = ({ open, onClose, order }) => {
                         <Empty description="Hozircha hech qanday frilanser taklif yubormagan" />
                     )}
                 </div>
+
             </Drawer>
 
             <Modal
@@ -144,10 +161,11 @@ const SelectOrderDrawer = ({ open, onClose, order }) => {
                 confirmLoading={isPending}
                 zIndex={20000}
             >
-                <p>
+                <p style={{ fontSize: "12px" }}>
                     Haqiqatan ham Siz <strong>{selectedOffer?.seller?.full_name}</strong> ni tanlamoqchimisiz?
                 </p>
-                <p><TextSlicer title={'izoh:'} bio={selectedOffer?.comment} /></p>
+                
+                <p><TextSlicer title={'Izoh:'} bio={`${selectedOffer?.comment || 'Izoh yo‘q'}`} /></p>
             </Modal>
         </>
     );

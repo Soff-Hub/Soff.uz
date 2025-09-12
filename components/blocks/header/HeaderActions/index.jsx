@@ -18,29 +18,24 @@ const HeaderActions = ({ auth, isDark }) => {
 
     return (
         <div
-            className={`site-header-actions  ${
-                isDark ? 'text-black' : 'text-white'
-            }`}>
+            className={`site-header-actions  ${isDark ? 'text-black' : 'text-white'
+                }`}>
             {!isMobile && !isTablet && <HeaderCatergories />}
             {!isMobile && !isTablet && <MenuCategoriesDropdown />}
             <div className="d-flex">
-                {wishlist?.length > 0 ? (
-                    <Link href="/account/wishlist">
-                        <a className="header__extra">
-                            <a href="#">
-                                <Badge count={wishlist.length}>
-                                    <img
-                                        src="/static/img/heart1.png"
-                                        width={'20px'}
-                                        alt=""
-                                    />{' '}
-                                </Badge>
-                            </a>
+                {wishlist?.length > 0 && <Link href="/account/wishlist">
+                    <a className="header__extra">
+                        <a href="#">
+                            <Badge count={wishlist.length}>
+                                <img
+                                    src="/static/img/heart1.png"
+                                    width={'20px'}
+                                    alt=""
+                                />{' '}
+                            </Badge>
                         </a>
-                    </Link>
-                ) : (
-                    ''
-                )}
+                    </a>
+                </Link>}
 
                 {data?.length > 0 && <MiniCart />}
             </div>

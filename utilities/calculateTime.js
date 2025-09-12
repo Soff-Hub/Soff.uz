@@ -38,6 +38,9 @@ export function getTimeAgo(dateString) {
 export const getDate = (date) => {
   return dayjs(date).format('DD/MM/YYYY')
 };
+export const getDateTime = (date) => {
+  return dayjs(date).format('YYYY-MM-DD HH:mm')
+};
 
 export const getStatus = (timestamp) => {
   if (!timestamp || !dayjs(timestamp).isValid()) {

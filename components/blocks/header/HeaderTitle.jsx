@@ -10,7 +10,7 @@ export default function HeaderTitle() {
             Har bir materialni o‘rganish, tahlil qilish yoki ilmiy ishlaringizda qo‘llash uchun sotib olishingiz mumkin. Bepul materiallar ham mavjud bo‘lib, ular darhol yuklab olinishi mumkin. Ushbu resurslar mahalliy mutaxassislar tomonidan tayyorlangan va sizga yuqori sifatli, ishonchli materiallarni taqdim etadi. I
             </p>
             <a className='px-5 py-4 bg-success btn btn-success rounded-5 text-white font-weight-bold fs-4 text-xl hover-overlay '>
-                Buyurma bering
+                Buyurtma bering
             </a>
         </div>
     );

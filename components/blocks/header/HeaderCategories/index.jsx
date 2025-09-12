@@ -121,7 +121,7 @@ const HeaderCatergories = () => {
                 </p>
                 <ul className={styles.dropSubBox}>
                     <li onClick={handleOrder} style={{ borderBottom: "1px solid rgba(0,0,0,0.2)", paddingBottom: "12px" }} className={styles.dropSubBoxItem}>
-                        <div class Name={styles.add_icon}><i style={{ fontSize: isMobile ? "18px" : "25px", color: "rgba(0,0,0,0.6)" }} className="fa-solid fa-plus"></i></div>
+                        <div className={styles.add_icon}><i style={{ fontSize: isMobile ? "18px" : "25px", color: "rgba(0,0,0,0.6)" }} className="fa-solid fa-plus"></i></div>
                         <span className={styles.orderAddBtn}>Maxsus buyurtma berish</span>
                     </li>
                     {options.tempates.map(item => (

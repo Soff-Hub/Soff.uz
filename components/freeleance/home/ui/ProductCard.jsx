@@ -5,6 +5,7 @@ import useWishlist from '~/hooks/useWishlist';
 import useCart from '~/hooks/useCart';
 import { Modal } from 'antd';
 import { formatCurrencyWithSpace } from '~/utilities/product-helper';
+import Link from 'next/link';
 
 const ProductCard = ({ product }) => {
     const { addSavedItem, wishlist, removeSavedItem } = useWishlist();
@@ -14,7 +15,7 @@ const ProductCard = ({ product }) => {
     const [basket, setBasket] = useState(false);
 
     const handleNavigate = () => {
-        Router.push(`/product/${product?.slug}`)
+        Router.push()
     }
 
 
@@ -52,42 +53,43 @@ const ProductCard = ({ product }) => {
         Router.push('/account/shopping-cart');
     };
     return (
-        <>
-            <div className={styles.card}>
-                <div className={styles.cardHead}>
-                    <div className={styles.cardHeadInfo}>
-                        <span className={styles.cardType}>{product?.document?.file_type || ".zip"}</span>
-                        <div className={styles.cardActions}>
-                            <div onClick={handleAddItemToWishlist} className={styles.likeIcon}>
-                                {wishlist?.some(item => Number(item.id) === Number(product?.id)) ?
-                                    <i style={{color: "#00a44f"}} className="fa-solid fa-heart"></i> : <i className="fa-regular fa-heart"></i>
-                                }
-                            </div>
-                            <div onClick={handleAddItemToCart} className={styles.cartIcon}>
-                                {basket ?
-                                    <i style={{color: "#00a44f"}} className="fa-solid fa-cart-shopping"></i> : <i className="fa-solid fa-cart-shopping"></i>
-                                }
+        <>  <Link href={`/product/${product?.slug}`}>
+                <div className={styles.card}>
+                    <div className={styles.cardHead}>
+                        <div className={styles.cardHeadInfo}>
+                            <span className={styles.cardType}>{product?.document?.file_type || ".zip"}</span>
+                            <div className={styles.cardActions}>
+                                <div onClick={handleAddItemToWishlist} className={styles.likeIcon}>
+                                    {wishlist?.some(item => Number(item.id) === Number(product?.id)) ?
+                                        <i style={{ color: "#00a44f" }} className="fa-solid fa-heart"></i> : <i className="fa-regular fa-heart"></i>
+                                    }
+                                </div>
+                                <div onClick={handleAddItemToCart} className={styles.cartIcon}>
+                                    {basket ?
+                                        <i style={{ color: "#00a44f" }} className="fa-solid fa-cart-shopping"></i> : <i className="fa-solid fa-cart-shopping"></i>
+                                    }
+                                </div>
                             </div>
                         </div>
+                        <img className={styles.cardImg} src={product?.poster_url || '/static/img/not-found.png'} alt="card img" />
                     </div>
-                    <img onClick={handleNavigate} className={styles.cardImg} src={product?.poster_url || '/static/img/not-found.png'} alt="card img" />
+                    <div className={styles.cardBody}>
+                        <h2 onClick={handleNavigate} className={styles.cardTitle}>{product?.title}</h2>
+                        <h3 className={styles.cardPrice}>{formatCurrencyWithSpace(product?.price)} so’m</h3>
+                    </div>
+                    <div className={styles.cardInfo}>
+                        {product?.document?.file_size &&
+                            <span><i className="fas fa-database"></i>{product?.document?.file_size}</span>
+                        }
+                        {product?.document?.page_count &&
+                            <span><i className="fas fa-copy"></i>{product?.document?.page_count}</span>
+                        }
+                        {product?.views_count !== 0 &&
+                            <span><i className='fa-solid fa-eye'></i>{product?.views_count}</span>
+                        }
+                    </div>
                 </div>
-                <div className={styles.cardBody}>
-                    <h2 onClick={handleNavigate} className={styles.cardTitle}>{product?.title}</h2>
-                    <h3 className={styles.cardPrice}>{formatCurrencyWithSpace(product?.price)} so’m</h3>
-                </div>
-                <div className={styles.cardInfo}>
-                    {product?.document?.file_size && 
-                        <span><i className="fas fa-database"></i>{product?.document?.file_size}</span>
-                    }
-                    {product?.document?.page_count &&
-                        <span><i className="fas fa-copy"></i>{product?.document?.page_count}</span>
-                    }
-                    {product?.views_count !== 0 &&
-                        <span><i className='fa-solid fa-eye'></i>{product?.views_count}</span>
-                    }
-                </div>
-            </div>
+            </Link>
             <Modal
                 title='Muvaffaqqiyatli'
                 open={open}

@@ -90,7 +90,7 @@ const PriceBox = ({ priceBox }) => {
                                     className="px-5 py-2"
                                     style={{ backgroundColor: '#28a745', borderColor: '#28a745' }}
                                     onClick={() => setShowPayment(true)}>
-                                    Buyurma berish
+                                        Buyurtma berish
                                     <i className="fa-solid fa-arrow-right ms-2"></i>
                                 </Button>
                             </div>

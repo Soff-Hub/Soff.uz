@@ -2,6 +2,7 @@ import React from 'react'
 import styles from "../styles/Bests.module.scss"
 import { useGet } from '~/repositories/https'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 
 const Bests = () => {
     const { push } = useRouter()
@@ -40,22 +41,24 @@ const Bests = () => {
                 <div className={styles.column}>
                     <h3 className={styles.columnTitle}>Eng faol sotuvchilar</h3>
                     {sellers?.map((item, idx) => (
-                        <div onClick={() => push(`/seller/${item?.id}`)} className={styles.item} key={item.id || idx}>
-                            <img
+                        <Link key={item.id || idx} href={`/seller/${item?.id}`}>
+                            <div className={styles.item} >
+                                <img
 
-                                src={item.image || "/static/img/avatar-placeholder.png"}
-                                alt={item.first_name}
-                                className={styles.avatar}
-                            />
-                            <div>
-                                <p className={styles.name}>
-                                    {item.first_name} {item.last_name}
-                                </p>
-                                <p className={styles.infoGreen}>
-                                    {item.products_count} mahsulot yuklangan
-                                </p>
+                                    src={item.image || "/static/img/ozodbek.png"}
+                                    alt={item.first_name}
+                                    className={styles.avatar}
+                                />
+                                <div>
+                                    <p className={`${styles.name} p-0`}>
+                                        {item.first_name} {item.last_name}
+                                    </p>
+                                    <p className={styles.infoGreen}>
+                                        {item.products_count} mahsulot yuklangan
+                                    </p>
+                                </div>
                             </div>
-                        </div>
+                        </Link>
                     ))}
                 </div>
 
@@ -63,24 +66,26 @@ const Bests = () => {
                 <div className={styles.column}>
                     <h3 className={styles.columnTitle}>Bestseller mualliflari</h3>
                     {authors?.map((item, idx) => (
-                        <div onClick={() => push(`/seller/${item?.id}`)} className={styles.item} key={item.id || idx}>
-                            <img
-                                src={item.image || "/static/img/avatar-placeholder.png"}
-                                alt={item.first_name}
-                                className={styles.avatar}
-                            />
-                            <div>
-                                <p className={styles.name}>
-                                    {item.first_name} {item.last_name}
-                                </p>
-                                <p className={styles.info}>
-                                    {item.order_count} ta sotuv{" "}
-                                    <span className={styles.infoGreen}>
-                                        {item.total_amount.toLocaleString()} so’m
-                                    </span>
-                                </p>
+                        <Link key={item.id || idx} href={`/seller/${item?.id}`}>
+                            <div className={styles.item}>
+                                <img
+                                    src={item.image || "/static/img/ozodbek.png"}
+                                    alt={item.first_name}
+                                    className={styles.avatar}
+                                />
+                                <div>
+                                    <p className={styles.name}>
+                                        {item.first_name} {item.last_name}
+                                    </p>
+                                    <p className={styles.info}>
+                                        {item.order_count} ta sotuv{" "}
+                                        <span className={styles.infoGreen}>
+                                            {item.total_amount.toLocaleString()} so’m
+                                        </span>
+                                    </p>
+                                </div>
                             </div>
-                        </div>
+                        </Link>
                     ))}
                 </div>
 
@@ -88,20 +93,22 @@ const Bests = () => {
                 <div className={styles.column}>
                     <h3 className={styles.columnTitle}>Top mahsulotlar</h3>
                     {products?.map((item, idx) => (
-                        <div onClick={() => push(`/product/${item?.slug}`)} className={styles.item} key={item.id || idx}>
-                            <img
-                                src={item.poster || "/static/img/product-placeholder.png"}
-                                alt={item.title}
-                                className={styles.avatar}
-                            />
-                            <div>
-                                <p className={styles.name}>{item.title}</p>
-                                <p className={styles.info}>
-                                    {item.view_count} ta ko‘rilgan, {" "}
-                                    <span className={styles.infoGreen}>{item.sold_count} ta sotilgan</span>
-                                </p>
+                        <Link key={item.id || idx} href={`/product/${item?.slug}`}>
+                            <div className={styles.item}>
+                                <img
+                                    src={item.poster || "/static/img/ozodbek.png"}
+                                    alt={item.title}
+                                    className={styles.avatar}
+                                />
+                                <div>
+                                    <p className={styles.name}>{item.title}</p>
+                                    <p className={styles.info}>
+                                        {item.view_count} ta ko‘rilgan, {" "}
+                                        <span className={styles.infoGreen}>{item.sold_count} ta sotilgan</span>
+                                    </p>
+                                </div>
                             </div>
-                        </div>
+                        </Link>
                     ))}
                 </div>
             </div>
