@@ -1,18 +1,35 @@
-import { Form, Modal, Input, Select, Button, DatePicker, message, InputNumber } from "antd";
-import React, { useState } from "react";
+import { Form, Modal, Input, Select, Button, DatePicker, message, InputNumber, Tooltip, TimePicker } from "antd";
+import React, { useEffect, useState } from "react";
+import { QuestionCircleOutlined } from '@ant-design/icons'
 import { directions } from "../../constants";
 import { useFGet, useFPost } from "../../api/useFApi";
 import dayjs from "dayjs";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import { createOrderInfo } from "~/constants/createOrder";
+import { ClipLoader, RingLoader } from "react-spinners";
 
 const { TextArea } = Input;
 
+
+const options = {
+    scientific_work: (title) => (`${title} tayyorlash kerak.`),
+    dizayn: (title) => (`${title} tayyorlash kerak.`),
+    web: (title) => (`${title} uchun dastur tayyorlash kerak.`),
+    three_d: (title) => (`${title} uchun dizayn tayyorlash kerak.`),
+}
+
 const CreateOrderModal = ({ open, onClose }) => {
     const [form] = Form.useForm();
-    const [direction, setDirection] = useState(null)
+    const [direction, setDirection] = useState('scientific_work')
+    const [category, setCategory] = useState('')
     const { user } = useSelector(state => state.auth)
     const { push } = useRouter()
+
+
+    useEffect(() => {
+        form.setFieldValue('direction', direction)
+    }, [direction])
 
     const { data: categories } = useFGet(direction, `categories/?direction=${direction}`, { enabled: !!direction })
 
@@ -35,16 +52,23 @@ const CreateOrderModal = ({ open, onClose }) => {
     });
 
     const handleFinish = (values) => {
+        const order = {
+            direction: direction,
+            category_id: values.category_id,
+            title: form.getFieldValue('title'),
+            description: values.description,
+            language: values.language,
+            budget: values.budget,
+            deadline_date: `${dayjs(values.deadline_date).format("YYYY-MM-DD")} ${dayjs(values.deadline_time).format("HH:mm")}`,
+
+        }
+        console.log('order', order)
+
         const fd = new FormData();
 
-        for (const [key, value] of Object.entries(values)) {
-            if (key === "deadline_date" && value) {
-                fd.append(key, dayjs(value).format("YYYY-MM-DD HH:mm"));
-            } else {
-                fd.append(key, value);
-            }
+        for (const [key, value] of Object.entries(order)) {
+            fd.append(key, value);
         }
-
         createOrder(fd);
     };
 
@@ -60,24 +84,11 @@ const CreateOrderModal = ({ open, onClose }) => {
                 onFinish={handleFinish}
             >
                 <Form.Item
-                    name="title"
-
-                    label={<div className="d-flex align-items-start text-wrap flex-column flex-sm-row align-items-sm-center">
-
-                        <p className="m-0 text-dark">Buyurtmangiz haqida qisqacha tavsif.</p>
-                        <span style={{ fontSize: '11px' }} className="text-info  ml-2">(Misol uchun: Logo dizayn tayyorlash)</span>
-                    </div>}
-                    rules={[{ required: true, message: "Buyurtma nomini kiriting!" }]}
-                >
-                    <Input style={{height: '32px'}} placeholder="" />
-                </Form.Item>
-
-                <Form.Item
                     name="direction"
                     label={
                         <div className="d-flex align-items-start text-wrap flex-column flex-sm-row align-items-sm-center">
-                            <p className="m-0 text-dark">Qanday turdagi xizmat kerak?</p>
-                            <span style={{ fontSize: '11px' }} className="text-info  ml-2">(Misol uchun: Grafik dizayn)</span>
+                            <p className="m-0 text-dark">Yo’nalishni tanlang</p>
+
                         </div>
                     }
                     rules={[{ required: true, message: "Yo'nalish tanlang!" }]}
@@ -86,7 +97,9 @@ const CreateOrderModal = ({ open, onClose }) => {
                         onChange={(val) => {
                             setDirection(val)
                             form.resetFields(['category_id'])
+                            form.setFieldValue('title', '')
                         }}
+
                         placeholder=""
                         options={directions}
                     />
@@ -95,14 +108,17 @@ const CreateOrderModal = ({ open, onClose }) => {
                     <Form.Item
                         name="category_id"
                         label={<div className="d-flex align-items-start text-wrap flex-column flex-sm-row align-items-sm-center">
-                            <p className="m-0 text-dark">Aniq xizmat turi</p>
-                            <span style={{ fontSize: '11px' }} className="text-info ml-2">(Misol uchun: Logo dizayn)</span>
+                            <p className="m-0 text-dark">Kategoriya tanlang</p>
+                            <Info title={createOrderInfo[direction].category.info} />
                         </div>}
                         rules={[{ required: true, message: "Kategoriya tanlang!" }]}
                     >
                         <Select
-
-                            placeholder=""
+                            onSelect={(_, option) => {
+                                form.setFieldValue('title', options[direction](option?.label))
+                                // setTitlePlacehoder(options[direction](option?.label))
+                            }}
+                            placeholder={createOrderInfo[direction].category.placeholder}
                             options={categories?.map(cat => ({
                                 label: cat?.title,
                                 value: cat?.id
@@ -110,17 +126,42 @@ const CreateOrderModal = ({ open, onClose }) => {
                         />
                     </Form.Item>
                 }
+                <Form.Item
+                    name="description"
+                    label={<div className="d-flex align-items-start text-wrap flex-column flex-sm-row align-items-sm-center">
+                        <p className="m-0 text-dark">Buyurtma tavsifini kiriting</p>
+                        <Info title={createOrderInfo[direction].description.info} />
+                    </div>}
+                    rules={[{ required: true, message: "Buyurtma tavsifini yozing!" }]}
+                >
+                    <TextArea style={{ resize: "none" }} rows={6} placeholder={createOrderInfo[direction].description.placeholder} />
+                </Form.Item>
+                <div>
+                    {/* Title yashirildi */}
+                    {/* <Form.Item
+                    name="title"
 
+                    label={<div className="d-flex align-items-start text-wrap flex-column flex-sm-row align-items-sm-center">
+
+                        <p className="m-0 text-dark">Buyurtmangiz haqida qisqacha tavsif.</p>
+                        <span style={{ fontSize: '11px' }} className="text-info  ml-2">(Misol uchun: Logo dizayn tayyorlash)</span>
+                    </div>}
+
+                    rules={[{ required: true, message: "Buyurtma nomini kiriting!" }]}
+                >
+                    <Input allowClear defaultValue={titlePlacehoder} style={{ height: '32px', color: '#000', placeholderColor: '#000' }} />
+                </Form.Item> */}
+                </div>
                 <Form.Item
                     name="language"
                     label={<div className="d-flex align-items-start text-wrap flex-column flex-sm-row align-items-sm-center">
-                        <p className="m-0 text-dark">Qaysi tilda bajarilsin?</p>
-                        <span style={{ fontSize: '11px' }} className="text-info ml-2">(Misol uchun: O'zbekcha)</span>
+                        <p className="m-0 text-dark">Buyurtma tili</p>
+                        <Info title={createOrderInfo[direction].lang.info} />
                     </div>}
                     rules={[{ required: true, message: "Bajarilish tilini tanlang!" }]}
                 >
                     <Select
-                        placeholder=""
+                        placeholder={createOrderInfo[direction].lang.placeholder}
                         options={[
                             { label: "O'zbekcha", value: "uzb" },
                             { label: "Ruscha", value: "rus" },
@@ -132,15 +173,15 @@ const CreateOrderModal = ({ open, onClose }) => {
                     name="budget"
 
                     label={<div className="d-flex align-items-start text-wrap flex-column flex-sm-row align-items-sm-center">
-                        <p className="m-0 text-dark">Siz bermoqchi bo'lgan summa</p>
-                        <span style={{ fontSize: '11px' }} className="text-info ml-2">(Misol uchun: 200 000 so’m)</span>
+                        <p className="m-0 text-dark">Byudjetingizni kiriting</p>
+                        <Info title={createOrderInfo[direction].price.info} />
                     </div>}
                     rules={[{ required: true, message: "Narx kiriting!" }]}
                 >
                     <InputNumber
                         min={2000}
                         style={{ width: "100%" }}
-                        placeholder=""
+                        placeholder={createOrderInfo[direction].price.placeholder}
                         formatter={(value) =>
                             value ? `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ") : ""
                         }
@@ -148,36 +189,44 @@ const CreateOrderModal = ({ open, onClose }) => {
                     />
                 </Form.Item>
 
-                <Form.Item
-                    name="deadline_date"
-                    label={<div className="d-flex align-items-start text-wrap flex-column flex-sm-row align-items-sm-center">
-                        <p className="m-0 text-dark">Qachongacha tayyor bo‘lishi kerak?</p>
-                        <span style={{ fontSize: '11px' }} className="text-info ml-2">(Misol uchun: Sep 4, 2025)</span>
-                    </div>}
-                    rules={[{ required: true, message: "Yetkazib berish sanasini tanlang!" }]}
-                >
-                    <DatePicker
-                        format="MMM DD, YYYY"
-                        style={{ width: "100%", height: "32px" }}
-                        placeholder=""
-                        size="small"
-                        disabledDate={(current) => current && current < dayjs().startOf("day")}
-                    />
-                </Form.Item>
 
-                <Form.Item
-                    name="description"
-                    label="Buyurtma haqida batafsil yozing"
-                    rules={[{ required: true, message: "Buyurtma tavsifini yozing!" }]}
-                >
-                    <TextArea style={{ resize: "none" }} rows={4} placeholder="Ishlab chiraqish korxonasi uchun logo dizayn tayyorlash kerak" />
-                </Form.Item>
-
-
+                <div className="d-flex gap-2">
+                    <Form.Item
+                        name="deadline_date"
+                        style={{ flex: 1 }}
+                        label={<div className="d-flex align-items-start text-wrap flex-column flex-sm-row align-items-sm-center">
+                            <p className="m-0 text-dark">Buyurtma tayyor bo‘lish muddatini belgilang</p>
+                        </div>}
+                        rules={[{ required: true, message: "Yetkazib berish sanasini tanlang!" }]}
+                    >
+                        <DatePicker
+                            format="MMM DD, YYYY"
+                            style={{ width: "100%", height: "32px" }}
+                            placeholder="Buyurtma tayyor bo‘lish sanasi va soatini tanlang"
+                            size="small"
+                            disabledDate={(current) => current && current < dayjs().startOf("day")}
+                        />
+                    </Form.Item>
+                    <Form.Item
+                        name="deadline_time" label={<div className="d-flex align-items-start text-wrap flex-column flex-sm-row align-items-sm-center">
+                            &nbsp;
+                        </div>}
+                        rules={[{ required: false, message: "Yetkazib berish sanasini tanlang!" }]}
+                    >
+                        <TimePicker
+                            format="HH:mm"
+                            style={{ width: "100%", height: "32px" }}
+                            placeholder="Soat"
+                            size="small"
+                            disabledDate={(current) => current && current < dayjs().startOf("day")}
+                        />
+                    </Form.Item>
+                </div>
 
                 <Form.Item>
                     <Button loading={isPending} type="primary" htmlType="submit" className="mt-3 py-4 fs-4" block>
-                        Yuborish
+                        {isPending ? <div className="d-flex align-items-center gap-3">
+                            <ClipLoader color="#fff" size={16} /> Yuborilmoqda...</div> : 'Yuborish'}
                     </Button>
                 </Form.Item>
             </Form>
@@ -186,3 +235,12 @@ const CreateOrderModal = ({ open, onClose }) => {
 };
 
 export default CreateOrderModal;
+
+
+export const Info = ({ title }) => {
+    return (
+        <Tooltip title={title} className="d-flex align-items-center">
+            <div className="d-flex align-items-center justify-content-center ml-2" style={{ width: '15px', height: '15px', cursor: 'pointer' }}><QuestionCircleOutlined /></div>
+        </Tooltip>
+    )
+}

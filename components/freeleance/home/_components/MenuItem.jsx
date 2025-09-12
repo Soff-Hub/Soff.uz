@@ -32,8 +32,8 @@ export const MenuItem = ({ products, templates, label }) => {
                     <h3 style={{ cursor: "pointer" }} onClick={() => router.push(`/${templateLink[label]}/all`)} className={styles.sectionLabel}>Tayyor mahsulotlar</h3>
                     <ul className={styles.details}>
                         {templates.map(item => (
-                            <Link key={item.id} href={`/${templateLink[label]}/${item.slug}?slug=${item.slug}&search=&parentCategory=${item.slug}&title=${item.title}`}>
-                                <p className={styles.detail}>{item.title}</p>
+                            <Link  key={item.id} href={`/${templateLink[label]}/${item.slug}?slug=${item.slug}&search=&parentCategory=${item.slug}&title=${item.title}`}>
+                                <a className={styles.detail}>{item.title}</a>
                             </Link>
                         ))}
                     </ul>
