@@ -140,9 +140,9 @@ const HeaderCatergories = () => {
                     ))}
                 </ul>
             </div>
-            {isMobile &&
+            {/* {isMobile &&
                 <div style={{ width: "10px" }}></div>
-            }
+            } */}
             <CreateOrderModal
                 open={open}
                 onClose={() => setOpen(false)}

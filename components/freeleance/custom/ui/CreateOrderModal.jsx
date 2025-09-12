@@ -7,7 +7,8 @@ import dayjs from "dayjs";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { createOrderInfo } from "~/constants/createOrder";
-import { ClipLoader, RingLoader } from "react-spinners";
+import { ClipLoader } from "react-spinners";
+import useResponsive from "~/utilities/useResponsive";
 
 const { TextArea } = Input;
 
@@ -23,6 +24,7 @@ const CreateOrderModal = ({ open, onClose }) => {
     const [form] = Form.useForm();
     const [direction, setDirection] = useState('scientific_work')
     const [category, setCategory] = useState('')
+    const { isMobile } = useResponsive()
     const { user } = useSelector(state => state.auth)
     const { push } = useRouter()
 
@@ -74,8 +76,16 @@ const CreateOrderModal = ({ open, onClose }) => {
 
     return (
         <Modal width={600} styles={{
+            wrapper: {
+                height: '100vh',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+            },
             content: {
-                padding: "15px"
+                padding: "15px",
+                height: isMobile ? '500px' : '700px',
+                overflowY: 'auto'
             }
         }} title="Maxsus buyurtma yaratish" open={open} onCancel={onClose} footer={null} destroyOnClose>
             <Form
@@ -88,7 +98,6 @@ const CreateOrderModal = ({ open, onClose }) => {
                     label={
                         <div className="d-flex align-items-start text-wrap flex-column flex-sm-row align-items-sm-center">
                             <p className="m-0 text-dark">Yo’nalishni tanlang</p>
-
                         </div>
                     }
                     rules={[{ required: true, message: "Yo'nalish tanlang!" }]}
@@ -107,7 +116,7 @@ const CreateOrderModal = ({ open, onClose }) => {
                 {direction &&
                     <Form.Item
                         name="category_id"
-                        label={<div className="d-flex align-items-start text-wrap flex-column flex-sm-row align-items-sm-center">
+                        label={<div className="d-flex align-items-center">
                             <p className="m-0 text-dark">Kategoriya tanlang</p>
                             <Info title={createOrderInfo[direction].category.info} />
                         </div>}
@@ -128,7 +137,7 @@ const CreateOrderModal = ({ open, onClose }) => {
                 }
                 <Form.Item
                     name="description"
-                    label={<div className="d-flex align-items-start text-wrap flex-column flex-sm-row align-items-sm-center">
+                    label={<div className="d-flex align-items-center align-items-sm-center">
                         <p className="m-0 text-dark">Buyurtma tavsifini kiriting</p>
                         <Info title={createOrderInfo[direction].description.info} />
                     </div>}
@@ -154,7 +163,7 @@ const CreateOrderModal = ({ open, onClose }) => {
                 </div>
                 <Form.Item
                     name="language"
-                    label={<div className="d-flex align-items-start text-wrap flex-column flex-sm-row align-items-sm-center">
+                    label={<div className="d-flex align-items-center text-wrap  align-items-sm-center">
                         <p className="m-0 text-dark">Buyurtma tili</p>
                         <Info title={createOrderInfo[direction].lang.info} />
                     </div>}
@@ -171,10 +180,9 @@ const CreateOrderModal = ({ open, onClose }) => {
                 </Form.Item>
                 <Form.Item
                     name="budget"
-
-                    label={<div className="d-flex align-items-start text-wrap flex-column flex-sm-row align-items-sm-center">
+                    label={<div className="d-flex align-items-center ">
                         <p className="m-0 text-dark">Byudjetingizni kiriting</p>
-                        <Info title={createOrderInfo[direction].price.info} />
+                        <span><Info title={createOrderInfo[direction].price.info} /></span>
                     </div>}
                     rules={[{ required: true, message: "Narx kiriting!" }]}
                 >
@@ -190,11 +198,12 @@ const CreateOrderModal = ({ open, onClose }) => {
                 </Form.Item>
 
 
-                <div className="d-flex gap-2">
+                <div className="d-flex gap-2 align-items-end mb-3">
                     <Form.Item
                         name="deadline_date"
-                        style={{ flex: 1 }}
-                        label={<div className="d-flex align-items-start text-wrap flex-column flex-sm-row align-items-sm-center">
+
+                        style={{ flex: 1, margin: 0 }}
+                        label={<div className="d-flex align-items-center">
                             <p className="m-0 text-dark">Buyurtma tayyor bo‘lish muddatini belgilang</p>
                         </div>}
                         rules={[{ required: true, message: "Yetkazib berish sanasini tanlang!" }]}
@@ -206,10 +215,12 @@ const CreateOrderModal = ({ open, onClose }) => {
                             size="small"
                             disabledDate={(current) => current && current < dayjs().startOf("day")}
                         />
-                    </Form.Item>
+                    </Form.Item> 
                     <Form.Item
-                        name="deadline_time" label={<div className="d-flex align-items-start text-wrap flex-column flex-sm-row align-items-sm-center">
-                            &nbsp;
+                        name="deadline_time"
+                        style={{ margin: 0, height: '100%' }}
+                        label={<div className="d-flex align-items-start text-wrap flex-column flex-sm-row align-items-sm-center">
+                            <p className="m-0 text-dark "></p>
                         </div>}
                         rules={[{ required: false, message: "Yetkazib berish sanasini tanlang!" }]}
                     >
@@ -223,10 +234,10 @@ const CreateOrderModal = ({ open, onClose }) => {
                     </Form.Item>
                 </div>
 
-                <Form.Item>
+                <Form.Item className="mb-2">
                     <Button loading={isPending} type="primary" htmlType="submit" className="mt-3 py-4 fs-4" block>
                         {isPending ? <div className="d-flex align-items-center gap-3">
-                            <ClipLoader color="#fff" size={16} /> Yuborilmoqda...</div> : 'Yuborish'}
+                            <ClipLoader color="#fff" size={16} /> Buyurtmani joylashtirilmoqda...</div> : 'Buyurtmani joylashtirish'}
                     </Button>
                 </Form.Item>
             </Form>

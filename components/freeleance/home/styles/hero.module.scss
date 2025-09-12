@@ -33,7 +33,6 @@
             color: $subTextColor;
             margin-bottom: 40px;
             text-align: center;
-
         }
 
         .heroButtons {
@@ -51,7 +50,7 @@
                 .heroBtn {
                     color: #24282b;
                     font-size: 16px;
-                    background-color:#fff;
+                    background-color: #fff;
                     padding: 5px 8px;
                     border-radius: 10px;
                     font-weight: 600;
@@ -62,7 +61,6 @@
                     gap: 10px;
                     box-sizing: border-box;
                     border: 1px solid #00a44f;
-
                 }
 
                 .activeHeroBtn {
@@ -78,7 +76,6 @@
                     align-items: center;
                     gap: 10px;
                     border: 1px solid #00a44f;
-
                 }
             }
         }
@@ -91,12 +88,10 @@
             justify-content: space-between;
             padding: 4px;
             width: 100%;
-            background-color:#fff;
+            background-color: #fff;
             max-width: 600px;
             position: relative; // kerak, pseudo-element ichida ishlashi uchun
             z-index: 10;
-
-            
 
             .input {
                 font-size: 15px;
@@ -126,8 +121,8 @@
             input {
                 outline: none !important;
                 z-index: 3;
-                
-                &::placeholder{
+
+                &::placeholder {
                     color: #24282b;
                 }
             }
@@ -139,26 +134,24 @@
             height: 100px;
             border-radius: 50%;
             top: 150px;
-            z-index:3;
+            z-index: 3;
             background-image: radial-gradient(
                 circle,
                 #28b86e 0%,
                 /* markaziy yashil */ #b5dac6 60%,
-                /* o‘rtada sariq */  #fdfffe 100% /* chetida oq */
+                /* o‘rtada sariq */ #fdfffe 100% /* chetida oq */
             );
 
             filter: blur(80px); /* blur radius */
             opacity: 1;
-
-            
-        }   
+        }
     }
 
     .heroCardSection {
         display: flex;
         gap: 15px;
         width: fit-content;
-        position: relative; 
+        position: relative;
         .cardWrapperOne {
             display: flex;
             flex-direction: column;
@@ -181,14 +174,12 @@
             right: 20%;
             top: 20%;
             z-index: 1;
-            background-image: radial-gradient(circle,
-                    #00a44f 0%,
-                    /* markaziy yashil */
-                    #57aa7f 80%,
-                    /* o‘rtada sariq */
-                    white 100%
-                    /* chetida oq */
-                );
+            background-image: radial-gradient(
+                circle,
+                #00a44f 0%,
+                /* markaziy yashil */ #57aa7f 80%,
+                /* o‘rtada sariq */ white 100% /* chetida oq */
+            );
 
             filter: blur(80px);
             /* blur radius */
@@ -246,7 +237,6 @@
 
             .heroButtons {
                 .heroFilterButtons {
-
                     .heroBtn,
                     .activeHeroBtn {
                         padding: 5px 8px !important;
@@ -280,7 +270,6 @@
 
             .heroButtons {
                 .heroFilterButtons {
-
                     .heroBtn,
                     .activeHeroBtn {
                         padding: 5px 8px !important;
@@ -356,9 +345,9 @@
 
 @media (max-width: 370px) {
     .heroMainBlock {
-        .heroInfoSection { 
+        .heroInfoSection {
             .heroButtons {
-                .heroFilterButtons { 
+                .heroFilterButtons {
                     .heroBtn,
                     .activeHeroBtn {
                         flex: 1;
@@ -370,7 +359,6 @@
         }
     }
 }
-
 
 .inputBackDrop {
     background-color: #fff;
@@ -385,16 +373,14 @@
     }
 }
 
-
-
 .heroCategorySection {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    margin-top:50px;
+    margin-top: 50px;
     width: 100%;
 
     .categoryBlock {
-        padding: 25px;
+        padding: 25px 0px;
 
         h3 {
             font-size: 24px;
@@ -424,7 +410,7 @@
                 border-radius: 12px;
                 cursor: pointer;
                 transition: 0.3s;
-                box-shadow: 5px 10px 30px 0px #0000000D;
+                box-shadow: 5px 10px 30px 0px #0000000d;
 
                 &:hover {
                     background: #eaf7f0;
@@ -441,10 +427,12 @@
                     font-size: 15px;
                     font-weight: 500;
                     color: #24282b;
+                    @media (max-width: 568px) {
+                        font-size: 12px;
+                    }
                 }
             }
         }
-
     }
 
     .categoryBlock:first-child {
@@ -474,8 +462,6 @@
         @media (max-width: 992px) {
             border: none;
         }
-
-
     }
 
     @media (max-width: 992px) {
