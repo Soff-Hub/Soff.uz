@@ -41,26 +41,18 @@ function NewHomePage({ tab, category, lastProductsData }) {
     );
 }
 
-export async function getServerSideProps(context) {
-    try {
-        const { query } = context;
-        const res = await fetch(`${baseURL}customer/last-added?limit=6`)
-        const lastProductsData = await res.json()
+// export async function getServerSideProps(context) {
+//     const { query } = context;
+//     const res = await fetch(`${baseURL}customer/last-added?limit=6`)
+//     const lastProductsData = await res.json()
 
-        return {
-            props: {
-                tab: query?.tab || 'file',
-                category: query?.category || null,
-                lastProductsData,
-            },
-        };
-    } catch (error) {
-        return {
-            props: {
-                err: error
-            },
-        }
-    }
-}
+//     return {
+//         props: {
+//             tab: query?.tab || 'file',
+//             category: query?.category || null,
+//             lastProductsData,
+//         },
+//     };
+// }
 
 export default NewHomePage;
