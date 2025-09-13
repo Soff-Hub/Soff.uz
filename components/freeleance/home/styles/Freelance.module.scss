@@ -81,7 +81,7 @@
         flex-direction: column;
         text-align: center;
         gap: 24px;
-         margin-top: 16px;
+         padding-top: 30px 20px;
         .freelance_text {
             max-width: 100%;
             .titleWrapper {
@@ -109,7 +109,6 @@
 
     /* Mobile (≤576px) */
     @media (max-width: 576px) {
-        padding: 10px 20px;
         gap: 10px;
         .freelance_text {
             max-width: 100%;

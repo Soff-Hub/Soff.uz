@@ -48,7 +48,7 @@ const LastProducts = () => {
                 />
                 <h1>So’ngi yuklangan mahsulotlar</h1>
             </div>
-            <div className={styles.productBox}>
+            {fileData?.results?.length > 0 && <div className={styles.productBox}>
                 <Link href={`/scientific-resources/all`}>
                     <h3>📚 Ilmiy ishlar</h3>
                 </Link>
@@ -59,8 +59,8 @@ const LastProducts = () => {
                         </div>
                     )}
                 </div>
-            </div>
-            <div className={styles.productBox}>
+            </div>}
+            {threeDData?.results?.length > 0 && <div className={styles.productBox}>
                 <Link href={`/3d-models-and-interior-designs/all`}>
                     <h3>🏠 3D moddellar</h3>
                 </Link>
@@ -71,8 +71,9 @@ const LastProducts = () => {
                         </div>
                     )}
                 </div>
-            </div>  
-            <div className={styles.productBox}>
+            </div>
+            }
+            {designData?.results?.length > 0 && <div className={styles.productBox}>
                 <Link href={`/design-developments/all`}>
                     <h3>🎨 Dizayn shablonlari</h3>
                 </Link>
@@ -84,7 +85,8 @@ const LastProducts = () => {
                     )}
                 </div>
             </div>
-            <div className={styles.productBox}>
+            }
+            {videoData?.results?.length > 0 && <div className={styles.productBox}>
                 <Link href={`/video-lessons/all`}>
                     <h3>🎥 Video ishlanmalar</h3>
                 </Link>
@@ -95,8 +97,8 @@ const LastProducts = () => {
                         </div>
                     )}
                 </div>
-            </div>
-            <div className={styles.productBox}>
+            </div>}
+            {templateData?.results?.length > 0 && <div className={styles.productBox}>
                 <Link href={`/templates/all`}>
                     <h3>📝 Tayyor shablonlar</h3>
                 </Link>
@@ -108,7 +110,8 @@ const LastProducts = () => {
                     )}
                 </div>
             </div>
-            <div className={styles.productBox}>
+            }
+            {websiteData?.results?.length > 0 && <div className={styles.productBox}>
                 <Link href={`/websites/all`}>
                     <h3>🌐 Vebsaytlar</h3>
                 </Link>
@@ -120,6 +123,7 @@ const LastProducts = () => {
                     )}
                 </div>
             </div>
+            }
         </section>
     );
 };
