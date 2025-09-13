@@ -9,11 +9,11 @@ const MenuCategoriesDropdown = () => {
     const { isLoggedIn } = useSelector(state => state.auth)
     return (
         <div className="menu--product-categories">
-            {!isMobile && isLoggedIn && 
+            {/* {!isMobile && isLoggedIn && 
                 <Link href={'/order/my-orders'} target="_blank">
                     <p className={`${styles.navLink} mx-0 my-0`}>Buyurtmalarim</p>
                 </Link>
-            }
+            } */}
             <Link href={'https://seller.soff.uz/'} target="_blank">
                 <p className={`${styles.navLink} my-0`}>Frilanser bo'lish</p>
             </Link>

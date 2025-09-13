@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { DownOutlined } from '@ant-design/icons';
 import { Dropdown, Space } from 'antd';
+import Link from 'next/link';
 
 
 const products = [
@@ -112,7 +113,7 @@ const templates = (handleOrder) => ([
                 Dasturlash xizmatlari
             </a>
         ),
-    }, 
+    },
 ])
 
 const HeaderCatergories = () => {
@@ -131,10 +132,10 @@ const HeaderCatergories = () => {
 
     return (
         <div className={styles.dropBlock}>
-            {/* {!isMobile &&
-            } */}
-            {/* <div>
-            </div> */}
+            {!isMobile &&
+                <Link href={'/order/my-orders'} target="_blank">
+                    <p className={`${styles.navLink} my-0`}>Buyurtmalarim</p>
+                </Link>}
             <div className={styles.dropBox}>
                 <Dropdown menu={{ items: products }}>
                     <a onClick={(e) => e.preventDefault()}>
@@ -197,9 +198,6 @@ const HeaderCatergories = () => {
                     ))}
                 </ul> */}
             </div>
-            {/* {isMobile &&
-                <div style={{ width: "10px" }}></div>
-            } */}
             <CreateOrderModal
                 open={open}
                 onClose={() => setOpen(false)}
