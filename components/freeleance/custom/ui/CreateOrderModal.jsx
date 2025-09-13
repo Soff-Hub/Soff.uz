@@ -216,7 +216,7 @@ const CreateOrderModal = ({ open, onClose }) => {
                         name="deadline_date"
                         style={{ flex: 1, margin: 0, width: '100%' }}
                         className="flex-fill"
-                        rules={[{ required: true, message: "Yetkazib berish sanasini tanlang!" }]}
+                        rules={[{ required: true, message: "Yetkazib berish sanasini va vaqtini tanlang!" }]}
                     >
                         <DatePicker
                             format="MMM DD, YYYY"
@@ -229,7 +229,7 @@ const CreateOrderModal = ({ open, onClose }) => {
                     </Form.Item>
                     <Form.Item
                         name="deadline_time"
-                        rules={[{ required: true, message: "Soatini tanlang!" }]}
+                        rules={[{ required: true, message: "" }]}
                     >
                         <TimePicker
                             format="HH:mm"
