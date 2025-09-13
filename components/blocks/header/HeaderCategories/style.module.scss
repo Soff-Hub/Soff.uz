@@ -9,7 +9,7 @@
         position: relative;
         display: flex;
         align-items: center;
-        margin-right: 10px; 
+        margin-right: 15px; 
         &:hover {
             .dropLabel {
                 color: $color-1st;
@@ -88,7 +88,7 @@
         }
     }
     @media (max-width: 1200px) {
-        margin-right: 20px;
+        // margin-right: 20px;
     }
     @media (max-width: 992px) {
         gap: 20px;
@@ -98,7 +98,7 @@
         margin-right: 0px;
     }
     .orderBox {
-        margin-right: 10px;
+        margin-right: 15px;
         @media (max-width: 568px) {
             flex: 1;
         }
