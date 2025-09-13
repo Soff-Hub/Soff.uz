@@ -26,8 +26,8 @@ const HomePage = () => {
             <div className="bg-white ">
                 <div className="container">
                     <FreelanceSection />
-                    <InfoSection />
                     <LastOpened />
+                    <InfoSection />
                 </div>
             </div>
             {/* <HomeCategoryHighlights /> */}
