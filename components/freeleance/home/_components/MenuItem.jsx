@@ -43,7 +43,7 @@ export const MenuItem = ({ products, templates, label }) => {
                     <ul className={styles.details}>
                         {products.map(item => (
                             <Link key={item.id} href={`/orders?direction=${label}&parent_category_id=${item.id}&title=${item.title}`}>
-                                <p className={styles.detail}>{item.title}</p>
+                                <a className={styles.detail}>{item.title}</a>
                             </Link>
                         ))}
                     </ul>

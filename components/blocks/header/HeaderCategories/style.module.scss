@@ -9,36 +9,7 @@
         position: relative;
         display: flex;
         align-items: center;
-        margin-right: 20px;
-        .dropLabel {
-            font-size: 16px;
-            color: $textColor;
-            font-weight: 400;
-            letter-spacing: 0%;
-            line-height: 26px;
-            margin: 0;
-            cursor: pointer;
-            display: flex;
-            gap: 5px;
-            align-items: center;
-            @media (max-width: 992px) {
-                font-size: 15px;
-            }
-            @media (max-width: 568px) {
-                font-size: 13px;
-                // flex: 1;
-            } 
-            @media (max-width: 480px) {
-                font-size: 12px; 
-            } 
-            @media (max-width: 340px) {
-                font-size: 11px; 
-            } 
-            .icon {
-                width: 14px !important;
-                height: 14px !important;
-            }
-        }
+        margin-right: 20px; 
         &:hover {
             .dropLabel {
                 color: $color-1st;
@@ -156,5 +127,36 @@
     i {
         font-size: 26px;
         color: #534534;
+    }
+}
+
+
+.dropLabel {
+    font-size: 16px;
+    color: $textColor;
+    font-weight: 400;
+    letter-spacing: 0%; 
+    margin: 0;
+    height: 25px;
+    cursor: pointer;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    @media (max-width: 992px) {
+        font-size: 15px;
+    }
+    @media (max-width: 568px) {
+        font-size: 13px;
+        // flex: 1;
+    } 
+    @media (max-width: 480px) {
+        font-size: 12px; 
+    } 
+    @media (max-width: 340px) {
+        font-size: 11px; 
+    } 
+    .icon {
+        width: 14px !important;
+        height: 14px !important;
     }
 }

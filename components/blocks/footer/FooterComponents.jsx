@@ -22,6 +22,12 @@ const footerMenu = {
         title: 'Ijtimoiy tarmoqlarimiz',
         items: [
             {
+                name: 'Telegram',
+                icon: '/static/svg/telegram_.svg',
+                username: '@soff_uz',
+                url: 'https://t.me/soff_uz',
+            },
+            {
                 name: 'FaceBook',
                 icon: '/static/img/faceb.png',
                 username: '@soffuz',

@@ -11,12 +11,13 @@
     .heroInfoSection {
         padding-top: 50px;
         position: relative;
-        overflow: hidden;
+        // overflow: hidden;
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding-bottom: 100px;
+        padding-bottom: 50px;
         z-index: 50 !important;
+        // border: 1px solid #00a44f;
 
         .heroTitle {
             font-size: 36px;
@@ -133,63 +134,17 @@
             width: 100%;
             height: 100px;
             border-radius: 50%;
-            top: 150px;
+            top: 200px;
             z-index: 3;
             background-image: radial-gradient(
                 circle,
-                #28b86e 0%,
-                /* markaziy yashil */ #b5dac6 60%,
-                /* o‘rtada sariq */ #fdfffe 100% /* chetida oq */
+                #a3e4c3 0%,
+                /* markaziy yashil */ #9ecdb4 60%,
+                /* o‘rtada sariq */ #ecf3f0 100% /* chetida oq */
             );
 
             filter: blur(80px); /* blur radius */
             opacity: 1;
-        }
-    }
-
-    .heroCardSection {
-        display: flex;
-        gap: 15px;
-        width: fit-content;
-        position: relative;
-        .cardWrapperOne {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .cardWrapperTwo {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-top: 34px;
-        }
-
-        &::after {
-            content: '';
-            position: absolute;
-            width: 500px;
-            height: 500px;
-            border-radius: 50%;
-            right: 20%;
-            top: 20%;
-            z-index: 1;
-            background-image: radial-gradient(
-                circle,
-                #00a44f 0%,
-                /* markaziy yashil */ #57aa7f 80%,
-                /* o‘rtada sariq */ white 100% /* chetida oq */
-            );
-
-            filter: blur(80px);
-            /* blur radius */
-            opacity: 0.7;
-        }
-
-        @media (max-width: 1200px) {
-            &::after {
-                display: none;
-            }
         }
     }
 }
@@ -381,7 +336,12 @@
 
     .categoryBlock {
         padding: 25px 0px;
-
+        @media (min-width: 992px) {
+            &:first-child {
+                margin-right: 20px;
+                padding-right: 20px;
+            }
+        }
         h3 {
             font-size: 24px;
             font-weight: 600;
@@ -466,5 +426,6 @@
 
     @media (max-width: 992px) {
         grid-template-columns: 1fr;
+        margin-top: 30px;
     }
 }

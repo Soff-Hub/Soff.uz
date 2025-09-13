@@ -1,7 +1,6 @@
 import { SearchOutlined } from '@ant-design/icons';
 import React, { useState } from 'react';
 import styles from '../styles/hero.module.scss';
-import HeroCard from '../ui/HeroCard';
 import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
 import { AutoComplete } from 'antd';
@@ -153,89 +152,89 @@ const Hero = () => {
                         </span>
                     </div>
                 </div>
-            </div>
 
-            <div className={styles.heroCategorySection}>
-                {/* Chap blok – Tayyor mahsulotlar */}
-                <div className={styles.categoryBlock}>
-                    <div className={styles.titleWrapper}>
-                        <img
-                            src="/static/img/star.svg"
-                            alt="badge"
-                            className={styles.badge}
-                        />
-                        <h3>Tayyor yuklangan mahsulotlar</h3>
+                <div style={{ backgroundColor: "transparent" }} className={styles.heroCategorySection}>
+
+                    <div className={styles.categoryBlock}>
+                        <div className={styles.titleWrapper}>
+                            <img
+                                src="/static/img/star.svg"
+                                alt="badge"
+                                className={styles.badge}
+                            />
+                            <h3>Tayyor yuklangan mahsulotlar</h3>
+                        </div>
+                        <div className={styles.categoryGrid}>
+                            <Link href='/scientific-resources/all' >
+                                <div className={styles.categoryItem}>
+                                    <img src="/static/img/HomePage/file3.webp" alt="Ilmiy ishlar" />
+                                    <span>Ilmiy ishlar</span>
+                                </div>
+                            </Link>
+                            <Link href='/3d-models-and-interior-designs/all' >
+                                <div className={styles.categoryItem}>
+                                    <img src="/static/img/HomePage/3d2.webp" alt="3D Modellar" />
+                                    <span>3D Modellar</span>
+                                </div>
+                            </Link>
+                            <Link href='/design-developments/all' >
+                                <div className={styles.categoryItem}>
+                                    <img src="/static/img/HomePage/design1.webp" alt="Dizayn shablonlari" />
+                                    <span>Dizayn shablonlari</span>
+                                </div>
+                            </Link>
+                            <Link href='/websites/all' >
+                                <div className={styles.categoryItem}>
+                                    <img src="/static/img/HomePage/web2.webp" alt="Veb saytlar" />
+                                    <span>Veb saytlar</span>
+                                </div>
+                            </Link>
+                            <Link href='/templates/all' >
+                                <div className={styles.categoryItem}>
+                                    <img src="/static/img/HomePage/template2.webp" alt="Shablonlar" />
+                                    <span>Shablonlar</span>
+                                </div>
+                            </Link>
+                            <Link href='/video-lessons/all' >
+                                <div className={styles.categoryItem}>
+                                    <img src="/static/img/HomePage/video1.webp" alt="Video darsliklar" />
+                                    <span>Video darsliklar</span>
+                                </div>
+                            </Link>
+                        </div>
                     </div>
-                    <div className={styles.categoryGrid}>
-                        <Link href='/scientific-resources/all' >
-                            <div className={styles.categoryItem}>
-                                <img src="/static/img/HomePage/file3.webp" alt="Ilmiy ishlar" />
-                                <span>Ilmiy ishlar</span>
-                            </div>
-                        </Link>
-                        <Link href='/3d-models-and-interior-designs/all' >
-                            <div className={styles.categoryItem}>
-                                <img src="/static/img/HomePage/3d2.webp" alt="3D Modellar" />
-                                <span>3D Modellar</span>
-                            </div>
-                        </Link>
-                        <Link href='/design-developments/all' >
-                            <div className={styles.categoryItem}>
-                                <img src="/static/img/HomePage/design1.webp" alt="Dizayn shablonlari" />
-                                <span>Dizayn shablonlari</span>
-                            </div>
-                        </Link>
-                        <Link href='/websites/all' >
-                            <div className={styles.categoryItem}>
-                                <img src="/static/img/HomePage/web2.webp" alt="Veb saytlar" />
-                                <span>Veb saytlar</span>
-                            </div>
-                        </Link>
-                        <Link href='/templates/all' >
-                            <div className={styles.categoryItem}>
-                                <img src="/static/img/HomePage/template2.webp" alt="Shablonlar" />
-                                <span>Shablonlar</span>
-                            </div>
-                        </Link>
-                        <Link href='/video-lessons/all' >
-                            <div className={styles.categoryItem}>
-                                <img src="/static/img/HomePage/video1.webp" alt="Video darsliklar" />
-                                <span>Video darsliklar</span>
-                            </div>
-                        </Link>
+
+                    <div className={styles.categoryBlock}>
+                        <h3>Xizmatni tanlang – Buyurtma bering</h3>
+                        <div className={styles.categoryGrid}>
+                            <Link href='/orders?direction=scientific_work' >
+                                <div className={styles.categoryItem}>
+                                    <img src="/static/img/HomePage/file2.webp" alt="Ilmiy va Akademik xizmatlar" />
+                                    <span>Ilmiy va Akademik Xizmatlar</span>
+                                </div>
+                            </Link>
+                            <Link href='/orders?direction=dizayn' >
+                                <div className={styles.categoryItem}>
+                                    <img src="/static/img/HomePage/design3.webp" alt="Dizayn xizmatlari" />
+                                    <span>Dizayn xizmatlari</span>
+                                </div>
+                            </Link>
+                            <Link href='/orders?direction=web' >
+                                <div className={styles.categoryItem}>
+                                    <img src="/static/img/HomePage/web.webp" alt="Dasturlash xizmatlari" />
+                                    <span>Dasturlash xizmatlari</span>
+                                </div>
+                            </Link>
+                            <Link href='/orders?direction=three_d' >
+                                <div className={styles.categoryItem}>
+                                    <img src="/static/img/HomePage/3d.webp" alt="3D Dizayn va Vizualizatsiya" />
+                                    <span>3D Dizayn va Vizualizatsiya</span>
+                                </div>
+                            </Link>
+                        </div>
                     </div>
                 </div>
-
-                <div className={styles.categoryBlock}>
-                    <h3>Xizmatni tanlang – Buyurtma bering</h3>
-                    <div className={styles.categoryGrid}>
-                        <Link href='/orders?direction=scientific_work' >
-                            <div className={styles.categoryItem}>
-                                <img src="/static/img/HomePage/file2.webp" alt="Ilmiy va Akademik xizmatlar" />
-                                <span>Ilmiy va Akademik Xizmatlar</span>
-                            </div>
-                        </Link>
-                        <Link href='/orders?direction=dizayn' >
-                            <div className={styles.categoryItem}>
-                                <img src="/static/img/HomePage/design3.webp" alt="Dizayn xizmatlari" />
-                                <span>Dizayn xizmatlari</span>
-                            </div>
-                        </Link>
-                        <Link href='/orders?direction=web' >
-                            <div className={styles.categoryItem}>
-                                <img src="/static/img/HomePage/web.webp" alt="Dasturlash xizmatlari" />
-                                <span>Dasturlash xizmatlari</span>
-                            </div>
-                        </Link>
-                        <Link href='/orders?direction=three_d' >
-                            <div className={styles.categoryItem}>
-                                <img src="/static/img/HomePage/3d.webp" alt="3D Dizayn va Vizualizatsiya" />
-                                <span>3D Dizayn va Vizualizatsiya</span>
-                            </div>
-                        </Link>
-                    </div>
-                </div>
-            </div>
+            </div> 
 
         </div>
     );
