@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import styles from './style.module.scss';
 import Image from 'next/image';
-import Link from 'next/link';
 import useResponsive from '~/utilities/useResponsive';
 import CreateOrderModal from '~/components/freeleance/custom/ui/CreateOrderModal';
 import { useSelector } from 'react-redux';
@@ -9,62 +8,6 @@ import { useRouter } from 'next/router';
 import { DownOutlined } from '@ant-design/icons';
 import { Dropdown, Space } from 'antd';
 
-const options = {
-    products: [
-        {
-            icon: '/static/svg/book-saved.svg',
-            label: 'Ilmiy ishlar',
-            link: '/scientific-resources/all?slug=all',
-        },
-        {
-            icon: '/static/svg/3dcube.svg',
-            label: '3D moddellar va Interier dizaynlar',
-            link: '/3d-models-and-interior-designs/all?slug=all',
-        },
-        {
-            icon: '/static/svg/image.svg',
-            label: 'Dizayn shablonlari',
-            link: '/design-developments/all?slug=all',
-        },
-        {
-            icon: '/static/svg/monitor.svg',
-            label: 'Dasturlash xizmatlari',
-            link: '/websites/all?slug=all',
-        },
-        {
-            icon: '/static/svg/chart.svg',
-            label: 'Turli sohalar uchun shablonlar',
-            link: '/templates/all?slug=all',
-        },
-        {
-            icon: '/static/svg/video-square.svg',
-            label: 'Video darsliklar',
-            link: '/video-lessons/all?slug=all',
-        },
-    ],
-    tempates: [
-        {
-            icon: '/static/svg/book-saved.svg',
-            label: 'Ilmiy va Akademik Xizmatlar',
-            link: '/orders?direction=scientific_work',
-        },
-        {
-            icon: '/static/svg/image.svg',
-            label: 'Dizayn',
-            link: '/orders?direction=dizayn',
-        },
-        {
-            icon: '/static/svg/monitor.svg',
-            label: 'Dasturlash xizmatlari',
-            link: '/orders?direction=web',
-        },
-        {
-            icon: '/static/svg/3dcube.svg',
-            label: '3D Dizayn va Vizualizatsiya',
-            link: '/orders?direction=three_d',
-        },
-    ],
-};
 
 const products = [
     {
@@ -123,9 +66,19 @@ const products = [
     }
 ];
 
-const templates = [
+const templates = (handleOrder) => ([
     {
         key: '1',
+        icon: <i style={{ fontSize: "20px", color: "rgba(0,0,0,0.6)" }} className="fa-solid fa-plus"></i>,
+        label: (
+            <p className={` ${styles.dropLabel}`}>
+                Maxsus buyurtma berish
+            </p>
+        ),
+        onClick: handleOrder
+    },
+    {
+        key: '2',
         icon: <Image src={'/static/svg/book-saved.svg'} alt="" width={20} height={20} />,
         label: (
             <a className={`ml-3 ${styles.dropLabel}`} href="/orders?direction=scientific_work">
@@ -134,7 +87,7 @@ const templates = [
         ),
     },
     {
-        key: '2',
+        key: '3',
         label: (
             <a className={`ml-3 ${styles.dropLabel}`} href="/orders?direction=three_d">
                 3D moddellar va Interier dizaynlar
@@ -143,7 +96,7 @@ const templates = [
         icon: <Image src={'/static/svg/3dcube.svg'} alt="" width={20} height={20} />,
     },
     {
-        key: '3',
+        key: '4',
         label: (
             <a className={`ml-3 ${styles.dropLabel}`} href="/orders?direction=dizayn">
                 Dizayn shablonlari
@@ -152,33 +105,15 @@ const templates = [
         icon: <Image src={'/static/svg/image.svg'} alt="" width={20} height={20} />,
     },
     {
-        key: '4',
+        key: '5',
         icon: <Image src={'/static/svg/monitor.svg'} alt="" width={20} height={20} />,
         label: (
             <a className={`ml-3 ${styles.dropLabel}`} href="/orders?direction=web">
                 Dasturlash xizmatlari
             </a>
         ),
-    },
-    // {
-    //     key: '5',
-    //     icon: <Image src={'/static/svg/chart.svg'} alt="" width={20} height={20} />,
-    //     label: (
-    //         <a className={`ml-2 ${styles.dropLabel}`} href="/orders?direction=templates">
-    //             Turli sohalar uchun shablonlar
-    //         </a>
-    //     ),
-    // },
-    // {
-    //     key: '6',
-    //     icon: <Image src={'/static/svg/video-square.svg'} alt="" width={20} height={20} />,
-    //     label: (
-    //         <a className={`ml-3 ${styles.dropLabel}`} href="/orders?direction=video">
-    //             Video darsliklar
-    //         </a>
-    //     ),
-    // }
-]
+    }, 
+])
 
 const HeaderCatergories = () => {
     const { isMobile } = useResponsive();
@@ -233,7 +168,7 @@ const HeaderCatergories = () => {
                         height={8}
                     /> 
                 </p> */}
-                <Dropdown menu={{ items: templates }}>
+                <Dropdown menu={{ items: templates(handleOrder) }}>
                     <a onClick={(e) => e.preventDefault()}>
                         <Space className={styles.dropLabel}>
                             Buyurtma berish
