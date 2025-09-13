@@ -53,14 +53,14 @@ const CatalogCard = ({ content_type, title, count, items }) => {
         <Link href={service[content_type]}>
             <div className={styles.catalogCard}>
                 <div className="d-flex gap-3 align-items-center">
-                    <div className={styles.cardIcon}>
+                    {/* <div className={styles.cardIcon}>
                         <Image
                             src={`/static/img/${content_type}.png`}
                             alt="Catalog Image"
                             width={50}
                             height={50}
                         />
-                    </div>
+                    </div> */}
                     <div>
                         <h2 className={styles.cardLabel}>{title}</h2>
                         {/* <p className={styles.cardDesc}>{count}+ mahsulot</p> */}
@@ -93,7 +93,7 @@ const CatalogCard = ({ content_type, title, count, items }) => {
                                     style={{
                                         backgroundImage: `url(${img ||
                                             '/static/img/not-found.png'})`,
-                                        backgroundSize: 'cover',
+                                        backgroundSize: "cover", 
                                         backgroundPosition: 'center',
                                     }}></div>
                             )}
