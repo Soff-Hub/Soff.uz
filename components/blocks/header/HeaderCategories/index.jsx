@@ -72,11 +72,15 @@ const templates = (handleOrder) => ([
         key: '1',
         icon: <i style={{ fontSize: "20px", color: "rgba(0,0,0,0.6)" }} className="fa-solid fa-plus"></i>,
         label: (
-            <p className={` ${styles.dropLabel}`}>
+            <p className={` ${styles.dropLabel}  `}>
                 Maxsus buyurtma berish
             </p>
         ),
-        onClick: handleOrder
+        onClick: handleOrder,
+        style: {
+            borderBottom: "1px solid rgba(0,0,0,0.2)",
+            borderRadius: "0px",
+        }
     },
     {
         key: '2',

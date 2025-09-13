@@ -4,6 +4,7 @@ import { useGet } from '~/repositories/https';
 import ProductCard from '../ui/ProductCard';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const LastProducts = () => {
     const { push } = useRouter()
@@ -50,7 +51,9 @@ const LastProducts = () => {
             </div>
             {fileData?.results?.length > 0 && <div className={styles.productBox}>
                 <Link href={`/scientific-resources/all`}>
-                    <h3> Ilmiy ishlar  </h3>
+                    <h3> Ilmiy ishlar
+                        <img className='ml-3' style={{ transform: 'rotate(-90deg)', width: '15px', height: '15px' }} src={'/static/svg/arrowdown.svg'} alt="arrow" />
+                    </h3>
                 </Link>
                 <div className='row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-gap-4'>
                     {fileData?.results?.map(p =>
@@ -62,7 +65,8 @@ const LastProducts = () => {
             </div>}
             {threeDData?.results?.length > 0 && <div className={styles.productBox}>
                 <Link href={`/3d-models-and-interior-designs/all`}>
-                    <h3>3D moddellar</h3>
+                    <h3 className='d-flex align-items-center gap-2'>
+                        3D moddellar <img className='ml-3' style={{ transform: 'rotate(-90deg)', width: '15px', height: '15px' }} src={'/static/svg/arrowdown.svg'} alt="arrow" /></h3>
                 </Link>
                 <div className='row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-gap-4'>
                     {threeDData?.results?.map(p =>
@@ -75,7 +79,9 @@ const LastProducts = () => {
             }
             {designData?.results?.length > 0 && <div className={styles.productBox}>
                 <Link href={`/design-developments/all`}>
-                    <h3>Dizayn shablonlari</h3>
+                    <h3>Dizayn shablonlari
+                        <img className='ml-3' style={{ transform: 'rotate(-90deg)', width: '15px', height: '15px' }} src={'/static/svg/arrowdown.svg'} alt="arrow" />
+                    </h3>
                 </Link>
                 <div className='row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-gap-4'>
                     {designData?.results?.map(p =>
@@ -88,7 +94,9 @@ const LastProducts = () => {
             }
             {videoData?.results?.length > 0 && <div className={styles.productBox}>
                 <Link href={`/video-lessons/all`}>
-                    <h3>Video ishlanmalar</h3>
+                    <h3>Video ishlanmalar
+                        <img className='ml-3' style={{ transform: 'rotate(-90deg)', width: '15px', height: '15px' }} src={'/static/svg/arrowdown.svg'} alt="arrow" />
+                    </h3>
                 </Link>
                 <div className='row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-gap-4'>
                     {videoData?.results?.map(p =>
@@ -100,7 +108,9 @@ const LastProducts = () => {
             </div>}
             {templateData?.results?.length > 0 && <div className={styles.productBox}>
                 <Link href={`/templates/all`}>
-                    <h3>Tayyor shablonlar</h3>
+                    <h3>Tayyor shablonlar
+                        <img className='ml-3' style={{ transform: 'rotate(-90deg)', width: '15px', height: '15px' }} src={'/static/svg/arrowdown.svg'} alt="arrow" />
+                    </h3>
                 </Link>
                 <div className='row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-gap-4'>
                     {templateData?.results?.map(p =>
@@ -113,7 +123,9 @@ const LastProducts = () => {
             }
             {websiteData?.results?.length > 0 && <div className={styles.productBox}>
                 <Link href={`/websites/all`}>
-                    <h3>Vebsaytlar</h3>
+                    <h3>Vebsaytlar
+                        <img className='ml-3' style={{ transform: 'rotate(-90deg)', width: '15px', height: '15px' }} src={'/static/svg/arrowdown.svg'} alt="arrow" />
+                    </h3>
                 </Link>
                 <div className='row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-gap-4'>
                     {websiteData?.results?.map(p =>
