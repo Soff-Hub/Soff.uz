@@ -20,6 +20,8 @@ const options = {
     three_d: (title) => (`${title} uchun dizayn tayyorlash kerak.`),
 }
 
+
+
 const CreateOrderModal = ({ open, onClose }) => {
     const [form] = Form.useForm();
     const [direction, setDirection] = useState('scientific_work')
@@ -64,7 +66,6 @@ const CreateOrderModal = ({ open, onClose }) => {
             deadline_date: `${dayjs(values.deadline_date).format("YYYY-MM-DD")} ${dayjs(values.deadline_time).format("HH:mm")}`,
 
         }
-        console.log('order', order)
 
         const fd = new FormData();
 
@@ -75,19 +76,28 @@ const CreateOrderModal = ({ open, onClose }) => {
     };
 
     return (
-        <Modal width={600} styles={{
-            wrapper: {
-                height: '100vh',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-            },
-            content: {
-                padding: "15px",
-                height: isMobile ? '500px' : '700px',
-                overflowY: 'auto'
-            }
-        }} title="Maxsus buyurtma yaratish" open={open} onCancel={onClose} footer={null} destroyOnClose>
+        <Modal
+            width={600} styles={{
+                wrapper: {
+                    height: '100vh',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: '0px',
+                    margin: '0px',
+                }, 
+                content: {
+                    padding: "15px",
+                    height: isMobile ? '500px' : '700px',
+                    overflowY: 'auto'
+                }
+            }}
+            title="Maxsus buyurtma yaratish"
+            open={open}
+            onCancel={onClose}
+            footer={null}
+            centered
+        >
             <Form
                 form={form}
                 layout="vertical"
@@ -165,7 +175,7 @@ const CreateOrderModal = ({ open, onClose }) => {
                     name="language"
                     label={<div className="d-flex align-items-center text-wrap  align-items-sm-center">
                         <p className="m-0 text-dark">Buyurtma tili</p>
-                        <Info title={createOrderInfo[direction].lang.info} />
+
                     </div>}
                     rules={[{ required: true, message: "Bajarilish tilini tanlang!" }]}
                 >
@@ -197,38 +207,36 @@ const CreateOrderModal = ({ open, onClose }) => {
                     />
                 </Form.Item>
 
-
-                <div className="d-flex gap-2 align-items-end mb-3">
+                <div className="d-flex align-items-start mb-2">
+                    <span style={{ marginRight: '5px', width: '5px', height: '5px' }} className="text-danger fs-6">*</span>
+                    <p className="m-0 text-dark">Buyurtma tayyor bo‘lish muddatini belgilang</p>
+                </div>
+                <div className="d-flex gap-2 mb-3">
                     <Form.Item
                         name="deadline_date"
-
-                        style={{ flex: 1, margin: 0 }}
-                        label={<div className="d-flex align-items-center">
-                            <p className="m-0 text-dark">Buyurtma tayyor bo‘lish muddatini belgilang</p>
-                        </div>}
+                        style={{ flex: 1, margin: 0, width: '100%' }}
+                        className="flex-fill"
                         rules={[{ required: true, message: "Yetkazib berish sanasini tanlang!" }]}
                     >
                         <DatePicker
                             format="MMM DD, YYYY"
+                            placement="bottom"
                             style={{ width: "100%", height: "32px" }}
                             placeholder="Buyurtma tayyor bo‘lish sanasi va soatini tanlang"
                             size="small"
                             disabledDate={(current) => current && current < dayjs().startOf("day")}
                         />
-                    </Form.Item> 
+                    </Form.Item>
                     <Form.Item
                         name="deadline_time"
-                        style={{ margin: 0, height: '100%' }}
-                        label={<div className="d-flex align-items-start text-wrap flex-column flex-sm-row align-items-sm-center">
-                            <p className="m-0 text-dark "></p>
-                        </div>}
-                        rules={[{ required: false, message: "Yetkazib berish sanasini tanlang!" }]}
+                        rules={[{ required: true, message: "Soatini tanlang!" }]}
                     >
                         <TimePicker
                             format="HH:mm"
-                            style={{ width: "100%", height: "32px" }}
+                            style={{ height: "32px" }}
                             placeholder="Soat"
                             size="small"
+                            className="ant-picker-time-panel-column"
                             disabledDate={(current) => current && current < dayjs().startOf("day")}
                         />
                     </Form.Item>
