@@ -204,6 +204,7 @@ const Hero = () => {
                         </div>
                     </div>
 
+
                     <div className={styles.categoryBlock}>
                         <h3>Xizmatni tanlang – Buyurtma bering</h3>
                         <div className={styles.categoryGrid}>
