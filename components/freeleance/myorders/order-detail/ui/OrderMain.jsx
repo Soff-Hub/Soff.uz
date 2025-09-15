@@ -96,7 +96,7 @@ const OrderMain = ({ order }) => {
                 {(order?.order_status_doing?.status === "order_accepted") && (
                     <div className={styles.orderPayCard}>
                         <div>
-                            <h4 style={{ color: "yellowgreen", marginBottom: 0 }} className={styles.orderNameLink}>Buyurtma qabul qilindi va frilanser ishni boshladi</h4>
+                            <h4 style={{ color: "yellowgreen", marginBottom: 0 }} className={styles.orderNameLink}>Buyurtma qabul qilindi va Frilanser ishni boshlaydi. Ish tugallangach, tayyor faylni shu yerda yuklab olishingiz mumkin bo‘ladi. Istalgan vaqtda chat orqali frilanser bilan muloqot qilishingiz mumkin.</h4>
                         </div>
                     </div>
                 )}
