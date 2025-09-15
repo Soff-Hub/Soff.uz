@@ -245,7 +245,7 @@ const CreateOrderModal = ({ open, onClose }) => {
                 <Form.Item className="mb-2">
                     <Button loading={isPending} type="primary" htmlType="submit" className="mt-3 py-4 fs-4" block>
                         {isPending ? <div className="d-flex align-items-center gap-3">
-                            <ClipLoader color="#fff" size={16} /> Buyurtmani joylashtirilmoqda...</div> : 'Buyurtmani joylashtirish'}
+                            Buyurtmani joylashtirilmoqda...</div> : 'Buyurtmani joylashtirish'}
                     </Button>
                 </Form.Item>
             </Form>

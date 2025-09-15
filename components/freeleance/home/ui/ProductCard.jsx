@@ -19,7 +19,6 @@ const ProductCard = ({ product }) => {
     }
 
 
-    // const { content_duration, content_type} = product?.document
 
     function handleAddItemToCart(e) {
         showModal();
@@ -79,13 +78,22 @@ const ProductCard = ({ product }) => {
                     </div>
                     <div className={styles.cardInfo}>
                         {product?.document?.file_size &&
-                            <span><i className="fas fa-database"></i>{product?.document?.file_size}</span>
+                            <div className='d-flex gap-1'>
+                                <img src="/static/img/card_icons/driver.svg" alt="icon" />
+                                <span>{product?.document?.file_size}</span>
+                            </div>
                         }
                         {product?.document?.page_count &&
-                            <span><i className="fas fa-copy"></i>{product?.document?.page_count}</span>
+                        <div className='d-flex gap-1'>
+                            <img src="/static/img/card_icons/driver.svg" alt="icon" />
+                            <span>{product?.document?.page_count}</span>
+                        </div>
                         }
                         {product?.views_count !== 0 &&
-                            <span><i className='fa-solid fa-eye'></i>{product?.views_count}</span>
+                        <div className='d-flex gap-1'>
+                            <img src="/static/img/card_icons/eye.svg" alt="icon" />
+                            <span>{product?.views_count}</span>
+                        </div>
                         }
                     </div>
                 </div>

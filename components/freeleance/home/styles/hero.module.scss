@@ -1,7 +1,6 @@
 @import '/scss/utils/variable';
 
 .heroMainBlock {
-    // display: flex;
     gap: 50px;
     padding-top: 20px;
     align-items: center;
@@ -17,7 +16,6 @@
         align-items: center;
         padding-bottom: 50px;
         z-index: 50 !important;
-        // border: 1px solid #00a44f;
 
         .heroTitle {
             font-size: 36px;
@@ -61,7 +59,7 @@
                     align-items: center;
                     gap: 10px;
                     box-sizing: border-box;
-                    border: 1px solid #00a44f;
+                    border: 1px solid #fff;
                 }
 
                 .activeHeroBtn {
@@ -91,7 +89,7 @@
             width: 100%;
             background-color: #fff;
             max-width: 600px;
-            position: relative; // kerak, pseudo-element ichida ishlashi uchun
+            position: relative;
             z-index: 10;
 
             .input {
@@ -139,11 +137,11 @@
             background-image: radial-gradient(
                 circle,
                 #a3e4c3 0%,
-                /* markaziy yashil */ #9ecdb4 60%,
-                /* o‘rtada sariq */ #ecf3f0 100% /* chetida oq */
+                #9ecdb4 60%,
+                #ecf3f0 100% 
             );
 
-            filter: blur(80px); /* blur radius */
+            filter: blur(80px);
             opacity: 1;
         }
     }
