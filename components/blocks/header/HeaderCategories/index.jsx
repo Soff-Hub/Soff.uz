@@ -24,7 +24,7 @@ const products = [
         key: '2',
         label: (
             <a className={`ml-3 ${styles.dropLabel}`} href="/3d-models-and-interior-designs/all?slug=all">
-                3D moddellar va Interier dizaynlar
+                3D Dizayn va Vizualizatsiya
             </a>
         ),
         icon: <Image src={'/static/svg/3dcube.svg'} alt="" width={20} height={20} />,
@@ -40,15 +40,6 @@ const products = [
     },
     {
         key: '4',
-        icon: <Image src={'/static/svg/monitor.svg'} alt="" width={20} height={20} />,
-        label: (
-            <a className={`ml-3 ${styles.dropLabel}`} href="/websites/all?slug=all">
-                Dasturlash xizmatlari
-            </a>
-        ),
-    },
-    {
-        key: '5',
         icon: <Image src={'/static/svg/chart.svg'} alt="" width={20} height={20} />,
         label: (
             <a className={`ml-2 ${styles.dropLabel}`} href="/templates/all?slug=all">
@@ -57,14 +48,23 @@ const products = [
         ),
     },
     {
-        key: '6',
+        key: '5',
         icon: <Image src={'/static/svg/video-square.svg'} alt="" width={20} height={20} />,
         label: (
             <a className={`ml-3 ${styles.dropLabel}`} href="/video-lessons/all?slug=all">
                 Video darsliklar
             </a>
         ),
-    }
+    },
+    {
+        key: '6',
+        icon: <Image src={'/static/svg/monitor.svg'} alt="" width={20} height={20} />,
+        label: (
+            <a className={`ml-3 ${styles.dropLabel}`} href="/websites/all?slug=all">
+                Dasturlash xizmatlari
+            </a>
+        ),
+    },
 ];
 
 const templates = (handleOrder) => ([
@@ -94,15 +94,6 @@ const templates = (handleOrder) => ([
     {
         key: '3',
         label: (
-            <a className={`ml-3 ${styles.dropLabel}`} href="/orders?direction=three_d">
-                3D moddellar va Interier dizaynlar
-            </a>
-        ),
-        icon: <Image src={'/static/svg/3dcube.svg'} alt="" width={20} height={20} />,
-    },
-    {
-        key: '4',
-        label: (
             <a className={`ml-3 ${styles.dropLabel}`} href="/orders?direction=dizayn">
                 Dizayn shablonlari
             </a>
@@ -110,13 +101,22 @@ const templates = (handleOrder) => ([
         icon: <Image src={'/static/svg/image.svg'} alt="" width={20} height={20} />,
     },
     {
-        key: '5',
+        key: '4',
         icon: <Image src={'/static/svg/monitor.svg'} alt="" width={20} height={20} />,
         label: (
             <a className={`ml-3 ${styles.dropLabel}`} href="/orders?direction=web">
                 Dasturlash xizmatlari
             </a>
         ),
+    },
+    {
+        key: '5',
+        label: (
+            <a className={`ml-3 ${styles.dropLabel}`} href="/orders?direction=three_d">
+                3D Dizayn va Vizualizatsiya
+            </a>
+        ),
+        icon: <Image src={'/static/svg/3dcube.svg'} alt="" width={20} height={20} />,
     },
 ])
 
@@ -127,11 +127,12 @@ const HeaderCatergories = () => {
     const { push } = useRouter()
 
     const handleOrder = () => {
-        if (isLoggedIn) {
-            setOpen(true)
-        } else {
-            push('/auth/login')
-        }
+        // if (isLoggedIn) {
+        //     setOpen(true)
+        // } else {
+        //     push('/auth/login')
+        // }
+        window.open('https://t.me/soff_freelancing_bot', '_blank')
     }
 
     return (

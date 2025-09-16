@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './catalogs.module.scss';
 import Image from 'next/image';
 import CatalogCard from '../cards/catalogCard'; 
+import { useRouter } from 'next/router';
 
 const title = {
     '3d': '3D Moddellar',
@@ -33,7 +34,7 @@ const data = [
     },
 ];
 const CatalogsSection = () => {  
-
+    const router = useRouter()
     return (
         <div className={styles.catalogSectionBlock}>
             <div className="container mx-auto">

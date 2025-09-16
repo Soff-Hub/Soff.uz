@@ -1,0 +1,97 @@
+.card {
+    background: #00A44F;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+
+    .btn {
+        background: #fefefe;
+        color: #24282B;
+        line-height: 26px;
+        font-size: 14px;
+        border-radius: 10px;
+        border: #fefefe solid 2px;
+        transition: all .3s ease-out;
+
+        &:hover {
+            color: #fefefe;
+            background: #00A44F;
+        }
+    }
+
+    .title {
+        margin: 0;
+        text-align: center;
+        color: #fefefe;
+        font-size: 20px;
+        line-height: 30px;
+        font-weight: 600;
+    }
+}
+
+/* ===========================
+   📱 Responsive breakpoints
+=========================== */
+
+/* Tablet */
+@media (max-width: 1024px) {
+    .card {
+        gap: 8px;
+        padding: 15px;
+
+        .btn {
+            font-size: 13px;
+            line-height: 24px;
+            padding: 6px 14px;
+        }
+
+        .title {
+            font-size: 18px;
+            line-height: 28px;
+        }
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .card {
+        gap: 6px;
+        padding: 12px;
+
+        .btn {
+            font-size: 12px;
+            line-height: 22px;
+            padding: 6px 12px;
+            border-radius: 8px;
+        }
+
+        .title {
+            font-size: 16px;
+            line-height: 24px;
+        }
+    }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+    .card {
+        gap: 4px;
+        padding: 10px;
+
+        .btn {
+            font-size: 11px;
+            line-height: 20px;
+            padding: 5px 10px;
+            border-radius: 6px;
+        }
+
+        .title {
+            font-size: 14px;
+            line-height: 22px;
+        }
+    }
+}

@@ -44,7 +44,7 @@ const HeaderActions = ({ auth, isDark }) => {
                 color={isDark ? 'text-black' : 'text-white'}
                 isLoggedIn={auth.isLoggedIn && Boolean(auth.isLoggedIn)}
             />
-            <SideBar />
+            {/* <SideBar /> */}
         </div>
     );
 };
