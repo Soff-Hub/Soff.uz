@@ -188,16 +188,18 @@ const getColumns = ({ onCancel, onOpenDrawer }) => {
                 if (record.status == 'pending') {
                     return (
                         <Space direction="" size={6}>
-                            <Tooltip title="Batafsil ko'rish">
-                                <Button
-                                    type="primary"
-                                    style={{
-                                        background: "#00a44f"
-                                    }}
-                                    onClick={() => router.push(`/order/${record.key}`)}>
-                                    <i className="fa-solid fa-arrow-up-right-from-square" />
-                                </Button>
-                            </Tooltip>
+                            {!record.seller && 
+                                <Tooltip title="Takliflarni ko'rish">
+                                    <Button
+                                        type="primary"
+                                        style={{
+                                            background: "#00a44f"
+                                        }}
+                                        onClick={() => onOpenDrawer(record)}>
+                                        <i className="fa-solid fa-arrow-up-right-from-square" />
+                                    </Button>
+                                </Tooltip>
+                            }
                             <Tooltip title="Bekor qilish">
                                 <Button
                                     type="primary"

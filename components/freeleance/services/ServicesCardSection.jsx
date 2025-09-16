@@ -2,8 +2,8 @@ import React from 'react';
 import { Empty } from 'antd';
 import { SmileOutlined } from '@ant-design/icons';
 import styles from './ServiceFilterSection.module.scss';
-import LastOpenedCard from '../home/ui/LastOpenedCard';
 import ServiceCard from './service-card';
+import ServiceFirstCard from './service-first-card';
 const ServicesCardSection = ({ services }) => {
     const hasProducts = services?.items?.length > 0;
     return (
@@ -12,9 +12,12 @@ const ServicesCardSection = ({ services }) => {
                 <div>
                     {hasProducts ? (
                         <div className='row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-gap-4'>
+                            <div className="col px-md-3 px-1">
+                                <ServiceFirstCard />
+                            </div>
                             {services.items.map((service, index) => (
-                                <div key={index} className="col px-3">
-                                    <ServiceCard service={service}/>
+                                <div key={index} className="col px-md-3 px-1">
+                                    <ServiceCard service={service} />
                                 </div>
                             ))}
                         </div>
