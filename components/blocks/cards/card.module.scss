@@ -13,16 +13,13 @@
     flex-direction: column;
     @media (max-width: 1199px) {
         padding: 14px;
-        height: 220px;
     }
     @media (max-width: 992px) {
         padding: 12px;
-        height: 200px;
     }
 
     @media (max-width: 576px) {
         padding: 10px;
-        height: 150px;
     }
 }
 .cardIcon {
@@ -104,6 +101,9 @@
                 border-radius: 10px;
                 border: 1px solid #e6e6e6;
                 
+                @media (max-width: 576px){
+                    height: 100px;
+                }
             }
         }
         .cardBlockRightBottom {
