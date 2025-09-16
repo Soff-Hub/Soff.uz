@@ -8,6 +8,7 @@ import { setSavedPrfileData } from '~/store/ecomerce/slice';
 import styles from '../../../landingStyles/landingStyles.module.scss';
 import Image from 'next/image';
 import useGetChats from '~/components/freeleance/chat/api/useGetChats';
+import { Badge } from 'antd';
 
 const HeaderUserDropdown = props => {
     const dispatch = useDispatch();
@@ -76,13 +77,20 @@ const HeaderUserDropdown = props => {
         return (
             <div className="ps-block--user-account ">
                 <div className="fs-3 d-flex align-items-center gap-3 pointer">
-                    <Image
-                        src={profile?.image || '/static/img/ozodbek.png'}
-                        style={{ borderRadius: '50%' }}
-                        width={30}
-                        height={30}
-                        alt="user"
-                    />
+                    <Badge
+                        count={unreads}
+                        size='small'
+                        color='#00a44f'
+                        offset={[-4, 3]}
+                    >
+                        <Image
+                            src={profile?.image || '/static/img/ozodbek.png'}
+                            style={{ borderRadius: '50%' }}
+                            width={30}
+                            height={30}
+                            alt="user"
+                        />
+                    </Badge>
                 </div>
                 <div className="ps-block__content">
                     <ul className="ps-list--arrow order">
