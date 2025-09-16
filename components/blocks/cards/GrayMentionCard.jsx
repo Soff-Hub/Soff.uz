@@ -13,6 +13,7 @@ const GrayMentionCard = ({
                 <a
                     onClick={goProducts}
                     href={link}
+                    target='_blank'
                     className={styles.catalogSeeAll}>
                     {btn}{' '}
                     <i

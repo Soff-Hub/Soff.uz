@@ -4,7 +4,7 @@
     justify-content: center;
     .block {
         position: relative;
-        bottom: -150px;
+        // bottom: -100px;
         border-radius: 16px;
         background: #b5b6b6;
         width: 85%;
@@ -13,6 +13,7 @@
         justify-content: center;
         padding: 90px 30px;
         margin: 0 auto; // markazga qo‘yish uchun
+        margin-top: 40px;
 
         .title {
             font-size: 36px;
