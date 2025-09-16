@@ -105,7 +105,7 @@ const getColumns = ({ onCancel, onOpenDrawer }) => {
             ),
         },
         {
-            title: 'Sotuvchi',
+            title: 'Mutaxassis',
             dataIndex: 'seller',
             render: (_, record) => {
                 const photos = record?.offers?.map(item => item.photo_url) || [];
@@ -182,12 +182,22 @@ const getColumns = ({ onCancel, onOpenDrawer }) => {
             align: 'center',
         },
         {
-            title: "O'chirish",
+            title: "Harakatlar",
             dataIndex: 'status',
             render: (_, record) => {
                 if (record.status == 'pending') {
                     return (
                         <Space direction="" size={6}>
+                            <Tooltip title="Batafsil ko'rish">
+                                <Button
+                                    type="primary"
+                                    style={{
+                                        background: "#00a44f"
+                                    }}
+                                    onClick={() => router.push(`/order/${record.key}`)}>
+                                    <i className="fa-solid fa-arrow-up-right-from-square" />
+                                </Button>
+                            </Tooltip>
                             <Tooltip title="Bekor qilish">
                                 <Button
                                     type="primary"
