@@ -4,6 +4,7 @@ import LastOpenedCard from '../ui/LastOpenedCard';
 import useLastOpened from '../../chat/api/useLastOpened';
 import Image from 'next/image';
 import Link from 'next/link';
+import ServiceCard from '../../services/service-card';
 const LastOpened = () => {
     const { data } = useLastOpened();
 
@@ -47,15 +48,7 @@ const LastOpened = () => {
             <div className={styles.cardSection}>
                 {data &&
                     data.map(item => (
-                        <LastOpenedCard
-                            key={item.title}
-                            title={item.title}
-                            image={item.poster}
-                            author={item.user}
-                            price={item.price}
-                            slug={item.slug}
-                            userImage={item.user.photo_url}
-                        />
+                        <ServiceCard service={item}/>
                     ))}
             </div>
         </>

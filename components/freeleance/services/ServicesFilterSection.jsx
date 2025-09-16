@@ -7,15 +7,15 @@ import {
     DownOutlined,
     SearchOutlined,
 } from '@ant-design/icons';
+import ServiceSteps from './service-steps';
 
 const { Option } = Select;
 
 const directions = [
-    { label: 'Ilmiy ishlar', value: 'scientific_work' },
+    { label: 'Ilmiy va akademik xizmatlar', value: 'scientific_work' },
+    { label: 'Dizayn', value: 'dizayn' },
+    { label: 'Xizmatlari', value: 'web' },
     { label: '3D Dizayn va Vizualizatsiya', value: 'three_d' },
-    { label: 'Grafik Dizayn va Shablonlar', value: 'dizayn' },
-    { label: 'Veb Dasturlash va IT Xizmatlari', value: 'web' },
-    { label: 'Hujjatlar va Professional Shablonlar', value: 'document' },
     { label: 'Barchasi', value: '' },
 ];
 
@@ -90,46 +90,14 @@ const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
         setSelectedDirection(query.direction);
     }, [query]);
 
-    const bannerTitle = {
-        scientific_work:
-            'Ilmiy maqolalar, tadqiqotlar va akademik ishlar uchun materiallar',
-        three_d:
-            '3D modellashtirish, animatsiya va vizualizatsiya bo‘yicha kreativ yechimlar',
-        dizayn: 'Grafik dizayn, brending, logotip va banner shablonlari',
-        web: 'Veb dasturlash, mobil ilovalar va IT xizmatlari',
-        document: 'Rasmiy hujjatlar va biznes shablonlari',
-    };
-
     return (
         <div className="">
             <div className={styles.headlineWrapper}>
-                <h1 className={styles.headline}>
-                    {bannerTitle[selectedDirection] || 'Barcha xizmatlar'}
-                </h1>
+                <ServiceSteps />
             </div>
             <div className={styles.serviceFilterTab}>
                 <div className={styles.filterRow}>
-                    <div className="d-flex gap-3 flex-fill">
-                        <div className={styles.searchBox}>
-                            <input
-                                value={searchValue}
-                                onChange={e => setSearchValue(e.target.value)}
-                                placeholder="Xizmatlarni izlash"
-                                className={styles.input}
-                                type="text"
-                            />
-                            <span className={styles.searchIcon}>
-                                <SearchOutlined />
-                            </span>
-                        </div>
-                        <div className="d-flex d-md-none align-items-center">
-                            <button
-                                className={styles.deleteMob}
-                                onClick={clearFilters}>
-                                <DeleteOutlined />
-                            </button>
-                        </div>
-                    </div>
+
 
                     <div className={styles.filterSelects}>
                         <Select
@@ -147,7 +115,6 @@ const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
                             ))}
                         </Select>
 
-                        {selectedDirection && (
                             <Select
                                 className={styles.filter_select}
                                 suffixIcon={
@@ -162,28 +129,34 @@ const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
                                     </Option>
                                 ))}
                             </Select>
-                        )}
-
-                        {/* <Select
-                            className={styles.filter_select}
-                            suffixIcon={
-                                <DownOutlined style={{ color: 'green' }} />
-                            }
-                            placeholder="Sub kategoriya"
-                            value={selectedChildCategory || undefined}
-                            onChange={onChildCategoryChange}>
-                            {childCategory?.map(cat => (
-                                <Option key={cat.id} value={String(cat.id)}>
-                                    {cat.title}
-                                </Option>
-                            ))}
-                        </Select> */}
-
+                        
                         <button
                             className={styles.deleteBtn}
                             onClick={clearFilters}>
                             <DeleteOutlined />
                         </button>
+                    </div>
+
+                    <div className="d-flex justify-content-end gap-3 flex-fill">
+                        <div className={styles.searchBox}>
+                            <input
+                                value={searchValue}
+                                onChange={e => setSearchValue(e.target.value)}
+                                placeholder="Qanday xizmat izlamoqdasiz"
+                                className={styles.input}
+                                type="text"
+                            />
+                            <span className={styles.searchIcon}>
+                                <SearchOutlined />
+                            </span>
+                        </div>
+                        <div className="d-flex d-md-none align-items-center">
+                            <button
+                                className={styles.deleteMob}
+                                onClick={clearFilters}>
+                                <DeleteOutlined />
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

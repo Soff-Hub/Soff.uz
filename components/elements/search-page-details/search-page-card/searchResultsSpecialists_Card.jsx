@@ -4,7 +4,6 @@ import React from 'react';
 
 export default function SearchResultsSpecialists_Card({ data }) {
     const router = useRouter();
-    // Last active vaqti hozirgi vaqtdan 5 daqiqa ichida bo'lsa "online"
     const isOnline = () => {
         if (!data.last_active) return false;
         const lastActiveDate = new Date(data.last_active);
@@ -33,7 +32,7 @@ export default function SearchResultsSpecialists_Card({ data }) {
                 ): <Badge color="" text="Ofline" /> }
             </div>
 
-            <p className='Search_Results_Specialists_Card_isName'>
+            <p className='Search_Results_Specialists_Card_isName text-wrap'>
                 {data.full_name}
             </p>
             <p className='Search_Results_Specialists_Card_job'>{data.position?.title}</p>

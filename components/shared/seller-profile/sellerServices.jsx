@@ -1,10 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import { Skeleton } from 'antd';
-import React, { useEffect, useState } from 'react';
-import ServiceCard from '~/components/freeleance/services/ServiceCard';
+import React from 'react';
 import { apiForFreelance } from '~/repositories/api';
 import ServiceIsUnavailable from './ServiceIsUnavailable';
-import LastOpenedCard from '~/components/freeleance/home/ui/LastOpenedCard';
+import ServiceCard from '~/components/freeleance/services/service-card';
 
 export default function SellerServices({ pid }) {
     const { data, isLoading } = useQuery({
@@ -41,16 +40,9 @@ export default function SellerServices({ pid }) {
                 )}
                 {Array.isArray(data) && (
                     <div className="row row-gap-4">
-                        {data?.map((item, index) => (
-                            <div className="col-6 col-md-4 px-2">
-                                <LastOpenedCard
-                                    title={item.title}
-                                    image={item.poster}
-                                    author={item.user.full_name}
-                                    price={item.price}
-                                    slug={item.slug}
-                                    userImage={item.user.photo_url}
-                                />
+                        {data?.map((item) => (
+                            <div key={item?.id} className="col-6 col-md-4 px-2">
+                                <ServiceCard service={item}/>
                             </div>
                         ))}
                     </div>

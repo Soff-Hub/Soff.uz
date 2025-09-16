@@ -54,7 +54,7 @@ export default function SoffFreelancerPage({
                         />
                     </div>
                 )}
-                <InfoSection />
+                {/* <InfoSection /> */}
                 <div>
                     <GrayMentionCard
                         title="Izlaganingiz yo’qmi? O'z buyurtmangizni joylashtiring!"
@@ -78,7 +78,6 @@ export async function getServerSideProps(context) {
         offset = 0,
     } = query;
 
-    // 🔹 Helper funksiya
     const fetchJson = async url => {
         try {
             const res = await fetch(url);
@@ -89,7 +88,6 @@ export async function getServerSideProps(context) {
         }
     };
 
-    // 🔹 Query param yig‘ish
     const servicesQuery = new URLSearchParams({
         ...(category_id && { category_id }),
         ...(search && { search }),
@@ -106,7 +104,6 @@ export async function getServerSideProps(context) {
         ? `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/categories?parent_id=${category_id}`
         : null;
 
-    // 🔹 Parallel fetch
     const [servicesData, parentCategory, childCategory] = await Promise.all([
         fetchJson(servicesUrl),
         parentCategoryUrl ? fetchJson(parentCategoryUrl) : Promise.resolve([]),

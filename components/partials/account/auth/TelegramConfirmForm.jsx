@@ -94,7 +94,8 @@ export default function TelegramConfigmForm() {
                             <span>Kirish uchun </span>
                             <a
                                 onClick={handleStart}
-                                href="tg://resolve?domain=soff_auth_bot"
+                                href="https://t.me/soff_auth_bot?start=new_code"
+                                target='_blank'
                                 className="text-success">
                                 @soff_auth_bot
                             </a>{' '}
