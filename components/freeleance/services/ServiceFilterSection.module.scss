@@ -93,40 +93,6 @@
     margin: 20px 0px;
 }
 
-.searchBox {
-    border: 1px solid #00a44f;
-    border-radius: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 4px;
-    background: #fff;
-    position: relative;
-    z-index: 2;
-    flex: 1;
-    width: 50%;
-
-    .input {
-        font-size: 15px;
-        outline: none;
-        border: none;
-        width: 100%;
-        margin-left: 9px;
-    }
-
-    .searchIcon {
-        font-size: 18px;
-        background: #00a44f;
-        cursor: pointer;
-        color: white;
-        border-radius: 50%;
-        padding: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-}
-
 .filterRow {
     width: 100%;
     display: flex;
@@ -147,7 +113,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 5px;
+    padding: 3px;
     background: #fff;
     position: relative;
     z-index: 2;
@@ -167,14 +133,14 @@
         cursor: pointer;
         color: white;
         border-radius: 50%;
-        padding: 10px;
+        padding: 5px;
         display: flex;
         align-items: center;
         justify-content: center;
     }
 
     @media (max-width: 992px) {
-        width: 100%; // mobil ekranlarda full bo‘ladi
+        width: 100%;
     }
 }
 
@@ -184,20 +150,18 @@
     gap: 20px;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap; // kichik ekranda selectlar pastga tushsin
 
     @media (max-width: 992px) {
         width: 100%;
         justify-content: flex-start;
     }
-
-    @media (max-width: 576px) {
-        // flex-direction: column;
+    
+    @media (max-width: 768px) {
         align-items: stretch;
         gap: 10px;
 
         button {
-            align-self: flex-end; // clear button yuqorida chiqadi
+            align-self: flex-end;
         }
     }
 }
@@ -205,7 +169,7 @@
 .filter_select {
     flex: 1;
     min-width: 120px;
-    border: 1px solid #a9cfbb;
+    border: 1px solid #00a44f;
     border-radius: 10px;
     height: 40px;
     :global {
@@ -254,7 +218,7 @@
 
 .deleteBtn,
 .deleteMob {
-    border: #24282b solid 1px;
+    border: #00a44f solid 1px;
     background: none;
     border-radius: 20px;
     width: 30px;
@@ -263,7 +227,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #24282b;
+    color: #00a44f;
     cursor: pointer;
     &:hover {
         color: red;
@@ -283,24 +247,3 @@
         display: block;
     }
 }
-
-// .serviceCardSections {
-//     display: grid;
-//     grid-template-columns: repeat(5, 1fr); /* <= 480px: 1 ta */
-//     gap: 10px;
-//     padding-bottom: 80px;
-//     @media (max-width: 1200px) {
-//         grid-template-columns: repeat(4, 1fr); /* 481–991px: 2 ta */
-//     }
-//     @media (max-width: 992px) {
-//         grid-template-columns: repeat(3, 1fr); /* 481–991px: 2 ta */
-//     }
-//     @media (max-width: 768px) {
-//         grid-template-columns: repeat(2, 1fr); /* 481–991px: 2 ta */
-//         gap: 10px;
-//     }
-//     @media (max-width: 420px) {
-//         grid-template-columns: repeat(2, 1fr); /* 481–991px: 2 ta */
-//         gap: 10px;
-//     }
-// }

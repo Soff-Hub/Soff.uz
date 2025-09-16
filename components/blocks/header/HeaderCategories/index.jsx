@@ -136,7 +136,7 @@ const HeaderCatergories = () => {
 
     return (
         <div className={styles.dropBlock}>
-            {!isMobile &&
+            {!isMobile && isLoggedIn &&
                 <Link href={'/order/my-orders'} target="_blank">
                     <p className={`${styles.navLink} my-0`}>Buyurtmalarim</p>
                 </Link>}
@@ -149,30 +149,8 @@ const HeaderCatergories = () => {
                         </Space>
                     </a>
                 </Dropdown>
-                {/* <ul className={styles.dropSubBox}>
-                    {options.products.map(item => (
-                        <li className={styles.dropSubBoxItem}>
-                            <Image
-                                src={item.icon}
-                                alt="direction"
-                                width={isMobile ? 18 : 25}
-                                height={isMobile ? 18 : 25}
-                            />
-                            <Link href={item.link}>{item.label}</Link>
-                        </li>
-                    ))}
-                </ul> */}
             </div>
             <div className={`${styles.orderBox} ${styles.dropBox}`}>
-                {/* <p className={styles.dropLabel}>
-                    <span className="">Buyurtma berish</span>{' '}
-                    <Image
-                        src="/static/svg/arrowdown.svg"
-                        alt="arrow"
-                        width={15}
-                        height={8}
-                    /> 
-                </p> */}
                 <Dropdown menu={{ items: templates(handleOrder) }}>
                     <a onClick={(e) => e.preventDefault()}>
                         <Space className={styles.dropLabel}>
@@ -181,26 +159,6 @@ const HeaderCatergories = () => {
                         </Space>
                     </a>
                 </Dropdown>
-                {/* <ul className={styles.dropSubBox}>
-                    <li onClick={handleOrder} style={{ borderBottom: "1px solid rgba(0,0,0,0.2)", paddingBottom: "12px" }} className={styles.dropSubBoxItem}>
-                        <div className={styles.add_icon}><i style={{ fontSize: isMobile ? "18px" : "25px", color: "rgba(0,0,0,0.6)" }} className="fa-solid fa-plus"></i></div>
-                        <span className={styles.orderAddBtn}>Maxsus buyurtma berish</span>
-                    </li>
-                    {options.tempates.map(item => (
-                        <li className={styles.dropSubBoxItem}>
-                            <img
-                                src={item.icon}
-                                alt="direction"
-                                style={{
-                                    color: '#534534',
-                                    width: isMobile ? "18px" : "25px",
-                                    height: isMobile ? "18px" : "25px",
-                                }}
-                            />
-                            <Link href={item.link}>{item.label}</Link>
-                        </li>
-                    ))}
-                </ul> */}
             </div>
             <CreateOrderModal
                 open={open}

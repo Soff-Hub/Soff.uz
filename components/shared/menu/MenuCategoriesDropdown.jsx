@@ -14,9 +14,9 @@ const MenuCategoriesDropdown = () => {
                     <p className={`${styles.navLink} mx-0 my-0`}>Buyurtmalarim</p>
                 </Link>
             } */}
-            <Link href={'https://seller.soff.uz/'} target="_blank">
+            <a href={'https://seller.soff.uz/'} target="_blank">
                 <p className={`${styles.navLink} my-0`}>Frilanser bo'lish</p>
-            </Link>
+            </a>
         </div>
     );
 };

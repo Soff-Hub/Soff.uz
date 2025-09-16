@@ -3,27 +3,18 @@ import { Empty } from 'antd';
 import { SmileOutlined } from '@ant-design/icons';
 import styles from './ServiceFilterSection.module.scss';
 import LastOpenedCard from '../home/ui/LastOpenedCard';
+import ServiceCard from './service-card';
 const ServicesCardSection = ({ services }) => {
     const hasProducts = services?.items?.length > 0;
-    const isFewProducts = services?.items?.length < 4; // Kam bo‘lsa ham 100vh qilamiz
-
     return (
         <div className={styles.servicesSection}>
-            <div className="">
-                <div
-                    className="">
+            <div>
+                <div>
                     {hasProducts ? (
-                        <div className='row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-gap-4'>
+                        <div className='row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-gap-4'>
                             {services.items.map((service, index) => (
-                                <div key={index} className="col px-2">
-                                    <LastOpenedCard
-                                        title={service.title}
-                                        image={service.poster}
-                                        author={service.user}
-                                        price={service.price}
-                                        slug={service.slug}
-                                        userImage={service.user.photo_url}
-                                    />
+                                <div key={index} className="col px-3">
+                                    <ServiceCard service={service}/>
                                 </div>
                             ))}
                         </div>

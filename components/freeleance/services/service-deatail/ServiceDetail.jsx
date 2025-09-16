@@ -7,63 +7,11 @@ import UserBox from './ui/UserBox';
 import ServiceDescription from './ui/ServiceDescription';
 import FaqSection from './ui/FaqSection';
 import PortfolioSection from './ui/PortfolioSection';
-import SwiperPages from '~/components/details-components/swiper/swiper-page';
-import ServiceCard from '../ServiceCard';
 import { useRouter } from 'next/router';
 import CommentSection from './ui/CommentSection';
-import Link from 'next/link';
-import { Breadcrumb, Button } from 'antd';
-import LastOpenedCard from '../../home/ui/LastOpenedCard';
+import { Breadcrumb } from 'antd';
 import Meta from '~/components/shared/meta';
-
-const defaultData = [
-    {
-        id: 1,
-        title: 'Soff uz’da qanday pul ishlash mumkin? To‘liq qo‘llanma!',
-        vedioUrl: 'KQq9wKKJkFs',
-    },
-    {
-        id: 2,
-        title:
-            'Soff uz’da sotuvchi bo‘lish – qanday ro‘yxatdan o‘tish va savdo qilish?',
-        vedioUrl: 'l0nDo1mbhf8',
-    },
-    {
-        id: 3,
-        title:
-            'Soff uz sotuvchi profili – barcha imkoniyatlar va funktsiyalar!',
-        vedioUrl: 'H6REqhC_NYM',
-    },
-    {
-        id: 4,
-        title:
-            'Soff uz’da birinchi mahsulotingizni qanday yuklash va sotishni boshlash?',
-        vedioUrl: '_c9CB7Hs50E',
-    },
-    {
-        id: 1,
-        title: 'Soff uz’da qanday pul ishlash mumkin? To‘liq qo‘llanma!',
-        vedioUrl: 'KQq9wKKJkFs',
-    },
-    {
-        id: 2,
-        title:
-            'Soff uz’da sotuvchi bo‘lish – qanday ro‘yxatdan o‘tish va savdo qilish?',
-        vedioUrl: 'l0nDo1mbhf8',
-    },
-    {
-        id: 3,
-        title:
-            'Soff uz sotuvchi profili – barcha imkoniyatlar va funktsiyalar!',
-        vedioUrl: 'H6REqhC_NYM',
-    },
-    {
-        id: 4,
-        title:
-            'Soff uz’da birinchi mahsulotingizni qanday yuklash va sotishni boshlash?',
-        vedioUrl: '_c9CB7Hs50E',
-    },
-];
+import ServiceCard from '../service-card';
 
 const ServiceDetail = ({ data }) => {
     const { push, back } = useRouter();
@@ -167,22 +115,13 @@ const ServiceDetail = ({ data }) => {
             {similar_services.length > 0 && (
                 <div>
                     <h3>O'xshash xizmatlar</h3>
-                    {/* <SwiperPages type={'file'}> */}
-                    <div className='row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-gap-2 row-gap-md-5 row-gap-lg-3'>
+                    <div className='row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-gap-2 row-gap-md-5 row-gap-lg-3'>
                         {similar_services?.map(item => (
-                            <div key={item?.title} className='col'>
-                                <LastOpenedCard
-                                    title={item.title}
-                                    image={item.poster}
-                                    author={item.user.full_name}
-                                    price={item.price}
-                                    slug={item.slug}
-                                    userImage={item.user.photo_url}
-                                />
+                            <div key={item?.title} className='col px-2'>
+                                <ServiceCard service={item}/>
                             </div>
                         ))}
                     </div>
-                    {/* </SwiperPages> */}
                 </div>
             )}
         </div>
