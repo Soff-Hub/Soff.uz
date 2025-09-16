@@ -59,7 +59,7 @@ export default function SoffFreelancerPage({
                     <GrayMentionCard
                         title="Izlaganingiz yo’qmi? O'z buyurtmangizni joylashtiring!"
                         btn="Buyurtmar berish"
-                        link="/orders"
+                        link='https://t.me/soff_freelancing_bot'
                     />
                 </div>
                 <div className="servicesOrders" />
