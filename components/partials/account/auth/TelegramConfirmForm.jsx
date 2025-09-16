@@ -48,7 +48,7 @@ export default function TelegramConfigmForm() {
             if (router?.query?.returnUrl) {
                 router.push(router?.query?.returnUrl);
             } else if (router?.query?.id) {
-                router.push(`/account/checkout-one?id=${router?.query?.id}`);
+                router.push(`/account/checkout?id=${router?.query?.id}`);
             } else if (router?.query?.deal) {
                 router.push(`/account/all-orders`);
             } else {
