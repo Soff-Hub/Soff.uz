@@ -226,6 +226,7 @@
             }
 
             .btns {
+                flex-direction: column;
                 gap: 8px;
 
                 .secondaryBtn,
@@ -233,6 +234,7 @@
                     font-size: 11px;
                     line-height: 18px;
                     border-radius: 5px;
+                    width: 100%;
                 }
 
                 .primaryBtn {
@@ -252,13 +254,13 @@
     }
 }
 
-@media (max-width: 320px) {
-    .btns {
-        flex-direction: column;
+// @media (max-width: 320px) {
+//     .btns {
+        
 
-        .secondaryBtn,
-        .primaryBtn {
-            width: 100%;
-        }
-    }
-}
+//         .secondaryBtn,
+//         .primaryBtn {
+            
+//         }
+//     }
+// }
