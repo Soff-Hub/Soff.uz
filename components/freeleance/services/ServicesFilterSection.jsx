@@ -46,7 +46,6 @@ const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
                 category_id: selectedParentCategory || undefined,
             };
 
-            // faqat query farq qilsa update
             if (JSON.stringify(newQuery) !== JSON.stringify(router.query)) {
                 updateQuery(newQuery);
             }
@@ -62,7 +61,7 @@ const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
         router.push({
             pathname: router.pathname,
             query: {
-                direction: value || undefined, // faqat direction
+                direction: value || undefined,
             },
         });
     };
@@ -74,7 +73,7 @@ const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
             pathname: router.pathname,
             query: {
                 direction: selectedDirection || undefined,
-                category_id: value || undefined, // direction + parent_category_id
+                category_id: value || undefined
             },
         });
     };
