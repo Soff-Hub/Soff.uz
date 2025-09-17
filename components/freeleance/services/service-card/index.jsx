@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import styles from './style.module.scss'
 import { formatCurrencyWithSpace } from '~/utilities/product-helper'
 import Link from 'next/link'
@@ -11,13 +11,14 @@ const ServiceCard = ({ service }) => {
     const [open, setOpen] = useState(false)
     const { push } = useRouter()
 
-    const handleOrder = () => {
+    const handleOrder = useCallback(() => {
         if (isLoggedIn) {
             push(`/service/${service?.slug}?modal=open`)
         } else {
             setOpen(true)
         }
-    }
+    }, [isLoggedIn, push, service?.slug])
+
 
     return (
         <>
@@ -53,4 +54,4 @@ const ServiceCard = ({ service }) => {
     )
 }
 
-export default ServiceCard
+export default React.memo(ServiceCard) 

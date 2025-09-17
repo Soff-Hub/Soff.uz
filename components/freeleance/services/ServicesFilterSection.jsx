@@ -87,6 +87,7 @@ const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
 
     useEffect(() => {
         setSelectedDirection(query.direction);
+        setSelectedParentCategory(query.category_id || query.parent_category_id)
     }, [query]);
 
     return (
