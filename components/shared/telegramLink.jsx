@@ -1,4 +1,3 @@
-// ~/components/shared/telegramLink.jsx
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
@@ -10,12 +9,12 @@ export function TelegramLink () {
       setIsMobile(window.innerWidth <= 576);
     };
 
-    handleResize(); // Initial check
+    handleResize(); 
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  if (isMobile) return null; // mobilda ko‘rinmasin
+  if (isMobile) return null; 
 
   return (
     <div
@@ -26,7 +25,7 @@ export function TelegramLink () {
         zIndex: 1000,
       }}
     >
-      <Link href="https://t.me/soff_uz" passHref>
+      <Link href="https://t.me/+y5GpvEz48_hkMzli" passHref>
         <a
           target="_blank"
           className="rounded-circle d-flex align-items-center justify-content-center"
