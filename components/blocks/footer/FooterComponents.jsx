@@ -25,7 +25,7 @@ const footerMenu = {
                 name: 'Telegram',
                 icon: '/static/svg/telegram_.svg',
                 username: '@soff_uz',
-                url: 'https://t.me/soff_uz',
+                url: 'https://t.me/+y5GpvEz48_hkMzli',
             },
             {
                 name: 'FaceBook',
