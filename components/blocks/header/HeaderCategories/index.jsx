@@ -127,12 +127,12 @@ const HeaderCatergories = () => {
     const { push } = useRouter()
 
     const handleOrder = () => {
-        if (isLoggedIn) {
-            setOpen(true)
-        } else {
-            push('/auth/login')
-        }
-        // window.open('https://t.me/soff_freelancing_bot', '_blank')
+        // if (isLoggedIn) {
+        //     setOpen(true)
+        // } else {
+        //     push('/auth/login')
+        // }
+        window.open('https://t.me/soff_freelancing_bot', '_blank')
     }
 
     return (
