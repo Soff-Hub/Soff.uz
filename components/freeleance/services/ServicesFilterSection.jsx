@@ -14,7 +14,7 @@ const { Option } = Select;
 const directions = [
     { label: 'Ilmiy va akademik xizmatlar', value: 'scientific_work' },
     { label: 'Dizayn', value: 'dizayn' },
-    { label: 'Xizmatlari', value: 'web' },
+    { label: 'Dasturlash xizmatlari', value: 'web' },
     { label: '3D Dizayn va Vizualizatsiya', value: 'three_d' },
     { label: 'Barchasi', value: '' },
 ];

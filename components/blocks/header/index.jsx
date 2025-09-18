@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { initLocalCart } from '~/store/ecomerce/slice';
 import NavbarMenu from '../../freeleance/home/widgets/NavbarMenu';
 import useResponsive from '~/utilities/useResponsive';
+import NavbarSearch from './navbar-search';
 
 const Header = () => {
     const [headerSticky, setHeaderSticky] = useState(false);
@@ -47,7 +48,7 @@ const Header = () => {
                         </div>
                     </div>
                 </div>
-                {!isMobile && <NavbarMenu />}
+                {isMobile ? <NavbarSearch/> : <NavbarMenu />}
             </div> 
             <div className='pagesSpace'/>
         </header>

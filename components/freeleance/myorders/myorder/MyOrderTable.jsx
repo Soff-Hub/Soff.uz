@@ -8,6 +8,7 @@ import styles from './style/status.module.scss';
 import { getRemainingDays } from '~/utilities/calculateTime';
 import { useRouter } from 'next/router';
 import SelectOrderDrawer from './ui/SelectOrderDrawer';
+import { useQueryClient } from '@tanstack/react-query';
 
 const Status = ({ status }) => {
     switch (status) {
@@ -236,6 +237,7 @@ export const AllOrdersTable = ({ type }) => {
     const { mutate: cancelOrder, isPending: isCancelling } = useCancelOrder();
     const { data: reasons } = useGetReasons();
     const [openDrawer, setOpenDrawer] = useState(false)
+    const queryClient = useQueryClient()
 
     const handleCancelClick = record => {
         setSelectedOrder(record);
@@ -259,6 +261,7 @@ export const AllOrdersTable = ({ type }) => {
                         message.success(
                             'Buyurtma muvaffaqiyatli bekor qilindi!'
                         );
+                        queryClient.invalidateQueries(['ordersStatus'])
                     },
                 }
             );

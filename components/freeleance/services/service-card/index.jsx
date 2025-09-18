@@ -49,7 +49,7 @@ const ServiceCard = ({ service }) => {
                     <Link href={`/seller/${service?.user?.soff_seller_id}`} className={styles.username}>{service?.user?.full_name}</Link>
                 </div>
             </div>
-            <AuthModal open={open} onClose={() => setOpen(false)} />
+            <AuthModal slug={service?.slug} open={open} onClose={() => setOpen(false)} />
         </>
     )
 }

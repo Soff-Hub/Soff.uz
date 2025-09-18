@@ -77,21 +77,7 @@ const CreateOrderModal = ({ open, onClose }) => {
 
     return (
         <Modal
-            width={600} styles={{
-                wrapper: {
-                    height: '100vh',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    padding: '0px',
-                    margin: '0px',
-                }, 
-                content: {
-                    padding: "15px",
-                    height: isMobile ? '500px' : '700px',
-                    overflowY: 'auto'
-                }
-            }}
+            width={600}
             title="Maxsus buyurtma yaratish"
             open={open}
             onCancel={onClose}

@@ -5,39 +5,43 @@ import ProductCard from '../ui/ProductCard';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { RightOutlined } from '@ant-design/icons';
+import useResponsive from '~/utilities/useResponsive';
 
 
 const LastProducts = () => {
-    const { push } = useRouter()
+    const { push } = useRouter();
+    const { isMobile } = useResponsive();
+
+    const limit = isMobile ? 6 : 5;
 
     const { data: fileData, isLoading: fileLoading } = useGet(
         'file_product',
-        "customer/last-added/?direction=file&limit=5"
+        `customer/last-added/?direction=file&limit=${limit}`
     );
 
     const { data: threeDData, isLoading: threeDLoading } = useGet(
         'three_d_product',
-        "customer/last-added?direction=3d&limit=5"
+        `customer/last-added?direction=3d&limit=${limit}`
     );
 
     const { data: designData, isLoading: designLoading } = useGet(
         'design_product',
-        "customer/last-added?direction=design&limit=5"
+        `customer/last-added?direction=design&limit=${limit}`
     );
 
     const { data: videoData, isLoading: videoLoading } = useGet(
         'video_product',
-        "customer/last-added?direction=video&limit=5"
+        `customer/last-added?direction=video&limit=${limit}`
     );
 
     const { data: websiteData, isLoading: websiteLoading } = useGet(
         'web_product',
-        "customer/last-added?direction=website&limit=5"
+        `customer/last-added?direction=website&limit=${limit}`
     );
 
     const { data: templateData, isLoading: templateLoading } = useGet(
         'templates_product',
-        "customer/last-added?direction=template&limit=5"
+        `customer/last-added?direction=template&limit=${limit}`
     );
 
     return (
