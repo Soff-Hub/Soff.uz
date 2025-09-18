@@ -115,7 +115,6 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
                     queryClient.invalidateQueries(['orders']);
                 },
                 onError: error => {
-                    // Agar backend detail yuborsa
                     const errorMessage = error?.response?.data || {
                         detail: "Noma'lum xato",
                     };
@@ -343,7 +342,6 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
     return (
         <Tabs
             className="bg-white checkoutstep-1"
-            defaultActiveKey="2"
             items={items}
             onChange={onChange}
         />

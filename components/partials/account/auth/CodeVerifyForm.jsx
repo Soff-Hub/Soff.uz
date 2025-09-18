@@ -13,7 +13,7 @@ export const formatTime = (seconds) => {
     return `${String(minutes).padStart(2, '0')}:${String(secondsLeft).padStart(2, '0')}`;
 };
 
-export default function CodeVerifyForm({authCode, onClose}) {
+export default function CodeVerifyForm({authCode, onClose, slug}) {
     const [loading, setLoading] = useState(false);
     const [secondsRemaining, setSecondsRemaining] = useState(120);
     const [msg, SetMsg] = useState(null);
@@ -67,8 +67,10 @@ export default function CodeVerifyForm({authCode, onClose}) {
                 router.push(`/account/checkout?id=${router?.query?.id}`);
             } else if (router?.query?.deal) {
                 router.push(`/account/all-orders`);
-            }else if (authCode){
-                
+            }else if (authCode && slug){
+                router.push(`/service/${slug}?modal=open`)
+            }else if(authCode){
+
             }
              else {
                 router.push('/account/sellerproducts');
