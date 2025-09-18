@@ -10,7 +10,6 @@ const ChatSidebar = ({ setChatId, chatId }) => {
     const [debouncedSearch, setDebouncedSearch] = useState('');
     const { back } = useRouter();
     const router = useRouter();
-    // ✅ endi useChats dan chats va isLoading olamiz
     const { data: chats, isLoading } = useGetChats(debouncedSearch);
     
     useEffect(() => {
@@ -29,7 +28,7 @@ const ChatSidebar = ({ setChatId, chatId }) => {
             });
  
         },
-        [chatId]
+        [router, setChatId]
     );
 
     // if (!chats) return null;

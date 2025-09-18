@@ -10,15 +10,14 @@ const useChat = (chatId) => {
     const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
         useGetChatById(chatId);
     const wsRef = useRef();
-
     useEffect(() => {
         if (chatId && data) {
-            setChat(data?.chat);
-            setMessages(prev => [...data?.pages?.at(-1)?.messages, ...prev]);
+            setChat(data?.pages[0]?.chat);
+            const allMsgs = data.pages.flatMap(p => p.messages);
+            setMessages(allMsgs); // toza qilib o‘rnat
         }
     }, [chatId, data]);
 
-    // 🔥 Unread message'larni yig'ib serverga yuborish
     const sendUnreadMessages = (ws, messages) => {
         if (!ws || ws.readyState !== WebSocket.OPEN) return;
         const unreadIds = messages?.filter(m => !m.is_read).map(m => m.id);
@@ -56,7 +55,7 @@ const useChat = (chatId) => {
         if (!chatId || !user?.access) return;
 
         const ws = new WebSocket(
-           ` ${process.env.NEXT_PUBLIC_WS_FREELEANCE_URL}${chatId}/?token=${user.access}`
+            ` ${process.env.NEXT_PUBLIC_WS_FREELEANCE_URL}${chatId}/?token=${user.access}`
         );
         wsRef.current = ws;
 
