@@ -37,7 +37,7 @@ const ChatWindow = ({ chatId, goBack }) => {
             setOpenDownIcon(false);
         }
     };
-
+    console.log(chat, "_____________________________")
 
     // edit qilishda
     useEffect(() => {
@@ -63,7 +63,7 @@ const ChatWindow = ({ chatId, goBack }) => {
             sendMessage(newMessage);
         }
         setNewMessage('');
-    }, [newMessage, edit]);
+    }, [newMessage, edit, sendMessage, updateMessage]);
 
     if (!chatId) {
         return (
