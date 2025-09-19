@@ -10,12 +10,12 @@ const ServiceFirstCard = () => {
     const { isLoggedIn } = useSelector(state => state.auth)
 
     const handleOrder = () => {
-        // if(isLoggedIn){
-        //     setOpen(true)
-        // }else{
-        //     setIsOpen(true)
-        // }
-        window.open('https://t.me/soff_freelancing_bot', '_blank')
+        if(isLoggedIn){
+            setOpen(true)
+        }else{
+            setIsOpen(true)
+        }
+        // window.open('https://t.me/soff_freelancing_bot', '_blank')
     }
 
     return (
