@@ -48,7 +48,7 @@ const Header = () => {
                         </div>
                     </div>
                 </div>
-                {isMobile ? <NavbarSearch/> : <NavbarMenu />}
+                {isMobile ? '' : <NavbarMenu />}  
             </div> 
             <div className='pagesSpace'/>
         </header>
@@ -56,3 +56,4 @@ const Header = () => {
 };
 
 export default Header;
+// <NavbarSearch/>
