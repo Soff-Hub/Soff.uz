@@ -3,38 +3,8 @@ import styles from './ProductFilter.module.scss';
 import { SearchOutlined, RightOutlined, LeftOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import useDebounce from '~/hooks/useDebounce';
-
-const childC = [
-    'Texnika fanlari',
-    'Iqtisodiyot',
-    'Tibbiyot',
-    'Tarix',
-    'Adabiyot',
-    'Psixologiya',
-    'Falsafa',
-    'Huquqshunoslik',
-];
-
-const parentC = [
-    'Axborot texnologiyalari',
-    'Dasturlash tillari',
-    'Sun’iy intellekt',
-    'Makroiqtisodiyot',
-    'Buxgalteriya hisobi',
-    'Bank ishi',
-    'Kardiologiya',
-    'Farmatsiya',
-    'O‘zbekiston tarixi',
-    'Jahon tarixi',
-    'Adabiy tanqid',
-    'She’riyat nazariyasi',
-    'Shaxs psixologiyasi',
-    'Ijtimoiy psixologiya',
-    'Etika',
-    'Logika',
-    'Fuqarolik huquqi',
-    'Mehnat huquqi',
-];
+import useResponsive from '~/utilities/useResponsive';
+import { Button, Checkbox, Drawer, Slider } from 'antd';
 
 const ProductFilterSection = ({ child, parent, path }) => {
     const { query, pathname, push } = useRouter();
@@ -45,6 +15,8 @@ const ProductFilterSection = ({ child, parent, path }) => {
     const [title, setTitle] = useState('Barchasi');
     const [sybTitle, setSybTitle] = useState('');
     const [search, setSearch] = useState('');
+    const [drawerOpen, setDrawerOpen] = useState(false); 
+    const { isMobile } = useResponsive();
 
     const debouncedSearch = useDebounce(search, 500);
 
@@ -106,12 +78,12 @@ const ProductFilterSection = ({ child, parent, path }) => {
     }, [query]);
 
     return (
-        <div className={`${styles.filter}  container`}>
+        <div className={`${styles.filter} container`}>
             <h1 className={styles.title}>
                 {(title || 'Barchasi').replace('-', ' ')}
                 {sybTitle && ` & ${sybTitle.replace(`${title}-`, ' ')}`}
             </h1>
-            <div className={`${styles.searchBox} container `}>
+            <div className={`${styles.searchBox} container`}>
                 <input
                     onChange={e => setSearch(e.target.value)}
                     placeholder="Qanday mahsulot izlamoqdasiz?"
@@ -141,10 +113,9 @@ const ProductFilterSection = ({ child, parent, path }) => {
                         <span
                             key={cat.slug}
                             onClick={() => handleParent(cat?.slug, cat?.name)}
-                            className={`${
-                                styles.parentCat
-                            } ${(query.parentCategory === cat.slug ||
-                                query.slug === cat.slug) &&
+                            className={`${styles.parentCat
+                                } ${(query.parentCategory === cat.slug ||
+                                    query.slug === cat.slug) &&
                                 styles.active}`}>
                             {cat?.name}
                         </span>
@@ -180,10 +151,9 @@ const ProductFilterSection = ({ child, parent, path }) => {
                                     onClick={() =>
                                         handleChild(cat?.slug, cat?.name)
                                     }
-                                    className={`${
-                                        styles.childCat
-                                    } ${(query.childCategory === cat.slug ||
-                                        query.slug === cat.slug) &&
+                                    className={`${styles.childCat
+                                        } ${(query.childCategory === cat.slug ||
+                                            query.slug === cat.slug) &&
                                         styles.active}`}>
                                     {cat?.name}
                                 </span>
@@ -198,6 +168,54 @@ const ProductFilterSection = ({ child, parent, path }) => {
                     />
                 )}
             </div>
+
+            {/* {isMobile && (
+                <>
+                    <Button
+                        type="primary"
+                        block
+                        onClick={() => setDrawerOpen(true)}
+                        style={{ marginTop: 16 }}
+                    >
+                        Filtrlarni ochish
+                    </Button>
+
+                    <Drawer
+                        title="Filtrlar"
+                        placement="bottom"
+                        onClose={() => setDrawerOpen(false)}
+                        open={drawerOpen}
+                        height="60%"
+                    >
+                        <div style={{ marginBottom: 24 }}>
+                            <h4>Fayl turlari</h4>
+                            <Checkbox.Group
+                                options={[
+                                    { label: 'DOCX', value: 'docx' },
+                                    { label: 'PPTX', value: 'pptx' },
+                                    { label: 'PDF', value: 'pdf' },
+                                ]}
+                                onChange={checkedValues => {
+                                    console.log('Tanlangan fayl turlari:', checkedValues);
+                                }}
+                            />
+                        </div>
+
+                        <div>
+                            <h4>Narx oralig‘i</h4>
+                            <Slider
+                                range
+                                min={0}
+                                max={100}
+                                defaultValue={[0, 100]}
+                                onChange={value => {
+                                    console.log('Tanlangan narx oralig‘i:', value);
+                                }}
+                            />
+                        </div>
+                    </Drawer>
+                </>
+            )} */}
         </div>
     );
 };
