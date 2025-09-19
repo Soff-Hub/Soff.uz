@@ -1,18 +1,26 @@
 import React from 'react';
 import styles from '../styles/LastOpened.module.scss';
-import LastOpenedCard from '../ui/LastOpenedCard';
 import useLastOpened from '../../chat/api/useLastOpened';
 import Image from 'next/image';
 import Link from 'next/link';
 import ServiceCard from '../../services/service-card';
+import useResponsive from '~/utilities/useResponsive';
+
 const LastOpened = () => {
     const { data } = useLastOpened();
+    const { isMobile } = useResponsive();
+
+    // data ni moslashtiramiz
+    const displayedData = React.useMemo(() => {
+        if (!data) return [];
+        return isMobile ? data : data.slice(0, 5);
+    }, [data, isMobile]);
 
     return (
         <>
             <div className={styles.freelance_section}>
                 <div className={styles.freelance_text}>
-                    <div className="d-flex  gap-2 flex-fill align-items-start">
+                    <div className="d-flex gap-2 flex-fill align-items-start">
                         <div className="d-none d-md-flex ">
                             <Image
                                 src={'/static/img/star.svg'}
@@ -46,10 +54,9 @@ const LastOpened = () => {
 
             {/* Cardlar */}
             <div className={styles.cardSection}>
-                {data &&
-                    data.map(item => (
-                        <ServiceCard service={item}/>
-                    ))}
+                {displayedData.map(item => (
+                    <ServiceCard key={item.id} service={item} />
+                ))}
             </div>
         </>
     );

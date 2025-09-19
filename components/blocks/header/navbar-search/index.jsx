@@ -2,36 +2,13 @@ import { SearchOutlined } from '@ant-design/icons';
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
-import { AutoComplete, Select } from 'antd';
+import { AutoComplete, Select, Input } from 'antd';
 import { api } from '~/repositories/api';
 import useDebounce from '~/hooks/useDebounce';
 import styles from './style.module.scss';
 import axiosInstance from '~/components/freeleance/api/freeleanceApi';
 
 const { Option } = Select;
-
-const placeholders = {
-    mahsulotlar: 'Qaysi turdagi tayyor mahsulot qidirmoqdasiz?',
-    xizmatlar: 'Qaysi turdagi xizmat qidirmoqdasiz?',
-    mutaxasislar: 'Qaysi turdagi mutaxassis qidirmoqdasiz?',
-};
-
-const staticOptions = {
-    xizmatlar: [
-        { value: 'Web Dasturlash' },
-        { value: 'Mobile App Dasturlash' },
-        { value: 'UI/UX Dizayn' },
-        { value: 'SEO Optimization' },
-        { value: 'Logo Dizayn' },
-    ],
-    mutaxasislar: [
-        { value: 'Frontend Dasturchi' },
-        { value: 'Backend Dasturchi' },
-        { value: 'Fullstack Dasturchi' },
-        { value: 'UI/UX Designer' },
-        { value: 'Project Manager' },
-    ],
-};
 
 const NavbarSearch = () => {
     const { push } = useRouter();
@@ -73,7 +50,6 @@ const NavbarSearch = () => {
         } else if (type === "xizmatlar") {
             return freelanceSuccess ? freelanceData?.services?.map(item => ({ value: item })) : [];
         }
-        return staticOptions[type] || [];
     };
 
     const handleSearch = () => {
@@ -88,10 +64,9 @@ const NavbarSearch = () => {
     };
 
     return (
-        <div className='container'>
+        <div className="container">
             <div className={styles.searchBox}>
-                {/* Select qo‘shdik */}
-                <div className='d-flex'>
+                <div className="d-flex">
                     <Select
                         value={type}
                         onChange={(val) => setType(val)}
@@ -102,31 +77,28 @@ const NavbarSearch = () => {
                         <Option value="xizmatlar">Xizmatlar</Option>
                         <Option value="mutaxasislar">Mutaxassislar</Option>
                     </Select>
+
                     <AutoComplete
                         value={search}
-                        // style={{ flex: 1 }}
-                        placeholder={'Izlash...'}
-                        onChange={val => setSearch(val)}
+                        onChange={(val) => setSearch(val)}
                         options={getOptions()}
+                        style={{ width: '100%' }}
                     >
-                        <input
+                        <Input
                             className={styles.input}
-                            style={{ width: '100%' }}
-                            onKeyDown={e => {
-                                if (e.key === 'Enter') {
-                                    handleSearch();
-                                }
-                            }}
+                            placeholder={'izlash...'}
+                            onPressEnter={handleSearch}
+                            bordered={false}
                         />
                     </AutoComplete>
-
                 </div>
-                    <span
-                        className={styles.searchIcon}
-                        onClick={handleSearch}
-                    >
-                        <SearchOutlined />
-                    </span>
+
+                <span
+                    className={styles.searchIcon}
+                    onClick={handleSearch}
+                >
+                    <SearchOutlined />
+                </span>
             </div>
         </div>
     );

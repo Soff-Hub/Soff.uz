@@ -27,14 +27,16 @@ export async function getServerSideProps(context) {
             },
         };
     } catch (error) {
-        if (error.response?.status === 404) {
-            return { notFound: true }; // Next.js avtomatik 404 page render qiladi
+        const errStatus = error.response?.status;
+
+        if ([400, 404, 500].includes(errStatus)) {
+            return { notFound: true };
         }
 
         return {
             props: {
                 data: null,
-                status: error.response?.status || 500,
+                status: errStatus || 500,
             },
         };
     }
