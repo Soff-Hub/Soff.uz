@@ -85,7 +85,7 @@ const ProductCard = ({ product }) => {
                         }
                         {product?.document?.page_count &&
                         <div className='d-flex gap-1'>
-                            <img src="/static/img/card_icons/driver.svg" alt="icon" />
+                            <img src="/static/img/card_icons/document-copy.svg" alt="icon" />
                             <span>{product?.document?.page_count}</span>
                         </div>
                         }

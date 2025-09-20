@@ -3,7 +3,7 @@ import { Modal } from 'antd';
 import LoginForm from '~/components/partials/account/auth/LoginForm.jsx';
 import CodeVerifyModal from '~/components/CodeVerifyModal';
 
-const AuthModal = ({ open, onClose, slug }) => {
+const AuthModal = ({ open, onClose, slug, onSuccess }) => {
     const [codeModalOpen, setCodeModalOpen] = useState(false);
     const [authCode, setCode] = useState();
 
@@ -25,6 +25,7 @@ const AuthModal = ({ open, onClose, slug }) => {
             </Modal>
 
             <CodeVerifyModal
+                onSuccess={onSuccess}
                 authCode={authCode}
                 open={codeModalOpen}
                 onClose={closeAllModals} 

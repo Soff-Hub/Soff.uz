@@ -1,5 +1,5 @@
 import { SearchOutlined } from '@ant-design/icons';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
 import { AutoComplete, Select, Input } from 'antd';
@@ -12,9 +12,11 @@ const { Option } = Select;
 
 const NavbarSearch = () => {
     const { push } = useRouter();
+    const [popupWidth, setPopupWidth] = useState(300);
     const [type, setType] = useState('mahsulotlar');
     const [search, setSearch] = useState('');
     const axios = axiosInstance();
+
 
     const debounceSearch = useDebounce(search, 500);
 
@@ -63,6 +65,23 @@ const NavbarSearch = () => {
         }
     };
 
+
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth <= 320) {
+                setPopupWidth(280);
+            } else if (window.innerWidth <= 420) {
+                setPopupWidth(300);
+            } else {
+                setPopupWidth(350); // katta ekran uchun
+            }
+        };
+
+        handleResize(); // birinchi yuklanganda ishga tushadi
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
+
     return (
         <div className="container">
             <div className={styles.searchBox}>
@@ -83,6 +102,7 @@ const NavbarSearch = () => {
                         onChange={(val) => setSearch(val)}
                         options={getOptions()}
                         style={{ width: '100%' }}
+                        popupMatchSelectWidth={popupWidth}
                     >
                         <Input
                             className={styles.input}

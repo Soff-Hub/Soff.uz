@@ -60,9 +60,11 @@
         font-size: 16px;
         color: #24282b;
         border: 1px solid #d9d9d9;
+
         @media (max-width: 992px) {
             padding: 4px 6px;
         }
+
         @media (max-width: 768px) {
             padding: 3px 5px;
         }
@@ -103,12 +105,10 @@
         left: 200px;
         top: 100px;
         z-index: 1;
-        background-image: radial-gradient(
-            circle,
-            #018f45 0%,
-            #038843 40%,
-            white 100%
-        );
+        background-image: radial-gradient(circle,
+                #018f45 0%,
+                #038843 40%,
+                white 100%);
         filter: blur(80px);
         opacity: 0.7;
 
@@ -127,12 +127,10 @@
         border-radius: 50%;
         right: 0;
         top: -300px;
-        background-image: radial-gradient(
-            circle,
-            #00a44f 0%,
-            #57aa7f 60%,
-            white 100%
-        );
+        background-image: radial-gradient(circle,
+                #00a44f 0%,
+                #57aa7f 60%,
+                white 100%);
         filter: blur(200px);
         opacity: 0.7;
     }
@@ -155,6 +153,7 @@
     position: relative;
     z-index: 20;
     margin: 3rem auto;
+
     .carouselTest {
         width: 100%;
         padding: 0px 50px;
@@ -167,37 +166,45 @@
         scroll-snap-stop: 100px;
         scrollbar-width: none !important;
         -ms-overflow-style: none !important;
+
         sc &::-webkit-scrollbar {
             display: none !important;
         }
+
         .parentCat {
             font-size: 16px;
             padding: 10px;
             color: #24282b;
             border: 1px solid #fefefe;
+
             @media (max-width: 992px) {
                 padding: 4px 6px;
                 font-size: 14px;
             }
+
             @media (max-width: 768px) {
                 padding: 4px 6px;
                 font-size: 12px;
             }
         }
+
         .childCat {
             padding: 5px 7px;
             font-size: 16px;
             color: #24282b;
             border: 1px solid #fefefe;
+
             @media (max-width: 992px) {
                 padding: 4px 6px;
                 font-size: 14px;
             }
+
             @media (max-width: 768px) {
                 padding: 3px 5px;
                 font-size: 12px;
             }
         }
+
         .parentCat,
         .childCat {
             white-space: nowrap;
@@ -254,15 +261,18 @@
 
     .block {
         margin-top: 30px;
+
         .detail {
             background-color: #fff;
             font-size: 16px;
             font-weight: 500;
             padding: 10px;
+
             @media (max-width: 992px) {
                 font-size: 14px;
                 padding: 7px;
             }
+
             @media (max-width: 576px) {
                 font-size: 12px;
                 padding: 5px;
