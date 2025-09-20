@@ -7,11 +7,7 @@ import ScientificResourcesFilterSection, {
 } from '~/components/elements/ScientificResourcesFilterSection';
 import { useRouter } from 'next/router';
 import { baseUrlUseApi } from '~/repositories/useApi';
-import AISoffiaPresentation from '~/components/elements/AISoffiaPresentation';
-import CategorySearchSection from '~/components/elements/CategorySearchSection';
 import styles from '../../components/blocks/catalogsSection/catalogs.module.scss';
-
-import { serialize } from 'cookie';
 import Image from 'next/image';
 import GrayMentionCard from '~/components/blocks/cards/GrayMentionCard';
 import ProductFilterSection from '~/components/elements/product-filter-section/ProductFilterSection';
@@ -45,8 +41,8 @@ export default function ProductCategoryScreen({
         title && subTitle
             ? `${title} - ${subTitle}`
             : title
-            ? title
-            : 'Ilmiy ishlar kategoriyasi';
+                ? title
+                : 'Ilmiy ishlar kategoriyasi';
 
     return (
         <PageContainer title={fullTitle} boxed={true}>
@@ -82,6 +78,7 @@ export default function ProductCategoryScreen({
             />
 
             <ProductFilterSection
+                isFile
                 child={childCategoryData.results}
                 parent={fourChildData.results}
                 path={'/scientific-resources/'}
@@ -173,7 +170,37 @@ export async function getServerSideProps(context) {
         parentCategory = '',
         childCategory = '',
         search = '',
+        category = '',   // ✅ category_slug o‘rniga category deb olamiz
+        content_extensions = [],
+        price_from = '',
+        price_to = '',
+        from_page = '',
+        to_page = ''
     } = context.query;
+
+    const queryParams = new URLSearchParams({
+        direction: "file",
+        page,
+        page_size: 48,
+        search,
+    });
+
+    if (category) queryParams.append("category", category);
+    if (content_extensions && content_extensions.length) {
+        const exts = Array.isArray(content_extensions)
+            ? content_extensions
+            : [content_extensions];
+
+        exts.forEach(ext => {
+            queryParams.append("content_extensions", ext);
+        });
+    }
+
+
+    if (price_from) queryParams.append("price_from", price_from);
+    if (price_to) queryParams.append("price_to", price_to);
+    if (from_page) queryParams.append("from_page", from_page);
+    if (to_page) queryParams.append("to_page", to_page);
 
     const fetchJson = async url => {
         const res = await fetch(url);
@@ -185,7 +212,7 @@ export async function getServerSideProps(context) {
 
     const categoryParam = childCategory ? childCategory : parentCategory;
 
-    const productsUrl = `${baseUrlUseApi}customer/products/?direction=file&category=${categoryParam}&page=${page}&page_size=48&search=${search}`;
+    const productsUrl = `${baseUrlUseApi}customer/products/?${queryParams.toString()}`;
     const fourChildUrl = `${baseUrlUseApi}customer/four-child?direction=file`;
     const childCategoryUrl = `${baseUrlUseApi}customer/four-child?direction=file&parent__slug=${parentCategory}`;
 
@@ -194,6 +221,9 @@ export async function getServerSideProps(context) {
         fetchJson(fourChildUrl),
         fetchJson(childCategoryUrl),
     ]);
+
+    console.log(productsUrl)
+
     return {
         props: {
             productsData: productsData || null,

@@ -1,12 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styles from './ProductFilter.module.scss';
-import { SearchOutlined, RightOutlined, LeftOutlined } from '@ant-design/icons';
+import { SearchOutlined, RightOutlined, LeftOutlined, CloseOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import useDebounce from '~/hooks/useDebounce';
 import useResponsive from '~/utilities/useResponsive';
-import { Button, Checkbox, Drawer, Slider } from 'antd';
+import { Button, Checkbox, ConfigProvider, Drawer, Select, Slider } from 'antd';
+import { formatCurrencyWithSpace } from '~/utilities/product-helper';
 
-const ProductFilterSection = ({ child, parent, path }) => {
+const ProductFilterSection = ({ child, parent, path, isFile }) => {
     const { query, pathname, push } = useRouter();
     const parentRef = useRef(null);
     const childRef = useRef(null);
@@ -15,8 +16,13 @@ const ProductFilterSection = ({ child, parent, path }) => {
     const [title, setTitle] = useState('Barchasi');
     const [sybTitle, setSybTitle] = useState('');
     const [search, setSearch] = useState('');
-    const [drawerOpen, setDrawerOpen] = useState(false); 
+    const [drawerOpen, setDrawerOpen] = useState(false);
     const { isMobile } = useResponsive();
+    const [selectedCategory, setSelectedCategory] = useState();
+    const [selectedSubCategory, setSelectedSubCategory] = useState();
+    const [fileTypes, setFileTypes] = useState([]);
+    const [priceRange, setPriceRange] = useState([0, 1000000]);
+    const [pageRange, setPageRange] = useState([0, 100]);
 
     const debouncedSearch = useDebounce(search, 500);
 
@@ -95,6 +101,9 @@ const ProductFilterSection = ({ child, parent, path }) => {
                 </span>
             </div>
 
+
+
+
             {/* Parent carousel */}
             <div className={styles.carouselTestWrapper}>
                 {showParentArrow && (
@@ -169,8 +178,31 @@ const ProductFilterSection = ({ child, parent, path }) => {
                 )}
             </div>
 
-            {/* {isMobile && (
-                <>
+
+            {(isMobile && isFile) && (
+                <ConfigProvider
+                    theme={{
+                        token: {
+                            colorPrimary: "#00a44f",
+                            borderRadiusLG: 20,
+                        },
+                        components: {
+                            Button: {
+                                colorPrimary: "#00a44f",
+                            },
+                            Checkbox: {
+                                colorPrimary: "#00a44f",
+                            },
+                            Slider: {
+                                colorPrimary: "#00a44f",
+                            },
+                            Select: {
+                                colorPrimary: "#00a44f",
+                            },
+                        },
+                    }}
+                >
+
                     <Button
                         type="primary"
                         block
@@ -179,43 +211,189 @@ const ProductFilterSection = ({ child, parent, path }) => {
                     >
                         Filtrlarni ochish
                     </Button>
-
                     <Drawer
-                        title="Filtrlar"
+                        style={{
+                            borderRadius: "20px 20px 0 0"
+                        }}
                         placement="bottom"
                         onClose={() => setDrawerOpen(false)}
                         open={drawerOpen}
-                        height="60%"
+                        height="75%"
+                        closeIcon={
+                            <Button
+                                type="text"
+                                shape="circle"
+                                icon={<CloseOutlined style={{ fontSize: 20, color: "#00a44f" }} />}
+                            />
+                        }
+                        headerStyle={{
+                            flexDirection: "column-reverse",
+                            alignItems: "flex-end",
+                        }}
                     >
+                        {/* Kategoriya Select */}
+                        <div style={{ marginBottom: 24 }}>
+                            <h4>Kategoriya</h4>
+                            <Select
+                                placeholder="Kategoriya tanlang"
+                                style={{ width: "100%" }}
+                                allowClear
+                                value={selectedCategory || undefined}
+                                onChange={(val) => {
+                                    if (!val) {
+                                        setSelectedCategory(undefined);
+                                        setSybTitle('');
+                                        push({
+                                            pathname: `${path}all`,
+                                            query: { ...query, parentCategory: '', childCategory: '', title: 'Barchasi' },
+                                        });
+                                        setTitle('Barchasi');
+                                    } else {
+                                        setSelectedCategory(val);
+                                        // shu yerda handleParent ishlatyapmiz
+                                        const category = parent.find(item => item.slug === val);
+                                        if (category) handleParent(category.slug, category.name);
+                                    }
+                                }}
+                                options={parent.map(item => ({
+                                    label: item.name,
+                                    value: item.slug,
+                                }))}
+                                getPopupContainer={(triggerNode) => triggerNode.parentNode}
+                            />
+                        </div>
+
+                        {/* Sub kategoriya Select */}
+                        {query?.parentCategory && (
+                            <div style={{ marginBottom: 24 }}>
+                                <h4>Sub kategoriya</h4>
+                                <Select
+                                    placeholder="Sub kategoriyani tanlang"
+                                    style={{ width: "100%" }}
+                                    allowClear
+                                    value={selectedSubCategory || undefined}
+                                    onChange={(val) => {
+                                        if (!val) {
+                                            setSelectedSubCategory(undefined);
+                                            push({
+                                                pathname,
+                                                query: { ...query, childCategory: '', title },
+                                            });
+                                            setSybTitle('');
+                                        } else {
+                                            setSelectedSubCategory(val);
+                                            // handleChild ishlatyapmiz
+                                            const subCategory = child.find(item => item.slug === val);
+                                            if (subCategory) handleChild(subCategory.slug, subCategory.name);
+                                        }
+                                    }}
+                                    options={child.map(item => ({
+                                        label: item.name,
+                                        value: item.slug,
+                                    }))}
+                                    getPopupContainer={(triggerNode) => triggerNode.parentNode}
+                                />
+                            </div>
+                        )}
+
                         <div style={{ marginBottom: 24 }}>
                             <h4>Fayl turlari</h4>
                             <Checkbox.Group
+                                style={{ display: "flex", flexDirection: "column", gap: 8 }}
+                                value={fileTypes}
+                                onChange={vals => setFileTypes(vals)}
                                 options={[
-                                    { label: 'DOCX', value: 'docx' },
-                                    { label: 'PPTX', value: 'pptx' },
-                                    { label: 'PDF', value: 'pdf' },
+                                    { label: "DOCX", value: ".docx" },
+                                    { label: "DOC", value: ".doc" },
+                                    { label: "PPTX", value: ".pptx" },
+                                    { label: "PPT", value: ".ppt" },
+                                    { label: "PDF", value: ".pdf" },
                                 ]}
-                                onChange={checkedValues => {
-                                    console.log('Tanlangan fayl turlari:', checkedValues);
-                                }}
+                            />
+
+                        </div>
+
+                        <div style={{ marginBottom: 24 }}>
+                            <h4>Narx oralig‘i</h4>
+                            <div style={{ display: "flex", justifyContent: "space-between" }}>
+                                <span>{formatCurrencyWithSpace(priceRange[0])} so'm</span>
+                                <span>{formatCurrencyWithSpace(priceRange[1])} so'm</span>
+                            </div>
+                            <Slider
+                                range
+                                min={0}
+                                max={1000000}
+                                value={priceRange}
+                                onChange={(value) => setPriceRange(value)}
                             />
                         </div>
 
                         <div>
-                            <h4>Narx oralig‘i</h4>
+                            <h4>Varoqlar oralig‘i</h4>
+                            <div style={{ display: "flex", justifyContent: "space-between" }}>
+                                <span>{pageRange[0]} bet</span>
+                                <span>{pageRange[1]} bet</span>
+                            </div>
                             <Slider
                                 range
                                 min={0}
                                 max={100}
-                                defaultValue={[0, 100]}
-                                onChange={value => {
-                                    console.log('Tanlangan narx oralig‘i:', value);
-                                }}
+                                value={pageRange}
+                                onChange={(value) => setPageRange(value)}
                             />
                         </div>
+
+                        <div style={{ display: "flex", gap: 12, marginTop: 24 }}>
+                            <Button
+                                block
+                                onClick={() => {
+                                    setSelectedCategory(undefined);
+                                    setSelectedSubCategory(undefined);
+                                    setFileTypes([]);
+                                    setPriceRange([0, 100000000]);
+                                    setPageRange([0, 100]);
+                                    setTitle("Barchasi");
+                                    setSybTitle("");
+
+                                    push({
+                                        pathname: `${path}all`,
+                                        query: { ...query, parentCategory: '', childCategory: '', title: 'Barchasi' },
+                                    });
+
+                                    setDrawerOpen(false);
+                                }}
+                            >
+                                Filtrni tozalash
+                            </Button>
+
+                            <Button
+                                type="primary"
+                                block
+                                onClick={() => {
+                                    const filters = {
+                                        category: selectedSubCategory || selectedCategory || '',
+                                        content_extensions: fileTypes,
+                                        price_from: priceRange[0],
+                                        price_to: priceRange[1],
+                                        from_page: pageRange[0],
+                                        to_page: pageRange[1],
+                                    };
+
+                                    push({
+                                        pathname,
+                                        query: { ...query, ...filters },
+                                    });
+
+                                    setDrawerOpen(false);
+                                }}
+                            >
+                                Filtrni qo‘llash
+                            </Button>
+                        </div>
+
                     </Drawer>
-                </>
-            )} */}
+                </ConfigProvider>
+            )}
         </div>
     );
 };

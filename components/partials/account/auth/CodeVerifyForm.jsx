@@ -13,7 +13,7 @@ export const formatTime = (seconds) => {
     return `${String(minutes).padStart(2, '0')}:${String(secondsLeft).padStart(2, '0')}`;
 };
 
-export default function CodeVerifyForm({authCode, onClose, slug}) {
+export default function CodeVerifyForm({ authCode, onClose, slug, onSuccess }) {
     const [loading, setLoading] = useState(false);
     const [secondsRemaining, setSecondsRemaining] = useState(120);
     const [msg, SetMsg] = useState(null);
@@ -45,10 +45,10 @@ export default function CodeVerifyForm({authCode, onClose, slug}) {
 
     const handleSubmit = async ({ code }) => {
         setLoading(true);
-        const data = { user: router?.query?.user || authCode, code   };
+        const data = { user: router?.query?.user || authCode, code };
 
         try {
-            const resp = await Axios.post(baseUrlAuth + 'auth/verify/', data );
+            const resp = await Axios.post(baseUrlAuth + 'auth/verify/', data);
             dispatch(login({
                 user: { ...resp.data, role: 'customer' },
                 data: JSON.parse(localStorage.getItem('data'))
@@ -67,12 +67,13 @@ export default function CodeVerifyForm({authCode, onClose, slug}) {
                 router.push(`/account/checkout?id=${router?.query?.id}`);
             } else if (router?.query?.deal) {
                 router.push(`/account/all-orders`);
-            }else if (authCode && slug){
+            } else if (authCode && slug) {
                 router.push(`/service/${slug}?modal=open`)
-            }else if(authCode){
+            } else if (typeof onSuccess === 'function') {
+                onSuccess()
+            } else if (authCode) {
 
-            }
-             else {
+            } else {
                 router.push('/account/sellerproducts');
             }
         } catch (err) {

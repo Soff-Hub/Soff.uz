@@ -2,10 +2,10 @@ import React from 'react';
 import { Modal } from 'antd';
 import CodeVerifyForm from '~/components/partials/account/auth/CodeVerifyForm.jsx';
 
-const CodeVerifyModal = ({ open, onClose, authCode, slug }) => {
+const CodeVerifyModal = ({ open, onClose, authCode, slug, onSuccess }) => {
     return (
         <Modal className="custom-auth-modal" open={open}  onCancel={onClose} footer={null} centered>
-            <CodeVerifyForm slug={slug} onClose={onClose} authCode={authCode}/>
+            <CodeVerifyForm slug={slug} onClose={onClose} authCode={authCode} onSuccess={onSuccess}/>
         </Modal>
     );
 };

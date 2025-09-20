@@ -95,8 +95,8 @@ const HeaderUserDropdown = props => {
                 <div className="ps-block__content">
                     <ul className="ps-list--arrow order">
                         <div>
-                            <div className="pointer d-flex pointer mb-3 gap-3 align-items-center ">
-                                <Image
+                            <div className="pointer d-flex pointer mb-3  gap-3 align-items-center ">
+                                {/* <Image
                                     style={{ borderRadius: '50%' }}
                                     src={
                                         profile?.image ||
@@ -105,7 +105,7 @@ const HeaderUserDropdown = props => {
                                     width={30}
                                     height={30}
                                     alt="user"
-                                />
+                                /> */}
 
                                 <Link
                                     href={

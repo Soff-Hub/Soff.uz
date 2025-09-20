@@ -15,12 +15,17 @@ const ServiceFirstCard = () => {
         }else{
             setIsOpen(true)
         }
-        // window.open('https://t.me/soff_freelancing_bot', '_blank')
     }
 
     return (
         <>
-            <AuthModal open={isOpen} onClose={() => setIsOpen(false)}/>
+            <AuthModal 
+                open={isOpen} 
+                onClose={() => setIsOpen(false)}
+                onSuccess={() => {
+                    setOpen(true)
+                }}
+            />
             <CreateOrderModal open={open} onClose={() => setOpen(false)}/>
             <div className={styles.card}>
                 <h3 className={styles.title}>Ishingizni frilanserlarga topshiring.</h3>
