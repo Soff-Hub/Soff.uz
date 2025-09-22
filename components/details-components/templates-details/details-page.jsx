@@ -24,9 +24,9 @@ function ThreeDesignProductsDetails ({ product, template }) {
                             }}>
                             {product?.title}
                         </p>
-                        <p className='m-0 fs-3 title_cat'>
+                        <span className='m-0 fs-3 title_cat'>
                             {product?.category?.name}
-                        </p>
+                        </span>
                     </div>
                     <div className='ps-product__header_seller_three_design '>
                         <ImageCarousel

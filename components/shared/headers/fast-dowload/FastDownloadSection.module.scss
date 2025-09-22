@@ -13,7 +13,7 @@
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 16px;
+    gap: 6px;
 
     @media (max-width: 768px) {
         position: fixed;
@@ -46,6 +46,11 @@
 .productTitle {
     font-size: 16px;
     margin: 0;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
 }
 
 .downloadBtn {
@@ -55,10 +60,33 @@
     color: #fff !important;
     border: none;
     border-radius: 5px;
+    text-align: center;
     cursor: pointer;
     transition: background-color 0.3s ease;
 
     &:hover {
         background-color: #05cc0c;
+    }
+}
+
+@media (max-width: 480px) {
+    .downloadBtn {
+        padding: 6px 14px;
+        font-size: 12px;
+        width: 100%;
+    }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+    .downloadBtn {
+        padding: 7px 16px;
+        font-size: 13px;
+    }
+}
+
+@media (min-width: 769px) {
+    .downloadBtn {
+        padding: 10px 22px;
+        font-size: 15px;
     }
 }

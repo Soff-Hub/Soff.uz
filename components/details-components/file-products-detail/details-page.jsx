@@ -23,9 +23,9 @@ function FileProductsDetails({ product }) {
             </h1>
             <Link href={`/scientific-resources/${product?.category?.slug}?childCategory=${product?.category?.slug}`}>
               <a>
-                <p className='m-0 fs-3'>
+                <span className='m-0 fs-3'>
                   {product?.category?.name || <span className="invisible-text">Kategoriya nomi</span>}
-                </p>
+                </span>
               </a>
             </Link>
           </div>

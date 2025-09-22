@@ -17,6 +17,8 @@ import ModelAndDesignProduct from '~/components/elements/products/ModelAndDesign
 import Axios from 'axios';
 import { Skeleton } from 'antd';
 import ProductCard from '~/components/freeleance/home/ui/ProductCard';
+import { useDispatch } from 'react-redux';
+import { setShowFastDownload } from '~/store/fast-dowload/slice';
 
 export default function ProductDefaultPage({ defaultProducts }) {
     const router = useRouter();
@@ -29,13 +31,21 @@ export default function ProductDefaultPage({ defaultProducts }) {
     const [lastAdded, setLastAdded] = useState()
     const [lastLoading, setLastLoading] = useState(false)
     const similarRef = useRef();
+    const dispatch = useDispatch();
 
     const contentType = defaultProducts?.document?.content_type;
 
+    useEffect(() => {
+        dispatch(setShowFastDownload(false));
+
+        return () => {
+            dispatch(setShowFastDownload(true));
+        };
+    }, [dispatch])
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            setInitialDelayPassed(true); // faqat 2 sekunddan keyin observer ishlasin
+            setInitialDelayPassed(true);
         }, 2000);
 
         return () => clearTimeout(timer);
@@ -328,9 +338,9 @@ export default function ProductDefaultPage({ defaultProducts }) {
                                         </h3>
                                         {hasLoadedSimilar ? (
                                             <div className='row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-gap-4'>
-                                                {similarProduct?.map((item, index) => 
+                                                {similarProduct?.map((item, index) =>
                                                     <div className='col px-3' key={item?.id}>
-                                                        <ProductCard product={item}/>
+                                                        <ProductCard product={item} />
                                                     </div>
                                                 )}
                                             </div>
@@ -346,7 +356,7 @@ export default function ProductDefaultPage({ defaultProducts }) {
                                                             style={{
                                                                 width: '100%',
                                                                 maxWidth: 170,
-                                                                height: '38vw', 
+                                                                height: '38vw',
                                                                 maxHeight: 230,
                                                                 minHeight: 120,
                                                                 borderRadius: 8,
@@ -389,7 +399,7 @@ export default function ProductDefaultPage({ defaultProducts }) {
                                             <div className='row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-gap-4'>
                                                 {lastAdded?.results?.map((p, i) => (
                                                     <div key={p?.id} className="col px-3">
-                                                        <ProductCard product={p}/>
+                                                        <ProductCard product={p} />
                                                     </div>
                                                 ))}
                                             </div>

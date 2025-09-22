@@ -8,6 +8,7 @@ import useCart from '~/hooks/useCart';
 import { useRouter } from 'next/router';
 import { setOneShopDoc } from '~/store/auth/slice';
 import { useDispatch, useSelector } from 'react-redux';
+import useResponsive from '~/utilities/useResponsive';
 
 export const fileColors = {
     ".doc": "#007DFF",
@@ -47,6 +48,7 @@ function FileActions({ product }) {
     const [basket, setBasket] = useState(false);
     const [messageApi, contextHolder] = message.useMessage();
     const state = useSelector((state) => state.auth.user?.access);
+    const { isMobile } = useResponsive()
 
     // Savatga qo'shish
     function handleAddItemToCart(e) {
@@ -287,6 +289,8 @@ function FileActions({ product }) {
                         </li>
                     )}
 
+
+
                     {product?.three_d_features?.platform && (
                         <li className='w-100 d-flex align-items-center justify-content-between gap-3'>
                             <span className="d-flex align-items-center gap-2">
@@ -317,16 +321,34 @@ function FileActions({ product }) {
                             </div>
                         )
                     }
-                    {product?.document?.file_url ?
-                        <a href={product?.document?.file_url} target='_blank'>
-                            <Button iconPosition='end' style={{ height: "58px", fontSize: "20px" }} type="primary" className='w-100 bg-success' icon={<DownloadOutlined />} size={"large"}>
-                                Yuklab olish
-                            </Button>
-                        </a> :
+                    <div className={`d-flex flex-column gap-3 ${isMobile ? 'sticky-bottom-btn' : ''}`}>
+                        {product?.document?.file_url ?
+                            <a href={product?.document?.file_url} target='_blank'>
+                                <Button
+                                    iconPosition='end'
+                                    style={{ height: "58px", fontSize: "20px" }}
+                                    type="primary"
+                                    className='w-100 bg-success'
+                                    icon={<DownloadOutlined />}
+                                    size={"large"}
+                                >
+                                    Yuklab olish
+                                </Button>
+                            </a> :
 
-                        <Button onClick={(e) => handleBuynow(e)} iconPosition='end' style={{ height: "58px", fontSize: "20px" }} type="primary" className='w-100 bg-success' icon={<DownloadOutlined />} size={"large"}>
-                            Hoziroq xarid qilish
-                        </Button>}
+                            <Button
+                                onClick={(e) => handleBuynow(e)}
+                                iconPosition='end'
+                                style={{ height: "58px", fontSize: "20px" }}
+                                type="primary"
+                                className='w-100 bg-success'
+                                icon={<DownloadOutlined />}
+                                size={"large"}
+                            >
+                                Hoziroq xarid qilish
+                            </Button>
+                        }
+                    </div>
                 </div>
 
             </div>
