@@ -21,7 +21,7 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
     const [selectedCategory, setSelectedCategory] = useState();
     const [selectedSubCategory, setSelectedSubCategory] = useState();
     const [fileTypes, setFileTypes] = useState([]);
-    const [priceRange, setPriceRange] = useState([0, 1000000]);
+    const [priceRange, setPriceRange] = useState([0, 500000]);
     const [pageRange, setPageRange] = useState([0, 100]);
 
     const debouncedSearch = useDebounce(search, 500);
@@ -218,7 +218,7 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
                         placement="bottom"
                         onClose={() => setDrawerOpen(false)}
                         open={drawerOpen}
-                        height="75%"
+                        height="90%"
                         closeIcon={
                             <Button
                                 type="text"
@@ -350,7 +350,7 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
                                     setSelectedCategory(undefined);
                                     setSelectedSubCategory(undefined);
                                     setFileTypes([]);
-                                    setPriceRange([0, 100000000]);
+                                    setPriceRange([0, 500000]);
                                     setPageRange([0, 100]);
                                     setTitle("Barchasi");
                                     setSybTitle("");

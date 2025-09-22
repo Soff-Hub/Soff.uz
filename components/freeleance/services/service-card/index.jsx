@@ -20,13 +20,16 @@ const ServiceCard = ({ service }) => {
     }, [isLoggedIn, push, service?.slug])
 
 
+
     return (
         <>
             <div className={styles.card}>
                 <div className={styles.cardBody}>
-                    <Link href={`/service/${service?.slug}`} className={styles.cardTitle}>
-                        {service?.title}
-                    </Link>
+                    <a href={`/service/${service?.slug}`} >
+                        <h1 className={styles.cardTitle}>
+                            {service?.title}
+                        </h1>
+                    </a>
                     <h3 className={styles.price}>
                         {formatCurrencyWithSpace(service?.price)} so'm
                     </h3>

@@ -69,7 +69,7 @@ const NavbarSearch = () => {
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth <= 320) {
-                setPopupWidth(280);
+                setPopupWidth(260);
             } else if (window.innerWidth <= 420) {
                 setPopupWidth(300);
             } else {

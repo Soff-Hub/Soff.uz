@@ -39,6 +39,7 @@ const PageLayout = ({ children, title }) => {
     const { user } = useSelector(state => state.auth);
     const dispatch = useDispatch();
     const Router = useRouter();
+    const { showFastDownload } = useSelector(state => state.ui);
 
     async function handleLogin(googleData) {
         Router.push(`/oauth/?token=${googleData}&returnUrl=${Router.asPath}`);
@@ -65,7 +66,9 @@ const PageLayout = ({ children, title }) => {
                 <title>{title}</title>
             </Head>
             <Header />
-            <FastDowloadSection />
+            {showFastDownload &&
+                <FastDowloadSection />
+            }
             {children}
             <HeaderMobileBottom />
             <FooterComponents />
