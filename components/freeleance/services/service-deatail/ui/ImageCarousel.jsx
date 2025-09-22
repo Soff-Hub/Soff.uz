@@ -9,7 +9,6 @@ import styles from '../styles/detail.module.scss';
 
 const ImageCarousel = ({ images }) => {
     if (!images) return null; // rasm bo'lmasa carouselni ko'rsatmaslik
-    console.log(images);
 
     return (
         <div className={styles.carouselWrapper}>

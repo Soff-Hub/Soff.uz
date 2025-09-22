@@ -242,8 +242,10 @@ const CreateOrderModal = ({ open, onClose }) => {
                         Ha, buyurtmani yubor
                     </Button>,
                 ]}
+                centered
             >
-                <p>Rostdan ham buyurtma bermoqchimisiz? Bu buyurtmangiz 10 000 ta frilanserga yuboriladi.</p>
+                <p>Rostdan ham buyurtma berishni xohlaysizmi?
+                    Buyurtmangiz 10 000 dan ortiq frilanserlarga yuboriladi, ular siz bilan hamkorlik qilish uchun taklif yuborishadi.</p>
             </Modal>
         </>
     );

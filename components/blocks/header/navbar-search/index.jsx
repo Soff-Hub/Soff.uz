@@ -102,7 +102,7 @@ const NavbarSearch = () => {
                         onChange={(val) => setSearch(val)}
                         options={getOptions()}
                         style={{ width: '100%' }}
-                        popupMatchSelectWidth={popupWidth}
+                        // popupMatchSelectWidth={popupWidth}
                     >
                         <Input
                             className={styles.input}
