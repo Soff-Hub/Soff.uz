@@ -128,7 +128,7 @@ const HeaderCatergories = () => {
 
     const handleOrder = () => {
         if (isLoggedIn) {
-            setOpen(true)
+            setOpen(true)   
         } else {
             push('/auth/login')
         }
