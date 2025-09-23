@@ -1,7 +1,7 @@
 import React from 'react';
 import PageContainer from '~/components/layouts/PageContainer';
 import ServiceDetail from '~/components/freeleance/services/service-deatail/ServiceDetail';
-import axiosInstance from '~/components/freeleance/api/freeleanceApi';
+import axiosInstance from '~/shared/api/freeleanceApi';
 
 const ServiceDetailPage = ({ data, status }) => {
     return (

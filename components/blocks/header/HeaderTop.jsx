@@ -9,7 +9,9 @@ export default function HeaderTop() {
     return (
         <div className=" header__top__items py-2">
             <div className="d-flex align-items-center  justify-content-end header__top__block">
-                <HeaderCatergories />
+                {isMobile && 
+                    <HeaderCatergories />
+                }
 
                 <MenuCategoriesDropdown />
             </div>

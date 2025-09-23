@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { message } from 'antd';
 import { useSelector } from 'react-redux';
-import axiosInstance from '~/components/freeleance/api/freeleanceApi';
+import axiosInstance from '~/shared/api/freeleanceApi';
 
 const useSendReq = () => {
     const { user } = useSelector(state => state.auth);

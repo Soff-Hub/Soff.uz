@@ -1,15 +1,15 @@
-import React from 'react';
-import { useRouter } from 'next/router';
+import React, { useState } from 'react';
+import CreateOrderModal from '~/shared/components/modals/CreateOrderModal';
 
-export default function Search_Results_NotFound () {
-    const router = useRouter();
+export default function Search_Results_NotFound() {
+    const [ open, setOpen ] = useState()
 
     const handleRedirect = () => {
-        router.push('/'); // bu yerda '/' asosiy sahifani bildiradi
+        setOpen(true)
     };
 
     return (
-        <div>
+        <>
             <div className='Search_Results_not_found'>
                 <img
                     src='/static/img/searchNotFound.png'
@@ -17,16 +17,22 @@ export default function Search_Results_NotFound () {
                     className='Search_Results_not_found_img'
                 />
                 <p className='Search_Results_not_found_title'>
-                    Kechirasiz, natijalar topilmadi
+                    Izlagan mahsulotingiz yo‘qmi?
                 </p>
-                <p
-                    className='Search_Results_not_found_btn'
-                    onClick={handleRedirect}
-                    style={{ cursor: 'pointer' }}
-                >
-                    Asosiy sahifaga
+                <p className='Search_Results_not_found_subtitle'>
+                    <span
+                        className='Search_Results_not_found_btn'
+                        onClick={handleRedirect}
+                    >
+                        Buyurtma bering
+                    </span>
                 </p>
             </div>
-        </div>
+
+            <CreateOrderModal
+                open={open}
+                onClose={() => setOpen(false)}
+            />
+        </>
     );
 }

@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import axiosInstance from '../../api/freeleanceApi';
+import axiosInstance from '../../../../shared/api/freeleanceApi';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
 

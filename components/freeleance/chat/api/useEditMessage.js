@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import axiosInstance from '../../api/freeleanceApi';
+import axiosInstance from '../../../../shared/api/freeleanceApi';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { message } from 'antd';
 

@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { message, Switch, Tooltip, ConfigProvider } from "antd";
 import { InfoCircleOutlined } from "@ant-design/icons";
-import useGetProfile from "../../api/useGetProfile";
 import { useGet, usePatch } from "~/repositories/https";
 import useResponsive from "~/shared/utilities/useResponsive";
+import useGetProfile from "~/components/freeleance/api/useGetProfile";
 
 export default function TelegramNotification() {
     const { isMobile } = useResponsive();

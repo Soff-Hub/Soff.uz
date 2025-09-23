@@ -2,7 +2,7 @@ import React from 'react';
 import Search_Results_Services_filter from './search-page-filter/search-results-services-filter';
 import { Pagination, Skeleton } from 'antd';
 import Search_Results_NotFound from './notFound';
-import ServiceCard from '~/components/freeleance/services/service-card';
+import ServiceCard from '~/entities/cards/service-card';
 import { useRouter } from 'next/router';
 import LastAddedProductCard from './search-page-card/lastAddedProductCard';
 
