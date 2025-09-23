@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { initLocalCart } from '~/store/ecomerce/slice';
 import NavbarMenu from '../../freeleance/home/widgets/NavbarMenu';
-import useResponsive from '~/utilities/useResponsive';
+import useResponsive from '~/shared/utilities/useResponsive';
 import NavbarSearch from './navbar-search';
 
 const Header = () => {

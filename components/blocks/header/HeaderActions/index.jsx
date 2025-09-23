@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect, useSelector } from 'react-redux';
 import Link from 'next/link';
-import useWishlist from '~/hooks/useWishlist';
+import useWishlist from '~/shared/hooks/useWishlist';
 import MiniCart from '~/components/shared/headers/modules/MiniCart';
 import HeaderNotifications from './HeaderNotifications';
 import HeaderUserDropdown from './HeaderUserDropdown';
 import { Badge } from 'antd';
 import MenuCategoriesDropdown from '~/components/shared/menu/MenuCategoriesDropdown';
-import useResponsive from '~/utilities/useResponsive';
+import useResponsive from '~/shared/utilities/useResponsive';
 import HeaderCatergories from '../HeaderCategories';
 import SideBar from '../SiderBar/sidebar';
 

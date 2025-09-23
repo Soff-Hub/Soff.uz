@@ -2,8 +2,8 @@ import React from 'react';
 import { connect, useSelector } from 'react-redux';
 import Link from 'next/link';
 import ProductOnCart from '~/components/elements/products/ProductOnCart';
-import { calculateAmount } from '~/utilities/ecomerce-helpers';
-import useCart from '~/hooks/useCart';
+import { calculateAmount } from '~/shared/utilities/ecomerce-helpers';
+import useCart from '~/shared/hooks/useCart';
 import { addPeriodToThousands } from '~/components/partials/account/price-formatter';
 import { Badge } from 'antd';
 

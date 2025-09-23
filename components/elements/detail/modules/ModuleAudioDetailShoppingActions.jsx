@@ -2,10 +2,10 @@
 import React, { useState } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import useCart from '~/hooks/useCart';
-import useWishlist from '~/hooks/useWishlist';
+import useCart from '~/shared/hooks/useCart';
+import useWishlist from '~/shared/hooks/useWishlist';
 import { Modal } from 'antd';
-import { audioDownloaderSale } from '~/utilities/common-helpers';
+import { audioDownloaderSale } from '~/shared/utilities/common-helpers';
 import { setOneShopDoc } from '~/store/auth/slice';
 
 

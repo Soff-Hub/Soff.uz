@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import ElectronicHeaderActions from '~/components/shared/headers/modules/ElectronicHeaderActions';
-import { stickyHeader } from '~/utilities/common-helpers';
+import { stickyHeader } from '~/shared/utilities/common-helpers';
 import NextImageCard from '~/components/nextImagecard';
 import SearchHeader from './modules/SearchHeader';
 import { useRouter } from 'next/router';

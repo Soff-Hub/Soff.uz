@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import useCreateChat from '~/components/freeleance/chat/api/useCreateChat';
 import CalculateTimeDifference from '~/components/partials/account/DateFormatter';
-import { getDate, getStatus, getTimeAgo } from '~/utilities/calculateTime';
+import { getDate, getStatus, getTimeAgo } from '~/shared/utilities/calculateTime';
 import { setActiveIndex } from '../../../store/seller/slice';
 import { apiForFreelance } from '~/repositories/api';
 export default function SellerShortInfo({ sellerInfo, pid }) {

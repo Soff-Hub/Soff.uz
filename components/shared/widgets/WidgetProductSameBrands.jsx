@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { getProductsByCollectionHelper } from '~/utilities/strapi-fetch-data-helpers';
+import { getProductsByCollectionHelper } from '~/shared/utilities/strapi-fetch-data-helpers';
 import Product from '~/components/elements/products/Product';
-import { generateTempArray } from '~/utilities/common-helpers';
+import { generateTempArray } from '~/shared/utilities/common-helpers';
 import SkeletonProduct from '~/components/elements/skeletons/SkeletonProduct';
 
 const WidgetProductSameBrands = ({ collectionSlug }) => {

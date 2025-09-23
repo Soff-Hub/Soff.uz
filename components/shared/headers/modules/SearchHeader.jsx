@@ -3,7 +3,7 @@ import Router from 'next/router';
 import { Select, Spin } from 'antd';
 import ProductSearchResult from '~/components/elements/products/ProductSearchResult';
 import PostRepository from '~/repositories/PostRepository';
-import useDebounce from '~/hooks/useDebounce';
+import useDebounce from '~/shared/hooks/useDebounce';
 const Option = Select.Option;
 
 

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React from 'react';
 import styles from '../../landingStyles/landingStyles.module.scss';
-import useResponsive from '~/utilities/useResponsive';
+import useResponsive from '~/shared/utilities/useResponsive';
 import { useSelector } from 'react-redux';
 
 const MenuCategoriesDropdown = () => {

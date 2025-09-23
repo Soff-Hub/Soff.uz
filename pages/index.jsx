@@ -1,12 +1,10 @@
 import React from 'react';
-import BestSellerStatics from '~/components/blocks/bestSellerStatics';
 import HomePage from '~/components/freeleance/home/HomePage';
 import PageLayout from '~/components/layouts/PageLayout';
 import Meta from '~/components/shared/headers/Meta';
 import { TelegramLink } from '~/components/shared/telegramLink';
-import { baseURL } from '~/repositories/api';
 
-function NewHomePage({ tab, category, lastProductsData }) {
+function NewHomePage() {
     return (
         <PageLayout>
             <Meta
@@ -28,31 +26,9 @@ function NewHomePage({ tab, category, lastProductsData }) {
                 image='c'
             />
             <HomePage />
-            {/* <BestSellerStatics /> */}
-            {/* <HeroSearch /> */}
-            {/* <HomeCategories /> */}
-            {/* <LastAddedProducts lastAdded={lastProductsData}/> */}
-            {/* <ItServicesCategories />
-            <ResutsComponents />
-            <SubProjects /> */}
             <TelegramLink />
-            {/* <Faqs/> */}
         </PageLayout>
     );
 }
-
-// export async function getServerSideProps(context) {
-//     const { query } = context;
-//     const res = await fetch(`${baseURL}customer/last-added?limit=6`)
-//     const lastProductsData = await res.json()
-
-//     return {
-//         props: {
-//             tab: query?.tab || 'file',
-//             category: query?.category || null,
-//             lastProductsData,
-//         },
-//     };
-// }
 
 export default NewHomePage;

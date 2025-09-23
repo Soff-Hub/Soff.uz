@@ -3,7 +3,7 @@ import { Button, Modal } from 'antd';
 import { DownloadOutlined } from '@ant-design/icons';
 import styles from '../styles/detail.module.scss';
 import { useSelector } from 'react-redux';
-import { formatCurrencyWithSpace } from '~/utilities/product-helper';
+import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import ServiceCheckout from './auth/serviceCheckout';
 import AuthModal from '~/components/AuthModal';
 import { useQueryClient } from '@tanstack/react-query';

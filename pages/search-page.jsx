@@ -5,7 +5,7 @@ import Head from 'next/head';
 import NextImageCard from '~/components/nextImagecard';
 import Search_Results_Products from '~/components/elements/search-page-details/products';
 import { baseUrlUseApi } from '~/repositories/useApi';
-import useDebounce from '~/hooks/useDebounce';
+import useDebounce from '~/shared/hooks/useDebounce';
 import { baseURL } from '~/repositories/api';
 import { Tabs } from 'antd';
 import Search_Results_Services from '~/components/elements/search-page-details/services';

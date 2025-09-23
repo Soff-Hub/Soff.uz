@@ -8,24 +8,22 @@ import '~/scss/style.scss';
 import '~/scss/electronic.scss';
 import Head from 'next/head';
 import NextProgress from 'next-progress';
-import { AudioProvider } from '~/hooks/AudioContext';
+import { AudioProvider } from '~/shared/hooks/AudioContext';
 import { ProductProvider } from '~/context/ProductsContext';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { Provider } from 'react-redux';
 import { store } from '~/store';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from 'react-hot-toast';
-import { ConfigProvider } from 'antd';
 import AffiliateListener from '~/components/AffiliateListener';
-import { customBreakPoints } from '~/service/themeConfig';
 const queryClient = new QueryClient();
 
 function App({ Component, pageProps }) {
     useEffect(() => {
-        setTimeout(function() {
+        setTimeout(function () {
             document.getElementById('__next').classList.add('loaded');
         }, 0);
-        window.addEventListener('contextmenu', function(e) {
+        window.addEventListener('contextmenu', function (e) {
             e.preventDefault();
         });
     }, []);
@@ -65,7 +63,6 @@ function App({ Component, pageProps }) {
                     content="width=device-width, initial-scale=1.0"
                 />
                 <meta name="format-detection" content="telephone=no" />
-                {/* <meta name="apple-mobile-web-app-capable" content="yes" /> */}
                 <meta name="mobile-web-app-capable" content="yes"></meta>
                 <meta
                     name="google-adsense-account"
@@ -100,21 +97,19 @@ function App({ Component, pageProps }) {
                 color="#00A44F"
             />
             <Provider store={store}>
-                <ConfigProvider theme={customBreakPoints}>
-                    <QueryClientProvider client={queryClient}>
-                        <GoogleOAuthProvider clientId="203103939049-2ste634q2uc1io9oaup8gt35tsmucru0.apps.googleusercontent.com">
-                            <CookiesProvider>
-                                <ProductProvider>
-                                    <AudioProvider>
-                                        <AffiliateListener />
-                                        <Component {...pageProps} />
-                                        <Toaster position="top-center" />
-                                    </AudioProvider>
-                                </ProductProvider>
-                            </CookiesProvider>
-                        </GoogleOAuthProvider>
-                    </QueryClientProvider>
-                </ConfigProvider>
+                <QueryClientProvider client={queryClient}>
+                    <GoogleOAuthProvider clientId="203103939049-2ste634q2uc1io9oaup8gt35tsmucru0.apps.googleusercontent.com">
+                        <CookiesProvider>
+                            <ProductProvider>
+                                <AudioProvider>
+                                    <AffiliateListener />
+                                    <Component {...pageProps} />
+                                    <Toaster position="top-center" />
+                                </AudioProvider>
+                            </ProductProvider>
+                        </CookiesProvider>
+                    </GoogleOAuthProvider>
+                </QueryClientProvider>
             </Provider>
         </>
     );

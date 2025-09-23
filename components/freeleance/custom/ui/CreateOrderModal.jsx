@@ -6,9 +6,9 @@ import { useFGet, useFPost } from "../../api/useFApi";
 import dayjs from "dayjs";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import { createOrderInfo } from "~/constants/createOrder";
+import { createOrderInfo } from "~/shared/constants/createOrder";
 import { ClipLoader } from "react-spinners";
-import useResponsive from "~/utilities/useResponsive";
+import useResponsive from "~/shared/utilities/useResponsive";
 
 const { TextArea } = Input;
 

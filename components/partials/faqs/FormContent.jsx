@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Form, Input, Modal } from 'antd';
-import useAuth from '~/hooks/useAuth';
+import useAuth from '~/shared/hooks/useAuth';
 // import CaptchaForm from '~/components/captcha/CaptchaForm';
 const App = () => {
     const [form] = Form.useForm();

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
-import useWishlist from '~/hooks/useWishlist';
+import useWishlist from '~/shared/hooks/useWishlist';
 
 const WebsitesProduct = ({ product }) => {
     const [countShow, setCountShow] = useState(false);

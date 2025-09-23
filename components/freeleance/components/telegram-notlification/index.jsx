@@ -3,7 +3,7 @@ import { message, Switch, Tooltip, ConfigProvider } from "antd";
 import { InfoCircleOutlined } from "@ant-design/icons";
 import useGetProfile from "../../api/useGetProfile";
 import { useGet, usePatch } from "~/repositories/https";
-import useResponsive from "~/utilities/useResponsive";
+import useResponsive from "~/shared/utilities/useResponsive";
 
 export default function TelegramNotification() {
     const { isMobile } = useResponsive();

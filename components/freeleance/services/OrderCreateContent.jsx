@@ -1,6 +1,6 @@
 import { Button } from 'antd';
 import React from 'react'
-import { formatCurrencyWithSpace } from '~/utilities/product-helper';
+import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import { ArrowRightOutlined } from '@ant-design/icons';
 
 const OrderCreateContent = ({ pkg, serviceName }) => {

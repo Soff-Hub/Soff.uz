@@ -4,7 +4,7 @@ import PageContainer from '~/components/layouts/PageContainer';
 import VedioCart from '~/components/partials/faqs/Vedio-cart';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { VideoLinks } from '~/utilities/vedio_link_api';
+import { VideoLinks } from '~/shared/utilities/vedio_link_api';
 import Meta from '~/components/shared/headers/Meta';
 
 const VedioList = () => {

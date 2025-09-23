@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
 import { AutoComplete } from 'antd';
 import { api } from '~/repositories/api';
-import useDebounce from '~/hooks/useDebounce';
+import useDebounce from '~/shared/hooks/useDebounce';
 import axiosInstance from '../../api/freeleanceApi';
 import Link from 'next/link';
 

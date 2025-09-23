@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Modal } from 'antd';
 import { connect } from 'react-redux';
-import useCart from '~/hooks/useCart';
-import useWishlist from '~/hooks/useWishlist';
+import useCart from '~/shared/hooks/useCart';
+import useWishlist from '~/shared/hooks/useWishlist';
 import Router from 'next/router';
 
 const ModuleProductVideoActions = ({ product }) => {

@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react'
 import styles from './style.module.scss'
-import { formatCurrencyWithSpace } from '~/utilities/product-helper'
+import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper'
 import Link from 'next/link'
 import { useSelector } from 'react-redux'
 import AuthModal from '~/components/AuthModal'

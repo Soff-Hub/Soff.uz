@@ -4,9 +4,9 @@ import Link from 'next/link'
 import { Badge, notification } from 'antd';
 import { SmileOutlined } from '@ant-design/icons';
 
-import useCredentials from '~/hooks/useCredentials'
-import useWebSocket from '~/hooks/useWebSocket';
-import { wssBaseUrl } from '~/utilities/exports';
+import useCredentials from '~/shared/hooks/useCredentials'
+import useWebSocket from '~/shared/hooks/useWebSocket';
+import { wssBaseUrl } from '~/shared/utilities/exports';
 
 export default function HeaderNotifications({ color }) {
     const { token } = useCredentials()

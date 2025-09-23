@@ -2,10 +2,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import styles from './ProductFilter.module.scss';
 import { SearchOutlined, RightOutlined, LeftOutlined, CloseOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
-import useDebounce from '~/hooks/useDebounce';
-import useResponsive from '~/utilities/useResponsive';
+import useDebounce from '~/shared/hooks/useDebounce';
+import useResponsive from '~/shared/utilities/useResponsive';
 import { Button, Checkbox, ConfigProvider, Drawer, Select, Slider } from 'antd';
-import { formatCurrencyWithSpace } from '~/utilities/product-helper';
+import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 
 const ProductFilterSection = ({ child, parent, path, isFile }) => {
     const { query, pathname, push } = useRouter();

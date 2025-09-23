@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 import MiniCart from './MiniCart';
 import AccountQuickLinks from './AccountQuickLinks';
-import useWishlist from '~/hooks/useWishlist';
+import useWishlist from '~/shared/hooks/useWishlist';
 import { SmileOutlined } from '@ant-design/icons';
 import { notification } from 'antd';
 import { useState } from 'react';

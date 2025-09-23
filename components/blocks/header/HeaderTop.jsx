@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React from 'react';
 import MenuCategoriesDropdown from '~/components/shared/menu/MenuCategoriesDropdown';
-import useResponsive from '~/utilities/useResponsive';
+import useResponsive from '~/shared/utilities/useResponsive';
 import HeaderCatergories from './HeaderCategories';
 
 export default function HeaderTop() {

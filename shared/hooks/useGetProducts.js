@@ -2,7 +2,7 @@ import { useState } from 'react';
 import {
     getProductsByCategoriesHelper,
     getProductsByCollectionHelper,
-} from '~/utilities/strapi-fetch-data-helpers';
+} from '~/shared/utilities/strapi-fetch-data-helpers';
 import ProductRepository from '~/repositories/ProductRepository';
 
 export default function useGetProducts() {

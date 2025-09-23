@@ -5,7 +5,7 @@ import ProductCard from '../ui/ProductCard';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { RightOutlined } from '@ant-design/icons';
-import useResponsive from '~/utilities/useResponsive';
+import useResponsive from '~/shared/utilities/useResponsive';
 
 
 const LastProducts = () => {

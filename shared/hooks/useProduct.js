@@ -1,6 +1,6 @@
 import React from 'react';
 import LazyLoad from 'react-lazyload';
-import { formatCurrency } from '~/utilities/product-helper';
+import { formatCurrency } from '~/shared/utilities/product-helper';
 import Link from 'next/link';
 import NextImageCard from '~/components/nextImagecard';
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ChatSidebar from './ui/ChatSidebar';
 import ChatWindow from './ui/ChatWindow';
-import useResponsive from '~/utilities/useResponsive';
+import useResponsive from '~/shared/utilities/useResponsive';
 import { useRouter } from 'next/router';
 import useGetChatById from './api/useGetChatById';
 

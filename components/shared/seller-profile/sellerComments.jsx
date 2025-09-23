@@ -3,7 +3,7 @@ import { Rate, Skeleton, Pagination } from 'antd';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { api, apiForFreelance } from '~/repositories/api';
-import { getTimeAgo } from '~/utilities/calculateTime';
+import { getTimeAgo } from '~/shared/utilities/calculateTime';
 
 export default function SellerComments({ pid }) {
     const router = useRouter();

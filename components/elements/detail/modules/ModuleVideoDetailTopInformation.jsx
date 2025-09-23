@@ -2,7 +2,7 @@ import Router, { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { message } from 'antd';
 import Meta from '~/components/shared/headers/Meta';
-import useWishlist from '~/hooks/useWishlist';
+import useWishlist from '~/shared/hooks/useWishlist';
 import { checkIfUserIsOnline } from '~/components/partials/homepage/electronic/TopSellersTable';
 import { addPeriodToThousands } from '~/components/partials/account/price-formatter';
 

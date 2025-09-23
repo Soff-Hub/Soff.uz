@@ -2,7 +2,7 @@ import React from 'react';
 import { Modal, Descriptions, Tag } from 'antd';
 
 import styles from './styles/detail.module.scss';
-import useResponsive from '~/utilities/useResponsive';
+import useResponsive from '~/shared/utilities/useResponsive';
 
 const PortfolioDetailModal = ({ open, onClose, portfolio }) => {
     const {isMobile} = useResponsive()
