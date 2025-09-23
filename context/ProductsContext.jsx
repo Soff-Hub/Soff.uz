@@ -1,8 +1,6 @@
 import Axios from 'axios';
 import { createContext, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { orginalUrl } from '~/reositoriy-admin/Repository';
-import { fetchProfile } from '~/store/profile/slice';
 
 // ** Defaults
 const defaultProvider = {

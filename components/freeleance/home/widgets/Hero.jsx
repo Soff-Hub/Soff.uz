@@ -6,7 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import { AutoComplete } from 'antd';
 import { api } from '~/repositories/api';
 import useDebounce from '~/shared/hooks/useDebounce';
-import axiosInstance from '../../api/freeleanceApi';
+import axiosInstance from '../../../../shared/api/freeleanceApi';
 import Link from 'next/link';
 
 const placeholders = {

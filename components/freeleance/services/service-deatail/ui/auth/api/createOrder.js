@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { useMutation } from '@tanstack/react-query';
-import axiosInstance from '~/components/freeleance/api/freeleanceApi';
+import axiosInstance from '~/shared/api/freeleanceApi';
 import { message } from 'antd';
 // const createOrderRequest = async ({ token, service_id, payment_type, card_number, expire_date, order_id }) => {
 //     const axios = axiosInstance(token);

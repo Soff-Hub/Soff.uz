@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
-import axiosInstance from '~/components/freeleance/api/freeleanceApi';
+import axiosInstance from '~/shared/api/freeleanceApi';
 
 const verifyCode = async ({ token, transaction_id, code }) => {
     const axios = axiosInstance(token);

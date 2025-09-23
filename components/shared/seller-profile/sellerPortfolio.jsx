@@ -1,13 +1,6 @@
-'use client';
-import { PlusOutlined } from '@ant-design/icons';
 import { Skeleton, Modal, Button } from 'antd';
 import { useEffect, useState } from 'react';
 import ServiceIsUnavailable from './ServiceIsUnavailable';
-import ProtfolioModal from './porfolioModal';
-import PortfolioForm from '~/components/form/portfolioForm';
-import PortfolioEditForm from '~/components/form/poerfolioEsitForm';
-import { useSellerPortfolios } from '~/shared/hooks/useSellerPortfolios';
-import { useGet } from '~/repositories/https';
 import { useQuery } from '@tanstack/react-query';
 import { apiForFreelance } from '~/repositories/api';
 import PortfolioCard from '~/components/freeleance/services/service-deatail/ui/PortfolioCard';
@@ -38,7 +31,6 @@ export default function SellerPortfolio({ pid }) {
     }, [parentCategory, portfolios]);
 
     // portfolio detail
-    const [openDetailModal, setOpenDetailModel] = useState(false);
 
     const { data: portfolios, isLoading } = useQuery({
         queryFn: ['sellerPorfolios'],

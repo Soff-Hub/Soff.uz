@@ -1,14 +1,12 @@
 import { Form, Modal, Input, Select, Button, DatePicker, message, InputNumber, Tooltip, TimePicker } from "antd";
 import React, { useEffect, useState } from "react";
 import { QuestionCircleOutlined } from '@ant-design/icons'
-import { directions } from "../../constants";
-import { useFGet, useFPost } from "../../api/useFApi";
+import { directions } from "../../../components/freeleance/constants";
+import { useFGet, useFPost } from "../../hooks/useFApi";
 import dayjs from "dayjs";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { createOrderInfo } from "~/shared/constants/createOrder";
-import { ClipLoader } from "react-spinners";
-import useResponsive from "~/shared/utilities/useResponsive";
 
 const { TextArea } = Input;
 
@@ -25,8 +23,6 @@ const options = {
 const CreateOrderModal = ({ open, onClose }) => {
     const [form] = Form.useForm();
     const [direction, setDirection] = useState('scientific_work')
-    const [category, setCategory] = useState('')
-    const { isMobile } = useResponsive()
     const { user } = useSelector(state => state.auth)
     const { push } = useRouter()
     const [confirmOpen, setConfirmOpen] = useState(false);

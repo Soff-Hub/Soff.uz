@@ -35,20 +35,6 @@ const MyOrderTabs = () => {
         },
         {
             key: '2',
-            label: `To'langan ${data?.requirement_approved || 0}`,
-            children: (
-                <AllOrdersTable
-                    type={[
-                        'approved',
-                        'requirement_file',
-                        'requirement_file_rejected',
-                        'requirement_approved',
-                    ]}
-                />
-            ),
-        },
-        {
-            key: '3',
             label: `Jarayonda ${data?.requirement_process || 0}`,
             children: (
                 <AllOrdersTable
@@ -57,12 +43,12 @@ const MyOrderTabs = () => {
             ),
         },
         {
-            key: '4',
+            key: '3',
             label: `Tugallandi ${data?.completed || 0}`,
             children: <AllOrdersTable type={'completed'} />,
         },
         {
-            key: '5',
+            key: '4',
             label: `Bekor qilingan ${data?.cancelled}`,
             children: <AllOrdersTable type={'cancelled'} />,
         },

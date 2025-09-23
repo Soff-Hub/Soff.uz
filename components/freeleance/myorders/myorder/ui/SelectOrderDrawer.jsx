@@ -1,16 +1,14 @@
 import React, { useState } from "react";
 import { Drawer, Avatar, Typography, Button, Tag, message, Modal, Empty } from "antd";
 import styles from "../style/SelectOrderDrawer.module.scss";
-import { formatCurrencyWithSpace } from "~/shared/utilities/product-helper";
 import TextSlicer from "~/shared/utilities/TextSlicer";
 import useResponsive from "~/shared/utilities/useResponsive";
-import { orderStatusName } from "~/components/freeleance/constants";
-import { useFGet, useFPost } from "~/components/freeleance/api/useFApi";
+import { useFGet, useFPost } from "~/shared/hooks/useFApi";
 import { useSelector } from "react-redux";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { getDate, getDateTime } from "~/shared/utilities/calculateTime";
+import OrderCard from "~/entities/cards/order-card";
 
 
 const SelectOrderDrawer = ({ open, onClose, order }) => {
@@ -21,8 +19,8 @@ const SelectOrderDrawer = ({ open, onClose, order }) => {
 
     const { data: freelancers } = useFGet(
         order?.key,
-        `offer/${order?.key}/`,
-        { enabled: !!order?.key, token: user?.access }
+        `offer/${order?.id}/`,
+        { enabled: !!order?.id, token: user?.access }
     );
 
     const { mutate: selectOffer, isPending } = useFPost({
@@ -31,7 +29,7 @@ const SelectOrderDrawer = ({ open, onClose, order }) => {
         onSuccess: () => {
             message.success("Frilanser tanlandi!");
             setSelectedOffer(null);
-            push(`/order/${order?.key}?isOpen=true`)
+            push(`/order/${order?.id}?isOpen=true`)
             onClose();
         },
         onError: () => {
@@ -47,7 +45,6 @@ const SelectOrderDrawer = ({ open, onClose, order }) => {
         fd.append("offer_id", selectedOffer.id);
         selectOffer(fd);
     };
-    console.log('order', order);
 
     return (
         <>
@@ -59,27 +56,9 @@ const SelectOrderDrawer = ({ open, onClose, order }) => {
                 onClose={onClose}
                 open={open}
             >
-                <div className={styles.orderCard}>
-                    <div className="d-flex align-items-center justify-content-between">
-                        <Typography.Title style={{ margin: 0 }} level={4}>
-                            {order?.order_name}
-                        </Typography.Title>
-                        <Typography.Title level={4} strong>{formatCurrencyWithSpace(order?.price)} so'm</Typography.Title>
-                    </div>
-                    <div className="d-flex align-items-center justify-content-between">
-                        <Typography.Paragraph type="secondary" style={{ margin: "8px 0" }}>
-                            {orderStatusName[order?.status] || ""} | {order?.ordered_at}
-                        </Typography.Paragraph>
-
-                    </div>
-                    <Typography.Paragraph>{order?.description}</Typography.Paragraph>
-                    <Typography.Paragraph type="secondary" style={{ margin: "8px 0" }}>
-                        Topshirish sanasi | {getDateTime(order?.deadline_date)}
-                    </Typography.Paragraph>
-                </div>
-
+                <OrderCard order={order}/>
                 <Tag
-                    className="w-100 mb-4 fs-4 text-wrap"
+                    className="w-100 my-4 fs-4 text-wrap"
                     style={{ color: "orange", background: "transparent", border: "none" }}
                     icon={<ExclamationCircleOutlined />}
                 >
@@ -164,7 +143,7 @@ const SelectOrderDrawer = ({ open, onClose, order }) => {
                 <p style={{ fontSize: "12px" }}>
                     Haqiqatan ham Siz <strong>{selectedOffer?.seller?.full_name}</strong> ni tanlamoqchimisiz?
                 </p>
-                
+
                 <p><TextSlicer title={'Izoh:'} bio={`${selectedOffer?.comment || 'Izoh yo‘q'}`} /></p>
             </Modal>
         </>

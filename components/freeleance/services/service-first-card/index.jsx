@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styles from './style.module.scss'
-import CreateOrderModal from '../../custom/ui/CreateOrderModal'
+import CreateOrderModal from '../../../../shared/components/modals/CreateOrderModal'
 import AuthModal from '~/components/AuthModal'
 import { useSelector } from 'react-redux'
 

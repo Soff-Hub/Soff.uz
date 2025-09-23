@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import axiosInstance from "./freeleanceApi";
+import axiosInstance from "../api/freeleanceApi";
 
 export const useFGet = (key, url, { enabled = true, token, ...options } = {}) => {
     return useQuery({

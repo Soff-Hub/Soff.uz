@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import dynamic from 'next/dynamic';
 import Loader from '~/components/shared/loader';
 import { useQuery } from '@tanstack/react-query';
-import axiosInstance from '../api/freeleanceApi';
+import axiosInstance from '../../../shared/api/freeleanceApi';
 import useGetCustomBalance from './myorder/api/useGetCustomBalance';
-import TelegramNotification from '../components/telegram-notlification';
+import TelegramNotification from '~/shared/components/telegram-notlification';
 
 // MyOrderTabs faqat client-side'da yuklanadi
 const MyOrderTabs = dynamic(() => import('./myorder/MyOrderTabs'), {

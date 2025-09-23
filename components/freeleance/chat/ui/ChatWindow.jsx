@@ -9,7 +9,7 @@ import useChat from '../api/useChat';
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useSelector } from 'react-redux';
 import { ClipLoader } from 'react-spinners';
-import axiosInstance from '../../api/freeleanceApi';
+import axiosInstance from '../../../../shared/api/freeleanceApi';
 
 const ChatWindow = ({ chatId, goBack }) => {
     const [newMessage, setNewMessage] = useState('');

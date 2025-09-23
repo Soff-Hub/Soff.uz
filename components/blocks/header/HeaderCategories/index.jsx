@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './style.module.scss';
 import Image from 'next/image';
 import useResponsive from '~/shared/utilities/useResponsive';
-import CreateOrderModal from '~/components/freeleance/custom/ui/CreateOrderModal';
+import CreateOrderModal from '~/shared/components/modals/CreateOrderModal';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { DownOutlined } from '@ant-design/icons';
@@ -124,7 +124,7 @@ const HeaderCatergories = () => {
     const { isMobile } = useResponsive();
     const [open, setOpen] = useState(false)
     const { isLoggedIn } = useSelector(state => state.auth)
-    const { push } = useRouter()
+    const { push, query, replace, pathname } = useRouter()
 
     const handleOrder = () => {
         if (isLoggedIn) {
@@ -132,8 +132,20 @@ const HeaderCatergories = () => {
         } else {
             push('/auth/login')
         }
-        // window.open('https://t.me/soff_freelancing_bot', '_blank')
     }
+
+    useEffect(() => {
+        if (query?.modal === 'open' && isLoggedIn) {
+            setOpen(true);
+            const newQuery = { ...query };
+            delete newQuery.modal;
+            replace(
+                { pathname: pathname, query: newQuery },
+                undefined,
+                { shallow: true }
+            );
+        }
+    }, [query.modal]);
 
     return (
         <div className={styles.dropBlock}>

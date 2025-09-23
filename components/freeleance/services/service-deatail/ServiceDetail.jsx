@@ -11,7 +11,7 @@ import { useRouter } from 'next/router';
 import CommentSection from './ui/CommentSection';
 import { Breadcrumb } from 'antd';
 import Meta from '~/components/shared/meta';
-import ServiceCard from '../service-card';
+import ServiceCard from '../../../../entities/cards/service-card';
 
 const ServiceDetail = ({ data }) => {
     const { push, back } = useRouter();

@@ -3,7 +3,7 @@ import styles from '../styles/LastOpened.module.scss';
 import useLastOpened from '../../chat/api/useLastOpened';
 import Image from 'next/image';
 import Link from 'next/link';
-import ServiceCard from '../../services/service-card';
+import ServiceCard from '../../../../entities/cards/service-card';
 import useResponsive from '~/shared/utilities/useResponsive';
 
 const LastOpened = () => {
