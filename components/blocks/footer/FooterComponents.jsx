@@ -9,11 +9,11 @@ const footerMenu = {
     services: {
         links: [
             { name: 'Sotib olish va moderatsiya bo‘yicha', link: '' },
-            { name: '+998 (99) 266 30 29', link: 'tel:+998992663029' },
+            { name: '+998 (91) 008 67 89', link: 'tel:+998910086789' },
             { name: '@soff_moderator', link: 'https://t.me/soff_moderator' },
             {
                 name: 'Texnik muammolar uchun',
-                link: 'tel:+998910086789 ',
+                link: 'tel:+998910086789',
             },
             { name: '@hr_soffhub', link: 'https://t.me/hr_soffhub' },
         ],
