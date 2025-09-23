@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { Drawer, Avatar, Typography, Button, Tag, message, Modal, Empty } from "antd";
 import styles from "../style/SelectOrderDrawer.module.scss";
-import { formatCurrencyWithSpace } from "~/utilities/product-helper";
-import TextSlicer from "~/utilities/TextSlicer";
-import useResponsive from "~/utilities/useResponsive";
+import { formatCurrencyWithSpace } from "~/shared/utilities/product-helper";
+import TextSlicer from "~/shared/utilities/TextSlicer";
+import useResponsive from "~/shared/utilities/useResponsive";
 import { orderStatusName } from "~/components/freeleance/constants";
 import { useFGet, useFPost } from "~/components/freeleance/api/useFApi";
 import { useSelector } from "react-redux";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { getDate, getDateTime } from "~/utilities/calculateTime";
+import { getDate, getDateTime } from "~/shared/utilities/calculateTime";
 
 
 const SelectOrderDrawer = ({ open, onClose, order }) => {

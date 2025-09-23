@@ -3,9 +3,9 @@ import { connect, useSelector } from 'react-redux';
 import ProductCart from '~/components/elements/products/ProductCart';
 
 import { Modal } from 'antd';
-import useWishlist from '~/hooks/useWishlist';
-import useCart from '~/hooks/useCart';
-import { audioDownloaderSale } from '~/utilities/common-helpers';
+import useWishlist from '~/shared/hooks/useWishlist';
+import useCart from '~/shared/hooks/useCart';
+import { audioDownloaderSale } from '~/shared/utilities/common-helpers';
 import { addPeriodToThousands } from './price-formatter';
 
 const Wishlist = ({ ecomerce }) => {

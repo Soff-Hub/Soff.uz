@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { LockOutlined } from '@ant-design/icons';
-import useResponsive from '~/utilities/useResponsive';
+import useResponsive from '~/shared/utilities/useResponsive';
 
 export default function DefaultVideoContent({ product, isPlay, setIsPlay, type }) {
     const url = product?.document?.file_url;

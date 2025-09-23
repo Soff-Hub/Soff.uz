@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { connect } from 'react-redux';
-import { calculateAmount } from '~/utilities/ecomerce-helpers';
+import { calculateAmount } from '~/shared/utilities/ecomerce-helpers';
 import ProductRepository from '~/repositories/ProductRepository';
 import { useState } from 'react';
 import { addPeriodToThousands } from '../price-formatter';

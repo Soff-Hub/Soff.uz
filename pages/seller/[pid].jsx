@@ -14,7 +14,7 @@ import SellerServices from '~/components/shared/seller-profile/sellerServices';
 import SellerShortInfo from '~/components/shared/seller-profile/sellerShortInfo';
 import { setActiveIndex } from '../../store/seller/slice';
 import { authAxios } from '~/repositories/authApi';
-import useResponsive from '~/utilities/useResponsive';
+import useResponsive from '~/shared/utilities/useResponsive';
 
 export default function SellersPage() {
     const router = useRouter();

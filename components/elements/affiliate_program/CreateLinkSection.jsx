@@ -5,7 +5,7 @@ import Axios from 'axios';
 import { baseURL } from '~/repositories/api';
 import Cookies from 'js-cookie';
 import AuthModal from '~/components/AuthModal';
-import { useIsLoggedIn } from '~/hooks/useIsLoggedIn';
+import { useIsLoggedIn } from '~/shared/hooks/useIsLoggedIn';
 import AffiliateEarningsSection from './AffiliateEarningsSection';
 
 const CreateLinkSection = () => {

@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { connect } from 'react-redux';
-import { calculateAmount } from '~/utilities/ecomerce-helpers';
+import { calculateAmount } from '~/shared/utilities/ecomerce-helpers';
 import ProductRepository from '~/repositories/ProductRepository';
 import { useState } from 'react';
 import { addPeriodToThousands } from '../price-formatter';
 import { Skeleton } from 'antd';
-import useCart from '~/hooks/useCart';
+import useCart from '~/shared/hooks/useCart';
 import { fileColors } from '~/components/details-components/details-actions/file-actions';
 import { useRouter } from 'next/router';
 

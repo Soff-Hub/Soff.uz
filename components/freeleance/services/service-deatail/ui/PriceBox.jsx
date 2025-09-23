@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from '../styles/detail.module.scss';
 import { Button, Modal } from 'antd';
-import { formatCurrencyWithSpace } from '~/utilities/product-helper';
+import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import AuthModal from '~/components/AuthModal';
 import { useSelector } from 'react-redux';
 import ServiceCheckout from './auth/serviceCheckout';

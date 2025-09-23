@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from '../styles/TwoCard.module.scss';
 import { useRouter } from 'next/router';
-import useResponsive from '~/utilities/useResponsive';
+import useResponsive from '~/shared/utilities/useResponsive';
 import Link from 'next/link';
 
 const TwoCard = () => {

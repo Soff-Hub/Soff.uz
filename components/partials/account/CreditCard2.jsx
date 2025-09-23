@@ -4,7 +4,7 @@ import { Modal, Tabs } from 'antd';
 import PostRepository from '~/repositories/PostRepository';
 import { BeatLoader } from 'react-spinners';
 import Router, { useRouter } from 'next/router';
-import useCart from '~/hooks/useCart';
+import useCart from '~/shared/hooks/useCart';
 
 const CreditCard2 = ({ document, type }) => {
     const { user } = useSelector(state => state.auth);

@@ -4,7 +4,7 @@ import useLastOpened from '../../chat/api/useLastOpened';
 import Image from 'next/image';
 import Link from 'next/link';
 import ServiceCard from '../../services/service-card';
-import useResponsive from '~/utilities/useResponsive';
+import useResponsive from '~/shared/utilities/useResponsive';
 
 const LastOpened = () => {
     const { data } = useLastOpened();

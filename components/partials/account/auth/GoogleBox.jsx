@@ -1,6 +1,6 @@
 import Router from 'next/router';
 import React from 'react';
-import useAuth from '~/hooks/useAuth';
+import useAuth from '~/shared/hooks/useAuth';
 
 export default function GoogleBox ({ loading, params }) {
     const { registerGoogleUser } = useAuth();

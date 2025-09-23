@@ -1,7 +1,7 @@
 import React, { use, useEffect } from 'react';
 import FormCheckoutInformation from './modules/FormCheckoutInformation';
 import { useSelector } from 'react-redux';
-import useCart from '~/hooks/useCart';
+import useCart from '~/shared/hooks/useCart';
 import RedesignModulePaymentOrderSummary from './modules/RedesignModulePaymentOrderSummary';
 import { useRouter } from 'next/router';
 import { useGet } from '~/repositories/https';

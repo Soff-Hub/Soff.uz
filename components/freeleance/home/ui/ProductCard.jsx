@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import styles from "../styles/ProductCard.module.scss"
 import { useRouter } from 'next/router';
-import useWishlist from '~/hooks/useWishlist';
-import useCart from '~/hooks/useCart';
+import useWishlist from '~/shared/hooks/useWishlist';
+import useCart from '~/shared/hooks/useCart';
 import { Modal } from 'antd';
-import { formatCurrencyWithSpace } from '~/utilities/product-helper';
+import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import Link from 'next/link';
 
 const ProductCard = ({ product }) => {

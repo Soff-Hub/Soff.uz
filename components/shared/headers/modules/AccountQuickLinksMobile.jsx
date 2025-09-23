@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { logOut } from '../../../../store/auth/slice';
 import { Badge, Card, Dropdown, Menu, Modal } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import useAuth from '~/hooks/useAuth';
+import useAuth from '~/shared/hooks/useAuth';
 import Router from 'next/router';
 import { setSavedPrfileData } from '~/store/ecomerce/slice';
 

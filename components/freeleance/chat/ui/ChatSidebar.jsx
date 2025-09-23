@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import styles from '../style/chat.module.scss';
 import { Button, Empty, Input, Spin } from 'antd';
-import { truncateTitle } from '~/utilities/TruncateTitle';
+import { truncateTitle } from '~/shared/utilities/TruncateTitle';
 import { useRouter } from 'next/router';
 import useGetChats from '../api/useGetChats';
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './style.module.scss';
 import Image from 'next/image';
-import useResponsive from '~/utilities/useResponsive';
+import useResponsive from '~/shared/utilities/useResponsive';
 import CreateOrderModal from '~/components/freeleance/custom/ui/CreateOrderModal';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';

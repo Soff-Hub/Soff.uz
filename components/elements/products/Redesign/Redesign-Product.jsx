@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import { addPeriodToThousands } from '~/components/partials/account/price-formatter';
-import useWishlist from '~/hooks/useWishlist';
+import useWishlist from '~/shared/hooks/useWishlist';
 import { useState } from 'react';
-import useCart from '~/hooks/useCart';
+import useCart from '~/shared/hooks/useCart';
 import { Modal } from 'antd';
 import { useRouter } from 'next/router';
 import { fileColors } from '~/components/details-components/details-actions/file-actions';

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styles from "./styles/style.module.scss"
-import { truncateTitle } from '~/utilities/TruncateTitle';
+import { truncateTitle } from '~/shared/utilities/TruncateTitle';
 import PortfolioDetailModal from './PortfolioDetailModal';
 
 

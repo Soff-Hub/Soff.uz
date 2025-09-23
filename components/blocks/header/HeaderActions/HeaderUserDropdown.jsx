@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import { logOut } from '~/store/auth/slice';
-import useAuth from '~/hooks/useAuth';
+import useAuth from '~/shared/hooks/useAuth';
 import Router, { useRouter } from 'next/router';
 import { setSavedPrfileData } from '~/store/ecomerce/slice';
 import styles from '../../../landingStyles/landingStyles.module.scss';

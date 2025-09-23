@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
-import useProduct from '~/hooks/useProduct';
+import useProduct from '~/shared/hooks/useProduct';
 import { addPeriodToThousands } from '~/components/partials/account/price-formatter';
 
 const Product = ({ product }) => {

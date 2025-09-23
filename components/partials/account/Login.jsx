@@ -4,7 +4,7 @@ import Router from 'next/router';
 import { begin, checkAuthorization, login } from '../../../store/auth/slice';
 import { Form, Input, Modal, notification, Segmented } from 'antd';
 import { connect } from 'react-redux';
-import useAuth from '~/hooks/useAuth';
+import useAuth from '~/shared/hooks/useAuth';
 import { BeatLoader } from 'react-spinners';
 import { withRouter } from 'next/router';
 import { LockOutlined, MailOutlined, PhoneOutlined } from '@ant-design/icons';

@@ -3,7 +3,7 @@ import { Tooltip, Rate } from "antd";
 import { CheckCircleFilled, MessageOutlined } from "@ant-design/icons";
 import { useEffect, useRef, useState } from "react";
 import { baseURL } from "~/repositories/api";
-import { getTimeAgo } from "~/utilities/calculateTime";
+import { getTimeAgo } from "~/shared/utilities/calculateTime";
 import ReplyForm from "./replysForm";
 
 export function CommentList({ slug }) {

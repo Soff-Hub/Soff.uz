@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Form, Switch, Modal } from 'antd';
-import { formatCurrency } from '~/utilities/product-helper';
-import { formatCreditCardNumber, formatExpiryDate } from '~/utilities/ecomerce-helpers';
+import { formatCurrency } from '~/shared/utilities/product-helper';
+import { formatCreditCardNumber, formatExpiryDate } from '~/shared/utilities/ecomerce-helpers';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import { baseUrlCustomer } from '~/reositoriy-admin/Repository';

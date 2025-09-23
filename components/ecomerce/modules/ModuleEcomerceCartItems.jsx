@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Result } from 'antd';
 import ProductCart from '~/components/elements/products/ProductCart';
-import useCart from '~/hooks/useCart';
+import useCart from '~/shared/hooks/useCart';
 import { addPeriodToThousands } from '~/components/partials/account/price-formatter';
 
 const ModuleEcomerceCartItems = ({ cartItems }) => {

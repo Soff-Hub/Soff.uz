@@ -6,7 +6,7 @@ import ServiceIsUnavailable from './ServiceIsUnavailable';
 import ProtfolioModal from './porfolioModal';
 import PortfolioForm from '~/components/form/portfolioForm';
 import PortfolioEditForm from '~/components/form/poerfolioEsitForm';
-import { useSellerPortfolios } from '~/hooks/useSellerPortfolios';
+import { useSellerPortfolios } from '~/shared/hooks/useSellerPortfolios';
 import { useGet } from '~/repositories/https';
 import { useQuery } from '@tanstack/react-query';
 import { apiForFreelance } from '~/repositories/api';

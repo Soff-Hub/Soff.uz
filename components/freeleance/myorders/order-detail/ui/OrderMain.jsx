@@ -15,14 +15,14 @@ import Link from 'next/link';
 import dayjs from 'dayjs';
 import 'dayjs/locale/uz-latn';
 import RequirementModal from './modals/RequirementModal';
-import { formatCurrencyWithSpace } from '~/utilities/product-helper';
+import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import ServiceCheckout from '~/components/freeleance/services/service-deatail/ui/auth/serviceCheckout';
 import useGetFile from '../api/useGetFile';
 import useSubmit from '../api/useSubmit';
 import { useQueryClient } from '@tanstack/react-query';
-import { getDate, getRemainingDays } from '~/utilities/calculateTime';
+import { getDate, getRemainingDays } from '~/shared/utilities/calculateTime';
 import ReactConfetti from 'react-confetti';
-import { useCountOrderTime, useCountTimeBack } from '~/hooks/useCountDown';
+import { useCountOrderTime, useCountTimeBack } from '~/shared/hooks/useCountDown';
 import { useRouter } from 'next/router';
 dayjs.locale('uz-latn');
 

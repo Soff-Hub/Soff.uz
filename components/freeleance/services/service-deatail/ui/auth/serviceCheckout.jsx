@@ -4,7 +4,7 @@ import { BeatLoader } from 'react-spinners';
 import Router, { useRouter } from 'next/router';
 import useCreateOrder from './api/createOrder';
 import { useVerifyCode } from './api/verifyCode';
-import { useCountdown } from '~/hooks/useCountDown';
+import { useCountdown } from '~/shared/hooks/useCountDown';
 import { useQueryClient } from '@tanstack/react-query';
 import { message as AlertMessage } from 'antd';
 

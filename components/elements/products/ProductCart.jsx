@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import useProduct from '~/hooks/useProduct';
+import useProduct from '~/shared/hooks/useProduct';
 
 const ProductCart = ({ product }) => {
     const { thumbnailImage, title } = useProduct();

@@ -3,10 +3,10 @@ import Link from 'next/link';
 import Router, { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import GetRepository from '~/reositoriy-admin/GetRepository';
-import useAuth from '~/hooks/useAuth';
+import useAuth from '~/shared/hooks/useAuth';
 import { logOut } from '~/store/auth/slice';
 import { Badge, Card, Modal, Tooltip } from 'antd';
-import { formatCurrency } from '~/utilities/product-helper';
+import { formatCurrency } from '~/shared/utilities/product-helper';
 import { addPeriodToThousands } from '~/components/partials/account/price-formatter';
 import CalculateTimeDifference from '~/components/partials/account/DateFormatter';
 

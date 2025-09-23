@@ -2,7 +2,7 @@ import { Card, Button, message } from "antd";
 import Axios from "axios";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
-import { formatCurrencyWithSpace } from "~/utilities/product-helper";
+import { formatCurrencyWithSpace } from "~/shared/utilities/product-helper";
 
 export default function AffiliateEarningsSection() {
     const [earnings, setEarnings] = useState(0);

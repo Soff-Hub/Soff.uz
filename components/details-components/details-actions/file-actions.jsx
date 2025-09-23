@@ -3,12 +3,12 @@ import { Button, message, Modal } from 'antd'
 import { DownloadOutlined, HeartOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import ShareAltOutlined from '@ant-design/icons/ShareAltOutlined';
 import { addPeriodToThousands } from '~/components/partials/account/price-formatter';
-import useWishlist from '~/hooks/useWishlist';
-import useCart from '~/hooks/useCart';
+import useWishlist from '~/shared/hooks/useWishlist';
+import useCart from '~/shared/hooks/useCart';
 import { useRouter } from 'next/router';
 import { setOneShopDoc } from '~/store/auth/slice';
 import { useDispatch, useSelector } from 'react-redux';
-import useResponsive from '~/utilities/useResponsive';
+import useResponsive from '~/shared/utilities/useResponsive';
 
 export const fileColors = {
     ".doc": "#007DFF",

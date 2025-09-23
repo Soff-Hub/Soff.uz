@@ -4,7 +4,7 @@ import PanelMenu from '../panel/PanelMenu';
 import { useState } from 'react';
 import UserMenuPanel from '../panel/UserMenuPanel';
 import Router, { useRouter } from 'next/router';
-import { AudioContext } from '~/hooks/AudioContext';
+import { AudioContext } from '~/shared/hooks/AudioContext';
 
 function NavigationListAdmin() {
 

@@ -1,5 +1,5 @@
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
-import { VideoLinks } from '~/utilities/vedio_link_api';
+import { VideoLinks } from '~/shared/utilities/vedio_link_api';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 // Import Swiper styles

@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect, useSelector } from 'react-redux';
 import Link from 'next/link';
-import useProduct from '~/hooks/useProduct';
-import { calculateAmount } from '~/utilities/ecomerce-helpers';
-import useCart from '~/hooks/useCart';
+import useProduct from '~/shared/hooks/useProduct';
+import { calculateAmount } from '~/shared/utilities/ecomerce-helpers';
+import useCart from '~/shared/hooks/useCart';
 
 const PanelCartMobile = ({ ecomerce, setMenuDrawer,
     setCartDrawer,
