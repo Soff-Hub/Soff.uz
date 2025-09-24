@@ -42,6 +42,7 @@ const CreateOrderModal = ({ open, onClose }) => {
             onClose();
             message.success("Buyurtma muvaffaqiyatli yaratildi!");
             push('/order/my-orders')
+            setConfirmOpen(false)
         },
         onError: (err) => {
             const errorMsg =
