@@ -238,7 +238,7 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
                                 placeholder="Kategoriya tanlang"
                                 style={{ width: "100%" }}
                                 allowClear
-                                value={selectedCategory || undefined}
+                                value={query.parentCategory || undefined}
                                 onChange={(val) => {
                                     if (!val) {
                                         setSelectedCategory(undefined);
@@ -271,7 +271,7 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
                                     placeholder="Sub kategoriyani tanlang"
                                     style={{ width: "100%" }}
                                     allowClear
-                                    value={selectedSubCategory || undefined}
+                                    value={query.childCategory || undefined}
                                     onChange={(val) => {
                                         if (!val) {
                                             setSelectedSubCategory(undefined);
@@ -282,7 +282,6 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
                                             setSybTitle('');
                                         } else {
                                             setSelectedSubCategory(val);
-                                            // handleChild ishlatyapmiz
                                             const subCategory = child.find(item => item.slug === val);
                                             if (subCategory) handleChild(subCategory.slug, subCategory.name);
                                         }

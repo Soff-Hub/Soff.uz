@@ -14,7 +14,7 @@ const useChat = (chatId) => {
         if (chatId && data) {
             setChat(data?.pages[0]?.chat);
             const allMsgs = data.pages.flatMap(p => p.messages);
-            setMessages(allMsgs); // toza qilib o‘rnat
+            setMessages(allMsgs);
         }
     }, [chatId, data]);
 
@@ -29,7 +29,6 @@ const useChat = (chatId) => {
         }
     };
 
-    // Xabar yuborish
     const sendMessage = (content) => {
         if (wsRef.current?.readyState === WebSocket.OPEN) {
             wsRef.current.send(JSON.stringify({
@@ -55,7 +54,7 @@ const useChat = (chatId) => {
         if (!chatId || !user?.access) return;
 
         const ws = new WebSocket(
-            ` ${process.env.NEXT_PUBLIC_WS_FREELEANCE_URL}${chatId}/?token=${user.access}`
+            `${process.env.NEXT_PUBLIC_WS_FREELEANCE_URL}${chatId}/?token=${user.access}`
         );
         wsRef.current = ws;
 
@@ -81,7 +80,6 @@ const useChat = (chatId) => {
                 case "message":
                     setMessages(prev => {
                         const updated = [...prev, msg];
-                        // yangi kelganida ham unreadlarni tekshirib yuboramiz
                         sendUnreadMessages(ws, updated);
                         return updated;
                     });

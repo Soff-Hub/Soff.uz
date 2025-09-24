@@ -66,3 +66,40 @@
     background-color: #e6e6e6;
     align-self: flex-start;
 }
+
+
+.chat_file_box{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+.chat_file_info {
+    display: flex;
+    flex-direction: column;
+}
+
+.chat_file {
+    font-size: 20px;
+    border: solid 1px #fff;
+    border-radius: 50%;
+    padding: 6px;
+    cursor: pointer;
+    color: white;
+    background: rgba(255, 255, 255, 0.05);
+    transition: all 0.25s ease;
+
+    &:hover {
+        color: #1677ff; // antd primary blue
+        border-color: #1677ff;
+        background: rgba(22, 119, 255, 0.1);
+        box-shadow: 0 4px 12px rgba(22, 119, 255, 0.3);
+        transform: scale(1.1);
+    }
+
+    &:active {
+        transform: scale(0.95);
+        box-shadow: 0 2px 6px rgba(22, 119, 255, 0.4);
+    }
+}
