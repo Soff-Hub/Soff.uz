@@ -13,8 +13,14 @@ const useChat = (chatId) => {
     useEffect(() => {
         if (chatId && data) {
             setChat(data?.pages[0]?.chat);
-            const allMsgs = data.pages.flatMap(p => p.messages);
-            setMessages(allMsgs);
+
+            let allMsgs = data.pages.flatMap(p => p.messages);
+
+            allMsgs = allMsgs.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+
+            const uniqueMsgs = Array.from(new Map(allMsgs.map(m => [m.id, m])).values());
+
+            setMessages(uniqueMsgs);
         }
     }, [chatId, data]);
 

@@ -5,7 +5,7 @@ import {
     CopyOutlined,
     ExclamationCircleOutlined,
     CheckOutlined,
-    DownloadOutlined,
+    FileTextOutlined,
 } from '@ant-design/icons';
 import styles from '../style/message.module.scss';
 import { Dropdown, message as AntMessage, Modal, Tooltip } from 'antd';
@@ -134,7 +134,7 @@ const ChatMessage = ({ msg, onEdit, pushUser }) => {
 
                     {msg.file &&
                         <div className={styles.chat_file_box}>
-                            <DownloadOutlined onClick={() => window.open(msg.file.url, '_blank')} className={styles.chat_file} />
+                            <FileTextOutlined onClick={() => window.open(msg.file.url, '_blank')} className={styles.chat_file} />
                             <div className={styles.chat_file_info}>
                                 <span className={styles.chat_file_name}>{truncateTitle(msg.file.filename, 15)}</span>
                                 <span className={styles.chat_file_size}>{(msg.file.size / (1024 * 1024)).toFixed(2)} MB</span>

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import styles from '../style/chat.module.scss';
-import { Input, Button, Avatar, Empty } from 'antd';
+import { Input, Button, Avatar, Empty, message } from 'antd';
 import { ArrowDownOutlined, ArrowLeftOutlined, PaperClipOutlined, SendOutlined } from '@ant-design/icons';
 import ChatMessage from './ChatMessage';
 import { useRouter } from 'next/router';
@@ -26,16 +26,17 @@ const ChatWindow = ({ chatId, goBack }) => {
         fileInputRef.current?.click();
     };
 
-    const handleSendFile = useCallback(() => {
-        if (!file) return;
-        sendFile({ chat_id: chatId, file }, {
-            onSuccess: () => { 
+    const handleSendFile = useCallback((selectedFile) => {
+        if (!selectedFile) return;
+        sendFile({ chat_id: chatId, file: selectedFile }, {
+            onSuccess: () => {
                 setFile(null);
                 queryClient.invalidateQueries(['chat-messages', chatId]);
                 scrollToBottom();
+                message.success('Fayl muvaffaqiyatli yuborildi');
             }
         });
-    }, [file, chatId, sendFile]);
+    }, [chatId, sendFile, queryClient]);
 
     const { messages, chat, sendMessage, updateMessage, fetchNextPage, hasNextPage } = useChat(chatId);
 
@@ -180,9 +181,13 @@ const ChatWindow = ({ chatId, goBack }) => {
                 <input
                     type="file"
                     ref={fileInputRef}
-                    onChange={e => 
-                        setFile(e.target.files[0] )
-                    }
+                    onChange={e => {
+                        const selectedFile = e.target.files[0];
+                        if (selectedFile) {
+                            setFile(selectedFile);
+                            handleSendFile(selectedFile); // ✅ tanlagan zahoti yuboradi
+                        }
+                    }}
                     style={{ display: "none" }}
                 />
 
