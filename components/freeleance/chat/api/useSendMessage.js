@@ -11,8 +11,8 @@ const useSendMessage = () => {
         mutationFn: async (data) => {
             const formData = new FormData();
             formData.append('chat_id', data.chat_id);
-            formData.append('content', data.content);
-
+            if (data.content) formData.append('content', data.content);
+            if (data.file) formData.append('file', data.file); 
             await axios.post("chats/message", formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
@@ -25,5 +25,6 @@ const useSendMessage = () => {
         }
     });
 };
+
 
 export default useSendMessage;

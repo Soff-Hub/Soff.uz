@@ -1,23 +1,41 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import styles from '../style/chat.module.scss';
 import { Input, Button, Avatar, Empty } from 'antd';
-import { ArrowDownOutlined, ArrowLeftOutlined, SendOutlined } from '@ant-design/icons';
+import { ArrowDownOutlined, ArrowLeftOutlined, PaperClipOutlined, SendOutlined } from '@ant-design/icons';
 import ChatMessage from './ChatMessage';
-import dayjs from 'dayjs';
 import { useRouter } from 'next/router';
 import useChat from '../api/useChat';
 import InfiniteScroll from "react-infinite-scroll-component";
-import { useSelector } from 'react-redux';
 import { ClipLoader } from 'react-spinners';
-import axiosInstance from '../../../../shared/api/freeleanceApi';
+import useSendMessage from '../api/useSendMessage';
+import { useQueryClient } from '@tanstack/react-query';
 
 const ChatWindow = ({ chatId, goBack }) => {
     const [newMessage, setNewMessage] = useState('');
     const [edit, setEdit] = useState(null);
     const [openDownIcon, setOpenDownIcon] = useState(false);
-    const { user } = useSelector(state => state.auth);
     const messagesContainerRef = useRef(null);
     const router = useRouter();
+    const [file, setFile] = useState();
+    const queryClient = useQueryClient();
+    const { mutate: sendFile, isPending } = useSendMessage()
+    const fileInputRef = useRef(null);
+
+
+    const handleClickAttach = () => {
+        fileInputRef.current?.click();
+    };
+
+    const handleSendFile = useCallback(() => {
+        if (!file) return;
+        sendFile({ chat_id: chatId, file }, {
+            onSuccess: () => { 
+                setFile(null);
+                queryClient.invalidateQueries(['chat-messages', chatId]);
+                scrollToBottom();
+            }
+        });
+    }, [file, chatId, sendFile]);
 
     const { messages, chat, sendMessage, updateMessage, fetchNextPage, hasNextPage } = useChat(chatId);
 
@@ -37,7 +55,6 @@ const ChatWindow = ({ chatId, goBack }) => {
             setOpenDownIcon(false);
         }
     };
-    console.log(chat, "_____________________________")
 
     // edit qilishda
     useEffect(() => {
@@ -46,11 +63,10 @@ const ChatWindow = ({ chatId, goBack }) => {
         }
     }, [edit]);
 
-    // useEffect(() => {
-    //     scrollToBottom();
-    // }, [messages.length]);
+    useEffect(() => {
+        scrollToBottom();
+    }, [messages.length]);
 
-    // yangi xabar yozilganda
     const handleSend = useCallback(() => {
 
         if (!newMessage.trim()) return;
@@ -118,7 +134,6 @@ const ChatWindow = ({ chatId, goBack }) => {
                 </div>
             </div>
 
-{/* messages */}
             <div onScroll={handlScroll} ref={messagesContainerRef} id="scrollableDiv" style={{ width: "100%", height: "100vh", overflowY: "scroll", display: "flex", flexDirection: "column-reverse", margin: "auto", overflowX: "hidden", position: "relative" }} className={`${styles.chat_messages}  p-3`}>
 
                 <InfiniteScroll
@@ -162,6 +177,25 @@ const ChatWindow = ({ chatId, goBack }) => {
 
             {/* input */}
             <div className={styles.chat_input_box}>
+                <input
+                    type="file"
+                    ref={fileInputRef}
+                    onChange={e => 
+                        setFile(e.target.files[0] )
+                    }
+                    style={{ display: "none" }}
+                />
+
+
+                <Button
+                    icon={<PaperClipOutlined />}
+                    type="primary"
+                    shape="circle"
+                    style={{ background: "#00a44f" }}
+                    onClick={handleClickAttach}
+                    loading={isPending}
+                />
+
                 <Input
                     value={newMessage}
                     onChange={e => setNewMessage(e.target.value)}
@@ -174,7 +208,7 @@ const ChatWindow = ({ chatId, goBack }) => {
                 <Button
                     style={{ background: edit ? '#f59e0b' : '#00A44F' }}
                     type="primary"
-                    onClick={handleSend}>
+                    onClick={file ? handleSendFile : handleSend}>
                     <SendOutlined style={{ fontSize: '20px' }} />
                 </Button>
             </div>
@@ -183,3 +217,5 @@ const ChatWindow = ({ chatId, goBack }) => {
 };
 
 export default ChatWindow;
+
+// 

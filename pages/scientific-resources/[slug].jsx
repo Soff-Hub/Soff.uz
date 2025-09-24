@@ -170,7 +170,7 @@ export async function getServerSideProps(context) {
         parentCategory = '',
         childCategory = '',
         search = '',
-        category = '',   // ✅ category_slug o‘rniga category deb olamiz
+        category = '',
         content_extensions = [],
         price_from = '',
         price_to = '',
@@ -212,7 +212,7 @@ export async function getServerSideProps(context) {
 
     const categoryParam = childCategory ? childCategory : parentCategory;
 
-    const productsUrl = `${baseUrlUseApi}customer/products/?${queryParams.toString()}`;
+    const productsUrl = `${baseUrlUseApi}customer/products/?${queryParams.toString()}&category=${categoryParam}`;
     const fourChildUrl = `${baseUrlUseApi}customer/four-child?direction=file`;
     const childCategoryUrl = `${baseUrlUseApi}customer/four-child?direction=file&parent__slug=${parentCategory}`;
 

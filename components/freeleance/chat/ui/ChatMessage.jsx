@@ -5,12 +5,14 @@ import {
     CopyOutlined,
     ExclamationCircleOutlined,
     CheckOutlined,
+    DownloadOutlined,
 } from '@ant-design/icons';
 import styles from '../style/message.module.scss';
 import { Dropdown, message as AntMessage, Modal, Tooltip } from 'antd';
 import useDeleteMessage from '../api/useDeleteMessage';
 import dayjs from 'dayjs';
-import React, { useCallback, useMemo } from 'react'; 
+import React, { useCallback, useMemo } from 'react';
+import { truncateTitle } from '~/shared/utilities/TruncateTitle';
 
 const { confirm } = Modal;
 
@@ -104,9 +106,8 @@ const ChatMessage = ({ msg, onEdit, pushUser }) => {
     return (
         <div
             key={msg.id}
-            className={`${styles.messageRow} ${
-                isMyMessage ? styles.myRow : styles.otherRow
-            }`}>
+            className={`${styles.messageRow} ${isMyMessage ? styles.myRow : styles.otherRow
+                }`}>
             {!isMyMessage && (
                 <img
                     className={styles.avatar}
@@ -118,9 +119,8 @@ const ChatMessage = ({ msg, onEdit, pushUser }) => {
             )}
 
             <div
-                className={`${styles.chat_message} ${
-                    isMyMessage ? styles.my_message : styles.other_message
-                }`}>
+                className={`${styles.chat_message} ${isMyMessage ? styles.my_message : styles.other_message
+                    }`}>
                 <span
                     style={{
                         display: 'flex',
@@ -128,7 +128,19 @@ const ChatMessage = ({ msg, onEdit, pushUser }) => {
                         alignItems: 'flex-end',
                         gap: '6px',
                     }}>
-                    <span>{msg.content}</span>
+                    {msg.content &&
+                        <span>{msg.content}</span>
+                    }
+
+                    {msg.file &&
+                        <div className={styles.chat_file_box}>
+                            <DownloadOutlined onClick={() => window.open(msg.file.url, '_blank')} className={styles.chat_file} />
+                            <div className={styles.chat_file_info}>
+                                <span className={styles.chat_file_name}>{truncateTitle(msg.file.filename, 15)}</span>
+                                <span className={styles.chat_file_size}>{(msg.file.size / (1024 * 1024)).toFixed(2)} MB</span>
+                            </div>
+                        </div>
+                    }
                     <span
                         style={{
                             display: 'flex',
