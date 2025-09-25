@@ -10,6 +10,8 @@ import { baseURL } from '~/repositories/api';
 import { Tabs } from 'antd';
 import Search_Results_Services from '~/components/elements/search-page-details/services';
 import Search_Results_Specialists from '~/components/elements/search-page-details/specialists';
+import CreateOrderModal from '~/shared/components/modals/CreateOrderModal';
+import useResponsive from '~/shared/utilities/useResponsive';
 
 const Search_Results = ({
     fourChildData,
@@ -28,9 +30,18 @@ const Search_Results = ({
     const [searchTerm, setSearchTerm] = useState(keyword || '');
     const debouncedSearchTerm = useDebounce(searchTerm, 1000);
     const { query } = useRouter()
+    const [open, setOpen] = useState(false)
+    const { isDesktop } = useResponsive()
 
-
-
+    const createBtn = () => (
+        <>
+            {isDesktop &&
+                <span onClick={() => setOpen(true)} className='Search_Results_not_found_btn'>
+                    Buyurtma yaratish
+                </span>
+            }
+        </>
+    )
 
 
     useEffect(() => {
@@ -91,6 +102,7 @@ const Search_Results = ({
                 total={searchData?.count}
                 isLoading={false}
                 lastProducts={lastProducts}
+                createBtn={createBtn}
             />
         },
         {
@@ -101,6 +113,7 @@ const Search_Results = ({
                 parentData={serviceParent}
                 data={service}
                 lastProducts={lastProducts}
+                createBtn={createBtn}
             />
         },
         {
@@ -109,6 +122,7 @@ const Search_Results = ({
             children: <Search_Results_Specialists
                 data={sellers}
                 lastProducts={lastProducts}
+                createBtn={createBtn}
             />
         }
     ]
@@ -134,16 +148,23 @@ const Search_Results = ({
             <nav className='global_navbar'>
                 <div className='container d-flex align-items-center'>
                     <div className='d-flex align-items-center gap-5 width_full_screen'>
-                        <Link href='/'>
-                            <a className='ps-logo'>
-                                <NextImageCard
-                                    url='/static/img/soff/logo-dark.png'
-                                    className='logoo'
-                                    width='120px'
-                                    height='50px'
-                                />
-                            </a>
-                        </Link>
+                        <div className={`${!isDesktop && "d-flex justify-content-between w-100 align-items-center"}`}>
+                            <Link href='/'>
+                                <a className='ps-logo'>
+                                    <NextImageCard
+                                        url='/static/img/soff/logo-dark.png'
+                                        className='logoo'
+                                        width='120px'
+                                        height='50px'
+                                    />
+                                </a>
+                            </Link>
+                            {!isDesktop &&
+                                <span onClick={() => setOpen(true)} className='Search_Results_not_found_btn'>
+                                    Buyurtma yaratish
+                                </span>
+                            }
+                        </div>
                         <div className='ps-form--quick-search'>
                             <div style={{ background: 'white' }} className={keyword === '' ? 'ps-form__input' : 'ps-form__input active_search_input'}>
                                 <input
@@ -175,6 +196,10 @@ const Search_Results = ({
                     items={tabItems}
                 />
             </div>
+            <CreateOrderModal
+                open={open}
+                onClose={() => setOpen(false)}
+            />
         </div>
     );
 };
@@ -199,7 +224,7 @@ export async function getServerSideProps(context) {
 
     const servicesQuery = new URLSearchParams({
         ...(category_id && { category_id }),
-        ...(direction && {direction}),
+        ...(direction && { direction }),
         limit,
         offset,
     });

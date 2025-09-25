@@ -6,7 +6,7 @@ import ServiceCard from '~/entities/cards/service-card';
 import { useRouter } from 'next/router';
 import LastAddedProductCard from './search-page-card/lastAddedProductCard';
 
-export default function Search_Results_Services({ data, isLoading, childData, parentData, lastProducts }) {
+export default function Search_Results_Services({ data, isLoading, childData, parentData, lastProducts, createBtn }) {
     const router = useRouter();
 
     const limit = 10;
@@ -69,6 +69,9 @@ export default function Search_Results_Services({ data, isLoading, childData, pa
                 </div>
 
                 <div className='forAdds p-5'>
+                    <div className='d-flex justify-content-center mb-3'>
+                        {createBtn()}
+                    </div>
                     {lastProducts?.results &&
                         <h3
                             style={{

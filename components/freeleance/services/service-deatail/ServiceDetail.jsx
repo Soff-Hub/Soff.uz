@@ -12,6 +12,8 @@ import CommentSection from './ui/CommentSection';
 import { Breadcrumb } from 'antd';
 import Meta from '~/components/shared/meta';
 import ServiceCard from '../../../../entities/cards/service-card';
+import StickyBox from './ui/sticky-box';
+import useResponsive from '~/shared/utilities/useResponsive';
 
 const ServiceDetail = ({ data }) => {
     const { push, back } = useRouter();
@@ -24,6 +26,7 @@ const ServiceDetail = ({ data }) => {
         user,
         service_items,
     } = data;
+    const { isDesktop } = useResponsive()
 
     const pushUser = () =>
         push(`/seller/${data?.user[0]?.soff_seller_id}`);
@@ -124,6 +127,10 @@ const ServiceDetail = ({ data }) => {
                     </div>
                 </div>
             )}
+
+            {!isDesktop &&
+                <StickyBox data={priceBox}/>
+            }
         </div>
     );
 };

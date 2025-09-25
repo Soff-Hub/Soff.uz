@@ -50,6 +50,7 @@ const CreditCard2 = ({ document, type }) => {
         );
         if (ItemsData?.status === 201) {
             setMessage(true);
+            localStorage.removeItem('cart')
             Router.push(ItemsData?.data?.url);
         } else {
             setMessage(true);
@@ -73,6 +74,7 @@ const CreditCard2 = ({ document, type }) => {
             affiliate_code
         );
         if (ItemsData?.status === 201) {
+            localStorage.removeItem('cart')
             setMessage(true);
             Router.push(ItemsData?.data?.url);
         } else {
@@ -98,6 +100,7 @@ const CreditCard2 = ({ document, type }) => {
             affiliate_code 
         );
         if (ItemsData?.status === 201) {
+            localStorage.removeItem('cart')
             setMessage(true);
             setOpen(true);
             setCart(ItemsData.data.cart);
@@ -145,6 +148,7 @@ const CreditCard2 = ({ document, type }) => {
         }
         if (dataNews?.status === 200) {
             setOpen(false);
+            localStorage.removeItem('cart')
             const modal = Modal.success({
                 centered: true,
                 title: 'Muffaqiyatli!',
