@@ -13,7 +13,7 @@ const useGetComments = (id, type) => {
             return data;
         },
         enabled: !!id,
-        retry: 1,
+        retry: false,
     });
 };
 

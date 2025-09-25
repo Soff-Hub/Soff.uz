@@ -1,4 +1,3 @@
-// carousel____________________________
 .carouselWrapper {
     width: 100%;
     display: flex;
@@ -24,7 +23,6 @@
     width: 100%;
 }
 
-// main ___________________
 .avatar {
     width: 30px;
     height: 30px;
@@ -258,12 +256,17 @@
                 background: #00a44f;
                 color: #fff;
                 border-color: #00a44f;
-                padding: 16px 40px;
+                padding: 20px;
                 font-size: 18px;
 
                 &:hover {
                     background: #008e43;
                     border-color: #008e43;
+                }
+
+                @media (max-width: 576px){
+                    font-size: 16px;
+                    padding: 10px;
                 }
             }
         }

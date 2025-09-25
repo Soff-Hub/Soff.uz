@@ -90,7 +90,7 @@ const ServiceDescription = ({ description = {}, priceBox = {} }) => {
                 </div>
                 <div className={styles.btnWrapper}>
                     <Button className={styles.btn} onClick={handleOrderClick}>
-                        Buyurtma berish
+                        Buyurtma berish ({formatCurrencyWithSpace(price)}so'm)
                     </Button>
                 </div>
             </div>

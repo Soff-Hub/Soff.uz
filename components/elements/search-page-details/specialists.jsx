@@ -6,7 +6,7 @@ import Search_Results_NotFound from './notFound';
 import { useRouter } from 'next/router';
 import LastAddedProductCard from './search-page-card/lastAddedProductCard';
 
-export default function Search_Results_Specialists({ data, lastProducts }) {
+export default function Search_Results_Specialists({ data, lastProducts, createBtn }) {
     const router = useRouter();
     const isLoading = false;
 
@@ -69,8 +69,10 @@ export default function Search_Results_Specialists({ data, lastProducts }) {
                     {!showResults && <Search_Results_NotFound />}
                 </div>
 
-                {/* 👉 Oxirgi yuklangan mahsulotlar */}
                 <div className="forAdds p-5">
+                    <div className='d-flex justify-content-center mb-3'>
+                        {createBtn()}
+                    </div>
                     {lastProducts?.results && (
                         <h3
                             style={{

@@ -48,20 +48,10 @@
     justify-content: space-between;
     flex-wrap: wrap;
 
-    .category {
-        font-size: 14px;
-        font-weight: 500;
-        color: #444;
-        text-transform: uppercase;
-    }
-
-    .time {
-        font-size: 14px;
-        color: #777;
-
-        @media (max-width: 768px) {
-            font-size: 12px;
-        }
+    @media (max-width: 576px){
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
     }
 }
 
@@ -81,6 +71,21 @@
         &:hover {
             text-decoration: underline;
         }
+    }
+}
+
+.meta{
+    display: flex;
+    flex-direction: column;
+
+    .metaTitle {
+        font-size: 13px;
+        color: rgba(0, 0, 0, 0.6);
+    }
+
+    .metaMain{
+        font-size: 16px;
+        font-weight: 500;
     }
 }
 

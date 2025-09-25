@@ -7,7 +7,7 @@ import Search_Results_NotFound from './notFound';
 import RedesignProduct from '../products/Redesign/Redesign-Product';
 import LastAddedProductCard from './search-page-card/lastAddedProductCard';
 
-export default function Search_Results_Products({ data, page, total, isLoading, childData, parentData, lastProducts }) {
+export default function Search_Results_Products({ data, page, total, isLoading, childData, parentData, lastProducts, createBtn }) {
     const router = useRouter();
     const showResults = !isLoading && Array.isArray(data) && data.length > 0;
 
@@ -48,6 +48,9 @@ export default function Search_Results_Products({ data, page, total, isLoading, 
                 </div>
 
                 <div className='forAdds p-5'>
+                    <div className='d-flex justify-content-center mb-3'>
+                        {createBtn()}
+                    </div>
                     {lastProducts?.results &&
                         <h3
                             style={{

@@ -6,6 +6,7 @@ import {
     ExclamationCircleOutlined,
     CheckOutlined,
     FileTextOutlined,
+    DownloadOutlined,
 } from '@ant-design/icons';
 import styles from '../style/message.module.scss';
 import { Dropdown, message as AntMessage, Modal, Tooltip } from 'antd';
@@ -46,39 +47,67 @@ const ChatMessage = ({ msg, onEdit, pushUser }) => {
     }, []);
 
     const myMenuItems = useMemo(
-        () => [
-            {
-                key: 'edit',
-                label: 'Tahrirlash',
-                icon: <EditOutlined />,
-                onClick: handleEdit,
-            },
-            {
-                key: 'copy',
-                label: 'Nusxalash',
-                icon: <CopyOutlined />,
-                onClick: () => handleCopy(msg.content),
-            },
-            {
-                key: 'delete',
-                label: 'O‘chirish',
-                icon: <DeleteOutlined />,
-                danger: true,
-                onClick: handleDeleteConfirm,
-            },
-        ],
+        () => {
+            if (msg.file) {
+                return [
+                    {
+                        key: 'delete',
+                        label: 'O‘chirish',
+                        icon: <DeleteOutlined />,
+                        danger: true,
+                        onClick: handleDeleteConfirm,
+                    },
+                ]
+            } else {
+                return [
+                    {
+                        key: 'edit',
+                        label: 'Tahrirlash',
+                        icon: <EditOutlined />,
+                        onClick: handleEdit,
+                    },
+                    {
+                        key: 'copy',
+                        label: 'Nusxalash',
+                        icon: <CopyOutlined />,
+                        onClick: () => handleCopy(msg.content),
+                    },
+                    {
+                        key: 'delete',
+                        label: 'O‘chirish',
+                        icon: <DeleteOutlined />,
+                        danger: true,
+                        onClick: handleDeleteConfirm,
+                    },
+                ]
+
+            }
+        },
         [msg.content, handleEdit, handleDeleteConfirm, handleCopy]
     );
 
     const opponentMenuItems = useMemo(
-        () => [
-            {
-                key: 'copy',
-                label: 'Nusxalash',
-                icon: <CopyOutlined />,
-                onClick: () => handleCopy(msg.content),
-            },
-        ],
+        () => {
+            if (msg.file) {
+                return [
+                    {
+                        key: 'dowload',
+                        label: 'Yuklab olish',
+                        icon: <DownloadOutlined />,
+                        onClick: () => window.open(msg.file.url, "_blank"),
+                    },
+                ]
+            } else {
+                return [
+                    {
+                        key: 'copy',
+                        label: 'Nusxalash',
+                        icon: <CopyOutlined />,
+                        onClick: () => handleCopy(msg.content),
+                    },
+                ]
+            }
+        },
         [msg.content, handleCopy]
     );
 
@@ -154,7 +183,6 @@ const ChatMessage = ({ msg, onEdit, pushUser }) => {
                         {readStatus}
                     </span>
                 </span>
-
                 <div
                     style={isMyMessage ? { left: '-20px' } : { right: '-20px' }}
                     className={styles.moreWrapper}>

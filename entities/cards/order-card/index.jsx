@@ -71,12 +71,18 @@ const OrderCard = ({ order, onOpenDrawer }) => {
             </div>
 
             <div className={styles.catWrapper}>
-                <div className={styles.leftMeta}>
-                    <span className={styles.category}>{order.language?.toUpperCase() || '-'}</span>
+                <div className={styles.meta}>
+                    <div className={styles.metaTitle}>
+                        <i className="fa-solid fa-language"/> Buyurtma tili 
+                    </div>
+                    <span className={styles.metaMain}>{order.language?.toUpperCase() || '-'}</span>
                 </div>
 
-                <div className={styles.rightMeta}>
-                    <span className={styles.time}>{createdAtDisplay}</span>
+                <div className={styles.meta}>
+                    <div className={styles.metaTitle}>
+                        <i className="fa-regular fa-clock" /> Yaratilgan vaqti
+                    </div>
+                    <span className={styles.metaMain}>{createdAtDisplay}</span>
                 </div>
             </div>
 
@@ -100,9 +106,11 @@ const OrderCard = ({ order, onOpenDrawer }) => {
                 {hasSeller ?
                     <div></div> :
                     <div className={styles.offers}>
-                        <span className={styles.offerTitle}>
-                            {/* <i className="fa-solid fa-users mr-1" /> Takliflar  */}
-                        </span>
+                        {order?.offers?.length !== 0 &&
+                            <span className={styles.offerTitle}>
+                                <i className="fa-solid fa-users mr-1" /> Takliflar 
+                            </span>
+                        }
                         <Avatar.Group
                             max={{
                                 count: 3,
