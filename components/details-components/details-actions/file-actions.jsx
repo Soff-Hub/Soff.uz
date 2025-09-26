@@ -9,6 +9,7 @@ import { useRouter } from 'next/router';
 import { setOneShopDoc } from '~/store/auth/slice';
 import { useDispatch, useSelector } from 'react-redux';
 import useResponsive from '~/shared/utilities/useResponsive';
+import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 
 export const fileColors = {
     ".doc": "#007DFF",
@@ -345,7 +346,7 @@ function FileActions({ product }) {
                                 icon={<DownloadOutlined />}
                                 size={"large"}
                             >
-                                Hoziroq xarid qilish
+                                Hoziroq xarid qilish ({formatCurrencyWithSpace(product?.price)} so'm)
                             </Button>
                         }
                     </div>

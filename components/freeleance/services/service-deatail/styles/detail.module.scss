@@ -2,6 +2,7 @@
     width: 100%;
     display: flex;
     justify-content: center;
+
     .carousel {
         border-radius: 10px;
         overflow: hidden;
@@ -132,11 +133,36 @@
         width: 100%;
         padding: 20px;
         font-size: 20px;
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+
+        &::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -75%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(120deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.5),
+                    transparent);
+            transform: skewX(-20deg);
+            animation: shine 2s infinite;
+        }
     }
 
     @media (max-width: 991px) {
         display: none;
     }
+
+    @keyframes shine {
+        100% {
+            left: 125%;
+        }
+    }
+
 }
 
 .moneyBox {
@@ -169,7 +195,7 @@
 .userBox {
     padding: 20px;
     background: #fff;
-    align-items: center; 
+    align-items: center;
     border-radius: 12px;
 
     .imgbox {
@@ -177,22 +203,25 @@
         align-items: center;
         gap: 10px;
         margin-bottom: 10px;
+
         img {
             width: 50px;
             height: 50px;
             border-radius: 50%;
             object-fit: cover;
         }
+
         h3 {
             font-size: 18px;
             margin: 0;
+
             &:hover {
                 color: #008e43;
             }
         }
     }
 
-     
+
 }
 
 // description _______________________________
@@ -258,15 +287,39 @@
                 border-color: #00a44f;
                 padding: 20px;
                 font-size: 18px;
+                position: relative;
+                overflow: hidden;
+                z-index: 1;
+
+                &::after {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: -75%;
+                    width: 50%;
+                    height: 100%;
+                    background: linear-gradient(120deg,
+                            transparent,
+                            rgba(255, 255, 255, 0.5),
+                            transparent);
+                    transform: skewX(-20deg);
+                    animation: shine 2s infinite;
+                }
 
                 &:hover {
                     background: #008e43;
                     border-color: #008e43;
                 }
 
-                @media (max-width: 576px){
+                @media (max-width: 576px) {
                     font-size: 16px;
                     padding: 10px;
+                }
+            }
+
+            @keyframes shine {
+                100% {
+                    left: 125%;
                 }
             }
         }
