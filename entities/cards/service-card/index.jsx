@@ -5,6 +5,8 @@ import Link from 'next/link'
 import { useSelector } from 'react-redux'
 import AuthModal from '~/components/AuthModal'
 import { useRouter } from 'next/router'
+import { StarFilled } from '@ant-design/icons';
+
 
 const ServiceCard = ({ service }) => {
     const { isLoggedIn } = useSelector(state => state.auth)
@@ -30,8 +32,16 @@ const ServiceCard = ({ service }) => {
                             {service?.title}
                         </h1>
                     </a>
-                    <div>
-                        {/* <span>{service?.order_count}</span> */}
+                    <div className='d-flex justify-content-between align-items-center'>
+                        {service?.avg_rating !== 0 ?
+                            <div className='d-flex gap-2 align-items-center'>
+                                <StarFilled style={{fontSize: "16px", color: "#faad14"}} />
+                                <span style={{fontSize: "16px", color: "#faad14"}}>{(service?.avg_rating).toFixed(1)}</span>
+                                <span>({service?.feedback_count})</span>
+                            </div>
+                            :
+                            <div></div>
+                        }
                         <h3 className={styles.price}>
                             {formatCurrencyWithSpace(service?.price)} so'm
                         </h3>
