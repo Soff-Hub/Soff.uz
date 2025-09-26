@@ -37,6 +37,7 @@ const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
         });
     };
 
+    
     useEffect(() => {
         const delay = setTimeout(() => {
             const newQuery = {

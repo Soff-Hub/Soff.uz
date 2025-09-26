@@ -5,7 +5,7 @@ import PageContainer from '~/components/layouts/PageContainer'
 const ChatPage = () => {
     return (
         <PageContainer>
-            <div className='container mt-lg-5' style={{ maxWidth: "1400px" }}>
+            <div className='container'>
                 <Chat/>
             </div>
         </PageContainer>

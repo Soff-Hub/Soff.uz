@@ -18,7 +18,7 @@ const SelectOrderDrawer = ({ open, onClose, order }) => {
     const { push } = useRouter();
 
     const { data: freelancers } = useFGet(
-        order?.key,
+        order?.id,
         `offer/${order?.id}/`,
         { enabled: !!order?.id, token: user?.access }
     );
@@ -36,8 +36,6 @@ const SelectOrderDrawer = ({ open, onClose, order }) => {
             message.error("Frilanser tanlanmadi. Iltimos qayta urinib ko‘ring!");
         },
     });
-
-    console.log('freelancers', freelancers);
 
     const handleSelect = () => {
         if (!selectedOffer) return;

@@ -90,4 +90,5 @@ const MiniCart = () => {
     );
 };
 
+
 export default connect(state => state)(MiniCart);

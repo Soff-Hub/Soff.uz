@@ -8,6 +8,7 @@ import CalculateTimeDifference from '~/components/partials/account/DateFormatter
 import { getDate, getStatus, getTimeAgo } from '~/shared/utilities/calculateTime';
 import { setActiveIndex } from '../../../store/seller/slice';
 import { apiForFreelance } from '~/repositories/api';
+import CreateOrderModal from '~/shared/components/modals/CreateOrderModal';
 export default function SellerShortInfo({ sellerInfo, pid }) {
     const [nameModal, setNameModal] = useState(false);
     const [fullName, setFullName] = useState(false);
@@ -24,6 +25,8 @@ export default function SellerShortInfo({ sellerInfo, pid }) {
             ).then(res => res.json()),
         enabled: !!sellerInfo?.id,
     });
+    const [createModal, setCreateModal] = useState(false)
+
 
     const { data: services } = useQuery({
         queryKey: ['getSellerServices'],
@@ -50,10 +53,6 @@ export default function SellerShortInfo({ sellerInfo, pid }) {
         } else {
             push('/auth/login');
         }
-    };
-
-    const handleChangeMenu = () => {
-        dispatch(setActiveIndex('services'));
     };
 
     return (
@@ -107,7 +106,7 @@ export default function SellerShortInfo({ sellerInfo, pid }) {
                     <i className="fa-solid fa-comment-dots"></i> Xabar yuborish
                 </button>
                 <button
-                    onClick={handleChangeMenu}
+                    onClick={() => setCreateModal(true)}
                     style={{
                         background: '#00A44F1A',
                         borderColor: '#00A44F80',
@@ -277,6 +276,12 @@ export default function SellerShortInfo({ sellerInfo, pid }) {
                     </div>
                 </form>
             </Modal>
+
+            <CreateOrderModal
+                open={createModal}
+                onClose={() => setCreateModal(false)}
+                id={sellerInfo?.id}
+            />
         </div>
     );
 }

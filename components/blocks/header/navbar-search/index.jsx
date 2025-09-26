@@ -7,16 +7,16 @@ import { api } from '~/repositories/api';
 import useDebounce from '~/shared/hooks/useDebounce';
 import styles from './style.module.scss';
 import axiosInstance from '~/shared/api/freeleanceApi';
+import { useSelector } from 'react-redux';
 
 const { Option } = Select;
 
 const NavbarSearch = () => {
     const { push } = useRouter();
-    const [popupWidth, setPopupWidth] = useState(300);
     const [type, setType] = useState('mahsulotlar');
     const [search, setSearch] = useState('');
     const axios = axiosInstance();
-
+    const {showSearch} = useSelector(state => state.ui)
 
     const debounceSearch = useDebounce(search, 500);
 
@@ -65,61 +65,46 @@ const NavbarSearch = () => {
         }
     };
 
-
-    useEffect(() => {
-        const handleResize = () => {
-            if (window.innerWidth <= 320) {
-                setPopupWidth(260);
-            } else if (window.innerWidth <= 420) {
-                setPopupWidth(300);
-            } else {
-                setPopupWidth(350); // katta ekran uchun
-            }
-        };
-
-        handleResize(); // birinchi yuklanganda ishga tushadi
-        window.addEventListener("resize", handleResize);
-        return () => window.removeEventListener("resize", handleResize);
-    }, []);
-
     return (
         <div className="container">
-            <div className={styles.searchBox}>
-                <div className="d-flex">
-                    <Select
-                        value={type}
-                        onChange={(val) => setType(val)}
-                        className={styles.select}
-                        bordered={false}
-                    >
-                        <Option value="mahsulotlar">Mahsulotlar</Option>
-                        <Option value="xizmatlar">Xizmatlar</Option>
-                        <Option value="mutaxasislar">Mutaxassislar</Option>
-                    </Select>
-
-                    <AutoComplete
-                        value={search}
-                        onChange={(val) => setSearch(val)}
-                        options={getOptions()}
-                        style={{ width: '100%' }}
-                        // popupMatchSelectWidth={popupWidth}
-                    >
-                        <Input
-                            className={styles.input}
-                            placeholder={'izlash...'}
-                            onPressEnter={handleSearch}
+            {showSearch &&
+                <div className={styles.searchBox}>
+                    <div className="d-flex">
+                        <Select
+                            value={type}
+                            onChange={(val) => setType(val)}
+                            className={styles.select}
                             bordered={false}
-                        />
-                    </AutoComplete>
-                </div>
+                        >
+                            <Option value="mahsulotlar">Mahsulotlar</Option>
+                            <Option value="xizmatlar">Xizmatlar</Option>
+                            <Option value="mutaxasislar">Mutaxassislar</Option>
+                        </Select>
 
-                <span
-                    className={styles.searchIcon}
-                    onClick={handleSearch}
-                >
-                    <SearchOutlined />
-                </span>
-            </div>
+                        <AutoComplete
+                            value={search}
+                            onChange={(val) => setSearch(val)}
+                            options={getOptions()}
+                            style={{ width: '100%' }}
+                            // popupMatchSelectWidth={popupWidth}
+                        >
+                            <Input
+                                className={styles.input}
+                                placeholder={'izlash...'}
+                                onPressEnter={handleSearch}
+                                bordered={false}
+                            />
+                        </AutoComplete>
+                    </div>
+
+                    <span
+                        className={styles.searchIcon}
+                        onClick={handleSearch}
+                    >
+                        <SearchOutlined />
+                    </span>
+                </div>
+            }
         </div>
     );
 };
