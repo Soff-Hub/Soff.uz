@@ -1,4 +1,4 @@
-import React, { use, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Head from 'next/head';
@@ -36,7 +36,7 @@ const Search_Results = ({
     const createBtn = () => (
         <>
             {isDesktop &&
-                <span onClick={() => setOpen(true)} className='Search_Results_not_found_btn'>
+                <span onClick={() => setOpen(true)} className='Search_Results_not_found_btn w-100 text-center py-3'>
                     Buyurtma yaratish
                 </span>
             }

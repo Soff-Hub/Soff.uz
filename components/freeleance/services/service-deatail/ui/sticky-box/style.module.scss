@@ -54,9 +54,6 @@
         transform: skewX(-20deg);
         animation: shine 2s infinite;
     }
-
-    &:hover::after {
-    }
 }
 
 @keyframes shine {
