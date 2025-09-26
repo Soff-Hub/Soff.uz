@@ -33,10 +33,10 @@ const ServiceCard = ({ service }) => {
                         </h1>
                     </a>
                     <div className='d-flex justify-content-between align-items-center'>
-                        {service?.avg_rating !== 0 ?
+                        {(service?.avg_rating !== 0 || service?.avg_rating !== null) ?
                             <div className='d-flex gap-2 align-items-center'>
                                 <StarFilled style={{fontSize: "16px", color: "#faad14"}} />
-                                <span style={{fontSize: "16px", color: "#faad14"}}>{(service?.avg_rating).toFixed(1)}</span>
+                                <span style={{fontSize: "16px", color: "#faad14"}}>{Number(service?.avg_rating).toFixed(1)}</span>
                                 <span>({service?.feedback_count})</span>
                             </div>
                             :
