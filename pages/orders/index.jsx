@@ -5,7 +5,6 @@ import PageContainer from '~/components/layouts/PageContainer';
 import Meta from '~/components/shared/headers/Meta';
 import ServicesFilterSection from '~/components/freeleance/services/ServicesFilterSection';
 import ServicesCardSection from '~/components/freeleance/services/ServicesCardSection';
-import InfoSection from '~/components/freeleance/home/_components/InfoSection';
 import GrayMentionCard from '~/components/blocks/cards/GrayMentionCard';
 
 export default function SoffFreelancerPage({
@@ -54,7 +53,6 @@ export default function SoffFreelancerPage({
                         />
                     </div>
                 )}
-                {/* <InfoSection /> */}
                 <div>
                     <GrayMentionCard
                         title="Izlaganingiz yo’qmi? O'z buyurtmangizni joylashtiring!"

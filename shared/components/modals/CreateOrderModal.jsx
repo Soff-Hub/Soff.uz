@@ -20,7 +20,7 @@ const options = {
 
 
 
-const CreateOrderModal = ({ open, onClose }) => {
+const CreateOrderModal = ({ open, onClose, id }) => {
     const [form] = Form.useForm();
     const [direction, setDirection] = useState('scientific_work')
     const { user } = useSelector(state => state.auth)
@@ -53,6 +53,25 @@ const CreateOrderModal = ({ open, onClose }) => {
         },
     });
 
+    const { mutate: createDirectOrder, isPending: createPending } = useFPost({
+        url: "order/direct-order",
+        token: user?.access,
+        onSuccess: () => {
+            form.resetFields();
+            onClose();
+            message.success("Buyurtma muvaffaqiyatli yuborildi!");
+            push('/order/my-orders')
+            setConfirmOpen(false)
+        },
+        onError: (err) => {
+            const errorMsg =
+                err?.response?.data?.detail ||
+                err?.response?.data?.message ||
+                "Noma’lum xato yuz berdi";
+            message.error(errorMsg);
+        }
+    })
+
     const handleFinish = () => {
         setConfirmOpen(true);
     };
@@ -68,13 +87,21 @@ const CreateOrderModal = ({ open, onClose }) => {
             deadline_date: `${dayjs(values.deadline_date).format("YYYY-MM-DD")} ${dayjs(values.deadline_time).format("HH:mm")}`,
         };
 
+        if (id) order.seller_id = id
+
         const fd = new FormData();
         for (const [key, value] of Object.entries(order)) {
             fd.append(key, value);
         }
-
-        createOrder(fd);
+        if (id) {
+            createDirectOrder(fd)
+        } else {
+            createOrder(fd);
+        }
     };
+
+
+
 
     return (
         <>
@@ -215,10 +242,17 @@ const CreateOrderModal = ({ open, onClose }) => {
                     </div>
 
                     <Form.Item className="mb-2">
-                        <Button loading={isPending} type="primary" htmlType="submit" className="mt-3 py-4 fs-4" block>
-                            {isPending ? <div className="d-flex align-items-center gap-3">
-                                Buyurtmani joylashtirilmoqda...</div> : 'Buyurtmani joylashtirish'}
-                        </Button>
+                        {id ?
+                            <Button loading={createPending} type="primary" htmlType="submit" className="mt-3 py-4 fs-4" block>
+                                {createPending ? <div className="d-flex align-items-center gap-3">
+                                    Buyurtmani yuborilmoqda...</div> : 'Buyurtmani yuborish'}
+                            </Button>
+                            :
+                            <Button loading={isPending} type="primary" htmlType="submit" className="mt-3 py-4 fs-4" block>
+                                {isPending ? <div className="d-flex align-items-center gap-3">
+                                    Buyurtmani joylashtirilmoqda...</div> : 'Buyurtmani joylashtirish'}
+                            </Button>
+                        }
                     </Form.Item>
                 </Form>
             </Modal>
@@ -241,8 +275,14 @@ const CreateOrderModal = ({ open, onClose }) => {
                 ]}
                 centered
             >
-                <p>Rostdan ham buyurtma berishni xohlaysizmi?
-                    Buyurtmangiz 10 000 dan ortiq frilanserlarga yuboriladi, ular siz bilan hamkorlik qilish uchun taklif yuborishadi.</p>
+                {id ? 
+                    <p>
+                        Rostdan ham buyurtma berishni xohlaysizmi?
+                    </p>
+                    :
+                    <p>Rostdan ham buyurtma berishni xohlaysizmi?
+                        Buyurtmangiz 10 000 dan ortiq frilanserlarga yuboriladi, ular siz bilan hamkorlik qilish uchun taklif yuborishadi.</p>
+                }
             </Modal>
         </>
     );

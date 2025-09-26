@@ -59,7 +59,7 @@ const OrderCard = ({ order, onOpenDrawer }) => {
                             if (hasSeller) {
                                 router.push(`/order/${order.id}`);
                             } else if (status === 'cancelled') {
-                                message.warning('❌ Siz bu buyurtmani bekor qilgansiz');
+                                message.warning('Siz bu buyurtmani bekor qilgansiz');
                             } else if (typeof onOpenDrawer === 'function') {
                                 onOpenDrawer(order);
                             }
@@ -69,11 +69,18 @@ const OrderCard = ({ order, onOpenDrawer }) => {
                     </a>
                 </div>
             </div>
-
+            {(order.order_type && typeof onOpenDrawer !== 'function') && 
+                <div className={styles.meta}>
+                    <div className={styles.metaTitle}>
+                        <i className="fa-solid fa-file-pen" /> Buyurtma tavsifi
+                    </div>
+                    <span>{order.description}</span>
+                </div>
+            }
             <div className={styles.catWrapper}>
                 <div className={styles.meta}>
                     <div className={styles.metaTitle}>
-                        <i className="fa-solid fa-language"/> Buyurtma tili 
+                        <i className="fa-solid fa-language" /> Buyurtma tili
                     </div>
                     <span className={styles.metaMain}>{order.language?.toUpperCase() || '-'}</span>
                 </div>
@@ -86,7 +93,7 @@ const OrderCard = ({ order, onOpenDrawer }) => {
                 </div>
             </div>
 
-            <div className={styles.wrapper}>
+            <div className={typeof onOpenDrawer === 'function' ? styles.wrapper : styles.catWrapper}>
                 <div className={styles.budjet}>
                     <span className={styles.budjetTitle}>
                         <i className="fa-solid fa-money-bill-wave mr-1" /> Budjet
@@ -103,32 +110,29 @@ const OrderCard = ({ order, onOpenDrawer }) => {
                     <span className={styles.dateTime}>{deadlineDisplay}</span>
                 </div>
 
-                {hasSeller ?
-                    <div></div> :
-                    <div className={styles.offers}>
-                        {order?.offers?.length !== 0 &&
-                            <span className={styles.offerTitle}>
-                                <i className="fa-solid fa-users mr-1" /> Takliflar 
-                            </span>
-                        }
-                        <Avatar.Group
-                            max={{
-                                count: 3,
-                                style: { color: 'white', backgroundColor: '#00a44f' }
-                            }}
-                        >
-                            {order?.offers?.map(item =>
-                                <Avatar src={item?.photo_url} />
-                            )}
-                        </Avatar.Group>
-                    </div>
+                {typeof onOpenDrawer === 'function' && 
+                    <div></div>
                 }
                 {typeof onOpenDrawer === 'function' &&
                     <button
                         className={styles.primary}
                         onClick={handlePrimaryClick}
                     >
-                        {hasSeller ? 'Batafsil' : "Takliflarni ko'rish"}
+                        {hasSeller ? 'Batafsil' :
+                            <div className='d-flex align-items-center gap-3'>
+                                Takliflarni ko'rish
+                                <Avatar.Group
+                                    max={{
+                                        count: 3,
+                                        style: { color: 'white', backgroundColor: '#00a44f' }
+                                    }}
+                                >
+                                    {order?.offers?.map(item =>
+                                        <Avatar src={item?.photo_url} />
+                                    )}
+                                </Avatar.Group>
+                            </div>
+                        }
                     </button>
                 }
             </div>

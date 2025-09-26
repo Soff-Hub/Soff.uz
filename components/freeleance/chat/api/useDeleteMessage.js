@@ -21,7 +21,7 @@ const useDeleteMessage = () => {
             });
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['chats'] });
+            queryClient.invalidateQueries({ queryKey: ['chat-messages'] });
             message.success("Xabar o'chirildi");
         }
     });

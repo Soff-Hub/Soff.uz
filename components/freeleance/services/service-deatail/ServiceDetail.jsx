@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import ImageCarousel from './ui/ImageCarousel';
 import styles from './styles/detail.module.scss';
 import PriceBox from './ui/PriceBox';
@@ -14,9 +14,12 @@ import Meta from '~/components/shared/meta';
 import ServiceCard from '../../../../entities/cards/service-card';
 import StickyBox from './ui/sticky-box';
 import useResponsive from '~/shared/utilities/useResponsive';
+import { useDispatch } from 'react-redux';
+import { setShowSearch } from '~/store/fast-dowload/slice';
 
 const ServiceDetail = ({ data }) => {
     const { push, back } = useRouter();
+    const dispatch = useDispatch() 
     const {
         service,
         seller_portfolio,
@@ -59,15 +62,23 @@ const ServiceDetail = ({ data }) => {
         [data]
     );
 
+    useEffect(() => {
+        dispatch(setShowSearch(false));
+
+        return () => {
+            dispatch(setShowSearch(true));
+        };
+    }, [dispatch])
+
     return (
         <div className="container my-5 navTabsPadding">
-            <Meta title={service?.title} image={service?.poster} description={service?.description} author={full_name}/>
+            <Meta title={service?.title} image={service?.poster} description={service?.description} author={full_name} />
             <div className="row">
-                <div className="col-12 col-lg-8 mb-5">
-                    <Breadcrumb
+                <div className="col-12 col-lg-8">
+                    {/* <Breadcrumb
                         className="mb-3 d-flex align-items-center"
                         items={breadcrumbItems}
-                    />
+                    /> */}
                     <div
                         style={{
                             background: 'white',
@@ -76,7 +87,7 @@ const ServiceDetail = ({ data }) => {
                         }}
                         className="w-100">
                         <h1 className={styles.title}>{service?.title}</h1>
-                        <div className={styles.userMainBox}>
+                        {/* <div className={styles.userMainBox}>
                             <img
                                 className={styles.avatar}
                                 src={photo_url || '/static/img/ozodbek.png'}
@@ -90,7 +101,7 @@ const ServiceDetail = ({ data }) => {
                                 className={styles.username}>
                                 {full_name || 'No Name'}
                             </span>
-                        </div>
+                        </div> */}
                         <ImageCarousel images={service?.poster} />
                         <ServiceDescription
                             priceBox={priceBox}
@@ -121,7 +132,7 @@ const ServiceDetail = ({ data }) => {
                     <div className='row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-gap-2 row-gap-md-5 row-gap-lg-3'>
                         {similar_services?.map(item => (
                             <div key={item?.title} className='col px-2'>
-                                <ServiceCard service={item}/>
+                                <ServiceCard service={item} />
                             </div>
                         ))}
                     </div>
@@ -129,7 +140,7 @@ const ServiceDetail = ({ data }) => {
             )}
 
             {!isDesktop &&
-                <StickyBox data={priceBox}/>
+                <StickyBox data={priceBox} />
             }
         </div>
     );

@@ -1,11 +1,10 @@
 
 import React, { useState } from 'react';
 import SellerDonateForm from '~/components/partials/seller/SellerDonateForm';
+import CreateOrderModal from '~/shared/components/modals/CreateOrderModal';
 
 export default function SellerInfo({ sellerInfo, onChange }) {
     const [openDonateModal, setOpenDonateModal] = useState(false);
-
-    console.log(sellerInfo)
     return (
         <div>
             <div className="SellerInfo">

@@ -52,7 +52,7 @@ export default function TelegramNotification() {
     return (
         <div
             className={`alert alert-warning d-flex ${
-                isMobile && "flex-column gap-3"
+                isMobile && ""
             } align-items-center justify-content-between`}
         >
             <div className="d-flex align-items-center gap-2">

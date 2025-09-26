@@ -43,7 +43,7 @@ export default function Search_Results_Services({ data, isLoading, childData, pa
                         {showResults && (
                             data?.items?.map((item, index) => (
                                 <div key={index}>
-                                    <ServiceCard service={item}/>
+                                    <ServiceCard service={item} />
                                 </div>
                             ))
                         )}
@@ -77,6 +77,8 @@ export default function Search_Results_Services({ data, isLoading, childData, pa
                             style={{
                                 fontSize: '20px',
                                 fontWeight: 400,
+                                borderTop: "1px solid rgba(0,0,0,0.2)",
+                                paddingTop: "10px"
                             }}
                             className='similar_title'>
                             So'ngi yuklangan mahsulotlar

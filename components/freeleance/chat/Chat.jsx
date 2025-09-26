@@ -27,7 +27,7 @@ const Chat = () => {
     const isSmallScreen = isMobile || isTablet;
 
     return (
-        <div className="row mb-5">
+        <div className="row my-5">
             {!isSmallScreen && (
                 <>
                     <div className="col-3 p-0">

@@ -19,7 +19,7 @@ const ServiceCard = ({ service }) => {
         }
     }, [isLoggedIn, push, service?.slug])
 
-
+    console.log("111111111111111111", service)
 
     return (
         <>
@@ -30,9 +30,12 @@ const ServiceCard = ({ service }) => {
                             {service?.title}
                         </h1>
                     </a>
-                    <h3 className={styles.price}>
-                        {formatCurrencyWithSpace(service?.price)} so'm
-                    </h3>
+                    <div>
+                        {/* <span>{service?.order_count}</span> */}
+                        <h3 className={styles.price}>
+                            {formatCurrencyWithSpace(service?.price)} so'm
+                        </h3>
+                    </div>
                     <div className={styles.btns}>
 
                         <button onClick={() => push(`/service/${service?.slug}`)} className={styles.secondaryBtn}>

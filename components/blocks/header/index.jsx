@@ -14,6 +14,7 @@ const Header = () => {
     const { isMobile } = useResponsive();
     const dispatch = useDispatch();
     const cartItems = useSelector(state => state.ecomerce.cartDataItems);
+    const {showSearch} = useSelector(state => state.ui)
 
     const handleScroll = useCallback(() => {
         const shouldBeSticky = window.scrollY > 30;
@@ -50,7 +51,12 @@ const Header = () => {
                 </div>
                 {isMobile ? <NavbarSearch/> : <NavbarMenu />}  
             </div> 
-            <div className='pagesSpace'/>
+            <div  
+                className='pagesSpace'
+                style={{
+                    height: isMobile && showSearch ? "120px" : ""
+                }}
+            />
         </header>
     );
 };

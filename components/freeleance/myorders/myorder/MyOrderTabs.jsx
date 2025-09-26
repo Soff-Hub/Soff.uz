@@ -1,13 +1,11 @@
-import { Tabs, Dropdown, Menu, Button } from 'antd';
+import { Tabs, ConfigProvider } from 'antd';
 import React, { useState, useEffect } from 'react';
-import { MoreOutlined } from '@ant-design/icons';
 import { AllOrdersTable } from './MyOrderTable';
 import useOrdersStatus from './api/useOrderStatus';
 import Loader from '~/components/shared/loader';
 import { useRouter } from 'next/router';
 
 const MyOrderTabs = () => {
-    const [isMobile, setIsMobile] = useState(window.innerWidth <= 500);
     const [activeKey, setActiveKey] = useState('1');
     const { data, isLoading } = useOrdersStatus();
     const { query } = useRouter();
@@ -16,16 +14,7 @@ const MyOrderTabs = () => {
         if (query?.tab) {
             setActiveKey(String(query?.tab));
         }
-    }, query?.tab);
-
-    useEffect(() => {
-        const handleResize = () => {
-            setIsMobile(window.innerWidth <= 500);
-        };
-        handleResize();
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
+    }, [query?.tab]);
 
     const items = [
         {
@@ -49,60 +38,46 @@ const MyOrderTabs = () => {
         },
         {
             key: '4',
-            label: `Bekor qilingan ${data?.cancelled}`,
+            label: `Bekor qilingan ${data?.cancelled || 0}`,
             children: <AllOrdersTable type={'cancelled'} />,
         },
     ];
 
-    const menuItems = items.map(item => ({
-        key: item.key,
-        label: item.label,
-    }));
-
     if (isLoading) return <Loader />;
 
-    const menu = (
-        <Menu
-            onClick={({ key }) => setActiveKey(key)}
-            selectedKeys={[activeKey]}
-            items={menuItems}
-        />
-    );
-
     return (
-        <div className="tabs-container">
-            {isMobile ? (
-                <>
-                    <Dropdown
-                        overlay={menu}
-                        trigger={['click']}
-                        placement="bottomRight">
-                        <Button
-                            style={{ marginBottom: '20px' }}
-                            iconPosition="end"
-                            icon={<MoreOutlined />}
-                            className="dropdown-button">
-                            {items.find(item => item.key === activeKey)?.label}
-                        </Button>
-                    </Dropdown>
-                    {items.find(item => item.key === activeKey)?.children}
-                </>
-            ) : (
-                <Tabs
-                    type="line"
-                    activeKey={activeKey}
-                    onChange={setActiveKey}
-                    className="order_tabs"
-                    items={items}
-                    tabPosition="top"
-                    tabBarStyle={{
-                        overflowX: 'auto',
-                        overflowY: 'hidden',
-                        whiteSpace: 'nowrap',
-                    }}
-                />
-            )}
-        </div>
+        <ConfigProvider
+            theme={{
+                token: {
+                    colorPrimary: "#00a44f",
+                },
+                components: {
+                    Tabs: {
+                        itemSelectedColor: "#00a44f",
+                        itemActiveColor: "#00a44f",
+                        inkBarColor: "#00a44f",
+                    },
+                },
+            }}
+        >
+            <Tabs
+                type="card"
+                activeKey={activeKey}
+                onChange={setActiveKey}
+                items={items}
+                tabPosition="top"
+                renderTabBar={(tabBarProps, DefaultTabBar) => (
+                    <div
+                        style={{
+                            overflowX: 'auto',
+                            whiteSpace: 'nowrap',
+                        }}
+                    >
+                        <DefaultTabBar {...tabBarProps} />
+                    </div>
+                )}
+            />
+        </ConfigProvider>
     );
 };
 

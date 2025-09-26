@@ -24,6 +24,7 @@
     }
 }
 
+
 .headlineWrapper {
     position: relative;
     text-align: center;
@@ -117,7 +118,7 @@
     background: #fff;
     position: relative;
     z-index: 2;
-    width: 50%;
+    width: 60%;
 
     .input {
         font-size: 15px;
@@ -146,7 +147,7 @@
 
 .filterSelects {
     display: flex;
-    width: 30%;
+    width: 40%;
     gap: 20px;
     justify-content: space-between;
     align-items: center;
