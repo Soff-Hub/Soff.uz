@@ -22,6 +22,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import ReactConfetti from 'react-confetti';
 import { useRouter } from 'next/router';
 import OrderCard from '~/entities/cards/order-card';
+import useResponsive from '~/shared/utilities/useResponsive';
 dayjs.locale('uz-latn');
 
 const OrderMain = ({ order }) => {
@@ -37,6 +38,7 @@ const OrderMain = ({ order }) => {
     const submit = useSubmit();
     const queryClient = useQueryClient();
     const { query, push } = useRouter()
+    const { isMobile, isDesktop } = useResponsive()
 
     const items = [
         { title: <Link href={'/order/my-orders'}>Mening buyurtmalarim</Link> },
@@ -62,8 +64,8 @@ const OrderMain = ({ order }) => {
                 {order?.order_status_doing?.status === 'pending' && (
                     <div className={styles.orderPayCard}>
                         <div className='w-100'>
-                            <h4 className='mb-0'>
-                                Ish boshlanishi uchun avval to‘lovni amalga oshiring
+                            <h4 className={`mb-0 ${!isDesktop && "text-center"}`}>
+                                Frilanser ishni boshlashi uchun to'lovni amalga oshiring
                             </h4>
                         </div>
                         <Button
@@ -74,7 +76,7 @@ const OrderMain = ({ order }) => {
                                 padding: '16px 36px',
                             }}
                             onClick={() => setIsOpen(true)}>
-                            To'lash
+                            <i class="fa-solid fa-credit-card"></i> To'lovni amalga oshiring
                         </Button>
                     </div>
                 )}

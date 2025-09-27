@@ -36,7 +36,7 @@ const ServiceCard = ({ service }) => {
                             <div className='d-flex gap-2 align-items-center'>
                                 <StarFilled style={{fontSize: "16px", color: "#faad14"}} />
                                 <span style={{fontSize: "16px", color: "#faad14"}}>{Number(service?.avg_rating).toFixed(1)}</span>
-                                <span>({service?.feedback_count})</span>
+                                <span>({service?.feedback_count} izoh)</span>
                             </div>
                             :
                             <div></div>
