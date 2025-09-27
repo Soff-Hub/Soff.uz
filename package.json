@@ -9,7 +9,8 @@
         "build": "next build",
         "start": "next start -p 3003",
         "clean": "antd-tools run clean && rm -rf es lib coverage dist report.html",
-        "compile": "npm run clean && antd-tools"
+        "compile": "npm run clean && antd-tools",
+        "push": "git add . && git commit -m 'some changes' && git push"
     },
     "dependencies": {
         "@ckeditor/ckeditor5-watchdog": "^46.0.0",
