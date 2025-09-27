@@ -4,12 +4,14 @@ import { useState } from 'react'
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper'
 import { MessageOutlined } from '@ant-design/icons'
 import ServiceCheckout from '../auth/serviceCheckout'
+import useCreateChat from '~/components/freeleance/chat/api/useCreateChat'
 
 const StickyBox = ({ data }) => {
     const [isOpen, setIsOpen] = useState(false)
     const [showPayment, setShowPayment] = useState(false)
+    const { mutate: createChat } = useCreateChat()
 
-    return (
+    return ( 
         <ConfigProvider
             theme={{
                 token: {
@@ -26,6 +28,7 @@ const StickyBox = ({ data }) => {
                         type="default"
                         icon={<MessageOutlined />}
                         className={styles.customBtn}
+                        onClick={() => createChat(data?.user[0]?.soff_seller_id)}
                     >
                         <span className={styles.chatTitle}>Chat</span>
                     </Button>

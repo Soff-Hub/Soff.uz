@@ -116,39 +116,9 @@ export default function SellerShortInfo({ sellerInfo, pid }) {
                         fontSize: '16px',
                     }}
                     className="btn">
-                    <i className="fa-solid fa-calendar"></i> Buyurtma berish
+                    <i className="fa-solid fa-calendar"></i> Maxsus buyurtma berish
                 </button>
             </div>
-
-            {/* <div className="VerifiedInformation">
-                <p className="VerifiedInformationTitle">
-                    Tasdiqlangan ma'lumotlar
-                </p>
-                <ul className="VerifiedInformationInfoWrap">
-                    <li className="VerifiedInformationInfo between  ">
-                        <p className="titleInfo m-0 p-0">Telefon raqami</p>
-                        <img
-                            src={
-                                sellerInfo?.phone
-                                    ? '/static/img/checked.png'
-                                    : '/static/img/unchecked.png'
-                            }
-                            alt=""
-                        />
-                    </li>
-                    <li className="VerifiedInformationInfo between">
-                        <p className="titleInfo m-0 p-0">Email manzil</p>
-                        <img
-                            src={
-                                sellerInfo?.email
-                                    ? '/static/img/checked.png'
-                                    : '/static/img/unchecked.png'
-                            }
-                            alt=""
-                        />
-                    </li>
-                </ul>
-            </div> */}
 
             <div className="d-flex flex-column gap-3">
                 <h4
@@ -280,6 +250,7 @@ export default function SellerShortInfo({ sellerInfo, pid }) {
             </Modal>
 
             <CreateOrderModal
+                seller={sellerInfo?.full_name}
                 open={createModal}
                 onClose={() => setCreateModal(false)}
                 id={sellerInfo?.id}

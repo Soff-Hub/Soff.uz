@@ -20,13 +20,12 @@ const options = {
 
 
 
-const CreateOrderModal = ({ open, onClose, id }) => {
+const CreateOrderModal = ({ open, onClose, id, seller }) => {
     const [form] = Form.useForm();
     const [direction, setDirection] = useState('scientific_work')
     const { user } = useSelector(state => state.auth)
     const { push } = useRouter()
     const [confirmOpen, setConfirmOpen] = useState(false);
-
 
     useEffect(() => {
         form.setFieldValue('direction', direction)
@@ -107,7 +106,7 @@ const CreateOrderModal = ({ open, onClose, id }) => {
         <>
             <Modal
                 width={600}
-                title="Maxsus buyurtma yaratish"
+                title={seller ? `${seller} uchun maxsus buyurtma berish` : "Maxsus buyurtma yaratish"}
                 open={open}
                 onCancel={onClose}
                 footer={null}
@@ -275,9 +274,9 @@ const CreateOrderModal = ({ open, onClose, id }) => {
                 ]}
                 centered
             >
-                {id ? 
+                {seller ? 
                     <p>
-                        Rostdan ham buyurtma berishni xohlaysizmi?
+                        Rostdan ham {seller} uchun buyurtma berishni xohlaysizmi?
                     </p>
                     :
                     <p>Rostdan ham buyurtma berishni xohlaysizmi?

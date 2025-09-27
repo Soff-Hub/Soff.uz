@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import styles from '../style/chat.module.scss';
 import { Input, Button, Avatar, Empty, message } from 'antd';
-import { ArrowDownOutlined, ArrowLeftOutlined, PaperClipOutlined, PlusOutlined, SendOutlined } from '@ant-design/icons';
+import { ArrowDownOutlined, ArrowLeftOutlined, PaperClipOutlined, PlusOutlined, SendOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import ChatMessage from './ChatMessage';
 import { useRouter } from 'next/router';
 import useChat from '../api/useChat';
@@ -10,7 +10,7 @@ import { ClipLoader } from 'react-spinners';
 import useSendMessage from '../api/useSendMessage';
 import { useQueryClient } from '@tanstack/react-query';
 import CreateOrderModal from '~/shared/components/modals/CreateOrderModal';
-import useResponsive from '~/shared/utilities/useResponsive';
+import SafetyAlert from './SafetyAlert';
 
 const ChatWindow = ({ chatId, goBack }) => {
     const [newMessage, setNewMessage] = useState('');
@@ -23,7 +23,6 @@ const ChatWindow = ({ chatId, goBack }) => {
     const { mutate: sendFile, isPending } = useSendMessage()
     const fileInputRef = useRef(null);
     const [ open, setOpen ] = useState(false)
-    const { isMobile } = useResponsive()
 
 
     const handleClickAttach = () => {
@@ -138,9 +137,8 @@ const ChatWindow = ({ chatId, goBack }) => {
                     <span>{chat?.opponent?.last_seen}</span>
                 </div>
             </div>
-
+            <SafetyAlert/>
             <div onScroll={handlScroll} ref={messagesContainerRef} id="scrollableDiv" style={{ width: "100%", height: "100vh", overflowY: "scroll", display: "flex", flexDirection: "column-reverse", margin: "auto", overflowX: "hidden", position: "relative" }} className={`${styles.chat_messages}  p-3`}>
-
                 <InfiniteScroll
                     dataLength={messages.length}
                     next={fetchNextPage}
@@ -189,7 +187,7 @@ const ChatWindow = ({ chatId, goBack }) => {
                         const selectedFile = e.target.files[0];
                         if (selectedFile) {
                             setFile(selectedFile);
-                            handleSendFile(selectedFile); // ✅ tanlagan zahoti yuboradi
+                            handleSendFile(selectedFile);
                         }
                     }}
                     style={{ display: "none" }}
@@ -198,11 +196,10 @@ const ChatWindow = ({ chatId, goBack }) => {
                 <Button
                     type='primary'
                     style={{ background: "#00a44f" }}
-                    icon={<PlusOutlined />}
+                    icon={<ShoppingCartOutlined />}
                     iconPosition='end'
                     onClick={() => setOpen(true)} 
                 >  
-                    {!isMobile && "Buyurtma yaratish"}
                 </Button>
                 <Button
                     icon={<PaperClipOutlined />}
@@ -233,6 +230,7 @@ const ChatWindow = ({ chatId, goBack }) => {
                 open={open}
                 onClose={() => setOpen(false)}
                 id={chat?.opponent?.id}
+                seller={chat?.opponent?.name}
             />
         </div>
     );
