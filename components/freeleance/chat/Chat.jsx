@@ -4,7 +4,6 @@ import ChatWindow from './ui/ChatWindow';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { useRouter } from 'next/router';
 import useGetChatById from './api/useGetChatById';
-import { Alert } from 'antd';
 
 const Chat = () => {
     const [chatId, setChatId] = useState(null);
@@ -29,13 +28,6 @@ const Chat = () => {
 
     return (
         <div className='my-5'>
-            <Alert
-                className='mb-3 w-100'
-                description="Xavfsizlik uchun barcha to‘lovlarni faqat soff.uz platformasi orqali amalga oshiring. 
-        Shaxsiy ma’lumotlaringizni (telefon, karta raqami va hokazo) bermang."
-                type="warning"
-                showIcon
-            />
             
             <div className="row">
                 {!isSmallScreen && (
