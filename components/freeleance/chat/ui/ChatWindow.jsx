@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import styles from '../style/chat.module.scss';
 import { Input, Button, Avatar, Empty, message } from 'antd';
-import { ArrowDownOutlined, ArrowLeftOutlined, PaperClipOutlined, SendOutlined } from '@ant-design/icons';
+import { ArrowDownOutlined, ArrowLeftOutlined, PaperClipOutlined, PlusOutlined, SendOutlined } from '@ant-design/icons';
 import ChatMessage from './ChatMessage';
 import { useRouter } from 'next/router';
 import useChat from '../api/useChat';
@@ -9,6 +9,8 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { ClipLoader } from 'react-spinners';
 import useSendMessage from '../api/useSendMessage';
 import { useQueryClient } from '@tanstack/react-query';
+import CreateOrderModal from '~/shared/components/modals/CreateOrderModal';
+import useResponsive from '~/shared/utilities/useResponsive';
 
 const ChatWindow = ({ chatId, goBack }) => {
     const [newMessage, setNewMessage] = useState('');
@@ -20,6 +22,8 @@ const ChatWindow = ({ chatId, goBack }) => {
     const queryClient = useQueryClient();
     const { mutate: sendFile, isPending } = useSendMessage()
     const fileInputRef = useRef(null);
+    const [ open, setOpen ] = useState(false)
+    const { isMobile } = useResponsive()
 
 
     const handleClickAttach = () => {
@@ -191,7 +195,15 @@ const ChatWindow = ({ chatId, goBack }) => {
                     style={{ display: "none" }}
                 />
 
-
+                <Button
+                    type='primary'
+                    style={{ background: "#00a44f" }}
+                    icon={<PlusOutlined />}
+                    iconPosition='end'
+                    onClick={() => setOpen(true)} 
+                >  
+                    {!isMobile && "Buyurtma yaratish"}
+                </Button>
                 <Button
                     icon={<PaperClipOutlined />}
                     type="primary"
@@ -217,10 +229,13 @@ const ChatWindow = ({ chatId, goBack }) => {
                     <SendOutlined style={{ fontSize: '20px' }} />
                 </Button>
             </div>
+            <CreateOrderModal
+                open={open}
+                onClose={() => setOpen(false)}
+                id={chat?.opponent?.id}
+            />
         </div>
     );
 };
 
 export default ChatWindow;
-
-// 

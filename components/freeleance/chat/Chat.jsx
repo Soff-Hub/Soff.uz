@@ -4,6 +4,7 @@ import ChatWindow from './ui/ChatWindow';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { useRouter } from 'next/router';
 import useGetChatById from './api/useGetChatById';
+import { Alert } from 'antd';
 
 const Chat = () => {
     const [chatId, setChatId] = useState(null);
@@ -27,38 +28,48 @@ const Chat = () => {
     const isSmallScreen = isMobile || isTablet;
 
     return (
-        <div className="row my-5">
-            {!isSmallScreen && (
-                <>
-                    <div className="col-3 p-0">
-                        <ChatSidebar setChatId={setChatId} chatId={chatId} />
-                    </div>
-                    <div className="col-9 p-0">
-                        <ChatWindow
-                            goBack={() => setChatId(null)}
-                            chatId={chatId}
-                        />
-                    </div>
-                </>
-            )}
-
-            {isSmallScreen && (
-                <>
-                    {!chatId && (
-                        <div className="col-12 p-0 mt-2 mt-lg-5">
-                            <ChatSidebar setChatId={setChatId} />
+        <div className='my-5'>
+            <Alert
+                className='mb-3 w-100'
+                description="Xavfsizlik uchun barcha to‘lovlarni faqat soff.uz platformasi orqali amalga oshiring. 
+        Shaxsiy ma’lumotlaringizni (telefon, karta raqami va hokazo) bermang."
+                type="warning"
+                showIcon
+            />
+            
+            <div className="row">
+                {!isSmallScreen && (
+                    <>
+                        <div className="col-3 p-0">
+                            <ChatSidebar setChatId={setChatId} chatId={chatId} />
                         </div>
-                    )}
-                    {chatId && (
-                        <div className="col-12 p-0 mt-2 mt-lg-5">
+                        <div className="col-9 p-0">
                             <ChatWindow
-                                chatId={chatId}
                                 goBack={() => setChatId(null)}
+                                chatId={chatId}
                             />
                         </div>
-                    )}
-                </>
-            )}
+                    </>
+                )}
+
+                {isSmallScreen && (
+                    <>
+                        {!chatId && (
+                            <div className="col-12 p-0 mt-2 mt-lg-5">
+                                <ChatSidebar setChatId={setChatId} />
+                            </div>
+                        )}
+                        {chatId && (
+                            <div className="col-12 p-0 mt-2 mt-lg-5">
+                                <ChatWindow
+                                    chatId={chatId}
+                                    goBack={() => setChatId(null)}
+                                />
+                            </div>
+                        )}
+                    </>
+                )}
+            </div>
         </div>
     );
 };

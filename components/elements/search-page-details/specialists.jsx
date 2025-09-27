@@ -5,6 +5,7 @@ import SearchResultsSpecialists_Card from './search-page-card/searchResultsSpeci
 import Search_Results_NotFound from './notFound';
 import { useRouter } from 'next/router';
 import LastAddedProductCard from './search-page-card/lastAddedProductCard';
+import SerachSide from './search-page-side';
 
 export default function Search_Results_Specialists({ data, lastProducts, createBtn }) {
     const router = useRouter();
@@ -69,28 +70,10 @@ export default function Search_Results_Specialists({ data, lastProducts, createB
                     {!showResults && <Search_Results_NotFound />}
                 </div>
 
-                <div className="forAdds p-5">
-                    <div className='d-flex justify-content-center mb-3'>
-                        {createBtn()}
-                    </div>
-                    {lastProducts?.results && (
-                        <h3
-                            style={{
-                                fontSize: '20px',
-                                fontWeight: 400,
-                                borderTop: "1px solid rgba(0,0,0,0.2)",
-                                paddingTop: "10px"
-                            }}
-                            className="similar_title">
-                            So‘ngi yuklangan mahsulotlar
-                        </h3>
-                    )}
-                    {lastProducts?.results?.map((p, i) => (
-                        <div className="mb-4" key={i}>
-                            <LastAddedProductCard product={p} />
-                        </div>
-                    ))}
-                </div>
+                <SerachSide
+                    lastProducts={lastProducts}
+                    createBtn={createBtn}
+                />
             </div>
         </div>
     );

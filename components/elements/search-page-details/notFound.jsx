@@ -8,7 +8,7 @@ export default function Search_Results_NotFound() {
     const [open, setOpen] = useState(false);
     const { data, isLoading } = useFGet(
         'top-services',
-        'customer/popular-services?limit=9'
+        'customer/popular-services?limit=6'
     );
 
     const handleRedirect = () => {
@@ -37,7 +37,7 @@ export default function Search_Results_NotFound() {
                 </p>
             </div>
 
-            <div className="row row-gap-2">
+            <div className="row row-gap-2 mt-4">
                 {isLoading ? (
                     // ✅ Skeleton loaderlar (9 dona card loader)
                     Array.from({ length: 9 }).map((_, i) => (

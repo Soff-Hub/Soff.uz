@@ -5,10 +5,9 @@ import {
     message,
     Input,
     Rate,
-    Collapse,
     Alert,
 } from 'antd';
-import { DownloadOutlined, ExclamationCircleOutlined, SmileOutlined, WarningOutlined } from '@ant-design/icons';
+import { DownloadOutlined, SmileOutlined, WarningOutlined } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
 import styles from '../style/style.module.scss';
 import Link from 'next/link';
@@ -20,10 +19,9 @@ import ServiceCheckout from '~/components/freeleance/services/service-deatail/ui
 import useGetFile from '../api/useGetFile';
 import useSubmit from '../api/useSubmit';
 import { useQueryClient } from '@tanstack/react-query';
-import { getDate, getRemainingDays } from '~/shared/utilities/calculateTime';
 import ReactConfetti from 'react-confetti';
-import { useCountOrderTime, useCountTimeBack } from '~/shared/hooks/useCountDown';
 import { useRouter } from 'next/router';
+import OrderCard from '~/entities/cards/order-card';
 dayjs.locale('uz-latn');
 
 const OrderMain = ({ order }) => {
@@ -39,13 +37,6 @@ const OrderMain = ({ order }) => {
     const submit = useSubmit();
     const queryClient = useQueryClient();
     const { query, push } = useRouter()
-    const { days, hours, minutes, seconds } = useCountOrderTime(
-        order?.order_status_doing?.order_accepted_date,
-        order?.service?.delivery_days || order?.deadline_date
-    );
-    const { days: daysBack, hours: hoursBack, minutes: minutesBack, seconds: secondsBack } = useCountTimeBack(
-        order?.deadline_date
-    );
 
     const items = [
         { title: <Link href={'/order/my-orders'}>Mening buyurtmalarim</Link> },
@@ -65,20 +56,15 @@ const OrderMain = ({ order }) => {
             push(`/order/${query?.id}`)
         }
     }, [query?.isOpen]);
-    console.log('order', order);
     return (
         <div className="col-lg-9 col-12 mb-5 rounded-2">
             <div className={styles.orderDetailMain}>
-                {/* Oldingi kartochkalar */}
                 {order?.order_status_doing?.status === 'pending' && (
                     <div className={styles.orderPayCard}>
                         <div className='w-100'>
-                            <h3 className={styles.orderNameLink}>
-                                To'lov kutilmoqda
-                            </h3>
-                            <p>
-                                Buyurtma muvaffaqiyatli yaratildi, ammo mutaxassis ishni boshlashi uchun avval to‘lovni amalga oshirishingiz kerak. Siz to‘lagan mablag‘ Soff platformasida xavfsiz saqlanadi va faqat ish tugallangach, siz uni qabul qilib, ma’qullaganingizdan so‘nggina mutaxassisga o‘tkaziladi.
-                            </p>
+                            <h4 className='mb-0'>
+                                Ish boshlanishi uchun avval to‘lovni amalga oshiring
+                            </h4>
                         </div>
                         <Button
                             type="primary"
@@ -141,7 +127,6 @@ const OrderMain = ({ order }) => {
                         </div>
                     )}
 
-                {/* Seller ishni tugatganda */}
                 {order?.order_status_doing?.status == 'order_file_sent' && (
                     <>
                         <Alert icon={<WarningOutlined />} message="Buyurtma 24 soat ichida ko'rib chiqilmasa avtomatik ravishta qabul qilingan deb hisoblanadi." type="warning" />
@@ -178,9 +163,9 @@ const OrderMain = ({ order }) => {
                         </div>
                     </>
                 )}
-                <Breadcrumb items={items} className='mb-3' />
+                <Breadcrumb items={items} className='mb-2' />
 
-                <div className={styles.order}>
+                {/* <div className={styles.order}>
                     <div className={styles.order_info}>
                         <img
                             src={
@@ -241,7 +226,6 @@ const OrderMain = ({ order }) => {
                         )}
                     </div>
 
-                    {/* <Table columns={columns} dataSource={data} pagination={false} /> */}
                     <Collapse accordion>
                         <Collapse.Panel header="Buyurtma tafsilotlari" key="1">
                             <div
@@ -325,7 +309,7 @@ const OrderMain = ({ order }) => {
                                 )}
                         </Collapse.Panel>
                     </Collapse>
-                </div>
+                </div> */}
                 {order?.order_status_doing?.status === 'completed' && (
                     <div className="d-flex justify-content-end align-items-center mt-3">
                         <Button
@@ -336,15 +320,14 @@ const OrderMain = ({ order }) => {
                     </div>
                 )}
             </div>
+            <OrderCard order={order}/>
 
-            {/* Talab yuborish modali */}
             <RequirementModal
                 visible={open}
                 onClose={() => setOpen(false)}
                 orderId={order?.id}
             />
 
-            {/* Fikr bildirish modali */}
 
             <Modal
                 title="Natija bo‘yicha fikringiz"
@@ -376,7 +359,7 @@ const OrderMain = ({ order }) => {
                             <Button
                                 key="submit"
                                 type="primary"
-                                loading={submit.isPending} // yuklanish animatsiyasi
+                                loading={submit.isPending}
                                 onClick={() => {
                                     if (res === 'rejected' && !text.trim()) {
                                         message.error(
@@ -395,13 +378,11 @@ const OrderMain = ({ order }) => {
 
                                     const payload = { id: order?.id };
 
-                                    // Status har doim bo'ladi
                                     payload.status =
                                         res === 'rejected'
                                             ? 'rejected'
                                             : 'completed';
 
-                                    // Faqat kerak bo'lsa qo'shamiz
                                     if (res === 'rejected' && text) {
                                         payload.reason = text;
                                     }

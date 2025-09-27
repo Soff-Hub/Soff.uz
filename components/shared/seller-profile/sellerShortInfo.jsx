@@ -80,12 +80,14 @@ export default function SellerShortInfo({ sellerInfo, pid }) {
             </div>
 
             <div className="d-flex flex-column gap-3">
-                {services && (
-                    <div className="d-flex align-items-center gap-4">
-                        <i className="fa-solid fa-clipboard-list fs-2"></i>
-                        <p className="m-0">Freelance xizmatlari uchun ochiq</p>
-                    </div>
-                )}
+                <div className="d-flex align-items-center gap-4">
+                    <i className="fa-solid fa-clipboard-list fs-2"></i>
+                    <p className="m-0">
+                        {(sellerInfo?.has_service && sellerInfo?.has_portfolio) ?
+                            "Freelance xizmatlari uchun ochiq" : "Freelance xizmatlari uchun yopiq"
+                        }
+                    </p>
+                </div>
 
                 {sellerInfo?.location && (
                     <div className="d-flex align-items-center gap-3">

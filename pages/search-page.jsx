@@ -148,23 +148,16 @@ const Search_Results = ({
             <nav className='global_navbar'>
                 <div className='container d-flex align-items-center'>
                     <div className='d-flex align-items-center gap-5 width_full_screen'>
-                        <div className={`${!isDesktop && "d-flex justify-content-between w-100 align-items-center"}`}>
-                            <Link href='/'>
-                                <a className='ps-logo'>
-                                    <NextImageCard
-                                        url='/static/img/soff/logo-dark.png'
-                                        className='logoo'
-                                        width='120px'
-                                        height='50px'
-                                    />
-                                </a>
-                            </Link>
-                            {!isDesktop &&
-                                <span onClick={() => setOpen(true)} className='Search_Results_not_found_btn'>
-                                    Buyurtma yaratish
-                                </span>
-                            }
-                        </div>
+                        <Link href='/'>
+                            <a className='ps-logo'>
+                                <NextImageCard
+                                    url='/static/img/soff/logo-dark.png'
+                                    className='logoo'
+                                    width='120px'
+                                    height='50px'
+                                />
+                            </a>
+                        </Link>
                         <div className='ps-form--quick-search'>
                             <div style={{ background: 'white' }} className={keyword === '' ? 'ps-form__input' : 'ps-form__input active_search_input'}>
                                 <input
