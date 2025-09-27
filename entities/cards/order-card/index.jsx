@@ -128,7 +128,7 @@ const OrderCard = ({ order, onOpenDrawer }) => {
                                     }}
                                 >
                                     {order?.offers?.map(item =>
-                                        <Avatar src={item?.photo_url} />
+                                        <Avatar src={item?.photo_url || '/static/img/ozodbek.png'} />
                                     )}
                                 </Avatar.Group>
                             </div>
