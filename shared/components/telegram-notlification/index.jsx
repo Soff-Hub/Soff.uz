@@ -1,23 +1,23 @@
 import { useState, useEffect } from "react";
-import { message, Switch, Tooltip, ConfigProvider } from "antd";
+import { message, Switch, Tooltip } from "antd";
 import { InfoCircleOutlined } from "@ant-design/icons";
 import { useGet, usePatch } from "~/repositories/https";
 import useResponsive from "~/shared/utilities/useResponsive";
-import useGetProfile from "~/components/freeleance/api/useGetProfile";
+import { AUTH_PROFILE, NEW_PROFILE, TELEGRAM_LINK } from "~/shared/api/end-points";
 
 export default function TelegramNotification() {
     const { isMobile } = useResponsive();
     const { data: tg_link } = useGet(
         "tg_link",
-        `${process.env.NEXT_PUBLIC_BASE_URL}/auth/get-telegram-link/`
+        `${process.env.NEXT_PUBLIC_BASE_URL}${TELEGRAM_LINK}`
     );
-    const { data: newProfile } = useGetProfile();
+    const { data: newProfile } = useGet('new-profile', `${process.env.NEXT_PUBLIC_BASE_URL}${NEW_PROFILE}`)
     const { mutate, isLoading } = usePatch("nimadir");
 
     const handleOff = () => {
         mutate(
             {
-                url: `${process.env.NEXT_PUBLIC_BASE_URL}/auth/profile/`,
+                url: `${process.env.NEXT_PUBLIC_BASE_URL}${AUTH_PROFILE}`,
                 payload: { telegram_chat_id: null },
             },
             {
@@ -51,9 +51,8 @@ export default function TelegramNotification() {
 
     return (
         <div
-            className={`alert alert-warning d-flex ${
-                isMobile && ""
-            } align-items-center justify-content-between`}
+            className={`alert alert-warning d-flex ${isMobile && ""
+                } align-items-center justify-content-between`}
         >
             <div className="d-flex align-items-center gap-2">
                 <span>Telegram bildirishnomalarini yoqish</span>
@@ -61,19 +60,11 @@ export default function TelegramNotification() {
                     <InfoCircleOutlined style={{ color: "#faad14" }} />
                 </Tooltip>
             </div>
-            <ConfigProvider
-                theme={{
-                    token: {
-                        colorPrimary: "#00a651", // switch rangini yashil qilib qo‘yamiz
-                    },
-                }}
-            >
-                <Switch
-                    loading={isLoading}
-                    checked={checked}
-                    onChange={handleSwitchChange}
-                />
-            </ConfigProvider>
+            <Switch
+                loading={isLoading}
+                checked={checked}
+                onChange={handleSwitchChange}
+            />
         </div>
     );
 }

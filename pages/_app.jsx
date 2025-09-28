@@ -8,8 +8,8 @@ import '~/scss/electronic.scss';
 import Head from 'next/head';
 import NextProgress from 'next-progress';
 import { Toaster } from 'react-hot-toast';
-import AffiliateListener from '~/components/AffiliateListener';
 import { Providers } from '~/app/providers';
+import AffiliateListener from '~/entities/affiliate';
 
 function App({ Component, pageProps }) {
     useEffect(() => {
