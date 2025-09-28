@@ -1,7 +1,6 @@
 import React from 'react';
 import BreadCrumb from '~/components/elements/BreadCrumb';
-import PageContainer from '~/components/layouts/PageContainer';
-import FooterDefault from '~/components/shared/footers/FooterDefault';
+import PageContainer from '~/widgets/layouts/PageContainer';
 import Meta from '~/components/shared/headers/Meta';
 import NotificationList from '~/components/partials/account/NotificationList';
 
@@ -16,7 +15,7 @@ const Notification = () => {
         },
     ];
     return (
-            <PageContainer footer={<FooterDefault />} title="Notifications">
+            <PageContainer title="Notifications">
                 <div className="ps-page--my-account">
                     <Meta
                         title={"Yangiliklar"}

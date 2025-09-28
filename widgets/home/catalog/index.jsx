@@ -34,53 +34,57 @@ const data = [
         direction: 'website',
     },
 ];
-const Catalog = () => {  
+const Catalog = ({ inFile }) => {  
     const router = useRouter()
     return (
         <div className={styles.catalogSectionBlock}>
             <div className="container mx-auto">
-                <div className={styles.catalogHealine}>
-                    <div className="d-flex gap-2 flex-fill">
-                        {' '}
-                        <div>
-                            <Image
-                                src={'/static/img/star.svg'}
-                                width={40}
-                                height={40}
-                                alt="starts"
-                            />
+                {!inFile &&
+                    <>
+                        <div className={styles.catalogHealine}>
+                            <div className="d-flex gap-2 flex-fill">
+                                {' '}
+                                <div>
+                                    <Image
+                                        src={'/static/img/star.svg'}
+                                        width={40}
+                                        height={40}
+                                        alt="starts"
+                                    />
+                                </div>
+                                <div className={styles.catalogWrapper}>
+                                    <h1 className={styles.catalogLabel}>
+                                        Tayyor mahsulotlar katalogi
+                                    </h1>
+                                    <p className={styles.catalogSubLabel}>
+                                        Sifatli va tayyor ishlardan foydalaning, vaqt va
+                                        kuchingizni tejang.
+                                    </p>
+                                </div>
+                            </div>
+                            <button
+                                onClick={() => router.push('/scientific-resources/all')}
+                                className={styles.catalogSeeAll}>
+                                Barcha mahsulotlar{' '}
+                                <Image
+                                    src={'/static/img/arrowwhite.svg'}
+                                    width={40}
+                                    height={20}
+                                    alt="arrow"
+                                />
+                            </button>
                         </div>
-                        <div className={styles.catalogWrapper}>
-                            <h1 className={styles.catalogLabel}>
-                                Tayyor mahsulotlar katalogi
-                            </h1>
-                            <p className={styles.catalogSubLabel}>
-                                Sifatli va tayyor ishlardan foydalaning, vaqt va
-                                kuchingizni tejang.
-                            </p>
+                        <div className={styles.catalogCardsSection}>
+                            {data?.map(item => (
+                                <CatalogCard
+                                    key={item.direction}
+                                    content_type={item.direction}
+                                    title={title[item.direction]}
+                                />
+                            ))}
                         </div>
-                    </div>
-                    <button
-                        onClick={() => router.push('/scientific-resources/all')}
-                        className={styles.catalogSeeAll}>
-                        Barcha mahsulotlar{' '}
-                        <Image
-                            src={'/static/img/arrowwhite.svg'}
-                            width={40}
-                            height={20}
-                            alt="arrow"
-                        />
-                    </button>
-                </div>
-                <div className={styles.catalogCardsSection}>
-                    {data?.map(item => (
-                        <CatalogCard
-                            key={item.direction}
-                            content_type={item.direction}
-                            title={title[item.direction]}
-                        />
-                    ))}
-                </div>
+                    </>
+                }
                 <section className={styles.howItWorksSection}>
                     <div className="d-flex justify-content-center my-5">
                         <Image

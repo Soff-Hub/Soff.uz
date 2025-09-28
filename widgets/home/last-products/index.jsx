@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { RightOutlined } from '@ant-design/icons';
 import useResponsive from '~/shared/utilities/useResponsive';
 import ProductCard from '~/entities/product/product-card';
+import { LAST_ADDED_PRODUCTS } from '~/shared/api/end-points';
 
 
 const LastProducts = () => {
@@ -14,32 +15,32 @@ const LastProducts = () => {
 
     const { data: fileData, isLoading: fileLoading } = useGet(
         'file_product',
-        `customer/last-added/?direction=file&limit=${limit}`
+        `${LAST_ADDED_PRODUCTS}?direction=file&limit=${limit}`
     );
 
     const { data: threeDData, isLoading: threeDLoading } = useGet(
         'three_d_product',
-        `customer/last-added?direction=3d&limit=${limit}`
+        `${LAST_ADDED_PRODUCTS}?direction=3d&limit=${limit}`
     );
 
     const { data: designData, isLoading: designLoading } = useGet(
         'design_product',
-        `customer/last-added?direction=design&limit=${limit}`
+        `${LAST_ADDED_PRODUCTS}?direction=design&limit=${limit}`
     );
 
     const { data: videoData, isLoading: videoLoading } = useGet(
         'video_product',
-        `customer/last-added?direction=video&limit=${limit}`
+        `${LAST_ADDED_PRODUCTS}?direction=video&limit=${limit}`
     );
 
     const { data: websiteData, isLoading: websiteLoading } = useGet(
         'web_product',
-        `customer/last-added?direction=website&limit=${limit}`
+        `${LAST_ADDED_PRODUCTS}?direction=website&limit=${limit}`
     );
 
     const { data: templateData, isLoading: templateLoading } = useGet(
         'templates_product',
-        `customer/last-added?direction=template&limit=${limit}`
+        `${LAST_ADDED_PRODUCTS}?direction=template&limit=${limit}`
     );
 
     return (

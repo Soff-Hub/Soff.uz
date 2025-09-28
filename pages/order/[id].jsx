@@ -1,5 +1,5 @@
 import React from 'react'
-import PageLayout from '~/components/layouts/PageLayout'
+import PageLayout from '~/widgets/layouts/PageLayout'
 import OrderDetailMain from '~/components/freeleance/myorders/order-detail/OrderDetailMain'
 
 const OrderDatail = () => {

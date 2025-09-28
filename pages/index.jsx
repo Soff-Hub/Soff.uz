@@ -1,7 +1,7 @@
 import React from 'react';
-import PageLayout from '~/components/layouts/PageLayout';
+import PageLayout from '~/widgets/layouts/PageLayout';
 import Meta from '~/components/shared/headers/Meta';
-import { TelegramLink } from '~/components/shared/telegramLink';
+import { TelegramLink } from '~/shared/components/telegramLink';
 import Home from '~/widgets/home';
 
 function NewHomePage() {

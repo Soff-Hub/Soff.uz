@@ -1,8 +1,7 @@
 import React from 'react';
 import BreadCrumb from '~/components/elements/BreadCrumb';
 import Wishlist from '~/components/partials/account/Wishlist';
-import FooterDefault from '~/components/shared/footers/FooterDefault';
-import PageContainer from '~/components/layouts/PageContainer';
+import PageContainer from '~/widgets/layouts/PageContainer';
 import Meta from '~/components/shared/headers/Meta';
 
 const WishlistPage = () => {
@@ -17,7 +16,7 @@ const WishlistPage = () => {
     ];
 
     return (
-        <PageContainer footer={<FooterDefault />} title="Wishlist">
+        <PageContainer title="Wishlist">
             <div className="ps-page--simple">
                 <Meta
                     title={"Tanlanganlar"}

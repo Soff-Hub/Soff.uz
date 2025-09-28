@@ -4,9 +4,10 @@ import menuItemStyle from './menuItem.module.scss';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useFGet } from '~/shared/hooks/useFApi';
+import { NAVBAR_MENU_CATEGORIES } from '~/shared/api/end-points';
 
 const NavbarMenu = () => {
-    const { data, isLoading } = useFGet('navbar-items', 'categories/categories-with-directions');
+    const { data, isLoading } = useFGet('navbar-items', NAVBAR_MENU_CATEGORIES);
 
     if (isLoading && !data) return null;
 

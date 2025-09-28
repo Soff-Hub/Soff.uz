@@ -8,6 +8,7 @@ import { api } from '~/repositories/api';
 import useDebounce from '~/shared/hooks/useDebounce';
 import Link from 'next/link';
 import axiosInstance from '~/shared/api/freeleanceApi';
+import { D_SEARCH_OPTIONS, F_SEARCH_OPTIONS } from '~/shared/api/end-points';
 
 const placeholders = {
     mahsulotlar: 'Qaysi turdagi tayyor mahsulot qidirmoqdasiz?',
@@ -44,7 +45,7 @@ const Hero = () => {
         queryKey: ['searchResults', debounceSearch],
         queryFn: async () => {
             const { data } = await api.get(
-                `doc-search/?search=${debounceSearch}`
+                `${D_SEARCH_OPTIONS}${debounceSearch}`
             );
             return data;
         },
@@ -56,7 +57,7 @@ const Hero = () => {
     const { data: freelanceData, isSuccess: freelanceSuccess } = useQuery({
         queryKey: ["freelanceData", debounceSearch],
         queryFn: async () => {
-            const { data } = await axios.get(`customer/search-page?search=${debounceSearch}`)
+            const { data } = await axios.get(`${F_SEARCH_OPTIONS}${debounceSearch}`)
             return data
         },
         enabled: type !== 'mahsulotlar',

@@ -5,7 +5,6 @@ import Link from "next/link";
 import { baseURL } from "~/repositories/api";
 import Axios from "axios";
 import Cookies from "js-cookie";
-import AffiliateEarningsSection from "~/components/elements/affiliate_program/AffiliateEarningsSection";
 
 const { Option } = Select;
 

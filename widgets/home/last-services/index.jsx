@@ -5,10 +5,11 @@ import Link from 'next/link';
 import useResponsive from '~/shared/utilities/useResponsive';
 import ServiceCard from '~/entities/service/service-card';
 import { useFGet } from '~/shared/hooks/useFApi';
+import { LAST_ADDED_SERVICES } from '~/shared/api/end-points';
 
 const LastServices = () => {
     const { isMobile } = useResponsive();
-    const { data } = useFGet('last-services', "customer/last")
+    const { data } = useFGet('last-services', LAST_ADDED_SERVICES)
 
     const displayedData = React.useMemo(() => {
         if (!data) return [];

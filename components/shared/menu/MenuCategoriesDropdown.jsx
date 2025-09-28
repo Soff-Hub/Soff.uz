@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../../landingStyles/landingStyles.module.scss';
+import styles from '~/shared/styles/landingStyles.module.scss';
 
 const MenuCategoriesDropdown = () => {
     return (
