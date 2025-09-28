@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import OrderCard from "~/entities/cards/order-card";
+import OrderCard from "~/entities/order/order-card";
 
 
 const SelectOrderDrawer = ({ open, onClose, order }) => {

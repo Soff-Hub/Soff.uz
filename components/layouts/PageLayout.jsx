@@ -3,11 +3,9 @@ import Head from 'next/head';
 import { useDispatch, useSelector } from 'react-redux';
 import { checkAuthorization, setAccountLinks } from '~/store/auth/slice';
 import { useRouter } from 'next/router';
-import HeaderMobileBottom from '../shared/headers/HeaderMobilebottom';
 import Header from '../blocks/header';
 
 import { GoogleLogin } from '@react-oauth/google';
-import SiteFooter from '../shared/footers/SiteFooter';
 import FooterComponents from '../blocks/footer/FooterComponents';
 import FastDowloadSection from '../shared/headers/fast-dowload/FastDowloadSection';
 import { fetchProfile } from '~/store/profile/slice';
@@ -28,11 +26,6 @@ export let cutomerAccountLink = [
         url: '/order/my-orders',
         icon: 'fas fa-truck',
     },
-    // {
-    //     text: 'Profil',
-    //     url: '/account/settings',<i className="fas fa-file-invoice"></i>
-    //     icon: 'fa-solid fa-gear',
-    // },
 ];
 
 const PageLayout = ({ children, title }) => {
@@ -70,7 +63,6 @@ const PageLayout = ({ children, title }) => {
                 <FastDowloadSection />
             }
             {children}
-            <HeaderMobileBottom />
             <FooterComponents />
 
             {user ? (

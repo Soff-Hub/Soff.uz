@@ -3,8 +3,8 @@ import { useQuery } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
 import { api } from '~/repositories/api';
 import ServiceIsUnavailable from '../seller-profile/ServiceIsUnavailable';
-import ProductCard from '~/components/freeleance/home/ui/ProductCard';
 import { Pagination } from 'antd';
+import ProductCard from '~/entities/product/product-card';
 
 export default function WebSites({ pid }) {
     const [page, setPage] = useState(1);

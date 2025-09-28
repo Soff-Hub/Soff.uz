@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styles from './style.module.scss';
 import {
     CaretRightOutlined,
@@ -6,7 +6,6 @@ import {
     MenuOutlined,
 } from '@ant-design/icons';
 import { useState } from 'react';
-import useNavCategories from '~/components/freeleance/chat/api/useNavCatergories';
 import SideBarItem from './sidebarItem';
 import { Collapse, Drawer } from 'antd'; 
 const option = {
@@ -19,7 +18,7 @@ const option = {
 
 const SideBar = () => {
     const [open, setOpen] = useState(false);
-    const { data, isLoading } = useNavCategories();
+    const { data, isLoading } = useFGet('navbar-items', 'categories/categories-with-directions');
     const panelStyle = {
         background: '#fff',
         padding: '0px',
@@ -72,10 +71,5 @@ const SideBar = () => {
         </div>
     );
 };
-// <SideBarItem
-//     products={item.freelance_categories}
-//     templates={item.soff_categories}
-//     label={item.direction}
-// />
 
 export default SideBar;

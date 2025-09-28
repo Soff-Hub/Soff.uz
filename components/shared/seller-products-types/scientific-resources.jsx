@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import ServiceIsUnavailable from '../seller-profile/ServiceIsUnavailable';
-import ProductCard from '~/components/freeleance/home/ui/ProductCard';
 import { useQuery } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
 import { api } from '~/repositories/api';
 import { Pagination } from 'antd'; // 🔹 Antd Pagination import qildik
+import ProductCard from '~/entities/product/product-card';
 
 export default function ScientificResources({ data, setCategoryValue, pid }) {
     const [page, setPage] = useState(1);

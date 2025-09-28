@@ -17,8 +17,6 @@ const HeaderUserDropdown = props => {
     const refresh = useSelector(state => state.auth?.user?.refresh);
     const { data: chats } = useGetChats();
     const { asPath } = useRouter();
-    const router = useRouter();
-    const { id, deal } = router?.query;
 
     const handleLogout = () => {
         const data = {
@@ -96,17 +94,6 @@ const HeaderUserDropdown = props => {
                     <ul className="ps-list--arrow order">
                         <div>
                             <div className="pointer d-flex pointer mb-3  gap-3 align-items-center ">
-                                {/* <Image
-                                    style={{ borderRadius: '50%' }}
-                                    src={
-                                        profile?.image ||
-                                        '/static/img/ozodbek.png'
-                                    }
-                                    width={30}
-                                    height={30}
-                                    alt="user"
-                                /> */}
-
                                 <Link
                                     href={
                                         user?.role === 'admin'
@@ -143,13 +130,6 @@ const HeaderUserDropdown = props => {
         return (
             <Link href={'/auth/login'}>
                 <p className={`${styles.loginEntrance} m-0`}>Kirish</p>
-                {/* href={
-                    id
-                        ? `/auth/login?id=${id}`
-                        : deal
-                        ? `/auth/login?deal=${deal}`
-                        : '/auth/login'
-                } */}
             </Link>
         );
     }

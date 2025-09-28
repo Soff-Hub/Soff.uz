@@ -1,0 +1,204 @@
+@import '/scss/utils/variable';
+
+.titleWrapper {
+    text-align: center;
+
+    img {
+        margin-bottom: 48px;
+        width: 30px;
+        height: 30px;
+    }
+
+    h1 {
+        font-size: 80px;
+        font-weight: 600;
+        color: $textColor;
+    }
+
+    h3 {
+        font-size: 36px;
+        font-weight: 600;
+        color: $textColor;
+    }
+
+
+    @media (max-width: 992px) {
+    margin-top: 40px;
+
+        h1 {
+            font-size: 60px;
+        }
+
+        h3 {
+            font-size: 28px;
+        }
+    }
+
+    @media (max-width: 768px) {
+    margin-top: 30px;
+
+        h1 {
+            font-size: 36px;
+        }
+
+        h3 {
+            font-size: 20px;
+        }
+
+        img {
+            width: 24px;
+            height: 24px;
+            margin-bottom: 32px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        margin-top: 20px;
+
+        h1 {
+            font-size: 28px;
+        }
+
+        h3 {
+            font-size: 18px;
+        }
+
+        img {
+            width: 20px;
+            height: 20px;
+            margin-bottom: 24px;
+        }
+    }
+}
+
+.stepsSection {
+    position: relative;
+    margin: auto;
+    z-index: 5;
+    justify-content: center;
+    &::after {
+        content: '';
+        position: absolute;
+        width: 80%;
+        height: 300px;
+        border-radius: 50%;
+        right: 50%;
+        top: 20%;
+        transform: translateX(50%);
+        z-index: -1;
+        background-image: radial-gradient(
+            circle,
+            #00a44f 0%,
+            // markaziy yashil
+                #57aa7f 60%,
+            // o‘rtada yashil-sariq
+                white 100% // chetida oq
+        );
+        filter: blur(80px);
+        opacity: 0.7;
+    }
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* <= 480px: 1 ta */
+    gap: 10px;
+
+    @media (max-width: 768px) {
+        grid-template-columns: repeat(2, 1fr); /* 481–991px: 2 ta */
+        gap: 10px;
+    }
+}
+
+.stepCard {
+    background: #fff;
+    border-radius: 25px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    padding: 20px;
+    height: 307px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.3s ease;
+
+    &:nth-child(2),
+    &:nth-child(4) {
+        margin-top: 130px; // katta ekranlarda shift bo‘lishi
+    }
+    @media (max-width: 1200px) {
+        padding: 15px;
+
+        &:nth-child(2),
+        &:nth-child(4) {
+            margin-top: 0px; // katta ekranlarda shift bo‘lishi
+        }
+        height: 240px;
+    }
+    @media (max-width: 768px) {
+        padding: 10px;
+    }
+
+    .icon {
+        width: 56px;
+        height: 56px;
+        color: #fff;
+        font-size: 24px;
+        display: grid;
+        place-content: center;
+        background-color: #00a44f;
+        border-radius: 50%;
+    }
+
+    .title {
+        color: $textColor;
+        font-size: 24px;
+        font-weight: 600;
+        margin: 10px 0px;
+
+        @media (max-width: 1200px) {
+            font-size: 20px;
+        }
+        @media (max-width: 768px) {
+            font-size: 16px;
+        }
+    }
+
+    .subtitle {
+        font-size: 16px;
+        font-weight: 400;
+        color: $subTextColor;
+        text-align: center;
+        @media (max-width: 1200px) {
+            font-size: 12px;
+        }
+        @media (max-width: 768px) {
+            font-size: 10px;
+        }
+    }
+
+    .two {
+        position: absolute;
+        width: 150px;
+        z-index: -1;
+        height: 150px;
+        left: -150px;
+        top: 120px;
+        @media (max-width: 1200px) {
+            display: none; // kichik ekranlarda margin-top olib tashlanadi
+        }
+    }
+    .three {
+        position: absolute;
+        width: 150px;
+        z-index: -1;
+        height: 150px;
+        left: -160px;
+        top: 50px;
+        @media (max-width: 1200px) {
+            display: none; // kichik ekranlarda margin-top olib tashlanadi
+        }
+    }
+
+    @media (max-width: 992px) {
+        margin-top: 0; // kichik ekranlarda margin-top olib tashlanadi
+    }
+}

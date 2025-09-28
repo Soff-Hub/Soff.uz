@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import ServiceIsUnavailable from '../seller-profile/ServiceIsUnavailable';
-import ProductCard from '~/components/freeleance/home/ui/ProductCard';
 import { useSelector } from 'react-redux';
 import { useQuery } from '@tanstack/react-query';
 import { api } from '~/repositories/api';
 import { Pagination } from 'antd';
+import ProductCard from '~/entities/product/product-card';
 
 export default function ModelAndDesign({ pid }) {
     const [page, setPage] = useState(1);
