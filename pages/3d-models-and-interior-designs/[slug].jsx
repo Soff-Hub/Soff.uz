@@ -1,12 +1,8 @@
 import { useRouter } from 'next/router';
 import React from 'react';
-import ThreeDCategoriesFilterSecion from '~/components/elements/ThreeDCategoriesFilterSecion';
-import PageContainer from '~/components/layouts/PageContainer';
-import FooterDefault from '~/components/shared/footers/FooterDefault';
+import PageContainer from '~/widgets/layouts/PageContainer';
 import Meta from '~/components/shared/headers/Meta';
-import ProductsByModelsAndDesignCategory from '~/components/partials/category/ProductsByModelsAndDesignCategory';
 import { baseUrlUseApi } from '~/repositories/useApi';
-import CategorySearchSection from '~/components/elements/CategorySearchSection';
 import ProductFilterSection from '~/components/elements/product-filter-section/ProductFilterSection';
 import ProductsByCategory from '~/components/partials/category/ProductsByCategory';
 
@@ -27,7 +23,6 @@ export default function ModelsAndInteriorDesign ({
 
     return (
         <PageContainer
-            footer={<FooterDefault />}
             title={'Kategoriya'}
             boxed={true}>
             <Meta

@@ -1,6 +1,6 @@
 import React from 'react';
-import styles from './style.module.scss'; 
-import ServiceCard from '~/components/blocks/cards/serviceCard';
+import styles from './style.module.scss';
+import cardStyle from './service.module.scss'
 import Link from 'next/link';
 
 const items = [
@@ -41,6 +41,20 @@ const items = [
         },
     },
 ];
+
+const title = {
+    '3d': '3D Dizayn va Vizualizatsiya',
+    website: 'Dasturlash xizmatlari',
+    design: 'Dizayn',
+    file: 'Ilmiy va Akademik Xizmatlar',
+};
+
+const link = {
+    '3d': '/orders?direction=three_d',
+    website: '/orders?direction=web',
+    design: '/orders?direction=dizayn',
+    file: '/orders?direction=scientific_work',
+};
 
 const Freelance = () => {
     return (
@@ -93,3 +107,47 @@ const Freelance = () => {
 };
 
 export default Freelance;
+
+const ServiceCard = ({ content_type = 'file', items = {} }) => {
+    return (
+        <Link href={link[content_type]}>
+            <div className={cardStyle.catalogCard}>
+                <div className={cardStyle.cardImageBlock}>
+                    <div
+                        className={cardStyle.cardBlockLeft}
+                        style={{
+                            backgroundImage: `url(${items.left ||
+                                '/static/img/not-found.png'})`,
+                            backgroundSize: 'cover',
+                            backgroundRepeat: 'no-repeat',
+                            backgroundPosition: 'center',
+                        }}>
+                    </div>
+                    <div className={cardStyle.cardBlockRight}>
+                        <div
+                            className={cardStyle.cardBlockRightBottom}
+                            style={{
+                                backgroundImage: `url(${items.rightTop ||
+                                    '/static/img/not-found.png'})`,
+                                backgroundSize: 'cover',
+                                backgroundRepeat: 'no-repeat',
+                                backgroundPosition: 'center',
+                            }}></div>
+                        <div
+                            className={cardStyle.cardBlockRightBottom}
+                            style={{
+                                backgroundImage: `url(${items.rightBot ||
+                                    '/static/img/not-found.png'})`,
+                                backgroundSize: 'cover',
+                                backgroundRepeat: 'no-repeat',
+                                backgroundPosition: 'center',
+                            }}></div>
+                    </div>
+                </div>
+                <div className="d-flex flex-column flex-fill">
+                    <h3 className={cardStyle.cardTile}>{title[content_type]}</h3>
+                </div>
+            </div>
+        </Link>
+    );
+};

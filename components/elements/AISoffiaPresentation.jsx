@@ -3,7 +3,7 @@ import { Button } from 'antd';
 import {
     soffiaIconSVG2,
     soffiaIconSVG3,
-} from '../blocks/header/HeaderActions/HeaderAIIcon';
+} from '../../widgets/header/HeaderActions/HeaderAIIcon';
 
 export default function AISoffiaPresentation () {
     return (

@@ -17,14 +17,6 @@ export const stickyHeader = () => {
     }
 };
 
-export const generateTempArray = (maxItems) => {
-    let result = [];
-
-    for (let i = 0; i < maxItems; i++) {
-        result.push(i);
-    }
-    return result;
-};
 
 export const audioDownloaderSale = async (file, product) => {
     const filee = file?.document?.file_url || file?.document?.short_content_url;

@@ -1,12 +1,11 @@
 import Link from 'next/link'
 import React from 'react'
-import PageContainer from '~/components/layouts/PageContainer'
-import FooterDefault from '~/components/shared/footers/FooterDefault'
+import PageContainer from '~/widgets/layouts/PageContainer'
 import Meta from '~/components/shared/headers/Meta'
 
 export default function DesignDevelopmentsPage() {
   return (
-      <PageContainer footer={<FooterDefault />} title="Grafik Dizayn Shablonlari">
+      <PageContainer title="Grafik Dizayn Shablonlari">
         <Meta
             title="Grafik Dizayn Shablonlari" 
             image="/static/img/dizayn-shablonlari-2.png" 

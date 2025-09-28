@@ -21,13 +21,6 @@ const PortfolioCard = ({ item, portfolioData }) => {
                         {item?.sub_category?.title}
                     </p>
                     <div className='SellerPortfolioCard_view_count'>
-                        {/* <i
-                            onClick={() => {
-                                setCardId(item.id);
-                                setOpenModal(true);
-                            }}
-                            className='fa-solid fa-pen fs-4 mx-3 text-white'
-                        ></i> */}
                         <img src='/static/img/eye.png' width={'20px'} />
                         <p className='text-white p-0 m-0'>{item?.view_count}</p>
                     </div>

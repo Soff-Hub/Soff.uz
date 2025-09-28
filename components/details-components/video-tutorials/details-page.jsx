@@ -5,7 +5,6 @@ import Description from '../details-actions/description'
 import SellerProfile from '../details-seller-profile/seller-profile'
 import DefaultVideoContent from './default-video'
 import { InfoCircleOutlined } from '@ant-design/icons'
-import PlayListsCard from './play-lists'
 
 
 function VideosProductsDetails({ product, isPlay, setIsPlay, }) {
@@ -38,9 +37,6 @@ function VideosProductsDetails({ product, isPlay, setIsPlay, }) {
 
           <div className='ps-product__header_seller_secound_videos'>
              <Description description={product?.description}/>
-            {/* {type !== "playlists" ?  :
-
-              <PlayListsCard product={product} isPlay={isPlay} setIsPlay={setIsPlay} />} */}
 
             <div className='w-100 gap-5 d-flex flex-column' style={{ maxWidth: "550px" }}>
               {type !== "playlists" ? <Description description={product?.description} /> :

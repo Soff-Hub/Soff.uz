@@ -1,12 +1,11 @@
 import Link from 'next/link'
 import React from 'react'
-import PageContainer from '~/components/layouts/PageContainer'
-import FooterDefault from '~/components/shared/footers/FooterDefault'
+import PageContainer from '~/widgets/layouts/PageContainer'
 import Meta from '~/components/shared/headers/Meta'
 
 export default function WebsitesPage() {
   return (
-      <PageContainer footer={<FooterDefault />} title="Veb-sayt Shablonlari">
+      <PageContainer title="Veb-sayt Shablonlari">
         <Meta
             title="Veb-sayt Shablonlari" 
             image="/static/img/veb-saytlar-2.png" 

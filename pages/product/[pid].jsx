@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import PageContainer from '~/components/layouts/PageContainer';
+import PageContainer from '~/widgets/layouts/PageContainer';
 import { baseUrl } from '~/repositories/Repository';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -8,12 +8,9 @@ import Joyride from 'react-joyride';
 import FileProductsDetails from '~/components/details-components/file-products-detail/details-page';
 import ThreeDesignProductsDetails from '~/components/details-components/templates-details/details-page';
 import VideosProductsDetails from '~/components/details-components/video-tutorials/details-page';
-import RedesignProduct from '~/components/elements/products/Redesign/Redesign-Product';
-import FooterDefault from '~/components/shared/footers/FooterDefault';
 import SkeletonProductDetail from '~/components/elements/skeletons/SkeletonProductDetail';
 import * as cookie from 'cookie';
 import AISoffiaPresentation from '~/components/elements/AISoffiaPresentation';
-import ModelAndDesignProduct from '~/components/elements/products/ModelAndDesignProduct';
 import Axios from 'axios';
 import { Skeleton } from 'antd';
 import { useDispatch } from 'react-redux';
@@ -177,7 +174,6 @@ export default function ProductDefaultPage({ defaultProducts }) {
     return (
         <>
             <PageContainer
-                footer={<FooterDefault />}
                 title={defaultProducts ? defaultProducts?.title : 'Loading...'}
                 boxed={true}>
                 <Head>

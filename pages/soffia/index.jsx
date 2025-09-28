@@ -1,8 +1,8 @@
 import React from 'react';
 import { Button, Steps } from 'antd';
-import PageContainer from '~/components/layouts/PageContainer';
+import PageContainer from '~/widgets/layouts/PageContainer';
 import Meta from '~/components/shared/headers/Meta';
-import { soffiaIconSVG3 } from '~/components/blocks/header/HeaderActions/HeaderAIIcon';
+import { soffiaIconSVG3 } from '~/widgets/header/HeaderActions/HeaderAIIcon';
 
 const steps = [
   {

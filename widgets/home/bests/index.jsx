@@ -2,16 +2,17 @@ import React from 'react'
 import styles from "./style.module.scss"
 import { useGet } from '~/repositories/https'
 import Link from 'next/link'
+import { BESTS } from '~/shared/api/end-points'
 
 const Bests = () => {
-    const { data: sellers } = useGet("customer/top-seller-statistics", `customer/top-seller-statistics/`, {
+    const { data: sellers } = useGet("customer/top-seller-statistics", BESTS, {
         filter_stats: 'active_sellers',
         filter_by: "week",
     })
 
     const { data: authors } = useGet(
         "customer/top-seller-statistics",
-        `customer/top-seller-statistics/`,
+        BESTS,
         {
             filter_stats: 'best_seller',
             filter_by: "week",
@@ -20,7 +21,7 @@ const Bests = () => {
 
     const { data: products } = useGet(
         "customer/top-seller-statistics",
-        `customer/top-seller-statistics/`,
+        BESTS,
         {
             filter_stats: 'top_product',
             filter_by: "week",

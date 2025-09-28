@@ -1,15 +1,9 @@
 import React from 'react';
-import PageContainer from '~/components/layouts/PageContainer';
-import FooterDefault from '~/components/shared/footers/FooterDefault';
+import PageContainer from '~/widgets/layouts/PageContainer';
 import Meta from '~/components/shared/headers/Meta';
 import { useRouter } from 'next/router';
-import useApi, { baseUrlUseApi } from '~/repositories/useApi';
-import ProductsByDesignDevelopment from '~/components/partials/category/ProductsByDesignDevelopment';
-import CategoriesFilterForDesignDevelopmentsSection from '~/components/elements/DesignDevelopmentsFilterSection';
-import FooterComponents from '~/components/blocks/footer/FooterComponents';
-import TemplatesFilterSection from '~/components/elements/TemplatesFilterSection';
+import { baseUrlUseApi } from '~/repositories/useApi';
 import ProductsByCategory from '~/components/partials/category/ProductsByCategory';
-import CategorySearchSection from '~/components/elements/CategorySearchSection';
 import ProductFilterSection from '~/components/elements/product-filter-section/ProductFilterSection';
 
 export default function Templates ({
@@ -32,7 +26,6 @@ export default function Templates ({
 
     return (
         <PageContainer
-            footer={<FooterDefault />}
             title={'Kategoriya'}
             boxed={true}>
             <Meta

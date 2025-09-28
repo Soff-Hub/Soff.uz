@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import BreadCrumb from '~/components/elements/BreadCrumb';
-import PageContainer from '~/components/layouts/PageContainer';
+import PageContainer from '~/widgets/layouts/PageContainer';
 import { baseUrl } from '~/repositories/Repository';
 import Meta from '~/components/shared/headers/Meta';
 import { Modal } from 'antd';
