@@ -1,8 +1,8 @@
 import React from 'react';
-import HomePage from '~/components/freeleance/home/HomePage';
 import PageLayout from '~/components/layouts/PageLayout';
 import Meta from '~/components/shared/headers/Meta';
 import { TelegramLink } from '~/components/shared/telegramLink';
+import Home from '~/widgets/home';
 
 function NewHomePage() {
     return (
@@ -25,7 +25,7 @@ function NewHomePage() {
                 author='Soff.uz'
                 image='c'
             />
-            <HomePage />
+            <Home />
             <TelegramLink />
         </PageLayout>
     );

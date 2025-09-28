@@ -5,7 +5,7 @@ import PanelCartMobile from '../panel/PanelCartMobile';
 import PanelSearch from '../panel/PanelSearch';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { AudioContext } from '~/shared/hooks/AudioContext';
+import { AudioContext } from '~/app/providers/AudioContext';
 
 
 function NavigationList() {

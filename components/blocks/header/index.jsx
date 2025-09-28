@@ -2,12 +2,11 @@ import React, { useCallback, useEffect, useState } from 'react';
 import HeaderTop from './HeaderTop';
 import HeaderLogo from './HeaderLogo';
 import HeaderActions from './HeaderActions';
-import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { initLocalCart } from '~/store/ecomerce/slice';
-import NavbarMenu from '../../freeleance/home/widgets/NavbarMenu';
 import useResponsive from '~/shared/utilities/useResponsive';
 import NavbarSearch from './navbar-search';
+import NavbarMenu from '~/widgets/navbar-menu';
 
 const Header = () => {
     const [headerSticky, setHeaderSticky] = useState(false);

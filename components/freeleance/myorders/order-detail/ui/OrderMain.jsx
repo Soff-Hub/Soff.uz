@@ -21,7 +21,7 @@ import useSubmit from '../api/useSubmit';
 import { useQueryClient } from '@tanstack/react-query';
 import ReactConfetti from 'react-confetti';
 import { useRouter } from 'next/router';
-import OrderCard from '~/entities/cards/order-card';
+import OrderCard from '~/entities/order/order-card';
 import useResponsive from '~/shared/utilities/useResponsive';
 dayjs.locale('uz-latn');
 

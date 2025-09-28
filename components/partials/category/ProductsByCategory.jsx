@@ -1,7 +1,7 @@
 import React from 'react';
 import { Pagination } from 'antd';
 import Link from 'next/link';
-import ProductCard from '~/components/freeleance/home/ui/ProductCard';
+import ProductCard from '~/entities/product/product-card';
 
 export default function ProductsByCategory({
     data = [],

@@ -16,9 +16,9 @@ import AISoffiaPresentation from '~/components/elements/AISoffiaPresentation';
 import ModelAndDesignProduct from '~/components/elements/products/ModelAndDesignProduct';
 import Axios from 'axios';
 import { Skeleton } from 'antd';
-import ProductCard from '~/components/freeleance/home/ui/ProductCard';
 import { useDispatch } from 'react-redux';
 import { setShowFastDownload } from '~/store/fast-dowload/slice';
+import ProductCard from '~/entities/product/product-card';
 
 export default function ProductDefaultPage({ defaultProducts }) {
     const router = useRouter();
