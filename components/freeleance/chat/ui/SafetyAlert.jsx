@@ -8,7 +8,6 @@ const SafetyAlert = () => {
     const { isMobile } = useResponsive()
 
     useEffect(() => {
-        // LocalStorage tekshiramiz
         const dismissed = localStorage.getItem('safetyAlertDismissed');
         if (!dismissed) {
             setVisible(true);
@@ -25,7 +24,7 @@ const SafetyAlert = () => {
     return (
         <Alert
             className="mb-3 w-100"
-            description={<TextSlicer bio={"Xavfsizlik uchun barcha to‘lovlarni faqat soff.uz platformasi orqali amalga oshiring. Shaxsiy ma’lumotlaringizni (telefon, karta raqami va hokazo) bermang."} len={isMobile ? 50 : 100000}/>}
+            description={<TextSlicer bio={"Ogohlantirish! Sayt tashqarisida to‘lov yoki ma’lumot almashish xavfli. Platforma bunday holatlar uchun mas’ul emas. Har doim suhbat va to‘lovlarni platforma ichida bajaring."} len={isMobile ? 50 : 100000}/>}
             type="warning"
             showIcon
             closable

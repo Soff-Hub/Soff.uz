@@ -18,7 +18,7 @@ const SerachSide = ({ lastProducts, createBtn }) => {
                         fontWeight: 400,
                     }}
                     className='similar_title'>
-                    Top xizmatlar
+                    Ommabop xizmatlar
                 </h3>
             }
 
