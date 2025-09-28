@@ -6,7 +6,7 @@ import { SmileOutlined } from '@ant-design/icons';
 
 import useCredentials from '~/shared/hooks/useCredentials'
 import useWebSocket from '~/shared/hooks/useWebSocket';
-import { wssBaseUrl } from '~/shared/utilities/exports';
+import { wssBaseUrl } from '~/shared/api/end-points';
 
 export default function HeaderNotifications({ color }) {
     const { token } = useCredentials()
