@@ -59,7 +59,7 @@ const OrderMain = ({ order }) => {
         }
     }, [query?.isOpen]);
     return (
-        <div className="col-lg-9 col-12 mb-5 rounded-2">
+        <div className="col-lg-9 col-12 rounded-2">
             <div className={styles.orderDetailMain}>
                 {order?.order_status_doing?.status === 'pending' && (
                     <div className={styles.orderPayCard}>
