@@ -103,7 +103,6 @@
         grid-template-columns: repeat(2, 1fr);
     }
 
-
 }
 
 .date,
@@ -132,21 +131,23 @@
     outline: none;
     border: 1px solid #06aa27;
     border-radius: 7px;
-    background-color: #06aa27;
-    color: white;
     transition: all 0.3s;
     padding: 8px 16px;
     font-size: 15px;
     font-weight: 500;
     justify-self: end;
-
+    color: #06aa27;
+    background: white;
+    
     &:hover {
-        color: #06aa27;
-        background: white;
+        background-color: #06aa27;
+        color: white;
     }
 
     @media (max-width: 576px) {
-        width: 100%;
+        width: 100%; // ✅ butun kenglikni egallaydi
         justify-self: stretch;
+        
+        grid-column: 1 / -1; // ✅ gridning boshidan oxirigacha cho‘ziladi
     }
 }

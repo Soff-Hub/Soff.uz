@@ -4,6 +4,7 @@ import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import { getRemainingDays } from '~/shared/utilities/calculateTime';
 import { useRouter } from 'next/router';
 import { Avatar, message } from 'antd';
+import { cn } from '~/shared/utilities/cn';
 
 const OrderCard = ({ order, onOpenDrawer }) => {
     const router = useRouter();
@@ -69,12 +70,20 @@ const OrderCard = ({ order, onOpenDrawer }) => {
                     </a>
                 </div>
             </div>
-            {(order.order_type && typeof onOpenDrawer !== 'function') && 
+            {(order.order_type == "custom_order" && typeof onOpenDrawer !== 'function') && 
                 <div className={styles.meta}>
                     <div className={styles.metaTitle}>
                         <i className="fa-solid fa-file-pen" /> Buyurtma tavsifi
                     </div>
                     <span>{order.description}</span>
+                </div>
+            }
+            {order.order_type == "ready_service" && 
+                <div className={styles.meta}>
+                    <div className={styles.metaTitle}>
+                        <i className="fa-solid fa-file-pen" /> Buyurtma tavsifi
+                    </div>
+                    <div dangerouslySetInnerHTML={{__html: order.description}} />
                 </div>
             }
             <div className={styles.catWrapper}>
@@ -119,8 +128,10 @@ const OrderCard = ({ order, onOpenDrawer }) => {
                         onClick={handlePrimaryClick}
                     >
                         {hasSeller ? 'Batafsil' :
-                            <div className='d-flex align-items-center gap-3'>
-                                Takliflarni ko'rish
+                            <div className={cn('flex', 'justify-center', 'items-center', 'gap-2')}>
+                                <span style={{fontSize: "14px"}}>
+                                    Takliflarni ko'rish
+                                </span>
                                 <Avatar.Group
                                     max={{
                                         count: 3,
@@ -128,7 +139,7 @@ const OrderCard = ({ order, onOpenDrawer }) => {
                                     }}
                                 >
                                     {order?.offers?.map(item =>
-                                        <Avatar src={item?.photo_url || '/static/img/ozodbek.png'} />
+                                        <Avatar size={25} src={item?.photo_url || '/static/img/ozodbek.png'} />
                                     )}
                                 </Avatar.Group>
                             </div>

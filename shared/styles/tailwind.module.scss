@@ -389,7 +389,7 @@
   overflow: visible;
 }
 
-@for $i from 1 through 200 {
+@for $i from 1 through 500 {
   .w-\[#{ $i }px\] { width: #{$i}px; }
   .h-\[#{ $i }px\] { height: #{$i}px; }
   .m-\[#{ $i }px\] { margin: #{$i}px; }
@@ -423,7 +423,7 @@ $colors: (
   "dark": #111827,
   "light": #f9fafb,
   "white": #ffffff,
-  "black": #000000,
+  "black": #000000, 
 );
 
 // ✅ Text colors

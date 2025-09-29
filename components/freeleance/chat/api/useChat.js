@@ -60,7 +60,7 @@ const useChat = (chatId) => {
         if (!chatId || !user?.access) return;
 
         const ws = new WebSocket(
-            `${process.env.NEXT_PUBLIC_WS_FREELEANCE_URL}${chatId}/?token=${user.access}`
+            `${process.env.NEXT_PUBLIC_WS_FREELEANCE_URL}chat/${chatId}/?token=${user.access}`
         );
         wsRef.current = ws;
 
