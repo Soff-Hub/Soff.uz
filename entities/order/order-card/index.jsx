@@ -78,7 +78,7 @@ const OrderCard = ({ order, onOpenDrawer }) => {
                     <span>{order.description}</span>
                 </div>
             }
-            {order.order_type == "ready_service" && 
+            {(order.order_type == "ready_service" &&  typeof onOpenDrawer !== 'function') &&
                 <div className={styles.meta}>
                     <div className={styles.metaTitle}>
                         <i className="fa-solid fa-file-pen" /> Buyurtma tavsifi

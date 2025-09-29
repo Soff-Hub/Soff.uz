@@ -199,7 +199,6 @@ const Search_Results = ({
 
 export default Search_Results;
 
-// SSR part
 export async function getServerSideProps(context) {
     const {
         keyword = '',
@@ -213,6 +212,9 @@ export async function getServerSideProps(context) {
         offset = 0,
         category_id = "",
         service_parent = "",
+        content_extensions = "", // fayl turi (file_type)
+        page_from = "", // ✅ yangi qo‘shildi
+        page_to = "",   // ✅ yangi qo‘shildi
     } = context.query;
 
     const servicesQuery = new URLSearchParams({
@@ -234,12 +236,15 @@ export async function getServerSideProps(context) {
 
     const fourChildUrl = `${baseUrlUseApi}customer/four-child?direction=${type}`;
     const childCategoryUrl = `${baseUrlUseApi}customer/four-child?direction=${type}&parent__slug=${parentCategory}`;
-    const searchUrl = `${baseUrlUseApi}customer/same-google-search/?page=${page}&search=${keyword}&type=${type}&category=${category}&order_by=${order_by}`;
-    const lastProductsUrl = `${baseURL}customer/last-added?limit=10`
-    const servicesUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/customer?${servicesQuery.toString()}&search=${keyword}${service_parent ? `&category_id=${service_parent}` : ""}`
-    const serviceParentUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/categories/?direction=${direction || ""}`
-    const serviceChildUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/categories/?parent_id=${service_parent}`
-    const sellersUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/users/sellers?limit=${limit}&offset=${offset}&search=${keyword}`
+
+    // ✅ Yangi filterlar qo‘shildi
+    const searchUrl = `${baseUrlUseApi}customer/same-google-search/?page=${page}&search=${keyword}&type=${type}&category=${category}&order_by=${order_by}&content_extensions=${content_extensions}&page_from=${page_from}&page_to=${page_to}`;
+
+    const lastProductsUrl = `${baseURL}customer/last-added?limit=10`;
+    const servicesUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/customer?${servicesQuery.toString()}&search=${keyword}${service_parent ? `&category_id=${service_parent}` : ""}`;
+    const serviceParentUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/categories/?direction=${direction || ""}`;
+    const serviceChildUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/categories/?parent_id=${service_parent}`;
+    const sellersUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/users/sellers?limit=${limit}&offset=${offset}&search=${keyword}`;
 
     const [fourChildData, childCategoryData, searchData, lastProducts, service, serviceParent, serviceChild, sellers] = await Promise.all([
         fetchJson(fourChildUrl),
@@ -251,6 +256,7 @@ export async function getServerSideProps(context) {
         fetchJson(serviceChildUrl),
         fetchJson(sellersUrl)
     ]);
+
     const searchError = searchData?.error || null;
     return {
         props: {
