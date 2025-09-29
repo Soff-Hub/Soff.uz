@@ -49,6 +49,8 @@ const ServiceDetail = ({ data }) => {
         serviceItems: service_items,
     };
 
+    console.log("111111111", data)
+
     const breadcrumbItems = useMemo(
         () => [
             {
@@ -112,7 +114,7 @@ const ServiceDetail = ({ data }) => {
                 <div className="col-12 col-lg-4">
                     <PriceBox priceBox={priceBox} />
                     <MoneyBack />
-                    <UserBox priceBox={priceBox} pushUser={pushUser} />
+                    <UserBox rating={service?.avg_rating} feedbacks={service?.feedback_count} priceBox={priceBox} pushUser={pushUser} />
                 </div>
             </div>
             <div className="row">

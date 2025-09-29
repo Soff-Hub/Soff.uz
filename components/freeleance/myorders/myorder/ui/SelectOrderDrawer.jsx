@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import { Drawer, Avatar, Typography, Button, Tag, message, Modal, Empty } from "antd";
-import styles from "../style/SelectOrderDrawer.module.scss";
+import React, { useState, useEffect } from "react";
+import { Drawer, Avatar, Button, Tag, message, Modal, Spin } from "antd";
 import TextSlicer from "~/shared/utilities/TextSlicer";
 import useResponsive from "~/shared/utilities/useResponsive";
 import { useFGet, useFPost } from "~/shared/hooks/useFApi";
 import { useSelector } from "react-redux";
-import { ExclamationCircleOutlined } from "@ant-design/icons";
+import { ExclamationCircleOutlined, StarFilled } from "@ant-design/icons";
 import { useRouter } from "next/router";
-import Link from "next/link";
 import OrderCard from "~/entities/order/order-card";
-
+import { formatCurrencyWithSpace } from "~/shared/utilities/product-helper";
+import { cn } from "~/shared/utilities/cn";
+import useOffers from "../api/useOffers";
 
 const SelectOrderDrawer = ({ open, onClose, order }) => {
     const [selectedOffer, setSelectedOffer] = useState(null);
@@ -17,11 +17,19 @@ const SelectOrderDrawer = ({ open, onClose, order }) => {
     const { isDesktop } = useResponsive();
     const { push } = useRouter();
 
-    const { data: freelancers } = useFGet(
+    const { data: initialOffers } = useFGet(
         order?.id,
         `offer/${order?.id}/`,
-        { enabled: !!order?.id, token: user?.access }
+        { enabled: open && !!order?.id, token: user?.access }
     );
+
+    const { offers, setOffers, isConnected } = useOffers(order?.id, open);
+
+    useEffect(() => {
+        if (initialOffers && open) {
+            setOffers(initialOffers);
+        }
+    }, [initialOffers, open]);
 
     const { mutate: selectOffer, isPending } = useFPost({
         url: "offer/select-offer",
@@ -29,7 +37,7 @@ const SelectOrderDrawer = ({ open, onClose, order }) => {
         onSuccess: () => {
             message.success("Frilanser tanlandi!");
             setSelectedOffer(null);
-            push(`/order/${order?.id}?isOpen=true`)
+            push(`/order/${order?.id}?isOpen=true`);
             onClose();
         },
         onError: () => {
@@ -50,11 +58,11 @@ const SelectOrderDrawer = ({ open, onClose, order }) => {
                 title="Frilanser takliflari"
                 placement="right"
                 width={isDesktop ? "70%" : "80%"}
-                style={{ height: "100vh", overflow: "auto" }}
                 onClose={onClose}
                 open={open}
+                destroyOnClose  
             >
-                <OrderCard order={order}/>
+                <OrderCard order={order} />
                 <Tag
                     className="w-100 my-4 fs-4 text-wrap"
                     style={{ color: "orange", background: "transparent", border: "none" }}
@@ -63,69 +71,136 @@ const SelectOrderDrawer = ({ open, onClose, order }) => {
                     Ishni boshlash uchun frilanser tanlashingiz kerak
                 </Tag>
 
-                <div className={styles.sellerList}>
-                    {freelancers?.length > 0 ? (
-                        freelancers?.map((item, index) => (
-                            <div key={index} className={styles.sellerCard}>
-                                <div className={styles.cardLeft}>
+                <div className={cn("w-full")}>
+                    {offers?.length > 0 ? (
+                        offers.map((item) => (
+                            <div
+                                key={item?.id}
+                                className={cn(
+                                    "shadow-lg",
+                                    "p-[16px]",
+                                    "bg-light",
+                                    "rounded-2xl",
+                                    "flex",
+                                    "flex-col",
+                                    "gap-3",
+                                    "border"
+                                )}
+                            >
+                                <div className={cn("flex", "items-center", "gap-4")}>
                                     <Avatar
-                                        style={{ cursor: "pointer" }}
-                                        onClick={() => push(`/seller/${item?.seller?.soff_seller_id}`)}
                                         src={item?.seller?.photo_url || "/static/img/ozodbek.png"}
-                                        size={64}
+                                        size={50}
+                                        style={{ minWidth: "50px" }}
+                                        className={cn("cursor-pointer")}
+                                        onClick={() =>
+                                            push(`/seller/${item?.seller?.soff_seller_id}`)
+                                        }
                                     />
-                                    <div className={styles.info}>
-                                        <Link href={`/seller/${item?.seller?.soff_seller_id}`}>
-                                            <Typography.Title
-                                                className={styles.hover_link}
-                                                style={{ cursor: "pointer", margin: 0, }}
-                                                level={5}
-                                            >
-                                                {item?.seller?.full_name}
-
-                                            </Typography.Title>
-                                        </Link>
-                                        <Typography.Text type="secondary">
-                                            {item?.seller?.position?.title || "Kasbi ko‘rsatilmagan"}
-                                        </Typography.Text>
-                                    </div>
-                                </div>
-                                <div className={styles.cardCenter}>
-                                    <Typography.Title type="secondary" level={5}>
-                                        Narxi:
-                                    </Typography.Title>
-                                    <Typography.Title level={5} style={{ margin: 0 }}>
-                                        {item.money?.toLocaleString("uz-UZ")} so‘m
-                                    </Typography.Title>
-                                </div>
-                                <div className={styles.cardRight}>
-                                    <div className="d-flex flex-column align-items-start justify-content-start">
-                                        <p className=" m-0 p-0 fs-4 text-secondary">
-                                            Taklif izohi:
-                                        </p>
-                                        <p className={`${styles.recommedation} text-justify`}>
-                                            <TextSlicer bio={item.comment} len={60} />
-                                        </p>
-                                    </div>
-                                    <div className="d-flex justify-content-end w-100">
-                                        <Button
-                                            onClick={() => setSelectedOffer(item)}
-                                            type="primary"
-                                            size="small"
-                                            className="px-5 py-4 fs-3"
-                                            style={{ background: "#00a44f", textAlign: "end" }}
+                                    <div className={cn("flex", "flex-col")}>
+                                        <h3
+                                            onClick={() =>
+                                                push(`/seller/${item?.seller?.soff_seller_id}`)
+                                            }
+                                            className={cn(
+                                                "text-[24px]",
+                                                "mb-0",
+                                                "cursor-pointer",
+                                                "hover-text-primary",
+                                                "transition"
+                                            )}
                                         >
-                                            Tanlash
-                                        </Button>
+                                            {item?.seller?.full_name}
+                                        </h3>
+                                        <span className={cn("text-primary")}>
+                                            {item?.seller?.position?.title}
+                                        </span>
                                     </div>
+                                </div>
+                                <p className={cn("mb-0", "text-lg", "text-dark")}>
+                                    {item.comment}
+                                </p>
+                                <div className={cn("flex", "justify-between", "items-center")}>
+                                    <div>
+                                        <div className={cn("flex", "items-center", "gap-1")}>
+                                            <i
+                                                style={{
+                                                    fontSize: "14px",
+                                                    color: "rgba(0,0,0,0.6)",
+                                                }}
+                                                className="fa-solid fa-sack-dollar"
+                                            ></i>
+                                            <span
+                                                className={cn(
+                                                    "text-[14px]",
+                                                    "text-secondary"
+                                                )}
+                                            >
+                                                Taklif narxi:
+                                            </span>
+                                        </div>
+                                        <span
+                                            className={cn("text-base", "font-semibold")}
+                                        >
+                                            {formatCurrencyWithSpace(item?.money)} so‘m
+                                        </span>
+                                    </div>
+                                    {(item?.seller?.avg_rating && item?.seller?.avg_rating !== 0) &&
+                                        <div>
+                                            <span
+                                                className={cn("text-[14px]", "text-secondary")}
+                                            >
+                                                Reytingi:
+                                            </span>
+                                            <div
+                                                className={cn("flex", "items-center", "gap-1")}
+                                            >
+                                                <StarFilled
+                                                    className={cn("text-base", "text-warning")}
+                                                />
+                                                <span
+                                                    className={cn("text-base", "text-warning")}
+                                                >
+                                                    {item?.seller?.avg_rating}
+                                                </span>
+                                                <span>({item?.seller?.feedback_count} izoh)</span>
+                                            </div>
+                                        </div>
+                                    }
+                                    <Button
+                                        onClick={() => setSelectedOffer(item)}
+                                        type="primary"
+                                    >
+                                        Tanlash
+                                    </Button>
                                 </div>
                             </div>
                         ))
                     ) : (
-                        <Empty description="Hozircha hech qanday frilanser taklif yubormagan" />
+                        <div
+                            className={cn(
+                                "flex",
+                                "flex-col",
+                                "justify-center",
+                                "items-center",
+                                "w-full",
+                                "h-[500px]",
+                                "flex-1"
+                            )}
+                        >
+                            <Spin size="large" />
+                            <p
+                                className={cn(
+                                    "mt-4",
+                                    "text-base",
+                                    "text-secondary"
+                                )}
+                            >
+                                Frilanserlar taklif yubormoqda. Iltimos biroz kuting...
+                            </p>
+                        </div>
                     )}
                 </div>
-
             </Drawer>
 
             <Modal
@@ -137,12 +212,19 @@ const SelectOrderDrawer = ({ open, onClose, order }) => {
                 cancelText="Bekor qilish"
                 confirmLoading={isPending}
                 zIndex={20000}
+                centered
             >
                 <p style={{ fontSize: "12px" }}>
-                    Haqiqatan ham Siz <strong>{selectedOffer?.seller?.full_name}</strong> ni tanlamoqchimisiz?
+                    Haqiqatan ham Siz{" "}
+                    <strong>{selectedOffer?.seller?.full_name}</strong> ni
+                    tanlamoqchimisiz?
                 </p>
-
-                <p><TextSlicer title={'Izoh:'} bio={`${selectedOffer?.comment || 'Izoh yo‘q'}`} /></p>
+                <p>
+                    <TextSlicer
+                        title={"Izoh:"}
+                        bio={`${selectedOffer?.comment || "Izoh yo‘q"}`}
+                    />
+                </p>
             </Modal>
         </>
     );
