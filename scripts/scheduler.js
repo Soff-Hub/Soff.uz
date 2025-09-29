@@ -12,8 +12,9 @@ async function clearCache() {
     }
 }
 
-// Run every 2 minutes
-setInterval(clearCache, 2 * 60 * 1000);
+// Run every 1 day
+const oneDayInterval = 24 * 60 * 60 * 1000;
+setInterval(clearCache, oneDayInterval);
 
 // Run immediately once on start
 clearCache();

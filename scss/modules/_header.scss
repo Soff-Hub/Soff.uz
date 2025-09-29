@@ -746,3 +746,19 @@
         border-right: 0.5px solid rgb(211, 209, 209) !important;
     }
 }
+
+.option-price-btn {
+    border: 1px solid #d9d9d9;
+    transition: background-color 0.3s, border 0.3s;
+    padding: 5px 10px;
+
+    &:hover {
+        border: 1px solid $color-1st;
+    }
+
+    &.active {
+        border: 1px solid $color-1st;
+        background-color: $color-1st;
+        color: #fff;
+    }
+}
