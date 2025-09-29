@@ -1,11 +1,14 @@
 const fs = require('fs');
 const path = require('path');
 
-function clearCache() {
+async function clearCache() {
     const cacheDir = path.join(process.cwd(), '.next', 'cache');
 
     if (fs.existsSync(cacheDir)) {
-        fs.rmSync(cacheDir, { recursive: true, force: true });
+        fs.rm(cacheDir, { recursive: true, force: true }, err => {
+            if (err) console.error('Failed to clear cache', err);
+            else console.log('Cache cleared ✅');
+        });
     }
 }
 
