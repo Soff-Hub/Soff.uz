@@ -24,7 +24,7 @@ export default function CodeVerifyForm({ authCode, onClose, slug, onSuccess }) {
     useEffect(() => {
         SetMsg(localStorage.getItem('msg'));
 
-        startTimer(); // Sahifa yuklanishi bilan timerni ishga tushiramiz
+        startTimer(); 
 
         return () => clearInterval(timerId); // Komponent unmount bo‘lganda intervalni to‘xtatish
     }, []);
