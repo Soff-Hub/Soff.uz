@@ -16,9 +16,5 @@ async function clearCache() {
 const oneDayInterval = 24 * 60 * 60 * 1000;
 setInterval(clearCache, oneDayInterval);
 
-// Run immediately once on start
-<<<<<<< HEAD
 clearCache();
-=======
-clearCache();
->>>>>>> 88820b001706add2634b3c62c841e70a5ff7ce9d
+
