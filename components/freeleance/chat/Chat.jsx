@@ -4,12 +4,15 @@ import ChatWindow from './ui/ChatWindow';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { useRouter } from 'next/router';
 import useGetChatById from './api/useGetChatById';
+import { useDispatch } from 'react-redux';
+import { setShowSearch } from '~/store/fast-dowload/slice';
 
 const Chat = () => {
     const [chatId, setChatId] = useState(null);
     const { isMobile, isTablet } = useResponsive();
     const { query } = useRouter();
     const { refetch } = useGetChatById(chatId);
+    const dispatch = useDispatch()
     useEffect(() => {
         if (query?.chatId) {
             console.log(query);
@@ -24,11 +27,19 @@ const Chat = () => {
         }
     }, [chatId]);
 
+    useEffect(() => {
+        dispatch(setShowSearch(false));
+
+        return () => {
+            dispatch(setShowSearch(true));
+        };
+    }, [dispatch])
+
     const isSmallScreen = isMobile || isTablet;
 
     return (
         <div className='my-5'>
-            
+
             <div className="row">
                 {!isSmallScreen && (
                     <>

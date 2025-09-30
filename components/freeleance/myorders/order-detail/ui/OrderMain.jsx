@@ -23,6 +23,8 @@ import ReactConfetti from 'react-confetti';
 import { useRouter } from 'next/router';
 import OrderCard from '~/entities/order/order-card';
 import useResponsive from '~/shared/utilities/useResponsive';
+import { useDispatch } from 'react-redux';
+import { setShowSearch } from '~/store/fast-dowload/slice';
 dayjs.locale('uz-latn');
 
 const OrderMain = ({ order }) => {
@@ -38,7 +40,8 @@ const OrderMain = ({ order }) => {
     const submit = useSubmit();
     const queryClient = useQueryClient();
     const { query, push } = useRouter()
-    const { isMobile, isDesktop } = useResponsive()
+    const { isDesktop } = useResponsive()
+    const dispatch = useDispatch()
 
     const items = [
         { title: <Link href={'/order/my-orders'}>Mening buyurtmalarim</Link> },
@@ -58,6 +61,15 @@ const OrderMain = ({ order }) => {
             push(`/order/${query?.id}`)
         }
     }, [query?.isOpen]);
+
+
+    useEffect(() => {
+        dispatch(setShowSearch(false));
+
+        return () => {
+            dispatch(setShowSearch(true));
+        };
+    }, [dispatch])
     return (
         <div className="col-lg-9 col-12 rounded-2">
             <div className={styles.orderDetailMain}>
@@ -166,7 +178,7 @@ const OrderMain = ({ order }) => {
                     </>
                 )}
                 <Breadcrumb items={items} className='mb-2' />
-                <OrderCard order={order}/>
+                <OrderCard order={order} />
                 {order?.order_status_doing?.status === 'completed' && (
                     <div className="d-flex justify-content-end align-items-center mt-3">
                         <Button
