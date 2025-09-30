@@ -43,7 +43,6 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
     const { user } = useSelector(state => state.auth);
     const { push } = useRouter();
     const [confirmOpen, setConfirmOpen] = useState(false);
-    console.log({ budget, seller, sellerInfo });
 
     useEffect(() => {
         form.setFieldValue('direction', direction);
@@ -158,7 +157,13 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
                                     }}>
                                     {sellerInfo?.image ? (
                                         <img
-                                            className="rounded-circle object-fit-cover"
+                                            className={
+                                                'rounded-circle object-fit-cover'
+                                            }
+                                            style={{
+                                                width: '50px',
+                                                aspectRatio: '1/1',
+                                            }}
                                             src={sellerInfo.image}
                                             alt="seller-image"
                                         />
@@ -191,10 +196,8 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
                                 </div>
                             </div>
                             <div className="text-end">
-                                {/* <div className="text-white fw-bold fs-5">
-                                    100 000 ₽
-                                </div> */}
-                                <div
+                                {/*NOTE: this will be implemented soon*/}
+                                {/* <div
                                     className="d-flex align-items-center gap-1 position-relative text-white fw-bold justify-content-end"
                                     style={{
                                         bottom: '3px',
@@ -210,7 +213,7 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
                                 </div>
                                 <div className="text-white-50 small">
                                     65 дней, предоплата 25%
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     </div>
@@ -362,7 +365,7 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
                                     ? `${value}`.replace(
                                           /\B(?=(\d{3})+(?!\d))/g,
                                           ' '
-                                    )
+                                      )
                                     : ''
                             }
                             parser={value =>
@@ -377,7 +380,7 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
                                     key={option.value}
                                     variant="solid"
                                     className="option-price-btn"
-                                    type='default'
+                                    type="default"
                                     onClick={() => {
                                         form.setFieldValue(
                                             'budget',
