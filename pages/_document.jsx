@@ -1,6 +1,4 @@
-// pages/_document.js
 import { Html, Head, Main, NextScript } from 'next/document';
-
 import React from 'react';
 
 export default function Document() {
@@ -8,20 +6,9 @@ export default function Document() {
         <Html lang="uz" style={{ overflowX: 'hidden' }}>
             <Head>
                 <link rel="shortcut icon" href={'/static/img/soff logo.png'} />
-                <link
-                    rel="icon"
-                    href={'/static/img/soff logo.png'}
-                    sizes="32x32"
-                />
-                <link
-                    rel="icon"
-                    href={'/static/img/soff logo.png'}
-                    sizes="192x192"
-                />
-                <link
-                    rel="apple-touch-icon-precomposed"
-                    href={'/static/img/soff logo.png'}
-                />
+                <link rel="icon" href={'/static/img/soff logo.png'} sizes="32x32" />
+                <link rel="icon" href={'/static/img/soff logo.png'} sizes="192x192" />
+                <link rel="apple-touch-icon-precomposed" href={'/static/img/soff logo.png'} />
 
                 <link
                     href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
@@ -48,10 +35,34 @@ export default function Document() {
                     href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
                 />
 
+                {/* ✅ OneSignal qo‘shilgan joy */}
+                {/* <script
+                    defer
+                    src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js"
+                ></script>
+                <script
+                    defer
+                    dangerouslySetInnerHTML={{
+                        __html: `
+                          window.OneSignalDeferred = window.OneSignalDeferred || [];
+                          OneSignalDeferred.push(async function(OneSignal) {
+                            await OneSignal.init({
+                              appId: "4c89c0b3-5aea-4145-b4cc-de98a7c8397a",
+                              safari_web_id: "web.onesignal.auto.63749170-9b18-4e2b-ba12-fbd09a76fb84",
+                              notifyButton: { enable: false },
+                              allowLocalhostAsSecureOrigin: true,
+                            });
+                          });
+                        `,
+                    }}
+                /> */}
+                {/* ✅ OneSignal tugadi */}
+
                 {process.env.NODE_ENV === 'production' && (
                     <script
                         defer
-                        src="https://www.googletagmanager.com/gtag/js?id=G-H60GJQ0WF2"></script>
+                        src="https://www.googletagmanager.com/gtag/js?id=G-H60GJQ0WF2"
+                    ></script>
                 )}
 
                 {process.env.NODE_ENV === 'production' && (
@@ -64,7 +75,8 @@ export default function Document() {
                         gtag('js', new Date());
                         gtag('config', 'G-H60GJQ0WF2');
                     `,
-                        }}></script>
+                        }}
+                    ></script>
                 )}
 
                 {process.env.NODE_ENV === 'production' && (
@@ -83,7 +95,8 @@ export default function Document() {
                         fbq('init', '1284858666704084');
                         fbq('track', 'PageView');
                     `,
-                        }}></script>
+                        }}
+                    ></script>
                 )}
 
                 {process.env.NODE_ENV === 'production' && (
@@ -103,7 +116,8 @@ export default function Document() {
                              accurateTrackBounce:true
                         });
                     `,
-                        }}></script>
+                        }}
+                    ></script>
                 )}
                 <noscript>
                     <div>
@@ -116,7 +130,9 @@ export default function Document() {
                 </noscript>
 
                 <noscript>
-                    <img height="1" width="1" 
+                    <img
+                        height="1"
+                        width="1"
                         style={{ position: 'absolute', left: '-9999px' }}
                         src="https://www.facebook.com/tr?id=1284858666704084&ev=PageView&noscript=1"
                         alt=""
@@ -130,7 +146,8 @@ export default function Document() {
                 <NextScript />
                 <script
                     defer
-                    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+                    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+                ></script>
             </body>
         </Html>
     );

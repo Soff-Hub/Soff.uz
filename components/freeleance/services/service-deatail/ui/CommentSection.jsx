@@ -4,6 +4,8 @@ import { useRouter } from 'next/router';
 import dayjs from 'dayjs';
 import styles from './styles/comment.module.scss';
 import useGetComments from '../api/useGetComments';
+import { cn } from '~/shared/utilities/cn';
+import { DownOutlined } from '@ant-design/icons';
 
 const CommentSection = ({ id, type }) => {
     const router = useRouter();
@@ -65,11 +67,12 @@ const CommentSection = ({ id, type }) => {
             {/* Ko‘proq yuklash tugmasi */}
             {hasNextPage && (
                 <div style={{ textAlign: 'center', marginTop: 16 }}>
-                    <Button onClick={() => fetchNextPage()} loading={isFetchingNextPage}>
-                        {isFetchingNextPage ? 'Yuklanmoqda...' : `Ko'proq ko‘rsatish (${data?.pages[0].total})`}
+                    <Button onClick={() => fetchNextPage()} loading={isFetchingNextPage} shape="round">
+                        {isFetchingNextPage ? 'Yuklanmoqda...' : <div className={cn("flex", 'items-center', 'gap-2')}>Ko'proq ko‘rsatish <DownOutlined /></div>}
                     </Button>
                 </div>
             )}
+            <p className={cn("mt-2", 'text-[12px]', 'text-center')}>{data?.pages[0].total} tadan {comments?.length} ta ko'rsatilgan</p>
         </div>
     );
 };

@@ -10,6 +10,7 @@ import { setOneShopDoc } from '~/store/auth/slice';
 import { useDispatch, useSelector } from 'react-redux';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
+import AuthModal from '~/components/AuthModal';
 
 export const fileColors = {
     ".doc": "#007DFF",
@@ -43,6 +44,7 @@ export const fileIcons = {
 function FileActions({ product }) {
     const { addSavedItem, wishlist, removeSavedItem } = useWishlist();
     const [open, setOpen] = useState(false);
+    const [ authModal, setAuthModal ] = useState(false)
     const Router = useRouter();
     const pid = Router.asPath;
     const { setCartOneItem, removeCartOneItem } = useCart();
@@ -51,7 +53,6 @@ function FileActions({ product }) {
     const state = useSelector((state) => state.auth.user?.access);
     const { isMobile } = useResponsive()
 
-    // Savatga qo'shish
     function handleAddItemToCart(e) {
         showModal();
         e.preventDefault();
@@ -64,7 +65,6 @@ function FileActions({ product }) {
         setBasket(prev => !prev);
     }
 
-    // Wishlistga qo'shish
     function handleAddItemToWishlist(e) {
         e.preventDefault();
         addSavedItem(product.id);
@@ -107,7 +107,6 @@ function FileActions({ product }) {
         const videoUrl = `https://soff.uz${pid}`;
         const telegramUrl = `https://t.me/share/url?url=${encodeURIComponent(videoUrl)}`;
 
-        // Telegramga yo‘naltirish
         window.open(telegramUrl, '_blank');
     };
 
@@ -118,13 +117,10 @@ function FileActions({ product }) {
         if (state) {
             Router.push(`/account/checkout?id=${product?.id}`);
         } else {
-            Router.push(`/auth/login?id=${product?.id}`);
+            // Router.push(`/auth/login?id=${product?.id}`);
+            setAuthModal(true)
         }
     }
-
-    console.log(product)
-    // content_type colors
-
     return (
         <>
             {contextHolder}
@@ -405,6 +401,13 @@ function FileActions({ product }) {
                 <p>Mahsulotingizni savatga qo'shdingiz!</p>
                 <p></p>
             </Modal>
+            <AuthModal 
+                open={authModal}
+                onClose={() => setAuthModal(false)}
+                onSuccess={() => {
+
+                }}
+            />
         </>
     )
 }
