@@ -5,7 +5,11 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import useCreateChat from '~/components/freeleance/chat/api/useCreateChat';
 import CalculateTimeDifference from '~/components/partials/account/DateFormatter';
-import { getDate, getStatus, getTimeAgo } from '~/shared/utilities/calculateTime';
+import {
+    getDate,
+    getStatus,
+    getTimeAgo,
+} from '~/shared/utilities/calculateTime';
 import { setActiveIndex } from '../../../store/seller/slice';
 import { apiForFreelance } from '~/repositories/api';
 import CreateOrderModal from '~/shared/components/modals/CreateOrderModal';
@@ -25,8 +29,7 @@ export default function SellerShortInfo({ sellerInfo, pid }) {
             ).then(res => res.json()),
         enabled: !!sellerInfo?.id,
     });
-    const [createModal, setCreateModal] = useState(false)
-
+    const [createModal, setCreateModal] = useState(false);
 
     const { data: services } = useQuery({
         queryKey: ['getSellerServices'],
@@ -66,10 +69,14 @@ export default function SellerShortInfo({ sellerInfo, pid }) {
                     alt="seller-image"
                 />
                 <div className=" sellerNameContainer d-flex flex-column ">
-                    <p className="sellerName text-center m-0">{sellerInfo?.full_name}</p>
+                    <p className="sellerName text-center m-0">
+                        {sellerInfo?.full_name}
+                    </p>
                     {sellerInfo?.position && (
                         <div className="d-flex align-items-center gap-3">
-                            <p className="m-0 text-center ">{sellerInfo?.position}</p>
+                            <p className="m-0 text-center ">
+                                {sellerInfo?.position}
+                            </p>
                         </div>
                     )}
                     <p style={{ color: '#312F30' }}>
@@ -83,9 +90,9 @@ export default function SellerShortInfo({ sellerInfo, pid }) {
                 <div className="d-flex align-items-center gap-4">
                     <i className="fa-solid fa-clipboard-list fs-2"></i>
                     <p className="m-0">
-                        {(sellerInfo?.has_service && sellerInfo?.has_portfolio) ?
-                            "Freelance xizmatlari uchun ochiq" : "Freelance xizmatlari uchun yopiq"
-                        }
+                        {sellerInfo?.has_service && sellerInfo?.has_portfolio
+                            ? 'Freelance xizmatlari uchun ochiq'
+                            : 'Freelance xizmatlari uchun yopiq'}
                     </p>
                 </div>
 
@@ -116,7 +123,8 @@ export default function SellerShortInfo({ sellerInfo, pid }) {
                         fontSize: '16px',
                     }}
                     className="btn">
-                    <i className="fa-solid fa-calendar"></i> Maxsus buyurtma berish
+                    <i className="fa-solid fa-calendar"></i> Maxsus buyurtma
+                    berish
                 </button>
             </div>
 
@@ -173,12 +181,11 @@ export default function SellerShortInfo({ sellerInfo, pid }) {
                     <p
                         style={{
                             fontWeight: 300,
-                            fontSize: "13px",
-                            wordBreak: "break-word",   // yoki overflowWrap: "anywhere"
-                            whiteSpace: "pre-wrap"     // agar yangi qatorlarni saqlash kerak bo‘lsa
+                            fontSize: '13px',
+                            wordBreak: 'break-word', // yoki overflowWrap: "anywhere"
+                            whiteSpace: 'pre-wrap', // agar yangi qatorlarni saqlash kerak bo‘lsa
                         }}
-                        className="m-0 text-wrap"
-                    >
+                        className="m-0 text-wrap">
                         {sellerInfo?.bio}
                     </p>
                 </div>
@@ -251,6 +258,7 @@ export default function SellerShortInfo({ sellerInfo, pid }) {
 
             <CreateOrderModal
                 seller={sellerInfo?.full_name}
+                sellerInfo={sellerInfo}
                 open={createModal}
                 onClose={() => setCreateModal(false)}
                 id={sellerInfo?.id}
