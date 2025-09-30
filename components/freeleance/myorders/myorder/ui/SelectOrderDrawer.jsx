@@ -84,7 +84,8 @@ const SelectOrderDrawer = ({ open, onClose, order }) => {
                                     "flex",
                                     "flex-col",
                                     "gap-3",
-                                    "border"
+                                    "border",
+                                    "mb-2"
                                 )}
                             >
                                 <div className={cn("flex", "items-center", "gap-4")}>

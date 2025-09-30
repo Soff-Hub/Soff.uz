@@ -10,7 +10,7 @@ import NextProgress from 'next-progress';
 import { Toaster } from 'react-hot-toast';
 import { Providers } from '~/app/providers';
 import AffiliateListener from '~/entities/affiliate';
-import OneSignal from 'react-onesignal';
+// import OneSignal from 'react-onesignal';
 
 function App({ Component, pageProps }) {
     useEffect(() => {
@@ -46,18 +46,16 @@ function App({ Component, pageProps }) {
         };
     }, []);
 
-    useEffect(() => {
-        // Ensure this code runs only on the client side
-        if (typeof window !== 'undefined') {
-            OneSignal.init({
-                appId: '3abeef1e-24c8-4898-90f6-a01ea21f36c0',
-                // You can add other initialization options here
-                notifyButton: {
-                    enable: true,
-                }
-            });
-        }
-    }, []);
+    // useEffect(() => {
+    //     if (typeof window !== 'undefined') {
+    //         OneSignal.init({
+    //             appId: '4c89c0b3-5aea-4145-b4cc-de98a7c8397a',
+    //             notifyButton: {
+    //                 enable: true,
+    //             }
+    //         });
+    //     }
+    // }, []);
 
     return (
         <>
