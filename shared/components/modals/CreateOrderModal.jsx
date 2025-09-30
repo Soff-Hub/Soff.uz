@@ -36,14 +36,13 @@ const priceOptions = [
     { title: '200 000', value: 200000 },
 ];
 
-const CreateOrderModal = ({ open, onClose, id, seller }) => {
+const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
     const [form] = Form.useForm();
     const budget = Form.useWatch('budget', form);
     const [direction, setDirection] = useState('scientific_work');
     const { user } = useSelector(state => state.auth);
     const { push } = useRouter();
     const [confirmOpen, setConfirmOpen] = useState(false);
-    console.log(budget);
 
     useEffect(() => {
         form.setFieldValue('direction', direction);
@@ -136,6 +135,89 @@ const CreateOrderModal = ({ open, onClose, id, seller }) => {
                 onCancel={onClose}
                 footer={null}
                 centered>
+                {seller && sellerInfo && (
+                    <div
+                        className="user-card mb-3 p-3 rounded-4"
+                        style={{
+                            background:
+                                'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                            border: '1px solid #e8e8e8',
+                        }}>
+                        <div className="d-flex align-items-center gap-1 justify-content-between">
+                            <div className="d-flex align-items-center gap-3">
+                                <div
+                                    className="user-avatar d-flex align-items-center justify-content-center rounded-circle"
+                                    style={{
+                                        width: '50px',
+                                        aspectRatio: '1/1',
+                                        background: '#fff',
+                                        fontSize: '20px',
+                                        fontWeight: 'bold',
+                                        color: '#667eea',
+                                    }}>
+                                    {sellerInfo?.image ? (
+                                        <img
+                                            className={
+                                                'rounded-circle object-fit-cover'
+                                            }
+                                            style={{
+                                                width: '50px',
+                                                aspectRatio: '1/1',
+                                            }}
+                                            src={sellerInfo.image}
+                                            alt="seller-image"
+                                        />
+                                    ) : (
+                                        seller?.charAt(0)?.toUpperCase()
+                                    )}
+                                </div>
+                                <div>
+                                    <div className="d-flex align-items-center gap-2">
+                                        <h6 className="m-0 text-white fw-bold">
+                                            {seller}
+                                        </h6>
+                                        <span
+                                            className="verified-badge"
+                                            style={{
+                                                color: '#4CAF50',
+                                                fontSize: '16px',
+                                            }}>
+                                            ✓
+                                        </span>
+                                    </div>
+                                    <div
+                                        className="d-flex align-items-center gap-1 position-relative text-white-50 small"
+                                        style={{
+                                            bottom: '3px',
+                                        }}>
+                                        {sellerInfo?.position ||
+                                            'No profession'}
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="text-end">
+                                {/*NOTE: this will be implemented soon*/}
+                                {/* <div
+                                    className="d-flex align-items-center gap-1 position-relative text-white fw-bold justify-content-end"
+                                    style={{
+                                        bottom: '3px',
+                                    }}>
+                                    <span
+                                        style={{
+                                            color: '#FFD700',
+                                            fontSize: '14px',
+                                        }}>
+                                        ★
+                                    </span>
+                                    <span>10/10</span>
+                                </div>
+                                <div className="text-white-50 small">
+                                    65 дней, предоплата 25%
+                                </div> */}
+                            </div>
+                        </div>
+                    </div>
+                )}
                 <Form form={form} layout="vertical" onFinish={handleFinish}>
                     <Form.Item
                         name="direction"
@@ -283,7 +365,7 @@ const CreateOrderModal = ({ open, onClose, id, seller }) => {
                                     ? `${value}`.replace(
                                           /\B(?=(\d{3})+(?!\d))/g,
                                           ' '
-                                    )
+                                      )
                                     : ''
                             }
                             parser={value =>
@@ -298,7 +380,7 @@ const CreateOrderModal = ({ open, onClose, id, seller }) => {
                                     key={option.value}
                                     variant="solid"
                                     className="option-price-btn"
-                                    type='default'
+                                    type="default"
                                     onClick={() => {
                                         form.setFieldValue(
                                             'budget',
