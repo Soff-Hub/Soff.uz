@@ -1,16 +1,14 @@
 import React from 'react';
-import PageContainer from '~/components/layouts/PageContainer';
+import PageContainer from '~/widgets/layouts/PageContainer';
 import Meta from '~/components/shared/headers/Meta';
 import ProductsByCategory from '~/components/partials/category/ProductsByCategory';
-import ScientificResourcesFilterSection, {
-    getTitleFromSlug,
-} from '~/components/elements/ScientificResourcesFilterSection';
+import { getTitleFromSlug, } from '~/components/elements/ScientificResourcesFilterSection';
 import { useRouter } from 'next/router';
 import { baseUrlUseApi } from '~/repositories/useApi';
-import styles from '../../components/blocks/catalogsSection/catalogs.module.scss';
+import styles from '~/widgets/home/catalog/style.module.scss';
 import Image from 'next/image';
-import GrayMentionCard from '~/components/blocks/cards/GrayMentionCard';
 import ProductFilterSection from '~/components/elements/product-filter-section/ProductFilterSection';
+import GrayCard from '~/widgets/gray-card';
 
 export default function ProductCategoryScreen({
     productsData,
@@ -150,7 +148,7 @@ export default function ProductCategoryScreen({
                             </div>
                         </div>
                     </section>
-                    <GrayMentionCard
+                    <GrayCard
                         title="Kerakli mahsulotni topa olmadingizmi? Buyurtma
                                 berishingiz mumkin."
                         btn="Buyurtmar berish"

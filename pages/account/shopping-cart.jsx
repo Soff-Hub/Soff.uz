@@ -1,7 +1,6 @@
 import React from 'react';
 import BreadCrumb from '~/components/elements/BreadCrumb';
-import PageContainer from '~/components/layouts/PageContainer';
-import FooterDefault from '~/components/shared/footers/FooterDefault';
+import PageContainer from '~/widgets/layouts/PageContainer';
 import { connect, useSelector } from 'react-redux';
 import ModuleEcomerceCartItems from '~/components/ecomerce/modules/ModuleEcomerceCartItems';
 import Link from 'next/link';
@@ -88,7 +87,7 @@ const ShoppingCartScreen = () => {
 
     return (
         <>
-            <PageContainer footer={<FooterDefault />} title="Shopping Cart">
+            <PageContainer title="Shopping Cart">
                 <div className="ps-page--simple mb-4">
                     <Meta
                         title={"Xarid savati"}

@@ -5,7 +5,7 @@ import useGetOrders from "./api/useGetOrders";
 import useCancelOrder from "./api/useCancelOrder";
 import useGetReasons from "./api/useGetReasons";
 import SelectOrderDrawer from "./ui/SelectOrderDrawer";
-import OrderCard from "../../../../entities/cards/order-card";
+import OrderCard from "../../../../entities/order/order-card";
 
 export const AllOrdersTable = ({ type }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);

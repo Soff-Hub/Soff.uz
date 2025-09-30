@@ -1,12 +1,10 @@
 import React from 'react';
 import Link from 'next/link';
-import FooterDefault from '../components/shared/footers/FooterDefault';
-import PageContainer from '~/components/layouts/PageContainer';
-import FooterComponents from '~/components/blocks/footer/FooterComponents';
+import PageContainer from '~/widgets/layouts/PageContainer';
 
 function Error() {
     return (
-        <PageContainer footer={<FooterDefault />} title="Sahifa topilmadi">
+        <PageContainer title="Sahifa topilmadi">
             <div className="ps-page--404">
                 <div className="container">
                     <div className="ps-section__content">

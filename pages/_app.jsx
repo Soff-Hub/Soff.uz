@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { CookiesProvider } from 'react-cookie';
 import '~/public/static/fonts/Linearicons/Font/demo-files/demo.css';
 import '~/public/static/fonts/font-awesome/css/font-awesome.min.css';
 import '~/public/static/css/bootstrap.min.css';
@@ -8,15 +7,9 @@ import '~/scss/style.scss';
 import '~/scss/electronic.scss';
 import Head from 'next/head';
 import NextProgress from 'next-progress';
-import { AudioProvider } from '~/shared/hooks/AudioContext';
-import { ProductProvider } from '~/context/ProductsContext';
-import { GoogleOAuthProvider } from '@react-oauth/google';
-import { Provider } from 'react-redux';
-import { store } from '~/store';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from 'react-hot-toast';
-import AffiliateListener from '~/components/AffiliateListener';
-const queryClient = new QueryClient();
+import { Providers } from '~/app/providers';
+import AffiliateListener from '~/entities/affiliate';
 
 function App({ Component, pageProps }) {
     useEffect(() => {
@@ -96,21 +89,11 @@ function App({ Component, pageProps }) {
                 options={{ showSpinner: false }}
                 color="#00A44F"
             />
-            <Provider store={store}>
-                <QueryClientProvider client={queryClient}>
-                    <GoogleOAuthProvider clientId="203103939049-2ste634q2uc1io9oaup8gt35tsmucru0.apps.googleusercontent.com">
-                        <CookiesProvider>
-                            <ProductProvider>
-                                <AudioProvider>
-                                    <AffiliateListener />
-                                    <Component {...pageProps} />
-                                    <Toaster position="top-center" />
-                                </AudioProvider>
-                            </ProductProvider>
-                        </CookiesProvider>
-                    </GoogleOAuthProvider>
-                </QueryClientProvider>
-            </Provider>
+            <Providers>
+                <AffiliateListener />
+                <Component {...pageProps} />
+                <Toaster position="top-center" />
+            </Providers>
         </>
     );
 }

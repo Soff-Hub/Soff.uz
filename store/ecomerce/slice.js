@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { baseUrl } from '~/repositories/Repository';
-import api from '~/service/api';
+import api from '~/shared/api/api';
 
 // Boshlang'ich holat
 const initialState = {

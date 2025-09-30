@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import PageContainer from '~/components/layouts/PageContainer';
+import PageContainer from '~/widgets/layouts/PageContainer';
 import SellerCollapseMenu from '~/components/shared/seller-profile/sellerCollapseMenu';
 import SellerComments from '~/components/shared/seller-profile/sellerComments';
 import SellerInfo from '~/components/shared/seller-profile/sellerInfo';

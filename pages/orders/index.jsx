@@ -1,11 +1,11 @@
 import React from 'react';
 import { Pagination } from 'antd';
 import { useRouter } from 'next/router';
-import PageContainer from '~/components/layouts/PageContainer';
+import PageContainer from '~/widgets/layouts/PageContainer';
 import Meta from '~/components/shared/headers/Meta';
 import ServicesFilterSection from '~/components/freeleance/services/ServicesFilterSection';
 import ServicesCardSection from '~/components/freeleance/services/ServicesCardSection';
-import GrayMentionCard from '~/components/blocks/cards/GrayMentionCard';
+import GrayCard from '~/widgets/gray-card';
 
 export default function SoffFreelancerPage({
     servicesData,
@@ -53,13 +53,11 @@ export default function SoffFreelancerPage({
                         />
                     </div>
                 )}
-                <div>
-                    <GrayMentionCard
-                        title="Izlaganingiz yo’qmi? O'z buyurtmangizni joylashtiring!"
-                        btn="Buyurtmar berish"
-                        link='https://t.me/soff_freelancing_bot'
-                    />
-                </div>
+                <GrayCard
+                    title="Izlaganingiz yo’qmi? O'z buyurtmangizni joylashtiring!"
+                    btn="Buyurtmar berish"
+                    link='https://t.me/soff_freelancing_bot'
+                />
                 <div className="servicesOrders" />
             </div>
         </PageContainer>

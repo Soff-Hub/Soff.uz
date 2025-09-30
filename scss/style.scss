@@ -73,10 +73,8 @@
 
 /*4. MODULES */
 // 4.1 header
-@import 'modules/navigations';
 @import 'modules/header';
 // 4.2 footer
-@import 'modules/footer';
 
 /*5. HELPERS */
 @import 'elements/helpers';
@@ -90,7 +88,6 @@
 @import './elements/new_search_header';
 
 @import './elements/sellerPage';
-@import './elements/topSellers';
 
 @import './elements/product-selection';
 
@@ -98,22 +95,13 @@
 @import './elements/productVideo';
 @import 'node_modules/react-modal-video/scss/modal-video.scss';
 
-@import './elements/audioProductCart';
 @import './elements/seller_products_details';
 
 @import './blocks/header';
-@import './blocks/components';
 @import './blocks/hero';
-@import './blocks/cards';
-@import './blocks/product-list';
-@import './blocks/footer';
 @import "./elements/affiliate_program";
 
 // service Page
-@import "./elements/service-page";
-@import "./elements/create-service";
-@import "./elements/service_create";
-@import "./elements/orders";
 @import "./utils/navbar_padding";
 
 // fonts

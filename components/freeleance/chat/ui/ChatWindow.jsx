@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import styles from '../style/chat.module.scss';
-import { Input, Button, Avatar, Empty, message } from 'antd';
+import { Input, Button, Avatar, Empty, message, Tooltip } from 'antd';
 import { ArrowDownOutlined, ArrowLeftOutlined, PaperClipOutlined, PlusOutlined, SendOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import ChatMessage from './ChatMessage';
 import { useRouter } from 'next/router';
@@ -22,7 +22,7 @@ const ChatWindow = ({ chatId, goBack }) => {
     const queryClient = useQueryClient();
     const { mutate: sendFile, isPending } = useSendMessage()
     const fileInputRef = useRef(null);
-    const [ open, setOpen ] = useState(false)
+    const [open, setOpen] = useState(false)
 
 
     const handleClickAttach = () => {
@@ -37,7 +37,10 @@ const ChatWindow = ({ chatId, goBack }) => {
                 queryClient.invalidateQueries(['chat-messages', chatId]);
                 scrollToBottom();
                 message.success('Fayl muvaffaqiyatli yuborildi');
-            }
+            },
+            onError: (err) => {
+                message.error(err?.response?.data?.detail || "Faylni yuborishda xatolik yuz berdi");
+            },
         });
     }, [chatId, sendFile, queryClient]);
 
@@ -137,7 +140,7 @@ const ChatWindow = ({ chatId, goBack }) => {
                     <span>{chat?.opponent?.last_seen}</span>
                 </div>
             </div>
-            <SafetyAlert/>
+            <SafetyAlert />
             <div onScroll={handlScroll} ref={messagesContainerRef} id="scrollableDiv" style={{ width: "100%", height: "100vh", overflowY: "scroll", display: "flex", flexDirection: "column-reverse", margin: "auto", overflowX: "hidden", position: "relative" }} className={`${styles.chat_messages}  p-3`}>
                 <InfiniteScroll
                     dataLength={messages.length}
@@ -186,6 +189,11 @@ const ChatWindow = ({ chatId, goBack }) => {
                     onChange={e => {
                         const selectedFile = e.target.files[0];
                         if (selectedFile) {
+                            const maxSize = 50 * 1024 * 1024;
+                            if (selectedFile.size > maxSize) {
+                                message.error("Fayl 50 MB dan katta bo'lishi mumkin emas");
+                                return; 
+                            }
                             setFile(selectedFile);
                             handleSendFile(selectedFile);
                         }
@@ -193,22 +201,23 @@ const ChatWindow = ({ chatId, goBack }) => {
                     style={{ display: "none" }}
                 />
 
-                <Button
-                    type='primary'
-                    style={{ background: "#00a44f" }}
-                    icon={<ShoppingCartOutlined />}
-                    iconPosition='end'
-                    onClick={() => setOpen(true)} 
-                >  
-                </Button>
-                <Button
-                    icon={<PaperClipOutlined />}
-                    type="primary"
-                    shape="circle"
-                    style={{ background: "#00a44f" }}
-                    onClick={handleClickAttach}
-                    loading={isPending}
-                />
+                <Tooltip title='Maxsus buyurtma berish'>
+                    <Button
+                        type='primary'
+                        icon={<ShoppingCartOutlined />}
+                        iconPosition='end'
+                        onClick={() => setOpen(true)}
+                    />
+                </Tooltip>
+                <Tooltip title='Fayl yuborish'>
+                    <Button
+                        icon={<PaperClipOutlined />}
+                        type="primary"
+                        shape="circle"
+                        onClick={handleClickAttach}
+                        loading={isPending}
+                    />
+                </Tooltip>
 
                 <Input
                     value={newMessage}

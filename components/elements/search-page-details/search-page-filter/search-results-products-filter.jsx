@@ -1,6 +1,6 @@
-import { Select } from 'antd';
+import { Select, Slider } from 'antd';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useState } from 'react';
 import {
   AppstoreOutlined,
   FileTextOutlined,
@@ -33,6 +33,21 @@ export default function SearchResultsProductsFilter({ total, parentData, childDa
     { title: 'Videolar', value: 'video', icon: <VideoCameraOutlined /> },
   ];
 
+  // ✅ Fayl turlari uchun filter
+  const fileTypes = [
+    { label: "DOCX", value: ".docx" },
+    { label: "DOC", value: ".doc" },
+    { label: "PPTX", value: ".pptx" },
+    { label: "PPT", value: ".ppt" },
+    { label: "PDF", value: ".pdf" },
+  ];
+
+  // ✅ Betlar soni filteri (faqat file uchun)
+  const [pageRange, setPageRange] = useState([
+    Number(router.query.page_from) || 1,
+    Number(router.query.page_to) || 100,
+  ]);
+
   const handleChange = (newQuery) => {
     router.push({
       pathname: router.pathname,
@@ -51,51 +66,55 @@ export default function SearchResultsProductsFilter({ total, parentData, childDa
         page: 1,
         search: router.query.search || '',
         type: 'all',
+        file_type: '',
+        page_from: '',
+        page_to: '',
       },
     }, undefined, { scroll: false });
   };
 
-return (
-  <div className='Search_Results_Products_form_box '>
-    <div className="row align-items-center mb-3">
-      <div className="col-12 col-md-3">
-        <p className='countProduct text-nowrap m-0'>
-          {total ? `${total} ta mahsulot topildi` : ''}
-        </p>
+  return (
+    <div className='Search_Results_Products_form_box '>
+      <div className="row align-items-center mb-3">
+        <div className="col-12 col-md-3">
+          <p className='countProduct text-nowrap m-0'>
+            {total ? `${total} ta mahsulot topildi` : ''}
+          </p>
+        </div>
       </div>
-    </div>
 
       <form className="Search_Results_Products_form">
         <div className="row g-3">
-
-          {/* Dynamic col class hisoblash */}
           {(() => {
             const hasType = router.query.type && router.query.type !== 'all';
             const hasParent = !!router.query.parentCategory;
             const hasChild = !!router.query.category;
 
-            // Nechta Select borligini aniqlaymiz
-            const totalCount = 1 + (hasType ? 1 : 0) + (hasParent ? 1 : 0) + 1; // type + parent + child + order_by
-            let colLg = '4'; // default
+            const totalCount =
+              1 + // type
+              (router.query.type === 'file' ? 2 : 0) + // ✅ file bo‘lsa file_type + pageRange
+              (hasType ? 1 : 0) +
+              (hasParent ? 1 : 0) +
+              1; // order_by
 
-          if (totalCount <= 2) colLg = '3';
-          else if (totalCount === 3) colLg = '4';
-          else colLg = '3';
+            let colLg = '4';
+            if (totalCount <= 2) colLg = '3';
+            else if (totalCount === 3) colLg = '4';
+            else colLg = '3';
 
             const commonCol = `col-6 col-lg-${colLg}`;
 
             return (
               <>
-                {/* type */}
+                {/* Type */}
                 <div className={commonCol}>
                   <Select
-                    // className="w-100"
                     style={{ width: '150px' }}
                     value={router.query.type || 'all'}
                     allowClear
                     onClear={handleClearAll}
                     onChange={(value) =>
-                      handleChange({ type: value, parentCategory: '', category: '' })
+                      handleChange({ type: value, parentCategory: '', category: '', file_type: '', page_from: '', page_to: '' })
                     }
                   >
                     {allTypes.map((item) => (
@@ -107,6 +126,40 @@ return (
                     ))}
                   </Select>
                 </div>
+
+                {/* ✅ Faqat type == file bo‘lsa qo‘shimcha filter */}
+                {router.query.type === 'file' && (
+                  <>
+                    <div className={commonCol}>
+                      <Select
+                        style={{ width: '150px' }}
+                        placeholder="Fayl turi"
+                        value={router.query.file_type || undefined}
+                        allowClear
+                        onClear={() => handleChange({ file_type: '' })}
+                        onChange={(value) => handleChange({ file_type: value })}
+                        options={fileTypes}
+                      />
+                    </div>
+
+                    {/* ✅ Pages filter */}
+                    <div className="col-12 col-lg-6">
+                      <p className="mb-1">Betlar soni</p>
+                      <Slider
+                        range
+                        min={1}
+                        max={100}
+                        value={pageRange}
+                        onChange={(val) => setPageRange(val)}
+                        onAfterChange={(val) => handleChange({ page_from: val[0], page_to: val[1] })}
+                      />
+                      <div className="d-flex justify-content-between">
+                        <span>{pageRange[0]} bet</span>
+                        <span>{pageRange[1]} bet</span>
+                      </div>
+                    </div>
+                  </>
+                )}
 
                 {/* Katta kategoriya */}
                 {hasType && (
@@ -161,7 +214,7 @@ return (
                       onChange={(value) => handleChange({ order_by: value })}
                       options={orders}
                     />
-                    {(hasType || hasParent || hasChild || router.query.order_by) && (
+                    {(hasType || hasParent || hasChild || router.query.order_by || router.query.file_type || router.query.page_from || router.query.page_to) && (
                       <CloseCircleOutlined
                         style={{ fontSize: 20, cursor: 'pointer', color: 'gray' }}
                         title="Barchasini tozalash"
@@ -177,33 +230,4 @@ return (
       </form>
     </div>
   );
-
-
 }
-
-
-
-
-
-
-{/* <div className='Search_Results_Products_form_inputBox'>
-    <input type='text' placeholder='Izlash' />
-    <svg
-        xmlns='http://www.w3.org/2000/svg'
-        width='12'
-        height='13'
-        viewBox='0 0 12 13'
-        fill='none'>
-        <path
-            d='M9.47006 9.13465L12 11.6646L11.1646 12.5L8.63465 9.97006C7.72497 10.6978 6.57133 11.1332 5.31661 11.1332C2.38184 11.1332 0 8.75138 0 5.81661C0 2.88184 2.38184 0.5 5.31661 0.5C8.25138 0.5 10.6332 2.88184 10.6332 5.81661C10.6332 7.07133 10.1978 8.22497 9.47006 9.13465ZM8.28487 8.69632C9.00722 7.95188 9.45175 6.93641 9.45175 5.81661C9.45175 3.53194 7.60127 1.68147 5.31661 1.68147C3.03194 1.68147 1.18147 3.53194 1.18147 5.81661C1.18147 8.10127 3.03194 9.95175 5.31661 9.95175C6.43641 9.95175 7.45188 9.50722 8.19632 8.78487L8.28487 8.69632Z'
-            fill='#7B7B7B'
-        />
-    </svg>{' '}
-</div> */}
-
-{/* <select name='' id=''>
-    <option value=''>Budjet</option>
-</select>
-<select name='' id=''>
-    <option value=''>Reytingi yuqori</option>
-</select> */}

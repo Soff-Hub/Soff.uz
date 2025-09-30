@@ -1,6 +1,5 @@
 import React from 'react';
-import PageContainer from '~/components/layouts/PageContainer';
-import FooterDefault from '~/components/shared/footers/FooterDefault';
+import PageContainer from '~/widgets/layouts/PageContainer';
 import Meta from '~/components/shared/headers/Meta';
 import { useRouter } from 'next/router';
 import { baseUrlUseApi } from '~/repositories/useApi'; 
@@ -17,17 +16,15 @@ export default function DesignDevelopments ({
 }) {
     const router = useRouter();
 
-    // Pagination tugmalari uchun funksiya
     const handlePageChange = newPage => {
         router.push({
             pathname: router.pathname,
-            query: { ...router.query, page: newPage }, // URL'ga yangi page qo'shish
+            query: { ...router.query, page: newPage }, 
         });
     };
 
     return (
         <PageContainer
-            footer={<FooterDefault />}
             title={'Kategoriya'}
             boxed={true}>
             <Meta

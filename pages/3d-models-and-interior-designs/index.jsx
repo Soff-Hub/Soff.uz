@@ -1,13 +1,11 @@
 import Link from 'next/link'
 import React from 'react'
-import FooterComponents from '~/components/blocks/footer/FooterComponents'
-import PageContainer from '~/components/layouts/PageContainer'
-import FooterDefault from '~/components/shared/footers/FooterDefault'
+import PageContainer from '~/widgets/layouts/PageContainer'
 import Meta from '~/components/shared/headers/Meta'
 
 export default function ThreeDModelsAndInteriorDesigns() {
   return (
-      <PageContainer footer={<FooterDefault />} title="3D Modellar va Interyer Dizaynlari">
+      <PageContainer title="3D Modellar va Interyer Dizaynlari">
             <Meta 
                 title="3D Modellar va Interyer Dizaynlari" 
                 image="/static/img/3D-moddellar-va-Interier-dizaynlar-2.png" 

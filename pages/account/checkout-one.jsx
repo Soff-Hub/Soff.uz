@@ -1,7 +1,6 @@
 import React from 'react';
 import BreadCrumb from '~/components/elements/BreadCrumb';
-import FooterDefault from '~/components/shared/footers/FooterDefault';
-import PageContainer from '~/components/layouts/PageContainer';
+import PageContainer from '~/widgets/layouts/PageContainer';
 import CheckoutOne from '~/components/partials/account/Chekout-one';
 import Meta from '~/components/shared/headers/Meta';
 
@@ -17,7 +16,7 @@ const CheckoutOnePage = () => {
     ];
 
     return (
-        <PageContainer footer={<FooterDefault />} title="Checkout">
+        <PageContainer title="Checkout">
             <div className="ps-page--simple">
                 <Meta
                     title={"Xarid savati"}

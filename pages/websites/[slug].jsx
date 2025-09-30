@@ -1,6 +1,5 @@
 import React from 'react';
-import PageContainer from '~/components/layouts/PageContainer';
-import FooterDefault from '~/components/shared/footers/FooterDefault';
+import PageContainer from '~/widgets/layouts/PageContainer';
 import Meta from '~/components/shared/headers/Meta';
 import { useRouter } from 'next/router';
 import { baseUrlUseApi } from '~/repositories/useApi';
@@ -24,7 +23,6 @@ export default function Websites ({
 
     return (
         <PageContainer
-            footer={<FooterDefault />}
             title={'Kategoriya'}
             boxed={true}>
             <Meta

@@ -1,31 +1,6 @@
 import axios from 'axios';
 import { baseUrl } from '~/repositories/Repository';
 
-export const stickyHeader = () => {
-    let number =
-        window.pageXOffset ||
-        document.documentElement.scrollTop ||
-        document.body.scrollTop ||
-        0;
-    const header = document.getElementById('headerSticky');
-    if (header !== null) {
-        if (number >= 100) {
-            header.classList.add('header--sticky');
-        } else {
-            header.classList.remove('header--sticky');
-        }
-    }
-};
-
-export const generateTempArray = (maxItems) => {
-    let result = [];
-
-    for (let i = 0; i < maxItems; i++) {
-        result.push(i);
-    }
-    return result;
-};
-
 export const audioDownloaderSale = async (file, product) => {
     const filee = file?.document?.file_url || file?.document?.short_content_url;
     try {

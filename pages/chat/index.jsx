@@ -1,6 +1,6 @@
 import React from 'react'
 import Chat from '~/components/freeleance/chat/Chat';
-import PageContainer from '~/components/layouts/PageContainer'
+import PageContainer from '~/widgets/layouts/PageContainer'
 
 const ChatPage = () => {
     return (

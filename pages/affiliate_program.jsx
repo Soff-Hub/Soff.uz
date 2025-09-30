@@ -5,7 +5,7 @@ import HeroSection from '~/components/elements/affiliate_program/HeroSection'
 import JoinSoffSection from '~/components/elements/affiliate_program/JoinSoffSection'
 import PromoteOptionsSection from '~/components/elements/affiliate_program/PromoteOptionsSection'
 import ThreeStepsSection from '~/components/elements/affiliate_program/ThreeStepsSection'
-import PageLayout from '~/components/layouts/PageLayout'
+import PageLayout from '~/widgets/layouts/PageLayout'
 
 const AffiliateProgram = () => {
     return (

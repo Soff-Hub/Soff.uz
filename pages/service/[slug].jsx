@@ -1,5 +1,5 @@
 import React from 'react';
-import PageContainer from '~/components/layouts/PageContainer';
+import PageContainer from '~/widgets/layouts/PageContainer';
 import ServiceDetail from '~/components/freeleance/services/service-deatail/ServiceDetail';
 import axiosInstance from '~/shared/api/freeleanceApi';
 

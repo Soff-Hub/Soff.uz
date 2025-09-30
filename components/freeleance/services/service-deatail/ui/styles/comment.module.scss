@@ -3,8 +3,7 @@
     border: 1px solid #e6f4e6;
     border-radius: 12px;
     padding: 20px;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin: 20px 0;
 }
 
 .title {
@@ -49,4 +48,20 @@
 .rating {
     color: #52c41a !important; // antd star rangini yashilga almashtirish
     font-size: 14px;
+}
+
+/* 🔥 Yangi qo'shilgan responsive qism */
+.commentHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; // kichik ekranlarda satrga tushadi
+    gap: 6px;
+}
+
+.userInfo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap; // sig‘masa pastga tushadi
 }

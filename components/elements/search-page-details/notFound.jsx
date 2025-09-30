@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ServiceCard from '~/entities/cards/service-card';
+import ServiceCard from '~/entities/service/service-card';
 import CreateOrderModal from '~/shared/components/modals/CreateOrderModal';
 import { useFGet } from '~/shared/hooks/useFApi';
 import { Skeleton } from 'antd';
