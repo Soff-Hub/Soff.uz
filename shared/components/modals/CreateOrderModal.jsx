@@ -57,11 +57,11 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
     const { mutate: createOrder, isPending } = useFPost({
         url: 'order/custom-order',
         token: user?.access,
-        onSuccess: () => {
+        onSuccess: (data) => {
             form.resetFields();
             onClose();
             message.success('Buyurtma muvaffaqiyatli yaratildi!');
-            push('/order/my-orders');
+            push(`/order/my-orders?orderId=${data?.id}`);
             setConfirmOpen(false);
         },
         onError: err => {

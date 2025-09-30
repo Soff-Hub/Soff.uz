@@ -6,12 +6,13 @@ import { SmileOutlined } from '@ant-design/icons';
 
 import useCredentials from '~/shared/hooks/useCredentials'
 import useWebSocket from '~/shared/hooks/useWebSocket';
-import { wssBaseUrl } from '~/shared/api/end-points';
+import { CHAT_UNSEENS, wssBaseUrl } from '~/shared/api/end-points';
+import { useFGet } from '~/shared/hooks/useFApi';
 
 export default function HeaderNotifications({ color }) {
     const { token } = useCredentials()
     const [api, contextHolder] = notification.useNotification();
-
+    const { data } = useFGet("unread_messages_count", CHAT_UNSEENS, {enabled: !!token, token })
     const [notifications, setNotifications] = useState([]);
     const [notificationsCount, setNotificationsCount] = useState(0);
 
@@ -61,12 +62,22 @@ export default function HeaderNotifications({ color }) {
     return (
         <div>
             {contextHolder}
-
             {token ? (
-                <Link href={`/account/notification`} style={{marginRight:'10px'}}>
+                <Link href={`/chat`} style={{ marginRight: '10px' }}>
+                    <Badge offset={[-10, 3]} size='small' count={data?.unread_messages} color='#00a44f'>
+                        <a className="header__extra fs-1" style={{ cursor: 'pointer' }}>
+                            <i style={{ marginRight: "10px" }} className={`fa-regular fa-comment-dots ${color}`}></i>
+                        </a>
+                    </Badge>
+                </Link>
+            ) : (
+                ''
+            )}
+            {token ? (
+                <Link href={`/account/notification`} style={{ marginRight: '10px' }}>
                     <Badge count={notificationsCount} color='#00a44f'>
                         <a className="header__extra fs-1" style={{ cursor: 'pointer' }}>
-                            <i style={{marginRight: "10px"}} className={`fa-regular fa-bell ${color}`}></i>
+                            <i style={{ marginRight: "10px" }} className={`fa-regular fa-bell ${color}`}></i>
                         </a>
                     </Badge>
                 </Link>

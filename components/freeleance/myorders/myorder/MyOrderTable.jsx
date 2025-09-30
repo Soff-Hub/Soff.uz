@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, Select, message } from "antd";
 import { useQueryClient } from "@tanstack/react-query";
 import useGetOrders from "./api/useGetOrders";
 import useCancelOrder from "./api/useCancelOrder";
 import useGetReasons from "./api/useGetReasons";
 import SelectOrderDrawer from "./ui/SelectOrderDrawer";
-import OrderCard from "../../../../entities/order/order-card";
+import OrderCard from "~/entities/order/order-card";
+import { useRouter } from "next/router";
 
 export const AllOrdersTable = ({ type }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -16,6 +17,8 @@ export const AllOrdersTable = ({ type }) => {
     const { data: reasons } = useGetReasons();
     const [openDrawer, setOpenDrawer] = useState(false);
     const queryClient = useQueryClient();
+    const router = useRouter()
+    const { orderId } = router.query
 
     const handleOpenDrawer = (order) => {
         setSelectedOrder(order);
@@ -54,6 +57,27 @@ export const AllOrdersTable = ({ type }) => {
         orders?.filter((order) =>
             type?.includes(order.order_status_doing?.status || "pending")
         ) || [];
+
+
+    useEffect(() => {
+        if (orderId && orders) {
+            const found = orders.find(o => o.id === Number(orderId));
+            if (found) {
+                setSelectedOrder(found);
+                setOpenDrawer(true);
+
+                const { orderId, ...rest } = router.query;
+                router.replace(
+                    {
+                        pathname: router.pathname,
+                        query: rest,
+                    },
+                    undefined,
+                    { shallow: true } // sahifani qayta yuklamasdan
+                );
+            }
+        }
+    }, [orderId, orders]);
 
     return (
         <>

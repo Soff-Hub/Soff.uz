@@ -11,3 +11,4 @@ export const wssBaseUrl = process.env.NEXT_PUBLIC_WS_BASE_URL;
 export const PRODUCT_SEARCH = 'customer/same-google-search/'
 export const CUSTOMER_SERVICES = 'customer'
 export const SEARCH_SPECIALISTS = 'users/sellers'
+export const CHAT_UNSEENS = 'chats/unread_count/'
