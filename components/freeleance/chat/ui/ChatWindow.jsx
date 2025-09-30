@@ -1,11 +1,18 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import styles from '../style/chat.module.scss';
 import { Input, Button, Avatar, Empty, message, Tooltip } from 'antd';
-import { ArrowDownOutlined, ArrowLeftOutlined, PaperClipOutlined, PlusOutlined, SendOutlined, ShoppingCartOutlined } from '@ant-design/icons';
+import {
+    ArrowDownOutlined,
+    ArrowLeftOutlined,
+    PaperClipOutlined,
+    PlusOutlined,
+    SendOutlined,
+    ShoppingCartOutlined,
+} from '@ant-design/icons';
 import ChatMessage from './ChatMessage';
 import { useRouter } from 'next/router';
 import useChat from '../api/useChat';
-import InfiniteScroll from "react-infinite-scroll-component";
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { ClipLoader } from 'react-spinners';
 import useSendMessage from '../api/useSendMessage';
 import { useQueryClient } from '@tanstack/react-query';
@@ -20,32 +27,49 @@ const ChatWindow = ({ chatId, goBack }) => {
     const router = useRouter();
     const [file, setFile] = useState();
     const queryClient = useQueryClient();
-    const { mutate: sendFile, isPending } = useSendMessage()
+    const { mutate: sendFile, isPending } = useSendMessage();
     const fileInputRef = useRef(null);
-    const [open, setOpen] = useState(false)
-
+    const [open, setOpen] = useState(false);
 
     const handleClickAttach = () => {
         fileInputRef.current?.click();
     };
 
-    const handleSendFile = useCallback((selectedFile) => {
-        if (!selectedFile) return;
-        sendFile({ chat_id: chatId, file: selectedFile }, {
-            onSuccess: () => {
-                setFile(null);
-                queryClient.invalidateQueries(['chat-messages', chatId]);
-                scrollToBottom();
-                message.success('Fayl muvaffaqiyatli yuborildi');
-            },
-            onError: (err) => {
-                message.error(err?.response?.data?.detail || "Faylni yuborishda xatolik yuz berdi");
-            },
-        });
-    }, [chatId, sendFile, queryClient]);
+    const handleSendFile = useCallback(
+        selectedFile => {
+            if (!selectedFile) return;
+            sendFile(
+                { chat_id: chatId, file: selectedFile },
+                {
+                    onSuccess: () => {
+                        setFile(null);
+                        queryClient.invalidateQueries([
+                            'chat-messages',
+                            chatId,
+                        ]);
+                        scrollToBottom();
+                        message.success('Fayl muvaffaqiyatli yuborildi');
+                    },
+                    onError: err => {
+                        message.error(
+                            err?.response?.data?.detail ||
+                                'Faylni yuborishda xatolik yuz berdi'
+                        );
+                    },
+                }
+            );
+        },
+        [chatId, sendFile, queryClient]
+    );
 
-    const { messages, chat, sendMessage, updateMessage, fetchNextPage, hasNextPage } = useChat(chatId);
-
+    const {
+        messages,
+        chat,
+        sendMessage,
+        updateMessage,
+        fetchNextPage,
+        hasNextPage,
+    } = useChat(chatId);
 
     const scrollToBottom = useCallback(() => {
         if (messagesContainerRef.current) {
@@ -55,7 +79,6 @@ const ChatWindow = ({ chatId, goBack }) => {
     }, []);
 
     const handlScroll = () => {
-
         if (messagesContainerRef.current.scrollTop < -500) {
             setOpenDownIcon(true);
         } else {
@@ -75,7 +98,6 @@ const ChatWindow = ({ chatId, goBack }) => {
     }, [messages.length]);
 
     const handleSend = useCallback(() => {
-
         if (!newMessage.trim()) return;
 
         if (edit) {
@@ -99,9 +121,6 @@ const ChatWindow = ({ chatId, goBack }) => {
             </div>
         );
     }
-
-
-
 
     return (
         <div className={styles.chat_window}>
@@ -141,19 +160,37 @@ const ChatWindow = ({ chatId, goBack }) => {
                 </div>
             </div>
             <SafetyAlert />
-            <div onScroll={handlScroll} ref={messagesContainerRef} id="scrollableDiv" style={{ width: "100%", height: "100vh", overflowY: "scroll", display: "flex", flexDirection: "column-reverse", margin: "auto", overflowX: "hidden", position: "relative" }} className={`${styles.chat_messages}  p-3`}>
+            <div
+                onScroll={handlScroll}
+                ref={messagesContainerRef}
+                id="scrollableDiv"
+                style={{
+                    width: '100%',
+                    height: '100vh',
+                    overflowY: 'scroll',
+                    display: 'flex',
+                    flexDirection: 'column-reverse',
+                    margin: 'auto',
+                    overflowX: 'hidden',
+                    position: 'relative',
+                }}
+                className={`${styles.chat_messages}  p-3`}>
                 <InfiniteScroll
                     dataLength={messages.length}
                     next={fetchNextPage}
                     hasMore={hasNextPage}
-                    loader={<div className="d-flex justify-content-center align-items-center py-2">
-                        <ClipLoader color='#00A44F' size={20} />
-                    </div>}
-                    style={{ display: "flex", flexDirection: "column-reverse", overflow: "visible" }}
+                    loader={
+                        <div className="d-flex justify-content-center align-items-center py-2">
+                            <ClipLoader color="#00A44F" size={20} />
+                        </div>
+                    }
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'column-reverse',
+                        overflow: 'visible',
+                    }}
                     scrollableTarget="scrollableDiv"
-                    inverse={true}
-
-                >
+                    inverse={true}>
                     <div>
                         {messages?.length > 0 ? (
                             messages.map(msg => (
@@ -177,7 +214,14 @@ const ChatWindow = ({ chatId, goBack }) => {
                     </div>
                 </InfiniteScroll>
             </div>
-            <span onClick={scrollToBottom} className={styles.chat_down_icon} style={{ transform: openDownIcon ? 'translateX(0)' : 'translateX(100px)' }}>
+            <span
+                onClick={scrollToBottom}
+                className={styles.chat_down_icon}
+                style={{
+                    transform: openDownIcon
+                        ? 'translateX(0)'
+                        : 'translateX(100px)',
+                }}>
                 <ArrowDownOutlined size={20} />
             </span>
 
@@ -191,25 +235,27 @@ const ChatWindow = ({ chatId, goBack }) => {
                         if (selectedFile) {
                             const maxSize = 50 * 1024 * 1024;
                             if (selectedFile.size > maxSize) {
-                                message.error("Fayl 50 MB dan katta bo'lishi mumkin emas");
-                                return; 
+                                message.error(
+                                    "Fayl 50 MB dan katta bo'lishi mumkin emas"
+                                );
+                                return;
                             }
                             setFile(selectedFile);
                             handleSendFile(selectedFile);
                         }
                     }}
-                    style={{ display: "none" }}
+                    style={{ display: 'none' }}
                 />
 
-                <Tooltip title='Maxsus buyurtma berish'>
+                <Tooltip title="Maxsus buyurtma berish">
                     <Button
-                        type='primary'
+                        type="primary"
                         icon={<ShoppingCartOutlined />}
-                        iconPosition='end'
+                        iconPosition="end"
                         onClick={() => setOpen(true)}
                     />
                 </Tooltip>
-                <Tooltip title='Fayl yuborish'>
+                <Tooltip title="Fayl yuborish">
                     <Button
                         icon={<PaperClipOutlined />}
                         type="primary"
@@ -240,6 +286,7 @@ const ChatWindow = ({ chatId, goBack }) => {
                 onClose={() => setOpen(false)}
                 id={chat?.opponent?.id}
                 seller={chat?.opponent?.name}
+                sellerInfo={chat?.opponent}
             />
         </div>
     );

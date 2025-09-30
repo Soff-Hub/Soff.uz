@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import Search_Results_Services_filter from './search-page-filter/search-results-services-filter';
 import { Pagination, Skeleton } from 'antd';
 import Search_Results_NotFound from './notFound';
@@ -6,74 +6,92 @@ import ServiceCard from '~/entities/service/service-card';
 import { useRouter } from 'next/router';
 import LastAddedProductCard from './search-page-card/lastAddedProductCard';
 import SerachSide from './search-page-side';
+import useScrollToNotFound from './useScrollToNotFound';
 
-export default function Search_Results_Services({ data, isLoading, childData, parentData, lastProducts, createBtn }) {
+export default function Search_Results_Services({
+    data,
+    isLoading,
+    childData,
+    parentData,
+    lastProducts,
+    createBtn,
+}) {
     const router = useRouter();
+    const notFoundRef = useRef();
 
     const limit = 10;
     const offset = Number(router.query.offset || 0);
     const currentPage = Math.floor(offset / limit) + 1;
-
     const showResults = Array.isArray(data?.items) && data?.items?.length > 0;
 
-    return (
-        <div className='Search_Results_Services'>
-            <div className='mb-5'>
-                <Search_Results_Services_filter
-                    total={data?.total_service}
-                    parentData={parentData}
-                    childData={childData}
+    useScrollToNotFound(notFoundRef, showResults, data);
+
+    let loadingContent = null;
+    if (isLoading) {
+        loadingContent = Array(12)
+            .fill(0)
+            .map((_, i) => (
+                <Skeleton.Image
+                    key={i}
+                    active
+                    className="Search_Results_Wrap_skeleton"
                 />
+            ));
+    }
+
+    let showResultsContent = null;
+    if (showResults) {
+        showResultsContent = data?.items?.map((item, index) => (
+            <div key={index}>
+                <ServiceCard service={item} />
             </div>
-            <div className='Search_Results_Services_product'>
+        ));
+    }
+
+    return (
+        <div className="Search_Results_Products container">
+            <div className="d-flex">
                 <div>
-                    <div className='Search_Results_Services_wrap'>
-                        {isLoading && (
-                            <>
-                                {Array(12)
-                                    .fill(0)
-                                    .map((_, i) => (
-                                        <Skeleton.Image
-                                            key={i}
-                                            active
-                                            className='Search_Results_Wrap_skeleton'
-                                        />
-                                    ))}
-                            </>
-                        )}
+                    <div className="mb-5">
+                        <Search_Results_Services_filter
+                            total={data?.total_service}
+                            parentData={parentData}
+                            childData={childData}
+                        />
+                    </div>
+                    <div>
+                        <div className="Search_Results_Services_wrap">
+                            {loadingContent}
+                            {showResultsContent}
+                        </div>
+
                         {showResults && (
-                            data?.items?.map((item, index) => (
-                                <div key={index}>
-                                    <ServiceCard service={item} />
-                                </div>
-                            ))
+                            <Pagination
+                                className="mt-3"
+                                pageSize={limit}
+                                current={currentPage}
+                                total={data?.total_service}
+                                onChange={newPage => {
+                                    const newOffset = (newPage - 1) * limit;
+                                    router.push({
+                                        pathname: router.pathname,
+                                        query: {
+                                            ...router.query,
+                                            offset: newOffset,
+                                            limit,
+                                        },
+                                    });
+                                }}
+                            />
+                        )}
+
+                        {!showResults && (
+                            <Search_Results_NotFound ref={notFoundRef} />
                         )}
                     </div>
-
-                    {showResults && (
-                        <Pagination
-                            className='mt-3'
-                            pageSize={limit}
-                            current={currentPage}
-                            total={data?.total_service}
-                            onChange={(newPage) => {
-                                const newOffset = (newPage - 1) * limit;
-                                router.push({
-                                    pathname: router.pathname,
-                                    query: { ...router.query, offset: newOffset, limit },
-                                });
-                            }}
-                        />
-                    )}
-
-                    {!showResults && <Search_Results_NotFound />}
                 </div>
-
-                <SerachSide
-                    lastProducts={lastProducts}
-                    createBtn={createBtn}
-                />
             </div>
+            <SerachSide lastProducts={lastProducts} createBtn={createBtn} />
         </div>
     );
 }
