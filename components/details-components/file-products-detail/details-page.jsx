@@ -5,9 +5,7 @@ import FileActions from '../details-actions/file-actions';
 import SellerProfile from '../details-seller-profile/seller-profile';
 import Description from '../details-actions/description';
 import Tags from '../details-actions/tags';
-import OrderCardBtn from '../details-seller-profile/order-card-btn';
 import Link from 'next/link';
-import CommentForm from '../comment-section/commentForm';
 import { CommentList } from '../comment-section/commentList';
 import CommentFormWrapper from '../comment-section/commentWrapper';
 
@@ -47,9 +45,7 @@ function FileProductsDetails({ product }) {
             <Description description={product?.description} />
             
             <SellerProfile product={product}/>
-            {/* <OrderCardBtn product={product}/> */}
           </div>
-          {/* comment section */}
           <div>
               <CommentFormWrapper id={product.id} slug={product.slug}/>
               <CommentList slug={product.slug}/>

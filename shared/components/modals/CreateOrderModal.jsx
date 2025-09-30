@@ -281,9 +281,15 @@ const CreateOrderModal = ({ open, onClose, id, seller }) => {
                             formatter={value =>
                                 value
                                     ? `${value}`.replace(
+<<<<<<< HEAD
                                           /\B(?=(\d{3})+(?!\d))/g,
                                           ' '
                                       )
+=======
+                                        /\B(?=(\d{3})+(?!\d))/g,
+                                        ' '
+                                    )
+>>>>>>> 88820b001706add2634b3c62c841e70a5ff7ce9d
                                     : ''
                             }
                             parser={value =>
@@ -298,7 +304,11 @@ const CreateOrderModal = ({ open, onClose, id, seller }) => {
                                     key={option.value}
                                     variant="solid"
                                     className="option-price-btn"
+<<<<<<< HEAD
                                     type="button"
+=======
+                                    type='default'
+>>>>>>> 88820b001706add2634b3c62c841e70a5ff7ce9d
                                     onClick={() => {
                                         form.setFieldValue(
                                             'budget',

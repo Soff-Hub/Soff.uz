@@ -1,5 +1,5 @@
 import React from 'react';
-import PageContainer from '~/components/layouts/PageContainer';
+import PageContainer from '~/widgets/layouts/PageContainer';
 import FormContent from '~/components/partials/faqs/FormContent';
 import Meta from '~/components/shared/headers/Meta';
 

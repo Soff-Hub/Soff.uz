@@ -1,0 +1,13 @@
+export const NAVBAR_MENU_CATEGORIES = 'categories/categories-with-directions'
+export const LAST_ADDED_PRODUCTS = "customer/last-added/"
+export const D_SEARCH_OPTIONS = "doc-search/?search="
+export const F_SEARCH_OPTIONS = "customer/search-page?search="
+export const LAST_ADDED_SERVICES = "customer/last"
+export const BESTS = "customer/top-seller-statistics/"
+export const TELEGRAM_LINK = "/auth/get-telegram-link/"
+export const AUTH_PROFILE = "/auth/profile/"
+export const NEW_PROFILE = '/auth/new-profile/'
+export const wssBaseUrl = process.env.NEXT_PUBLIC_WS_BASE_URL;
+export const PRODUCT_SEARCH = 'customer/same-google-search/'
+export const CUSTOMER_SERVICES = 'customer'
+export const SEARCH_SPECIALISTS = 'users/sellers'

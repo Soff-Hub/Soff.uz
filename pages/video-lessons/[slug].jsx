@@ -1,15 +1,9 @@
 import React from 'react';
-import PageContainer from '~/components/layouts/PageContainer';
-import FooterDefault from '~/components/shared/footers/FooterDefault';
+import PageContainer from '~/widgets/layouts/PageContainer';
 import Meta from '~/components/shared/headers/Meta';
 import { useRouter } from 'next/router';
-import useApi, { baseUrlUseApi } from '~/repositories/useApi';
-import FooterComponents from '~/components/blocks/footer/FooterComponents';
-import VideoLessonsFilterSection from '~/components/elements/VideoLessonsFilterSection';
-import ProductsByVideoLessons from '~/components/partials/category/ProductsByVideoLessons';
+import { baseUrlUseApi } from '~/repositories/useApi';
 import ProductsByCategory from '~/components/partials/category/ProductsByCategory';
-import ProductsByDesignDevelopment from '~/components/partials/category/ProductsByDesignDevelopment';
-import CategorySearchSection from '~/components/elements/CategorySearchSection';
 import ProductFilterSection from '~/components/elements/product-filter-section/ProductFilterSection';
 
 export default function VideoLessons ({
@@ -34,7 +28,6 @@ export default function VideoLessons ({
 
     return (
         <PageContainer
-            footer={<FooterDefault />}
             title={'Kategoriya'}
             boxed={true}>
             <Meta

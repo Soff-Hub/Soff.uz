@@ -1,12 +1,11 @@
 import Link from 'next/link'
 import React from 'react'
-import PageContainer from '~/components/layouts/PageContainer'
-import FooterDefault from '~/components/shared/footers/FooterDefault'
+import PageContainer from '~/widgets/layouts/PageContainer'
 import Meta from '~/components/shared/headers/Meta'
 
 export default function TemplatesPage() {
   return (
-      <PageContainer footer={<FooterDefault />} title="Turli sohalar uchun shablonlar">
+      <PageContainer title="Turli sohalar uchun shablonlar">
         <Meta
             title="Turli sohalar uchun shablonlar" 
             image="/static/img/shablonlar-3.png" 

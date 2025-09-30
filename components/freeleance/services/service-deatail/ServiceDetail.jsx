@@ -11,7 +11,7 @@ import { useRouter } from 'next/router';
 import CommentSection from './ui/CommentSection';
 import { Breadcrumb } from 'antd';
 import Meta from '~/components/shared/meta';
-import ServiceCard from '../../../../entities/cards/service-card';
+import ServiceCard from '../../../../entities/service/service-card';
 import StickyBox from './ui/sticky-box';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { useDispatch } from 'react-redux';
@@ -48,6 +48,8 @@ const ServiceDetail = ({ data }) => {
         file: order_requirements[0]?.order_requirement_file,
         serviceItems: service_items,
     };
+
+    console.log("111111111", data)
 
     const breadcrumbItems = useMemo(
         () => [
@@ -112,7 +114,7 @@ const ServiceDetail = ({ data }) => {
                 <div className="col-12 col-lg-4">
                     <PriceBox priceBox={priceBox} />
                     <MoneyBack />
-                    <UserBox priceBox={priceBox} pushUser={pushUser} />
+                    <UserBox rating={service?.avg_rating} feedbacks={service?.feedback_count} priceBox={priceBox} pushUser={pushUser} />
                 </div>
             </div>
             <div className="row">

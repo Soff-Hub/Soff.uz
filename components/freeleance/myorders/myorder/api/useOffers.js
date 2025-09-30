@@ -1,17 +1,17 @@
-import { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
+import { f_base_ws_url } from "~/shared/api/base-url";
 
-const useOffers = (orderId) => {
+const useOffers = (orderId, isOpen) => {
     const [offers, setOffers] = useState([]);
     const [isConnected, setIsConnected] = useState(false);
     const wsRef = useRef(null);
-    const { user } = useSelector(state => state.auth)
+    const { user } = useSelector((state) => state.auth);
 
     useEffect(() => {
-        if (!orderId) return;
+        if (!orderId || !isOpen) return;
 
-        // ✅ WebSocket URL
-        const wsUrl = `${process.env.NEXT_PUBLIC_WS_FREELEANCE_URL}order-offers/${orderId}?token=${user?.access}`;
+        const wsUrl = `${f_base_ws_url}order-offers/${orderId}?token=${user?.access}`;
         const socket = new WebSocket(wsUrl);
         wsRef.current = socket;
 
@@ -23,10 +23,14 @@ const useOffers = (orderId) => {
         socket.onmessage = (event) => {
             try {
                 const data = JSON.parse(event.data);
-                console.log("📩 New offer message:", data);
-                setOffers((prev) => [...prev, data]);
-            } catch (error) {
-                console.error("❌ WS parse error:", error);
+                console.log("📩 New WS offer:", data);
+
+                setOffers((prev) => {
+                    if (prev.some((o) => o.id === data.id)) return prev;
+                    return [...prev, data];
+                });
+            } catch (err) {
+                console.error("❌ WS parse error:", err);
             }
         };
 
@@ -41,10 +45,11 @@ const useOffers = (orderId) => {
 
         return () => {
             socket.close();
+            setOffers([]); 
         };
-    }, [orderId]);
+    }, [orderId, isOpen]);
 
-    return { offers, isConnected };
+    return { offers, setOffers, isConnected };
 };
 
 export default useOffers;

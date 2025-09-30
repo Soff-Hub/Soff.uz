@@ -1,19 +1,8 @@
 import React from 'react';
-import FooterDefault from '~/components/shared/footers/FooterDefault';
-import PageContainer from '~/components/layouts/PageContainer';
-import VedioCart from '~/components/partials/faqs/Vedio-cart';
-import { useState } from 'react';
-import { useEffect } from 'react';
-import { VideoLinks } from '~/shared/utilities/vedio_link_api';
+import PageContainer from '~/widgets/layouts/PageContainer';
 import Meta from '~/components/shared/headers/Meta';
 
 const VedioList = () => {
-    // const [data, setData] = useState(null);
-
-    // useEffect(() => {
-    //     setData(VideoLinks);
-    // }, []);
-
     const data = [
         {
             id: 1,
@@ -65,7 +54,7 @@ const VedioList = () => {
 
     return (
         <div>
-            <PageContainer footer={<FooterDefault />} title="FAQ page">
+            <PageContainer title="FAQ page">
                 <Meta
                     title={
                         'Soff.uz platformasidan foydalanish bo‘yicha video qo‘llanma – Raqamli xizmatlar bozori'
@@ -84,25 +73,6 @@ const VedioList = () => {
                     ]}
                     author="Soff.uz jamoasi"
                 />
-                {/* <div className="ps-page--singlee">
-                    <div className="container px-5">
-                        <h3 className='mb-2 mt-5'>Soff.uz sotuvchilari uchun video qo'llanma: </h3>
-                        <div className="row">
-                            {data?.map((el) => (
-                                <div
-                                    className="col-md-6 mt-2"
-                                    key={el.id}>
-                                    <VedioCart
-                                        title={el.title}
-                                        url={el.image}
-                                        vedioUrl={el.vedioUrl}
-                                        id={el.id}
-                                    />
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div> */}
                 <div className="ps-page--singlee">
                     <div className="container">
                         <h3 className="mb-2 mt-5">

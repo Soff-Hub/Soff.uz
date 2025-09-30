@@ -117,6 +117,7 @@ const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
                         </Select>
 
                             <Select
+                                allowClear
                                 className={styles.filter_select}
                                 suffixIcon={
                                     <DownOutlined style={{ color: 'green' }} />
@@ -124,6 +125,9 @@ const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
                                 placeholder="Kategoriya"
                                 value={selectedParentCategory || undefined}
                                 onChange={onParentCategoryChange}>
+                                <Option value=''>
+                                    Barchasi
+                                </Option>
                                 {parentCategory?.map(cat => (
                                     <Option key={cat.id} value={String(cat.id)}>
                                         {cat.title}

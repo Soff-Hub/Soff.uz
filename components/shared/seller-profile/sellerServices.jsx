@@ -3,7 +3,7 @@ import { Skeleton } from 'antd';
 import React from 'react';
 import { apiForFreelance } from '~/repositories/api';
 import ServiceIsUnavailable from './ServiceIsUnavailable';
-import ServiceCard from '~/entities/cards/service-card';
+import ServiceCard from '~/entities/service/service-card';
 
 export default function SellerServices({ pid }) {
     const { data, isLoading } = useQuery({

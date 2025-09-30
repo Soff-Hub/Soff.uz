@@ -3,7 +3,7 @@ import Axios from 'axios';
 import Link from 'next/link';
 import Router, { useRouter } from 'next/router';
 import React from 'react';
-import PageContainer from '~/components/layouts/PageContainer';
+import PageContainer from '~/widgets/layouts/PageContainer';
 import { orginalUrl } from '~/reositoriy-admin/Repository';
 import { useGet } from '~/repositories/https';
 

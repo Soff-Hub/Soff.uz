@@ -2,7 +2,6 @@ import Axios from 'axios';
 import { createContext, useState } from 'react';
 import { orginalUrl } from '~/reositoriy-admin/Repository';
 
-// ** Defaults
 const defaultProvider = {
     homeProdutcs: [],
     getHomeProducts: () => {},
