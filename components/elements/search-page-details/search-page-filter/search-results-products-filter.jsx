@@ -110,7 +110,7 @@ export default function SearchResultsProductsFilter({ total, parentData, childDa
                 <div className={commonCol}>
                   <Select
                     style={{ width: '150px' }}
-                    value={router.query.type || 'all'}
+                    value={router.query.type || 'file'}
                     allowClear
                     onClear={handleClearAll}
                     onChange={(value) =>
@@ -127,39 +127,7 @@ export default function SearchResultsProductsFilter({ total, parentData, childDa
                   </Select>
                 </div>
 
-                {/* ✅ Faqat type == file bo‘lsa qo‘shimcha filter */}
-                {router.query.type === 'file' && (
-                  <>
-                    <div className={commonCol}>
-                      <Select
-                        style={{ width: '150px' }}
-                        placeholder="Fayl turi"
-                        value={router.query.file_type || undefined}
-                        allowClear
-                        onClear={() => handleChange({ file_type: '' })}
-                        onChange={(value) => handleChange({ file_type: value })}
-                        options={fileTypes}
-                      />
-                    </div>
-
-                    {/* ✅ Pages filter */}
-                    <div className="col-12 col-lg-6">
-                      <p className="mb-1">Betlar soni</p>
-                      <Slider
-                        range
-                        min={1}
-                        max={100}
-                        value={pageRange}
-                        onChange={(val) => setPageRange(val)}
-                        onAfterChange={(val) => handleChange({ page_from: val[0], page_to: val[1] })}
-                      />
-                      <div className="d-flex justify-content-between">
-                        <span>{pageRange[0]} bet</span>
-                        <span>{pageRange[1]} bet</span>
-                      </div>
-                    </div>
-                  </>
-                )}
+                
 
                 {/* Katta kategoriya */}
                 {hasType && (
@@ -231,3 +199,37 @@ export default function SearchResultsProductsFilter({ total, parentData, childDa
     </div>
   );
 }
+
+
+// {router.query.type === 'file' && (
+//                   <>
+//                     <div className={commonCol}>
+//                       <Select
+//                         style={{ width: '150px' }}
+//                         placeholder="Fayl turi"
+//                         value={router.query.file_type || undefined}
+//                         allowClear
+//                         onClear={() => handleChange({ file_type: '' })}
+//                         onChange={(value) => handleChange({ file_type: value })}
+//                         options={fileTypes}
+//                       />
+//                     </div>
+
+//                     {/* ✅ Pages filter */}
+//                     <div className="col-12 col-lg-6">
+//                       <p className="mb-1">Betlar soni</p>
+//                       <Slider
+//                         range
+//                         min={1}
+//                         max={100}
+//                         value={pageRange}
+//                         onChange={(val) => setPageRange(val)}
+//                         onAfterChange={(val) => handleChange({ page_from: val[0], page_to: val[1] })}
+//                       />
+//                       <div className="d-flex justify-content-between">
+//                         <span>{pageRange[0]} bet</span>
+//                         <span>{pageRange[1]} bet</span>
+//                       </div>
+//                     </div>
+//                   </>
+//                 )}
