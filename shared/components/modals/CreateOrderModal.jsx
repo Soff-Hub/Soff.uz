@@ -76,11 +76,11 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
     const { mutate: createDirectOrder, isPending: createPending } = useFPost({
         url: 'order/direct-order',
         token: user?.access,
-        onSuccess: () => {
+        onSuccess: (data) => {
             form.resetFields();
             onClose();
             message.success('Buyurtma muvaffaqiyatli yuborildi!');
-            push('/order/my-orders');
+            push(`/order/${data?.id}`);
             setConfirmOpen(false);
         },
         onError: err => {
