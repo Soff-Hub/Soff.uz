@@ -7,15 +7,15 @@ import Router, { useRouter } from 'next/router';
 import { setSavedPrfileData } from '~/store/ecomerce/slice';
 import styles from '~/shared/styles/landingStyles.module.scss';
 import Image from 'next/image';
-import useGetChats from '~/components/freeleance/chat/api/useGetChats';
 import { Badge } from 'antd';
+import { useFGet } from '~/shared/hooks/useFApi';
+import { CHAT_UNSEENS } from '~/shared/api/end-points';
 
 const HeaderUserDropdown = props => {
     const dispatch = useDispatch();
     const { accountLinks, user } = useSelector(state => state.auth);
     const { user: profile } = useSelector(state => state.profile);
     const refresh = useSelector(state => state.auth?.user?.refresh);
-    const { data: chats } = useGetChats();
     const { asPath } = useRouter();
 
     const handleLogout = () => {
@@ -46,10 +46,9 @@ const HeaderUserDropdown = props => {
         }
     };
 
-    const unreads = chats?.reduce((sum, chat) => {
-        sum += chat.unread_count;
-        return sum;
-    }, 0);
+    const { data } = useFGet("unread_messages_count", CHAT_UNSEENS, {enabled: !!user?.access, token: user?.access })
+
+
 
     const { isLoggedIn, color } = props;
     const linksView = accountLinks.map((item, index) => (
@@ -60,9 +59,9 @@ const HeaderUserDropdown = props => {
                         <i className={` text-dark fs-4 me-2  ${item.icon}`}></i>{' '}
                         <p className="m-0">{item.text}</p>
                     </div>
-                    {unreads != 0 && item.url == '/chat' && (
+                    {data?.unread_messages != 0 && item.url == '/chat' && (
                         <span className={styles.unreadsChatsCount}>
-                            {unreads}
+                            {data?.unread_messages}
                         </span>
                     )}
                 </div>
@@ -76,7 +75,7 @@ const HeaderUserDropdown = props => {
             <div className="ps-block--user-account ">
                 <div className="fs-3 d-flex align-items-center gap-3 pointer">
                     <Badge
-                        count={unreads}
+                        count={data?.unread_messages}
                         size='small'
                         color='#00a44f'
                         offset={[-4, 3]}
