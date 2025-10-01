@@ -18,6 +18,7 @@ import dayjs from 'dayjs';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { createOrderInfo } from '~/shared/constants/createOrder';
+import { useTelegram } from '~/shared/hooks/useTelegram';
 
 const { TextArea } = Input;
 
@@ -37,6 +38,7 @@ const priceOptions = [
 ];
 
 const CreateOrderModal = ({ open, onClose, id, seller }) => {
+    const { tg } = useTelegram();
     const [form] = Form.useForm();
     const budget = Form.useWatch('budget', form);
     const [direction, setDirection] = useState('scientific_work');
@@ -62,6 +64,7 @@ const CreateOrderModal = ({ open, onClose, id, seller }) => {
             form.resetFields();
             onClose();
             message.success('Buyurtma muvaffaqiyatli yaratildi!');
+            tg?.close?.();
             push('/order/my-orders');
             setConfirmOpen(false);
         },
@@ -281,9 +284,9 @@ const CreateOrderModal = ({ open, onClose, id, seller }) => {
                             formatter={value =>
                                 value
                                     ? `${value}`.replace(
-                                        /\B(?=(\d{3})+(?!\d))/g,
-                                        ' '
-                                    )
+                                          /\B(?=(\d{3})+(?!\d))/g,
+                                          ' '
+                                      )
                                     : ''
                             }
                             parser={value =>
@@ -298,7 +301,7 @@ const CreateOrderModal = ({ open, onClose, id, seller }) => {
                                     key={option.value}
                                     variant="solid"
                                     className="option-price-btn"
-                                    type='default'
+                                    type="default"
                                     onClick={() => {
                                         form.setFieldValue(
                                             'budget',

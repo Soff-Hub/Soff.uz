@@ -10,13 +10,16 @@ import NextProgress from 'next-progress';
 import { Toaster } from 'react-hot-toast';
 import { Providers } from '~/app/providers';
 import AffiliateListener from '~/entities/affiliate';
+import { useTelegram } from '~/shared/hooks/useTelegram';
 
 function App({ Component, pageProps }) {
+    const { tg } = useTelegram();
+
     useEffect(() => {
-        setTimeout(function () {
+        setTimeout(function() {
             document.getElementById('__next').classList.add('loaded');
         }, 0);
-        window.addEventListener('contextmenu', function (e) {
+        window.addEventListener('contextmenu', function(e) {
             e.preventDefault();
         });
     }, []);
@@ -44,6 +47,10 @@ function App({ Component, pageProps }) {
             document.removeEventListener('keydown', handleKeyDown);
         };
     }, []);
+
+    useEffect(() => {
+        tg?.ready?.();
+    }, [tg]);
 
     return (
         <>
