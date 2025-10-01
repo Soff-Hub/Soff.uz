@@ -5,7 +5,7 @@ import useGetChats from './useGetChats';
 const useChats = (search) => {
     const [chats, setChats] = useState([]);
     const { user } = useSelector(state => state.auth);
-    const { data } = useGetChats(search);
+    const { data, isLoading } = useGetChats(search);
     const wsRef = useRef()
     // initial load
     useEffect(() => {
@@ -16,14 +16,12 @@ const useChats = (search) => {
     useEffect(() => {
         if (!user?.access) return;
 
-        if (!chatId || !user?.access) return;
-
-        const ws = new WebSocket(`${process.env.NEXT_PUBLIC_WS_FREELEANCE_URL}?token=${user?.access}`);
+        const ws = new WebSocket(`${process.env.NEXT_PUBLIC_WS_FREELEANCE_URL}chat/?token=${user?.access}`);
         wsRef.current = ws;
 
-        ws.onopen = () => {
-            sendUnreadMessages(ws, messages);
-        };
+        // ws.onopen = () => {
+        //     sendUnreadMessages(ws, messages);
+        // };
 
         ws.onmessage = (event) => {
 
@@ -35,8 +33,6 @@ const useChats = (search) => {
                 console.warn("⚠️ JSON emas data:", event.data);
                 return;
             }
-            // 🔥 chat update qilish
-            // refetch()
             setChats(prev => {
                 if (!Array.isArray(prev)) prev = [];
 
@@ -62,6 +58,7 @@ const useChats = (search) => {
     return {
         chats,
         setChats,
+        isLoading
     };
 };
 

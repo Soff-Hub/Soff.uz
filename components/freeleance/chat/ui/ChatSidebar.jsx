@@ -3,15 +3,14 @@ import styles from '../style/chat.module.scss';
 import { Button, Empty, Input, Spin } from 'antd';
 import { truncateTitle } from '~/shared/utilities/TruncateTitle';
 import { useRouter } from 'next/router';
-import useGetChats from '../api/useGetChats';
+import useChats from '../api/useChats';
 
 const ChatSidebar = ({ setChatId, chatId }) => {
     const [search, setSearch] = useState('');
     const [debouncedSearch, setDebouncedSearch] = useState('');
     const { back } = useRouter();
     const router = useRouter();
-    const { data: chats, isLoading } = useGetChats(debouncedSearch);
-    
+
     useEffect(() => {
         const handler = setTimeout(() => {
             setDebouncedSearch(search);
@@ -26,12 +25,12 @@ const ChatSidebar = ({ setChatId, chatId }) => {
                 pathname: router.pathname,
                 query: { chatId: id },
             });
- 
+
         },
         [router, setChatId]
     );
 
-    // if (!chats) return null;
+    const { chats, isLoading } = useChats(debouncedSearch)
 
     return (
         <div className={styles.chat_sidebar}>
