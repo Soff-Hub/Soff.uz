@@ -10,10 +10,9 @@
     color: #fff !important;
     width: 100%;
     margin-top: 30px;
-
 }
 
-.sticky_color_btn{
+.sticky_color_btn {
     display: none !important;
     @media (max-width: 768px) {
         display: block !important;
@@ -22,10 +21,9 @@
         left: 0;
         right: 0;
         margin: 0;
-        border-radius: 0 !important; 
+        border-radius: 0 !important;
         z-index: 1000;
     }
-
 }
 
 .tolov-usullari {
@@ -237,6 +235,7 @@
 }
 
 .cart-product {
+    position: relative;
     width: 100%;
 
     .cartCardBlock {
@@ -262,6 +261,19 @@
             font-size: 12px;
         }
     }
+
+    .cartCardDelete {
+        @media screen and (min-width: 600px) {
+            display: none;
+        }
+
+        a {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 18px;
+        }
+    }
 }
 
 .ps-product--cart {
@@ -279,11 +291,24 @@
 }
 
 .ps-block--shopping-total {
+    @include media('<sm') {
+        padding: 16px;
+        h3 {
+            font-size: 20px;
+        }
+    }
+
     .ps-block__product {
         .ps-block__estimate a:first-child {
             display: block;
             width: 70% !important;
             padding-right: 10px;
+            text-align: left;
+        }
+
+        .ps-block__estimate a {
+            font-size: 14px;
+            text-align: right;
         }
     }
 }
@@ -457,7 +482,7 @@
         display: flex;
         flex-flow: row nowrap;
 
-        >* {
+        > * {
             width: 100%;
         }
 
@@ -834,7 +859,6 @@
 }
 
 @media screen and (max-width: 370px) {
-
     // .home-card{
     //     max-width: 160px;
     //     min-width: 160px;
@@ -1889,7 +1913,6 @@
         }
 
         .user_profile_body {
-
             h1,
             p {
                 text-align: center;
@@ -2366,9 +2389,11 @@
     display: block;
     height: 50px;
     background: #ffffff;
-    background: -webkit-linear-gradient(0deg,
-            #ffffff 0%,
-            rgba(254, 254, 254, 0) 100%);
+    background: -webkit-linear-gradient(
+        0deg,
+        #ffffff 0%,
+        rgba(254, 254, 254, 0) 100%
+    );
     background: linear-gradient(0deg, #ffffff 0%, rgba(254, 254, 254, 0) 100%);
     width: 100%;
     bottom: 60px;
@@ -2467,12 +2492,16 @@
 
 .scroll-buy-btn {
     background: rgba(0, 0, 0, 0.49);
-    background: -webkit-linear-gradient(0deg,
-            rgba(0, 0, 0, 0.49) 0%,
-            rgba(255, 255, 255, 0) 100%);
-    background: linear-gradient(0deg,
-            rgba(0, 0, 0, 0.49) 0%,
-            rgba(255, 255, 255, 0) 100%);
+    background: -webkit-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.49) 0%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    background: linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.49) 0%,
+        rgba(255, 255, 255, 0) 100%
+    );
 }
 
 .scroll-buy-btn {

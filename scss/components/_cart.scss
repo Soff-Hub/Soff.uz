@@ -75,7 +75,7 @@
         .ps-btn {
             padding: 5px;
             flex-basis: 100%;
-            font-size: 16px; 
+            font-size: 16px;
             text-align: center;
         }
     }
@@ -97,6 +97,7 @@
     .ps-product--cart-mobile {
         margin-bottom: 10px;
         padding-bottom: 10px;
+        padding-right: 10px !important;
         border-bottom: 1px solid #eaeaea;
 
         &:last-child {
@@ -191,4 +192,8 @@
         border: 1px solid $color-1st;
         color: $color-1st;
     }
+}
+
+.ps-card {
+    display: flex;
 }
