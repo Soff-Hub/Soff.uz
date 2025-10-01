@@ -405,7 +405,7 @@ function FileActions({ product }) {
                 open={authModal}
                 onClose={() => setAuthModal(false)}
                 onSuccess={() => {
-
+                    Router.push('/account/checkout')
                 }}
             />
         </>
