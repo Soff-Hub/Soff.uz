@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import styles from "./style.module.scss"
+import React, { useState } from 'react';
+import styles from './style.module.scss';
 import { useRouter } from 'next/router';
 import useWishlist from '~/shared/hooks/useWishlist';
 import useCart from '~/shared/hooks/useCart';
@@ -15,10 +15,8 @@ const ProductCard = ({ product }) => {
     const [basket, setBasket] = useState(false);
 
     const handleNavigate = () => {
-        Router.push()
-    }
-
-
+        Router.push(`/product/${product?.slug}`);
+    };
 
     function handleAddItemToCart(e) {
         showModal();
@@ -57,50 +55,90 @@ const ProductCard = ({ product }) => {
                 <div className={styles.card}>
                     <div className={styles.cardHead}>
                         <div className={styles.cardHeadInfo}>
-                            <span className={styles.cardType}>{product?.document?.file_type || ".zip"}</span>
+                            <span className={styles.cardType}>
+                                {product?.document?.file_type || '.zip'}
+                            </span>
                             <div className={styles.cardActions}>
-                                <div onClick={handleAddItemToWishlist} className={styles.likeIcon}>
-                                    {wishlist?.some(item => Number(item.id) === Number(product?.id)) ?
-                                        <i style={{ color: "#00a44f" }} className="fa-solid fa-heart"></i> : <i className="fa-regular fa-heart"></i>
-                                    }
+                                <div
+                                    onClick={handleAddItemToWishlist}
+                                    className={styles.likeIcon}>
+                                    {wishlist?.some(
+                                        item =>
+                                            Number(item.id) ===
+                                            Number(product?.id)
+                                    ) ? (
+                                        <i
+                                            style={{ color: '#00a44f' }}
+                                            className="fa-solid fa-heart"></i>
+                                    ) : (
+                                        <i className="fa-regular fa-heart"></i>
+                                    )}
                                 </div>
-                                <div onClick={handleAddItemToCart} className={styles.cartIcon}>
-                                    {basket ?
-                                        <i style={{ color: "#00a44f" }} className="fa-solid fa-cart-shopping"></i> : <i className="fa-solid fa-cart-shopping"></i>
-                                    }
+                                <div
+                                    onClick={handleAddItemToCart}
+                                    className={styles.cartIcon}>
+                                    {basket ? (
+                                        <i
+                                            style={{ color: '#00a44f' }}
+                                            className="fa-solid fa-cart-shopping"></i>
+                                    ) : (
+                                        <i className="fa-solid fa-cart-shopping"></i>
+                                    )}
                                 </div>
                             </div>
                         </div>
-                        <img className={styles.cardImg} src={product?.poster_url || '/static/img/not-found.png'} alt="card img" />
+                        <img
+                            className={styles.cardImg}
+                            src={
+                                product?.poster_url ||
+                                '/static/img/not-found.png'
+                            }
+                            alt="card img"
+                        />
                     </div>
                     <div className={styles.cardBody}>
-                        <h2 onClick={handleNavigate} className={styles.cardTitle}>{product?.title}</h2>
-                        <h3 className={styles.cardPrice}>{formatCurrencyWithSpace(product?.price)} so’m</h3>
+                        <h2
+                            onClick={handleNavigate}
+                            className={styles.cardTitle}>
+                            {product?.title}
+                        </h2>
+                        <h3 className={styles.cardPrice}>
+                            {formatCurrencyWithSpace(product?.price)} so’m
+                        </h3>
                     </div>
                     <div className={styles.cardInfo}>
-                        {product?.document?.file_size &&
-                            <div className='d-flex gap-1'>
-                                <img src="/static/img/card_icons/driver.svg" alt="icon" />
+                        {product?.document?.file_size && (
+                            <div className="d-flex gap-1">
+                                <img
+                                    src="/static/img/card_icons/driver.svg"
+                                    alt="icon"
+                                />
                                 <span>{product?.document?.file_size}</span>
                             </div>
-                        }
-                        {product?.document?.page_count &&
-                            <div className='d-flex gap-1'>
-                                <img src="/static/img/card_icons/document-copy.svg" alt="icon" />
+                        )}
+                        {product?.document?.page_count && (
+                            <div className="d-flex gap-1">
+                                <img
+                                    src="/static/img/card_icons/document-copy.svg"
+                                    alt="icon"
+                                />
                                 <span>{product?.document?.page_count}</span>
                             </div>
-                        }
-                        {product?.views_count !== 0 &&
-                            <div className='d-flex gap-1'>
-                                <img src="/static/img/card_icons/eye.svg" alt="icon" />
+                        )}
+                        {product?.views_count !== 0 && (
+                            <div className="d-flex gap-1">
+                                <img
+                                    src="/static/img/card_icons/eye.svg"
+                                    alt="icon"
+                                />
                                 <span>{product?.views_count}</span>
                             </div>
-                        }
+                        )}
                     </div>
                 </div>
             </Link>
             <Modal
-                title='Muvaffaqqiyatli'
+                title="Muvaffaqqiyatli"
                 open={open}
                 onOk={hideModalOk}
                 onCancel={hideModal}
@@ -115,13 +153,13 @@ const ProductCard = ({ product }) => {
                     },
                 }}
                 okText="Savatga o'tish"
-                cancelText='Xaridlarni davom etirish'>
+                cancelText="Xaridlarni davom etirish">
                 <p></p>
                 <p>Mahsulotingizni savatga qo'shdingiz!</p>
                 <p></p>
             </Modal>
         </>
-    )
-}
+    );
+};
 
-export default ProductCard
+export default ProductCard;

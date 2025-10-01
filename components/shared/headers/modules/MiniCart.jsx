@@ -5,11 +5,12 @@ import ProductOnCart from '~/components/elements/products/ProductOnCart';
 import { calculateAmount } from '~/shared/utilities/ecomerce-helpers';
 import useCart from '~/shared/hooks/useCart';
 import { addPeriodToThousands } from '~/components/partials/account/price-formatter';
-import { Badge } from 'antd';
+import { Badge, Button, Popover } from 'antd';
+import { cn } from '~/shared/utilities/cn';
 
 const MiniCart = () => {
-    const state = useSelector((state) => state.auth.user);
-    const data = useSelector((state) => state.ecomerce.cartDataItems);
+    const state = useSelector(state => state.auth.user);
+    const data = useSelector(state => state.ecomerce.cartDataItems);
 
     const { removeCartOneItem } = useCart();
 
@@ -19,20 +20,18 @@ const MiniCart = () => {
     }
 
     const amount = calculateAmount(data);
- 
     const hisob = addPeriodToThousands(amount);
 
-
     return (
-        <div className='ps-cart--mini'>
+        <div className="ps-cart--mini">
             {data?.length > 0 ? (
-                <Link href='/account/shopping-cart' passHref>
-                    <a className='header__extra'>
-                        <Badge size='small' count={data.length}>
+                <Link href="/account/shopping-cart" passHref>
+                    <a className="header__extra">
+                        <Badge size="small" count={data.length}>
                             <img
-                                src='/static/img/wishlist.png'
+                                src="/static/img/wishlist.png"
                                 width={'25px'}
-                                alt='Savat'
+                                alt="Savat"
                             />
                         </Badge>
                     </a>
@@ -43,13 +42,13 @@ const MiniCart = () => {
             {data && data.length > 0 ? (
                 <div className="ps-cart__content">
                     <div className="ps-cart__items">
-                        {data?.map((item) => {
+                        {data?.map(item => {
                             return (
                                 <ProductOnCart product={item} key={item?.id}>
                                     <a
                                         className="ps-product__remove"
                                         style={{ cursor: 'pointer' }}
-                                        onClick={(e) =>
+                                        onClick={e =>
                                             handleRemoveItem(e, item)
                                         }>
                                         <i className="icon-cross"></i>
@@ -89,6 +88,5 @@ const MiniCart = () => {
         </div>
     );
 };
-
 
 export default connect(state => state)(MiniCart);
