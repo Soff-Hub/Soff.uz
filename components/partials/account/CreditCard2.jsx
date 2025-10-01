@@ -5,6 +5,9 @@ import PostRepository from '~/repositories/PostRepository';
 import { BeatLoader } from 'react-spinners';
 import Router, { useRouter } from 'next/router';
 import useCart from '~/shared/hooks/useCart';
+import ProductRepository from '~/repositories/ProductRepository';
+import { calculateAmount } from '~/shared/utilities/ecomerce-helpers';
+import { addPeriodToThousands } from './price-formatter';
 
 const CreditCard2 = ({ document, type }) => {
     const { user } = useSelector(state => state.auth);
@@ -21,10 +24,12 @@ const CreditCard2 = ({ document, type }) => {
     const [buttonOk, setButtonOk] = useState(false);
     const [tab, setTab] = useState(false);
     const router = useRouter()
-    const {  affiliateId  } = useSelector(state => state.affiliate);
+    const { affiliateId } = useSelector(state => state.affiliate);
+    const [percentage, setPercentage] = useState(0);
+    const ecomerce = useSelector((state) => state.ecomerce.cartDataItems);
+    
 
     const affiliate_code = affiliateId
-
     const numberTyper = value => {
         SetNumberCardVal(value);
         if (!value == 0) {
@@ -37,8 +42,21 @@ const CreditCard2 = ({ document, type }) => {
             }
         }
     };
+    let amount = calculateAmount(ecomerce);
+    async function getPercentage() {
+        const responseData = await ProductRepository.getOrderPercentage();
+        if (responseData) {
+            setPercentage(Number(responseData?.data?.percentage));
+        }
+    }
 
-    async function handleClickCardPostsclick (e) {
+    useEffect(() => {
+        getPercentage();
+    }, []);
+
+    const hisob = addPeriodToThousands(amount + Math.floor(amount * percentage));
+
+    async function handleClickCardPostsclick(e) {
         e.preventDefault();
         setMessage(false);
         const ItemsData = await PostRepository.postClickCardNumber(
@@ -63,7 +81,7 @@ const CreditCard2 = ({ document, type }) => {
         }
     }
 
-    async function handleClickCardPostsPayme (e) {
+    async function handleClickCardPostsPayme(e) {
         e.preventDefault();
         setMessage(false);
         const ItemsData = await PostRepository.postClickCardNumber(
@@ -88,7 +106,7 @@ const CreditCard2 = ({ document, type }) => {
         }
     }
 
-    async function handleClickCardPosts (e) {
+    async function handleClickCardPosts(e) {
         e.preventDefault();
         setMessage(false);
         const ItemsData = await PostRepository.postClickCard(
@@ -97,7 +115,7 @@ const CreditCard2 = ({ document, type }) => {
             cardDate,
             `${type || 'document'}`,
             user?.access,
-            affiliate_code 
+            affiliate_code
         );
         if (ItemsData?.status === 201) {
             localStorage.removeItem('cart')
@@ -113,14 +131,14 @@ const CreditCard2 = ({ document, type }) => {
                 content: ItemsData?.data?.expire_date
                     ? ' Karta amal qilish muddatini kiriting'
                     : ItemsData?.data?.card_number
-                    ? "Karta raqamini to'g'ri kiriting"
-                    : ItemsData?.data?.msg,
+                        ? "Karta raqamini to'g'ri kiriting"
+                        : ItemsData?.data?.msg,
             });
             modal.update;
         }
     }
 
-    async function handleSubmitCode () {
+    async function handleSubmitCode() {
         setButtonOk(true);
         const dataNews = await PostRepository.postClickCode(
             cart,
@@ -184,7 +202,7 @@ const CreditCard2 = ({ document, type }) => {
         }
     }, [resData]);
 
-    function handleCancale () {
+    function handleCancale() {
         setOpen(false);
         setResData(null);
     }
@@ -244,7 +262,8 @@ const CreditCard2 = ({ document, type }) => {
                         <div>
                             <form
                                 onSubmit={handleClickCardPosts}
-                                className=' pb-3 d-flex align-items-end justify-content-between row gap-xxs-0 gap-xs-0 gap-lg-0 gap-md-0 gap-3 bg-white'>
+                                className='pb-3 d-flex align-items-end justify-content-between row gap-xxs-0 gap-xs-0 gap-lg-0 gap-md-0 gap-3 bg-white'
+                            >
                                 <div className='col-xl-7 col-lg-12 p-0 col-md-7 col-sm-6 click-form-item my-2'>
                                     <p className='cardNumber'>Karta raqam</p>
                                     <label htmlFor='ccn' className='m-0'>
@@ -282,15 +301,27 @@ const CreditCard2 = ({ document, type }) => {
                                 </div>
                                 <div className='col-12 p-0 '>
                                     {message ? (
-                                        <button
-                                            type='submit'
-                                            className='ps-btn w-100 text-center btn_color'>
-                                            Davom etish
-                                        </button>
+                                        <div>
+                                            <button
+                                                type='submit'
+                                                className='ps-btn w-100 text-center btn_color'>
+                                                To'lash ({hisob} so'm)
+                                            </button>
+                                            <button
+                                                type='submit'
+                                                className='ps-btn w-100 text-center btn_color sticky_color_btn'>
+                                                To'lash ({hisob} so'm)
+                                            </button>
+                                        </div>
                                     ) : (
-                                        <button className='ps-btn ps-btn--fullwidth w-100 text-center'>
-                                            <BeatLoader color='#fff' />
-                                        </button>
+                                        <div>
+                                            <button className='ps-btn ps-btn--fullwidth w-100 text-center'>
+                                                <BeatLoader color='#fff' />
+                                            </button>
+                                            <button className='ps-btn ps-btn--fullwidth w-100 text-center sticky_color_btn'>
+                                                <BeatLoader color='#fff' />
+                                            </button>
+                                        </div>
                                     )}
                                 </div>
                             </form>
@@ -355,15 +386,27 @@ const CreditCard2 = ({ document, type }) => {
                             className=' pt-3 pb-3 d-flex align-items-end justify-content-between row gap-xxs-0 gap-xs-0 gap-lg-0 gap-md-0 gap-3'>
                             <div className='col-12 p-0 px-4 my-3'>
                                 {message ? (
-                                    <button
-                                        type='submit'
-                                        className='ps-btn w-100 text-center btn_color'>
-                                        Davom etish
-                                    </button>
+                                    <div>
+                                        <button
+                                            type='submit'
+                                            className='ps-btn w-100 text-center btn_color'>
+                                            To'lash ({hisob} so'm)
+                                        </button>
+                                        <button
+                                            type='submit'
+                                            className='ps-btn w-100 text-center btn_color sticky_color_btn'>
+                                            To'lash ({hisob} so'm)
+                                        </button>
+                                    </div>
                                 ) : (
-                                    <button className='ps-btn ps-btn--fullwidth w-100 text-center'>
-                                        <BeatLoader color='#fff' />
-                                    </button>
+                                    <div>
+                                        <button className='ps-btn ps-btn--fullwidth w-100 text-center'>
+                                            <BeatLoader color='#fff' />
+                                        </button>
+                                        <button className='ps-btn ps-btn--fullwidth w-100 text-center sticky_color_btn'>
+                                            <BeatLoader color='#fff' />
+                                        </button>
+                                    </div>
                                 )}
                             </div>
                         </form>
@@ -387,15 +430,27 @@ const CreditCard2 = ({ document, type }) => {
                             className=' pt-3 pb-3 d-flex align-items-end justify-content-between row gap-xxs-0 gap-xs-0 gap-lg-0 gap-md-0 gap-3'>
                             <div className='col-12 p-0 px-4 my-3'>
                                 {message ? (
-                                    <button
-                                        type='submit'
-                                        className='ps-btn w-100 text-center btn_color'>
-                                        Davom etish
-                                    </button>
+                                    <div>
+                                        <button
+                                            type='submit'
+                                            className='ps-btn w-100 text-center btn_color'>
+                                            To'lash ({hisob} so'm)
+                                        </button>
+                                        <button
+                                            type='submit'
+                                            className='ps-btn w-100 text-center btn_color sticky_color_btn'>
+                                            To'lash ({hisob} so'm)
+                                        </button>
+                                    </div>
                                 ) : (
-                                    <button className='ps-btn ps-btn--fullwidth w-100 text-center'>
-                                        <BeatLoader color='#fff' />
-                                    </button>
+                                    <div>
+                                        <button className='ps-btn ps-btn--fullwidth w-100 text-center'>
+                                            <BeatLoader color='#fff' />
+                                        </button>
+                                        <button className='ps-btn ps-btn--fullwidth w-100 text-center sticky_color_btn'>
+                                            <BeatLoader color='#fff' />
+                                        </button>
+                                    </div>
                                 )}
                             </div>
                         </form>
