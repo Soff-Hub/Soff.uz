@@ -8,6 +8,7 @@ import { Skeleton } from 'antd';
 import useCart from '~/shared/hooks/useCart';
 import { setShowSearch } from '~/store/fast-dowload/slice';
 import { cn, useRcn } from '~/shared/utilities/cn';
+import { fileColors } from '~/components/details-components/details-actions/file-actions';
 
 const RedesignModulePaymentOrderSummary = ({ ecomerce }) => {
     const [percentage, setPercentage] = useState(0);
@@ -20,12 +21,13 @@ const RedesignModulePaymentOrderSummary = ({ ecomerce }) => {
         desktop: "text-xl"
     });
 
+
     const produtsHeightClass = useRcn({
         mobile: "max-h-[200px]",
         tablet: "max-h-[300px]",
         desktop: "h-auto"
     })
-
+    console.log(ecomerce.cartDataItems)
     let amount = calculateAmount(ecomerce.cartDataItems);
 
     async function getPercentage() {
@@ -56,15 +58,11 @@ const RedesignModulePaymentOrderSummary = ({ ecomerce }) => {
 
     return (
         <div className={cn("bg-white", "rounded-xl", "shadow-sm", "flex", "flex-col")}>
-            {/* Header */}
-            <div className={cn("p-4", "border-b")}>
-                <p className={cn("text-dark", "font-semibold", "m-0")}>
-                    {ecomerce.cartDataItems.length} ta mahsulot
-                </p>
-            </div>
+            <p className={cn("text-dark", "font-semibold", "m-0", "px-4", "py-2")}>
+                {ecomerce.cartDataItems.length} ta mahsulot
+            </p>
 
-            {/* Scrollable Products */}
-            <div className={cn("flex-1", "overflow-y-auto", "p-4", "space-y-3", produtsHeightClass)}>
+            <div className={cn("flex-1", "overflow-y-auto", "px-4", "space-y-3", "py-2", produtsHeightClass)}>
                 {ecomerce.cartDataItems && ecomerce.cartDataItems.length > 0 ? (
                     ecomerce.cartDataItems.map((item) => (
                         <div
@@ -88,7 +86,7 @@ const RedesignModulePaymentOrderSummary = ({ ecomerce }) => {
                                                 "font-semibold",
                                                 "text-sm",
                                                 "md:text-base",
-                                                "mb-1",
+                                                "mb-2",
                                                 "line-clamp-2"
                                             )}
                                         >
@@ -96,6 +94,14 @@ const RedesignModulePaymentOrderSummary = ({ ecomerce }) => {
                                         </p>
                                     </a>
                                 </Link>
+                                <span
+                                    className={cn("text-white", "px-2", "py-1", "rounded")}
+                                    style={{
+                                        background: fileColors[item?.file_type]
+                                    }}
+                                >
+                                    {item?.file_type}
+                                </span>
                             </div>
 
                             <div className={cn("flex", "flex-col", "items-end", "gap-2", "min-w-[90px]")}>
