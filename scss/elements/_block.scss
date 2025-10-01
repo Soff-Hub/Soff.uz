@@ -2683,7 +2683,7 @@
         // padding: 10px;
         border-radius: 10px !important;
         padding: 22px 50px 31px 50px;
-        @media (max-width: 425px) {
+        @media (max-width: 500px) {
             padding: 10px 5px;
         }
     }
@@ -2770,13 +2770,12 @@
         align-items: start;
         background: #fff;
         padding: 12px 24px 12px 24px;
-        // box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.1);
         border: 1px solid rgba(0, 0, 0, 0.1);
         border-radius: 8px;
         position: relative;
         height: 218px;
 
-        @media (max-width: 425px) {
+        @media (max-width: 500px) {
             height: 140px !important;
         }
 
@@ -2790,8 +2789,8 @@
                 align-items: start !important;
                 flex-direction: column;
                 justify-content: space-between;
-                padding-left: 40px;
-                @media (max-width: 425px) {
+                padding-left: 20px;
+                @media (max-width: 500px) {
                     padding-left: 0px;
                 }
                 a {
@@ -2806,18 +2805,11 @@
             }
         }
 
-        // .sell_card_delete {
-        //     // position: absolute;
-        //     // top: 5 !important;/
-        //     // left: 15 !important;
-        // }
         .sell_card_delete img {
-            // margin-top: 10px;
             border: 2px solid #fff;
         }
         .sell_card_delete img:hover {
             border: 2px solid #ffa5a6;
-            // padding: 5px;
             border-radius: 50%;
         }
         .sell_card_price {
@@ -2844,15 +2836,10 @@
             display: flex;
             justify-content: space-between;
             align-items: start;
-            // flex-direction: column;
-            // background: #fff;
             padding: 5px;
             border-radius: 8px;
             position: relative;
             gap: 5px;
-            // .sell_card_img {
-            //     // display: none;
-            // }
             .sell_card_title {
                 a {
                     p {
@@ -2876,7 +2863,6 @@
         justify-content: start;
         align-items: start;
         flex-direction: column;
-        // background: #fff;
         padding: 5px !important;
         border-radius: 8px;
         position: relative;

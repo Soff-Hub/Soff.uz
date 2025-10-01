@@ -28,7 +28,7 @@ const MiniCart = () => {
             {data?.length > 0 ? (
                 <Link href='/account/shopping-cart' passHref>
                     <a className='header__extra'>
-                        <Badge count={data.length}>
+                        <Badge size='small' count={data.length}>
                             <img
                                 src='/static/img/wishlist.png'
                                 width={'25px'}

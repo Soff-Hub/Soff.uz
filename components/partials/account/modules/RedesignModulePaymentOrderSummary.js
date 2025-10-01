@@ -17,7 +17,7 @@ const RedesignModulePaymentOrderSummary = ({ ecomerce }) => {
 
     let amount = calculateAmount(ecomerce.cartDataItems);
 
-    async function getPercentage () {
+    async function getPercentage() {
         const responseData = await ProductRepository.getOrderPercentage();
         if (responseData) {
             setPercentage(Number(responseData?.data?.percentage));
@@ -84,15 +84,15 @@ const RedesignModulePaymentOrderSummary = ({ ecomerce }) => {
                 <p className='product_count m-0'>
                     {ecomerce.cartDataItems.length} ta mahsulot
                 </p>
-                    <div
-                        className='ps-block__content w-100 hidden-scroll'
-                        style={{ backgroundColor: 'transparent' }}>
-                        {ecomerce.cartDataItems &&
+                <div
+                    className='ps-block__content w-100 hidden-scroll'
+                    style={{ backgroundColor: 'transparent' }}>
+                    {ecomerce.cartDataItems &&
                         ecomerce.cartDataItems.length > 0 ? (
-                            ecomerce.cartDataItems?.map((el, i) => (
-                                <div className='sell_card' key={el?.slug}>
+                        ecomerce.cartDataItems?.map((el, i) => (
+                            <div className='sell_card' key={el?.slug}>
                                     <img
-                                    className='sell_card_img'
+                                        className='sell_card_img'
                                         src={el.poster_url}
                                         alt='document'
                                         height={'128px'}
@@ -118,31 +118,31 @@ const RedesignModulePaymentOrderSummary = ({ ecomerce }) => {
                                         </div>
                                     </div>
 
-                                    <div className='sell_card_price'>
-                                        <a
-                                            className='sell_card_delete'
-                                            href='#'
-                                            onClick={e => handleRemoveItem(e, el)}>
-                                            <img
-                                                src='/static/img/xicon.svg'
-                                                alt=''
-                                            />
-                                        </a>
-                                        <p className='w-100'>
-                                            {
-                                                addPeriodToThousands(el?.discount_price) + ` `
-                                            }
-                                            so'm
-                                        </p>
-                                    </div>
+                                <div className='sell_card_price'>
+                                    <a
+                                        className='sell_card_delete'
+                                        href='#'
+                                        onClick={e => handleRemoveItem(e, el)}>
+                                        <img
+                                            src='/static/img/xicon.svg'
+                                            alt=''
+                                        />
+                                    </a>
+                                    <p className='w-100'>
+                                        {
+                                            addPeriodToThousands(el?.discount_price) + ` `
+                                        }
+                                        so'm
+                                    </p>
                                 </div>
-                            ))
-                        ) : (
-                            <figure className='ps-block__total'>
-                                <Skeleton active paragraph={{ rows: 7 }} />
-                            </figure>
-                        )}
-                    </div>
+                            </div>
+                        ))
+                    ) : (
+                        <figure className='ps-block__total'>
+                            <Skeleton active paragraph={{ rows: 7 }} />
+                        </figure>
+                    )}
+                </div>
             </div>
             <div className='checkout_footer rounded-2 my-5 bg-white w-100'>
                 {ecomerce.cartDataItems && ecomerce.cartDataItems.length > 0 && (
@@ -164,10 +164,10 @@ const RedesignModulePaymentOrderSummary = ({ ecomerce }) => {
                     </div>
                 )}
             </div>
-                <button className="prevev_button" onClick={() => router.back()}>
-                    <i className="fa-solid fa-angles-left"></i>{' '}
-                    orqaga
-                </button>
+            <button className="prevev_button" onClick={() => router.back()}>
+                <i className="fa-solid fa-angles-left"></i>{' '}
+                orqaga
+            </button>
         </div>
     );
 };
