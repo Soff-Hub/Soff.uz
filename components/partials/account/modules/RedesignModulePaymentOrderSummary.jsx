@@ -97,7 +97,7 @@ const RedesignModulePaymentOrderSummary = ({ ecomerce }) => {
                                 <span
                                     className={cn("text-white", "px-2", "py-1", "rounded")}
                                     style={{
-                                        background: fileColors[item?.file_type]
+                                        background: fileColors[item?.file_type] || "#007DFF"
                                     }}
                                 >
                                     {item?.file_type}
