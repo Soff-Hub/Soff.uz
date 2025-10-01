@@ -406,6 +406,9 @@
   .pt-\[#{ $i }px\] { padding-top: #{$i}px; }
   .pl-\[#{ $i }px\] { padding-left: #{$i}px;}
   .pr-\[#{ $i }px\] { padding-right: #{$i}px; }
+
+  .max-w-\[#{ $i }px\] { max-width: #{$i}px; }
+  .max-h-\[#{ $i }px\] { max-height: #{$i}px; }
 }
 
 @for $i from 8 through 72 {
@@ -500,3 +503,22 @@ $colors: (
 .cursor-grabbing { cursor: grabbing; }
 .cursor-zoom-in { cursor: zoom-in; }
 .cursor-zoom-out { cursor: zoom-out; }
+
+
+// overflow utils
+.overflow-visible { overflow: visible; }
+.overflow-hidden { overflow: hidden; }
+.overflow-auto { overflow: auto; }
+.overflow-scroll { overflow: scroll; }
+
+// X o‘qi
+.overflow-x-visible { overflow-x: visible; }
+.overflow-x-hidden { overflow-x: hidden; }
+.overflow-x-auto { overflow-x: auto; }
+.overflow-x-scroll { overflow-x: scroll; }
+
+// Y o‘qi
+.overflow-y-visible { overflow-y: visible; }
+.overflow-y-hidden { overflow-y: hidden; }
+.overflow-y-auto { overflow-y: auto; }
+.overflow-y-scroll { overflow-y: scroll; }
