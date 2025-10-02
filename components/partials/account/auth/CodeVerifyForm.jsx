@@ -68,7 +68,7 @@ export default function CodeVerifyForm({ authCode, onClose, slug, onSuccess }) {
             } else if (router?.query?.deal) {
                 router.push(`/account/all-orders`);
             } else if (authCode && slug) {
-                router.push(`/service/${slug}?modal=open`)
+                router.push(`/service/${slug}?paymodal=open`)
             } else if (typeof onSuccess === 'function') {
                 onSuccess()
             } else if (authCode) {
