@@ -4,7 +4,6 @@ import { Pagination, Skeleton } from 'antd';
 import SearchResultsProductsFilter from './search-page-filter/search-results-products-filter';
 import { useRouter } from 'next/router';
 import Search_Results_NotFound from './notFound';
-import LastAddedProductCard from './search-page-card/lastAddedProductCard';
 import SerachSide from './search-page-side';
 import useScrollToNotFound from './useScrollToNotFound';
 

@@ -34,6 +34,7 @@ const Search_Results = ({
     const [open, setOpen] = useState(false);
     const defaultTabRefSet = useRef(false);
     const { isDesktop } = useResponsive();
+    const pageRef = useRef(null)
 
     const createBtn = () => (
         <>
@@ -61,6 +62,14 @@ const Search_Results = ({
             },
         });
     };
+
+    useEffect(() => {
+        if (pageRef.current) {
+            pageRef.current.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            window.scrollIntoView({ behavior: 'smooth' });
+        }
+    }, [router.query.page]);
 
     const handleClearInput = () => {
         setSearchTerm('');
@@ -163,7 +172,7 @@ const Search_Results = ({
     ];
 
     return (
-        <div className="global_search_results">
+        <div ref={pageRef} className="global_search_results">
             <Head>
                 <title>
                     {keyword ? `“${keyword}”` : 'Soff.uz - Qidiruv natijalar'}
@@ -174,7 +183,7 @@ const Search_Results = ({
                     content={
                         keyword
                             ? `“${keyword}” bo‘yicha ${searchData?.count ||
-                                  0} ta mahsulot topildi. Soff.uz orqali kerakli bo'lgan raqamli mahsulotlarni yuklab olishingiz mumkin`
+                            0} ta mahsulot topildi. Soff.uz orqali kerakli bo'lgan raqamli mahsulotlarni yuklab olishingiz mumkin`
                             : "Soff.uz orqali kerakli bo'lgan raqamli mahsulotlarni yuklab olishingiz mumkin"
                     }
                 />
@@ -280,26 +289,19 @@ export async function getServerSideProps(context) {
     const childCategoryUrl = `${baseUrlUseApi}customer/four-child?direction=${type}&parent__slug=${parentCategory}`;
 
     // ✅ Yangi filterlar qo‘shildi
-    const searchUrl = `${baseUrlUseApi}customer/same-google-search/?${
-        page ? `page=${page}&` : ''
-    }${keyword ? `search=${keyword}&` : ''}${type ? `type=${type}&` : ''}${
-        category ? `category=${category}&` : ''
-    }${order_by ? `order_by=${order_by}&` : ''}${
-        file_type ? `file_type=${file_type}&` : ''
-    }${page_from ? `page_from=${page_from}&` : ''}${
-        page_to ? `page_to=${page_to}` : ''
-    }`;
+    const searchUrl = `${baseUrlUseApi}customer/same-google-search/?${page ? `page=${page}&` : ''
+        }${keyword ? `search=${keyword}&` : ''}${type ? `type=${type}&` : ''}${category ? `category=${category}&` : ''
+        }${order_by ? `order_by=${order_by}&` : ''}${file_type ? `file_type=${file_type}&` : ''
+        }${page_from ? `page_from=${page_from}&` : ''}${page_to ? `page_to=${page_to}` : ''
+        }`;
 
     // console.log('searchUrl', searchUrl);
     const lastProductsUrl = `${baseURL}customer/last-added?limit=10`;
-    const servicesUrl = `${
-        process.env.NEXT_PUBLIC_FREELEANCE_URL
-    }/api/v1/customer?${servicesQuery.toString()}&search=${keyword}${
-        service_parent ? `&category_id=${service_parent}` : ''
-    }`;
-    const serviceParentUrl = `${
-        process.env.NEXT_PUBLIC_FREELEANCE_URL
-    }/api/v1/categories/?direction=${direction || ''}`;
+    const servicesUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL
+        }/api/v1/customer?${servicesQuery.toString()}&search=${keyword}${service_parent ? `&category_id=${service_parent}` : ''
+        }`;
+    const serviceParentUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL
+        }/api/v1/categories/?direction=${direction || ''}`;
     const serviceChildUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/categories/?parent_id=${service_parent}`;
     const sellersUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/users/sellers?limit=${limit}&offset=${offset}&search=${keyword}`;
 
@@ -334,7 +336,6 @@ export async function getServerSideProps(context) {
                 fetchJson(lastProductsUrl),
             ]);
 
-            // console.log({ searchUrl, searchData });
 
             const searchError = searchData?.error || null;
 
@@ -379,7 +380,6 @@ export async function getServerSideProps(context) {
                 fetchJson(sellersUrl),
             ]);
 
-            // console.log({ sellers });
 
             return {
                 props: {

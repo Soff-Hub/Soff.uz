@@ -7,7 +7,6 @@ import Router, { useRouter } from 'next/router';
 import { setSavedPrfileData } from '~/store/ecomerce/slice';
 import styles from '~/shared/styles/landingStyles.module.scss';
 import Image from 'next/image';
-import { Badge } from 'antd';
 import { useFGet } from '~/shared/hooks/useFApi';
 import { CHAT_UNSEENS } from '~/shared/api/end-points';
 
@@ -46,7 +45,7 @@ const HeaderUserDropdown = props => {
         }
     };
 
-    const { data } = useFGet("unread_messages_count", CHAT_UNSEENS, {enabled: !!user?.access, token: user?.access })
+    const { data } = useFGet("unread_messages_count", CHAT_UNSEENS, { enabled: !!user?.access, token: user?.access })
 
 
 
@@ -68,26 +67,19 @@ const HeaderUserDropdown = props => {
             </Link>
         </li>
     ));
-    useEffect(() => {}, []);
+    useEffect(() => { }, []);
 
     if (isLoggedIn === true) {
         return (
             <div className="ps-block--user-account ">
                 <div className="fs-3 d-flex align-items-center gap-3 pointer">
-                    <Badge
-                        count={data?.unread_messages}
-                        size='small'
-                        color='#00a44f'
-                        offset={[-4, 3]}
-                    >
-                        <Image
-                            src={profile?.image || '/static/img/ozodbek.png'}
-                            style={{ borderRadius: '50%' }}
-                            width={30}
-                            height={30}
-                            alt="user"
-                        />
-                    </Badge>
+                    <Image
+                        src={profile?.image || '/static/img/ozodbek.png'}
+                        style={{ borderRadius: '50%' }}
+                        width={30}
+                        height={30}
+                        alt="user"
+                    />
                 </div>
                 <div className="ps-block__content">
                     <ul className="ps-list--arrow order">
@@ -98,8 +90,8 @@ const HeaderUserDropdown = props => {
                                         user?.role === 'admin'
                                             ? '/account/dashbord'
                                             : user?.role === 'seller'
-                                            ? '/account/sellerproducts'
-                                            : '#'
+                                                ? '/account/sellerproducts'
+                                                : '#'
                                     }>
                                     <div className="m-0">
                                         <h4 className="m-0 fw-normal fs-3">
