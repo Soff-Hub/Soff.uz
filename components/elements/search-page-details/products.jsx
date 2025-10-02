@@ -69,7 +69,11 @@ export default function Search_Results_Products({
                             {resultsContent}
                             {showResults && (
                                 <Pagination
-                                    className="my-3"
+                                    style={{
+                                        marginBottom: "100px",
+                                        marginTop: "20px"
+                                    }}
+                                    className=""
                                     current={page}
                                     pageSize={10}
                                     total={total}
