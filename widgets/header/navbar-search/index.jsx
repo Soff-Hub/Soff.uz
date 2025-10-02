@@ -75,7 +75,7 @@ const NavbarSearch = () => {
         <div className="container">
             {showSearch && (
                 <div className={styles.searchBox}>
-                    <div className="d-flex">
+                    <div className="d-flex w-100">
                         <Select
                             value={type}
                             onChange={val => setType(val)}
