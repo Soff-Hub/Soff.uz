@@ -68,7 +68,10 @@ export default function Search_Results_Specialists({
                         {/* ✅ Pagination */}
                         {showResults && (
                             <Pagination
-                                className="mt-3"
+                                style={{
+                                    marginBottom: "100px",
+                                    marginTop: "20px"
+                                }}
                                 pageSize={limit}
                                 current={currentPage}
                                 total={data?.count}
