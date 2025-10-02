@@ -16,11 +16,11 @@ export let cutomerAccountLink = [
         url: '/account/sellerproducts',
         icon: 'fa-solid fa-bag-shopping',
     },
-    {
-        text: 'Chatlar',
-        url: '/chat',
-        icon: 'fa-solid fa-comment-dots',
-    },
+    // {
+    //     text: 'Chatlar',
+    //     url: '/chat',
+    //     icon: 'fa-solid fa-comment-dots',
+    // },
     {
         text: 'Buyurtmalarim',
         url: '/order/my-orders',
