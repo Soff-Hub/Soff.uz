@@ -15,7 +15,7 @@ const ServiceCard = ({ service }) => {
 
     const handleOrder = useCallback(() => {
         if (isLoggedIn) {
-            push(`/service/${service?.slug}?modal=open`)
+            push(`/service/${service?.slug}?paymodal=open`)
         } else {
             setOpen(true)
         }

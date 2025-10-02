@@ -24,11 +24,11 @@ const PriceBox = ({ priceBox }) => {
     }
 
     useEffect(() => {
-        if (query?.modal === "open") {
+        if (query?.paymodal === "open") {
             setIsOpen(true)
 
             const newQuery = { ...query }
-            delete newQuery.modal
+            delete newQuery.paymodal
             replace(
                 {
                     pathname: pathname,
