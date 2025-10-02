@@ -18,8 +18,6 @@ const ModuleCartSummary = ({ source }) => {
         getPercentage();
     }, []);
 
- 
-
     const amount = calculateAmount(source);
     const hisob = addPeriodToThousands(amount);
     const hisobPercentage = addPeriodToThousands(amount * percentage);
@@ -62,14 +60,15 @@ const ModuleCartSummary = ({ source }) => {
                     <p>
                         Umumiy hisob <span> {hisob} so'm </span>
                     </p>
-                   
                 </div>
                 <div className="">
                     <ul className="ps-block__product">{productItemsView}</ul>
                     {percentage > 0 && (
-                        <p className='d-flex justify-content-between' >
-                            Xizmat haqi uchun{' '}
-                            <span>
+                        <p className="d-flex justify-content-between">
+                            <span className="text-left">
+                                Xizmat haqi uchun{' '}
+                            </span>
+                            <span className="text-right">
                                 {' '}
                                 {hisobPercentage} so`m{' '}
                                 {`(${percentage * 100} %)`}{' '}

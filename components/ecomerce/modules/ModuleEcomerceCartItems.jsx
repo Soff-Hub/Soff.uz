@@ -4,21 +4,21 @@ import { Result } from 'antd';
 import ProductCart from '~/components/elements/products/ProductCart';
 import useCart from '~/shared/hooks/useCart';
 import { addPeriodToThousands } from '~/components/partials/account/price-formatter';
+import useResponsive from '~/shared/utilities/useResponsive';
 
 const ModuleEcomerceCartItems = ({ cartItems }) => {
-    const { removeCartOneItem } = useCart()
+    const { removeCartOneItem } = useCart();
+    const { isMobile } = useResponsive();
 
     const handleRemoveItem = async (e, item) => {
         e.preventDefault();
-        removeCartOneItem(item.id)
+        removeCartOneItem(item.id);
     };
-
-
 
     // View
     let cartItemsViews;
     if (cartItems && cartItems.length > 0) {
-        const items = cartItems.map((item) => (
+        const items = cartItems.map(item => (
             <tr key={item.id}>
                 <td className="cart-product">
                     <ProductCart product={item} />
@@ -27,15 +27,15 @@ const ModuleEcomerceCartItems = ({ cartItems }) => {
                     <span>
                         {item.discount === 0 ? (
                             <p>
-                                {addPeriodToThousands(item.discount_price )}  so'm
+                                {addPeriodToThousands(item.discount_price)} so'm
                             </p>
                         ) : (
                             <>
                                 <del>
-                                    {addPeriodToThousands(item.price )} so'm
+                                    {addPeriodToThousands(item.price)} so'm
                                 </del>
                                 <p>
-                                    {addPeriodToThousands(item.discount_price )}
+                                    {addPeriodToThousands(item.discount_price)}
                                     so'm
                                 </p>
                             </>
@@ -44,7 +44,7 @@ const ModuleEcomerceCartItems = ({ cartItems }) => {
                 </td>
                 <td></td>
                 <td>
-                    <a href="#" onClick={(e) => handleRemoveItem(e, item)}>
+                    <a href="#" onClick={e => handleRemoveItem(e, item)}>
                         <i className="icon-cross"></i>
                     </a>
                 </td>
@@ -53,7 +53,7 @@ const ModuleEcomerceCartItems = ({ cartItems }) => {
 
         cartItemsViews = (
             <>
-                <table className="table  ps-table--shopping-cart ps-table--responsive">
+                <table className="table ps-table--shopping-cart ps-table--responsive">
                     <thead>
                         <tr>
                             <th>Mahsulot</th>
@@ -74,4 +74,4 @@ const ModuleEcomerceCartItems = ({ cartItems }) => {
     return <>{cartItemsViews}</>;
 };
 
-export default connect((state) => state)(ModuleEcomerceCartItems);
+export default connect(state => state)(ModuleEcomerceCartItems);
