@@ -15,7 +15,7 @@ const Checkout = () => {
                 <div className=''>
                     <div className=''>
                         <div className='ps-form__content'>
-                            <div className='row d-flex justify-content-between'>
+                            <div className='row d-flex justify-content-between my-5'>
                                 <div className='col-xl-7 col-lg-8 col-md-12 col-12'>
                                     <RedesignModulePaymentOrderSummary
                                         ecomerce={ecomerce}

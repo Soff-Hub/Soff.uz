@@ -13,7 +13,8 @@ import {
 import { setActiveIndex } from '../../../store/seller/slice';
 import { apiForFreelance } from '~/repositories/api';
 import CreateOrderModal from '~/shared/components/modals/CreateOrderModal';
-export default function SellerShortInfo({ sellerInfo, pid }) {
+import AuthModal from '~/components/AuthModal';
+export default function     SellerShortInfo({ sellerInfo, pid }) {
     const [nameModal, setNameModal] = useState(false);
     const [fullName, setFullName] = useState(false);
     const [surName, setSurname] = useState(false);
@@ -30,6 +31,7 @@ export default function SellerShortInfo({ sellerInfo, pid }) {
         enabled: !!sellerInfo?.id,
     });
     const [createModal, setCreateModal] = useState(false);
+    const [ authModal, setAuthModal ] = useState(false)
 
     const { data: services } = useQuery({
         queryKey: ['getSellerServices'],
@@ -57,6 +59,14 @@ export default function SellerShortInfo({ sellerInfo, pid }) {
             push('/auth/login');
         }
     };
+
+    const handleOrder = () => {
+        if(isLoggedIn){
+            setCreateModal(true)
+        }else{
+            setAuthModal(true)
+        }
+    }
 
     return (
         <div className="sellerInfo">
@@ -115,7 +125,7 @@ export default function SellerShortInfo({ sellerInfo, pid }) {
                     <i className="fa-solid fa-comment-dots"></i> Xabar yuborish
                 </button>
                 <button
-                    onClick={() => setCreateModal(true)}
+                    onClick={handleOrder}
                     style={{
                         background: '#00A44F1A',
                         borderColor: '#00A44F80',
@@ -262,6 +272,12 @@ export default function SellerShortInfo({ sellerInfo, pid }) {
                 open={createModal}
                 onClose={() => setCreateModal(false)}
                 id={sellerInfo?.id}
+            />
+
+            <AuthModal 
+                open={authModal}
+                onClose={() => setAuthModal(false)}
+                onSuccess={() => setCreateModal(true)}
             />
         </div>
     );
