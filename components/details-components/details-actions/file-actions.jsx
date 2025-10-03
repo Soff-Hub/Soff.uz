@@ -447,7 +447,7 @@ function FileActions({ product }) {
                         </div>
                     ) : null}
 
-                    <CustomResponsiveLayout product={product} />
+                    <CustomResponsiveLayout handleBuynow={handleBuynow} product={product} />
                 </div>
             </div>
 
@@ -483,7 +483,7 @@ function FileActions({ product }) {
     );
 }
 
-const CustomResponsiveLayout = ({ product }) => {
+const CustomResponsiveLayout = ({ product, handleBuynow }) => {
     const { isMobile, size } = useResponsive();
 
     return (
