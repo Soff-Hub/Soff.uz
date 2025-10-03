@@ -462,6 +462,11 @@ $colors: (
   }
 }
 
+.hover-underline{
+  &:hover{
+    text-decoration: underline;
+  }
+}
 
 // transitions
 .transition {

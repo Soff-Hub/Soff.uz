@@ -12,6 +12,8 @@ import Search_Results_Services from '~/components/elements/search-page-details/s
 import Search_Results_Specialists from '~/components/elements/search-page-details/specialists';
 import CreateOrderModal from '~/shared/components/modals/CreateOrderModal';
 import useResponsive from '~/shared/utilities/useResponsive';
+import AuthModal from '~/components/AuthModal';
+import { useSelector } from 'react-redux';
 
 const Search_Results = ({
     fourChildData,
@@ -35,12 +37,21 @@ const Search_Results = ({
     const defaultTabRefSet = useRef(false);
     const { isDesktop } = useResponsive();
     const pageRef = useRef(null)
+    const [ authModal, setAuthModal ] = useState(false)
+    const { isLoggedIn } = useSelector(state => state.auth)
+
 
     const createBtn = () => (
         <>
             {isDesktop && (
                 <span
-                    onClick={() => setOpen(true)}
+                    onClick={() => {
+                        if(isLoggedIn){
+                            setOpen(true)
+                        }else{
+                            setAuthModal(true)
+                        }
+                    }}
                     className="Search_Results_not_found_btn w-100 text-center py-3">
                     Buyurtma yaratish
                 </span>
@@ -243,6 +254,7 @@ const Search_Results = ({
                 />
             </div>
             <CreateOrderModal open={open} onClose={() => setOpen(false)} />
+            <AuthModal open={authModal} onClose={() => setAuthModal(false)} onSuccess={() => setOpen(true)}/>
         </div>
     );
 };
