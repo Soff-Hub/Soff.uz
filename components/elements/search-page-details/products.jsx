@@ -75,7 +75,7 @@ export default function Search_Results_Products({
                                     }}
                                     className=""
                                     current={page}
-                                    pageSize={10}
+                                    pageSize={50}
                                     total={total}
                                     onChange={newPage => {
                                         router.push({
