@@ -15,11 +15,11 @@ import ServiceCard from '../../../../entities/service/service-card';
 import StickyBox from './ui/sticky-box';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { useDispatch } from 'react-redux';
-import { setShowSearch } from '~/store/fast-dowload/slice';
+import { setShowFastDownload, setShowSearch } from '~/store/fast-dowload/slice';
 
 const ServiceDetail = ({ data }) => {
     const { push, back } = useRouter();
-    const dispatch = useDispatch() 
+    const dispatch = useDispatch()
     const {
         service,
         seller_portfolio,
@@ -49,8 +49,6 @@ const ServiceDetail = ({ data }) => {
         serviceItems: service_items,
     };
 
-    console.log("111111111", data)
-
     const breadcrumbItems = useMemo(
         () => [
             {
@@ -66,9 +64,11 @@ const ServiceDetail = ({ data }) => {
 
     useEffect(() => {
         dispatch(setShowSearch(false));
+        dispatch(setShowFastDownload(false));
 
         return () => {
             dispatch(setShowSearch(true));
+            dispatch(setShowFastDownload(true));
         };
     }, [dispatch])
 

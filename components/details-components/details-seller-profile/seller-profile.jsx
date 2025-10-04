@@ -3,9 +3,18 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import { useRouter } from 'next/router';
+import { useDispatch } from 'react-redux';
+import { setActiveIndex } from '~/store/seller/slice';
 
 function SellerProfile({ product }) {
     const router = useRouter();
+    const dispatch = useDispatch()
+
+    const handleOrder = () => {
+        router.push(`/seller/${product?.seller?.id}`)
+        dispatch(setActiveIndex("services"))
+    }
+
     return (
         <div className="seller_products_actions_secound">
             <div className="seller_profile">
@@ -58,7 +67,7 @@ function SellerProfile({ product }) {
                 className="w-100 seller_profile_button"
                 icon={<i className="fa-solid fa-rocket"></i>}
                 size={'large'}
-                onClick={() => router.push('/orders')}>
+                onClick={handleOrder}>
                 Buyurtma berish
             </Button>
         </div>

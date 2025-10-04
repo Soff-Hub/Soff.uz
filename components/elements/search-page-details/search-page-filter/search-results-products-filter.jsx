@@ -12,49 +12,51 @@ import {
     CloseCircleOutlined,
 } from '@ant-design/icons';
 
+
+const fileTypes = [
+    { label: "Barchasi", value: "" },
+    { label: 'DOCX', value: '.docx' },
+    { label: 'DOC', value: '.doc' },
+    { label: 'PPTX', value: '.pptx' },
+    { label: 'PPT', value: '.ppt' },
+    { label: 'PDF', value: '.pdf' },
+];
+const { Option } = Select;
+
+const orders = [
+    { label: 'Narx (arzon)', value: 'price' },
+    { label: 'Narx (qimmat)', value: '-price' },
+    { label: "Ko'p ko‘rilganlar bo‘yicha", value: 'views' },
+    { label: 'Ko‘p xarid qilingan', value: 'purchased_count' },
+];
+
+const allTypes = [
+    { title: 'Barchasi', value: 'all', icon: <AppstoreOutlined /> },
+    { title: 'Fayllar', value: 'file', icon: <FileTextOutlined /> },
+    { title: '3D modellar', value: '3d', icon: <PictureOutlined /> },
+    {
+        title: 'Dizayn shablonlar',
+        value: 'design',
+        icon: <LayoutOutlined />,
+    },
+    {
+        title: 'Turli shablonlar',
+        value: 'template',
+        icon: <CodeOutlined />,
+    },
+    { title: 'Veb saytlar', value: 'website', icon: <GlobalOutlined /> },
+    { title: 'Videolar', value: 'video', icon: <VideoCameraOutlined /> },
+];
+
 export default function SearchResultsProductsFilter({
     total,
     parentData,
     childData,
 }) {
     const router = useRouter();
-    const { Option } = Select;
 
-    const orders = [
-        { label: 'Narx (arzon)', value: 'price' },
-        { label: 'Narx (qimmat)', value: '-price' },
-        { label: "Ko'p ko‘rilganlar bo‘yicha", value: 'views' },
-        { label: 'Ko‘p xarid qilingan', value: 'purchased_count' },
-    ];
 
-    const allTypes = [
-        { title: 'Barchasi', value: 'all', icon: <AppstoreOutlined /> },
-        { title: 'Fayllar', value: 'file', icon: <FileTextOutlined /> },
-        { title: '3D modellar', value: '3d', icon: <PictureOutlined /> },
-        {
-            title: 'Dizayn shablonlar',
-            value: 'design',
-            icon: <LayoutOutlined />,
-        },
-        {
-            title: 'Turli shablonlar',
-            value: 'template',
-            icon: <CodeOutlined />,
-        },
-        { title: 'Veb saytlar', value: 'website', icon: <GlobalOutlined /> },
-        { title: 'Videolar', value: 'video', icon: <VideoCameraOutlined /> },
-    ];
 
-    // ✅ Fayl turlari uchun filter
-    const fileTypes = [
-        { label: 'DOCX', value: '.docx' },
-        { label: 'DOC', value: '.doc' },
-        { label: 'PPTX', value: '.pptx' },
-        { label: 'PPT', value: '.ppt' },
-        { label: 'PDF', value: '.pdf' },
-    ];
-
-    // ✅ Betlar soni filteri (faqat file uchun)
     const [pageRange, setPageRange] = useState([
         Number(router.query.page_from) || 1,
         Number(router.query.page_to) || 100,
@@ -105,7 +107,6 @@ export default function SearchResultsProductsFilter({
 
             <form className="Search_Results_Products_form">
                 <div className="row g-3">
-                    {/* Type */}
                     <div className="col-6 col-lg-3">
                         <Select
                             style={{ width: '100%' }}
@@ -132,7 +133,6 @@ export default function SearchResultsProductsFilter({
                         </Select>
                     </div>
 
-                    {/* File Type - Always visible but disabled when not file type */}
                     <div className="col-6 col-lg-3">
                         <Select
                             style={{ width: '100%' }}
@@ -148,7 +148,6 @@ export default function SearchResultsProductsFilter({
                         />
                     </div>
 
-                    {/* Parent Category - Always visible but disabled when type is 'all' */}
                     <div className="col-6 col-lg-3">
                         <Select
                             style={{ width: '100%' }}
@@ -181,7 +180,6 @@ export default function SearchResultsProductsFilter({
                         />
                     </div>
 
-                    {/* Sorting */}
                     <div className="col-6 col-lg-3">
                         <div className="d-flex align-items-center gap-2">
                             <Select
@@ -202,25 +200,24 @@ export default function SearchResultsProductsFilter({
                                 router.query.file_type ||
                                 router.query.page_from ||
                                 router.query.page_to) && (
-                                <CloseCircleOutlined
-                                    style={{
-                                        fontSize: 20,
-                                        cursor: 'pointer',
-                                        color: '#ff4d4f',
-                                        minWidth: '20px',
-                                    }}
-                                    title="Barchasini tozalash"
-                                    onClick={handleClearAll}
-                                />
-                            )}
+                                    <CloseCircleOutlined
+                                        style={{
+                                            fontSize: 20,
+                                            cursor: 'pointer',
+                                            color: '#ff4d4f',
+                                            minWidth: '20px',
+                                        }}
+                                        title="Barchasini tozalash"
+                                        onClick={handleClearAll}
+                                    />
+                                )}
                         </div>
                     </div>
 
-                    {/* Page Range Slider - Only for file type */}
                     {router.query.type === 'file' && (
                         <div className="col-12">
-                            <div className="p-3 border rounded bg-light">
-                                <p className="mb-2 fw-medium">Betlar soni</p>
+                            <div className="p-2 border rounded bg-light">
+                                <p className="mb-0 fw-medium">Betlar soni</p>
                                 <Slider
                                     range
                                     min={1}
@@ -233,8 +230,11 @@ export default function SearchResultsProductsFilter({
                                             page_to: val[1],
                                         })
                                     }
+                                    style={{
+                                        margin: "6px"
+                                    }}
                                 />
-                                <div className="d-flex justify-content-between mt-1">
+                                <div className="d-flex justify-content-between">
                                     <span className="text-muted small">
                                         {pageRange[0]} bet
                                     </span>
