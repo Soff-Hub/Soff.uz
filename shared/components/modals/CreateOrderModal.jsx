@@ -18,23 +18,9 @@ import dayjs from 'dayjs';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { createOrderInfo } from '~/shared/constants/createOrder';
+import { priceOptions, options } from '~/shared/constants/createOrder';
 
 const { TextArea } = Input;
-
-const options = {
-    scientific_work: title => `${title} tayyorlash kerak.`,
-    dizayn: title => `${title} tayyorlash kerak.`,
-    web: title => `${title} uchun dastur tayyorlash kerak.`,
-    three_d: title => `${title} uchun dizayn tayyorlash kerak.`,
-};
-
-const priceOptions = [
-    { title: '10 000', value: 10000 },
-    { title: '20 000', value: 20000 },
-    { title: '50 000', value: 50000 },
-    { title: '100 000', value: 100000 },
-    { title: '200 000', value: 200000 },
-];
 
 const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
     const [form] = Form.useForm();
@@ -57,7 +43,7 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
     const { mutate: createOrder, isPending } = useFPost({
         url: 'order/custom-order',
         token: user?.access,
-        onSuccess: (data) => {
+        onSuccess: data => {
             form.resetFields();
             onClose();
             message.success('Buyurtma muvaffaqiyatli yaratildi!');
@@ -76,7 +62,7 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
     const { mutate: createDirectOrder, isPending: createPending } = useFPost({
         url: 'order/direct-order',
         token: user?.access,
-        onSuccess: (data) => {
+        onSuccess: data => {
             form.resetFields();
             onClose();
             message.success('Buyurtma muvaffaqiyatli yuborildi!');
@@ -95,6 +81,7 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
     const handleFinish = () => {
         setConfirmOpen(true);
     };
+
     const handleConfirm = () => {
         const values = form.getFieldsValue();
         const order = {
@@ -112,6 +99,7 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
         if (id) order.seller_id = id;
 
         const fd = new FormData();
+
         for (const [key, value] of Object.entries(order)) {
             fd.append(key, value);
         }
