@@ -70,7 +70,7 @@ export async function getServerSideProps(context) {
         category_id = '',
         search = '',
         direction = '',
-        limit = 20,
+        limit = 23,
         offset = 0,
     } = query;
 
