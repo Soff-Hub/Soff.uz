@@ -8,16 +8,11 @@ import {
     SearchOutlined,
 } from '@ant-design/icons';
 import ServiceSteps from './service-steps';
+import { directions } from '@/components/freeleance/constants/index';
 
 const { Option } = Select;
 
-const directions = [
-    { label: 'Barchasi', value: '' },
-    { label: 'Ilmiy va akademik xizmatlar', value: 'scientific_work' },
-    { label: 'Dizayn', value: 'dizayn' },
-    { label: 'Dasturlash xizmatlari', value: 'web' },
-    { label: '3D Dizayn va Vizualizatsiya', value: 'three_d' },
-];
+const directionsWithEmpty = [{ label: 'Barchasi', value: '' }, ...directions];
 
 const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
     const router = useRouter();
@@ -37,7 +32,6 @@ const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
         });
     };
 
-    
     useEffect(() => {
         const delay = setTimeout(() => {
             const newQuery = {
@@ -74,7 +68,7 @@ const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
             pathname: router.pathname,
             query: {
                 direction: selectedDirection || undefined,
-                category_id: value || undefined
+                category_id: value || undefined,
             },
         });
     };
@@ -88,7 +82,9 @@ const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
 
     useEffect(() => {
         setSelectedDirection(query.direction);
-        setSelectedParentCategory(query.category_id || query.parent_category_id)
+        setSelectedParentCategory(
+            query.category_id || query.parent_category_id
+        );
     }, [query]);
 
     return (
@@ -98,8 +94,6 @@ const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
             </div>
             <div className={styles.serviceFilterTab}>
                 <div className={styles.filterRow}>
-
-
                     <div className={styles.filterSelects}>
                         <Select
                             className={styles.filter_select}
@@ -109,32 +103,30 @@ const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
                             placeholder="Yo'nalish"
                             value={selectedDirection || undefined}
                             onChange={updateDirection}>
-                            {directions.map(d => (
+                            {directionsWithEmpty.map(d => (
                                 <Option key={d.value} value={d.value}>
                                     {d.label}
                                 </Option>
                             ))}
                         </Select>
 
-                            <Select
-                                allowClear
-                                className={styles.filter_select}
-                                suffixIcon={
-                                    <DownOutlined style={{ color: 'green' }} />
-                                }
-                                placeholder="Kategoriya"
-                                value={selectedParentCategory || undefined}
-                                onChange={onParentCategoryChange}>
-                                <Option value=''>
-                                    Barchasi
+                        <Select
+                            allowClear
+                            className={styles.filter_select}
+                            suffixIcon={
+                                <DownOutlined style={{ color: 'green' }} />
+                            }
+                            placeholder="Kategoriya"
+                            value={selectedParentCategory || undefined}
+                            onChange={onParentCategoryChange}>
+                            <Option value="">Barchasi</Option>
+                            {parentCategory?.map(cat => (
+                                <Option key={cat.id} value={String(cat.id)}>
+                                    {cat.title}
                                 </Option>
-                                {parentCategory?.map(cat => (
-                                    <Option key={cat.id} value={String(cat.id)}>
-                                        {cat.title}
-                                    </Option>
-                                ))}
-                            </Select>
-                        
+                            ))}
+                        </Select>
+
                         <button
                             className={styles.deleteBtn}
                             onClick={clearFilters}>

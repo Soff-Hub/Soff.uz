@@ -39,7 +39,12 @@
         left: -20px !important;
         transition: all 0.5s;
         max-height: 400px;
-        // Custom scrollbar for Webkit browsers
+        z-index: 1000;
+
+        &.overflowing {
+            left: auto !important;
+            right: -20px !important;
+        }
 
         .detailsTitle {
             padding-left: 20px;

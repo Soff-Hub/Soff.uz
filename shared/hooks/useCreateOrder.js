@@ -16,9 +16,12 @@ import { useFGet, useFPost } from '~/shared/hooks/useFApi';
 import dayjs from 'dayjs';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import { createOrderInfo } from '~/shared/constants/createOrder';
 import { Info } from '~/shared/components/modals/CreateOrderModal';
-import { priceOptions, options } from '~/shared/constants/createOrder';
+import {
+    priceOptions,
+    options,
+    createOrderInfo,
+} from '~/shared/constants/createOrder';
 import useResponsive from '../utilities/useResponsive';
 
 const direction_content = (
