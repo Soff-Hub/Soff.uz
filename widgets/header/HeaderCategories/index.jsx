@@ -129,7 +129,12 @@ const templates = handleOrder => [
                 className="fa-solid fa-plus"></i>
         ),
         label: (
-            <p className={` ${styles.dropLabel}  `}>Maxsus buyurtma berish</p>
+            <a
+                href="/order/create"
+                onClick={e => e.preventDefault()}
+                className={` ${styles.dropLabel}  `}>
+                Maxsus buyurtma berish
+            </a>
         ),
         onClick: handleOrder,
         style: {
@@ -219,7 +224,7 @@ const HeaderCatergories = () => {
 
     const handleOrder = () => {
         if (isLoggedIn) {
-            setOpen(true);
+            push('/order/create');
         } else {
             push('/auth/login');
         }
@@ -269,4 +274,3 @@ const HeaderCatergories = () => {
 };
 
 export default HeaderCatergories;
-
