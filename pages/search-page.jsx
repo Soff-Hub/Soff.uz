@@ -301,7 +301,7 @@ export async function getServerSideProps(context) {
     const childCategoryUrl = `${baseUrlUseApi}customer/four-child?direction=${type}&parent__slug=${parentCategory}`;
 
     // ✅ Yangi filterlar qo‘shildi
-    const searchUrl = `${baseUrlUseApi}customer/same-google-search/?${page ? `page=${page}&` : ''
+    const searchUrl = `${baseUrlUseApi}customer/same-google-search/?limit=50&${page ? `page=${page}&` : ''
         }${keyword ? `search=${keyword}&` : ''}${type ? `type=${type}&` : ''}${category ? `category=${category}&` : ''
         }${order_by ? `order_by=${order_by}&` : ''}${file_type ? `file_type=${file_type}&` : ''
         }${page_from ? `page_from=${page_from}&` : ''}${page_to ? `page_to=${page_to}` : ''
