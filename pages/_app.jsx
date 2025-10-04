@@ -5,6 +5,7 @@ import '~/public/static/css/bootstrap.min.css';
 import '~/public/static/css/slick.min.css';
 import '~/scss/style.scss';
 import '~/scss/electronic.scss';
+import '~/widgets/navbar-menu/popover-override.css';
 import Head from 'next/head';
 import NextProgress from 'next-progress';
 import { Toaster } from 'react-hot-toast';
@@ -14,10 +15,10 @@ import AffiliateListener from '~/entities/affiliate';
 
 function App({ Component, pageProps }) {
     useEffect(() => {
-        setTimeout(function () {
+        setTimeout(function() {
             document.getElementById('__next').classList.add('loaded');
         }, 0);
-        window.addEventListener('contextmenu', function (e) {
+        window.addEventListener('contextmenu', function(e) {
             e.preventDefault();
         });
     }, []);
