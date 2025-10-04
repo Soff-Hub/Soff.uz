@@ -7,19 +7,19 @@ import Link from 'next/link';
 import ModuleCartSummary from '~/components/ecomerce/modules/ModuleCartSummary';
 import Meta from '~/components/shared/headers/Meta';
 
+const breadCrumb = [
+    {
+        text: 'Asosiy sahifa',
+        url: '/',
+    },
+    {
+        text: 'Savat',
+    },
+];
+
 const ShoppingCartScreen = () => {
     const state = useSelector(state => state.auth.user);
     const cartItems = useSelector(state => state.ecomerce.cartDataItems);
-
-    const breadCrumb = [
-        {
-            text: 'Asosiy sahifa',
-            url: '/',
-        },
-        {
-            text: 'Savat',
-        },
-    ];
 
     let contentView;
     if (cartItems) {
