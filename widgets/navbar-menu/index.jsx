@@ -1,16 +1,82 @@
 import React, { useRef, useState, useEffect } from 'react';
 import styles from './style.module.scss';
 import menuItemStyle from './menuItem.module.scss';
+// import './popover-override.css'; // Import the override CSS
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useFGet } from '~/shared/hooks/useFApi';
 import { NAVBAR_MENU_CATEGORIES } from '~/shared/api/end-points';
 import { directions } from '~/components/freeleance/constants';
-import { options } from '~/shared/constants/createOrder';
+import { IoIosArrowBack } from 'react-icons/io';
+import { Popover, Button } from 'antd';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import SwiperController from './swiperController';
 
 const NavbarMenu = () => {
     const { data, isLoading } = useFGet('navbar-items', NAVBAR_MENU_CATEGORIES);
-    console.log('navbar items', data);
+    const [isEnd, setIsEnd] = useState(false);
+    const [isBeginning, setIsBeginning] = useState(true); // Start with true as initial state
+    const [swiperController, setSwiperController] = useState(null);
+    const swiperRef = useRef(null);
+
+    const getMethods = swiperClass => {
+        setSwiperController(swiperClass);
+    };
+
+    const setEnding = status => {
+        setIsEnd(status);
+    };
+    const setBeginning = status => {
+        setIsBeginning(status);
+    };
+
+    // Function to update swiper state
+    const updateSwiperState = swiper => {
+        if (swiper) {
+            setIsEnd(swiper.isEnd);
+            setIsBeginning(swiper.isBeginning);
+        }
+    };
+
+    // Handle swiper initialization
+    const handleSwiperInit = swiper => {
+        // Set initial state
+        updateSwiperState(swiper);
+    };
+
+    // Handle slide change
+    const handleSlideChange = swiper => {
+        updateSwiperState(swiper);
+    };
+
+    console.log({ isEnd, isBeginning });
+
+    // Remove the old useEffect and replace with proper event handling
+    useEffect(() => {
+        if (swiperRef.current?.swiper) {
+            const swiper = swiperRef.current.swiper;
+
+            // Set initial state
+            updateSwiperState(swiper);
+
+            // Add event listeners
+            swiper.on('slideChange', () => updateSwiperState(swiper));
+            swiper.on('reachEnd', () => setIsEnd(true));
+            swiper.on('reachBeginning', () => setIsBeginning(true));
+            swiper.on('fromEdge', () => {
+                updateSwiperState(swiper);
+            });
+
+            // Cleanup function
+            return () => {
+                swiper.off('slideChange');
+                swiper.off('reachEnd');
+                swiper.off('reachBeginning');
+                swiper.off('fromEdge');
+            };
+        }
+    }, [data]); // Depend on data so it runs when swiper is ready
 
     if (isLoading && !data) return null;
 
@@ -20,14 +86,53 @@ const NavbarMenu = () => {
                 <nav className={styles.navSectionBlock}>
                     <div className="container">
                         <div className={styles.navbarWrapper}>
-                            {data?.map(item => (
-                                <MenuItem
-                                    key={item.direction}
-                                    products={item.freelance_categories}
-                                    templates={item.soff_categories}
-                                    label={item.direction}
+                            <Button
+                                aria-label="previous"
+                                size="large"
+                                shape="circle"
+                                onClick={() => swiperController?.slidePrev()}
+                                color="primary"
+                                disabled={isBeginning}>
+                                <IoIosArrowBack />
+                            </Button>
+                            <Swiper
+                                ref={swiperRef}
+                                spaceBetween={20}
+                                navigation={false}
+                                grabCursor={true}
+                                freeMode={true}
+                                slidesPerView={'auto'}
+                                onSwiper={handleSwiperInit}
+                                onSlideChange={handleSlideChange}
+                                className={`categorySwiper ${!isEnd &&
+                                    'categorySwiperEnding'} ${!isBeginning &&
+                                    'categorySwiperBeginning'}`}>
+                                {data.map(item => (
+                                    <SwiperSlide key={item.direction}>
+                                        <MenuItem
+                                            products={item.freelance_categories}
+                                            templates={item.soff_categories}
+                                            label={item.direction}
+                                        />
+                                    </SwiperSlide>
+                                ))}
+
+                                <SwiperController
+                                    getMethods={getMethods}
+                                    setEnding={setEnding}
+                                    setBeginning={setBeginning}
                                 />
-                            ))}
+                            </Swiper>
+                            <Button
+                                aria-label="next"
+                                size="large"
+                                color="primary"
+                                shape="circle"
+                                className={styles.swipeNext}
+                                onClick={() => swiperController?.slideNext()}
+                                disabled={isEnd}>
+                                <IoIosArrowBack />
+                            </Button>
                         </div>
                     </div>
                 </nav>
@@ -42,13 +147,6 @@ const option = directions.reduce((acc, item) => {
     acc[item.value] = item.label;
     return acc;
 }, {});
-// {
-//     scientific_work: 'Ilmiy va Akademik Xizmatlar',
-//     three_d: '3D Dizayn va Vizualizatsiya',
-//     web: 'Dasturlash xizmatlari',
-//     dizayn: 'Dizayn',
-//     document: 'Shablonlar',
-// };
 
 const templateLink = {
     scientific_work: 'scientific-resources',
@@ -60,93 +158,58 @@ const templateLink = {
 
 const MenuItem = ({ products, templates, label }) => {
     const router = useRouter();
-    const dropdownRef = useRef(null);
-    const menuItemRef = useRef(null);
-    const [isOverflowing, setIsOverflowing] = useState(false);
 
-    const checkOverflow = () => {
-        if (dropdownRef.current && menuItemRef.current) {
-            // Temporarily make dropdown visible to measure it
-            const dropdown = dropdownRef.current;
-            const originalDisplay = dropdown.style.display;
-            const originalVisibility = dropdown.style.visibility;
-
-            dropdown.style.display = 'flex';
-            dropdown.style.visibility = 'hidden';
-
-            const rect = dropdown.getBoundingClientRect();
-            const windowWidth = window.innerWidth;
-
-            setIsOverflowing(rect.right > windowWidth);
-
-            // Restore original styles
-            dropdown.style.display = originalDisplay;
-            dropdown.style.visibility = originalVisibility;
-        }
-    };
-
-    const handleMouseEnter = () => {
-        // Small delay to ensure dropdown is rendered
-        setTimeout(checkOverflow, 10);
-    };
-
-    console.log({ options });
     return (
-        <div
-            ref={menuItemRef}
-            className={menuItemStyle.menuItem}
-            onMouseEnter={handleMouseEnter}>
-            <button type="button" className={menuItemStyle.label}>
-                {option[label]}
-            </button>
-            <div
-                ref={dropdownRef}
-                className={`${menuItemStyle.dropDown} ${
-                    isOverflowing ? menuItemStyle.overflowing : ''
-                }`}>
-                <div className={menuItemStyle.templates}>
-                    <h3
-                        style={{ cursor: 'pointer' }}
-                        onClick={() =>
-                            router.push(`/${templateLink[label]}/all`)
-                        }
-                        className={menuItemStyle.sectionLabel}>
-                        Tayyor mahsulotlar
-                    </h3>
-                    <ul className={menuItemStyle.details}>
-                        {templates.map(item => (
-                            <Link
-                                key={item.id}
-                                href={`/${templateLink[label]}/${item.slug}?slug=${item.slug}&search=&parentCategory=${item.slug}&title=${item.title}`}>
-                                <a className={menuItemStyle.detail}>
-                                    {item.title}
-                                </a>
-                            </Link>
-                        ))}
-                    </ul>
+        <Popover
+            title={''}
+            overlayClassName="navbar-menu-popover"
+            content={
+                <div className="dropdown-content">
+                    <div className="templates">
+                        <h3
+                            style={{ cursor: 'pointer' }}
+                            onClick={() =>
+                                router.push(`/${templateLink[label]}/all`)
+                            }
+                            className="section-label">
+                            Tayyor mahsulotlar
+                        </h3>
+                        <ul className="details-list">
+                            {templates.map(item => (
+                                <Link
+                                    key={item.id}
+                                    href={`/${templateLink[label]}/${item.slug}?slug=${item.slug}&search=&parentCategory=${item.slug}&title=${item.title}`}>
+                                    <a className="detail-item">{item.title}</a>
+                                </Link>
+                            ))}
+                        </ul>
+                    </div>
+                    <div className="orders">
+                        <h3
+                            style={{ cursor: 'pointer' }}
+                            onClick={() =>
+                                router.push(`/orders?direction=${label}`)
+                            }
+                            className="section-label">
+                            Buyurtma berish
+                        </h3>
+                        <ul className="details-list">
+                            {products.map(item => (
+                                <Link
+                                    key={item.id}
+                                    href={`/orders?direction=${label}&category_id=${item.id}&title=${item.title}`}>
+                                    <a className="detail-item">{item.title}</a>
+                                </Link>
+                            ))}
+                        </ul>
+                    </div>
                 </div>
-                <div className={menuItemStyle.orders}>
-                    <h3
-                        style={{ cursor: 'pointer' }}
-                        onClick={() =>
-                            router.push(`/orders?direction=${label}`)
-                        }
-                        className={menuItemStyle.sectionLabel}>
-                        Buyurtma berish
-                    </h3>
-                    <ul className={menuItemStyle.details}>
-                        {products.map(item => (
-                            <Link
-                                key={item.id}
-                                href={`/orders?direction=${label}&category_id=${item.id}&title=${item.title}`}>
-                                <a className={menuItemStyle.detail}>
-                                    {item.title}
-                                </a>
-                            </Link>
-                        ))}
-                    </ul>
-                </div>
+            }>
+            <div className={menuItemStyle.menuItem}>
+                <button type="button" className={menuItemStyle.label}>
+                    {option[label]}
+                </button>
             </div>
-        </div>
+        </Popover>
     );
 };
