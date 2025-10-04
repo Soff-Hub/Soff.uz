@@ -46,7 +46,7 @@
     }
     @media (max-width: 768px) {
         height: 100px;
-    } 
+    }
 }
 
 .header-bottom {
@@ -213,4 +213,93 @@
 
 .white-link {
     color: white !important;
+}
+
+.menuItem {
+    // position: relative;
+    width: max-content;
+    background: #fff;
+
+    .label {
+        padding: 10px 20px 10px 0px;
+        color: $grayColor;
+        font-size: 16px;
+        font-weight: 400;
+        border: none;
+        outline: none;
+        background: transparent;
+        border-bottom: 2px solid transparent;
+    }
+
+    &:hover {
+        .label {
+            color: $color-1st;
+            border-bottom: 2px solid $color-1st;
+        }
+    }
+
+    .dropDown {
+        display: flex;
+        background: #fff;
+        align-items: start;
+        padding: 20px 0px;
+        border: 1px solid $paragraphColor;
+        overflow-y: auto;
+        max-height: 400px;
+
+        .detailsTitle {
+            padding-left: 20px;
+            font-weight: 500;
+            font-size: 16px;
+            border: 2px solid transparent;
+        }
+
+        .details {
+            display: flex;
+            flex-direction: column;
+            width: 300px;
+            padding: 0;
+            list-style: none;
+            flex: 1;
+
+            .detail {
+                color: $grayColor;
+                font-size: 14px !important;
+                font-weight: 400;
+                text-align: start;
+                cursor: pointer;
+                list-style: none;
+                padding-left: 25px !important;
+                box-sizing: border-box;
+                border: 3px solid transparent;
+                transition: all 0.5s;
+
+                &:hover {
+                    border-left: 3px solid $color-1st;
+                    color: $color-1st !important;
+                }
+            }
+        }
+
+        .templates .orders {
+            display: flex !important;
+            flex-direction: column !important;
+            flex: 1;
+        }
+
+        .orders {
+            border-left: 1px solid $paragraphColor;
+        }
+
+        .sectionLabel {
+            color: $textColor;
+            font-size: 16px;
+            font-weight: 700;
+            text-align: start;
+            line-height: 26px;
+            padding: 0px 20px 10px 20px;
+            margin: 0;
+            border-left: 3px solid transparent;
+        }
+    }
 }
