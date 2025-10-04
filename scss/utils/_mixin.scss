@@ -77,7 +77,12 @@
     }
 }
 
-@mixin font-general($font-family: arial, $font-size: 14, $font-weight: 400, $line-height: 1.5em) {
+@mixin font-general(
+    $font-family: arial,
+    $font-size: 14,
+    $font-weight: 400,
+    $line-height: 1.5em
+) {
     font-family: $font-family;
     font-size: $font-size;
     font-weight: $font-weight;
@@ -140,5 +145,27 @@
     }
     @include media('<xs') {
         padding: 35px 0;
+    }
+}
+
+@mixin standard-card(
+    $display: flex,
+    $flex-direction: row,
+    $border: 1px solid #f0f0f0,
+    $border-radius: 12px,
+    $padding: 12px,
+    $transition: box-shadow 0.3s ease,
+    $background-color: #ffffff
+) {
+    display: $display;
+    flex-direction: $flex-direction;
+    border: $border;
+    border-radius: $border-radius;
+    padding: $padding;
+    transition: $transition;
+    background-color: $background-color;
+
+    &:hover {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 }
