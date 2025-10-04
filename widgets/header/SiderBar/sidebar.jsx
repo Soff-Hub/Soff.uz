@@ -7,7 +7,8 @@ import {
 } from '@ant-design/icons';
 import { useState } from 'react';
 import SideBarItem from './sidebarItem';
-import { Collapse, Drawer } from 'antd'; 
+import { Collapse, Drawer } from 'antd';
+
 const option = {
     scientific_work: 'Ilmiy va Akademik Xizmatlar',
     three_d: '3D Dizayn va Vizualizatsiya',
@@ -18,7 +19,10 @@ const option = {
 
 const SideBar = () => {
     const [open, setOpen] = useState(false);
-    const { data, isLoading } = useFGet('navbar-items', 'categories/categories-with-directions');
+    const { data, isLoading } = useFGet(
+        'navbar-items',
+        'categories/categories-with-directions'
+    );
     const panelStyle = {
         background: '#fff',
         padding: '0px',
@@ -42,7 +46,7 @@ const SideBar = () => {
     return (
         <div className=" d-lg-none position-relative">
             <button onClick={() => setOpen(true)} className={styles.barIcon}>
-                <MenuOutlined style={{color:'#000'}} />
+                <MenuOutlined style={{ color: '#000' }} />
             </button>
             <Drawer
                 style={panelStyle}
@@ -60,7 +64,7 @@ const SideBar = () => {
                 <div className="  overflow-auto p-0">
                     <Collapse
                         style={{ backgroundColor: '#fff' }}
-                        bordered={false} 
+                        bordered={false}
                         expandIcon={({ isActive }) => (
                             <CaretRightOutlined rotate={isActive ? 90 : 0} />
                         )}
