@@ -224,7 +224,8 @@ const HeaderCatergories = () => {
 
     const handleOrder = () => {
         if (isLoggedIn) {
-            push('/order/create');
+            // push('/order/create');
+            setOpen(true);
         } else {
             push('/auth/login');
         }

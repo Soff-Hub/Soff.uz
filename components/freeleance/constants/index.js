@@ -3,19 +3,10 @@ export const directions = [
     { label: '3D Dizayn va Vizualizatsiya', value: 'three_d' },
     { label: 'Dizayn va Shablonlar', value: 'dizayn' },
     { label: 'Veb Dasturlash va IT Xizmatlari', value: 'web' },
-    {
-        label: 'Marketing',
-        value: 'marketing',
-    },
-    { label: 'SEO va Trafik', value: 'seo_traffic' },
-    {
-        label: 'Audio va Video',
-        value: 'audio_video',
-    },
-    {
-        label: 'Biznes Xizmatlari',
-        value: 'business',
-    },
+    { label: 'Marketing va SMM', value: 'marketing' },
+    { label: 'SEO va Veb trafik', value: 'seo_traffic' },
+    { label: 'Audio va Video', value: 'audio_video' },
+    { label: 'Biznes', value: 'business' },
 ];
 
 // marketing = 'marketing';
