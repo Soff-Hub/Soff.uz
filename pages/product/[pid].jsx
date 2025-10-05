@@ -16,11 +16,13 @@ import { Skeleton } from 'antd';
 import { useDispatch } from 'react-redux';
 import { setShowFastDownload } from '~/store/fast-dowload/slice';
 import ProductCard from '~/entities/product/product-card';
+import useResponsive from '~/shared/utilities/useResponsive';
 
 export default function ProductDefaultPage({ defaultProducts }) {
     const router = useRouter();
     const { pid } = router.query;
     const [isPlay, setIsPlay] = useState(null);
+    const { isMobile } = useResponsive()
 
     const [initialDelayPassed, setInitialDelayPassed] = useState(false);
     const [similarProduct, setSimilarProduct] = useState([]);
@@ -334,7 +336,7 @@ export default function ProductDefaultPage({ defaultProducts }) {
                                         </h3>
                                         {hasLoadedSimilar ? (
                                             <div className='row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-gap-4'>
-                                                {similarProduct?.map((item, index) =>
+                                                {similarProduct?.slice(0, isMobile ? 12 : 10)?.map((item, index) =>
                                                     <div className='col px-3' key={item?.id}>
                                                         <ProductCard product={item} />
                                                     </div>
@@ -393,11 +395,13 @@ export default function ProductDefaultPage({ defaultProducts }) {
                                     ) : (
                                         lastAdded && (
                                             <div className='row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-gap-4'>
-                                                {lastAdded?.results?.map((p, i) => (
-                                                    <div key={p?.id} className="col px-3">
-                                                        <ProductCard product={p} />
-                                                    </div>
-                                                ))}
+                                                {lastAdded?.results
+                                                    ?.slice(0, isMobile ? 6 : 5)
+                                                    ?.map((p, i) => (
+                                                        <div key={p?.id} className="col px-3">
+                                                            <ProductCard product={p} />
+                                                        </div>
+                                                    ))}
                                             </div>
                                         )
                                     )

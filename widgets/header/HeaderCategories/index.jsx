@@ -166,7 +166,7 @@ const templates = handleOrder => [
             <a
                 className={`ml-3 ${styles.dropLabel}`}
                 href="/orders?direction=dizayn">
-                Dizayn shablonlari
+                Dizayn va shablonlar
             </a>
         ),
         icon: (
@@ -212,6 +212,66 @@ const templates = handleOrder => [
                 width={20}
                 height={20}
             />
+        ),
+    },
+    {
+        key: '6',
+        label: (
+            <a
+                className={`ml-3 ${styles.dropLabel}`}
+                href="/orders?direction=marketing">
+                Marketing va SMM
+            </a>
+        ),
+        icon: (
+            <i
+                style={{ fontSize: '20px', color: 'rgba(0,0,0,0.4)' }}
+                className="fa-solid fa-people-arrows"></i>
+        ),
+    },
+    {
+        key: '7',
+        label: (
+            <a
+                className={`ml-3 ${styles.dropLabel}`}
+                href="/orders?direction=seo_traffic">
+                SEO va Veb trafik
+            </a>
+        ),
+        icon: (
+            <i
+                style={{ fontSize: '20px', color: 'rgba(0,0,0,0.4)' }}
+                className="fa-solid fa-globe"></i>
+        ),
+    },
+    {
+        key: '8',
+        label: (
+            <a
+                className={`ml-3 ${styles.dropLabel}`}
+                href="/orders?direction=audio_video">
+                Audio va Video
+            </a>
+        ),
+        icon: (
+            <i
+                style={{ fontSize: '20px', color: 'rgba(0,0,0,0.4)' }}
+                className="fa-solid fa-play"></i>
+        ),
+    },
+    {
+        key: '9',
+        label: (
+            <a
+                className={`ml-3 ${styles.dropLabel}`}
+                href="/orders?direction=business">
+                Biznes
+            </a>
+        ),
+        icon: (
+            <i
+                style={{ fontSize: '20px', color: 'rgba(0,0,0,0.4)' }}
+                className="fa-solid fa-briefcase"></i>
         ),
     },
 ];
