@@ -14,7 +14,7 @@
 /* Ensure dropdown styles work inside popover */
 .navbar-menu-popover .dropdown-content {
     display: flex;
-    background: #fff;
+    background: #f5f6f7;
     align-items: start;
     padding: 20px 0px;
     border: 1px solid #d0d0d0;
