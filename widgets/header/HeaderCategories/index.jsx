@@ -218,14 +218,14 @@ const templates = handleOrder => [
         key: '6',
         label: (
             <a
-                className={`ml-3 ${styles.dropLabel}`}
+                className={` ${styles.dropLabel}`}
                 href="/orders?direction=marketing">
                 Marketing va SMM
             </a>
         ),
         icon: (
             <i
-                style={{ fontSize: '20px', color: 'rgba(0,0,0,0.4)' }}
+                style={{ fontSize: '18px', color: 'rgba(0,0,0,0.4)' }}
                 className="fa-solid fa-people-arrows"></i>
         ),
     },
@@ -233,7 +233,7 @@ const templates = handleOrder => [
         key: '7',
         label: (
             <a
-                className={`ml-3 ${styles.dropLabel}`}
+                className={`ml-1 ${styles.dropLabel}`}
                 href="/orders?direction=seo_traffic">
                 SEO va Veb trafik
             </a>
@@ -248,14 +248,18 @@ const templates = handleOrder => [
         key: '8',
         label: (
             <a
-                className={`ml-3 ${styles.dropLabel}`}
+                className={`ml-2 ${styles.dropLabel}`}
                 href="/orders?direction=audio_video">
                 Audio va Video
             </a>
         ),
         icon: (
             <i
-                style={{ fontSize: '20px', color: 'rgba(0,0,0,0.4)' }}
+                style={{
+                    marginLeft: '3px',
+                    fontSize: '18px',
+                    color: 'rgba(0,0,0,0.4)',
+                }}
                 className="fa-solid fa-play"></i>
         ),
     },
@@ -263,14 +267,14 @@ const templates = handleOrder => [
         key: '9',
         label: (
             <a
-                className={`ml-3 ${styles.dropLabel}`}
+                className={`ml-1 ${styles.dropLabel}`}
                 href="/orders?direction=business">
                 Biznes
             </a>
         ),
         icon: (
             <i
-                style={{ fontSize: '20px', color: 'rgba(0,0,0,0.4)' }}
+                style={{ fontSize: '18px', color: 'rgba(0,0,0,0.4)' }}
                 className="fa-solid fa-briefcase"></i>
         ),
     },

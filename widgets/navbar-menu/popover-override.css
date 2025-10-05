@@ -17,7 +17,7 @@
     background: #fff;
     align-items: start;
     padding: 20px 0px;
-    border: 1px solid #757575;
+    border: 1px solid #d0d0d0;
     overflow-y: auto;
     max-height: 400px;
 }
@@ -63,7 +63,7 @@
 }
 
 .navbar-menu-popover .orders {
-    border-left: 1px solid #757575;
+    border-left: 1px solid #d0d0d0;
 }
 
 .navbar-menu-popover .section-label {
