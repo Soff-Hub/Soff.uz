@@ -1,8 +1,8 @@
 export const directions = [
-    { label: 'Ilmiy ishlar', value: 'scientific_work' },
+    { label: 'Ilmiy va Akademik Xizmatlar', value: 'scientific_work' },
+    { label: 'Dizayn', value: 'dizayn' },
+    { label: 'Dasturlash Xizmatlari', value: 'web' },
     { label: '3D Dizayn va Vizualizatsiya', value: 'three_d' },
-    { label: 'Dizayn va Shablonlar', value: 'dizayn' },
-    { label: 'Veb Dasturlash va IT Xizmatlari', value: 'web' },
     { label: 'Marketing va SMM', value: 'marketing' },
     { label: 'SEO va Veb trafik', value: 'seo_traffic' },
     { label: 'Audio va Video', value: 'audio_video' },

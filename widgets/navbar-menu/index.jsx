@@ -173,6 +173,7 @@ const MenuItem = ({ products, templates, label }) => {
         <Popover
             title={''}
             overlayClassName="navbar-menu-popover"
+            placement="bottomLeft"
             content={
                 <div className="dropdown-content">
                     <div className="templates">
