@@ -218,64 +218,72 @@ const templates = handleOrder => [
         key: '6',
         label: (
             <a
-                className={` ${styles.dropLabel}`}
+                className={`ml-3 ${styles.dropLabel}`}
                 href="/orders?direction=marketing">
                 Marketing va SMM
             </a>
         ),
         icon: (
-            <i
-                style={{ fontSize: '18px', color: 'rgba(0,0,0,0.4)' }}
-                className="fa-solid fa-people-arrows"></i>
+            <Image
+                src={'/static/img/icons/megaphone.png'}
+                alt=""
+                width={20}
+                height={20}
+            />
         ),
     },
     {
         key: '7',
         label: (
             <a
-                className={`ml-1 ${styles.dropLabel}`}
+                className={`ml-3 ${styles.dropLabel}`}
                 href="/orders?direction=seo_traffic">
                 SEO va Veb trafik
             </a>
         ),
         icon: (
-            <i
-                style={{ fontSize: '20px', color: 'rgba(0,0,0,0.4)' }}
-                className="fa-solid fa-globe"></i>
+            <Image
+                src={'/static/img/icons/seo.png'}
+                alt=""
+                width={20}
+                height={20}
+            />
         ),
     },
     {
         key: '8',
         label: (
             <a
-                className={`ml-2 ${styles.dropLabel}`}
+                className={`ml-3 ${styles.dropLabel}`}
                 href="/orders?direction=audio_video">
                 Audio va Video
             </a>
         ),
         icon: (
-            <i
-                style={{
-                    marginLeft: '3px',
-                    fontSize: '18px',
-                    color: 'rgba(0,0,0,0.4)',
-                }}
-                className="fa-solid fa-play"></i>
+            <Image
+                src={'/static/img/icons/soundtrack.png'}
+                alt=""
+                width={20}
+                height={20}
+            />
         ),
     },
     {
         key: '9',
         label: (
             <a
-                className={`ml-1 ${styles.dropLabel}`}
+                className={`ml-3 ${styles.dropLabel}`}
                 href="/orders?direction=business">
                 Biznes
             </a>
         ),
         icon: (
-            <i
-                style={{ fontSize: '18px', color: 'rgba(0,0,0,0.4)' }}
-                className="fa-solid fa-briefcase"></i>
+            <Image
+                src={'/static/img/icons/briefcase.png'}
+                alt=""
+                width={20}
+                height={20}
+            />
         ),
     },
 ];
