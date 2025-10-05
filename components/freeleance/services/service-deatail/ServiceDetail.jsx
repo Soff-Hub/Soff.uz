@@ -29,7 +29,7 @@ const ServiceDetail = ({ data }) => {
         user,
         service_items,
     } = data;
-    const { isDesktop } = useResponsive()
+    const { isDesktop, isMobile } = useResponsive()
 
     const pushUser = () =>
         push(`/seller/${data?.user[0]?.soff_seller_id}`);
@@ -132,7 +132,7 @@ const ServiceDetail = ({ data }) => {
                 <div>
                     <h3>O'xshash xizmatlar</h3>
                     <div className='row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-gap-2 row-gap-md-5 row-gap-lg-3'>
-                        {similar_services?.map(item => (
+                        {similar_services?.slice(0, isMobile ? 10 : 8)?.map(item => (
                             <div key={item?.title} className='col px-2'>
                                 <ServiceCard service={item} />
                             </div>

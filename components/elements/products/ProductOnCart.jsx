@@ -50,7 +50,7 @@ const ProductOnCart = ({ product }) => {
             <Button
                 className="ps-basket__content__items__item__remove"
                 style={{ cursor: 'pointer' }}
-                onClick={e => handleRemoveItem(e, item)}>
+                onClick={e => handleRemoveItem(e, product)}>
                 <i className="icon-cross"></i>
             </Button>
         </div>
