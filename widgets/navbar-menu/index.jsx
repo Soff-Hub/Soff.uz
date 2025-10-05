@@ -169,6 +169,52 @@ const templateLink = {
 const MenuItem = ({ products, templates, label }) => {
     const router = useRouter();
 
+    let readyTemplates = null;
+    if (templates?.length) {
+        readyTemplates = (
+            <div className="templates">
+                <h3
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => router.push(`/${templateLink[label]}/all`)}
+                    className="section-label">
+                    Tayyor mahsulotlar
+                </h3>
+                <ul className="details-list">
+                    {templates.map(item => (
+                        <Link
+                            key={item.id}
+                            href={`/${templateLink[label]}/${item.slug}?slug=${item.slug}&search=&parentCategory=${item.slug}&title=${item.title}`}>
+                            <a className="detail-item">{item.title}</a>
+                        </Link>
+                    ))}
+                </ul>
+            </div>
+        );
+    }
+
+    let readyProducts = null;
+    if (products?.length) {
+        readyProducts = (
+            <div className="orders">
+                <h3
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => router.push(`/orders?direction=${label}`)}
+                    className="section-label">
+                    Buyurtma berish
+                </h3>
+                <ul className="details-list">
+                    {products.map(item => (
+                        <Link
+                            key={item.id}
+                            href={`/orders?direction=${label}&category_id=${item.id}&title=${item.title}`}>
+                            <a className="detail-item">{item.title}</a>
+                        </Link>
+                    ))}
+                </ul>
+            </div>
+        );
+    }
+
     return (
         <Popover
             title={''}
@@ -176,44 +222,8 @@ const MenuItem = ({ products, templates, label }) => {
             placement="bottomLeft"
             content={
                 <div className="dropdown-content">
-                    <div className="templates">
-                        <h3
-                            style={{ cursor: 'pointer' }}
-                            onClick={() =>
-                                router.push(`/${templateLink[label]}/all`)
-                            }
-                            className="section-label">
-                            Tayyor mahsulotlar
-                        </h3>
-                        <ul className="details-list">
-                            {templates.map(item => (
-                                <Link
-                                    key={item.id}
-                                    href={`/${templateLink[label]}/${item.slug}?slug=${item.slug}&search=&parentCategory=${item.slug}&title=${item.title}`}>
-                                    <a className="detail-item">{item.title}</a>
-                                </Link>
-                            ))}
-                        </ul>
-                    </div>
-                    <div className="orders">
-                        <h3
-                            style={{ cursor: 'pointer' }}
-                            onClick={() =>
-                                router.push(`/orders?direction=${label}`)
-                            }
-                            className="section-label">
-                            Buyurtma berish
-                        </h3>
-                        <ul className="details-list">
-                            {products.map(item => (
-                                <Link
-                                    key={item.id}
-                                    href={`/orders?direction=${label}&category_id=${item.id}&title=${item.title}`}>
-                                    <a className="detail-item">{item.title}</a>
-                                </Link>
-                            ))}
-                        </ul>
-                    </div>
+                    {readyTemplates}
+                    {readyProducts}
                 </div>
             }>
             <div className={menuItemStyle.menuItem}>
