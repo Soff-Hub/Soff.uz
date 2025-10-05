@@ -93,10 +93,10 @@ const NavbarMenu = () => {
                                 onClick={() => swiperController?.slidePrev()}
                                 color="primary"
                                 style={{
-                                    // display: isBeginning ? 'none' : 'block',
-                                    visibility: isBeginning
-                                        ? 'hidden'
-                                        : 'visible',
+                                    display: isBeginning ? 'none' : 'block',
+                                    // visibility: isBeginning
+                                    //     ? 'hidden'
+                                    //     : 'visible',
                                 }}
                                 disabled={isBeginning}>
                                 <IoIosArrowBack />
@@ -135,8 +135,8 @@ const NavbarMenu = () => {
                                 color="primary"
                                 shape="circle"
                                 style={{
-                                    // display: isEnd ? 'none' : 'block',
-                                    visibility: isEnd ? 'hidden' : 'visible',
+                                    display: isEnd ? 'none' : 'block',
+                                    // visibility: isEnd ? 'hidden' : 'visible',
                                 }}
                                 className={styles.swipeNext}
                                 onClick={() => swiperController?.slideNext()}
