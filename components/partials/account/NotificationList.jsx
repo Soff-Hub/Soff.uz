@@ -93,7 +93,7 @@ const Notification = memo(({ notification, link, index }) => {
             {link && (
                 <div className="text-end">
                     <Link href={link}>
-                        <a target="_blank" className="btn btn-outline-success rounded-pill fs-5 px-4 py-1">
+                        <a target="_blank" className="btn btn-success rounded-pill fs-5 px-4 py-1">
                             Batafsil <i className="fa-solid fa-arrow-right ms-1"></i>
                         </a>
                     </Link>
