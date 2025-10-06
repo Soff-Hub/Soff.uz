@@ -8,15 +8,19 @@ import {
     SearchOutlined,
 } from '@ant-design/icons';
 import ServiceSteps from './service-steps';
-import { directions } from '@/components/freeleance/constants/index';
+// import { directions } from '@/components/freeleance/constants/index';
+import { useSelector } from 'react-redux';
 
 const { Option } = Select;
-
-const directionsWithEmpty = [{ label: 'Barchasi', value: '' }, ...directions];
 
 const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
     const router = useRouter();
     const { query } = router;
+    const { directions } = useSelector(state => state.profile);
+    const directionsWithEmpty = [
+        { label: 'Barchasi', value: '' },
+        ...directions,
+    ];
 
     const [searchValue, setSearchValue] = useState(query.search || '');
     const [selectedDirection, setSelectedDirection] = useState(

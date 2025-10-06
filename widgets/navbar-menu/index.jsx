@@ -6,12 +6,13 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useFGet } from '~/shared/hooks/useFApi';
 import { NAVBAR_MENU_CATEGORIES } from '~/shared/api/end-points';
-import { directions } from '~/components/freeleance/constants';
+// import { directions } from '~/components/freeleance/constants';
 import { IoIosArrowBack } from 'react-icons/io';
 import { Popover, Button } from 'antd';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import SwiperController from './swiperController';
+import { useSelector } from 'react-redux';
 
 const NavbarMenu = () => {
     const { data, isLoading } = useFGet('navbar-items', NAVBAR_MENU_CATEGORIES);
@@ -154,11 +155,6 @@ const NavbarMenu = () => {
 
 export default NavbarMenu;
 
-const option = directions.reduce((acc, item) => {
-    acc[item.value] = item.label;
-    return acc;
-}, {});
-
 const templateLink = {
     scientific_work: 'scientific-resources',
     three_d: '3d-models-and-interior-designs',
@@ -169,6 +165,12 @@ const templateLink = {
 
 const MenuItem = ({ products, templates, label }) => {
     const router = useRouter();
+    const { directions } = useSelector(state => state.profile);
+
+    const option = directions.reduce((acc, item) => {
+        acc[item.value] = item.label;
+        return acc;
+    }, {});
 
     let readyTemplates = null;
     if (templates?.length) {

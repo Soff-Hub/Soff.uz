@@ -7,7 +7,7 @@ import Header from '../header';
 
 import { GoogleLogin } from '@react-oauth/google';
 import FastDowloadSection from '../../shared/components/fast-dowload/FastDowloadSection';
-import { fetchProfile } from '~/store/profile/slice';
+import { fetchDirections, fetchProfile } from '~/store/profile/slice';
 import Footer from '~/widgets/footer';
 
 export let cutomerAccountLink = [
@@ -43,6 +43,7 @@ const PageLayout = ({ children, title }) => {
             dispatch(setAccountLinks(cutomerAccountLink));
             dispatch(fetchProfile());
         }
+        dispatch(fetchDirections());
     }, [user?.role]);
 
     const defaultRoutePage = () => {
@@ -59,9 +60,7 @@ const PageLayout = ({ children, title }) => {
                 <title>{title}</title>
             </Head>
             <Header />
-            {showFastDownload &&
-                <FastDowloadSection />
-            }
+            {showFastDownload && <FastDowloadSection />}
             {children}
             <Footer />
 
