@@ -12,7 +12,7 @@ import {
 } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
 import { QuestionCircleOutlined } from '@ant-design/icons';
-import { directions } from '../../../components/freeleance/constants';
+// import { directions } from '../../../components/freeleance/constants';
 import { useFGet, useFPost } from '../../hooks/useFApi';
 import dayjs from 'dayjs';
 import { useSelector } from 'react-redux';
@@ -29,6 +29,7 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
     const { user } = useSelector(state => state.auth);
     const { push } = useRouter();
     const [confirmOpen, setConfirmOpen] = useState(false);
+    const { directions } = useSelector(state => state.profile);
 
     useEffect(() => {
         form.setFieldValue('direction', direction);

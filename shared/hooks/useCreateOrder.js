@@ -11,7 +11,8 @@ import {
     TimePicker,
 } from 'antd';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { directions } from '../../components/freeleance/constants';
+// import { directions } from '../../components/freeleance/constants';
+import { useSelector } from 'react-redux';
 import { useFGet, useFPost } from '~/shared/hooks/useFApi';
 import dayjs from 'dayjs';
 import { useSelector } from 'react-redux';
@@ -131,6 +132,7 @@ function useCreateOrder() {
     const { user } = useSelector(state => state.auth);
     const { push } = useRouter();
     const [confirmOpen, setConfirmOpen] = useState(false);
+    const { directions } = useSelector(state => state.profile);
 
     const { data: categories } = useFGet(
         direction,
