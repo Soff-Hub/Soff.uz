@@ -15,7 +15,6 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useFGet, useFPost } from '~/shared/hooks/useFApi';
 import dayjs from 'dayjs';
-import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { Info } from '~/shared/components/modals/CreateOrderModal';
 import {
