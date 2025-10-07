@@ -66,7 +66,6 @@ const MiniCart = () => {
         <Popover
             content={cartContent}
             title={null}
-            open={true}
             className={cn('px-4 h-36', 'ps-basket')}
             classNames={{
                 root: 'ps-basket',
