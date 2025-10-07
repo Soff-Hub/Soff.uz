@@ -36,7 +36,7 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
     }, [direction]);
 
     const { data: categories } = useFGet(
-        direction,
+        ['direction-categories', direction],
         `categories/?direction=${direction}`,
         { enabled: !!direction }
     );
@@ -110,6 +110,8 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
             createOrder(fd);
         }
     };
+
+    console.log({ directions, direction, createOrderInfo });
 
     return (
         <>
@@ -240,8 +242,8 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
                                     </p>
                                     <Info
                                         title={
-                                            createOrderInfo[direction].category
-                                                .info
+                                            createOrderInfo[direction]?.category
+                                                ?.info || 'Kategoriya tanlang'
                                         }
                                     />
                                 </div>
@@ -261,8 +263,8 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
                                     // setTitlePlacehoder(options[direction](option?.label))
                                 }}
                                 placeholder={
-                                    createOrderInfo[direction].category
-                                        .placeholder
+                                    createOrderInfo[direction]?.category
+                                        ?.placeholder || 'Kategoriya tanlang'
                                 }
                                 options={categories?.map(cat => ({
                                     label: cat?.title,
@@ -280,8 +282,9 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
                                 </p>
                                 <Info
                                     title={
-                                        createOrderInfo[direction].description
-                                            .info
+                                        createOrderInfo[direction]?.description
+                                            ?.info ||
+                                        'Buyurtma tavsifini kiriting'
                                     }
                                 />
                             </div>
@@ -296,8 +299,9 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
                             style={{ resize: 'none' }}
                             rows={6}
                             placeholder={
-                                createOrderInfo[direction].description
-                                    .placeholder
+                                createOrderInfo[direction]?.description
+                                    ?.placeholder ||
+                                'Buyurtma tavsifini kiriting'
                             }
                         />
                     </Form.Item>
@@ -316,7 +320,8 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
                         ]}>
                         <Select
                             placeholder={
-                                createOrderInfo[direction].lang.placeholder
+                                createOrderInfo[direction]?.lang?.placeholder ||
+                                'Buyurtma tilini tanlang'
                             }
                             options={[
                                 { label: "O'zbekcha", value: 'uzb' },
@@ -335,8 +340,9 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
                                 <span>
                                     <Info
                                         title={
-                                            createOrderInfo[direction].price
-                                                .info
+                                            createOrderInfo[direction]?.price
+                                                ?.info ||
+                                            'Byudjetingizni kiriting'
                                         }
                                     />
                                 </span>
@@ -347,7 +353,8 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
                             min={2000}
                             style={{ width: '100%' }}
                             placeholder={
-                                createOrderInfo[direction].price.placeholder
+                                createOrderInfo[direction]?.price
+                                    ?.placeholder || 'Byudjetingizni kiriting'
                             }
                             formatter={value =>
                                 value
