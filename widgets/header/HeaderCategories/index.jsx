@@ -8,7 +8,7 @@ import { useRouter } from 'next/router';
 import { DownOutlined } from '@ant-design/icons';
 import { Dropdown, Space } from 'antd';
 import Link from 'next/link';
-
+import AuthModal from '~/components/AuthModal';
 const products = [
     {
         key: '1',
@@ -187,13 +187,14 @@ const HeaderCatergories = () => {
     const { directions } = useSelector(state => state.profile);
     [...directions, { label: 'Boshqa', value: 'other' }];
     const { push, query, replace, pathname } = useRouter();
+    const [openAuth, setOpenAuth] = useState(false);
 
     const handleOrder = () => {
         if (isLoggedIn) {
             // push('/order/create');
             setOpen(true);
         } else {
-            push('/auth/login');
+            setOpenAuth(true);
         }
     };
 
@@ -245,6 +246,8 @@ const HeaderCatergories = () => {
             replace({ pathname: pathname, query: newQuery }, undefined, {
                 shallow: true,
             });
+        } else {
+            setOpenAuth(true);
         }
     }, [query.modal]);
 
@@ -276,6 +279,13 @@ const HeaderCatergories = () => {
                 </Dropdown>
             </div>
             <CreateOrderModal open={open} onClose={() => setOpen(false)} />
+            <AuthModal
+                open={openAuth}
+                onClose={() => setOpenAuth(false)}
+                onSuccess={() => {
+                    setOpen(true);
+                }}
+            />
         </div>
     );
 };
