@@ -1,49 +1,40 @@
 import React from 'react';
-import LazyLoad from 'react-lazyload';
 import { formatCurrency } from '~/shared/utilities/product-helper';
 import Link from 'next/link';
 import NextImageCard from '~/components/nextImagecard';
 
 export default function useProduct() {
     return {
-        thumbnailImage: (payload) => {
+        thumbnailImage: payload => {
+            console.log('payload', payload, payload?.poster_url);
             return (
                 <>
-                    <LazyLoad>
-                        {payload?.poster_url ? (
-                            <div
-                                style={{ overflow: 'hidden' }}
-                                className="responsive-image-card text-center">
-                                {/* <div
-                                    style={{
-                                        backgroundImage: `url(${payload?.poster_url})`,
-                                        backgroundSize: 'contain',
-                                        backgroundRepeat: 'no-repeat',
-                                        backgroundPosition: 'center',
-                                    }}
-                                    className="products-image1 m-0"></div> */}
-                                <NextImageCard
-                                    url={payload?.poster_url}
-                                    clasSn="products-image1 m-0 "
-                                    width="70px"
-                                    height="70px"
-                                    payload={payload}
-                                />
-                            </div>
-                        ) : (
-                            <div
-                                style={{
-                                    backgroundImage: `url(/static/img/docCopy.png)`,
-                                    backgroundSize: 'contain',
-                                    backgroundRepeat: 'no-repeat',
-                                }}
-                                className="placholder-hujjat products-image1"></div>
-                        )}
-                    </LazyLoad>
+                    {payload?.poster_url ? (
+                        <div
+                            style={{ overflow: 'hidden' }}
+                            className="responsive-image-card text-center">
+                            <NextImageCard
+                                url={payload?.poster_url}
+                                clasSn="products-image1 m-0"
+                                width="70px"
+                                height="70px"
+                                payload={payload}
+                            />
+                        </div>
+                    ) : (
+                        <div
+                            style={{
+                                backgroundImage: `url(/static/img/docCopy.png)`,
+                                backgroundSize: 'contain',
+                                backgroundRepeat: 'no-repeat',
+                                height: '70px',
+                            }}
+                            className="placholder-hujjat products-image1"></div>
+                    )}
                 </>
             );
         },
-        price: (payload) => {
+        price: payload => {
             let view;
             if (payload.sale_price) {
                 view = (
@@ -59,7 +50,7 @@ export default function useProduct() {
                             </>
                         ) : (
                             <p className="free-product-text free-product-text_search">
-                                Bepul 
+                                Bepul
                             </p>
                         )}
                     </p>
@@ -85,7 +76,7 @@ export default function useProduct() {
             return view;
         },
 
-        title: (payload) => {
+        title: payload => {
             let view = (
                 <Link href="/product/[pid]" as={`/product/${payload?.slug}`}>
                     <a className="ps-product__title ">{payload?.title}</a>
