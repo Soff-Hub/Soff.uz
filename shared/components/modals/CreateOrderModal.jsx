@@ -111,8 +111,6 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
         }
     };
 
-    console.log({ directions, direction, createOrderInfo });
-
     return (
         <>
             <Modal
@@ -258,7 +256,9 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
                                 onSelect={(_, option) => {
                                     form.setFieldValue(
                                         'title',
-                                        options[direction](option?.label)
+                                        options[direction]
+                                            ? options[direction](option?.label)
+                                            : options['unknown'](option?.label)
                                     );
                                     // setTitlePlacehoder(options[direction](option?.label))
                                 }}

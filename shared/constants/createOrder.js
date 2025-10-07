@@ -97,6 +97,7 @@ export const options = {
     dizayn: title => `${title} tayyorlash kerak.`,
     web: title => `${title} uchun dastur tayyorlash kerak.`,
     three_d: title => `${title} uchun dizayn tayyorlash kerak.`,
+    unknown: title => `${title} bo'yicha xizmat kerak.`,
 };
 
 export const priceOptions = [
