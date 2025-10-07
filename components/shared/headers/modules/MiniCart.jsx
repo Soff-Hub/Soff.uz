@@ -4,7 +4,7 @@ import Link from 'next/link';
 import ProductOnCart from '~/components/elements/products/ProductOnCart';
 import { calculateAmount } from '~/shared/utilities/ecomerce-helpers';
 import { addPeriodToThousands } from '~/components/partials/account/price-formatter';
-import { Badge, Button, Popover } from 'antd';
+import { Badge, Popover } from 'antd';
 import { cn } from '~/shared/utilities/cn';
 
 const MiniCart = () => {
@@ -66,6 +66,7 @@ const MiniCart = () => {
         <Popover
             content={cartContent}
             title={null}
+            open={true}
             className={cn('px-4 h-36', 'ps-basket')}
             classNames={{
                 root: 'ps-basket',

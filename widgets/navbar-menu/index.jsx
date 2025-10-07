@@ -51,8 +51,6 @@ const NavbarMenu = () => {
         updateSwiperState(swiper);
     };
 
-    console.log({ isEnd, isBeginning });
-
     // Remove the old useEffect and replace with proper event handling
     useEffect(() => {
         if (swiperRef.current?.swiper) {
