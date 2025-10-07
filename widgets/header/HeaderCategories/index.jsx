@@ -246,7 +246,7 @@ const HeaderCatergories = () => {
             replace({ pathname: pathname, query: newQuery }, undefined, {
                 shallow: true,
             });
-        } else {
+        } else if (query?.modal === 'open' && !isLoggedIn) {
             setOpenAuth(true);
         }
     }, [query.modal]);
