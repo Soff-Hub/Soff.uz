@@ -12,6 +12,7 @@ export const useFGet = (
             const { data } = await axiosInstance(token).get(url);
             return data;
         },
+        enabled,
         ...options,
     });
 };
