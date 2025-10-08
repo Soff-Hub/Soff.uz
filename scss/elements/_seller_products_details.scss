@@ -19,42 +19,33 @@
     z-index: 9999;
 }
 
-
 .swiper-button-prev::after,
 .swiper-button-next::after {
     display: none;
-
 }
-
-
-
 
 // Tegs components scss
 .tags_components {
     border-radius: 8px;
     padding: 8px 15px;
-    border: 1.5px solid #00A44F;
+    border: 1.5px solid #00a44f;
     cursor: pointer;
-    color: #312F30;
+    color: #312f30;
     font-weight: 400;
-
 }
 
 .tags_components:hover {
-    color: #00A44F;
+    color: #00a44f;
     background-color: rgba(242, 244, 247, 0.615);
 }
 
 // Products detils action scss
 .seller_products_right_section {
-
     max-width: 550px;
     width: 100%;
 }
 
 .seller_products_actions_container {
-
-
     .seller_products_actions {
         background-color: white;
         height: 100%;
@@ -70,21 +61,21 @@
             width: 100%;
 
             h2 {
-                color: #312F30;
+                color: #312f30;
                 font-weight: 700;
                 font-size: 30px;
                 margin: 0;
             }
 
             del {
-                color: #312F30B2;
+                color: #312f30b2;
                 font-size: 20px;
                 font-weight: 400;
             }
         }
 
         .button_hover:hover {
-            background-color: #00A44F;
+            background-color: #00a44f;
             color: white !important;
             transition: all 0.1s ease-in-out;
         }
@@ -95,13 +86,12 @@
         }
 
         .icon_hover:hover {
-            background-color: #00A44F;
+            background-color: #00a44f;
             color: white !important;
             border-radius: 50%;
             transition: all 0.1s ease-in-out;
             padding: 6px;
         }
-
     }
 }
 
@@ -618,6 +608,15 @@
                         object-fit: contain;
                         margin: 8px 0;
                         border-radius: 5px;
+                    }
+
+                    .main-swiper .swiper-slide {
+                        width: 100% !important;
+                        flex-shrink: 0 !important;
+                    }
+
+                    .main-swiper .swiper-wrapper {
+                        width: 100% !important;
                     }
                 }
             }
@@ -1178,7 +1177,8 @@
     .ServiseDetailAbout_aboutService {
         margin-top: 20px;
 
-        h2 {}
+        h2 {
+        }
 
         p {
             // font-size: clamp(0.938rem, 1.119vw + 0.22rem, 1.563rem);
@@ -1192,4 +1192,14 @@
 
 .ServiseDetailTItle {
     font-size: clamp(1rem, 0.625vw + 0.813rem, 3rem);
+}
+
+.ps-seller-product {
+    @include standard-card();
+
+    .image-container {
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
 }
