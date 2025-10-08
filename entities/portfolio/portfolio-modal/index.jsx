@@ -54,7 +54,6 @@ const PortfolioModal = ({ open, onClose, portfolio }) => {
                                 <img
                                     src={img?.image || '/static/img/orqafon1.avif'}
                                     alt={`Image ${idx + 1}`}
-                                    layout="fill"
                                     className={styles.image}
                                 />
                             </div>

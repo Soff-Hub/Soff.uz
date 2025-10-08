@@ -7,6 +7,7 @@ import { useFGet } from '~/shared/hooks/useFApi'
 import { cn, useRcn } from '~/shared/utilities/cn'
 import dynamic from 'next/dynamic'
 import ItemsNotFound from './items-not-found'
+import useResponsive from '~/shared/utilities/useResponsive'
 
 const PortfolioModal = dynamic(() => import("~/entities/portfolio/portfolio-modal"), {
     ssr: false
@@ -15,6 +16,7 @@ const PortfolioModal = dynamic(() => import("~/entities/portfolio/portfolio-moda
 const UserPortfolios = () => {
     const router = useRouter()
     const [portfolio, setPortfolio] = useState()
+    const { isMobile } = useResponsive()
     const { pid } = router.query
     const { data, isLoading } = useFGet(`${pid}-portfolio`, `${SELLER_PORTFOLIOS}${pid}`, {
         enabled: !!pid,
@@ -33,19 +35,29 @@ const UserPortfolios = () => {
 
     const handleSetPortfolio = useCallback(item => setPortfolio(item), [])
 
-    if(notFound) return (
+    if (notFound) return (
         <div className={cn("w-full", "my-4")}>
             <ItemsNotFound type='portfolio' />
         </div>
-    ) 
+    )
 
     return (
         <div className={cn("w-full", "my-4")}>
-            <div className={cn("grid", "gap-4", gridClass, "bg-light", "p-3", "rounded-xl", "shadow")}>
+            <div
+                className={cn(
+                    "grid",
+                    "gap-4",
+                    gridClass,
+                    "rounded-xl",
+                    !isMobile ? "bg-light" : "",
+                    !isMobile ? "p-3" : "",
+                    !isMobile ? "shadow" : ""
+                )}
+            >
                 {data?.map(portfolio =>
                     <PortfolioCard setPortfolio={handleSetPortfolio} portfolio={portfolio} key={portfolio.id} />
                 )}
-                {isLoading && <PortfolioSkeletonGrid/>} 
+                {isLoading && <PortfolioSkeletonGrid />}
             </div>
             <PortfolioModal
                 open={!!portfolio}

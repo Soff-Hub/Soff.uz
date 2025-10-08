@@ -11,7 +11,7 @@ const UserProfile = ({ seller }) => {
     const gridClass = useRcn({
         mobile: "grid-cols-1",
         tablet: "grid-cols-1",
-        desktop: "grid-cols-12"
+        desktop: "grid-cols-4"
     })
 
     const gapClass = useRcn({
@@ -22,10 +22,10 @@ const UserProfile = ({ seller }) => {
 
     return (
         <div className={cn("grid", gapClass, gridClass, "mb-5")}>
-            <div className={cn("col-span-3")}>
+            <div className={cn("col-span-1")}>
                 <UserShortInfo seller={seller} />
             </div>
-            <div className={cn("col-span-9")}>
+            <div className={cn("col-span-3")}>
                 {isMobile ? (
                     <UserAccordians seller={seller} />
                 ) : (

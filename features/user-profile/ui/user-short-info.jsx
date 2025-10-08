@@ -22,7 +22,7 @@ dayjs.extend(relativeTime);
 dayjs.locale("uz-latn");
 
 const InfoRow = memo(({ icon, label, value }) => (
-    <div className={cn("flex", "items-start", "justify-between", "gap-1", "text-[18px]")}>
+    <div className={cn("flex", "items-start", "justify-between", "gap-2", "text-[18px]")}>
         <div className={cn("flex", "items-center", "gap-2")}>
             <div className={cn("w-[20px]", "flex", "justify-center")}>{icon}</div>
             <span className={cn("text-[12px]", "text-secondary")}>{label}</span>
@@ -34,7 +34,7 @@ const InfoRow = memo(({ icon, label, value }) => (
 const UserShortInfo = ({ seller }) => {
     const { isLoggedIn } = useSelector((state) => state?.auth);
     const { mutate: createChat } = useCreateChat();
-    const { isMobile } = useResponsive()
+    const { isMobile, isTablet } = useResponsive()
 
     const [authModal, setAuthModal] = useState(false);
     const [createOrderModal, setCreateOrderModal] = useState(false);
@@ -108,9 +108,9 @@ const UserShortInfo = ({ seller }) => {
                     loading={isMobile ? "lazy" : "eager"}
                     placeholder="blur"
                     blurDataURL="data:image/webp;base64,UklGRiIAAABXRUJQVlA4IBIAAAAvAAAAAA..."
-                    className={cn("rounded-full", "mb-3")}
+                    className={cn("rounded-full")}
                 />
-                <h2 className={cn("text-[18px]", "font-semibold", "text-center", "mb-1")}>
+                <h2 className={cn("text-[18px]", "font-semibold", "text-center", "mb-1", "mt-2")}>
                     {seller?.full_name}
                 </h2>
                 <h4 className={cn("text-[14px]", "font-normal", "text-center", "text-secondary", "mb-1")}>
@@ -148,14 +148,13 @@ const UserShortInfo = ({ seller }) => {
             </div>
 
             <Divider size="small" />
-            <div className={cn("mt-5", "flex", "flex-col", "gap-3")}>
-                <Button type="primary" block className="rounded" onClick={handleCreateChat}>
-                    <i className="fa-solid fa-comment-dots"></i> Xabar yuborish
+            <div className={cn("mt-5", "flex","gap-3", (isMobile || isTablet) ? "" : "flex-col")}>
+                <Button type="default" block={!isMobile} className={cn("border-primary", "text-primary")} onClick={handleCreateChat}>
+                    <i className="fa-solid fa-comment-dots"></i>{!isMobile && " Xabar yuborish"} 
                 </Button>
                 <Button
-                    type="default"
+                    type="primary"
                     block
-                    className={cn("rounded", "text-primary", "border-primary")}
                     onClick={handleCreateOrder}
                 >
                     <i className="fa-solid fa-calendar"></i> Maxsus buyurtma berish
