@@ -37,7 +37,7 @@ const Header = () => {
     }, []);
 
     const getHeaderHeight = () => {
-        if (isDesktop) return "120px";
+        if (isDesktop) return "110px";
         if (isTablet) return showSearch ? "140px" : "130px";
         if (isMobile) return showSearch ? "150px" : "130px";
         return "120px";
