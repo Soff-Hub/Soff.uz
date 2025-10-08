@@ -18,8 +18,6 @@ const ImageCarousel = ({ images, views, demo_link }) => {
     const prevRef = useRef(null);
     const nextRef = useRef(null);
 
-    images = [...images, ...images, ...images, ...images, ...images];
-
     // Fix navigation initialization and track active slide
     useEffect(() => {
         if (mainSwiper && prevRef.current && nextRef.current) {
