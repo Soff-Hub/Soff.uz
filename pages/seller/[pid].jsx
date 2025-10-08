@@ -1,124 +1,35 @@
-import { useQuery } from '@tanstack/react-query';
-import { Modal } from 'antd';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import PageContainer from '~/widgets/layouts/PageContainer';
-import SellerCollapseMenu from '~/components/shared/seller-profile/sellerCollapseMenu';
-import SellerComments from '~/components/shared/seller-profile/sellerComments';
-import SellerInfo from '~/components/shared/seller-profile/sellerInfo';
-import SellerPortfolio from '~/components/shared/seller-profile/sellerPortfolio';
-import SellerProduct from '~/components/shared/seller-profile/sellerProduct';
-import SellerServices from '~/components/shared/seller-profile/sellerServices';
-import SellerShortInfo from '~/components/shared/seller-profile/sellerShortInfo';
-import { setActiveIndex } from '../../store/seller/slice';
-import { authAxios } from '~/repositories/authApi';
-import useResponsive from '~/shared/utilities/useResponsive';
+import UserProfile from "~/features/user-profile";
+import { d_base_url } from "~/shared/api/base-url";
+import fetchJson from "~/shared/api/fetch-json";
+import PageContainer from "~/widgets/layouts/PageContainer";
 
-export default function SellersPage() {
-    const router = useRouter();
-    const dispatch = useDispatch();
-    const { query, asPath, isReady } = router;
-    const { activeIndex } = useSelector(state => state.user);
-    const { isMobile } = useResponsive();
-    // const activeIndex = asPath.slice(asPath.indexOf('#') + 1, asPath.length);
-
-    const pid = query.pid;
-
-    const menuItems = [
-        {
-            title: 'Muallif Haqida',
-            path: 'about_author',
-        },
-        {
-            title: 'Portfolio',
-            path: 'portfolio',
-        },
-        {
-            title: 'Xizmatlar',
-            path: 'services',
-        },
-        {
-            title: 'Mahsulotlar',
-            path: 'products',
-        },
-        {
-            title: 'Izohlar',
-            path: 'comments',
-        },
-    ];
-    const { data, isLoading: getDetailsLoading } = useQuery({
-        queryKey: ['getSellerDetails'],
-        queryFn: async () => {
-            const response = await authAxios.get(
-                `/auth/freelance-profile/${pid}/`
-            );
-
-            return response.data;
-        },
-        enabled: !!pid,
-        refetchOnWindowFocus: true,
-        refetchOnMount: true,
-    });
-
-    const handleChangeMenu = item => {
-        dispatch(setActiveIndex(item));
-    };
-
-    const sellerTabItems = {
-        about_author: (
-            <SellerInfo
-                onChange={() => dispatch(setActiveIndex('services'))}
-                pid={pid}
-                sellerInfo={data}
-            />
-        ),
-        portfolio: <SellerPortfolio pid={pid} />,
-        services: <SellerServices pid={pid} />,
-        products: <SellerProduct pid={pid} />,
-        comments: <SellerComments pid={pid} />,
-    };
-
-    useEffect(() => {
-        if (isMobile) dispatch(setActiveIndex(null));
-    }, [isMobile]);
-
+const SellerPage = ({ seller }) => {
     return (
         <PageContainer>
-            <div className="container mt-0">
-                <div className="SellersPageWrap">
-                    <div className="SellerShortInfo">
-                        <SellerShortInfo sellerInfo={data} pid={pid} />
-                    </div>
-                    <div className="SellerCollapseMenu">
-                        <SellerCollapseMenu sellerInfo={data} pid={pid} />
-                    </div>
-                    <div className="sellerProduct ">
-                        <div className="shadow-sm">
-                            <div className="sellerProductMenu">
-                                {menuItems.map((item, index) => (
-                                    <div
-                                        onClick={() =>
-                                            handleChangeMenu(item.path)
-                                        }
-                                        key={index}>
-                                        <a
-                                            className={`activeTab ${
-                                                activeIndex === item.path
-                                                    ? 'active'
-                                                    : ''
-                                            }`}>
-                                            {item.title}
-                                        </a>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                        {sellerTabItems[activeIndex]}
-                    </div>
-                </div>
+            <div className="container">
+                <UserProfile seller={seller} />
             </div>
         </PageContainer>
-    );
+    )
+}
+
+export default SellerPage
+
+
+export async function getServerSideProps(context) {
+    const { pid } = context.params
+
+    try {
+        const url = `${d_base_url}/auth/freelance-profile/${pid}/`
+        const res = await fetchJson(url)
+        return {
+            props: {
+                seller: res || null
+            }
+        }
+    } catch (error) {
+        return {
+            notFound: true
+        }
+    }
 }
