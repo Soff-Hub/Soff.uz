@@ -10,10 +10,10 @@ import NavbarMenu from '~/widgets/navbar-menu';
 
 const Header = () => {
     const [headerSticky, setHeaderSticky] = useState(false);
-    const { isMobile } = useResponsive();
+    const { isMobile, isDesktop, isTablet } = useResponsive();
     const dispatch = useDispatch();
     const cartItems = useSelector(state => state.ecomerce.cartDataItems);
-    const {showSearch} = useSelector(state => state.ui)
+    const { showSearch } = useSelector(state => state.ui)
 
     const handleScroll = useCallback(() => {
         const shouldBeSticky = window.scrollY > 30;
@@ -36,6 +36,13 @@ const Header = () => {
         }
     }, []);
 
+    const getHeaderHeight = () => {
+        if (isDesktop) return "120px";
+        if (isTablet) return showSearch ? "140px" : "130px";
+        if (isMobile) return showSearch ? "150px" : "130px";
+        return "120px";
+    };
+
     return (
         <header className="site-header">
             <div className={`header-bottom top-0 bg-white`}>
@@ -48,12 +55,12 @@ const Header = () => {
                         </div>
                     </div>
                 </div>
-                {isMobile ? <NavbarSearch/> : <NavbarMenu />}  
-            </div> 
-            <div  
+                {isMobile ? <NavbarSearch /> : <NavbarMenu />}
+            </div>
+            <div
                 className='pagesSpace'
                 style={{
-                    height: isMobile && showSearch ? "120px" : ""
+                    height: getHeaderHeight()
                 }}
             />
         </header>

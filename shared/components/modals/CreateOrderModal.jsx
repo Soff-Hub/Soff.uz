@@ -12,7 +12,6 @@ import {
 } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
 import { QuestionCircleOutlined } from '@ant-design/icons';
-// import { directions } from '../../../components/freeleance/constants';
 import { useFGet, useFPost } from '../../hooks/useFApi';
 import dayjs from 'dayjs';
 import { useSelector } from 'react-redux';
