@@ -5,11 +5,13 @@ import { Skeleton, Select, Pagination } from 'antd'
 import ProductCard from '~/entities/product/product-card'
 import { digitalDirections } from '~/shared/constants'
 import ItemsNotFound from './items-not-found'
+import useResponsive from '~/shared/utilities/useResponsive'
 
 const UserProducts = ({ id }) => {
     const [page, setPage] = useState(1)
     const [type, setType] = useState("file")
     const { data, isLoading, isFetching } = useSellerProducts(id, page, type)
+    const { isMobile } = useResponsive()
 
     const notFound = data?.results?.length === 0 && !isLoading && !isFetching
     const products = data?.results || []
@@ -50,7 +52,7 @@ const UserProducts = ({ id }) => {
     ), [page, total])
 
     return (
-        <div className={cn("w-full", "my-4")}>
+        <div className={cn("w-full", isMobile ? "" : "my-4")}>
             <div className={cn("mb-3", "flex", "justify-end")}>
                 <Select
                     options={digitalDirections}
@@ -64,7 +66,17 @@ const UserProducts = ({ id }) => {
                 <ItemsNotFound type="product" />
             }
 
-            <div className={cn("grid", "gap-2", gridClass, "bg-light", "p-3", "rounded-xl", "shadow")}>
+            <div
+                className={cn(
+                    "grid",
+                    "gap-2",
+                    gridClass,
+                    "rounded-xl",
+                    !isMobile ? "bg-light" : "",
+                    !isMobile ? "p-3" : "",
+                    !isMobile ? "shadow" : ""
+                )}
+            >
                 {(isLoading || isFetching) && <ProductSkeletonGrid />}
 
                 {!isLoading && !isFetching && renderedProducts}

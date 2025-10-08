@@ -25,7 +25,7 @@ const ProductComments = memo(({ id }) => {
 
             {notFound && (
                 <div className={cn("flex", "justify-center", "items-center", "my-[30px]")}>
-                    <span className={cn("text-primary")}>Hali izohlar mavjud emas</span>
+                    <span className={cn("text-primary")}>Hozircha izohlar mavjud emas</span>
                 </div>
             )}
 

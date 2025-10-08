@@ -6,10 +6,12 @@ import { SELLER_SERVICES } from '~/shared/api/end-points'
 import { useFGet } from '~/shared/hooks/useFApi'
 import { cn, useRcn } from '~/shared/utilities/cn'
 import ItemsNotFound from './items-not-found'
+import useResponsive from '~/shared/utilities/useResponsive'
 
 const UserServices = () => {
     const router = useRouter()
     const { pid } = router.query
+    const { isMobile } = useResponsive()
     const { data, isLoading } = useFGet(`${pid}-service`, `${SELLER_SERVICES}${pid}`, {
         enabled: !!pid,
         token: null,
@@ -33,7 +35,17 @@ const UserServices = () => {
 
     return (
         <div className={cn("w-full", "my-4")}>
-            <div className={cn("grid", "gap-4", gridClass, "bg-light", "p-3", "rounded-xl", "shadow")}>
+            <div
+                className={cn(
+                    "grid",
+                    "gap-4",
+                    gridClass,
+                    "rounded-xl",
+                    !isMobile ? "bg-light" : "",
+                    !isMobile ? "p-3" : "",
+                    !isMobile ? "shadow" : ""
+                )}
+            >
                 {data?.map(service =>
                     <ServiceCard service={service} key={service.id} />
                 )}
