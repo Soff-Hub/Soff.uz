@@ -4,7 +4,7 @@ import Link from 'next/link';
 import ProductOnCart from '~/components/elements/products/ProductOnCart';
 import { calculateAmount } from '~/shared/utilities/ecomerce-helpers';
 import { addPeriodToThousands } from '~/components/partials/account/price-formatter';
-import { Badge, Button, Popover } from 'antd';
+import { Badge, Popover } from 'antd';
 import { cn } from '~/shared/utilities/cn';
 
 const MiniCart = () => {

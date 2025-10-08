@@ -10,18 +10,18 @@ const ServicesCardSection = ({ services }) => {
         <div className={styles.servicesSection}>
             <div>
                 <div>
-                    {hasProducts ? (
-                        <div className='row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-gap-4'>
-                            <div className="col px-md-3 px-1">
-                                <ServiceFirstCard />
-                            </div>
-                            {services.items.map((service, index) => (
+                    <div className="row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-gap-4">
+                        <div className="col px-md-3 px-1">
+                            <ServiceFirstCard />
+                        </div>
+                        {hasProducts &&
+                            services.items.map((service, index) => (
                                 <div key={index} className="col px-md-3 px-1">
                                     <ServiceCard service={service} />
                                 </div>
                             ))}
-                        </div>
-                    ) : (
+                    </div>
+                    {!hasProducts && (
                         <div className="col-12">
                             <div
                                 style={{
