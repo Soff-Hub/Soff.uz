@@ -322,8 +322,7 @@
                     @extend .btn;
 
                     &:hover {
-                        background-color: #fff !important;
-                        color: $color-1st !important;
+                        filter: brightness(0.8);
                     }
                 }
 
