@@ -22,6 +22,7 @@ const nextSettings = {
             '192.168.1.15',
             'media.licdn.com',
             'freelance.soff.uz',
+            "freelance.ilmiyish.uz"
         ],
     },
     async headers() {

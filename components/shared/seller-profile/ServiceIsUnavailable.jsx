@@ -10,10 +10,7 @@ export default function ServiceIsUnavailable ({type = "product"}) {
                 <p className='ServiceIsUnavailableTitle'>{type == "service" && "Xizmat mavjud emas"}{type == "portfolio" && "Portfolio mavjud emas"}{type == "product" && "Mahsulot mavjud emas"}</p>
                 <p className='ServiceIsUnavailableDescription'>
                     Bu sotuvchi hali {type == "service" && "xizmatlarini ishga tushirmagan."} {type == "product" && "mahsulot yuklamagan."} {type == "portfolio" && "portfolio yuklamagan."} 
-                    {/* Boshqa sotuvchilarni ko‘rib chiqing! */}
                 </p>
-                {/* <img src='/static/img/feedbacks.png' alt='' />
-                <a href='https://soff.uz/' className='ServiceIsUnavailableBtn'>Boshqa sotuvchilar</a> */}
             </div>
         </div>
     );

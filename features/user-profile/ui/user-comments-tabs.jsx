@@ -1,0 +1,52 @@
+import { Tabs } from 'antd'
+import React, { memo, useCallback, useMemo, useState } from 'react'
+import { cn } from '~/shared/utilities/cn'
+import ProductComments from './product-comments'
+import ServiceComments from './service-comments'
+import useResponsive from '~/shared/utilities/useResponsive'
+
+const items = [
+    { key: "product", label: "Mahsulotlar" },
+    { key: "service", label: "Xizmatlar" },
+]
+
+const UserCommentsTabs = ({ id }) => {
+    const [activeKey, setActiveKey] = useState('product')
+    const { isMobile } = useResponsive()
+
+    const renderContent = useMemo(() => {
+        if (activeKey === "product") {
+            return <ProductComments id={id} />
+        } else {
+            return <ServiceComments id={id} />
+        }
+    })
+
+    const onChange = useCallback(key => setActiveKey(key), [])
+
+    return (
+        <div
+            className={cn(
+                "rounded-xl",
+                "w-full",
+                !isMobile ? "mt-4" : "",
+                !isMobile ? "p-4" : "",
+                !isMobile ? "bg-light" : "",
+                !isMobile ? "shadow" : ""
+            )}
+        >
+            <span className={cn("font-bold", "text-[20px]", "mb-3", "block")}>Izohlar</span>
+            <Tabs
+                className="user_tabs"
+                items={items}
+                destroyOnHidden
+                onChange={onChange}
+                activeKey={activeKey}
+            />
+
+            {renderContent}
+        </div>
+    )
+}
+
+export default memo(UserCommentsTabs)
