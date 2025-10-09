@@ -63,7 +63,7 @@ const UserTabs = ({ seller }) => {
     }, [activeKey])
 
     return (
-        <div>
+        <div className={cn("h-full")}>
             <div className={cn("bg-light", "shadow", "rounded-xl", "w-full")}>
                 <Tabs
                     className="user_tabs"

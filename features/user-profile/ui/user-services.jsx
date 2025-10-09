@@ -34,22 +34,28 @@ const UserServices = () => {
     )
 
     return (
-        <div className={cn("w-full", "my-4")}>
+        <div className={cn("w-full", "my-4", "h-full")}>
             <div
                 className={cn(
-                    "grid",
-                    "gap-4",
-                    gridClass,
-                    "rounded-xl",
                     !isMobile ? "bg-light" : "",
                     !isMobile ? "p-3" : "",
-                    !isMobile ? "shadow" : ""
+                    !isMobile ? "shadow" : "",
+                    "rounded-xl",
+                    "h-min-90"
                 )}
             >
-                {data?.map(service =>
-                    <ServiceCard service={service} key={service.id} />
-                )}
-                {isLoading && <ServiceSkeletonGrid />}
+                <div
+                    className={cn(
+                        "grid",
+                        "gap-4",
+                        gridClass,
+                    )}
+                >
+                    {data?.map(service =>
+                        <ServiceCard service={service} key={service.id} />
+                    )}
+                    {isLoading && <ServiceSkeletonGrid />}
+                </div>
             </div>
         </div>
     )
