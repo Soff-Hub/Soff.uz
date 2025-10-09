@@ -235,6 +235,9 @@
 .w-min    { width: min-content; }
 .w-max    { width: max-content; }
 .w-fit    { width: fit-content; }
+.w-90
+.w-80
+.w-70
 
 /* ✅ Height Utilities */
 .h-0    { height: 0px; }
@@ -263,6 +266,9 @@
 .h-min    { height: min-content; }
 .h-max    { height: max-content; }
 .h-fit    { height: fit-content; }
+.h-90     {height: 90%;}
+.h-80     {height: 80%;}
+.h-70     {height: 70%;}
 
 /* ✅ Min & Max Width */
 .min-w-0     { min-width: 0px; }

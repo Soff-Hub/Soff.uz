@@ -1,5 +1,4 @@
-import React, { memo } from 'react'
-import { Skeleton } from 'antd'
+import React from 'react'
 import UserShortInfo from './ui/user-short-info'
 import UserTabs from './ui/user-tabs'
 import { cn, useRcn } from '~/shared/utilities/cn'
@@ -21,7 +20,7 @@ const UserProfile = ({ seller }) => {
     })
 
     return (
-        <div className={cn("grid", gapClass, gridClass, "mb-5")}>
+        <div className={cn("grid", gapClass, gridClass, "my-4")}>
             <div className={cn("col-span-1")}>
                 <UserShortInfo seller={seller} />
             </div>
@@ -36,4 +35,4 @@ const UserProfile = ({ seller }) => {
     )
 }
 
-export default memo(UserProfile)
+export default UserProfile

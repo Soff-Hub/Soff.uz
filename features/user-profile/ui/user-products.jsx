@@ -1,16 +1,19 @@
 import React, { memo, useCallback, useMemo, useState } from 'react'
 import { cn, useRcn } from '~/shared/utilities/cn'
 import { useSellerProducts } from '../api/useSellerProducts'
-import { Skeleton, Select, Pagination } from 'antd'
+import { Skeleton, Select, Pagination, Input } from 'antd'
 import ProductCard from '~/entities/product/product-card'
 import { digitalDirections } from '~/shared/constants'
 import ItemsNotFound from './items-not-found'
 import useResponsive from '~/shared/utilities/useResponsive'
+import useDebounce from '~/shared/hooks/useDebounce'
 
 const UserProducts = ({ id }) => {
     const [page, setPage] = useState(1)
     const [type, setType] = useState("file")
-    const { data, isLoading, isFetching } = useSellerProducts(id, page, type)
+    const [search, setSearch] = useState("")
+    const debounceSearch = useDebounce(search, 700)
+    const { data, isLoading, isFetching } = useSellerProducts(id, page, type, debounceSearch)
     const { isMobile } = useResponsive()
 
     const notFound = data?.results?.length === 0 && !isLoading && !isFetching
@@ -23,7 +26,11 @@ const UserProducts = ({ id }) => {
         desktop: "grid-cols-4"
     })
 
-
+    const flexClass = useRcn({
+        mobile: "flex-col",
+        tablet: "flex-row",
+        desktop: "flex-row",
+    })
 
     const handleTypeChange = useCallback((value) => {
         setType(value)
@@ -53,34 +60,54 @@ const UserProducts = ({ id }) => {
 
     return (
         <div className={cn("w-full", isMobile ? "" : "my-4")}>
-            <div className={cn("mb-3", "flex", "justify-end")}>
+            <div className={cn("mb-4", "flex", "justify-between", "items-center", "gap-2", flexClass)}>
+                <Input.Search
+                    className={cn("flex-1")}
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    placeholder='Mahsulot qidirish...'
+                />
                 <Select
                     options={digitalDirections}
                     value={type}
                     onChange={handleTypeChange}
-                    style={{ width: 250 }}
+                    className={cn("flex-1", "w-full")}
                 />
             </div>
 
             {notFound &&
                 <ItemsNotFound type="product" />
             }
-
-            <div
-                className={cn(
-                    "grid",
-                    "gap-2",
-                    gridClass,
-                    "rounded-xl",
-                    !isMobile ? "bg-light" : "",
-                    !isMobile ? "p-3" : "",
-                    !isMobile ? "shadow" : ""
-                )}
-            >
-                {(isLoading || isFetching) && <ProductSkeletonGrid />}
-
-                {!isLoading && !isFetching && renderedProducts}
-            </div>
+            {!isLoading && !isFetching && products.length !== 0 &&
+                <div
+                    className={cn(
+                        "grid",
+                        "gap-2",
+                        gridClass,
+                        "rounded-xl",
+                        !isMobile ? "bg-light" : "",
+                        !isMobile ? "p-3" : "",
+                        !isMobile ? "shadow" : ""
+                    )}
+                >
+                    {renderedProducts}
+                </div>
+            }
+            {(isLoading || isFetching) &&
+                <div
+                    className={cn(
+                        "grid",
+                        "gap-2",
+                        gridClass,
+                        "rounded-xl",
+                        !isMobile ? "bg-light" : "",
+                        !isMobile ? "p-3" : "",
+                        !isMobile ? "shadow" : ""
+                    )}
+                >
+                    <ProductSkeletonGrid />
+                </div>
+            }
 
             {total > 0 && (
                 <div className={cn("flex", "justify-center", "mt-4")}>

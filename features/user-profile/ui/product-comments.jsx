@@ -3,6 +3,7 @@ import { Skeleton, Button, Divider, Rate } from 'antd'
 import { cn } from '~/shared/utilities/cn'
 import { useProductComments } from '../api/useProductComments'
 import { DownOutlined } from '@ant-design/icons'
+import { useRouter } from 'next/router'
 
 const ProductComments = memo(({ id }) => {
     const [limit, setLimit] = useState(10)
@@ -72,6 +73,7 @@ export default memo(ProductComments)
 
 const CommentCard = memo(({ item }) => {
     const date = useMemo(() => item.created_at?.split('T')[0], [item.created_at])
+    const { push } = useRouter()
 
     return (
         <div>
@@ -87,11 +89,11 @@ const CommentCard = memo(({ item }) => {
                     </div>
                 </div>
                 <span className={cn("text-[13px]", "text-secondary")}>
-                    {date} | {item.document_title}
+                    {date} | <span className={cn("cursor-pointer", "hover-text-primary", "transition")} onClick={() => push(`/product/${item?.document_slug}`)}>{item.document_title}</span>  
                 </span>
             </div>
             {item.text && (
-                <p className={cn("text-[14px]", "text-secondary", "mt-1")}>{item.text}</p>
+                <p className={cn("text-[14px]", "text-dark", "mt-1")}>{item.text}</p>
             )}
         </div>
     )

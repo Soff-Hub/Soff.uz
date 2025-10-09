@@ -3,6 +3,7 @@ import { Skeleton, Button, Divider, Rate } from 'antd'
 import { cn } from '~/shared/utilities/cn'
 import { useServiceComments } from '../api/useServiceComments'
 import { DownOutlined } from '@ant-design/icons'
+import { useRouter } from 'next/router'
 
 const ServiceComments = memo(({ id }) => {
     const {
@@ -77,6 +78,7 @@ export default memo(ServiceComments)
 
 const CommentCard = memo(({ item }) => {
     const date = useMemo(() => item.created_at?.split('T')[0], [item.created_at])
+    const { push } = useRouter()
 
     return (
         <div>
@@ -86,10 +88,10 @@ const CommentCard = memo(({ item }) => {
                     <Rate disabled value={item.quality} className={cn("text-[12px]")} />
                 </div>
                 <span className={cn("text-[13px]", "text-secondary")}>
-                    {date} | {item.service?.title}
+                    {date} | {item.service?.title ? <span onClick={() => push(`/service/${item.service?.slug}`)} className={cn("cursor-pointer", "hover-text-primary", "transition")}>{item.service?.title}</span> : "Maxsus buyurtma"}
                 </span>
             </div>
-            <p className={cn("text-[14px]", "text-secondary")}>{item.comment}</p>
+            <p className={cn("text-[14px]", "text-dark")}>{item.comment}</p>
         </div>
     )
 }, (prev, next) => prev.item.comment === next.item.comment)
