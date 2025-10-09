@@ -16,6 +16,17 @@ export const formatTime = seconds => {
     )}`;
 };
 
+// Helper function to validate slug
+const isValidSlug = slug => {
+    return (
+        slug &&
+        typeof slug === 'string' &&
+        slug.trim().length > 0 &&
+        slug !== 'undefined' &&
+        slug !== 'null'
+    );
+};
+
 export default function CodeVerifyForm({ authCode, onClose, slug, onSuccess }) {
     const [loading, setLoading] = useState(false);
     const [secondsRemaining, setSecondsRemaining] = useState(120);
@@ -74,8 +85,18 @@ export default function CodeVerifyForm({ authCode, onClose, slug, onSuccess }) {
                 router.push(`/account/checkout?id=${router?.query?.id}`);
             } else if (router?.query?.deal) {
                 router.push(`/account/all-orders`);
-            } else if (authCode && slug) {
+            } else if (authCode && isValidSlug(slug)) {
                 router.push(`/service/${slug}?paymodal=open`);
+            } else if (authCode && !isValidSlug(slug)) {
+                console.error(
+                    'Invalid slug for service navigation after auth:',
+                    slug
+                );
+                if (typeof onSuccess === 'function') {
+                    onSuccess();
+                } else {
+                    router.push('/account/sellerproducts');
+                }
             } else if (typeof onSuccess === 'function') {
                 onSuccess();
             } else if (authCode) {
