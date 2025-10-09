@@ -13,7 +13,10 @@ const currentTab = '1';
 export default function Search_Results_Products({ children }) {
     const router = useRouter();
     const queriesRef = useRef(router.query);
-    queriesRef.current = tab === currentTab ? router.query : queriesRef.current;
+
+    queriesRef.current =
+        router.query.tab === currentTab ? router.query : queriesRef.current;
+
     const {
         keyword = '',
         page = 1,
@@ -118,7 +121,7 @@ export default function Search_Results_Products({ children }) {
                     current={page}
                     pageSize={50}
                     total={total}
-                    onChange={newPage => {
+                    onChange={(newPage) => {
                         router.push({
                             pathname: router.pathname,
                             query: {
