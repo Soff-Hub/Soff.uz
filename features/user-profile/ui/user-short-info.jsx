@@ -121,11 +121,11 @@ const UserShortInfo = ({ seller }) => {
             <div className={cn("mt-5", "flex", "flex-col", "gap-4")}>
                 <InfoRow
                     icon={<i className="fa-solid fa-clipboard-list"></i>}
-                    label="Xizmatlar"
+                    label="Xizmatlar uchun ochiq"
                     value={
-                        seller?.has_service && seller?.has_portfolio
-                            ? "Freelance xizmatlari uchun ochiq"
-                            : "Freelance xizmatlari uchun yopiq"
+                        seller?.has_service && seller?.has_portfolio ?
+                        <CheckCircleOutlined className={cn("text-primary", "text-[16px]")} /> :
+                        <CloseCircleOutlined className={cn("text-danger", "text-[16px]")} />
                     }
                 />
                 {seller?.location && (
@@ -148,16 +148,16 @@ const UserShortInfo = ({ seller }) => {
             </div>
 
             <Divider size="small" />
-            <div className={cn("mt-5", "flex","gap-3", (isMobile || isTablet) ? "" : "flex-col")}>
-                <Button type="default" block={!isMobile} className={cn("border-primary", "text-primary")} onClick={handleCreateChat}>
-                    <i className="fa-solid fa-comment-dots"></i>{!isMobile && " Xabar yuborish"} 
+            <div className={cn("mt-5", "flex", "gap-3")}>
+                <Button type="default" className={cn("border-primary", "text-primary")} onClick={handleCreateChat}>
+                    <i className="fa-solid fa-comment-dots"></i>
                 </Button>
                 <Button
                     type="primary"
                     block
                     onClick={handleCreateOrder}
                 >
-                    <i className="fa-solid fa-calendar"></i> Maxsus buyurtma berish
+                    <i className="fa-solid fa-calendar"></i> Buyurtma berish
                 </Button>
             </div>
 
@@ -170,12 +170,14 @@ const UserShortInfo = ({ seller }) => {
                     {sellerStats.map((stat) => (
                         <div
                             key={stat.title}
-                            className={cn("flex", "items-center", "gap-4")}
+                            className={cn("flex", "items-center", "gap-4", "justify-between")}
                         >
-                            {stat.icon}
-                            <span className={cn("text-secondary", "text-[15px]")}>
-                                {stat.title}
-                            </span>
+                            <div className={cn("flex", "items-center", "gap-4")}>
+                                {stat.icon}
+                                <span className={cn("text-secondary", "text-[15px]")}>
+                                    {stat.title}
+                                </span>
+                            </div>
                             <span
                                 className={cn(stat.color, "font-semibold", "text-[15px]")}
                             >

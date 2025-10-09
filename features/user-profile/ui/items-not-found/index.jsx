@@ -1,4 +1,4 @@
-import React, { memo, useMemo } from 'react'
+import React from 'react'
 import style from './style.module.scss'
 
 const TYPE_MAP = {
@@ -17,7 +17,7 @@ const TYPE_MAP = {
 }
 
 const ItemNotFound = ({ type = "product" }) => {
-    const content = useMemo(() => TYPE_MAP[type] || TYPE_MAP['product'], [type])
+    const content = TYPE_MAP[type] || TYPE_MAP['product']
 
     return (
         <div className={style.wrapper}>
@@ -33,4 +33,4 @@ const ItemNotFound = ({ type = "product" }) => {
     )
 }
 
-export default memo(ItemNotFound)
+export default ItemNotFound

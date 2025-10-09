@@ -2,11 +2,16 @@ import { useQuery } from '@tanstack/react-query'
 import { api } from '~/repositories/api'
 import { SELLER_PRODUTS } from '~/shared/api/end-points'
 
-export const useSellerProducts = (id, page = 1, type = 'file') => {
+export const useSellerProducts = (id, page = 1, type = 'file', search = '') => {
     return useQuery({
-        queryKey: ['seller-products', id, page, type],
+        queryKey: ['seller-products', id, page, type, search],
         queryFn: async () => {
-            const res = await api.get(`${SELLER_PRODUTS}${id}/?page=${page}&type=${type}`)
+            const query = new URLSearchParams({
+                page,
+                type,
+                search
+            }).toString()
+            const res = await api.get(`${SELLER_PRODUTS}${id}/?${query}`)
             return res.data
         },
         enabled: !!id,
