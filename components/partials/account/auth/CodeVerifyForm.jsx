@@ -27,6 +27,16 @@ const isValidSlug = slug => {
     );
 };
 
+const isReturnUrlEmpty = returnUrl => {
+    return (
+        !returnUrl ||
+        returnUrl === 'undefined' ||
+        returnUrl === 'null' ||
+        returnUrl.trim() === '/' ||
+        returnUrl.trim() === ''
+    );
+};
+
 export default function CodeVerifyForm({ authCode, onClose, slug, onSuccess }) {
     const [loading, setLoading] = useState(false);
     const [secondsRemaining, setSecondsRemaining] = useState(120);
@@ -79,8 +89,12 @@ export default function CodeVerifyForm({ authCode, onClose, slug, onSuccess }) {
                 onClose();
             }
 
-            if (router?.query?.returnUrl) {
-                router.push(decodeURIComponent(router?.query?.returnUrl));
+            const decodedUrl = decodeURIComponent(
+                router?.query?.returnUrl || ''
+            );
+
+            if (router?.query?.returnUrl && !isReturnUrlEmpty(decodedUrl)) {
+                router.push(decodedUrl);
             } else if (router?.query?.id) {
                 router.push(`/account/checkout?id=${router?.query?.id}`);
             } else if (router?.query?.deal) {
