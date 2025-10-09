@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import styles from './style.module.scss';
 import { useRouter } from 'next/router';
 import useWishlist from '~/shared/hooks/useWishlist';
@@ -103,7 +103,9 @@ const ProductCard = ({ product }) => {
                             {product?.title}
                         </h2>
                         <h3 className={styles.cardPrice}>
-                            {formatCurrencyWithSpace(product?.price)} so’m
+                            {product?.price === 0 || !product?.price
+                                ? "Bepul"
+                                : `${formatCurrencyWithSpace(product?.price)} so’m`}
                         </h3>
                     </div>
                     <div className={styles.cardInfo}>
@@ -162,4 +164,4 @@ const ProductCard = ({ product }) => {
     );
 };
 
-export default ProductCard;
+export default memo(ProductCard);

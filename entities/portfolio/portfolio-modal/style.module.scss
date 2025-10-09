@@ -1,0 +1,34 @@
+.galleryBox {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.imageWrapper {
+    width: 100%;
+    border-radius: 12px;
+    background: #f2f2f2;
+    height: auto;
+
+    img {
+        object-fit: contain;
+    }
+}
+
+
+.mobile{
+    border: 1px solid rgba(0,0,0,0.1);
+    padding: 5px;
+    border-radius: 12px;
+    margin: 10px 0;
+
+    .mobileTitle{
+        font-size: 16px;
+        margin-bottom: 5px;
+    }
+
+    .mobileDescr{
+        font-size: 12px;
+        margin: 0;
+    }
+}
