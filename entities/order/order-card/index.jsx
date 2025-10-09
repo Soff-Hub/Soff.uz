@@ -3,11 +3,18 @@ import styles from './style.module.scss';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import { getRemainingDays } from '~/shared/utilities/calculateTime';
 import { useRouter } from 'next/router';
-import { Avatar, message } from 'antd';
+import { Avatar, Button, message } from 'antd';
 import { cn } from '~/shared/utilities/cn';
 
-const OrderCard = ({ order, onOpenDrawer }) => {
+const OrderCard = ({ order, onOpenDrawer, onCancel, isRejectable }) => {
     const router = useRouter();
+
+    // order.offers = [
+    //     { id: 1, photo_url: '/static/img/ozodbek.png' },
+    //     { id: 2, photo_url: '/static/img/ozodbek.png' },
+    //     { id: 3, photo_url: '/static/img/ozodbek.png' },
+    //     { id: 4, photo_url: '/static/img/ozodbek.png' },
+    // ];
 
     const status = order.order_status_doing?.status || 'pending';
     const hasSeller = Boolean(order.user);
@@ -15,23 +22,26 @@ const OrderCard = ({ order, onOpenDrawer }) => {
 
     const deadlineDisplay = order.deadline_date
         ? new Date(order.deadline_date).toLocaleString('uz-UZ', {
+              year: 'numeric',
+              month: '2-digit',
+              day: '2-digit',
+              hour: '2-digit',
+              minute: '2-digit',
+          })
+        : order.service?.delivery_days
+        ? `${getRemainingDays(order.created_at, order.service.delivery_days)}`
+        : '-';
+
+    const createdAtDisplay = new Date(order.created_at).toLocaleString(
+        'uz-UZ',
+        {
             year: 'numeric',
             month: '2-digit',
             day: '2-digit',
             hour: '2-digit',
             minute: '2-digit',
-        })
-        : order.service?.delivery_days
-            ? `${getRemainingDays(order.created_at, order.service.delivery_days)}`
-            : '-';
-
-    const createdAtDisplay = new Date(order.created_at).toLocaleString('uz-UZ', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
-    });
+        }
+    );
 
     const handlePrimaryClick = () => {
         if (hasSeller) {
@@ -42,11 +52,12 @@ const OrderCard = ({ order, onOpenDrawer }) => {
             } else if (typeof onOpenDrawer === 'function') {
                 onOpenDrawer(order);
             } else {
-                message.info('Takliflarni ko‘rish uchun funksiyani o‘tkazmadingiz');
+                message.info(
+                    'Takliflarni ko‘rish uchun funksiyani o‘tkazmadingiz'
+                );
             }
         }
     };
-
 
     return (
         <div className={styles.card} data-status={status}>
@@ -60,38 +71,49 @@ const OrderCard = ({ order, onOpenDrawer }) => {
                             if (hasSeller) {
                                 router.push(`/order/${order.id}`);
                             } else if (status === 'cancelled') {
-                                message.warning('Siz bu buyurtmani bekor qilgansiz');
+                                message.warning(
+                                    'Siz bu buyurtmani bekor qilgansiz'
+                                );
                             } else if (typeof onOpenDrawer === 'function') {
                                 onOpenDrawer(order);
                             }
-                        }}
-                    >
+                        }}>
                         {order.service?.title || order.title || '-'}
                     </a>
                 </div>
             </div>
-            {(order.order_type == "custom_order" && typeof onOpenDrawer !== 'function') && 
-                <div className={styles.meta}>
-                    <div className={styles.metaTitle}>
-                        <i className="fa-solid fa-file-pen" /> Buyurtma tavsifi
+            {order.order_type == 'custom_order' &&
+                typeof onOpenDrawer !== 'function' && (
+                    <div className={styles.meta}>
+                        <div className={styles.metaTitle}>
+                            <i className="fa-solid fa-file-pen" /> Buyurtma
+                            tavsifi
+                        </div>
+                        <span>{order.description}</span>
                     </div>
-                    <span>{order.description}</span>
-                </div>
-            }
-            {(order.order_type == "ready_service" &&  typeof onOpenDrawer !== 'function') &&
-                <div className={styles.meta}>
-                    <div className={styles.metaTitle}>
-                        <i className="fa-solid fa-file-pen" /> Buyurtma tavsifi
+                )}
+            {order.order_type == 'ready_service' &&
+                typeof onOpenDrawer !== 'function' && (
+                    <div className={styles.meta}>
+                        <div className={styles.metaTitle}>
+                            <i className="fa-solid fa-file-pen" /> Buyurtma
+                            tavsifi
+                        </div>
+                        <div
+                            dangerouslySetInnerHTML={{
+                                __html: order.description,
+                            }}
+                        />
                     </div>
-                    <div dangerouslySetInnerHTML={{__html: order.description}} />
-                </div>
-            }
+                )}
             <div className={styles.catWrapper}>
                 <div className={styles.meta}>
                     <div className={styles.metaTitle}>
                         <i className="fa-solid fa-language" /> Buyurtma tili
                     </div>
-                    <span className={styles.metaMain}>{order.language?.toUpperCase() || '-'}</span>
+                    <span className={styles.metaMain}>
+                        {order.language?.toUpperCase() || '-'}
+                    </span>
                 </div>
 
                 <div className={styles.meta}>
@@ -102,10 +124,16 @@ const OrderCard = ({ order, onOpenDrawer }) => {
                 </div>
             </div>
 
-            <div className={typeof onOpenDrawer === 'function' ? styles.wrapper : styles.catWrapper}>
+            <div
+                className={
+                    typeof onOpenDrawer === 'function'
+                        ? styles.wrapper
+                        : styles.catWrapper
+                }>
                 <div className={styles.budjet}>
                     <span className={styles.budjetTitle}>
-                        <i className="fa-solid fa-money-bill-wave mr-1" /> Budjet
+                        <i className="fa-solid fa-money-bill-wave mr-1" />{' '}
+                        Budjet
                     </span>
                     <span className={styles.budjetPrice}>
                         {formatCurrencyWithSpace(price)} so'm
@@ -114,38 +142,61 @@ const OrderCard = ({ order, onOpenDrawer }) => {
 
                 <div className={styles.date}>
                     <span className={styles.dateTitle}>
-                        <i className="fa-regular fa-calendar mr-1" /> Topshirish muddati
+                        <i className="fa-regular fa-calendar mr-1" /> Topshirish
+                        muddati
                     </span>
                     <span className={styles.dateTime}>{deadlineDisplay}</span>
                 </div>
-
-                {typeof onOpenDrawer === 'function' && 
-                    <div></div>
-                }
-                {typeof onOpenDrawer === 'function' &&
-                    <button
-                        className={styles.primary}
-                        onClick={handlePrimaryClick}
-                    >
-                        {hasSeller ? 'Batafsil' :
-                            <div className={cn('flex', 'justify-center', 'items-center', 'gap-2')}>
-                                <span style={{fontSize: "14px"}}>
-                                    Takliflarni ko'rish
-                                </span>
-                                <Avatar.Group
-                                    max={{
-                                        count: 3,
-                                        style: { color: 'white', backgroundColor: '#00a44f' }
-                                    }}
-                                >
-                                    {order?.offers?.map(item =>
-                                        <Avatar size={25} src={item?.photo_url || '/static/img/ozodbek.png'} />
-                                    )}
-                                </Avatar.Group>
-                            </div>
-                        }
-                    </button>
-                }
+                <div className={styles.actionButtons}>
+                    {typeof onOpenDrawer === 'function' && isRejectable ? (
+                        <Button
+                            variant="outlined"
+                            color="red"
+                            className={styles.actionButtonReject}
+                            onClick={() => onCancel(order)}>
+                            Bekor qilish
+                        </Button>
+                    ) : null}
+                    {typeof onOpenDrawer === 'function' && (
+                        <button
+                            className={styles.primary}
+                            onClick={handlePrimaryClick}>
+                            {hasSeller ? (
+                                'Batafsil'
+                            ) : (
+                                <div
+                                    className={cn(
+                                        'flex',
+                                        'justify-center',
+                                        'items-center',
+                                        'gap-2'
+                                    )}>
+                                    <span style={{ fontSize: '14px' }}>
+                                        Takliflarni ko'rish
+                                    </span>
+                                    <Avatar.Group
+                                        max={{
+                                            count: 3,
+                                            style: {
+                                                color: 'white',
+                                                backgroundColor: '#00a44f',
+                                            },
+                                        }}>
+                                        {order?.offers?.map(item => (
+                                            <Avatar
+                                                size={25}
+                                                src={
+                                                    item?.photo_url ||
+                                                    '/static/img/ozodbek.png'
+                                                }
+                                            />
+                                        ))}
+                                    </Avatar.Group>
+                                </div>
+                            )}
+                        </button>
+                    )}
+                </div>
             </div>
         </div>
     );

@@ -15,16 +15,13 @@ const Notification = () => {
         },
     ];
     return (
-            <PageContainer title="Notifications">
-                <div className="ps-page--my-account">
-                    <Meta
-                        title={"Yangiliklar"}
-                    />
-                    <BreadCrumb breacrumb={breadCrumb} />
-                    <NotificationList />
-                </div>
-            </PageContainer> 
-
+        <PageContainer title="Notifications">
+            <div className="ps-page--my-account">
+                <BreadCrumb breacrumb={breadCrumb} />
+                <Meta title={'Yangiliklar'} />
+                <NotificationList />
+            </div>
+        </PageContainer>
     );
 };
 

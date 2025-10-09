@@ -11,7 +11,6 @@ import VideosProductsDetails from '~/components/details-components/video-tutoria
 import SkeletonProductDetail from '~/components/elements/skeletons/SkeletonProductDetail';
 import * as cookie from 'cookie';
 import AISoffiaPresentation from '~/components/elements/AISoffiaPresentation';
-import Axios from 'axios';
 import { Skeleton } from 'antd';
 import { useDispatch } from 'react-redux';
 import { setShowFastDownload } from '~/store/fast-dowload/slice';
@@ -86,6 +85,8 @@ export default function ProductDefaultPage({ defaultProducts }) {
             return await similarProductsRequest.json();
         },
     });
+
+    console.log({ similarProducts });
 
     let similarProductsContent = null;
     if (similarProductsLoading) {
@@ -392,6 +393,9 @@ export async function getServerSideProps({ query, req }) {
     });
 
     const defaultProducts = await resquest.json();
+
+    console.log('serverside fetch', defaultProducts);
+
     return {
         props: {
             defaultProducts,

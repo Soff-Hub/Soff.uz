@@ -93,9 +93,6 @@ const NavbarMenu = () => {
                                 color="primary"
                                 style={{
                                     display: isBeginning ? 'none' : 'flex',
-                                    // visibility: isBeginning
-                                    //     ? 'hidden'
-                                    //     : 'visible',
                                 }}
                                 className={styles.swipe_btn}
                                 disabled={isBeginning}>
@@ -136,7 +133,6 @@ const NavbarMenu = () => {
                                 shape="circle"
                                 style={{
                                     display: isEnd ? 'none' : 'flex',
-                                    // visibility: isEnd ? 'hidden' : 'visible',
                                 }}
                                 className={styles.swipeNext}
                                 onClick={() => swiperController?.slideNext()}
