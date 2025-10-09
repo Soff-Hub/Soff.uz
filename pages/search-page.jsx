@@ -4,9 +4,7 @@ import Link from 'next/link';
 import Head from 'next/head';
 import NextImageCard from '~/components/nextImagecard';
 import Search_Results_Products from '~/components/elements/search-page-details/products';
-import { baseUrlUseApi } from '~/repositories/useApi';
 import useDebounce from '~/shared/hooks/useDebounce';
-import { baseURL } from '~/repositories/api';
 import { Tabs } from 'antd';
 import Search_Results_Services from '~/components/elements/search-page-details/services';
 import Search_Results_Specialists from '~/components/elements/search-page-details/specialists';
@@ -14,19 +12,12 @@ import CreateOrderModal from '~/shared/components/modals/CreateOrderModal';
 import useResponsive from '~/shared/utilities/useResponsive';
 import AuthModal from '~/components/AuthModal';
 import { useSelector } from 'react-redux';
+import SerachSide from '~/components/elements/search-page-details/search-page-side';
+import { useFGet } from '~/shared/hooks/useFApi';
+import { useQuery } from '@tanstack/react-query';
+import { api } from '~/repositories/api';
 
-const Search_Results = ({
-    fourChildData,
-    childCategoryData,
-    searchData,
-    keyword,
-    page,
-    lastProducts,
-    service,
-    serviceChild,
-    serviceParent,
-    sellers,
-}) => {
+const Search_Results = ({ keyword }) => {
     const inputEl = useRef(null);
     const router = useRouter();
     const [searchTerm, setSearchTerm] = useState(keyword || '');
@@ -36,20 +27,32 @@ const Search_Results = ({
     const [open, setOpen] = useState(false);
     const defaultTabRefSet = useRef(false);
     const { isDesktop } = useResponsive();
-    const pageRef = useRef(null)
-    const [ authModal, setAuthModal ] = useState(false)
-    const { isLoggedIn } = useSelector(state => state.auth)
+    const pageRef = useRef(null);
+    const [authModal, setAuthModal] = useState(false);
+    const { isLoggedIn } = useSelector(state => state.auth);
 
+    const { data: topServices, isLoading: topServicesLoading } = useFGet(
+        'top-services',
+        'customer/popular-services?limit=6'
+    );
+
+    const { data: lastProducts, isLoading: lastProductsLoading } = useQuery({
+        queryKey: [`last-products`],
+        queryFn: async () => {
+            const res = await api.get(`customer/last-added?limit=10`);
+            return res.data;
+        },
+    });
 
     const createBtn = () => (
         <>
             {isDesktop && (
                 <span
                     onClick={() => {
-                        if(isLoggedIn){
-                            setOpen(true)
-                        }else{
-                            setAuthModal(true)
+                        if (isLoggedIn) {
+                            setOpen(true);
+                        } else {
+                            setAuthModal(true);
                         }
                     }}
                     className="Search_Results_not_found_btn w-100 text-center py-3">
@@ -68,6 +71,8 @@ const Search_Results = ({
                 page: 1,
                 tab: currentTab || activeTab,
                 type: (currentTab || activeTab) == '1' ? 'file' : 'all',
+                offset: undefined,
+                limit: undefined,
                 category: '',
                 parentCategory: '',
             },
@@ -80,7 +85,7 @@ const Search_Results = ({
         } else {
             window.scrollIntoView({ behavior: 'smooth' });
         }
-    }, [router.query.page]);
+    }, [router.query.tab]);
 
     const handleClearInput = () => {
         setSearchTerm('');
@@ -139,46 +144,31 @@ const Search_Results = ({
         </span>
     );
 
+    const sideElements = (
+        <SerachSide
+            createBtn={createBtn}
+            topServices={topServices}
+            topServicesLoading={topServicesLoading}
+            lastProducts={lastProducts}
+            lastProductsLoading={lastProductsLoading}
+        />
+    );
+
     const tabItems = [
         {
             key: '1',
             label: 'Mahsulotlar',
-            children: (
-                <Search_Results_Products
-                    childData={fourChildData}
-                    parentData={childCategoryData}
-                    data={searchData?.results}
-                    page={page}
-                    total={searchData?.count}
-                    isLoading={false}
-                    lastProducts={lastProducts}
-                    createBtn={createBtn}
-                />
-            ),
+            children: <Search_Results_Products children={sideElements} />,
         },
         {
             key: '2',
             label: 'Xizmatlar',
-            children: (
-                <Search_Results_Services
-                    childData={serviceChild}
-                    parentData={serviceParent}
-                    data={service}
-                    lastProducts={lastProducts}
-                    createBtn={createBtn}
-                />
-            ),
+            children: <Search_Results_Services children={sideElements} />,
         },
         {
             key: '3',
             label: 'Mutahasislar',
-            children: (
-                <Search_Results_Specialists
-                    data={sellers}
-                    lastProducts={lastProducts}
-                    createBtn={createBtn}
-                />
-            ),
+            children: <Search_Results_Specialists children={sideElements} />,
         },
     ];
 
@@ -193,8 +183,7 @@ const Search_Results = ({
                     name="description"
                     content={
                         keyword
-                            ? `“${keyword}” bo‘yicha ${searchData?.count ||
-                            0} ta mahsulot topildi. Soff.uz orqali kerakli bo'lgan raqamli mahsulotlarni yuklab olishingiz mumkin`
+                            ? `“${keyword}” bo‘yicha topilgan natijalar. Soff.uz orqali kerakli bo'lgan raqamli mahsulotlarni yuklab olishingiz mumkin`
                             : "Soff.uz orqali kerakli bo'lgan raqamli mahsulotlarni yuklab olishingiz mumkin"
                     }
                 />
@@ -254,7 +243,11 @@ const Search_Results = ({
                 />
             </div>
             <CreateOrderModal open={open} onClose={() => setOpen(false)} />
-            <AuthModal open={authModal} onClose={() => setAuthModal(false)} onSuccess={() => setOpen(true)}/>
+            <AuthModal
+                open={authModal}
+                onClose={() => setAuthModal(false)}
+                onSuccess={() => setOpen(true)}
+            />
         </div>
     );
 };
@@ -262,181 +255,11 @@ const Search_Results = ({
 export default Search_Results;
 
 export async function getServerSideProps(context) {
-    const {
-        keyword = '',
-        page = 1,
-        tab,
-        type = 'all',
-        category = '',
-        parentCategory = '',
-        order_by = '',
-        direction = '',
-        limit = 20,
-        offset = 0,
-        category_id = '',
-        service_parent = '',
-        file_type = '', // fayl turi (file_type)
-        page_from = '', // ✅ yangi qo‘shildi
-        page_to = '', // ✅ yangi qo‘shildi
-    } = context.query;
+    const { keyword = '' } = context.query;
 
-    const servicesQuery = new URLSearchParams({
-        ...(category_id && { category_id }),
-        ...(direction && { direction }),
-        limit,
-        offset,
-    });
-
-    const fetchJson = async url => {
-        try {
-            const res = await fetch(url);
-            if (!res.ok) throw new Error('Failed to fetch');
-            return await res.json();
-        } catch (err) {
-            return { error: err.message };
-        }
+    return {
+        props: {
+            keyword,
+        },
     };
-
-    const fourChildUrl = `${baseUrlUseApi}customer/four-child?direction=${type}`;
-    const childCategoryUrl = `${baseUrlUseApi}customer/four-child?direction=${type}&parent__slug=${parentCategory}`;
-
-    // ✅ Yangi filterlar qo‘shildi
-    const searchUrl = `${baseUrlUseApi}customer/same-google-search/?limit=50&${page ? `page=${page}&` : ''
-        }${keyword ? `search=${keyword}&` : ''}${type ? `type=${type}&` : ''}${category ? `category=${category}&` : ''
-        }${order_by ? `order_by=${order_by}&` : ''}${file_type ? `file_type=${file_type}&` : ''
-        }${page_from ? `page_from=${page_from}&` : ''}${page_to ? `page_to=${page_to}` : ''
-        }`;
-
-    // console.log('searchUrl', searchUrl);
-    const lastProductsUrl = `${baseURL}customer/last-added?limit=10`;
-    const servicesUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL
-        }/api/v1/customer?${servicesQuery.toString()}&search=${keyword}${service_parent ? `&category_id=${service_parent}` : ''
-        }`;
-    const serviceParentUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL
-        }/api/v1/categories/?direction=${direction || ''}`;
-    const serviceChildUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/categories/?parent_id=${service_parent}`;
-    const sellersUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/users/sellers?limit=${limit}&offset=${offset}&search=${keyword}`;
-
-    const restQueries = {
-        fourChildData: null,
-        childCategoryData: null,
-        searchData: null,
-        keyword,
-        page,
-        type,
-        category,
-        order_by,
-        error: null,
-        lastProducts: null,
-        service: null,
-        serviceParent: null,
-        serviceChild: null,
-        sellers: null,
-    };
-
-    switch (tab) {
-        case '1': {
-            const [
-                fourChildData,
-                childCategoryData,
-                searchData,
-                lastProducts,
-            ] = await Promise.all([
-                fetchJson(fourChildUrl),
-                fetchJson(childCategoryUrl),
-                fetchJson(searchUrl),
-                fetchJson(lastProductsUrl),
-            ]);
-
-
-            const searchError = searchData?.error || null;
-
-            return {
-                props: {
-                    ...restQueries,
-                    error: searchError,
-                    fourChildData: fourChildData || null,
-                    childCategoryData: childCategoryData || null,
-                    searchData: searchData?.results ? searchData : null,
-                    lastProducts,
-                },
-            };
-        }
-        case '2': {
-            const [
-                lastProducts,
-                service,
-                serviceParent,
-                serviceChild,
-            ] = await Promise.all([
-                fetchJson(lastProductsUrl),
-                fetchJson(servicesUrl),
-                fetchJson(serviceParentUrl),
-                fetchJson(serviceChildUrl),
-            ]);
-
-            return {
-                props: {
-                    ...restQueries,
-                    error: null,
-                    lastProducts,
-                    service,
-                    serviceParent,
-                    serviceChild,
-                },
-            };
-        }
-        case '3': {
-            const [lastProducts, sellers] = await Promise.all([
-                fetchJson(lastProductsUrl),
-                fetchJson(sellersUrl),
-            ]);
-
-
-            return {
-                props: {
-                    ...restQueries,
-                    lastProducts,
-                    sellers,
-                },
-            };
-        }
-        default: {
-            const [
-                fourChildData,
-                childCategoryData,
-                searchData,
-                lastProducts,
-                service,
-                serviceParent,
-                serviceChild,
-                sellers,
-            ] = await Promise.all([
-                fetchJson(fourChildUrl),
-                fetchJson(childCategoryUrl),
-                fetchJson(searchUrl),
-                fetchJson(lastProductsUrl),
-                fetchJson(servicesUrl),
-                fetchJson(serviceParentUrl),
-                fetchJson(serviceChildUrl),
-                fetchJson(sellersUrl),
-            ]);
-            const searchError = searchData?.error || null;
-
-            return {
-                props: {
-                    ...restQueries,
-                    error: searchError,
-                    fourChildData: fourChildData || null,
-                    childCategoryData: childCategoryData || null,
-                    searchData: searchData?.results ? searchData : null,
-                    lastProducts,
-                    service,
-                    serviceParent,
-                    serviceChild,
-                    sellers,
-                },
-            };
-        }
-    }
 }

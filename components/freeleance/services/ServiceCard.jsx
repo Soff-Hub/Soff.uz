@@ -3,17 +3,35 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import styles from './ServiceCard.module.scss';
 
+// Helper function to validate slug
+const isValidSlug = slug => {
+    return (
+        slug &&
+        typeof slug === 'string' &&
+        slug.trim().length > 0 &&
+        slug !== 'undefined' &&
+        slug !== 'null'
+    );
+};
+
 const ServiceCard = ({ product }) => {
     const router = useRouter();
 
     const goToService = useCallback(() => {
-        if (product?.slug) router.push(`/service/${product.slug}`);
+        if (!isValidSlug(product?.slug)) {
+            console.error(
+                'Invalid product slug for navigation:',
+                product?.slug
+            );
+            return;
+        }
+        router.push(`/service/${product.slug}`);
     }, [product?.slug, router]);
 
     const goToSeller = useCallback(
         e => {
             e?.stopPropagation();
-            if (product?.user?.id) {
+            if (product?.user?.id && product?.user?.soff_seller_id) {
                 router.push(
                     {
                         pathname: `/seller/[pid]`,
@@ -24,7 +42,7 @@ const ServiceCard = ({ product }) => {
                 );
             }
         },
-        [product?.user?.id, router]
+        [product?.user?.id, product?.user?.soff_seller_id, router]
     );
 
     const handleLike = useCallback(e => {
@@ -34,6 +52,12 @@ const ServiceCard = ({ product }) => {
     const formattedPrice = product?.price
         ? new Intl.NumberFormat('ru-RU').format(product.price)
         : '—';
+
+    // Don't render if product or slug is invalid
+    if (!product || !isValidSlug(product?.slug)) {
+        console.warn('ServiceCard: Invalid product data or slug', product);
+        return null;
+    }
 
     return (
         <article

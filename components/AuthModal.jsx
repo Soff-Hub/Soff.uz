@@ -19,16 +19,19 @@ const AuthModal = ({ open, onClose, slug, onSuccess }) => {
                 open={open && !codeModalOpen}
                 onCancel={onClose}
                 footer={null}
-                centered
-            >
-                <LoginForm setCode={setCode} onSuccess={() => setCodeModalOpen(true)} />
+                centered>
+                <LoginForm
+                    setCode={setCode}
+                    onSuccess={() => setCodeModalOpen(true)}
+                    isModal={true}
+                />
             </Modal>
 
             <CodeVerifyModal
                 onSuccess={onSuccess}
                 authCode={authCode}
                 open={codeModalOpen}
-                onClose={closeAllModals} 
+                onClose={closeAllModals}
                 slug={slug}
             />
         </>

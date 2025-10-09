@@ -16,6 +16,16 @@ export const formatTime = (seconds) => {
     )}`;
 };
 
+const isReturnUrlEmpty = (returnUrl) => {
+    return (
+        !returnUrl ||
+        returnUrl === 'undefined' ||
+        returnUrl === 'null' ||
+        returnUrl.trim() === '/' ||
+        returnUrl.trim() === ''
+    );
+};
+
 export default function TelegramConfigmForm() {
     const [loading, setLoading] = useState(false);
     const [secondsRemaining, setSecondsRemaining] = useState(120);
@@ -45,8 +55,12 @@ export default function TelegramConfigmForm() {
                 localStorage.setItem('is_seller', '1');
             }
 
-            if (router?.query?.returnUrl) {
-                router.push(router?.query?.returnUrl);
+            const decodedUrl = decodeURIComponent(
+                router?.query?.returnUrl || ''
+            );
+
+            if (router?.query?.returnUrl && !isReturnUrlEmpty(decodedUrl)) {
+                router.push(decodedUrl);
             } else if (router?.query?.id) {
                 router.push(`/account/checkout?id=${router?.query?.id}`);
             } else if (router?.query?.deal) {
@@ -95,7 +109,7 @@ export default function TelegramConfigmForm() {
                             <a
                                 onClick={handleStart}
                                 href="https://t.me/soff_auth_bot?start=new_code"
-                                target='_blank'
+                                target="_blank"
                                 className="text-success">
                                 @soff_auth_bot
                             </a>{' '}
