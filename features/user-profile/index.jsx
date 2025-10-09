@@ -19,8 +19,14 @@ const UserProfile = ({ seller }) => {
         desktop: "gap-x-4"
     })
 
+    const marginClass = useRcn({
+        mobile: "my-1",
+        tablet: "mb-2",
+        desktop: "my-4"
+    })
+
     return (
-        <div className={cn("grid", gapClass, gridClass, "my-4", "items-start")}>
+        <div className={cn("grid", gapClass, gridClass, marginClass, "items-start")}>
             <div className={cn("col-span-1")}>
                 <UserShortInfo seller={seller} />
             </div>
