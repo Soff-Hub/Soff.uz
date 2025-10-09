@@ -13,25 +13,29 @@ export default function GoogleBox({
     const router = useRouter();
 
     const handleGoogleClick = async () => {
+        // Build the OAuth URL with proper query parameters
+        const baseUrl = 'https://api.soff.uz/auth/social/login/customer';
+        const params = new URLSearchParams();
+
+        // Add existing query parameters
+        Object.keys(router.query).forEach((key) => {
+            if (router.query[key]) {
+                params.append(key, router.query[key]);
+            }
+        });
+
+        // Add return URL for modals
         if (isModal) {
-            router.push({
-                query: {
-                    ...router.query,
-                    returnUrl: encodeURIComponent(router.asPath),
-                },
-                pathname: 'https://api.soff.uz/auth/social/login/customer',
-            });
+            params.append('returnUrl', encodeURIComponent(router.asPath));
             onSuccess();
-        } else {
-            router.push({
-                query: {
-                    ...router.query,
-                },
-                pathname: 'https://api.soff.uz/auth/social/login/customer',
-            });
-            // window.location = 'https://api.soff.uz/auth/social/login/customer';
         }
-        // await registerGoogleUser(params, 'customer');
+
+        const fullUrl = params.toString()
+            ? `${baseUrl}?${params.toString()}`
+            : baseUrl;
+
+        // Use window.location for external redirects - this works reliably on iOS 18
+        window.location.href = fullUrl;
     };
 
     const handleTelegramClick = async () => {
