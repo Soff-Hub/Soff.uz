@@ -1256,6 +1256,7 @@
     grid-template-columns: repeat(4, 1fr);
     gap: 10px;
     row-gap: 10px;
+    width: 100%;
 
     @media (max-width: 1300px) {
         grid-template-columns: repeat(4, 1fr);

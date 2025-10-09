@@ -7,7 +7,7 @@ import Axios from 'axios';
 import { baseUrlAuth } from '~/repositories/Repository';
 import { login } from '~/store/auth/slice';
 
-export const formatTime = (seconds) => {
+export const formatTime = seconds => {
     const minutes = Math.floor(seconds / 60);
     const secondsLeft = seconds % 60;
     return `${String(minutes).padStart(2, '0')}:${String(secondsLeft).padStart(
@@ -46,7 +46,7 @@ export default function TelegramConfigmForm() {
             }
 
             if (router?.query?.returnUrl) {
-                router.push(router?.query?.returnUrl);
+                router.push(decodeURIComponent(router?.query?.returnUrl));
             } else if (router?.query?.id) {
                 router.push(`/account/checkout?id=${router?.query?.id}`);
             } else if (router?.query?.deal) {
@@ -68,7 +68,7 @@ export default function TelegramConfigmForm() {
         setSecondsRemaining(120);
 
         const interval = setInterval(() => {
-            setSecondsRemaining((prevSeconds) => {
+            setSecondsRemaining(prevSeconds => {
                 if (prevSeconds > 0) {
                     return prevSeconds - 1;
                 } else {
@@ -95,7 +95,7 @@ export default function TelegramConfigmForm() {
                             <a
                                 onClick={handleStart}
                                 href="https://t.me/soff_auth_bot?start=new_code"
-                                target='_blank'
+                                target="_blank"
                                 className="text-success">
                                 @soff_auth_bot
                             </a>{' '}
