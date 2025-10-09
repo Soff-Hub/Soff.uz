@@ -3,7 +3,12 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { PacmanLoader } from 'react-spinners';
-import { accountLinksReducers, begin, login, setAccountLinks } from '~/store/auth/slice';
+import {
+    accountLinksReducers,
+    begin,
+    login,
+    setAccountLinks,
+} from '~/store/auth/slice';
 
 export let accountAdminLinks = [
     {
@@ -42,7 +47,7 @@ export let accountAdminLinks = [
         icon: 'fa-solid fa-tags',
     },
     {
-        text: "Ariza va Takliflar",
+        text: 'Ariza va Takliflar',
         url: '/account/application',
         icon: 'fa-solid fa-file-signature',
     },
@@ -89,7 +94,7 @@ export let accountSellerLink = [
         icon: 'fa-solid fa-truck',
     },
     {
-        text: "Ariza va Takliflar",
+        text: 'Ariza va Takliflar',
         url: '/account/application',
         icon: 'fa-solid fa-file-signature',
     },
@@ -112,51 +117,85 @@ export let cutomerAccountLink = [
     },
 ];
 
-
-
 const Loader = () => {
     const { user } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     const Router = useRouter();
     const query = Router.route;
     const { asPath } = Router;
+
     useEffect(() => {
-        if (asPath.split('').length > 10) {
-            const roleBegin = asPath.slice(-1)
-            const role = asPath.slice(-20).split('&')[0];
-            const tokenArr = asPath.split('token=');
-            const token = tokenArr[1]?.split('');
-            const list = token?.reverse()?.splice(0, 20);
-            const tokenText = token?.reverse()?.join('');
-            localStorage.setItem('token', tokenText);
-            const data = {
-                access: tokenText,
-                role: 'customer'
+        // Better token extraction for iOS 18 compatibility
+        if (asPath && asPath.includes('token=')) {
+            try {
+                // Extract token from URL
+                const urlParams = new URLSearchParams(
+                    asPath.split('?')[1] || ''
+                );
+                const token = urlParams.get('token');
+                const returnUrl = urlParams.get('returnUrl');
+
+                if (token) {
+                    console.log(
+                        'Token found in URL:',
+                        token.substring(0, 20) + '...'
+                    );
+
+                    // Store token
+                    localStorage.setItem('token', token);
+
+                    const userData = {
+                        access: token,
+                        role: 'customer',
+                    };
+
+                    dispatch(login({ user: userData, data: userData }));
+                    dispatch(begin({ id: userData.role }));
+
+                    // Redirect to return URL or default page
+                    if (returnUrl) {
+                        Router.replace(decodeURIComponent(returnUrl));
+                    } else {
+                        Router.replace('/account/sellerproducts');
+                    }
+                    return;
+                }
+            } catch (error) {
+                console.error('Error processing OAuth token:', error);
+                // Fallback to old method if new method fails
+                if (asPath.split('').length > 10) {
+                    const roleBegin = asPath.slice(-1);
+                    const tokenArr = asPath.split('token=');
+                    const tokenPart = tokenArr[1];
+
+                    if (tokenPart) {
+                        const token = tokenPart.split('&')[0]; // Get token before any other params
+                        localStorage.setItem('token', token);
+
+                        const data = {
+                            access: token,
+                            role: 'customer',
+                        };
+
+                        dispatch(login({ user: data, data: data }));
+                        dispatch(begin({ id: roleBegin }));
+                    }
+                }
             }
-            dispatch(login({ user: data, data: data }));
-            dispatch(begin({ id: roleBegin }))
         }
 
         if (user?.role === 'admin') {
-            localStorage.setItem('is_seller', '1')
+            localStorage.setItem('is_seller', '1');
         }
-        // if (user?.role === 'seller') {
-        //     dispatch(accountLinksReducers(accountSellerLink));
-        // }
-        // if (user?.role === 'customer') {
+
         dispatch(setAccountLinks(cutomerAccountLink));
-        // }
 
-        // if (
-        // user?.role === 'seller' ||
-        // user?.role === 'admin'
-        // ) {
-        // Router.push('/account/dashbord');
-        // } else if (user?.role === 'customer') {
-        Router.push('/account/sellerproducts');
-        // }
+        // Only redirect if we're not already processing a token
+        if (!asPath.includes('token=') && user?.role) {
+            Router.push('/account/sellerproducts');
+        }
+    }, [user?.role, asPath]);
 
-    }, [user?.role]);
     return (
         <div
             style={{
@@ -169,4 +208,4 @@ const Loader = () => {
     );
 };
 
-export default Loader
+export default Loader;
