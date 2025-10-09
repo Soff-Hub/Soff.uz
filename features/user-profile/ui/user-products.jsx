@@ -59,7 +59,7 @@ const UserProducts = ({ id }) => {
     ), [page, total])
 
     return (
-        <div className={cn("w-full", isMobile ? "" : "my-4")}>
+        <div className={cn("w-full", isMobile ? "" : "my-4", "h-full")}>
             <div className={cn("mb-4", "flex", "justify-between", "items-center", "gap-2", flexClass)}>
                 <Input.Search
                     className={cn("flex-1")}
@@ -78,34 +78,48 @@ const UserProducts = ({ id }) => {
             {notFound &&
                 <ItemsNotFound type="product" />
             }
+
+
             {!isLoading && !isFetching && products.length !== 0 &&
                 <div
                     className={cn(
-                        "grid",
-                        "gap-2",
-                        gridClass,
                         "rounded-xl",
                         !isMobile ? "bg-light" : "",
                         !isMobile ? "p-3" : "",
-                        !isMobile ? "shadow" : ""
+                        !isMobile ? "shadow" : "",
+                        "h-min-80"
                     )}
                 >
-                    {renderedProducts}
+                    <div
+                        className={cn(
+                            "grid",
+                            "gap-2",
+                            gridClass,
+                        )}
+                    >
+                        {renderedProducts}
+                    </div>
                 </div>
             }
             {(isLoading || isFetching) &&
                 <div
                     className={cn(
-                        "grid",
-                        "gap-2",
-                        gridClass,
                         "rounded-xl",
                         !isMobile ? "bg-light" : "",
                         !isMobile ? "p-3" : "",
-                        !isMobile ? "shadow" : ""
+                        !isMobile ? "shadow" : "",
+                        "h-min-80"
                     )}
                 >
-                    <ProductSkeletonGrid />
+                    <div
+                        className={cn(
+                            "grid",
+                            "gap-2",
+                            gridClass,
+                        )}
+                    >
+                        <ProductSkeletonGrid />
+                    </div>
                 </div>
             }
 

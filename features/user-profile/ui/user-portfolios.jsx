@@ -42,22 +42,28 @@ const UserPortfolios = () => {
     )
 
     return (
-        <div className={cn("w-full", "my-4")}>
+        <div className={cn("w-full", "my-4", "h-full")}>
             <div
                 className={cn(
-                    "grid",
-                    "gap-4",
-                    gridClass,
-                    "rounded-xl",
                     !isMobile ? "bg-light" : "",
                     !isMobile ? "p-3" : "",
-                    !isMobile ? "shadow" : ""
+                    !isMobile ? "shadow" : "",
+                    "rounded-xl",
+                    "h-min-90"
                 )}
             >
-                {data?.map(portfolio =>
-                    <PortfolioCard setPortfolio={handleSetPortfolio} portfolio={portfolio} key={portfolio.id} />
-                )}
-                {isLoading && <PortfolioSkeletonGrid />}
+                <div
+                    className={cn(
+                        "grid",
+                        "gap-4",
+                        gridClass,
+                    )}
+                >
+                    {data?.map(portfolio =>
+                        <PortfolioCard setPortfolio={handleSetPortfolio} portfolio={portfolio} key={portfolio.id} />
+                    )}
+                    {isLoading && <PortfolioSkeletonGrid />}
+                </div>
             </div>
             <PortfolioModal
                 open={!!portfolio}

@@ -20,11 +20,11 @@ const UserProfile = ({ seller }) => {
     })
 
     return (
-        <div className={cn("grid", gapClass, gridClass, "my-4")}>
+        <div className={cn("grid", gapClass, gridClass, "my-4", "items-start")}>
             <div className={cn("col-span-1")}>
                 <UserShortInfo seller={seller} />
             </div>
-            <div className={cn("col-span-3")}>
+            <div className={cn("col-span-3", "h-full")}>
                 {isMobile ? (
                     <UserAccordians seller={seller} />
                 ) : (
