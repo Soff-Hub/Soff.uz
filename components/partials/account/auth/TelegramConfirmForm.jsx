@@ -7,13 +7,23 @@ import Axios from 'axios';
 import { baseUrlAuth } from '~/repositories/Repository';
 import { login } from '~/store/auth/slice';
 
-export const formatTime = seconds => {
+export const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);
     const secondsLeft = seconds % 60;
     return `${String(minutes).padStart(2, '0')}:${String(secondsLeft).padStart(
         2,
         '0'
     )}`;
+};
+
+const isReturnUrlEmpty = (returnUrl) => {
+    return (
+        !returnUrl ||
+        returnUrl === 'undefined' ||
+        returnUrl === 'null' ||
+        returnUrl.trim() === '/' ||
+        returnUrl.trim() === ''
+    );
 };
 
 export default function TelegramConfigmForm() {
@@ -45,8 +55,12 @@ export default function TelegramConfigmForm() {
                 localStorage.setItem('is_seller', '1');
             }
 
-            if (router?.query?.returnUrl) {
-                router.push(decodeURIComponent(router?.query?.returnUrl));
+            const decodedUrl = decodeURIComponent(
+                router?.query?.returnUrl || ''
+            );
+
+            if (router?.query?.returnUrl && !isReturnUrlEmpty(decodedUrl)) {
+                router.push(decodedUrl);
             } else if (router?.query?.id) {
                 router.push(`/account/checkout?id=${router?.query?.id}`);
             } else if (router?.query?.deal) {
@@ -68,7 +82,7 @@ export default function TelegramConfigmForm() {
         setSecondsRemaining(120);
 
         const interval = setInterval(() => {
-            setSecondsRemaining(prevSeconds => {
+            setSecondsRemaining((prevSeconds) => {
                 if (prevSeconds > 0) {
                     return prevSeconds - 1;
                 } else {
