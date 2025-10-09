@@ -1,33 +1,70 @@
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
 import React from 'react';
-import useAuth from '~/shared/hooks/useAuth';
+// import useAuth from '~/shared/hooks/useAuth';
 
-export default function GoogleBox ({ loading, params }) {
-    const { registerGoogleUser } = useAuth();
+export default function GoogleBox({
+    // loading,
+    // params,
+    isModal,
+    onSuccess,
+    // setCode,
+}) {
+    // const { registerGoogleUser } = useAuth();
+    const router = useRouter();
 
     const handleGoogleClick = async () => {
-        window.location = 'https://api.soff.uz/auth/social/login/customer';
-        try {
-            const user = await registerGoogleUser(params, 'customer');
-        } catch (err) {}
+        if (isModal) {
+            router.push({
+                query: {
+                    ...router.query,
+                    returnUrl: encodeURIComponent(router.asPath),
+                },
+                pathname: 'https://api.soff.uz/auth/social/login/customer',
+            });
+            onSuccess();
+        } else {
+            router.push({
+                query: {
+                    ...router.query,
+                },
+                pathname: 'https://api.soff.uz/auth/social/login/customer',
+            });
+            // window.location = 'https://api.soff.uz/auth/social/login/customer';
+        }
+        // await registerGoogleUser(params, 'customer');
+    };
+
+    const handleTelegramClick = async () => {
+        if (isModal) {
+            Router.push({
+                query: {
+                    ...Router.query,
+                    returnUrl: encodeURIComponent(router.asPath),
+                },
+                pathname: '/auth/telegram',
+            });
+            // onSuccess();
+        } else {
+            Router.push({
+                query: {
+                    ...Router.query,
+                },
+                pathname: '/auth/telegram',
+            });
+        }
     };
 
     return (
-        <div className='d-flex flex-column align-items-center justify-content-center gap-4 mt-2 '>
+        <div className="d-flex flex-column align-items-center justify-content-center gap-4 mt-2 ">
             <div
-                onClick={() =>
-                    Router.push({
-                        query: { ...Router.query },
-                        pathname: '/auth/telegram',
-                    })
-                }
+                onClick={handleTelegramClick}
                 style={{
                     border: '1px solid #24A1DE',
                     borderRadius: '10px',
                     cursor: 'pointer',
                 }}
-                className='py-3 px-3 d-flex align-items-center gap-2 w-100 justify-content-center'>
-                <img src='/static/img/telegram.png' alt='' height={20} />
+                className="py-3 px-3 d-flex align-items-center gap-2 w-100 justify-content-center">
+                <img src="/static/img/telegram.png" alt="" height={20} />
                 <span>Telegram orqali kirish</span>
             </div>
 
@@ -38,8 +75,8 @@ export default function GoogleBox ({ loading, params }) {
                     borderRadius: '10px',
                     cursor: 'pointer',
                 }}
-                className='py-3 px-3 d-flex align-items-center gap-2 w-100 justify-content-center'>
-                <img src='/static/img/google.png' alt='' height={20} />
+                className="py-3 px-3 d-flex align-items-center gap-2 w-100 justify-content-center">
+                <img src="/static/img/google.png" alt="" height={20} />
                 <span>Google orqali kirish</span>
             </div>
         </div>

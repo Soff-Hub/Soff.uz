@@ -12,9 +12,8 @@ import {
     CloseCircleOutlined,
 } from '@ant-design/icons';
 
-
 const fileTypes = [
-    { label: "Barchasi", value: "" },
+    { label: 'Barchasi', value: '' },
     { label: 'DOCX', value: '.docx' },
     { label: 'DOC', value: '.doc' },
     { label: 'PPTX', value: '.pptx' },
@@ -48,14 +47,8 @@ const allTypes = [
     { title: 'Videolar', value: 'video', icon: <VideoCameraOutlined /> },
 ];
 
-export default function SearchResultsProductsFilter({
-    total,
-    parentData,
-    childData,
-}) {
+export default function SearchResultsProductsFilter({ total, childData }) {
     const router = useRouter();
-
-
 
     const [pageRange, setPageRange] = useState([
         Number(router.query.page_from) || 1,
@@ -200,22 +193,22 @@ export default function SearchResultsProductsFilter({
                                 router.query.file_type ||
                                 router.query.page_from ||
                                 router.query.page_to) && (
-                                    <CloseCircleOutlined
-                                        style={{
-                                            fontSize: 20,
-                                            cursor: 'pointer',
-                                            color: '#ff4d4f',
-                                            minWidth: '20px',
-                                        }}
-                                        title="Barchasini tozalash"
-                                        onClick={handleClearAll}
-                                    />
-                                )}
+                                <CloseCircleOutlined
+                                    style={{
+                                        fontSize: 20,
+                                        cursor: 'pointer',
+                                        color: '#ff4d4f',
+                                        minWidth: '20px',
+                                    }}
+                                    title="Barchasini tozalash"
+                                    onClick={handleClearAll}
+                                />
+                            )}
                         </div>
                     </div>
 
                     {router.query.type === 'file' && (
-                        <div className="col-12">
+                        <div className="col-lg-6 col-12">
                             <div className="p-2 border rounded bg-light">
                                 <p className="mb-0 fw-medium">Betlar soni</p>
                                 <Slider
@@ -231,7 +224,7 @@ export default function SearchResultsProductsFilter({
                                         })
                                     }
                                     style={{
-                                        margin: "6px"
+                                        margin: '6px',
                                     }}
                                 />
                                 <div className="d-flex justify-content-between">
