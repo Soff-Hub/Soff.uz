@@ -242,7 +242,6 @@ const HeaderCatergories = () => {
         if (query?.modal === 'open' && isLoggedIn) {
             setOpen(true);
             const newQuery = { ...query };
-            delete newQuery.modal;
             replace({ pathname: pathname, query: newQuery }, undefined, {
                 shallow: true,
             });
@@ -250,6 +249,15 @@ const HeaderCatergories = () => {
             setOpenAuth(true);
         }
     }, [query.modal]);
+
+    const handleCloseOrderModal = () => {
+        const newQuery = { ...query };
+        if (query?.modal) delete newQuery.modal;
+        replace({ pathname: pathname, query: newQuery }, undefined, {
+            shallow: true,
+        });
+        setOpen(false);
+    };
 
     return (
         <div className={styles.dropBlock}>
@@ -278,7 +286,7 @@ const HeaderCatergories = () => {
                     </a>
                 </Dropdown>
             </div>
-            <CreateOrderModal open={open} onClose={() => setOpen(false)} />
+            <CreateOrderModal open={open} onClose={handleCloseOrderModal} />
             <AuthModal
                 open={openAuth}
                 onClose={() => setOpenAuth(false)}

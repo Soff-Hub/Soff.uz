@@ -17,7 +17,7 @@ export const fetchProfile = createAsyncThunk(
 
 export const fetchDirections = createAsyncThunk(
     'api/v1/categories/all-directions',
-    async _ => {
+    async (_) => {
         try {
             const response = await apiForFreelance.get(
                 'categories/all-directions'
@@ -41,13 +41,13 @@ const userProfile = createSlice({
     name: 'userProfile',
     initialState,
     reducers: {
-        logout: state => {
+        logout: (state) => {
             state.user = null;
         },
     },
-    extraReducers: builder => {
+    extraReducers: (builder) => {
         builder
-            .addCase(fetchProfile.pending, state => {
+            .addCase(fetchProfile.pending, (state) => {
                 state.loading = true;
             })
             .addCase(fetchProfile.fulfilled, (state, action) => {
@@ -58,12 +58,12 @@ const userProfile = createSlice({
                 state.loading = false;
                 state.error = action.error.message;
             })
-            .addCase(fetchDirections.pending, state => {
+            .addCase(fetchDirections.pending, (state) => {
                 state.loading = true;
             })
             .addCase(fetchDirections.fulfilled, (state, action) => {
                 state.loading = false;
-                state.directions = action.payload.map(dir => ({
+                state.directions = action.payload.map((dir) => ({
                     label: dir.title,
                     value: dir.value,
                 }));
