@@ -25,8 +25,8 @@ export default function ProductDefaultPage({ defaultProducts }) {
     const [initialDelayPassed, setInitialDelayPassed] = useState(false);
     const [similarProduct, setSimilarProduct] = useState([]);
     const [hasLoadedSimilar, setHasLoadedSimilar] = useState(false);
-    const [lastAdded, setLastAdded] = useState()
-    const [lastLoading, setLastLoading] = useState(false)
+    const [lastAdded, setLastAdded] = useState();
+    const [lastLoading, setLastLoading] = useState(false);
     const similarRef = useRef();
     const dispatch = useDispatch();
 
@@ -38,7 +38,7 @@ export default function ProductDefaultPage({ defaultProducts }) {
         return () => {
             dispatch(setShowFastDownload(true));
         };
-    }, [dispatch])
+    }, [dispatch]);
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -49,9 +49,10 @@ export default function ProductDefaultPage({ defaultProducts }) {
     }, []);
     const fetchSimilarProducts = async () => {
         try {
-            const { data } = await Axios.get(`${baseUrl}customer/similar/${pid}/`);
+            const { data } = await Axios.get(
+                `${baseUrl}customer/similar/${pid}/`
+            );
             setSimilarProduct(data);
-
         } catch (error) {
             console.error('Oxshash mahsulotlarni olishda xatolik:', error);
         }
@@ -86,20 +87,23 @@ export default function ProductDefaultPage({ defaultProducts }) {
 
     useEffect(() => {
         const fetchLastAdded = async () => {
-            setLastLoading(true)
+            setLastLoading(true);
             try {
-                const { data } = await Axios.get(`${baseUrl}customer/last-added?direction=${contentType}&limit=${contentType == "3d" ? "4" : '6'}`)
-                setLastAdded(data)
+                const { data } = await Axios.get(
+                    `${baseUrl}customer/last-added?direction=${contentType}&limit=${
+                        contentType == '3d' ? '4' : '6'
+                    }`
+                );
+                setLastAdded(data);
             } catch (error) {
+            } finally {
+                setLastLoading(false);
             }
-            finally {
-                setLastLoading(false)
-            }
-        }
-        fetchLastAdded()
-    }, [])
+        };
+        fetchLastAdded();
+    }, []);
 
-    const removeHTMLTags = html => {
+    const removeHTMLTags = (html) => {
         return html.replace(/<[^>]+>/g, '');
     };
 
@@ -154,7 +158,6 @@ export default function ProductDefaultPage({ defaultProducts }) {
         />
     );
 
-
     const productsDetails = {
         file: <FileProductsDetails product={defaultProducts} />,
         '3d': <ThreeDesignProductsDetails product={defaultProducts} />,
@@ -170,7 +173,6 @@ export default function ProductDefaultPage({ defaultProducts }) {
         ),
     };
 
-
     return (
         <>
             <PageContainer
@@ -182,118 +184,121 @@ export default function ProductDefaultPage({ defaultProducts }) {
                             'Soff.uz - Intellektual mulk marketi'}
                     </title>
                     <meta
-                        name='title'
+                        name="title"
                         content={
                             defaultProducts?.title ||
                             'soff.uz - Intellektual mulk marketi'
                         }
                     />
                     <meta
-                        name='description'
+                        name="description"
                         content={
                             defaultProducts?.description
                                 ? removeHTMLTags(defaultProducts?.description)
-                                : `${defaultProducts?.title} + ${defaultProducts?.tag
-                                    ?.map(e => e?.name)
-                                    ?.join(', ') ||
-                                'soff.uz - Intellektual mulk marketi'
-                                } `
+                                : `${defaultProducts?.title} + ${
+                                      defaultProducts?.tag
+                                          ?.map((e) => e?.name)
+                                          ?.join(', ') ||
+                                      'soff.uz - Intellektual mulk marketi'
+                                  } `
                         }
                     />
-                    <meta name='robots' content='index, follow' />
+                    <meta name="robots" content="index, follow" />
                     <meta
-                        name='image'
+                        name="image"
                         content={
                             defaultProducts?.poster_url ||
                             '../../static/img/soff/logo-dark.png'
                         }
                     />
                     <meta
-                        name='keywords'
+                        name="keywords"
                         content={
                             defaultProducts?.tag
                                 ? defaultProducts?.tag
-                                    ?.map(e => e?.name)
-                                    ?.join(', ')
+                                      ?.map((e) => e?.name)
+                                      ?.join(', ')
                                 : 'kurs ishi, taqdimotlar, slaydlar, diplom ishi, prezentatsiya'
                         }
                     />
 
-                    <meta property='og:type' content='website' />
+                    <meta property="og:type" content="website" />
                     <meta
-                        property='og:title'
+                        property="og:title"
                         content={
                             defaultProducts?.title ||
                             'soff.uz - Intellektual mulk marketi'
                         }
                     />
                     <meta
-                        property='og:description'
+                        property="og:description"
                         content={
                             defaultProducts?.description
                                 ? removeHTMLTags(defaultProducts?.description)
-                                : `${defaultProducts?.title} + ${defaultProducts?.tag
-                                    ?.map(e => e?.name)
-                                    ?.join(', ') ||
-                                'soff.uz - Intellektual mulk marketi'
-                                } `
+                                : `${defaultProducts?.title} + ${
+                                      defaultProducts?.tag
+                                          ?.map((e) => e?.name)
+                                          ?.join(', ') ||
+                                      'soff.uz - Intellektual mulk marketi'
+                                  } `
                         }
                     />
                     <meta
-                        property='og:image'
+                        property="og:image"
                         content={
                             defaultProducts?.poster_url ||
                             '../../static/img/soff/logo-dark.png'
                         }
                     />
-                    <meta property='og:url' content='https://soff.uz' />
-                    <meta property='og:site_name' content='soff.uz' />
+                    <meta property="og:url" content="https://soff.uz" />
+                    <meta property="og:site_name" content="soff.uz" />
                     <meta
-                        property='og:keywords'
+                        property="og:keywords"
                         content={
                             defaultProducts?.tag
                                 ? defaultProducts?.tag
-                                    ?.map(e => e?.name)
-                                    ?.join(', ')
+                                      ?.map((e) => e?.name)
+                                      ?.join(', ')
                                 : 'kurs ishi, taqdimotlar, slaydlar, diplom ishi, prezentatsiya'
                         }
                     />
 
                     <meta
-                        property='twitter:image'
+                        property="twitter:image"
                         content={
                             defaultProducts?.poster_url ||
                             '../../static/img/soff/logo-dark.png'
                         }></meta>
-                    <meta property='twitter:type' content='website' />
+                    <meta property="twitter:type" content="website" />
                     <meta
-                        property='twitter:title'
+                        property="twitter:title"
                         content={
                             defaultProducts?.title ||
                             'soff.uz - Intellektual mulk marketi'
                         }
                     />
                     <meta
-                        property='twitter:description'
+                        property="twitter:description"
                         content={
                             defaultProducts?.description
                                 ? removeHTMLTags(defaultProducts?.description)
-                                : `${defaultProducts?.title} + ${defaultProducts?.tag
-                                    ?.map(e => e?.name)
-                                    ?.join(', ') ||
-                                'soff.uz - Intellektual mulk marketi'
-                                } `
+                                : `${defaultProducts?.title} + ${
+                                      defaultProducts?.tag
+                                          ?.map((e) => e?.name)
+                                          ?.join(', ') ||
+                                      'soff.uz - Intellektual mulk marketi'
+                                  } `
                         }
                     />
-                    <meta property='twitter:url' content='https://soff.uz' />
-                    <meta property='twitter:site_name' content='soff.uz' />
+                    <meta property="twitter:url" content="https://soff.uz" />
+                    <meta property="twitter:site_name" content="soff.uz" />
                     <meta
-                        property='twitter:keywords'
+                        property="twitter:keywords"
                         content={
                             defaultProducts?.tag
                                 ? defaultProducts?.tag
-                                    ?.map(e => e?.name)
-                                    ?.join(', ')
+                                      ?.map((e) => e?.name)
+                                      ?.join(', ')
                                 : 'kurs ishi, taqdimotlar, slaydlar, diplom ishi, prezentatsiya'
                         }
                     />
@@ -301,20 +306,21 @@ export default function ProductDefaultPage({ defaultProducts }) {
 
                 {joyrideFeature}
 
-                <div >
-                    <div className='container' style={{ position: 'relative' }}>
+                <div>
+                    <div className="container" style={{ position: 'relative' }}>
                         <div
-                            className={`ps-page--product ${defaultProducts?.price === 0 ? '' : 'pt-2'
-                                }`}>
-                            <div className='ps-container p-0'>
-                                <div className='ps-page__container'>
+                            className={`ps-page--product ${
+                                defaultProducts?.price === 0 ? '' : 'pt-2'
+                            }`}>
+                            <div className="ps-container p-0">
+                                <div className="ps-page__container">
                                     {!defaultProducts && (
                                         <SkeletonProductDetail />
                                     )}
                                     {
                                         productsDetails[
-                                        defaultProducts?.document
-                                            ?.content_type
+                                            defaultProducts?.document
+                                                ?.content_type
                                         ]
                                     }
                                 </div>
@@ -328,38 +334,44 @@ export default function ProductDefaultPage({ defaultProducts }) {
                                                 fontSize: '25px',
                                                 fontWeight: 400,
                                             }}
-                                            className="py-4 similar_title"
-                                        >
+                                            className="py-4 similar_title">
                                             O’xshash mahsulotlar
                                         </h3>
                                         {hasLoadedSimilar ? (
-                                            <div className='row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-gap-4'>
-                                                {similarProduct?.map((item, index) =>
-                                                    <div className='col px-3' key={item?.id}>
-                                                        <ProductCard product={item} />
-                                                    </div>
+                                            <div className="row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-gap-4">
+                                                {similarProduct?.map(
+                                                    (item, index) => (
+                                                        <div
+                                                            className="col px-3"
+                                                            key={item?.id}>
+                                                            <ProductCard
+                                                                product={item}
+                                                            />
+                                                        </div>
+                                                    )
                                                 )}
                                             </div>
                                         ) : (
                                             <div className="row g-5 py-3 justify-content-center">
-                                                {Array.from({ length: 12 }).map((_, index) => (
-                                                    <div
-                                                        key={index}
-                                                        className="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2  mb-3 d-flex justify-content-center"
-                                                    >
-                                                        <Skeleton.Input
-                                                            active
-                                                            style={{
-                                                                width: '100%',
-                                                                maxWidth: 170,
-                                                                height: '38vw',
-                                                                maxHeight: 230,
-                                                                minHeight: 120,
-                                                                borderRadius: 8,
-                                                            }}
-                                                        />
-                                                    </div>
-                                                ))}
+                                                {Array.from({ length: 12 }).map(
+                                                    (_, index) => (
+                                                        <div
+                                                            key={index}
+                                                            className="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2  mb-3 d-flex justify-content-center">
+                                                            <Skeleton.Input
+                                                                active
+                                                                style={{
+                                                                    width: '100%',
+                                                                    maxWidth: 170,
+                                                                    height: '38vw',
+                                                                    maxHeight: 230,
+                                                                    minHeight: 120,
+                                                                    borderRadius: 8,
+                                                                }}
+                                                            />
+                                                        </div>
+                                                    )
+                                                )}
                                             </div>
                                         )}
                                     </div>
@@ -369,16 +381,16 @@ export default function ProductDefaultPage({ defaultProducts }) {
                                         fontSize: '25px',
                                         fontWeight: 400,
                                     }}
-                                    className='py-4 similar_title'>
+                                    className="py-4 similar_title">
                                     So'ngi yuklangan mahsulotlar
                                 </h3>
-                                {
-                                    lastLoading ? (
-                                        <div className='row g-3 py-3'>
-                                            {Array.from({ length: 6 }).map((_, index) => (
+                                {lastLoading ? (
+                                    <div className="row g-3 py-3">
+                                        {Array.from({ length: 6 }).map(
+                                            (_, index) => (
                                                 <div
                                                     key={index}
-                                                    className='col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-4 d-flex justify-content-center'>
+                                                    className="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-4 d-flex justify-content-center">
                                                     <Skeleton.Input
                                                         active
                                                         style={{
@@ -388,20 +400,22 @@ export default function ProductDefaultPage({ defaultProducts }) {
                                                         }}
                                                     />
                                                 </div>
+                                            )
+                                        )}
+                                    </div>
+                                ) : (
+                                    lastAdded && (
+                                        <div className="row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-gap-4">
+                                            {lastAdded?.results?.map((p, i) => (
+                                                <div
+                                                    key={p?.id}
+                                                    className="col px-3">
+                                                    <ProductCard product={p} />
+                                                </div>
                                             ))}
                                         </div>
-                                    ) : (
-                                        lastAdded && (
-                                            <div className='row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-gap-4'>
-                                                {lastAdded?.results?.map((p, i) => (
-                                                    <div key={p?.id} className="col px-3">
-                                                        <ProductCard product={p} />
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        )
                                     )
-                                }
+                                )}
                             </div>
                         </div>
                     </div>

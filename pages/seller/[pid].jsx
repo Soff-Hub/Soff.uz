@@ -20,7 +20,7 @@ export default function SellersPage() {
     const router = useRouter();
     const dispatch = useDispatch();
     const { query, asPath, isReady } = router;
-    const { activeIndex } = useSelector(state => state.user);
+    const { activeIndex } = useSelector((state) => state.user);
     const { isMobile } = useResponsive();
     // const activeIndex = asPath.slice(asPath.indexOf('#') + 1, asPath.length);
 
@@ -62,7 +62,7 @@ export default function SellersPage() {
         refetchOnMount: true,
     });
 
-    const handleChangeMenu = item => {
+    const handleChangeMenu = (item) => {
         dispatch(setActiveIndex(item));
     };
 

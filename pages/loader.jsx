@@ -3,7 +3,12 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { PacmanLoader } from 'react-spinners';
-import { accountLinksReducers, begin, login, setAccountLinks } from '~/store/auth/slice';
+import {
+    accountLinksReducers,
+    begin,
+    login,
+    setAccountLinks,
+} from '~/store/auth/slice';
 
 export let accountAdminLinks = [
     {
@@ -42,7 +47,7 @@ export let accountAdminLinks = [
         icon: 'fa-solid fa-tags',
     },
     {
-        text: "Ariza va Takliflar",
+        text: 'Ariza va Takliflar',
         url: '/account/application',
         icon: 'fa-solid fa-file-signature',
     },
@@ -89,7 +94,7 @@ export let accountSellerLink = [
         icon: 'fa-solid fa-truck',
     },
     {
-        text: "Ariza va Takliflar",
+        text: 'Ariza va Takliflar',
         url: '/account/application',
         icon: 'fa-solid fa-file-signature',
     },
@@ -112,8 +117,6 @@ export let cutomerAccountLink = [
     },
 ];
 
-
-
 const Loader = () => {
     const { user } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
@@ -122,7 +125,7 @@ const Loader = () => {
     const { asPath } = Router;
     useEffect(() => {
         if (asPath.split('').length > 10) {
-            const roleBegin = asPath.slice(-1)
+            const roleBegin = asPath.slice(-1);
             const role = asPath.slice(-20).split('&')[0];
             const tokenArr = asPath.split('token=');
             const token = tokenArr[1]?.split('');
@@ -131,14 +134,14 @@ const Loader = () => {
             localStorage.setItem('token', tokenText);
             const data = {
                 access: tokenText,
-                role: 'customer'
-            }
+                role: 'customer',
+            };
             dispatch(login({ user: data, data: data }));
-            dispatch(begin({ id: roleBegin }))
+            dispatch(begin({ id: roleBegin }));
         }
 
         if (user?.role === 'admin') {
-            localStorage.setItem('is_seller', '1')
+            localStorage.setItem('is_seller', '1');
         }
         // if (user?.role === 'seller') {
         //     dispatch(accountLinksReducers(accountSellerLink));
@@ -155,7 +158,6 @@ const Loader = () => {
         // } else if (user?.role === 'customer') {
         Router.push('/account/sellerproducts');
         // }
-
     }, [user?.role]);
     return (
         <div
@@ -169,4 +171,4 @@ const Loader = () => {
     );
 };
 
-export default Loader
+export default Loader;
