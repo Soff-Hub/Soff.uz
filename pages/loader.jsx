@@ -124,6 +124,7 @@ const Loader = () => {
     const query = Router.route;
     const { asPath } = Router;
     useEffect(() => {
+<<<<<<< Updated upstream
         if (asPath.split('').length > 10) {
             const roleBegin = asPath.slice(-1);
             const role = asPath.slice(-20).split('&')[0];
@@ -138,6 +139,67 @@ const Loader = () => {
             };
             dispatch(login({ user: data, data: data }));
             dispatch(begin({ id: roleBegin }));
+=======
+        // Better token extraction for iOS 18 compatibility
+        if (asPath && asPath.includes('token=')) {
+            try {
+                // Extract token from URL
+                console.log('Processing OAuth token from URL...');
+                const urlParams = new URLSearchParams(
+                    asPath.split('?')[1] || ''
+                );
+                const token = urlParams.get('token');
+                const returnUrl = urlParams.get('returnUrl');
+                console.log('Extracted token:', token ? 'Yes' : 'No');
+                if (token) {
+                    console.log(
+                        'Token found in URL:',
+                        token.substring(0, 20) + '...'
+                    );
+
+                    // Store token
+                    localStorage.setItem('token', token);
+
+                    const userData = {
+                        access: token,
+                        role: 'customer',
+                    };
+
+                    dispatch(login({ user: userData, data: userData }));
+                    dispatch(begin({ id: userData.role }));
+                    console.log('User logged in with token.');
+
+                    // Redirect to return URL or default page
+                    if (returnUrl) {
+                        Router.replace(decodeURIComponent(returnUrl));
+                    } else {
+                        Router.replace('/account/sellerproducts');
+                    }
+                    return;
+                }
+            } catch (error) {
+                console.error('Error processing OAuth token:', error);
+                // Fallback to old method if new method fails
+                if (asPath.split('').length > 10) {
+                    const roleBegin = asPath.slice(-1);
+                    const tokenArr = asPath.split('token=');
+                    const tokenPart = tokenArr[1];
+
+                    if (tokenPart) {
+                        const token = tokenPart.split('&')[0]; // Get token before any other params
+                        localStorage.setItem('token', token);
+
+                        const data = {
+                            access: token,
+                            role: 'customer',
+                        };
+
+                        dispatch(login({ user: data, data: data }));
+                        dispatch(begin({ id: roleBegin }));
+                    }
+                }
+            }
+>>>>>>> Stashed changes
         }
 
         if (user?.role === 'admin') {
