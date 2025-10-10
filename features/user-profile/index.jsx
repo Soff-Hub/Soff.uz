@@ -3,7 +3,6 @@ import UserShortInfo from './ui/user-short-info'
 import UserTabs from './ui/user-tabs'
 import { cn, useRcn } from '~/shared/utilities/cn'
 import useResponsive from '~/shared/utilities/useResponsive'
-import UserAccordians from './ui/user-accordians'
 
 const UserProfile = ({ seller }) => {
     const { isMobile } = useResponsive()
@@ -31,11 +30,7 @@ const UserProfile = ({ seller }) => {
                 <UserShortInfo seller={seller} />
             </div>
             <div className={cn("col-span-3", "h-full")}>
-                {isMobile ? (
-                    <UserAccordians seller={seller} />
-                ) : (
-                    <UserTabs seller={seller} />
-                )}
+                <UserTabs seller={seller} />
             </div>
         </div>
     )

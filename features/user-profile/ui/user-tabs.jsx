@@ -10,8 +10,8 @@ import UserProducts from './user-products'
 const items = [
     { key: "about", label: "Muallif haqida" },
     { key: "portfolio", label: "Portfolio" },
-    { key: "services", label: "Xizmatlar" },
-    { key: "products", label: "Mahsulotlar" },
+    { key: "service", label: "Xizmatlar" },
+    { key: "product", label: "Mahsulotlar" },
     { key: "comments", label: "Izohlar" },
 ]
 
@@ -21,6 +21,7 @@ const UserTabs = ({ seller }) => {
     const [activeKey, setActiveKey] = useState("about")
 
     const commentRef = useRef(null)
+    const sectionRef = useRef(null)
 
     useEffect(() => {
         if (tab && items.find(item => item.key === tab)) {
@@ -53,18 +54,18 @@ const UserTabs = ({ seller }) => {
         switch (activeKey) {
             case "portfolio":
                 return <UserPortfolios />
-            case "services":
+            case "service":
                 return <UserServices />
-            case "products":
+            case "product":
                 return <UserProducts id={seller?.id} />
             default:
-                return <UserInfo commentRef={commentRef} seller={seller} />
+                return <UserInfo sectionRef={sectionRef} commentRef={commentRef} seller={seller} />
         }
     }, [activeKey])
 
     return (
         <div className={cn("h-full")}>
-            <div className={cn("bg-light", "shadow", "rounded-xl", "w-full")}>
+            <div style={{ scrollMarginTop: '150px' }} ref={sectionRef} className={cn("bg-light", "shadow", "rounded-xl", "w-full")}>
                 <Tabs
                     className="user_tabs"
                     items={items}
