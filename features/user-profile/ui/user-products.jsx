@@ -59,7 +59,7 @@ const UserProducts = ({ id }) => {
     ), [page, total])
 
     return (
-        <div className={cn("w-full", isMobile ? "" : "my-4", "h-full")}>
+        <div className={cn("w-full", "my-4", "h-full")}>
             <div className={cn("mb-4", "flex", "justify-between", "items-center", "gap-2", flexClass)}>
                 <Input.Search
                     className={cn("flex-1")}
@@ -84,9 +84,9 @@ const UserProducts = ({ id }) => {
                 <div
                     className={cn(
                         "rounded-xl",
-                        !isMobile ? "bg-light" : "",
-                        !isMobile ? "p-3" : "",
-                        !isMobile ? "shadow" : "",
+                        "bg-light",
+                        "p-3",
+                        "shadow",
                         "h-min-80"
                     )}
                 >

@@ -5,13 +5,14 @@ import {
     CloseCircleOutlined,
     SyncOutlined,
     FileTextOutlined,
-    ShoppingOutlined
+    ShoppingOutlined,
 } from '@ant-design/icons'
 import UserCommentsTabs from './user-comments-tabs'
+import UserShortItems from './user-short-items'
 import useResponsive from '~/shared/utilities/useResponsive'
 
-const UserInfo = ({ seller, commentRef }) => {
-    const { isMobile } = useResponsive()
+const UserInfo = ({ seller, commentRef, sectionRef }) => {
+    const { isDesktop } = useResponsive()
     const stats = useMemo(() => [
         {
             title: "Jarayondagi ishlar",
@@ -40,6 +41,8 @@ const UserInfo = ({ seller, commentRef }) => {
         },
     ], [seller])
 
+    const limit = isDesktop ? 3 : 2
+
     return (
         <div>
             {seller?.bio && (
@@ -53,11 +56,17 @@ const UserInfo = ({ seller, commentRef }) => {
                     <StatCard stat={stat} key={index} className="flex-1" />
                 ))}
             </div>
-            {!isMobile && 
-                <div ref={commentRef} style={{ scrollMarginTop: '120px' }}>
-                    <UserCommentsTabs id={seller?.id} />
-                </div>
-            }
+
+            <UserShortItems sectionRef={sectionRef} type="service" id={seller.id} limit={limit} />
+            <UserShortItems sectionRef={sectionRef} type="product" id={seller.id} limit={limit} />
+            <UserShortItems sectionRef={sectionRef} type="portfolio" id={seller.id} limit={limit} />
+
+            <div ref={commentRef} style={{ scrollMarginTop: '120px' }}>
+                <UserCommentsTabs id={seller?.id} />
+            </div>
+
+
+
         </div>
     )
 }

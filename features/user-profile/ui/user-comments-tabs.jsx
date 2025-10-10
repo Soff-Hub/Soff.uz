@@ -3,7 +3,6 @@ import React, { memo, useCallback, useMemo, useState } from 'react'
 import { cn } from '~/shared/utilities/cn'
 import ProductComments from './product-comments'
 import ServiceComments from './service-comments'
-import useResponsive from '~/shared/utilities/useResponsive'
 
 const items = [
     { key: "product", label: "Mahsulotlar" },
@@ -12,7 +11,6 @@ const items = [
 
 const UserCommentsTabs = ({ id }) => {
     const [activeKey, setActiveKey] = useState('product')
-    const { isMobile } = useResponsive()
 
     const renderContent = useMemo(() => {
         if (activeKey === "product") {
@@ -29,10 +27,10 @@ const UserCommentsTabs = ({ id }) => {
             className={cn(
                 "rounded-xl",
                 "w-full",
-                !isMobile ? "mt-4" : "",
-                !isMobile ? "p-4" : "",
-                !isMobile ? "bg-light" : "",
-                !isMobile ? "shadow" : ""
+                "mt-4",
+                "p-4",
+                "bg-light",
+                "shadow"
             )}
         >
             <span className={cn("font-bold", "text-[20px]", "mb-3", "block")}>Izohlar</span>
