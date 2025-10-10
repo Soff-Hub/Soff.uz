@@ -123,34 +123,18 @@ const Loader = () => {
     const Router = useRouter();
     const query = Router.route;
     const { asPath } = Router;
+
     useEffect(() => {
-<<<<<<< Updated upstream
-        if (asPath.split('').length > 10) {
-            const roleBegin = asPath.slice(-1);
-            const role = asPath.slice(-20).split('&')[0];
-            const tokenArr = asPath.split('token=');
-            const token = tokenArr[1]?.split('');
-            const list = token?.reverse()?.splice(0, 20);
-            const tokenText = token?.reverse()?.join('');
-            localStorage.setItem('token', tokenText);
-            const data = {
-                access: tokenText,
-                role: 'customer',
-            };
-            dispatch(login({ user: data, data: data }));
-            dispatch(begin({ id: roleBegin }));
-=======
         // Better token extraction for iOS 18 compatibility
         if (asPath && asPath.includes('token=')) {
             try {
                 // Extract token from URL
-                console.log('Processing OAuth token from URL...');
                 const urlParams = new URLSearchParams(
                     asPath.split('?')[1] || ''
                 );
                 const token = urlParams.get('token');
                 const returnUrl = urlParams.get('returnUrl');
-                console.log('Extracted token:', token ? 'Yes' : 'No');
+
                 if (token) {
                     console.log(
                         'Token found in URL:',
@@ -167,7 +151,6 @@ const Loader = () => {
 
                     dispatch(login({ user: userData, data: userData }));
                     dispatch(begin({ id: userData.role }));
-                    console.log('User logged in with token.');
 
                     // Redirect to return URL or default page
                     if (returnUrl) {
@@ -199,28 +182,20 @@ const Loader = () => {
                     }
                 }
             }
->>>>>>> Stashed changes
         }
 
         if (user?.role === 'admin') {
             localStorage.setItem('is_seller', '1');
         }
-        // if (user?.role === 'seller') {
-        //     dispatch(accountLinksReducers(accountSellerLink));
-        // }
-        // if (user?.role === 'customer') {
-        dispatch(setAccountLinks(cutomerAccountLink));
-        // }
 
-        // if (
-        // user?.role === 'seller' ||
-        // user?.role === 'admin'
-        // ) {
-        // Router.push('/account/dashbord');
-        // } else if (user?.role === 'customer') {
-        Router.push('/account/sellerproducts');
-        // }
-    }, [user?.role]);
+        dispatch(setAccountLinks(cutomerAccountLink));
+
+        // Only redirect if we're not already processing a token
+        if (!asPath.includes('token=') && user?.role) {
+            Router.push('/account/sellerproducts');
+        }
+    }, [user?.role, asPath]);
+
     return (
         <div
             style={{
