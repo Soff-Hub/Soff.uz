@@ -11,7 +11,7 @@ import useResponsive from '~/shared/utilities/useResponsive'
 const UserServices = () => {
     const router = useRouter()
     const { pid } = router.query
-    const { isMobile } = useResponsive()
+    const { isDesktop } = useResponsive()
     const { data, isLoading } = useFGet(`${pid}-service`, `${SELLER_SERVICES}${pid}`, {
         enabled: !!pid,
         token: null,
@@ -37,11 +37,11 @@ const UserServices = () => {
         <div className={cn("w-full", "my-4", "h-full")}>
             <div
                 className={cn(
-                    !isMobile ? "bg-light" : "",
-                    !isMobile ? "p-3" : "",
-                    !isMobile ? "shadow" : "",
+                    "bg-light",
+                    "p-3",
+                    "shadow",
                     "rounded-xl",
-                    "h-min-90"
+                    isDesktop ? "h-min-90" : ""
                 )}
             >
                 <div

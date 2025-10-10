@@ -3,7 +3,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/uz-latn";
 import Image from "next/image";
 import React, { memo, useCallback, useMemo, useState } from "react";
-import { cn } from "~/shared/utilities/cn";
+import { cn, useRcn } from "~/shared/utilities/cn";
 import { Button, Divider } from "antd";
 import {
     CheckCircleOutlined,
@@ -48,6 +48,18 @@ const UserShortInfo = ({ seller }) => {
         () => dayjs(seller?.created_at).format("DD.MM.YYYY"),
         [seller?.created_at]
     );
+
+    const flexClass = useRcn({
+        mobile: "hidden",
+        tablet: "flex",
+        desktop: "flex"
+    })
+
+    const hiddenClass = useRcn({
+        mobile: "flex",
+        tablet: "hidden",
+        desktop: "hidden"
+    })
 
     const sellerStats = useMemo(
         () => [
@@ -124,8 +136,8 @@ const UserShortInfo = ({ seller }) => {
                     label="Xizmatlar uchun ochiq"
                     value={
                         seller?.has_service && seller?.has_portfolio ?
-                        <CheckCircleOutlined className={cn("text-primary", "text-[16px]")} /> :
-                        <CloseCircleOutlined className={cn("text-danger", "text-[16px]")} />
+                            <CheckCircleOutlined className={cn("text-primary", "text-[16px]")} /> :
+                            <CloseCircleOutlined className={cn("text-danger", "text-[16px]")} />
                     }
                 />
                 {seller?.location && (
@@ -147,14 +159,46 @@ const UserShortInfo = ({ seller }) => {
                 />
             </div>
 
-            <Divider size="small" />
-            <div className={cn("mt-5", "flex", "gap-3")}>
+            <Divider size="small" className={cn(flexClass)} />
+            <div className={cn("mt-5", flexClass, "gap-3")}>
                 <Button type="default" className={cn("border-primary", "text-primary")} onClick={handleCreateChat}>
                     <i className="fa-solid fa-comment-dots"></i>
                 </Button>
                 <Button
                     type="primary"
                     block
+                    onClick={handleCreateOrder}
+                >
+                    <i className="fa-solid fa-calendar"></i> Buyurtma berish
+                </Button>
+            </div>
+
+            <div
+                className={cn(
+                    "fixed",
+                    "bottom-0",
+                    "w-full",
+                    "bg-white",
+                    "p-3",
+                    "flex",
+                    "gap-3",
+                    "justify-center",
+                    hiddenClass,
+                    "shadow",
+                    "z-50",
+                    "left-0"
+                )}
+            >
+                <Button
+                    type="default"
+                    className={cn("border-primary", "text-primary")}
+                    onClick={handleCreateChat}
+                >
+                    <i className="fa-solid fa-comment-dots"></i>
+                </Button>
+                <Button
+                    block
+                    type="primary"
                     onClick={handleCreateOrder}
                 >
                     <i className="fa-solid fa-calendar"></i> Buyurtma berish
