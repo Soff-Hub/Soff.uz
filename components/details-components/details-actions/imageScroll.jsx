@@ -20,7 +20,7 @@ const ImageCarousel = ({ images, views, demo_link }) => {
 
     // Fix navigation initialization and track active slide
     useEffect(() => {
-        if (mainSwiper && prevRef.current && nextRef.current) {
+        if (mainSwiper?.params && prevRef.current && nextRef.current) {
             mainSwiper.params.navigation.prevEl = prevRef.current;
             mainSwiper.params.navigation.nextEl = nextRef.current;
             mainSwiper.navigation.init();
@@ -62,7 +62,7 @@ const ImageCarousel = ({ images, views, demo_link }) => {
     }, [mainSwiper, thumbsSwiper]);
 
     // Handle thumbnail swiper progress to show/hide gradients
-    const handleThumbProgress = swiper => {
+    const handleThumbProgress = (swiper) => {
         const progress = swiper.progress;
         const isBeginning = swiper.isBeginning;
         const isEnd = swiper.isEnd;
@@ -324,14 +324,15 @@ const ImageCarousel = ({ images, views, demo_link }) => {
                                                     const slidesPerView =
                                                         thumbsSwiper.params
                                                             .slidesPerView;
-                                                    const targetSlide = Math.max(
-                                                        0,
-                                                        index -
-                                                            Math.floor(
-                                                                slidesPerView /
-                                                                    2
-                                                            )
-                                                    );
+                                                    const targetSlide =
+                                                        Math.max(
+                                                            0,
+                                                            index -
+                                                                Math.floor(
+                                                                    slidesPerView /
+                                                                        2
+                                                                )
+                                                        );
                                                     thumbsSwiper.slideTo(
                                                         targetSlide
                                                     );

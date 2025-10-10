@@ -5,22 +5,22 @@ import PageContainer from '~/widgets/layouts/PageContainer';
 import Meta from '~/components/shared/headers/Meta';
 import useCreateOrder from '~/shared/hooks/useCreateOrder';
 
-const breadCrumb = [
-    {
-        text: 'Asosiy sahifa',
-        url: '/',
-    },
-    {
-        text: 'Maxsus buyurtma yaratish',
-    },
-];
+// const breadCrumb = [
+//     {
+//         text: 'Asosiy sahifa',
+//         url: '/',
+//     },
+//     {
+//         text: 'Maxsus buyurtma yaratish',
+//     },
+// ];
 
 function OrderCreate() {
     return (
         <PageContainer title="Order Create">
-            <div className="ps-page--simple mb-4">
+            <div className="ps-page--simple">
                 <Meta title={'Maxsus buyurtma yaratish'} />
-                <BreadCrumb breacrumb={breadCrumb} />
+                {/* <BreadCrumb breacrumb={breadCrumb} /> */}
                 <div className="ps-section--shopping ps-shopping-cart">
                     <div className="container">
                         <div className="ps-section__header">
@@ -63,7 +63,7 @@ const OrderCreateForm = () => {
                         block>
                         {isPending ? (
                             <div className="d-flex align-items-center gap-3">
-                                Buyurtmani joylashtirilmoqda...
+                                Buyurtmangiz joylashtirilmoqda...
                             </div>
                         ) : (
                             'Buyurtmani joylashtirish'
