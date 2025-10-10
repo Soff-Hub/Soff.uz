@@ -26,6 +26,10 @@ import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import { useQuery } from '@tanstack/react-query';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Thumbs } from 'swiper/modules';
+import { useTelegram } from '~/shared/hooks/useTelegram';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/thumbs';
 
 const { TextArea } = Input;
 
@@ -46,6 +50,7 @@ const priceOptions = [
 
 const CreateOrderModal = ({ open, onClose, id, seller }) => {
     const [form] = Form.useForm();
+    const { tg } = useTelegram();
     const budget = Form.useWatch('budget', form);
     const categoryId = Form.useWatch('category_id', form);
     const [direction, setDirection] = useState('scientific_work');
@@ -108,6 +113,7 @@ const CreateOrderModal = ({ open, onClose, id, seller }) => {
             onClose();
             message.success('Buyurtma muvaffaqiyatli yaratildi!');
             push('/order/my-orders');
+            tg?.close();
             setConfirmOpen(false);
         },
         onError: (err) => {
@@ -435,7 +441,7 @@ const CreateOrderModal = ({ open, onClose, id, seller }) => {
                                         <SwiperSlide
                                             key={`thumb-${option.amount}-${index}`}
                                             style={{
-                                                width: '75px',
+                                                width: 'fit-content',
                                                 height: '35px',
                                                 flexShrink: 0,
                                             }}>

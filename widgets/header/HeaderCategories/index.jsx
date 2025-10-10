@@ -120,7 +120,7 @@ const products = [
     },
 ];
 
-const templates = handleOrder => [
+const templates = (handleOrder) => [
     {
         key: '1',
         icon: (
@@ -214,12 +214,13 @@ const templates = handleOrder => [
 const HeaderCatergories = () => {
     const { isMobile } = useResponsive();
     const [open, setOpen] = useState(false);
-    const { isLoggedIn } = useSelector(state => state.auth);
+    const { isLoggedIn } = useSelector((state) => state.auth);
     const { push, query, replace, pathname } = useRouter();
 
     const handleOrder = () => {
         if (isLoggedIn) {
             setOpen(true);
+            // push('/order/create');
         } else {
             push('/auth/login');
         }
@@ -245,7 +246,7 @@ const HeaderCatergories = () => {
             )}
             <div className={styles.dropBox}>
                 <Dropdown menu={{ items: products }}>
-                    <a onClick={e => e.preventDefault()}>
+                    <a onClick={(e) => e.preventDefault()}>
                         <Space className={styles.dropLabel}>
                             Mahsulotlar
                             <DownOutlined />
@@ -255,7 +256,7 @@ const HeaderCatergories = () => {
             </div>
             <div className={`${styles.orderBox} ${styles.dropBox}`}>
                 <Dropdown menu={{ items: templates(handleOrder) }}>
-                    <a onClick={e => e.preventDefault()}>
+                    <a onClick={(e) => e.preventDefault()}>
                         <Space className={styles.dropLabel}>
                             Buyurtma berish
                             <DownOutlined />
@@ -269,4 +270,3 @@ const HeaderCatergories = () => {
 };
 
 export default HeaderCatergories;
-

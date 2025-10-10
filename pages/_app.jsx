@@ -10,19 +10,26 @@ import NextProgress from 'next-progress';
 import { Toaster } from 'react-hot-toast';
 import { Providers } from '~/app/providers';
 import AffiliateListener from '~/entities/affiliate';
+import { useTelegram } from '~/shared/hooks/useTelegram';
 
 function App({ Component, pageProps }) {
+    const { tg } = useTelegram();
+
     useEffect(() => {
-        setTimeout(function() {
+        tg?.ready();
+    }, [tg]);
+
+    useEffect(() => {
+        setTimeout(function () {
             document.getElementById('__next').classList.add('loaded');
         }, 0);
-        window.addEventListener('contextmenu', function(e) {
+        window.addEventListener('contextmenu', function (e) {
             e.preventDefault();
         });
     }, []);
 
     useEffect(() => {
-        const handleKeyDown = e => {
+        const handleKeyDown = (e) => {
             if (
                 (e.ctrlKey && e.shiftKey && e.key === 'I') || // Prevent Ctrl+Shift+I (Windows)
                 (e.metaKey && e.altKey && e.key === 'I') || // Prevent Command+Option+I (macOS)
@@ -74,8 +81,7 @@ function App({ Component, pageProps }) {
                             url: 'https://soff.uz',
                             potentialAction: {
                                 '@type': 'SearchAction',
-                                target:
-                                    'https://soff.uz/search-page?keyword={search_term_string}',
+                                target: 'https://soff.uz/search-page?keyword={search_term_string}',
                                 'query-input':
                                     'required name=search_term_string',
                             },
