@@ -25,6 +25,10 @@ import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import { useQuery } from '@tanstack/react-query';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Thumbs } from 'swiper/modules';
+import { useTelegram } from '~/shared/hooks/useTelegram';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/thumbs';
 
 const { TextArea } = Input;
 
@@ -39,6 +43,7 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
     const [showLeftGradient, setShowLeftGradient] = useState(false);
     const [showRightGradient, setShowRightGradient] = useState(true);
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
+    const { tg } = useTelegram();
     // const dispatch = useDispatch();
     // const { directions } = useSelector((state) => state.profile);
 
@@ -82,8 +87,6 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
 
     const minPrice = priceList ? priceList[0]?.amount : 2000;
 
-    console.log({ priceData, priceList });
-
     const { mutate: createOrder, isPending } = useFPost({
         url: 'order/custom-order',
         token: user?.access,
@@ -91,6 +94,7 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
             form.resetFields();
             onClose();
             message.success('Buyurtma muvaffaqiyatli yaratildi!');
+            tg?.close();
             push(`/order/my-orders?orderId=${data?.id}`);
             setConfirmOpen(false);
         },
@@ -470,28 +474,6 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
                                         paddingLeft: '5px',
                                         paddingRight: '5px',
                                     }}
-                                    // breakpoints={{
-                                    //     320: {
-                                    //         slidesPerView: 3,
-                                    //         spaceBetween: 6,
-                                    //     },
-                                    //     480: {
-                                    //         slidesPerView: 4,
-                                    //         spaceBetween: 8,
-                                    //     },
-                                    //     768: {
-                                    //         slidesPerView: 5,
-                                    //         spaceBetween: 8,
-                                    //     },
-                                    //     1024: {
-                                    //         slidesPerView: 6,
-                                    //         spaceBetween: 10,
-                                    //     },
-                                    //     1200: {
-                                    //         slidesPerView: 7,
-                                    //         spaceBetween: 12,
-                                    //     },
-                                    // }}
                                     onProgress={handleThumbProgress}
                                     onSlideChange={handleThumbProgress}
                                     onReachBeginning={() =>
@@ -504,7 +486,7 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
                                         <SwiperSlide
                                             key={`thumb-${option.amount}-${index}`}
                                             style={{
-                                                width: '75px',
+                                                width: 'fit-content',
                                                 height: '35px',
                                                 flexShrink: 0,
                                             }}>
