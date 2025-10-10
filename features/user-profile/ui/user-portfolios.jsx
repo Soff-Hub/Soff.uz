@@ -16,7 +16,7 @@ const PortfolioModal = dynamic(() => import("~/entities/portfolio/portfolio-moda
 const UserPortfolios = () => {
     const router = useRouter()
     const [portfolio, setPortfolio] = useState()
-    const { isMobile } = useResponsive()
+    const { isDesktop } = useResponsive()
     const { pid } = router.query
     const { data, isLoading } = useFGet(`${pid}-portfolio`, `${SELLER_PORTFOLIOS}${pid}`, {
         enabled: !!pid,
@@ -45,11 +45,11 @@ const UserPortfolios = () => {
         <div className={cn("w-full", "my-4", "h-full")}>
             <div
                 className={cn(
-                    !isMobile ? "bg-light" : "",
-                    !isMobile ? "p-3" : "",
-                    !isMobile ? "shadow" : "",
+                    "bg-light",
+                    "p-3",
+                    "shadow",
                     "rounded-xl",
-                    "h-min-90"
+                    isDesktop ? "h-min-90" : ""
                 )}
             >
                 <div
