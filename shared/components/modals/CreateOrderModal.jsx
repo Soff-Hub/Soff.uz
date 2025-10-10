@@ -10,29 +10,56 @@ import {
     Tooltip,
     TimePicker,
 } from 'antd';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { useFGet, useFPost } from '../../hooks/useFApi';
 import dayjs from 'dayjs';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
-import { createOrderInfo } from '~/shared/constants/createOrder';
-import { priceOptions, options } from '~/shared/constants/createOrder';
+import { fetchDirections } from '~/store/profile/slice';
+import {
+    titleDescription,
+    inputInfoToCreateOrder,
+} from '~/shared/constants/createOrder';
+import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
+import { useQuery } from '@tanstack/react-query';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Thumbs } from 'swiper/modules';
 
 const { TextArea } = Input;
 
 const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
     const [form] = Form.useForm();
     const budget = Form.useWatch('budget', form);
+    const categoryId = Form.useWatch('category_id', form);
     const [direction, setDirection] = useState('scientific_work');
-    const { user } = useSelector(state => state.auth);
+    const { user } = useSelector((state) => state.auth);
     const { push } = useRouter();
     const [confirmOpen, setConfirmOpen] = useState(false);
-    const { directions } = useSelector(state => state.profile);
+    const [showLeftGradient, setShowLeftGradient] = useState(false);
+    const [showRightGradient, setShowRightGradient] = useState(true);
+    const [thumbsSwiper, setThumbsSwiper] = useState(null);
+    // const dispatch = useDispatch();
+    // const { directions } = useSelector((state) => state.profile);
 
     useEffect(() => {
         form.setFieldValue('direction', direction);
+        // dispatch(fetchDirections());
     }, [direction]);
+
+    const { data: directionsData } = useFGet(
+        'directions',
+        'categories/all-directions'
+    );
+
+    const directions = useMemo(() => {
+        return (
+            directionsData?.map((elem) => ({
+                label: elem.title,
+                value: elem.value,
+            })) || []
+        );
+    }, [directionsData]);
 
     const { data: categories } = useFGet(
         ['direction-categories', direction],
@@ -40,17 +67,34 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
         { enabled: !!direction }
     );
 
+    console.log({ direction, categories });
+
+    const { data: priceData } = useFGet(
+        ['price-range', direction, categoryId],
+        `categories/?direction=${direction}&category_id=${categoryId}`,
+        {
+            enabled: !!direction && !!categoryId,
+        }
+    );
+
+    const priceList =
+        priceData?.[0]?.service_delivery_price_options?.[0]?.price;
+
+    const minPrice = priceList ? priceList[0]?.amount : 2000;
+
+    console.log({ priceData, priceList });
+
     const { mutate: createOrder, isPending } = useFPost({
         url: 'order/custom-order',
         token: user?.access,
-        onSuccess: data => {
+        onSuccess: (data) => {
             form.resetFields();
             onClose();
             message.success('Buyurtma muvaffaqiyatli yaratildi!');
             push(`/order/my-orders?orderId=${data?.id}`);
             setConfirmOpen(false);
         },
-        onError: err => {
+        onError: (err) => {
             const errorMsg =
                 err?.response?.data?.detail ||
                 err?.response?.data?.message ||
@@ -62,14 +106,14 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
     const { mutate: createDirectOrder, isPending: createPending } = useFPost({
         url: 'order/direct-order',
         token: user?.access,
-        onSuccess: data => {
+        onSuccess: (data) => {
             form.resetFields();
             onClose();
             message.success('Buyurtma muvaffaqiyatli yuborildi!');
             push(`/order/${data?.id}`);
             setConfirmOpen(false);
         },
-        onError: err => {
+        onError: (err) => {
             const errorMsg =
                 err?.response?.data?.detail ||
                 err?.response?.data?.message ||
@@ -110,6 +154,15 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
         }
     };
 
+    const handleThumbProgress = (swiper) => {
+        const progress = swiper.progress;
+        const isBeginning = swiper.isBeginning;
+        const isEnd = swiper.isEnd;
+
+        setShowLeftGradient(!isBeginning);
+        setShowRightGradient(!isEnd);
+    };
+
     return (
         <>
             <Modal
@@ -122,6 +175,9 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
                 open={open}
                 onCancel={onClose}
                 footer={null}
+                style={{
+                    zIndex: 11100,
+                }}
                 centered>
                 {seller && sellerInfo && (
                     <div
@@ -220,7 +276,7 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
                             { required: true, message: "Yo'nalish tanlang!" },
                         ]}>
                         <Select
-                            onChange={val => {
+                            onChange={(val) => {
                                 setDirection(val);
                                 form.resetFields(['category_id']);
                                 form.setFieldValue('title', '');
@@ -239,8 +295,8 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
                                     </p>
                                     <Info
                                         title={
-                                            createOrderInfo[direction]?.category
-                                                ?.info || 'Kategoriya tanlang'
+                                            inputInfoToCreateOrder['category']
+                                                .info
                                         }
                                     />
                                 </div>
@@ -252,20 +308,16 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
                                 },
                             ]}>
                             <Select
-                                onSelect={(_, option) => {
+                                onSelect={() => {
                                     form.setFieldValue(
                                         'title',
-                                        options[direction]
-                                            ? options[direction](option?.label)
-                                            : options['unknown'](option?.label)
+                                        titleDescription(direction)
                                     );
-                                    // setTitlePlacehoder(options[direction](option?.label))
                                 }}
-                                placeholder={
-                                    createOrderInfo[direction]?.category
-                                        ?.placeholder || 'Kategoriya tanlang'
-                                }
-                                options={categories?.map(cat => ({
+                                placeholder={inputInfoToCreateOrder[
+                                    'category'
+                                ].placeholder(directions)}
+                                options={categories?.map((cat) => ({
                                     label: cat?.title,
                                     value: cat?.id,
                                 }))}
@@ -281,9 +333,8 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
                                 </p>
                                 <Info
                                     title={
-                                        createOrderInfo[direction]?.description
-                                            ?.info ||
-                                        'Buyurtma tavsifini kiriting'
+                                        inputInfoToCreateOrder['description']
+                                            .info
                                     }
                                 />
                             </div>
@@ -298,9 +349,8 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
                             style={{ resize: 'none' }}
                             rows={6}
                             placeholder={
-                                createOrderInfo[direction]?.description
-                                    ?.placeholder ||
-                                'Buyurtma tavsifini kiriting'
+                                inputInfoToCreateOrder['description']
+                                    .placeholder
                             }
                         />
                     </Form.Item>
@@ -319,8 +369,7 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
                         ]}>
                         <Select
                             placeholder={
-                                createOrderInfo[direction]?.lang?.placeholder ||
-                                'Buyurtma tilini tanlang'
+                                inputInfoToCreateOrder['lang'].placeholder
                             }
                             options={[
                                 { label: "O'zbekcha", value: 'uzb' },
@@ -339,23 +388,21 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
                                 <span>
                                     <Info
                                         title={
-                                            createOrderInfo[direction]?.price
-                                                ?.info ||
-                                            'Byudjetingizni kiriting'
+                                            inputInfoToCreateOrder['price'].info
                                         }
                                     />
                                 </span>
                             </div>
                         }
-                        rules={[{ required: true, message: 'Narx kiriting!' }]}>
+                        rules={[{ required: true, message: 'Narx kiriting!' }]}
+                        style={{ position: 'relative' }}>
                         <InputNumber
-                            min={2000}
+                            min={minPrice}
                             style={{ width: '100%' }}
                             placeholder={
-                                createOrderInfo[direction]?.price
-                                    ?.placeholder || 'Byudjetingizni kiriting'
+                                inputInfoToCreateOrder['price'].placeholder
                             }
-                            formatter={value =>
+                            formatter={(value) =>
                                 value
                                     ? `${value}`.replace(
                                           /\B(?=(\d{3})+(?!\d))/g,
@@ -363,28 +410,123 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
                                       )
                                     : ''
                             }
-                            parser={value =>
+                            parser={(value) =>
                                 value.replace(/\s/g, '').replace(/[^\d]/g, '')
                             }
                             value={budget}
-                            onChange={val => form.setFieldValue('budget', val)}
+                            onChange={(val) =>
+                                form.setFieldValue('budget', val)
+                            }
                         />
-                        <div className="d-flex flex-wrap my-2 gap-2">
-                            {priceOptions.map(option => (
-                                <Button
-                                    key={option.value}
-                                    variant="solid"
-                                    className="option-price-btn"
-                                    type="default"
-                                    onClick={() => {
-                                        form.setFieldValue(
-                                            'budget',
-                                            option.value
-                                        );
-                                    }}>
-                                    {option.title}
-                                </Button>
-                            ))}
+                        <div className="my-3 position-relative">
+                            <div className="position-relative">
+                                {/* Left Gradient Indicator */}
+                                {showLeftGradient && (
+                                    <div
+                                        style={{
+                                            position: 'absolute',
+                                            left: 0,
+                                            top: 0,
+                                            bottom: 0,
+                                            width: '30px',
+                                            background:
+                                                'linear-gradient(to right, rgba(255,255,255,0.9), transparent)',
+                                            zIndex: 5,
+                                            pointerEvents: 'none',
+                                        }}
+                                    />
+                                )}
+
+                                {/* Right Gradient Indicator */}
+                                {showRightGradient && priceList?.length > 7 && (
+                                    <div
+                                        style={{
+                                            position: 'absolute',
+                                            right: 0,
+                                            top: 0,
+                                            bottom: 0,
+                                            width: '30px',
+                                            background:
+                                                'linear-gradient(to left, rgba(255,255,255,0.9), transparent)',
+                                            zIndex: 5,
+                                            pointerEvents: 'none',
+                                        }}
+                                    />
+                                )}
+
+                                <Swiper
+                                    modules={[Thumbs]}
+                                    onSwiper={setThumbsSwiper}
+                                    spaceBetween={8}
+                                    slidesPerView="auto"
+                                    freeMode={true}
+                                    watchSlidesProgress={true}
+                                    centeredSlides={false}
+                                    allowTouchMove={true}
+                                    className="thumbs-swiper mt-2"
+                                    style={{
+                                        width: '100%',
+                                        overflow: 'hidden',
+                                        paddingLeft: '5px',
+                                        paddingRight: '5px',
+                                    }}
+                                    // breakpoints={{
+                                    //     320: {
+                                    //         slidesPerView: 3,
+                                    //         spaceBetween: 6,
+                                    //     },
+                                    //     480: {
+                                    //         slidesPerView: 4,
+                                    //         spaceBetween: 8,
+                                    //     },
+                                    //     768: {
+                                    //         slidesPerView: 5,
+                                    //         spaceBetween: 8,
+                                    //     },
+                                    //     1024: {
+                                    //         slidesPerView: 6,
+                                    //         spaceBetween: 10,
+                                    //     },
+                                    //     1200: {
+                                    //         slidesPerView: 7,
+                                    //         spaceBetween: 12,
+                                    //     },
+                                    // }}
+                                    onProgress={handleThumbProgress}
+                                    onSlideChange={handleThumbProgress}
+                                    onReachBeginning={() =>
+                                        setShowLeftGradient(false)
+                                    }
+                                    onReachEnd={() =>
+                                        setShowRightGradient(false)
+                                    }>
+                                    {priceList?.map((option, index) => (
+                                        <SwiperSlide
+                                            key={`thumb-${option.amount}-${index}`}
+                                            style={{
+                                                width: '75px',
+                                                height: '35px',
+                                                flexShrink: 0,
+                                            }}>
+                                            <Button
+                                                key={option.amount}
+                                                variant="solid"
+                                                className="option-price-btn"
+                                                type="default"
+                                                onClick={() => {
+                                                    form.setFieldValue(
+                                                        'budget',
+                                                        option.amount
+                                                    );
+                                                }}>
+                                                {formatCurrencyWithSpace(
+                                                    option.amount
+                                                )}
+                                            </Button>
+                                        </SwiperSlide>
+                                    ))}
+                                </Swiper>
+                            </div>
                         </div>
                     </Form.Item>
 
@@ -420,7 +562,7 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
                                 style={{ width: '100%', height: '32px' }}
                                 placeholder="Buyurtma tayyor bo‘lish sanasi va soatini tanlang"
                                 size="small"
-                                disabledDate={current =>
+                                disabledDate={(current) =>
                                     current && current < dayjs().startOf('day')
                                 }
                             />
@@ -434,7 +576,7 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
                                 placeholder="Soat"
                                 size="small"
                                 className="ant-picker-time-panel-column"
-                                disabledDate={current =>
+                                disabledDate={(current) =>
                                     current && current < dayjs().startOf('day')
                                 }
                             />

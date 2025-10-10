@@ -1,39 +1,40 @@
-import { Tabs } from 'antd'
-import React, { memo, useCallback, useMemo, useState } from 'react'
-import { cn } from '~/shared/utilities/cn'
-import ProductComments from './product-comments'
-import ServiceComments from './service-comments'
+import { Tabs } from 'antd';
+import React, { memo, useCallback, useMemo, useState } from 'react';
+import { cn } from '~/shared/utilities/cn';
+import ProductComments from './product-comments';
+import ServiceComments from './service-comments';
 
 const items = [
-    { key: "product", label: "Mahsulotlar" },
-    { key: "service", label: "Xizmatlar" },
-]
+    { key: 'product', label: 'Mahsulotlar' },
+    { key: 'service', label: 'Xizmatlar' },
+];
 
 const UserCommentsTabs = ({ id }) => {
-    const [activeKey, setActiveKey] = useState('product')
+    const [activeKey, setActiveKey] = useState('product');
 
     const renderContent = useMemo(() => {
-        if (activeKey === "product") {
-            return <ProductComments id={id} />
+        if (activeKey === 'product') {
+            return <ProductComments id={id} />;
         } else {
-            return <ServiceComments id={id} />
+            return <ServiceComments id={id} />;
         }
-    })
+    });
 
-    const onChange = useCallback(key => setActiveKey(key), [])
+    const onChange = useCallback((key) => setActiveKey(key), []);
 
     return (
         <div
             className={cn(
-                "rounded-xl",
-                "w-full",
-                "mt-4",
-                "p-4",
-                "bg-light",
-                "shadow"
-            )}
-        >
-            <span className={cn("font-bold", "text-[20px]", "mb-3", "block")}>Izohlar</span>
+                'rounded-xl',
+                'w-full',
+                'mt-4',
+                'p-4',
+                'bg-light',
+                'shadow'
+            )}>
+            <span className={cn('font-bold', 'text-[20px]', 'mb-3', 'block')}>
+                Izohlar
+            </span>
             <Tabs
                 className="user_tabs"
                 items={items}
@@ -44,7 +45,7 @@ const UserCommentsTabs = ({ id }) => {
 
             {renderContent}
         </div>
-    )
-}
+    );
+};
 
-export default memo(UserCommentsTabs)
+export default memo(UserCommentsTabs);

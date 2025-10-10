@@ -129,12 +129,13 @@ const Loader = () => {
         if (asPath && asPath.includes('token=')) {
             try {
                 // Extract token from URL
+                console.log('Processing OAuth token from URL...');
                 const urlParams = new URLSearchParams(
                     asPath.split('?')[1] || ''
                 );
                 const token = urlParams.get('token');
                 const returnUrl = urlParams.get('returnUrl');
-
+                console.log('Extracted token:', token ? 'Yes' : 'No');
                 if (token) {
                     console.log(
                         'Token found in URL:',
@@ -151,6 +152,7 @@ const Loader = () => {
 
                     dispatch(login({ user: userData, data: userData }));
                     dispatch(begin({ id: userData.role }));
+                    console.log('User logged in with token.');
 
                     // Redirect to return URL or default page
                     if (returnUrl) {
