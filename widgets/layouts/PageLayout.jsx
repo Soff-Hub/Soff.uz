@@ -55,13 +55,47 @@ const PageLayout = ({ children, title }) => {
     }, []);
 
     return (
+        // <>
+        //     <Head>
+        //         <title>{title}</title>
+        //     </Head>
+        //     <Header />
+        //     {showFastDownload && <FastDowloadSection />}
+        //     {children}
+        //     <Footer />
+
+        //     {user ? (
+        //         ''
+        //     ) : (
+        //         <div style={{ height: 0, overflow: 'hidden' }}>
+        //             <GoogleLogin
+        //                 onSuccess={(credentialResponse) => {
+        //                     handleLogin(credentialResponse?.credential);
+        //                 }}
+        //                 onError={() => {
+        //                     console.log('Login Failed');
+        //                 }}
+        //                 intermediate_iframe_close_callback={(e) =>
+        //                     e.preventDefault()
+        //                 }
+        //                 useOneTap
+        //                 prompt="select_account"
+        //             />
+        //         </div>
+        //     )}
+        // </>
         <>
             <Head>
                 <title>{title}</title>
             </Head>
             <Header />
             {showFastDownload && <FastDowloadSection />}
-            {children}
+            
+            <main style={{ minHeight: 'calc(100vh - 100px)' }}>
+                {children}
+            </main>
+            
+
             <Footer />
 
             {user ? (
