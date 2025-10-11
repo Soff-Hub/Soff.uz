@@ -4,23 +4,26 @@ import { SmileOutlined } from '@ant-design/icons';
 import styles from './ServiceFilterSection.module.scss';
 import ServiceCard from '../../../entities/service/service-card';
 import ServiceFirstCard from './service-first-card';
+import Search_Results_NotFound from '~/components/elements/search-page-details/notFound';
 const ServicesCardSection = ({ services }) => {
     const hasProducts = services?.items?.length > 0;
     return (
         <div className={styles.servicesSection}>
             <div>
                 <div>
-                    <div className="row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-gap-4">
-                        <div className="col px-md-3 px-1">
-                            <ServiceFirstCard />
-                        </div>
-                        {hasProducts &&
-                            services.items.map((service, index) => (
+
+                    {hasProducts &&
+                        <div className="row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-gap-4">
+                            <div className="col px-md-3 px-1">
+                                <ServiceFirstCard />
+                            </div>
+                            {services.items.map((service, index) => (
                                 <div key={index} className="col px-md-3 px-1">
                                     <ServiceCard service={service} />
                                 </div>
                             ))}
-                    </div>
+                        </div>
+                    }
                     {!hasProducts && (
                         <div className="col-12">
                             <div
@@ -34,27 +37,9 @@ const ServicesCardSection = ({ services }) => {
                                     borderRadius: '8px',
                                     height: '50vh',
                                 }}>
-                                <Empty
-                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                    description={
-                                        <span
-                                            style={{
-                                                fontSize: '16px',
-                                                color: '#666',
-                                            }}>
-                                            Hozircha hech qanday xizmat
-                                            topilmadi
-                                        </span>
-                                    }
-                                />
-                                <p
-                                    style={{
-                                        color: '#999',
-                                        marginTop: '10px',
-                                    }}>
-                                    Qidiruv yoki filtrlarni o‘zgartirib ko‘ring{' '}
-                                    <SmileOutlined />
-                                </p>
+                            <Search_Results_NotFound 
+                                isSearchPage={false}
+                            />
                             </div>
                         </div>
                     )}

@@ -86,6 +86,7 @@ const UserTabs = ({ seller }) => {
     return (
         <div className={cn('h-full', 'flex', 'flex-col', 'gap-4', 'w-full')}>
             <DynamicTabs
+                ref={sectionRef}
                 items={items}
                 activeKey={activeKey}
                 onChange={onChange}
