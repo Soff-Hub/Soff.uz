@@ -27,7 +27,7 @@ const UserCommentsTabs = ({ id }) => {
             className={cn(
                 'rounded-xl',
                 'w-full',
-                'mt-4',
+                // 'mt-4',
                 'p-4',
                 'bg-light',
                 'shadow'

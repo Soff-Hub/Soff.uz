@@ -62,7 +62,8 @@ const UserServices = () => {
                     'p-3',
                     'shadow',
                     'rounded-xl',
-                    isDesktop ? 'h-min-90' : ''
+                    'h-full'
+                    // isDesktop ? 'h-min-90' : ''
                 )}>
                 <div className={cn('grid', 'gap-4', gridClass)}>
                     {data?.map((service) => (

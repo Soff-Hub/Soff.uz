@@ -1,7 +1,7 @@
-import UserProfile from "~/features/user-profile";
-import { d_base_url } from "~/shared/api/base-url";
-import fetchJson from "~/shared/api/fetch-json";
-import PageContainer from "~/widgets/layouts/PageContainer";
+import UserProfile from '~/features/user-profile';
+import { d_base_url } from '~/shared/api/base-url';
+import fetchJson from '~/shared/api/fetch-json';
+import PageContainer from '~/widgets/layouts/PageContainer';
 
 const SellerPage = ({ seller }) => {
     return (
@@ -10,26 +10,25 @@ const SellerPage = ({ seller }) => {
                 <UserProfile seller={seller} />
             </div>
         </PageContainer>
-    )
-}
+    );
+};
 
-export default SellerPage
-
+export default SellerPage;
 
 export async function getServerSideProps(context) {
-    const { pid } = context.params
+    const { pid } = context.params;
 
     try {
-        const url = `${d_base_url}/auth/freelance-profile/${pid}/`
-        const res = await fetchJson(url)
+        const url = `${d_base_url}/auth/freelance-profile/${pid}/`;
+        const res = await fetchJson(url);
         return {
             props: {
-                seller: res || null
-            }
-        }
+                seller: res,
+            },
+        };
     } catch (error) {
         return {
-            notFound: true
-        }
+            notFound: true,
+        };
     }
 }
