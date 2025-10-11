@@ -182,19 +182,16 @@ const templateIcons = {
 
 const HeaderCatergories = () => {
     const { isMobile } = useResponsive();
-    const [open, setOpen] = useState(false);
     const { isLoggedIn } = useSelector((state) => state.auth);
     const { directions } = useSelector((state) => state.profile);
     [...directions, { label: 'Boshqa', value: 'other' }];
     const { push, query, replace, pathname } = useRouter();
-    const [openAuth, setOpenAuth] = useState(false);
 
     const handleOrder = () => {
         if (isLoggedIn) {
             push('/order/create');
-            // setOpen(true);
         } else {
-            setOpenAuth(true);
+            push('/auth/login?returnUrl=%2Forder%2Fcreate');
         }
     };
 
@@ -240,24 +237,13 @@ const HeaderCatergories = () => {
 
     useEffect(() => {
         if (query?.modal === 'open' && isLoggedIn) {
-            setOpen(true);
+            push('/order/create');
             const newQuery = { ...query };
             replace({ pathname: pathname, query: newQuery }, undefined, {
                 shallow: true,
             });
-        } else if (query?.modal === 'open' && !isLoggedIn) {
-            setOpenAuth(true);
         }
     }, [query.modal]);
-
-    const handleCloseOrderModal = () => {
-        const newQuery = { ...query };
-        if (query?.modal) delete newQuery.modal;
-        replace({ pathname: pathname, query: newQuery }, undefined, {
-            shallow: true,
-        });
-        setOpen(false);
-    };
 
     return (
         <div className={styles.dropBlock}>
@@ -286,14 +272,6 @@ const HeaderCatergories = () => {
                     </a>
                 </Dropdown>
             </div>
-            <CreateOrderModal open={open} onClose={handleCloseOrderModal} />
-            <AuthModal
-                open={openAuth}
-                onClose={() => setOpenAuth(false)}
-                onSuccess={() => {
-                    setOpen(true);
-                }}
-            />
         </div>
     );
 };
