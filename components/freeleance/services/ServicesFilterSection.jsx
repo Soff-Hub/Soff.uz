@@ -43,6 +43,7 @@ const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
                 search: searchValue || undefined,
                 direction: selectedDirection || undefined,
                 category_id: selectedParentCategory || undefined,
+                offset: 0
             };
 
             if (JSON.stringify(newQuery) !== JSON.stringify(router.query)) {
@@ -61,6 +62,7 @@ const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
             pathname: router.pathname,
             query: {
                 direction: value || undefined,
+                offset: 0
             },
         });
     };
@@ -73,6 +75,7 @@ const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
             query: {
                 direction: selectedDirection || undefined,
                 category_id: value || undefined,
+                offset: 0
             },
         });
     };

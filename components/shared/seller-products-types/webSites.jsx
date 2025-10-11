@@ -23,9 +23,6 @@ export default function WebSites({ pid }) {
         keepPreviousData: true,
     });
 
-    useEffect(() => {
-        console.log('Website products', products);
-    }, [products]);
 
     // 🔹 Pagination handler
     const handlePageChange = page => {

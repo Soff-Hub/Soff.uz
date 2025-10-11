@@ -17,13 +17,11 @@ const useOffers = (orderId, isOpen) => {
 
         socket.onopen = () => {
             setIsConnected(true);
-            console.log("🔌 Connected to offers WS:", wsUrl);
         };
 
         socket.onmessage = (event) => {
             try {
                 const data = JSON.parse(event.data);
-                console.log("📩 New WS offer:", data);
 
                 setOffers((prev) => {
                     if (prev.some((o) => o.id === data.id)) return prev;
@@ -36,7 +34,6 @@ const useOffers = (orderId, isOpen) => {
 
         socket.onclose = () => {
             setIsConnected(false);
-            console.log("❌ Offers WS closed");
         };
 
         socket.onerror = (err) => {

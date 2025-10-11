@@ -30,7 +30,6 @@ export default function SellerComments({ pid }) {
         keepPreviousData: true,
     });
 
-    console.log(data);
 
     return (
         <div className="SellerComments p-5">

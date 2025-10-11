@@ -15,7 +15,6 @@ const Chat = () => {
     const dispatch = useDispatch()
     useEffect(() => {
         if (query?.chatId) {
-            console.log(query);
 
             setChatId(query.chatId);
         }
@@ -38,7 +37,7 @@ const Chat = () => {
     const isSmallScreen = isMobile || isTablet;
 
     return (
-        <div className='my-5'>
+        <div className='my-2'>
 
             <div className="row">
                 {!isSmallScreen && (
