@@ -6,9 +6,20 @@ export default function Document() {
         <Html lang="uz" style={{ overflowX: 'hidden' }}>
             <Head>
                 <link rel="shortcut icon" href={'/static/img/soff logo.png'} />
-                <link rel="icon" href={'/static/img/soff logo.png'} sizes="32x32" />
-                <link rel="icon" href={'/static/img/soff logo.png'} sizes="192x192" />
-                <link rel="apple-touch-icon-precomposed" href={'/static/img/soff logo.png'} />
+                <link
+                    rel="icon"
+                    href={'/static/img/soff logo.png'}
+                    sizes="32x32"
+                />
+                <link
+                    rel="icon"
+                    href={'/static/img/soff logo.png'}
+                    sizes="192x192"
+                />
+                <link
+                    rel="apple-touch-icon-precomposed"
+                    href={'/static/img/soff logo.png'}
+                />
 
                 <link
                     href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
@@ -61,8 +72,7 @@ export default function Document() {
                 {process.env.NODE_ENV === 'production' && (
                     <script
                         defer
-                        src="https://www.googletagmanager.com/gtag/js?id=G-H60GJQ0WF2"
-                    ></script>
+                        src="https://www.googletagmanager.com/gtag/js?id=G-H60GJQ0WF2"></script>
                 )}
 
                 {process.env.NODE_ENV === 'production' && (
@@ -75,8 +85,7 @@ export default function Document() {
                         gtag('js', new Date());
                         gtag('config', 'G-H60GJQ0WF2');
                     `,
-                        }}
-                    ></script>
+                        }}></script>
                 )}
 
                 {process.env.NODE_ENV === 'production' && (
@@ -95,8 +104,7 @@ export default function Document() {
                         fbq('init', '1284858666704084');
                         fbq('track', 'PageView');
                     `,
-                        }}
-                    ></script>
+                        }}></script>
                 )}
 
                 {process.env.NODE_ENV === 'production' && (
@@ -116,8 +124,12 @@ export default function Document() {
                              accurateTrackBounce:true
                         });
                     `,
-                        }}
-                    ></script>
+                        }}></script>
+                )}
+                {process.env.TELEGRAM_WEB_APP === 'true' && (
+                    <script
+                        src="https://telegram.org/js/telegram-web-app.js"
+                        defer></script>
                 )}
                 <noscript>
                     <div>
@@ -146,8 +158,7 @@ export default function Document() {
                 <NextScript />
                 <script
                     defer
-                    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-                ></script>
+                    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
             </body>
         </Html>
     );
