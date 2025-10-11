@@ -16,11 +16,10 @@ const MyOrderTabs = () => {
         }
     }, [query?.tab]);
 
-    // Umumiy buyurtmalar sonini hisoblash
-    const totalOrders = data 
-        ? (data.pending || 0) + 
-          (data.requirement_process || 0) + 
-          (data.completed || 0) + 
+    const totalOrders = data
+        ? (data.pending || 0) +
+          (data.requirement_process || 0) +
+          (data.completed || 0) +
           (data.cancelled || 0)
         : 0;
 
@@ -28,57 +27,71 @@ const MyOrderTabs = () => {
         {
             key: '1',
             label: `Yangi ${data?.pending || 0}`,
-            children: data?.pending > 0 
-                ? <AllOrdersTable type={['pending']} />
-                : <Empty 
-                    image={Empty.PRESENTED_IMAGE_SIMPLE}
-                    description="Sizda yangi buyurtmalar mavjud emas" 
-                  />,
+            children:
+                data?.pending > 0 ? (
+                    <AllOrdersTable type={['pending']} />
+                ) : (
+                    <Empty
+                        image={Empty.PRESENTED_IMAGE_SIMPLE}
+                        description="Sizda yangi buyurtmalar mavjud emas"
+                    />
+                ),
         },
         {
             key: '2',
             label: `Jarayonda ${data?.requirement_process || 0}`,
-            children: data?.requirement_process > 0
-                ? <AllOrdersTable type={['order_accepted', 'order_file_sent', 'rejected']} />
-                : <Empty 
-                    image={Empty.PRESENTED_IMAGE_SIMPLE}
-                    description="Sizda jarayondagi buyurtmalar mavjud emas" 
-                  />,
+            children:
+                data?.requirement_process > 0 ? (
+                    <AllOrdersTable
+                        type={['order_accepted', 'order_file_sent', 'rejected']}
+                    />
+                ) : (
+                    <Empty
+                        image={Empty.PRESENTED_IMAGE_SIMPLE}
+                        description="Sizda jarayondagi buyurtmalar mavjud emas"
+                    />
+                ),
         },
         {
             key: '3',
             label: `Tugallandi ${data?.completed || 0}`,
-            children: data?.completed > 0
-                ? <AllOrdersTable type={'completed'} />
-                : <Empty 
-                    image={Empty.PRESENTED_IMAGE_SIMPLE}
-                    description="Sizda tugallangan buyurtmalar mavjud emas" 
-                  />,
+            children:
+                data?.completed > 0 ? (
+                    <AllOrdersTable type={'completed'} />
+                ) : (
+                    <Empty
+                        image={Empty.PRESENTED_IMAGE_SIMPLE}
+                        description="Sizda tugallangan buyurtmalar mavjud emas"
+                    />
+                ),
         },
         {
             key: '4',
             label: `Bekor qilingan ${data?.cancelled || 0}`,
-            children: data?.cancelled > 0
-                ? <AllOrdersTable type={'cancelled'} />
-                : <Empty 
-                    image={Empty.PRESENTED_IMAGE_SIMPLE}
-                    description="Sizda bekor qilingan buyurtmalar mavjud emas" 
-                  />,
+            children:
+                data?.cancelled > 0 ? (
+                    <AllOrdersTable type={'cancelled'} />
+                ) : (
+                    <Empty
+                        image={Empty.PRESENTED_IMAGE_SIMPLE}
+                        description="Sizda bekor qilingan buyurtmalar mavjud emas"
+                    />
+                ),
         },
     ];
 
     if (isLoading) return <Loader />;
 
-    // Agar umuman buyurtma bo'lmasa
     if (totalOrders === 0) {
         return (
-            <div style={{ 
-                textAlign: 'center', 
-                padding: '60px 20px',
-                background: '#fafafa',
-                borderRadius: '8px'
-            }}>
-                <Empty 
+            <div
+                style={{
+                    textAlign: 'center',
+                    padding: '60px 20px',
+                    background: '#fafafa',
+                    borderRadius: '8px',
+                }}>
+                <Empty
                     image={Empty.PRESENTED_IMAGE_DEFAULT}
                     description={
                         <span style={{ fontSize: '16px', color: '#666' }}>
@@ -94,17 +107,16 @@ const MyOrderTabs = () => {
         <ConfigProvider
             theme={{
                 token: {
-                    colorPrimary: "#00a44f",
+                    colorPrimary: '#00a44f',
                 },
                 components: {
                     Tabs: {
-                        itemSelectedColor: "#00a44f",
-                        itemActiveColor: "#00a44f",
-                        inkBarColor: "#00a44f",
+                        itemSelectedColor: '#00a44f',
+                        itemActiveColor: '#00a44f',
+                        inkBarColor: '#00a44f',
                     },
                 },
-            }}
-        >
+            }}>
             <Tabs
                 type="card"
                 activeKey={activeKey}
@@ -116,8 +128,7 @@ const MyOrderTabs = () => {
                         style={{
                             overflowX: 'auto',
                             whiteSpace: 'nowrap',
-                        }}
-                    >
+                        }}>
                         <DefaultTabBar {...tabBarProps} />
                     </div>
                 )}

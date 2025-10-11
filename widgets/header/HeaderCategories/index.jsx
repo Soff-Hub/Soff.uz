@@ -183,16 +183,16 @@ const templateIcons = {
 const HeaderCatergories = () => {
     const { isMobile } = useResponsive();
     const [open, setOpen] = useState(false);
-    const { isLoggedIn } = useSelector(state => state.auth);
-    const { directions } = useSelector(state => state.profile);
+    const { isLoggedIn } = useSelector((state) => state.auth);
+    const { directions } = useSelector((state) => state.profile);
     [...directions, { label: 'Boshqa', value: 'other' }];
     const { push, query, replace, pathname } = useRouter();
     const [openAuth, setOpenAuth] = useState(false);
 
     const handleOrder = () => {
         if (isLoggedIn) {
-            // push('/order/create');
-            setOpen(true);
+            push('/order/create');
+            // setOpen(true);
         } else {
             setOpenAuth(true);
         }
@@ -210,7 +210,7 @@ const HeaderCatergories = () => {
                 label: (
                     <a
                         href="/order/create"
-                        onClick={e => e.preventDefault()}
+                        onClick={(e) => e.preventDefault()}
                         className={` ${styles.dropLabel}  `}>
                         Maxsus buyurtma berish
                     </a>
@@ -221,7 +221,7 @@ const HeaderCatergories = () => {
                     borderRadius: '0px',
                 },
             },
-            ...directions.map(dir => ({
+            ...directions.map((dir) => ({
                 key: dir.value,
                 icon: templateIcons[dir.value]
                     ? templateIcons[dir.value]
@@ -242,7 +242,6 @@ const HeaderCatergories = () => {
         if (query?.modal === 'open' && isLoggedIn) {
             setOpen(true);
             const newQuery = { ...query };
-            delete newQuery.modal;
             replace({ pathname: pathname, query: newQuery }, undefined, {
                 shallow: true,
             });
@@ -250,6 +249,15 @@ const HeaderCatergories = () => {
             setOpenAuth(true);
         }
     }, [query.modal]);
+
+    const handleCloseOrderModal = () => {
+        const newQuery = { ...query };
+        if (query?.modal) delete newQuery.modal;
+        replace({ pathname: pathname, query: newQuery }, undefined, {
+            shallow: true,
+        });
+        setOpen(false);
+    };
 
     return (
         <div className={styles.dropBlock}>
@@ -260,7 +268,7 @@ const HeaderCatergories = () => {
             )}
             <div className={styles.dropBox}>
                 <Dropdown menu={{ items: products }}>
-                    <a onClick={e => e.preventDefault()}>
+                    <a onClick={(e) => e.preventDefault()}>
                         <Space className={styles.dropLabel}>
                             Mahsulotlar
                             <DownOutlined />
@@ -270,7 +278,7 @@ const HeaderCatergories = () => {
             </div>
             <div className={`${styles.orderBox} ${styles.dropBox}`}>
                 <Dropdown menu={{ items: templates }}>
-                    <a onClick={e => e.preventDefault()}>
+                    <a onClick={(e) => e.preventDefault()}>
                         <Space className={styles.dropLabel}>
                             Buyurtma berish
                             <DownOutlined />
@@ -278,7 +286,7 @@ const HeaderCatergories = () => {
                     </a>
                 </Dropdown>
             </div>
-            <CreateOrderModal open={open} onClose={() => setOpen(false)} />
+            <CreateOrderModal open={open} onClose={handleCloseOrderModal} />
             <AuthModal
                 open={openAuth}
                 onClose={() => setOpenAuth(false)}

@@ -1,0 +1,30 @@
+.custom_expand_icon {
+    width: 30px;
+    height: 30px;
+    transition: transform 0.3s ease;
+
+    &.active {
+        transform: rotate(45deg);
+    }
+
+    @media (max-width: 768px) {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+
+.customCollapse {
+    :global(.ant-collapse-content-box) {
+        padding: 0 !important; // Collapse default paddingni olib tashlaymiz
+    }
+}
+
+.customPanel {
+    border: none !important;
+
+    // Header pastida joylashgan chiziqni olib tashlash
+    :global(.ant-collapse-header) {
+        padding: 0;
+    }
+}

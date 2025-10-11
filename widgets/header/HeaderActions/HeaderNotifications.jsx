@@ -73,6 +73,7 @@ export default function HeaderNotifications({ color }) {
                     }}
                 />
             ),
+            onClose: handleRead
         });
     };
 

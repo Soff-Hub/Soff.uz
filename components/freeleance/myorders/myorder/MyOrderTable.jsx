@@ -1,31 +1,38 @@
-import React, { useEffect, useState } from "react";
-import { Modal, Select, message } from "antd";
-import { useQueryClient } from "@tanstack/react-query";
-import useGetOrders from "./api/useGetOrders";
-import useCancelOrder from "./api/useCancelOrder";
-import useGetReasons from "./api/useGetReasons";
-import SelectOrderDrawer from "./ui/SelectOrderDrawer";
-import OrderCard from "~/entities/order/order-card";
-import { useRouter } from "next/router";
+import React, { useEffect, useState } from 'react';
+import { Modal, Select, message } from 'antd';
+import { useQueryClient } from '@tanstack/react-query';
+import useGetOrders from './api/useGetOrders';
+import useCancelOrder from './api/useCancelOrder';
+import useGetReasons from './api/useGetReasons';
+import SelectOrderDrawer from './ui/SelectOrderDrawer';
+import OrderCard from '~/entities/order/order-card';
+import { useRouter } from 'next/router';
+
+const rejectableStatuses = [
+    'order_accepted',
+    'order_file_sent',
+    'rejected',
+    'pending',
+];
 
 export const AllOrdersTable = ({ type }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState(null);
-    const [reason, setReason] = useState("");
-    const { data: orders } = useGetOrders();
+    const [reason, setReason] = useState('');
+    const { data: orders, isLoading: ordersLoading } = useGetOrders();
     const { mutate: cancelOrder, isPending: isCancelling } = useCancelOrder();
     const { data: reasons } = useGetReasons();
     const [openDrawer, setOpenDrawer] = useState(false);
     const queryClient = useQueryClient();
-    const router = useRouter()
-    const { orderId } = router.query
+    const router = useRouter();
+    const { orderId } = router.query;
 
-    const handleOpenDrawer = (order) => {
+    const handleOpenDrawer = order => {
         setSelectedOrder(order);
         setOpenDrawer(true);
     };
 
-    const handleCancelClick = (order) => {
+    const handleCancelClick = order => {
         setSelectedOrder(order);
         setIsModalOpen(true);
     };
@@ -37,10 +44,12 @@ export const AllOrdersTable = ({ type }) => {
                 {
                     onSuccess: () => {
                         setIsModalOpen(false);
-                        setReason("");
+                        setReason('');
                         setSelectedOrder(null);
-                        message.success("Buyurtma muvaffaqiyatli bekor qilindi!");
-                        queryClient.invalidateQueries(["ordersStatus"]);
+                        message.success(
+                            'Buyurtma muvaffaqiyatli bekor qilindi!'
+                        );
+                        queryClient.invalidateQueries(['ordersStatus']);
                     },
                 }
             );
@@ -49,15 +58,35 @@ export const AllOrdersTable = ({ type }) => {
 
     const handleModalCancel = () => {
         setIsModalOpen(false);
-        setReason("");
+        setReason('');
         setSelectedOrder(null);
     };
 
     const statusFilter =
-        orders?.filter((order) =>
-            type?.includes(order.order_status_doing?.status || "pending")
+        orders?.filter(order =>
+            type?.includes(order.order_status_doing?.status || 'pending')
         ) || [];
 
+    const isRejectable = Array.isArray(type)
+        ? type.some(t => rejectableStatuses.includes(t))
+        : rejectableStatuses.includes(type);
+
+    let ordersContent = null;
+    if (ordersLoading) {
+        ordersContent = <p>Yuklanmoqda...</p>;
+    } else if (statusFilter.length) {
+        ordersContent = statusFilter.map(order => (
+            <OrderCard
+                key={order.id}
+                order={order}
+                onOpenDrawer={handleOpenDrawer}
+                onCancel={handleCancelClick}
+                isRejectable={isRejectable}
+            />
+        ));
+    } else {
+        ordersContent = <p>Buyurtmalar topilmadi</p>;
+    }
 
     useEffect(() => {
         if (orderId && orders) {
@@ -81,16 +110,7 @@ export const AllOrdersTable = ({ type }) => {
 
     return (
         <>
-            <div className="d-flex flex-column gap-3">
-                {statusFilter.map((order) => (
-                    <OrderCard
-                        key={order.id}
-                        order={order}
-                        onOpenDrawer={handleOpenDrawer}
-                        onCancel={handleCancelClick}
-                    />
-                ))}
-            </div>
+            <div className="d-flex flex-column gap-3">{ordersContent}</div>
 
             <Modal
                 title="Buyurtmani bekor qilish"
@@ -99,8 +119,7 @@ export const AllOrdersTable = ({ type }) => {
                 onCancel={handleModalCancel}
                 okText="Bekor qilish"
                 cancelText="Yopish"
-                confirmLoading={isCancelling}
-            >
+                confirmLoading={isCancelling}>
                 <p>
                     Haqiqatan ham “{selectedOrder?.title}” buyurtmasini bekor
                     qilmoqchimisiz?
@@ -110,8 +129,8 @@ export const AllOrdersTable = ({ type }) => {
                     className="w-100"
                     placeholder="Bekor qilish sababini tanlang..."
                     value={reason}
-                    onChange={(val) => setReason(val)}
-                    options={reasons?.map((reason) => ({
+                    onChange={val => setReason(val)}
+                    options={reasons?.map(reason => ({
                         value: reason.id,
                         label: reason.reason,
                     }))}

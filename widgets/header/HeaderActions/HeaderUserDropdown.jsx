@@ -15,7 +15,7 @@ const HeaderUserDropdown = props => {
     const { accountLinks, user } = useSelector(state => state.auth);
     const { user: profile } = useSelector(state => state.profile);
     const refresh = useSelector(state => state.auth?.user?.refresh);
-    const { asPath } = useRouter();
+    const router = useRouter();
 
     const handleLogout = () => {
         const data = {
@@ -25,7 +25,7 @@ const HeaderUserDropdown = props => {
         const res = logOutAuth(data);
 
         if (res) {
-            if (asPath == '/account/dashbord') {
+            if (router.asPath == '/account/dashbord') {
                 Router.push('/auth/login');
             } else if ('/account/myproducts') {
                 Router.push('/auth/login');
@@ -45,9 +45,10 @@ const HeaderUserDropdown = props => {
         }
     };
 
-    const { data } = useFGet("unread_messages_count", CHAT_UNSEENS, { enabled: !!user?.access, token: user?.access })
-
-
+    const { data } = useFGet('unread_messages_count', CHAT_UNSEENS, {
+        enabled: !!user?.access,
+        token: user?.access,
+    });
 
     const { isLoggedIn, color } = props;
     const linksView = accountLinks.map((item, index) => (
@@ -67,7 +68,10 @@ const HeaderUserDropdown = props => {
             </Link>
         </li>
     ));
-    useEffect(() => { }, []);
+
+    const returnUrl = router.query?.returnUrl
+        ? router.query.returnUrl
+        : decodeURIComponent(router.asPath);
 
     if (isLoggedIn === true) {
         return (
@@ -90,8 +94,8 @@ const HeaderUserDropdown = props => {
                                         user?.role === 'admin'
                                             ? '/account/dashbord'
                                             : user?.role === 'seller'
-                                                ? '/account/sellerproducts'
-                                                : '#'
+                                            ? '/account/sellerproducts'
+                                            : '#'
                                     }>
                                     <div className="m-0">
                                         <h4 className="m-0 fw-normal fs-3">
@@ -105,7 +109,7 @@ const HeaderUserDropdown = props => {
                             </div>
                         </div>
 
-                        <ul className='my-2 list-unstyled'>{linksView}</ul>
+                        <ul className="my-2 list-unstyled">{linksView}</ul>
                         <li className="ps-block__footer">
                             <a href="#" onClick={handleLogout}>
                                 <i
@@ -119,7 +123,12 @@ const HeaderUserDropdown = props => {
         );
     } else {
         return (
-            <Link href={'/auth/login'}>
+            <Link
+                href={`/auth/login/?returnUrl=${returnUrl}`}
+                onClick={e => {
+                    e.preventDefault();
+                    Router.push(`/auth/login/?returnUrl=${returnUrl}`);
+                }}>
                 <p className={`${styles.loginEntrance} m-0`}>Kirish</p>
             </Link>
         );

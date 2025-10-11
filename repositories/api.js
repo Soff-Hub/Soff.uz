@@ -13,7 +13,7 @@ export const apiForFreelance = axios.create({
 });
 
 api.interceptors.request.use(
-    config => {
+    (config) => {
         const storedToken = localStorage.getItem('user');
         if (storedToken && JSON.parse(storedToken).access) {
             const token = JSON.parse(storedToken).access;
@@ -21,19 +21,25 @@ api.interceptors.request.use(
         }
         return config;
     },
-    error => {
+    (error) => {
         return Promise.reject(error);
     }
 );
 
 api.interceptors.response.use(
-    response => {
+    (response) => {
         return response;
     },
-    error => {
+    (error) => {
         if (error.response && error.response.status === 403) {
-            localStorage.clear();
-            window.location.href = '/';
+            // Check if URL has modal=open query parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const hasModalOpen = urlParams.get('modal') === 'open';
+
+            if (!hasModalOpen) {
+                localStorage.clear();
+                window.location.href = '/';
+            }
         }
         return Promise.reject(error);
     }
