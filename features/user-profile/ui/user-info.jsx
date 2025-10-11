@@ -94,7 +94,7 @@ const UserInfo = ({ seller, commentRef, sectionRef }) => {
                 sectionRef={sectionRef}
                 type="service"
                 id={seller.id}
-                limit={limit}
+                limit={limit * 2}
             />
             <UserShortItems
                 sectionRef={sectionRef}
