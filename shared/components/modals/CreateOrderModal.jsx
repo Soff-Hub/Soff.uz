@@ -83,7 +83,7 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
     );
 
     const priceList =
-        priceData?.[0]?.service_delivery_price_options?.[0]?.price;
+        priceData?.[0]?.service_delivery_price_options?.[0]?.price?.slice(0, 5);
 
     const minPrice = priceList ? priceList[0]?.amount : 2000;
 
