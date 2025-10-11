@@ -107,10 +107,10 @@ function useCreateOrder() {
     const categoryId = Form.useWatch('category_id', form);
     const { isDesktop } = useResponsive();
     const [direction, setDirection] = useState('scientific_work');
-    const { user } = useSelector((state) => state.auth);
+    const { user } = useSelector(state => state.auth);
     const { push } = useRouter();
     const [confirmOpen, setConfirmOpen] = useState(false);
-    const { directions } = useSelector((state) => state.profile);
+    const { directions } = useSelector(state => state.profile);
     const [showLeftGradient, setShowLeftGradient] = useState(false);
     const [showRightGradient, setShowRightGradient] = useState(true);
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
@@ -133,7 +133,7 @@ function useCreateOrder() {
         <div style={{ maxWidth: '300px' }}>
             <p>Buyurtma yo'nalishini tanlang:</p>
             <ul>
-                {categories?.map((cat) => (
+                {categories?.map(cat => (
                     <li key={cat.id}>
                         <b>{cat.title}</b>
                     </li>
@@ -166,13 +166,13 @@ function useCreateOrder() {
     const { mutate: createOrder, isPending } = useFPost({
         url: 'order/custom-order',
         token: user?.access,
-        onSuccess: (data) => {
+        onSuccess: data => {
             form.resetFields();
             handleCloseConfirm();
             message.success('Buyurtma muvaffaqiyatli yaratildi!');
             push(`/order/my-orders?orderId=${data?.id}`);
         },
-        onError: (err) => {
+        onError: err => {
             const errorMsg =
                 err?.response?.data?.detail ||
                 err?.response?.data?.message ||
@@ -189,7 +189,7 @@ function useCreateOrder() {
         setConfirmOpen(false);
     };
 
-    const handleThumbProgress = (swiper) => {
+    const handleThumbProgress = swiper => {
         const progress = swiper.progress;
         const isBeginning = swiper.isBeginning;
         const isEnd = swiper.isEnd;
@@ -235,7 +235,7 @@ function useCreateOrder() {
                     }
                     rules={[{ required: true, message: "Yo'nalish tanlang!" }]}>
                     <Select
-                        onChange={(val) => {
+                        onChange={val => {
                             setDirection(val);
                             form.resetFields(['category_id']);
                             form.setFieldValue('title', '');
@@ -280,7 +280,7 @@ function useCreateOrder() {
                             'category'
                         ].placeholder(directions)}
                         size="large"
-                        options={categories?.map((cat) => ({
+                        options={categories?.map(cat => ({
                             label: cat?.title,
                             value: cat?.id,
                         }))}
@@ -315,7 +315,7 @@ function useCreateOrder() {
                     ]}>
                     <TextArea
                         style={{ resize: 'none' }}
-                        rows={6}
+                        rows={4}
                         placeholder={
                             inputInfoToCreateOrder['description'].placeholder
                         }
@@ -376,11 +376,11 @@ function useCreateOrder() {
                     rules={[{ required: true, message: 'Narx kiriting!' }]}>
                     <InputNumber
                         min={minPrice}
-                        style={{ width: '100%', height: '50px' }}
+                        style={{ width: '100%' }} // height'ni olib tashlang, CSS'dan keladi
                         className="form-element"
                         placeholder={inputInfoToCreateOrder.price.placeholder}
                         size="large"
-                        formatter={(value) =>
+                        formatter={value =>
                             value
                                 ? `${value}`.replace(
                                       /\B(?=(\d{3})+(?!\d))/g,
@@ -388,11 +388,11 @@ function useCreateOrder() {
                                   )
                                 : ''
                         }
-                        parser={(value) =>
+                        parser={value =>
                             value.replace(/\s/g, '').replace(/[^\d]/g, '')
                         }
                         value={budget}
-                        onChange={(val) => form.setFieldValue('budget', val)}
+                        onChange={val => form.setFieldValue('budget', val)}
                     />
                     <div className="my-3 position-relative">
                         <div className="position-relative">
@@ -543,7 +543,7 @@ function useCreateOrder() {
                                 className="form-element"
                                 placeholder="Buyurtma tayyor bo‘lish sanasi va soatini tanlang"
                                 size="large"
-                                disabledDate={(current) =>
+                                disabledDate={current =>
                                     current && current < dayjs().startOf('day')
                                 }
                             />
@@ -557,7 +557,7 @@ function useCreateOrder() {
                                 placeholder="Soat"
                                 size="large"
                                 className="ant-picker-time-panel-column form-element"
-                                disabledDate={(current) =>
+                                disabledDate={current =>
                                     current && current < dayjs().startOf('day')
                                 }
                             />
@@ -571,7 +571,7 @@ function useCreateOrder() {
 
     console.log({ formItems });
 
-    const formItemsContent = formItems.map((formItem) =>
+    const formItemsContent = formItems.map(formItem =>
         withPopover(
             formItem,
             isDesktop,
