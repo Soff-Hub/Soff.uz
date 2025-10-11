@@ -161,7 +161,7 @@ const UserShortItems = ({ type = 'portfolio', id, limit = 3, sectionRef }) => {
                                       }
                                     : {})}
                                 {...(type === 'service'
-                                    ? { service: item }
+                                    ? { service: item, hasFooter: false }
                                     : {})}
                                 {...(type === 'product'
                                     ? { product: item }
