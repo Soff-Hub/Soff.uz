@@ -168,10 +168,10 @@ const OrderCreateForm = () => {
             font-size: 11px !important;
         }
         .ps-section__header h3 {
-            font-size: 16px !important;
+            font-size: 18px !important;
         }
         .ps-section__header {
-            margin-bottom: 3px !important;
+            margin-bottom: 20px !important;
         }
         
         /* Mobile placeholder */
