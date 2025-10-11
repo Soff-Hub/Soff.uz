@@ -1,14 +1,12 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import styles from './style.module.scss';
 import Image from 'next/image';
 import useResponsive from '~/shared/utilities/useResponsive';
-import CreateOrderModal from '~/shared/components/modals/CreateOrderModal';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { DownOutlined } from '@ant-design/icons';
 import { Dropdown, Space } from 'antd';
 import Link from 'next/link';
-import AuthModal from '~/components/AuthModal';
 const products = [
     {
         key: '1',
