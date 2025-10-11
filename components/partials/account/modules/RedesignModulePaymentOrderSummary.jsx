@@ -27,7 +27,6 @@ const RedesignModulePaymentOrderSummary = ({ ecomerce }) => {
         tablet: "max-h-[300px]",
         desktop: "h-auto"
     })
-    console.log(ecomerce.cartDataItems)
     let amount = calculateAmount(ecomerce.cartDataItems);
 
     async function getPercentage() {

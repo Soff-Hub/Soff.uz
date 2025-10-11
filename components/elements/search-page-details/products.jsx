@@ -82,7 +82,6 @@ export default function Search_Results_Products({ children }) {
         },
     });
 
-    console.log('productsRef', queriesRef.current);
 
     const total = data?.count || 0;
     const notFoundRef = useRef();
@@ -91,7 +90,6 @@ export default function Search_Results_Products({ children }) {
 
     useScrollToNotFound(notFoundRef, showResults, data);
 
-    console.log({ isLoading });
 
     let resultsContent = null;
     if (isLoading) {

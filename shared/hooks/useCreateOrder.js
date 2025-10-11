@@ -12,7 +12,7 @@ import {
 } from 'antd';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 // import { directions } from '../../components/freeleance/constants';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useFGet, useFPost } from '~/shared/hooks/useFApi';
 import dayjs from 'dayjs';
 import { useRouter } from 'next/router';
@@ -25,6 +25,7 @@ import useResponsive from '../utilities/useResponsive';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Thumbs } from 'swiper/modules';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
+import { setShowSearch } from '~/store/fast-dowload/slice';
 
 const popover_content = (
     <div style={{ maxWidth: '300px' }}>
@@ -114,6 +115,15 @@ function useCreateOrder() {
     const [showLeftGradient, setShowLeftGradient] = useState(false);
     const [showRightGradient, setShowRightGradient] = useState(true);
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(setShowSearch(false));
+
+        return () => {
+            dispatch(setShowSearch(true));
+        };
+    }, [dispatch])
 
     const { data: categories } = useFGet(
         direction,
@@ -385,9 +395,9 @@ function useCreateOrder() {
                         formatter={(value) =>
                             value
                                 ? `${value}`.replace(
-                                      /\B(?=(\d{3})+(?!\d))/g,
-                                      ' '
-                                  )
+                                    /\B(?=(\d{3})+(?!\d))/g,
+                                    ' '
+                                )
                                 : ''
                         }
                         parser={(value) =>

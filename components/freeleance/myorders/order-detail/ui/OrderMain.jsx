@@ -301,7 +301,6 @@ const OrderMain = ({ order }) => {
                                               ) {
                                                   setCongratModal(true);
                                               }
-                                              console.log('payload', payload);
                                           },
                                           onError: () => {
                                               message.error(

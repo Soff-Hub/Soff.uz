@@ -259,7 +259,6 @@ const PurchasedProductsLayout = ({
 }) => {
     const { isDesktop, isMobile } = useResponsive();
 
-    console.log({ products });
 
     const hasProducts = products && products.length;
 
