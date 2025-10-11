@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import '~/public/static/fonts/Linearicons/Font/demo-files/demo.css';
 import '~/public/static/fonts/font-awesome/css/font-awesome.min.css';
 import '~/public/static/css/bootstrap.min.css';
@@ -12,10 +12,12 @@ import { Toaster } from 'react-hot-toast';
 import { Providers } from '~/app/providers';
 import AffiliateListener from '~/entities/affiliate';
 import { useTelegram } from '~/shared/hooks/useTelegram';
+import { PacmanLoader } from 'react-spinners';
 // import OneSignal from 'react-onesignal';
 
 function App({ Component, pageProps }) {
     const { tg } = useTelegram();
+    const [siteLoaded, setSiteLoaded] = useState(false);
 
     useEffect(() => {
         tg?.ready();
@@ -51,6 +53,26 @@ function App({ Component, pageProps }) {
 
         return () => {
             document.removeEventListener('keydown', handleKeyDown);
+        };
+    }, []);
+
+    // ✅ Sayt to‘liq yuklanguncha loader ko‘rsatish
+    useEffect(() => {
+        const handleLoad = () => {
+            // Barcha JS, CSS, img va fontlar yuklandi
+            setTimeout(() => {
+                setSiteLoaded(true);
+            }, 400); // biroz delay bilan silliq o'tish
+        };
+
+        if (document.readyState === 'complete') {
+            handleLoad();
+        } else {
+            window.addEventListener('load', handleLoad);
+        }
+
+        return () => {
+            window.removeEventListener('load', handleLoad);
         };
     }, []);
 
@@ -108,11 +130,31 @@ function App({ Component, pageProps }) {
                 options={{ showSpinner: false }}
                 color="#00A44F"
             />
-            <Providers>
-                <AffiliateListener />
-                <Component {...pageProps} />
-                <Toaster position="top-center" />
-            </Providers>
+
+            {/* ✅ Loader — sayt to‘liq yuklanmaguncha PacmanLoader chiqadi */}
+            {!siteLoaded && (
+                <div
+                    style={{
+                        position: 'fixed',
+                        inset: 0,
+                        background: '#fff',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        zIndex: 9999,
+                        transition: 'opacity 0.4s ease',
+                    }}>
+                    <PacmanLoader color="#00A44F" size={30} />
+                </div>
+            )}
+
+            {siteLoaded && (
+                <Providers>
+                    <AffiliateListener />
+                    <Component {...pageProps} />
+                    <Toaster position="top-center" />
+                </Providers>
+            )}
         </>
     );
 }
