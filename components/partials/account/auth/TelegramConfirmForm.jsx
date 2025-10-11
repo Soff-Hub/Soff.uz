@@ -26,7 +26,7 @@ const isReturnUrlEmpty = (returnUrl) => {
     );
 };
 
-export default function TelegramConfigmForm() {
+export default function TelegramConfigmForm({ isModal, onSuccess }) {
     const [loading, setLoading] = useState(false);
     const [secondsRemaining, setSecondsRemaining] = useState(120);
     const [start, setStart] = useState(false);
@@ -53,6 +53,14 @@ export default function TelegramConfigmForm() {
             );
             if (resp.data?.role === 'seller') {
                 localStorage.setItem('is_seller', '1');
+            }
+
+            if (isModal) {
+                message.success(
+                    "Siz tizimdan muvaffaqqiyatli ro'yxatdan o'tdingiz"
+                );
+                onSuccess();
+                return;
             }
 
             const decodedUrl = decodeURIComponent(

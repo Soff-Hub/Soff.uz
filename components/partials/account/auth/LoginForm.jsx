@@ -8,7 +8,12 @@ import { useRouter } from 'next/router';
 import { baseUrlAuth } from '~/repositories/Repository';
 import { useMutation } from '@tanstack/react-query';
 
-export default function LoginForm({ onSuccess, isModal, setCode }) {
+export default function LoginForm({
+    onSuccess,
+    isModal,
+    setCode,
+    openTelegram,
+}) {
     const [type, setType] = useState('t'); // t, e
     const router = useRouter();
     const [loading, setLoading] = useState(false);
@@ -68,6 +73,7 @@ export default function LoginForm({ onSuccess, isModal, setCode }) {
                         <GoogleBox
                             isModal={isModal}
                             onSuccess={onSuccess}
+                            openTelegram={openTelegram}
                             setCode={setCode}
                             params={
                                 router.query?.id ? `?id=${router.query.id}` : ''
