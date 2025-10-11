@@ -1,6 +1,7 @@
 import { Tabs } from 'antd';
 import { useRouter } from 'next/router';
 import React, {
+    forwardRef,
     memo,
     useCallback,
     useEffect,
@@ -13,6 +14,7 @@ import UserInfo from './user-info';
 import UserPortfolios from './user-portfolios';
 import UserServices from './user-services';
 import UserProducts from './user-products';
+import useResponsive from '~/shared/utilities/useResponsive';
 
 const items = [
     { key: 'about', label: 'Muallif haqida' },
@@ -83,19 +85,11 @@ const UserTabs = ({ seller }) => {
 
     return (
         <div className={cn('h-full', 'flex', 'flex-col', 'gap-4', 'w-full')}>
-            <div
-                style={{ scrollMarginTop: '150px' }}
-                ref={sectionRef}
-                className={cn('bg-light', 'shadow', 'rounded-xl', 'w-full')}>
-                <Tabs
-                    className="user_tabs"
-                    items={items}
-                    activeKey={activeKey}
-                    onChange={onChange}
-                    destroyOnHidden
-                />
-            </div>
-
+            <DynamicTabs
+                items={items}
+                activeKey={activeKey}
+                onChange={onChange}
+            />
             {renderContent}
         </div>
     );
@@ -103,4 +97,21 @@ const UserTabs = ({ seller }) => {
 
 export default memo(UserTabs);
 
-const DynamicTabs = () => {};
+const DynamicTabs = forwardRef(({ activeKey, onChange }, ref) => {
+    const { isMobile } = useResponsive();
+
+    return (
+        <div
+            style={{ scrollMarginTop: '150px' }}
+            ref={ref}
+            className={cn('bg-light', 'shadow', 'rounded-xl', 'w-full')}>
+            <Tabs
+                className="user_tabs"
+                items={items}
+                activeKey={activeKey}
+                onChange={onChange}
+                destroyOnHidden
+            />
+        </div>
+    );
+});
