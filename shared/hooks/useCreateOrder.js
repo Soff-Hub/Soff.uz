@@ -590,25 +590,54 @@ function useCreateOrder() {
         handleCloseConfirm,
     };
 }
-
 const withPopover = (item, isDesktop, position) => {
     return isDesktop ? (
         <Popover
             key={item.id}
             placement={position}
             title={item.title}
-            content={item.popoverContent}>
+            content={item.popoverContent}
+            overlayStyle={{ 
+                maxWidth: '300px',
+                zIndex: 1050 
+            }}
+            overlayInnerStyle={{
+                boxShadow: '0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08)'
+            }}
+            align={{
+                offset: typeof window !== 'undefined' && window.innerWidth < 1400 ? [0, 10] : [10, 0],
+            }}>
             {item.content}
         </Popover>
     ) : (
-        <div key={item.key}>{item.content}</div>
+        <div key={item.id}>{item.content}</div>
     );
 };
-
 const definePosition = (index, length) => {
+    if (typeof window !== 'undefined') {
+        const screenWidth = window.innerWidth;
+        
+        // 1024px dan 1400px oralig'ida - tepada/pastda
+        if (screenWidth >= 1024 && screenWidth < 1400) {
+            if (index < 2) return 'top';
+            if (index >= length - 2) return 'bottom';
+            return 'top';
+        }
+        
+        // 768px dan 1024px oralig'ida - faqat top
+        if (screenWidth >= 768 && screenWidth < 1024) {
+            return 'top';
+        }
+        
+        // 768px dan kichik (mobile) - bottomLeft
+        if (screenWidth < 768) {
+            return 'bottomLeft';
+        }
+    }
+    
+    // 1400px va undan katta - o'ng tomonda
     if (index === 0) return 'rightTop';
     if (index === length - 1) return 'rightBottom';
     return 'right';
 };
-
 export default useCreateOrder;
