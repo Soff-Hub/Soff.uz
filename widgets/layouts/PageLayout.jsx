@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { checkAuthorization, setAccountLinks } from '~/store/auth/slice';
 import { useRouter } from 'next/router';
 import Header from '../header';
-
 import { GoogleLogin } from '@react-oauth/google';
 import FastDowloadSection from '../../shared/components/fast-dowload/FastDowloadSection';
 import { fetchDirections, fetchProfile } from '~/store/profile/slice';
@@ -16,11 +15,6 @@ export let cutomerAccountLink = [
         url: '/account/sellerproducts',
         icon: 'fa-solid fa-bag-shopping',
     },
-    // {
-    //     text: 'Chatlar',
-    //     url: '/chat',
-    //     icon: 'fa-solid fa-comment-dots',
-    // },
     {
         text: 'Buyurtmalarim',
         url: '/order/my-orders',
@@ -55,48 +49,29 @@ const PageLayout = ({ children, title }) => {
     }, []);
 
     return (
-        // <>
-        //     <Head>
-        //         <title>{title}</title>
-        //     </Head>
-        //     <Header />
-        //     {showFastDownload && <FastDowloadSection />}
-        //     {children}
-        //     <Footer />
-
-        //     {user ? (
-        //         ''
-        //     ) : (
-        //         <div style={{ height: 0, overflow: 'hidden' }}>
-        //             <GoogleLogin
-        //                 onSuccess={(credentialResponse) => {
-        //                     handleLogin(credentialResponse?.credential);
-        //                 }}
-        //                 onError={() => {
-        //                     console.log('Login Failed');
-        //                 }}
-        //                 intermediate_iframe_close_callback={(e) =>
-        //                     e.preventDefault()
-        //                 }
-        //                 useOneTap
-        //                 prompt="select_account"
-        //             />
-        //         </div>
-        //     )}
-        // </>
         <>
             <Head>
                 <title>{title}</title>
             </Head>
-            <Header />
-            {showFastDownload && <FastDowloadSection />}
             
-            <main style={{ minHeight: 'calc(100vh - 100px)' }}>
-                {children}
-            </main>
-            
-
-            <Footer />
+            <div style={{ 
+                display: 'flex', 
+                flexDirection: 'column', 
+                minHeight: '100vh' 
+            }}>
+                <Header />
+                {showFastDownload && <FastDowloadSection />}
+                
+                <main style={{ 
+                    flex: '1 0 auto',
+                    display: 'flex',
+                    flexDirection: 'column'
+                }}>
+                    {children}
+                </main>
+                
+                <Footer />
+            </div>
 
             {user ? (
                 ''
