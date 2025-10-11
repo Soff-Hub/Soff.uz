@@ -2,10 +2,8 @@ import React from 'react';
 import UserShortInfo from './ui/user-short-info';
 import UserTabs from './ui/user-tabs';
 import { cn, useRcn } from '~/shared/utilities/cn';
-import useResponsive from '~/shared/utilities/useResponsive';
 
 const UserProfile = ({ seller }) => {
-    const { isMobile } = useResponsive();
     const gridClass = useRcn({
         mobile: 'grid-cols-1',
         tablet: 'grid-cols-1',
