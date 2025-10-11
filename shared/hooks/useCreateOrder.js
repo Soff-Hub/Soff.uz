@@ -171,13 +171,14 @@ function useCreateOrder() {
         form.setFieldValue('direction', direction);
     }, [direction]);
 
-    const { mutateAsync: createOrder, isPending } = useFPost({
+    const { mutate: createOrder, isPending } = useFPost({
         url: 'order/custom-order',
         token: user?.access,
         onSuccess: (data) => {
             form.resetFields();
             handleCloseConfirm();
             message.success('Buyurtma muvaffaqiyatli yaratildi!');
+            tg?.close();
             push(`/order/my-orders?orderId=${data?.id}`);
         },
         onError: (err) => {
@@ -206,7 +207,7 @@ function useCreateOrder() {
         setShowRightGradient(!isEnd);
     };
 
-    const handleConfirm = async () => {
+    const handleConfirm = () => {
         const values = form.getFieldsValue();
         const order = {
             direction: direction,
@@ -220,16 +221,13 @@ function useCreateOrder() {
             )} ${dayjs(values.deadline_time).format('HH:mm')}`,
         };
 
-        console.log({ order });
-
         const fd = new FormData();
 
         for (const [key, value] of Object.entries(order)) {
             fd.append(key, value);
         }
 
-        await createOrder(fd);
-        tg?.close();
+        createOrder(fd);
     };
 
     const formItems = [
