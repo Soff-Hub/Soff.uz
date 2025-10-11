@@ -26,6 +26,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Thumbs } from 'swiper/modules';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import { setShowSearch } from '~/store/fast-dowload/slice';
+import { useTelegram } from './useTelegram';
 
 const direction_content = (
     <div style={{ maxWidth: '300px' }}>
@@ -137,6 +138,7 @@ function useCreateOrder() {
     const [showRightGradient, setShowRightGradient] = useState(true);
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
     const dispatch = useDispatch();
+    const { tg } = useTelegram();
 
     useEffect(() => {
         dispatch(setShowSearch(false));
@@ -169,7 +171,7 @@ function useCreateOrder() {
         form.setFieldValue('direction', direction);
     }, [direction]);
 
-    const { mutate: createOrder, isPending } = useFPost({
+    const { mutateAsync: createOrder, isPending } = useFPost({
         url: 'order/custom-order',
         token: user?.access,
         onSuccess: (data) => {
@@ -204,7 +206,7 @@ function useCreateOrder() {
         setShowRightGradient(!isEnd);
     };
 
-    const handleConfirm = () => {
+    const handleConfirm = async () => {
         const values = form.getFieldsValue();
         const order = {
             direction: direction,
@@ -226,7 +228,8 @@ function useCreateOrder() {
             fd.append(key, value);
         }
 
-        createOrder(fd);
+        await createOrder(fd);
+        tg?.close();
     };
 
     const formItems = [
