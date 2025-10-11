@@ -27,6 +27,27 @@ import { Thumbs } from 'swiper/modules';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import { setShowSearch } from '~/store/fast-dowload/slice';
 
+const direction_content = (
+    <div style={{ maxWidth: '300px' }}>
+        <p>Buyurtma yo'nalishini tanlang:</p>
+        <ul>
+            <li>
+                Buyurtmangizga mos keladigan yo'nalishni tanlang, bu sizning
+                talablaringizga mos mutaxassislarni topishga yordam beradi.
+            </li>
+            <li>
+                Har bir yo'nalish o'z sohasida ixtisoslashgan mutaxassislar
+                guruhiga ega bo'lib, sizning loyihangiz xususiyatlariga qarab
+                eng mos variantni tanlash muhim.
+            </li>
+            <li>
+                To'g'ri yo'nalish tanlovi buyurtmangizning sifatli va o'z
+                vaqtida bajarilishini ta'minlaydi.
+            </li>
+        </ul>
+    </div>
+);
+
 const popover_content = (
     <div style={{ maxWidth: '300px' }}>
         <p>Buyurtma kategoriyasini tanlang:</p>
@@ -115,7 +136,7 @@ function useCreateOrder() {
     const [showLeftGradient, setShowLeftGradient] = useState(false);
     const [showRightGradient, setShowRightGradient] = useState(true);
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(setShowSearch(false));
@@ -123,7 +144,7 @@ function useCreateOrder() {
         return () => {
             dispatch(setShowSearch(true));
         };
-    }, [dispatch])
+    }, [dispatch]);
 
     const { data: categories } = useFGet(
         direction,
@@ -137,31 +158,6 @@ function useCreateOrder() {
         {
             enabled: !!direction && !!categoryId,
         }
-    );
-
-    const direction_content = (
-        <div style={{ maxWidth: '300px' }}>
-            <p>Buyurtma yo'nalishini tanlang:</p>
-            <ul>
-                {categories?.map((cat) => (
-                    <li key={cat.id}>
-                        <b>{cat.title}</b>
-                    </li>
-                ))}
-                {/* <li>
-                    <b>Dizayn</b> - logotiplar, brending, veb-dizayn va boshqa
-                    grafik dizayn xizmatlari uchun.
-                </li>
-                <li>
-                    <b>Veb-ishlanmalar</b> - veb-saytlar, mobil ilovalar, botlar
-                    va boshqa dasturiy ta'minot ishlab chiqish uchun.
-                </li>
-                <li>
-                    <b>3D modellashtirish</b> - 3D modellar, animatsiyalar,
-                    AR/VR loyihalari va boshqa 3D xizmatlari uchun.
-                </li> */}
-            </ul>
-        </div>
     );
 
     const priceList =
@@ -395,9 +391,9 @@ function useCreateOrder() {
                         formatter={(value) =>
                             value
                                 ? `${value}`.replace(
-                                    /\B(?=(\d{3})+(?!\d))/g,
-                                    ' '
-                                )
+                                      /\B(?=(\d{3})+(?!\d))/g,
+                                      ' '
+                                  )
                                 : ''
                         }
                         parser={(value) =>
