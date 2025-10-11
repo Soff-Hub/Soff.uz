@@ -17,6 +17,7 @@ import CreateOrderModal from '~/shared/components/modals/CreateOrderModal';
 import { useSelector } from 'react-redux';
 import useCreateChat from '~/components/freeleance/chat/api/useCreateChat';
 import useResponsive from '~/shared/utilities/useResponsive';
+import { set } from 'react-hook-form';
 
 dayjs.extend(relativeTime);
 dayjs.locale('uz-latn');
@@ -44,6 +45,7 @@ const UserShortInfo = ({ seller }) => {
     const { isLoggedIn } = useSelector((state) => state?.auth);
     const { mutate: createChat } = useCreateChat();
     const { isMobile, isTablet } = useResponsive();
+    const [activeModal, setActiveModal] = useState(null); // 'auth' or 'createOrder' or null
 
     const [authModal, setAuthModal] = useState(false);
     const [createOrderModal, setCreateOrderModal] = useState(false);
@@ -128,11 +130,21 @@ const UserShortInfo = ({ seller }) => {
     );
 
     const handleCreateOrder = useCallback(() => {
-        isLoggedIn ? setCreateOrderModal(true) : setAuthModal(true);
+        if (isLoggedIn) {
+            setCreateOrderModal(true);
+        } else {
+            setAuthModal(true);
+            setActiveModal('createOrder');
+        }
     }, [isLoggedIn]);
 
     const handleCreateChat = useCallback(() => {
-        isLoggedIn ? createChat(seller?.id) : setAuthModal(true);
+        if (isLoggedIn) {
+            createChat(seller?.id);
+        } else {
+            setAuthModal(true);
+            setActiveModal('chat');
+        }
     }, [isLoggedIn, seller?.id, createChat]);
 
     const imageSrc = useMemo(
@@ -143,6 +155,14 @@ const UserShortInfo = ({ seller }) => {
         () => seller?.full_name || 'User image',
         [seller?.full_name]
     );
+
+    const handleSuccessAuth = () => {
+        if (activeModal === 'createOrder') {
+            setCreateOrderModal(true);
+        } else if (activeModal === 'chat') {
+            createChat(seller?.id);
+        }
+    };
 
     return (
         <div className={cn('bg-light', 'p-3', 'shadow', 'rounded-xl')}>
@@ -308,7 +328,7 @@ const UserShortInfo = ({ seller }) => {
             <AuthModal
                 open={authModal}
                 onClose={() => setAuthModal(false)}
-                onSuccess={() => setCreateOrderModal(true)}
+                onSuccess={handleSuccessAuth}
             />
             <CreateOrderModal
                 open={createOrderModal}
