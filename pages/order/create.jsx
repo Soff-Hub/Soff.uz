@@ -47,6 +47,7 @@ const OrderCreateForm = () => {
         handleCloseConfirm,
     } = useCreateOrder();
     const { isMobile } = useResponsive()
+
     return (
         <div>
             <style jsx>{`
@@ -226,6 +227,15 @@ const OrderCreateForm = () => {
                 layout="vertical"
                 className="create-order-form"
                 onFinish={handleOpenConfirm}
+                onFinishFailed={(errorInfo) => {
+                    const firstErrorField = errorInfo?.errorFields?.[0]?.name?.[0];
+                    if (firstErrorField) {
+                        form.scrollToField(firstErrorField, {
+                            behavior: 'smooth',
+                            block: 'center',
+                        });
+                    }
+                }}
                 style={{
                     maxWidth: '800px',
                     margin: '0 auto',
@@ -277,7 +287,7 @@ const OrderCreateForm = () => {
                         type="primary"
                         htmlType="submit"
                         block
-                        style={{height: "38px", fontSize: "14xp" }}
+                        style={{ height: "38px", fontSize: "14px" }}
                     >
                         {isPending
                             ? 'Buyurtmangiz joylashtirilmoqda...'

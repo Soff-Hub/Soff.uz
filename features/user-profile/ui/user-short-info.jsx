@@ -73,6 +73,12 @@ const UserShortInfo = ({ seller }) => {
         desktop: 'hidden',
     });
 
+    const marginClass = useRcn({
+        mobile: 'mt-4',
+        tablet: 'mt-4',
+        desktop: 'mt-5',
+    })
+
     const sellerStats = useMemo(
         () => [
             {
@@ -186,7 +192,7 @@ const UserShortInfo = ({ seller }) => {
                 </h4>
             </div>
 
-            <div className={cn('mt-5', 'flex', 'flex-col', 'gap-4')}>
+            <div className={cn(marginClass, 'flex', 'flex-col', 'gap-4')}>
                 <InfoRow
                     icon={<i className="fa-solid fa-clipboard-list"></i>}
                     label="Xizmatlar uchun ochiq"
@@ -222,7 +228,7 @@ const UserShortInfo = ({ seller }) => {
             </div>
 
             <Divider size="small" className={cn(flexClass)} />
-            <div className={cn('mt-5', flexClass, 'gap-3')}>
+            <div className={cn(marginClass, flexClass, 'gap-3')}>
                 <Button
                     type="default"
                     className={cn('border-primary', 'text-primary')}
@@ -260,8 +266,8 @@ const UserShortInfo = ({ seller }) => {
                 </Button>
             </div>
 
-            <Divider size="small" />
-            <div className="mt-5">
+            <Divider size="small" className={cn(flexClass)} />
+            <div className={cn(marginClass)}>
                 <span
                     className={cn(
                         'block',

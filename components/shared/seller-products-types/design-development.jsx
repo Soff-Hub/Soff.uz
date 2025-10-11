@@ -23,10 +23,6 @@ export default function DesignDevelopment({ pid }) {
         keepPreviousData: true,
     });
 
-    useEffect(() => {
-        console.log('Design products', products);
-    }, [products]);
-
     // 🔹 Pagination handler
     const handlePageChange = page => {
         setPage(page);

@@ -329,14 +329,14 @@
     margin: 0 auto;
 
     .form-element {
-        height: 50px !important;
+        // height: 40px !important;
         width: 100% !important;
     }
 
     @include media('<sm') {
         max-width: 100%;
-        .form-element {
-            height: 42px !important;
-        }
+        // .form-element {
+        //     height: 42px !important;
+        // }
     }
 }

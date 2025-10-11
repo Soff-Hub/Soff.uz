@@ -23,9 +23,6 @@ export default function ModelAndDesign({ pid }) {
         keepPreviousData: true, // pagination scrollda eski datani saqlaydi
     });
 
-    useEffect(() => {
-        console.log('3D models and designs', models);
-    }, [models]);
 
     // 🔹 Pagination handler
     const handlePageChange = page => {

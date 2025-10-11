@@ -45,7 +45,6 @@ export default function CodeVerifyForm({ authCode, onClose, slug, onSuccess }) {
     const dispatch = useDispatch();
     const [timerId, setTimerId] = useState(null);
 
-    console.log({ authCode });
 
     useEffect(() => {
         SetMsg(localStorage.getItem('msg'));
