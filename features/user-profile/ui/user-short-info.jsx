@@ -18,6 +18,7 @@ import { useSelector } from 'react-redux';
 import useCreateChat from '~/components/freeleance/chat/api/useCreateChat';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { set } from 'react-hook-form';
+import { create } from 'domain';
 
 dayjs.extend(relativeTime);
 dayjs.locale('uz-latn');
@@ -79,7 +80,7 @@ const UserShortInfo = ({ seller }) => {
         mobile: 'mt-4',
         tablet: 'mt-4',
         desktop: 'mt-5',
-    })
+    });
 
     const sellerStats = useMemo(
         () => [
@@ -166,7 +167,9 @@ const UserShortInfo = ({ seller }) => {
         if (activeModal === 'createOrder') {
             setCreateOrderModal(true);
         } else if (activeModal === 'chat') {
-            createChat(seller?.id);
+            setTimeout(() => {
+                createChat(seller?.id);
+            }, 1000);
         }
     };
 
