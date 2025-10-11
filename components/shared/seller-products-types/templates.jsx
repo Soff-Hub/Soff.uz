@@ -23,9 +23,6 @@ export default function Templates({ pid }) {
         keepPreviousData: true,
     });
 
-    useEffect(() => {
-        console.log('Template products', products);
-    }, [products]);
 
     // 🔹 Pagination handler
     const handlePageChange = page => {

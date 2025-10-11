@@ -8,7 +8,6 @@ import { ProductProvider } from '~/context/ProductsContext';
 import AntdProvider from './AntdProvider';
 
 const retryFunc = (failureCount, error) => {
-    console.log('error', error);
     if (error?.status && error?.status < 499) {
         return false;
     }

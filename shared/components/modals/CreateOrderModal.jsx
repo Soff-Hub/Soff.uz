@@ -72,8 +72,6 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
         { enabled: !!direction }
     );
 
-    console.log({ direction, categories });
-
     const { data: priceData } = useFGet(
         ['price-range', direction, categoryId],
         `categories/?direction=${direction}&category_id=${categoryId}`,

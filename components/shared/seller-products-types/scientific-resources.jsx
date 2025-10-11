@@ -23,9 +23,6 @@ export default function ScientificResources({ data, setCategoryValue, pid }) {
         keepPreviousData: true, // pagination scrollda eski datani saqlaydi
     });
 
-    useEffect(() => {
-        console.log('produts', produts);
-    }, [produts]);
 
     // 🔹 Page o‘zgartirish handler
     const handlePageChange = page => {

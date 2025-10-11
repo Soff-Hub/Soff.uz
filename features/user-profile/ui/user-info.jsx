@@ -12,7 +12,7 @@ import UserShortItems from './user-short-items';
 import useResponsive from '~/shared/utilities/useResponsive';
 
 const UserInfo = ({ seller, commentRef, sectionRef }) => {
-    const { isDesktop } = useResponsive();
+    const { isDesktop, isMobile } = useResponsive();
     const stats = useMemo(
         () => [
             {
@@ -81,11 +81,14 @@ const UserInfo = ({ seller, commentRef, sectionRef }) => {
                     <p className={cn('m-0', 'text-secondary')}>{seller?.bio}</p>
                 </div>
             )}
-            <div className={cn('flex', 'flex-wrap', 'gap-4')}>
-                {stats.map((stat, index) => (
-                    <StatCard stat={stat} key={index} className="flex-1" />
-                ))}
-            </div>
+
+            {!isMobile && 
+                <div className={cn('flex', 'flex-wrap', 'gap-4')}>
+                    {stats.map((stat, index) => (
+                        <StatCard stat={stat} key={index} className="flex-1" />
+                    ))}
+                </div>
+            }
 
             <UserShortItems
                 sectionRef={sectionRef}

@@ -81,9 +81,6 @@ const PageLayout = ({ children, title }) => {
                         onSuccess={(credentialResponse) => {
                             handleLogin(credentialResponse?.credential);
                         }}
-                        onError={() => {
-                            console.log('Login Failed');
-                        }}
                         intermediate_iframe_close_callback={(e) =>
                             e.preventDefault()
                         }
