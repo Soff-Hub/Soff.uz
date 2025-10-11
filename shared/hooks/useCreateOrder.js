@@ -212,6 +212,8 @@ function useCreateOrder() {
             )} ${dayjs(values.deadline_time).format('HH:mm')}`,
         };
 
+        console.log({ order });
+
         const fd = new FormData();
 
         for (const [key, value] of Object.entries(order)) {
@@ -273,7 +275,7 @@ function useCreateOrder() {
                         onSelect={(_, option) => {
                             form.setFieldValue(
                                 'title',
-                                titleDescription(direction)
+                                titleDescription(option?.label)
                             );
                         }}
                         placeholder={inputInfoToCreateOrder[
