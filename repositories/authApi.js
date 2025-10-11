@@ -1,13 +1,13 @@
-import axios from 'axios'; 
-export const authBaseUrl = process.env.NEXT_PUBLIC_BASE_URL
+import axios from 'axios';
+export const authBaseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 export const authAxios = axios.create({
     baseURL: authBaseUrl,
     timeout: 30000,
-}); 
+});
 
 authAxios.interceptors.request.use(
-    config => {
+    (config) => {
         const storedToken = localStorage.getItem('user');
         if (storedToken && JSON.parse(storedToken).access) {
             const token = JSON.parse(storedToken).access;
@@ -15,19 +15,24 @@ authAxios.interceptors.request.use(
         }
         return config;
     },
-    error => {
+    (error) => {
         return Promise.reject(error);
     }
 );
 
 authAxios.interceptors.response.use(
-    response => {
+    (response) => {
         return response;
     },
-    error => {
+    (error) => {
         if (error.response && error.response.status === 403) {
-            localStorage.clear();
-            window.location.href = '/';
+            const urlParams = new URLSearchParams(window.location.search);
+            const hasModalOpen = urlParams.get('modal') === 'open';
+
+            if (!hasModalOpen) {
+                localStorage.clear();
+                window.location.href = '/';
+            }
         }
         return Promise.reject(error);
     }

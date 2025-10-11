@@ -29,10 +29,10 @@ export let cutomerAccountLink = [
 ];
 
 const PageLayout = ({ children, title }) => {
-    const { user } = useSelector(state => state.auth);
+    const { user } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     const Router = useRouter();
-    const { showFastDownload } = useSelector(state => state.ui);
+    const { showFastDownload } = useSelector((state) => state.ui);
 
     async function handleLogin(googleData) {
         Router.push(`/oauth/?token=${googleData}&returnUrl=${Router.asPath}`);
@@ -69,13 +69,13 @@ const PageLayout = ({ children, title }) => {
             ) : (
                 <div style={{ height: 0, overflow: 'hidden' }}>
                     <GoogleLogin
-                        onSuccess={credentialResponse => {
+                        onSuccess={(credentialResponse) => {
                             handleLogin(credentialResponse?.credential);
                         }}
                         onError={() => {
                             console.log('Login Failed');
                         }}
-                        intermediate_iframe_close_callback={e =>
+                        intermediate_iframe_close_callback={(e) =>
                             e.preventDefault()
                         }
                         useOneTap
