@@ -209,7 +209,7 @@ const OrderCreateForm = () => {
                     .ps-section__header h3 {
                         font-size: 20px !important;
                     }
-                    .ps-section__header {
+                    .ps-section__header {ps-section--shopping ps-shopping-cart
                         margin-bottom: 10px !important;
                     }
                     .create-order-form .ant-form-item {
