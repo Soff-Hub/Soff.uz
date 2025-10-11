@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useMemo, useState } from 'react';
+import React, { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { cn, useRcn } from '~/shared/utilities/cn';
 import { useSellerProducts } from '../api/useSellerProducts';
 import { Skeleton, Select, Pagination, Input } from 'antd';
@@ -64,6 +64,10 @@ const UserProducts = ({ id }) => {
         ),
         [page, total]
     );
+
+    useEffect(() => {
+        setPage(1);
+    }, [debounceSearch]);
 
     return (
         <div
