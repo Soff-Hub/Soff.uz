@@ -315,7 +315,7 @@ function useCreateOrder() {
                     ]}>
                     <TextArea
                         style={{ resize: 'none' }}
-                        rows={2}
+                        rows={4}
                         placeholder={
                             inputInfoToCreateOrder['description'].placeholder
                         }
@@ -376,7 +376,7 @@ function useCreateOrder() {
                     rules={[{ required: true, message: 'Narx kiriting!' }]}>
                     <InputNumber
                         min={minPrice}
-                        style={{ width: '100%', height: '36px' }}
+                        style={{ width: '100%' }} // height'ni olib tashlang, CSS'dan keladi
                         className="form-element"
                         placeholder={inputInfoToCreateOrder.price.placeholder}
                         size="large"

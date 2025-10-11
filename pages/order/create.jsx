@@ -5,16 +5,6 @@ import PageContainer from '~/widgets/layouts/PageContainer';
 import Meta from '~/components/shared/headers/Meta';
 import useCreateOrder from '~/shared/hooks/useCreateOrder';
 
-// const breadCrumb = [
-//     {
-//         text: 'Asosiy sahifa',
-//         url: '/',
-//     },
-//     {
-//         text: 'Maxsus buyurtma yaratish',
-//     },
-// ];
-
 function OrderCreate() {
     return (
         <PageContainer title="Order Create">
@@ -48,116 +38,150 @@ const OrderCreateForm = () => {
     
     return (
         <div>
-            <style jsx global>{`
-                .ps-section--shopping.ps-shopping-cart {
-                    padding-top: 8px !important;
-                    padding-bottom: 8px !important;
-                }
-                .ps-section--shopping .container {
-                    padding-top: 0 !important;
-                }
-                .ps-section__header {
-                    margin-bottom: 4px !important;
-                    padding-bottom: 0 !important;
-                    margin-top: 0 !important;
-                    padding-top: 0 !important;
-                }
-                .ps-section__header h3 {
-                    font-size: 18px !important;
-                    margin-bottom: 0 !important;
-                    margin-top: 0 !important;
-                    line-height: 1.2 !important;
-                }
-                
-                .create-order-form .ant-form-item {
-                    margin-bottom: 6px !important;
-                }
-                .create-order-form .ant-form-item:first-child {
-                    margin-top: 0 !important;
-                }
-                .create-order-form .ant-form-item-label {
-                    padding-bottom: 2px !important;
-                    margin-bottom: 0 !important;
-                }
-                .create-order-form .ant-form-item-label > label {
-                    height: auto !important;
-                    font-size: 12px !important;
-                    line-height: 1.2 !important;
-                }
-                .create-order-form .form-element,
-                .create-order-form .ant-select,
-                .create-order-form .ant-picker {
-                    height: 32px !important;
-                    font-size: 13px !important;
-                }
-                .create-order-form .ant-select-selector {
-                    height: 32px !important;
-                    line-height: 32px !important;
-                }
-                .create-order-form .ant-select-selection-item {
-                    line-height: 30px !important;
-                }
-                .create-order-form .ant-input {
-                    height: 32px !important;
-                    line-height: 32px !important;
-                    font-size: 13px !important;
-                }
-                .create-order-form .ant-input-number {
-                    height: 32px !important;
-                }
-                .create-order-form .ant-input-number-input {
-                    height: 30px !important;
-                    font-size: 13px !important;
-                }
-                .create-order-form textarea.ant-input {
-                    height: auto !important;
-                    min-height: 50px !important;
-                    line-height: 1.3 !important;
-                    padding: 4px 8px !important;
-                    font-size: 13px !important;
-                }
-                .create-order-form .ant-picker-input > input {
-                    font-size: 12px !important;
-                }
-                .create-order-form .d-flex.gap-2 {
-                    gap: 6px !important;
-                }
-                .create-order-form .my-3 {
-                    margin-top: 4px !important;
-                    margin-bottom: 4px !important;
-                }
-                .create-order-form .mb-2 {
-                    margin-bottom: 4px !important;
-                }
-                .create-order-form .mb-3 {
-                    margin-bottom: 0 !important;
-                }
-                .create-order-form .option-price-btn {
-                    height: 28px !important;
-                    font-size: 11px !important;
-                    padding: 0 8px !important;
-                    line-height: 28px !important;
-                }
-                .create-order-form .thumbs-swiper {
-                    margin-top: 4px !important;
-                }
-                
-                /* Mobile responsive */
-                @media (max-width: 768px) {
-                    .create-order-form .ant-form-item {
-                        margin-bottom: 4px !important;
-                    }
-                    .create-order-form .ant-form-item-label > label {
-                        font-size: 11px !important;
-                    }
-                    .ps-section__header h3 {
-                        font-size: 16px !important;
-                    }
-                    .ps-section__header {
-                        margin-bottom: 3px !important;
-                    }
-                }
-            `}</style>
+           <style jsx global>{`
+    .ps-section--shopping.ps-shopping-cart {
+        padding-top: 10px !important;
+        padding-bottom: 10px !important;
+    }
+    .ps-section--shopping .container {
+        padding-top: 0 !important;
+    }
+    .ps-section__header {
+        margin-bottom: 7px !important;
+        padding-bottom: 0 !important;
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+    }
+    .ps-section__header h3 {
+        font-size: 20px !important;
+        margin-bottom: 0 !important;
+        margin-top: 0 !important;
+        line-height: 1.2 !important;
+    }
+    
+    .create-order-form .ant-form-item {
+        margin-bottom: 14px !important;
+    }
+    .create-order-form .ant-form-item:first-child {
+        margin-top: 0 !important;
+    }
+    .create-order-form .ant-form-item-label {
+        padding-bottom: 2px !important;
+        margin-bottom: 0 !important;
+    }
+    .create-order-form .ant-form-item-label > label {
+        height: auto !important;
+        font-size: 12px !important;
+        line-height: 1.2 !important;
+    }
+    
+    /* Input height va padding */
+    .create-order-form .form-element,
+    .create-order-form .ant-select,
+    .create-order-form .ant-picker {
+        height: 36px !important;
+        font-size: 14px !important;
+    }
+    .create-order-form .ant-select-selector {
+        height: 36px !important;
+        line-height: 36px !important;
+        padding: 0 12px !important;
+    }
+    .create-order-form .ant-select-selection-item {
+        line-height: 34px !important;
+    }
+    .create-order-form .ant-input {
+        height: 36px !important;
+        line-height: 36px !important;
+        font-size: 14px !important;
+        padding: 4px 12px !important;
+    }
+    .create-order-form .ant-input-number {
+        height: 36px !important;
+    }
+    .create-order-form .ant-input-number-input {
+        height: 34px !important;
+        font-size: 14px !important;
+        padding: 4px 12px !important;
+    }
+    .create-order-form .ant-picker-input {
+        padding: 0 12px !important;
+    }
+    .create-order-form .ant-picker-input > input {
+        font-size: 13px !important;
+        padding: 4px 0 !important;
+    }
+    
+    /* Textarea */
+    .create-order-form textarea.ant-input {
+        height: auto !important;
+        min-height: 60px !important;
+        line-height: 1.5 !important;
+        padding: 8px 12px !important;
+        font-size: 14px !important;
+    }
+    
+    /* Placeholder styles */
+    .create-order-form .ant-input::placeholder,
+    .create-order-form .ant-input-number-input::placeholder,
+    .create-order-form .ant-picker-input input::placeholder,
+    .create-order-form textarea.ant-input::placeholder {
+        color: #bfbfbf !important;
+        font-size: 13px !important;
+        opacity: 1 !important;
+    }
+    
+    .create-order-form .ant-select-selection-placeholder {
+        color: #bfbfbf !important;
+        font-size: 13px !important;
+        padding-left: 0 !important;
+    }
+    
+    .create-order-form .d-flex.gap-2 {
+        gap: 6px !important;
+    }
+    .create-order-form .my-3 {
+        margin-top: 4px !important;
+        margin-bottom: 4px !important;
+    }
+    .create-order-form .mb-2 {
+        margin-bottom: 4px !important;
+    }
+    .create-order-form .mb-3 {
+        margin-bottom: 0 !important;
+    }
+    .create-order-form .option-price-btn {
+        height: 28px !important;
+        font-size: 11px !important;
+        padding: 0 8px !important;
+        line-height: 28px !important;
+    }
+    .create-order-form .thumbs-swiper {
+        margin-top: 4px !important;
+    }
+    
+    @media (max-width: 768px) {
+        .create-order-form .ant-form-item {
+            margin-bottom: 10px !important;
+        }
+        .create-order-form .ant-form-item-label > label {
+            font-size: 11px !important;
+        }
+        .ps-section__header h3 {
+            font-size: 18px !important;
+        }
+        .ps-section__header {
+            margin-bottom: 20px !important;
+        }
+        
+        /* Mobile placeholder */
+        .create-order-form .ant-input::placeholder,
+        .create-order-form .ant-input-number-input::placeholder,
+        .create-order-form textarea.ant-input::placeholder {
+            font-size: 12px !important;
+        }
+    }
+`}</style>
             
             <Form
                 form={form}
