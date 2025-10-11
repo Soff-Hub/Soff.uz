@@ -1,160 +1,187 @@
-import React, { memo, useMemo, useState, useCallback } from 'react'
-import { Skeleton, Button } from 'antd'
-import { useRouter } from 'next/router'
-import dynamic from 'next/dynamic'
-import { ArrowRightOutlined } from '@ant-design/icons'
-import { cn, useRcn } from '~/shared/utilities/cn'
-import { useFGet } from '~/shared/hooks/useFApi'
-import useResponsive from '~/shared/utilities/useResponsive'
+import React, { memo, useMemo, useState, useCallback } from 'react';
+import { Skeleton, Button } from 'antd';
+import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
+import { ArrowRightOutlined } from '@ant-design/icons';
+import { cn, useRcn } from '~/shared/utilities/cn';
+import { useFGet } from '~/shared/hooks/useFApi';
+import useResponsive from '~/shared/utilities/useResponsive';
 
-import PortfolioCard from '~/entities/portfolio/portfolio-card'
-import ServiceCard from '~/entities/service/service-card'
-import ProductCard from '~/entities/product/product-card'
+import PortfolioCard from '~/entities/portfolio/portfolio-card';
+import ServiceCard from '~/entities/service/service-card';
+import ProductCard from '~/entities/product/product-card';
 
-import { SELLER_PORTFOLIOS, SELLER_SERVICES } from '~/shared/api/end-points'
-import { useSellerProducts } from '../api/useSellerProducts'
+import { SELLER_PORTFOLIOS, SELLER_SERVICES } from '~/shared/api/end-points';
+import { useSellerProducts } from '../api/useSellerProducts';
 
-const PortfolioModal = dynamic(() => import("~/entities/portfolio/portfolio-modal"), {
-    ssr: false
-})
+const PortfolioModal = dynamic(
+    () => import('~/entities/portfolio/portfolio-modal'),
+    {
+        ssr: false,
+    }
+);
 
-const UserShortItems = ({ type = "portfolio", id, limit = 3, sectionRef }) => {
-    const { isDesktop, isMobile } = useResponsive()
-    const router = useRouter()
-    const [selected, setSelected] = useState(null)
+const UserShortItems = ({ type = 'portfolio', id, limit = 3, sectionRef }) => {
+    const { isDesktop, isMobile } = useResponsive();
+    const router = useRouter();
+    const [selected, setSelected] = useState(null);
 
     const titles = {
-        portfolio: "Portfolio",
-        service: "Xizmatlar",
-        product: "Mahsulotlar",
-    }
+        portfolio: 'Portfolio',
+        service: 'Xizmatlar',
+        product: 'Mahsulotlar',
+    };
 
     const { key, url, Card } = useMemo(() => {
         switch (type) {
-            case "service":
-                return { key: `${id}-service`, url: `${SELLER_SERVICES}${id}`, Card: ServiceCard }
-            case "product":
-                return { key: `${id}-short-product`, url: null, Card: ProductCard }
+            case 'service':
+                return {
+                    key: `${id}-service`,
+                    url: `${SELLER_SERVICES}${id}`,
+                    Card: ServiceCard,
+                };
+            case 'product':
+                return {
+                    key: `${id}-short-product`,
+                    url: null,
+                    Card: ProductCard,
+                };
             default:
-                return { key: `${id}-portfolio`, url: `${SELLER_PORTFOLIOS}${id}`, Card: PortfolioCard }
+                return {
+                    key: `${id}-portfolio`,
+                    url: `${SELLER_PORTFOLIOS}${id}`,
+                    Card: PortfolioCard,
+                };
         }
-    }, [type, id])
+    }, [type, id]);
 
-    const isProduct = type === 'product'
+    const isProduct = type === 'product';
 
-    const { data: productData, isLoading: productLoading } = useSellerProducts(id, 1, 'file')
+    const { data: productData, isLoading: productLoading } = useSellerProducts(
+        id,
+        1,
+        'file'
+    );
     const { data: otherData, isLoading: otherLoading } = useFGet(key, url, {
         enabled: !!id && !isProduct,
         token: null,
         staleTime: 1000 * 60 * 5,
         cacheTime: 1000 * 60 * 10,
-    })
+    });
 
-    const data = isProduct ? productData : otherData
-    const isLoading = isProduct ? productLoading : otherLoading
+    const data = isProduct ? productData : otherData;
+    const isLoading = isProduct ? productLoading : otherLoading;
 
     const gridClass = useRcn({
-        mobile: "grid-cols-2",
-        tablet: "grid-cols-2",
-        desktop: "grid-cols-3"
-    })
+        mobile: 'grid-cols-2',
+        tablet: 'grid-cols-2',
+        desktop: 'grid-cols-3',
+    });
 
     const items = useMemo(() => {
-        if (!data) return []
+        if (!data) return [];
 
         if (isProduct && Array.isArray(data.results)) {
-            return data.results.slice(0, limit)
+            return data.results.slice(0, limit);
         }
 
         if (Array.isArray(data)) {
-            return data.slice(0, limit)
+            return data.slice(0, limit);
         }
 
-        return []
-    }, [data, limit, isProduct])
+        return [];
+    }, [data, limit, isProduct]);
 
-    const handleClick = useCallback(item => {
-        if (type === 'portfolio') setSelected(item)
-    }, [type])
+    const handleClick = useCallback(
+        (item) => {
+            if (type === 'portfolio') setSelected(item);
+        },
+        [type]
+    );
 
     const handleMoreClick = useCallback(() => {
         if (!id) return;
 
-        router.push(
-            {
-                pathname: `/seller/${id}`,
-                query: { tab: type },
-            },
-            undefined,
-            { shallow: true }
-        ).then(() => {
-            const isMobile = window.innerWidth < 768;
+        router
+            .push(
+                {
+                    pathname: `/seller/${id}`,
+                    query: { tab: type },
+                },
+                undefined,
+                { shallow: true }
+            )
+            .then(() => {
+                const isMobile = window.innerWidth < 768;
 
-            if (isMobile) {
-                if (sectionRef?.current) {
-                    sectionRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                if (isMobile) {
+                    if (sectionRef?.current) {
+                        sectionRef.current.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start',
+                        });
+                    }
+                } else {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
                 }
-            } else {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-        });
+            });
     }, [id, type, router, sectionRef]);
 
-    if (!isLoading && items.length === 0) return null
+    if (!isLoading && items.length === 0) return null;
 
     return (
-        <div className={cn("w-full", "mt-4", "h-full")}>
+        <div className={cn('w-full', 'h-full')}>
             <div
                 className={cn(
-                    "bg-light",
-                    "p-3",
-                    "shadow",
-                    "rounded-xl",
-                    "flex",
-                    "flex-col",
-                    "gap-3",
-                    isDesktop ? "h-min-90" : ""
-                )}
-            >
+                    'bg-light',
+                    'p-3',
+                    'shadow',
+                    'rounded-xl',
+                    'flex',
+                    'flex-col',
+                    'gap-3',
+                    isDesktop ? 'h-min-90' : ''
+                )}>
                 {/* Title */}
-                <h2 className={cn("text-lg", "font-semibold", "px-1")}>
+                <h2 className={cn('text-lg', 'font-semibold', 'px-1')}>
                     {titles[type]}
                 </h2>
 
                 {/* Grid */}
-                <div className={cn("grid", "gap-4", gridClass)}>
+                <div className={cn('grid', 'gap-4', gridClass)}>
                     {isLoading && <SkeletonGrid count={limit} type={type} />}
-                    {!isLoading && items.map(item => (
-                        <Card
-                            key={item.id}
-                            {...(type === "portfolio" ? { portfolio: item, setPortfolio: handleClick } : {})}
-                            {...(type === "service" ? { service: item } : {})}
-                            {...(type === "product" ? { product: item } : {})}
-                        />
-                    ))}
+                    {!isLoading &&
+                        items.map((item) => (
+                            <Card
+                                key={item.id}
+                                {...(type === 'portfolio'
+                                    ? {
+                                          portfolio: item,
+                                          setPortfolio: handleClick,
+                                      }
+                                    : {})}
+                                {...(type === 'service'
+                                    ? { service: item }
+                                    : {})}
+                                {...(type === 'product'
+                                    ? { product: item }
+                                    : {})}
+                            />
+                        ))}
                 </div>
 
                 {/* Button */}
-                {!isLoading && (
-                    <>
-                        {(
-                            (isProduct && data?.results?.length > limit) ||
-                            (!isProduct && Array.isArray(data) && data.length > limit)
-                        ) && (
-                                <div className={cn("flex", "justify-center", "mt-2", "px-1")}>
-                                    <Button
-                                        type="primary"
-                                        shape="round"
-                                        icon={<ArrowRightOutlined />}
-                                        iconPosition="end"
-                                        onClick={handleMoreClick}
-                                    >
-                                        Ko‘proq ko‘rish
-                                    </Button>
-                                </div>
-                            )}
-                    </>
-                )}
+
+                <div className={cn('flex', 'justify-center', 'mt-2', 'px-1')}>
+                    <Button
+                        type="primary"
+                        shape="round"
+                        icon={<ArrowRightOutlined />}
+                        iconPosition="end"
+                        onClick={handleMoreClick}>
+                        Barchasini ko'rish
+                    </Button>
+                </div>
             </div>
 
             {type === 'portfolio' && (
@@ -165,14 +192,13 @@ const UserShortItems = ({ type = "portfolio", id, limit = 3, sectionRef }) => {
                 />
             )}
         </div>
-    )
-}
+    );
+};
 
-export default memo(UserShortItems)
-
+export default memo(UserShortItems);
 
 const SkeletonGrid = memo(({ type, count }) => {
-    const height = type === "product" ? 160 : 200
+    const height = type === 'product' ? 160 : 200;
 
     return (
         <>
@@ -184,5 +210,5 @@ const SkeletonGrid = memo(({ type, count }) => {
                 />
             ))}
         </>
-    )
-})
+    );
+});

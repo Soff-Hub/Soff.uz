@@ -145,12 +145,7 @@ const UserShortInfo = ({ seller }) => {
     );
 
     return (
-        <div
-            className={cn('bg-light', 'p-3', 'shadow', 'rounded-xl')}
-            style={{
-                position: 'sticky',
-                top: '100px',
-            }}>
+        <div className={cn('bg-light', 'p-3', 'shadow', 'rounded-xl')}>
             <div
                 className={cn(
                     'flex',
@@ -244,7 +239,7 @@ const UserShortInfo = ({ seller }) => {
                     'fixed',
                     'bottom-0',
                     'w-full',
-                    'bg-white',
+                    'bg-light',
                     'p-3',
                     'flex',
                     'gap-3',

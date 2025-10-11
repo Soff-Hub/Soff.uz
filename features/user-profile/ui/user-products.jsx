@@ -66,10 +66,18 @@ const UserProducts = ({ id }) => {
     );
 
     return (
-        <div className={cn('w-full', 'my-4', 'h-full')}>
+        <div
+            className={cn(
+                'w-full',
+                'h-full',
+                'flex-1',
+                'flex',
+                'flex-col',
+                'gap-4'
+            )}>
             <div
                 className={cn(
-                    'mb-4',
+                    // 'mb-4',
                     'flex',
                     'justify-between',
                     'items-center',
@@ -99,7 +107,8 @@ const UserProducts = ({ id }) => {
                         'bg-light',
                         'p-3',
                         'shadow',
-                        'h-min-80'
+                        'flex-1'
+                        // 'h-min-80'
                     )}>
                     <div className={cn('grid', 'gap-2', gridClass)}>
                         {renderedProducts}
