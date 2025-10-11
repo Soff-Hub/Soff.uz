@@ -82,7 +82,7 @@ const UserTabs = ({ seller }) => {
     }, [activeKey]);
 
     return (
-        <div className={cn('h-full')}>
+        <div className={cn('h-full', 'flex', 'flex-col', 'gap-4', 'w-full')}>
             <div
                 style={{ scrollMarginTop: '150px' }}
                 ref={sectionRef}
@@ -102,3 +102,5 @@ const UserTabs = ({ seller }) => {
 };
 
 export default memo(UserTabs);
+
+const DynamicTabs = () => {};
