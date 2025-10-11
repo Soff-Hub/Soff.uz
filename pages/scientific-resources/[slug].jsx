@@ -156,7 +156,7 @@ export default function ProductCategoryScreen({
                     />
                 </div>
             </div>
-            <div className="servicesSpace" />
+            {/* <div className="servicesSpace" /> */}
         </PageContainer>
     );
 }
