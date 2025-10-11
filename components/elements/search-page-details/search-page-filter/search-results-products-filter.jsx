@@ -208,9 +208,11 @@ export default function SearchResultsProductsFilter({ total, childData }) {
                     </div>
 
                     {router.query.type === 'file' && (
-                        <div className="col-lg-6 col-12">
+                        <div className="col-12">
                             <div className="p-2 border rounded bg-light">
-                                <p className="mb-0 fw-medium">Betlar soni</p>
+                                <p className="mb-0 fw-medium small">
+                                    Betlar soni
+                                </p>
                                 <Slider
                                     range
                                     min={1}
