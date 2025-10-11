@@ -22,7 +22,7 @@ const UserPortfolios = () => {
     const [portfolio, setPortfolio] = useState();
     const { isDesktop } = useResponsive();
     const { pid } = router.query;
-    const { data, isLoading } = useFGet(
+    const { data: portfolios, isLoading } = useFGet(
         `${pid}-portfolio`,
         `${SELLER_PORTFOLIOS}${pid}`,
         {
@@ -39,13 +39,7 @@ const UserPortfolios = () => {
         desktop: 'grid-cols-3',
     });
 
-    const portfoliosShortSizes = isMobile || isTablet ? 2 : 3;
-
-    const notFound = !isLoading && (!data || data?.length === 0);
-
-    const portfolios = isShortView
-        ? data?.slice(0, portfoliosShortSizes)
-        : data;
+    const notFound = !isLoading && (!portfolios || portfolios?.length === 0);
 
     const handleSetPortfolio = useCallback((item) => setPortfolio(item), []);
 
@@ -56,51 +50,6 @@ const UserPortfolios = () => {
                 <ItemsNotFound type="portfolio" />
             </div>
         );
-
-    let portfolioContent = null;
-    if (isLoading) {
-        portfolioContent = (
-            <>
-                <h3 className={cn('mb-3', 'text-lg', 'font-semibold')}>
-                    Muallif haqida
-                </h3>
-                <div className={cn('grid', 'gap-4', gridClass)}>
-                    <PortfolioSkeletonGrid />
-                </div>
-            </>
-        );
-    } else if (portfolios?.length) {
-        portfolioContent = (
-            <>
-                <h3 className={cn('mb-3', 'text-lg', 'font-semibold')}>
-                    Portfolio
-                </h3>
-                <div className={cn('grid', 'gap-4', gridClass)}>
-                    {portfolios.map((portfolio) => (
-                        <PortfolioCard
-                            setPortfolio={handleSetPortfolio}
-                            portfolio={portfolio}
-                            key={portfolio.id}
-                        />
-                    ))}
-                </div>
-            </>
-        );
-    }
-
-    let viewMoreButton = null;
-    if (isShortView && portfolios?.length) {
-        viewMoreButton = (
-            <button className={styles.freelance_button} size="large">
-                Barcha xizmatlar
-                <img
-                    src={'/static/img/arrowwhite.svg'}
-                    sizes="15"
-                    alt="arrow"
-                />
-            </button>
-        );
-    }
 
     return (
         <div
@@ -121,7 +70,7 @@ const UserPortfolios = () => {
                     isDesktop ? 'h-min-90' : ''
                 )}>
                 <div className={cn('grid', 'gap-4', gridClass)}>
-                    {data?.map((portfolio) => (
+                    {portfolios?.map((portfolio) => (
                         <PortfolioCard
                             setPortfolio={handleSetPortfolio}
                             portfolio={portfolio}
