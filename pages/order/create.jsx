@@ -1,11 +1,27 @@
-import React from 'react';
+
+import React, { useEffect } from 'react';
 import { Form, Modal, Button } from 'antd';
 import BreadCrumb from '~/components/elements/BreadCrumb';
 import PageContainer from '~/widgets/layouts/PageContainer';
 import Meta from '~/components/shared/headers/Meta';
 import useCreateOrder from '~/shared/hooks/useCreateOrder';
+import { useRouter } from 'next/router';
 
 function OrderCreate() {
+    const router = useRouter(); // Next.js uchun
+    // const navigate = useNavigate(); // React Router uchun
+
+    useEffect(() => {
+        // localStorage dan kerakli ma'lumotlarni tekshirish
+        const user = localStorage.getItem('user');
+        const token = localStorage.getItem('token'); // yoki boshqa key
+        
+        // Agar user yo'q bo'lsa, login sahifasiga yo'naltirish
+        if (!user || !token) {
+            router.replace('/auth/login'); // Next.js uchun
+            // navigate('/login', { replace: true }); // React Router uchun
+        }
+    }, [router]); 
     return (
         <PageContainer title="Order Create">
             <div className="ps-page--simple">
