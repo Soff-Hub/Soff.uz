@@ -21,7 +21,6 @@ import OrderCard from '~/entities/order/order-card';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { useDispatch } from 'react-redux';
 import { setShowFastDownload, setShowSearch } from '~/store/fast-dowload/slice';
-import { set } from 'react-hook-form';
 dayjs.locale('uz-latn');
 
 const OrderMain = ({ order }) => {
@@ -81,8 +80,9 @@ const OrderMain = ({ order }) => {
                     <div className={styles.orderPayCard}>
                         <div className="w-100">
                             <h4
-                                className={`mb-0 ${!isDesktop &&
-                                    'text-center'}`}>
+                                className={`mb-0 ${
+                                    !isDesktop && 'text-center'
+                                }`}>
                                 Frilanser ishni boshlashi uchun to'lovni amalga
                                 oshiring
                             </h4>
@@ -301,7 +301,6 @@ const OrderMain = ({ order }) => {
                                               ) {
                                                   setCongratModal(true);
                                               }
-                                              console.log('payload', payload);
                                           },
                                           onError: () => {
                                               message.error(
@@ -333,13 +332,13 @@ const OrderMain = ({ order }) => {
                         <Rate
                             allowHalf={false}
                             value={rate}
-                            onChange={val => setRate(val)}
+                            onChange={(val) => setRate(val)}
                         />
                         <TextArea
                             placeholder="Xizmat haqida fikrlaringizni yozib qoldiring"
                             rows={3}
                             value={text}
-                            onChange={e => setText(e.target.value)}
+                            onChange={(e) => setText(e.target.value)}
                         />
                     </div>
                 )}
@@ -354,7 +353,7 @@ const OrderMain = ({ order }) => {
                             placeholder="Ishning aniqlangan kamchiliklarini yozing"
                             rows={3}
                             value={text}
-                            onChange={e => setText(e.target.value)}
+                            onChange={(e) => setText(e.target.value)}
                         />
                     </>
                 )}

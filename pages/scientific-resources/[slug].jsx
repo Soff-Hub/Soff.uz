@@ -156,7 +156,7 @@ export default function ProductCategoryScreen({
                     />
                 </div>
             </div>
-            <div className="servicesSpace" />
+            {/* <div className="servicesSpace" /> */}
         </PageContainer>
     );
 }
@@ -219,8 +219,6 @@ export async function getServerSideProps(context) {
         fetchJson(fourChildUrl),
         fetchJson(childCategoryUrl),
     ]);
-
-    console.log(productsUrl)
 
     return {
         props: {

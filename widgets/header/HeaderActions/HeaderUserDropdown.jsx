@@ -10,11 +10,11 @@ import Image from 'next/image';
 import { useFGet } from '~/shared/hooks/useFApi';
 import { CHAT_UNSEENS } from '~/shared/api/end-points';
 
-const HeaderUserDropdown = props => {
+const HeaderUserDropdown = (props) => {
     const dispatch = useDispatch();
-    const { accountLinks, user } = useSelector(state => state.auth);
-    const { user: profile } = useSelector(state => state.profile);
-    const refresh = useSelector(state => state.auth?.user?.refresh);
+    const { accountLinks, user } = useSelector((state) => state.auth);
+    const { user: profile } = useSelector((state) => state.profile);
+    const refresh = useSelector((state) => state.auth?.user?.refresh);
     const router = useRouter();
 
     const handleLogout = () => {
@@ -77,13 +77,15 @@ const HeaderUserDropdown = props => {
         return (
             <div className="ps-block--user-account ">
                 <div className="fs-3 d-flex align-items-center gap-3 pointer">
-                    <Image
-                        src={profile?.image || '/static/img/ozodbek.png'}
-                        style={{ borderRadius: '50%' }}
-                        width={30}
-                        height={30}
-                        alt="user"
-                    />
+                    <Link href={'/account/sellerproducts'}>
+                        <Image
+                            src={profile?.image || '/static/img/ozodbek.png'}
+                            style={{ borderRadius: '50%' }}
+                            width={30}
+                            height={30}
+                            alt="user"
+                        />
+                    </Link>
                 </div>
                 <div className="ps-block__content">
                     <ul className="ps-list--arrow order">
@@ -125,7 +127,7 @@ const HeaderUserDropdown = props => {
         return (
             <Link
                 href={`/auth/login/?returnUrl=${returnUrl}`}
-                onClick={e => {
+                onClick={(e) => {
                     e.preventDefault();
                     Router.push(`/auth/login/?returnUrl=${returnUrl}`);
                 }}>
@@ -135,4 +137,4 @@ const HeaderUserDropdown = props => {
     }
 };
 
-export default connect(state => state)(HeaderUserDropdown);
+export default connect((state) => state)(HeaderUserDropdown);

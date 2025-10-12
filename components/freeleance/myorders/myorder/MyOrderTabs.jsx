@@ -33,6 +33,16 @@ const MyOrderTabs = () => {
                 ) : (
                     <Empty
                         image={Empty.PRESENTED_IMAGE_SIMPLE}
+                        style={{
+                            height: '50vh',
+                            display: 'flex',
+                            background: '#fafafa',
+                            borderRadius: '8px',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            margin: '0 0 32px 0',
+                        }}
                         description="Sizda yangi buyurtmalar mavjud emas"
                     />
                 ),
@@ -48,6 +58,16 @@ const MyOrderTabs = () => {
                 ) : (
                     <Empty
                         image={Empty.PRESENTED_IMAGE_SIMPLE}
+                        style={{
+                            height: '50vh',
+                            display: 'flex',
+                            background: '#fafafa',
+                            borderRadius: '8px',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            margin: '0 0 32px 0',
+                        }}
                         description="Sizda jarayondagi buyurtmalar mavjud emas"
                     />
                 ),
@@ -61,6 +81,16 @@ const MyOrderTabs = () => {
                 ) : (
                     <Empty
                         image={Empty.PRESENTED_IMAGE_SIMPLE}
+                        style={{
+                            height: '50vh',
+                            display: 'flex',
+                            background: '#fafafa',
+                            borderRadius: '8px',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            margin: '0 0 32px 0',
+                        }}
                         description="Sizda tugallangan buyurtmalar mavjud emas"
                     />
                 ),
@@ -74,32 +104,51 @@ const MyOrderTabs = () => {
                 ) : (
                     <Empty
                         image={Empty.PRESENTED_IMAGE_SIMPLE}
+                        style={{
+                            height: '50vh',
+                            display: 'flex',
+                            background: '#fafafa',
+                            borderRadius: '8px',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            margin: '0 0 32px 0',
+                        }}
                         description="Sizda bekor qilingan buyurtmalar mavjud emas"
                     />
                 ),
         },
     ];
 
-    if (isLoading) return <Loader />;
-
-    if (totalOrders === 0) {
+    if (isLoading)
         return (
             <div
                 style={{
-                    textAlign: 'center',
-                    padding: '60px 20px',
+                    minHeight: '60vh',
+                }}>
+                <Loader />
+            </div>
+        );
+
+    if (totalOrders === 0) {
+        return (
+            <Empty
+                image={Empty.PRESENTED_IMAGE_DEFAULT}
+                style={{
+                    height: '50vh',
+                    display: 'flex',
                     background: '#fafafa',
                     borderRadius: '8px',
-                }}>
-                <Empty
-                    image={Empty.PRESENTED_IMAGE_DEFAULT}
-                    description={
-                        <span style={{ fontSize: '16px', color: '#666' }}>
-                            Sizda hozircha buyurtmalar mavjud emas
-                        </span>
-                    }
-                />
-            </div>
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                }}
+                description={
+                    <span style={{ fontSize: '16px', color: '#666' }}>
+                        Sizda hozircha buyurtmalar mavjud emas
+                    </span>
+                }
+            />
         );
     }
 
@@ -117,22 +166,27 @@ const MyOrderTabs = () => {
                     },
                 },
             }}>
-            <Tabs
-                type="card"
-                activeKey={activeKey}
-                onChange={setActiveKey}
-                items={items}
-                tabPosition="top"
-                renderTabBar={(tabBarProps, DefaultTabBar) => (
-                    <div
-                        style={{
-                            overflowX: 'auto',
-                            whiteSpace: 'nowrap',
-                        }}>
-                        <DefaultTabBar {...tabBarProps} />
-                    </div>
-                )}
-            />
+            <div
+                style={{
+                    minHeight: '60vh',
+                }}>
+                <Tabs
+                    type="card"
+                    activeKey={activeKey}
+                    onChange={setActiveKey}
+                    items={items}
+                    tabPosition="top"
+                    renderTabBar={(tabBarProps, DefaultTabBar) => (
+                        <div
+                            style={{
+                                overflowX: 'auto',
+                                whiteSpace: 'nowrap',
+                            }}>
+                            <DefaultTabBar {...tabBarProps} />
+                        </div>
+                    )}
+                />
+            </div>
         </ConfigProvider>
     );
 };

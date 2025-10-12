@@ -6,6 +6,7 @@ import PageContainer from '~/widgets/layouts/PageContainer';
 import Meta from '~/components/shared/headers/Meta';
 import useCreateOrder from '~/shared/hooks/useCreateOrder';
 import { useRouter } from 'next/router';
+import useResponsive from '~/shared/utilities/useResponsive';
 
 function OrderCreate() {
     const router = useRouter(); // Next.js uchun
@@ -61,10 +62,11 @@ const OrderCreateForm = () => {
         handleOpenConfirm,
         handleCloseConfirm,
     } = useCreateOrder();
+    const { isMobile } = useResponsive()
 
     return (
         <div>
-            <style jsx global>{`
+            <style jsx>{`
                 .ps-section--shopping.ps-shopping-cart {
                     padding-top: 15px !important;
                     padding-bottom: 15px !important;
@@ -224,7 +226,7 @@ const OrderCreateForm = () => {
                     .ps-section__header h3 {
                         font-size: 20px !important;
                     }
-                    .ps-section__header {
+                    .ps-section__header {ps-section--shopping ps-shopping-cart
                         margin-bottom: 10px !important;
                     }
                     .create-order-form .ant-form-item {
@@ -241,20 +243,68 @@ const OrderCreateForm = () => {
                 layout="vertical"
                 className="create-order-form"
                 onFinish={handleOpenConfirm}
+                onFinishFailed={(errorInfo) => {
+                    const firstErrorField = errorInfo?.errorFields?.[0]?.name?.[0];
+                    if (firstErrorField) {
+                        form.scrollToField(firstErrorField, {
+                            behavior: 'smooth',
+                            block: 'center',
+                        });
+                    }
+                }}
                 style={{
                     maxWidth: '800px',
                     margin: '0 auto',
                     paddingTop: '0',
                 }}>
                 {formItemsContent}
-
-                <Form.Item style={{ marginTop: '10px', marginBottom: '0' }}>
+                {
+                    isMobile &&
+                    <Form.Item
+                        style={{
+                            marginTop: isMobile ? 0 : '10px',
+                            marginBottom: 0,
+                            position: isMobile ? 'fixed' : 'static',
+                            bottom: isMobile ? 0 : 'auto',
+                            left: isMobile ? 0 : 'auto',
+                            width: isMobile ? '100%' : 'auto',
+                            zIndex: isMobile ? 1000 : 'auto',
+                            padding: isMobile ? '0' : '0',
+                            background: isMobile ? '#fff' : 'transparent', // mobilda orqa fon
+                            boxShadow: isMobile ? '0 -2px 10px rgba(0,0,0,0.05)' : 'none', // engil soyali
+                        }}
+                    >
+                        <Button
+                            loading={isPending}
+                            type="primary"
+                            htmlType="submit"
+                            style={{
+                                height: isMobile ? '50px' : '38px',
+                                fontSize: isMobile ? '15px' : '14px',
+                                width: '100%',
+                                borderRadius: isMobile ? 0 : 6,
+                            }}
+                            block
+                        >
+                            {isPending
+                                ? 'Buyurtmangiz joylashtirilmoqda...'
+                                : 'Buyurtmani joylashtirish'}
+                        </Button>
+                    </Form.Item>
+                }
+                <Form.Item
+                    style={{
+                        marginTop: '10px',
+                        marginBottom: 0,
+                    }}
+                >
                     <Button
                         loading={isPending}
                         type="primary"
                         htmlType="submit"
-                        style={{ height: '38px', fontSize: '14px' }}
-                        block>
+                        block
+                        style={{ height: "38px", fontSize: "14px" }}
+                    >
                         {isPending
                             ? 'Buyurtmangiz joylashtirilmoqda...'
                             : 'Buyurtmani joylashtirish'}

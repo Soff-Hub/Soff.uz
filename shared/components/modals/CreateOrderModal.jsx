@@ -72,8 +72,6 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
         { enabled: !!direction }
     );
 
-    console.log({ direction, categories });
-
     const { data: priceData } = useFGet(
         ['price-range', direction, categoryId],
         `categories/?direction=${direction}&category_id=${categoryId}`,
@@ -83,7 +81,7 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
     );
 
     const priceList =
-        priceData?.[0]?.service_delivery_price_options?.[0]?.price;
+        priceData?.[0]?.service_delivery_price_options?.[0]?.price?.slice(0, 5);
 
     const minPrice = priceList ? priceList[0]?.amount : 2000;
 

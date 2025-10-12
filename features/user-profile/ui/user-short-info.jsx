@@ -17,6 +17,8 @@ import CreateOrderModal from '~/shared/components/modals/CreateOrderModal';
 import { useSelector } from 'react-redux';
 import useCreateChat from '~/components/freeleance/chat/api/useCreateChat';
 import useResponsive from '~/shared/utilities/useResponsive';
+import { set } from 'react-hook-form';
+import { create } from 'domain';
 
 dayjs.extend(relativeTime);
 dayjs.locale('uz-latn');
@@ -44,6 +46,7 @@ const UserShortInfo = ({ seller }) => {
     const { isLoggedIn } = useSelector((state) => state?.auth);
     const { mutate: createChat } = useCreateChat();
     const { isMobile, isTablet } = useResponsive();
+    const [activeModal, setActiveModal] = useState(null); // 'auth' or 'createOrder' or null
 
     const [authModal, setAuthModal] = useState(false);
     const [createOrderModal, setCreateOrderModal] = useState(false);
@@ -71,6 +74,12 @@ const UserShortInfo = ({ seller }) => {
         mobile: 'flex',
         tablet: 'hidden',
         desktop: 'hidden',
+    });
+
+    const marginClass = useRcn({
+        mobile: 'mt-4',
+        tablet: 'mt-4',
+        desktop: 'mt-5',
     });
 
     const sellerStats = useMemo(
@@ -128,11 +137,21 @@ const UserShortInfo = ({ seller }) => {
     );
 
     const handleCreateOrder = useCallback(() => {
-        isLoggedIn ? setCreateOrderModal(true) : setAuthModal(true);
+        if (isLoggedIn) {
+            setCreateOrderModal(true);
+        } else {
+            setAuthModal(true);
+            setActiveModal('createOrder');
+        }
     }, [isLoggedIn]);
 
     const handleCreateChat = useCallback(() => {
-        isLoggedIn ? createChat(seller?.id) : setAuthModal(true);
+        if (isLoggedIn) {
+            createChat(seller?.id);
+        } else {
+            setAuthModal(true);
+            setActiveModal('chat');
+        }
     }, [isLoggedIn, seller?.id, createChat]);
 
     const imageSrc = useMemo(
@@ -143,6 +162,16 @@ const UserShortInfo = ({ seller }) => {
         () => seller?.full_name || 'User image',
         [seller?.full_name]
     );
+
+    const handleSuccessAuth = () => {
+        if (activeModal === 'createOrder') {
+            setCreateOrderModal(true);
+        } else if (activeModal === 'chat') {
+            setTimeout(() => {
+                createChat(seller?.id);
+            }, 1000);
+        }
+    };
 
     return (
         <div className={cn('bg-light', 'p-3', 'shadow', 'rounded-xl')}>
@@ -186,7 +215,7 @@ const UserShortInfo = ({ seller }) => {
                 </h4>
             </div>
 
-            <div className={cn('mt-5', 'flex', 'flex-col', 'gap-4')}>
+            <div className={cn(marginClass, 'flex', 'flex-col', 'gap-4')}>
                 <InfoRow
                     icon={<i className="fa-solid fa-clipboard-list"></i>}
                     label="Xizmatlar uchun ochiq"
@@ -222,7 +251,7 @@ const UserShortInfo = ({ seller }) => {
             </div>
 
             <Divider size="small" className={cn(flexClass)} />
-            <div className={cn('mt-5', flexClass, 'gap-3')}>
+            <div className={cn(marginClass, flexClass, 'gap-3')}>
                 <Button
                     type="default"
                     className={cn('border-primary', 'text-primary')}
@@ -260,8 +289,8 @@ const UserShortInfo = ({ seller }) => {
                 </Button>
             </div>
 
-            <Divider size="small" />
-            <div className="mt-5">
+            <Divider size="small" className={cn(flexClass)} />
+            <div className={cn(marginClass)}>
                 <span
                     className={cn(
                         'block',
@@ -308,7 +337,7 @@ const UserShortInfo = ({ seller }) => {
             <AuthModal
                 open={authModal}
                 onClose={() => setAuthModal(false)}
-                onSuccess={() => setCreateOrderModal(true)}
+                onSuccess={handleSuccessAuth}
             />
             <CreateOrderModal
                 open={createOrderModal}

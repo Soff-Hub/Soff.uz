@@ -12,6 +12,7 @@ export function useTelegram() {
         if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
             const tg = window.Telegram.WebApp;
             tg?.expand();
+            tg?.ready();
 
             setTelegramData({
                 tg,

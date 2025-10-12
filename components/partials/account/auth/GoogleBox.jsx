@@ -7,6 +7,7 @@ export default function GoogleBox({
     // params,
     isModal,
     onSuccess,
+    openTelegram,
     // setCode,
 }) {
     // const { registerGoogleUser } = useAuth();
@@ -27,7 +28,7 @@ export default function GoogleBox({
         // Add return URL for modals
         if (isModal) {
             params.append('returnUrl', encodeURIComponent(router.asPath));
-            onSuccess();
+            // onSuccess();
         }
 
         const fullUrl = params.toString()
@@ -40,13 +41,14 @@ export default function GoogleBox({
 
     const handleTelegramClick = async () => {
         if (isModal) {
-            Router.push({
-                query: {
-                    ...Router.query,
-                    returnUrl: encodeURIComponent(router.asPath),
-                },
-                pathname: '/auth/telegram',
-            });
+            openTelegram();
+            // Router.push({
+            //     query: {
+            //         ...Router.query,
+            //         returnUrl: encodeURIComponent(router.asPath),
+            //     },
+            //     pathname: '/auth/telegram',
+            // });
             // onSuccess();
         } else {
             Router.push({
