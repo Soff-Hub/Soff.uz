@@ -178,12 +178,8 @@ function useCreateOrder() {
             form.resetFields();
             handleCloseConfirm();
             message.success('Buyurtma muvaffaqiyatli yaratildi!');
-            // const telegram = window.Telegram?.WebApp;
-            if (tg?.close) {
-                tg.close();
-            } else {
-                push(`/order/my-orders?orderId=${data?.id}`);
-            }
+            tg?.close();
+            push(`/order/my-orders?orderId=${data?.id}`);
         },
         onError: (err) => {
             const errorMsg =
