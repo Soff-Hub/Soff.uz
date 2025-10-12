@@ -86,8 +86,6 @@ export default function ProductDefaultPage({ defaultProducts }) {
         },
     });
 
-    console.log({ similarProducts });
-
     let similarProductsContent = null;
     if (similarProductsLoading) {
         similarProductsContent = (
@@ -124,8 +122,6 @@ export default function ProductDefaultPage({ defaultProducts }) {
             </div>
         );
     }
-
-    console.log({ similarProducts });
 
     const removeHTMLTags = html => {
         return html.replace(/<[^>]+>/g, '');
@@ -393,8 +389,6 @@ export async function getServerSideProps({ query, req }) {
     });
 
     const defaultProducts = await resquest.json();
-
-    console.log('serverside fetch', defaultProducts);
 
     return {
         props: {

@@ -18,7 +18,7 @@ const isValidSlug = slug => {
     );
 };
 
-const ServiceCard = ({ service }) => {
+const ServiceCard = ({ service, hasFooter = true }) => {
     const { isLoggedIn } = useSelector(state => state.auth);
     const [open, setOpen] = useState(false);
     const { push } = useRouter();
@@ -96,24 +96,28 @@ const ServiceCard = ({ service }) => {
                         </button>
                     </div>
                 </div>
-                <div className={styles.divider} />
-                <div className={styles.footer}>
-                    <Link href={`/seller/${service?.user?.soff_seller_id}`}>
-                        <img
-                            className={styles.userImg}
-                            src={
-                                service?.user?.photo_url ||
-                                '/static/img/ozodbek.png'
-                            }
-                            alt="user_img"
-                        />
-                    </Link>
-                    <Link
-                        href={`/seller/${service?.user?.soff_seller_id}`}
-                        className={styles.username}>
-                        {service?.user?.full_name}
-                    </Link>
-                </div>
+                {hasFooter &&
+                    <>
+                        <div className={styles.divider} />
+                        <div className={styles.footer}>
+                            <Link href={`/seller/${service?.user?.soff_seller_id}`}>
+                                <img
+                                    className={styles.userImg}
+                                    src={
+                                        service?.user?.photo_url ||
+                                        '/static/img/ozodbek.png'
+                                    }
+                                    alt="user_img"
+                                />
+                            </Link>
+                            <Link
+                                href={`/seller/${service?.user?.soff_seller_id}`}
+                                className={styles.username}>
+                                {service?.user?.full_name}
+                            </Link>
+                        </div>
+                    </>
+                }
             </div>
             <AuthModal
                 slug={service?.slug}

@@ -8,47 +8,55 @@ import { useRouter } from 'next/router';
 import { baseUrlAuth } from '~/repositories/Repository';
 import { useMutation } from '@tanstack/react-query';
 
-export default function LoginForm({ onSuccess, isModal, setCode }) {
+export default function LoginForm({
+    onSuccess,
+    isModal,
+    setCode,
+    openTelegram,
+}) {
     const [type, setType] = useState('t'); // t, e
     const router = useRouter();
+    const [loading, setLoading] = useState(false);
 
-    const { mutate: handleSubmit, isPending: loading } = useMutation({
+    const { mutate: handleSubmit } = useMutation({
         mutationKey: ['auth-register'],
         mutationFn: async ({ phone, email }) => {
+            setLoading(true);
             const data = {
                 phone_or_email: type === 't' ? '+998' + phone : email,
                 role: 'customer',
             };
-            try {
-                const resp = await Axios.post(
-                    baseUrlAuth + 'auth/register/',
-                    data
-                );
-                localStorage.setItem('via_', resp?.data?.via_);
-                localStorage.setItem('msg', resp?.data?.msg);
-                localStorage.setItem('data', JSON.stringify(data));
-                if (isModal) {
-                    onSuccess();
-                    setCode(resp.data?.user);
-                } else {
-                    router.push({
-                        query: {
-                            ...router.query,
-                            user: resp.data?.user,
-                        },
-                        pathname: '/auth/code-verify',
-                    });
-                }
-            } catch (err) {
-                const modal = Modal.error({
-                    centered: true,
-                    title: 'Xatolik',
-                    content:
-                        err?.response?.data?.msg ||
-                        JSON.stringify(err?.response),
+            const resp = await Axios.post(baseUrlAuth + 'auth/register/', data);
+            localStorage.setItem('via_', resp?.data?.via_);
+            localStorage.setItem('msg', resp?.data?.msg);
+            localStorage.setItem('data', JSON.stringify(data));
+            return resp;
+        },
+        onSuccess: (resp) => {
+            setLoading(false);
+            if (isModal) {
+                onSuccess();
+                setCode(resp.data?.user);
+            } else {
+                router.push({
+                    query: {
+                        ...router.query,
+                        user: resp.data?.user,
+                    },
+                    pathname: '/auth/code-verify',
                 });
-                modal.update;
             }
+        },
+        onError: (error) => {
+            setLoading(false);
+            const modal = Modal.error({
+                centered: true,
+                title: 'Xatolik',
+                content:
+                    error?.response?.data?.msg ||
+                    JSON.stringify(error?.response),
+            });
+            modal.update;
         },
     });
 
@@ -65,6 +73,7 @@ export default function LoginForm({ onSuccess, isModal, setCode }) {
                         <GoogleBox
                             isModal={isModal}
                             onSuccess={onSuccess}
+                            openTelegram={openTelegram}
                             setCode={setCode}
                             params={
                                 router.query?.id ? `?id=${router.query.id}` : ''
@@ -77,7 +86,7 @@ export default function LoginForm({ onSuccess, isModal, setCode }) {
                             Yoki
                         </Divider>
                         <Segmented
-                            onChange={value => setType(value)}
+                            onChange={(value) => setType(value)}
                             options={[
                                 {
                                     label: 'Telefon raqam',
@@ -142,7 +151,7 @@ export default function LoginForm({ onSuccess, isModal, setCode }) {
                                             'Iltimos, haqiqiy telefon raqam kiriting',
                                     },
                                 ]}
-                                normalize={value =>
+                                normalize={(value) =>
                                     value.replace(/\D/g, '').slice(0, 9)
                                 }>
                                 <Input

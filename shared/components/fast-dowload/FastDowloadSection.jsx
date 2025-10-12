@@ -1,15 +1,26 @@
 import React from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import styles from './FastDownloadSection.module.scss';
-import { fetchFastDownloadProduct, fetchProductDowload } from './FastDowloadApi';
+import {
+    fetchFastDownloadProduct,
+    fetchProductDowload,
+} from './FastDowloadApi';
+
+import Cookies from 'js-cookie';
+const getToken = () => Cookies.get('token');
 
 const FastDownloadSection = () => {
-    const queryClient = useQueryClient()
-    const { data: product, isLoading, isError, error } = useQuery({
+    const queryClient = useQueryClient();
+    const {
+        data: product,
+        isLoading,
+        isError,
+        error,
+    } = useQuery({
         queryKey: ['fast-download'],
         queryFn: fetchFastDownloadProduct,
         retry: false,
-        enabled: typeof window !== 'undefined',
+        enabled: !!getToken(),
         staleTime: 1000 * 60 * 5,
     });
 
@@ -18,12 +29,12 @@ const FastDownloadSection = () => {
 
     const handleDowload = async (id) => {
         try {
-            await fetchProductDowload(id)
-            queryClient.invalidateQueries(['fast-download'],)
+            await fetchProductDowload(id);
+            queryClient.invalidateQueries(['fast-download']);
         } catch (error) {
             console.error('Download error:', error);
         }
-    }
+    };
 
     return (
         <div className={styles.wrapper}>
@@ -38,11 +49,10 @@ const FastDownloadSection = () => {
                 </div>
                 <a
                     href={product.url}
-                    target='_blank'
+                    target="_blank"
                     className={styles.downloadBtn}
                     onClick={() => handleDowload(product.id)}
-                    download
-                >
+                    download>
                     Yuklab olish
                 </a>
             </div>

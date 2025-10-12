@@ -53,12 +53,12 @@ export default function SoffFreelancerPage({
                         />
                     </div>
                 )}
-                <GrayCard
+                {/* <GrayCard
                     title="Izlaganingiz yo’qmi? O'z buyurtmangizni joylashtiring!"
                     btn="Buyurtmar berish"
                     // link='https://t.me/soff_freelancing_bot'
-                />
-                <div className="servicesOrders" />
+                /> */}
+                {/* <div className="servicesOrders" /> */}
             </div>
         </PageContainer>
     );

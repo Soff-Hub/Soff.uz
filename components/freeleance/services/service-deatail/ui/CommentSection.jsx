@@ -17,7 +17,6 @@ const CommentSection = ({ id, type }) => {
     } = useGetComments(id, type);
 
     const comments = data?.pages.flatMap(page => page.items) || [];
-    console.log(data)
     const handleUserClick = sellerId => {
         router.push(`/seller/${sellerId}`);
     };

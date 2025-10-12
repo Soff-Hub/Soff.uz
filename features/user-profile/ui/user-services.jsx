@@ -67,7 +67,7 @@ const UserServices = () => {
                 )}>
                 <div className={cn('grid', 'gap-4', gridClass)}>
                     {data?.map((service) => (
-                        <ServiceCard service={service} key={service.id} />
+                        <ServiceCard hasFooter={false} service={service} key={service.id} />
                     ))}
                     {isLoading && <ServiceSkeletonGrid />}
                 </div>
