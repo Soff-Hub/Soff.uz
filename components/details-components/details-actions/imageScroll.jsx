@@ -159,6 +159,7 @@ const ImageCarousel = ({ images, views, demo_link }) => {
                                 className="image-wrapper"
                                 style={{
                                     width: '100%',
+                                    height: 'auto',
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
@@ -170,7 +171,7 @@ const ImageCarousel = ({ images, views, demo_link }) => {
                                     className="swiper-image rounded-3"
                                     style={{
                                         width: '100%',
-                                        height: '100%',
+                                        height: '450px',
                                         objectFit: 'contain',
                                         display: 'block',
                                         userSelect: 'none',
