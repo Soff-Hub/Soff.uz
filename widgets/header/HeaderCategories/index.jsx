@@ -5,8 +5,10 @@ import useResponsive from '~/shared/utilities/useResponsive';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { DownOutlined } from '@ant-design/icons';
-import { Dropdown, Space } from 'antd';
+import { Dropdown, Space, Badge } from 'antd';
 import Link from 'next/link';
+import useOrdersStatus from '~/components/freeleance/myorders/myorder/api/useOrderStatus';
+
 const products = [
     {
         key: '1',
@@ -184,6 +186,9 @@ const HeaderCatergories = () => {
     const { directions } = useSelector((state) => state.profile);
     [...directions, { label: 'Boshqa', value: 'other' }];
     const { push, query, replace, pathname } = useRouter();
+    const { data } = useOrdersStatus();
+
+    const totalOrders = data ? data.requirement_process || 0 : 0;
 
     const handleOrder = () => {
         if (isLoggedIn) {
@@ -246,9 +251,18 @@ const HeaderCatergories = () => {
     return (
         <div className={styles.dropBlock}>
             {!isMobile && isLoggedIn && (
-                <Link href={'/order/my-orders'} target="_blank">
-                    <p className={`${styles.navLink} my-0`}>Buyurtmalarim</p>
-                </Link>
+                <a href="/order/my-orders?tab=2">
+                    <Badge
+                        count={totalOrders}
+                        overflowCount={10}
+                        offset={[-10, 0]}>
+                        <Link href={'/order/my-orders'} target="_blank">
+                            <p className={`${styles.navLink} my-0`}>
+                                Buyurtmalarim
+                            </p>
+                        </Link>
+                    </Badge>
+                </a>
             )}
             <div className={styles.dropBox}>
                 <Dropdown menu={{ items: products }}>

@@ -8,7 +8,7 @@
     gap: 3px;
     margin-right: 20px;
     cursor: pointer;
-    transition: all .3 ease-out;
+    transition: all 0.3 ease-out;
     @media (max-width: 992px) {
         font-size: 15px;
         margin-right: 0px;
@@ -20,10 +20,38 @@
     @media (max-width: 340px) {
         font-size: 11px;
     }
-    &:hover{
+    &:hover {
         color: $color-1st;
     }
 }
+
+.navLinkFreelance {
+    font-size: 16px;
+    font-weight: 400;
+    color: $textColor;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    margin-right: 20px;
+    cursor: pointer;
+    transition: all 0.3 ease-out;
+    @media (max-width: 992px) {
+        font-size: 15px;
+        margin-right: 0px;
+    }
+    @media (max-width: 480px) {
+        font-size: 12px;
+        margin-right: 0px;
+    }
+    @media (max-width: 340px) {
+        font-size: 11px;
+    }
+
+    &:hover {
+        color: rgb(3, 73, 3);
+    }
+}
+
 .loginEntrance {
     background-color: $color-1st;
     font-size: 16px;
@@ -69,4 +97,3 @@
         background-color: #daedce;
     }
 }
-

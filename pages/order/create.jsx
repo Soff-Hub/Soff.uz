@@ -6,17 +6,23 @@ import useCreateOrder from '~/shared/hooks/useCreateOrder';
 import { useRouter } from 'next/router';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { useSelector } from 'react-redux';
+import { sleep } from '~/shared/utilities/sleep';
 
 function OrderCreate() {
     const router = useRouter();
     const { isLoggedIn } = useSelector((state) => state.auth);
 
     useEffect(() => {
-        if (!isLoggedIn) {
-            router.replace(
-                '/auth/login?returnUrl=' + encodeURIComponent('/order/create')
-            );
-        }
+        const handleCheckLogin = async () => {
+            await sleep(200);
+            if (!isLoggedIn) {
+                router.replace(
+                    '/auth/login?returnUrl=' +
+                        encodeURIComponent('/order/create')
+                );
+            }
+        };
+        handleCheckLogin();
     }, [router, isLoggedIn]);
 
     return (

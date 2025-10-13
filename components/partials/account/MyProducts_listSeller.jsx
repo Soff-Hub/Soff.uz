@@ -2,14 +2,13 @@ import { Pagination, Input, Button, Select, Card, Skeleton, Table } from 'antd';
 import { useState, useMemo, useCallback } from 'react';
 import { DownloadOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import Link from 'next/link';
-import { baseURL } from '~/repositories/api';
+import { api, baseURL } from '~/repositories/api';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import useDebounce from '~/shared/hooks/useDebounce';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { useQuery } from '@tanstack/react-query';
-import Image from 'next/image';
 import { cn } from '~/shared/utilities/cn';
 import dayjs from 'dayjs';
 
@@ -46,14 +45,16 @@ export default function PurchasedProducts() {
         setTimeout(() => setLoadingId(null), 1000);
     }, []);
 
-    const handleDownloadThroughTelegram = fileSourceLink => {
-        const fileSourceValue = fileSourceLink
-            .split('/')
-            .pop()
-            .split('.')
-            .join('_');
-        const telegramBotLink = `https://t.me/soff_uz_bot?start=${fileSourceValue}`;
-        window.open(telegramBotLink, '_blank');
+    const handleDownloadThroughTelegram = async (getId) => {
+        try {
+            const fileSourceValue = await api.get(
+                `seller/return-telegram-link/${getId}/`
+            );
+            console.log({ fileSourceValue });
+            window.open(fileSourceValue.data.link, '_blank');
+        } catch (error) {
+            console.error('Telegram download error:', error);
+        }
     };
 
     const columns = useMemo(
@@ -110,7 +111,7 @@ export default function PurchasedProducts() {
                 title: 'Rasm',
                 dataIndex: 'document',
                 key: 'image',
-                render: document =>
+                render: (document) =>
                     document?.poster_url ? (
                         <img
                             src={document?.poster_url}
@@ -126,7 +127,7 @@ export default function PurchasedProducts() {
                 dataIndex: 'document',
                 key: 'name',
 
-                render: document => (
+                render: (document) => (
                     <Link
                         href={`/product/${document?.slug || ''}`}
                         classdocument="cursor-pointer">
@@ -138,19 +139,19 @@ export default function PurchasedProducts() {
                 title: 'Kategoriyasi',
                 dataIndex: 'document',
                 key: 'category',
-                render: document => document?.category?.name || '-',
+                render: (document) => document?.category?.name || '-',
             },
             {
                 title: 'Narxi',
                 dataIndex: 'price',
                 key: 'price',
-                render: p => <span>{formatCurrencyWithSpace(p)} so'm</span>,
+                render: (p) => <span>{formatCurrencyWithSpace(p)} so'm</span>,
             },
             {
                 title: 'Xarid sanasi',
                 dataIndex: 'created_at',
                 key: 'created_at',
-                render: date => (
+                render: (date) => (
                     <span>{dayjs(date).format('YYYY-MM-DD HH:mm')}</span>
                 ),
             },
@@ -200,7 +201,7 @@ export default function PurchasedProducts() {
                             placeholder="Qidiruv"
                             value={search}
                             size="large"
-                            onChange={e => setSearch(e.target.value)}
+                            onChange={(e) => setSearch(e.target.value)}
                             allowClear
                         />
                     </div>
@@ -208,9 +209,9 @@ export default function PurchasedProducts() {
                         <Select
                             value={category}
                             className="w-100"
-                            onChange={value => setCategory(value)}
+                            onChange={(value) => setCategory(value)}
                             allowClear>
-                            {CATEGORY_LIST.map(item => (
+                            {CATEGORY_LIST.map((item) => (
                                 <Option key={item.value} value={item.value}>
                                     {item.title}
                                 </Option>
@@ -258,7 +259,6 @@ const PurchasedProductsLayout = ({
     loadingId,
 }) => {
     const { isDesktop, isMobile } = useResponsive();
-
 
     const hasProducts = products && products.length;
 
@@ -351,7 +351,7 @@ const PurchasedProductsLayout = ({
                     flexDirection: 'column',
                     gap: '16px',
                 }}>
-                {products.map(item => (
+                {products.map((item) => (
                     <div
                         key={item.id}
                         className={cn(
@@ -491,9 +491,7 @@ const PurchasedProductsLayout = ({
                                         </div>
                                     }
                                     onClick={() =>
-                                        handleDownloadThroughTelegram(
-                                            item.document?.file_url
-                                        )
+                                        handleDownloadThroughTelegram(item.id)
                                     }>
                                     <span>Telegram orqali olish</span>
                                 </Button>

@@ -14,6 +14,7 @@ import AffiliateListener from '~/entities/affiliate';
 import { useTelegram } from '~/shared/hooks/useTelegram';
 import { PacmanLoader } from 'react-spinners';
 // import OneSignal from 'react-onesignal';
+import { TelegramLink } from '~/shared/components/telegram-link';
 
 function App({ Component, pageProps }) {
     const { tg } = useTelegram();
@@ -153,6 +154,7 @@ function App({ Component, pageProps }) {
                     <AffiliateListener />
                     <Component {...pageProps} />
                     <Toaster position="top-center" />
+                    <TelegramLink />
                 </Providers>
             )}
         </>

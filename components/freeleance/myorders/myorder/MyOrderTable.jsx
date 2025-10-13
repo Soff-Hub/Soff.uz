@@ -6,7 +6,9 @@ import useCancelOrder from './api/useCancelOrder';
 import useGetReasons from './api/useGetReasons';
 import SelectOrderDrawer from './ui/SelectOrderDrawer';
 import OrderCard from '~/entities/order/order-card';
+import Loader from '~/components/shared/loader';
 import { useRouter } from 'next/router';
+import { EmptyTab } from './MyOrderTabs';
 
 const rejectableStatuses = [
     'order_accepted',
@@ -27,12 +29,12 @@ export const AllOrdersTable = ({ type }) => {
     const router = useRouter();
     const { orderId } = router.query;
 
-    const handleOpenDrawer = order => {
+    const handleOpenDrawer = (order) => {
         setSelectedOrder(order);
         setOpenDrawer(true);
     };
 
-    const handleCancelClick = order => {
+    const handleCancelClick = (order) => {
         setSelectedOrder(order);
         setIsModalOpen(true);
     };
@@ -63,34 +65,40 @@ export const AllOrdersTable = ({ type }) => {
     };
 
     const statusFilter =
-        orders?.filter(order =>
-            type?.includes(order.order_status_doing?.status || 'pending')
+        orders?.filter((order) =>
+            type
+                ? type?.includes(order.order_status_doing?.status || 'pending')
+                : true
         ) || [];
-
-    const isRejectable = Array.isArray(type)
-        ? type.some(t => rejectableStatuses.includes(t))
-        : rejectableStatuses.includes(type);
 
     let ordersContent = null;
     if (ordersLoading) {
-        ordersContent = <p>Yuklanmoqda...</p>;
+        ordersContent = (
+            <div
+                style={{
+                    minHeight: '60vh',
+                }}>
+                <Loader />
+            </div>
+        );
     } else if (statusFilter.length) {
-        ordersContent = statusFilter.map(order => (
+        ordersContent = statusFilter.map((order) => (
             <OrderCard
                 key={order.id}
                 order={order}
                 onOpenDrawer={handleOpenDrawer}
                 onCancel={handleCancelClick}
-                isRejectable={isRejectable}
             />
         ));
     } else {
-        ordersContent = <p>Buyurtmalar topilmadi</p>;
+        ordersContent = (
+            <EmptyTab description="Sizda buyurtmalar mavjud emas" />
+        );
     }
 
     useEffect(() => {
         if (orderId && orders) {
-            const found = orders.find(o => o.id === Number(orderId));
+            const found = orders.find((o) => o.id === Number(orderId));
             if (found) {
                 setSelectedOrder(found);
                 setOpenDrawer(true);
@@ -129,8 +137,8 @@ export const AllOrdersTable = ({ type }) => {
                     className="w-100"
                     placeholder="Bekor qilish sababini tanlang..."
                     value={reason}
-                    onChange={val => setReason(val)}
-                    options={reasons?.map(reason => ({
+                    onChange={(val) => setReason(val)}
+                    options={reasons?.map((reason) => ({
                         value: reason.id,
                         label: reason.reason,
                     }))}

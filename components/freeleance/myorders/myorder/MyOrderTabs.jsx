@@ -4,9 +4,30 @@ import { AllOrdersTable } from './MyOrderTable';
 import useOrdersStatus from './api/useOrderStatus';
 import Loader from '~/components/shared/loader';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
+import { Button } from 'antd';
+
+export const EmptyTab = ({ description }) => {
+    return (
+        <Empty
+            image={Empty.PRESENTED_IMAGE_SIMPLE}
+            style={{
+                height: '50vh',
+                display: 'flex',
+                background: '#fafafa',
+                borderRadius: '8px',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '0 0 32px 0',
+            }}
+            description={description}
+        />
+    );
+};
 
 const MyOrderTabs = () => {
-    const [activeKey, setActiveKey] = useState('1');
+    const [activeKey, setActiveKey] = useState('0');
     const { data, isLoading } = useOrdersStatus();
     const { query } = useRouter();
 
@@ -25,26 +46,18 @@ const MyOrderTabs = () => {
 
     const items = [
         {
+            key: '0',
+            label: `Barchasi ${totalOrders}`,
+            children: totalOrders && <AllOrdersTable type={null} />,
+        },
+        {
             key: '1',
             label: `Yangi ${data?.pending || 0}`,
             children:
                 data?.pending > 0 ? (
                     <AllOrdersTable type={['pending']} />
                 ) : (
-                    <Empty
-                        image={Empty.PRESENTED_IMAGE_SIMPLE}
-                        style={{
-                            height: '50vh',
-                            display: 'flex',
-                            background: '#fafafa',
-                            borderRadius: '8px',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            margin: '0 0 32px 0',
-                        }}
-                        description="Sizda yangi buyurtmalar mavjud emas"
-                    />
+                    <EmptyTab description="Sizda yangi buyurtmalar mavjud emas" />
                 ),
         },
         {
@@ -56,43 +69,17 @@ const MyOrderTabs = () => {
                         type={['order_accepted', 'order_file_sent', 'rejected']}
                     />
                 ) : (
-                    <Empty
-                        image={Empty.PRESENTED_IMAGE_SIMPLE}
-                        style={{
-                            height: '50vh',
-                            display: 'flex',
-                            background: '#fafafa',
-                            borderRadius: '8px',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            margin: '0 0 32px 0',
-                        }}
-                        description="Sizda jarayondagi buyurtmalar mavjud emas"
-                    />
+                    <EmptyTab description="Sizda jarayondagi buyurtmalar mavjud emas" />
                 ),
         },
         {
             key: '3',
-            label: `Tugallandi ${data?.completed || 0}`,
+            label: `Tugallandi ${data?.completed}`,
             children:
                 data?.completed > 0 ? (
                     <AllOrdersTable type={'completed'} />
                 ) : (
-                    <Empty
-                        image={Empty.PRESENTED_IMAGE_SIMPLE}
-                        style={{
-                            height: '50vh',
-                            display: 'flex',
-                            background: '#fafafa',
-                            borderRadius: '8px',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            margin: '0 0 32px 0',
-                        }}
-                        description="Sizda tugallangan buyurtmalar mavjud emas"
-                    />
+                    <EmptyTab description="Sizda tugallangan buyurtmalar mavjud emas" />
                 ),
         },
         {
@@ -102,20 +89,7 @@ const MyOrderTabs = () => {
                 data?.cancelled > 0 ? (
                     <AllOrdersTable type={'cancelled'} />
                 ) : (
-                    <Empty
-                        image={Empty.PRESENTED_IMAGE_SIMPLE}
-                        style={{
-                            height: '50vh',
-                            display: 'flex',
-                            background: '#fafafa',
-                            borderRadius: '8px',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            margin: '0 0 32px 0',
-                        }}
-                        description="Sizda bekor qilingan buyurtmalar mavjud emas"
-                    />
+                    <EmptyTab description="Sizda bekor qilingan buyurtmalar mavjud emas" />
                 ),
         },
     ];
@@ -144,9 +118,40 @@ const MyOrderTabs = () => {
                     justifyContent: 'center',
                 }}
                 description={
-                    <span style={{ fontSize: '16px', color: '#666' }}>
-                        Sizda hozircha buyurtmalar mavjud emas
-                    </span>
+                    <>
+                        <h3
+                            style={{
+                                fontSize: '20px',
+                                fontWeight: '600',
+                                color: '#374151',
+                                marginBottom: '8px',
+                            }}>
+                            Sizda hozircha buyurtmalar mavjud emas
+                        </h3>
+                        <p
+                            style={{
+                                color: '#6b7280',
+                                textAlign: 'center',
+                                maxWidth: '448px',
+                            }}>
+                            Maxsus buyurtmalar bo'limi orqali siz o'zingizga
+                            kerakli xizmatlarni topishingiz va buyurtma
+                            berishingiz mumkin.
+                        </p>
+                        <Link
+                            href="/order/create"
+                            style={{ marginTop: '24px' }}>
+                            <Button
+                                type="primary"
+                                size="large"
+                                style={{
+                                    borderRadius: '8px',
+                                    padding: '0 24px',
+                                }}>
+                                Maxsus buyurtma yaratish
+                            </Button>
+                        </Link>
+                    </>
                 }
             />
         );
@@ -174,6 +179,7 @@ const MyOrderTabs = () => {
                     type="card"
                     activeKey={activeKey}
                     onChange={setActiveKey}
+                    className="order-tabs"
                     items={items}
                     tabPosition="top"
                     renderTabBar={(tabBarProps, DefaultTabBar) => (

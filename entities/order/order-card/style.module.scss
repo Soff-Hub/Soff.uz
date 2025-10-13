@@ -13,31 +13,108 @@
     }
 }
 
+.completed {
+    color: #06aa27;
+    font-size: 32px;
+    float: right;
+}
+
+.cancelled {
+    color: #f5222d;
+    font-size: 32px;
+    float: right;
+}
+
+.inProgress {
+    color: #faad14;
+    font-size: 32px;
+    float: right;
+}
+
+.pending {
+    color: lightgray;
+    font-size: 32px;
+    float: right;
+}
+
+.cardCompleted {
+    padding: 16px;
+    border: 1px solid #e6e6e6;
+    border-radius: 10px;
+    background: #f5fff1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: all 0.3s ease;
+
+    &:hover {
+        box-shadow: 0 6px 16px rgba(151, 250, 172, 0.297);
+    }
+}
+
+.cardInProgress {
+    padding: 16px;
+    border: 1px solid #e6e6e6;
+    border-radius: 10px;
+    background: #fffbe6;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: all 0.3s ease;
+
+    &:hover {
+        box-shadow: 0 6px 16px rgba(250, 236, 151, 0.297);
+    }
+}
+
+.cardCancelled {
+    padding: 16px;
+    border: 1px solid #e6e6e6;
+    border-radius: 10px;
+    background: #fff1f1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: all 0.3s ease;
+
+    &:hover {
+        box-shadow: 0 6px 16px rgba(250, 151, 151, 0.297);
+    }
+}
+
 .titleWrapper {
     display: flex;
-    align-items: center;
+    justify-content: space-between;
     gap: 8px;
-    flex-wrap: wrap;
 
-    .id {
-        font-size: 18px;
-        font-weight: 500;
-        color: #555;
-    }
+    .nameWrapper {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
 
-    .title {
-        font-size: 20px;
-        font-weight: 600;
-        color: #101010;
-        text-transform: capitalize;
-        cursor: pointer;
-
-        &:hover {
-            color: #06aa27;
+        .id {
+            font-size: 18px;
+            font-weight: 500;
+            color: #555;
+            align-self: center;
         }
 
-        @media (max-width: 768px) {
-            font-size: 16px;
+        .titleRow {
+            font-size: 20px;
+            font-weight: 600;
+            color: #101010;
+            text-transform: capitalize;
+            cursor: pointer;
+            align-self: center;
+
+            &:hover {
+                color: #06aa27;
+            }
+
+            @media (max-width: 768px) {
+                font-size: 16px;
+            }
         }
     }
 }
