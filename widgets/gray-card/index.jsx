@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './style.module.scss';
-import CreateOrderModal from '../../shared/components/modals/CreateOrderModal';
-import AuthModal from '~/components/AuthModal';
 import { useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 
 const GrayCard = ({
     title = '',
@@ -10,18 +9,20 @@ const GrayCard = ({
     goProducts = () => {},
     link = '',
 }) => {
-    const [open, setOpen] = useState(false);
-    const [isOpen, setIsOpen] = useState(false);
-    const { isLoggedIn } = useSelector(state => state.auth);
+    const { push } = useRouter();
+    const { isLoggedIn } = useSelector((state) => state.auth);
 
-    const handleOrder = e => {
+    const handleOrder = (e) => {
         e.preventDefault();
         if (isLoggedIn) {
-            setOpen(true);
+            push('/order/create');
         } else {
-            setIsOpen(true);
+            push(
+                '/auth/login?returnUrl=' + encodeURIComponent('/order/create')
+            );
         }
     };
+
     return (
         <section className={styles.readyProducts}>
             <div className={styles.block}>
@@ -37,14 +38,6 @@ const GrayCard = ({
                         className="fa-solid fa-arrow-right"></i>
                 </a>
             </div>
-            <AuthModal
-                open={isOpen}
-                onClose={() => setIsOpen(false)}
-                onSuccess={() => {
-                    setOpen(true);
-                }}
-            />
-            <CreateOrderModal open={open} onClose={() => setOpen(false)} />
         </section>
     );
 };

@@ -17,8 +17,6 @@ import CreateOrderModal from '~/shared/components/modals/CreateOrderModal';
 import { useSelector } from 'react-redux';
 import useCreateChat from '~/components/freeleance/chat/api/useCreateChat';
 import useResponsive from '~/shared/utilities/useResponsive';
-import { set } from 'react-hook-form';
-import { create } from 'domain';
 
 dayjs.extend(relativeTime);
 dayjs.locale('uz-latn');

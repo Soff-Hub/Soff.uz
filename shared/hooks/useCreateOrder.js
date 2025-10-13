@@ -455,28 +455,6 @@ function useCreateOrder() {
                                     paddingLeft: '5px',
                                     paddingRight: '5px',
                                 }}
-                                // breakpoints={{
-                                //     320: {
-                                //         slidesPerView: 3,
-                                //         spaceBetween: 6,
-                                //     },
-                                //     480: {
-                                //         slidesPerView: 4,
-                                //         spaceBetween: 8,
-                                //     },
-                                //     768: {
-                                //         slidesPerView: 5,
-                                //         spaceBetween: 8,
-                                //     },
-                                //     1024: {
-                                //         slidesPerView: 6,
-                                //         spaceBetween: 10,
-                                //     },
-                                //     1200: {
-                                //         slidesPerView: 7,
-                                //         spaceBetween: 12,
-                                //     },
-                                // }}
                                 onProgress={handleThumbProgress}
                                 onSlideChange={handleThumbProgress}
                                 onReachBeginning={() =>

@@ -19,7 +19,7 @@ import { setShowFastDownload, setShowSearch } from '~/store/fast-dowload/slice';
 
 const ServiceDetail = ({ data }) => {
     const { push, back } = useRouter();
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     const {
         service,
         seller_portfolio,
@@ -29,10 +29,9 @@ const ServiceDetail = ({ data }) => {
         user,
         service_items,
     } = data;
-    const { isDesktop, isMobile } = useResponsive()
+    const { isDesktop, isMobile } = useResponsive();
 
-    const pushUser = () =>
-        push(`/seller/${data?.user[0]?.soff_seller_id}`);
+    const pushUser = () => push(`/seller/${data?.user[0]?.soff_seller_id}`);
     const priceBox = {
         days: service?.delivery_days,
         price: service?.price,
@@ -62,6 +61,18 @@ const ServiceDetail = ({ data }) => {
         [data]
     );
 
+    const slider_images = [
+        ...seller_portfolio
+            ?.map((portfolio) =>
+                portfolio?.portfolio_images.map((elem, index) => ({
+                    id: index,
+                    image_url: elem?.image,
+                }))
+            )
+            .flatMap((i) => i),
+        { id: 'poster-img', image_url: service?.poster },
+    ];
+
     useEffect(() => {
         dispatch(setShowSearch(false));
         dispatch(setShowFastDownload(false));
@@ -70,11 +81,16 @@ const ServiceDetail = ({ data }) => {
             dispatch(setShowSearch(true));
             dispatch(setShowFastDownload(true));
         };
-    }, [dispatch])
+    }, [dispatch]);
 
     return (
         <div className="container my-5 navTabsPadding">
-            <Meta title={service?.title} image={service?.poster} description={service?.description} author={full_name} />
+            <Meta
+                title={service?.title}
+                image={service?.poster}
+                description={service?.description}
+                author={full_name}
+            />
             <div className="row">
                 <div className="col-12 col-lg-8">
                     {/* <Breadcrumb
@@ -104,7 +120,7 @@ const ServiceDetail = ({ data }) => {
                                 {full_name || 'No Name'}
                             </span>
                         </div> */}
-                        <ImageCarousel images={service?.poster} />
+                        <ImageCarousel images={slider_images} />
                         <ServiceDescription
                             priceBox={priceBox}
                             description={description}
@@ -114,7 +130,12 @@ const ServiceDetail = ({ data }) => {
                 <div className="col-12 col-lg-4">
                     <PriceBox priceBox={priceBox} />
                     <MoneyBack />
-                    <UserBox rating={service?.avg_rating} feedbacks={service?.feedback_count} priceBox={priceBox} pushUser={pushUser} />
+                    <UserBox
+                        rating={service?.avg_rating}
+                        feedbacks={service?.feedback_count}
+                        priceBox={priceBox}
+                        pushUser={pushUser}
+                    />
                 </div>
             </div>
             <div className="row">
@@ -131,19 +152,19 @@ const ServiceDetail = ({ data }) => {
             {similar_services.length > 0 && (
                 <div>
                     <h3>O'xshash xizmatlar</h3>
-                    <div className='row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-gap-2 row-gap-md-5 row-gap-lg-3'>
-                        {similar_services?.slice(0, isMobile ? 10 : 8)?.map(item => (
-                            <div key={item?.title} className='col px-2'>
-                                <ServiceCard service={item} />
-                            </div>
-                        ))}
+                    <div className="row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-gap-2 row-gap-md-5 row-gap-lg-3">
+                        {similar_services
+                            ?.slice(0, isMobile ? 10 : 8)
+                            ?.map((item) => (
+                                <div key={item?.title} className="col px-2">
+                                    <ServiceCard service={item} />
+                                </div>
+                            ))}
                     </div>
                 </div>
             )}
 
-            {!isDesktop &&
-                <StickyBox data={priceBox} />
-            }
+            {!isDesktop && <StickyBox data={priceBox} />}
         </div>
     );
 };

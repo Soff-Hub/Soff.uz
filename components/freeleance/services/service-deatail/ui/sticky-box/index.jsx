@@ -7,19 +7,22 @@ import ServiceCheckout from '../auth/serviceCheckout';
 import useCreateChat from '~/components/freeleance/chat/api/useCreateChat';
 import { useSelector } from 'react-redux';
 import AuthModal from '~/components/AuthModal';
+import { sleep } from '~/shared/utilities/sleep';
 
 const StickyBox = ({ data }) => {
     const [openAuth, setOpenAuth] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [showPayment, setShowPayment] = useState(false);
     const { mutate: createChat } = useCreateChat();
-    const { isLoggedIn } = useSelector(state => state.auth);
+    const { isLoggedIn } = useSelector((state) => state.auth);
+    const [actionTracker, setActionTracker] = useState(null);
 
     const handleCreateChat = () => {
         if (isLoggedIn) {
             createChat(data?.user[0]?.soff_seller_id);
         } else {
             setOpenAuth(true);
+            setActionTracker('createChat');
         }
     };
 
@@ -28,6 +31,19 @@ const StickyBox = ({ data }) => {
             setIsOpen(true);
         } else {
             setOpenAuth(true);
+            setActionTracker('payment');
+        }
+    };
+
+    const handleAuthSuccess = async () => {
+        await sleep(200);
+        switch (actionTracker) {
+            case 'createChat':
+                createChat(data?.user[0]?.soff_seller_id);
+                break;
+            case 'payment':
+                setIsOpen(true);
+                break;
         }
     };
 
@@ -63,9 +79,7 @@ const StickyBox = ({ data }) => {
             <AuthModal
                 open={openAuth}
                 onClose={() => setOpenAuth(false)}
-                onSuccess={() => {
-                    createChat(data?.user[0]?.soff_seller_id);
-                }}
+                onSuccess={handleAuthSuccess}
             />
             <Modal
                 open={isOpen}

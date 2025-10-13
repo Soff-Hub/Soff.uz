@@ -8,9 +8,7 @@ import useDebounce from '~/shared/hooks/useDebounce';
 import { Tabs } from 'antd';
 import Search_Results_Services from '~/components/elements/search-page-details/services';
 import Search_Results_Specialists from '~/components/elements/search-page-details/specialists';
-import CreateOrderModal from '~/shared/components/modals/CreateOrderModal';
 import useResponsive from '~/shared/utilities/useResponsive';
-import AuthModal from '~/components/AuthModal';
 import { useSelector } from 'react-redux';
 import SerachSide from '~/components/elements/search-page-details/search-page-side';
 import { useFGet } from '~/shared/hooks/useFApi';
@@ -24,12 +22,10 @@ const Search_Results = ({ keyword }) => {
     const debouncedSearchTerm = useDebounce(searchTerm, 1000);
     const { query } = useRouter();
     const [activeTab, setActiveTab] = useState(query?.tab || '1');
-    const [open, setOpen] = useState(false);
     const defaultTabRefSet = useRef(false);
     const { isDesktop } = useResponsive();
     const pageRef = useRef(null);
-    const [authModal, setAuthModal] = useState(false);
-    const { isLoggedIn } = useSelector(state => state.auth);
+    const { isLoggedIn } = useSelector((state) => state.auth);
 
     const { data: topServices, isLoading: topServicesLoading } = useFGet(
         'top-services',
@@ -44,17 +40,21 @@ const Search_Results = ({ keyword }) => {
         },
     });
 
+    const handleCreateOrder = () => {
+        if (isLoggedIn) {
+            router.push('/order/create');
+        } else {
+            router.push(
+                '/auth/login?returnUrl=' + encodeURIComponent('/order/create')
+            );
+        }
+    };
+
     const createBtn = () => (
         <>
             {isDesktop && (
                 <span
-                    onClick={() => {
-                        if (isLoggedIn) {
-                            setOpen(true);
-                        } else {
-                            setAuthModal(true);
-                        }
-                    }}
+                    onClick={handleCreateOrder}
                     className="Search_Results_not_found_btn w-100 text-center py-3">
                     Buyurtma yaratish
                 </span>
@@ -62,7 +62,7 @@ const Search_Results = ({ keyword }) => {
         </>
     );
 
-    const handleSetRouterQuery = currentTab => {
+    const handleSetRouterQuery = (currentTab) => {
         router.push({
             pathname: router.pathname,
             query: {
@@ -92,7 +92,7 @@ const Search_Results = ({ keyword }) => {
         inputEl.current.value = '';
     };
 
-    const handleChangeTab = value => {
+    const handleChangeTab = (value) => {
         setActiveTab(value);
         handleSetRouterQuery(value);
     };
@@ -222,7 +222,9 @@ const Search_Results = ({ keyword }) => {
                                     type="text"
                                     value={searchTerm}
                                     placeholder="Izlayotgan mahsulotingizni toping..."
-                                    onInput={e => setSearchTerm(e.target.value)}
+                                    onInput={(e) =>
+                                        setSearchTerm(e.target.value)
+                                    }
                                 />
                                 {clearTextView}
                             </div>
@@ -242,12 +244,6 @@ const Search_Results = ({ keyword }) => {
                     items={tabItems}
                 />
             </div>
-            <CreateOrderModal open={open} onClose={() => setOpen(false)} />
-            <AuthModal
-                open={authModal}
-                onClose={() => setAuthModal(false)}
-                onSuccess={() => setOpen(true)}
-            />
         </div>
     );
 };

@@ -1,28 +1,24 @@
-
 import React, { useEffect } from 'react';
 import { Form, Modal, Button } from 'antd';
-import BreadCrumb from '~/components/elements/BreadCrumb';
 import PageContainer from '~/widgets/layouts/PageContainer';
 import Meta from '~/components/shared/headers/Meta';
 import useCreateOrder from '~/shared/hooks/useCreateOrder';
 import { useRouter } from 'next/router';
 import useResponsive from '~/shared/utilities/useResponsive';
+import { useSelector } from 'react-redux';
 
 function OrderCreate() {
-    const router = useRouter(); // Next.js uchun
-    // const navigate = useNavigate(); // React Router uchun
+    const router = useRouter();
+    const { isLoggedIn } = useSelector((state) => state.auth);
 
     useEffect(() => {
-        // localStorage dan kerakli ma'lumotlarni tekshirish
-        const user = localStorage.getItem('user');
-        const token = localStorage.getItem('token'); // yoki boshqa key
-        
-        // Agar user yo'q bo'lsa, login sahifasiga yo'naltirish
-        if (!user || !token) {
-            router.replace('/auth/login'); // Next.js uchun
-            // navigate('/login', { replace: true }); // React Router uchun
+        if (!isLoggedIn) {
+            router.replace(
+                '/auth/login?returnUrl=' + encodeURIComponent('/order/create')
+            );
         }
-    }, [router]); 
+    }, [router, isLoggedIn]);
+
     return (
         <PageContainer title="Order Create">
             <div className="ps-page--simple">
@@ -62,7 +58,7 @@ const OrderCreateForm = () => {
         handleOpenConfirm,
         handleCloseConfirm,
     } = useCreateOrder();
-    const { isMobile } = useResponsive()
+    const { isMobile } = useResponsive();
 
     return (
         <div>
@@ -244,7 +240,8 @@ const OrderCreateForm = () => {
                 className="create-order-form"
                 onFinish={handleOpenConfirm}
                 onFinishFailed={(errorInfo) => {
-                    const firstErrorField = errorInfo?.errorFields?.[0]?.name?.[0];
+                    const firstErrorField =
+                        errorInfo?.errorFields?.[0]?.name?.[0];
                     if (firstErrorField) {
                         form.scrollToField(firstErrorField, {
                             behavior: 'smooth',
@@ -258,8 +255,7 @@ const OrderCreateForm = () => {
                     paddingTop: '0',
                 }}>
                 {formItemsContent}
-                {
-                    isMobile &&
+                {isMobile && (
                     <Form.Item
                         style={{
                             marginTop: isMobile ? 0 : '10px',
@@ -271,9 +267,10 @@ const OrderCreateForm = () => {
                             zIndex: isMobile ? 1000 : 'auto',
                             padding: isMobile ? '0' : '0',
                             background: isMobile ? '#fff' : 'transparent', // mobilda orqa fon
-                            boxShadow: isMobile ? '0 -2px 10px rgba(0,0,0,0.05)' : 'none', // engil soyali
-                        }}
-                    >
+                            boxShadow: isMobile
+                                ? '0 -2px 10px rgba(0,0,0,0.05)'
+                                : 'none', // engil soyali
+                        }}>
                         <Button
                             loading={isPending}
                             type="primary"
@@ -284,27 +281,24 @@ const OrderCreateForm = () => {
                                 width: '100%',
                                 borderRadius: isMobile ? 0 : 6,
                             }}
-                            block
-                        >
+                            block>
                             {isPending
                                 ? 'Buyurtmangiz joylashtirilmoqda...'
                                 : 'Buyurtmani joylashtirish'}
                         </Button>
                     </Form.Item>
-                }
+                )}
                 <Form.Item
                     style={{
                         marginTop: '10px',
                         marginBottom: 0,
-                    }}
-                >
+                    }}>
                     <Button
                         loading={isPending}
                         type="primary"
                         htmlType="submit"
                         block
-                        style={{ height: "38px", fontSize: "14px" }}
-                    >
+                        style={{ height: '38px', fontSize: '14px' }}>
                         {isPending
                             ? 'Buyurtmangiz joylashtirilmoqda...'
                             : 'Buyurtmani joylashtirish'}

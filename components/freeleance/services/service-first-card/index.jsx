@@ -1,38 +1,32 @@
-import React, { useState } from 'react'
-import styles from './style.module.scss'
-import CreateOrderModal from '../../../../shared/components/modals/CreateOrderModal'
-import AuthModal from '~/components/AuthModal'
-import { useSelector } from 'react-redux'
+import React from 'react';
+import styles from './style.module.scss';
+import { useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 
 const ServiceFirstCard = () => {
-    const [ open, setOpen ] = useState(false)
-    const [ isOpen, setIsOpen ] = useState(false)
-    const { isLoggedIn } = useSelector(state => state.auth)
+    const { isLoggedIn } = useSelector((state) => state.auth);
+    const { push } = useRouter();
 
     const handleOrder = () => {
-        if(isLoggedIn){
-            setOpen(true)
-        }else{
-            setIsOpen(true)
+        if (isLoggedIn) {
+            push('/order/create');
+        } else {
+            push(
+                '/auth/login?returnUrl=' + encodeURIComponent('/order/create')
+            );
         }
-    }
+    };
 
     return (
-        <>
-            <AuthModal 
-                open={isOpen} 
-                onClose={() => setIsOpen(false)}
-                onSuccess={() => {
-                    setOpen(true)
-                }}
-            />
-            <CreateOrderModal open={open} onClose={() => setOpen(false)}/>
-            <div className={styles.card}>
-                <h3 className={styles.title}>Ishingizni frilanserlarga topshiring.</h3>
-                <button onClick={handleOrder} className={styles.btn}>Hoziroq buyurtma berish</button>
-            </div>
-        </>
-    )
-}
+        <div className={styles.card}>
+            <h3 className={styles.title}>
+                Ishingizni frilanserlarga topshiring.
+            </h3>
+            <button onClick={handleOrder} className={styles.btn}>
+                Hoziroq buyurtma berish
+            </button>
+        </div>
+    );
+};
 
-export default ServiceFirstCard
+export default ServiceFirstCard;

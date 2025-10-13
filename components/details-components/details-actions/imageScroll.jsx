@@ -175,6 +175,11 @@ const ImageCarousel = ({ images, views, demo_link }) => {
                                         display: 'block',
                                         userSelect: 'none',
                                     }}
+                                    onError={(e) => {
+                                        e.target.onerror = null; // Prevent infinite loop
+                                        e.target.src =
+                                            '/static/img/no-document.png';
+                                    }}
                                 />
                             </div>
                         </SwiperSlide>
@@ -339,8 +344,7 @@ const ImageCarousel = ({ images, views, demo_link }) => {
                                                 }
                                             }
                                         }}>
-                                        <Image
-                                            objectFit="cover"
+                                        <img
                                             src={
                                                 item?.image_url ||
                                                 item?.thumbUrl
@@ -354,6 +358,11 @@ const ImageCarousel = ({ images, views, demo_link }) => {
                                                 display: 'block',
                                                 width: '100%',
                                                 height: '100%',
+                                            }}
+                                            onError={(e) => {
+                                                e.target.onerror = null; // Prevent infinite loop
+                                                e.target.src =
+                                                    '/static/img/no-document.png';
                                             }}
                                         />
                                     </div>
