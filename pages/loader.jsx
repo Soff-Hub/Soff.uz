@@ -125,63 +125,20 @@ const Loader = () => {
     const { asPath } = Router;
 
     useEffect(() => {
-        // Better token extraction for iOS 18 compatibility
-        if (asPath && asPath.includes('token=')) {
-            try {
-                // Extract token from URL
-                const urlParams = new URLSearchParams(
-                    asPath.split('?')[1] || ''
-                );
-                const token = urlParams.get('token');
-                const returnUrl = urlParams.get('returnUrl');
-
-                if (token) {
-                    console.log(
-                        'Token found in URL:',
-                        token.substring(0, 20) + '...'
-                    );
-
-                    // Store token
-                    localStorage.setItem('token', token);
-
-                    const userData = {
-                        access: token,
-                        role: 'customer',
-                    };
-
-                    dispatch(login({ user: userData, data: userData }));
-                    dispatch(begin({ id: userData.role }));
-
-                    // Redirect to return URL or default page
-                    if (returnUrl) {
-                        Router.replace(decodeURIComponent(returnUrl));
-                    } else {
-                        Router.replace('/account/sellerproducts');
-                    }
-                    return;
-                }
-            } catch (error) {
-                console.error('Error processing OAuth token:', error);
-                // Fallback to old method if new method fails
-                if (asPath.split('').length > 10) {
-                    const roleBegin = asPath.slice(-1);
-                    const tokenArr = asPath.split('token=');
-                    const tokenPart = tokenArr[1];
-
-                    if (tokenPart) {
-                        const token = tokenPart.split('&')[0]; // Get token before any other params
-                        localStorage.setItem('token', token);
-
-                        const data = {
-                            access: token,
-                            role: 'customer',
-                        };
-
-                        dispatch(login({ user: data, data: data }));
-                        dispatch(begin({ id: roleBegin }));
-                    }
-                }
-            }
+        if (asPath.split('').length > 10) {
+            const roleBegin = asPath.slice(-1);
+            const role = asPath.slice(-20).split('&')[0];
+            const tokenArr = asPath.split('token=');
+            const token = tokenArr[1]?.split('');
+            const list = token?.reverse()?.splice(0, 20);
+            const tokenText = token?.reverse()?.join('');
+            localStorage.setItem('token', tokenText);
+            const data = {
+                access: tokenText,
+                role: 'customer',
+            };
+            dispatch(login({ user: data, data: data }));
+            dispatch(begin({ id: roleBegin }));
         }
 
         if (user?.role === 'admin') {
@@ -189,13 +146,17 @@ const Loader = () => {
         }
 
         dispatch(setAccountLinks(cutomerAccountLink));
+        // }
 
-        // Only redirect if we're not already processing a token
-        if (!asPath.includes('token=') && user?.role) {
-            Router.push('/account/sellerproducts');
-        }
-    }, [user?.role, asPath]);
-
+        // if (
+        // user?.role === 'seller' ||
+        // user?.role === 'admin'
+        // ) {
+        // Router.push('/account/dashbord');
+        // } else if (user?.role === 'customer') {
+        Router.push('/account/sellerproducts');
+        // }
+    }, [user?.role]);
     return (
         <div
             style={{

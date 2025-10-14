@@ -6,13 +6,14 @@ export function cn(...classes) {
 }
 
 
-export function rcn(responsiveClasses) {
-    const { isMobile, isTablet, isDesktop } = useResponsive();
 
-    let activeClass = "";
-    if (isMobile && responsiveClasses.mobile) activeClass = responsiveClasses.mobile;
-    if (isTablet && responsiveClasses.tablet) activeClass = responsiveClasses.tablet;
-    if (isDesktop && responsiveClasses.desktop) activeClass = responsiveClasses.desktop;
+export function useRcn(responsiveClasses) {
+  const { isMobile, isTablet, isDesktop } = useResponsive();
 
-    return cn(activeClass);
+  let activeClass = "";
+  if (isMobile && responsiveClasses.mobile) activeClass = responsiveClasses.mobile;
+  if (isTablet && responsiveClasses.tablet) activeClass = responsiveClasses.tablet;
+  if (isDesktop && responsiveClasses.desktop) activeClass = responsiveClasses.desktop;
+
+  return cn(activeClass);
 }

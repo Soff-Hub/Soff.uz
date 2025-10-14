@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import styles from './style.module.scss';
 import Image from 'next/image';
 import useResponsive from '~/shared/utilities/useResponsive';
-import CreateOrderModal from '~/shared/components/modals/CreateOrderModal';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { DownOutlined } from '@ant-design/icons';
-import { Dropdown, Space } from 'antd';
+import { Dropdown, Space, Badge } from 'antd';
 import Link from 'next/link';
+import useOrdersStatus from '~/components/freeleance/myorders/myorder/api/useOrderStatus';
 
 const products = [
     {
@@ -120,117 +120,130 @@ const products = [
     },
 ];
 
-const templates = (handleOrder) => [
-    {
-        key: '1',
-        icon: (
-            <i
-                style={{ fontSize: '20px', color: 'rgba(0,0,0,0.6)' }}
-                className="fa-solid fa-plus"></i>
-        ),
-        label: (
-            <p className={` ${styles.dropLabel}  `}>Maxsus buyurtma berish</p>
-        ),
-        onClick: handleOrder,
-        style: {
-            borderBottom: '1px solid rgba(0,0,0,0.2)',
-            borderRadius: '0px',
-        },
-    },
-    {
-        key: '2',
-        icon: (
-            <Image
-                src={'/static/svg/book-saved.svg'}
-                alt=""
-                width={20}
-                height={20}
-            />
-        ),
-        label: (
-            <a
-                className={`ml-3 ${styles.dropLabel}`}
-                href="/orders?direction=scientific_work">
-                Ilmiy va Akademik Xizmatlar
-            </a>
-        ),
-    },
-    {
-        key: '3',
-        label: (
-            <a
-                className={`ml-3 ${styles.dropLabel}`}
-                href="/orders?direction=dizayn">
-                Dizayn shablonlari
-            </a>
-        ),
-        icon: (
-            <Image
-                src={'/static/svg/image.svg'}
-                alt=""
-                width={20}
-                height={20}
-            />
-        ),
-    },
-    {
-        key: '4',
-        icon: (
-            <Image
-                src={'/static/svg/monitor.svg'}
-                alt=""
-                width={20}
-                height={20}
-            />
-        ),
-        label: (
-            <a
-                className={`ml-3 ${styles.dropLabel}`}
-                href="/orders?direction=web">
-                Dasturlash xizmatlari
-            </a>
-        ),
-    },
-    {
-        key: '5',
-        label: (
-            <a
-                className={`ml-3 ${styles.dropLabel}`}
-                href="/orders?direction=three_d">
-                3D Dizayn va Vizualizatsiya
-            </a>
-        ),
-        icon: (
-            <Image
-                src={'/static/svg/3dcube.svg'}
-                alt=""
-                width={20}
-                height={20}
-            />
-        ),
-    },
-];
+const templateIcons = {
+    scientific_work: (
+        <Image
+            src={'/static/svg/book-saved.svg'}
+            alt=""
+            width={20}
+            height={20}
+        />
+    ),
+    dizayn: (
+        <Image src={'/static/svg/image.svg'} alt="" width={20} height={20} />
+    ),
+    web: (
+        <Image src={'/static/svg/monitor.svg'} alt="" width={20} height={20} />
+    ),
+    three_d: (
+        <Image src={'/static/svg/3dcube.svg'} alt="" width={20} height={20} />
+    ),
+    marketing: (
+        <Image
+            src={'/static/img/icons/megaphone.png'}
+            alt=""
+            width={20}
+            height={20}
+        />
+    ),
+    seo_traffic: (
+        <Image
+            src={'/static/img/icons/seo.png'}
+            alt=""
+            width={20}
+            height={20}
+        />
+    ),
+    audio_video: (
+        <Image
+            src={'/static/img/icons/soundtrack.png'}
+            alt=""
+            width={20}
+            height={20}
+        />
+    ),
+    business: (
+        <Image
+            src={'/static/img/icons/briefcase.png'}
+            alt=""
+            width={20}
+            height={20}
+        />
+    ),
+    not_found: (
+        <Image
+            src={'/static/svg/not-found.svg'}
+            alt=""
+            width={20}
+            height={20}
+        />
+    ),
+};
 
 const HeaderCatergories = () => {
     const { isMobile } = useResponsive();
-    const [open, setOpen] = useState(false);
     const { isLoggedIn } = useSelector((state) => state.auth);
+    const { directions } = useSelector((state) => state.profile);
+    [...directions, { label: 'Boshqa', value: 'other' }];
     const { push, query, replace, pathname } = useRouter();
+    const { data } = useOrdersStatus();
+
+    const totalOrders = data
+        ? (data.pending || 0) + (data.requirement_process || 0)
+        : 0;
 
     const handleOrder = () => {
         if (isLoggedIn) {
-            setOpen(true);
-            // push('/order/create');
+            push('/order/create');
         } else {
-            push('/auth/login');
+            push('/auth/login?returnUrl=%2Forder%2Fcreate');
         }
     };
 
+    const templates = useMemo(
+        () => [
+            {
+                key: '1',
+                icon: (
+                    <i
+                        style={{ fontSize: '20px', color: 'rgba(0,0,0,0.6)' }}
+                        className="fa-solid fa-plus"></i>
+                ),
+                label: (
+                    <a
+                        href="/order/create"
+                        onClick={(e) => e.preventDefault()}
+                        className={` ${styles.dropLabel}  `}>
+                        Maxsus buyurtma berish
+                    </a>
+                ),
+                onClick: handleOrder,
+                style: {
+                    borderBottom: '1px solid rgba(0,0,0,0.2)',
+                    borderRadius: '0px',
+                },
+            },
+            ...directions.map((dir) => ({
+                key: dir.value,
+                icon: templateIcons[dir.value]
+                    ? templateIcons[dir.value]
+                    : templateIcons['not_found'],
+                label: (
+                    <a
+                        className={`ml-3 ${styles.dropLabel}`}
+                        href={`/orders?direction=${dir.value}`}>
+                        {dir.label}
+                    </a>
+                ),
+            })),
+        ],
+        [directions]
+    );
+
     useEffect(() => {
         if (query?.modal === 'open' && isLoggedIn) {
-            setOpen(true);
+            push('/order/create');
             const newQuery = { ...query };
-            delete newQuery.modal;
             replace({ pathname: pathname, query: newQuery }, undefined, {
                 shallow: true,
             });
@@ -240,8 +253,17 @@ const HeaderCatergories = () => {
     return (
         <div className={styles.dropBlock}>
             {!isMobile && isLoggedIn && (
-                <Link href={'/order/my-orders'} target="_blank">
-                    <p className={`${styles.navLink} my-0`}>Buyurtmalarim</p>
+                <Link href="/order/my-orders">
+                    <Badge
+                        count={totalOrders}
+                        overflowCount={9}
+                        offset={[-10, 0]}>
+                        <Link href={'/order/my-orders'} target="_blank">
+                            <p className={`${styles.navLink} my-0`}>
+                                Buyurtmalarim
+                            </p>
+                        </Link>
+                    </Badge>
                 </Link>
             )}
             <div className={styles.dropBox}>
@@ -255,7 +277,7 @@ const HeaderCatergories = () => {
                 </Dropdown>
             </div>
             <div className={`${styles.orderBox} ${styles.dropBox}`}>
-                <Dropdown menu={{ items: templates(handleOrder) }}>
+                <Dropdown menu={{ items: templates }}>
                     <a onClick={(e) => e.preventDefault()}>
                         <Space className={styles.dropLabel}>
                             Buyurtma berish
@@ -264,7 +286,6 @@ const HeaderCatergories = () => {
                     </a>
                 </Dropdown>
             </div>
-            <CreateOrderModal open={open} onClose={() => setOpen(false)} />
         </div>
     );
 };

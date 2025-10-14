@@ -19,16 +19,19 @@ const PriceBox = ({ priceBox }) => {
         if (isLoggedIn) {
             setIsOpen(true)
         } else {
+            // Login qilish kerak bo'lganda localStorage'ga belgi qo'yamiz
+            localStorage.setItem('openPaymentModal', 'true');
             setOpen(true)
         }
     }
 
+    // URL parametrini tekshirish
     useEffect(() => {
-        if (query?.modal === "open") {
+        if (query?.paymodal === "open" && isLoggedIn) {
             setIsOpen(true)
 
             const newQuery = { ...query }
-            delete newQuery.modal
+            delete newQuery.paymodal
             replace(
                 {
                     pathname: pathname,
@@ -38,7 +41,26 @@ const PriceBox = ({ priceBox }) => {
                 { shallow: true }
             )
         }
-    }, [query?.modal])
+    }, [query?.paymodal, isLoggedIn, pathname, replace])
+
+    // Login statusini tekshirish
+    useEffect(() => {
+        if (isLoggedIn) {
+            const shouldOpenModal = localStorage.getItem('openPaymentModal');
+            if (shouldOpenModal === 'true') {
+                setIsOpen(true);
+                localStorage.removeItem('openPaymentModal');
+            }
+        }
+    }, [isLoggedIn])
+
+    // Yangi callback funksiya
+const handleAuthSuccess = () => {
+    setOpen(false); // AuthModal yopish
+    setTimeout(() => {
+        setIsOpen(true); // Payment modal ochish
+    }, 300); // 300ms kechikish
+}
 
     return (
         <div className={styles.priceBox}>
@@ -131,7 +153,11 @@ const PriceBox = ({ priceBox }) => {
                     )}
                 </div>
             </Modal>
-            <AuthModal open={open} onClose={() => setOpen(false)} />
+      <AuthModal 
+    open={open} 
+    onClose={() => setOpen(false)}
+    onSuccess={handleAuthSuccess}  // ← SHU QATOR MUHIM!
+/>
         </div>
     );
 };

@@ -1,80 +1,100 @@
+import React, { useMemo, useRef } from 'react';
 import { Pagination, Skeleton } from 'antd';
-import React from 'react';
 import SearchResultsSpecialists_Filter from './search-page-filter/search-results-specialists-filter';
 import SearchResultsSpecialists_Card from './search-page-card/searchResultsSpecialists_Card';
 import Search_Results_NotFound from './notFound';
 import { useRouter } from 'next/router';
-import LastAddedProductCard from './search-page-card/lastAddedProductCard';
-import SerachSide from './search-page-side';
+import useScrollToNotFound from './useScrollToNotFound';
+import { useFGet } from '~/shared/hooks/useFApi';
 
-export default function Search_Results_Specialists({ data, lastProducts, createBtn }) {
+const currentTab = '3';
+export default function Search_Results_Specialists({ children }) {
     const router = useRouter();
-    const isLoading = false;
+    const notFoundRef = useRef();
+    const queriesRef = useRef(router.query);
+    queriesRef.current =
+        router.query.tab === currentTab ? router.query : queriesRef.current;
+    const { keyword = '', offset: queryOffset } = queriesRef.current;
 
-    const limit = 32; // 🔑 nechta specialist chiqishi
-    const offset = Number(router.query.offset || 0);
+    const limit = 50; // 🔑 nechta specialist chiqishi
+    const offset = Number(queryOffset || 0);
     const currentPage = Math.floor(offset / limit) + 1;
+
+    const { data, isLoading } = useFGet(
+        ['customer/sellers', keyword, limit, offset],
+        `users/sellers?limit=${limit}&offset=${offset}&search=${keyword}`
+    );
 
     const showResults =
         Array.isArray(data?.results) && data?.results?.length > 0;
 
-    return (
-        <div>
-            <SearchResultsSpecialists_Filter total={data?.count} />
-            <div className="Search_Results_Specialists">
-                <div>
-                    <div className="Search_Results_Specialists_Wrap">
-                        {isLoading && (
-                            <>
-                                {Array(12)
-                                    .fill(0)
-                                    .map((_, i) => (
-                                        <Skeleton.Image
-                                            key={i}
-                                            active
-                                            className="Search_Results_Wrap_skeleton"
-                                        />
-                                    ))}
-                            </>
-                        )}
-                        {showResults &&
-                            data?.results?.map((item, index) => (
-                                <SearchResultsSpecialists_Card
-                                    key={item?.soff_seller_id}
-                                    data={item}
-                                />
-                            ))}
-                    </div>
+    useScrollToNotFound(notFoundRef, showResults, data);
 
-                    {/* ✅ Pagination */}
-                    {showResults && (
-                        <Pagination
-                            className="mt-3"
-                            pageSize={limit}
-                            current={currentPage}
-                            total={data?.count}
-                            onChange={newPage => {
-                                const newOffset = (newPage - 1) * limit;
-                                router.push({
-                                    pathname: router.pathname,
-                                    query: {
-                                        ...router.query,
-                                        offset: newOffset,
-                                        limit,
-                                    },
-                                });
-                            }}
+    let resultsContent = null;
+    if (isLoading) {
+        resultsContent = (
+            <div className="Search_Results_Specialists_Wrap">
+                {Array(12)
+                    .fill(0)
+                    .map((_, i) => (
+                        <Skeleton
+                            key={i}
+                            active
+                            className="Search_Results_Wrap_skeleton"
                         />
-                    )}
-
-                    {!showResults && <Search_Results_NotFound />}
-                </div>
-
-                <SerachSide
-                    lastProducts={lastProducts}
-                    createBtn={createBtn}
-                />
+                    ))}
             </div>
+        );
+    } else if (showResults) {
+        resultsContent = (
+            <>
+                <div className="Search_Results_Specialists_Wrap">
+                    {data.results.map(item => (
+                        <SearchResultsSpecialists_Card
+                            key={item?.soff_seller_id}
+                            data={item}
+                        />
+                    ))}
+                </div>
+                {/* ✅ Pagination */}
+                <Pagination
+                    style={{
+                        marginBottom: '100px',
+                        marginTop: '20px',
+                    }}
+                    pageSize={limit}
+                    current={currentPage}
+                    pageSizeOptions={[]}
+                    total={data?.count}
+                    onChange={newPage => {
+                        const newOffset = (newPage - 1) * limit;
+                        router.push({
+                            pathname: router.pathname,
+                            query: {
+                                ...router.query,
+                                offset: newOffset,
+                                limit,
+                            },
+                        });
+                    }}
+                />
+            </>
+        );
+    } else {
+        resultsContent = <Search_Results_NotFound ref={notFoundRef} />;
+    }
+
+    return (
+        <div className="Search_Results_Products container">
+            <div className="d-flex">
+                <div className="w-100">
+                    <div className="mb-3">
+                        <SearchResultsSpecialists_Filter total={data?.count} />
+                    </div>
+                    <div>{resultsContent}</div>
+                </div>
+            </div>
+            {children}
         </div>
     );
 }

@@ -6,62 +6,87 @@ import { BeatLoader } from 'react-spinners';
 import Axios from 'axios';
 import { useRouter } from 'next/router';
 import { baseUrlAuth } from '~/repositories/Repository';
+import { useMutation } from '@tanstack/react-query';
 
-export default function LoginForm({ onSuccess, setCode }) {
+export default function LoginForm({
+    onSuccess,
+    isModal,
+    setCode,
+    openTelegram,
+}) {
     const [type, setType] = useState('t'); // t, e
-    const [loading, setLoading] = useState(false);
     const router = useRouter();
-    const handleSubmit = async ({ phone, email }) => {
-        setLoading(true);
-        const data = {
-            phone_or_email: type === 't' ? '+998' + phone : email,
-            role: 'customer',
-        };
-        try {
+    const [loading, setLoading] = useState(false);
+
+    const { mutate: handleSubmit } = useMutation({
+        mutationKey: ['auth-register'],
+        mutationFn: async ({ phone, email }) => {
+            setLoading(true);
+            const data = {
+                phone_or_email: type === 't' ? '+998' + phone : email,
+                role: 'customer',
+            };
             const resp = await Axios.post(baseUrlAuth + 'auth/register/', data);
             localStorage.setItem('via_', resp?.data?.via_);
             localStorage.setItem('msg', resp?.data?.msg);
             localStorage.setItem('data', JSON.stringify(data));
-            if (typeof onSuccess === 'function') {
-                onSuccess(resp.data?.user);
+            return resp;
+        },
+        onSuccess: (resp) => {
+            setLoading(false);
+            if (isModal) {
+                onSuccess();
                 setCode(resp.data?.user);
             } else {
                 router.push({
-                    query: { ...router.query, user: resp.data?.user },
+                    query: {
+                        ...router.query,
+                        user: resp.data?.user,
+                    },
                     pathname: '/auth/code-verify',
                 });
             }
-        } catch (err) {
+        },
+        onError: (error) => {
             setLoading(false);
             const modal = Modal.error({
                 centered: true,
                 title: 'Xatolik',
                 content:
-                    err?.response?.data?.msg || JSON.stringify(err?.response),
+                    error?.response?.data?.msg ||
+                    JSON.stringify(error?.response),
             });
             modal.update;
-        }
-    };
+        },
+    });
 
     return (
         <div style={{ backgroundColor: '#f1f1f1', padding: '50px 20px' }}>
-            <div className='container p-0'>
-                <div className='ps-form--account'>
+            <div className="container p-0">
+                <div className="ps-form--account">
                     <Form onFinish={handleSubmit}>
-                        <div className='d-flex justify-content-center align-items-center flex-column mb-4'>
+                        <div className="d-flex justify-content-center align-items-center flex-column mb-4">
                             <span style={{ fontSize: '28px', fontWeight: 700 }}>
                                 Kirish
                             </span>
                         </div>
                         <GoogleBox
+                            isModal={isModal}
+                            onSuccess={onSuccess}
+                            openTelegram={openTelegram}
+                            setCode={setCode}
                             params={
                                 router.query?.id ? `?id=${router.query.id}` : ''
                             }
                         />
 
-                        <Divider size="large" style={{borderColor: "rgba(0,0,0,0.2)"}}>Yoki</Divider>
+                        <Divider
+                            size="large"
+                            style={{ borderColor: 'rgba(0,0,0,0.2)' }}>
+                            Yoki
+                        </Divider>
                         <Segmented
-                            onChange={value => setType(value)}
+                            onChange={(value) => setType(value)}
                             options={[
                                 {
                                     label: 'Telefon raqam',
@@ -75,16 +100,16 @@ export default function LoginForm({ onSuccess, setCode }) {
                                 },
                             ]}
                             block
-                            className='mb-5'
-                            size='small'
+                            className="mb-5"
+                            size="small"
                             style={{ height: '38px' }}
                             value={type}
                         />
 
                         {type === 'e' ? (
                             <Form.Item
-                                name='email'
-                                className='mb-4'
+                                name="email"
+                                className="mb-4"
                                 rules={[
                                     {
                                         required: true,
@@ -107,13 +132,13 @@ export default function LoginForm({ onSuccess, setCode }) {
                                             }}
                                         />
                                     }
-                                    type='email'
-                                    placeholder='Elektron pochta'
+                                    type="email"
+                                    placeholder="Elektron pochta"
                                 />
                             </Form.Item>
                         ) : (
                             <Form.Item
-                                name='phone'
+                                name="phone"
                                 rules={[
                                     {
                                         required: true,
@@ -126,36 +151,35 @@ export default function LoginForm({ onSuccess, setCode }) {
                                             'Iltimos, haqiqiy telefon raqam kiriting',
                                     },
                                 ]}
-                                normalize={value =>
+                                normalize={(value) =>
                                     value.replace(/\D/g, '').slice(0, 9)
                                 }>
                                 <Input
-                                    autoComplete='off'
+                                    autoComplete="off"
                                     style={{ height: '50px', fontSize: '16px' }}
-                                    type='text'
-                                    placeholder='Telefon raqam'
-                                    addonBefore='+998'
+                                    type="text"
+                                    placeholder="Telefon raqam"
+                                    addonBefore="+998"
                                 />
                             </Form.Item>
                         )}
 
-                        <div className='form-group submit mt-5'>
+                        <div className="form-group submit mt-5">
                             {loading ? (
                                 <button
                                     disabled={true}
-                                    type='submit'
-                                    className='ps-btn ps-btn--fullwidth'>
-                                    <BeatLoader color='#fff' />
+                                    type="submit"
+                                    className="ps-btn ps-btn--fullwidth">
+                                    <BeatLoader color="#fff" />
                                 </button>
                             ) : (
                                 <button
-                                    type='submit'
-                                    className='ps-btn text-white fw-normal ps-btn--fullwidth'>
+                                    type="submit"
+                                    className="ps-btn text-white fw-normal ps-btn--fullwidth">
                                     Ko'dni olish
                                 </button>
                             )}
                         </div>
-
                     </Form>
                 </div>
             </div>

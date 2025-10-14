@@ -39,7 +39,7 @@
             font-family: Montserrat !important;
         }
     }
-    .top-seller-image_desc{
+    .top-seller-image_desc {
         position: absolute;
         top: 50%;
         left: 50%;
@@ -47,15 +47,63 @@
     }
 }
 
-.ant-card-body{
+.ant-card-body {
     padding: 0 !important;
 }
 
-.order{
-    .ant-card-bordered{
+.order {
+    .ant-card-bordered {
         border: none !important;
     }
-    .ant-ribbon-text{
+    .ant-ribbon-text {
         font-size: 9px !important;
     }
+}
+
+.swiper {
+    .swiper-slide {
+        width: max-content !important;
+    }
+}
+
+.categorySwiper {
+    padding: 60px 0;
+    width: 100%;
+}
+
+.categorySwiperBeginning::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 60px;
+    height: 100%;
+    z-index: 11;
+    background: linear-gradient(
+        to left,
+        rgba(241, 243, 255, 0.05),
+        rgba(255, 255, 255, 1) 80%
+    );
+}
+
+.categorySwiperEnding::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 60px;
+    height: 100%;
+    z-index: 11;
+    background: linear-gradient(
+        to right,
+        rgba(241, 243, 255, 0.05),
+        rgba(255, 255, 255, 1) 80%
+    );
+}
+
+.mui-tel-input .MuiInputAdornment-root {
+    display: none !important;
+}
+.mui-tel-input .MuiInputBase-root {
+    padding-left: 2px !important;
 }

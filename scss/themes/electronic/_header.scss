@@ -1,8 +1,6 @@
-
-
 .header--electronic {
     background-color: #022335;
-    
+
     // background-image: url('../../../public/static/img/soff/spring2\ 2.png');
     background-size: contain;
     background-repeat: no-repeat;
@@ -195,5 +193,153 @@
 .ps-panel--sidebar {
     .ps-panel__header {
         background-color: $color-electronic;
+    }
+}
+
+.ps-basket {
+    .ant-popover-content {
+        margin-right: 10px;
+    }
+
+    .ant-popover-inner {
+        padding: 0px;
+        overflow: hidden;
+    }
+
+    &__content {
+        position: relative;
+        overflow-y: auto;
+        max-height: 400px;
+        width: 300px;
+
+        &__items {
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 20px;
+
+            &__item {
+                @include standard-card();
+
+                display: flex;
+                gap: 10px;
+                justify-content: space-between;
+
+                &__thumbnail {
+                    width: 60px;
+                    height: 60px;
+                    border-radius: 25px;
+
+                    img {
+                        object-fit: contain;
+                    }
+                }
+
+                &__content {
+                    flex: 1;
+
+                    h4 {
+                        font-size: 14px;
+                        margin-bottom: 5px;
+                        font-weight: 600;
+
+                        a {
+                            color: $color-1st;
+
+                            &:hover {
+                                color: $color-electronic;
+                            }
+                        }
+                    }
+
+                    .free-product-text {
+                        width: fit-content;
+                    }
+
+                    p {
+                        font-size: 13px;
+                        color: darken($color-text, 20%);
+                    }
+                }
+
+                &__remove {
+                    align-self: start;
+                    color: darken($color-text, 20%);
+                    font-size: 16px;
+                    padding: 5px;
+
+                    &:hover {
+                        color: $color-electronic;
+                    }
+                }
+            }
+        }
+
+        &__footer {
+            padding: 10px;
+            position: sticky;
+            bottom: 0;
+            border-radius: 10px 10px 0px 0px;
+            border-top: 1px solid #eaeaea;
+            background: #fcfcfc;
+            box-shadow: 0 -10px 8px rgba(0, 0, 0, 0.1);
+
+            h3 {
+                display: block;
+                margin-bottom: 20px;
+                font-size: 18px;
+                font-weight: 600;
+
+                strong {
+                    float: right;
+                    color: red;
+                }
+            }
+
+            &__figure {
+                margin-bottom: 0;
+                display: flex;
+                flex-flow: row nowrap;
+                justify-content: space-between;
+                align-items: center;
+                gap: 10px;
+
+                .btn {
+                    text-decoration: none;
+                    border-radius: 6px;
+                    transition: all 0.3s ease;
+                    border: 1px solid $color-electronic;
+                }
+
+                &__btn--primary {
+                    padding: 10px;
+                    font-size: 16px;
+                    text-align: center;
+                    width: 100%;
+                    background-color: $color-electronic !important;
+                    color: #ffffff !important;
+                    @extend .btn;
+
+                    &:hover {
+                        filter: brightness(0.8);
+                    }
+                }
+
+                &__btn--secondary {
+                    padding: 10px;
+                    font-size: 16px;
+                    text-align: center;
+                    width: 100%;
+                    color: $color-1st !important;
+                    @extend .btn;
+
+                    &:hover {
+                        background-color: $color-electronic !important;
+                        color: #ffffff !important;
+                    }
+                }
+            }
+        }
     }
 }

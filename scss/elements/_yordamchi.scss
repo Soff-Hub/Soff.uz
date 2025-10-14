@@ -9,7 +9,21 @@
 .btn_color {
     color: #fff !important;
     width: 100%;
-    margin-top: 51px;
+    margin-top: 30px;
+}
+
+.sticky_color_btn {
+    display: none !important;
+    @media (max-width: 768px) {
+        display: block !important;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: 0;
+        border-radius: 0 !important;
+        z-index: 1000;
+    }
 }
 
 .tolov-usullari {
@@ -221,24 +235,43 @@
 }
 
 .cart-product {
+    position: relative;
     width: 100%;
+
     .cartCardBlock {
         padding: 10px;
         display: flex;
     }
+
     .cartCardTitle {
         padding: 10px;
         flex: 1;
         font-size: 24px;
         color: #06c;
+
         @media (max-width: 992px) {
             font-size: 20px;
         }
+
         @media (max-width: 768px) {
             font-size: 16px;
         }
+
         @media (max-width: 576px) {
             font-size: 12px;
+        }
+    }
+
+    .cartCardDelete {
+        @media screen and (min-width: 600px) {
+            display: none;
+        }
+
+        a {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 18px;
         }
     }
 }
@@ -258,11 +291,24 @@
 }
 
 .ps-block--shopping-total {
+    @include media('<sm') {
+        padding: 16px;
+        h3 {
+            font-size: 20px;
+        }
+    }
+
     .ps-block__product {
         .ps-block__estimate a:first-child {
             display: block;
             width: 70% !important;
             padding-right: 10px;
+            text-align: left;
+        }
+
+        .ps-block__estimate a {
+            font-size: 14px;
+            text-align: right;
         }
     }
 }
@@ -442,7 +488,7 @@
 
         .ps-product__content {
             position: relative;
-            padding-right: 10px; 
+            padding-right: 10px;
             padding-left: 0px;
 
             .ps-product__remove {
@@ -456,6 +502,7 @@
             a {
                 color: #06c;
                 font-size: 16px;
+
                 @media (max-width: 576px) {
                     font-size: 14px;
                 }
@@ -555,9 +602,11 @@
             .ps-product__title {
                 padding-left: 10px;
                 font-size: 20px;
+
                 @media (max-width: 992px) {
                     font-size: 18px;
                 }
+
                 @media (max-width: 576px) {
                     font-size: 16px;
                 }
@@ -2209,6 +2258,7 @@
     0% {
         opacity: 0;
     }
+
     100% {
         opacity: 1;
     }
@@ -2309,23 +2359,29 @@
     0% {
         transform: translateX(0);
     }
+
     25% {
         transform: translateX(6px);
     }
+
     50% {
         transform: translateX(0);
     }
+
     75% {
         transform: translateX(-6px);
     }
+
     100% {
         transform: translateX(0);
     }
 }
 
 .vibrate {
-    position: relative; /* absolute emas, relative yaxshiroq bo'ladi */
-    animation: vibrate 200ms ease; /* animatsiyani takrorlash uchun infinite */
+    position: relative;
+    /* absolute emas, relative yaxshiroq bo'ladi */
+    animation: vibrate 200ms ease;
+    /* animatsiyani takrorlash uchun infinite */
 }
 
 .vibrate-overlay {
@@ -2413,6 +2469,7 @@
     p {
         color: white;
     }
+
     i {
         color: white;
     }
@@ -2469,6 +2526,7 @@
         background-color: #00a44f;
     }
 }
+
 .scroll-buy-btn-no-active {
     transition: all 0.3s ease;
     bottom: -55px;
@@ -2478,9 +2536,11 @@
     0% {
         width: 90%;
     }
+
     50% {
         width: 91%;
     }
+
     100% {
         width: 90%;
     }
@@ -2512,21 +2572,25 @@
     padding: 48px 50px 44px;
     background: #fff;
     border-radius: 10px !important;
+
     .type_payment_h3 {
         font-family: 'Poppins';
         font-weight: 600;
         font-size: 25px;
         line-height: 37.5px;
         letter-spacing: 0%;
+
         @media (min-width: 768px) and (max-width: 1024px) {
             padding: 0 !important;
             font-size: 20px;
             line-height: 30.5px;
         }
+
         @media (max-width: 425px) {
             padding: 0 10px;
         }
     }
+
     .type_payment_description {
         font-family: 'Poppins';
         font-weight: 400;
@@ -2534,15 +2598,18 @@
         line-height: 28.5px;
         letter-spacing: 2%;
         margin: 29px 0 50px;
+
         @media (min-width: 768px) and (max-width: 1024px) {
             font-size: 12px;
             line-height: 20.5px;
             margin: 10px 0 20px;
         }
+
         @media (max-width: 425px) {
             padding: 0 10px;
         }
     }
+
     @media (max-width: 425px) {
         padding: 0px;
     }
@@ -2555,7 +2622,8 @@
     line-height: 27px;
     letter-spacing: 0%;
     color: #312f30;
-    margin: 48px 0 10px;
+    margin: 20px 0 10px;
+
     @media (min-width: 768px) and (max-width: 1024px) {
         font-weight: 500;
         font-size: 15px;

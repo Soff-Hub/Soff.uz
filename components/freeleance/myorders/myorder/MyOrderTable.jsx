@@ -1,21 +1,33 @@
-import React, { useState } from "react";
-import { Modal, Select, message } from "antd";
-import { useQueryClient } from "@tanstack/react-query";
-import useGetOrders from "./api/useGetOrders";
-import useCancelOrder from "./api/useCancelOrder";
-import useGetReasons from "./api/useGetReasons";
-import SelectOrderDrawer from "./ui/SelectOrderDrawer";
-import OrderCard from "../../../../entities/order/order-card";
+import React, { useEffect, useState } from 'react';
+import { Modal, Select, message } from 'antd';
+import { useQueryClient } from '@tanstack/react-query';
+import useGetOrders from './api/useGetOrders';
+import useCancelOrder from './api/useCancelOrder';
+import useGetReasons from './api/useGetReasons';
+import SelectOrderDrawer from './ui/SelectOrderDrawer';
+import OrderCard from '~/entities/order/order-card';
+import Loader from '~/components/shared/loader';
+import { useRouter } from 'next/router';
+import { EmptyTab } from './MyOrderTabs';
+
+const rejectableStatuses = [
+    'order_accepted',
+    'order_file_sent',
+    'rejected',
+    'pending',
+];
 
 export const AllOrdersTable = ({ type }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState(null);
-    const [reason, setReason] = useState("");
-    const { data: orders } = useGetOrders();
+    const [reason, setReason] = useState('');
+    const { data: orders, isLoading: ordersLoading } = useGetOrders();
     const { mutate: cancelOrder, isPending: isCancelling } = useCancelOrder();
     const { data: reasons } = useGetReasons();
     const [openDrawer, setOpenDrawer] = useState(false);
     const queryClient = useQueryClient();
+    const router = useRouter();
+    const { orderId } = router.query;
 
     const handleOpenDrawer = (order) => {
         setSelectedOrder(order);
@@ -34,10 +46,12 @@ export const AllOrdersTable = ({ type }) => {
                 {
                     onSuccess: () => {
                         setIsModalOpen(false);
-                        setReason("");
+                        setReason('');
                         setSelectedOrder(null);
-                        message.success("Buyurtma muvaffaqiyatli bekor qilindi!");
-                        queryClient.invalidateQueries(["ordersStatus"]);
+                        message.success(
+                            'Buyurtma muvaffaqiyatli bekor qilindi!'
+                        );
+                        queryClient.invalidateQueries(['ordersStatus']);
                     },
                 }
             );
@@ -46,27 +60,65 @@ export const AllOrdersTable = ({ type }) => {
 
     const handleModalCancel = () => {
         setIsModalOpen(false);
-        setReason("");
+        setReason('');
         setSelectedOrder(null);
     };
 
     const statusFilter =
         orders?.filter((order) =>
-            type?.includes(order.order_status_doing?.status || "pending")
+            type
+                ? type?.includes(order.order_status_doing?.status || 'pending')
+                : true
         ) || [];
+
+    let ordersContent = null;
+    if (ordersLoading) {
+        ordersContent = (
+            <div
+                style={{
+                    minHeight: '60vh',
+                }}>
+                <Loader />
+            </div>
+        );
+    } else if (statusFilter.length) {
+        ordersContent = statusFilter.map((order) => (
+            <OrderCard
+                key={order.id}
+                order={order}
+                onOpenDrawer={handleOpenDrawer}
+                onCancel={handleCancelClick}
+            />
+        ));
+    } else {
+        ordersContent = (
+            <EmptyTab description="Sizda buyurtmalar mavjud emas" />
+        );
+    }
+
+    useEffect(() => {
+        if (orderId && orders) {
+            const found = orders.find((o) => o.id === Number(orderId));
+            if (found) {
+                setSelectedOrder(found);
+                setOpenDrawer(true);
+
+                const { orderId, ...rest } = router.query;
+                router.replace(
+                    {
+                        pathname: router.pathname,
+                        query: rest,
+                    },
+                    undefined,
+                    { shallow: true } // sahifani qayta yuklamasdan
+                );
+            }
+        }
+    }, [orderId, orders]);
 
     return (
         <>
-            <div className="d-flex flex-column gap-3">
-                {statusFilter.map((order) => (
-                    <OrderCard
-                        key={order.id}
-                        order={order}
-                        onOpenDrawer={handleOpenDrawer}
-                        onCancel={handleCancelClick}
-                    />
-                ))}
-            </div>
+            <div className="d-flex flex-column gap-3">{ordersContent}</div>
 
             <Modal
                 title="Buyurtmani bekor qilish"
@@ -75,8 +127,7 @@ export const AllOrdersTable = ({ type }) => {
                 onCancel={handleModalCancel}
                 okText="Bekor qilish"
                 cancelText="Yopish"
-                confirmLoading={isCancelling}
-            >
+                confirmLoading={isCancelling}>
                 <p>
                     Haqiqatan ham “{selectedOrder?.title}” buyurtmasini bekor
                     qilmoqchimisiz?

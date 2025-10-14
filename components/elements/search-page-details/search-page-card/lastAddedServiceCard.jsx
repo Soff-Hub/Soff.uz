@@ -1,9 +1,41 @@
-import { useRouter } from 'next/router'
-import React from 'react'
-import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper'
+import { useRouter } from 'next/router';
+import React from 'react';
+import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
+
+// Helper function to validate slug
+const isValidSlug = slug => {
+    return (
+        slug &&
+        typeof slug === 'string' &&
+        slug.trim().length > 0 &&
+        slug !== 'undefined' &&
+        slug !== 'null'
+    );
+};
 
 const LastAddedServiceCard = ({ service }) => {
-    const { push } = useRouter()
+    const { push } = useRouter();
+
+    const handleClick = () => {
+        if (!isValidSlug(service?.slug)) {
+            console.error(
+                'Invalid service slug for navigation:',
+                service?.slug
+            );
+            return;
+        }
+        push(`/service/${service.slug}`);
+    };
+
+    // Don't render if service or slug is invalid
+    if (!service || !isValidSlug(service?.slug)) {
+        console.warn(
+            'LastAddedServiceCard: Invalid service data or slug',
+            service
+        );
+        return null;
+    }
+
     return (
         <div
             style={{
@@ -16,34 +48,33 @@ const LastAddedServiceCard = ({ service }) => {
                 transition: 'box-shadow 0.3s ease',
                 boxShadow: '0 0 6px rgba(0, 0, 0, 0.05)',
                 backgroundColor: '#fff',
-                flexDirection: "column"
+                flexDirection: 'column',
             }}
-            onMouseEnter={(e) =>
+            onMouseEnter={e =>
                 (e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)')
             }
-            onMouseLeave={(e) =>
-                (e.currentTarget.style.boxShadow = '0 0 6px rgba(0, 0, 0, 0.05)')
+            onMouseLeave={e =>
+                (e.currentTarget.style.boxShadow =
+                    '0 0 6px rgba(0, 0, 0, 0.05)')
             }
-
-            onClick={() => push(`/service/${service?.slug}`)}
-        >
+            onClick={handleClick}>
             <p
                 style={{
                     color: '#111',
-                    fontSize: "16px",
-                    fontWeight: "600"
+                    fontSize: '16px',
+                    fontWeight: '600',
                 }}
-                className='m-0'>
+                className="m-0">
                 {service?.title}
             </p>
-            <p className='m-0'>
+            <p className="m-0">
                 Narxi:{' '}
                 <span style={{ fontWeight: 600, color: '#00a44f' }}>
                     {formatCurrencyWithSpace(service?.price)} so'm
                 </span>
             </p>
         </div>
-    )
-}
+    );
+};
 
-export default LastAddedServiceCard
+export default LastAddedServiceCard;

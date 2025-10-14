@@ -3,16 +3,16 @@ import { useSelector } from 'react-redux';
 import axiosInstance from '~/shared/api/freeleanceApi';
 
 const useGetOrderById = (id) => {
-    const { user } = useSelector(state => state.auth);
+    const { user } = useSelector((state) => state.auth);
     const axios = axiosInstance(user?.access);
 
     return useQuery({
-        queryKey: ["order", id],
+        queryKey: ['order', id],
         queryFn: async () => {
             const { data } = await axios.get(`order/${id}`);
             return data;
         },
-        enabled: !!id,
+        enabled: !!id && !!user?.access,
         retry: 1,
         refetchOnWindowFocus: false,
     });

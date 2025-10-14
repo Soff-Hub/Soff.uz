@@ -56,3 +56,12 @@ export const faqs = [
             'Agar Soff.uz bilan bog‘lanishingiz kerak bo‘lsa, bizning Telegram kanali orqali yoki email orqali bizga murojaat qilishingiz mumkin. Shuningdek, saytimizda mavjud Yordam markazi orqali tezkor javoblar olishingiz mumkin.',
     },
 ];
+
+export const digitalDirections = [
+    { value: "file", label: "Ilmiy ishlar" },
+    { value: "3d", label: "3D moddellar va Vizualizatsiya" },
+    { value: "design", label: "Dizayn shablonlari" },
+    { value: "template", label: "Turli sohalar uchun shablonlar" },
+    { value: "video", label: "Video darsliklar" },
+    { value: "website", label: "Dasturlash xizmatlar"},
+]

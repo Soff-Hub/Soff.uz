@@ -53,12 +53,12 @@ export default function SoffFreelancerPage({
                         />
                     </div>
                 )}
-                <GrayCard
+                {/* <GrayCard
                     title="Izlaganingiz yo’qmi? O'z buyurtmangizni joylashtiring!"
                     btn="Buyurtmar berish"
-                    link='https://t.me/soff_freelancing_bot'
-                />
-                <div className="servicesOrders" />
+                    // link='https://t.me/soff_freelancing_bot'
+                /> */}
+                {/* <div className="servicesOrders" /> */}
             </div>
         </PageContainer>
     );
@@ -70,7 +70,7 @@ export async function getServerSideProps(context) {
         category_id = '',
         search = '',
         direction = '',
-        limit = 20,
+        limit = 23,
         offset = 0,
     } = query;
 

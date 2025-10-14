@@ -1,17 +1,53 @@
-import { Button, Modal, ConfigProvider } from 'antd'
-import styles from './style.module.scss'
-import { useState } from 'react'
-import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper'
-import { MessageOutlined } from '@ant-design/icons'
-import ServiceCheckout from '../auth/serviceCheckout'
-import useCreateChat from '~/components/freeleance/chat/api/useCreateChat'
+import { Button, Modal, ConfigProvider } from 'antd';
+import styles from './style.module.scss';
+import { useState } from 'react';
+import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
+import { MessageOutlined } from '@ant-design/icons';
+import ServiceCheckout from '../auth/serviceCheckout';
+import useCreateChat from '~/components/freeleance/chat/api/useCreateChat';
+import { useSelector } from 'react-redux';
+import AuthModal from '~/components/AuthModal';
+import { sleep } from '~/shared/utilities/sleep';
 
 const StickyBox = ({ data }) => {
-    const [isOpen, setIsOpen] = useState(false)
-    const [showPayment, setShowPayment] = useState(false)
-    const { mutate: createChat } = useCreateChat()
+    const [openAuth, setOpenAuth] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
+    const [showPayment, setShowPayment] = useState(false);
+    const { mutate: createChat } = useCreateChat();
+    const { isLoggedIn } = useSelector((state) => state.auth);
+    const [actionTracker, setActionTracker] = useState(null);
 
-    return ( 
+    const handleCreateChat = () => {
+        if (isLoggedIn) {
+            createChat(data?.user[0]?.soff_seller_id);
+        } else {
+            setOpenAuth(true);
+            setActionTracker('createChat');
+        }
+    };
+
+    const handlePayment = () => {
+        if (isLoggedIn) {
+            setIsOpen(true);
+        } else {
+            setOpenAuth(true);
+            setActionTracker('payment');
+        }
+    };
+
+    const handleAuthSuccess = async () => {
+        await sleep(200);
+        switch (actionTracker) {
+            case 'createChat':
+                createChat(data?.user[0]?.soff_seller_id);
+                break;
+            case 'payment':
+                setIsOpen(true);
+                break;
+        }
+    };
+
+    return (
         <ConfigProvider
             theme={{
                 token: {
@@ -20,38 +56,39 @@ const StickyBox = ({ data }) => {
                     colorPrimaryHover: '#009045',
                     colorPrimaryActive: '#007a39',
                 },
-            }}
-        >
+            }}>
             <div className={styles.stickyBox}>
                 <div className={styles.wrapper}>
                     <Button
                         type="default"
                         icon={<MessageOutlined />}
                         className={styles.customBtn}
-                        onClick={() => createChat(data?.user[0]?.soff_seller_id)}
-                    >
+                        onClick={handleCreateChat}>
                         <span className={styles.chatTitle}>Chat</span>
                     </Button>
 
                     <Button
                         type="primary"
                         className={`${styles.customBtn} ${styles.customBtnShine} ${styles.customBtnGlow}`}
-                        onClick={() => setIsOpen(true)}
-                    >
-                        Buyurtma berish ({formatCurrencyWithSpace(data?.price)} so'm)
+                        onClick={handlePayment}>
+                        Buyurtma berish ({formatCurrencyWithSpace(data?.price)}{' '}
+                        so'm)
                     </Button>
                 </div>
             </div>
-
+            <AuthModal
+                open={openAuth}
+                onClose={() => setOpenAuth(false)}
+                onSuccess={handleAuthSuccess}
+            />
             <Modal
                 open={isOpen}
                 onCancel={() => {
-                    setIsOpen(false)
-                    setShowPayment(false)
+                    setIsOpen(false);
+                    setShowPayment(false);
                 }}
                 footer={null}
-                width={600}
-            >
+                width={600}>
                 <div className="type_payment p-lg-5 p-md-5 p-4">
                     {!showPayment ? (
                         <>
@@ -62,9 +99,10 @@ const StickyBox = ({ data }) => {
                             <div className="security-message mb-4 text-center">
                                 <i className="fa-solid fa-shield-halved text-success fs-4 mb-2"></i>
                                 <p className="text-muted mb-0">
-                                    Sizning to'lovingiz Soff tizimi tomonidan xavfsiz saqlanadi.
-                                    Mutaxassisga to'lov faqat siz ishni ko'rib chiqib,
-                                    tasdiqlaganingizdan so'ng amalga oshiriladi.
+                                    Sizning to'lovingiz Soff tizimi tomonidan
+                                    xavfsiz saqlanadi. Mutaxassisga to'lov faqat
+                                    siz ishni ko'rib chiqib, tasdiqlaganingizdan
+                                    so'ng amalga oshiriladi.
                                 </p>
                             </div>
 
@@ -73,12 +111,17 @@ const StickyBox = ({ data }) => {
                                     <div className="d-flex align-items-center">
                                         <i className="fa-solid fa-file-lines text-primary me-3 fs-4"></i>
                                         <div>
-                                            <h5 className="mb-1 fw-bold">{data?.title}</h5>
+                                            <h5 className="mb-1 fw-bold">
+                                                {data?.title}
+                                            </h5>
                                         </div>
                                     </div>
                                     <div className="text-end">
                                         <h4 className="text-primary mb-0 fw-bold">
-                                            {formatCurrencyWithSpace(data?.price)} so'm
+                                            {formatCurrencyWithSpace(
+                                                data?.price
+                                            )}{' '}
+                                            so'm
                                         </h4>
                                     </div>
                                 </div>
@@ -89,8 +132,7 @@ const StickyBox = ({ data }) => {
                                     type="primary"
                                     size="large"
                                     className="px-5 py-2"
-                                    onClick={() => setShowPayment(true)}
-                                >
+                                    onClick={() => setShowPayment(true)}>
                                     Buyurtma berish
                                     <i className="fa-solid fa-arrow-right ms-2"></i>
                                 </Button>
@@ -102,9 +144,10 @@ const StickyBox = ({ data }) => {
                                 <h3 className="type_payment_h3 mb-0"></h3>
                                 <Button
                                     type="text"
-                                    icon={<i className="fa-solid fa-arrow-left"></i>}
-                                    onClick={() => setShowPayment(false)}
-                                >
+                                    icon={
+                                        <i className="fa-solid fa-arrow-left"></i>
+                                    }
+                                    onClick={() => setShowPayment(false)}>
                                     Orqaga
                                 </Button>
                             </div>
@@ -116,7 +159,7 @@ const StickyBox = ({ data }) => {
                 </div>
             </Modal>
         </ConfigProvider>
-    )
-}
+    );
+};
 
-export default StickyBox
+export default StickyBox;

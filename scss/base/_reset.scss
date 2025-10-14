@@ -6,8 +6,10 @@ html {
 
 body {
     margin: 0;
-    height: 100%;
-    overflow-x: hidden !important;
+    padding: 0;
+    font-size: $document-font-size;
+    background-color: #f5f6f7;
+    position: relative;
 }
 
 #__next.loaded {

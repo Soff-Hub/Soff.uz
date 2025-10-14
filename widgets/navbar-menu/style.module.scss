@@ -6,7 +6,23 @@
 
     .navbarWrapper {
         display: flex;
+        align-items: center;
         gap: 10px;
+    }
+
+    .swipe_btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        svg {
+            position: relative;
+        }
+    }
+
+    .swipeNext {
+        transform: rotate(180deg);
+        @extend .swipe_btn;
     }
 
     ul {
@@ -26,4 +42,4 @@
     @media (max-width: 992px) {
         display: none;
     }
-}  
+}

@@ -34,8 +34,8 @@ const UserBox = ({ pushUser, priceBox, rating, feedbacks }) => {
 
     const formattedLastActive = last_active
         ? dayjs(last_active)
-              .locale('uz-latn')
-              .format('DD-MMMM YYYY, HH:mm')
+            .locale('uz-latn')
+            .format('DD-MMMM YYYY, HH:mm')
         : 'Faol emas';
 
     return (
@@ -54,11 +54,15 @@ const UserBox = ({ pushUser, priceBox, rating, feedbacks }) => {
                             <h3 style={{ cursor: 'pointer' }} onClick={pushUser}>
                                 {full_name || 'No Name'}
                             </h3>
-                            <div className='d-flex gap-2 align-items-center'>
-                                <StarFilled style={{fontSize: "16px", color: "#faad14"}} />
-                                <span style={{fontSize: "16px", color: "#faad14"}}>{Number(rating).toFixed(1)}</span>
-                                <span>({feedbacks} izoh)</span>
-                            </div>
+                            {rating >= 1 && (
+                                <div className='d-flex gap-2 align-items-center'>
+                                    <StarFilled style={{ fontSize: "16px", color: "#faad14" }} />
+                                    <span style={{ fontSize: "16px", color: "#faad14" }}>
+                                        {Number(rating).toFixed(1)}
+                                    </span>
+                                    <span>({feedbacks} izoh)</span>
+                                </div>
+                            )}
                         </div>
                         <p className="m-0">
                             Oxirgi faollik: {formattedLastActive}

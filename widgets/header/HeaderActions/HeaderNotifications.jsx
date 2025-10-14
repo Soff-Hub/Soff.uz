@@ -3,15 +3,18 @@ import Link from 'next/link'
 
 import { Badge, notification } from 'antd';
 import { SmileOutlined } from '@ant-design/icons';
+import { api as axios } from '~/repositories/api'
 
 import useCredentials from '~/shared/hooks/useCredentials'
 import useWebSocket from '~/shared/hooks/useWebSocket';
-import { wssBaseUrl } from '~/shared/api/end-points';
+import { CHAT_UNSEENS, wssBaseUrl } from '~/shared/api/end-points';
+import { useFGet } from '~/shared/hooks/useFApi';
+import { cn } from '~/shared/utilities/cn';
 
 export default function HeaderNotifications({ color }) {
     const { token } = useCredentials()
     const [api, contextHolder] = notification.useNotification();
-
+    const { data } = useFGet("unread_messages_count", CHAT_UNSEENS, { enabled: !!token, token })
     const [notifications, setNotifications] = useState([]);
     const [notificationsCount, setNotificationsCount] = useState(0);
 
@@ -23,6 +26,25 @@ export default function HeaderNotifications({ color }) {
         },
     });
 
+    const handleRead = async () => {
+        try {
+            await axios.post(
+                'seller/notifications/read-all/',
+                {},
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            )
+            api.destroy()
+            setNotificationsCount(0)
+        } catch (error) {
+            console.error("Bildirishnomalarni o‘qilgan qilishda xatolik:", error)
+        }
+    }
+
+
     const openNotification = () => {
         api.open({
             message: 'Yangi bildirishnoma!',
@@ -33,12 +55,15 @@ export default function HeaderNotifications({ color }) {
                             {i + 1}. {el.title}
                         </h4>
                     ))}
-                    <Link href={`/account/notification`}>
-                        <a className="yashil">
-                            Batafsil{' '}
-                            <i className="fa-regular fa-hand-point-right"></i>
-                        </a>
-                    </Link>
+                    <div className={cn("flex", "justify-between", "items-center")}>
+                        <Link href={`/account/notification`}>
+                            <a className="yashil">
+                                Batafsil{' '}
+                                <i className="fa-regular fa-hand-point-right"></i>
+                            </a>
+                        </Link>
+                        <span onClick={handleRead} className={cn("text-primary", "cursor-pointer", "hover-underline", "transition")}>O'qildi</span>
+                    </div>
                 </div>
             ),
             icon: (
@@ -48,6 +73,7 @@ export default function HeaderNotifications({ color }) {
                     }}
                 />
             ),
+            onClose: handleRead
         });
     };
 
@@ -61,12 +87,22 @@ export default function HeaderNotifications({ color }) {
     return (
         <div>
             {contextHolder}
-
             {token ? (
-                <Link href={`/account/notification`} style={{marginRight:'10px'}}>
-                    <Badge count={notificationsCount} color='#00a44f'>
+                <Link href={`/chat`} style={{ marginRight: '10px' }}>
+                    <Badge offset={[-10, 3]} size='small' count={data?.unread_messages} color='#00a44f'>
                         <a className="header__extra fs-1" style={{ cursor: 'pointer' }}>
-                            <i style={{marginRight: "10px"}} className={`fa-regular fa-bell ${color}`}></i>
+                            <i style={{ marginRight: "10px" }} className={`fa-regular fa-comment-dots ${color}`}></i>
+                        </a>
+                    </Badge>
+                </Link>
+            ) : (
+                ''
+            )}
+            {token ? (
+                <Link href={`/account/notification`} style={{ marginRight: '10px' }}>
+                    <Badge offset={[-10, 3]} size="small" count={notificationsCount} color='#00a44f'>
+                        <a className="header__extra fs-1" style={{ cursor: 'pointer' }}>
+                            <i style={{ marginRight: "10px" }} className={`fa-regular fa-bell ${color}`}></i>
                         </a>
                     </Badge>
                 </Link>

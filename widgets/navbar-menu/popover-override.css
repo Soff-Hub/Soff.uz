@@ -1,0 +1,86 @@
+/* Popover override styles for navbar menu */
+.navbar-menu-popover {
+    z-index: 10000 !important;
+}
+.navbar-menu-popover .ant-popover-content {
+    padding: 0 !important;
+}
+
+.navbar-menu-popover .ant-popover-inner {
+    padding: 0 !important;
+}
+
+.navbar-menu-popover .ant-popover-inner-content {
+    padding: 0 !important;
+}
+
+/* Ensure dropdown styles work inside popover */
+.navbar-menu-popover .dropdown-content {
+    display: flex;
+    background: #f5f6f7;
+    align-items: start;
+    padding: 20px 0px;
+    border: 1px solid #d0d0d0;
+    overflow-y: auto;
+    max-height: 400px;
+}
+
+.navbar-menu-popover .details-title {
+    padding-left: 20px;
+    font-weight: 500;
+    font-size: 16px;
+    border: 2px solid transparent;
+}
+
+.navbar-menu-popover .details-list {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    padding: 0;
+    list-style: none;
+    flex: 1;
+}
+
+.navbar-menu-popover .detail-item {
+    color: #757575;
+    font-size: 14px !important;
+    font-weight: 400;
+    text-align: start;
+    cursor: pointer;
+    list-style: none;
+    padding-left: 25px !important;
+    box-sizing: border-box;
+    border: 3px solid transparent;
+    transition: all 0.5s;
+}
+
+.navbar-menu-popover .detail-item:hover {
+    border-left: 3px solid #00a44f;
+    color: #00a44f !important;
+}
+
+.navbar-menu-popover .templates .orders {
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1;
+}
+
+.navbar-menu-popover .orders {
+    border-left: 1px solid #d0d0d0;
+}
+
+.navbar-menu-popover .section-label {
+    color: #333;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: start;
+    line-height: 26px;
+    padding: 0px 20px 10px 20px;
+    margin: 0;
+    border-left: 3px solid transparent;
+    cursor: pointer;
+}
+
+.__floater__open {
+    z-index: 10000 !important;
+}

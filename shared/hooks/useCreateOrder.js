@@ -12,7 +12,7 @@ import {
 } from 'antd';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 // import { directions } from '../../components/freeleance/constants';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useFGet, useFPost } from '~/shared/hooks/useFApi';
 import dayjs from 'dayjs';
 import { useRouter } from 'next/router';
@@ -25,6 +25,29 @@ import useResponsive from '../utilities/useResponsive';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Thumbs } from 'swiper/modules';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
+import { setShowSearch } from '~/store/fast-dowload/slice';
+import { useTelegram } from './useTelegram';
+
+const direction_content = (
+    <div style={{ maxWidth: '300px' }}>
+        <p>Buyurtma yo'nalishini tanlang:</p>
+        <ul>
+            <li>
+                Buyurtmangizga mos keladigan yo'nalishni tanlang, bu sizning
+                talablaringizga mos mutaxassislarni topishga yordam beradi.
+            </li>
+            <li>
+                Har bir yo'nalish o'z sohasida ixtisoslashgan mutaxassislar
+                guruhiga ega bo'lib, sizning loyihangiz xususiyatlariga qarab
+                eng mos variantni tanlash muhim.
+            </li>
+            <li>
+                To'g'ri yo'nalish tanlovi buyurtmangizning sifatli va o'z
+                vaqtida bajarilishini ta'minlaydi.
+            </li>
+        </ul>
+    </div>
+);
 
 const popover_content = (
     <div style={{ maxWidth: '300px' }}>
@@ -114,6 +137,16 @@ function useCreateOrder() {
     const [showLeftGradient, setShowLeftGradient] = useState(false);
     const [showRightGradient, setShowRightGradient] = useState(true);
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
+    const dispatch = useDispatch();
+    const { tg } = useTelegram();
+
+    useEffect(() => {
+        dispatch(setShowSearch(false));
+
+        return () => {
+            dispatch(setShowSearch(true));
+        };
+    }, [dispatch]);
 
     const { data: categories } = useFGet(
         direction,
@@ -129,33 +162,8 @@ function useCreateOrder() {
         }
     );
 
-    const direction_content = (
-        <div style={{ maxWidth: '300px' }}>
-            <p>Buyurtma yo'nalishini tanlang:</p>
-            <ul>
-                {categories?.map((cat) => (
-                    <li key={cat.id}>
-                        <b>{cat.title}</b>
-                    </li>
-                ))}
-                {/* <li>
-                    <b>Dizayn</b> - logotiplar, brending, veb-dizayn va boshqa
-                    grafik dizayn xizmatlari uchun.
-                </li>
-                <li>
-                    <b>Veb-ishlanmalar</b> - veb-saytlar, mobil ilovalar, botlar
-                    va boshqa dasturiy ta'minot ishlab chiqish uchun.
-                </li>
-                <li>
-                    <b>3D modellashtirish</b> - 3D modellar, animatsiyalar,
-                    AR/VR loyihalari va boshqa 3D xizmatlari uchun.
-                </li> */}
-            </ul>
-        </div>
-    );
-
     const priceList =
-        priceData?.[0]?.service_delivery_price_options?.[0]?.price;
+        priceData?.[0]?.service_delivery_price_options?.[0]?.price?.slice(0, 7);
 
     const minPrice = priceList ? priceList[0]?.amount : 2000;
 
@@ -170,6 +178,7 @@ function useCreateOrder() {
             form.resetFields();
             handleCloseConfirm();
             message.success('Buyurtma muvaffaqiyatli yaratildi!');
+            tg?.close();
             push(`/order/my-orders?orderId=${data?.id}`);
         },
         onError: (err) => {
@@ -273,7 +282,7 @@ function useCreateOrder() {
                         onSelect={(_, option) => {
                             form.setFieldValue(
                                 'title',
-                                titleDescription(direction)
+                                titleDescription(option?.label)
                             );
                         }}
                         placeholder={inputInfoToCreateOrder[
@@ -315,7 +324,7 @@ function useCreateOrder() {
                     ]}>
                     <TextArea
                         style={{ resize: 'none' }}
-                        rows={6}
+                        rows={4}
                         placeholder={
                             inputInfoToCreateOrder['description'].placeholder
                         }
@@ -376,7 +385,7 @@ function useCreateOrder() {
                     rules={[{ required: true, message: 'Narx kiriting!' }]}>
                     <InputNumber
                         min={minPrice}
-                        style={{ width: '100%', height: '50px' }}
+                        style={{ width: '100%' }} // height'ni olib tashlang, CSS'dan keladi
                         className="form-element"
                         placeholder={inputInfoToCreateOrder.price.placeholder}
                         size="large"
@@ -446,28 +455,6 @@ function useCreateOrder() {
                                     paddingLeft: '5px',
                                     paddingRight: '5px',
                                 }}
-                                // breakpoints={{
-                                //     320: {
-                                //         slidesPerView: 3,
-                                //         spaceBetween: 6,
-                                //     },
-                                //     480: {
-                                //         slidesPerView: 4,
-                                //         spaceBetween: 8,
-                                //     },
-                                //     768: {
-                                //         slidesPerView: 5,
-                                //         spaceBetween: 8,
-                                //     },
-                                //     1024: {
-                                //         slidesPerView: 6,
-                                //         spaceBetween: 10,
-                                //     },
-                                //     1200: {
-                                //         slidesPerView: 7,
-                                //         spaceBetween: 12,
-                                //     },
-                                // }}
                                 onProgress={handleThumbProgress}
                                 onSlideChange={handleThumbProgress}
                                 onReachBeginning={() =>
@@ -590,25 +577,58 @@ function useCreateOrder() {
         handleCloseConfirm,
     };
 }
-
 const withPopover = (item, isDesktop, position) => {
     return isDesktop ? (
         <Popover
             key={item.id}
             placement={position}
             title={item.title}
-            content={item.popoverContent}>
+            content={item.popoverContent}
+            overlayStyle={{
+                maxWidth: '300px',
+                zIndex: 1050,
+            }}
+            overlayInnerStyle={{
+                boxShadow:
+                    '0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08)',
+            }}
+            align={{
+                offset:
+                    typeof window !== 'undefined' && window.innerWidth < 1400
+                        ? [0, 10]
+                        : [10, 0],
+            }}>
             {item.content}
         </Popover>
     ) : (
-        <div key={item.key}>{item.content}</div>
+        <div key={item.id}>{item.content}</div>
     );
 };
-
 const definePosition = (index, length) => {
+    if (typeof window !== 'undefined') {
+        const screenWidth = window.innerWidth;
+
+        // 1024px dan 1400px oralig'ida - tepada/pastda
+        if (screenWidth >= 1024 && screenWidth < 1400) {
+            if (index < 2) return 'top';
+            if (index >= length - 2) return 'bottom';
+            return 'top';
+        }
+
+        // 768px dan 1024px oralig'ida - faqat top
+        if (screenWidth >= 768 && screenWidth < 1024) {
+            return 'top';
+        }
+
+        // 768px dan kichik (mobile) - bottomLeft
+        if (screenWidth < 768) {
+            return 'bottomLeft';
+        }
+    }
+
+    // 1400px va undan katta - o'ng tomonda
     if (index === 0) return 'rightTop';
     if (index === length - 1) return 'rightBottom';
     return 'right';
 };
-
 export default useCreateOrder;

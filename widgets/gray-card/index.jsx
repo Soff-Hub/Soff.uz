@@ -1,19 +1,36 @@
 import React from 'react';
 import styles from './style.module.scss';
+import { useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
+
 const GrayCard = ({
     title = '',
     btn = '',
-    goProducts = () => { },
+    goProducts = () => {},
     link = '',
 }) => {
+    const { push } = useRouter();
+    const { isLoggedIn } = useSelector((state) => state.auth);
+
+    const handleOrder = (e) => {
+        e.preventDefault();
+        if (isLoggedIn) {
+            push('/order/create');
+        } else {
+            push(
+                '/auth/login?returnUrl=' + encodeURIComponent('/order/create')
+            );
+        }
+    };
+
     return (
         <section className={styles.readyProducts}>
             <div className={styles.block}>
                 <h1 className={styles.title}>{title}</h1>
                 <a
-                    onClick={goProducts}
+                    onClick={handleOrder}
                     href={link}
-                    target='_blank'
+                    target="_blank"
                     className={styles.catalogSeeAll}>
                     {btn}{' '}
                     <i

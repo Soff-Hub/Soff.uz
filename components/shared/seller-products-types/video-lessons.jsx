@@ -23,9 +23,7 @@ export default function VideoLessons({ pid }) {
         keepPreviousData: true,
     });
 
-    useEffect(() => {
-        console.log('Video lessons products', products);
-    }, [products]);
+ 
 
     // 🔹 Pagination handler
     const handlePageChange = page => {

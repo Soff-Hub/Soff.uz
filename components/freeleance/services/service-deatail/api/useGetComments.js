@@ -15,11 +15,9 @@ const useGetComments = (id, type) => {
             return data;
         },
         getNextPageParam: (lastPage, allPages) => {
-            // `lastPage.total` = umumiy
-            // `allPages.length * 10` = hozirgacha yuklangan
             const loaded = allPages.length * 10;
             if (loaded < lastPage.total) {
-                return allPages.length + 1; // keyingi sahifa
+                return allPages.length + 1;
             }
             return undefined;
         },

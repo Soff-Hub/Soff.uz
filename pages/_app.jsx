@@ -1,19 +1,24 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import '~/public/static/fonts/Linearicons/Font/demo-files/demo.css';
 import '~/public/static/fonts/font-awesome/css/font-awesome.min.css';
 import '~/public/static/css/bootstrap.min.css';
 import '~/public/static/css/slick.min.css';
 import '~/scss/style.scss';
 import '~/scss/electronic.scss';
+import '~/widgets/navbar-menu/popover-override.css';
 import Head from 'next/head';
 import NextProgress from 'next-progress';
 import { Toaster } from 'react-hot-toast';
 import { Providers } from '~/app/providers';
 import AffiliateListener from '~/entities/affiliate';
 import { useTelegram } from '~/shared/hooks/useTelegram';
+import { PacmanLoader } from 'react-spinners';
+// import OneSignal from 'react-onesignal';
+import { TelegramLink } from '~/shared/components/telegram-link';
 
 function App({ Component, pageProps }) {
     const { tg } = useTelegram();
+    const [siteLoaded, setSiteLoaded] = useState(false);
 
     useEffect(() => {
         tg?.ready();
@@ -51,6 +56,37 @@ function App({ Component, pageProps }) {
             document.removeEventListener('keydown', handleKeyDown);
         };
     }, []);
+
+    // ✅ Sayt to‘liq yuklanguncha loader ko‘rsatish
+    useEffect(() => {
+        const handleLoad = () => {
+            // Barcha JS, CSS, img va fontlar yuklandi
+            setTimeout(() => {
+                setSiteLoaded(true);
+            }, 400); // biroz delay bilan silliq o'tish
+        };
+
+        if (document.readyState === 'complete') {
+            handleLoad();
+        } else {
+            window.addEventListener('load', handleLoad);
+        }
+
+        return () => {
+            window.removeEventListener('load', handleLoad);
+        };
+    }, []);
+
+    // useEffect(() => {
+    //     if (typeof window !== 'undefined') {
+    //         OneSignal.init({
+    //             appId: '4c89c0b3-5aea-4145-b4cc-de98a7c8397a',
+    //             notifyButton: {
+    //                 enable: true,
+    //             }
+    //         });
+    //     }
+    // }, []);
 
     return (
         <>
@@ -95,11 +131,32 @@ function App({ Component, pageProps }) {
                 options={{ showSpinner: false }}
                 color="#00A44F"
             />
-            <Providers>
-                <AffiliateListener />
-                <Component {...pageProps} />
-                <Toaster position="top-center" />
-            </Providers>
+
+            {/* ✅ Loader — sayt to‘liq yuklanmaguncha PacmanLoader chiqadi */}
+            {!siteLoaded && (
+                <div
+                    style={{
+                        position: 'fixed',
+                        inset: 0,
+                        background: '#fff',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        zIndex: 9999,
+                        transition: 'opacity 0.4s ease',
+                    }}>
+                    <PacmanLoader color="#00A44F" size={30} />
+                </div>
+            )}
+
+            {siteLoaded && (
+                <Providers>
+                    <AffiliateListener />
+                    <Component {...pageProps} />
+                    <Toaster position="top-center" />
+                    <TelegramLink />
+                </Providers>
+            )}
         </>
     );
 }

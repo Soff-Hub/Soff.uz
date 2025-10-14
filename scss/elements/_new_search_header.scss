@@ -614,10 +614,14 @@
             margin: 0 auto;
         }
 
-
         @media (max-width: 768px) {
             padding: 0 !important;
             margin: 0 auto;
+        }
+    }
+    .order-tabs {
+        .ant-tabs-nav {
+            padding: 0 !important;
         }
     }
 }
@@ -652,13 +656,11 @@
         align-items: center;
         justify-content: start;
 
-
         .global_search_results_input {
             border: none;
             outline: none;
             background: none;
             width: 80%;
-
 
             &::placeholder {
                 color: #7b7b7b;
@@ -671,7 +673,6 @@
         }
     }
 }
-
 
 .global_search_results_SignInBtn {
     display: flex;
@@ -689,7 +690,6 @@
     line-height: normal;
     cursor: pointer;
 
-
     &:hover {
         border-radius: 4.167px;
         background: rgba(0, 164, 79, 0.8);
@@ -701,7 +701,6 @@
 .Search_Results {
     border-bottom: 1px solid #dbdbdb;
     margin-bottom: 28px;
-
 
     .Search_Results_container {
         // height: 55px;
@@ -719,12 +718,10 @@
             scrollbar-width: none;
             display: flex;
 
-
             @media (max-width: 550px) {
                 gap: 0;
                 justify-content: space-between;
             }
-
 
             .activeTab {
                 color: #7b7b7b;
@@ -738,18 +735,15 @@
                 list-style-type: none;
                 padding-bottom: 8px !important;
 
-
                 @media (max-width: 550px) {
                     font-size: 12px;
                     gap: 0;
                     justify-content: space-between;
                 }
 
-
                 @media (max-width: 400px) {
                     font-size: 10px;
                 }
-
 
                 @media (max-width: 350px) {
                     font-size: 8px;
@@ -763,7 +757,6 @@
         }
     }
 }
-
 
 .Search_Results_not_found {
     display: flex;
@@ -786,8 +779,7 @@
         line-height: normal;
         margin: 40px 0;
         text-align: center;
-    }    
-    
+    }
 }
 
 .Search_Results_not_found_btn {
@@ -802,10 +794,12 @@
         left: -75%;
         width: 50%;
         height: 100%;
-        background: linear-gradient(120deg,
-                transparent,
-                rgba(255, 255, 255, 0.5),
-                transparent);
+        background: linear-gradient(
+            120deg,
+            transparent,
+            rgba(255, 255, 255, 0.5),
+            transparent
+        );
         transform: skewX(-20deg);
         animation: shine 2s infinite;
     }
@@ -820,10 +814,9 @@
     padding: 6px 12px;
     cursor: pointer;
 
-
     &:hover {
         background: rgba(0, 164, 79, 0.8);
-    }   
+    }
 }
 
 @keyframes shine {
@@ -923,7 +916,6 @@
     grid-template-columns: 65% 30%;
     gap: 57px;
 
-
     @media (max-width: 900px) {
         display: block;
     }
@@ -933,13 +925,11 @@
         background: #fff;
         box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.1);
 
-
         @media (max-width: 900px) {
             display: none;
         }
     }
 }
-
 
 .Search_Results_Products_Wrap {
     display: flex;
@@ -951,7 +941,6 @@
             display: none;
         }
     }
-
 
     .Search_Results_Products_card {
         padding: 15px;
@@ -985,18 +974,16 @@
                 height: 80px;
             }
 
-
             @media (max-width: 350px) {
                 width: 60px;
                 height: 60px;
             }
         }
 
-
         .Search_Results_Products_card_title {
             color: #000;
             font-family: 'Poppins';
-            font-size: 20px;
+            font-size: 18px;
             font-style: normal;
             font-weight: 600;
             line-height: normal;
@@ -1050,23 +1037,19 @@
                     font-weight: 500;
                     line-height: normal;
 
-
                     @media (max-width: 600px) {
                         font-size: 14px;
                     }
 
-
                     @media (max-width: 450px) {
                         font-size: 14px;
                     }
-
 
                     @media (max-width: 350px) {
                         font-size: 14px;
                     }
                 }
             }
-
 
             .Search_Results_Products_card_price {
                 color: #7b7b7b;
@@ -1081,11 +1064,9 @@
                     font-size: 16px;
                 }
 
-
                 @media (max-width: 450px) {
                     font-size: 16px;
                 }
-
 
                 @media (max-width: 350px) {
                     font-size: 16px;
@@ -1116,11 +1097,9 @@
                         font-size: 16px;
                     }
 
-
                     @media (max-width: 450px) {
                         font-size: 16px;
                     }
-
 
                     @media (max-width: 350px) {
                         font-size: 16px;
@@ -1138,14 +1117,12 @@
     margin-bottom: 43px;
     align-items: center;
 
-
     @media (max-width: 1150px) {
         flex-direction: column;
         justify-content: start;
         align-items: start;
         gap: 20px;
     }
-
 
     .countSpecialist {
         color: #7b7b7b;
@@ -1157,35 +1134,29 @@
         letter-spacing: 0.18px;
         margin: 0;
 
-
         @media (max-width: 800px) {
             font-size: 15px;
         }
 
-
         @media (max-width: 600px) {
             font-size: 12px;
         }
-
 
         @media (max-width: 400px) {
             font-size: 10px;
         }
     }
 
-
     .Search_Results_Specialists_form {
         display: flex;
         justify-content: end;
         gap: 20px;
-
 
         @media (max-width: 1150px) {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             width: 100%;
         }
-
 
         @media (max-width: 600px) {
             display: flex;
@@ -1194,13 +1165,11 @@
             width: 100%;
         }
 
-
         @media (max-width: 350px) {
             display: grid;
             grid-template-columns: repeat(1, 1fr);
             width: 100%;
         }
-
 
         .Search_Results_Specialists_form_inputBox {
             display: flex;
@@ -1212,23 +1181,19 @@
             box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.15);
             width: 281px;
 
-
             @media (max-width: 1150px) {
                 width: 100%;
             }
 
-
             @media (max-width: 350px) {
                 padding: 5px 10px;
             }
-
 
             input {
                 width: 80%;
                 border: none;
                 outline: none;
                 background: none;
-
 
                 &::placeholder {
                     color: #7b7b7b;
@@ -1258,7 +1223,6 @@
                 width: 45%;
             }
 
-
             @media (max-width: 350px) {
                 width: 100%;
                 padding: 5px 10px;
@@ -1273,22 +1237,18 @@
     grid-template-columns: 1fr 30%;
     gap: 30px !important;
 
-
     @media (max-width: 1000px) {
         gap: 25px !important;
     }
-
 
     @media (max-width: 900px) {
         display: block;
     }
 
-
     .forAdds {
         border-radius: 10px;
         background: #fff;
         box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.1);
-
 
         @media (max-width: 900px) {
             display: none;
@@ -1296,34 +1256,29 @@
     }
 }
 
-
 .Search_Results_Specialists_Wrap {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 10px;
     row-gap: 10px;
-
+    width: 100%;
 
     @media (max-width: 1300px) {
         grid-template-columns: repeat(4, 1fr);
     }
 
-
     @media (max-width: 1250px) {
         grid-template-columns: repeat(3, 1fr);
     }
-
 
     @media (max-width: 650px) {
         grid-template-columns: repeat(2, 1fr);
     }
 
-
     .Search_Results_Wrap_skeleton {
         width: 100% !important;
         height: 250px !important;
         border-radius: 10px;
-
 
         @media (max-width: 400px) {
             height: 200px !important;
@@ -1335,12 +1290,10 @@
         height: 250px !important;
         border-radius: 10px;
 
-
         @media (max-width: 400px) {
             height: 200px !important;
         }
     }
-
 
     .Search_Results_Specialists_Card {
         display: flex;
@@ -1354,23 +1307,19 @@
         box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.1);
         cursor: pointer;
 
-
         &:hover {
             border-radius: 10px;
             background: #fff;
             box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.15);
         }
 
-
         @media (max-width: 650px) {
             padding: 15px;
         }
 
-
         @media (max-width: 380px) {
             padding: 5px;
         }
-
 
         .Search_Results_Specialists_Card_img {
             width: 126px;
@@ -1384,13 +1333,11 @@
                 height: 100px;
             }
 
-
             @media (max-width: 350px) {
                 width: 80px;
                 height: 80px;
             }
         }
-
 
         .Search_Results_Specialists_Card_status_box {
             gap: 3px;
@@ -1398,16 +1345,13 @@
             align-items: center;
             margin: 15px 0;
 
-
             @media (max-width: 450px) {
                 margin: 10px 0;
             }
 
-
             @media (max-width: 350px) {
                 margin: 5px 0;
             }
-
 
             .Search_Results_Specialists_Card_status {
                 margin: 0;
@@ -1419,35 +1363,29 @@
                 line-height: normal;
                 cursor: pointer;
 
-
                 &:hover {
                     color: #7b7b7b;
                 }
 
-
                 @media (max-width: 450px) {
                     font-size: 10px;
                 }
-
 
                 @media (max-width: 350px) {
                     font-size: 8px;
                 }
             }
 
-
             .Search_Results_Specialists_Card_status_img {
                 width: 25px;
                 height: auto;
                 flex-shrink: 0;
-
 
                 @media (max-width: 450px) {
                     width: 18px;
                 }
             }
         }
-
 
         .Search_Results_Specialists_Card_isName {
             text-align: center;
@@ -1461,22 +1399,18 @@
             margin: 0;
             text-wrap: nowrap;
 
-
             &:hover {
                 color: #7b7b7b;
             }
-
 
             @media (max-width: 450px) {
                 font-size: 12px;
             }
 
-
             @media (max-width: 350px) {
                 font-size: 8px;
             }
         }
-
 
         .Search_Results_Specialists_Card_job {
             color: #7b7b7b;
@@ -1489,16 +1423,13 @@
             cursor: pointer;
             margin: 0;
 
-
             &:hover {
                 color: #312f30;
             }
 
-
             @media (max-width: 450px) {
                 font-size: 10px;
             }
-
 
             @media (max-width: 350px) {
                 font-size: 8px;
@@ -1517,7 +1448,6 @@
         margin-bottom: 43px;
         align-items: center;
 
-
         @media (max-width: 1150px) {
             flex-direction: column;
             justify-content: start;
@@ -1525,11 +1455,9 @@
             gap: 20px;
         }
 
-
         @media (max-width: 600px) {
             margin-bottom: 20px;
         }
-
 
         .countServices {
             color: #7b7b7b;
@@ -1541,35 +1469,29 @@
             letter-spacing: 0.18px;
             margin: 0;
 
-
             @media (max-width: 800px) {
                 font-size: 15px;
             }
 
-
             @media (max-width: 600px) {
                 font-size: 12px;
             }
-
 
             @media (max-width: 400px) {
                 font-size: 10px;
             }
         }
 
-
         .Search_Results_Services_form {
             display: flex;
             justify-content: end;
             gap: 20px;
-
 
             @media (max-width: 1150px) {
                 display: grid;
                 grid-template-columns: repeat(3, 1fr);
                 width: 100%;
             }
-
 
             @media (max-width: 600px) {
                 display: flex;
@@ -1578,13 +1500,11 @@
                 width: 100%;
             }
 
-
             @media (max-width: 350px) {
                 display: grid;
                 grid-template-columns: repeat(1, 1fr);
                 width: 100%;
             }
-
 
             .Search_Results_Services_form_inputBox {
                 display: flex;
@@ -1596,23 +1516,19 @@
                 box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.15);
                 width: 281px;
 
-
                 @media (max-width: 1150px) {
                     width: 100%;
                 }
 
-
                 @media (max-width: 350px) {
                     padding: 5px 10px;
                 }
-
 
                 input {
                     width: 80%;
                     border: none;
                     outline: none;
                     background: none;
-
 
                     &::placeholder {
                         color: #7b7b7b;
@@ -1624,7 +1540,6 @@
                     }
                 }
             }
-
 
             select {
                 border-radius: 4.404px;
@@ -1639,11 +1554,9 @@
                 font-weight: 500;
                 line-height: normal;
 
-
                 @media (max-width: 600px) {
                     width: 45%;
                 }
-
 
                 @media (max-width: 350px) {
                     width: 100%;
@@ -1658,22 +1571,18 @@
         grid-template-columns: 1fr 30%;
         gap: 30px;
 
-
         @media (max-width: 1000px) {
             gap: 25px !important;
         }
-
 
         @media (max-width: 900px) {
             display: block;
         }
 
-
         .forAdds {
             border-radius: 10px;
             background: #fff;
             box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.1);
-
 
             @media (max-width: 900px) {
                 display: none;
@@ -1682,40 +1591,33 @@
     }
 }
 
-
 .Search_Results_Services_wrap {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 15px;
     row-gap: 15px;
 
-
     // @media (max-width: 1300px) {
     //     grid-template-columns: repeat(4, 1fr);
     // }
-
 
     @media (max-width: 1250px) {
         grid-template-columns: repeat(3, 1fr);
     }
 
-
     @media (max-width: 650px) {
         grid-template-columns: repeat(2, 1fr);
     }
-
 
     .Search_Results_Wrap_skeleton {
         width: 100% !important;
         height: 250px !important;
         border-radius: 10px;
 
-
         @media (max-width: 400px) {
             height: 200px !important;
         }
     }
-
 
     .Search_Results_Services_card {
         padding: 10px;
@@ -1723,13 +1625,11 @@
         position: relative;
         background: #fff;
 
-
         &:hover {
             border-radius: 5.072px;
             background: #fff;
             box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
         }
-
 
         .likeBtn {
             border-radius: 100%;
@@ -1738,12 +1638,10 @@
             right: 10px;
             width: 24px !important;
 
-
             @media (max-width: 650px) {
                 width: 20px !important;
             }
         }
-
 
         .Search_Results_Services_card_img {
             display: flex;
@@ -1755,17 +1653,14 @@
             object-fit: cover;
             border-radius: 5.072px;
 
-
             @media (max-width: 650px) {
                 height: 150px;
             }
-
 
             @media (max-width: 380px) {
                 height: 100px;
             }
         }
-
 
         .Search_Results_Services_card_body {
             .Search_Results_Services_card_infoPerson {
@@ -1775,7 +1670,6 @@
                 justify-content: start;
                 gap: 5px;
 
-
                 .Search_Results_Services_card_infoPerson_avatar {
                     height: 25px;
                     flex-shrink: 0;
@@ -1783,12 +1677,10 @@
                     border-radius: 26px;
                     box-shadow: 0px 0px 2.835px 0px rgba(0, 0, 0, 0.25);
 
-
                     @media (max-width: 500px) {
                         height: 20px;
                     }
                 }
-
 
                 .Search_Results_Services_card_infoPerson_isname {
                     margin: 0;
@@ -1801,22 +1693,18 @@
                     letter-spacing: 0.145px;
                     cursor: pointer;
 
-
                     &:hover {
                         color: #312f30;
                     }
-
 
                     @media (max-width: 500px) {
                         font-size: 12px;
                     }
 
-
                     @media (max-width: 350px) {
                         font-size: 10px;
                     }
                 }
-
 
                 .Search_Results_Services_card_infoPerson_status {
                     width: 17.245px;
@@ -1825,7 +1713,6 @@
                 }
             }
         }
-
 
         .Search_Results_Services_card_title {
             color: #312f30;
@@ -1844,22 +1731,18 @@
             letter-spacing: 0.3px;
             cursor: pointer;
 
-
             &:hover {
                 color: #7b7b7b;
             }
-
 
             @media (max-width: 500px) {
                 font-size: 12px;
             }
 
-
             @media (max-width: 350px) {
                 font-size: 10px;
             }
         }
-
 
         .Search_Results_Services_card_price {
             color: #312f30;
@@ -1875,16 +1758,13 @@
             margin-top: 10px;
             cursor: pointer;
 
-
             &:hover {
                 color: #7b7b7b;
             }
 
-
             @media (max-width: 500px) {
                 font-size: 12px;
             }
-
 
             @media (max-width: 350px) {
                 font-size: 10px;
@@ -1900,28 +1780,23 @@
     grid-template-columns: 1fr 30%;
     gap: 45px;
 
-
     @media (max-width: 1000px) {
         gap: 25px !important;
     }
 
-
     @media (max-width: 900px) {
         display: block;
     }
-
 
     .forAdds {
         border-radius: 10px;
         background: #fff;
         box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.1);
 
-
         @media (max-width: 1000px) {
             display: none;
         }
     }
-
 
     .SearchAllProductsTitle {
         color: #312f30;
@@ -1935,7 +1810,6 @@
     .specialistsSection {
         margin: 30px 0 50px;
     }
-
 
     .productsDataSection {
         margin: 50px 0;
@@ -1954,21 +1828,17 @@
     margin: 30px auto;
     border: none;
 
-
     @media (max-width: 700px) {
         width: 80%;
     }
-
 
     @media (max-width: 500px) {
         width: 100%;
     }
 
-
     &:hover {
         background: rgba(228, 228, 228, 0.8);
     }
-
 
     .forMore {
         margin: 0;

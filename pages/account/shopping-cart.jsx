@@ -7,19 +7,19 @@ import Link from 'next/link';
 import ModuleCartSummary from '~/components/ecomerce/modules/ModuleCartSummary';
 import Meta from '~/components/shared/headers/Meta';
 
-const ShoppingCartScreen = () => {
-    const state = useSelector((state) => state.auth.user);
-    const cartItems = useSelector(state => state.ecomerce.cartDataItems)
+const breadCrumb = [
+    {
+        text: 'Asosiy sahifa',
+        url: '/',
+    },
+    {
+        text: 'Savat',
+    },
+];
 
-    const breadCrumb = [
-        {
-            text: 'Asosiy sahifa',
-            url: '/',
-        },
-        {
-            text: 'Savat',
-        },
-    ];
+const ShoppingCartScreen = () => {
+    const state = useSelector(state => state.auth.user);
+    const cartItems = useSelector(state => state.ecomerce.cartDataItems);
 
     let contentView;
     if (cartItems) {
@@ -27,31 +27,36 @@ const ShoppingCartScreen = () => {
             contentView = (
                 <>
                     <div className="ps-section__content">
-                        <ModuleEcomerceCartItems
-                            cartItems={cartItems}
-                        />
+                        <ModuleEcomerceCartItems cartItems={cartItems} />
                         <div className="ps-section__cart-actions">
                             <Link href="/">
-                                <a className="ps-btn btn_color" style={{maxWidth:'120px', width:'100%', display:'flex', justifyContent:'center', alignItems:'center'}} ><i className="fa-solid fa-angles-left"></i> Ortga</a>
+                                <a
+                                    className="ps-btn btn_color"
+                                    style={{
+                                        maxWidth: '120px',
+                                        width: '100%',
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                    }}>
+                                    <i className="fa-solid fa-angles-left"></i>{' '}
+                                    Ortga
+                                </a>
                             </Link>
                         </div>
                     </div>
                     <div className="ps-section__footer mb-5">
                         <div className="row justify-space-between mb-4">
                             <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 ">
-                                <ModuleCartSummary
-                                    source={cartItems}
-                                />
+                                <ModuleCartSummary source={cartItems} />
                                 {state !== null ? (
-                                    <Link href='/account/checkout' as='/account/checkout'>
-                                        <a className="ps-btn ps-btn--fullwidth btn_color "
-
-                                        >
+                                    <Link
+                                        href="/account/checkout"
+                                        as="/account/checkout">
+                                        <a className="ps-btn ps-btn--fullwidth btn_color ">
                                             Sotib olish
                                         </a>
-
                                     </Link>
-
                                 ) : (
                                     <Link href="/auth/login?returnUrl=/account/checkout">
                                         <a className="ps-btn ps-btn--fullwidth btn_color ">
@@ -69,29 +74,37 @@ const ShoppingCartScreen = () => {
                 <>
                     <div className="ps-section__content">
                         <div className="alert alert-info">
-
                             <p className="mb-0">Sizning savatingiz bo'sh...</p>
                         </div>
 
                         <div className="ps-section__cart-actions">
                             <Link href="/">
-                                <a className="ps-btn btn_color btn_color" style={{maxWidth:'120px', width:'100%', display:'flex', justifyContent:'center', alignItems:'center'}} > <i className="fa-solid fa-angles-left"></i> Ortga</a>
+                                <a
+                                    className="ps-btn btn_color btn_color"
+                                    style={{
+                                        maxWidth: '120px',
+                                        width: '100%',
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                    }}>
+                                    {' '}
+                                    <i className="fa-solid fa-angles-left"></i>{' '}
+                                    Ortga
+                                </a>
                             </Link>
                         </div>
                     </div>
                 </>
             );
         }
-    } else {
     }
 
     return (
         <>
             <PageContainer title="Shopping Cart">
                 <div className="ps-page--simple mb-4">
-                    <Meta
-                        title={"Xarid savati"}
-                    />
+                    <Meta title={'Xarid savati'} />
                     <BreadCrumb breacrumb={breadCrumb} />
                     <div className="ps-section--shopping ps-shopping-cart">
                         <div className="container">
@@ -107,4 +120,4 @@ const ShoppingCartScreen = () => {
     );
 };
 
-export default connect((state) => state)(ShoppingCartScreen);
+export default connect(state => state)(ShoppingCartScreen);

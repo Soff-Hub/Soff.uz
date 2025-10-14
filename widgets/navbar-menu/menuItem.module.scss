@@ -1,11 +1,12 @@
 @import '/scss/utils/variable';
 
 .menuItem {
-    position: relative;
+    // position: relative;
+    width: max-content;
     background: #fff;
 
     .label {
-        padding: 10px 20px 10px 0px;
+        padding: 10px 10px 10px 0px;
         color: $grayColor;
         font-size: 16px;
         font-weight: 400;
@@ -20,26 +21,16 @@
             color: $color-1st;
             border-bottom: 2px solid $color-1st;
         }
-
-        .dropDown {
-            display: flex;
-        }
     }
 
     .dropDown {
-        display: none;
-        transition: all 1s;
-        position: absolute;
+        display: flex;
         background: #fff;
         align-items: start;
         padding: 20px 0px;
         border: 1px solid $paragraphColor;
-        top: 100%;
         overflow-y: auto;
-        left: -20px !important;
-        transition: all 0.5s;
         max-height: 400px;
-        // Custom scrollbar for Webkit browsers
 
         .detailsTitle {
             padding-left: 20px;
@@ -95,5 +86,15 @@
             margin: 0;
             border-left: 3px solid transparent;
         }
+    }
+}
+
+.popoverContentCustom {
+    :global(.ant-popover-inner) {
+        padding: 0;
+    }
+
+    :global(.ant-popover-inner-content) {
+        padding: 0;
     }
 }

@@ -1,7 +1,5 @@
-
 import React, { useState } from 'react';
 import SellerDonateForm from '~/components/partials/seller/SellerDonateForm';
-import CreateOrderModal from '~/shared/components/modals/CreateOrderModal';
 
 export default function SellerInfo({ sellerInfo, onChange }) {
     const [openDonateModal, setOpenDonateModal] = useState(false);
@@ -93,9 +91,9 @@ export default function SellerInfo({ sellerInfo, onChange }) {
                         <p
                             style={{
                                 fontWeight: 300,
-                                fontSize: "13px",
-                                wordBreak: "break-word",   // yoki overflowWrap: "anywhere"
-                                whiteSpace: "pre-wrap"     // agar yangi qatorlarni saqlash kerak bo‘lsa
+                                fontSize: '13px',
+                                wordBreak: 'break-word', // yoki overflowWrap: "anywhere"
+                                whiteSpace: 'pre-wrap', // agar yangi qatorlarni saqlash kerak bo‘lsa
                             }}
                             className="SellerInfoDescription">
                             {sellerInfo?.bio}
