@@ -188,7 +188,9 @@ const HeaderCatergories = () => {
     const { push, query, replace, pathname } = useRouter();
     const { data } = useOrdersStatus();
 
-    const totalOrders = data ? data.requirement_process || 0 : 0;
+    const totalOrders = data
+        ? (data.pending || 0) + (data.requirement_process || 0)
+        : 0;
 
     const handleOrder = () => {
         if (isLoggedIn) {
@@ -251,10 +253,10 @@ const HeaderCatergories = () => {
     return (
         <div className={styles.dropBlock}>
             {!isMobile && isLoggedIn && (
-                <a href="/order/my-orders?tab=2">
+                <Link href="/order/my-orders">
                     <Badge
                         count={totalOrders}
-                        overflowCount={10}
+                        overflowCount={9}
                         offset={[-10, 0]}>
                         <Link href={'/order/my-orders'} target="_blank">
                             <p className={`${styles.navLink} my-0`}>
@@ -262,7 +264,7 @@ const HeaderCatergories = () => {
                             </p>
                         </Link>
                     </Badge>
-                </a>
+                </Link>
             )}
             <div className={styles.dropBox}>
                 <Dropdown menu={{ items: products }}>

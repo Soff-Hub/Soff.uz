@@ -9,13 +9,12 @@ import FaqSection from './ui/FaqSection';
 import PortfolioSection from './ui/PortfolioSection';
 import { useRouter } from 'next/router';
 import CommentSection from './ui/CommentSection';
-import { Breadcrumb } from 'antd';
 import Meta from '~/components/shared/meta';
 import ServiceCard from '../../../../entities/service/service-card';
 import StickyBox from './ui/sticky-box';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { useDispatch } from 'react-redux';
-import { setShowFastDownload, setShowSearch } from '~/store/fast-dowload/slice';
+import { setShowSearch } from '~/store/fast-dowload/slice';
 
 const ServiceDetail = ({ data }) => {
     const { push, back } = useRouter();
@@ -48,19 +47,6 @@ const ServiceDetail = ({ data }) => {
         serviceItems: service_items,
     };
 
-    const breadcrumbItems = useMemo(
-        () => [
-            {
-                title: 'Buyurtmalar',
-                href: '/orders',
-            },
-            {
-                title: <span>{service?.title}</span>,
-            },
-        ],
-        [data]
-    );
-
     const slider_images = [
         ...seller_portfolio
             ?.map((portfolio) =>
@@ -75,11 +61,9 @@ const ServiceDetail = ({ data }) => {
 
     useEffect(() => {
         dispatch(setShowSearch(false));
-        dispatch(setShowFastDownload(false));
 
         return () => {
             dispatch(setShowSearch(true));
-            dispatch(setShowFastDownload(true));
         };
     }, [dispatch]);
 

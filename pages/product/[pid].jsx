@@ -12,8 +12,6 @@ import SkeletonProductDetail from '~/components/elements/skeletons/SkeletonProdu
 import * as cookie from 'cookie';
 import AISoffiaPresentation from '~/components/elements/AISoffiaPresentation';
 import { Skeleton } from 'antd';
-import { useDispatch } from 'react-redux';
-import { setShowFastDownload } from '~/store/fast-dowload/slice';
 import ProductCard from '~/entities/product/product-card';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { useQuery } from '@tanstack/react-query';
@@ -47,17 +45,8 @@ export default function ProductDefaultPage({ defaultProducts }) {
     const { isMobile } = useResponsive();
 
     const similarRef = useRef();
-    const dispatch = useDispatch();
 
     const contentType = defaultProducts?.document?.content_type;
-
-    useEffect(() => {
-        dispatch(setShowFastDownload(false));
-
-        return () => {
-            dispatch(setShowFastDownload(true));
-        };
-    }, [dispatch]);
 
     const { data: lastAdded, isLoading: lastLoading } = useQuery({
         queryKey: ['last-products', contentType],
@@ -123,7 +112,7 @@ export default function ProductDefaultPage({ defaultProducts }) {
         );
     }
 
-    const removeHTMLTags = html => {
+    const removeHTMLTags = (html) => {
         return html.replace(/<[^>]+>/g, '');
     };
 
@@ -164,12 +153,12 @@ export default function ProductDefaultPage({ defaultProducts }) {
                         content={
                             defaultProducts?.description
                                 ? removeHTMLTags(defaultProducts?.description)
-                                : `${
-                                      defaultProducts?.title
-                                  } + ${defaultProducts?.tag
-                                      ?.map(e => e?.name)
-                                      ?.join(', ') ||
-                                      'soff.uz - Intellektual mulk marketi'} `
+                                : `${defaultProducts?.title} + ${
+                                      defaultProducts?.tag
+                                          ?.map((e) => e?.name)
+                                          ?.join(', ') ||
+                                      'soff.uz - Intellektual mulk marketi'
+                                  } `
                         }
                     />
                     <meta name="robots" content="index, follow" />
@@ -185,7 +174,7 @@ export default function ProductDefaultPage({ defaultProducts }) {
                         content={
                             defaultProducts?.tag
                                 ? defaultProducts?.tag
-                                      ?.map(e => e?.name)
+                                      ?.map((e) => e?.name)
                                       ?.join(', ')
                                 : 'kurs ishi, taqdimotlar, slaydlar, diplom ishi, prezentatsiya'
                         }
@@ -204,12 +193,12 @@ export default function ProductDefaultPage({ defaultProducts }) {
                         content={
                             defaultProducts?.description
                                 ? removeHTMLTags(defaultProducts?.description)
-                                : `${
-                                      defaultProducts?.title
-                                  } + ${defaultProducts?.tag
-                                      ?.map(e => e?.name)
-                                      ?.join(', ') ||
-                                      'soff.uz - Intellektual mulk marketi'} `
+                                : `${defaultProducts?.title} + ${
+                                      defaultProducts?.tag
+                                          ?.map((e) => e?.name)
+                                          ?.join(', ') ||
+                                      'soff.uz - Intellektual mulk marketi'
+                                  } `
                         }
                     />
                     <meta
@@ -226,7 +215,7 @@ export default function ProductDefaultPage({ defaultProducts }) {
                         content={
                             defaultProducts?.tag
                                 ? defaultProducts?.tag
-                                      ?.map(e => e?.name)
+                                      ?.map((e) => e?.name)
                                       ?.join(', ')
                                 : 'kurs ishi, taqdimotlar, slaydlar, diplom ishi, prezentatsiya'
                         }
@@ -251,12 +240,12 @@ export default function ProductDefaultPage({ defaultProducts }) {
                         content={
                             defaultProducts?.description
                                 ? removeHTMLTags(defaultProducts?.description)
-                                : `${
-                                      defaultProducts?.title
-                                  } + ${defaultProducts?.tag
-                                      ?.map(e => e?.name)
-                                      ?.join(', ') ||
-                                      'soff.uz - Intellektual mulk marketi'} `
+                                : `${defaultProducts?.title} + ${
+                                      defaultProducts?.tag
+                                          ?.map((e) => e?.name)
+                                          ?.join(', ') ||
+                                      'soff.uz - Intellektual mulk marketi'
+                                  } `
                         }
                     />
                     <meta property="twitter:url" content="https://soff.uz" />
@@ -266,7 +255,7 @@ export default function ProductDefaultPage({ defaultProducts }) {
                         content={
                             defaultProducts?.tag
                                 ? defaultProducts?.tag
-                                      ?.map(e => e?.name)
+                                      ?.map((e) => e?.name)
                                       ?.join(', ')
                                 : 'kurs ishi, taqdimotlar, slaydlar, diplom ishi, prezentatsiya'
                         }
@@ -367,7 +356,7 @@ export default function ProductDefaultPage({ defaultProducts }) {
                                 primaryColor: '#00A44F',
                                 textColor: '#004a14',
                                 width: 300,
-                                zIndex: 10000,
+                                zIndex: 100,
                             },
                         }}
                         locale={joyrideLocales}

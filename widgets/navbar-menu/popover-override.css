@@ -77,3 +77,7 @@
     border-left: 3px solid transparent;
     cursor: pointer;
 }
+
+.__floater__open {
+    z-index: 10000 !important;
+}

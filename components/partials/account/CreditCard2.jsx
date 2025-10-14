@@ -10,7 +10,7 @@ import { calculateAmount } from '~/shared/utilities/ecomerce-helpers';
 import { addPeriodToThousands } from './price-formatter';
 
 const CreditCard2 = ({ document, type }) => {
-    const { user } = useSelector(state => state.auth);
+    const { user } = useSelector((state) => state.auth);
     const [numberCardVal, SetNumberCardVal] = useState(null);
     const [message, setMessage] = useState(true);
     const [cardDate, setCardDate] = useState(null);
@@ -23,14 +23,13 @@ const CreditCard2 = ({ document, type }) => {
     const { removeAll } = useCart();
     const [buttonOk, setButtonOk] = useState(false);
     const [tab, setTab] = useState(false);
-    const router = useRouter()
-    const { affiliateId } = useSelector(state => state.affiliate);
+    const router = useRouter();
+    const { affiliateId } = useSelector((state) => state.affiliate);
     const [percentage, setPercentage] = useState(0);
     const ecomerce = useSelector((state) => state.ecomerce.cartDataItems);
-    
 
-    const affiliate_code = affiliateId
-    const numberTyper = value => {
+    const affiliate_code = affiliateId;
+    const numberTyper = (value) => {
         SetNumberCardVal(value);
         if (!value == 0) {
             let numberPlaceholder = '';
@@ -54,7 +53,9 @@ const CreditCard2 = ({ document, type }) => {
         getPercentage();
     }, []);
 
-    const hisob = addPeriodToThousands(amount + Math.floor(amount * percentage));
+    const hisob = addPeriodToThousands(
+        amount + Math.floor(amount * percentage)
+    );
 
     async function handleClickCardPostsclick(e) {
         e.preventDefault();
@@ -68,7 +69,7 @@ const CreditCard2 = ({ document, type }) => {
         );
         if (ItemsData?.status === 201) {
             setMessage(true);
-            localStorage.removeItem('cart')
+            localStorage.removeItem('cart');
             Router.push(ItemsData?.data?.url);
         } else {
             setMessage(true);
@@ -92,7 +93,7 @@ const CreditCard2 = ({ document, type }) => {
             affiliate_code
         );
         if (ItemsData?.status === 201) {
-            localStorage.removeItem('cart')
+            localStorage.removeItem('cart');
             setMessage(true);
             Router.push(ItemsData?.data?.url);
         } else {
@@ -118,7 +119,7 @@ const CreditCard2 = ({ document, type }) => {
             affiliate_code
         );
         if (ItemsData?.status === 201) {
-            localStorage.removeItem('cart')
+            localStorage.removeItem('cart');
             setMessage(true);
             setOpen(true);
             setCart(ItemsData.data.cart);
@@ -131,8 +132,8 @@ const CreditCard2 = ({ document, type }) => {
                 content: ItemsData?.data?.expire_date
                     ? ' Karta amal qilish muddatini kiriting'
                     : ItemsData?.data?.card_number
-                        ? "Karta raqamini to'g'ri kiriting"
-                        : ItemsData?.data?.msg,
+                    ? "Karta raqamini to'g'ri kiriting"
+                    : ItemsData?.data?.msg,
             });
             modal.update;
         }
@@ -166,7 +167,7 @@ const CreditCard2 = ({ document, type }) => {
         }
         if (dataNews?.status === 200) {
             setOpen(false);
-            localStorage.removeItem('cart')
+            localStorage.removeItem('cart');
             const modal = Modal.success({
                 centered: true,
                 title: 'Muffaqiyatli!',
@@ -188,7 +189,7 @@ const CreditCard2 = ({ document, type }) => {
         if (resData?.status === 201) {
             setTime(120);
             const timerID = setInterval(() => {
-                setTime(prevTime => {
+                setTime((prevTime) => {
                     if (prevTime <= 0) {
                         clearInterval(timerID);
                         setResData(null);
@@ -199,6 +200,8 @@ const CreditCard2 = ({ document, type }) => {
                     }
                 });
             }, 1000);
+
+            return () => clearInterval(timerID);
         }
     }, [resData]);
 
@@ -212,7 +215,7 @@ const CreditCard2 = ({ document, type }) => {
     const [formattedCardNumber, setFormattedCardNumber] = useState('');
     const [numberDate, setNumberDate] = useState('');
 
-    const handleCardNumberChange = e => {
+    const handleCardNumberChange = (e) => {
         const inputValue = e.target.value.replace(/\D/g, ''); // Raqam va probilni olib tashlash
         let formattedValue = '';
 
@@ -229,7 +232,7 @@ const CreditCard2 = ({ document, type }) => {
         setFormattedCardNumber(formattedValue);
     };
 
-    const handleCardNumberDate = e => {
+    const handleCardNumberDate = (e) => {
         const inputValue = e.target.value.replace(/\D/g, ''); // Raqam va probilni olib tashlash
         let formattedValue = '';
 
@@ -245,81 +248,80 @@ const CreditCard2 = ({ document, type }) => {
         setNumberDate(formattedValue);
     };
 
-    const onChange = key => {
+    const onChange = (key) => {
         setTab(key);
     };
     const items = [
         {
             key: '1',
             label: (
-                <div className='click '>
-                    <img src='/static/img/uzcard_humo.png' alt='' />
+                <div className="click ">
+                    <img src="/static/img/uzcard_humo.png" alt="" />
                 </div>
             ),
             children: (
-                <div className='row mx-auto m-0'>
-                    <div className=' px-4 mx-md-auto rounded click-b'>
+                <div className="row mx-auto m-0">
+                    <div className=" px-4 mx-md-auto rounded click-b">
                         <div>
                             <form
                                 onSubmit={handleClickCardPosts}
-                                className='pb-3 d-flex align-items-end justify-content-between row gap-xxs-0 gap-xs-0 gap-lg-0 gap-md-0 gap-3 bg-white'
-                            >
-                                <div className='col-xl-7 col-lg-12 p-0 col-md-7 col-sm-6 click-form-item my-2'>
-                                    <p className='cardNumber'>Karta raqam</p>
-                                    <label htmlFor='ccn' className='m-0'>
-                                        <i className='fa-regular fa-credit-card i '></i>
+                                className="pb-3 d-flex align-items-end justify-content-between row gap-xxs-0 gap-xs-0 gap-lg-0 gap-md-0 gap-3 bg-white">
+                                <div className="col-xl-7 col-lg-12 p-0 col-md-7 col-sm-6 click-form-item my-2">
+                                    <p className="cardNumber">Karta raqam</p>
+                                    <label htmlFor="ccn" className="m-0">
+                                        <i className="fa-regular fa-credit-card i "></i>
                                         <input
                                             required
-                                            id='ccn'
-                                            type='tel'
-                                            className='form-control rounded-3 card__number '
-                                            inputMode='numeric'
-                                            pattern='[0-9\s]{13,19}'
-                                            autoComplete='cc-number'
-                                            maxLength='19'
-                                            placeholder='0000 0000 0000 0000'
+                                            id="ccn"
+                                            type="tel"
+                                            className="form-control rounded-3 card__number "
+                                            inputMode="numeric"
+                                            pattern="[0-9\s]{13,19}"
+                                            autoComplete="cc-number"
+                                            maxLength="19"
+                                            placeholder="0000 0000 0000 0000"
                                             value={formattedCardNumber}
                                             onChange={handleCardNumberChange}
                                         />
                                     </label>
                                 </div>
-                                <div className='col-xl-4 col-lg-6 p-0 col-md-4 col-sm-6 click-form-item my-2'>
-                                    <label className='m-0'>
-                                        <i className='fa-regular fa-calendar-days'></i>
+                                <div className="col-xl-4 col-lg-6 p-0 col-md-4 col-sm-6 click-form-item my-2">
+                                    <label className="m-0">
+                                        <i className="fa-regular fa-calendar-days"></i>
                                         <input
                                             required
-                                            id='ccn'
-                                            className='form-control rounded-3 card__number'
-                                            inputMode='numeric'
-                                            autoComplete='cc-number'
-                                            maxLength='5'
-                                            placeholder='MM/YY'
+                                            id="ccn"
+                                            className="form-control rounded-3 card__number"
+                                            inputMode="numeric"
+                                            autoComplete="cc-number"
+                                            maxLength="5"
+                                            placeholder="MM/YY"
                                             value={numberDate}
                                             onChange={handleCardNumberDate}
                                         />
                                     </label>
                                 </div>
-                                <div className='col-12 p-0 '>
+                                <div className="col-12 p-0 ">
                                     {message ? (
                                         <div>
                                             <button
-                                                type='submit'
-                                                className='ps-btn w-100 text-center btn_color'>
+                                                type="submit"
+                                                className="ps-btn w-100 text-center btn_color">
                                                 To'lash ({hisob} so'm)
                                             </button>
                                             <button
-                                                type='submit'
-                                                className='ps-btn w-100 text-center btn_color sticky_color_btn'>
+                                                type="submit"
+                                                className="ps-btn w-100 text-center btn_color sticky_color_btn">
                                                 To'lash ({hisob} so'm)
                                             </button>
                                         </div>
                                     ) : (
                                         <div>
-                                            <button className='ps-btn ps-btn--fullwidth w-100 text-center'>
-                                                <BeatLoader color='#fff' />
+                                            <button className="ps-btn ps-btn--fullwidth w-100 text-center">
+                                                <BeatLoader color="#fff" />
                                             </button>
-                                            <button className='ps-btn ps-btn--fullwidth w-100 text-center sticky_color_btn'>
-                                                <BeatLoader color='#fff' />
+                                            <button className="ps-btn ps-btn--fullwidth w-100 text-center sticky_color_btn">
+                                                <BeatLoader color="#fff" />
                                             </button>
                                         </div>
                                     )}
@@ -341,28 +343,28 @@ const CreditCard2 = ({ document, type }) => {
                         }}
                         okText={
                             buttonOk ? (
-                                <BeatLoader color='#fff' />
+                                <BeatLoader color="#fff" />
                             ) : (
                                 "To'lov qilish"
                             )
                         }
-                        cancelText='Orqaga'>
+                        cancelText="Orqaga">
                         <>
                             <p>
                                 Kod quyidagi raqamga yuborildi:
                                 {resData?.data?.phone_number}
                             </p>
                             <input
-                                onChange={e => setCode(e.target.value)}
-                                type='tel'
-                                placeholder='000000'
+                                onChange={(e) => setCode(e.target.value)}
+                                type="tel"
+                                placeholder="000000"
                                 maxLength={6}
-                                className='form-control text-center rounded-3 fs-3'
+                                className="form-control text-center rounded-3 fs-3"
                             />
-                            <strong className='text-danger'>
+                            <strong className="text-danger">
                                 {formattedTime}
                             </strong>
-                            <p className='text-danger'>
+                            <p className="text-danger">
                                 {resDataCode?.data?.msg?.[0] == 'Parol xato' &&
                                     resDataCode?.data?.msg}
                             </p>
@@ -374,37 +376,37 @@ const CreditCard2 = ({ document, type }) => {
         {
             key: '2',
             label: (
-                <div className='click'>
-                    <img src='/static/img/click.png' alt='' />
+                <div className="click">
+                    <img src="/static/img/click.png" alt="" />
                 </div>
             ),
             children: (
-                <div className='row   mx-auto m-0'>
-                    <div className=' px-4 rounded click-b'>
+                <div className="row   mx-auto m-0">
+                    <div className=" px-4 rounded click-b">
                         <form
                             onSubmit={handleClickCardPostsclick}
-                            className=' pt-3 pb-3 d-flex align-items-end justify-content-between row gap-xxs-0 gap-xs-0 gap-lg-0 gap-md-0 gap-3'>
-                            <div className='col-12 p-0 px-4 my-3'>
+                            className=" pt-3 pb-3 d-flex align-items-end justify-content-between row gap-xxs-0 gap-xs-0 gap-lg-0 gap-md-0 gap-3">
+                            <div className="col-12 p-0 px-4 my-3">
                                 {message ? (
                                     <div>
                                         <button
-                                            type='submit'
-                                            className='ps-btn w-100 text-center btn_color'>
+                                            type="submit"
+                                            className="ps-btn w-100 text-center btn_color">
                                             To'lash ({hisob} so'm)
                                         </button>
                                         <button
-                                            type='submit'
-                                            className='ps-btn w-100 text-center btn_color sticky_color_btn'>
+                                            type="submit"
+                                            className="ps-btn w-100 text-center btn_color sticky_color_btn">
                                             To'lash ({hisob} so'm)
                                         </button>
                                     </div>
                                 ) : (
                                     <div>
-                                        <button className='ps-btn ps-btn--fullwidth w-100 text-center'>
-                                            <BeatLoader color='#fff' />
+                                        <button className="ps-btn ps-btn--fullwidth w-100 text-center">
+                                            <BeatLoader color="#fff" />
                                         </button>
-                                        <button className='ps-btn ps-btn--fullwidth w-100 text-center sticky_color_btn'>
-                                            <BeatLoader color='#fff' />
+                                        <button className="ps-btn ps-btn--fullwidth w-100 text-center sticky_color_btn">
+                                            <BeatLoader color="#fff" />
                                         </button>
                                     </div>
                                 )}
@@ -418,37 +420,37 @@ const CreditCard2 = ({ document, type }) => {
         {
             key: '3',
             label: (
-                <div className='click'>
-                    <img src='/static/img/soff/paymee-r.png' alt='' />
+                <div className="click">
+                    <img src="/static/img/soff/paymee-r.png" alt="" />
                 </div>
             ),
             children: (
-                <div className='row   mx-auto m-0'>
-                    <div className=' px-4 rounded click-b'>
+                <div className="row   mx-auto m-0">
+                    <div className=" px-4 rounded click-b">
                         <form
                             onSubmit={handleClickCardPostsPayme}
-                            className=' pt-3 pb-3 d-flex align-items-end justify-content-between row gap-xxs-0 gap-xs-0 gap-lg-0 gap-md-0 gap-3'>
-                            <div className='col-12 p-0 px-4 my-3'>
+                            className=" pt-3 pb-3 d-flex align-items-end justify-content-between row gap-xxs-0 gap-xs-0 gap-lg-0 gap-md-0 gap-3">
+                            <div className="col-12 p-0 px-4 my-3">
                                 {message ? (
                                     <div>
                                         <button
-                                            type='submit'
-                                            className='ps-btn w-100 text-center btn_color'>
+                                            type="submit"
+                                            className="ps-btn w-100 text-center btn_color">
                                             To'lash ({hisob} so'm)
                                         </button>
                                         <button
-                                            type='submit'
-                                            className='ps-btn w-100 text-center btn_color sticky_color_btn'>
+                                            type="submit"
+                                            className="ps-btn w-100 text-center btn_color sticky_color_btn">
                                             To'lash ({hisob} so'm)
                                         </button>
                                     </div>
                                 ) : (
                                     <div>
-                                        <button className='ps-btn ps-btn--fullwidth w-100 text-center'>
-                                            <BeatLoader color='#fff' />
+                                        <button className="ps-btn ps-btn--fullwidth w-100 text-center">
+                                            <BeatLoader color="#fff" />
                                         </button>
-                                        <button className='ps-btn ps-btn--fullwidth w-100 text-center sticky_color_btn'>
-                                            <BeatLoader color='#fff' />
+                                        <button className="ps-btn ps-btn--fullwidth w-100 text-center sticky_color_btn">
+                                            <BeatLoader color="#fff" />
                                         </button>
                                     </div>
                                 )}
@@ -462,8 +464,8 @@ const CreditCard2 = ({ document, type }) => {
 
     return (
         <Tabs
-            className='bg-white  checkoutstep-1'
-            defaultActiveKey='1'
+            className="bg-white  checkoutstep-1"
+            defaultActiveKey="1"
             items={items}
             onChange={onChange}
         />

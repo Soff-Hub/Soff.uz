@@ -20,7 +20,7 @@ import { useRouter } from 'next/router';
 import OrderCard from '~/entities/order/order-card';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { useDispatch } from 'react-redux';
-import { setShowFastDownload, setShowSearch } from '~/store/fast-dowload/slice';
+import { setShowSearch } from '~/store/fast-dowload/slice';
 dayjs.locale('uz-latn');
 
 const OrderMain = ({ order }) => {
@@ -66,11 +66,9 @@ const OrderMain = ({ order }) => {
 
     useEffect(() => {
         dispatch(setShowSearch(false));
-        dispatch(setShowFastDownload(false));
 
         return () => {
             dispatch(setShowSearch(true));
-            dispatch(setShowFastDownload(true));
         };
     }, [dispatch]);
     return (

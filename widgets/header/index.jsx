@@ -7,41 +7,19 @@ import { initLocalCart } from '~/store/ecomerce/slice';
 import useResponsive from '~/shared/utilities/useResponsive';
 import NavbarSearch from './navbar-search';
 import NavbarMenu from '~/widgets/navbar-menu';
+import FastDownloadSection from '~/shared/components/fast-dowload/FastDowloadSection';
 
 const Header = () => {
-    const [headerSticky, setHeaderSticky] = useState(false);
-    const { isMobile, isDesktop, isTablet } = useResponsive();
+    const { isMobile } = useResponsive();
     const dispatch = useDispatch();
-    const cartItems = useSelector(state => state.ecomerce.cartDataItems);
-    const { showSearch } = useSelector(state => state.ui)
-
-    const handleScroll = useCallback(() => {
-        const shouldBeSticky = window.scrollY > 30;
-        if (headerSticky !== shouldBeSticky) {
-            setHeaderSticky(shouldBeSticky);
-        }
-    }, [headerSticky]);
-
-    useEffect(() => {
-        window.addEventListener('scroll', handleScroll);
-
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, [handleScroll]);
+    const cartItems = useSelector((state) => state.ecomerce.cartDataItems);
+    const { showSearch, showFastDownload } = useSelector((state) => state.ui);
 
     useEffect(() => {
         if (!cartItems.length) {
             dispatch(initLocalCart());
         }
     }, []);
-
-    const getHeaderHeight = () => {
-        if (isDesktop) return "110px";
-        if (isTablet) return showSearch ? "120px" : "110px";
-        if (isMobile) return showSearch ? "150px" : "90px";
-        return "120px";
-    };
 
     return (
         <header className="site-header">
@@ -56,16 +34,11 @@ const Header = () => {
                     </div>
                 </div>
                 {isMobile ? <NavbarSearch /> : <NavbarMenu />}
+                {showFastDownload ? <FastDownloadSection /> : null}
             </div>
-            <div
-                className='pagesSpace'
-                style={{
-                    height: getHeaderHeight()
-                }}
-            />
         </header>
     );
 };
 
 export default Header;
-// 
+//

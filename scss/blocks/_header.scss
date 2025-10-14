@@ -14,16 +14,12 @@
 }
 
 .site-header {
-    background-color: transparent;
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+    z-index: 9999;
     .pagesSpace {
         background-color: transparent;
-        // height: 100px;
-        // // @media (max-width: 992px) {
-        // //     height: 80px;
-        // // }
-        // @media (max-width: 576px) {
-        //     height: 1400px;
-        // }
     }
 }
 
@@ -49,25 +45,25 @@
     }
 }
 
-.header-bottom {
-    position: fixed;
-    width: 100vw;
-    left: 0;
-    right: 0;
-    top: 0;
-    z-index: 1000;
-    background-color: white;
-}
+// .header-bottom {
+//     position: fixed;
+//     width: 100vw;
+//     left: 0;
+//     right: 0;
+//     top: 0;
+//     z-index: 1000;
+//     background-color: white;
+// }
 
-.nprogress {
-    z-index: 99999999999;
-}
+// .nprogress {
+//     z-index: 99999999999;
+// }
 
-.header-bottom--show {
-    background-color: white;
-    transition: all 0.3s ease;
-    top: 0;
-}
+// .header-bottom--show {
+//     background-color: white;
+//     transition: all 0.3s ease;
+//     top: 0;
+// }
 
 .other-header {
     background-color: white;

@@ -53,23 +53,24 @@ const PageLayout = ({ children, title }) => {
             <Head>
                 <title>{title}</title>
             </Head>
-            
-            <div style={{ 
-                display: 'flex', 
-                flexDirection: 'column', 
-                minHeight: '100vh' 
-            }}>
-                <Header />
-                {showFastDownload && <FastDowloadSection />}
-                
-                <main style={{ 
-                    flex: '1 0 auto',
+
+            <div
+                style={{
                     display: 'flex',
-                    flexDirection: 'column'
+                    flexDirection: 'column',
+                    minHeight: '100vh',
                 }}>
+                <Header />
+
+                <main
+                    style={{
+                        flex: '1 0 auto',
+                        display: 'flex',
+                        flexDirection: 'column',
+                    }}>
                     {children}
                 </main>
-                
+
                 <Footer />
             </div>
 

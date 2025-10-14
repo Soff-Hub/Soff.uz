@@ -2,8 +2,10 @@ import React from 'react';
 import UserShortInfo from './ui/user-short-info';
 import UserTabs from './ui/user-tabs';
 import { cn, useRcn } from '~/shared/utilities/cn';
+import useResponsive from '~/shared/utilities/useResponsive';
 
 const UserProfile = ({ seller }) => {
+    const { isDesktop } = useResponsive();
     const gridClass = useRcn({
         mobile: 'grid-cols-1',
         tablet: 'grid-cols-1',
@@ -22,6 +24,13 @@ const UserProfile = ({ seller }) => {
         desktop: 'my-4',
     });
 
+    const sidebarStyle = isDesktop
+        ? {
+              position: 'sticky',
+              top: '125px',
+          }
+        : {};
+
     return (
         <div
             className={cn(
@@ -33,7 +42,7 @@ const UserProfile = ({ seller }) => {
                 'items-start',
                 'relative'
             )}>
-            <div className={cn('col-span-1', 'user-profile-sticky')}>
+            <div className={cn('col-span-1')} style={sidebarStyle}>
                 <UserShortInfo seller={seller} />
             </div>
             <div className={cn('col-span-3', 'h-full')}>
