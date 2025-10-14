@@ -7,9 +7,14 @@ import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import ServiceCheckout from './auth/serviceCheckout';
 import AuthModal from '~/components/AuthModal';
 import { useQueryClient } from '@tanstack/react-query';
+import { FaCheck } from "react-icons/fa6";
+import { AiOutlineDollar } from "react-icons/ai";
+import { IoTimeOutline } from "react-icons/io5";
+import { GoPencil } from "react-icons/go";
+import { cn, useRcn } from '~/shared/utilities/cn';
 
 const ServiceDescription = ({ description = {}, priceBox = {} }) => {
-    const { price, id, days, revisions, title } = priceBox;
+    const { price, id, days, revisions, title, category } = priceBox;
     const {
         requirements = '',
         file = '',
@@ -35,20 +40,50 @@ const ServiceDescription = ({ description = {}, priceBox = {} }) => {
         queyrClient.invalidateQueries({ queryKey: ['orders'] });
     };
 
+    const hiddenClass = useRcn({
+        mobile: "flex",
+        tablet: "hidden",
+        desktop: "hidden"
+    })
+
+    const flexClass = useRcn({
+        mobile: "block",
+        tablet: "hidden",
+        desktop: "hidden"
+    })
+
     return (
         <div className={styles.serviceDescription}>
+            <div className={cn(flexClass)}>
+                <h1 className={cn("text-[20px]", "mb-1")}>{title}</h1>
+                <span className={cn("text-secondary", "text-[14px]")}>{category}</span>
+            </div>
+            <div className={cn("flex", "items-center", "gap-4", "my-4", hiddenClass)}>
+                <div className={cn("flex", "items-center", "gap-2")}>
+                    <AiOutlineDollar color='rgba(0,0,0,0.5)' />
+                    <span className={cn("text-[14px]")}>{formatCurrencyWithSpace(price)} so'm</span>
+                </div>
+                <div className={cn("flex", "items-center", "gap-2")}>
+                    <IoTimeOutline color='rgba(0,0,0,0.5)' />
+                    <span className={cn("text-[14px]")}>{days} kun</span>
+                </div>
+                <div className={cn("flex", "items-center", "gap-2")}>
+                    <GoPencil color='rgba(0,0,0,0.5)' />
+                    <span className={cn("text-[14px]")}>{revisions} ta tahrir</span>
+                </div>
+            </div>
             <h2>Xizmat tavsifi</h2>
             {descText && (
                 <div
-                    style={{ borderBottom: '1px solid rgba(0,0,0,0.1)' }}
+                    style={{ borderBottom: '1px solid rgba(0,0,0,0.04)' }}
                     dangerouslySetInnerHTML={{ __html: descText }}
                 />
             )}
 
-            <h3>Boshlash uchun mutaxasisga kerak</h3>
+            <h3>Boshlash uchun kerak</h3>
             {requirements && (
                 <div
-                    style={{ borderBottom: '1px solid rgba(0,0,0,0.1)' }}
+                    style={{ borderBottom: '1px solid rgba(0,0,0,0.04)' }}
                     dangerouslySetInnerHTML={{ __html: requirements }}
                 />
             )}
@@ -68,10 +103,10 @@ const ServiceDescription = ({ description = {}, priceBox = {} }) => {
             )}
             {serviceItems?.length > 0 && (
                 <div className={styles.serviceBox}>
-                    <h3>Bu xizmat ichiga nimalar kiradi</h3>
+                    <h3>Nimalar kiradi</h3>
                     {serviceItems.map((item, idx) => (
                         <p key={idx} className={styles.serviceItem}>
-                            {idx + 1}. {item.service_item}
+                            <FaCheck color="green" /> {item.service_item}
                         </p>
                     ))}
                 </div>
@@ -79,14 +114,14 @@ const ServiceDescription = ({ description = {}, priceBox = {} }) => {
 
             <div className={styles.pricing}>
                 <div className={styles.infoBox}>
-                    <p className={styles.info}>
+                    {/* <p className={styles.info}>
                         <i className="fa-solid fa-clock"></i> {days} kunda
                         yetkazish
                     </p>
                     <p className={styles.info}>
                         <i className="fa-solid fa-pen-to-square"></i>{' '}
                         {revisions} marta tahrirlash huquqi
-                    </p>
+                    </p> */}
                 </div>
                 <div className={styles.btnWrapper}>
                     <Button className={styles.btn} onClick={handleOrderClick}>

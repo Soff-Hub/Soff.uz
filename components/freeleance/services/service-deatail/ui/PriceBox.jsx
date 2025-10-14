@@ -19,31 +19,20 @@ const PriceBox = ({ priceBox }) => {
         if (isLoggedIn) {
             setIsOpen(true)
         } else {
-            // Login qilish kerak bo'lganda localStorage'ga belgi qo'yamiz
             localStorage.setItem('openPaymentModal', 'true');
             setOpen(true)
         }
     }
 
-    // URL parametrini tekshirish
     useEffect(() => {
         if (query?.paymodal === "open" && isLoggedIn) {
             setIsOpen(true)
-
             const newQuery = { ...query }
             delete newQuery.paymodal
-            replace(
-                {
-                    pathname: pathname,
-                    query: newQuery,
-                },
-                undefined,
-                { shallow: true }
-            )
+            replace({ pathname, query: newQuery }, undefined, { shallow: true })
         }
     }, [query?.paymodal, isLoggedIn, pathname, replace])
 
-    // Login statusini tekshirish
     useEffect(() => {
         if (isLoggedIn) {
             const shouldOpenModal = localStorage.getItem('openPaymentModal');
@@ -54,35 +43,48 @@ const PriceBox = ({ priceBox }) => {
         }
     }, [isLoggedIn])
 
-    // Yangi callback funksiya
-const handleAuthSuccess = () => {
-    setOpen(false); // AuthModal yopish
-    setTimeout(() => {
-        setIsOpen(true); // Payment modal ochish
-    }, 300); // 300ms kechikish
-}
+    const handleAuthSuccess = () => {
+        setOpen(false);
+        setTimeout(() => setIsOpen(true), 300);
+    }
 
     return (
         <div className={styles.priceBox}>
-            <div className={styles.priceDiv}>
-                <h2 className={styles.price}>
-                    {formatCurrencyWithSpace(price)} so'm
-                </h2>
-            </div>
             <div className={styles.infoBox}>
-                <p className={styles.info}>
-                    <i className="fa-solid fa-clock"></i> {days} kunda yetkazish
-                </p>
-                <p className={styles.info}>
-                    <i className="fa-solid fa-pen-to-square"></i> {revisions} marta
-                    tahrirlash huquqi
-                </p>
+                {/* --- Narx --- */}
+                <div className={styles.infoRow}>
+                    <div className={styles.key}>
+                        <i className="fa-solid fa-money-bill-wave"></i>
+                        <span>Narx</span>
+                    </div>
+                    <div className={styles.value}>
+                        {formatCurrencyWithSpace(price)} so'm
+                    </div>
+                </div>
+
+                {/* --- Yetkazish --- */}
+                <div className={styles.infoRow}>
+                    <div className={styles.key}>
+                        <i className="fa-solid fa-clock"></i>
+                        <span>Yetkazish</span>
+                    </div>
+                    <div className={styles.value}>{days} kunda</div>
+                </div>
+
+                {/* --- Tahrirlash --- */}
+                <div className={styles.infoRow}>
+                    <div className={styles.key}>
+                        <i className="fa-solid fa-pen-to-square"></i>
+                        <span>Tahrirlash</span>
+                    </div>
+                    <div className={styles.value}>{revisions} marta</div>
+                </div>
             </div>
-            <Button
-                onClick={handleClick}
-                className={styles.btn}>
+
+            <Button onClick={handleClick} className={styles.btn}>
                 Buyurtma berish
             </Button>
+
             <Modal
                 open={isOpen}
                 onCancel={() => {
@@ -97,15 +99,13 @@ const handleAuthSuccess = () => {
                             <h3 className="type_payment_h3 text-center mb-4">
                                 Buyurtma uchun to'lovni amalga oshiring
                             </h3>
-
                             <div className="security-message mb-4 text-center">
                                 <i className="fa-solid fa-shield-halved text-success fs-4 mb-2"></i>
                                 <p className="text-muted mb-0">
                                     Sizning to'lovingiz Soff tizimi tomonidan xavfsiz saqlanadi.
-                                    Mutaxassisga to'lov faqat siz ishni ko'rib chiqib, tasdiqlaganingizdan so'ng amalga oshiriladi.
+                                    Mutaxassisga to'lov faqat siz ishni ko‘rib chiqib, tasdiqlaganingizdan so‘ng amalga oshiriladi.
                                 </p>
                             </div>
-
                             <div className="service-details-box bg-white border rounded p-3 mb-4">
                                 <div className="d-flex justify-content-between align-items-center">
                                     <div className="d-flex align-items-center">
@@ -137,8 +137,7 @@ const handleAuthSuccess = () => {
                     ) : (
                         <>
                             <div className="d-flex justify-content-between align-items-center mb-4">
-                                <h3 className="type_payment_h3 mb-0">
-                                </h3>
+                                <h3 className="type_payment_h3 mb-0"></h3>
                                 <Button
                                     type="text"
                                     icon={<i className="fa-solid fa-arrow-left"></i>}
@@ -153,11 +152,8 @@ const handleAuthSuccess = () => {
                     )}
                 </div>
             </Modal>
-      <AuthModal 
-    open={open} 
-    onClose={() => setOpen(false)}
-    onSuccess={handleAuthSuccess}  // ← SHU QATOR MUHIM!
-/>
+
+            <AuthModal open={open} onClose={() => setOpen(false)} onSuccess={handleAuthSuccess} />
         </div>
     );
 };

@@ -9,7 +9,7 @@ import ImageLightBox from './image-lightbox';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import DemoButton from '~/components/form/demoBtn';
 
-const ImageCarousel = ({ images, views, demo_link }) => {
+const ImageCarousel = ({ images, views, demo_link, isProduct = true }) => {
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
     const [mainSwiper, setMainSwiper] = useState(null);
     const [activeIndex, setActiveIndex] = useState(0);
@@ -299,11 +299,10 @@ const ImageCarousel = ({ images, views, demo_link }) => {
                                         flexShrink: 0,
                                     }}>
                                     <div
-                                        className={`thumbnail-wrapper ${
-                                            activeIndex === index
-                                                ? 'active'
-                                                : ''
-                                        }`}
+                                        className={`thumbnail-wrapper ${activeIndex === index
+                                            ? 'active'
+                                            : ''
+                                            }`}
                                         style={{
                                             width: '75px',
                                             height: '50px',
@@ -334,10 +333,10 @@ const ImageCarousel = ({ images, views, demo_link }) => {
                                                         Math.max(
                                                             0,
                                                             index -
-                                                                Math.floor(
-                                                                    slidesPerView /
-                                                                        2
-                                                                )
+                                                            Math.floor(
+                                                                slidesPerView /
+                                                                2
+                                                            )
                                                         );
                                                     thumbsSwiper.slideTo(
                                                         targetSlide
@@ -372,27 +371,31 @@ const ImageCarousel = ({ images, views, demo_link }) => {
                         </Swiper>
                     </div>
                 )}
+                {isProduct &&
+                    <>
+                        <div className="views mt-2">
+                            <i className="fa-solid fa-eye"></i>{' '}
+                            <span>{views || 0}</span>
+                        </div>
 
-                <div className="views mt-2">
-                    <i className="fa-solid fa-eye"></i>{' '}
-                    <span>{views || 0}</span>
-                </div>
+                        <div className="d-flex align-items-center gap-5 mt-2 flex-wrap justify-content-center">
+                            {demo_link && <DemoButton demo_link={demo_link} />}
+                            <div className="d-flex gap-2 align-items-center flex-wrap">
+                                <InfoCircleOutlined
+                                    className="fs-2 "
+                                    style={{ cursor: 'pointer' }}
+                                />
+                                <span>Mualliflik huquqi buzilgan holatda</span>
+                                <strong
+                                    className="text-success"
+                                    style={{ cursor: 'pointer' }}>
+                                    shikoyat qiling!
+                                </strong>
+                            </div>
+                        </div>
+                    </>
 
-                <div className="d-flex align-items-center gap-5 mt-2 flex-wrap justify-content-center">
-                    {demo_link && <DemoButton demo_link={demo_link} />}
-                    <div className="d-flex gap-2 align-items-center flex-wrap">
-                        <InfoCircleOutlined
-                            className="fs-2 "
-                            style={{ cursor: 'pointer' }}
-                        />
-                        <span>Mualliflik huquqi buzilgan holatda</span>
-                        <strong
-                            className="text-success"
-                            style={{ cursor: 'pointer' }}>
-                            shikoyat qiling!
-                        </strong>
-                    </div>
-                </div>
+                }
             </div>
         </div>
     );
