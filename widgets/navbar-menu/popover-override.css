@@ -1,4 +1,7 @@
 /* Popover override styles for navbar menu */
+.navbar-menu-popover {
+    z-index: 10000 !important;
+}
 .navbar-menu-popover .ant-popover-content {
     padding: 0 !important;
 }
