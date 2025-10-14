@@ -16,12 +16,12 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    flex-wrap: wrap;
     gap: 6px;
 
     @media (max-width: 768px) {
         position: fixed;
         bottom: 0;
+        height: 70px;
         left: 50%;
         transform: translateX(-50%);
         z-index: 1010;
@@ -34,6 +34,7 @@
 }
 
 .productInfo {
+    width: 80%;
     display: flex;
     align-items: center;
     gap: 12px;
@@ -49,18 +50,19 @@
 
 .productTitle {
     font-size: 16px;
-    margin: 0;
-
     white-space: nowrap;
+    line-clamp: 1;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 100%;
+    margin: 0;
+    min-width: 100px;
 }
 
 .downloadBtn {
     padding: 8px 18px;
     font-size: 14px;
     background-color: #00a44f;
+    white-space: nowrap;
     color: #fff !important;
     border: none;
     border-radius: 5px;
@@ -73,24 +75,52 @@
     }
 }
 
+.closeBtn {
+    font-size: 20px;
+}
+
 @media (max-width: 480px) {
+    .productInfo {
+        width: 50%;
+    }
     .downloadBtn {
         padding: 6px 14px;
         font-size: 12px;
         width: 100%;
     }
+
+    .closeBtn {
+        padding: 15px 8px;
+        font-size: 16px;
+    }
 }
 
 @media (min-width: 481px) and (max-width: 768px) {
+    .productInfo {
+        width: 65%;
+    }
     .downloadBtn {
         padding: 7px 16px;
         font-size: 13px;
     }
+
+    .closeBtn {
+        padding: 17px 10px;
+        font-size: 18px;
+    }
 }
 
 @media (min-width: 769px) {
+    .productInfo {
+        width: 75%;
+    }
+
     .downloadBtn {
         padding: 10px 22px;
         font-size: 15px;
+    }
+
+    .closeBtn {
+        padding: 21px 10px;
     }
 }

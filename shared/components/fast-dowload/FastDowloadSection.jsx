@@ -53,11 +53,11 @@ const FastDownloadSection = () => {
                             className={styles.productImage}
                         />
                     </Link>
-                    <Link
-                        href={`/product/${product.slug}`}
-                        className={styles.productTitle}>
-                        {product.title}
-                    </Link>
+                    <p className={styles.productTitle}>
+                        <Link href={`/product/${product.slug}`}>
+                            {product.title}
+                        </Link>
+                    </p>
                 </div>
                 <div className={cn('flex', 'gap-3', 'items-center')}>
                     <a
@@ -69,11 +69,9 @@ const FastDownloadSection = () => {
                         Yuklab olish
                     </a>
                     <Button
-                        style={{
-                            height: '40px',
-                        }}
+                        className={styles.closeBtn}
                         onClick={() => handleDowload(product.id)}>
-                        <IoMdClose fontSize={20} />
+                        <IoMdClose />
                     </Button>
                 </div>
             </div>
