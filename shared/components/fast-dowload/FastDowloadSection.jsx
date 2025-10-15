@@ -11,21 +11,23 @@ import { Button } from 'antd';
 import Cookies from 'js-cookie';
 import { cn } from '~/shared/utilities/cn';
 import Link from 'next/link';
+import { useSelector } from 'react-redux';
 const getToken = () => Cookies.get('token');
 
 const FastDownloadSection = () => {
     const queryClient = useQueryClient();
+    const { showFastDownload } = useSelector((state) => state.ui);
+    console.log('showFastDownload', showFastDownload);
     const {
         data: product,
         isLoading,
         isError,
         error,
     } = useQuery({
-        queryKey: ['fast-download'],
+        queryKey: ['fast-download', showFastDownload],
         queryFn: fetchFastDownloadProduct,
         retry: false,
-        enabled: !!getToken(),
-        staleTime: 1000 * 60 * 5,
+        enabled: !!getToken() && showFastDownload,
     });
 
     if (isLoading) return null;
@@ -34,7 +36,10 @@ const FastDownloadSection = () => {
     const handleDowload = async (id) => {
         try {
             await fetchProductDowload(id);
-            queryClient.invalidateQueries(['fast-download']);
+            queryClient.invalidateQueries({
+                queryKey: ['fast-download'],
+                exact: false,
+            });
         } catch (error) {
             console.error('Download error:', error);
         }

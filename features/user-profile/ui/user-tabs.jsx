@@ -26,21 +26,31 @@ const items = [
 
 const UserTabs = ({ seller }) => {
     const router = useRouter();
-    const { tab } = router.query;
     const [activeKey, setActiveKey] = useState('about');
 
     const commentRef = useRef(null);
     const sectionRef = useRef(null);
 
     useEffect(() => {
-        if (tab && items.find((item) => item.key === tab)) {
+        const { tab } = router.query;
+        console.log('triggering');
+        if (!tab) {
+            router.replace(
+                {
+                    pathname: router.pathname,
+                    query: { ...router.query, tab: 'about' },
+                },
+                undefined,
+                { shallow: true }
+            );
+            setActiveKey('about');
+        } else {
             setActiveKey(tab);
         }
-    }, [tab, items]);
+    }, [router]);
 
     const onChange = useCallback(
         (key) => {
-            setActiveKey(key);
             router.push(
                 {
                     pathname: router.pathname,
@@ -55,12 +65,14 @@ const UserTabs = ({ seller }) => {
 
     useEffect(() => {
         if (activeKey === 'comments' && commentRef.current) {
-            setTimeout(() => {
+            const timing = setTimeout(() => {
                 commentRef.current.scrollIntoView({
                     behavior: 'smooth',
                     block: 'start',
                 });
             }, 300);
+
+            return () => clearTimeout(timing);
         }
     }, [activeKey]);
 

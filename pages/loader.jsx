@@ -137,6 +137,7 @@ const Loader = () => {
                 access: tokenText,
                 role: 'customer',
             };
+            console.log({ roleBegin, role, tokenArr, token, list, tokenText });
             dispatch(login({ user: data, data: data }));
             dispatch(begin({ id: roleBegin }));
         }
@@ -154,9 +155,11 @@ const Loader = () => {
         // ) {
         // Router.push('/account/dashbord');
         // } else if (user?.role === 'customer') {
-        Router.push('/account/sellerproducts');
+        // Router.push('/account/sellerproducts');
         // }
     }, [user?.role]);
+
+    console.log('loader user', user);
     return (
         <div
             style={{

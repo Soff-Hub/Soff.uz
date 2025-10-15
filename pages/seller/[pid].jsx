@@ -21,6 +21,7 @@ export async function getServerSideProps(context) {
     try {
         const url = `${d_base_url}/auth/freelance-profile/${pid}/`;
         const res = await fetchJson(url);
+        console.log('seller profile', res);
         return {
             props: {
                 seller: res,
