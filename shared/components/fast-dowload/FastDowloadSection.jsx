@@ -7,29 +7,27 @@ import {
 } from './FastDowloadApi';
 import { IoMdClose } from 'react-icons/io';
 import { Button } from 'antd';
-
-import Cookies from 'js-cookie';
 import { cn } from '~/shared/utilities/cn';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
-const getToken = () => Cookies.get('token');
 
 const FastDownloadSection = () => {
     const queryClient = useQueryClient();
-    const { showFastDownload } = useSelector((state) => state.ui);
-    console.log('showFastDownload', showFastDownload);
+    const { user } = useSelector((state) => state.auth);
+    console.log('User in FastDownloadSection:', user);
     const {
         data: product,
         isLoading,
         isError,
         error,
+        isFetched,
     } = useQuery({
         queryKey: ['fast-download', showFastDownload],
         queryFn: fetchFastDownloadProduct,
-        retry: false,
-        enabled: !!getToken() && showFastDownload,
+        enabled: user?.access ? true : false,
+        staleTime: 1000 * 60 * 5,
     });
-
+    console.log({ product, isLoading, isError, error, isFetched });
     if (isLoading) return null;
     if (isError || !product || Object.keys(product).length == 0) return null;
 
@@ -45,8 +43,6 @@ const FastDownloadSection = () => {
         }
     };
 
-    console.log({ product });
-
     return (
         <div className={styles.wrapper}>
             <div className={`container ${styles.productContainer}`}>
@@ -58,11 +54,11 @@ const FastDownloadSection = () => {
                             className={styles.productImage}
                         />
                     </Link>
-                    <Link
-                        href={`/product/${product.slug}`}
-                        className={styles.productTitle}>
-                        {product.title}
-                    </Link>
+                    <p className={styles.productTitle}>
+                        <Link href={`/product/${product.slug}`}>
+                            {product.title}
+                        </Link>
+                    </p>
                 </div>
                 <div className={cn('flex', 'gap-3', 'items-center')}>
                     <a
@@ -74,11 +70,9 @@ const FastDownloadSection = () => {
                         Yuklab olish
                     </a>
                     <Button
-                        style={{
-                            height: '40px',
-                        }}
+                        className={styles.closeBtn}
                         onClick={() => handleDowload(product.id)}>
-                        <IoMdClose fontSize={20} />
+                        <IoMdClose />
                     </Button>
                 </div>
             </div>

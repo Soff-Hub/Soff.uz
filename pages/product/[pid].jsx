@@ -372,12 +372,28 @@ export async function getServerSideProps({ query, req }) {
     const token = cookies.token;
 
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
+    let defaultProducts = null;
+    try {
+        const resquest = await fetch(
+            `${baseUrl}customer/documents/${query.pid}/`,
+            {
+                headers,
+            }
+        );
 
-    const resquest = await fetch(`${baseUrl}customer/documents/${query.pid}/`, {
-        headers,
-    });
+        if (resquest.status === 403 || resquest.status === 401) {
+            throw new Error(
+                'Token invalid yoki muddati o‘tgan. Iltimos, qaytadan tizimga kiring.'
+            );
+        }
 
-    const defaultProducts = await resquest.json();
+        defaultProducts = await resquest.json();
+    } catch (error) {
+        const request = await fetch(
+            `${baseUrl}customer/documents/${query.pid}/`
+        );
+        defaultProducts = await request.json();
+    }
 
     return {
         props: {

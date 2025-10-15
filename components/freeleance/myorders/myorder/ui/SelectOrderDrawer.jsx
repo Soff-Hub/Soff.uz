@@ -18,7 +18,7 @@ const SelectOrderDrawer = ({ open, onClose, order }) => {
     const { push } = useRouter();
 
     const { data: initialOffers } = useFGet(order?.id, `offer/${order?.id}/`, {
-        enabled: open && !!order?.id && !user?.access,
+        enabled: open && !!order?.id && !!user?.access,
         token: user?.access,
     });
 

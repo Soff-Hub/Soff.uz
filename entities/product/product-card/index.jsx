@@ -27,13 +27,13 @@ const ProductCard = ({ product }) => {
             setCartOneItem(product.id);
         }
 
-        setBasket(prev => !prev);
+        setBasket((prev) => !prev);
     }
 
     function handleAddItemToWishlist(e) {
         e.preventDefault();
         addSavedItem(product.id);
-        if (wishlist?.find(item => item.id === product?.id)) {
+        if (wishlist?.find((item) => item.id === product?.id)) {
             removeSavedItem(product.id);
         }
     }
@@ -63,7 +63,7 @@ const ProductCard = ({ product }) => {
                                     onClick={handleAddItemToWishlist}
                                     className={styles.likeIcon}>
                                     {wishlist?.some(
-                                        item =>
+                                        (item) =>
                                             Number(item.id) ===
                                             Number(product?.id)
                                     ) ? (
@@ -91,7 +91,7 @@ const ProductCard = ({ product }) => {
                             className={styles.cardImg}
                             src={
                                 product?.poster_url ||
-                                '/static/img/not-found.png'
+                                '/static/img/no-document.png'
                             }
                             alt="card img"
                         />
@@ -104,8 +104,10 @@ const ProductCard = ({ product }) => {
                         </h2>
                         <h3 className={styles.cardPrice}>
                             {product?.price === 0 || !product?.price
-                                ? "Bepul"
-                                : `${formatCurrencyWithSpace(product?.price)} so’m`}
+                                ? 'Bepul'
+                                : `${formatCurrencyWithSpace(
+                                      product?.price
+                                  )} so’m`}
                         </h3>
                     </div>
                     <div className={styles.cardInfo}>

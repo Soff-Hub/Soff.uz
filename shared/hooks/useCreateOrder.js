@@ -556,8 +556,6 @@ function useCreateOrder() {
         },
     ];
 
-    console.log({ formItems });
-
     const formItemsContent = formItems.map((formItem) =>
         withPopover(
             formItem,
