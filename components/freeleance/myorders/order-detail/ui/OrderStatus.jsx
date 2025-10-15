@@ -7,7 +7,9 @@ import Link from 'next/link';
 
 const OrderStatus = ({ order }) => {
     const priceFormatted =
-        new Intl.NumberFormat('uz-UZ').format(order?.service?.price || order?.budget || 0) + " so'm";
+        new Intl.NumberFormat('uz-UZ').format(
+            order?.service?.price || order?.budget || 0
+        ) + " so'm";
     const { mutate: createChat } = useCreateChat();
 
     const orderStatus = {
@@ -19,7 +21,7 @@ const OrderStatus = ({ order }) => {
         rejected: 4,
         order_file_sent: 5,
         completed: 6,
-        cancelled: 0
+        cancelled: 0,
     };
 
     const orderStatusName = {
@@ -31,16 +33,23 @@ const OrderStatus = ({ order }) => {
         order_file_sent: 'Tasdiqlash uchun topshirildi',
         completed: 'Buyurtma tugallandi',
         rejected: "Fayl to'liq emas",
-        cancelled: "Buyurtma bekor qilindi"
+        cancelled: 'Buyurtma bekor qilindi',
     };
 
     return (
-        <div className="col-12 col-lg-3">
+        <div className="col-12 col-lg-3 my-4">
             {/* Order info */}
             <div className={styles.status}>
                 <div className={styles.status_info}>
                     <span>Buyurtma holati</span>
-                    <p style={{ background: order?.order_status_doing?.status == "cancelled" && "red" }}>{orderStatusName[order?.order_status_doing?.status]}</p>
+                    <p
+                        style={{
+                            background:
+                                order?.order_status_doing?.status ==
+                                    'cancelled' && 'red',
+                        }}>
+                        {orderStatusName[order?.order_status_doing?.status]}
+                    </p>
                 </div>
                 <div className={styles.status_price}>
                     <span>Buyurtma narxi</span>
@@ -50,7 +59,6 @@ const OrderStatus = ({ order }) => {
 
             {/* Seller info */}
             <div className={styles.seller}>
-
                 <div className={styles.seller_box}>
                     <img
                         src={
@@ -66,9 +74,8 @@ const OrderStatus = ({ order }) => {
                             href={`/seller/${order?.user?.soff_seller_id}#about_author`}>
                             {order?.user?.full_name || ''}
                         </Link>
-                        <span className='text-muted fs-5'>Frilanser</span>
+                        <span className="text-muted fs-5">Frilanser</span>
                     </div>
-
                 </div>
             </div>
             {order?.user?.soff_seller_id && (
@@ -78,11 +85,11 @@ const OrderStatus = ({ order }) => {
                         size="large"
                         className="w-100 rounded-0">
                         <span className={styles.unreadChatsWrapper}>
-                            {order?.unread_messages_count !== 0 &&
+                            {order?.unread_messages_count !== 0 && (
                                 <span className={styles.unreadChats}>
                                     {order?.unread_messages_count}
                                 </span>
-                            }
+                            )}
                             <MessageOutlined />
                         </span>
                         Chat
@@ -99,18 +106,24 @@ const OrderStatus = ({ order }) => {
                     status={
                         order?.order_status_doing?.status ===
                             'requirement_file_rejected' ||
-                            order?.order_status_doing?.status === 'rejected' ||
-                            order?.order_status_doing?.status === 'cancelled'
+                        order?.order_status_doing?.status === 'rejected' ||
+                        order?.order_status_doing?.status === 'cancelled'
                             ? 'error'
                             : 'process'
                     }
                     items={[
-                        { title: `${order?.order_status_doing?.status == "cancelled" ? "Buyurtma bekor qilindi" : "Buyurtma yaratildi"}  ` },
+                        {
+                            title: `${
+                                order?.order_status_doing?.status == 'cancelled'
+                                    ? 'Buyurtma bekor qilindi'
+                                    : 'Buyurtma yaratildi'
+                            }  `,
+                        },
                         { title: "To'lov amalga oshirildi" },
                         {
                             title:
                                 order?.order_status_doing?.status ==
-                                    'requirement_file_rejected' ? (
+                                'requirement_file_rejected' ? (
                                     <Tooltip
                                         title={
                                             order?.order_status_doing?.reason
@@ -126,7 +139,7 @@ const OrderStatus = ({ order }) => {
                         {
                             title:
                                 order?.order_status_doing?.status ==
-                                    'rejected' ? (
+                                'rejected' ? (
                                     <Tooltip
                                         title={
                                             order?.order_status_doing?.reason

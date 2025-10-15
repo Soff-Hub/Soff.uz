@@ -9,7 +9,7 @@ import {
     TELEGRAM_LINK,
 } from '~/shared/api/end-points';
 
-export default function TelegramNotification() {
+export default function TelegramNotification({ header, hideIfActivated }) {
     const { isMobile } = useResponsive();
     const { data: tg_link } = useGet(
         'tg_link',
@@ -45,7 +45,7 @@ export default function TelegramNotification() {
         }
     }, [newProfile]);
 
-    const handleSwitchChange = value => {
+    const handleSwitchChange = (value) => {
         if (value) {
             if (!newProfile?.telegram_chat_id && tg_link?.link_code) {
                 window.open(tg_link.link_code, '_blank');
@@ -56,17 +56,26 @@ export default function TelegramNotification() {
         setChecked(value);
     };
 
+    if (checked && hideIfActivated) {
+        return null;
+    }
+
     return (
         <div
-            className={`alert alert-warning d-flex ${isMobile &&
-                ''} align-items-center justify-content-between`}>
-            <div className="d-flex align-items-center gap-2">
-                <span>Telegram orqali davom ettirish</span>
-                <Tooltip
-                    title="Buyurtma holati va yangi takliflar haqida telegram bot orqali bildirishnomalarni qabul qilish">
-                    <InfoCircleOutlined style={{ color: '#faad14' }} />
-                </Tooltip>
-            </div>
+            className={`alert alert-warning d-flex ${
+                isMobile && ''
+            } align-items-center justify-content-between`}
+            style={{
+                borderRadius: '8px',
+            }}>
+            {header || (
+                <div className="d-flex align-items-center gap-2">
+                    <span>Telegram orqali davom ettirish</span>
+                    <Tooltip title="Buyurtma holati va yangi takliflar haqida telegram bot orqali bildirishnomalarni qabul qilish">
+                        <InfoCircleOutlined style={{ color: '#faad14' }} />
+                    </Tooltip>
+                </div>
+            )}
             <Switch
                 loading={isLoading}
                 checked={checked}

@@ -26,21 +26,21 @@ api.interceptors.request.use(
     }
 );
 
-// api.interceptors.response.use(
-//     (response) => {
-//         return response;
-//     },
-//     (error) => {
-//         if (error.response && error.response.status === 403) {
-//             // Check if URL has modal=open query parameter
-//             const urlParams = new URLSearchParams(window.location.search);
-//             const hasModalOpen = urlParams.get('modal') === 'open';
+api.interceptors.response.use(
+    (response) => {
+        return response;
+    },
+    (error) => {
+        if (error.response && error.response.status === 403) {
+            // Check if URL has modal=open query parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const hasModalOpen = urlParams.get('modal') === 'open';
 
-//             if (!hasModalOpen) {
-//                 localStorage.clear();
-//                 window.location.href = '/';
-//             }
-//         }
-//         return Promise.reject(error);
-//     }
-// );
+            if (!hasModalOpen) {
+                localStorage.clear();
+                window.location.href = '/';
+            }
+        }
+        return Promise.reject(error);
+    }
+);
