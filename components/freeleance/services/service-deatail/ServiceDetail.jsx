@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import ImageCarousel from './ui/ImageCarousel';
 import styles from './styles/detail.module.scss';
 import PriceBox from './ui/PriceBox';
@@ -17,7 +17,7 @@ import { useDispatch } from 'react-redux';
 import { setShowSearch } from '~/store/fast-dowload/slice';
 
 const ServiceDetail = ({ data }) => {
-    const { push, back } = useRouter();
+    const { push } = useRouter();
     const dispatch = useDispatch();
     const {
         service,
@@ -38,6 +38,7 @@ const ServiceDetail = ({ data }) => {
         id: service?.id,
         title: service?.title,
         user: user,
+        category: service?.category?.title
     };
     const { full_name, photo_url } = user[0];
     const description = {
@@ -66,6 +67,7 @@ const ServiceDetail = ({ data }) => {
             dispatch(setShowSearch(true));
         };
     }, [dispatch]);
+    console.log(data)
 
     return (
         <div className="container my-5 navTabsPadding">
@@ -77,10 +79,6 @@ const ServiceDetail = ({ data }) => {
             />
             <div className="row">
                 <div className="col-12 col-lg-8">
-                    {/* <Breadcrumb
-                        className="mb-3 d-flex align-items-center"
-                        items={breadcrumbItems}
-                    /> */}
                     <div
                         style={{
                             background: 'white',
@@ -89,21 +87,6 @@ const ServiceDetail = ({ data }) => {
                         }}
                         className="w-100">
                         <h1 className={styles.title}>{service?.title}</h1>
-                        {/* <div className={styles.userMainBox}>
-                            <img
-                                className={styles.avatar}
-                                src={photo_url || '/static/img/ozodbek.png'}
-                                alt={service?.user?.full_name || 'User'}
-                                style={{ cursor: 'pointer' }}
-                                onClick={pushUser}
-                            />
-                            <span
-                                style={{ cursor: 'pointer' }}
-                                onClick={pushUser}
-                                className={styles.username}>
-                                {full_name || 'No Name'}
-                            </span>
-                        </div> */}
                         <ImageCarousel images={slider_images} />
                         <ServiceDescription
                             priceBox={priceBox}
