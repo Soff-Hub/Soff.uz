@@ -6,6 +6,7 @@ import Search_Results_NotFound from './notFound';
 import { useRouter } from 'next/router';
 import useScrollToNotFound from './useScrollToNotFound';
 import { useFGet } from '~/shared/hooks/useFApi';
+import SearchSellerCard from '~/entities/seller/search-seller-card';
 
 const currentTab = '3';
 export default function Search_Results_Specialists({ children }) {
@@ -16,7 +17,7 @@ export default function Search_Results_Specialists({ children }) {
         router.query.tab === currentTab ? router.query : queriesRef.current;
     const { keyword = '', offset: queryOffset } = queriesRef.current;
 
-    const limit = 50; // 🔑 nechta specialist chiqishi
+    const limit = 51;
     const offset = Number(queryOffset || 0);
     const currentPage = Math.floor(offset / limit) + 1;
 
@@ -50,9 +51,13 @@ export default function Search_Results_Specialists({ children }) {
             <>
                 <div className="Search_Results_Specialists_Wrap">
                     {data.results.map(item => (
-                        <SearchResultsSpecialists_Card
+                        // <SearchResultsSpecialists_Card
+                        //     key={item?.soff_seller_id}
+                        //     data={item}
+                        // />
+                        <SearchSellerCard
+                            seller={item}
                             key={item?.soff_seller_id}
-                            data={item}
                         />
                     ))}
                 </div>

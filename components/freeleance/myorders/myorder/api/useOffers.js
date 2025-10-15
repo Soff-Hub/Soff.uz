@@ -22,11 +22,12 @@ const useOffers = (orderId, isOpen) => {
         socket.onmessage = (event) => {
             try {
                 const data = JSON.parse(event.data);
-
-                setOffers((prev) => {
-                    if (prev.some((o) => o.id === data.id)) return prev;
-                    return [data, ...prev];
-                });
+                if (data?.type !== 'offers_count') {
+                    setOffers((prev) => {
+                        if (prev.some((o) => o.id === data.id)) return prev;
+                        return [data, ...prev];
+                    });
+                }
             } catch (err) {
                 console.error('❌ WS parse error:', err);
             }

@@ -78,10 +78,9 @@ const handleAuthSuccess = () => {
                     tahrirlash huquqi
                 </p>
             </div>
-            <Button
-                onClick={handleClick}
-                className={styles.btn}>
-                Buyurtma berish
+
+            <Button onClick={handleClick} className={styles.btn}>
+                Buyurtma berish ({formatCurrencyWithSpace(price)} s'om)
             </Button>
             <Modal
                 open={isOpen}

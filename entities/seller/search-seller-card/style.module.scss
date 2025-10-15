@@ -1,0 +1,240 @@
+.card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: 0.3s ease;
+    text-align: center;
+    justify-content: space-between;
+
+    &:hover {
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+        transform: translateY(-2px);
+    }
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+
+
+.avatar {
+    border-radius: 50%;
+    object-fit: contain;
+}
+
+.info {
+    margin-top: 8px;
+}
+
+.name {
+    font-weight: 600;
+    font-size: 16px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.position {
+    color: #666;
+    font-size: 13px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.extraInfo {
+    margin: 10px 0;
+    font-size: 13px;
+    color: #777;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.lastActive {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 0;
+}
+
+.location {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 0;
+}
+
+.ratingBox {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    justify-content: center;
+
+    // .ratingValue {
+    //     font-weight: 500;
+    // }
+
+    .reviewCount {
+        color: #999;
+    }
+}
+
+.btn {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+}
+
+.badge {
+    :global(.ant-badge-dot) {
+        width: 18px !important;
+        height: 18px !important;
+    }
+}
+
+.rate {
+    font-size: 18px;
+    color: #ffae00;
+}
+
+.icon {
+    font-size: 15px;
+    color: #555;
+}
+
+.iconSmall {
+    font-size: 16px;
+    color: #777;
+}
+
+
+
+@media (max-width: 1024px) {
+    .card {
+        flex-direction: column;
+        text-align: center;
+        padding: 12px;
+    }
+
+    .avatar {
+        width: 80px !important;
+        height: 80px !important;
+    }
+
+    .name {
+        font-size: 14px;
+    }
+
+    .position {
+        font-size: 12px;
+    }
+
+    .extraInfo {
+        gap: 4px;
+    }
+
+    .lastActive,
+    .location {
+        font-size: 12px;
+    }
+
+    .btn {
+        width: 100%;
+        justify-content: center;
+        font-size: 14px;
+    }
+
+    .badge :global(.ant-badge-dot) {
+        width: 14px !important;
+        height: 14px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .card {
+        padding: 10px;
+    }
+
+    .avatar {
+        width: 70px !important;
+        height: 70px !important;
+    }
+
+    .name {
+        font-size: 13px;
+    }
+
+    .position {
+        font-size: 11px;
+    }
+
+    .rate {
+        font-size: 16px;
+    }
+
+    .ratingBox {
+        gap: 4px;
+    }
+
+    .btn {
+        font-size: 13px;
+        padding: 6px 10px;
+    }
+}
+
+@media (max-width: 576px) {
+    .card {
+        padding: 8px;
+        border-radius: 10px;
+        box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .avatar {
+        width: 60px !important;
+        height: 60px !important;
+    }
+
+    .name {
+        font-size: 12.5px;
+    }
+
+    .rate {
+        font-size: 15px;
+    }
+
+    .extraInfo {
+        gap: 1px;
+    }
+
+    .btn {
+        font-size: 12.5px;
+        padding: 5px 8px;
+    }
+
+    .badge :global(.ant-badge-dot) {
+        width: 12px !important;
+        height: 12px !important;
+        top: 5px;
+        right: 5px;
+    }
+
+    .lastActive,
+    .location {
+        font-size: 10px;
+    }
+}

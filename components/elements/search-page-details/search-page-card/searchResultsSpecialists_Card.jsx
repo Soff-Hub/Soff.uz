@@ -29,7 +29,7 @@ export default function SearchResultsSpecialists_Card({ data }) {
                 </p>
                 {isOnline() ? (
                     <Badge color="green" text="Online" />
-                ): <Badge color="" text="Ofline" /> }
+                ): <Badge color="" text="Offline" /> }
             </div>
 
             <p className='Search_Results_Specialists_Card_isName text-wrap'>
