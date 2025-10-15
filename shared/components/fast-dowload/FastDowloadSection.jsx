@@ -14,20 +14,18 @@ import { useSelector } from 'react-redux';
 const FastDownloadSection = () => {
     const queryClient = useQueryClient();
     const { user } = useSelector((state) => state.auth);
-    console.log('User in FastDownloadSection:', user);
+
     const {
         data: product,
         isLoading,
         isError,
-        error,
-        isFetched,
     } = useQuery({
-        queryKey: ['fast-download', showFastDownload],
+        queryKey: ['fast-download'],
         queryFn: fetchFastDownloadProduct,
         enabled: user?.access ? true : false,
         staleTime: 1000 * 60 * 5,
     });
-    console.log({ product, isLoading, isError, error, isFetched });
+
     if (isLoading) return null;
     if (isError || !product || Object.keys(product).length == 0) return null;
 
