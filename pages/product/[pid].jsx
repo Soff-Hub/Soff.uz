@@ -43,12 +43,10 @@ export default function ProductDefaultPage({ defaultProducts }) {
     const { query } = router;
     const [isPlay, setIsPlay] = useState(null);
     const { isMobile } = useResponsive();
-    console.log({ defaultProducts });
 
     const similarRef = useRef();
 
     const contentType = defaultProducts?.document?.content_type;
-    console.log({ contentType });
 
     const { data: lastAdded, isLoading: lastLoading } = useQuery({
         queryKey: ['last-products', contentType],
