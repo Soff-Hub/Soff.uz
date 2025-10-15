@@ -131,6 +131,10 @@ const authSlice = createSlice({
                 state.status = 'idle';
                 state.data = {};
             })
+            .addCase(checkAuthorization.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action.payload;
+            })
             .addCase(checkAuthorization.fulfilled, (state, action) => {
                 state.isLoggedIn = action.payload.isLoggedIn;
                 state.user = action.payload.user;
