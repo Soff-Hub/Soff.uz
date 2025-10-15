@@ -95,7 +95,7 @@ export default function PurchasedProducts() {
                                 alignItems: 'center',
                             }}
                             onClick={() =>
-                                handleDownloadThroughTelegram(document.file_url)
+                                handleDownloadThroughTelegram(document.id)
                             }>
                             <img
                                 src="/static/img/telegram.png"
