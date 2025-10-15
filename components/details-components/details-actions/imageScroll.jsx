@@ -359,6 +359,7 @@ const ImageCarousel = ({ images, views, demo_link }) => {
                                                 display: 'block',
                                                 width: '100%',
                                                 height: '100%',
+                                                objectFit: 'contain',
                                             }}
                                             onError={(e) => {
                                                 e.target.onerror = null; // Prevent infinite loop

@@ -7,14 +7,13 @@ import {
 } from './FastDowloadApi';
 import { IoMdClose } from 'react-icons/io';
 import { Button } from 'antd';
-
-import Cookies from 'js-cookie';
 import { cn } from '~/shared/utilities/cn';
 import Link from 'next/link';
-const getToken = () => Cookies.get('token');
+import { useSelector } from 'react-redux';
 
 const FastDownloadSection = () => {
     const queryClient = useQueryClient();
+    const { user } = useSelector((state) => state.auth);
     const {
         data: product,
         isLoading,
@@ -24,7 +23,7 @@ const FastDownloadSection = () => {
         queryKey: ['fast-download'],
         queryFn: fetchFastDownloadProduct,
         retry: false,
-        enabled: !!getToken(),
+        enabled: user?.access ? true : false,
         staleTime: 1000 * 60 * 5,
     });
 
@@ -39,8 +38,6 @@ const FastDownloadSection = () => {
             console.error('Download error:', error);
         }
     };
-
-    console.log({ product });
 
     return (
         <div className={styles.wrapper}>

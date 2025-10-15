@@ -48,6 +48,7 @@ const ServiceDetail = ({ data }) => {
     };
 
     const slider_images = [
+        { id: 'poster-img', image_url: service?.poster },
         ...seller_portfolio
             ?.map((portfolio) =>
                 portfolio?.portfolio_images.map((elem, index) => ({
@@ -56,7 +57,6 @@ const ServiceDetail = ({ data }) => {
                 }))
             )
             .flatMap((i) => i),
-        { id: 'poster-img', image_url: service?.poster },
     ];
 
     useEffect(() => {

@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import {jwtDecode} from "jwt-decode";
+import { jwtDecode } from 'jwt-decode';
 import Cookies from 'js-cookie';
 
 // Boshlang'ich holat
@@ -25,13 +25,19 @@ export const login = createAsyncThunk(
     async ({ user, data }, { rejectWithValue }) => {
         try {
             // API chaqiruv
-            localStorage.setItem('user', JSON.stringify(user));  
-            Cookies.set('token', user?.access, { expires: jwtDecode(user?.access)?.exp || 8 })
+            localStorage.setItem('user', JSON.stringify(user));
+            Cookies.set('token', user?.access, {
+                expires: jwtDecode(user?.access)?.exp || 8,
+            });
             localStorage.setItem(
                 'data',
                 JSON.stringify({ ...data, password: null })
             );
-            return { user, data: { ...data, password: null } };
+            return {
+                user,
+                data: { ...data, password: null },
+                status: 'succeeded',
+            };
         } catch (error) {
             return rejectWithValue(error.message);
         }
@@ -56,16 +62,18 @@ export const checkAuthorization = createAsyncThunk(
     'auth/checkAuthorization',
     async (_, { rejectWithValue }) => {
         try {
-            
             const user = localStorage.getItem('user')
                 ? JSON.parse(localStorage.getItem('user'))
                 : '';
-            const token = Cookies.get('token')
-            if(!token) Cookies.set('token', user?.access, { expires: jwtDecode(user?.access)?.exp || 8 })
+            const token = Cookies.get('token');
+            if (!token)
+                Cookies.set('token', user?.access, {
+                    expires: jwtDecode(user?.access)?.exp || 8,
+                });
             if (user?.access) {
-                return { isLoggedIn: true, user };
+                return { isLoggedIn: true, user, status: 'succeeded' };
             } else {
-                return { isLoggedIn: false, user: null };
+                return { isLoggedIn: false, user: null, status: 'failed' };
             }
         } catch (error) {
             return rejectWithValue(error.message);
@@ -120,11 +128,13 @@ const authSlice = createSlice({
             .addCase(logOut.fulfilled, (state) => {
                 state.isLoggedIn = false;
                 state.user = null;
+                state.status = 'idle';
                 state.data = {};
             })
             .addCase(checkAuthorization.fulfilled, (state, action) => {
                 state.isLoggedIn = action.payload.isLoggedIn;
                 state.user = action.payload.user;
+                state.status = action.payload.status;
             });
     },
 });
