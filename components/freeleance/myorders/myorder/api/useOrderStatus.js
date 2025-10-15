@@ -13,6 +13,7 @@ const useOrdersStatus = () => {
             return data;
         },
         enabled: !!user?.access,
+        staleTime: 0,
         refetchOnWindowFocus: true,
         refetchOnMount: true,
     });

@@ -7,7 +7,7 @@ import { MdErrorOutline } from 'react-icons/md';
 import { RiProgress5Line } from 'react-icons/ri';
 import { MdOutlinePendingActions } from 'react-icons/md';
 import { useRouter } from 'next/router';
-import { Avatar, Button, message } from 'antd';
+import { Avatar, Button, message, Tooltip } from 'antd';
 import { cn } from '~/shared/utilities/cn';
 
 const orderStatusAssets = (status) => {
@@ -15,7 +15,11 @@ const orderStatusAssets = (status) => {
         case 'completed':
             return {
                 orderClassName: styles.cardCompleted,
-                orderIcon: <IoCheckmarkDone className={styles.completed} />,
+                orderIcon: (
+                    <Tooltip title="Buyurtma tugallandi">
+                        <IoCheckmarkDone className={styles.completed} />
+                    </Tooltip>
+                ),
                 status: 'completed',
                 isRejectable: false,
             };
@@ -24,14 +28,22 @@ const orderStatusAssets = (status) => {
         case 'rejected':
             return {
                 orderClassName: styles.cardInProgress,
-                orderIcon: <RiProgress5Line className={styles.inProgress} />,
+                orderIcon: (
+                    <Tooltip title="Buyurtma jarayonda">
+                        <RiProgress5Line className={styles.inProgress} />
+                    </Tooltip>
+                ),
                 status: status,
                 isRejectable: true,
             };
         case 'cancelled':
             return {
                 orderClassName: styles.cardCancelled,
-                orderIcon: <MdErrorOutline className={styles.cancelled} />,
+                orderIcon: (
+                    <Tooltip title="Buyurtma bekor qilingan">
+                        <MdErrorOutline className={styles.cancelled} />
+                    </Tooltip>
+                ),
                 status: 'cancelled',
                 isRejectable: false,
             };
@@ -40,7 +52,9 @@ const orderStatusAssets = (status) => {
             return {
                 orderClassName: styles.card,
                 orderIcon: (
-                    <MdOutlinePendingActions className={styles.pending} />
+                    <Tooltip title="Yangi yaratilgan buyurtma">
+                        <MdOutlinePendingActions className={styles.pending} />
+                    </Tooltip>
                 ),
                 status: 'pending',
                 isRejectable: true,
@@ -210,45 +224,46 @@ const OrderCard = ({ order, onOpenDrawer, onCancel }) => {
                             Bekor qilish
                         </Button>
                     ) : null}
-                    {typeof onOpenDrawer === 'function' && (
-                        <button
-                            className={styles.primary}
-                            onClick={handlePrimaryClick}>
-                            {hasSeller ? (
-                                'Batafsil'
-                            ) : (
-                                <div
-                                    className={cn(
-                                        'flex',
-                                        'justify-center',
-                                        'items-center',
-                                        'gap-2'
-                                    )}>
-                                    <span style={{ fontSize: '14px' }}>
-                                        Takliflarni ko'rish
-                                    </span>
-                                    <Avatar.Group
-                                        max={{
-                                            count: 3,
-                                            style: {
-                                                color: 'white',
-                                                backgroundColor: '#00a44f',
-                                            },
-                                        }}>
-                                        {order?.offers?.map((item) => (
-                                            <Avatar
-                                                size={25}
-                                                src={
-                                                    item?.photo_url ||
-                                                    '/static/img/ozodbek.png'
-                                                }
-                                            />
-                                        ))}
-                                    </Avatar.Group>
-                                </div>
-                            )}
-                        </button>
-                    )}
+                    {typeof onOpenDrawer === 'function' &&
+                        statusAsset.status !== 'cancelled' && (
+                            <button
+                                className={styles.primary}
+                                onClick={handlePrimaryClick}>
+                                {hasSeller ? (
+                                    'Batafsil'
+                                ) : (
+                                    <div
+                                        className={cn(
+                                            'flex',
+                                            'justify-center',
+                                            'items-center',
+                                            'gap-2'
+                                        )}>
+                                        <span style={{ fontSize: '14px' }}>
+                                            Takliflarni ko'rish
+                                        </span>
+                                        <Avatar.Group
+                                            max={{
+                                                count: 3,
+                                                style: {
+                                                    color: 'white',
+                                                    backgroundColor: '#00a44f',
+                                                },
+                                            }}>
+                                            {order?.offers?.map((item) => (
+                                                <Avatar
+                                                    size={25}
+                                                    src={
+                                                        item?.photo_url ||
+                                                        '/static/img/ozodbek.png'
+                                                    }
+                                                />
+                                            ))}
+                                        </Avatar.Group>
+                                    </div>
+                                )}
+                            </button>
+                        )}
                 </div>
             </div>
         </div>

@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
-import { f_base_ws_url } from "~/shared/api/base-url";
+import { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { f_base_ws_url } from '~/shared/api/base-url';
 
 const useOffers = (orderId, isOpen) => {
     const [offers, setOffers] = useState([]);
@@ -25,10 +25,10 @@ const useOffers = (orderId, isOpen) => {
 
                 setOffers((prev) => {
                     if (prev.some((o) => o.id === data.id)) return prev;
-                    return [...prev, data];
+                    return [data, ...prev];
                 });
             } catch (err) {
-                console.error("❌ WS parse error:", err);
+                console.error('❌ WS parse error:', err);
             }
         };
 
@@ -37,12 +37,12 @@ const useOffers = (orderId, isOpen) => {
         };
 
         socket.onerror = (err) => {
-            console.error("⚠️ WS error:", err);
+            console.error('⚠️ WS error:', err);
         };
 
         return () => {
             socket.close();
-            setOffers([]); 
+            setOffers([]);
         };
     }, [orderId, isOpen]);
 
