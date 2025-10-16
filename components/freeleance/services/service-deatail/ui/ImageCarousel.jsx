@@ -5,7 +5,7 @@ import styles from '../styles/detail.module.scss';
 const ImageCarousel = ({ images }) => {
     return (
         <div className={styles.carouselWrapper}>
-            <ImageSlideCarousel images={images} />
+            <ImageSlideCarousel isProduct={false} images={images} />
         </div>
     );
 };

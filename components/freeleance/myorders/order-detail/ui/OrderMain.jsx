@@ -1,8 +1,18 @@
-import { Breadcrumb, Button, Modal, message, Input, Rate, Alert } from 'antd';
+import {
+    Breadcrumb,
+    Button,
+    Modal,
+    message,
+    Input,
+    Rate,
+    Alert,
+    Radio,
+} from 'antd';
 import {
     DownloadOutlined,
     SmileOutlined,
     WarningOutlined,
+    BellOutlined,
 } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
 import styles from '../style/style.module.scss';
@@ -21,7 +31,145 @@ import OrderCard from '~/entities/order/order-card';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { useDispatch } from 'react-redux';
 import { setShowSearch } from '~/store/fast-dowload/slice';
+import { IoCheckboxOutline } from 'react-icons/io5';
+import TelegramNotification from '~/shared/components/telegram-notlification';
+import duration from 'dayjs/plugin/duration';
 dayjs.locale('uz-latn');
+dayjs.extend(duration);
+
+// TimerComponent to show time remaining until deadline
+const TimerComponent = ({ deadlineDate }) => {
+    const [timeRemaining, setTimeRemaining] = useState('');
+    const [isOverdue, setIsOverdue] = useState(false);
+
+    useEffect(() => {
+        const updateTimer = () => {
+            if (!deadlineDate) return;
+
+            const now = dayjs();
+            const deadline = dayjs(deadlineDate);
+            const diff = deadline.diff(now);
+
+            if (diff < 0) {
+                // Deadline has passed - show overdue time
+                const overdueDuration = dayjs.duration(Math.abs(diff));
+                const years = Math.floor(overdueDuration.asYears());
+                const months = Math.floor(overdueDuration.asMonths()) % 12;
+                const days = Math.floor(overdueDuration.asDays()) % 30;
+                const hours = overdueDuration.hours();
+                const minutes = overdueDuration.minutes();
+
+                let overdueString = '';
+
+                if (years > 0) {
+                    overdueString += `${years} yil `;
+                }
+                if (months > 0) {
+                    overdueString += `${months} oy `;
+                }
+                if (days > 0) {
+                    overdueString += `${days} kun `;
+                }
+                if (hours > 0) {
+                    overdueString += `${hours} soat `;
+                }
+                if (minutes > 0 && days === 0 && hours === 0) {
+                    overdueString += `${minutes} daqiqa `;
+                }
+
+                setTimeRemaining(overdueString.trim() + ' kechikdi');
+                setIsOverdue(true);
+                return;
+            }
+
+            const duration = dayjs.duration(diff);
+            const years = Math.floor(duration.asYears());
+            const months = Math.floor(duration.asMonths()) % 12;
+            const days = Math.floor(duration.asDays()) % 30;
+            const hours = duration.hours();
+            const minutes = duration.minutes();
+
+            let timeString = '';
+
+            if (years > 0) {
+                timeString += `${years} yil `;
+            }
+            if (months > 0) {
+                timeString += `${months} oy `;
+            }
+            if (days > 0) {
+                timeString += `${days} kun `;
+            }
+            if (hours > 0) {
+                timeString += `${hours} soat `;
+            }
+            if (minutes > 0 && days === 0) {
+                timeString += `${minutes} daqiqa `;
+            }
+
+            if (!timeString) {
+                timeString = 'Bir necha daqiqa ';
+            }
+
+            setTimeRemaining(timeString.trim() + ' qoldi');
+            setIsOverdue(false);
+        };
+
+        updateTimer();
+        const interval = setInterval(updateTimer, 60000); // Update every minute
+
+        return () => clearInterval(interval);
+    }, [deadlineDate]);
+
+    if (!timeRemaining) return null;
+
+    return (
+        <div
+            style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                marginTop: '8px',
+                color: isOverdue ? '#ff4d4f' : '#666',
+                fontSize: '14px',
+            }}>
+            <span>
+                {isOverdue ? '⚠️ ' : '⏰ '}
+                Muddat: {timeRemaining}
+            </span>
+        </div>
+    );
+};
+
+const TelegramNotificationHeader = (
+    <div>
+        <h5
+            className="mb-1"
+            style={{
+                color: '#faad14',
+                fontSize: '18px',
+                display: 'flex',
+                gap: '8px',
+                alignItems: 'center',
+            }}>
+            <div
+                style={{
+                    width: '25px',
+                }}>
+                <BellOutlined
+                    style={{
+                        fontSize: '25px',
+                    }}
+                />
+            </div>
+            Bildirishnomalarni yoqing
+        </h5>
+        <p className="mb-0 text-muted">
+            Buyurtma holati haqida xabardor bo'lish uchun Telegram orqali
+            bildirishnoma oling
+        </p>
+    </div>
+);
 
 const OrderMain = ({ order }) => {
     const [open, setOpen] = useState(false);
@@ -43,6 +191,8 @@ const OrderMain = ({ order }) => {
         { title: <Link href={'/order/my-orders'}>Mening buyurtmalarim</Link> },
         { title: `#${order?.id}` },
     ];
+
+    console.log({ order });
 
     const { TextArea } = Input;
 
@@ -72,10 +222,16 @@ const OrderMain = ({ order }) => {
         };
     }, [dispatch]);
     return (
-        <div className="col-lg-9 col-12 rounded-2">
+        <div className="col-lg-9 col-12 rounded-2 my-4">
             <div className={styles.orderDetailMain}>
+                {/* Notification Settings Card */}
+                <TelegramNotification
+                    hideIfActivated
+                    header={TelegramNotificationHeader}
+                />
+
                 {order?.order_status_doing?.status === 'pending' && (
-                    <div className={styles.orderPayCard}>
+                    <div className={styles.orderPayCardFlex}>
                         <div className="w-100">
                             <h4
                                 className={`mb-0 ${
@@ -98,30 +254,43 @@ const OrderMain = ({ order }) => {
                         </Button>
                     </div>
                 )}
-
                 {order?.order_status_doing?.status === 'order_accepted' && (
-                    <div className={styles.orderPayCard}>
+                    <div className={styles.orderPayCardFlex}>
                         <div>
                             <h4
                                 style={{
-                                    color: 'yellowgreen',
+                                    color: '#389e0d',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '8px',
                                     marginBottom: 0,
                                 }}
                                 className={styles.orderNameLink}>
-                                Buyurtma qabul qilindi va Frilanser ishni
-                                boshlaydi. Ish tugallangach, tayyor faylni shu
-                                yerda yuklab olishingiz mumkin bo‘ladi. Istalgan
-                                vaqtda chat orqali frilanser bilan muloqot
-                                qilishingiz mumkin.
+                                <div
+                                    style={{
+                                        width: '25px',
+                                    }}>
+                                    <IoCheckboxOutline
+                                        style={{ fontSize: '25px' }}
+                                    />
+                                </div>
+                                Buyurtma qabul qilindi! Frilanser ishni
+                                boshladi.
                             </h4>
+                            <p className="mt-2 mb-0 text-muted">
+                                Ish tayyor bo'lgach fayl shu yerdan yuklanadi •
+                                Chat orqali frilanser bilan aloqada bo'ling
+                            </p>
+                            <TimerComponent
+                                deadlineDate={order?.deadline_date}
+                            />
                         </div>
                     </div>
                 )}
-
                 {(order?.order_status_doing?.status === 'approved' ||
                     order?.order_status_doing?.status ===
                         'requirement_file_rejected') && (
-                    <div className={styles.orderPayCard}>
+                    <div className={styles.orderPayCardFlex}>
                         <div>
                             <h3 className={styles.orderNameLink}>
                                 Buyurtma talablari kutilmoqda
@@ -165,8 +334,8 @@ const OrderMain = ({ order }) => {
                             message="Buyurtma 24 soat ichida ko'rib chiqilmasa avtomatik ravishta qabul qilingan deb hisoblanadi."
                             type="warning"
                         />
-                        <div className={styles.orderPayCard}>
-                            <div>
+                        <div className={styles.orderPayCardGrid}>
+                            <div className={styles.orderPayCardInfo}>
                                 <h3 className={styles.orderNameLink}>
                                     Ishni qabul qilish
                                 </h3>
@@ -176,26 +345,34 @@ const OrderMain = ({ order }) => {
                                     chiqing va tasdiqlang yoki rad eting.
                                 </p>
                             </div>
-                            <div
-                                className="d-flex w-100 flex-column justify-content-end flex-sm-row"
-                                style={{ display: 'flex', gap: 12 }}>
-                                <Button
-                                    icon={<DownloadOutlined />}
-                                    onClick={() =>
-                                        window.open(file?.file, '_blank')
-                                    }>
-                                    Faylni yuklab olish
-                                </Button>
-                                <Button
-                                    type="primary"
-                                    style={{
-                                        backgroundColor: '#00a44f',
-                                        borderColor: '#00a44f',
-                                    }}
-                                    onClick={() => setFeedbackOpen(true)}>
-                                    Natijani baholash
-                                </Button>
-                            </div>
+
+                            <Button
+                                icon={<DownloadOutlined />}
+                                onClick={() =>
+                                    window.open(file?.file, '_blank')
+                                }>
+                                Faylni yuklab olish
+                            </Button>
+
+                            <Radio.Group
+                                className={styles.orderPayCardQualityCheck}>
+                                <Radio.Button
+                                    value="end"
+                                    onClick={() => {
+                                        setRes('rejected');
+                                        setFeedbackOpen(true);
+                                    }}>
+                                    Kamchilik aniqlandi
+                                </Radio.Button>
+                                <Radio.Button
+                                    value="start"
+                                    onClick={() => {
+                                        setRes('complected');
+                                        setFeedbackOpen(true);
+                                    }}>
+                                    Qabul qilish
+                                </Radio.Button>
+                            </Radio.Group>
                         </div>
                     </>
                 )}
@@ -226,100 +403,66 @@ const OrderMain = ({ order }) => {
                     setRes('');
                     setText('');
                 }}
-                footer={
-                    res === ''
-                        ? [
-                              <Button
-                                  key="rejected"
-                                  danger
-                                  onClick={() => setRes('rejected')}>
-                                  Kamchilik aniqlandi
-                              </Button>,
-                              <Button
-                                  key="complected"
-                                  type="primary"
-                                  onClick={() => {
-                                      setRes('complected');
-                                  }}>
-                                  Qabul qilish
-                              </Button>,
-                          ]
-                        : [
-                              <Button
-                                  key="submit"
-                                  type="primary"
-                                  loading={submit.isPending}
-                                  onClick={() => {
-                                      if (res === 'rejected' && !text.trim()) {
-                                          message.error(
-                                              'Kamchiliklarni yozishingiz kerak'
-                                          );
-                                          return;
-                                      } else if (
-                                          res === 'complected' &&
-                                          (!text.trim() || !rate)
-                                      ) {
-                                          message.error(
-                                              'Fikr va bahoni yozishingiz kerak'
-                                          );
-                                          return;
-                                      }
+                footer={[
+                    <Button
+                        key="submit"
+                        type="primary"
+                        loading={submit.isPending}
+                        onClick={() => {
+                            if (res === 'rejected' && !text.trim()) {
+                                message.error(
+                                    'Kamchiliklarni yozishingiz kerak'
+                                );
+                                return;
+                            } else if (
+                                res === 'complected' &&
+                                (!text.trim() || !rate)
+                            ) {
+                                message.error(
+                                    'Fikr va bahoni yozishingiz kerak'
+                                );
+                                return;
+                            }
 
-                                      const payload = { id: order?.id };
+                            const payload = { id: order?.id };
 
-                                      payload.status =
-                                          res === 'rejected'
-                                              ? 'rejected'
-                                              : 'completed';
+                            payload.status =
+                                res === 'rejected' ? 'rejected' : 'completed';
 
-                                      if (res === 'rejected' && text) {
-                                          payload.reason = text;
-                                      }
-                                      if (res === 'complected' && rate) {
-                                          payload.rating = rate;
-                                      }
-                                      if (res === 'complected' && text) {
-                                          payload.comment = text;
-                                      }
+                            if (res === 'rejected' && text) {
+                                payload.reason = text;
+                            }
+                            if (res === 'complected' && rate) {
+                                payload.rating = rate;
+                            }
+                            if (res === 'complected' && text) {
+                                payload.comment = text;
+                            }
 
-                                      submit.mutate(payload, {
-                                          onSuccess: () => {
-                                              message.success(
-                                                  'Fikringiz yuborildi'
-                                              );
-                                              setFeedbackOpen(false);
-                                              setRes('');
-                                              queryClient.invalidateQueries({
-                                                  queryKey: ['order'],
-                                              });
-                                              setText('');
-                                              setRate(undefined);
-                                              if (
-                                                  payload.status == 'completed'
-                                              ) {
-                                                  setCongratModal(true);
-                                              }
-                                          },
-                                          onError: () => {
-                                              message.error(
-                                                  'Fikr yuborishda xatolik yuz berdi'
-                                              );
-                                          },
-                                      });
-                                  }}>
-                                  Yuborish
-                              </Button>,
-                          ]
-                }>
-                {res === '' && (
-                    <p>
-                        Natijani diqqat bilan ko‘rib chiqing. Agar hammasi siz
-                        kutgandek bo‘lsa — <b>“Qabul qilish”</b> tugmasini
-                        bosing. Agar muammolar bo‘lsa yoki to‘liq bo‘lmasa —{' '}
-                        <b>“Kamchilik aniqlandi”</b> tugmasini bosing.
-                    </p>
-                )}
-
+                            submit.mutate(payload, {
+                                onSuccess: () => {
+                                    message.success('Fikringiz yuborildi');
+                                    setFeedbackOpen(false);
+                                    setRes('');
+                                    queryClient.invalidateQueries({
+                                        queryKey: ['order'],
+                                    });
+                                    setText('');
+                                    setRate(undefined);
+                                    if (payload.status == 'completed') {
+                                        setCongratModal(true);
+                                    }
+                                },
+                                onError: () => {
+                                    message.error(
+                                        'Fikr yuborishda xatolik yuz berdi'
+                                    );
+                                },
+                            });
+                        }}>
+                        Yuborish
+                    </Button>,
+                ]}>
                 {res === 'complected' && (
                     <div className="d-flex flex-column gap-4">
                         <p className="m-0">

@@ -121,44 +121,44 @@ const Loader = () => {
     const { user } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     const Router = useRouter();
-    const query = Router.route;
     const { asPath } = Router;
+
     useEffect(() => {
+        let returnUrl = null;
         if (asPath.split('').length > 10) {
-            const roleBegin = asPath.slice(-1);
-            const role = asPath.slice(-20).split('&')[0];
-            const tokenArr = asPath.split('token=');
-            const token = tokenArr[1]?.split('');
-            const list = token?.reverse()?.splice(0, 20);
-            const tokenText = token?.reverse()?.join('');
-            localStorage.setItem('token', tokenText);
+            const urlParams = new URLSearchParams(asPath.split('?')[1] || '');
+            const firstId = urlParams.get('first');
+            const token = urlParams.get('token')?.slice(0, -12);
+
+            returnUrl =
+                urlParams.get('redirect_url') ||
+                urlParams.get('redirectUrl') ||
+                urlParams.get('returnUrl');
+
+            localStorage.setItem('token', token);
+
             const data = {
-                access: tokenText,
+                access: token,
                 role: 'customer',
             };
+
             dispatch(login({ user: data, data: data }));
-            dispatch(begin({ id: roleBegin }));
+            dispatch(begin({ id: firstId }));
         }
 
         if (user?.role === 'admin') {
             localStorage.setItem('is_seller', '1');
         }
-        // if (user?.role === 'seller') {
-        //     dispatch(accountLinksReducers(accountSellerLink));
-        // }
-        // if (user?.role === 'customer') {
-        dispatch(setAccountLinks(cutomerAccountLink));
-        // }
 
-        // if (
-        // user?.role === 'seller' ||
-        // user?.role === 'admin'
-        // ) {
-        // Router.push('/account/dashbord');
-        // } else if (user?.role === 'customer') {
-        Router.push('/account/sellerproducts');
-        // }
+        dispatch(setAccountLinks(cutomerAccountLink));
+
+        if (returnUrl) {
+            Router.push(decodeURIComponent(returnUrl));
+        } else {
+            Router.push('/account/sellerproducts');
+        }
     }, [user?.role]);
+
     return (
         <div
             style={{
@@ -172,3 +172,78 @@ const Loader = () => {
 };
 
 export default Loader;
+
+// old version
+// useEffect(() => {
+//     if (asPath.split('').length > 10) {
+//         const roleBegin = asPath.slice(-1);
+//         const role = asPath.slice(-20).split('&')[0];
+//         const tokenArr = asPath.split('token=');
+//         const token = tokenArr[1]?.split('');
+//         const list = token?.reverse()?.splice(0, 20);
+//         const tokenText = token?.reverse()?.join('');
+//         localStorage.setItem('token', tokenText);
+//         const data = {
+//             access: tokenText,
+//             role: 'customer',
+//         };
+//         dispatch(login({ user: data, data: data }));
+//         dispatch(begin({ id: roleBegin }));
+//     }
+
+//     if (user?.role === 'admin') {
+//         localStorage.setItem('is_seller', '1');
+//     }
+//     // if (user?.role === 'seller') {
+//     //     dispatch(accountLinksReducers(accountSellerLink));
+//     // }
+//     // if (user?.role === 'customer') {
+//     dispatch(setAccountLinks(cutomerAccountLink));
+//     // }
+
+//     // if (
+//     // user?.role === 'seller' ||
+//     // user?.role === 'admin'
+//     // ) {
+//     // Router.push('/account/dashbord');
+//     // } else if (user?.role === 'customer') {
+//     Router.push('/account/sellerproducts');
+//     // }
+// }, [user?.role]);
+
+// new version
+// useEffect(() => {
+//     let returnUrl = null;
+//     if (asPath.split('').length > 10) {
+//         const urlParams = new URLSearchParams(asPath.split('?')[1] || '');
+//         const firstId = urlParams.get('first');
+//         const token = urlParams.get('token');
+
+//         returnUrl =
+//             urlParams.get('redirect_url') ||
+//             urlParams.get('redirectUrl') ||
+//             urlParams.get('returnUrl');
+
+//         localStorage.setItem('token', token);
+
+//         const data = {
+//             access: token,
+//             role: 'customer',
+//         };
+
+//         dispatch(login({ user: data, data: data }));
+//         dispatch(begin({ id: firstId }));
+//     }
+
+//     if (user?.role === 'admin') {
+//         localStorage.setItem('is_seller', '1');
+//     }
+
+//     dispatch(setAccountLinks(cutomerAccountLink));
+
+//     if (returnUrl) {
+//         Router.push(decodeURIComponent(returnUrl));
+//     } else {
+//         Router.push('/account/sellerproducts');
+//     }
+// }, [user?.role]);

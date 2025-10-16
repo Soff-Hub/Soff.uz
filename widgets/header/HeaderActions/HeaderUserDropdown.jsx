@@ -9,6 +9,7 @@ import styles from '~/shared/styles/landingStyles.module.scss';
 import Image from 'next/image';
 import { useFGet } from '~/shared/hooks/useFApi';
 import { CHAT_UNSEENS } from '~/shared/api/end-points';
+import { cn } from '~/shared/utilities/cn';
 
 const HeaderUserDropdown = (props) => {
     const dispatch = useDispatch();
@@ -78,13 +79,23 @@ const HeaderUserDropdown = (props) => {
             <div className="ps-block--user-account ">
                 <div className="fs-3 d-flex align-items-center gap-3 pointer">
                     <Link href={'/account/sellerproducts'}>
-                        <Image
-                            src={profile?.image || '/static/img/ozodbek.png'}
-                            style={{ borderRadius: '50%' }}
-                            width={30}
-                            height={30}
-                            alt="user"
-                        />
+                        <div
+                            style={{
+                                width: '30px',
+                                height: '30px',
+                                position: 'relative',
+                                overflow: 'hidden',
+                                borderRadius: '50%',
+                            }}>
+                            <Image
+                                src={
+                                    profile?.image || '/static/img/ozodbek.png'
+                                }
+                                className={cn('object-cover')}
+                                layout="fill"
+                                alt="user"
+                            />
+                        </div>
                     </Link>
                 </div>
                 <div className="ps-block__content">

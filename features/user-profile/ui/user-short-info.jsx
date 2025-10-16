@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/uz-latn';
 import Image from 'next/image';
-import React, { memo, useCallback, useMemo, useState } from 'react';
+import React, { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { cn, useRcn } from '~/shared/utilities/cn';
 import { Button, Divider } from 'antd';
 import {
@@ -17,6 +17,7 @@ import CreateOrderModal from '~/shared/components/modals/CreateOrderModal';
 import { useSelector } from 'react-redux';
 import useCreateChat from '~/components/freeleance/chat/api/useCreateChat';
 import useResponsive from '~/shared/utilities/useResponsive';
+import { useRouter } from 'next/router';
 
 dayjs.extend(relativeTime);
 dayjs.locale('uz-latn');
@@ -41,13 +42,13 @@ const InfoRow = memo(({ icon, label, value }) => (
 ));
 
 const UserShortInfo = ({ seller }) => {
-    const { isLoggedIn } = useSelector((state) => state?.auth);
+    const { isLoggedIn, status } = useSelector((state) => state?.auth);
     const { mutate: createChat } = useCreateChat();
-    const { isMobile, isTablet } = useResponsive();
-    const [activeModal, setActiveModal] = useState(null); // 'auth' or 'createOrder' or null
-
+    const { isMobile } = useResponsive();
+    const [activeModal, setActiveModal] = useState(null);
     const [authModal, setAuthModal] = useState(false);
     const [createOrderModal, setCreateOrderModal] = useState(false);
+    const router = useRouter();
 
     const lastActive = useMemo(
         () =>
@@ -134,14 +135,22 @@ const UserShortInfo = ({ seller }) => {
         [seller]
     );
 
-    const handleCreateOrder = useCallback(() => {
+    const handleCreateOrder = () => {
         if (isLoggedIn) {
             setCreateOrderModal(true);
+            router.replace(
+                {
+                    pathname: router.pathname,
+                    query: { ...router.query, order: 'true' },
+                },
+                undefined,
+                { shallow: true }
+            );
         } else {
             setAuthModal(true);
             setActiveModal('createOrder');
         }
-    }, [isLoggedIn]);
+    };
 
     const handleCreateChat = useCallback(() => {
         if (isLoggedIn) {
@@ -151,6 +160,17 @@ const UserShortInfo = ({ seller }) => {
             setActiveModal('chat');
         }
     }, [isLoggedIn, seller?.id, createChat]);
+
+    const cancelCreateOrder = () => {
+        setCreateOrderModal(false);
+        const newQuery = { ...router.query };
+        delete newQuery.order;
+        router.replace(
+            { pathname: router.pathname, query: newQuery },
+            undefined,
+            { shallow: true }
+        );
+    };
 
     const imageSrc = useMemo(
         () => seller?.image || '/static/img/ozodbek.png',
@@ -171,6 +191,18 @@ const UserShortInfo = ({ seller }) => {
         }
     };
 
+    useEffect(() => {
+        const { order } = router.query;
+        if (order === 'true' && isLoggedIn && status === 'succeeded') {
+            setCreateOrderModal(true);
+            setAuthModal(false);
+            setActiveModal(null);
+        } else if (order === 'true' && !isLoggedIn && status !== 'idle') {
+            setAuthModal(true);
+            setActiveModal('createOrder');
+        }
+    }, [isLoggedIn, status]);
+
     return (
         <div className={cn('bg-light', 'p-3', 'shadow', 'rounded-xl')}>
             <div
@@ -180,17 +212,25 @@ const UserShortInfo = ({ seller }) => {
                     'items-center',
                     'justify-center'
                 )}>
-                <Image
-                    width={125}
-                    height={125}
-                    src={imageSrc}
-                    alt={imageAlt}
-                    priority={!isMobile}
-                    loading={isMobile ? 'lazy' : 'eager'}
-                    placeholder="blur"
-                    blurDataURL="data:image/webp;base64,UklGRiIAAABXRUJQVlA4IBIAAAAvAAAAAA..."
-                    className={cn('rounded-full')}
-                />
+                <div
+                    style={{
+                        width: 125,
+                        height: 125,
+                        position: 'relative',
+                        overflow: 'hidden',
+                    }}
+                    className={cn('rounded-full')}>
+                    <Image
+                        src={imageSrc}
+                        alt={imageAlt}
+                        priority={!isMobile}
+                        loading={isMobile ? 'lazy' : 'eager'}
+                        placeholder="blur"
+                        layout="fill"
+                        blurDataURL="data:image/webp;base64,UklGRiIAAABXRUJQVlA4IBIAAAAvAAAAAA..."
+                        className={cn('rounded-full', 'object-cover')}
+                    />
+                </div>
                 <h2
                     className={cn(
                         'text-[18px]',
@@ -339,7 +379,7 @@ const UserShortInfo = ({ seller }) => {
             />
             <CreateOrderModal
                 open={createOrderModal}
-                onClose={() => setCreateOrderModal(false)}
+                onClose={cancelCreateOrder}
                 seller={seller?.full_name}
                 id={seller?.id}
                 sellerInfo={seller}

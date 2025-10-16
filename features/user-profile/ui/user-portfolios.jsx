@@ -7,8 +7,6 @@ import { useFGet } from '~/shared/hooks/useFApi';
 import { cn, useRcn } from '~/shared/utilities/cn';
 import dynamic from 'next/dynamic';
 import ItemsNotFound from './items-not-found';
-import useResponsive from '~/shared/utilities/useResponsive';
-import styles from '@/widgets/home/freelance/style.module.scss';
 
 const PortfolioModal = dynamic(
     () => import('~/entities/portfolio/portfolio-modal'),
@@ -20,7 +18,6 @@ const PortfolioModal = dynamic(
 const UserPortfolios = () => {
     const router = useRouter();
     const [portfolio, setPortfolio] = useState();
-    const { isDesktop } = useResponsive();
     const { pid } = router.query;
     const { data: portfolios, isLoading } = useFGet(
         `${pid}-portfolio`,
@@ -35,8 +32,8 @@ const UserPortfolios = () => {
 
     const gridClass = useRcn({
         mobile: 'grid-cols-2',
-        tablet: 'grid-cols-2',
-        desktop: 'grid-cols-3',
+        tablet: 'grid-cols-3',
+        desktop: 'grid-cols-4',
     });
 
     const notFound = !isLoading && (!portfolios || portfolios?.length === 0);
@@ -68,7 +65,6 @@ const UserPortfolios = () => {
                     'shadow',
                     'rounded-xl',
                     'h-full'
-                    // isDesktop ? 'h-min-90' : ''
                 )}>
                 <div className={cn('grid', 'gap-4', gridClass)}>
                     {portfolios?.map((portfolio) => (

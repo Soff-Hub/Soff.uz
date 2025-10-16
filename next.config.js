@@ -3,6 +3,14 @@ const nextSettings = {
     eslint: {
         ignoreDuringBuilds: true,
     },
+    // Enable detailed hydration error logging
+    experimental: {
+        logging: {
+            level: 'verbose',
+        },
+    },
+    // Show more detailed hydration mismatches
+    reactStrictMode: true,
     env: {
         title: 'Soff uz',
         titleDescription:

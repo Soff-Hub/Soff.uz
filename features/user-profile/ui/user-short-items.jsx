@@ -21,8 +21,8 @@ const PortfolioModal = dynamic(
     }
 );
 
-const UserShortItems = ({ type = 'portfolio', id, limit = 3, sectionRef }) => {
-    const { isDesktop, isMobile } = useResponsive();
+const UserShortItems = ({ type = 'portfolio', id, limit = 4, sectionRef }) => {
+    const { isDesktop } = useResponsive();
     const router = useRouter();
     const [selected, setSelected] = useState(null);
 
@@ -74,8 +74,8 @@ const UserShortItems = ({ type = 'portfolio', id, limit = 3, sectionRef }) => {
 
     const gridClass = useRcn({
         mobile: 'grid-cols-2',
-        tablet: 'grid-cols-2',
-        desktop: 'grid-cols-3',
+        tablet: 'grid-cols-3',
+        desktop: 'grid-cols-4',
     });
 
     const items = useMemo(() => {

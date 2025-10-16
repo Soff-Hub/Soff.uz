@@ -40,6 +40,8 @@ export default function Search_Results_Services({ children }) {
         }`
     );
 
+    console.log('services data', data);
+
     const showResults = Array.isArray(data?.items) && data?.items?.length > 0;
 
     useScrollToNotFound(notFoundRef, showResults, data);
@@ -78,7 +80,7 @@ export default function Search_Results_Services({ children }) {
                     current={currentPage}
                     total={data?.total_service}
                     pageSizeOptions={[]}
-                    onChange={newPage => {
+                    onChange={(newPage) => {
                         const newOffset = (newPage - 1) * limit;
                         router.push({
                             pathname: router.pathname,
@@ -105,8 +107,8 @@ export default function Search_Results_Services({ children }) {
                             <div className="row align-items-center mb-3">
                                 <div className="col-12 col-md-3">
                                     <p className="countProduct text-nowrap m-0">
-                                        {data?.total
-                                            ? `${data?.total} ta mahsulot topildi`
+                                        {data?.total_service
+                                            ? `${data?.total_service} ta mahsulot topildi`
                                             : ''}
                                     </p>
                                 </div>

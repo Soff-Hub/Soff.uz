@@ -34,6 +34,7 @@ const { TextArea } = Input;
 
 const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
     const [form] = Form.useForm();
+    const { tg } = useTelegram();
     const budget = Form.useWatch('budget', form);
     const categoryId = Form.useWatch('category_id', form);
     const [direction, setDirection] = useState('scientific_work');
@@ -43,7 +44,6 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
     const [showLeftGradient, setShowLeftGradient] = useState(false);
     const [showRightGradient, setShowRightGradient] = useState(true);
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
-    const { tg } = useTelegram();
     // const dispatch = useDispatch();
     // const { directions } = useSelector((state) => state.profile);
 
@@ -310,7 +310,7 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
                                 },
                             ]}>
                             <Select
-                                onSelect={(_, option) => {
+                                onSelect={() => {
                                     form.setFieldValue(
                                         'title',
                                         titleDescription(option?.label)

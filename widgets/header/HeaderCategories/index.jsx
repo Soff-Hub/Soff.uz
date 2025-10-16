@@ -252,12 +252,14 @@ const HeaderCatergories = () => {
 
     return (
         <div className={styles.dropBlock}>
-            {!isMobile && isLoggedIn && (
+            {isLoggedIn && (
                 <Link href="/order/my-orders">
                     <Badge
                         count={totalOrders}
+                        size={isMobile ? 'small' : 'default'}
+                        dot={isMobile ? totalOrders > 0 : false}
                         overflowCount={9}
-                        offset={[-10, 0]}>
+                        offset={isMobile ? [0, 0] : [-10, 0]}>
                         <Link href={'/order/my-orders'} target="_blank">
                             <p className={`${styles.navLink} my-0`}>
                                 Buyurtmalarim

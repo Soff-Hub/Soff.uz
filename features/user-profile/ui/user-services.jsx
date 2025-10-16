@@ -6,12 +6,10 @@ import { SELLER_SERVICES } from '~/shared/api/end-points';
 import { useFGet } from '~/shared/hooks/useFApi';
 import { cn, useRcn } from '~/shared/utilities/cn';
 import ItemsNotFound from './items-not-found';
-import useResponsive from '~/shared/utilities/useResponsive';
 
 const UserServices = () => {
     const router = useRouter();
     const { pid } = router.query;
-    const { isDesktop } = useResponsive();
     const { data, isLoading } = useFGet(
         `${pid}-service`,
         `${SELLER_SERVICES}${pid}`,
@@ -25,8 +23,8 @@ const UserServices = () => {
 
     const gridClass = useRcn({
         mobile: 'grid-cols-2',
-        tablet: 'grid-cols-2',
-        desktop: 'grid-cols-3',
+        tablet: 'grid-cols-3',
+        desktop: 'grid-cols-4',
     });
 
     const notFound = !isLoading && (!Array.isArray(data) || data.length === 0);
@@ -63,11 +61,14 @@ const UserServices = () => {
                     'shadow',
                     'rounded-xl',
                     'h-full'
-                    // isDesktop ? 'h-min-90' : ''
                 )}>
                 <div className={cn('grid', 'gap-4', gridClass)}>
                     {data?.map((service) => (
-                        <ServiceCard hasFooter={false} service={service} key={service.id} />
+                        <ServiceCard
+                            hasFooter={false}
+                            service={service}
+                            key={service.id}
+                        />
                     ))}
                     {isLoading && <ServiceSkeletonGrid />}
                 </div>
