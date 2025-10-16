@@ -13,7 +13,7 @@ import { D_SEARCH_OPTIONS, F_SEARCH_OPTIONS } from '~/shared/api/end-points';
 const placeholders = {
     mahsulotlar: 'Qaysi turdagi tayyor mahsulot qidirmoqdasiz?',
     xizmatlar: 'Qaysi turdagi  xizmat  qidirmoqdasiz?',
-    mutaxasislar: 'Qaysi turdagi tayyor mutaxassis qidirmoqdasiz?',
+    mutaxasislar: 'Qaysi turdagi mutaxassislar qidirmoqdasiz?',
 };
 
 const staticOptions = {
@@ -69,14 +69,14 @@ const Hero = () => {
 
     const getOptions = () => {
         if (type === 'mahsulotlar') {
-            return isSuccess ? data?.map(item => ({ value: item })) : [];
+            return isSuccess ? data?.map((item) => ({ value: item })) : [];
         } else if (type === 'mutaxasislar') {
             return freelanceSuccess
-                ? freelanceData?.position?.map(item => ({ value: item }))
+                ? freelanceData?.position?.map((item) => ({ value: item }))
                 : [];
         } else if (type == 'xizmatlar') {
             return freelanceSuccess
-                ? freelanceData?.services?.map(item => ({ value: item }))
+                ? freelanceData?.services?.map((item) => ({ value: item }))
                 : [];
         }
         return staticOptions[type] || [];
@@ -139,12 +139,12 @@ const Hero = () => {
                             value={search}
                             style={{ width: '100%' }}
                             placeholder={placeholders[type]}
-                            onChange={val => setSearch(val)}
+                            onChange={(val) => setSearch(val)}
                             options={getOptions()}>
                             <input
                                 className={styles.input}
                                 style={{ width: '100%' }}
-                                onKeyDown={e => {
+                                onKeyDown={(e) => {
                                     if (e.key === 'Enter') {
                                         handleSearch();
                                     }

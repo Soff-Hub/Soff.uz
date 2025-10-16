@@ -19,6 +19,8 @@ import { useQueryClient } from '@tanstack/react-query';
 import CreateOrderModal from '~/shared/components/modals/CreateOrderModal';
 import SafetyAlert from './SafetyAlert';
 
+const { TextArea } = Input;
+
 const ChatWindow = ({ chatId, goBack }) => {
     const [newMessage, setNewMessage] = useState('');
     const [edit, setEdit] = useState(null);
@@ -36,7 +38,7 @@ const ChatWindow = ({ chatId, goBack }) => {
     };
 
     const handleSendFile = useCallback(
-        selectedFile => {
+        (selectedFile) => {
             if (!selectedFile) return;
             sendFile(
                 { chat_id: chatId, file: selectedFile },
@@ -50,7 +52,7 @@ const ChatWindow = ({ chatId, goBack }) => {
                         scrollToBottom();
                         message.success('Fayl muvaffaqiyatli yuborildi');
                     },
-                    onError: err => {
+                    onError: (err) => {
                         message.error(
                             err?.response?.data?.detail ||
                                 'Faylni yuborishda xatolik yuz berdi'
@@ -109,6 +111,16 @@ const ChatWindow = ({ chatId, goBack }) => {
         }
         setNewMessage('');
     }, [newMessage, edit, sendMessage, updateMessage]);
+
+    const handleKeyPress = useCallback(
+        (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                handleSend();
+            }
+        },
+        [handleSend]
+    );
 
     if (!chatId) {
         return (
@@ -193,7 +205,7 @@ const ChatWindow = ({ chatId, goBack }) => {
                     inverse={true}>
                     <div>
                         {messages?.length > 0 ? (
-                            messages.map(msg => (
+                            messages.map((msg) => (
                                 <ChatMessage
                                     pushUser={() =>
                                         router.push(
@@ -227,10 +239,10 @@ const ChatWindow = ({ chatId, goBack }) => {
 
             {/* input */}
             <div className={styles.chat_input_box}>
-                <input
+                <Input
                     type="file"
                     ref={fileInputRef}
-                    onChange={e => {
+                    onChange={(e) => {
                         const selectedFile = e.target.files[0];
                         if (selectedFile) {
                             const maxSize = 50 * 1024 * 1024;
@@ -265,10 +277,11 @@ const ChatWindow = ({ chatId, goBack }) => {
                     />
                 </Tooltip>
 
-                <Input
+                <TextArea
                     value={newMessage}
-                    onChange={e => setNewMessage(e.target.value)}
-                    onPressEnter={handleSend}
+                    onChange={(e) => setNewMessage(e.target.value)}
+                    onKeyDown={handleKeyPress}
+                    autoSize={{ minRows: 1, maxRows: 6 }}
                     placeholder={
                         edit ? 'Xabarni tahrir qilyapsiz...' : 'Xabar yozing...'
                     }

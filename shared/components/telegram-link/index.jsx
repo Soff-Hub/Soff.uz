@@ -1,9 +1,16 @@
 import Link from 'next/link';
 import styles from './style.module.scss';
 import useResponsive from '~/shared/utilities/useResponsive';
+import { useRouter } from 'next/router';
 
 export function TelegramLink() {
     const { isMobile, isTablet } = useResponsive();
+    const location = useRouter().pathname;
+
+    if (location === '/chat') {
+        return null;
+    }
+
     return (
         <div
             className={styles.telegramWrapper}
