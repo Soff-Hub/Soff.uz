@@ -212,17 +212,25 @@ const UserShortInfo = ({ seller }) => {
                     'items-center',
                     'justify-center'
                 )}>
-                <Image
-                    width={125}
-                    height={125}
-                    src={imageSrc}
-                    alt={imageAlt}
-                    priority={!isMobile}
-                    loading={isMobile ? 'lazy' : 'eager'}
-                    placeholder="blur"
-                    blurDataURL="data:image/webp;base64,UklGRiIAAABXRUJQVlA4IBIAAAAvAAAAAA..."
-                    className={cn('rounded-full')}
-                />
+                <div
+                    style={{
+                        width: 125,
+                        height: 125,
+                        position: 'relative',
+                        overflow: 'hidden',
+                    }}
+                    className={cn('rounded-full')}>
+                    <Image
+                        src={imageSrc}
+                        alt={imageAlt}
+                        priority={!isMobile}
+                        loading={isMobile ? 'lazy' : 'eager'}
+                        placeholder="blur"
+                        layout="fill"
+                        blurDataURL="data:image/webp;base64,UklGRiIAAABXRUJQVlA4IBIAAAAvAAAAAA..."
+                        className={cn('rounded-full', 'object-cover')}
+                    />
+                </div>
                 <h2
                     className={cn(
                         'text-[18px]',
