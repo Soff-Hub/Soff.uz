@@ -167,7 +167,7 @@ function ServiceOrderModal({ children, handleAuthSuccess, order = {} }) {
                                     style={{
                                         backgroundColor: '#28a745',
                                         borderColor: '#28a745',
-                                        marginTop: files?.[0] ? '30px' : '10px',
+                                        marginTop: files?.[0] ? '40px' : '10px',
                                     }}
                                     onClick={handleToPaymentPart}>
                                     Buyurtma berish

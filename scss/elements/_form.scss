@@ -1,4 +1,4 @@
-// click page 
+// click page
 
 .click-form-item {
     label {
@@ -23,22 +23,10 @@
     }
 }
 
-
 .audio_ramka {
     border: 2px solid $color-1st;
     border-radius: 5px;
 }
-
-
-
-
-
-
-
-
-
-
-
 
 aside {
     span {
@@ -116,12 +104,11 @@ textarea.form-control {
 .ps-input--has-icon {
     position: relative;
 
-    >i {
+    > i {
         @include vertical-align();
         right: 15px;
     }
 }
-
 
 .product_priview {
     position: relative;
@@ -149,7 +136,6 @@ textarea.form-control {
         }
     }
 }
-
 
 .ps-number {
     position: relative;
@@ -202,7 +188,7 @@ textarea.form-control {
     position: relative;
     display: block;
 
-    >input {
+    > input {
         position: absolute;
         visibility: hidden;
         box-sizing: border-box;
@@ -248,7 +234,7 @@ textarea.form-control {
         }
     }
 
-    input[type='checkbox']:checked~label {
+    input[type='checkbox']:checked ~ label {
         &:before {
             background-color: $color-2nd;
             border-color: $color-2nd;
@@ -268,7 +254,7 @@ textarea.form-control {
     &--color {
         margin-right: 1rem;
 
-        >label {
+        > label {
             margin-bottom: 0;
             width: 20px;
             height: 20px;
@@ -290,7 +276,7 @@ textarea.form-control {
             }
         }
 
-        input[type='radio']:checked~label {
+        input[type='radio']:checked ~ label {
             background-color: transparent;
 
             &:before {
@@ -341,7 +327,7 @@ textarea.form-control {
     }
 
     &.color-sidebar {
-        >label {
+        > label {
             &:before {
                 width: 26px;
                 height: 26px;
@@ -353,7 +339,7 @@ textarea.form-control {
     &--size {
         margin-right: 1rem;
 
-        >label {
+        > label {
             margin-bottom: 0;
             padding: 8px 20px;
             border: none;
@@ -368,7 +354,7 @@ textarea.form-control {
             }
         }
 
-        input[type='checkbox']:checked~label {
+        input[type='checkbox']:checked ~ label {
             color: #ffffff;
             background-color: #a7a7a7;
         }
@@ -378,7 +364,7 @@ textarea.form-control {
 .ps-radio {
     position: relative;
 
-    >input {
+    > input {
         position: absolute;
         visibility: hidden;
         box-sizing: border-box;
@@ -425,7 +411,7 @@ textarea.form-control {
         }
     }
 
-    input[type='radio']:checked~label {
+    input[type='radio']:checked ~ label {
         &:before {
             background-color: $color-2nd;
             border-color: $color-2nd;
@@ -445,7 +431,7 @@ textarea.form-control {
     &--color {
         margin-right: 1rem;
 
-        >label {
+        > label {
             margin-bottom: 0;
             width: 20px;
             height: 20px;
@@ -466,7 +452,7 @@ textarea.form-control {
             }
         }
 
-        input[type='radio']:checked~label {
+        input[type='radio']:checked ~ label {
             background-color: rgba(#3dc47e, 0.5);
         }
 
@@ -519,8 +505,7 @@ textarea.form-control {
 .form-group {
     margin-bottom: 2.5rem;
 
-
-    >label {
+    > label {
         margin-bottom: 1.5rem;
         font-weight: 400;
         color: #000000;
@@ -535,7 +520,7 @@ textarea.form-control {
     flex-flow: row nowrap;
     align-items: center;
 
-    >label {
+    > label {
         margin-bottom: 0;
         font-weight: 700;
         min-width: 160px;
@@ -665,7 +650,7 @@ textarea.form-control {
     position: relative;
     display: inline-block;
 
-    >a {
+    > a {
         position: relative;
         display: block;
         padding-right: 20px;
@@ -881,5 +866,4 @@ textarea.form-control {
             padding-left: 45px;
         }
     }
-
 }
