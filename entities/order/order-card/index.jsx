@@ -7,8 +7,40 @@ import { MdErrorOutline } from 'react-icons/md';
 import { RiProgress5Line } from 'react-icons/ri';
 import { MdOutlinePendingActions } from 'react-icons/md';
 import { useRouter } from 'next/router';
-import { Avatar, Button, message, Tooltip } from 'antd';
+import { Avatar, Button, message, Tooltip, Badge } from 'antd';
 import { cn } from '~/shared/utilities/cn';
+
+const CompletedOrderWrapper = ({ children }) => {
+    return (
+        <Badge.Ribbon text="Buyurtma tugallandi" color="#06aa27">
+            {children}
+        </Badge.Ribbon>
+    );
+};
+
+const InProgressOrderWrapper = ({ children }) => {
+    return (
+        <Badge.Ribbon text="Buyurtma jarayonda" color="#ffb400">
+            {children}
+        </Badge.Ribbon>
+    );
+};
+
+const CancelledOrderWrapper = ({ children }) => {
+    return (
+        <Badge.Ribbon text="Buyurtma bekor qilindi" color="#f5222d">
+            {children}
+        </Badge.Ribbon>
+    );
+};
+
+const PendingOrderWrapper = ({ children }) => {
+    return (
+        <Badge.Ribbon text="Yangi buyurtma" color="gray">
+            {children}
+        </Badge.Ribbon>
+    );
+};
 
 const orderStatusAssets = (status) => {
     switch (status) {
@@ -20,8 +52,10 @@ const orderStatusAssets = (status) => {
                         <IoCheckmarkDone className={styles.completed} />
                     </Tooltip>
                 ),
+                orderWrapper: CompletedOrderWrapper,
                 status: 'completed',
                 isRejectable: false,
+                isPaymentApproved: true,
             };
         case 'order_accepted':
         case 'order_file_sent':
@@ -33,8 +67,10 @@ const orderStatusAssets = (status) => {
                         <RiProgress5Line className={styles.inProgress} />
                     </Tooltip>
                 ),
+                orderWrapper: InProgressOrderWrapper,
                 status: status,
                 isRejectable: true,
+                isPaymentApproved: true,
             };
         case 'cancelled':
             return {
@@ -44,8 +80,10 @@ const orderStatusAssets = (status) => {
                         <MdErrorOutline className={styles.cancelled} />
                     </Tooltip>
                 ),
+                orderWrapper: CancelledOrderWrapper,
                 status: 'cancelled',
                 isRejectable: false,
+                isPaymentApproved: false,
             };
         case 'pending':
         default:
@@ -56,8 +94,10 @@ const orderStatusAssets = (status) => {
                         <MdOutlinePendingActions className={styles.pending} />
                     </Tooltip>
                 ),
+                orderWrapper: PendingOrderWrapper,
                 status: 'pending',
                 isRejectable: true,
+                isPaymentApproved: false,
             };
     }
     // pending: {
@@ -119,7 +159,7 @@ const OrderCard = ({ order, onOpenDrawer, onCancel }) => {
         }
     };
 
-    return (
+    const content = (
         <div
             className={statusAsset.orderClassName}
             data-status={statusAsset.status}>
@@ -146,7 +186,7 @@ const OrderCard = ({ order, onOpenDrawer, onCancel }) => {
                     </div>
                 </div>
 
-                <div>{statusAsset.orderIcon}</div>
+                {/* <div>{statusAsset.orderIcon}</div> */}
             </div>
             {order.order_type == 'custom_order' &&
                 typeof onOpenDrawer !== 'function' && (
@@ -204,6 +244,13 @@ const OrderCard = ({ order, onOpenDrawer, onCancel }) => {
                     <span className={styles.budjetPrice}>
                         {formatCurrencyWithSpace(price)} so'm
                     </span>
+                    {statusAsset.isPaymentApproved &&
+                    statusAsset.status !== 'rejected' ? (
+                        <span className={styles.paymentApproved}>
+                            <i className="fa fa-check-circle-o" />
+                            To'lov qabul qilindi:
+                        </span>
+                    ) : null}
                 </div>
 
                 <div className={styles.date}>
@@ -215,7 +262,8 @@ const OrderCard = ({ order, onOpenDrawer, onCancel }) => {
                 </div>
                 <div className={styles.actionButtons}>
                     {typeof onOpenDrawer === 'function' &&
-                    statusAsset.isRejectable ? (
+                    statusAsset.isRejectable &&
+                    statusAsset.status !== 'rejected' ? (
                         <Button
                             variant="outlined"
                             color="red"
@@ -225,7 +273,8 @@ const OrderCard = ({ order, onOpenDrawer, onCancel }) => {
                         </Button>
                     ) : null}
                     {typeof onOpenDrawer === 'function' &&
-                        statusAsset.status !== 'cancelled' && (
+                        statusAsset.status !== 'cancelled' &&
+                        statusAsset.status !== 'rejected' && (
                             <button
                                 className={styles.primary}
                                 onClick={handlePrimaryClick}>
@@ -264,10 +313,19 @@ const OrderCard = ({ order, onOpenDrawer, onCancel }) => {
                                 )}
                             </button>
                         )}
+                    {statusAsset.status === 'rejected' && (
+                        <div className={styles.rejectedLabel}>
+                            <i className="fa fa-exclamation-circle" />
+                            Buyurtma to'lovingiz 24 soat ichida profilingizga
+                            qaytariladi.
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
     );
+
+    return <statusAsset.orderWrapper>{content}</statusAsset.orderWrapper>;
 };
 
 export default OrderCard;

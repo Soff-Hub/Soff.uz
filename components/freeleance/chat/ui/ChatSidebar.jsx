@@ -1,48 +1,58 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import styles from '../style/chat.module.scss';
 import { Button, Empty, Input, Spin } from 'antd';
 import { truncateTitle } from '~/shared/utilities/TruncateTitle';
 import { useRouter } from 'next/router';
 import useChats from '../api/useChats';
+import useDebounce from '~/shared/hooks/useDebounce';
+
+function BackButton() {
+    const router = useRouter();
+    const backRef = useRef(null);
+
+    const handleBack = () => {
+        router.back();
+        backRef.current?.scrollIntoView({ behavior: 'smooth' });
+        setTimeout(() => window.scrollTo({ top: 0, behavior: 'auto' }), 10);
+    };
+
+    return (
+        <>
+            <div ref={backRef}></div>
+            <Button
+                onClick={handleBack}
+                icon={<i className="fa-solid fa-arrow-left"></i>}
+            />
+        </>
+    );
+}
 
 const ChatSidebar = ({ setChatId, chatId }) => {
     const [search, setSearch] = useState('');
-    const [debouncedSearch, setDebouncedSearch] = useState('');
-    const { back } = useRouter();
+    const debouncedSearch = useDebounce(search, 300);
     const router = useRouter();
 
-    useEffect(() => {
-        const handler = setTimeout(() => {
-            setDebouncedSearch(search);
-        }, 300);
-        return () => clearTimeout(handler);
-    }, [search]);
-
     const handleChatId = useCallback(
-        id => {
+        (id) => {
             setChatId(id);
             router.replace({
                 pathname: router.pathname,
                 query: { chatId: id },
             });
-
         },
         [router, setChatId]
     );
 
-    const { chats, isLoading } = useChats(debouncedSearch)
+    const { chats, isLoading } = useChats(debouncedSearch);
 
     return (
         <div className={styles.chat_sidebar}>
             <div className={styles.chat_search}>
-                <Button
-                    onClick={() => back()}
-                    icon={<i className="fa-solid fa-arrow-left"></i>}
-                />
+                <BackButton />
                 <Input.Search
                     placeholder="Chatlarni qidirish"
                     value={search}
-                    onChange={e => setSearch(e.target.value)}
+                    onChange={(e) => setSearch(e.target.value)}
                     allowClear
                 />
             </div>
@@ -59,7 +69,7 @@ const ChatSidebar = ({ setChatId, chatId }) => {
                     />
                 )}
                 {!isLoading &&
-                    chats?.map(chat => (
+                    chats?.map((chat) => (
                         <div
                             key={chat.chat_id}
                             onClick={() => handleChatId(chat?.chat_id)}
