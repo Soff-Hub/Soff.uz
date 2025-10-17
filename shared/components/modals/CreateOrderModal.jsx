@@ -310,7 +310,7 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
                                 },
                             ]}>
                             <Select
-                                onSelect={() => {
+                                onSelect={(_, option) => {
                                     form.setFieldValue(
                                         'title',
                                         titleDescription(option?.label)
