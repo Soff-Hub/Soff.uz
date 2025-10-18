@@ -18,8 +18,6 @@ function ServiceOrderModal({
     const [actionTracker, setActionTracker] = useState(null);
     const [files, setFiles] = useState([]);
     const [description, setDescription] = useState('');
-    const [isOrderRequirementsPresent, setIsOrderRequirementsPresent] =
-        useState(true);
     const { price, id, title } = order;
 
     const componentProperties = {
@@ -45,13 +43,7 @@ function ServiceOrderModal({
     };
 
     const handleToPaymentPart = () => {
-        // files or description should be set to go payment part
-        if (files.length || description) {
-            setShowPayment(true);
-            setIsOrderRequirementsPresent(true);
-            return;
-        }
-        setIsOrderRequirementsPresent(false);
+        setShowPayment(true);
     };
 
     const onAuthSuccess = async () => {
@@ -63,8 +55,6 @@ function ServiceOrderModal({
             setIsOpen(externalOpenModal);
         }
     }, [externalOpenModal]);
-
-    console.log({ isOrderRequirementsPresent, files, description });
 
     return (
         <>
@@ -122,7 +112,6 @@ function ServiceOrderModal({
                                 value={description}
                                 onChange={(e) => {
                                     setDescription(e.target.value);
-                                    setIsOrderRequirementsPresent(true);
                                 }}
                                 placeholder="Buyurtma bo'yicha qo'shimcha ma'lumot (ixtiyoriy)"
                                 className="mb-4"
@@ -151,7 +140,6 @@ function ServiceOrderModal({
                                             return;
                                         }
                                         setFiles(fileList);
-                                        setIsOrderRequirementsPresent(true);
                                     }
                                 }}
                                 onRemove={() => setFiles(null)}>
@@ -162,13 +150,6 @@ function ServiceOrderModal({
                                     Fayl yuklash (ixtiyoriy)
                                 </Button>
                             </Upload>
-
-                            {!isOrderRequirementsPresent && (
-                                <p className="text-danger mt-2">
-                                    Iltimos, davom etish uchun fayl yuklang yoki
-                                    tavsif kiriting.
-                                </p>
-                            )}
 
                             <div className="text-center">
                                 <Button

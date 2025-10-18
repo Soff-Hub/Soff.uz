@@ -31,6 +31,8 @@ const UserTabs = ({ seller }) => {
     const commentRef = useRef(null);
     const sectionRef = useRef(null);
 
+    console.log({ seller });
+
     useEffect(() => {
         const { tab } = router.query;
         console.log('triggering');

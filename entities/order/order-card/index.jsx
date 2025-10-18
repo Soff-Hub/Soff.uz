@@ -36,7 +36,7 @@ const CancelledOrderWrapper = ({ children }) => {
 
 const PendingOrderWrapper = ({ children }) => {
     return (
-        <Badge.Ribbon text="Yangi buyurtma" color="gray">
+        <Badge.Ribbon text="Yangi buyurtma" color="blue">
             {children}
         </Badge.Ribbon>
     );

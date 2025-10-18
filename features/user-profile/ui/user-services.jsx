@@ -21,6 +21,8 @@ const UserServices = () => {
         }
     );
 
+    console.log({ data });
+
     const gridClass = useRcn({
         mobile: 'grid-cols-2',
         tablet: 'grid-cols-3',

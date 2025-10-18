@@ -27,7 +27,7 @@ import { Thumbs } from 'swiper/modules';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import { setShowSearch } from '~/store/fast-dowload/slice';
 import { useTelegram } from './useTelegram';
-import Editor from '~/components/Editor';
+// import Editor from '~/components/Editor';
 
 const direction_content = (
     <div style={{ maxWidth: '300px' }}>
@@ -323,7 +323,15 @@ function useCreateOrder() {
                             message: 'Buyurtma tavsifini yozing!',
                         },
                     ]}>
-                    <Editor
+                    <TextArea
+                        style={{ resize: 'none' }}
+                        rows={4}
+                        name="description"
+                        placeholder={
+                            inputInfoToCreateOrder['description'].placeholder
+                        }
+                    />
+                    {/* <Editor
                         onChange={(value) => {
                             form.setFieldValue('description', value);
                         }}
@@ -332,7 +340,7 @@ function useCreateOrder() {
                         placeholder={
                             inputInfoToCreateOrder['description'].placeholder
                         }
-                    />
+                    /> */}
                 </Form.Item>
             ),
             popoverContent: description_content,

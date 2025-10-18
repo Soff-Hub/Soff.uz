@@ -38,7 +38,7 @@ const ServiceDetail = ({ data }) => {
         id: service?.id,
         title: service?.title,
         user: user,
-        category: service?.category?.title
+        category: service?.category?.title,
     };
     const { full_name, photo_url } = user[0];
     const description = {
@@ -50,6 +50,11 @@ const ServiceDetail = ({ data }) => {
 
     const slider_images = [
         { id: 'poster-img', image_url: service?.poster },
+        {
+            type: 'video',
+            id: 'service-video',
+            video_url: service?.video?.video_url,
+        },
         ...seller_portfolio
             ?.map((portfolio) =>
                 portfolio?.portfolio_images.map((elem, index) => ({
@@ -60,6 +65,8 @@ const ServiceDetail = ({ data }) => {
             .flatMap((i) => i),
     ];
 
+    console.log({ slider_images });
+
     useEffect(() => {
         dispatch(setShowSearch(false));
 
@@ -67,7 +74,7 @@ const ServiceDetail = ({ data }) => {
             dispatch(setShowSearch(true));
         };
     }, [dispatch]);
-    console.log(data)
+    console.log(data);
 
     return (
         <div className="container my-5 navTabsPadding">
