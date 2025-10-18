@@ -1,8 +1,19 @@
 import React, { memo, useMemo } from 'react';
 import { Modal, Descriptions, Tag } from 'antd';
-import Image from 'next/image';
 import styles from './style.module.scss';
 import useResponsive from '~/shared/utilities/useResponsive';
+
+const getYouTubeEmbed = (url) => {
+    if (!url) return null;
+    try {
+        const videoId =
+            url.split('v=')[1]?.split('&')[0] ||
+            url.split('youtu.be/')[1]?.split('?')[0];
+        return `https://www.youtube.com/embed/${videoId}`;
+    } catch {
+        return null;
+    }
+};
 
 const PortfolioModal = ({ open, onClose, portfolio }) => {
     const { isMobile } = useResponsive();
@@ -10,6 +21,11 @@ const PortfolioModal = ({ open, onClose, portfolio }) => {
     const galleryImages = useMemo(
         () => portfolio?.portfolio_images || [],
         [portfolio?.portfolio_images]
+    );
+
+    const galleryVideos = useMemo(
+        () => portfolio?.videos || [],
+        [portfolio?.videos]
     );
 
     return (
@@ -21,18 +37,18 @@ const PortfolioModal = ({ open, onClose, portfolio }) => {
             width={isMobile ? '100%' : '80%'}
             centered
             destroyOnHidden
-            bodyStyle={{ maxHeight: '80vh', overflowY: 'auto' }}
-        >
-            <div >
+            bodyStyle={{ maxHeight: '80vh', overflowY: 'auto' }}>
+            <div>
                 <Descriptions
                     title="Portfolio Ma'lumotlari"
                     bordered
                     size="small"
                     column={1}
-                    className={styles.descriptions}
-                >
+                    className={styles.descriptions}>
                     <Descriptions.Item label="Kategoriya">
-                        <Tag color="blue">{portfolio?.category?.title || 'Noma’lum'}</Tag>
+                        <Tag color="blue">
+                            {portfolio?.category?.title || 'Noma’lum'}
+                        </Tag>
                     </Descriptions.Item>
 
                     {!isMobile && (
@@ -41,18 +57,23 @@ const PortfolioModal = ({ open, onClose, portfolio }) => {
                         </Descriptions.Item>
                     )}
                 </Descriptions>
-                {isMobile &&
+                {isMobile && (
                     <div className={styles.mobile}>
                         <h4 className={styles.mobileTitle}>Tavsif</h4>
-                        <p className={styles.mobileDescr}>{portfolio?.description}</p>
+                        <p className={styles.mobileDescr}>
+                            {portfolio?.description}
+                        </p>
                     </div>
-                }
+                )}
                 <div className={styles.galleryBox}>
                     {galleryImages.length > 0 ? (
                         galleryImages.map((img, idx) => (
                             <div key={idx} className={styles.imageWrapper}>
                                 <img
-                                    src={img?.image || '/static/img/orqafon1.avif'}
+                                    src={
+                                        img?.image ||
+                                        '/static/img/orqafon1.avif'
+                                    }
                                     alt={`Image ${idx + 1}`}
                                     className={styles.image}
                                 />
@@ -63,6 +84,27 @@ const PortfolioModal = ({ open, onClose, portfolio }) => {
                             Rasm topilmadi.
                         </p>
                     )}
+                    {galleryVideos.length > 0 ? (
+                        galleryVideos.map((video, index) => (
+                            <div className="video-wrapper">
+                                <iframe
+                                    src={`${getYouTubeEmbed(
+                                        video.video_url
+                                    )}?modestbranding=1&rel=0&controls=1&showinfo=0`}
+                                    style={{
+                                        height: '500px',
+                                    }}
+                                    title={`video-${index}`}
+                                    frameBorder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowFullScreen></iframe>
+                            </div>
+                        ))
+                    ) : (
+                        <p className="text-gray-500 text-center mt-4">
+                            Video topilmadi.
+                        </p>
+                    )}
                 </div>
             </div>
         </Modal>
@@ -70,6 +112,3 @@ const PortfolioModal = ({ open, onClose, portfolio }) => {
 };
 
 export default memo(PortfolioModal);
-
-
-
