@@ -27,6 +27,7 @@ import { Thumbs } from 'swiper/modules';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import { setShowSearch } from '~/store/fast-dowload/slice';
 import { useTelegram } from './useTelegram';
+import { on } from 'events';
 // import Editor from '~/components/Editor';
 
 const direction_content = (
@@ -171,6 +172,15 @@ function useCreateOrder() {
 
     useEffect(() => {
         form.setFieldValue('direction', direction);
+        if (onfirstRender.current) return;
+        replace(
+            {
+                pathname: pathname,
+                query: { ...query, direction: direction },
+            },
+            undefined,
+            { shallow: true }
+        );
     }, [direction]);
 
     useEffect(() => {
@@ -258,14 +268,6 @@ function useCreateOrder() {
         form.resetFields(['category_id']);
         form.setFieldValue('title', '');
         // form.setFieldValue('direction', direction);
-        replace(
-            {
-                pathname: pathname,
-                query: { ...query, direction: direction },
-            },
-            undefined,
-            { shallow: true }
-        );
     };
 
     const formItems = [
