@@ -7,6 +7,7 @@ import 'swiper/css/thumbs';
 import ImageLightBox from './image-lightbox';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import DemoButton from '~/components/form/demoBtn';
+import Link from 'next/link';
 
 const getYouTubeEmbed = (url) => {
     if (!url) return null;
@@ -26,7 +27,13 @@ function getYouTubeThumbnail(url) {
     return id ? `https://img.youtube.com/vi/${id}/maxresdefault.jpg` : null;
 }
 
-const ImageCarousel = ({ images, views, demo_link, isProduct = true }) => {
+const ImageCarousel = ({
+    images,
+    views,
+    demo_link,
+    isProduct = true,
+    slug,
+}) => {
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
     const [mainSwiper, setMainSwiper] = useState(null);
     const [activeIndex, setActiveIndex] = useState(0);
@@ -424,11 +431,15 @@ const ImageCarousel = ({ images, views, demo_link, isProduct = true }) => {
                                     style={{ cursor: 'pointer' }}
                                 />
                                 <span>Mualliflik huquqi buzilgan holatda</span>
-                                <strong
-                                    className="text-success"
-                                    style={{ cursor: 'pointer' }}>
-                                    shikoyat qiling!
-                                </strong>
+                                <Link href={`/report/${slug}`}>
+                                    <a>
+                                        <strong
+                                            className="text-success"
+                                            style={{ cursor: 'pointer' }}>
+                                            shikoyat qiling!
+                                        </strong>
+                                    </a>
+                                </Link>
                             </div>
                         </div>
                     </>

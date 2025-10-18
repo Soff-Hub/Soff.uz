@@ -5,6 +5,7 @@ import Description from '../details-actions/description'
 import SellerProfile from '../details-seller-profile/seller-profile'
 import DefaultVideoContent from './default-video'
 import { InfoCircleOutlined } from '@ant-design/icons'
+import Link from 'next/link'
 
 
 function VideosProductsDetails({ product, isPlay, setIsPlay, }) {
@@ -28,7 +29,15 @@ function VideosProductsDetails({ product, isPlay, setIsPlay, }) {
               <div className='title_support'>
                 <InfoCircleOutlined className='fs-2 ' style={{ cursor: "pointer", }} />
                 <span>Mualliflik huquqi buzilgan holatda</span>
-                <strong className='text-success' style={{ cursor: "pointer" }}>shikoyat qiling!</strong>
+                <Link href={`/report/${product.slug}`}>
+                  <a>
+                    <strong
+                      className="text-success"
+                      style={{ cursor: 'pointer' }}>
+                      shikoyat qiling!
+                    </strong>
+                  </a>
+                </Link>
 
               </div>
             </div>
@@ -36,7 +45,7 @@ function VideosProductsDetails({ product, isPlay, setIsPlay, }) {
           </div>
 
           <div className='ps-product__header_seller_secound_videos'>
-             <Description description={product?.description}/>
+            <Description description={product?.description} />
 
             <div className='w-100 gap-5 d-flex flex-column' style={{ maxWidth: "550px" }}>
               {type !== "playlists" ? <Description description={product?.description} /> :

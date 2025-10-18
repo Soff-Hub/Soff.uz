@@ -234,9 +234,8 @@ const OrderMain = ({ order }) => {
                     <div className={styles.orderPayCardFlex}>
                         <div className="w-100">
                             <h4
-                                className={`mb-0 ${
-                                    !isDesktop && 'text-center'
-                                }`}>
+                                className={`mb-0 ${!isDesktop && 'text-center'
+                                    }`}>
                                 Frilanser ishni boshlashi uchun to'lovni amalga
                                 oshiring
                             </h4>
@@ -289,43 +288,43 @@ const OrderMain = ({ order }) => {
                 )}
                 {(order?.order_status_doing?.status === 'approved' ||
                     order?.order_status_doing?.status ===
-                        'requirement_file_rejected') && (
-                    <div className={styles.orderPayCardFlex}>
-                        <div>
-                            <h3 className={styles.orderNameLink}>
-                                Buyurtma talablari kutilmoqda
-                            </h3>
-                            {order?.order_status_doing?.status ===
-                                'approved' && (
-                                <p>
-                                    Siz to‘lovni amalga oshirdingiz. Endi
-                                    mutahasis ishni boshlashi uchun kerakli
-                                    materiallar va ko‘rsatmalarni yuboring.
-                                </p>
-                            )}
-                            {order?.order_status_doing?.status ===
-                                'requirement_file_rejected' && (
-                                <p>
-                                    Siz yuborgan materiallar yoki ko‘rsatmalar
-                                    yetarli emasligi sababli mutahasis ularni
-                                    rad etdi. Iltimos, ishni boshlash uchun
-                                    barcha kerakli fayllar va aniq
-                                    ko‘rsatmalarni qayta yuboring.
-                                </p>
-                            )}
+                    'requirement_file_rejected') && (
+                        <div className={styles.orderPayCardFlex}>
+                            <div>
+                                <h3 className={styles.orderNameLink}>
+                                    Buyurtma talablari kutilmoqda
+                                </h3>
+                                {order?.order_status_doing?.status ===
+                                    'approved' && (
+                                        <p>
+                                            Siz to‘lovni amalga oshirdingiz. Endi
+                                            mutahasis ishni boshlashi uchun kerakli
+                                            materiallar va ko‘rsatmalarni yuboring.
+                                        </p>
+                                    )}
+                                {order?.order_status_doing?.status ===
+                                    'requirement_file_rejected' && (
+                                        <p>
+                                            Siz yuborgan materiallar yoki ko‘rsatmalar
+                                            yetarli emasligi sababli mutahasis ularni
+                                            rad etdi. Iltimos, ishni boshlash uchun
+                                            barcha kerakli fayllar va aniq
+                                            ko‘rsatmalarni qayta yuboring.
+                                        </p>
+                                    )}
+                            </div>
+                            <Button
+                                type="primary"
+                                style={{
+                                    backgroundColor: '#00a44f',
+                                    borderColor: '#00a44f',
+                                    padding: '16px 28px',
+                                }}
+                                onClick={() => setOpen(true)}>
+                                Talablarni yuborish
+                            </Button>
                         </div>
-                        <Button
-                            type="primary"
-                            style={{
-                                backgroundColor: '#00a44f',
-                                borderColor: '#00a44f',
-                                padding: '16px 28px',
-                            }}
-                            onClick={() => setOpen(true)}>
-                            Talablarni yuborish
-                        </Button>
-                    </div>
-                )}
+                    )}
 
                 {order?.order_status_doing?.status == 'order_file_sent' && (
                     <>
@@ -385,6 +384,63 @@ const OrderMain = ({ order }) => {
                             onClick={() => window.open(file?.file, '_blank')}>
                             Faylni yuklab olish
                         </Button>
+                    </div>
+                )}
+
+                {order?.order_requirement?.length > 0 && (
+                    <div
+                        className="mt-4 border border-success"
+                        style={{
+                            borderRadius: "12px",
+                            padding: "16px",
+                            backgroundColor: "#fafafa",
+                        }}
+                    >
+                        <h5
+                            style={{
+                                fontWeight: "600",
+                                marginBottom: "16px",
+                                fontSize: "18px",
+                                color: "#333",
+                            }}
+                        >
+                            Buyurtma talablari
+                        </h5>
+
+                        <div className="d-flex flex-column flex-md-row align-items-start gap-3">
+                            {/* Tavsif qismi */}
+                            <div
+                                style={{
+                                    flex: 1,
+                                    fontSize: "15px",
+                                    lineHeight: "1.6",
+                                    color: "#444",
+                                    overflowWrap: "break-word",
+                                }}
+                                dangerouslySetInnerHTML={{
+                                    __html:
+                                        order.order_requirement[0]?.order_requirement_description
+                                }}
+                            />
+
+                            {/* Fayl bo‘lsa tugma chiqadi */}
+                            {order.order_requirement[0]?.order_requirement_file && (
+                                <div className="d-flex justify-content-md-end justify-content-start w-md-auto">
+                                    <Button
+                                        icon={<DownloadOutlined />}
+                                        onClick={() =>
+                                            window.open(
+                                                order.order_requirement[0]
+                                                    .order_requirement_file,
+                                                "_blank"
+                                            )
+                                        }
+                                    >
+                                        Faylni yuklab olish
+                                    </Button>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 )}
             </div>
@@ -541,7 +597,7 @@ const OrderMain = ({ order }) => {
                                         <h4 className="text-primary mb-0 fw-bold">
                                             {formatCurrencyWithSpace(
                                                 order?.service?.price ||
-                                                    order?.budget
+                                                order?.budget
                                             )}{' '}
                                             so'm
                                         </h4>
