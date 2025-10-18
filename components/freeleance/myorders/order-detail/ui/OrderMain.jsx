@@ -419,14 +419,13 @@ const OrderMain = ({ order }) => {
                                 }}
                                 dangerouslySetInnerHTML={{
                                     __html:
-                                        order.order_requirement[0]?.order_requirement_description ||
-                                        "<p>Tavsif mavjud emas</p>",
+                                        order.order_requirement[0]?.order_requirement_description
                                 }}
                             />
 
                             {/* Fayl bo‘lsa tugma chiqadi */}
                             {order.order_requirement[0]?.order_requirement_file && (
-                                <div className="d-flex justify-content-md-end justify-content-start w-100 w-md-auto">
+                                <div className="d-flex justify-content-md-end justify-content-start w-md-auto">
                                     <Button
                                         icon={<DownloadOutlined />}
                                         onClick={() =>
