@@ -38,7 +38,7 @@ export default function useCreateOrder() {
                 order_requirement_file,
             } = orderData;
             const formData = new FormData();
-            formData.append('service_id', service_id);
+            if (service_id) formData.append('service_id', service_id);
             formData.append('payment_type', payment_type);
 
             if (card_number) {
