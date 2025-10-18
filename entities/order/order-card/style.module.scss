@@ -89,15 +89,22 @@
 
     .nameWrapper {
         display: flex;
-        flex-wrap: wrap;
         align-items: center;
+        margin-top: 5px;
         gap: 8px;
+
+        @media (max-width: 768px) {
+            justify-content: start;
+            align-items: start;
+            flex-direction: column;
+            margin-top: 0;
+            gap: 0;
+        }
 
         .id {
             font-size: 18px;
             font-weight: 500;
             color: #555;
-            align-self: center;
         }
 
         .titleRow {
@@ -202,6 +209,28 @@
     .offerCount {
         font-size: 16px;
         font-weight: 500;
+    }
+
+    .paymentApproved {
+        font-size: 14px;
+        color: #06aa27;
+
+        i {
+            margin-right: 6px;
+        }
+    }
+}
+.rejectedLabel {
+    font-size: 14px;
+    color: #f5222d;
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    gap: 6px;
+
+    i {
+        margin-top: 5px;
+        color: #f5222d;
     }
 }
 

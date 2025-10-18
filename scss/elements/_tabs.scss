@@ -52,6 +52,18 @@
     }
 }
 
+@media (max-width: 768px) {
+    .ant-tabs-tab {
+        font-size: 12px;
+        padding: 6px 12px;
+        height: 35px !important;
+    }
+
+    .ant-tabs-nav-wrap {
+        height: 45px !important;
+    }
+}
+
 .container-deal {
     max-width: 950px;
     width: 100%;

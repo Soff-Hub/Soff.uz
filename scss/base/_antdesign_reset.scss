@@ -7,10 +7,9 @@
 }
 
 .order_tabs {
-
     /* optional */
     .ant-tabs-nav-list {
-        gap: 20px
+        gap: 20px;
     }
 
     .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
@@ -29,7 +28,6 @@
         color: #00a44f;
     }
 }
-
 
 .user_tabs {
     .ant-tabs-nav {

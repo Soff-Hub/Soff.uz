@@ -10,6 +10,7 @@ import OrderCard from '~/entities/order/order-card';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import { cn } from '~/shared/utilities/cn';
 import useOffers from '../api/useOffers';
+import Link from 'next/link';
 
 const SelectOrderDrawer = ({ open, onClose, order }) => {
     const [selectedOffer, setSelectedOffer] = useState(null);
@@ -96,36 +97,36 @@ const SelectOrderDrawer = ({ open, onClose, order }) => {
                                         'items-center',
                                         'gap-4'
                                     )}>
-                                    <Avatar
-                                        src={
-                                            item?.seller?.photo_url ||
-                                            '/static/img/ozodbek.png'
-                                        }
-                                        size={50}
-                                        style={{ minWidth: '50px' }}
-                                        className={cn('cursor-pointer')}
-                                        onClick={() =>
-                                            push(
-                                                `/seller/${item?.seller?.soff_seller_id}`
-                                            )
-                                        }
-                                    />
-                                    <div className={cn('flex', 'flex-col')}>
-                                        <h3
-                                            onClick={() =>
-                                                push(
-                                                    `/seller/${item?.seller?.soff_seller_id}`
-                                                )
+                                    <a
+                                        href={`/seller/${item?.seller?.soff_seller_id}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer">
+                                        <Avatar
+                                            src={
+                                                item?.seller?.photo_url ||
+                                                '/static/img/ozodbek.png'
                                             }
-                                            className={cn(
-                                                'text-[24px]',
-                                                'mb-0',
-                                                'cursor-pointer',
-                                                'hover-text-primary',
-                                                'transition'
-                                            )}>
-                                            {item?.seller?.full_name}
-                                        </h3>
+                                            size={50}
+                                            style={{ minWidth: '50px' }}
+                                            className={cn('cursor-pointer')}
+                                        />
+                                    </a>
+                                    <div className={cn('flex', 'flex-col')}>
+                                        <a
+                                            href={`/seller/${item?.seller?.soff_seller_id}`}
+                                            target="_blank"
+                                            rel="noopener noreferrer">
+                                            <h3
+                                                className={cn(
+                                                    'text-[24px]',
+                                                    'mb-0',
+                                                    'cursor-pointer',
+                                                    'hover-text-primary',
+                                                    'transition'
+                                                )}>
+                                                {item?.seller?.full_name}
+                                            </h3>
+                                        </a>
                                         <span className={cn('text-primary')}>
                                             {item?.seller?.position?.title}
                                         </span>

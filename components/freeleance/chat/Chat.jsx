@@ -10,12 +10,12 @@ import { setShowSearch } from '~/store/fast-dowload/slice';
 const Chat = () => {
     const [chatId, setChatId] = useState(null);
     const { isMobile, isTablet } = useResponsive();
-    const { query } = useRouter();
+    const router = useRouter();
+    const { query } = router;
     const { refetch } = useGetChatById(chatId);
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     useEffect(() => {
         if (query?.chatId) {
-
             setChatId(query.chatId);
         }
     }, [query?.chatId]);
@@ -32,18 +32,20 @@ const Chat = () => {
         return () => {
             dispatch(setShowSearch(true));
         };
-    }, [dispatch])
+    }, [dispatch]);
 
     const isSmallScreen = isMobile || isTablet;
 
     return (
-        <div className='my-2'>
-
+        <div className="my-2">
             <div className="row">
                 {!isSmallScreen && (
                     <>
                         <div className="col-3 p-0">
-                            <ChatSidebar setChatId={setChatId} chatId={chatId} />
+                            <ChatSidebar
+                                setChatId={setChatId}
+                                chatId={chatId}
+                            />
                         </div>
                         <div className="col-9 p-0">
                             <ChatWindow

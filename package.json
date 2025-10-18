@@ -16,6 +16,8 @@
         "push": "git add . && git commit -m 'some changes' && git push"
     },
     "dependencies": {
+        "@ckeditor/ckeditor5-build-classic": "^41.4.2",
+        "@ckeditor/ckeditor5-react": "^11.0.0",
         "@react-oauth/google": "^0.12.1",
         "@reduxjs/toolkit": "^2.3.0",
         "@shined/react-use": "^1.12.0",

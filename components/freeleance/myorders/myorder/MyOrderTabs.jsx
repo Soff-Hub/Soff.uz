@@ -29,11 +29,16 @@ export const EmptyTab = ({ description }) => {
 const MyOrderTabs = () => {
     const [activeKey, setActiveKey] = useState('0');
     const { data, isLoading } = useOrdersStatus();
-    const { query } = useRouter();
+    const { query, push, replace } = useRouter();
 
     useEffect(() => {
-        if (query?.tab) {
-            setActiveKey(String(query?.tab));
+        if (!query?.tab) {
+            replace({ query: { ...query, tab: '0' } }, undefined, {
+                shallow: true,
+            });
+            setActiveKey('0');
+        } else {
+            setActiveKey(query?.tab);
         }
     }, [query?.tab]);
 
@@ -157,6 +162,17 @@ const MyOrderTabs = () => {
         );
     }
 
+    const handleOrderTabChange = (key) => {
+        push(
+            {
+                pathname: query.pathname,
+                query: { ...query, tab: key },
+            },
+            undefined,
+            { shallow: true }
+        );
+    };
+
     return (
         <ConfigProvider
             theme={{
@@ -178,7 +194,7 @@ const MyOrderTabs = () => {
                 <Tabs
                     type="card"
                     activeKey={activeKey}
-                    onChange={setActiveKey}
+                    onChange={handleOrderTabChange}
                     className="order-tabs"
                     items={items}
                     tabPosition="top"

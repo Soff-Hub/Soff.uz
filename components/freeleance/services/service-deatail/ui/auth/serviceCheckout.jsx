@@ -8,7 +8,13 @@ import { useCountdown } from '~/shared/hooks/useCountDown';
 import { useQueryClient } from '@tanstack/react-query';
 import { message as AlertMessage } from 'antd';
 
-const ServiceCheckout = ({ document, order_id, onClose }) => {
+const ServiceCheckout = ({
+    document,
+    order_id,
+    files,
+    description,
+    onClose,
+}) => {
     const [numberCardVal, SetNumberCardVal] = useState(null);
     const [message, setMessage] = useState(false);
     const [cardDate, setCardDate] = useState(null);
@@ -31,7 +37,7 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
 
     const verifyCode = useVerifyCode();
 
-    const numberTyper = value => {
+    const numberTyper = (value) => {
         SetNumberCardVal(value);
         if (!value == 0) {
             let numberPlaceholder = '';
@@ -53,14 +59,16 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
                 service_id: document,
                 payment_type: type,
                 order_id,
+                order_requirement_description: description,
+                order_requirement_file: files?.[0]?.originFileObj,
             },
             {
-                onSuccess: data => {
+                onSuccess: (data) => {
                     setMessage(true);
                     // window.open(data?.url, '_blank');
                     router.push(data.url);
                 },
-                onError: err => {
+                onError: (err) => {
                     AlertMessage.error(err.response.data.detail);
                     setMessage(false);
                 },
@@ -78,17 +86,19 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
             payment_type: type,
             card_number: formattedCardNumber.replace(/\s/g, ''),
             expire_date: numberDate.replace('/', ''),
+            order_requirement_description: description,
+            order_requirement_file: files?.[0]?.originFileObj,
         };
 
         if (order_id) payload.order_id = order_id;
         createOrder.mutate(payload, {
-            onSuccess: data => {
+            onSuccess: (data) => {
                 setMessage(false);
                 setOpen(true);
                 setResData(data);
                 reset();
             },
-            onError: err => {
+            onError: (err) => {
                 console.error('❌ Click payment error:', err);
                 setMessage(false);
                 setResData({
@@ -107,14 +117,14 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
                 code,
             },
             {
-                onSuccess: data => {
+                onSuccess: (data) => {
                     setResDataCode(data);
                     if (!order_id) push('/order/my-orders?tab=2');
                     if (onClose) onClose();
                     setOpen(false);
                     queryClient.invalidateQueries(['orders']);
                 },
-                onError: error => {
+                onError: (error) => {
                     const errorMessage = error?.response?.data || {
                         detail: "Noma'lum xato",
                     };
@@ -130,7 +140,7 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
             setTime(120); // 2 daqiqa
 
             const timerID = setInterval(() => {
-                setTime(prev => {
+                setTime((prev) => {
                     if (prev <= 1) {
                         clearInterval(timerID);
                         setResData(null);
@@ -150,7 +160,7 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
         setResData(null);
     }
 
-    const handleCardNumberChange = e => {
+    const handleCardNumberChange = (e) => {
         const inputValue = e.target.value.replace(/\D/g, '');
         let formattedValue = '';
 
@@ -167,7 +177,7 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
         setFormattedCardNumber(formattedValue);
     };
 
-    const handleCardNumberDate = e => {
+    const handleCardNumberDate = (e) => {
         const inputValue = e.target.value.replace(/\D/g, '');
         let formattedValue = '';
 
@@ -183,7 +193,7 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
         setNumberDate(formattedValue);
     };
 
-    const onChange = key => {
+    const onChange = (key) => {
         setTab(key);
         if (key === '1') {
             setType('card');
@@ -289,7 +299,7 @@ const ServiceCheckout = ({ document, order_id, onClose }) => {
                                 {resData?.phone_number}
                             </p>
                             <input
-                                onChange={e => setCode(e.target.value)}
+                                onChange={(e) => setCode(e.target.value)}
                                 type="tel"
                                 placeholder="000000"
                                 maxLength={6}
