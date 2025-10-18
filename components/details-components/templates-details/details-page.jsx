@@ -30,6 +30,7 @@ function ThreeDesignProductsDetails ({ product, template }) {
                     </div>
                     <div className='ps-product__header_seller_three_design '>
                         <ImageCarousel
+                            slug={product?.slug}
                             demo_link={product?.demo_link}
                             images={product?.document?.images}
                             views={product?.view_count}
