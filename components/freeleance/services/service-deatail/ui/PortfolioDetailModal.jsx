@@ -1,11 +1,34 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Modal, Descriptions, Tag } from 'antd';
 
 import styles from './styles/detail.module.scss';
 import useResponsive from '~/shared/utilities/useResponsive';
 
+const getYouTubeEmbed = (url) => {
+    if (!url) return null;
+    try {
+        const videoId =
+            url.split('v=')[1]?.split('&')[0] ||
+            url.split('youtu.be/')[1]?.split('?')[0];
+        return `https://www.youtube.com/embed/${videoId}`;
+    } catch {
+        return null;
+    }
+};
+
 const PortfolioDetailModal = ({ open, onClose, portfolio }) => {
     const { isMobile } = useResponsive();
+
+    const galleryImages = useMemo(
+        () => portfolio?.portfolio_images || [],
+        [portfolio?.portfolio_images]
+    );
+
+    const galleryVideos = useMemo(
+        () => portfolio?.videos || [],
+        [portfolio?.videos]
+    );
+
     return (
         <Modal
             open={open}
@@ -39,18 +62,50 @@ const PortfolioDetailModal = ({ open, onClose, portfolio }) => {
                     )}
                 </div>
                 <div className={styles.galleryBox}>
-                    {portfolio?.portfolio_images?.map((img, idx) => (
-                        <img
-                            key={idx}
-                            className={styles.newImage}
-                            src={img?.image}
-                            alt={`Image ${idx}`}
-                            onError={(e) => {
-                                e.target.onerror = null; // Prevent infinite loop
-                                e.target.src = '/static/img/no-document.png';
-                            }}
-                        />
-                    ))}
+                    {galleryImages.length > 0 ? (
+                        galleryImages.map((img, idx) => (
+                            <div key={idx} className={styles.imageWrapper}>
+                                <img
+                                    src={
+                                        img?.image ||
+                                        '/static/img/orqafon1.avif'
+                                    }
+                                    alt={`Image ${idx + 1}`}
+                                    className={styles.image}
+                                />
+                            </div>
+                        ))
+                    ) : (
+                        <p className="text-gray-500 text-center mt-4">
+                            Rasm topilmadi.
+                        </p>
+                    )}
+                    {galleryVideos.length > 0 ? (
+                        galleryVideos.map((video, index) => (
+                            <div
+                                className="video-wrapper"
+                                style={{
+                                    width: '100%',
+                                }}>
+                                <iframe
+                                    src={`${getYouTubeEmbed(
+                                        video.video_url
+                                    )}?modestbranding=1&rel=0&controls=1&showinfo=0`}
+                                    style={{
+                                        height: '500px',
+                                        width: '100%',
+                                    }}
+                                    title={`video-${index}`}
+                                    frameBorder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowFullScreen></iframe>
+                            </div>
+                        ))
+                    ) : (
+                        <p className="text-gray-500 text-center mt-4">
+                            Video topilmadi.
+                        </p>
+                    )}
                 </div>
             </div>
         </Modal>
