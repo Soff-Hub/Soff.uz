@@ -381,6 +381,7 @@ const UserShortInfo = ({ seller }) => {
                 open={createOrderModal}
                 onClose={cancelCreateOrder}
                 seller={seller?.full_name}
+                defaultDirection={seller?.direction}
                 id={seller?.id}
                 sellerInfo={seller}
             />

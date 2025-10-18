@@ -32,7 +32,14 @@ import 'swiper/css/thumbs';
 
 const { TextArea } = Input;
 
-const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
+const CreateOrderModal = ({
+    open,
+    onClose,
+    id,
+    seller,
+    sellerInfo,
+    defaultDirection,
+}) => {
     const [form] = Form.useForm();
     const { tg } = useTelegram();
     const budget = Form.useWatch('budget', form);
@@ -51,6 +58,13 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
         form.setFieldValue('direction', direction);
         // dispatch(fetchDirections());
     }, [direction]);
+
+    useEffect(() => {
+        if (defaultDirection) {
+            setDirection(defaultDirection);
+            form.setFieldValue('direction', defaultDirection);
+        }
+    }, [defaultDirection]);
 
     const { data: directionsData } = useFGet(
         'directions',
