@@ -132,7 +132,7 @@ function useCreateOrder() {
     const { isDesktop } = useResponsive();
     const [direction, setDirection] = useState('scientific_work');
     const { user } = useSelector((state) => state.auth);
-    const { push } = useRouter();
+    const { push, query, replace, pathname } = useRouter();
     const [confirmOpen, setConfirmOpen] = useState(false);
     const { directions } = useSelector((state) => state.profile);
     const [showLeftGradient, setShowLeftGradient] = useState(false);
@@ -140,6 +140,7 @@ function useCreateOrder() {
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
     const dispatch = useDispatch();
     const { tg } = useTelegram();
+    const onfirstRender = useRef(true);
 
     useEffect(() => {
         dispatch(setShowSearch(false));
@@ -171,6 +172,27 @@ function useCreateOrder() {
     useEffect(() => {
         form.setFieldValue('direction', direction);
     }, [direction]);
+
+    useEffect(() => {
+        if (onfirstRender.current) {
+            onfirstRender.current = false;
+
+            if (!query?.direction) {
+                replace(
+                    {
+                        pathname: pathname,
+                        query: { ...query, direction: 'scientific_work' },
+                    },
+                    undefined,
+                    { shallow: true }
+                );
+            }
+
+            if (query?.direction) {
+                setDirection(query?.direction);
+            }
+        }
+    }, [query?.direction]);
 
     const { mutate: createOrder, isPending } = useFPost({
         url: 'order/custom-order',
@@ -231,6 +253,21 @@ function useCreateOrder() {
         createOrder(fd);
     };
 
+    const handleDirectionChange = (val) => {
+        setDirection(val);
+        form.resetFields(['category_id']);
+        form.setFieldValue('title', '');
+        // form.setFieldValue('direction', direction);
+        replace(
+            {
+                pathname: pathname,
+                query: { ...query, direction: direction },
+            },
+            undefined,
+            { shallow: true }
+        );
+    };
+
     const formItems = [
         {
             id: 'direction',
@@ -245,11 +282,7 @@ function useCreateOrder() {
                     }
                     rules={[{ required: true, message: "Yo'nalish tanlang!" }]}>
                     <Select
-                        onChange={(val) => {
-                            setDirection(val);
-                            form.resetFields(['category_id']);
-                            form.setFieldValue('title', '');
-                        }}
+                        onChange={handleDirectionChange}
                         className="form-element"
                         size="large"
                         options={directions}
