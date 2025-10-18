@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from "react";
 import styles from './style.module.scss';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import { getRemainingDays } from '~/shared/utilities/calculateTime';
@@ -119,18 +119,21 @@ const OrderCard = ({ order, onOpenDrawer, onCancel }) => {
     const statusAsset = orderStatusAssets(order.order_status_doing?.status);
     const hasSeller = Boolean(order.user);
     const price = order.service?.price ?? order.budget ?? 0;
+    const [showMore, setShowMore] = useState(false);
+    const [showMoreBtn, setShowMoreBtn] = useState(false);
+    const descRef = useRef(null);
 
     const deadlineDisplay = order.deadline_date
         ? new Date(order.deadline_date).toLocaleString('uz-UZ', {
-              year: 'numeric',
-              month: '2-digit',
-              day: '2-digit',
-              hour: '2-digit',
-              minute: '2-digit',
-          })
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+        })
         : order.service?.delivery_days
-        ? `${getRemainingDays(order.created_at, order.service.delivery_days)}`
-        : '-';
+            ? `${getRemainingDays(order.created_at, order.service.delivery_days)}`
+            : '-';
 
     const createdAtDisplay = new Date(order.created_at).toLocaleString(
         'uz-UZ',
@@ -142,6 +145,13 @@ const OrderCard = ({ order, onOpenDrawer, onCancel }) => {
             minute: '2-digit',
         }
     );
+
+    useEffect(() => {
+        if (descRef.current) {
+            const isOverflowing = descRef.current.scrollHeight > descRef.current.clientHeight + 5;
+            setShowMoreBtn(isOverflowing);
+        }
+    }, [order.description]);
 
     const handlePrimaryClick = () => {
         if (hasSeller) {
@@ -192,10 +202,39 @@ const OrderCard = ({ order, onOpenDrawer, onCancel }) => {
                 typeof onOpenDrawer !== 'function' && (
                     <div className={styles.meta}>
                         <div className={styles.metaTitle}>
-                            <i className="fa-solid fa-file-pen" /> Buyurtma
-                            tavsifi
+                            <i className="fa-solid fa-file-pen" /> Buyurtma tavsifi
                         </div>
-                        <span>{order.description}</span>
+
+                        <p
+                            ref={descRef}
+                            style={{
+                                whiteSpace: "pre-wrap",
+                                overflow: "hidden",
+                                display: "-webkit-box",
+                                WebkitBoxOrient: "vertical",
+                                WebkitLineClamp: showMore ? "unset" : 3,
+                                lineHeight: "1.6",
+                                fontSize: "14px",
+                                marginBottom: 0
+                            }}
+                        >
+                            {order.description}
+                        </p>
+
+                        {showMoreBtn && (
+                            <span
+                                onClick={() => setShowMore((prev) => !prev)}
+                                style={{
+                                    color: "#1677ff",
+                                    fontWeight: 500,
+                                    cursor: "pointer",
+                                    marginTop: "4px",
+                                    display: "inline-block",
+                                }}
+                            >
+                                {showMore ? "Kamroq" : "Batafsil"}
+                            </span>
+                        )}
                     </div>
                 )}
             {order.order_type == 'ready_service' &&
@@ -245,7 +284,7 @@ const OrderCard = ({ order, onOpenDrawer, onCancel }) => {
                         {formatCurrencyWithSpace(price)} so'm
                     </span>
                     {statusAsset.isPaymentApproved &&
-                    statusAsset.status !== 'rejected' ? (
+                        statusAsset.status !== 'rejected' ? (
                         <span className={styles.paymentApproved}>
                             <i className="fa fa-check-circle-o" />
                             To'lov qabul qilindi:
@@ -262,8 +301,8 @@ const OrderCard = ({ order, onOpenDrawer, onCancel }) => {
                 </div>
                 <div className={styles.actionButtons}>
                     {typeof onOpenDrawer === 'function' &&
-                    statusAsset.isRejectable &&
-                    statusAsset.status !== 'rejected' ? (
+                        statusAsset.isRejectable &&
+                        statusAsset.status !== 'rejected' ? (
                         <Button
                             variant="outlined"
                             color="red"
