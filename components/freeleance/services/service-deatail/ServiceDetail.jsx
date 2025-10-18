@@ -50,20 +50,27 @@ const ServiceDetail = ({ data }) => {
 
     const slider_images = [
         { id: 'poster-img', image_url: service?.poster },
-        {
-            type: 'video',
-            id: 'service-video',
-            video_url: service?.video?.video_url,
-        },
+        service?.video?.video_url
+            ? {
+                  type: 'video',
+                  id: 'service-video',
+                  video_url: service?.video?.video_url,
+              }
+            : null,
         ...seller_portfolio
-            ?.map((portfolio) =>
-                portfolio?.portfolio_images.map((elem, index) => ({
+            ?.map((portfolio) => [
+                ...(portfolio?.portfolio_images?.map((elem, index) => ({
                     id: index,
                     image_url: elem?.image,
-                }))
-            )
+                })) || []),
+                ...(portfolio?.videos?.map((vid, index) => ({
+                    type: 'video',
+                    id: `video-${index}`,
+                    video_url: vid?.video_url,
+                })) || []),
+            ])
             .flatMap((i) => i),
-    ];
+    ].filter(Boolean);
 
     console.log({ slider_images });
 
@@ -74,6 +81,7 @@ const ServiceDetail = ({ data }) => {
             dispatch(setShowSearch(true));
         };
     }, [dispatch]);
+
     console.log(data);
 
     return (

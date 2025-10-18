@@ -3,11 +3,22 @@ import { useState } from 'react';
 import { IoExpandOutline } from 'react-icons/io5';
 import 'yet-another-react-lightbox/styles.css';
 
+function getYouTubeThumbnail(url) {
+    const match = url?.match(/(?:v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+    const id = match ? match[1] : null;
+    return id ? `https://img.youtube.com/vi/${id}/maxresdefault.jpg` : null;
+}
+
 const ImageLightBox = ({ gallery = [] }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const slidesGallery = Array.isArray(gallery)
-        ? gallery.map((image) => ({ src: image?.image_url || image?.thumbUrl }))
+        ? gallery.map((image) => ({
+              src:
+                  image?.image_url ||
+                  image?.thumbUrl ||
+                  getYouTubeThumbnail(image?.video_url),
+          }))
         : [];
 
     return (

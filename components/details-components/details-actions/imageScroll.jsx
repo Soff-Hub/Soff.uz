@@ -1,7 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Thumbs } from 'swiper/modules';
-import Image from 'next/image';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
@@ -10,7 +9,31 @@ import { InfoCircleOutlined } from '@ant-design/icons';
 import DemoButton from '~/components/form/demoBtn';
 import Link from 'next/link';
 
-const ImageCarousel = ({ images, views, demo_link, isProduct = true, slug }) => {
+const getYouTubeEmbed = (url) => {
+    if (!url) return null;
+    try {
+        const videoId =
+            url.split('v=')[1]?.split('&')[0] ||
+            url.split('youtu.be/')[1]?.split('?')[0];
+        return `https://www.youtube.com/embed/${videoId}`;
+    } catch {
+        return null;
+    }
+};
+
+function getYouTubeThumbnail(url) {
+    const match = url.match(/(?:v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+    const id = match ? match[1] : null;
+    return id ? `https://img.youtube.com/vi/${id}/maxresdefault.jpg` : null;
+}
+
+const ImageCarousel = ({
+    images,
+    views,
+    demo_link,
+    isProduct = true,
+    slug,
+}) => {
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
     const [mainSwiper, setMainSwiper] = useState(null);
     const [activeIndex, setActiveIndex] = useState(0);
@@ -156,34 +179,50 @@ const ImageCarousel = ({ images, views, demo_link, isProduct = true, slug }) => 
                                 maxWidth: '100%',
                                 flex: '0 0 100%',
                             }}>
-                            <div
-                                className="image-wrapper"
-                                style={{
-                                    width: '100%',
-                                    height: 'auto',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    overflow: 'hidden',
-                                }}>
-                                <img
-                                    src={item?.image_url || item?.thumbUrl}
-                                    alt="Product"
-                                    className="swiper-image rounded-3"
+                            {item?.type === 'video' ? (
+                                <div className="video-wrapper">
+                                    <iframe
+                                        src={`${getYouTubeEmbed(
+                                            item.video_url
+                                        )}?modestbranding=1&rel=0&controls=1&showinfo=0`}
+                                        style={{
+                                            height: '450px',
+                                        }}
+                                        title={`video-${index}`}
+                                        frameBorder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowFullScreen></iframe>
+                                </div>
+                            ) : (
+                                <div
+                                    className="image-wrapper"
                                     style={{
                                         width: '100%',
-                                        height: '450px',
-                                        objectFit: 'contain',
-                                        display: 'block',
-                                        userSelect: 'none',
-                                    }}
-                                    onError={(e) => {
-                                        e.target.onerror = null; // Prevent infinite loop
-                                        e.target.src =
-                                            '/static/img/no-document.png';
-                                    }}
-                                />
-                            </div>
+                                        height: 'auto',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        overflow: 'hidden',
+                                    }}>
+                                    <img
+                                        src={item?.image_url || item?.thumbUrl}
+                                        alt="Product"
+                                        className="swiper-image rounded-3"
+                                        style={{
+                                            width: '100%',
+                                            height: '450px',
+                                            objectFit: 'contain',
+                                            display: 'block',
+                                            userSelect: 'none',
+                                        }}
+                                        onError={(e) => {
+                                            e.target.onerror = null; // Prevent infinite loop
+                                            e.target.src =
+                                                '/static/img/no-document.png';
+                                        }}
+                                    />
+                                </div>
+                            )}
                         </SwiperSlide>
                     ))}
                 </Swiper>
@@ -300,10 +339,11 @@ const ImageCarousel = ({ images, views, demo_link, isProduct = true, slug }) => 
                                         flexShrink: 0,
                                     }}>
                                     <div
-                                        className={`thumbnail-wrapper ${activeIndex === index
-                                            ? 'active'
-                                            : ''
-                                            }`}
+                                        className={`thumbnail-wrapper ${
+                                            activeIndex === index
+                                                ? 'active'
+                                                : ''
+                                        }`}
                                         style={{
                                             width: '75px',
                                             height: '50px',
@@ -334,10 +374,10 @@ const ImageCarousel = ({ images, views, demo_link, isProduct = true, slug }) => 
                                                         Math.max(
                                                             0,
                                                             index -
-                                                            Math.floor(
-                                                                slidesPerView /
-                                                                2
-                                                            )
+                                                                Math.floor(
+                                                                    slidesPerView /
+                                                                        2
+                                                                )
                                                         );
                                                     thumbsSwiper.slideTo(
                                                         targetSlide
@@ -348,7 +388,10 @@ const ImageCarousel = ({ images, views, demo_link, isProduct = true, slug }) => 
                                         <img
                                             src={
                                                 item?.image_url ||
-                                                item?.thumbUrl
+                                                item?.thumbUrl ||
+                                                getYouTubeThumbnail(
+                                                    item?.video_url
+                                                )
                                             }
                                             alt="Thumbnail"
                                             width={71}
@@ -373,7 +416,7 @@ const ImageCarousel = ({ images, views, demo_link, isProduct = true, slug }) => 
                         </Swiper>
                     </div>
                 )}
-                {isProduct &&
+                {isProduct && (
                     <>
                         <div className="views mt-2">
                             <i className="fa-solid fa-eye"></i>{' '}
@@ -400,8 +443,7 @@ const ImageCarousel = ({ images, views, demo_link, isProduct = true, slug }) => 
                             </div>
                         </div>
                     </>
-
-                }
+                )}
             </div>
         </div>
     );

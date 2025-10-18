@@ -7,7 +7,7 @@ export function TelegramLink() {
     const { isMobile, isTablet } = useResponsive();
     const location = useRouter().pathname;
 
-    if (location === '/chat') {
+    if (location === '/chat' || location === '/order/create') {
         return null;
     }
 

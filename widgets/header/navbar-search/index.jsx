@@ -16,7 +16,8 @@ const NavbarSearch = () => {
     const [type, setType] = useState('mahsulotlar');
     const [search, setSearch] = useState('');
     const axios = axiosInstance();
-    const { showSearch } = useSelector(state => state.ui);
+    const location = useRouter().pathname;
+    const { showSearch } = useSelector((state) => state.ui);
 
     const debounceSearch = useDebounce(search, 500);
 
@@ -48,14 +49,14 @@ const NavbarSearch = () => {
 
     const getOptions = () => {
         if (type === 'mahsulotlar') {
-            return isSuccess ? data?.map(item => ({ value: item })) : [];
+            return isSuccess ? data?.map((item) => ({ value: item })) : [];
         } else if (type === 'mutaxasislar') {
             return freelanceSuccess
-                ? freelanceData?.position?.map(item => ({ value: item }))
+                ? freelanceData?.position?.map((item) => ({ value: item }))
                 : [];
         } else if (type === 'xizmatlar') {
             return freelanceSuccess
-                ? freelanceData?.services?.map(item => ({ value: item }))
+                ? freelanceData?.services?.map((item) => ({ value: item }))
                 : [];
         }
     };
@@ -71,6 +72,10 @@ const NavbarSearch = () => {
         }
     };
 
+    if (location === '/') {
+        return null;
+    }
+
     return (
         <div className="container">
             {showSearch && (
@@ -78,7 +83,7 @@ const NavbarSearch = () => {
                     <div className="d-flex w-100">
                         <Select
                             value={type}
-                            onChange={val => setType(val)}
+                            onChange={(val) => setType(val)}
                             className={styles.select}
                             bordered={false}>
                             <Option value="mahsulotlar">Mahsulotlar</Option>
@@ -88,7 +93,7 @@ const NavbarSearch = () => {
 
                         <AutoComplete
                             value={search}
-                            onChange={val => setSearch(val)}
+                            onChange={(val) => setSearch(val)}
                             options={getOptions()}
                             style={{ width: '100%' }}
                             // popupMatchSelectWidth={popupWidth}
