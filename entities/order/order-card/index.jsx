@@ -114,7 +114,7 @@ const orderStatusAssets = (status) => {
     // cancelled: 'Buyurtma bekor qilindi',
 };
 
-const OrderCard = ({ order, onOpenDrawer, onCancel }) => {
+const OrderCard = ({ order, onOpenDrawer, onSelectNotPaidOrder, onCancel }) => {
     const router = useRouter();
     const statusAsset = orderStatusAssets(order.order_status_doing?.status);
     const hasSeller = Boolean(order.user);
@@ -143,7 +143,17 @@ const OrderCard = ({ order, onOpenDrawer, onCancel }) => {
         }
     );
 
+    const isFullyPaid = order?.approved_transaction_amount >= price;
+    const isPartiallyPaid =
+        order?.approved_transaction_amount > 0 &&
+        order?.approved_transaction_amount < price;
+    const notPaidAmount = price - (order?.approved_transaction_amount || 0);
+
     const handlePrimaryClick = () => {
+        if (!isPartiallyPaid) {
+            onOpenDrawer(order);
+            return;
+        }
         if (hasSeller) {
             router.push(`/order/${order.id}`);
         } else {
@@ -244,11 +254,29 @@ const OrderCard = ({ order, onOpenDrawer, onCancel }) => {
                     <span className={styles.budjetPrice}>
                         {formatCurrencyWithSpace(price)} so'm
                     </span>
-                    {statusAsset.isPaymentApproved &&
-                    statusAsset.status !== 'rejected' ? (
+                    {statusAsset.status === 'cancelled' && isPartiallyPaid ? (
+                        <span className={styles.paymentRejected}>
+                            <i className="fa fa-times-circle-o" />
+                            To'lov bekor qilindi
+                        </span>
+                    ) : statusAsset.status ==
+                      'cancelled' ? null : isFullyPaid ? (
                         <span className={styles.paymentApproved}>
                             <i className="fa fa-check-circle-o" />
-                            To'lov qabul qilindi:
+                            To'lov qabul qilindi
+                        </span>
+                    ) : isPartiallyPaid ? (
+                        <span className={styles.paymentHalfApproved}>
+                            <i className="fa fa-stop-circle-o" />
+                            To'lovning {formatCurrencyWithSpace(
+                                notPaidAmount
+                            )}{' '}
+                            so'm qismi amalga oshirilmagan
+                        </span>
+                    ) : !isPartiallyPaid && !isFullyPaid ? (
+                        <span className={styles.paymentNotApproved}>
+                            <i className="fa fa-dot-circle-o" />
+                            To'lov amalga oshirilmagan
                         </span>
                     ) : null}
                 </div>
@@ -272,48 +300,59 @@ const OrderCard = ({ order, onOpenDrawer, onCancel }) => {
                             Bekor qilish
                         </Button>
                     ) : null}
-                    {typeof onOpenDrawer === 'function' &&
-                        statusAsset.status !== 'cancelled' &&
-                        statusAsset.status !== 'rejected' && (
-                            <button
-                                className={styles.primary}
-                                onClick={handlePrimaryClick}>
-                                {hasSeller ? (
-                                    'Batafsil'
-                                ) : (
-                                    <div
-                                        className={cn(
-                                            'flex',
-                                            'justify-center',
-                                            'items-center',
-                                            'gap-2'
-                                        )}>
-                                        <span style={{ fontSize: '14px' }}>
-                                            Takliflarni ko'rish
-                                        </span>
-                                        <Avatar.Group
-                                            max={{
-                                                count: 3,
-                                                style: {
-                                                    color: 'white',
-                                                    backgroundColor: '#00a44f',
-                                                },
-                                            }}>
-                                            {order?.offers?.map((item) => (
-                                                <Avatar
-                                                    size={25}
-                                                    src={
-                                                        item?.photo_url ||
-                                                        '/static/img/ozodbek.png'
-                                                    }
-                                                />
-                                            ))}
-                                        </Avatar.Group>
-                                    </div>
-                                )}
-                            </button>
-                        )}
-                    {statusAsset.status === 'rejected' && (
+                    {
+                        //     typeof onSelectNotPaidOrder === 'function' &&
+                        // statusAsset.status !== 'cancelled' &&
+                        // !order?.has_approved_transaction ? (
+                        //     <button
+                        //         className={styles.primary}
+                        //         onClick={() => onSelectNotPaidOrder(order)}>
+                        //         To'lovni amalga oshirish
+                        //     </button>
+                        // ) :
+                        typeof onOpenDrawer === 'function' &&
+                            statusAsset.status !== 'cancelled' && (
+                                <button
+                                    className={styles.primary}
+                                    onClick={handlePrimaryClick}>
+                                    {hasSeller ? (
+                                        'Batafsil'
+                                    ) : (
+                                        <div
+                                            className={cn(
+                                                'flex',
+                                                'justify-center',
+                                                'items-center',
+                                                'gap-2'
+                                            )}>
+                                            <span style={{ fontSize: '14px' }}>
+                                                Takliflarni ko'rish
+                                            </span>
+                                            <Avatar.Group
+                                                max={{
+                                                    count: 3,
+                                                    style: {
+                                                        color: 'white',
+                                                        backgroundColor:
+                                                            '#00a44f',
+                                                    },
+                                                }}>
+                                                {order?.offers?.map((item) => (
+                                                    <Avatar
+                                                        size={25}
+                                                        src={
+                                                            item?.photo_url ||
+                                                            '/static/img/ozodbek.png'
+                                                        }
+                                                    />
+                                                ))}
+                                            </Avatar.Group>
+                                        </div>
+                                    )}
+                                </button>
+                            )
+                    }
+                    {statusAsset.status === 'cancelled' && isPartiallyPaid && (
                         <div className={styles.rejectedLabel}>
                             <i className="fa fa-exclamation-circle" />
                             Buyurtma to'lovingiz 24 soat ichida profilingizga

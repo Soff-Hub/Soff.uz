@@ -18,9 +18,16 @@ import { useSelector } from 'react-redux';
 import useCreateChat from '~/components/freeleance/chat/api/useCreateChat';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { useRouter } from 'next/router';
+import OrderPaymentPrompt from './OrderPaymentPrompt';
 
 dayjs.extend(relativeTime);
 dayjs.locale('uz-latn');
+
+const defaultOrder = {
+    id: 123,
+    price: 100000,
+    title: 'Namuna Xizmat',
+};
 
 const InfoRow = memo(({ icon, label, value }) => (
     <div
@@ -48,6 +55,9 @@ const UserShortInfo = ({ seller }) => {
     const [activeModal, setActiveModal] = useState(null);
     const [authModal, setAuthModal] = useState(false);
     const [createOrderModal, setCreateOrderModal] = useState(false);
+    const [latelyCreatedOrder, setLatelyCreatedOrder] = useState(null);
+    const [orderPaymentPromptModal, setOrderPaymentPromptModal] =
+        useState(false);
     const router = useRouter();
 
     const lastActive = useMemo(
@@ -152,6 +162,11 @@ const UserShortInfo = ({ seller }) => {
         }
     };
 
+    const onOrderCreateSuccess = (orderId) => {
+        setLatelyCreatedOrder(orderId);
+        setOrderPaymentPromptModal(true);
+    };
+
     const handleCreateChat = useCallback(() => {
         if (isLoggedIn) {
             createChat(seller?.id);
@@ -202,6 +217,14 @@ const UserShortInfo = ({ seller }) => {
             setActiveModal('createOrder');
         }
     }, [isLoggedIn, status]);
+
+    useEffect(() => {
+        const { payment } = router.query;
+        if (payment === 'true') {
+            setOrderPaymentPromptModal(true);
+            setCreateOrderModal(false);
+        }
+    }, [router.query]);
 
     return (
         <div className={cn('bg-light', 'p-3', 'shadow', 'rounded-xl')}>
@@ -380,9 +403,15 @@ const UserShortInfo = ({ seller }) => {
             <CreateOrderModal
                 open={createOrderModal}
                 onClose={cancelCreateOrder}
+                onSuccess={onOrderCreateSuccess}
                 seller={seller?.full_name}
                 id={seller?.id}
                 sellerInfo={seller}
+            />
+            <OrderPaymentPrompt
+                isOpen={orderPaymentPromptModal}
+                onClose={() => setOrderPaymentPromptModal(false)}
+                order={latelyCreatedOrder || defaultOrder}
             />
         </div>
     );
