@@ -352,13 +352,13 @@ const OrderCard = ({ order, onOpenDrawer, onCancel }) => {
                                 )}
                             </button>
                         )}
-                    {statusAsset.status === 'rejected' && (
+                    {/* {statusAsset.status === 'rejected' && (
                         <div className={styles.rejectedLabel}>
                             <i className="fa fa-exclamation-circle" />
                             Buyurtma to'lovingiz 24 soat ichida profilingizga
                             qaytariladi.
                         </div>
-                    )}
+                    )} */}
                 </div>
             </div>
         </div>

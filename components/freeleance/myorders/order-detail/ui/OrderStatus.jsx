@@ -59,43 +59,48 @@ const OrderStatus = ({ order }) => {
 
             {/* Seller info */}
             <div className={styles.seller}>
-                <div className={styles.seller_box}>
-                    <img
-                        src={
-                            order?.user?.photo_url || '/static/img/ozodbek.png'
-                        }
-                        alt={'USER PHOTO'}
-                        width={60}
-                        height={60}
-                        style={{ objectFit: 'cover' }}
-                    />
-                    <div className="d-flex flex-column">
-                        <Link
-                            href={`/seller/${order?.user?.soff_seller_id}#about_author`}>
-                            {order?.user?.full_name || ''}
-                        </Link>
-                        <span className="text-muted fs-5">Frilanser</span>
+                <div className="d-flex justify-content-between align-items-center w-100">
+                    <div className={styles.seller_box}>
+                        <img
+                            src={
+                                order?.user?.photo_url ||
+                                '/static/img/ozodbek.png'
+                            }
+                            alt={'USER PHOTO'}
+                            width={60}
+                            height={60}
+                            style={{ objectFit: 'cover' }}
+                        />
+                        <div className="d-flex flex-column">
+                            <Link
+                                href={`/seller/${order?.user?.soff_seller_id}#about_author`}>
+                                {order?.user?.full_name || ''}
+                            </Link>
+                            <span className="text-muted fs-5">Frilanser</span>
+                        </div>
                     </div>
+                    {order?.user?.soff_seller_id && (
+                        <Button
+                            onClick={() =>
+                                createChat(order?.user?.soff_seller_id)
+                            }
+                            type="text"
+                            icon={
+                                <span className={styles.unreadChatsWrapper}>
+                                    {order?.unread_messages_count !== 0 && (
+                                        <span className={styles.unreadChats}>
+                                            {order?.unread_messages_count}
+                                        </span>
+                                    )}
+                                    <MessageOutlined
+                                        style={{ fontSize: '30px' }}
+                                    />
+                                </span>
+                            }
+                        />
+                    )}
                 </div>
             </div>
-            {order?.user?.soff_seller_id && (
-                <div className="mb-0 ">
-                    <Button
-                        onClick={() => createChat(order?.user?.soff_seller_id)}
-                        size="large"
-                        className="w-100 rounded-0">
-                        <span className={styles.unreadChatsWrapper}>
-                            {order?.unread_messages_count !== 0 && (
-                                <span className={styles.unreadChats}>
-                                    {order?.unread_messages_count}
-                                </span>
-                            )}
-                            <MessageOutlined />
-                        </span>
-                        Chat
-                    </Button>
-                </div>
-            )}
 
             {/* Steps */}
             <div className={styles.status_steps}>

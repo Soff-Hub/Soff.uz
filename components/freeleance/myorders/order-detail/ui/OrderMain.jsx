@@ -225,17 +225,19 @@ const OrderMain = ({ order }) => {
         <div className="col-lg-9 col-12 rounded-2 my-4">
             <div className={styles.orderDetailMain}>
                 {/* Notification Settings Card */}
-                <TelegramNotification
-                    hideIfActivated
-                    header={TelegramNotificationHeader}
-                />
+                {order?.order_status_doing?.status !== 'rejected' && (
+                    <TelegramNotification
+                        hideIfActivated
+                        header={TelegramNotificationHeader}
+                    />
+                )}
 
                 {order?.order_status_doing?.status === 'pending' && (
                     <div className={styles.orderPayCardFlex}>
                         <div className="w-100">
                             <h4
-                                className={`mb-0 ${!isDesktop && 'text-center'
-                                    }`}>
+                                className={`mb-0 ${!isDesktop &&
+                                    'text-center'}`}>
                                 Frilanser ishni boshlashi uchun to'lovni amalga
                                 oshiring
                             </h4>
@@ -288,51 +290,51 @@ const OrderMain = ({ order }) => {
                 )}
                 {(order?.order_status_doing?.status === 'approved' ||
                     order?.order_status_doing?.status ===
-                    'requirement_file_rejected') && (
-                        <div className={styles.orderPayCardFlex}>
-                            <div>
-                                <h3 className={styles.orderNameLink}>
-                                    Buyurtma talablari kutilmoqda
-                                </h3>
-                                {order?.order_status_doing?.status ===
-                                    'approved' && (
-                                        <p>
-                                            Siz to‘lovni amalga oshirdingiz. Endi
-                                            mutahasis ishni boshlashi uchun kerakli
-                                            materiallar va ko‘rsatmalarni yuboring.
-                                        </p>
-                                    )}
-                                {order?.order_status_doing?.status ===
-                                    'requirement_file_rejected' && (
-                                        <p>
-                                            Siz yuborgan materiallar yoki ko‘rsatmalar
-                                            yetarli emasligi sababli mutahasis ularni
-                                            rad etdi. Iltimos, ishni boshlash uchun
-                                            barcha kerakli fayllar va aniq
-                                            ko‘rsatmalarni qayta yuboring.
-                                        </p>
-                                    )}
-                            </div>
-                            <Button
-                                type="primary"
-                                style={{
-                                    backgroundColor: '#00a44f',
-                                    borderColor: '#00a44f',
-                                    padding: '16px 28px',
-                                }}
-                                onClick={() => setOpen(true)}>
-                                Talablarni yuborish
-                            </Button>
+                        'requirement_file_rejected') && (
+                    <div className={styles.orderPayCardFlex}>
+                        <div>
+                            <h3 className={styles.orderNameLink}>
+                                Buyurtma talablari kutilmoqda
+                            </h3>
+                            {order?.order_status_doing?.status ===
+                                'approved' && (
+                                <p>
+                                    Siz to‘lovni amalga oshirdingiz. Endi
+                                    mutahasis ishni boshlashi uchun kerakli
+                                    materiallar va ko‘rsatmalarni yuboring.
+                                </p>
+                            )}
+                            {order?.order_status_doing?.status ===
+                                'requirement_file_rejected' && (
+                                <p>
+                                    Siz yuborgan materiallar yoki ko‘rsatmalar
+                                    yetarli emasligi sababli mutahasis ularni
+                                    rad etdi. Iltimos, ishni boshlash uchun
+                                    barcha kerakli fayllar va aniq
+                                    ko‘rsatmalarni qayta yuboring.
+                                </p>
+                            )}
                         </div>
-                    )}
+                        <Button
+                            type="primary"
+                            style={{
+                                backgroundColor: '#00a44f',
+                                borderColor: '#00a44f',
+                                padding: '16px 28px',
+                            }}
+                            onClick={() => setOpen(true)}>
+                            Talablarni yuborish
+                        </Button>
+                    </div>
+                )}
 
                 {order?.order_status_doing?.status == 'order_file_sent' && (
                     <>
-                        <Alert
+                        {/* <Alert
                             icon={<WarningOutlined />}
                             message="Buyurtma 24 soat ichida ko'rib chiqilmasa avtomatik ravishta qabul qilingan deb hisoblanadi."
                             type="warning"
-                        />
+                        /> */}
                         <div className={styles.orderPayCardGrid}>
                             <div className={styles.orderPayCardInfo}>
                                 <h3 className={styles.orderNameLink}>
@@ -340,7 +342,7 @@ const OrderMain = ({ order }) => {
                                 </h3>
                                 <p>
                                     Mutahasis buyurtmani yakunladi va natijani
-                                    sizga jo‘natdi. Natijani yuklab olib ko‘rib
+                                    sizga jo'natdi. Natijani yuklab olib ko'rib
                                     chiqing va tasdiqlang yoki rad eting.
                                 </p>
                             </div>
@@ -375,6 +377,17 @@ const OrderMain = ({ order }) => {
                         </div>
                     </>
                 )}
+
+                {order?.order_status_doing?.status === 'rejected' && (
+                    <Alert
+                        icon={<WarningOutlined />}
+                        message="Fayl rad etildi"
+                        description={order?.order_status_doing?.reason}
+                        type="error"
+                        showIcon
+                        className="mb-3"
+                    />
+                )}
                 <Breadcrumb items={items} className="mb-2" />
                 <OrderCard order={order} />
                 {order?.order_status_doing?.status === 'completed' && (
@@ -391,19 +404,17 @@ const OrderMain = ({ order }) => {
                     <div
                         className="mt-4 border border-success"
                         style={{
-                            borderRadius: "12px",
-                            padding: "16px",
-                            backgroundColor: "#fafafa",
-                        }}
-                    >
+                            borderRadius: '12px',
+                            padding: '16px',
+                            backgroundColor: '#fafafa',
+                        }}>
                         <h5
                             style={{
-                                fontWeight: "600",
-                                marginBottom: "16px",
-                                fontSize: "18px",
-                                color: "#333",
-                            }}
-                        >
+                                fontWeight: '600',
+                                marginBottom: '16px',
+                                fontSize: '18px',
+                                color: '#333',
+                            }}>
                             Buyurtma talablari
                         </h5>
 
@@ -412,19 +423,21 @@ const OrderMain = ({ order }) => {
                             <div
                                 style={{
                                     flex: 1,
-                                    fontSize: "15px",
-                                    lineHeight: "1.6",
-                                    color: "#444",
-                                    overflowWrap: "break-word",
+                                    fontSize: '15px',
+                                    lineHeight: '1.6',
+                                    color: '#444',
+                                    overflowWrap: 'break-word',
                                 }}
                                 dangerouslySetInnerHTML={{
                                     __html:
-                                        order.order_requirement[0]?.order_requirement_description
+                                        order.order_requirement[0]
+                                            ?.order_requirement_description,
                                 }}
                             />
 
                             {/* Fayl bo‘lsa tugma chiqadi */}
-                            {order.order_requirement[0]?.order_requirement_file && (
+                            {order.order_requirement[0]
+                                ?.order_requirement_file && (
                                 <div className="d-flex justify-content-md-end justify-content-start w-md-auto">
                                     <Button
                                         icon={<DownloadOutlined />}
@@ -432,10 +445,9 @@ const OrderMain = ({ order }) => {
                                             window.open(
                                                 order.order_requirement[0]
                                                     .order_requirement_file,
-                                                "_blank"
+                                                '_blank'
                                             )
-                                        }
-                                    >
+                                        }>
                                         Faylni yuklab olish
                                     </Button>
                                 </div>
@@ -529,13 +541,13 @@ const OrderMain = ({ order }) => {
                         <Rate
                             allowHalf={false}
                             value={rate}
-                            onChange={(val) => setRate(val)}
+                            onChange={val => setRate(val)}
                         />
                         <TextArea
                             placeholder="Xizmat haqida fikrlaringizni yozib qoldiring"
                             rows={3}
                             value={text}
-                            onChange={(e) => setText(e.target.value)}
+                            onChange={e => setText(e.target.value)}
                         />
                     </div>
                 )}
@@ -550,7 +562,7 @@ const OrderMain = ({ order }) => {
                             placeholder="Ishning aniqlangan kamchiliklarini yozing"
                             rows={3}
                             value={text}
-                            onChange={(e) => setText(e.target.value)}
+                            onChange={e => setText(e.target.value)}
                         />
                     </>
                 )}
@@ -597,7 +609,7 @@ const OrderMain = ({ order }) => {
                                         <h4 className="text-primary mb-0 fw-bold">
                                             {formatCurrencyWithSpace(
                                                 order?.service?.price ||
-                                                order?.budget
+                                                    order?.budget
                                             )}{' '}
                                             so'm
                                         </h4>
