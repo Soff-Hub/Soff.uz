@@ -10,6 +10,7 @@ function ServiceOrderModal({
     children,
     handleAuthSuccess,
     order = {},
+    requirements = '',
     externalOpenModal,
 }) {
     const [openAuth, setOpenAuth] = useState(false);
@@ -56,6 +57,9 @@ function ServiceOrderModal({
         }
     }, [externalOpenModal]);
 
+    console.log(requirements,'reuqirements');
+    
+
     return (
         <>
             {childrenContent}
@@ -99,6 +103,22 @@ function ServiceOrderModal({
                                     </div>
                                 </div>
                             </div>
+
+                            {requirements && (
+                                <>
+                                    <h5 className="mb-3" style={{ fontWeight: 'semi-bold' }}>
+                                       Frilanser ishni boshlashi uchun quyidagilarni yuboring:
+                                    </h5>
+                                    <div
+                                        style={{ 
+                                            borderBottom: '1px solid rgba(0,0,0,0.04)',
+                                            marginBottom: '20px',
+                                            paddingBottom: '15px'
+                                        }}
+                                        dangerouslySetInnerHTML={{ __html: requirements }}
+                                    />
+                                </>
+                            )}
 
                             <h5
                                 className="mb-3"
@@ -161,7 +181,9 @@ function ServiceOrderModal({
                                         borderColor: '#28a745',
                                         marginTop: files?.[0] ? '40px' : '10px',
                                     }}
-                                    onClick={handleToPaymentPart}>
+                                    onClick={() => {
+                                        handleToPaymentPart();
+                                    }}>
                                     Buyurtma berish
                                     <i className="fa-solid fa-arrow-right ms-2"></i>
                                 </Button>

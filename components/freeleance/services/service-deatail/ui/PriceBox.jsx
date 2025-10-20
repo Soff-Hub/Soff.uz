@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 import ServiceOrderModal from './ServiceOrderModal';
 import { sleep } from '~/shared/utilities/sleep';
 
-const PriceBox = ({ priceBox }) => {
+const PriceBox = ({ priceBox,requirements }) => {
     const { price, days, revisions } = priceBox;
     const [isOpen, setIsOpen] = useState(false);
     const { isLoggedIn } = useSelector((state) => state.auth);
@@ -81,6 +81,7 @@ const PriceBox = ({ priceBox }) => {
                 </div>
             </div>
             <ServiceOrderModal
+            requirements={requirements}
                 handleAuthSuccess={handleAuthSuccess}
                 order={priceBox}
                 externalOpenModal={isOpen}>
@@ -96,7 +97,7 @@ const PriceBox = ({ priceBox }) => {
                         Buyurtma berish ({formatCurrencyWithSpace(price)} so'm)
                     </Button>
                 )}
-            </ServiceOrderModal>
+            </ServiceOrderModal >
         </div>
     );
 };
