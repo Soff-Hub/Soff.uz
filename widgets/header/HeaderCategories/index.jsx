@@ -252,22 +252,22 @@ const HeaderCatergories = () => {
 
     return (
         <div className={styles.dropBlock}>
-            {isLoggedIn && (
-                <Link href="/order/my-orders">
-                    <Badge
-                        count={totalOrders}
-                        size={isMobile ? 'small' : 'default'}
-                        dot={isMobile ? totalOrders > 0 : false}
-                        overflowCount={9}
-                        offset={isMobile ? [0, 0] : [-10, 0]}>
-                        <Link href={'/order/my-orders'} target="_blank">
-                            <p className={`${styles.navLink} my-0`}>
-                                Buyurtmalarim
-                            </p>
-                        </Link>
-                    </Badge>
-                </Link>
-            )}
+           {isLoggedIn && !isMobile && (
+    <Link href="/order/my-orders">
+        <Badge
+            count={totalOrders}
+            size={isMobile ? 'small' : 'default'}
+            dot={isMobile ? totalOrders > 0 : false}
+            overflowCount={9}
+            offset={isMobile ? [0, 0] : [-10, 0]}>
+            <Link href={'/order/my-orders'} target="_blank">
+                <p className={`${styles.navLink} my-0`}>
+                    Buyurtmalarim
+                </p>
+            </Link>
+        </Badge>
+    </Link>
+)}
             <div className={styles.dropBox}>
                 <Dropdown menu={{ items: products }}>
                     <a onClick={(e) => e.preventDefault()}>
