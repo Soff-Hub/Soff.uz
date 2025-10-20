@@ -352,14 +352,13 @@ const OrderCard = ({ order, onOpenDrawer, onSelectNotPaidOrder, onCancel }) => {
                                 </button>
                             )
                     }
-                    {statusAsset.status === 'cancelled' &&
-                        order?.has_approved_transaction && (
-                            <div className={styles.rejectedLabel}>
-                                <i className="fa fa-exclamation-circle" />
-                                Buyurtma to'lovingiz 24 soat ichida
-                                profilingizga qaytariladi.
-                            </div>
-                        )}
+                    {statusAsset.status === 'cancelled' && isPartiallyPaid && (
+                        <div className={styles.rejectedLabel}>
+                            <i className="fa fa-exclamation-circle" />
+                            Buyurtma to'lovingiz 24 soat ichida profilingizga
+                            qaytariladi.
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
