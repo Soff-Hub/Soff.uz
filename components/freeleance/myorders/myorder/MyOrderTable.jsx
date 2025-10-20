@@ -9,7 +9,7 @@ import OrderCard from '~/entities/order/order-card';
 import Loader from '~/components/shared/loader';
 import { useRouter } from 'next/router';
 import { EmptyTab } from './MyOrderTabs';
-import ServiceCheckout from '~/components/freeleance/services/service-deatail/ui/auth/ServiceCheckout';
+import ServiceCheckout from '~/components/freeleance/services/service-deatail/ui/auth/serviceCheckout';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 
 const rejectableStatuses = [
