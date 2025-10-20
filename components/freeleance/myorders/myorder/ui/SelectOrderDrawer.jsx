@@ -101,7 +101,7 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
         onOpen();
     };
 
-    const isFullyPaid = order?.approved_transaction_amount === price;
+    const isFullyPaid = order?.approved_transaction_amount >= price;
     const isPartiallyPaid =
         order?.approved_transaction_amount > 0 &&
         order?.approved_transaction_amount < price;
