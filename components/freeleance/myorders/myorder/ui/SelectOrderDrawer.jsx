@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Drawer, Avatar, Button, Tag, message, Modal, Spin } from 'antd';
+import { Drawer, Avatar, Button, Tag, message, Modal, Spin, Card } from 'antd';
 import TextSlicer from '~/shared/utilities/TextSlicer';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { useFGet, useFPost } from '~/shared/hooks/useFApi';
@@ -10,20 +10,35 @@ import OrderCard from '~/entities/order/order-card';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import { cn } from '~/shared/utilities/cn';
 import useOffers from '../api/useOffers';
-import Link from 'next/link';
+import ServiceCheckout from '~/components/freeleance/services/service-deatail/ui/auth/serviceCheckout';
 
-const SelectOrderDrawer = ({ open, onClose, order }) => {
+// NOTE: on equal payment done
+// {"success":true,"extra_amount":0,"order_id":367,"freelancer_id":281}
+
+// NOTE: on more payment required
+// {"success":false,"extra_amount":75000.0,"order_id":371,"freelancer_id":281}
+
+// NOTE: on payment with lower amount
+// {"success":true,"extra_amount":0,"order_id":372,"freelancer_id":281}
+
+const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
     const [selectedOffer, setSelectedOffer] = useState(null);
     const { user } = useSelector((state) => state.auth);
+    const [paymentModal, setPaymentModal] = useState(false);
     const { isDesktop } = useResponsive();
+    // const [extraAmount, setExtraAmount] = useState(0);
     const { push } = useRouter();
+    const { offers, setOffers, isConnected } = useOffers(order?.id, open);
+
+    const price = order?.service?.price || order?.budget || 0;
 
     const { data: initialOffers } = useFGet(order?.id, `offer/${order?.id}/`, {
         enabled: open && !!order?.id && !!user?.access,
         token: user?.access,
+        refetchOnWindowFocus: true,
+        refetchOnMount: true,
+        staleTime: 0,
     });
-
-    const { offers, setOffers, isConnected } = useOffers(order?.id, open);
 
     useEffect(() => {
         if (initialOffers && open) {
@@ -34,10 +49,28 @@ const SelectOrderDrawer = ({ open, onClose, order }) => {
     const { mutate: selectOffer, isPending } = useFPost({
         url: 'offer/select-offer',
         token: user?.access,
-        onSuccess: () => {
-            message.success('Frilanser tanlandi!');
+        onSuccess: (data) => {
+            if (!data.success) {
+                message.warning(
+                    `Frilanser tanlash uchun iltimos qo'shimcha ${formatCurrencyWithSpace(
+                        data.extra_amount
+                    )} so'm to'lovni amalga oshiring`,
+                    2.5
+                );
+                setPaymentModal(true);
+                onClose();
+                return;
+            }
+
+            message.success(
+                selectedOffer.money < price
+                    ? `Frilanser tanlandi! Ortiqcha to'lov summasi: ${formatCurrencyWithSpace(
+                          price - selectedOffer.money
+                      )} so'm qaytarildi`
+                    : `Frilanser tanlandi!`
+            );
             setSelectedOffer(null);
-            push(`/order/${order?.id}?isOpen=true`);
+            push(`/order/${order?.id}`);
             onClose();
         },
         onError: () => {
@@ -54,16 +87,30 @@ const SelectOrderDrawer = ({ open, onClose, order }) => {
         selectOffer(fd);
     };
 
-    return (
-        <>
-            <Drawer
-                title="Frilanser takliflari"
-                placement="right"
-                width={isDesktop ? '70%' : '80%'}
-                onClose={onClose}
-                open={open}
-                destroyOnClose>
-                <OrderCard order={order} />
+    const handleClosePaymentModal = () => {
+        setPaymentModal(false);
+    };
+
+    const handleOpenPaymentModal = () => {
+        setPaymentModal(true);
+        onClose();
+    };
+
+    const handleRetreatDrawer = () => {
+        handleClosePaymentModal();
+        onOpen();
+    };
+
+    const isFullyPaid = order?.approved_transaction_amount === price;
+    const isPartiallyPaid =
+        order?.approved_transaction_amount > 0 &&
+        order?.approved_transaction_amount < price;
+    const notPaidAmount = price - (order?.approved_transaction_amount || 0);
+
+    let orderDrawerContent = null;
+    if (isFullyPaid) {
+        orderDrawerContent = (
+            <>
                 <Tag
                     className="w-100 my-4 fs-4 text-wrap"
                     style={{
@@ -253,11 +300,93 @@ const SelectOrderDrawer = ({ open, onClose, order }) => {
                         </div>
                     )}
                 </div>
+            </>
+        );
+    } else {
+        orderDrawerContent = (
+            <Card className="type_payment p-lg-5 p-md-5 p-4 mt-4">
+                <h3 className="type_payment_h3 text-center mb-4">
+                    Buyurtma uchun to'lovni amalga oshiring
+                </h3>
+
+                <div className="security-message mb-2 text-center">
+                    <i className="fa-solid fa-shield-halved text-success fs-4 mb-2"></i>
+                    <p className="text-muted mb-0">
+                        Sizning to'lovingiz Soff tizimi tomonidan xavfsiz
+                        saqlanadi. Mutaxassisga to'lov faqat siz ishni ko'rib
+                        chiqib, tasdiqlaganingizdan so'ng amalga oshiriladi.
+                    </p>
+                </div>
+                <div className="text-center mb-4 text-warning">
+                    {isPartiallyPaid && (
+                        <p className="text-warning mb-0 mt-2">
+                            Eslatma: Siz ilgari{' '}
+                            {formatCurrencyWithSpace(
+                                order?.approved_transaction_amount
+                            )}{' '}
+                            so'm to'lovni amalga oshirgansiz. Iltimos, qolgan{' '}
+                            {formatCurrencyWithSpace(notPaidAmount)} so'm
+                            to'lovni amalga oshiring.
+                        </p>
+                    )}
+                </div>
+
+                <div className="service-details-box bg-white border rounded p-3 mb-4">
+                    <div className="d-flex justify-content-between align-items-center">
+                        <div className="d-flex align-items-center">
+                            <i className="fa-solid fa-file-lines text-primary me-3 fs-4"></i>
+                            <div>
+                                <h5 className="mb-1 fw-bold">{order?.title}</h5>
+                            </div>
+                        </div>
+                        <div className="text-end">
+                            <h4 className="text-primary mb-0 fw-bold">
+                                {formatCurrencyWithSpace(
+                                    isPartiallyPaid ? notPaidAmount : price
+                                )}{' '}
+                                so'm
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="text-center">
+                    <Button
+                        type="primary"
+                        size="large"
+                        className="px-5 py-2"
+                        style={{
+                            backgroundColor: '#28a745',
+                            borderColor: '#28a745',
+                            marginTop: '10px',
+                        }}
+                        onClick={handleOpenPaymentModal}>
+                        Buyurtma uchun to'lov
+                        <i className="fa-solid fa-arrow-right ms-2"></i>
+                    </Button>
+                </div>
+            </Card>
+        );
+    }
+    return (
+        <>
+            <Drawer
+                title="Frilanser takliflari"
+                placement="right"
+                width={isDesktop ? '70%' : '80%'}
+                onClose={onClose}
+                open={open}
+                destroyOnClose>
+                <OrderCard order={order} />
+                {orderDrawerContent}
             </Drawer>
 
             <Modal
                 title="Frilanserni tanlash"
-                open={!!selectedOffer}
+                open={
+                    // true
+                    !!selectedOffer
+                }
                 onCancel={() => setSelectedOffer(null)}
                 onOk={handleSelect}
                 okText="Ha, tanlayman"
@@ -276,6 +405,28 @@ const SelectOrderDrawer = ({ open, onClose, order }) => {
                         bio={`${selectedOffer?.comment || 'Izoh yo‘q'}`}
                     />
                 </p>
+            </Modal>
+            <Modal
+                open={paymentModal}
+                onCancel={handleClosePaymentModal}
+                footer={null}
+                width={600}>
+                <div className="type_payment p-lg-5 p-md-5 p-4">
+                    <div className="d-flex justify-content-between align-items-center mb-4">
+                        <Button
+                            type="text"
+                            icon={<i className="fa-solid fa-arrow-left"></i>}
+                            onClick={handleRetreatDrawer}>
+                            Orqaga
+                        </Button>
+                    </div>
+                    <div className="bg-white">
+                        <ServiceCheckout
+                            order_id={order?.id}
+                            onClose={handleClosePaymentModal}
+                        />
+                    </div>
+                </div>
             </Modal>
         </>
     );

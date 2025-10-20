@@ -10,21 +10,19 @@ import {
     Tooltip,
     TimePicker,
 } from 'antd';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { useFGet, useFPost } from '../../hooks/useFApi';
 import dayjs from 'dayjs';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import { fetchDirections } from '~/store/profile/slice';
 import {
     titleDescription,
     inputInfoToCreateOrder,
 } from '~/shared/constants/createOrder';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
-import { useQuery } from '@tanstack/react-query';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Thumbs } from 'swiper/modules';
+import { Thumbs } from 'swiper/modules';
 import { useTelegram } from '~/shared/hooks/useTelegram';
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -32,7 +30,14 @@ import 'swiper/css/thumbs';
 
 const { TextArea } = Input;
 
-const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
+const CreateOrderModal = ({
+    open,
+    onClose,
+    id,
+    seller,
+    sellerInfo,
+    onSuccess,
+}) => {
     const [form] = Form.useForm();
     const { tg } = useTelegram();
     const budget = Form.useWatch('budget', form);
@@ -109,10 +114,19 @@ const CreateOrderModal = ({ open, onClose, id, seller, sellerInfo }) => {
         url: 'order/direct-order',
         token: user?.access,
         onSuccess: (data) => {
+            message.success('Buyurtma muvaffaqiyatli yuborildi!');
+            if (onSuccess) {
+                onSuccess({
+                    id: data?.id,
+                    price: form.getFieldValue('budget'),
+                    title: form.getFieldValue('title'),
+                });
+                console.log({ data });
+            } else {
+                push(`/order/${data?.id}`);
+            }
             form.resetFields();
             onClose();
-            message.success('Buyurtma muvaffaqiyatli yuborildi!');
-            push(`/order/${data?.id}`);
             setConfirmOpen(false);
         },
         onError: (err) => {

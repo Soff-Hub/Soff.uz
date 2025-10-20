@@ -219,6 +219,36 @@
             margin-right: 6px;
         }
     }
+
+    .paymentHalfApproved {
+        font-size: 14px;
+        color: #faad14;
+
+        i {
+            margin-right: 6px;
+            color: #faad14;
+        }
+    }
+
+    .paymentNotApproved {
+        font-size: 14px;
+        color: #1677ff;
+
+        i {
+            margin-right: 6px;
+            color: #1677ff;
+        }
+    }
+
+    .paymentRejected {
+        font-size: 14px;
+        color: #f5222d;
+
+        i {
+            margin-right: 6px;
+            color: #f5222d;
+        }
+    }
 }
 .rejectedLabel {
     font-size: 14px;

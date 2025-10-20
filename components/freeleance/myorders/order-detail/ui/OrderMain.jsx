@@ -187,6 +187,8 @@ const OrderMain = ({ order }) => {
     const { isDesktop } = useResponsive();
     const dispatch = useDispatch();
 
+    const price = order?.service?.price || order?.budget || 0;
+
     const items = [
         { title: <Link href={'/order/my-orders'}>Mening buyurtmalarim</Link> },
         { title: `#${order?.id}` },
@@ -201,15 +203,21 @@ const OrderMain = ({ order }) => {
         queryClient.invalidateQueries({ queryKey: ['order'] });
     };
 
-    useEffect(() => {
-        if (query?.isOpen === 'true' && !isOpen) {
-            setIsOpen(true);
-            push(`/order/${query?.id}`);
-        }
-    }, [query?.isOpen]);
+    // useEffect(() => {
+    //     if (query?.isOpen === 'true' && !isOpen) {
+    //         setIsOpen(true);
+    //         push(`/order/${query?.id}`);
+    //     }
+    // }, [query?.isOpen]);
+
+    const isFullyPaid = order?.approved_transaction_amount === price;
+    const isPartiallyPaid =
+        order?.approved_transaction_amount > 0 &&
+        order?.approved_transaction_amount < price;
+    const notPaidAmount = price - (order?.approved_transaction_amount || 0);
 
     useEffect(() => {
-        if (order?.order_status_doing?.status === 'pending') {
+        if (!isFullyPaid) {
             setIsOpen(true);
         }
     }, [setIsOpen, order]);
@@ -234,8 +242,9 @@ const OrderMain = ({ order }) => {
                     <div className={styles.orderPayCardFlex}>
                         <div className="w-100">
                             <h4
-                                className={`mb-0 ${!isDesktop && 'text-center'
-                                    }`}>
+                                className={`mb-0 ${
+                                    !isDesktop && 'text-center'
+                                }`}>
                                 Frilanser ishni boshlashi uchun to'lovni amalga
                                 oshiring
                             </h4>
@@ -288,43 +297,43 @@ const OrderMain = ({ order }) => {
                 )}
                 {(order?.order_status_doing?.status === 'approved' ||
                     order?.order_status_doing?.status ===
-                    'requirement_file_rejected') && (
-                        <div className={styles.orderPayCardFlex}>
-                            <div>
-                                <h3 className={styles.orderNameLink}>
-                                    Buyurtma talablari kutilmoqda
-                                </h3>
-                                {order?.order_status_doing?.status ===
-                                    'approved' && (
-                                        <p>
-                                            Siz to‘lovni amalga oshirdingiz. Endi
-                                            mutahasis ishni boshlashi uchun kerakli
-                                            materiallar va ko‘rsatmalarni yuboring.
-                                        </p>
-                                    )}
-                                {order?.order_status_doing?.status ===
-                                    'requirement_file_rejected' && (
-                                        <p>
-                                            Siz yuborgan materiallar yoki ko‘rsatmalar
-                                            yetarli emasligi sababli mutahasis ularni
-                                            rad etdi. Iltimos, ishni boshlash uchun
-                                            barcha kerakli fayllar va aniq
-                                            ko‘rsatmalarni qayta yuboring.
-                                        </p>
-                                    )}
-                            </div>
-                            <Button
-                                type="primary"
-                                style={{
-                                    backgroundColor: '#00a44f',
-                                    borderColor: '#00a44f',
-                                    padding: '16px 28px',
-                                }}
-                                onClick={() => setOpen(true)}>
-                                Talablarni yuborish
-                            </Button>
+                        'requirement_file_rejected') && (
+                    <div className={styles.orderPayCardFlex}>
+                        <div>
+                            <h3 className={styles.orderNameLink}>
+                                Buyurtma talablari kutilmoqda
+                            </h3>
+                            {order?.order_status_doing?.status ===
+                                'approved' && (
+                                <p>
+                                    Siz to‘lovni amalga oshirdingiz. Endi
+                                    mutahasis ishni boshlashi uchun kerakli
+                                    materiallar va ko‘rsatmalarni yuboring.
+                                </p>
+                            )}
+                            {order?.order_status_doing?.status ===
+                                'requirement_file_rejected' && (
+                                <p>
+                                    Siz yuborgan materiallar yoki ko‘rsatmalar
+                                    yetarli emasligi sababli mutahasis ularni
+                                    rad etdi. Iltimos, ishni boshlash uchun
+                                    barcha kerakli fayllar va aniq
+                                    ko‘rsatmalarni qayta yuboring.
+                                </p>
+                            )}
                         </div>
-                    )}
+                        <Button
+                            type="primary"
+                            style={{
+                                backgroundColor: '#00a44f',
+                                borderColor: '#00a44f',
+                                padding: '16px 28px',
+                            }}
+                            onClick={() => setOpen(true)}>
+                            Talablarni yuborish
+                        </Button>
+                    </div>
+                )}
 
                 {order?.order_status_doing?.status == 'order_file_sent' && (
                     <>
@@ -391,19 +400,17 @@ const OrderMain = ({ order }) => {
                     <div
                         className="mt-4 border border-success"
                         style={{
-                            borderRadius: "12px",
-                            padding: "16px",
-                            backgroundColor: "#fafafa",
-                        }}
-                    >
+                            borderRadius: '12px',
+                            padding: '16px',
+                            backgroundColor: '#fafafa',
+                        }}>
                         <h5
                             style={{
-                                fontWeight: "600",
-                                marginBottom: "16px",
-                                fontSize: "18px",
-                                color: "#333",
-                            }}
-                        >
+                                fontWeight: '600',
+                                marginBottom: '16px',
+                                fontSize: '18px',
+                                color: '#333',
+                            }}>
                             Buyurtma talablari
                         </h5>
 
@@ -412,19 +419,20 @@ const OrderMain = ({ order }) => {
                             <div
                                 style={{
                                     flex: 1,
-                                    fontSize: "15px",
-                                    lineHeight: "1.6",
-                                    color: "#444",
-                                    overflowWrap: "break-word",
+                                    fontSize: '15px',
+                                    lineHeight: '1.6',
+                                    color: '#444',
+                                    overflowWrap: 'break-word',
                                 }}
                                 dangerouslySetInnerHTML={{
-                                    __html:
-                                        order.order_requirement[0]?.order_requirement_description
+                                    __html: order.order_requirement[0]
+                                        ?.order_requirement_description,
                                 }}
                             />
 
                             {/* Fayl bo‘lsa tugma chiqadi */}
-                            {order.order_requirement[0]?.order_requirement_file && (
+                            {order.order_requirement[0]
+                                ?.order_requirement_file && (
                                 <div className="d-flex justify-content-md-end justify-content-start w-md-auto">
                                     <Button
                                         icon={<DownloadOutlined />}
@@ -432,10 +440,9 @@ const OrderMain = ({ order }) => {
                                             window.open(
                                                 order.order_requirement[0]
                                                     .order_requirement_file,
-                                                "_blank"
+                                                '_blank'
                                             )
-                                        }
-                                    >
+                                        }>
                                         Faylni yuklab olish
                                     </Button>
                                 </div>
@@ -581,6 +588,21 @@ const OrderMain = ({ order }) => {
                                 </p>
                             </div>
 
+                            <div className="text-center mb-4 text-warning">
+                                {isPartiallyPaid && (
+                                    <p className="text-warning mb-0 mt-2">
+                                        Eslatma: Siz ilgari{' '}
+                                        {formatCurrencyWithSpace(
+                                            order?.approved_transaction_amount
+                                        )}{' '}
+                                        so'm to'lovni amalga oshirgansiz.
+                                        Iltimos, qolgan{' '}
+                                        {formatCurrencyWithSpace(notPaidAmount)}{' '}
+                                        so'm to'lovni amalga oshiring.
+                                    </p>
+                                )}
+                            </div>
+
                             <div className="service-details-box bg-white border rounded p-3 mb-4">
                                 <div className="d-flex justify-content-between align-items-center">
                                     <div className="d-flex align-items-center">
@@ -596,8 +618,9 @@ const OrderMain = ({ order }) => {
                                     <div className="text-end">
                                         <h4 className="text-primary mb-0 fw-bold">
                                             {formatCurrencyWithSpace(
-                                                order?.service?.price ||
-                                                order?.budget
+                                                isPartiallyPaid
+                                                    ? notPaidAmount
+                                                    : price
                                             )}{' '}
                                             so'm
                                         </h4>
