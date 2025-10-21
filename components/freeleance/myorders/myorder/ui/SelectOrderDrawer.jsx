@@ -22,41 +22,6 @@ import ServiceCheckout from '~/components/freeleance/services/service-deatail/ui
 // {"success":true,"extra_amount":0,"order_id":372,"freelancer_id":281}
 
 const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
-    // order = {
-    //     id: 366,
-    //     created_at: '2025-10-20T06:35:55.591146+00:00',
-    //     order_type: 'custom_order',
-    //     user_id: 119,
-    //     deadline_date: '2025-10-24T11:35:00',
-    //     title: "Kurs ishi bo'yicha xizmat kerak.",
-    //     budget: 35000,
-    //     description: 'Test 123 hello there',
-    //     language: 'uzb',
-    //     category: null,
-    //     service: null,
-    //     order_status_doing: {
-    //         status: 'pending',
-    //         order_accepted_date: null,
-    //         reason: null,
-    //     },
-    //     user: {
-    //         id: 281,
-    //         full_name: 'abdumomin abdurasulov',
-    //         photo_url:
-    //             'https://test-soffuz.s3.amazonaws.com/media/users/ChatGPT_Image_Jul_4_2025_09_40_35_PM.png',
-    //         last_active: '2025-10-21T09:39:20.751172+05:00',
-    //         soff_seller_id: 23,
-    //     },
-    //     chat_id: null,
-    //     reason: [],
-    //     order_requirement: null,
-    //     feedback: null,
-    //     unread_messages_count: 0,
-    //     file: null,
-    //     offers_count: 0,
-    //     approved_transaction_amount: 0,
-    //     offers: [],
-    // };
     const [selectedOffer, setSelectedOffer] = useState(null);
     const [verfiedOffer, setVerfiedOffer] = useState(null);
     const { user } = useSelector((state) => state.auth);

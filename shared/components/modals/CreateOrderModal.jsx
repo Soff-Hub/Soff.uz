@@ -631,7 +631,7 @@ const CreateOrderModal = ({
                     <Button
                         key="ok"
                         type="primary"
-                        loading={isPending}
+                        loading={isPending || createPending}
                         onClick={handleConfirm}>
                         Ha, buyurtmani yubor
                     </Button>,

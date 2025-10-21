@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import styles from '../style/style.module.scss';
 import { Button, Steps, Tooltip } from 'antd';
 import { MessageOutlined } from '@ant-design/icons';
 import useCreateChat from '~/components/freeleance/chat/api/useCreateChat';
 import Link from 'next/link';
 
-const OrderStatus = ({ order }) => {
+const OrderStatus = ({ order, handleShowStickySeller }) => {
+    const orderStatusRef = useRef(null);
     const priceFormatted =
         new Intl.NumberFormat('uz-UZ').format(
             order?.service?.price || order?.budget || 0
@@ -36,8 +37,29 @@ const OrderStatus = ({ order }) => {
         cancelled: 'Buyurtma bekor qilindi',
     };
 
+    useEffect(() => {
+        if (order?.user?.soff_seller_id && window.IntersectionObserver) {
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            handleShowStickySeller(false);
+                        } else {
+                            handleShowStickySeller(true);
+                        }
+                    });
+                },
+                { threshold: 0.3 }
+            );
+            observer.observe(orderStatusRef.current);
+            return () => {
+                observer.disconnect();
+            };
+        }
+    }, [handleShowStickySeller]);
+
     return (
-        <div className="col-12 col-lg-3 my-4">
+        <div className="col-12 col-lg-3 my-4" ref={orderStatusRef}>
             {/* Order info */}
             <div className={styles.status}>
                 <div className={styles.status_info}>

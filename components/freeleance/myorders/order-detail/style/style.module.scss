@@ -222,6 +222,24 @@
     }
 }
 
+.sellerSticky {
+    position: fixed;
+    bottom: 0px;
+    z-index: 100;
+
+    @extend .seller;
+}
+
+.sellerStickyOpen {
+    transform: translateY(0);
+    transition: transform 0.3s ease-in-out;
+}
+
+.sellerStickyClosed {
+    transform: translateY(150px);
+    transition: transform 0.3s ease-in-out;
+}
+
 .status_steps {
     background: #fff;
     padding: 12px;

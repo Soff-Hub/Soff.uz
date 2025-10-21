@@ -398,7 +398,7 @@ const OrderMain = ({ order }) => {
                     />
                 )}
                 <Breadcrumb items={items} className="mb-2" />
-                <OrderCard order={order} />
+                <OrderCard order={order} infoOnly />
                 {order?.order_status_doing?.status === 'completed' && (
                     <div className="d-flex justify-content-end align-items-center mt-3">
                         <Button
