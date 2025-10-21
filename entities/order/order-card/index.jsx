@@ -114,13 +114,7 @@ const orderStatusAssets = (status) => {
     // cancelled: 'Buyurtma bekor qilindi',
 };
 
-const OrderCard = ({
-    order,
-    onOpenDrawer,
-    onSelectNotPaidOrder,
-    onCancel,
-    infoOnly,
-}) => {
+const OrderCard = ({ order, onOpenDrawer, onCancel, infoOnly }) => {
     const router = useRouter();
     const statusAsset = orderStatusAssets(order.order_status_doing?.status);
     const hasSeller = Boolean(order.user);
@@ -341,60 +335,47 @@ const OrderCard = ({
                                 Bekor qilish
                             </Button>
                         ) : null}
-                        {
-                            //     typeof onSelectNotPaidOrder === 'function' &&
-                            // statusAsset.status !== 'cancelled' &&
-                            // !isFullyPaid &&
-                            // !isPartiallyPaid ? (
-                            //     <button
-                            //         className={styles.primary}
-                            //         onClick={() => onSelectNotPaidOrder(order)}>
-                            //         To'lovni amalga oshirish
-                            //     </button>
-                            // ) :
-                            statusAsset.status === 'cancelled' ? null : (
-                                <button
-                                    className={styles.primary}
-                                    onClick={handlePrimaryClick}>
-                                    {!isPartiallyPaid && !isFullyPaid ? (
-                                        "To'lovni amalga oshirish"
-                                    ) : hasSeller ? (
-                                        'Batafsil'
-                                    ) : (
-                                        <div
-                                            className={cn(
-                                                'flex',
-                                                'justify-center',
-                                                'items-center',
-                                                'gap-2'
-                                            )}>
-                                            <span style={{ fontSize: '14px' }}>
-                                                Takliflarni ko'rish
-                                            </span>
-                                            <Avatar.Group
-                                                max={{
-                                                    count: 3,
-                                                    style: {
-                                                        color: 'white',
-                                                        backgroundColor:
-                                                            '#00a44f',
-                                                    },
-                                                }}>
-                                                {order?.offers?.map((item) => (
-                                                    <Avatar
-                                                        size={25}
-                                                        src={
-                                                            item?.photo_url ||
-                                                            '/static/img/ozodbek.png'
-                                                        }
-                                                    />
-                                                ))}
-                                            </Avatar.Group>
-                                        </div>
-                                    )}
-                                </button>
-                            )
-                        }
+                        {statusAsset.status === 'cancelled' ? null : (
+                            <button
+                                className={styles.primary}
+                                onClick={handlePrimaryClick}>
+                                {!isPartiallyPaid && !isFullyPaid ? (
+                                    "To'lovni amalga oshirish"
+                                ) : hasSeller ? (
+                                    'Batafsil'
+                                ) : (
+                                    <div
+                                        className={cn(
+                                            'flex',
+                                            'justify-center',
+                                            'items-center',
+                                            'gap-2'
+                                        )}>
+                                        <span style={{ fontSize: '14px' }}>
+                                            Takliflarni ko'rish
+                                        </span>
+                                        <Avatar.Group
+                                            max={{
+                                                count: 3,
+                                                style: {
+                                                    color: 'white',
+                                                    backgroundColor: '#00a44f',
+                                                },
+                                            }}>
+                                            {order?.offers?.map((item) => (
+                                                <Avatar
+                                                    size={25}
+                                                    src={
+                                                        item?.photo_url ||
+                                                        '/static/img/ozodbek.png'
+                                                    }
+                                                />
+                                            ))}
+                                        </Avatar.Group>
+                                    </div>
+                                )}
+                            </button>
+                        )}
                         {statusAsset.status === 'cancelled' &&
                             isPartiallyPaid && (
                                 <div className={styles.rejectedLabel}>

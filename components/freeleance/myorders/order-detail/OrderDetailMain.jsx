@@ -10,10 +10,12 @@ import { MessageOutlined } from '@ant-design/icons';
 import useCreateChat from '~/components/freeleance/chat/api/useCreateChat';
 import Link from 'next/link';
 import { Button } from 'antd';
+import OrderDrawer from './ui/OrderDrawer';
 
 const OrderDetailMain = () => {
     const router = useRouter();
     const [showStickySeller, setShowStickySeller] = useState(false);
+    const [openDrawer, setOpenDrawer] = useState(false);
     const { data: order, error, isLoading } = useGetOrderById(router.query?.id);
 
     if (isLoading) {
@@ -37,6 +39,12 @@ const OrderDetailMain = () => {
                     <OrderStatus
                         order={order}
                         handleShowStickySeller={handleShowStickySeller}
+                    />
+                    <OrderDrawer
+                        open={openDrawer}
+                        onClose={() => setOpenDrawer(false)}
+                        onOpen={() => setOpenDrawer(true)}
+                        order={order}
                     />
                     {<StickySeller order={order} isOpen={showStickySeller} />}
                 </div>
