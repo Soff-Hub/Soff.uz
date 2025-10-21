@@ -404,8 +404,8 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                     </>
                 }
                 open={
-                    true
-                    // !!selectedOffer
+                    // true
+                    !!selectedOffer
                 }
                 onCancel={() => setSelectedOffer(null)}
                 onOk={handleSelect}
