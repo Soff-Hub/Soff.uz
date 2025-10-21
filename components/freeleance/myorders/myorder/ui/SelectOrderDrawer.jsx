@@ -69,8 +69,8 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
             message.success(
                 selectedOffer.money < price
                     ? `Frilanser tanlandi! Ortiqcha to'lov summasi: ${formatCurrencyWithSpace(
-                          price - selectedOffer.money
-                      )} so'm qaytarildi`
+                        price - selectedOffer.money
+                    )} so'm qaytarildi`
                     : `Frilanser tanlandi!`
             );
             setSelectedOffer(null);
@@ -323,68 +323,17 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
         );
     } else {
         orderDrawerContent = (
-            <Card className="type_payment p-lg-5 p-md-5 p-4 mt-4">
-                <h3 className="type_payment_h3 text-center mb-4">
-                    Buyurtma uchun to'lovni amalga oshiring
-                </h3>
-
-                <div className="security-message mb-2 text-center">
-                    <i className="fa-solid fa-shield-halved text-success fs-4 mb-2"></i>
-                    <p className="text-muted mb-0">
-                        Sizning to'lovingiz Soff tizimi tomonidan xavfsiz
-                        saqlanadi. Mutaxassisga to'lov faqat siz ishni ko'rib
-                        chiqib, tasdiqlaganingizdan so'ng amalga oshiriladi.
-                    </p>
-                </div>
-                <div className="text-center mb-4 text-warning">
-                    {isPartiallyPaid && (
-                        <p className="text-warning mb-0 mt-2">
-                            Eslatma: Siz ilgari{' '}
-                            {formatCurrencyWithSpace(
-                                order?.approved_transaction_amount
-                            )}{' '}
-                            so'm to'lovni amalga oshirgansiz. Iltimos, qolgan{' '}
-                            {formatCurrencyWithSpace(notPaidAmount)} so'm
-                            to'lovni amalga oshiring.
-                        </p>
-                    )}
-                </div>
-
-                <div className="service-details-box bg-white border rounded p-3 mb-4">
-                    <div className="d-flex justify-content-between align-items-center">
-                        <div className="d-flex align-items-center">
-                            <i className="fa-solid fa-file-lines text-primary me-3 fs-4"></i>
-                            <div>
-                                <h5 className="mb-1 fw-bold">{order?.title}</h5>
-                            </div>
-                        </div>
-                        <div className="text-end">
-                            <h4 className="text-primary mb-0 fw-bold">
-                                {formatCurrencyWithSpace(
-                                    isPartiallyPaid ? notPaidAmount : price
-                                )}{' '}
-                                so'm
-                            </h4>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="text-center">
-                    <Button
-                        type="primary"
-                        size="large"
-                        className="px-5 py-2"
-                        style={{
-                            backgroundColor: '#28a745',
-                            borderColor: '#28a745',
-                            marginTop: '10px',
-                        }}
-                        onClick={handleOpenPaymentModal}>
-                        Buyurtma uchun to'lov
-                        <i className="fa-solid fa-arrow-right ms-2"></i>
-                    </Button>
-                </div>
-            </Card>
+            <div className="border rounded-4 border-success align-items-center gap-3 justify-content-between d-flex flex-column flex-lg-row flex-sm-column p-4 mb-4">
+                <h3 className='fs-3 mb-0 text-center'>Frilanser ishni boshlashi uchun to'lovni amalga oshiring</h3>
+                <Button
+                    type="primary"
+                    size="large"
+                    className="px-5 py-2"
+                    onClick={handleOpenPaymentModal}>
+                    <i class="fa-solid fa-credit-card"></i>
+                    To'lovni amalga oshiring
+                </Button>
+            </div>
         );
     }
     return (
@@ -396,8 +345,9 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                 onClose={onClose}
                 open={open}
                 destroyOnClose>
+                {!isFullyPaid && orderDrawerContent}
                 <OrderCard order={order} infoOnly />
-                {orderDrawerContent}
+                {isFullyPaid && orderDrawerContent}
             </Drawer>
 
             <Modal
@@ -468,7 +418,7 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
             </Modal>
             <Modal
                 open={paymentModal}
-                onCancel={handleClosePaymentModal}
+                onCancel={handleRetreatDrawer}
                 footer={null}
                 width={600}>
                 <div className="type_payment p-lg-5 p-md-5 p-4">
@@ -479,6 +429,25 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                             onClick={handleRetreatDrawer}>
                             Orqaga
                         </Button>
+
+                    </div>
+                    <div className="service-details-box bg-white border rounded p-3 mb-4">
+                        <div className="d-flex justify-content-between align-items-center">
+                            <div className="d-flex align-items-center">
+                                <i className="fa-solid fa-file-lines text-primary me-3 fs-4"></i>
+                                <div>
+                                    <h5 className="mb-1 checkout_title fw-bold">{order?.title}</h5>
+                                </div>
+                            </div>
+                            <div className="text-end">
+                                <h4 className="text-primary checkout_price mb-0 fw-bold">
+                                    {formatCurrencyWithSpace(
+                                        isPartiallyPaid ? notPaidAmount : price
+                                    )}{' '}
+                                    so'm
+                                </h4>
+                            </div>
+                        </div>
                     </div>
                     <div className="bg-white">
                         <ServiceCheckout
@@ -489,6 +458,22 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                     </div>
                 </div>
             </Modal>
+
+
+            <style jsx>
+                {`
+
+                    @media (max-width: 576px) {
+                        .checkout_price {
+                            font-size: 12px;
+                        }
+
+                        .checkout_title{
+                            font-size: 12px;
+                        }
+                    }
+                `}
+            </style>
         </>
     );
 };
