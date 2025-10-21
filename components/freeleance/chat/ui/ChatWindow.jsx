@@ -34,7 +34,7 @@ const ChatWindow = ({ chatId, goBack }) => {
     const [open, setOpen] = useState(false);
 
     const handleClickAttach = () => {
-        fileInputRef.current?.click();
+        if (fileInputRef.current) fileInputRef.current?.click();
     };
 
     const handleSendFile = useCallback(
@@ -239,7 +239,7 @@ const ChatWindow = ({ chatId, goBack }) => {
 
             {/* input */}
             <div className={styles.chat_input_box}>
-                <Input
+                <input
                     type="file"
                     ref={fileInputRef}
                     onChange={(e) => {
