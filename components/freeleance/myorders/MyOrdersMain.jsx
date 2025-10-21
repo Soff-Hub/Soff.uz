@@ -6,6 +6,7 @@ import { Button } from 'antd';
 import BreadCrumb from '~/components/elements/BreadCrumb';
 import BalanceWithDrawModal from '~/shared/components/modals/balance-with-draw-modal';
 import { useSafeBack } from '~/shared/hooks/useSafeBack';
+import { FaMoneyCheck } from 'react-icons/fa';
 
 const MyOrdersMain = () => {
     const { data } = useGetCustomBalance();
@@ -35,9 +36,12 @@ const MyOrdersMain = () => {
                 className="navTabsPadding container"
                 style={{ margin: '20px 0px', maxWidth: '100%' }}>
                 <TelegramNotification />
-                <div className="d-flex flex-column flex-sm-row align-items-start mb-4 justify-content-between">
-                    <h1 className="fs-1 m-0">Mening buyurtmalarim</h1>
-                    <Button onClick={() => setOpen(true)} className="fs-3">
+                <div className="order_header">
+                    <h1 className="order_title">Mening buyurtmalarim</h1>
+                    <Button
+                        onClick={() => setOpen(true)}
+                        className="order_button">
+                        <FaMoneyCheck />
                         Balance -{' '}
                         {Number(data?.wallet || 0).toLocaleString('en-US')} so'm
                     </Button>
@@ -48,6 +52,38 @@ const MyOrdersMain = () => {
                     open={open}
                     onClose={() => setOpen(false)}
                 />
+
+                <style jsx>
+                    {`
+                        .order_header {
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            margin-bottom: 24px;
+                        }
+
+                        .order_title {
+                            font-size: 32px;
+                            font-weight: 600;
+                            margin-bottom: 0px;
+                        }
+
+                        .order_button {
+                            fonsize: 16px;
+                        }
+
+                        @media (max-width: 576px) {
+                            .order_title {
+                                font-size: 20px;
+                            }
+
+                            .order_header {
+                                flex-direction: column;
+                                gap: 6px;
+                            }
+                        }
+                    `}
+                </style>
             </div>
         </>
     );
