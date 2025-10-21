@@ -233,10 +233,12 @@ const OrderMain = ({ order }) => {
         <div className="col-lg-9 col-12 rounded-2 my-4">
             <div className={styles.orderDetailMain}>
                 {/* Notification Settings Card */}
-                <TelegramNotification
-                    hideIfActivated
-                    header={TelegramNotificationHeader}
-                />
+                {order?.order_status_doing?.status !== 'rejected' && (
+                    <TelegramNotification
+                        hideIfActivated
+                        header={TelegramNotificationHeader}
+                    />
+                )}
 
                 {order?.order_status_doing?.status === 'pending' && (
                     <div className={styles.orderPayCardFlex}>
@@ -337,11 +339,11 @@ const OrderMain = ({ order }) => {
 
                 {order?.order_status_doing?.status == 'order_file_sent' && (
                     <>
-                        <Alert
+                        {/* <Alert
                             icon={<WarningOutlined />}
                             message="Buyurtma 24 soat ichida ko'rib chiqilmasa avtomatik ravishta qabul qilingan deb hisoblanadi."
                             type="warning"
-                        />
+                        /> */}
                         <div className={styles.orderPayCardGrid}>
                             <div className={styles.orderPayCardInfo}>
                                 <h3 className={styles.orderNameLink}>
@@ -349,7 +351,7 @@ const OrderMain = ({ order }) => {
                                 </h3>
                                 <p>
                                     Mutahasis buyurtmani yakunladi va natijani
-                                    sizga jo‘natdi. Natijani yuklab olib ko‘rib
+                                    sizga jo'natdi. Natijani yuklab olib ko'rib
                                     chiqing va tasdiqlang yoki rad eting.
                                 </p>
                             </div>
@@ -383,6 +385,17 @@ const OrderMain = ({ order }) => {
                             </Radio.Group>
                         </div>
                     </>
+                )}
+
+                {order?.order_status_doing?.status === 'rejected' && (
+                    <Alert
+                        icon={<WarningOutlined />}
+                        message="Fayl rad etildi"
+                        description={order?.order_status_doing?.reason}
+                        type="error"
+                        showIcon
+                        className="mb-3"
+                    />
                 )}
                 <Breadcrumb items={items} className="mb-2" />
                 <OrderCard order={order} />

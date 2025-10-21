@@ -112,7 +112,7 @@ export default function ProductDefaultPage({ defaultProducts }) {
         );
     }
 
-    const removeHTMLTags = (html) => {
+    const removeHTMLTags = html => {
         return html.replace(/<[^>]+>/g, '');
     };
 
@@ -153,12 +153,12 @@ export default function ProductDefaultPage({ defaultProducts }) {
                         content={
                             defaultProducts?.description
                                 ? removeHTMLTags(defaultProducts?.description)
-                                : `${defaultProducts?.title} + ${
-                                      defaultProducts?.tag
-                                          ?.map((e) => e?.name)
-                                          ?.join(', ') ||
-                                      'soff.uz - Intellektual mulk marketi'
-                                  } `
+                                : `${
+                                      defaultProducts?.title
+                                  } + ${defaultProducts?.tag
+                                      ?.map(e => e?.name)
+                                      ?.join(', ') ||
+                                      'soff.uz - Intellektual mulk marketi'} `
                         }
                     />
                     <meta name="robots" content="index, follow" />
@@ -174,7 +174,7 @@ export default function ProductDefaultPage({ defaultProducts }) {
                         content={
                             defaultProducts?.tag
                                 ? defaultProducts?.tag
-                                      ?.map((e) => e?.name)
+                                      ?.map(e => e?.name)
                                       ?.join(', ')
                                 : 'kurs ishi, taqdimotlar, slaydlar, diplom ishi, prezentatsiya'
                         }
@@ -193,12 +193,12 @@ export default function ProductDefaultPage({ defaultProducts }) {
                         content={
                             defaultProducts?.description
                                 ? removeHTMLTags(defaultProducts?.description)
-                                : `${defaultProducts?.title} + ${
-                                      defaultProducts?.tag
-                                          ?.map((e) => e?.name)
-                                          ?.join(', ') ||
-                                      'soff.uz - Intellektual mulk marketi'
-                                  } `
+                                : `${
+                                      defaultProducts?.title
+                                  } + ${defaultProducts?.tag
+                                      ?.map(e => e?.name)
+                                      ?.join(', ') ||
+                                      'soff.uz - Intellektual mulk marketi'} `
                         }
                     />
                     <meta
@@ -208,6 +208,8 @@ export default function ProductDefaultPage({ defaultProducts }) {
                             '../../static/img/soff/logo-dark.png'
                         }
                     />
+                    <meta property="og:image:width" content="1200" />
+                    <meta property="og:image:height" content="630" />
                     <meta property="og:url" content="https://soff.uz" />
                     <meta property="og:site_name" content="soff.uz" />
                     <meta
@@ -215,7 +217,7 @@ export default function ProductDefaultPage({ defaultProducts }) {
                         content={
                             defaultProducts?.tag
                                 ? defaultProducts?.tag
-                                      ?.map((e) => e?.name)
+                                      ?.map(e => e?.name)
                                       ?.join(', ')
                                 : 'kurs ishi, taqdimotlar, slaydlar, diplom ishi, prezentatsiya'
                         }
@@ -228,6 +230,8 @@ export default function ProductDefaultPage({ defaultProducts }) {
                             '../../static/img/soff/logo-dark.png'
                         }></meta>
                     <meta property="twitter:type" content="website" />
+                    <meta property="twitter:image:width" content="1200" />
+                    <meta property="twitter:image:height" content="630" />
                     <meta
                         property="twitter:title"
                         content={
@@ -240,12 +244,12 @@ export default function ProductDefaultPage({ defaultProducts }) {
                         content={
                             defaultProducts?.description
                                 ? removeHTMLTags(defaultProducts?.description)
-                                : `${defaultProducts?.title} + ${
-                                      defaultProducts?.tag
-                                          ?.map((e) => e?.name)
-                                          ?.join(', ') ||
-                                      'soff.uz - Intellektual mulk marketi'
-                                  } `
+                                : `${
+                                      defaultProducts?.title
+                                  } + ${defaultProducts?.tag
+                                      ?.map(e => e?.name)
+                                      ?.join(', ') ||
+                                      'soff.uz - Intellektual mulk marketi'} `
                         }
                     />
                     <meta property="twitter:url" content="https://soff.uz" />
@@ -255,7 +259,7 @@ export default function ProductDefaultPage({ defaultProducts }) {
                         content={
                             defaultProducts?.tag
                                 ? defaultProducts?.tag
-                                      ?.map((e) => e?.name)
+                                      ?.map(e => e?.name)
                                       ?.join(', ')
                                 : 'kurs ishi, taqdimotlar, slaydlar, diplom ishi, prezentatsiya'
                         }

@@ -405,6 +405,7 @@ const UserShortInfo = ({ seller }) => {
                 onClose={cancelCreateOrder}
                 onSuccess={onOrderCreateSuccess}
                 seller={seller?.full_name}
+                defaultDirection={seller?.direction}
                 id={seller?.id}
                 sellerInfo={seller}
             />

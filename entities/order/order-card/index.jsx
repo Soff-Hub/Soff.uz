@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styles from './style.module.scss';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import { getRemainingDays } from '~/shared/utilities/calculateTime';
@@ -125,6 +125,9 @@ const OrderCard = ({
     const statusAsset = orderStatusAssets(order.order_status_doing?.status);
     const hasSeller = Boolean(order.user);
     const price = order.service?.price ?? order.budget ?? 0;
+    const [showMore, setShowMore] = useState(false);
+    const [showMoreBtn, setShowMoreBtn] = useState(false);
+    const descRef = useRef(null);
 
     const deadlineDisplay = order.deadline_date
         ? new Date(order.deadline_date).toLocaleString('uz-UZ', {
@@ -154,6 +157,14 @@ const OrderCard = ({
         order?.approved_transaction_amount > 0 &&
         order?.approved_transaction_amount < price;
     const notPaidAmount = price - (order?.approved_transaction_amount || 0);
+
+    useEffect(() => {
+        if (descRef.current) {
+            const isOverflowing =
+                descRef.current.scrollHeight > descRef.current.clientHeight + 5;
+            setShowMoreBtn(isOverflowing);
+        }
+    }, [order.description]);
 
     const handlePrimaryClick = () => {
         if (!isPartiallyPaid && !isFullyPaid) {
@@ -211,7 +222,35 @@ const OrderCard = ({
                             <i className="fa-solid fa-file-pen" /> Buyurtma
                             tavsifi
                         </div>
-                        <span>{order.description}</span>
+
+                        <p
+                            ref={descRef}
+                            style={{
+                                whiteSpace: 'pre-wrap',
+                                overflow: 'hidden',
+                                display: '-webkit-box',
+                                WebkitBoxOrient: 'vertical',
+                                WebkitLineClamp: showMore ? 'unset' : 3,
+                                lineHeight: '1.6',
+                                fontSize: '14px',
+                                marginBottom: 0,
+                            }}>
+                            {order.description}
+                        </p>
+
+                        {showMoreBtn && (
+                            <span
+                                onClick={() => setShowMore((prev) => !prev)}
+                                style={{
+                                    color: '#1677ff',
+                                    fontWeight: 500,
+                                    cursor: 'pointer',
+                                    marginTop: '4px',
+                                    display: 'inline-block',
+                                }}>
+                                {showMore ? 'Kamroq' : 'Batafsil'}
+                            </span>
+                        )}
                     </div>
                 )}
             {order.order_type == 'ready_service' &&

@@ -110,7 +110,7 @@ const ServiceDetail = ({ data }) => {
                     </div>
                 </div>
                 <div className="col-12 col-lg-4">
-                    <PriceBox priceBox={priceBox} />
+                    <PriceBox priceBox={priceBox} requirements={description.requirements} />
                     <MoneyBack />
                     <UserBox
                         rating={service?.avg_rating}

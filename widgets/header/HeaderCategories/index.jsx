@@ -252,7 +252,7 @@ const HeaderCatergories = () => {
 
     return (
         <div className={styles.dropBlock}>
-            {/* {isLoggedIn && (
+            {isLoggedIn && !isMobile && (
                 <Link href="/order/my-orders">
                     <Badge
                         count={totalOrders}
@@ -267,7 +267,7 @@ const HeaderCatergories = () => {
                         </Link>
                     </Badge>
                 </Link>
-            )} */}
+            )}
             <div className={styles.dropBox}>
                 <Dropdown menu={{ items: products }}>
                     <a onClick={(e) => e.preventDefault()}>

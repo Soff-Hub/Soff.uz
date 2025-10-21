@@ -36,6 +36,7 @@ const CreateOrderModal = ({
     id,
     seller,
     sellerInfo,
+    defaultDirection,
     onSuccess,
 }) => {
     const [form] = Form.useForm();
@@ -56,6 +57,13 @@ const CreateOrderModal = ({
         form.setFieldValue('direction', direction);
         // dispatch(fetchDirections());
     }, [direction]);
+
+    useEffect(() => {
+        if (defaultDirection) {
+            setDirection(defaultDirection);
+            form.setFieldValue('direction', defaultDirection);
+        }
+    }, [defaultDirection]);
 
     const { data: directionsData } = useFGet(
         'directions',
