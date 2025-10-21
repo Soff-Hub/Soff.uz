@@ -1,6 +1,5 @@
 import {
     Form,
-    Modal,
     Input,
     Select,
     Button,
@@ -26,8 +25,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Thumbs } from 'swiper/modules';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import { setShowSearch } from '~/store/fast-dowload/slice';
-import { useTelegram } from './useTelegram';
-import { on } from 'events';
 // import Editor from '~/components/Editor';
 
 const direction_content = (
@@ -140,7 +137,6 @@ function useCreateOrder() {
     const [showRightGradient, setShowRightGradient] = useState(true);
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
     const dispatch = useDispatch();
-    const { tg } = useTelegram();
     const onfirstRender = useRef(true);
 
     useEffect(() => {
@@ -211,7 +207,6 @@ function useCreateOrder() {
             form.resetFields();
             handleCloseConfirm();
             message.success('Buyurtma muvaffaqiyatli yaratildi!');
-            tg?.close();
             push(`/order/my-orders?orderId=${data?.order_id}`);
         },
         onError: (err) => {

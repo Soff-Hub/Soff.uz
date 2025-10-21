@@ -29,7 +29,7 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
     const { isDesktop } = useResponsive();
     const { push } = useRouter();
     const { offers, setOffers, isConnected } = useOffers(order?.id, open);
-
+    const { tg } = useTelegram();
     const price = order?.service?.price || order?.budget || 0;
     console.log({ selectedOffer });
 
@@ -100,12 +100,16 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
     };
 
     const handleRetreatDrawer = () => {
+        handleClosePaymentModal();
+        onOpen();
+    };
+
+    const onSuccessPayment = () => {
         if (verfiedOffer) {
             push(`/order/${order?.id}`);
             return;
         }
-        handleClosePaymentModal();
-        onOpen();
+        handleRetreatDrawer();
     };
 
     console.log({ order });
@@ -479,7 +483,7 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                         <ServiceCheckout
                             order_id={order?.id}
                             onClose={handleClosePaymentModal}
-                            onSuccess={handleRetreatDrawer}
+                            onSuccess={onSuccessPayment}
                         />
                     </div>
                 </div>
