@@ -133,6 +133,15 @@ export const AllOrdersTable = ({ type }) => {
         }
     }, [orderId, orders]);
 
+    useEffect(() => {
+        if (orders?.length) {
+            setSelectedOrder((prev) => {
+                if (!prev) return null;
+                return orders.find((o) => o.id === prev.id) || null;
+            });
+        }
+    }, [orders]);
+
     return (
         <>
             <div className="d-flex flex-column gap-3">{ordersContent}</div>

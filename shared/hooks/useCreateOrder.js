@@ -212,7 +212,7 @@ function useCreateOrder() {
             handleCloseConfirm();
             message.success('Buyurtma muvaffaqiyatli yaratildi!');
             tg?.close();
-            push(`/order/my-orders?orderId=${data?.id}`);
+            push(`/order/my-orders?orderId=${data?.order_id}`);
         },
         onError: (err) => {
             const errorMsg =

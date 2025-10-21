@@ -114,7 +114,13 @@ const orderStatusAssets = (status) => {
     // cancelled: 'Buyurtma bekor qilindi',
 };
 
-const OrderCard = ({ order, onOpenDrawer, onSelectNotPaidOrder, onCancel }) => {
+const OrderCard = ({
+    order,
+    onOpenDrawer,
+    onSelectNotPaidOrder,
+    onCancel,
+    infoOnly,
+}) => {
     const router = useRouter();
     const statusAsset = orderStatusAssets(order.order_status_doing?.status);
     const hasSeller = Boolean(order.user);
@@ -150,7 +156,7 @@ const OrderCard = ({ order, onOpenDrawer, onSelectNotPaidOrder, onCancel }) => {
     const notPaidAmount = price - (order?.approved_transaction_amount || 0);
 
     const handlePrimaryClick = () => {
-        if (!isPartiallyPaid) {
+        if (!isPartiallyPaid && !isFullyPaid) {
             onOpenDrawer(order);
             return;
         }
@@ -273,11 +279,6 @@ const OrderCard = ({ order, onOpenDrawer, onSelectNotPaidOrder, onCancel }) => {
                             )}{' '}
                             so'm qismi amalga oshirilmagan
                         </span>
-                    ) : !isPartiallyPaid && !isFullyPaid ? (
-                        <span className={styles.paymentNotApproved}>
-                            <i className="fa fa-dot-circle-o" />
-                            To'lov amalga oshirilmagan
-                        </span>
                     ) : null}
                 </div>
 
@@ -288,34 +289,37 @@ const OrderCard = ({ order, onOpenDrawer, onSelectNotPaidOrder, onCancel }) => {
                     </span>
                     <span className={styles.dateTime}>{deadlineDisplay}</span>
                 </div>
-                <div className={styles.actionButtons}>
-                    {typeof onOpenDrawer === 'function' &&
-                    statusAsset.isRejectable &&
-                    statusAsset.status !== 'rejected' ? (
-                        <Button
-                            variant="outlined"
-                            color="red"
-                            className={styles.actionButtonReject}
-                            onClick={() => onCancel(order)}>
-                            Bekor qilish
-                        </Button>
-                    ) : null}
-                    {
-                        //     typeof onSelectNotPaidOrder === 'function' &&
-                        // statusAsset.status !== 'cancelled' &&
-                        // !order?.has_approved_transaction ? (
-                        //     <button
-                        //         className={styles.primary}
-                        //         onClick={() => onSelectNotPaidOrder(order)}>
-                        //         To'lovni amalga oshirish
-                        //     </button>
-                        // ) :
-                        typeof onOpenDrawer === 'function' &&
-                            statusAsset.status !== 'cancelled' && (
+                {!infoOnly && (
+                    <div className={styles.actionButtons}>
+                        {typeof onOpenDrawer === 'function' &&
+                        statusAsset.isRejectable &&
+                        statusAsset.status !== 'rejected' ? (
+                            <Button
+                                variant="outlined"
+                                color="red"
+                                className={styles.actionButtonReject}
+                                onClick={() => onCancel(order)}>
+                                Bekor qilish
+                            </Button>
+                        ) : null}
+                        {
+                            //     typeof onSelectNotPaidOrder === 'function' &&
+                            // statusAsset.status !== 'cancelled' &&
+                            // !isFullyPaid &&
+                            // !isPartiallyPaid ? (
+                            //     <button
+                            //         className={styles.primary}
+                            //         onClick={() => onSelectNotPaidOrder(order)}>
+                            //         To'lovni amalga oshirish
+                            //     </button>
+                            // ) :
+                            statusAsset.status === 'cancelled' ? null : (
                                 <button
                                     className={styles.primary}
                                     onClick={handlePrimaryClick}>
-                                    {hasSeller ? (
+                                    {!isPartiallyPaid && !isFullyPaid ? (
+                                        "To'lovni amalga oshirish"
+                                    ) : hasSeller ? (
                                         'Batafsil'
                                     ) : (
                                         <div
@@ -351,15 +355,17 @@ const OrderCard = ({ order, onOpenDrawer, onSelectNotPaidOrder, onCancel }) => {
                                     )}
                                 </button>
                             )
-                    }
-                    {statusAsset.status === 'cancelled' && isPartiallyPaid && (
-                        <div className={styles.rejectedLabel}>
-                            <i className="fa fa-exclamation-circle" />
-                            Buyurtma to'lovingiz 24 soat ichida profilingizga
-                            qaytariladi.
-                        </div>
-                    )}
-                </div>
+                        }
+                        {statusAsset.status === 'cancelled' &&
+                            isPartiallyPaid && (
+                                <div className={styles.rejectedLabel}>
+                                    <i className="fa fa-exclamation-circle" />
+                                    Buyurtma to'lovingiz 24 soat ichida
+                                    profilingizga qaytariladi.
+                                </div>
+                            )}
+                    </div>
+                )}
             </div>
         </div>
     );

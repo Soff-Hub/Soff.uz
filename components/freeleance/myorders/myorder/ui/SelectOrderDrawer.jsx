@@ -22,15 +22,51 @@ import ServiceCheckout from '~/components/freeleance/services/service-deatail/ui
 // {"success":true,"extra_amount":0,"order_id":372,"freelancer_id":281}
 
 const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
+    // order = {
+    //     id: 366,
+    //     created_at: '2025-10-20T06:35:55.591146+00:00',
+    //     order_type: 'custom_order',
+    //     user_id: 119,
+    //     deadline_date: '2025-10-24T11:35:00',
+    //     title: "Kurs ishi bo'yicha xizmat kerak.",
+    //     budget: 35000,
+    //     description: 'Test 123 hello there',
+    //     language: 'uzb',
+    //     category: null,
+    //     service: null,
+    //     order_status_doing: {
+    //         status: 'pending',
+    //         order_accepted_date: null,
+    //         reason: null,
+    //     },
+    //     user: {
+    //         id: 281,
+    //         full_name: 'abdumomin abdurasulov',
+    //         photo_url:
+    //             'https://test-soffuz.s3.amazonaws.com/media/users/ChatGPT_Image_Jul_4_2025_09_40_35_PM.png',
+    //         last_active: '2025-10-21T09:39:20.751172+05:00',
+    //         soff_seller_id: 23,
+    //     },
+    //     chat_id: null,
+    //     reason: [],
+    //     order_requirement: null,
+    //     feedback: null,
+    //     unread_messages_count: 0,
+    //     file: null,
+    //     offers_count: 0,
+    //     approved_transaction_amount: 0,
+    //     offers: [],
+    // };
     const [selectedOffer, setSelectedOffer] = useState(null);
+    const [verfiedOffer, setVerfiedOffer] = useState(null);
     const { user } = useSelector((state) => state.auth);
     const [paymentModal, setPaymentModal] = useState(false);
     const { isDesktop } = useResponsive();
-    // const [extraAmount, setExtraAmount] = useState(0);
     const { push } = useRouter();
     const { offers, setOffers, isConnected } = useOffers(order?.id, open);
 
     const price = order?.service?.price || order?.budget || 0;
+    console.log({ selectedOffer });
 
     const { data: initialOffers } = useFGet(order?.id, `offer/${order?.id}/`, {
         enabled: open && !!order?.id && !!user?.access,
@@ -59,6 +95,8 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                 );
                 setPaymentModal(true);
                 onClose();
+                setVerfiedOffer(selectedOffer);
+                setSelectedOffer(null);
                 return;
             }
 
@@ -97,15 +135,26 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
     };
 
     const handleRetreatDrawer = () => {
+        if (verfiedOffer) {
+            push(`/order/${order?.id}`);
+            return;
+        }
         handleClosePaymentModal();
         onOpen();
     };
+
+    console.log({ order });
 
     const isFullyPaid = order?.approved_transaction_amount >= price;
     const isPartiallyPaid =
         order?.approved_transaction_amount > 0 &&
         order?.approved_transaction_amount < price;
     const notPaidAmount = price - (order?.approved_transaction_amount || 0);
+
+    const offerAmount =
+        (selectedOffer?.money || 0) - (order?.approved_transaction_amount || 0);
+
+    console.log({ isFullyPaid, isPartiallyPaid, notPaidAmount });
 
     let orderDrawerContent = null;
     if (isFullyPaid) {
@@ -377,7 +426,7 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                 onClose={onClose}
                 open={open}
                 destroyOnClose>
-                <OrderCard order={order} />
+                <OrderCard order={order} infoOnly />
                 {orderDrawerContent}
             </Drawer>
 
@@ -394,11 +443,51 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                 confirmLoading={isPending}
                 zIndex={20000}
                 centered>
-                <p style={{ fontSize: '12px' }}>
+                <p>
                     Haqiqatan ham Siz{' '}
                     <strong>{selectedOffer?.seller?.full_name}</strong> ni
                     tanlamoqchimisiz?
                 </p>
+                <div className="text-center mb-4 text-warning">
+                    {offerAmount > 0 && (
+                        <p className="text-warning mb-0 mt-2">
+                            Eslatma: Siz ilgari{' '}
+                            {formatCurrencyWithSpace(
+                                order?.approved_transaction_amount
+                            )}{' '}
+                            so'm to'lovni amalga oshirgansiz. Taklif narxi{' '}
+                            {formatCurrencyWithSpace(selectedOffer?.money)}{' '}
+                            so'm.
+                        </p>
+                    )}
+                    {offerAmount < 0 && (
+                        <p className="text-warning mb-0 mt-2">
+                            Eslatma: Siz tanlagan frilanserning taklif narxi{' '}
+                            {formatCurrencyWithSpace(-offerAmount)} so'm siz
+                            ilgari to'lagan summadan kam. Ortiqcha to'lov
+                            summasi balansingizga qaytariladi.
+                        </p>
+                    )}
+                </div>
+                {offerAmount > 0 ? (
+                    <div className="service-details-box bg-white border rounded p-3 mb-4">
+                        <div className="d-flex justify-content-between align-items-center">
+                            <div className="d-flex align-items-center">
+                                <i className="fa-solid fa-file-lines text-primary me-3 fs-4"></i>
+                                <div>
+                                    <h5 className="mb-1 fw-bold">
+                                        {order?.title}
+                                    </h5>
+                                </div>
+                            </div>
+                            <div className="text-end">
+                                <h4 className="text-primary mb-0 fw-bold">
+                                    +{formatCurrencyWithSpace(offerAmount)} so'm
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                ) : null}
                 <p>
                     <TextSlicer
                         title={'Izoh:'}
@@ -424,6 +513,7 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                         <ServiceCheckout
                             order_id={order?.id}
                             onClose={handleClosePaymentModal}
+                            onSuccess={handleRetreatDrawer}
                         />
                     </div>
                 </div>

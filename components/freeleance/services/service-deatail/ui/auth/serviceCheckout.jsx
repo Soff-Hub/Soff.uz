@@ -14,6 +14,7 @@ const ServiceCheckout = ({
     files,
     description,
     onClose,
+    onSuccess,
 }) => {
     const [numberCardVal, SetNumberCardVal] = useState(null);
     const [message, setMessage] = useState(false);
@@ -117,12 +118,15 @@ const ServiceCheckout = ({
                 code,
             },
             {
-                onSuccess: (data) => {
+                onSuccess: async (data) => {
+                    await queryClient.invalidateQueries({
+                        queryKey: ['orders'],
+                    });
                     setResDataCode(data);
+                    setOpen(false);
+                    if (onSuccess) onSuccess();
                     if (!order_id) push('/order/my-orders?tab=2');
                     if (onClose) onClose();
-                    setOpen(false);
-                    queryClient.invalidateQueries(['orders']);
                 },
                 onError: (error) => {
                     const errorMessage = error?.response?.data || {

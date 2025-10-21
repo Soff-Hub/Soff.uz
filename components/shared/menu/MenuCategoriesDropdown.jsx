@@ -11,7 +11,7 @@ const MenuCategoriesDropdown = () => {
                         color: '#00a44f',
                         fontWeight: '500',
                     }}>
-                    Frilanser bo'lish
+                    Sotuvchi bo'lish
                 </p>
             </a>
         </div>
