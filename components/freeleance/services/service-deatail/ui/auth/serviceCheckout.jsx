@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Modal, Tabs } from 'antd';
 import { BeatLoader } from 'react-spinners';
-import Router, { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import useCreateOrder from './api/createOrder';
 import { useVerifyCode } from './api/verifyCode';
 import { useCountdown } from '~/shared/hooks/useCountDown';
@@ -210,8 +210,13 @@ const ServiceCheckout = ({
         {
             key: '1',
             label: (
-                <div className="click">
-                    <img src="/static/img/uzcard_humo.png" alt="" />
+                <div className="click" height={80} width={'auto'}>
+                    <img
+                        src="/static/img/uzcard_humo.png"
+                        alt=""
+                        height={80}
+                        width={'auto'}
+                    />
                 </div>
             ),
             children: (
@@ -323,7 +328,7 @@ const ServiceCheckout = ({
         {
             key: '2',
             label: (
-                <div className="click">
+                <div className="click" height={80} width={'auto'}>
                     <img src="/static/img/click.png" alt="" />
                 </div>
             ),

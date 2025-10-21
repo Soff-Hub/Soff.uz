@@ -396,10 +396,16 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
             </Drawer>
 
             <Modal
-                title="Frilanserni tanlash"
+                title={
+                    <>
+                        Haqiqatan ham Siz{' '}
+                        <strong>{selectedOffer?.seller?.full_name}</strong> ni
+                        tanlamoqchimisiz?
+                    </>
+                }
                 open={
-                    // true
-                    !!selectedOffer
+                    true
+                    // !!selectedOffer
                 }
                 onCancel={() => setSelectedOffer(null)}
                 onOk={handleSelect}
@@ -408,11 +414,6 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                 confirmLoading={isPending}
                 zIndex={20000}
                 centered>
-                <p>
-                    Haqiqatan ham Siz{' '}
-                    <strong>{selectedOffer?.seller?.full_name}</strong> ni
-                    tanlamoqchimisiz?
-                </p>
                 <div className="text-center mb-4 text-warning">
                     {offerAmount > 0 && (
                         <p className="text-warning mb-0 mt-2">
@@ -455,7 +456,7 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                 ) : null}
                 <p>
                     <TextSlicer
-                        title={'Izoh:'}
+                        title={'Frilanser izohi:'}
                         bio={`${selectedOffer?.comment || 'Izoh yo‘q'}`}
                     />
                 </p>
