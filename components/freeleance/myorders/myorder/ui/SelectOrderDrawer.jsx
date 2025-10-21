@@ -11,6 +11,7 @@ import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import { cn } from '~/shared/utilities/cn';
 import useOffers from '../api/useOffers';
 import ServiceCheckout from '~/components/freeleance/services/service-deatail/ui/auth/serviceCheckout';
+import { useTelegram } from '~/shared/hooks/useTelegram';
 
 // NOTE: on equal payment done
 // {"success":true,"extra_amount":0,"order_id":367,"freelancer_id":281}
