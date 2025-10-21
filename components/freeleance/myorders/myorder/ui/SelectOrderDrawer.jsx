@@ -69,8 +69,8 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
             message.success(
                 selectedOffer.money < price
                     ? `Frilanser tanlandi! Ortiqcha to'lov summasi: ${formatCurrencyWithSpace(
-                        price - selectedOffer.money
-                    )} so'm qaytarildi`
+                          price - selectedOffer.money
+                      )} so'm qaytarildi`
                     : `Frilanser tanlandi!`
             );
             setSelectedOffer(null);
@@ -324,7 +324,9 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
     } else {
         orderDrawerContent = (
             <div className="border rounded-4 border-success align-items-center gap-3 justify-content-between d-flex flex-column flex-lg-row flex-sm-column p-4 mb-4">
-                <h3 className='fs-3 mb-0 text-center'>Frilanser ishni boshlashi uchun to'lovni amalga oshiring</h3>
+                <h3 className="fs-3 mb-0 text-center">
+                    Frilanser ishni boshlashi uchun to'lovni amalga oshiring
+                </h3>
                 <Button
                     type="primary"
                     size="large"
@@ -429,14 +431,15 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                             onClick={handleRetreatDrawer}>
                             Orqaga
                         </Button>
-
                     </div>
                     <div className="service-details-box bg-white border rounded p-3 mb-4">
                         <div className="d-flex justify-content-between align-items-center">
                             <div className="d-flex align-items-center">
                                 <i className="fa-solid fa-file-lines text-primary me-3 fs-4"></i>
                                 <div>
-                                    <h5 className="mb-1 checkout_title fw-bold">{order?.title}</h5>
+                                    <h5 className="mb-1 checkout_title fw-bold">
+                                        {order?.title}
+                                    </h5>
                                 </div>
                             </div>
                             <div className="text-end">
@@ -459,16 +462,15 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                 </div>
             </Modal>
 
-
             <style jsx>
                 {`
-
                     @media (max-width: 576px) {
                         .checkout_price {
-                            font-size: 12px;
+                            font-size: 14px;
+                            white-space: nowrap;
                         }
 
-                        .checkout_title{
+                        .checkout_title {
                             font-size: 12px;
                         }
                     }

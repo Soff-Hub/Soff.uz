@@ -142,20 +142,9 @@ const TimerComponent = ({ deadlineDate }) => {
 };
 
 const TelegramNotificationHeader = (
-    <div>
-        <h5
-            className="mb-1"
-            style={{
-                color: '#faad14',
-                fontSize: '18px',
-                display: 'flex',
-                gap: '8px',
-                alignItems: 'center',
-            }}>
-            <div
-                style={{
-                    width: '25px',
-                }}>
+    <div className={styles.telegramNotification}>
+        <h5 className={styles.telegramNotificationTitle}>
+            <div className={styles.telegramNotificationIcon}>
                 <BellOutlined
                     style={{
                         fontSize: '25px',
@@ -164,7 +153,7 @@ const TelegramNotificationHeader = (
             </div>
             Bildirishnomalarni yoqing
         </h5>
-        <p className="mb-0 text-muted">
+        <p className={'mb-0 text-muted ' + styles.telegramNotificationDesc}>
             Buyurtma holati haqida xabardor bo'lish uchun Telegram orqali
             bildirishnoma oling
         </p>
@@ -242,14 +231,13 @@ const OrderMain = ({ order }) => {
 
                 {order?.order_status_doing?.status === 'pending' && (
                     <div className={styles.orderPayCardFlex}>
-                        <div className="w-100">
-                            <h4
+                        <div className={styles.orderPayCardInfo}>
+                            <h5
                                 className={`mb-0 ${
                                     !isDesktop && 'text-center'
                                 }`}>
-                                Frilanser ishni boshlashi uchun to'lovni amalga
-                                oshiring
-                            </h4>
+                                Frilanser ish boshlashiga to'lov qiling.
+                            </h5>
                         </div>
                         <Button
                             type="primary"
@@ -584,9 +572,9 @@ const OrderMain = ({ order }) => {
                 }}
                 footer={null}
                 width={600}>
-                <div className="type_payment p-lg-5 p-md-5 p-4">
+                <div className="type_payment">
                     {!showPayment ? (
-                        <>
+                        <div className={styles.showPayment}>
                             <h3 className="type_payment_h3 text-center mb-4">
                                 Buyurtma uchun to'lovni amalga oshiring
                             </h3>
@@ -622,14 +610,18 @@ const OrderMain = ({ order }) => {
                                         <i className="fa-solid fa-file-lines text-primary me-3 fs-4"></i>
                                         <div>
                                             {/* <h5 className="mb-1 fw-bold">{title}</h5> */}
-                                            <p className="text-muted mb-0 small">
+                                            <p className="text-muted mb-0">
                                                 {order?.service?.title ||
                                                     order?.title}
                                             </p>
                                         </div>
                                     </div>
                                     <div className="text-end">
-                                        <h4 className="text-primary mb-0 fw-bold">
+                                        <h4
+                                            className="text-primary white-space-nowrap mb-0 fw-bold"
+                                            style={{
+                                                whiteSpace: 'nowrap',
+                                            }}>
                                             {formatCurrencyWithSpace(
                                                 isPartiallyPaid
                                                     ? notPaidAmount
@@ -641,7 +633,7 @@ const OrderMain = ({ order }) => {
                                 </div>
                             </div>
 
-                            <div className="text-center">
+                            <div className={'text-center'}>
                                 <Button
                                     type="primary"
                                     size="large"
@@ -655,7 +647,7 @@ const OrderMain = ({ order }) => {
                                     <i className="fa-solid fa-arrow-right ms-2"></i>
                                 </Button>
                             </div>
-                        </>
+                        </div>
                     ) : (
                         <>
                             <div className="d-flex justify-content-between align-items-center mb-4">

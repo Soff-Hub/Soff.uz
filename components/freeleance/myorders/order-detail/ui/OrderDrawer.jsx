@@ -412,7 +412,7 @@ const OrderDrawer = ({
                 onCancel={handleClosePaymentModal}
                 footer={null}
                 width={600}>
-                <div className="type_payment p-lg-5 p-md-5 p-4">
+                <div className="type_payment">
                     <div className="d-flex justify-content-between align-items-center mb-4">
                         <Button
                             type="text"
@@ -430,6 +430,20 @@ const OrderDrawer = ({
                     </div>
                 </div>
             </Modal>
+            <style jsx>
+                {`
+                    @media (max-width: 576px) {
+                        .checkout_price {
+                            font-size: 12px;
+                            white-space: nowrap;
+                        }
+
+                        .checkout_title {
+                            font-size: 12px;
+                        }
+                    }
+                `}
+            </style>
         </>
     );
 };
