@@ -3,6 +3,8 @@ import { Button, Input, Modal, Upload } from 'antd';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import ServiceCheckout from './auth/serviceCheckout';
 import AuthModal from '~/components/AuthModal';
+import { useRouter } from 'next/router';
+import { on } from 'events';
 
 const { TextArea } = Input;
 
@@ -19,6 +21,7 @@ function ServiceOrderModal({
     const [actionTracker, setActionTracker] = useState(null);
     const [files, setFiles] = useState([]);
     const [description, setDescription] = useState('');
+    const { push } = useRouter();
     const { price, id, title } = order;
 
     const componentProperties = {
@@ -50,6 +53,12 @@ function ServiceOrderModal({
     const onAuthSuccess = async () => {
         handleAuthSuccess && handleAuthSuccess(componentProperties);
     };
+
+    const onPaymentSuccess = (id) => {
+        handleClose();
+        push(`/order/${id}`);
+    };
+    console.log({ order });
 
     useEffect(() => {
         if (externalOpenModal !== undefined) {
@@ -213,6 +222,7 @@ function ServiceOrderModal({
                                     files={files}
                                     description={description}
                                     onClose={handleClose}
+                                    onSuccess={onPaymentSuccess}
                                 />
                             </div>
                         </>

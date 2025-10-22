@@ -144,11 +144,9 @@ export default function Document() {
                             `,
                         }}></script>
                 )}
-                {process.env.TELEGRAM_WEB_APP === 'true' && (
-                    <script
-                        src="https://telegram.org/js/telegram-web-app.js"
-                        defer></script>
-                )}
+                <script
+                    src="https://telegram.org/js/telegram-web-app.js"
+                    defer></script>
                 <noscript>
                     <div>
                         <img

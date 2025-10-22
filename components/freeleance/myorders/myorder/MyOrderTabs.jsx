@@ -28,7 +28,7 @@ export const EmptyTab = ({ description }) => {
 
 const MyOrderTabs = () => {
     const [activeKey, setActiveKey] = useState('0');
-    const { data, isLoading } = useOrdersStatus();
+    const { data, isLoading } = useOrdersStatus({ activeclyFetch: true });
     const { query, push, replace } = useRouter();
 
     useEffect(() => {

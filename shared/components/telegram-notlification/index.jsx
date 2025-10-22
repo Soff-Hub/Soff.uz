@@ -46,7 +46,7 @@ export default function TelegramNotification({ header, hideIfActivated }) {
     }, [newProfile]);
 
     useEffect(() => {
-        if (window.Telegram?.WebApp) {
+        if (window.Telegram?.WebApp?.initDataUnsafe?.user) {
             setIsTelegramWebApp(true);
         }
     }, []);

@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
 import axiosInstance from '~/shared/api/freeleanceApi';
 
-const useOrdersStatus = () => {
+const useOrdersStatus = ({ activeclyFetch = false } = {}) => {
     const { user } = useSelector((state) => state.auth);
     const axios = axiosInstance(user?.access);
 
@@ -14,8 +14,8 @@ const useOrdersStatus = () => {
         },
         enabled: !!user?.access,
         staleTime: 0,
-        refetchOnWindowFocus: true,
-        refetchOnMount: true,
+        refetchOnWindowFocus: activeclyFetch,
+        refetchOnMount: activeclyFetch,
     });
 };
 
