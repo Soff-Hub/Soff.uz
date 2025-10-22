@@ -14,28 +14,12 @@ const Header = () => {
     const dispatch = useDispatch();
     const cartItems = useSelector((state) => state.ecomerce.cartDataItems);
     const { showSearch, showFastDownload } = useSelector((state) => state.ui);
-    const [isTelegramWebApp, setIsTelegramWebApp] = useState(false);
 
     useEffect(() => {
         if (!cartItems.length) {
             dispatch(initLocalCart());
         }
     }, []);
-
-    useEffect(() => {
-        if (typeof window !== 'undefined') {
-            const isInTelegram = !!window.Telegram?.WebApp;
-
-            if (isInTelegram) {
-                console.log('Opened inside Telegram WebApp');
-                setIsTelegramWebApp(true);
-            }
-        }
-    }, []);
-
-    if (isTelegramWebApp) {
-        return null;
-    }
 
     return (
         <header className="site-header">
@@ -57,3 +41,4 @@ const Header = () => {
 };
 
 export default Header;
+//
