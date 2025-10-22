@@ -9,6 +9,7 @@ import { MdOutlinePendingActions } from 'react-icons/md';
 import { useRouter } from 'next/router';
 import { Avatar, Button, message, Tooltip, Badge } from 'antd';
 import { cn } from '~/shared/utilities/cn';
+import { CancelOrderModal } from '~/components/freeleance/myorders/order-detail/ui/modals/CancelOrderModal';
 
 const CompletedOrderWrapper = ({ children }) => {
     return (
@@ -42,7 +43,7 @@ const PendingOrderWrapper = ({ children }) => {
     );
 };
 
-const orderStatusAssets = (status) => {
+const orderStatusAssets = status => {
     switch (status) {
         case 'completed':
             return {
@@ -122,6 +123,8 @@ const OrderCard = ({ order, onOpenDrawer, onCancel, infoOnly }) => {
     const [showMore, setShowMore] = useState(false);
     const [showMoreBtn, setShowMoreBtn] = useState(false);
     const descRef = useRef(null);
+  
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const deadlineDisplay = order.deadline_date
         ? new Date(order.deadline_date).toLocaleString('uz-UZ', {
@@ -180,6 +183,14 @@ const OrderCard = ({ order, onOpenDrawer, onCancel, infoOnly }) => {
         }
     };
 
+     const handleCancelClick = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+    };
+
     const content = (
         <div
             className={statusAsset.orderClassName}
@@ -234,7 +245,7 @@ const OrderCard = ({ order, onOpenDrawer, onCancel, infoOnly }) => {
 
                         {showMoreBtn && (
                             <span
-                                onClick={() => setShowMore((prev) => !prev)}
+                                onClick={() => setShowMore(prev => !prev)}
                                 style={{
                                     color: '#1677ff',
                                     fontWeight: 500,
@@ -362,7 +373,7 @@ const OrderCard = ({ order, onOpenDrawer, onCancel, infoOnly }) => {
                                                     backgroundColor: '#00a44f',
                                                 },
                                             }}>
-                                            {order?.offers?.map((item) => (
+                                            {order?.offers?.map(item => (
                                                 <Avatar
                                                     size={25}
                                                     src={
@@ -376,17 +387,28 @@ const OrderCard = ({ order, onOpenDrawer, onCancel, infoOnly }) => {
                                 )}
                             </button>
                         )}
-                        {statusAsset.status === 'cancelled' &&
-                            isPartiallyPaid && (
-                                <div className={styles.rejectedLabel}>
-                                    <i className="fa fa-exclamation-circle" />
-                                    Buyurtma to'lovingiz 24 soat ichida
-                                    profilingizga qaytariladi.
-                                </div>
-                            )}
+                        {statusAsset.status === 'cancelled' && isPartiallyPaid && (
+                            <div className={styles.rejectedLabel}>
+                                <i className="fa fa-exclamation-circle" />
+                                Buyurtma to'lovingiz 24 soat ichida
+                                profilingizga qaytariladi.
+                            </div>
+                        )}
                     </div>
                 )}
+                <Button
+                    variant="outlined"
+                    color="red"
+                    className={styles.actionButtonReject}
+                    onClick={() => handleCancelClick(order)}>
+                    Bekor qilish
+                </Button>
             </div>
+             <CancelOrderModal
+                isOpen={isModalOpen}
+                selectedOrder={order}
+                onClose={handleCloseModal}
+            />
         </div>
     );
 
