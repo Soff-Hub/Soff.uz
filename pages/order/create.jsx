@@ -317,26 +317,54 @@ const OrderCreateForm = () => {
                 open={confirmOpen}
                 onCancel={handleCloseConfirm}
                 footer={[
-                    <Button key="cancel" onClick={handleCloseConfirm}>
-                        Yo'q
-                    </Button>,
+                   
                     <Button
                         key="ok"
                         type="primary"
                         loading={isPending}
                         onClick={handleConfirm}>
-                        Ha, buyurtmani yubor
+                         To'lov qilish
                     </Button>,
                 ]}
                 centered>
-                <p>
-                    Buyurtma berishni tasdiqlaysizmi?
-                    <br /> ✅ Buyurtma yaratilgandan
-                    so‘ng siz 💳 to‘lovni amalga oshirasiz, <br /> va platformamizdagi
-                    malakali 💼 frilanserlar sizga narx va tavsif bilan o‘z
-                    takliflarini taqdim etishadi. <br /> Siz esa ular orasidan 🎯 sizga
-                    eng mos frilanserni tanlab, u bilan hamkorlikni boshlaysiz.
-                </p>
+               <p style={{
+    lineHeight: '1.6',
+    fontSize: '14px',
+    color: '#333',
+    marginBottom: '0'
+}}>
+    <strong style={{
+        display: 'block',
+        textAlign: 'center',
+        fontSize: '16px',
+        marginBottom: '16px',
+        color: '#1a1a1a'
+    }}>
+        Buyurtma berishni tasdiqlaysizmi?
+    </strong>
+    
+    <div style={{
+        background: '#f8f9fa',
+        padding: '16px',
+        borderRadius: '8px',
+        borderLeft: '4px solid #28a745'
+    }}>
+        <div style={{ marginBottom: '8px' }}>
+            <span style={{ marginRight: '8px' }}>✅</span>
+            Buyurtma yaratilgandan so'ng siz 💳 to'lovni amalga oshirasiz
+        </div>
+        
+        <div style={{ marginBottom: '8px' }}>
+            <span style={{ marginRight: '8px' }}>💼</span>
+            Platformamizdagi malakali frilanserlar sizga narx va tavsif bilan o'z takliflarini taqdim etishadi
+        </div>
+        
+        <div>
+            <span style={{ marginRight: '8px' }}>🎯</span>
+            Siz esa ular orasidan sizga eng mos frilanserni tanlab, u bilan hamkorlikni boshlaysiz
+        </div>
+    </div>
+</p>
             </Modal>
         </div>
     );

@@ -367,7 +367,7 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                 onCancel={() => setSelectedOffer(null)}
                 onOk={handleSelect}
                 okText="Ha, tanlayman"
-                cancelText="Bekor qilish"
+                cancelText="Yo'q"
                 confirmLoading={isPending}
                 zIndex={20000}
                 centered>
