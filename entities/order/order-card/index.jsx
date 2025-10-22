@@ -397,13 +397,7 @@ const OrderCard = ({ order, onOpenDrawer, onCancel, infoOnly }) => {
                     </div>
                 )}
                 
-                <Button
-                    variant="outlined"
-                    color="red"
-                    className={styles.actionButtonReject}
-                    onClick={() => handleCancelClick(order)}>
-                    Bekor qilish
-                </Button>
+                
             </div>
              <CancelOrderModal
                 isOpen={isModalOpen}

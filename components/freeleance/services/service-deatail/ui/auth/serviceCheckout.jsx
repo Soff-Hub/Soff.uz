@@ -38,7 +38,7 @@ const ServiceCheckout = ({
 
     const verifyCode = useVerifyCode();
 
-    const numberTyper = (value) => {
+    const numberTyper = value => {
         SetNumberCardVal(value);
         if (!value == 0) {
             let numberPlaceholder = '';
@@ -64,12 +64,12 @@ const ServiceCheckout = ({
                 order_requirement_file: files?.[0]?.originFileObj,
             },
             {
-                onSuccess: (data) => {
+                onSuccess: data => {
                     setMessage(true);
                     // window.open(data?.url, '_blank');
                     router.push(data.url);
                 },
-                onError: (err) => {
+                onError: err => {
                     AlertMessage.error(err.response.data.detail);
                     setMessage(false);
                 },
@@ -93,13 +93,13 @@ const ServiceCheckout = ({
 
         if (order_id) payload.order_id = order_id;
         createOrder.mutate(payload, {
-            onSuccess: (data) => {
+            onSuccess: data => {
                 setMessage(false);
                 setOpen(true);
                 setResData(data);
                 reset();
             },
-            onError: (err) => {
+            onError: err => {
                 console.error('❌ Click payment error:', err);
                 setMessage(false);
                 setResData({
@@ -118,7 +118,7 @@ const ServiceCheckout = ({
                 code,
             },
             {
-                onSuccess: async (data) => {
+                onSuccess: async data => {
                     await queryClient.invalidateQueries({
                         queryKey: ['orders'],
                     });
@@ -128,7 +128,7 @@ const ServiceCheckout = ({
                     if (!order_id) push('/order/my-orders?tab=2');
                     if (onClose) onClose();
                 },
-                onError: (error) => {
+                onError: error => {
                     const errorMessage = error?.response?.data || {
                         detail: "Noma'lum xato",
                     };
@@ -144,7 +144,7 @@ const ServiceCheckout = ({
             setTime(120); // 2 daqiqa
 
             const timerID = setInterval(() => {
-                setTime((prev) => {
+                setTime(prev => {
                     if (prev <= 1) {
                         clearInterval(timerID);
                         setResData(null);
@@ -164,7 +164,7 @@ const ServiceCheckout = ({
         setResData(null);
     }
 
-    const handleCardNumberChange = (e) => {
+    const handleCardNumberChange = e => {
         const inputValue = e.target.value.replace(/\D/g, '');
         let formattedValue = '';
 
@@ -181,7 +181,7 @@ const ServiceCheckout = ({
         setFormattedCardNumber(formattedValue);
     };
 
-    const handleCardNumberDate = (e) => {
+    const handleCardNumberDate = e => {
         const inputValue = e.target.value.replace(/\D/g, '');
         let formattedValue = '';
 
@@ -197,7 +197,7 @@ const ServiceCheckout = ({
         setNumberDate(formattedValue);
     };
 
-    const onChange = (key) => {
+    const onChange = key => {
         setTab(key);
         if (key === '1') {
             setType('card');
@@ -226,10 +226,22 @@ const ServiceCheckout = ({
                             <form
                                 onSubmit={handleClickCardPosts}
                                 className="pb-3 d-flex align-items-end justify-content-between row gap-3 bg-white">
-                                <div className="col-xl-7 col-lg-12 p-0 col-md-7 col-sm-6 click-form-item my-2">
+                                <div className="col-xl-7 col-lg-12 p-1 col-md-7 col-sm-6 click-form-item my-2">
                                     <p className="cardNumber">Karta raqam</p>
-                                    <label htmlFor="ccn" className="m-0">
-                                        <i className="fa-regular fa-credit-card i"></i>
+                                    <label
+                                        htmlFor="ccn"
+                                        className="m-0"
+                                        style={{ position: 'relative' }}>
+                                        <i
+                                            className="fa-regular fa-credit-card i"
+                                            style={{
+                                                position: 'absolute',
+                                                left: '15px',
+                                                top: '50%',
+                                                transform: 'translateY(-50%)',
+                                                zIndex: 10,
+                                                color: '#6c757d',
+                                            }}></i>
                                         <input
                                             required
                                             type="tel"
@@ -239,12 +251,28 @@ const ServiceCheckout = ({
                                             placeholder="0000 0000 0000 0000"
                                             value={formattedCardNumber}
                                             onChange={handleCardNumberChange}
+                                            style={{
+                                                paddingLeft: '45px',
+                                                height: '50px',
+                                            }}
                                         />
                                     </label>
                                 </div>
+
                                 <div className="col-xl-4 col-lg-6 p-0 col-md-4 col-sm-6 click-form-item my-2">
-                                    <label className="m-0">
-                                        <i className="fa-regular fa-calendar-days"></i>
+                                    <label
+                                        className="m-0"
+                                        style={{ position: 'relative' }}>
+                                        <i
+                                            className="fa-regular fa-calendar-days"
+                                            style={{
+                                                position: 'absolute',
+                                                left: '15px',
+                                                top: '50%',
+                                                transform: 'translateY(-50%)',
+                                                zIndex: 10,
+                                                color: '#6c757d',
+                                            }}></i>
                                         <input
                                             required
                                             className="form-control rounded-3 card__number"
@@ -253,6 +281,10 @@ const ServiceCheckout = ({
                                             placeholder="MM/YY"
                                             value={numberDate}
                                             onChange={handleCardNumberDate}
+                                            style={{
+                                                paddingLeft: '45px',
+                                                height: '50px',
+                                            }}
                                         />
                                     </label>
                                 </div>
@@ -308,7 +340,7 @@ const ServiceCheckout = ({
                                 {resData?.phone_number}
                             </p>
                             <input
-                                onChange={(e) => setCode(e.target.value)}
+                                onChange={e => setCode(e.target.value)}
                                 type="tel"
                                 placeholder="000000"
                                 maxLength={6}
