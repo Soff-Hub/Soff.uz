@@ -104,9 +104,9 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
         handleClosePaymentModal();
         onOpen();
     };
-
+    console.log({ order }, order?.order_status_doing?.status);
     const onSuccessPayment = () => {
-        if (verfiedOffer) {
+        if (verfiedOffer || order?.order_type === 'ready_service') {
             push(`/order/${order?.id}`);
             return;
         }

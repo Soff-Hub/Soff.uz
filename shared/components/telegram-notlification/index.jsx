@@ -11,6 +11,8 @@ import {
 
 export default function TelegramNotification({ header, hideIfActivated }) {
     const { isMobile } = useResponsive();
+    const [isTelegramWebApp, setIsTelegramWebApp] = useState(false);
+    const [checked, setChecked] = useState(false);
     const { data: tg_link } = useGet(
         'tg_link',
         `${process.env.NEXT_PUBLIC_BASE_URL}${TELEGRAM_LINK}`
@@ -35,8 +37,6 @@ export default function TelegramNotification({ header, hideIfActivated }) {
         );
     };
 
-    const [checked, setChecked] = useState(false);
-
     useEffect(() => {
         if (newProfile?.telegram_chat_id) {
             setChecked(true);
@@ -44,6 +44,16 @@ export default function TelegramNotification({ header, hideIfActivated }) {
             setChecked(false);
         }
     }, [newProfile]);
+
+    useEffect(() => {
+        if (window.Telegram?.WebApp) {
+            setIsTelegramWebApp(true);
+        }
+    }, []);
+
+    if (isTelegramWebApp) {
+        return null;
+    }
 
     const handleSwitchChange = (value) => {
         if (value) {
