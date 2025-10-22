@@ -171,7 +171,7 @@ const OrderStatus = ({ order, handleShowStickySeller }) => {
                                         title={
                                             order?.order_status_doing?.reason
                                         }>
-                                        Fayl rad etildi
+                                        Fayl qayta ishlash uchun junatildi
                                     </Tooltip>
                                 ) : (
                                     'Tasdiqlash uchun topshirildi'
