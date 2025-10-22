@@ -135,6 +135,7 @@ const TgLoader = () => {
                     const userData = {
                         access: token,
                         role: 'customer',
+                        telegramWebApp: true,
                     };
 
                     dispatch(login({ user: userData, data: userData }));

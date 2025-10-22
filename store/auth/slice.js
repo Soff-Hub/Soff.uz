@@ -17,6 +17,7 @@ const initialState = {
     id: null,
     status: 'idle',
     error: null,
+    telegramWebApp: false,
 };
 
 // Asenkron funksiyalarni yaratish

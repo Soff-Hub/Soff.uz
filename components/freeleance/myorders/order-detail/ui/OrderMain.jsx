@@ -381,7 +381,7 @@ const OrderMain = ({ order }) => {
                 {order?.order_status_doing?.status === 'rejected' && (
                     <Alert
                         icon={<WarningOutlined />}
-                        message="Fayl qayta ishlash uchun junatildi"
+                        message="Fayl qayta ishlov uchun qaytarildi"
                         description={order?.order_status_doing?.reason}
                         type="error"
                         showIcon

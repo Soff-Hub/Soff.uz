@@ -9,20 +9,23 @@ import {
     TELEGRAM_LINK,
 } from '~/shared/api/end-points';
 import { useTelegram } from '~/shared/hooks/useTelegram';
+import { useSelector } from 'react-redux';
 
 export default function TelegramNotification({ header, hideIfActivated }) {
     const { isMobile } = useResponsive();
-    const [isTelegramWebApp, setIsTelegramWebApp] = useState(false);
-    const { tg } = useTelegram();
+    const { user } = useSelector((state) => state.auth);
     const [checked, setChecked] = useState(false);
+
     const { data: tg_link } = useGet(
         'tg_link',
         `${process.env.NEXT_PUBLIC_BASE_URL}${TELEGRAM_LINK}`
     );
+
     const { data: newProfile } = useGet(
         'new-profile',
         `${process.env.NEXT_PUBLIC_BASE_URL}${NEW_PROFILE}`
     );
+
     const { mutate, isLoading } = usePatch('nimadir');
 
     const handleOff = () => {
@@ -47,12 +50,6 @@ export default function TelegramNotification({ header, hideIfActivated }) {
         }
     }, [newProfile]);
 
-    useEffect(() => {
-        if (window.Telegram?.WebApp?.initDataUnsafe?.user) {
-            setIsTelegramWebApp(true);
-        }
-    }, [tg]);
-
     const handleSwitchChange = (value) => {
         if (value) {
             if (!newProfile?.telegram_chat_id && tg_link?.link_code) {
@@ -68,7 +65,7 @@ export default function TelegramNotification({ header, hideIfActivated }) {
         return null;
     }
 
-    if (isTelegramWebApp) {
+    if (user?.telegramWebApp) {
         return null;
     }
 
