@@ -21,9 +21,10 @@ export const CancelOrderModal = ({ isOpen, selectedOrder, onClose }) => {
                 { id: selectedOrder.id, reason },
                 {
                     onSuccess: () => {
-                        message.success('Buyurtma muvaffaqiyatli bekor qilindi!');
-                        queryClient.invalidateQueries(['order',selectedOrder.id]);
-                        queryClient.invalidateQueries(['orderDetail']);
+                        message.success(
+                            'Buyurtma muvaffaqiyatli bekor qilindi!'
+                        );
+                        queryClient.invalidateQueries(['ordersStatus']);
                         setReason('');
                         onClose();
                     },
@@ -48,7 +49,7 @@ export const CancelOrderModal = ({ isOpen, selectedOrder, onClose }) => {
             confirmLoading={isCancelling}
             okButtonProps={{ danger: true }}>
             <p>
-                Haqiqatan ham "<strong>{selectedOrder?.title}</strong>" 
+                Haqiqatan ham "<strong>{selectedOrder?.title}</strong>"
                 buyurtmasini bekor qilmoqchimisiz?
             </p>
             <h5 style={{ marginTop: '20px' }}>Sababni tanlang</h5>
@@ -56,8 +57,8 @@ export const CancelOrderModal = ({ isOpen, selectedOrder, onClose }) => {
                 className="w-100"
                 placeholder="Bekor qilish sababini tanlang..."
                 value={reason}
-                onChange={(val) => setReason(val)}
-                options={reasons?.map((reason) => ({
+                onChange={val => setReason(val)}
+                options={reasons?.map(reason => ({
                     value: reason.id,
                     label: reason.reason,
                 }))}
