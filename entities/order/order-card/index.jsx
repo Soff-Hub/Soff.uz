@@ -4,7 +4,7 @@ import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import { getRemainingDays } from '~/shared/utilities/calculateTime';
 import { IoCheckmarkDone } from 'react-icons/io5';
 import { MdErrorOutline } from 'react-icons/md';
-import { RiProgress5Line } from 'react-icons/ri';
+import { RiH2, RiProgress5Line } from 'react-icons/ri';
 import { MdOutlinePendingActions } from 'react-icons/md';
 import { useRouter } from 'next/router';
 import { Avatar, Button, message, Tooltip, Badge } from 'antd';
@@ -115,15 +115,25 @@ const orderStatusAssets = status => {
     // cancelled: 'Buyurtma bekor qilindi',
 };
 
-const OrderCard = ({ order, onOpenDrawer, onCancel, infoOnly }) => {
+const OrderCard = ({
+    order,
+    onOpenDrawer,
+    onCancel,
+    infoOnly,
+    detail = false,
+    onOrderUpdate,
+}) => {
     const router = useRouter();
     const statusAsset = orderStatusAssets(order.order_status_doing?.status);
+
+    console.log(statusAsset, 'stat');
+
     const hasSeller = Boolean(order.user);
     const price = order.service?.price ?? order.budget ?? 0;
     const [showMore, setShowMore] = useState(false);
     const [showMoreBtn, setShowMoreBtn] = useState(false);
     const descRef = useRef(null);
-  
+
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const deadlineDisplay = order.deadline_date
@@ -183,12 +193,15 @@ const OrderCard = ({ order, onOpenDrawer, onCancel, infoOnly }) => {
         }
     };
 
-     const handleCancelClick = () => {
+    const handleCancelClick = () => {
         setIsModalOpen(true);
     };
 
     const handleCloseModal = () => {
         setIsModalOpen(false);
+        if (onOrderUpdate) {
+            onOrderUpdate();
+        }
     };
 
     const content = (
@@ -224,8 +237,9 @@ const OrderCard = ({ order, onOpenDrawer, onCancel, infoOnly }) => {
                 typeof onOpenDrawer !== 'function' && (
                     <div className={styles.meta}>
                         <div className={styles.metaTitle}>
-                            <i className="fa-solid fa-file-pen" /> Buyurtma
-                            tavsifi
+                            <i className="fa-solid fa-file-pen" />
+                            Buyurtma tavsifi
+                        
                         </div>
 
                         <p
@@ -396,10 +410,22 @@ const OrderCard = ({ order, onOpenDrawer, onCancel, infoOnly }) => {
                         )}
                     </div>
                 )}
-                
-                
+                {infoOnly && (
+                    <div className={styles.actionButtons}>
+                        {statusAsset.status === 'order_accepted' &&
+                            detail === true && (
+                                <Button
+                                    variant="outlined"
+                                    color="red"
+                                    className={styles.actionButtonRejectDetail}
+                                    onClick={() => handleCancelClick()}>
+                                    Bekor qilish
+                                </Button>
+                            )}
+                    </div>
+                )}
             </div>
-             <CancelOrderModal
+            <CancelOrderModal
                 isOpen={isModalOpen}
                 selectedOrder={order}
                 onClose={handleCloseModal}

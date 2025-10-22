@@ -218,6 +218,12 @@ const OrderMain = ({ order }) => {
             dispatch(setShowSearch(true));
         };
     }, [dispatch]);
+
+
+    const handleOrderUpdate = () => {
+    // Bu yerda orders listini qayta yuklash yoki state yangilash
+ queryClient.invalidateQueries({ queryKey: ['order'] });
+};
     return (
         <div className="col-lg-9 col-12 rounded-2 my-4">
             <div className={styles.orderDetailMain}>
@@ -386,7 +392,7 @@ const OrderMain = ({ order }) => {
                     />
                 )}
                 <Breadcrumb items={items} className="mb-2" />
-                <OrderCard order={order} infoOnly />
+                <OrderCard order={order} infoOnly detail={true} onOrderUpdate={handleOrderUpdate} />
                 {order?.order_status_doing?.status === 'completed' && (
                     <div className="d-flex justify-content-end align-items-center mt-3">
                         <Button
