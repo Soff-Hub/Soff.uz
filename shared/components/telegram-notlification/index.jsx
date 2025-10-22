@@ -51,10 +51,6 @@ export default function TelegramNotification({ header, hideIfActivated }) {
         }
     }, []);
 
-    if (isTelegramWebApp) {
-        return null;
-    }
-
     const handleSwitchChange = (value) => {
         if (value) {
             if (!newProfile?.telegram_chat_id && tg_link?.link_code) {
@@ -67,6 +63,10 @@ export default function TelegramNotification({ header, hideIfActivated }) {
     };
 
     if (checked && hideIfActivated) {
+        return null;
+    }
+
+    if (isTelegramWebApp) {
         return null;
     }
 
