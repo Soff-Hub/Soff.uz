@@ -71,8 +71,6 @@ export const AllOrdersTable = ({ type }) => {
                 : true
         ) || [];
 
-    console.log({ orders, statusFilter });
-
     let ordersContent = null;
     if (ordersLoading) {
         ordersContent = (

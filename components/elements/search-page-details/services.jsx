@@ -40,8 +40,6 @@ export default function Search_Results_Services({ children }) {
         }`
     );
 
-    console.log('services data', data);
-
     const showResults = Array.isArray(data?.items) && data?.items?.length > 0;
 
     useScrollToNotFound(notFoundRef, showResults, data);

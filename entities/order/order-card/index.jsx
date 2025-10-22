@@ -43,7 +43,7 @@ const PendingOrderWrapper = ({ children }) => {
     );
 };
 
-const orderStatusAssets = status => {
+const orderStatusAssets = (status) => {
     switch (status) {
         case 'completed':
             return {
@@ -125,8 +125,6 @@ const OrderCard = ({
 }) => {
     const router = useRouter();
     const statusAsset = orderStatusAssets(order.order_status_doing?.status);
-
-    console.log(statusAsset, 'stat');
 
     const hasSeller = Boolean(order.user);
     const price = order.service?.price ?? order.budget ?? 0;
@@ -239,7 +237,6 @@ const OrderCard = ({
                         <div className={styles.metaTitle}>
                             <i className="fa-solid fa-file-pen" />
                             Buyurtma tavsifi
-                        
                         </div>
 
                         <p
@@ -259,7 +256,7 @@ const OrderCard = ({
 
                         {showMoreBtn && (
                             <span
-                                onClick={() => setShowMore(prev => !prev)}
+                                onClick={() => setShowMore((prev) => !prev)}
                                 style={{
                                     color: '#1677ff',
                                     fontWeight: 500,
@@ -387,7 +384,7 @@ const OrderCard = ({
                                                     backgroundColor: '#00a44f',
                                                 },
                                             }}>
-                                            {order?.offers?.map(item => (
+                                            {order?.offers?.map((item) => (
                                                 <Avatar
                                                     size={25}
                                                     src={
@@ -401,13 +398,14 @@ const OrderCard = ({
                                 )}
                             </button>
                         )}
-                        {statusAsset.status === 'cancelled' && isPartiallyPaid && (
-                            <div className={styles.rejectedLabel}>
-                                <i className="fa fa-exclamation-circle" />
-                                Buyurtma to'lovingiz 24 soat ichida
-                                profilingizga qaytariladi.
-                            </div>
-                        )}
+                        {statusAsset.status === 'cancelled' &&
+                            isPartiallyPaid && (
+                                <div className={styles.rejectedLabel}>
+                                    <i className="fa fa-exclamation-circle" />
+                                    Buyurtma to'lovingiz 24 soat ichida
+                                    profilingizga qaytariladi.
+                                </div>
+                            )}
                     </div>
                 )}
                 {infoOnly && (

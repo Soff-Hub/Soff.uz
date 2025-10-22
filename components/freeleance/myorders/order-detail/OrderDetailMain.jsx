@@ -29,8 +29,6 @@ const OrderDetailMain = () => {
         setShowStickySeller(value);
     };
 
-    console.log({ showStickySeller });
-
     return (
         <>
             {order && (

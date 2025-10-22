@@ -30,8 +30,6 @@ const UserPortfolios = () => {
         }
     );
 
-    console.log({ portfolios });
-
     const gridClass = useRcn({
         mobile: 'grid-cols-2',
         tablet: 'grid-cols-3',

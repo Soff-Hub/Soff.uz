@@ -183,8 +183,6 @@ const OrderMain = ({ order }) => {
         { title: `#${order?.id}` },
     ];
 
-    console.log({ order });
-
     const { TextArea } = Input;
 
     const onClose = () => {

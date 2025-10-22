@@ -57,9 +57,6 @@ function ServiceOrderModal({
         }
     }, [externalOpenModal]);
 
-    console.log(requirements,'reuqirements');
-    
-
     return (
         <>
             {childrenContent}
@@ -106,16 +103,22 @@ function ServiceOrderModal({
 
                             {requirements && (
                                 <>
-                                    <h5 className="mb-3" style={{ fontWeight: 'semi-bold' }}>
-                                       Frilanser ishni boshlashi uchun quyidagilarni yuboring:
+                                    <h5
+                                        className="mb-3"
+                                        style={{ fontWeight: 'semi-bold' }}>
+                                        Frilanser ishni boshlashi uchun
+                                        quyidagilarni yuboring:
                                     </h5>
                                     <div
-                                        style={{ 
-                                            borderBottom: '1px solid rgba(0,0,0,0.04)',
+                                        style={{
+                                            borderBottom:
+                                                '1px solid rgba(0,0,0,0.04)',
                                             marginBottom: '20px',
-                                            paddingBottom: '15px'
+                                            paddingBottom: '15px',
                                         }}
-                                        dangerouslySetInnerHTML={{ __html: requirements }}
+                                        dangerouslySetInnerHTML={{
+                                            __html: requirements,
+                                        }}
                                     />
                                 </>
                             )}

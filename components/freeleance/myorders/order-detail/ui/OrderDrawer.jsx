@@ -38,7 +38,6 @@ const OrderDrawer = ({
     const { offers, setOffers, isConnected } = useOffers(order?.id, open);
     const { tg } = useTelegram();
     const price = order?.service?.price || order?.budget || 0;
-    console.log({ selectedOffer });
 
     const { data: initialOffers } = useFGet(order?.id, `offer/${order?.id}/`, {
         enabled: open && !!order?.id && !!user?.access,
@@ -118,8 +117,6 @@ const OrderDrawer = ({
         handleRetreatDrawer();
     };
 
-    console.log({ order });
-
     const isFullyPaid = order?.approved_transaction_amount >= price;
     const isPartiallyPaid =
         order?.approved_transaction_amount > 0 &&
@@ -128,8 +125,6 @@ const OrderDrawer = ({
 
     const offerAmount =
         (selectedOffer?.money || 0) - (order?.approved_transaction_amount || 0);
-
-    console.log({ isFullyPaid, isPartiallyPaid, notPaidAmount });
 
     let orderDrawerContent = null;
     if (isFullyPaid && !order?.user) {

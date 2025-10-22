@@ -16,14 +16,11 @@ const Wishlist = ({ ecomerce }) => {
     const { wishlist } = useSelector((state) => state.ecomerce);
     const { setAllSaved } = useWishlist();
 
-
-
     useEffect(() => {
         if (wishlist.length !== JSON.parse(localStorage.getItem('wishlist'))) {
             setAllSaved();
         }
     }, []);
-
 
     function handleAddItemToCart(e, product) {
         e.preventDefault();
@@ -79,78 +76,89 @@ const Wishlist = ({ ecomerce }) => {
                                     </td>
                                     <td>
                                         <span>
-                                            {
-                                                +product.discount_price === 0 ? <p className='free-product-text'>Bepul</p> : (
-                                                    product?.discount === 0 ? (
-                                                        <p>
-                                                            {addPeriodToThousands(
-                                                                product.discount_price
-                                                            )}
-                                                        </p>
-                                                    ) : (
-                                                        <>
-                                                            <del>
-                                                                {addPeriodToThousands(
-                                                                    product.price
-                                                                )}
-                                                                so'm
-                                                            </del>
-                                                            <p>
-                                                                {addPeriodToThousands(
-                                                                    product.discount_price
-                                                                )}
-                                                                so'm
-                                                            </p>
-                                                        </>
-                                                    )
-                                                )
-                                            }
+                                            {+product.discount_price === 0 ? (
+                                                <p className="free-product-text">
+                                                    Bepul
+                                                </p>
+                                            ) : product?.discount === 0 ? (
+                                                <p>
+                                                    {addPeriodToThousands(
+                                                        product.discount_price
+                                                    )}
+                                                </p>
+                                            ) : (
+                                                <>
+                                                    <del>
+                                                        {addPeriodToThousands(
+                                                            product.price
+                                                        )}
+                                                        so'm
+                                                    </del>
+                                                    <p>
+                                                        {addPeriodToThousands(
+                                                            product.discount_price
+                                                        )}
+                                                        so'm
+                                                    </p>
+                                                </>
+                                            )}
                                         </span>
                                     </td>
                                     <td style={{ margin: '0 auto' }}>
-                                        {
-                                            +product.discount_price > 0 ? (
-                                                <a
-                                                    className="ps-btn d-inline-block"
-                                                    href=""
-                                                    onClick={(e) =>
-                                                        handleAddItemToCart(e, product)
-                                                    }>
-                                                    Savatga qo'shish
-                                                </a>
-                                            ) : (
-                                                <a
-                                                    style={{ cursor:loading ? "not-allowed" : 'pointer',minWidth: "172px" }}
-                                                    className="ps-btn d-inline-block"
-                                                    href=""
-                                                    onClick={async (e) => {
-                                                        e.preventDefault();
-                                                        setLoading(true);
-                                                        console.log('Loading state set to true');
-                                                        try {
-                                                            await audioDownloaderSale(product, product);
-                                                        } catch (error) {
-                                                            console.error('Error in audioDownloaderSale:', error);
-                                                        } finally {
-                                                            setLoading(false);
-                                                            console.log('Loading state set to false');
-                                                        }
-                                                    }}>
-                                                    {!loading ? "Bepul yuklab olish" :
-                                                        <div >
-                                                            <div
-                                                                className="spinner-border"
-                                                                role="status">
-                                                                <span className="visually-hidden">
-                                                                    Loading...
-                                                                </span>
-                                                            </div>
-                                                        </div>
+                                        {+product.discount_price > 0 ? (
+                                            <a
+                                                className="ps-btn d-inline-block"
+                                                href=""
+                                                onClick={(e) =>
+                                                    handleAddItemToCart(
+                                                        e,
+                                                        product
+                                                    )
+                                                }>
+                                                Savatga qo'shish
+                                            </a>
+                                        ) : (
+                                            <a
+                                                style={{
+                                                    cursor: loading
+                                                        ? 'not-allowed'
+                                                        : 'pointer',
+                                                    minWidth: '172px',
+                                                }}
+                                                className="ps-btn d-inline-block"
+                                                href=""
+                                                onClick={async (e) => {
+                                                    e.preventDefault();
+                                                    setLoading(true);
+                                                    try {
+                                                        await audioDownloaderSale(
+                                                            product,
+                                                            product
+                                                        );
+                                                    } catch (error) {
+                                                        console.error(
+                                                            'Error in audioDownloaderSale:',
+                                                            error
+                                                        );
+                                                    } finally {
+                                                        setLoading(false);
                                                     }
-                                                </a>
-                                            )
-                                        }
-
+                                                }}>
+                                                {!loading ? (
+                                                    'Bepul yuklab olish'
+                                                ) : (
+                                                    <div>
+                                                        <div
+                                                            className="spinner-border"
+                                                            role="status">
+                                                            <span className="visually-hidden">
+                                                                Loading...
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                )}
+                                            </a>
+                                        )}
                                     </td>
                                 </tr>
                             ))}

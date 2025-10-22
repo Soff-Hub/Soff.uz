@@ -21,7 +21,7 @@ const ServiceDescription = ({ description = {}, priceBox = {} }) => {
         description: descText = '',
     } = description;
 
-    const { isLoggedIn } = useSelector(state => state.auth);
+    const { isLoggedIn } = useSelector((state) => state.auth);
     const hiddenClass = useRcn({
         mobile: 'flex',
         tablet: 'hidden',
@@ -46,10 +46,7 @@ const ServiceDescription = ({ description = {}, priceBox = {} }) => {
         await sleep(200);
         setModalOpen(true);
     };
-    
 
-    console.log(requirements,);
-    
     return (
         <div className={styles.serviceDescription}>
             <div className={cn(flexClass)}>

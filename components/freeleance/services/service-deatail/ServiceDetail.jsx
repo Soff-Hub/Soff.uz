@@ -72,8 +72,6 @@ const ServiceDetail = ({ data }) => {
             .flatMap((i) => i),
     ].filter(Boolean);
 
-    console.log({ slider_images });
-
     useEffect(() => {
         dispatch(setShowSearch(false));
 
@@ -81,8 +79,6 @@ const ServiceDetail = ({ data }) => {
             dispatch(setShowSearch(true));
         };
     }, [dispatch]);
-
-    console.log(data);
 
     return (
         <div className="container my-5 navTabsPadding">
@@ -110,7 +106,10 @@ const ServiceDetail = ({ data }) => {
                     </div>
                 </div>
                 <div className="col-12 col-lg-4">
-                    <PriceBox priceBox={priceBox} requirements={description.requirements} />
+                    <PriceBox
+                        priceBox={priceBox}
+                        requirements={description.requirements}
+                    />
                     <MoneyBack />
                     <UserBox
                         rating={service?.avg_rating}

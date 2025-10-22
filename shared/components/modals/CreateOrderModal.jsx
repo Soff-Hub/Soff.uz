@@ -129,7 +129,6 @@ const CreateOrderModal = ({
                     price: form.getFieldValue('budget'),
                     title: form.getFieldValue('title'),
                 });
-                console.log({ data });
             } else {
                 push(`/order/${data?.id}`);
             }

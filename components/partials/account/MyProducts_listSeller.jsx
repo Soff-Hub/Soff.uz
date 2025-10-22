@@ -50,7 +50,6 @@ export default function PurchasedProducts() {
             const fileSourceValue = await api.get(
                 `seller/return-telegram-link/${getId}/`
             );
-            console.log({ fileSourceValue });
             window.open(fileSourceValue.data.link, '_blank');
         } catch (error) {
             console.error('Telegram download error:', error);

@@ -32,7 +32,6 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
     const { offers, setOffers, isConnected } = useOffers(order?.id, open);
     const { tg } = useTelegram();
     const price = order?.service?.price || order?.budget || 0;
-    console.log({ selectedOffer });
 
     const { data: initialOffers } = useFGet(order?.id, `offer/${order?.id}/`, {
         enabled: open && !!order?.id && !!user?.access,
@@ -104,7 +103,6 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
         handleClosePaymentModal();
         onOpen();
     };
-    console.log({ order }, order?.order_status_doing?.status);
     const onSuccessPayment = () => {
         if (verfiedOffer || order?.order_type === 'ready_service') {
             push(`/order/${order?.id}`);
@@ -112,8 +110,6 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
         }
         handleRetreatDrawer();
     };
-
-    console.log({ order });
 
     const isFullyPaid = order?.approved_transaction_amount >= price;
     const isPartiallyPaid =
@@ -123,8 +119,6 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
 
     const offerAmount =
         (selectedOffer?.money || 0) - (order?.approved_transaction_amount || 0);
-
-    console.log({ isFullyPaid, isPartiallyPaid, notPaidAmount });
 
     let orderDrawerContent = null;
     if (isFullyPaid) {
@@ -360,10 +354,7 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                         tanlamoqchimisiz?
                     </>
                 }
-                open={
-                    // true
-                    !!selectedOffer
-                }
+                open={!!selectedOffer}
                 onCancel={() => setSelectedOffer(null)}
                 onOk={handleSelect}
                 okText="Ha, tanlayman"

@@ -26,7 +26,6 @@ export default function HeaderNotifications({ color }) {
     const {} = useWebSocket(`${wssBaseUrl}ws/user-notification/`, {
         onMessage: (event) => {
             const newNotification = JSON.parse(event.data);
-            console.log('newNotification', newNotification);
             if (newNotification?.count > 0) {
                 setNotificationsCount(newNotification?.count);
                 setNotifications(newNotification?.notifications);
