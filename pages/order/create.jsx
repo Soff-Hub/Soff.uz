@@ -10,7 +10,7 @@ import Editor from '~/components/Editor';
 
 function OrderCreate() {
     const router = useRouter();
-    const { isLoggedIn, status } = useSelector((state) => state.auth);
+    const { isLoggedIn, status } = useSelector(state => state.auth);
 
     useEffect(() => {
         const handleCheckLogin = async () => {
@@ -227,7 +227,8 @@ const OrderCreateForm = () => {
                     .ps-section__header h3 {
                         font-size: 20px !important;
                     }
-                    .ps-section__header {ps-section--shopping ps-shopping-cart
+                    .ps-section__header {
+                        ps-section--shoppingps-shopping-cart
                         margin-bottom: 10px !important;
                     }
                     .create-order-form .ant-form-item {
@@ -244,7 +245,7 @@ const OrderCreateForm = () => {
                 layout="vertical"
                 className="create-order-form"
                 onFinish={handleOpenConfirm}
-                onFinishFailed={(errorInfo) => {
+                onFinishFailed={errorInfo => {
                     const firstErrorField =
                         errorInfo?.errorFields?.[0]?.name?.[0];
                     if (firstErrorField) {
@@ -329,9 +330,12 @@ const OrderCreateForm = () => {
                 ]}
                 centered>
                 <p>
-                    Rostdan ham buyurtma berishni xohlaysizmi? Buyurtmangiz 10
-                    000 dan ortiq frilanserlarga yuboriladi, ular siz bilan
-                    hamkorlik qilish uchun taklif yuborishadi.
+                    Buyurtma berishni tasdiqlaysizmi?
+                    <br /> ✅ Buyurtma yaratilgandan
+                    so‘ng siz 💳 to‘lovni amalga oshirasiz, <br /> va platformamizdagi
+                    malakali 💼 frilanserlar sizga narx va tavsif bilan o‘z
+                    takliflarini taqdim etishadi. <br /> Siz esa ular orasidan 🎯 sizga
+                    eng mos frilanserni tanlab, u bilan hamkorlikni boshlaysiz.
                 </p>
             </Modal>
         </div>

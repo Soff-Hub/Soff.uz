@@ -3,12 +3,15 @@ import { Modal, Select, message } from 'antd';
 import { useQueryClient } from '@tanstack/react-query';
 import useCancelOrder from '../../../myorder/api/useCancelOrder';
 import useGetReasons from '../../../myorder/api/useGetReasons';
+import useGetOrderById from '../../api/useGetOrderById';
 
 export const CancelOrderModal = ({ isOpen, selectedOrder, onClose }) => {
     const [reason, setReason] = useState('');
     const { data: reasons } = useGetReasons();
     const { mutate: cancelOrder, isPending: isCancelling } = useCancelOrder();
     const queryClient = useQueryClient();
+
+    const { data: order, refetch } = useGetOrderById(selectedOrder.id);
 
     const handleOk = () => {
         if (!reason) {
@@ -25,6 +28,7 @@ export const CancelOrderModal = ({ isOpen, selectedOrder, onClose }) => {
                             'Buyurtma muvaffaqiyatli bekor qilindi!'
                         );
                         queryClient.invalidateQueries(['ordersStatus']);
+                        refetch();
                         setReason('');
                         onClose();
                     },
