@@ -8,10 +8,12 @@ import {
     NEW_PROFILE,
     TELEGRAM_LINK,
 } from '~/shared/api/end-points';
+import { useTelegram } from '~/shared/hooks/useTelegram';
 
 export default function TelegramNotification({ header, hideIfActivated }) {
     const { isMobile } = useResponsive();
     const [isTelegramWebApp, setIsTelegramWebApp] = useState(false);
+    const { tg } = useTelegram();
     const [checked, setChecked] = useState(false);
     const { data: tg_link } = useGet(
         'tg_link',
@@ -49,7 +51,7 @@ export default function TelegramNotification({ header, hideIfActivated }) {
         if (window.Telegram?.WebApp?.initDataUnsafe?.user) {
             setIsTelegramWebApp(true);
         }
-    }, []);
+    }, [tg]);
 
     const handleSwitchChange = (value) => {
         if (value) {
