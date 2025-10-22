@@ -11,6 +11,7 @@ import {
 
 export default function TelegramNotification({ header, hideIfActivated }) {
     const { isMobile } = useResponsive();
+    const [isTelegramWebApp, setIsTelegramWebApp] = useState(false);
     const { data: tg_link } = useGet(
         'tg_link',
         `${process.env.NEXT_PUBLIC_BASE_URL}${TELEGRAM_LINK}`
@@ -57,6 +58,16 @@ export default function TelegramNotification({ header, hideIfActivated }) {
     };
 
     if (checked && hideIfActivated) {
+        return null;
+    }
+
+    useEffect(() => {
+        if (window.Telegram?.WebApp) {
+            setIsTelegramWebApp(true);
+        }
+    }, []);
+
+    if (isTelegramWebApp) {
         return null;
     }
 
