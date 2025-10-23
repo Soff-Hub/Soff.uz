@@ -52,7 +52,7 @@ export default function TelegramNotification({ header, hideIfActivated }) {
 
     const handleSwitchChange = (value) => {
         if (value) {
-            if (!newProfile?.telegram_chat_id && tg_link?.link_code) {
+            if (tg_link?.link_code) {
                 window.open(tg_link.link_code, '_blank');
             }
         } else {
