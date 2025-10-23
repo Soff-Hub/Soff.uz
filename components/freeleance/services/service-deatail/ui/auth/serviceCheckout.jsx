@@ -125,7 +125,7 @@ const ServiceCheckout = ({
                     setResDataCode(data);
                     setOpen(false);
                     if (onSuccess) {
-                        onSuccess(data?.order_id);
+                        onSuccess(data?.order_id, data?.accepted_by_id);
                         return;
                     }
                     if (!order_id) push('/order/my-orders?tab=2');

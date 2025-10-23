@@ -23,12 +23,6 @@ import OrderPaymentPrompt from './OrderPaymentPrompt';
 dayjs.extend(relativeTime);
 dayjs.locale('uz-latn');
 
-const defaultOrder = {
-    id: 123,
-    price: 100000,
-    title: 'Namuna Xizmat',
-};
-
 const InfoRow = memo(({ icon, label, value }) => (
     <div
         className={cn(
@@ -412,7 +406,7 @@ const UserShortInfo = ({ seller }) => {
             <OrderPaymentPrompt
                 isOpen={orderPaymentPromptModal}
                 onClose={() => setOrderPaymentPromptModal(false)}
-                order={latelyCreatedOrder || defaultOrder}
+                order={latelyCreatedOrder}
             />
         </div>
     );

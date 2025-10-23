@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { Button, Modal } from 'antd';
 import ServiceCheckout from '~/components/freeleance/services/service-deatail/ui/auth/serviceCheckout';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
+import { useRouter } from 'next/router';
 
 function OrderPaymentPrompt({ isOpen, onClose, order }) {
     const [showPayment, setShowPayment] = useState(false);
+    const { push } = useRouter();
     return (
         <Modal open={isOpen} onCancel={onClose} footer={null} width={600}>
             <div className="type_payment p-lg-5 p-md-5 p-4">
@@ -76,7 +78,8 @@ function OrderPaymentPrompt({ isOpen, onClose, order }) {
                         </div>
                         <div className="bg-white">
                             <ServiceCheckout
-                                document={order?.id}
+                                order_id={order?.id}
+                                onSuccess={() => push(`/order/${order?.id}`)}
                                 onClose={onClose}
                             />
                         </div>
