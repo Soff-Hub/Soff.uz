@@ -241,6 +241,7 @@ const ServiceCheckout = ({
                                             maxLength="19"
                                             placeholder="0000 0000 0000 0000"
                                             value={formattedCardNumber}
+                                            disabled={createOrder?.isPending}
                                             onChange={handleCardNumberChange}
                                         />
                                     </label>
@@ -254,6 +255,7 @@ const ServiceCheckout = ({
                                             inputMode="numeric"
                                             maxLength="5"
                                             placeholder="MM/YY"
+                                            disabled={createOrder?.isPending}
                                             value={numberDate}
                                             onChange={handleCardNumberDate}
                                         />
@@ -273,11 +275,15 @@ const ServiceCheckout = ({
                                     {!message ? (
                                         <button
                                             type="submit"
+                                            disabled={createOrder?.isPending}
                                             className="ps-btn w-100 btn_color">
                                             Davom etish
                                         </button>
                                     ) : (
-                                        <button className="ps-btn w-100">
+                                        <button
+                                            className="ps-btn w-100"
+                                            disabled={createOrder?.isPending}
+                                            type="button">
                                             <BeatLoader color="#fff" />
                                         </button>
                                     )}
@@ -295,6 +301,7 @@ const ServiceCheckout = ({
                         onCancel={handleCancale}
                         okButtonProps={{
                             style: { backgroundColor: 'green', color: 'white' },
+                            disabled: verifyCode?.isPending || !code?.length,
                         }}
                         okText={
                             buttonOk ? (
@@ -304,7 +311,6 @@ const ServiceCheckout = ({
                             )
                         }
                         cancelText="Orqaga">
-                        {/* <p>To'lov tez orada ishga tushadi</p> */}
                         <>
                             <p>
                                 Kod quyidagi raqamga yuborildi:{' '}
@@ -314,13 +320,16 @@ const ServiceCheckout = ({
                                 onChange={(e) => setCode(e.target.value)}
                                 type="tel"
                                 placeholder="000000"
+                                disabled={verifyCode?.isPending}
                                 maxLength={6}
                                 className="form-control text-center rounded-3 fs-3"
                             />
                             <strong className="text-danger">{display}</strong>
                             {resDataCode?.detail && (
                                 <p className="text-danger">
-                                    {resDataCode.detail}
+                                    {typeof resDataCode.detail == 'string'
+                                        ? resDataCode.detail
+                                        : "Noma'lum xato"}
                                 </p>
                             )}
                         </>
@@ -360,6 +369,8 @@ const ServiceCheckout = ({
             ),
         },
     ];
+
+    console.log({ code });
 
     return (
         <Tabs
