@@ -67,8 +67,7 @@
     align-self: flex-start;
 }
 
-
-.chat_file_box{
+.chat_file_box {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -87,7 +86,7 @@
     padding: 6px;
     cursor: pointer;
     color: #00a44f;
-    background:white;
+    background: white;
     transition: all 0.25s ease;
 
     &:hover {

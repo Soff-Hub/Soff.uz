@@ -1,12 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import useGetChatById from './useGetChatById';
+import useDeleteMessage from './useDeleteMessage';
+import { sleep } from '~/shared/utilities/sleep';
 
 const useChat = (chatId) => {
     const [messages, setMessages] = useState([]);
     const [chat, setChat] = useState();
+    const { mutate: deleteMsg } = useDeleteMessage();
 
-    const { user } = useSelector(state => state.auth);
+    const { user } = useSelector((state) => state.auth);
     const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
         useGetChatById(chatId);
     const wsRef = useRef();
@@ -14,11 +17,15 @@ const useChat = (chatId) => {
         if (chatId && data) {
             setChat(data?.pages[0]?.chat);
 
-            let allMsgs = data.pages.flatMap(p => p.messages);
+            let allMsgs = data.pages.flatMap((p) => p.messages);
 
-            allMsgs = allMsgs.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+            allMsgs = allMsgs.sort(
+                (a, b) => new Date(a.created_at) - new Date(b.created_at)
+            );
 
-            const uniqueMsgs = Array.from(new Map(allMsgs.map(m => [m.id, m])).values());
+            const uniqueMsgs = Array.from(
+                new Map(allMsgs.map((m) => [m.id, m])).values()
+            );
 
             setMessages(uniqueMsgs);
         }
@@ -26,39 +33,76 @@ const useChat = (chatId) => {
 
     const sendUnreadMessages = (ws, messages) => {
         if (!ws || ws.readyState !== WebSocket.OPEN) return;
-        const unreadIds = messages?.filter(m => !m.is_read).map(m => m.id);
+        const unreadIds = messages?.filter((m) => !m.is_read).map((m) => m.id);
         if (unreadIds?.length > 0) {
-            ws.send(JSON.stringify({
-                event: "message_read",
-                message_ids: unreadIds
-            }));
+            ws.send(
+                JSON.stringify({
+                    event: 'message_read',
+                    message_ids: unreadIds,
+                })
+            );
         }
     };
 
-    const sendMessage = (content) => {
+    const sendMessage = async (content) => {
         if (wsRef.current?.readyState === WebSocket.OPEN) {
-            wsRef.current.send(JSON.stringify({
-                event: "message",
-                content
-            }));
-        }
-    };
-
-
-
-    const updateMessage = (content, message_id) => {
-        if (wsRef.current?.readyState === WebSocket.OPEN) {
-            wsRef.current.send(JSON.stringify({
-                event: "message_update",
+            const tempId = `temp-${Date.now()}`;
+            const tempMessage = {
+                id: tempId,
                 content,
-                message_id,
-            }));
+                file: null,
+                read_at: null,
+                sender_id: user.id,
+                created_at: new Date().toISOString(),
+                is_read: false,
+                is_mine: true,
+                status: 'sending', // 🟡 UI can show spinner
+            };
+
+            // Add it immediately to UI
+            setMessages((prev) => [...prev, tempMessage]);
+            await sleep(5000);
+            wsRef.current.send(
+                JSON.stringify({
+                    event: 'message',
+                    content,
+                })
+            );
         }
+    };
+
+    const updateMessage = async (content, message_id) => {
+        if (wsRef.current?.readyState === WebSocket.OPEN) {
+            const tempMessage = {
+                ...(messages.find((m) => m.id === message_id) || {}),
+                content,
+                status: 'updating', // 🟡 UI can show spinner
+            };
+            console.log({ tempMessage, message_id });
+
+            setMessages((prev) =>
+                prev.map((m) => (m.id === message_id ? tempMessage : m))
+            );
+            await sleep(5000);
+            wsRef.current.send(
+                JSON.stringify({
+                    event: 'message_update',
+                    content,
+                    message_id,
+                })
+            );
+        }
+    };
+
+    const deleteMessage = async (message_id, message_status) => {
+        setMessages((prev) => prev.filter((m) => m.id !== message_id));
+        await sleep(5000);
+        deleteMsg(message_id);
     };
 
     useEffect(() => {
         if (!chatId || !user?.access) return;
-
+        let unreadMessageTimeout;
         const ws = new WebSocket(
             `${process.env.NEXT_PUBLIC_WS_FREELEANCE_URL}chat/${chatId}/?token=${user.access}`
         );
@@ -70,7 +114,7 @@ const useChat = (chatId) => {
 
         ws.onmessage = (event) => {
             if (!event.data) {
-                console.warn("⚠️ WS event.data bo‘sh:", event);
+                console.warn('⚠️ WS event.data bo‘sh:', event);
                 return;
             }
 
@@ -78,36 +122,50 @@ const useChat = (chatId) => {
             try {
                 msg = JSON.parse(event.data);
             } catch (e) {
-                console.warn("⚠️ JSON emas data:", event.data);
+                console.warn('⚠️ JSON emas data:', event.data);
                 return;
             }
-
+            console.log('WS message received:', msg);
             switch (msg.event) {
-                case "message":
-                    setMessages(prev => {
-                        const updated = [...prev, msg];
+                case 'message': {
+                    setMessages((prev) => {
+                        const prevFilteredMessages = prev.filter(
+                            (m) =>
+                                m.status != 'sending' &&
+                                m.content !== msg.content
+                        );
+                        const updated = [...prevFilteredMessages, msg];
                         sendUnreadMessages(ws, updated);
                         return updated;
                     });
                     break;
-                case "message_update":
-                    setMessages(prev => prev.map(m =>
-                        m.id === msg.id ? { ...m, ...msg } : m
-                    ));
+                }
+                case 'message_update':
+                    setMessages((prev) =>
+                        prev.map((m) => {
+                            const { status, ...cleanMsgProperties } = m;
+                            if (m.id === msg.id) {
+                                return { ...cleanMsgProperties, ...msg };
+                            }
+                            return m;
+                        })
+                    );
                     break;
-                case "delete_message":
-                    setMessages(prev => prev.filter(m => m.id !== msg.id));
+                case 'delete_message':
+                    setMessages((prev) => prev.filter((m) => m.id !== msg.id));
                     break;
                 default:
-                    console.warn("Unknown event:", msg);
+                    console.warn('Unknown event:', msg);
             }
-            setTimeout(() => {
+            unreadMessageTimeout = setTimeout(() => {
                 sendUnreadMessages(ws, messages);
             }, 1000);
         };
 
-
-        return () => ws.close();
+        return () => {
+            ws.close();
+            clearTimeout(unreadMessageTimeout);
+        };
     }, [chatId, user?.access]);
 
     return {
@@ -115,6 +173,7 @@ const useChat = (chatId) => {
         chat,
         sendMessage,
         updateMessage,
+        deleteMessage,
         sendUnreadMessages,
         fetchNextPage,
         hasNextPage,

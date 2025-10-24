@@ -5,7 +5,6 @@ import {
     ArrowDownOutlined,
     ArrowLeftOutlined,
     PaperClipOutlined,
-    PlusOutlined,
     SendOutlined,
     ShoppingCartOutlined,
 } from '@ant-design/icons';
@@ -22,105 +21,54 @@ import SafetyAlert from './SafetyAlert';
 const { TextArea } = Input;
 
 const ChatWindow = ({ chatId, goBack }) => {
-    const [newMessage, setNewMessage] = useState('');
     const [edit, setEdit] = useState(null);
     const [openDownIcon, setOpenDownIcon] = useState(false);
     const messagesContainerRef = useRef(null);
+    const scrollPositionRef = useRef(0);
     const router = useRouter();
-    const [file, setFile] = useState();
-    const queryClient = useQueryClient();
-    const { mutate: sendFile, isPending } = useSendMessage();
-    const fileInputRef = useRef(null);
-    const [open, setOpen] = useState(false);
-
-    const handleClickAttach = () => {
-        if (fileInputRef.current) fileInputRef.current?.click();
-    };
-
-    const handleSendFile = useCallback(
-        (selectedFile) => {
-            if (!selectedFile) return;
-            sendFile(
-                { chat_id: chatId, file: selectedFile },
-                {
-                    onSuccess: () => {
-                        setFile(null);
-                        queryClient.invalidateQueries([
-                            'chat-messages',
-                            chatId,
-                        ]);
-                        scrollToBottom();
-                        message.success('Fayl muvaffaqiyatli yuborildi');
-                    },
-                    onError: (err) => {
-                        message.error(
-                            err?.response?.data?.detail ||
-                                'Faylni yuborishda xatolik yuz berdi'
-                        );
-                    },
-                }
-            );
-        },
-        [chatId, sendFile, queryClient]
-    );
 
     const {
         messages,
         chat,
         sendMessage,
         updateMessage,
+        deleteMessage,
         fetchNextPage,
         hasNextPage,
     } = useChat(chatId);
+    console.log('messages', messages);
 
-    const scrollToBottom = useCallback(() => {
+    const handleFetchNext = async () => {
+        if (!messagesContainerRef.current) return;
+
+        const el = messagesContainerRef.current;
+
+        // Store the current scroll position from the bottom
+        const scrollFromBottom =
+            el.scrollHeight - el.scrollTop - el.clientHeight;
+
+        await fetchNextPage();
+
+        // Wait for DOM to update with new messages
+
         if (messagesContainerRef.current) {
-            messagesContainerRef.current.scrollTop =
-                messagesContainerRef.current.scrollHeight;
+            // Restore scroll position relative to bottom
+            const newScrollTop =
+                el.scrollHeight - el.clientHeight - scrollFromBottom;
+            el.scrollTop = newScrollTop;
         }
-    }, []);
+    };
 
     const handlScroll = () => {
-        if (messagesContainerRef.current.scrollTop < -500) {
+        if (
+            messagesContainerRef.current &&
+            messagesContainerRef.current.scrollTop < -500
+        ) {
             setOpenDownIcon(true);
         } else {
             setOpenDownIcon(false);
         }
     };
-
-    // edit qilishda
-    useEffect(() => {
-        if (edit) {
-            setNewMessage(edit.content);
-        }
-    }, [edit]);
-
-    useEffect(() => {
-        scrollToBottom();
-    }, [messages.length]);
-
-    const handleSend = useCallback(() => {
-        if (!newMessage.trim()) return;
-
-        if (edit) {
-            updateMessage(newMessage, edit.id);
-            setEdit(null);
-        } else {
-            // scrollToBottom();
-            sendMessage(newMessage);
-        }
-        setNewMessage('');
-    }, [newMessage, edit, sendMessage, updateMessage]);
-
-    const handleKeyPress = useCallback(
-        (e) => {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                handleSend();
-            }
-        },
-        [handleSend]
-    );
 
     if (!chatId) {
         return (
@@ -189,7 +137,7 @@ const ChatWindow = ({ chatId, goBack }) => {
                 className={`${styles.chat_messages}  p-3`}>
                 <InfiniteScroll
                     dataLength={messages.length}
-                    next={fetchNextPage}
+                    next={handleFetchNext}
                     hasMore={hasNextPage}
                     loader={
                         <div className="d-flex justify-content-center align-items-center py-2">
@@ -215,6 +163,7 @@ const ChatWindow = ({ chatId, goBack }) => {
                                     key={msg.id}
                                     msg={msg}
                                     onEdit={setEdit}
+                                    onDelete={deleteMessage}
                                 />
                             ))
                         ) : (
@@ -226,6 +175,104 @@ const ChatWindow = ({ chatId, goBack }) => {
                     </div>
                 </InfiniteScroll>
             </div>
+            <ChatInputParts
+                edit={edit}
+                chatId={chatId}
+                chat={chat}
+                sendMessage={sendMessage}
+                updateMessage={updateMessage}
+                setEdit={setEdit}
+                messagesContainerRef={messagesContainerRef}
+                scrollPositionRef={scrollPositionRef}
+                openDownIcon={openDownIcon}
+            />
+        </div>
+    );
+};
+
+const ChatInputParts = ({
+    edit,
+    chat,
+    chatId,
+    messagesContainerRef,
+    openDownIcon,
+    sendMessage,
+    updateMessage,
+    setEdit,
+}) => {
+    const [newMessage, setNewMessage] = useState('');
+    const [file, setFile] = useState();
+    const queryClient = useQueryClient();
+    const { mutate: sendFile, isPending } = useSendMessage();
+    const fileInputRef = useRef(null);
+    const [open, setOpen] = useState(false);
+
+    const handleClickAttach = () => {
+        if (fileInputRef.current) fileInputRef.current?.click();
+    };
+
+    const handleSendFile = useCallback(
+        (selectedFile) => {
+            if (!selectedFile) return;
+            sendFile(
+                { chat_id: chatId, file: selectedFile },
+                {
+                    onSuccess: () => {
+                        setFile(null);
+                        queryClient.invalidateQueries([
+                            'chat-messages',
+                            chatId,
+                        ]);
+                        scrollToBottom();
+                        message.success('Fayl muvaffaqiyatli yuborildi');
+                    },
+                    onError: (err) => {
+                        message.error(
+                            err?.response?.data?.detail ||
+                                'Faylni yuborishda xatolik yuz berdi'
+                        );
+                    },
+                }
+            );
+        },
+        [chatId, sendFile, queryClient]
+    );
+
+    const handleSend = useCallback(() => {
+        if (!newMessage.trim()) return;
+
+        if (edit) {
+            updateMessage(newMessage, edit.id);
+            setEdit(null);
+        } else {
+            scrollToBottom();
+            sendMessage(newMessage);
+        }
+        setNewMessage('');
+    }, [newMessage, edit, sendMessage, updateMessage]);
+
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            handleSend();
+        }
+    };
+
+    const scrollToBottom = useCallback(() => {
+        if (messagesContainerRef.current) {
+            messagesContainerRef.current.scrollTop =
+                messagesContainerRef.current.scrollHeight;
+        }
+    }, []);
+
+    useEffect(() => {
+        if (edit) {
+            setNewMessage(edit.content);
+        }
+    }, [edit]);
+
+    return (
+        <>
             <span
                 onClick={scrollToBottom}
                 className={styles.chat_down_icon}
@@ -301,7 +348,7 @@ const ChatWindow = ({ chatId, goBack }) => {
                 seller={chat?.opponent?.name}
                 sellerInfo={chat?.opponent}
             />
-        </div>
+        </>
     );
 };
 

@@ -20,7 +20,7 @@ import { EmptyTab } from './MyOrderTabs';
 export const AllOrdersTable = ({ type }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState(null);
-    const [reason, setReason] = useState('');
+    const [reason, setReason] = useState(null);
     const { data: orders, isLoading: ordersLoading } = useGetOrders();
     const { mutate: cancelOrder, isPending: isCancelling } = useCancelOrder();
     const { data: reasons } = useGetReasons();
@@ -60,7 +60,7 @@ export const AllOrdersTable = ({ type }) => {
 
     const handleModalCancel = () => {
         setIsModalOpen(false);
-        setReason('');
+        setReason(null);
         setSelectedOrder(null);
     };
 
@@ -132,6 +132,9 @@ export const AllOrdersTable = ({ type }) => {
             <Modal
                 title="Buyurtmani bekor qilish"
                 open={isModalOpen}
+                okButtonProps={{
+                    disabled: !reason || isCancelling,
+                }}
                 onOk={handleModalOk}
                 onCancel={handleModalCancel}
                 okText="Bekor qilish"
