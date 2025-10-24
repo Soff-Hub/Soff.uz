@@ -88,6 +88,49 @@
     height: fit-content !important;
 }
 
+.chat-file-uploader {
+    height: fit-content !important;
+    .has_files {
+        display: block !important;
+    }
+    .no-files {
+        display: none !important;
+    }
+
+    .ant-upload {
+        display: none !important;
+    }
+
+    .ant-upload-list-item {
+        height: 43px !important;
+
+        .ant-upload-list-item-thumbnail {
+            height: 30px !important;
+            width: 30px !important;
+
+            .anticon {
+                position: relative;
+                bottom: 10px;
+                font-size: 25px !important;
+            }
+        }
+
+        .ant-upload-list-item-progress {
+            padding: 0 !important;
+            bottom: 3px !important;
+            width: calc(100% - 24px) !important;
+            margin-top: 0 !important;
+            padding-inline-start: 38px !important;
+        }
+    }
+}
+
+// .chat-file-upload-indicator {
+//     .ant-spin-dot-circle:nth-child(2) {
+//         stroke: #fff !important;
+//     }
+// }
+
 @media (max-width: 1024px) {
     .usr_bodyy {
         padding: 20px 0 !important;

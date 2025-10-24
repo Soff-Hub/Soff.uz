@@ -1,6 +1,15 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import styles from '../style/chat.module.scss';
-import { Input, Button, Avatar, Empty, message, Tooltip } from 'antd';
+import {
+    Input,
+    Button,
+    Avatar,
+    Empty,
+    message,
+    Tooltip,
+    Upload,
+    Spin,
+} from 'antd';
 import {
     ArrowDownOutlined,
     ArrowLeftOutlined,
@@ -13,12 +22,12 @@ import { useRouter } from 'next/router';
 import useChat from '../api/useChat';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { ClipLoader } from 'react-spinners';
-import useSendMessage from '../api/useSendMessage';
 import { useQueryClient } from '@tanstack/react-query';
 import CreateOrderModal from '~/shared/components/modals/CreateOrderModal';
 import SafetyAlert from './SafetyAlert';
 
 const { TextArea } = Input;
+const maxSize = 50 * 1024 * 1024;
 
 const ChatWindow = ({ chatId, goBack }) => {
     const [edit, setEdit] = useState(null);
@@ -31,10 +40,12 @@ const ChatWindow = ({ chatId, goBack }) => {
         messages,
         chat,
         sendMessage,
+        sendMessageWithFile,
         updateMessage,
         deleteMessage,
         fetchNextPage,
         hasNextPage,
+        isMessageWithFilePending,
     } = useChat(chatId);
     console.log('messages', messages);
 
@@ -180,8 +191,10 @@ const ChatWindow = ({ chatId, goBack }) => {
                 chatId={chatId}
                 chat={chat}
                 sendMessage={sendMessage}
+                sendMessageWithFile={sendMessageWithFile}
                 updateMessage={updateMessage}
                 setEdit={setEdit}
+                isMessageWithFilePending={isMessageWithFilePending}
                 messagesContainerRef={messagesContainerRef}
                 scrollPositionRef={scrollPositionRef}
                 openDownIcon={openDownIcon}
@@ -197,33 +210,47 @@ const ChatInputParts = ({
     messagesContainerRef,
     openDownIcon,
     sendMessage,
+    sendMessageWithFile,
+    isMessageWithFilePending,
     updateMessage,
     setEdit,
 }) => {
     const [newMessage, setNewMessage] = useState('');
-    const [file, setFile] = useState();
+    const [fileList, setFileList] = useState([]);
     const queryClient = useQueryClient();
-    const { mutate: sendFile, isPending } = useSendMessage();
     const fileInputRef = useRef(null);
     const [open, setOpen] = useState(false);
+    console.log('fileList', fileList);
+    // originFileObj;
 
     const handleClickAttach = () => {
         if (fileInputRef.current) fileInputRef.current?.click();
     };
 
-    const handleSendFile = useCallback(
-        (selectedFile) => {
-            if (!selectedFile) return;
-            sendFile(
-                { chat_id: chatId, file: selectedFile },
+    const clearStates = () => {
+        setFileList([]);
+        setNewMessage('');
+    };
+
+    const handleSend = () => {
+        const trimmedMessage = newMessage.trim();
+
+        if (fileList.length) {
+            sendMessageWithFile(
+                {
+                    chat_id: chatId,
+                    file: fileList[0]?.originFileObj,
+                    content: trimmedMessage,
+                },
                 {
                     onSuccess: () => {
-                        setFile(null);
-                        queryClient.invalidateQueries([
-                            'chat-messages',
-                            chatId,
-                        ]);
-                        scrollToBottom();
+                        queryClient.invalidateQueries({
+                            queryKey: ['chat-messages', chatId],
+                        });
+                        // Use setTimeout to ensure DOM is updated before scrolling
+                        setTimeout(() => {
+                            scrollToBottom();
+                        }, 100);
                         message.success('Fayl muvaffaqiyatli yuborildi');
                     },
                     onError: (err) => {
@@ -234,22 +261,25 @@ const ChatInputParts = ({
                     },
                 }
             );
-        },
-        [chatId, sendFile, queryClient]
-    );
+            clearStates();
+            return;
+        }
 
-    const handleSend = useCallback(() => {
-        if (!newMessage.trim()) return;
+        if (!trimmedMessage) return;
 
         if (edit) {
             updateMessage(newMessage, edit.id);
             setEdit(null);
         } else {
-            scrollToBottom();
             sendMessage(newMessage);
+            // Use setTimeout to ensure DOM is updated before scrolling
+            setTimeout(() => {
+                scrollToBottom();
+            }, 100);
         }
-        setNewMessage('');
-    }, [newMessage, edit, sendMessage, updateMessage]);
+
+        clearStates();
+    };
 
     const handleKeyPress = (e) => {
         if (e.key === 'Enter' && !e.shiftKey) {
@@ -260,8 +290,10 @@ const ChatInputParts = ({
 
     const scrollToBottom = useCallback(() => {
         if (messagesContainerRef.current) {
-            messagesContainerRef.current.scrollTop =
-                messagesContainerRef.current.scrollHeight;
+            const container = messagesContainerRef.current;
+            // Force scroll to the absolute bottom
+            container.scrollTop =
+                container.scrollHeight - container.clientHeight;
         }
     }, []);
 
@@ -270,6 +302,11 @@ const ChatInputParts = ({
             setNewMessage(edit.content);
         }
     }, [edit]);
+
+    const canSubmit = edit
+        ? newMessage.trim() !== edit.content && newMessage.trim() !== ''
+        : newMessage.trim() !== '' ||
+          (fileList.length > 0 && fileList[0]?.status === 'done');
 
     return (
         <>
@@ -285,27 +322,31 @@ const ChatInputParts = ({
             </span>
 
             {/* input */}
-            <div className={styles.chat_input_box}>
-                <input
-                    type="file"
+            <Upload
+                listType="picture"
+                maxCount={1}
+                fileList={fileList}
+                onChange={({ fileList: newFileList }) => {
+                    if (newFileList[0]?.size > maxSize) {
+                        message.error('Fayl hajmi 50MB dan oshmasligi kerak');
+                        return;
+                    }
+                    setFileList(newFileList);
+                }}
+                className={`chat-file-uploader ${
+                    fileList.length ? 'has-files' : 'no-files'
+                }`}>
+                <Button
+                    type="primary"
+                    icon={'🌛'}
                     ref={fileInputRef}
-                    onChange={(e) => {
-                        const selectedFile = e.target.files[0];
-                        if (selectedFile) {
-                            const maxSize = 50 * 1024 * 1024;
-                            if (selectedFile.size > maxSize) {
-                                message.error(
-                                    "Fayl 50 MB dan katta bo'lishi mumkin emas"
-                                );
-                                return;
-                            }
-                            setFile(selectedFile);
-                            handleSendFile(selectedFile);
-                        }
-                    }}
-                    style={{ display: 'none' }}
-                />
-
+                    style={{
+                        display: 'none',
+                    }}>
+                    Upload
+                </Button>
+            </Upload>
+            <div className={styles.chat_input_box}>
                 <Tooltip title="Maxsus buyurtma berish">
                     <Button
                         type="primary"
@@ -320,12 +361,14 @@ const ChatInputParts = ({
                         type="primary"
                         shape="circle"
                         onClick={handleClickAttach}
-                        loading={isPending}
+                        disabled={edit != null}
+                        loading={fileList?.[0]?.status == 'uploading'}
                     />
                 </Tooltip>
 
                 <TextArea
                     value={newMessage}
+                    disabled={isMessageWithFilePending}
                     onChange={(e) => setNewMessage(e.target.value)}
                     onKeyDown={handleKeyPress}
                     autoSize={{ minRows: 1, maxRows: 6 }}
@@ -335,10 +378,17 @@ const ChatInputParts = ({
                     className={styles.chat_input}
                 />
                 <Button
-                    style={{ background: edit ? '#f59e0b' : '#00A44F' }}
                     type="primary"
-                    onClick={file ? handleSendFile : handleSend}>
-                    <SendOutlined style={{ fontSize: '20px' }} />
+                    disabled={!canSubmit || isMessageWithFilePending}
+                    onClick={handleSend}>
+                    {fileList?.[0]?.status == 'uploading' ? (
+                        <Spin
+                            percent={fileList?.[0]?.percent || 0}
+                            className="chat-file-upload-indicator"
+                        />
+                    ) : (
+                        <SendOutlined style={{ fontSize: '20px' }} />
+                    )}
                 </Button>
             </div>
             <CreateOrderModal

@@ -3,12 +3,14 @@ import { useSelector } from 'react-redux';
 import useGetChatById from './useGetChatById';
 import useDeleteMessage from './useDeleteMessage';
 import { sleep } from '~/shared/utilities/sleep';
+import useSendMessage from './useSendMessage';
 
 const useChat = (chatId) => {
     const [messages, setMessages] = useState([]);
     const [chat, setChat] = useState();
-    const { mutate: deleteMsg } = useDeleteMessage();
-
+    const { mutateAsync: deleteMsg } = useDeleteMessage();
+    const { mutateAsync: sendFile, isPending: isMessageWithFilePending } =
+        useSendMessage();
     const { user } = useSelector((state) => state.auth);
     const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
         useGetChatById(chatId);
@@ -71,6 +73,29 @@ const useChat = (chatId) => {
         }
     };
 
+    const sendMessageWithFile = async (data, options) => {
+        setMessages((prev) => [
+            ...prev,
+            {
+                id: `temp-${Date.now()}`,
+                content: data.content || '',
+                file: {
+                    url: URL.createObjectURL(data?.file),
+                    filename: data?.file.name,
+                    size: data?.file.size,
+                },
+                read_at: null,
+                sender_id: user.id,
+                created_at: new Date().toISOString(),
+                is_read: false,
+                is_mine: true,
+                status: 'sending', // 🟡 UI can show spinner
+            },
+        ]);
+        await sleep(5000);
+        await sendFile(data, options);
+    };
+
     const updateMessage = async (content, message_id) => {
         if (wsRef.current?.readyState === WebSocket.OPEN) {
             const tempMessage = {
@@ -97,7 +122,7 @@ const useChat = (chatId) => {
     const deleteMessage = async (message_id, message_status) => {
         setMessages((prev) => prev.filter((m) => m.id !== message_id));
         await sleep(5000);
-        deleteMsg(message_id);
+        await deleteMsg(message_id);
     };
 
     useEffect(() => {
@@ -129,12 +154,20 @@ const useChat = (chatId) => {
             switch (msg.event) {
                 case 'message': {
                     setMessages((prev) => {
-                        const prevFilteredMessages = prev.filter(
-                            (m) =>
-                                m.status != 'sending' &&
-                                m.content !== msg.content
-                        );
-                        const updated = [...prevFilteredMessages, msg];
+                        let replaced = false;
+
+                        const updated = prev.map((m) => {
+                            if (
+                                !replaced &&
+                                m.status === 'sending' &&
+                                m.content === msg.content
+                            ) {
+                                replaced = true;
+                                return msg; // replace this one
+                            }
+                            return m;
+                        });
+
                         sendUnreadMessages(ws, updated);
                         return updated;
                     });
@@ -172,12 +205,14 @@ const useChat = (chatId) => {
         messages,
         chat,
         sendMessage,
+        sendMessageWithFile,
         updateMessage,
         deleteMessage,
         sendUnreadMessages,
         fetchNextPage,
         hasNextPage,
         isFetchingNextPage,
+        isMessageWithFilePending,
     };
 };
 

@@ -55,7 +55,7 @@ const ChatMessage = ({ msg, onEdit, onDelete, pushUser }) => {
     }, []);
 
     const myMenuItems = useMemo(() => {
-        if (msg.file) {
+        if (msg.file && !msg.content) {
             return [
                 {
                     key: 'delete',
@@ -180,16 +180,20 @@ const ChatMessage = ({ msg, onEdit, onDelete, pushUser }) => {
             <div
                 className={`${styles.chat_message} ${
                     isMyMessage ? styles.my_message : styles.other_message
-                }`}>
+                }`}
+                style={{
+                    wordBreak: 'break-word',
+                    whiteSpace: 'pre-wrap',
+                }}>
                 <span
                     style={{
-                        display: 'flex',
+                        display: 'grid',
+                        gridTemplateColumns: '1fr auto',
                         justifyContent: 'space-between',
-                        alignItems: 'flex-end',
-                        gap: '6px',
+                        alignItems: 'end',
+                        gap: '5px',
+                        width: '100%',
                     }}>
-                    {msg.content && <span>{msg.content}</span>}
-
                     {msg.file && (
                         <div className={styles.chat_file_box}>
                             <FileTextOutlined
@@ -209,10 +213,21 @@ const ChatMessage = ({ msg, onEdit, onDelete, pushUser }) => {
                             </div>
                         </div>
                     )}
+                    {msg.content && (
+                        <span
+                            style={{
+                                gridColumn: '1 / 2',
+                                whiteSpace: 'pre-wrap',
+                                wordWrap: 'break-word',
+                                overflowWrap: 'break-word',
+                                minWidth: 0,
+                            }}>
+                            {msg.content}
+                        </span>
+                    )}
                     <span
                         style={{
-                            display: 'flex',
-                            alignItems: 'center',
+                            textAlign: 'right',
                             fontSize: '9.5px',
                             color: isMyMessage ? 'white' : 'black',
                             opacity: 0.7,
@@ -223,7 +238,14 @@ const ChatMessage = ({ msg, onEdit, onDelete, pushUser }) => {
                     </span>
                 </span>
                 <div
-                    style={isMyMessage ? { left: '-20px' } : { right: '-20px' }}
+                    style={{
+                        ...(isMyMessage
+                            ? { left: '-20px' }
+                            : { right: '-20px' }),
+                        position: 'absolute',
+                        top: '4px',
+                        zIndex: 10,
+                    }}
                     className={styles.moreWrapper}>
                     <Dropdown
                         menu={
