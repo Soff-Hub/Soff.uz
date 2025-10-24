@@ -392,7 +392,7 @@ const OrderMain = ({ order }) => {
                 <OrderCard
                     order={order}
                     infoOnly
-                    detail={true}
+                    detail
                     onOrderUpdate={handleOrderUpdate}
                 />
                 {order?.order_status_doing?.status === 'completed' && (

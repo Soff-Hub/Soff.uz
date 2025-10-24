@@ -347,8 +347,7 @@ const OrderCard = ({
                 {!infoOnly && (
                     <div className={styles.actionButtons}>
                         {typeof onOpenDrawer === 'function' &&
-                        statusAsset.isRejectable &&
-                        statusAsset.status !== 'rejected' ? (
+                        statusAsset.isRejectable ? (
                             <Button
                                 variant="outlined"
                                 color="red"
@@ -415,7 +414,7 @@ const OrderCard = ({
                                 <Button
                                     variant="outlined"
                                     color="red"
-                                    className={styles.actionButtonRejectDetail}
+                                    className={styles.actionButtonReject}
                                     onClick={() => handleCancelClick()}>
                                     Bekor qilish
                                 </Button>

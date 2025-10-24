@@ -48,8 +48,7 @@ export const CancelOrderModal = ({ isOpen, selectedOrder, onClose }) => {
             onCancel={handleCancel}
             okText="Bekor qilish"
             cancelText="Yopish"
-            confirmLoading={isCancelling}
-            okButtonProps={{ danger: true }}>
+            confirmLoading={isCancelling}>
             <p>
                 Haqiqatan ham "<strong>{selectedOrder?.title}</strong>"
                 buyurtmasini bekor qilmoqchimisiz?
