@@ -324,6 +324,7 @@ const ChatInputParts = ({
             {/* input */}
             <Upload
                 listType="picture"
+                beforeUpload={() => false}
                 maxCount={1}
                 fileList={fileList}
                 onChange={({ fileList: newFileList }) => {
