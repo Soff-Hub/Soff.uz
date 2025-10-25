@@ -490,7 +490,9 @@ const PurchasedProductsLayout = ({
                                         </div>
                                     }
                                     onClick={() =>
-                                        handleDownloadThroughTelegram(item.id)
+                                        handleDownloadThroughTelegram(
+                                            item.document?.id
+                                        )
                                     }>
                                     <span>Telegram orqali olish</span>
                                 </Button>
