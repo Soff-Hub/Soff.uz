@@ -63,7 +63,7 @@ const useChat = (chatId) => {
 
             // Add it immediately to UI
             setMessages((prev) => [...prev, tempMessage]);
-            await sleep(5000);
+            // await sleep(5000);
             wsRef.current.send(
                 JSON.stringify({
                     event: 'message',
@@ -92,7 +92,7 @@ const useChat = (chatId) => {
                 status: 'sending', // 🟡 UI can show spinner
             },
         ]);
-        await sleep(5000);
+        // await sleep(5000);
         await sendFile(data, options);
     };
 
@@ -108,7 +108,7 @@ const useChat = (chatId) => {
             setMessages((prev) =>
                 prev.map((m) => (m.id === message_id ? tempMessage : m))
             );
-            await sleep(5000);
+            // await sleep(5000);
             wsRef.current.send(
                 JSON.stringify({
                     event: 'message_update',
@@ -121,7 +121,7 @@ const useChat = (chatId) => {
 
     const deleteMessage = async (message_id, message_status) => {
         setMessages((prev) => prev.filter((m) => m.id !== message_id));
-        await sleep(5000);
+        // await sleep(5000);
         await deleteMsg(message_id);
     };
 
