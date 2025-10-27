@@ -25,6 +25,7 @@ import { ClipLoader } from 'react-spinners';
 import { useQueryClient } from '@tanstack/react-query';
 import CreateOrderModal from '~/shared/components/modals/CreateOrderModal';
 import SafetyAlert from './SafetyAlert';
+import { sleep } from '~/shared/utilities/sleep';
 
 const { TextArea } = Input;
 const maxSize = 50 * 1024 * 1024;
@@ -217,11 +218,10 @@ const ChatInputParts = ({
 }) => {
     const [newMessage, setNewMessage] = useState('');
     const [fileList, setFileList] = useState([]);
+    const fileMapRef = useRef(new Map()); // Store actual files separately
     const queryClient = useQueryClient();
     const fileInputRef = useRef(null);
     const [open, setOpen] = useState(false);
-    console.log('fileList', fileList);
-    // originFileObj;
 
     const handleClickAttach = () => {
         if (fileInputRef.current) fileInputRef.current?.click();
@@ -229,6 +229,7 @@ const ChatInputParts = ({
 
     const clearStates = () => {
         setFileList([]);
+        fileMapRef.current.clear();
         setNewMessage('');
     };
 
@@ -236,10 +237,12 @@ const ChatInputParts = ({
         const trimmedMessage = newMessage.trim();
 
         if (fileList.length) {
+            const file = fileMapRef.current.get(fileList[0].uid);
+
             sendMessageWithFile(
                 {
                     chat_id: chatId,
-                    file: fileList[0]?.originFileObj,
+                    file: file,
                     content: trimmedMessage,
                 },
                 {
@@ -247,7 +250,6 @@ const ChatInputParts = ({
                         queryClient.invalidateQueries({
                             queryKey: ['chat-messages', chatId],
                         });
-                        // Use setTimeout to ensure DOM is updated before scrolling
                         setTimeout(() => {
                             scrollToBottom();
                         }, 100);
@@ -272,13 +274,67 @@ const ChatInputParts = ({
             setEdit(null);
         } else {
             sendMessage(newMessage);
-            // Use setTimeout to ensure DOM is updated before scrolling
             setTimeout(() => {
                 scrollToBottom();
             }, 100);
         }
 
         clearStates();
+    };
+
+    const customRequest = ({ file, onSuccess, onProgress }) => {
+        const uid = file.uid;
+
+        // Immediately show in UI without processing
+        setFileList([
+            {
+                uid: uid,
+                name: file.name,
+                status: 'uploading',
+                percent: 0,
+                size: file.size,
+            },
+        ]);
+
+        // Defer file storage to avoid blocking
+        requestIdleCallback(
+            () => {
+                fileMapRef.current.set(uid, file);
+                simulateUpload(uid, onSuccess, onProgress);
+            },
+            { timeout: 100 }
+        );
+    };
+
+    const simulateUpload = (uid, onSuccess, onProgress) => {
+        let progress = 0;
+        const interval = setInterval(() => {
+            progress += 10;
+
+            onProgress({ percent: progress });
+
+            setFileList((prev) =>
+                prev.map((f) =>
+                    f.uid === uid
+                        ? {
+                              ...f,
+                              percent: progress,
+                              status: progress >= 100 ? 'done' : 'uploading',
+                          }
+                        : f
+                )
+            );
+
+            if (progress >= 100) {
+                clearInterval(interval);
+                onSuccess('ok');
+            }
+        }, 300);
+    };
+
+    const handleRemove = (file) => {
+        setFileList((prev) => prev.filter((f) => f.uid !== file.uid));
+        fileMapRef.current.delete(file.uid);
     };
 
     const handleKeyPress = (e) => {
@@ -291,7 +347,6 @@ const ChatInputParts = ({
     const scrollToBottom = useCallback(() => {
         if (messagesContainerRef.current) {
             const container = messagesContainerRef.current;
-            // Force scroll to the absolute bottom
             container.scrollTop =
                 container.scrollHeight - container.clientHeight;
         }
@@ -305,8 +360,8 @@ const ChatInputParts = ({
 
     const canSubmit = edit
         ? newMessage.trim() !== edit.content && newMessage.trim() !== ''
-        : newMessage.trim() !== '' ||
-          (fileList.length > 0 && fileList[0]?.status === 'done');
+        : (fileList.length && fileList[0]?.status === 'done') ||
+          newMessage.trim() !== '';
 
     return (
         <>
@@ -321,18 +376,23 @@ const ChatInputParts = ({
                 <ArrowDownOutlined size={20} />
             </span>
 
-            {/* input */}
             <Upload
                 listType="picture"
-                beforeUpload={() => false}
-                maxCount={1}
+                customRequest={customRequest}
                 fileList={fileList}
-                onChange={({ fileList: newFileList }) => {
-                    if (newFileList[0]?.size > maxSize) {
+                onRemove={handleRemove}
+                multiple={false}
+                maxCount={1}
+                showUploadList={{
+                    showPreviewIcon: false,
+                    showDownloadIcon: false,
+                }}
+                beforeUpload={(file) => {
+                    if (file.size > maxSize) {
                         message.error('Fayl hajmi 50MB dan oshmasligi kerak');
-                        return;
+                        return Upload.LIST_IGNORE;
                     }
-                    setFileList(newFileList);
+                    return true;
                 }}
                 className={`chat-file-uploader ${
                     fileList.length ? 'has-files' : 'no-files'
@@ -347,6 +407,7 @@ const ChatInputParts = ({
                     Upload
                 </Button>
             </Upload>
+
             <div className={styles.chat_input_box}>
                 <Tooltip title="Maxsus buyurtma berish">
                     <Button
@@ -402,5 +463,4 @@ const ChatInputParts = ({
         </>
     );
 };
-
 export default ChatWindow;

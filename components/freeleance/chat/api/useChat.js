@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import useGetChatById from './useGetChatById';
 import useDeleteMessage from './useDeleteMessage';
-import { sleep } from '~/shared/utilities/sleep';
 import useSendMessage from './useSendMessage';
 
 const useChat = (chatId) => {
@@ -15,6 +14,7 @@ const useChat = (chatId) => {
     const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
         useGetChatById(chatId);
     const wsRef = useRef();
+
     useEffect(() => {
         if (chatId && data) {
             setChat(data?.pages[0]?.chat);

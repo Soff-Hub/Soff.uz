@@ -219,7 +219,7 @@ const HeaderCatergories = () => {
     const { isMobile, size } = useResponsive();
     const { isLoggedIn } = useSelector((state) => state.auth);
     const { directions } = useSelector((state) => state.profile);
-    [...directions, { label: 'Boshqa', value: 'other' }];
+    // [...directions, { label: 'Boshqa', value: 'other' }];
     const { push, query, replace, pathname } = useRouter();
     const { data } = useOrdersStatus();
 
@@ -287,7 +287,7 @@ const HeaderCatergories = () => {
 
     return (
         <div className={styles.dropBlock}>
-            {size > 1025 && <HeaderSearch />}
+            {size > 1025 && pathname !== '/' && <HeaderSearch />}
             {isLoggedIn && !isMobile && (
                 <Link href="/order/my-orders">
                     <Badge
@@ -410,8 +410,6 @@ const HeaderSearch = () => {
             push(`/search-page/?keyword=${search}&tab=3&type=all`);
         }
     };
-
-    console.log({ filteredOptions });
 
     useEffect(() => {
         if (openSearch && searchRef.current) {
