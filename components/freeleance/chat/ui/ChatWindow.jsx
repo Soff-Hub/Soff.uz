@@ -25,7 +25,6 @@ import { ClipLoader } from 'react-spinners';
 import { useQueryClient } from '@tanstack/react-query';
 import CreateOrderModal from '~/shared/components/modals/CreateOrderModal';
 import SafetyAlert from './SafetyAlert';
-import { sleep } from '~/shared/utilities/sleep';
 
 const { TextArea } = Input;
 const maxSize = 50 * 1024 * 1024;
@@ -48,7 +47,6 @@ const ChatWindow = ({ chatId, goBack }) => {
         hasNextPage,
         isMessageWithFilePending,
     } = useChat(chatId);
-    console.log('messages', messages);
 
     const handleFetchNext = async () => {
         if (!messagesContainerRef.current) return;
