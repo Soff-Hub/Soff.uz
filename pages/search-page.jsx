@@ -28,8 +28,8 @@ const Search_Results = ({ keyword }) => {
     const { isLoggedIn } = useSelector((state) => state.auth);
 
     const { data: topServices, isLoading: topServicesLoading } = useFGet(
-        'top-services',
-        'customer/popular-services?limit=6'
+        ['top-services', query.keyword || ''],
+        `customer/popular-services?limit=6&search=${query.keyword || ''}`
     );
 
     const { data: lastProducts, isLoading: lastProductsLoading } = useQuery({

@@ -1,10 +1,9 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useRef } from 'react';
 import { Pagination, Skeleton } from 'antd';
 import SearchResultsSpecialists_Filter from './search-page-filter/search-results-specialists-filter';
-import SearchResultsSpecialists_Card from './search-page-card/searchResultsSpecialists_Card';
 import Search_Results_NotFound from './notFound';
 import { useRouter } from 'next/router';
-import useScrollToNotFound from './useScrollToNotFound';
+import useScrollToNotFound from '../../../shared/hooks/useScrollToNotFound';
 import { useFGet } from '~/shared/hooks/useFApi';
 import SearchSellerCard from '~/entities/seller/search-seller-card';
 
@@ -50,7 +49,7 @@ export default function Search_Results_Specialists({ children }) {
         resultsContent = (
             <>
                 <div className="Search_Results_Specialists_Wrap">
-                    {data.results.map(item => (
+                    {data.results.map((item) => (
                         // <SearchResultsSpecialists_Card
                         //     key={item?.soff_seller_id}
                         //     data={item}
@@ -71,7 +70,7 @@ export default function Search_Results_Specialists({ children }) {
                     current={currentPage}
                     pageSizeOptions={[]}
                     total={data?.count}
-                    onChange={newPage => {
+                    onChange={(newPage) => {
                         const newOffset = (newPage - 1) * limit;
                         router.push({
                             pathname: router.pathname,

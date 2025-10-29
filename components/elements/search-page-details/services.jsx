@@ -1,11 +1,18 @@
-import React, { useRef, useMemo } from 'react';
+import React, { useRef } from 'react';
 import { Pagination, Skeleton } from 'antd';
 import Search_Results_NotFound from './notFound';
 import ServiceCard from '~/entities/service/service-card';
 import { useRouter } from 'next/router';
-import useScrollToNotFound from './useScrollToNotFound';
+import useScrollToNotFound from '../../../shared/hooks/useScrollToNotFound';
 import { useFGet } from '~/shared/hooks/useFApi';
 import SearchResultsProductsFilter from './search-page-filter/search-results-services-filter';
+import { useQuery } from '@tanstack/react-query';
+import { baseUrlUseApi } from '~/repositories/useApi';
+
+// const serviceParentUrl = `${
+//     process.env.NEXT_PUBLIC_FREELEANCE_URL
+// }/api/v1/categories/?direction=${direction || ''}`;
+// const serviceChildUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/categories/?parent_id=${service_parent}`;
 
 const currentTab = '2';
 export default function Search_Results_Services({ children }) {
@@ -20,6 +27,8 @@ export default function Search_Results_Services({ children }) {
         service_parent = '',
         category_id = '',
         direction = '',
+        type = '',
+        tab = currentTab,
         offset: queryOffset,
     } = queriesRef.current;
 
@@ -35,7 +44,14 @@ export default function Search_Results_Services({ children }) {
     });
 
     const { data, isLoading } = useFGet(
-        ['customer/services', keyword, limit, offset],
+        [
+            'customer/services',
+            keyword,
+            limit,
+            offset,
+            direction,
+            service_parent,
+        ],
         `customer?${servicesQuery.toString()}&search=${keyword}${
             service_parent ? `&category_id=${service_parent}` : ''
         }`
@@ -99,7 +115,7 @@ export default function Search_Results_Services({ children }) {
         <div className="Search_Results_Products container">
             <div className="d-flex">
                 <div className="w-100">
-                    <div className="mb-5">
+                    <div className="mb-3">
                         {/* <div className="Search_Results_Products_form_box">
                             <div className="row align-items-center mb-3">
                                 <div className="col-12 col-md-3">
@@ -111,7 +127,10 @@ export default function Search_Results_Services({ children }) {
                                 </div>
                             </div>
                         </div> */}
-                        <SearchResultsProductsFilter />
+                        <SearchResultsProductsFilter
+                            count={data}
+                            total={data?.total_service}
+                        />
                     </div>
                     <div>{showResultsContent}</div>
                 </div>

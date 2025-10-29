@@ -380,14 +380,10 @@ const FilterFormDrawer = ({ open, childData, onClose }) => {
             }>
             <form
                 onSubmit={handleSaveFilters}
-                className="search_results_filter_form"
-                style={{
-                    zIndex: 1000,
-                }}>
+                className="search_results_filter_form">
                 <Select
                     style={{ width: '100%' }}
                     value={filterValues.type}
-                    allowClear
                     onClear={handleClear}
                     onChange={(value) =>
                         handleChangeFilterValues({

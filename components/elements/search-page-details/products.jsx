@@ -1,10 +1,10 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useRef } from 'react';
 import SearchResultsProducts_Card from './search-page-card/searchResultsProducts_Card';
 import { Pagination, Skeleton } from 'antd';
 import SearchResultsProductsFilter from './search-page-filter/search-results-products-filter';
 import { useRouter } from 'next/router';
 import Search_Results_NotFound from './notFound';
-import useScrollToNotFound from './useScrollToNotFound';
+import useScrollToNotFound from '../../../shared/hooks/useScrollToNotFound';
 import { useQuery } from '@tanstack/react-query';
 import { baseUrlUseApi } from '~/repositories/useApi';
 
@@ -82,14 +82,12 @@ export default function Search_Results_Products({ children }) {
         },
     });
 
-
     const total = data?.count || 0;
     const notFoundRef = useRef();
     const showResults =
         Array.isArray(data?.results) && data?.results?.length > 0;
 
     useScrollToNotFound(notFoundRef, showResults, data);
-
 
     let resultsContent = null;
     if (isLoading) {
