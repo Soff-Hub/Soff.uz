@@ -20,7 +20,7 @@ export default function SearchResultsProductsFilter({
         { label: 'Hujjatlar va Professional Shablonlar', value: 'document' },
     ];
 
-    const handleChange = newQuery => {
+    const handleChange = (newQuery) => {
         router.push(
             {
                 pathname: router.pathname,
@@ -56,7 +56,7 @@ export default function SearchResultsProductsFilter({
                 </div>
             </div>
 
-            {/* <form className="Search_Results_Products_form">
+            <form className="Search_Results_Products_form">
                 <div className="row g-3">
                     <div className="col-6 col-lg-3">
                         <Select
@@ -70,7 +70,7 @@ export default function SearchResultsProductsFilter({
                                     category_id: '',
                                 })
                             }
-                            onChange={value =>
+                            onChange={(value) =>
                                 handleChange({
                                     direction: value,
                                     service_parent: '',
@@ -98,7 +98,7 @@ export default function SearchResultsProductsFilter({
                                     category_id: '',
                                 })
                             }
-                            onChange={value =>
+                            onChange={(value) =>
                                 handleChange({
                                     service_parent: value,
                                     category_id: '',
@@ -106,7 +106,7 @@ export default function SearchResultsProductsFilter({
                             }
                             options={
                                 parentData && direction
-                                    ? parentData.map(cat => ({
+                                    ? parentData.map((cat) => ({
                                           value: cat.id,
                                           label: cat.title,
                                       }))
@@ -127,12 +127,12 @@ export default function SearchResultsProductsFilter({
                                 !(service_parent && childData?.length > 0)
                             } // 🔑 childData bo‘sh bo‘lsa disable
                             onClear={() => handleChange({ category_id: '' })}
-                            onChange={value =>
+                            onChange={(value) =>
                                 handleChange({ category_id: value })
                             }
                             options={
                                 childData && childData.length > 0
-                                    ? childData.map(cat => ({
+                                    ? childData.map((cat) => ({
                                           value: cat.id,
                                           label: cat.title,
                                       }))
@@ -141,7 +141,7 @@ export default function SearchResultsProductsFilter({
                         />
                     </div>
                 </div>
-            </form> */}
+            </form>
         </div>
     );
 }

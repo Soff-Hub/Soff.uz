@@ -238,6 +238,7 @@ const Search_Results = ({ keyword }) => {
             <div className="container ">
                 <Tabs
                     className="order_tabs"
+                    destroyInactiveTabPane
                     defaultActiveKey={String(query?.tab)}
                     accessKey={activeTab}
                     onChange={handleChangeTab}

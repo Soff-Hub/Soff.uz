@@ -5,6 +5,7 @@ import ServiceCard from '~/entities/service/service-card';
 import { useRouter } from 'next/router';
 import useScrollToNotFound from './useScrollToNotFound';
 import { useFGet } from '~/shared/hooks/useFApi';
+import SearchResultsProductsFilter from './search-page-filter/search-results-services-filter';
 
 const currentTab = '2';
 export default function Search_Results_Services({ children }) {
@@ -64,9 +65,7 @@ export default function Search_Results_Services({ children }) {
             <>
                 <div className="Search_Results_Services_wrap">
                     {data?.items?.map((item, index) => (
-                        <div key={index}>
-                            <ServiceCard service={item} />
-                        </div>
+                        <ServiceCard service={item} key={index} />
                     ))}
                 </div>
                 <Pagination
@@ -101,7 +100,7 @@ export default function Search_Results_Services({ children }) {
             <div className="d-flex">
                 <div className="w-100">
                     <div className="mb-5">
-                        <div className="Search_Results_Products_form_box">
+                        {/* <div className="Search_Results_Products_form_box">
                             <div className="row align-items-center mb-3">
                                 <div className="col-12 col-md-3">
                                     <p className="countProduct text-nowrap m-0">
@@ -111,7 +110,8 @@ export default function Search_Results_Services({ children }) {
                                     </p>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
+                        <SearchResultsProductsFilter />
                     </div>
                     <div>{showResultsContent}</div>
                 </div>
