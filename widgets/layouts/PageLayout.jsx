@@ -50,9 +50,11 @@ const PageLayout = ({ children, title }) => {
 
     return (
         <>
-            <Head>
-                <title>{title}</title>
-            </Head>
+            {title ? (
+                <Head>
+                    <title>{title}</title>
+                </Head>
+            ) : null}
 
             <div
                 style={{
