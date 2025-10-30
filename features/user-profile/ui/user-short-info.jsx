@@ -4,7 +4,7 @@ import 'dayjs/locale/uz-latn';
 import Image from 'next/image';
 import React, { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { cn, useRcn } from '~/shared/utilities/cn';
-import { Button, Divider } from 'antd';
+import { Button, Divider, message } from 'antd';
 import {
     CheckCircleOutlined,
     CloseCircleOutlined,
@@ -20,6 +20,7 @@ import useResponsive from '~/shared/utilities/useResponsive';
 import { useRouter } from 'next/router';
 import OrderPaymentPrompt from './OrderPaymentPrompt';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
+import { FaRegCopy } from 'react-icons/fa';
 
 dayjs.extend(relativeTime);
 dayjs.locale('uz-latn');
@@ -202,6 +203,18 @@ const UserShortInfo = ({ seller }) => {
         }
     };
 
+    const handleCopyLink = useCallback(() => {
+        const link = `${window.location.origin}/seller/${seller?.id}`;
+        navigator.clipboard
+            .writeText(link)
+            .then(() => {
+                message.success('Link nusxalandi!');
+            })
+            .catch(() => {
+                message.error('Link nusxalanmadi');
+            });
+    }, [seller?.id]);
+
     useEffect(() => {
         const { order } = router.query;
         if (order === 'true' && isLoggedIn && status === 'succeeded') {
@@ -221,6 +234,8 @@ const UserShortInfo = ({ seller }) => {
             setCreateOrderModal(false);
         }
     }, [router.query]);
+
+    console.log({ router });
 
     return (
         <div className={cn('bg-light', 'p-3', 'shadow', 'rounded-xl')}>
@@ -270,6 +285,14 @@ const UserShortInfo = ({ seller }) => {
                     )}>
                     {seller?.position}
                 </h4>
+                <Button
+                    type="primary"
+                    iconPosition="end"
+                    variant="solid"
+                    icon={<FaRegCopy />}
+                    onClick={handleCopyLink}>
+                    Pro'fil linkini nusxalash
+                </Button>
             </div>
 
             <div className={cn(marginClass, 'flex', 'flex-col', 'gap-4')}>

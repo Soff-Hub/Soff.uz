@@ -3,18 +3,24 @@ import React, { useState } from 'react';
 import styles from './style.module.scss';
 import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
-import { AutoComplete } from 'antd';
+// import { AutoComplete } from 'antd';
 import { api } from '~/repositories/api';
 import useDebounce from '~/shared/hooks/useDebounce';
 import Link from 'next/link';
 import axiosInstance from '~/shared/api/freeleanceApi';
 import { D_SEARCH_OPTIONS, F_SEARCH_OPTIONS } from '~/shared/api/end-points';
+import dynamic from 'next/dynamic';
 
 const placeholders = {
     mahsulotlar: 'Qaysi turdagi tayyor mahsulot qidirmoqdasiz?',
     xizmatlar: 'Qaysi turdagi  xizmat  qidirmoqdasiz?',
     mutaxasislar: 'Qaysi turdagi mutaxassislar qidirmoqdasiz?',
 };
+
+const AutoComplete = dynamic(() => import('antd/es/auto-complete'), {
+    ssr: false,
+    loading: () => <p>Loading..</p>,
+});
 
 const staticOptions = {
     xizmatlar: [
