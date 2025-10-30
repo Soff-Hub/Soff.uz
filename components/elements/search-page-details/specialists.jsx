@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Pagination, Skeleton } from 'antd';
 import SearchResultsSpecialists_Filter from './search-page-filter/search-results-specialists-filter';
 import Search_Results_NotFound from './notFound';
@@ -12,6 +12,7 @@ export default function Search_Results_Specialists({ children }) {
     const router = useRouter();
     const notFoundRef = useRef();
     const queriesRef = useRef(router.query);
+
     queriesRef.current =
         router.query.tab === currentTab ? router.query : queriesRef.current;
     const { keyword = '', offset: queryOffset } = queriesRef.current;
@@ -88,11 +89,58 @@ export default function Search_Results_Specialists({ children }) {
         resultsContent = <Search_Results_NotFound ref={notFoundRef} />;
     }
 
+    console.log({ data });
+
+    useEffect(() => {
+        const defineDirection = async () => {
+            const rankingsMap = new Map();
+
+            if (data?.count) {
+                data.results.forEach((specialist) => {
+                    if (rankingsMap.has(specialist.position?.direction)) {
+                        const currentUsageNumber = rankingsMap.get(
+                            specialist.position?.direction
+                        );
+                        rankingsMap.set(
+                            specialist.position?.direction,
+                            ++currentUsageNumber
+                        );
+                    } else {
+                        rankingsMap.set(specialist.position?.direction, 1);
+                    }
+                });
+
+                const heighestUsageDetect = [...rankingsMap.entries()];
+                console.log({ heighestUsageDetect });
+
+                let max = -Infinity;
+                let direction = null;
+
+                for (let i = 0; i < heighestUsageDetect.length; i++) {
+                    const [key, value] = heighestUsageDetect[i];
+                    if (value > max) {
+                        max = value;
+                        direction = key;
+                    }
+                }
+
+                router.push({
+                    pathname: router.pathname,
+                    query: {
+                        ...router.query,
+                        direction,
+                    },
+                });
+            }
+        };
+        defineDirection();
+    }, [data]);
+
     return (
         <div className="Search_Results_Products container">
             <div className="d-flex">
                 <div className="w-100">
-                    <div className="mb-3">
+                    <div style={{ marginBottom: '26px' }}>
                         <SearchResultsSpecialists_Filter total={data?.count} />
                     </div>
                     <div>{resultsContent}</div>

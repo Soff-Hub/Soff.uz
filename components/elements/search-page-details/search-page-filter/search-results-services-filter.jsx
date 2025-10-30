@@ -13,7 +13,7 @@ import { useFGet } from '~/shared/hooks/useFApi';
 import { useQuery } from '@tanstack/react-query';
 
 const defaultValues = {
-    direction: undefined,
+    direction: '',
     service_parent: undefined,
 };
 
@@ -30,7 +30,7 @@ export default function SearchResultsProductsFilter({ total }) {
 
     const directions = useMemo(() => {
         return [
-            { label: 'Barchasi', value: 'all' },
+            { label: 'Barchasi', value: '' },
             ,
             ...(directionsData?.map((elem) => ({
                 label: elem.title,
@@ -110,9 +110,7 @@ export default function SearchResultsProductsFilter({ total }) {
                 key: 'direction',
                 icon: <AiOutlineApartment />,
                 title: currentType?.label,
-                isEnabled:
-                    !!router.query.direction &&
-                    router.query.direction !== 'all',
+                isEnabled: !!router.query.direction,
                 disabled:
                     defaultValues.direction === router.query.direction ||
                     router.query.service_parent,
@@ -214,7 +212,7 @@ const FilterFormDrawer = ({ open, onClose, directions, setCategoriesList }) => {
     const router = useRouter();
     const initialFilterValues = useMemo(() => {
         return {
-            direction: router.query.direction || 'all',
+            direction: router.query.direction || '',
             service_parent: router.query.service_parent || undefined,
             category_id: router.query.category_id || undefined,
         };
@@ -314,13 +312,7 @@ const FilterFormDrawer = ({ open, onClose, directions, setCategoriesList }) => {
                 <Select
                     style={{ width: '100%', maxWidth: '159px' }}
                     placeholder="Yo‘nalish"
-                    value={filterValues.direction || 'all'}
-                    onClear={() =>
-                        handleChangeFilterValues({
-                            direction: 'all',
-                            service_parent: undefined,
-                        })
-                    }
+                    value={filterValues.direction}
                     onChange={(value) =>
                         handleChangeFilterValues({
                             direction: value,
@@ -338,13 +330,11 @@ const FilterFormDrawer = ({ open, onClose, directions, setCategoriesList }) => {
                     onClear={() =>
                         handleChangeFilterValues({
                             service_parent: '',
-                            category_id: '',
                         })
                     }
                     onChange={(value) =>
                         handleChangeFilterValues({
                             service_parent: value,
-                            category_id: '',
                         })
                     }
                     options={categories}

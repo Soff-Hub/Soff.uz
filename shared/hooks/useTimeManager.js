@@ -4,8 +4,9 @@ export function useTimeManager() {
     const timeouts = useRef(new Set());
     const intervals = useRef(new Set());
 
-    const startTimout = useCallback((callback, delay) => {
+    const startTimeout = useCallback((callback, delay) => {
         const id = setTimeout(() => {
+            console.log('useTimeManager file setTimeout');
             timeouts.current.delete(id);
             callback();
         }, delay);
@@ -42,14 +43,15 @@ export function useTimeManager() {
     const clearAll = useCallback(() => {
         stopTimeout();
         stopInterval();
+        console.log('clearing all timeouts and intervals');
     }, [stopTimeout, stopInterval]);
 
     useEffect(() => clearAll, [clearAll]);
 
     return {
-        startTimout,
+        startTimeout,
         stopTimeout,
-        startTimout,
+        startInterval,
         stopInterval,
         clearAll,
     };

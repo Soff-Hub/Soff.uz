@@ -9,7 +9,8 @@ const Search_Results_NotFound = forwardRef(({ isSearchPage = true }, ref) => {
     const { isLoggedIn } = useSelector((state) => state.auth);
     const { data, isLoading } = useFGet(
         'top-services',
-        'customer/popular-services?limit=6'
+        'customer/popular-services?limit=6',
+        { enabled: isSearchPage }
     );
     const { push } = useRouter();
 

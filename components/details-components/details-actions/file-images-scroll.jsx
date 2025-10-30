@@ -2,9 +2,11 @@ import Image from 'next/image';
 import React, { useEffect, useRef } from 'react';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import Link from 'next/link';
+import { useTimeManager } from '~/shared/hooks/useTimeManager';
 
 function FileImagesScroll({ product }) {
     const containerRef = useRef(null);
+    const { startTimeout, stopTimeout } = useTimeManager();
 
     useEffect(() => {
         const scrollContainer = containerRef.current;
@@ -13,9 +15,11 @@ function FileImagesScroll({ product }) {
             scrollContainer.scrollTop = scrollContainer.scrollHeight;
 
             // 1 soniyadan keyin avtomatik yuqoriga qaytarish
-            setTimeout(() => {
+            const timing = startTimeout(() => {
                 scrollContainer.scrollTo({ top: 0, behavior: 'smooth' });
             }, 1000);
+
+            return () => stopTimeout(timing);
         }
     }, [product?.document?.images]);
 

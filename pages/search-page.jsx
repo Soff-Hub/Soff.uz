@@ -27,9 +27,15 @@ const Search_Results = ({ keyword }) => {
     const pageRef = useRef(null);
     const { isLoggedIn } = useSelector((state) => state.auth);
 
+    const topServicesQuery = new URLSearchParams({
+        limit: 6,
+        ...(query.keyword && { search: query.keyword }),
+        ...(query.direction && { direction: query.direction }),
+    });
+
     const { data: topServices, isLoading: topServicesLoading } = useFGet(
-        ['top-services', query.keyword || ''],
-        `customer/popular-services?limit=6&search=${query.keyword || ''}`
+        ['top-services', query.keyword || '', query.direction || ''],
+        `customer/popular-services?${topServicesQuery.toString()}`
     );
 
     const { data: lastProducts, isLoading: lastProductsLoading } = useQuery({
@@ -63,18 +69,33 @@ const Search_Results = ({ keyword }) => {
     );
 
     const handleSetRouterQuery = (currentTab) => {
+        const omitKeys = [
+            'direction',
+            'page',
+            'offset',
+            'limit',
+            'category',
+            'parentCategory',
+            'service_parent',
+            'file_type',
+            'order_by',
+            'page_from',
+            'page_to',
+        ];
+
+        const newQueries = Object.fromEntries(
+            Object.entries(router.query).filter(
+                ([key]) => !omitKeys.includes(key)
+            )
+        );
+
         router.push({
             pathname: router.pathname,
             query: {
-                ...router.query,
+                ...newQueries,
                 keyword: debouncedSearchTerm,
-                page: 1,
                 tab: currentTab || activeTab,
                 type: (currentTab || activeTab) == '1' ? 'file' : 'all',
-                offset: undefined,
-                limit: undefined,
-                category: '',
-                parentCategory: '',
             },
         });
     };

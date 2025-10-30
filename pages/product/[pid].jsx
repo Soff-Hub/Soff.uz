@@ -112,7 +112,7 @@ export default function ProductDefaultPage({ defaultProducts }) {
         );
     }
 
-    const removeHTMLTags = html => {
+    const removeHTMLTags = (html) => {
         return html.replace(/<[^>]+>/g, '');
     };
 
@@ -153,12 +153,12 @@ export default function ProductDefaultPage({ defaultProducts }) {
                         content={
                             defaultProducts?.description
                                 ? removeHTMLTags(defaultProducts?.description)
-                                : `${
-                                      defaultProducts?.title
-                                  } + ${defaultProducts?.tag
-                                      ?.map(e => e?.name)
-                                      ?.join(', ') ||
-                                      'soff.uz - Intellektual mulk marketi'} `
+                                : `${defaultProducts?.title} + ${
+                                      defaultProducts?.tag
+                                          ?.map((e) => e?.name)
+                                          ?.join(', ') ||
+                                      'soff.uz - Intellektual mulk marketi'
+                                  } `
                         }
                     />
                     <meta name="robots" content="index, follow" />
@@ -174,7 +174,7 @@ export default function ProductDefaultPage({ defaultProducts }) {
                         content={
                             defaultProducts?.tag
                                 ? defaultProducts?.tag
-                                      ?.map(e => e?.name)
+                                      ?.map((e) => e?.name)
                                       ?.join(', ')
                                 : 'kurs ishi, taqdimotlar, slaydlar, diplom ishi, prezentatsiya'
                         }
@@ -193,12 +193,12 @@ export default function ProductDefaultPage({ defaultProducts }) {
                         content={
                             defaultProducts?.description
                                 ? removeHTMLTags(defaultProducts?.description)
-                                : `${
-                                      defaultProducts?.title
-                                  } + ${defaultProducts?.tag
-                                      ?.map(e => e?.name)
-                                      ?.join(', ') ||
-                                      'soff.uz - Intellektual mulk marketi'} `
+                                : `${defaultProducts?.title} + ${
+                                      defaultProducts?.tag
+                                          ?.map((e) => e?.name)
+                                          ?.join(', ') ||
+                                      'soff.uz - Intellektual mulk marketi'
+                                  } `
                         }
                     />
                     <meta
@@ -217,7 +217,7 @@ export default function ProductDefaultPage({ defaultProducts }) {
                         content={
                             defaultProducts?.tag
                                 ? defaultProducts?.tag
-                                      ?.map(e => e?.name)
+                                      ?.map((e) => e?.name)
                                       ?.join(', ')
                                 : 'kurs ishi, taqdimotlar, slaydlar, diplom ishi, prezentatsiya'
                         }
@@ -244,12 +244,12 @@ export default function ProductDefaultPage({ defaultProducts }) {
                         content={
                             defaultProducts?.description
                                 ? removeHTMLTags(defaultProducts?.description)
-                                : `${
-                                      defaultProducts?.title
-                                  } + ${defaultProducts?.tag
-                                      ?.map(e => e?.name)
-                                      ?.join(', ') ||
-                                      'soff.uz - Intellektual mulk marketi'} `
+                                : `${defaultProducts?.title} + ${
+                                      defaultProducts?.tag
+                                          ?.map((e) => e?.name)
+                                          ?.join(', ') ||
+                                      'soff.uz - Intellektual mulk marketi'
+                                  } `
                         }
                     />
                     <meta property="twitter:url" content="https://soff.uz" />
@@ -259,7 +259,7 @@ export default function ProductDefaultPage({ defaultProducts }) {
                         content={
                             defaultProducts?.tag
                                 ? defaultProducts?.tag
-                                      ?.map(e => e?.name)
+                                      ?.map((e) => e?.name)
                                       ?.join(', ')
                                 : 'kurs ishi, taqdimotlar, slaydlar, diplom ishi, prezentatsiya'
                         }
@@ -378,30 +378,42 @@ export async function getServerSideProps({ query, req }) {
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
     let defaultProducts = null;
     try {
-        const resquest = await fetch(
+        const request = await fetch(
             `${baseUrl}customer/documents/${query.pid}/`,
             {
                 headers,
             }
         );
 
-        if (resquest.status === 403 || resquest.status === 401) {
+        if (request.status === 403 || request.status === 401) {
             throw new Error(
                 'Token invalid yoki muddati o‘tgan. Iltimos, qaytadan tizimga kiring.'
             );
         }
 
-        defaultProducts = await resquest.json();
+        if (request.status === 404) {
+            return { notFound: true };
+        }
+
+        defaultProducts = await request.json();
     } catch (error) {
         const request = await fetch(
             `${baseUrl}customer/documents/${query.pid}/`
         );
+
+        if (!request.ok) {
+            return {
+                notFound: true,
+            };
+        }
+
         defaultProducts = await request.json();
     }
 
-    return {
-        props: {
-            defaultProducts,
-        },
-    };
+    if (!defaultProducts)
+        return {
+            props: {
+                defaultProducts,
+            },
+        };
 }

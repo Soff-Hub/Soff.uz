@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useRef } from 'react';
+import { useTimeManager } from './useTimeManager';
 
 export function useThrottle(callback, limit = 300) {
+    const { startTimeout } = useTimeManager();
     const callbackRef = useRef(callback);
     const timeoutRef = useRef(null);
     const lastCallTimeRef = useRef(0);
@@ -41,7 +43,7 @@ export function useThrottle(callback, limit = 300) {
                 lastContextRef.current = this;
 
                 if (!timeoutRef.current) {
-                    timeoutRef.current = setTimeout(() => {
+                    timeoutRef.current = startTimeout(() => {
                         timeoutRef.current = null;
                         invoke();
                     }, remaining);

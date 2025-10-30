@@ -3,14 +3,14 @@ import { useTimeManager } from './useTimeManager';
 
 export const useMounted = (timer) => {
     const [isMounted, setIsMounted] = useState(false);
-    const { startTimout, stopTimeout } = useTimeManager();
+    const { startTimeout, stopTimeout } = useTimeManager();
 
     useEffect(() => {
-        const timeoutId = startTimout(() => {
+        const timeoutId = startTimeout(() => {
             setIsMounted(true);
         }, timer || 10);
         return () => stopTimeout(timeoutId);
-    }, [setTimeout, timer]);
+    }, [timer]);
 
     return isMounted;
 };

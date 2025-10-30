@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styles from '../style/chat.module.scss';
 import {
     Input,
@@ -25,6 +25,7 @@ import { ClipLoader } from 'react-spinners';
 import { useQueryClient } from '@tanstack/react-query';
 import CreateOrderModal from '~/shared/components/modals/CreateOrderModal';
 import SafetyAlert from './SafetyAlert';
+import { useTimeManager } from '~/shared/hooks/useTimeManager';
 
 const { TextArea } = Input;
 const maxSize = 50 * 1024 * 1024;
@@ -45,6 +46,7 @@ const ChatWindow = ({ chatId, goBack }) => {
         deleteMessage,
         fetchNextPage,
         hasNextPage,
+        isFetching,
         isMessageWithFilePending,
     } = useChat(chatId);
 
@@ -162,7 +164,17 @@ const ChatWindow = ({ chatId, goBack }) => {
                     scrollableTarget="scrollableDiv"
                     inverse={true}>
                     <div>
-                        {messages?.length > 0 ? (
+                        {isFetching ? (
+                            <div
+                                style={{
+                                    height: '30vh',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                }}>
+                                <Spin />
+                            </div>
+                        ) : messages?.length ? (
                             messages.map((msg) => (
                                 <ChatMessage
                                     pushUser={() =>
@@ -193,6 +205,7 @@ const ChatWindow = ({ chatId, goBack }) => {
                 sendMessageWithFile={sendMessageWithFile}
                 updateMessage={updateMessage}
                 setEdit={setEdit}
+                isFetching={isFetching}
                 isMessageWithFilePending={isMessageWithFilePending}
                 messagesContainerRef={messagesContainerRef}
                 scrollPositionRef={scrollPositionRef}
@@ -216,10 +229,19 @@ const ChatInputParts = ({
 }) => {
     const [newMessage, setNewMessage] = useState('');
     const [fileList, setFileList] = useState([]);
+    const { startTimeout } = useTimeManager();
     const fileMapRef = useRef(new Map()); // Store actual files separately
     const queryClient = useQueryClient();
     const fileInputRef = useRef(null);
     const [open, setOpen] = useState(false);
+
+    const scrollToBottom = () => {
+        if (messagesContainerRef.current) {
+            const container = messagesContainerRef.current;
+            container.scrollTop =
+                container.scrollHeight - container.clientHeight;
+        }
+    };
 
     const handleClickAttach = () => {
         if (fileInputRef.current) fileInputRef.current?.click();
@@ -248,9 +270,7 @@ const ChatInputParts = ({
                         queryClient.invalidateQueries({
                             queryKey: ['chat-messages', chatId],
                         });
-                        setTimeout(() => {
-                            scrollToBottom();
-                        }, 100);
+                        startTimeout(scrollToBottom, 100);
                         message.success('Fayl muvaffaqiyatli yuborildi');
                     },
                     onError: (err) => {
@@ -272,9 +292,7 @@ const ChatInputParts = ({
             setEdit(null);
         } else {
             sendMessage(newMessage);
-            setTimeout(() => {
-                scrollToBottom();
-            }, 100);
+            startTimeout(scrollToBottom, 100);
         }
 
         clearStates();
@@ -341,14 +359,6 @@ const ChatInputParts = ({
             handleSend();
         }
     };
-
-    const scrollToBottom = useCallback(() => {
-        if (messagesContainerRef.current) {
-            const container = messagesContainerRef.current;
-            container.scrollTop =
-                container.scrollHeight - container.clientHeight;
-        }
-    }, []);
 
     useEffect(() => {
         if (edit) {

@@ -11,6 +11,7 @@ import useResponsive from '~/shared/utilities/useResponsive';
 import { useQuery } from '@tanstack/react-query';
 import { cn } from '~/shared/utilities/cn';
 import dayjs from 'dayjs';
+import { useTimeManager } from '~/shared/hooks/useTimeManager';
 
 const { Option } = Select;
 
@@ -24,13 +25,14 @@ const CATEGORY_LIST = [
 ];
 
 export default function PurchasedProducts() {
+    const { startTimeout } = useTimeManager();
+    const debouncedSearch = useDebounce(search, 500);
     const [search, setSearch] = useState('');
     const [category, setCategory] = useState('file');
     const [currPage, setCurrPage] = useState(1);
     const [pageSize, setPageSize] = useState(5);
     const [loadingId, setLoadingId] = useState(null);
 
-    const debouncedSearch = useDebounce(search, 500);
     const token = Cookies.get('token');
 
     const handleDownload = useCallback((file, id) => {
@@ -42,7 +44,9 @@ export default function PurchasedProducts() {
         document.body.appendChild(link);
         link.click();
         link.remove();
-        setTimeout(() => setLoadingId(null), 1000);
+        startTimeout(() => {
+            setLoadingId(null);
+        }, 1000);
     }, []);
 
     const handleDownloadThroughTelegram = async (getId) => {

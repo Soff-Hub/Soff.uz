@@ -19,6 +19,7 @@ import useCreateChat from '~/components/freeleance/chat/api/useCreateChat';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { useRouter } from 'next/router';
 import OrderPaymentPrompt from './OrderPaymentPrompt';
+import { useTimeManager } from '~/shared/hooks/useTimeManager';
 
 dayjs.extend(relativeTime);
 dayjs.locale('uz-latn');
@@ -43,16 +44,17 @@ const InfoRow = memo(({ icon, label, value }) => (
 ));
 
 const UserShortInfo = ({ seller }) => {
+    const router = useRouter();
     const { isLoggedIn, status } = useSelector((state) => state?.auth);
     const { mutate: createChat } = useCreateChat();
     const { isMobile } = useResponsive();
+    const { startTimeout } = useTimeManager();
     const [activeModal, setActiveModal] = useState(null);
     const [authModal, setAuthModal] = useState(false);
     const [createOrderModal, setCreateOrderModal] = useState(false);
     const [latelyCreatedOrder, setLatelyCreatedOrder] = useState(null);
     const [orderPaymentPromptModal, setOrderPaymentPromptModal] =
         useState(false);
-    const router = useRouter();
 
     const lastActive = useMemo(
         () =>
@@ -194,7 +196,7 @@ const UserShortInfo = ({ seller }) => {
         if (activeModal === 'createOrder') {
             setCreateOrderModal(true);
         } else if (activeModal === 'chat') {
-            setTimeout(() => {
+            startTimeout(() => {
                 createChat(seller?.id);
             }, 1000);
         }

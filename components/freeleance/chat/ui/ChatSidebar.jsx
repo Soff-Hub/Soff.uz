@@ -5,15 +5,19 @@ import { truncateTitle } from '~/shared/utilities/TruncateTitle';
 import { useRouter } from 'next/router';
 import useChats from '../api/useChats';
 import useDebounce from '~/shared/hooks/useDebounce';
+import { useTimeManager } from '~/shared/hooks/useTimeManager';
 
 function BackButton() {
     const router = useRouter();
     const backRef = useRef(null);
+    const { startTimeout } = useTimeManager();
 
     const handleBack = () => {
         router.back();
         backRef.current?.scrollIntoView({ behavior: 'smooth' });
-        setTimeout(() => window.scrollTo({ top: 0, behavior: 'auto' }), 10);
+        startTimeout(() => {
+            window.scrollTo({ top: 0, behavior: 'auto' });
+        }, 10);
     };
 
     return (

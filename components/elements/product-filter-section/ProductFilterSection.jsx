@@ -1,6 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styles from './ProductFilter.module.scss';
-import { SearchOutlined, RightOutlined, LeftOutlined, CloseOutlined } from '@ant-design/icons';
+import {
+    SearchOutlined,
+    RightOutlined,
+    LeftOutlined,
+    CloseOutlined,
+} from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import useDebounce from '~/shared/hooks/useDebounce';
 import useResponsive from '~/shared/utilities/useResponsive';
@@ -48,11 +53,11 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
         setSybTitle(name);
     };
 
-    const scrollLeft = ref => {
+    const scrollLeft = (ref) => {
         ref.current.scrollBy({ left: -200, behavior: 'smooth' });
     };
 
-    const scrollRight = ref => {
+    const scrollRight = (ref) => {
         ref.current.scrollBy({ left: 200, behavior: 'smooth' });
     };
 
@@ -91,7 +96,7 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
             </h1>
             <div className={`${styles.searchBox} container`}>
                 <input
-                    onChange={e => setSearch(e.target.value)}
+                    onChange={(e) => setSearch(e.target.value)}
                     placeholder="Qanday mahsulot izlamoqdasiz?"
                     className={styles.input}
                     type="text"
@@ -100,9 +105,6 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
                     <SearchOutlined />
                 </span>
             </div>
-
-
-
 
             {/* Parent carousel */}
             <div className={styles.carouselTestWrapper}>
@@ -118,14 +120,15 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
                     style={{
                         justifyContent: showParentArrow ? 'start' : 'center',
                     }}>
-                    {parent.map((cat, index) => (
+                    {parent?.map((cat, index) => (
                         <span
                             key={cat.slug}
                             onClick={() => handleParent(cat?.slug, cat?.name)}
-                            className={`${styles.parentCat
-                                } ${(query.parentCategory === cat.slug ||
+                            className={`${styles.parentCat} ${
+                                (query.parentCategory === cat.slug ||
                                     query.slug === cat.slug) &&
-                                styles.active}`}>
+                                styles.active
+                            }`}>
                             {cat?.name}
                         </span>
                     ))}
@@ -154,16 +157,17 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
                     }}>
                     {query?.parentCategory && (
                         <>
-                            {child.map(cat => (
+                            {child.map((cat) => (
                                 <span
                                     key={cat.slug}
                                     onClick={() =>
                                         handleChild(cat?.slug, cat?.name)
                                     }
-                                    className={`${styles.childCat
-                                        } ${(query.childCategory === cat.slug ||
+                                    className={`${styles.childCat} ${
+                                        (query.childCategory === cat.slug ||
                                             query.slug === cat.slug) &&
-                                        styles.active}`}>
+                                        styles.active
+                                    }`}>
                                     {cat?.name}
                                 </span>
                             ))}
@@ -178,42 +182,38 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
                 )}
             </div>
 
-
-            {(isMobile && isFile) && (
+            {isMobile && isFile && (
                 <ConfigProvider
                     theme={{
                         token: {
-                            colorPrimary: "#00a44f",
+                            colorPrimary: '#00a44f',
                             borderRadiusLG: 20,
                         },
                         components: {
                             Button: {
-                                colorPrimary: "#00a44f",
+                                colorPrimary: '#00a44f',
                             },
                             Checkbox: {
-                                colorPrimary: "#00a44f",
+                                colorPrimary: '#00a44f',
                             },
                             Slider: {
-                                colorPrimary: "#00a44f",
+                                colorPrimary: '#00a44f',
                             },
                             Select: {
-                                colorPrimary: "#00a44f",
+                                colorPrimary: '#00a44f',
                             },
                         },
-                    }}
-                >
-
+                    }}>
                     <Button
                         type="primary"
                         block
                         onClick={() => setDrawerOpen(true)}
-                        style={{ marginTop: 16 }}
-                    >
+                        style={{ marginTop: 16 }}>
                         Filtrlarni ochish
                     </Button>
                     <Drawer
                         style={{
-                            borderRadius: "20px 20px 0 0"
+                            borderRadius: '20px 20px 0 0',
                         }}
                         placement="bottom"
                         onClose={() => setDrawerOpen(false)}
@@ -223,20 +223,26 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
                             <Button
                                 type="text"
                                 shape="circle"
-                                icon={<CloseOutlined style={{ fontSize: 20, color: "#00a44f" }} />}
+                                icon={
+                                    <CloseOutlined
+                                        style={{
+                                            fontSize: 20,
+                                            color: '#00a44f',
+                                        }}
+                                    />
+                                }
                             />
                         }
                         headerStyle={{
-                            flexDirection: "column-reverse",
-                            alignItems: "flex-end",
-                        }}
-                    >
+                            flexDirection: 'column-reverse',
+                            alignItems: 'flex-end',
+                        }}>
                         {/* Kategoriya Select */}
                         <div style={{ marginBottom: 24 }}>
                             <h4>Kategoriya</h4>
                             <Select
                                 placeholder="Kategoriya tanlang"
-                                style={{ width: "100%" }}
+                                style={{ width: '100%' }}
                                 allowClear
                                 value={query.parentCategory || undefined}
                                 onChange={(val) => {
@@ -245,21 +251,34 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
                                         setSybTitle('');
                                         push({
                                             pathname: `${path}all`,
-                                            query: { ...query, parentCategory: '', childCategory: '', title: 'Barchasi' },
+                                            query: {
+                                                ...query,
+                                                parentCategory: '',
+                                                childCategory: '',
+                                                title: 'Barchasi',
+                                            },
                                         });
                                         setTitle('Barchasi');
                                     } else {
                                         setSelectedCategory(val);
                                         // shu yerda handleParent ishlatyapmiz
-                                        const category = parent.find(item => item.slug === val);
-                                        if (category) handleParent(category.slug, category.name);
+                                        const category = parent.find(
+                                            (item) => item.slug === val
+                                        );
+                                        if (category)
+                                            handleParent(
+                                                category.slug,
+                                                category.name
+                                            );
                                     }
                                 }}
-                                options={parent.map(item => ({
+                                options={parent.map((item) => ({
                                     label: item.name,
                                     value: item.slug,
                                 }))}
-                                getPopupContainer={(triggerNode) => triggerNode.parentNode}
+                                getPopupContainer={(triggerNode) =>
+                                    triggerNode.parentNode
+                                }
                             />
                         </div>
 
@@ -269,7 +288,7 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
                                 <h4>Sub kategoriya</h4>
                                 <Select
                                     placeholder="Sub kategoriyani tanlang"
-                                    style={{ width: "100%" }}
+                                    style={{ width: '100%' }}
                                     allowClear
                                     value={query.childCategory || undefined}
                                     onChange={(val) => {
@@ -277,20 +296,32 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
                                             setSelectedSubCategory(undefined);
                                             push({
                                                 pathname,
-                                                query: { ...query, childCategory: '', title },
+                                                query: {
+                                                    ...query,
+                                                    childCategory: '',
+                                                    title,
+                                                },
                                             });
                                             setSybTitle('');
                                         } else {
                                             setSelectedSubCategory(val);
-                                            const subCategory = child.find(item => item.slug === val);
-                                            if (subCategory) handleChild(subCategory.slug, subCategory.name);
+                                            const subCategory = child.find(
+                                                (item) => item.slug === val
+                                            );
+                                            if (subCategory)
+                                                handleChild(
+                                                    subCategory.slug,
+                                                    subCategory.name
+                                                );
                                         }
                                     }}
-                                    options={child.map(item => ({
+                                    options={child.map((item) => ({
                                         label: item.name,
                                         value: item.slug,
                                     }))}
-                                    getPopupContainer={(triggerNode) => triggerNode.parentNode}
+                                    getPopupContainer={(triggerNode) =>
+                                        triggerNode.parentNode
+                                    }
                                 />
                             </div>
                         )}
@@ -298,25 +329,38 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
                         <div style={{ marginBottom: 24 }}>
                             <h4>Fayl turlari</h4>
                             <Checkbox.Group
-                                style={{ display: "flex", flexDirection: "column", gap: 8 }}
+                                style={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    gap: 8,
+                                }}
                                 value={fileTypes}
-                                onChange={vals => setFileTypes(vals)}
+                                onChange={(vals) => setFileTypes(vals)}
                                 options={[
-                                    { label: "DOCX", value: ".docx" },
-                                    { label: "DOC", value: ".doc" },
-                                    { label: "PPTX", value: ".pptx" },
-                                    { label: "PPT", value: ".ppt" },
-                                    { label: "PDF", value: ".pdf" },
+                                    { label: 'DOCX', value: '.docx' },
+                                    { label: 'DOC', value: '.doc' },
+                                    { label: 'PPTX', value: '.pptx' },
+                                    { label: 'PPT', value: '.ppt' },
+                                    { label: 'PDF', value: '.pdf' },
                                 ]}
                             />
-
                         </div>
 
                         <div style={{ marginBottom: 24 }}>
                             <h4>Narx oralig‘i</h4>
-                            <div style={{ display: "flex", justifyContent: "space-between" }}>
-                                <span>{formatCurrencyWithSpace(priceRange[0])} so'm</span>
-                                <span>{formatCurrencyWithSpace(priceRange[1])} so'm</span>
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                }}>
+                                <span>
+                                    {formatCurrencyWithSpace(priceRange[0])}{' '}
+                                    so'm
+                                </span>
+                                <span>
+                                    {formatCurrencyWithSpace(priceRange[1])}{' '}
+                                    so'm
+                                </span>
                             </div>
                             <Slider
                                 range
@@ -329,7 +373,11 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
 
                         <div>
                             <h4>Varoqlar oralig‘i</h4>
-                            <div style={{ display: "flex", justifyContent: "space-between" }}>
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                }}>
                                 <span>{pageRange[0]} bet</span>
                                 <span>{pageRange[1]} bet</span>
                             </div>
@@ -342,7 +390,8 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
                             />
                         </div>
 
-                        <div style={{ display: "flex", gap: 12, marginTop: 24 }}>
+                        <div
+                            style={{ display: 'flex', gap: 12, marginTop: 24 }}>
                             <Button
                                 block
                                 onClick={() => {
@@ -351,17 +400,21 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
                                     setFileTypes([]);
                                     setPriceRange([0, 500000]);
                                     setPageRange([0, 100]);
-                                    setTitle("Barchasi");
-                                    setSybTitle("");
+                                    setTitle('Barchasi');
+                                    setSybTitle('');
 
                                     push({
                                         pathname: `${path}all`,
-                                        query: { ...query, parentCategory: '', childCategory: '', title: 'Barchasi' },
+                                        query: {
+                                            ...query,
+                                            parentCategory: '',
+                                            childCategory: '',
+                                            title: 'Barchasi',
+                                        },
                                     });
 
                                     setDrawerOpen(false);
-                                }}
-                            >
+                                }}>
                                 Filtrni tozalash
                             </Button>
 
@@ -370,7 +423,10 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
                                 block
                                 onClick={() => {
                                     const filters = {
-                                        category: selectedSubCategory || selectedCategory || '',
+                                        category:
+                                            selectedSubCategory ||
+                                            selectedCategory ||
+                                            '',
                                         content_extensions: fileTypes,
                                         price_from: priceRange[0],
                                         price_to: priceRange[1],
@@ -384,12 +440,10 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
                                     });
 
                                     setDrawerOpen(false);
-                                }}
-                            >
+                                }}>
                                 Filtrni qo‘llash
                             </Button>
                         </div>
-
                     </Drawer>
                 </ConfigProvider>
             )}

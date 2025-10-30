@@ -331,6 +331,7 @@ const HeaderCatergories = () => {
 const HeaderSearch = () => {
     const { push } = useRouter();
     const [type, setType] = useState('mahsulotlar');
+    const [freezeSearch, setFreezeSearch] = useState(false);
     const [openSearch, setOpenSearch] = useState(false);
     const [search, setSearch] = useState('');
     const [isSearchFocused, setIsSearchFocused] = useState(false);
@@ -338,6 +339,8 @@ const HeaderSearch = () => {
     const axios = axiosInstance();
 
     const debounceSearch = useDebounce(search, 500);
+
+    const searchEnabled = debounceSearch.length > 0 && !freezeSearch;
 
     const {
         data,
@@ -351,8 +354,7 @@ const HeaderSearch = () => {
             );
             return data;
         },
-        enabled: type === 'mahsulotlar',
-        cacheTime: 10000,
+        enabled: type === 'mahsulotlar' && searchEnabled,
         retry: 1,
     });
 
@@ -368,8 +370,7 @@ const HeaderSearch = () => {
             );
             return data;
         },
-        enabled: type !== 'mahsulotlar',
-        cacheTime: 10000,
+        enabled: type !== 'mahsulotlar' && searchEnabled,
         retry: 1,
     });
 
@@ -402,6 +403,7 @@ const HeaderSearch = () => {
 
     const handleSearch = () => {
         if (!search) return;
+        setFreezeSearch(true);
         if (type === 'mahsulotlar') {
             push(`/search-page/?keyword=${search}&tab=1&type=file`);
         } else if (type === 'xizmatlar') {
@@ -424,6 +426,7 @@ const HeaderSearch = () => {
         window.addEventListener('keydown', handleOnKeydown);
         return () => {
             window.removeEventListener('keydown', handleOnKeydown);
+            setFreezeSearch(false);
         };
     }, [openSearch]);
 

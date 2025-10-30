@@ -5,7 +5,6 @@ import { checkAuthorization, setAccountLinks } from '~/store/auth/slice';
 import { useRouter } from 'next/router';
 import Header from '../header';
 import { GoogleLogin } from '@react-oauth/google';
-import FastDowloadSection from '../../shared/components/fast-dowload/FastDowloadSection';
 import { fetchDirections, fetchProfile } from '~/store/profile/slice';
 import Footer from '~/widgets/footer';
 

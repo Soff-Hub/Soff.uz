@@ -3,16 +3,23 @@ import { useSelector } from 'react-redux';
 import useGetChatById from './useGetChatById';
 import useDeleteMessage from './useDeleteMessage';
 import useSendMessage from './useSendMessage';
+import { useTimeManager } from '~/shared/hooks/useTimeManager';
 
 const useChat = (chatId) => {
     const [messages, setMessages] = useState([]);
     const [chat, setChat] = useState();
+    const { startTimeout, stopTimeout } = useTimeManager();
     const { mutateAsync: deleteMsg } = useDeleteMessage();
     const { mutateAsync: sendFile, isPending: isMessageWithFilePending } =
         useSendMessage();
     const { user } = useSelector((state) => state.auth);
-    const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-        useGetChatById(chatId);
+    const {
+        data,
+        fetchNextPage,
+        hasNextPage,
+        isFetchingNextPage,
+        isInitialLoading,
+    } = useGetChatById(chatId);
     const wsRef = useRef();
 
     useEffect(() => {
@@ -190,14 +197,14 @@ const useChat = (chatId) => {
                 default:
                     console.warn('Unknown event:', msg);
             }
-            unreadMessageTimeout = setTimeout(() => {
+            unreadMessageTimeout = startTimeout(() => {
                 sendUnreadMessages(ws, messages);
             }, 1000);
         };
 
         return () => {
             ws.close();
-            clearTimeout(unreadMessageTimeout);
+            stopTimeout(unreadMessageTimeout);
         };
     }, [chatId, user?.access]);
 
@@ -212,6 +219,7 @@ const useChat = (chatId) => {
         fetchNextPage,
         hasNextPage,
         isFetchingNextPage,
+        isFetching: isInitialLoading,
         isMessageWithFilePending,
     };
 };

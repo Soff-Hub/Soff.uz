@@ -8,9 +8,15 @@ import useCart from '~/shared/hooks/useCart';
 import ProductRepository from '~/repositories/ProductRepository';
 import { calculateAmount } from '~/shared/utilities/ecomerce-helpers';
 import { addPeriodToThousands } from './price-formatter';
+import { useTimeManager } from '~/shared/hooks/useTimeManager';
 
 const CreditCard2 = ({ document, type }) => {
+    const router = useRouter();
     const { user } = useSelector((state) => state.auth);
+    const ecomerce = useSelector((state) => state.ecomerce.cartDataItems);
+    const { affiliateId } = useSelector((state) => state.affiliate);
+    const { removeAll } = useCart();
+    const { startTimeout } = useTimeManager();
     const [numberCardVal, SetNumberCardVal] = useState(null);
     const [message, setMessage] = useState(true);
     const [cardDate, setCardDate] = useState(null);
@@ -20,13 +26,9 @@ const CreditCard2 = ({ document, type }) => {
     const [resData, setResData] = useState(null);
     const [cart, setCart] = useState(0);
     const [resDataCode, setResDataCode] = useState(null);
-    const { removeAll } = useCart();
     const [buttonOk, setButtonOk] = useState(false);
     const [tab, setTab] = useState(false);
-    const router = useRouter();
-    const { affiliateId } = useSelector((state) => state.affiliate);
     const [percentage, setPercentage] = useState(0);
-    const ecomerce = useSelector((state) => state.ecomerce.cartDataItems);
 
     const affiliate_code = affiliateId;
     const numberTyper = (value) => {
@@ -161,7 +163,7 @@ const CreditCard2 = ({ document, type }) => {
                 content: `${dataNews?.data?.msg}`,
             });
 
-            setTimeout(() => {
+            startTimeout(() => {
                 setResData(null);
             }, 2000);
         }

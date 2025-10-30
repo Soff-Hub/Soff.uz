@@ -15,6 +15,7 @@ import UserPortfolios from './user-portfolios';
 import UserServices from './user-services';
 import UserProducts from './user-products';
 import useResponsive from '~/shared/utilities/useResponsive';
+import { useTimeManager } from '~/shared/hooks/useTimeManager';
 
 const items = [
     { key: 'about', label: 'Muallif haqida' },
@@ -26,6 +27,7 @@ const items = [
 
 const UserTabs = ({ seller }) => {
     const router = useRouter();
+    const { startTimeout, stopTimeout } = useTimeManager();
     const [activeKey, setActiveKey] = useState('about');
 
     const commentRef = useRef(null);
@@ -64,14 +66,14 @@ const UserTabs = ({ seller }) => {
 
     useEffect(() => {
         if (activeKey === 'comments' && commentRef.current) {
-            const timing = setTimeout(() => {
+            const timing = startTimeout(() => {
                 commentRef.current.scrollIntoView({
                     behavior: 'smooth',
                     block: 'start',
                 });
             }, 300);
 
-            return () => clearTimeout(timing);
+            return () => stopTimeout(timing);
         }
     }, [activeKey]);
 
