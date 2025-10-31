@@ -263,7 +263,8 @@ const ChatInputParts = ({
                 {
                     chat_id: chatId,
                     file: file,
-                    content: trimmedMessage,
+                    // ● NOTE: delete temporarily content
+                    // content: trimmedMessage,
                 },
                 {
                     onSuccess: () => {
@@ -300,7 +301,8 @@ const ChatInputParts = ({
 
     const customRequest = ({ file, onSuccess, onProgress }) => {
         const uid = file.uid;
-
+        // ● NOTE: clear message input when file is selected
+        setNewMessage('');
         // Immediately show in UI without processing
         setFileList([
             {
@@ -345,7 +347,7 @@ const ChatInputParts = ({
                 clearInterval(interval);
                 onSuccess('ok');
             }
-        }, 300);
+        }, 150);
     };
 
     const handleRemove = (file) => {
@@ -438,7 +440,9 @@ const ChatInputParts = ({
 
                 <TextArea
                     value={newMessage}
-                    disabled={isMessageWithFilePending}
+                    // ● NOTE: comment temporarily disabled state and disable only on file upload
+                    // disabled={isMessageWithFilePending}
+                    disabled={fileList.length}
                     onChange={(e) => setNewMessage(e.target.value)}
                     onKeyDown={handleKeyPress}
                     autoSize={{ minRows: 1, maxRows: 6 }}
@@ -449,7 +453,7 @@ const ChatInputParts = ({
                 />
                 <Button
                     type="primary"
-                    disabled={!canSubmit || isMessageWithFilePending}
+                    disabled={!canSubmit}
                     onClick={handleSend}>
                     {fileList?.[0]?.status == 'uploading' ? (
                         <Spin

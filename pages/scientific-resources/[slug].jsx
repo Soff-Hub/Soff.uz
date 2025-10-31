@@ -43,6 +43,7 @@ export default function ProductCategoryScreen({
             : 'Ilmiy ishlar kategoriyasi';
 
     return (
+        // <>
         <PageContainer title={fullTitle} boxed={true}>
             <Meta
                 title={fullTitle}
@@ -158,6 +159,7 @@ export default function ProductCategoryScreen({
             </div>
             {/* <div className="servicesSpace" /> */}
         </PageContainer>
+        // </>
     );
 }
 
