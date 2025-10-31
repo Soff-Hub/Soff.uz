@@ -95,16 +95,21 @@ export default function Search_Results_Specialists({ children }) {
 
             if (data?.count) {
                 data.results.forEach((specialist) => {
-                    if (rankingsMap.has(specialist.position?.direction)) {
+                    if (
+                        rankingsMap.has(specialist.position?.position_direction)
+                    ) {
                         const currentUsageNumber = rankingsMap.get(
-                            specialist.position?.direction
+                            specialist.position?.position_direction
                         );
                         rankingsMap.set(
-                            specialist.position?.direction,
+                            specialist.position?.position_direction,
                             ++currentUsageNumber
                         );
                     } else {
-                        rankingsMap.set(specialist.position?.direction, 1);
+                        rankingsMap.set(
+                            specialist.position?.position_direction,
+                            1
+                        );
                     }
                 });
 
@@ -125,7 +130,7 @@ export default function Search_Results_Specialists({ children }) {
                     pathname: router.pathname,
                     query: {
                         ...router.query,
-                        direction,
+                        ts_direction: direction,
                     },
                 });
             }

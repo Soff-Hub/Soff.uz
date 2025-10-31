@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Pagination, Skeleton } from 'antd';
 import Search_Results_NotFound from './notFound';
 import ServiceCard from '~/entities/service/service-card';
@@ -6,13 +6,6 @@ import { useRouter } from 'next/router';
 import useScrollToNotFound from '../../../shared/hooks/useScrollToNotFound';
 import { useFGet } from '~/shared/hooks/useFApi';
 import SearchResultsProductsFilter from './search-page-filter/search-results-services-filter';
-import { useQuery } from '@tanstack/react-query';
-import { baseUrlUseApi } from '~/repositories/useApi';
-
-// const serviceParentUrl = `${
-//     process.env.NEXT_PUBLIC_FREELEANCE_URL
-// }/api/v1/categories/?direction=${direction || ''}`;
-// const serviceChildUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/categories/?parent_id=${service_parent}`;
 
 const currentTab = '2';
 export default function Search_Results_Services({ children }) {
@@ -111,22 +104,55 @@ export default function Search_Results_Services({ children }) {
         showResultsContent = <Search_Results_NotFound ref={notFoundRef} />;
     }
 
+    useEffect(() => {
+        const defineDirection = async () => {
+            const rankingsMap = new Map();
+
+            if (data?.total_service) {
+                data.items.forEach((service) => {
+                    if (rankingsMap.has(service.category?.direction)) {
+                        const currentUsageNumber = rankingsMap.get(
+                            service.category?.direction
+                        );
+                        rankingsMap.set(
+                            service.category?.direction,
+                            ++currentUsageNumber
+                        );
+                    } else {
+                        rankingsMap.set(service.category?.direction, 1);
+                    }
+                });
+
+                const heighestUsageDetect = [...rankingsMap.entries()];
+
+                let max = -Infinity;
+                let direction = null;
+
+                for (let i = 0; i < heighestUsageDetect.length; i++) {
+                    const [key, value] = heighestUsageDetect[i];
+                    if (value > max) {
+                        max = value;
+                        direction = key;
+                    }
+                }
+
+                router.push({
+                    pathname: router.pathname,
+                    query: {
+                        ...router.query,
+                        ts_direction: direction,
+                    },
+                });
+            }
+        };
+        defineDirection();
+    }, [data]);
+
     return (
         <div className="Search_Results_Products container">
             <div className="d-flex">
                 <div className="w-100">
                     <div className="mb-3">
-                        {/* <div className="Search_Results_Products_form_box">
-                            <div className="row align-items-center mb-3">
-                                <div className="col-12 col-md-3">
-                                    <p className="countProduct text-nowrap m-0">
-                                        {data?.total_service
-                                            ? `${data?.total_service} ta mahsulot topildi`
-                                            : ''}
-                                    </p>
-                                </div>
-                            </div>
-                        </div> */}
                         <SearchResultsProductsFilter
                             count={data}
                             total={data?.total_service}

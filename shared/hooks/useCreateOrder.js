@@ -9,8 +9,7 @@ import {
     Popover,
     TimePicker,
 } from 'antd';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
-// import { directions } from '../../components/freeleance/constants';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFGet, useFPost } from '~/shared/hooks/useFApi';
 import dayjs from 'dayjs';

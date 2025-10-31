@@ -29,12 +29,16 @@ const Search_Results = ({ keyword }) => {
 
     const topServicesQuery = new URLSearchParams({
         limit: 6,
-        ...(query.keyword && { search: query.keyword }),
-        ...(query.direction && { direction: query.direction }),
+        ...((query.direction || query.ts_direction) && {
+            direction: query.direction || query.ts_direction,
+        }),
+        ...(query.keyword &&
+            !query.direction &&
+            !query.ts_direction && { search: query.keyword }),
     });
 
     const { data: topServices, isLoading: topServicesLoading } = useFGet(
-        ['top-services', query.keyword || '', query.direction || ''],
+        ['top-services', topServicesQuery.toString()],
         `customer/popular-services?${topServicesQuery.toString()}`
     );
 
@@ -71,6 +75,7 @@ const Search_Results = ({ keyword }) => {
     const handleSetRouterQuery = (currentTab) => {
         const omitKeys = [
             'direction',
+            'ts_direction',
             'page',
             'offset',
             'limit',
