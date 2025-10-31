@@ -410,7 +410,7 @@ export async function getServerSideProps({ query, req }) {
         defaultProducts = await request.json();
     }
 
-    if (!defaultProducts)
+    // if (!defaultProducts)
         return {
             props: {
                 defaultProducts,
