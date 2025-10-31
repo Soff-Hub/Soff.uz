@@ -1,27 +1,19 @@
 import Image from 'next/image';
-import React, { useEffect, useRef } from 'react';
+import React, { useLayoutEffect, useRef } from 'react';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import Link from 'next/link';
-import { useTimeManager } from '~/shared/hooks/useTimeManager';
 
 function FileImagesScroll({ product }) {
     const containerRef = useRef(null);
-    const { startTimeout, stopTimeout } = useTimeManager();
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         const scrollContainer = containerRef.current;
         if (scrollContainer) {
             // Scrollni eng pastga tushirish
             scrollContainer.scrollTop = scrollContainer.scrollHeight;
-
-            // 1 soniyadan keyin avtomatik yuqoriga qaytarish
-            const timing = startTimeout(() => {
-                scrollContainer.scrollTo({ top: 0, behavior: 'smooth' });
-            }, 1000);
-
-            return () => stopTimeout(timing);
+            scrollContainer.scrollTo({ top: 0 });
         }
-    }, [product?.document?.images]);
+    }, []);
 
     return (
         <div className="ps-product__thumbnail_seller">
