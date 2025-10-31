@@ -23,7 +23,6 @@ const commonTransition = {
 function AvatarTransitioned({ msg }) {
     const isLoading = msg.status === 'sending' || msg.status === 'updating';
     const [showSpinner, setShowSpinner] = useState(false);
-    console.log('isLoading avatar', isLoading);
     const spinnerContainerStyle = {
         ...commonTransition,
         display: 'flex',

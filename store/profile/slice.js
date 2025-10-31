@@ -9,9 +9,7 @@ export const fetchProfile = createAsyncThunk(
         try {
             const response = await authAxios.get('/auth/profile');
             return response.data;
-        } catch (error) {
-            console.log('auth/profile');
-        }
+        } catch (error) {}
     }
 );
 
@@ -24,7 +22,6 @@ export const fetchDirections = createAsyncThunk(
             );
             return response.data;
         } catch (error) {
-            console.log('api/v1/categories/all-directions');
             return [];
         }
     }

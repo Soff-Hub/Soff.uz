@@ -5,9 +5,8 @@ async function clearCache() {
     const cacheDir = path.join(process.cwd(), '.next', 'cache');
 
     if (fs.existsSync(cacheDir)) {
-        fs.rm(cacheDir, { recursive: true, force: true }, err => {
+        fs.rm(cacheDir, { recursive: true, force: true }, (err) => {
             if (err) console.error('Failed to clear cache', err);
-            else console.log('Cache cleared ✅');
         });
     }
 }
@@ -17,4 +16,3 @@ const oneDayInterval = 24 * 60 * 60 * 1000;
 setInterval(clearCache, oneDayInterval);
 
 clearCache();
-

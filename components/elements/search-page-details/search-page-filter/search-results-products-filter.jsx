@@ -227,8 +227,6 @@ function SearchResultsProductsFilter({ total, childData }) {
         setFilterOpen(false);
     };
 
-    console.log({ mutationsInForm });
-
     return (
         <div className="Search_Results_Products_form_box">
             {mutationsInForm.hasMutation ? (

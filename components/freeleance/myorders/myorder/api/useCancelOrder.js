@@ -23,7 +23,6 @@ const useCancelOrder = () => {
             queryClient.invalidateQueries({ queryKey: ['orders'] });
         },
         onError: (error) => {
-            console.log({ error });
             const errorMessage =
                 typeof error?.response?.data?.detail === 'string'
                     ? error.response.data.detail

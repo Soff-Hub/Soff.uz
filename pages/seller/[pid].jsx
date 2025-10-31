@@ -33,7 +33,6 @@ export async function getServerSideProps(context) {
         };
     } catch (error) {
         // i should redirect to 404 page
-        console.log('Error fetching seller data:', error);
         return {
             notFound: true,
         };

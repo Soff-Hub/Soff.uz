@@ -110,7 +110,6 @@ const useChat = (chatId) => {
                 content,
                 status: 'updating', // 🟡 UI can show spinner
             };
-            console.log({ tempMessage, message_id });
 
             setMessages((prev) =>
                 prev.map((m) => (m.id === message_id ? tempMessage : m))
@@ -157,7 +156,6 @@ const useChat = (chatId) => {
                 console.warn('⚠️ JSON emas data:', event.data);
                 return;
             }
-            console.log('WS message received:', msg);
             switch (msg.event) {
                 case 'message': {
                     setMessages((prev) => {

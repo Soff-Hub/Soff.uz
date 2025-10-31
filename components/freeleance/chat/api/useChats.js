@@ -12,8 +12,6 @@ const useChats = (search) => {
         if (data) setChats(data);
     }, [data]);
 
-    console.log('🔵 Chats data:', data);
-
     useEffect(() => {
         if (!user?.access) return;
 
@@ -35,7 +33,6 @@ const useChats = (search) => {
                 console.warn('⚠️ JSON emas data:', event.data);
                 return;
             }
-            console.log('🟢 New chat message received via WebSocket:', msg);
             setChats((prev) => {
                 if (!Array.isArray(prev)) prev = [];
 

@@ -492,7 +492,6 @@ function FileActions({ product }) {
 
 const CustomResponsiveLayout = ({ product, handleBuynow }) => {
     const { isMobile, size } = useResponsive();
-    console.log({ product });
     return (
         <>
             <div

@@ -89,8 +89,6 @@ export default function Search_Results_Specialists({ children }) {
         resultsContent = <Search_Results_NotFound ref={notFoundRef} />;
     }
 
-    console.log({ data });
-
     useEffect(() => {
         const defineDirection = async () => {
             const rankingsMap = new Map();
@@ -111,7 +109,6 @@ export default function Search_Results_Specialists({ children }) {
                 });
 
                 const heighestUsageDetect = [...rankingsMap.entries()];
-                console.log({ heighestUsageDetect });
 
                 let max = -Infinity;
                 let direction = null;

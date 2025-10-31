@@ -9,12 +9,7 @@ export default function useAuth() {
             .catch((error) => {
                 if (error.response) {
                     return error.response;
-                } else if (error.request) {
-                    console.log(error.request);
-                } else {
-                    console.log('Error', error.message);
                 }
-                console.log(error.config);
             });
 
         return user;
@@ -42,15 +37,9 @@ export default function useAuth() {
             })
 
             .catch((error) => {
-                console.log(error.response);
                 if (error.response) {
                     return error.response;
-                } else if (error.request) {
-                    console.log(error.request);
-                } else {
-                    console.log('Error', error.message);
                 }
-                console.log(error.config);
             });
 
         return user;
@@ -66,15 +55,9 @@ export default function useAuth() {
                 return ress;
             })
             .catch((error) => {
-                console.log(error.response);
                 if (error.response) {
                     return error.response;
-                } else if (error.request) {
-                    console.log(error.request);
-                } else {
-                    console.log('Error', error.message);
                 }
-                console.log(error.config);
             });
 
         return user;
@@ -92,15 +75,9 @@ export default function useAuth() {
                 return ress;
             })
             .catch((error) => {
-                console.log(error.response);
                 if (error.response) {
                     return error.response;
-                } else if (error.request) {
-                    console.log(error.request);
-                } else {
-                    console.log('Error', error.message);
                 }
-                console.log(error.config);
             });
 
         return user;
@@ -122,15 +99,9 @@ export default function useAuth() {
                 return ress;
             })
             .catch((error) => {
-                console.log(error.response);
                 if (error.response) {
                     return error.response;
-                } else if (error.request) {
-                    console.log(error.request);
-                } else {
-                    console.log('Error', error.message);
                 }
-                console.log(error.config);
             });
 
         return user;
@@ -151,15 +122,9 @@ export default function useAuth() {
                 return ress;
             })
             .catch((error) => {
-                console.log(error.response);
                 if (error.response) {
                     return error.response;
-                } else if (error.request) {
-                    console.log(error.request);
-                } else {
-                    console.log('Error', error.message);
                 }
-                console.log(error.config);
             });
 
         return user;
@@ -173,15 +138,9 @@ export default function useAuth() {
                 return ress;
             })
             .catch((error) => {
-                console.log(error.response);
                 if (error.response) {
                     return error.response;
-                } else if (error.request) {
-                    console.log(error.request);
-                } else {
-                    console.log('Error', error.message);
                 }
-                console.log(error.config);
             });
 
         return user;
@@ -199,15 +158,9 @@ export default function useAuth() {
                 return ress;
             })
             .catch((error) => {
-                console.log(error.response);
                 if (error.response) {
                     return error.response;
-                } else if (error.request) {
-                    console.log(error.request);
-                } else {
-                    console.log('Error', error.message);
                 }
-                console.log(error.config);
             });
 
         return user;
@@ -224,15 +177,9 @@ export default function useAuth() {
                 return ress;
             })
             .catch((error) => {
-                console.log(error.response);
                 if (error.response) {
                     return error.response;
-                } else if (error.request) {
-                    console.log(error.request);
-                } else {
-                    console.log('Error', error.message);
                 }
-                console.log(error.config);
             });
 
         return user;
@@ -246,15 +193,9 @@ export default function useAuth() {
                 return ress;
             })
             .catch((error) => {
-                console.log(error.response);
                 if (error.response) {
                     return error.response;
-                } else if (error.request) {
-                    console.log(error.request);
-                } else {
-                    console.log('Error', error.message);
                 }
-                console.log(error.config);
             });
 
         return user;

@@ -235,8 +235,6 @@ const UserShortInfo = ({ seller }) => {
         }
     }, [router.query]);
 
-    console.log({ router });
-
     return (
         <div className={cn('bg-light', 'p-3', 'shadow', 'rounded-xl')}>
             <div
