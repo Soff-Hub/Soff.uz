@@ -22,11 +22,18 @@ export default function LoginForm({
         mutationKey: ['auth-register'],
         mutationFn: async ({ phone, email }) => {
             setLoading(true);
+            const utm_source = localStorage.getItem('utm_source');
             const data = {
                 phone_or_email: type === 't' ? '+998' + phone : email,
                 role: 'customer',
             };
-            const resp = await Axios.post(baseUrlAuth + 'auth/register/', data);
+            const resp = await Axios.post(
+                baseUrlAuth +
+                    `auth/register/${
+                        utm_source ? `?utm_source=${utm_source}` : ''
+                    }`,
+                data
+            );
             localStorage.setItem('via_', resp?.data?.via_);
             localStorage.setItem('msg', resp?.data?.msg);
             localStorage.setItem('data', JSON.stringify(data));

@@ -39,6 +39,12 @@ function App({ Component, pageProps }) {
             document.getElementById('__next').classList.add('loaded');
         }, 10);
         window.addEventListener('contextmenu', (e) => e.preventDefault());
+
+        return () => {
+            localStorage.removeItem('utm_source');
+            localStorage.removeItem('utm_medium');
+            localStorage.removeItem('utm_campaign');
+        };
     }, []);
 
     useEffect(() => {
