@@ -100,6 +100,9 @@ function FileImagesScroll({ product }) {
                             cqursor: 'pointer',
                             transition: '0.3s ease',
                             opacity: isScrolledDown ? 0 : 1,
+                            transform: isScrolledDown
+                                ? 'translateY(100%)'
+                                : 'translateY(0)',
                         }}>
                         <i className="fa-solid fa-angles-down fa-bounce"></i>
                     </div>
