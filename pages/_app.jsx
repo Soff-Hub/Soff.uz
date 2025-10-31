@@ -13,11 +13,12 @@ import { Providers } from '~/app/providers';
 import AffiliateListener from '~/entities/affiliate';
 import { useTelegram } from '~/shared/hooks/useTelegram';
 import { PacmanLoader } from 'react-spinners';
-// import OneSignal from 'react-onesignal';
 import { TelegramLink } from '~/shared/components/telegram-link';
+import { useTimeManager } from '~/shared/hooks/useTimeManager';
 
 function App({ Component, pageProps }) {
     const { tg } = useTelegram();
+    const { startTimeout } = useTimeManager();
     const [siteLoaded, setSiteLoaded] = useState(false);
 
     useEffect(() => {
@@ -25,12 +26,25 @@ function App({ Component, pageProps }) {
     }, [tg]);
 
     useEffect(() => {
-        setTimeout(function () {
+        const params = new URLSearchParams(window.location.search);
+        const utmSource = params.get('utm_source');
+        const utmMedium = params.get('utm_medium');
+        const utmCampaign = params.get('utm_campaign');
+
+        if (utmSource) localStorage.setItem('utm_source', utmSource);
+        if (utmMedium) localStorage.setItem('utm_medium', utmMedium);
+        if (utmCampaign) localStorage.setItem('utm_campaign', utmCampaign);
+
+        startTimeout(() => {
             document.getElementById('__next').classList.add('loaded');
-        }, 0);
-        window.addEventListener('contextmenu', function (e) {
-            e.preventDefault();
-        });
+        }, 10);
+        window.addEventListener('contextmenu', (e) => e.preventDefault());
+
+        return () => {
+            localStorage.removeItem('utm_source');
+            localStorage.removeItem('utm_medium');
+            localStorage.removeItem('utm_campaign');
+        };
     }, []);
 
     useEffect(() => {
@@ -61,7 +75,7 @@ function App({ Component, pageProps }) {
     useEffect(() => {
         const handleLoad = () => {
             // Barcha JS, CSS, img va fontlar yuklandi
-            setTimeout(() => {
+            startTimeout(() => {
                 setSiteLoaded(true);
             }, 400); // biroz delay bilan silliq o'tish
         };

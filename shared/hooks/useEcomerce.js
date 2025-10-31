@@ -7,73 +7,70 @@ import {
     setWishlistTtems,
     setCartItems,
 } from '~/store/ecomerce/slice';
+import { useTimeManager } from './useTimeManager';
+
 export default function useEcomerce() {
     const dispatch = useDispatch();
+    const { startTimeout, stopTimeout } = useTimeManager();
     const [loading, setLoading] = useState(false);
     const [cartItemsOnCookie] = useState(null);
     const [cookies, setCookie] = useCookies(['cart']);
     const [products, setProducts] = useState(null);
-    const { wishlistItems } = useSelector(state => state.ecomerce)
+    const { wishlistItems } = useSelector((state) => state.ecomerce);
     return {
         loading,
         cartItemsOnCookie,
         products,
         getProducts: async (payload, group = '') => {
             setLoading(true);
-            if (true) {
-                // let queries = '';
-                // payload?.forEach((item) => {
-                //     queries = `${item.id}`;
-                // });
 
-                if (true) {
-                    if (group === 'cart' || group === 'wishlist') {
-                        let cartItems = payload;
-                        cartItems?.forEach((item) => {
-                            let existItem = cartItems.find(
-                                (val) => val.id === item.id
-                            );
-                        });
+            if (group === 'cart' || group === 'wishlist') {
+                let cartItems = payload;
+                cartItems?.forEach((item) => {
+                    let existItem = cartItems.find((val) => val.id === item.id);
+                });
 
-                        // setProducts(cartItems);
-                        setProducts(payload);
-                    } else {
-                        setProducts(payload);
-                    }
-                    setTimeout(
-                        function () {
-                            setLoading(false);
-                        }.bind(this),
-                        250
-                    );
-                }
+                // setProducts(cartItems);
+                setProducts(payload);
             } else {
-                setLoading(false);
                 setProducts(payload);
             }
+            startTimeout(
+                function () {
+                    setLoading(false);
+                }.bind(this),
+                250
+            );
         },
 
         addItem: async (newItem, group) => {
             if (group === 'wishlist') {
-                const localData = JSON.parse(localStorage.getItem('wishlist')) || []
+                const localData =
+                    JSON.parse(localStorage.getItem('wishlist')) || [];
                 if (localData.length > 0 && wishlistItems.length > 0) {
-                    const data = []
+                    const data = [];
                     for (let i = 0; i < localData.length; i++) {
                         for (let j = 0; j < wishlistItems.length; j++) {
                             // if (localData[i] !== wishlistItems[j]) {
                             //     data.push(localData[i])
                             // }
-                            data.push(localData[i])
+                            data.push(localData[i]);
                         }
                     }
-                    const resp = await ProductRepository.postCartData([newItem.id]);
+                    const resp = await ProductRepository.postCartData([
+                        newItem.id,
+                    ]);
                     if (resp?.data) {
                         dispatch(setWishlistTtems(resp?.data.data));
                     }
-                }
-                else {
-                    localStorage.setItem('wishlist', JSON.stringify([newItem.id]))
-                    const resp = await ProductRepository.postCartData([newItem.id]);
+                } else {
+                    localStorage.setItem(
+                        'wishlist',
+                        JSON.stringify([newItem.id])
+                    );
+                    const resp = await ProductRepository.postCartData([
+                        newItem.id,
+                    ]);
                     if (resp?.data) {
                         dispatch(setWishlistTtems(resp?.data.data));
                     }
@@ -111,7 +108,7 @@ export default function useEcomerce() {
                 }
 
                 setCookie('cart', currentItems, { path: '/' });
-                return currentItems
+                return currentItems;
             }
 
             if (group === 'wishlist') {

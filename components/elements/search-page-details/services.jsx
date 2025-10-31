@@ -1,10 +1,11 @@
-import React, { useRef, useMemo } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Pagination, Skeleton } from 'antd';
 import Search_Results_NotFound from './notFound';
 import ServiceCard from '~/entities/service/service-card';
 import { useRouter } from 'next/router';
-import useScrollToNotFound from './useScrollToNotFound';
+import useScrollToNotFound from '../../../shared/hooks/useScrollToNotFound';
 import { useFGet } from '~/shared/hooks/useFApi';
+import SearchResultsProductsFilter from './search-page-filter/search-results-services-filter';
 
 const currentTab = '2';
 export default function Search_Results_Services({ children }) {
@@ -19,6 +20,8 @@ export default function Search_Results_Services({ children }) {
         service_parent = '',
         category_id = '',
         direction = '',
+        type = '',
+        tab = currentTab,
         offset: queryOffset,
     } = queriesRef.current;
 
@@ -34,7 +37,14 @@ export default function Search_Results_Services({ children }) {
     });
 
     const { data, isLoading } = useFGet(
-        ['customer/services', keyword, limit, offset],
+        [
+            'customer/services',
+            keyword,
+            limit,
+            offset,
+            direction,
+            service_parent,
+        ],
         `customer?${servicesQuery.toString()}&search=${keyword}${
             service_parent ? `&category_id=${service_parent}` : ''
         }`
@@ -64,9 +74,7 @@ export default function Search_Results_Services({ children }) {
             <>
                 <div className="Search_Results_Services_wrap">
                     {data?.items?.map((item, index) => (
-                        <div key={index}>
-                            <ServiceCard service={item} />
-                        </div>
+                        <ServiceCard service={item} key={index} />
                     ))}
                 </div>
                 <Pagination
@@ -96,22 +104,59 @@ export default function Search_Results_Services({ children }) {
         showResultsContent = <Search_Results_NotFound ref={notFoundRef} />;
     }
 
+    useEffect(() => {
+        const defineDirection = async () => {
+            const rankingsMap = new Map();
+
+            if (data?.total_service) {
+                data.items.forEach((service) => {
+                    if (rankingsMap.has(service.category?.direction)) {
+                        const currentUsageNumber = rankingsMap.get(
+                            service.category?.direction
+                        );
+                        rankingsMap.set(
+                            service.category?.direction,
+                            ++currentUsageNumber
+                        );
+                    } else {
+                        rankingsMap.set(service.category?.direction, 1);
+                    }
+                });
+
+                const heighestUsageDetect = [...rankingsMap.entries()];
+
+                let max = -Infinity;
+                let direction = null;
+
+                for (let i = 0; i < heighestUsageDetect.length; i++) {
+                    const [key, value] = heighestUsageDetect[i];
+                    if (value > max) {
+                        max = value;
+                        direction = key;
+                    }
+                }
+
+                router.push({
+                    pathname: router.pathname,
+                    query: {
+                        ...router.query,
+                        ts_direction: direction,
+                    },
+                });
+            }
+        };
+        defineDirection();
+    }, [data]);
+
     return (
         <div className="Search_Results_Products container">
             <div className="d-flex">
                 <div className="w-100">
-                    <div className="mb-5">
-                        <div className="Search_Results_Products_form_box">
-                            <div className="row align-items-center mb-3">
-                                <div className="col-12 col-md-3">
-                                    <p className="countProduct text-nowrap m-0">
-                                        {data?.total_service
-                                            ? `${data?.total_service} ta mahsulot topildi`
-                                            : ''}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
+                    <div className="mb-3">
+                        <SearchResultsProductsFilter
+                            count={data}
+                            total={data?.total_service}
+                        />
                     </div>
                     <div>{showResultsContent}</div>
                 </div>

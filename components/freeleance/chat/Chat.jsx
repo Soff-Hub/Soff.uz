@@ -14,6 +14,7 @@ const Chat = () => {
     const { query } = router;
     const { refetch } = useGetChatById(chatId);
     const dispatch = useDispatch();
+
     useEffect(() => {
         if (query?.chatId) {
             setChatId(query.chatId);

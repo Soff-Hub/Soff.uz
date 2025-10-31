@@ -4,7 +4,7 @@ import 'dayjs/locale/uz-latn';
 import Image from 'next/image';
 import React, { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { cn, useRcn } from '~/shared/utilities/cn';
-import { Button, Divider } from 'antd';
+import { Button, Divider, message } from 'antd';
 import {
     CheckCircleOutlined,
     CloseCircleOutlined,
@@ -19,6 +19,8 @@ import useCreateChat from '~/components/freeleance/chat/api/useCreateChat';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { useRouter } from 'next/router';
 import OrderPaymentPrompt from './OrderPaymentPrompt';
+import { useTimeManager } from '~/shared/hooks/useTimeManager';
+import { FaRegCopy } from 'react-icons/fa';
 
 dayjs.extend(relativeTime);
 dayjs.locale('uz-latn');
@@ -43,16 +45,17 @@ const InfoRow = memo(({ icon, label, value }) => (
 ));
 
 const UserShortInfo = ({ seller }) => {
+    const router = useRouter();
     const { isLoggedIn, status } = useSelector((state) => state?.auth);
     const { mutate: createChat } = useCreateChat();
     const { isMobile } = useResponsive();
+    const { startTimeout } = useTimeManager();
     const [activeModal, setActiveModal] = useState(null);
     const [authModal, setAuthModal] = useState(false);
     const [createOrderModal, setCreateOrderModal] = useState(false);
     const [latelyCreatedOrder, setLatelyCreatedOrder] = useState(null);
     const [orderPaymentPromptModal, setOrderPaymentPromptModal] =
         useState(false);
-    const router = useRouter();
 
     const lastActive = useMemo(
         () =>
@@ -194,11 +197,23 @@ const UserShortInfo = ({ seller }) => {
         if (activeModal === 'createOrder') {
             setCreateOrderModal(true);
         } else if (activeModal === 'chat') {
-            setTimeout(() => {
+            startTimeout(() => {
                 createChat(seller?.id);
             }, 1000);
         }
     };
+
+    const handleCopyLink = useCallback(() => {
+        const link = `${window.location.origin}/seller/${seller?.id}`;
+        navigator.clipboard
+            .writeText(link)
+            .then(() => {
+                message.success('Link nusxalandi!');
+            })
+            .catch(() => {
+                message.error('Link nusxalanmadi');
+            });
+    }, [seller?.id]);
 
     useEffect(() => {
         const { order } = router.query;
@@ -268,6 +283,14 @@ const UserShortInfo = ({ seller }) => {
                     )}>
                     {seller?.position}
                 </h4>
+                <Button
+                    type="primary"
+                    iconPosition="end"
+                    variant="solid"
+                    icon={<FaRegCopy />}
+                    onClick={handleCopyLink}>
+                    Pro'fil linkini nusxalash
+                </Button>
             </div>
 
             <div className={cn(marginClass, 'flex', 'flex-col', 'gap-4')}>

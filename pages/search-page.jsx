@@ -27,9 +27,19 @@ const Search_Results = ({ keyword }) => {
     const pageRef = useRef(null);
     const { isLoggedIn } = useSelector((state) => state.auth);
 
+    const topServicesQuery = new URLSearchParams({
+        limit: 6,
+        ...((query.direction || query.ts_direction) && {
+            direction: query.direction || query.ts_direction,
+        }),
+        ...(query.keyword &&
+            !query.direction &&
+            !query.ts_direction && { search: query.keyword }),
+    });
+
     const { data: topServices, isLoading: topServicesLoading } = useFGet(
-        'top-services',
-        'customer/popular-services?limit=6'
+        ['top-services', topServicesQuery.toString()],
+        `customer/popular-services?${topServicesQuery.toString()}`
     );
 
     const { data: lastProducts, isLoading: lastProductsLoading } = useQuery({
@@ -63,18 +73,34 @@ const Search_Results = ({ keyword }) => {
     );
 
     const handleSetRouterQuery = (currentTab) => {
+        const omitKeys = [
+            'direction',
+            'ts_direction',
+            'page',
+            'offset',
+            'limit',
+            'category',
+            'parentCategory',
+            'service_parent',
+            'file_type',
+            'order_by',
+            'page_from',
+            'page_to',
+        ];
+
+        const newQueries = Object.fromEntries(
+            Object.entries(router.query).filter(
+                ([key]) => !omitKeys.includes(key)
+            )
+        );
+
         router.push({
             pathname: router.pathname,
             query: {
-                ...router.query,
+                ...newQueries,
                 keyword: debouncedSearchTerm,
-                page: 1,
                 tab: currentTab || activeTab,
                 type: (currentTab || activeTab) == '1' ? 'file' : 'all',
-                offset: undefined,
-                limit: undefined,
-                category: '',
-                parentCategory: '',
             },
         });
     };
@@ -238,6 +264,7 @@ const Search_Results = ({ keyword }) => {
             <div className="container ">
                 <Tabs
                     className="order_tabs"
+                    destroyInactiveTabPane
                     defaultActiveKey={String(query?.tab)}
                     accessKey={activeTab}
                     onChange={handleChangeTab}

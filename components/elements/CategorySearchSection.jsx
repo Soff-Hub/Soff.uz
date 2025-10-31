@@ -1,17 +1,18 @@
-
 import { Input } from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { useTimeManager } from '~/shared/hooks/useTimeManager';
 
 function useDebounce(value, delay = 500) {
     const [debounced, setDebounced] = useState(value);
+    const { startTimeout, stopTimeout } = useTimeManager();
 
     useEffect(() => {
-        const handler = setTimeout(() => {
+        const handler = startTimeout(() => {
             setDebounced(value);
         }, delay);
 
-        return () => clearTimeout(handler);
+        return () => stopTimeout(handler);
     }, [value, delay]);
 
     return debounced;
@@ -47,7 +48,7 @@ export default function CategorySearchSection() {
                 size="large"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                style={{height: '50px', fontSize: '18px'}}
+                style={{ height: '50px', fontSize: '18px' }}
             />
         </div>
     );

@@ -10,7 +10,7 @@
     max-width: 600px;
     position: relative;
     z-index: 10;
-    margin-bottom:10px;
+    margin-bottom: 10px;
 
     .input {
         font-size: 15px;
@@ -24,7 +24,7 @@
     }
 
     .select {
-        min-width: 130px !important;
+        min-width: 140px !important;
         border-right: 1px solid #eaeaea;
     }
 
@@ -49,5 +49,16 @@
         &::placeholder {
             color: #24282b;
         }
+    }
+}
+
+.searchOption {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+
+    &:hover {
+        background-color: #f5f5f5;
     }
 }

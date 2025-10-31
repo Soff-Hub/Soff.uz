@@ -1,16 +1,15 @@
-import React from 'react'
-import Hero from './hero'
-import Catalog from './catalog'
-import Freelance from './freelance'
-import LastServices from './last-services'
-import Info from './info'
-import LastProducts from './last-products'
-import Statistics from './statistics'
-import Bests from './bests'
-import Title from './title'
-import TwoCard from './two-card'
-import Faqs from './faqs'
-
+import React from 'react';
+import Hero from './hero';
+import Catalog from './catalog';
+import Freelance from './freelance';
+import LastServices from './last-services';
+import Info from './info';
+import LastProducts from './last-products';
+import Statistics from './statistics';
+import Bests from './bests';
+import Title from './title';
+import TwoCard from './two-card';
+import Faqs from './faqs';
 
 const Home = () => {
     return (
@@ -47,7 +46,7 @@ const Home = () => {
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Home
+export default Home;

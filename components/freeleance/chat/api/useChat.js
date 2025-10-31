@@ -1,24 +1,40 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import useGetChatById from './useGetChatById';
+import useDeleteMessage from './useDeleteMessage';
+import useSendMessage from './useSendMessage';
+import { useTimeManager } from '~/shared/hooks/useTimeManager';
 
 const useChat = (chatId) => {
     const [messages, setMessages] = useState([]);
     const [chat, setChat] = useState();
-
-    const { user } = useSelector(state => state.auth);
-    const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-        useGetChatById(chatId);
+    const { startTimeout, stopTimeout } = useTimeManager();
+    const { mutateAsync: deleteMsg } = useDeleteMessage();
+    const { mutateAsync: sendFile, isPending: isMessageWithFilePending } =
+        useSendMessage();
+    const { user } = useSelector((state) => state.auth);
+    const {
+        data,
+        fetchNextPage,
+        hasNextPage,
+        isFetchingNextPage,
+        isInitialLoading,
+    } = useGetChatById(chatId);
     const wsRef = useRef();
+
     useEffect(() => {
         if (chatId && data) {
             setChat(data?.pages[0]?.chat);
 
-            let allMsgs = data.pages.flatMap(p => p.messages);
+            let allMsgs = data.pages.flatMap((p) => p.messages);
 
-            allMsgs = allMsgs.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+            allMsgs = allMsgs.sort(
+                (a, b) => new Date(a.created_at) - new Date(b.created_at)
+            );
 
-            const uniqueMsgs = Array.from(new Map(allMsgs.map(m => [m.id, m])).values());
+            const uniqueMsgs = Array.from(
+                new Map(allMsgs.map((m) => [m.id, m])).values()
+            );
 
             setMessages(uniqueMsgs);
         }
@@ -26,39 +42,98 @@ const useChat = (chatId) => {
 
     const sendUnreadMessages = (ws, messages) => {
         if (!ws || ws.readyState !== WebSocket.OPEN) return;
-        const unreadIds = messages?.filter(m => !m.is_read).map(m => m.id);
+        const unreadIds = messages?.filter((m) => !m.is_read).map((m) => m.id);
         if (unreadIds?.length > 0) {
-            ws.send(JSON.stringify({
-                event: "message_read",
-                message_ids: unreadIds
-            }));
+            ws.send(
+                JSON.stringify({
+                    event: 'message_read',
+                    message_ids: unreadIds,
+                })
+            );
         }
     };
 
-    const sendMessage = (content) => {
+    const sendMessage = async (content) => {
         if (wsRef.current?.readyState === WebSocket.OPEN) {
-            wsRef.current.send(JSON.stringify({
-                event: "message",
-                content
-            }));
-        }
-    };
-
-
-
-    const updateMessage = (content, message_id) => {
-        if (wsRef.current?.readyState === WebSocket.OPEN) {
-            wsRef.current.send(JSON.stringify({
-                event: "message_update",
+            const tempId = `temp-${Date.now()}`;
+            const tempMessage = {
+                id: tempId,
                 content,
-                message_id,
-            }));
+                file: null,
+                read_at: null,
+                sender_id: user.id,
+                created_at: new Date().toISOString(),
+                is_read: false,
+                is_mine: true,
+                status: 'sending', // 🟡 UI can show spinner
+            };
+
+            // Add it immediately to UI
+            setMessages((prev) => [...prev, tempMessage]);
+            // await sleep(5000);
+            wsRef.current.send(
+                JSON.stringify({
+                    event: 'message',
+                    content,
+                })
+            );
         }
+    };
+
+    const sendMessageWithFile = async (data, options) => {
+        setMessages((prev) => [
+            ...prev,
+            {
+                id: `temp-${Date.now()}`,
+                content: data.content || '',
+                file: {
+                    url: URL.createObjectURL(data?.file),
+                    filename: data?.file.name,
+                    size: data?.file.size,
+                },
+                read_at: null,
+                sender_id: user.id,
+                created_at: new Date().toISOString(),
+                is_read: false,
+                is_mine: true,
+                status: 'sending', // 🟡 UI can show spinner
+            },
+        ]);
+        // await sleep(5000);
+        await sendFile(data, options);
+    };
+
+    const updateMessage = async (content, message_id) => {
+        if (wsRef.current?.readyState === WebSocket.OPEN) {
+            const tempMessage = {
+                ...(messages.find((m) => m.id === message_id) || {}),
+                content,
+                status: 'updating', // 🟡 UI can show spinner
+            };
+
+            setMessages((prev) =>
+                prev.map((m) => (m.id === message_id ? tempMessage : m))
+            );
+            // await sleep(5000);
+            wsRef.current.send(
+                JSON.stringify({
+                    event: 'message_update',
+                    content,
+                    message_id,
+                })
+            );
+        }
+    };
+
+    const deleteMessage = async (message_id, message_status) => {
+        setMessages((prev) => prev.filter((m) => m.id !== message_id));
+        // await sleep(5000);
+        await deleteMsg(message_id);
     };
 
     useEffect(() => {
         if (!chatId || !user?.access) return;
-
+        let unreadMessageTimeout;
         const ws = new WebSocket(
             `${process.env.NEXT_PUBLIC_WS_FREELEANCE_URL}chat/${chatId}/?token=${user.access}`
         );
@@ -70,7 +145,7 @@ const useChat = (chatId) => {
 
         ws.onmessage = (event) => {
             if (!event.data) {
-                console.warn("⚠️ WS event.data bo‘sh:", event);
+                console.warn('⚠️ WS event.data bo‘sh:', event);
                 return;
             }
 
@@ -78,47 +153,72 @@ const useChat = (chatId) => {
             try {
                 msg = JSON.parse(event.data);
             } catch (e) {
-                console.warn("⚠️ JSON emas data:", event.data);
+                console.warn('⚠️ JSON emas data:', event.data);
                 return;
             }
-
             switch (msg.event) {
-                case "message":
-                    setMessages(prev => {
-                        const updated = [...prev, msg];
+                case 'message': {
+                    setMessages((prev) => {
+                        let replaced = false;
+
+                        const updated = prev.map((m) => {
+                            if (
+                                !replaced &&
+                                m.status === 'sending' &&
+                                m.content === msg.content
+                            ) {
+                                replaced = true;
+                                return msg; // replace this one
+                            }
+                            return m;
+                        });
+
                         sendUnreadMessages(ws, updated);
                         return updated;
                     });
                     break;
-                case "message_update":
-                    setMessages(prev => prev.map(m =>
-                        m.id === msg.id ? { ...m, ...msg } : m
-                    ));
+                }
+                case 'message_update':
+                    setMessages((prev) =>
+                        prev.map((m) => {
+                            const { status, ...cleanMsgProperties } = m;
+                            if (m.id === msg.id) {
+                                return { ...cleanMsgProperties, ...msg };
+                            }
+                            return m;
+                        })
+                    );
                     break;
-                case "delete_message":
-                    setMessages(prev => prev.filter(m => m.id !== msg.id));
+                case 'delete_message':
+                    setMessages((prev) => prev.filter((m) => m.id !== msg.id));
                     break;
                 default:
-                    console.warn("Unknown event:", msg);
+                    console.warn('Unknown event:', msg);
             }
-            setTimeout(() => {
+            unreadMessageTimeout = startTimeout(() => {
                 sendUnreadMessages(ws, messages);
             }, 1000);
         };
 
-
-        return () => ws.close();
+        return () => {
+            ws.close();
+            stopTimeout(unreadMessageTimeout);
+        };
     }, [chatId, user?.access]);
 
     return {
         messages,
         chat,
         sendMessage,
+        sendMessageWithFile,
         updateMessage,
+        deleteMessage,
         sendUnreadMessages,
         fetchNextPage,
         hasNextPage,
         isFetchingNextPage,
+        isFetching: isInitialLoading,
+        isMessageWithFilePending,
     };
 };
 

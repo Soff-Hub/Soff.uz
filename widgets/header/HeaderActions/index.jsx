@@ -12,29 +12,32 @@ import HeaderCatergories from '../HeaderCategories';
 
 const HeaderActions = ({ auth, isDark }) => {
     const { wishlist } = useWishlist();
-    const { isMobile, isTablet, si } = useResponsive();
-    const data = useSelector(state => state.ecomerce.cartDataItems);
+    const { isMobile, isTablet } = useResponsive();
+    const data = useSelector((state) => state.ecomerce.cartDataItems);
 
     return (
         <div
-            className={`site-header-actions  ${isDark ? 'text-black' : 'text-white'
-                }`}>
+            className={`site-header-actions flex-1 ${
+                isDark ? 'text-black' : 'text-white'
+            }`}>
             {!isMobile && !isTablet && <HeaderCatergories />}
             {!isMobile && !isTablet && <MenuCategoriesDropdown />}
             <div className="d-flex">
-                {wishlist?.length > 0 && <Link href="/account/wishlist">
-                    <a className="header__extra">
-                        <a href="#">
-                            <Badge count={wishlist.length}>
-                                <img
-                                    src="/static/img/heart1.png"
-                                    width={'20px'}
-                                    alt=""
-                                />{' '}
-                            </Badge>
+                {wishlist?.length > 0 && (
+                    <Link href="/account/wishlist">
+                        <a className="header__extra">
+                            <a href="#">
+                                <Badge count={wishlist.length}>
+                                    <img
+                                        src="/static/img/heart1.png"
+                                        width={'20px'}
+                                        alt=""
+                                    />{' '}
+                                </Badge>
+                            </a>
                         </a>
-                    </a>
-                </Link>}
+                    </Link>
+                )}
 
                 {data?.length > 0 && <MiniCart />}
             </div>
@@ -47,4 +50,4 @@ const HeaderActions = ({ auth, isDark }) => {
     );
 };
 
-export default connect(state => state)(HeaderActions);
+export default connect((state) => state)(HeaderActions);

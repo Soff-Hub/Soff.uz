@@ -1,32 +1,93 @@
-import { Select } from 'antd';
+import React, { useState, useMemo, useEffect } from 'react';
+import { Badge, Button, Card, Drawer, Select, Space, Tooltip } from 'antd';
 import { useRouter } from 'next/router';
-import React from 'react';
+import { useMounted } from '~/shared/hooks/useMounted';
+import { IoFilter } from 'react-icons/io5';
+import { IoClose } from 'react-icons/io5';
+import { LuFileType2 } from 'react-icons/lu';
+import { FaRegFile } from 'react-icons/fa6';
 import { CloseCircleOutlined } from '@ant-design/icons';
+import { BiCategory } from 'react-icons/bi';
+import { AiOutlineApartment } from 'react-icons/ai';
+import { useFGet } from '~/shared/hooks/useFApi';
+import { useQuery } from '@tanstack/react-query';
 
-export default function SearchResultsProductsFilter({
-    parentData,
-    childData,
-    total,
-}) {
+const defaultValues = {
+    direction: '',
+    service_parent: undefined,
+};
+
+export default function SearchResultsProductsFilter({ total }) {
+    const [filterOpen, setFilterOpen] = useState(false);
+    const isMounted = useMounted(200);
     const router = useRouter();
-    const { direction, service_parent, category_id } = router.query;
+    const [categoriesList, setCategoriesList] = useState([]);
 
-    const directions = [
-        { label: 'Barchasi', value: '' },
-        { label: 'Ilmiy va Akademik Xizmatlar', value: 'scientific_work' },
-        { label: '3D Dizayn va Vizualizatsiya', value: 'three_d' },
-        { label: 'Grafik Dizayn va Shablonlar', value: 'dizayn' },
-        { label: 'Veb Dasturlash va IT Xizmatlari', value: 'web' },
-        { label: 'Hujjatlar va Professional Shablonlar', value: 'document' },
-    ];
+    const { data: directionsData } = useFGet(
+        'directions',
+        'categories/all-directions'
+    );
 
-    const handleChange = newQuery => {
+    const directions = useMemo(() => {
+        return [
+            { label: 'Barchasi', value: '' },
+            ,
+            ...(directionsData?.map((elem) => ({
+                label: elem.title,
+                value: elem.value,
+            })) || []),
+        ].filter(Boolean);
+    }, [directionsData]);
+
+    const mutationsInForm = useMemo(() => {
+        if (!isMounted) {
+            return {
+                hasMutation: false,
+                howManyMutations: 0,
+            };
+        }
+
+        let hasMutation = false;
+        let howManyMutations = 0;
+        Object.keys(defaultValues).forEach((key) => {
+            if (router.query[key] && router.query[key] !== defaultValues[key]) {
+                hasMutation = true;
+                howManyMutations += 1;
+            }
+        });
+        return {
+            hasMutation,
+            howManyMutations,
+        };
+    }, [router.query, isMounted]);
+
+    const handleClearAll = () => {
+        const newQueries = { ...router.query };
+        newQueries.offset = 0;
+        newQueries.limit = 50;
+        delete newQueries.direction;
+        delete newQueries.service_parent;
+
+        router.push(
+            {
+                pathname: router.pathname,
+                query: newQueries,
+            },
+            undefined,
+            { scroll: false }
+        );
+    };
+
+    const deleteQuerySelectively = (...keys) => {
+        const newParams = { ...router.query };
+        keys.forEach((key) => {
+            delete newParams[key];
+        });
         router.push(
             {
                 pathname: router.pathname,
                 query: {
-                    ...router.query,
-                    ...newQuery,
+                    ...newParams,
                     page: 1,
                 },
             },
@@ -35,113 +96,266 @@ export default function SearchResultsProductsFilter({
         );
     };
 
-    const handleClearAll = () => {
-        router.push(
-            {
-                pathname: router.pathname,
-                query: { page: 1 },
-            },
-            undefined,
-            { scroll: false }
+    const filterIndicatorSelectors = useMemo(() => {
+        const currentType = directions?.find(
+            (type) => type?.value == router.query.direction
         );
+
+        const currentFileType = categoriesList.find(
+            (type) => type.value == router.query.service_parent
+        );
+
+        return [
+            {
+                key: 'direction',
+                icon: <AiOutlineApartment />,
+                title: currentType?.label,
+                isEnabled: !!router.query.direction,
+                disabled:
+                    defaultValues.direction === router.query.direction ||
+                    router.query.service_parent,
+                disabledTooltip:
+                    "Yo‘nalishni o'chirish uchun kategoriyani avval tozalang",
+                tooltip: 'Yo‘nalish',
+                action: () => deleteQuerySelectively('direction'),
+            },
+            {
+                key: 'service_parent',
+                icon: <BiCategory />,
+                title: currentFileType?.label,
+                tooltip: 'Kategoriya',
+                isEnabled: !!router.query.service_parent,
+                action: () => deleteQuerySelectively('service_parent'),
+            },
+        ];
+    }, [router.query, directions, categoriesList]);
+
+    const onClose = () => {
+        setFilterOpen(false);
     };
 
     return (
         <div className="Search_Results_Products_form_box">
-            <div className="row align-items-center mb-3">
-                <div className="col-12 col-md-3">
-                    <p className="countProduct text-nowrap m-0">
-                        {total ? `${total} ta mahsulot topildi` : ''}
-                    </p>
+            {mutationsInForm.hasMutation ? (
+                <Badge.Ribbon text="Faol filterlar" placement="start">
+                    <Card className="search_results_filter_card">
+                        <div className="filter_card_action_btns">
+                            <div className="filter_indicators">
+                                {filterIndicatorSelectors
+                                    .filter((selector) => selector.isEnabled)
+                                    .map((selector) => (
+                                        <Tooltip
+                                            placement="top"
+                                            title={
+                                                selector.disabled
+                                                    ? selector.disabledTooltip
+                                                    : selector.tooltip
+                                            }
+                                            key={selector.key}>
+                                            <Button
+                                                color="light"
+                                                icon={selector.icon}
+                                                className="filter-indicator-button"
+                                                disabled={selector.disabled}
+                                                onClick={selector.action}>
+                                                {selector.title}
+                                                <CloseCircleOutlined
+                                                    style={{
+                                                        marginLeft: '4px',
+                                                    }}
+                                                />
+                                            </Button>
+                                        </Tooltip>
+                                    ))}
+                            </div>
+                            <Button
+                                color="danger"
+                                icon={<IoClose />}
+                                onClick={handleClearAll}
+                                iconPosition="end"
+                                className="filter-danger">
+                                Barchasini tozalash
+                            </Button>
+                        </div>
+                    </Card>
+                </Badge.Ribbon>
+            ) : null}
+            <div className="search_results_indicator">
+                <p className="countProduct text-nowrap m-0">
+                    {total ? `${total} ta xizmat topildi` : ''}
+                </p>
+                <div>
+                    <Badge count={mutationsInForm.howManyMutations}>
+                        <Button
+                            icon={<IoFilter />}
+                            type="primary"
+                            onClick={() => setFilterOpen(true)}
+                            style={{
+                                width: 'auto',
+                            }}>
+                            Filter
+                        </Button>
+                    </Badge>
                 </div>
             </div>
-
-            {/* <form className="Search_Results_Products_form">
-                <div className="row g-3">
-                    <div className="col-6 col-lg-3">
-                        <Select
-                            style={{ width: '100%' }}
-                            placeholder="Yo‘nalish"
-                            value={direction || ''}
-                            onClear={() =>
-                                handleChange({
-                                    direction: '',
-                                    service_parent: '',
-                                    category_id: '',
-                                })
-                            }
-                            onChange={value =>
-                                handleChange({
-                                    direction: value,
-                                    service_parent: '',
-                                    category_id: '',
-                                })
-                            }
-                            options={directions}
-                        />
-                    </div>
-
-                    <div className="col-6 col-lg-3">
-                        <Select
-                            style={{ width: '100%' }}
-                            placeholder="Katta kategoriya"
-                            value={
-                                service_parent
-                                    ? Number(service_parent)
-                                    : undefined
-                            }
-                            allowClear
-                            disabled={!(parentData && direction)} // 🔑 parentData bo‘sh bo‘lsa disable
-                            onClear={() =>
-                                handleChange({
-                                    service_parent: '',
-                                    category_id: '',
-                                })
-                            }
-                            onChange={value =>
-                                handleChange({
-                                    service_parent: value,
-                                    category_id: '',
-                                })
-                            }
-                            options={
-                                parentData && direction
-                                    ? parentData.map(cat => ({
-                                          value: cat.id,
-                                          label: cat.title,
-                                      }))
-                                    : []
-                            }
-                        />
-                    </div>
-
-                    <div className="col-6 col-lg-3">
-                        <Select
-                            style={{ width: '100%' }}
-                            placeholder="Kategoriya"
-                            value={
-                                category_id ? Number(category_id) : undefined
-                            }
-                            allowClear
-                            disabled={
-                                !(service_parent && childData?.length > 0)
-                            } // 🔑 childData bo‘sh bo‘lsa disable
-                            onClear={() => handleChange({ category_id: '' })}
-                            onChange={value =>
-                                handleChange({ category_id: value })
-                            }
-                            options={
-                                childData && childData.length > 0
-                                    ? childData.map(cat => ({
-                                          value: cat.id,
-                                          label: cat.title,
-                                      }))
-                                    : []
-                            }
-                        />
-                    </div>
-                </div>
-            </form> */}
+            <FilterFormDrawer
+                open={filterOpen}
+                onClose={onClose}
+                setCategoriesList={setCategoriesList}
+                directions={directions}
+            />
         </div>
     );
 }
+
+const FilterFormDrawer = ({ open, onClose, directions, setCategoriesList }) => {
+    const router = useRouter();
+    const initialFilterValues = useMemo(() => {
+        return {
+            direction: router.query.direction || '',
+            service_parent: router.query.service_parent || undefined,
+            category_id: router.query.category_id || undefined,
+        };
+    }, [router.query]);
+    const [filterValues, setFilterValues] = useState(initialFilterValues);
+
+    const { data: parentData } = useQuery({
+        queryKey: ['service-parent', filterValues.direction],
+        queryFn: async () => {
+            const res = await fetch(
+                `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/categories?direction=${filterValues.direction}`
+            );
+
+            return await res.json();
+        },
+        enabled: !!filterValues.direction && filterValues.direction !== 'all',
+    });
+
+    const categories = useMemo(() => {
+        return (parentData || []).map((parent) => ({
+            label: parent.title,
+            value: String(parent.id),
+        }));
+    }, [parentData]);
+
+    const handleChangeFilterValues = (key, value) => {
+        setFilterValues((prev) => {
+            if (typeof key === 'object') {
+                return {
+                    ...prev,
+                    ...key,
+                };
+            }
+            return {
+                ...prev,
+                [key]: value,
+            };
+        });
+    };
+
+    const handleSaveFilters = (e) => {
+        e.preventDefault();
+
+        const validFilterValues = Object.keys(filterValues)
+            .filter(
+                (key) =>
+                    filterValues[key] !== undefined && filterValues[key] !== ''
+            )
+            .reduce((obj, key) => {
+                obj[key] = filterValues[key];
+                return obj;
+            }, {});
+        router.push(
+            {
+                pathname: router.pathname,
+                query: {
+                    ...router.query,
+                    ...validFilterValues,
+                },
+            },
+            undefined,
+            { scroll: false }
+        );
+        onClose();
+    };
+
+    const handleClear = () => {
+        setFilterValues(defaultValues);
+    };
+
+    useEffect(() => {
+        setFilterValues(initialFilterValues);
+    }, [initialFilterValues]);
+
+    useEffect(() => {
+        setCategoriesList(categories);
+    }, [categories]);
+
+    return (
+        <Drawer
+            title="Filterlar"
+            placement="left"
+            onClose={onClose}
+            open={open}
+            closable={false}
+            extra={
+                <Space>
+                    <Button
+                        onClick={onClose}
+                        icon={<IoClose fontSize={20} />}
+                        type="text"></Button>
+                </Space>
+            }>
+            <form
+                className="search_results_filter_form"
+                onSubmit={handleSaveFilters}>
+                <Select
+                    style={{ width: '100%', maxWidth: '159px' }}
+                    placeholder="Yo‘nalish"
+                    value={filterValues.direction}
+                    onChange={(value) =>
+                        handleChangeFilterValues({
+                            direction: value,
+                            service_parent: undefined,
+                        })
+                    }
+                    options={directions}
+                />
+                <Select
+                    style={{ width: '100%', maxWidth: '159px' }}
+                    placeholder="Katta kategoriya"
+                    value={filterValues.service_parent}
+                    allowClear
+                    disabled={!(categories.length && filterValues.direction)} // 🔑 parentData bo‘sh bo‘lsa disable
+                    onClear={() =>
+                        handleChangeFilterValues({
+                            service_parent: '',
+                        })
+                    }
+                    onChange={(value) =>
+                        handleChangeFilterValues({
+                            service_parent: value,
+                        })
+                    }
+                    options={categories}
+                />
+                <div
+                    className="actions"
+                    style={{
+                        marginTop: '15px',
+                    }}>
+                    <Button
+                        type="default"
+                        htmlType="reset"
+                        block
+                        onClick={handleClear}>
+                        Tozalash
+                    </Button>
+                    <Button htmlType="submit" type="primary" block>
+                        Qo‘llash
+                    </Button>
+                </div>
+            </form>
+        </Drawer>
+    );
+};

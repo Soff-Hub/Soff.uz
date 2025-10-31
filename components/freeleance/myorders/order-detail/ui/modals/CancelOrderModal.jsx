@@ -4,7 +4,7 @@ import useCancelOrder from '../../../myorder/api/useCancelOrder';
 import useGetReasons from '../../../myorder/api/useGetReasons';
 
 export const CancelOrderModal = ({ isOpen, selectedOrder, onClose }) => {
-    const [reason, setReason] = useState('');
+    const [reason, setReason] = useState(null);
     const { data: reasons } = useGetReasons();
     const { mutate: cancelOrder, isPending: isCancelling } = useCancelOrder();
 

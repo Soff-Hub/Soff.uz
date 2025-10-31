@@ -65,12 +65,14 @@ const ServiceCheckout = ({
             },
             {
                 onSuccess: (data) => {
-                    setMessage(true);
+                    if (onClose) onClose();
                     // window.open(data?.url, '_blank');
                     router.push(data.url);
                 },
                 onError: (err) => {
                     AlertMessage.error(err.response.data.detail);
+                },
+                onSettled: () => {
                     setMessage(false);
                 },
             }

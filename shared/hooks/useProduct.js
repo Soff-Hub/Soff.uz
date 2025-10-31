@@ -5,8 +5,7 @@ import NextImageCard from '~/components/nextImagecard';
 
 export default function useProduct() {
     return {
-        thumbnailImage: payload => {
-            console.log('payload', payload, payload?.poster_url);
+        thumbnailImage: (payload) => {
             return (
                 <>
                     {payload?.poster_url ? (
@@ -34,7 +33,7 @@ export default function useProduct() {
                 </>
             );
         },
-        price: payload => {
+        price: (payload) => {
             let view;
             if (payload.sale_price) {
                 view = (
@@ -76,7 +75,7 @@ export default function useProduct() {
             return view;
         },
 
-        title: payload => {
+        title: (payload) => {
             let view = (
                 <Link href="/product/[pid]" as={`/product/${payload?.slug}`}>
                     <a className="ps-product__title ">{payload?.title}</a>

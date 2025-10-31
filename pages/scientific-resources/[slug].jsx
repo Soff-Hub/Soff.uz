@@ -2,7 +2,7 @@ import React from 'react';
 import PageContainer from '~/widgets/layouts/PageContainer';
 import Meta from '~/components/shared/headers/Meta';
 import ProductsByCategory from '~/components/partials/category/ProductsByCategory';
-import { getTitleFromSlug, } from '~/components/elements/ScientificResourcesFilterSection';
+import { getTitleFromSlug } from '~/components/elements/ScientificResourcesFilterSection';
 import { useRouter } from 'next/router';
 import { baseUrlUseApi } from '~/repositories/useApi';
 import styles from '~/widgets/home/catalog/style.module.scss';
@@ -22,7 +22,7 @@ export default function ProductCategoryScreen({
 }) {
     const router = useRouter();
 
-    const handlePageChange = newPage => {
+    const handlePageChange = (newPage) => {
         router.push({
             pathname: router.pathname,
             query: { ...router.query, page: newPage },
@@ -39,10 +39,11 @@ export default function ProductCategoryScreen({
         title && subTitle
             ? `${title} - ${subTitle}`
             : title
-                ? title
-                : 'Ilmiy ishlar kategoriyasi';
+            ? title
+            : 'Ilmiy ishlar kategoriyasi';
 
     return (
+        // <>
         <PageContainer title={fullTitle} boxed={true}>
             <Meta
                 title={fullTitle}
@@ -77,15 +78,15 @@ export default function ProductCategoryScreen({
 
             <ProductFilterSection
                 isFile
-                child={childCategoryData.results}
-                parent={fourChildData.results}
+                child={childCategoryData?.results}
+                parent={fourChildData?.results}
                 path={'/scientific-resources/'}
             />
             <div className="ps-page--shop container p-lg-1 my-5">
                 <ProductsByCategory
                     data={productsData}
                     page={page}
-                    handlePagination={number => {
+                    handlePagination={(number) => {
                         handlePageChange(number);
                     }}
                     isLoading={false}
@@ -158,6 +159,7 @@ export default function ProductCategoryScreen({
             </div>
             {/* <div className="servicesSpace" /> */}
         </PageContainer>
+        // </>
     );
 }
 
@@ -173,34 +175,33 @@ export async function getServerSideProps(context) {
         price_from = '',
         price_to = '',
         from_page = '',
-        to_page = ''
+        to_page = '',
     } = context.query;
 
     const queryParams = new URLSearchParams({
-        direction: "file",
+        direction: 'file',
         page,
         page_size: 48,
         search,
     });
 
-    if (category) queryParams.append("category", category);
+    if (category) queryParams.append('category', category);
     if (content_extensions && content_extensions.length) {
         const exts = Array.isArray(content_extensions)
             ? content_extensions
             : [content_extensions];
 
-        exts.forEach(ext => {
-            queryParams.append("content_extensions", ext);
+        exts.forEach((ext) => {
+            queryParams.append('content_extensions', ext);
         });
     }
 
+    if (price_from) queryParams.append('price_from', price_from);
+    if (price_to) queryParams.append('price_to', price_to);
+    if (from_page) queryParams.append('from_page', from_page);
+    if (to_page) queryParams.append('to_page', to_page);
 
-    if (price_from) queryParams.append("price_from", price_from);
-    if (price_to) queryParams.append("price_to", price_to);
-    if (from_page) queryParams.append("from_page", from_page);
-    if (to_page) queryParams.append("to_page", to_page);
-
-    const fetchJson = async url => {
+    const fetchJson = async (url) => {
         const res = await fetch(url);
         if (!res.ok) {
             return null;

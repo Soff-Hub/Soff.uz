@@ -6,7 +6,7 @@ import { baseUrlUseApi } from '~/repositories/useApi';
 import ProductsByCategory from '~/components/partials/category/ProductsByCategory';
 import ProductFilterSection from '~/components/elements/product-filter-section/ProductFilterSection';
 
-export default function VideoLessons ({
+export default function VideoLessons({
     productsData,
     fourChildData,
     childCategoryData,
@@ -16,10 +16,8 @@ export default function VideoLessons ({
 }) {
     const router = useRouter();
 
-
-
     // Pagination tugmalari uchun funksiya
-    const handlePageChange = newPage => {
+    const handlePageChange = (newPage) => {
         router.push({
             pathname: router.pathname,
             query: { ...router.query, page: newPage }, // URL'ga yangi page qo'shish
@@ -27,23 +25,21 @@ export default function VideoLessons ({
     };
 
     return (
-        <PageContainer
-            title={'Kategoriya'}
-            boxed={true}>
+        <PageContainer title={'Kategoriya'} boxed={true}>
             <Meta
                 title={`${'Video darsliklar'}`}
                 description={`Biz siz qidirayotgan mahsulotlarni Soff.uz saytimizning kategoriyasida topdik`}
             />
             <ProductFilterSection
-                child={childCategoryData.results}
-                parent={fourChildData.results}
-                path={"/video-lessons/"}
+                child={childCategoryData?.results}
+                parent={fourChildData?.results}
+                path={'/video-lessons/'}
             />
-            <div className='ps-page--shop container my-5 p-l-0 p-xl-0'>
+            <div className="ps-page--shop container my-5 p-l-0 p-xl-0">
                 <ProductsByCategory
                     data={productsData}
                     page={page}
-                    handlePagination={number => {
+                    handlePagination={(number) => {
                         handlePageChange(number);
                     }}
                     isLoading={false}
@@ -53,7 +49,7 @@ export default function VideoLessons ({
     );
 }
 
-export async function getServerSideProps (context) {
+export async function getServerSideProps(context) {
     const {
         slug,
         page = 1,
@@ -62,7 +58,7 @@ export async function getServerSideProps (context) {
         search = '',
     } = context.query;
 
-    const fetchJson = async url => {
+    const fetchJson = async (url) => {
         const res = await fetch(url);
         if (!res.ok) {
             return null;

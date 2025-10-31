@@ -41,8 +41,12 @@ export default function TelegramConfigmForm({ isModal, onSuccess }) {
         };
 
         try {
+            const utm_source = localStorage.getItem('utm_source');
             const resp = await Axios.post(
-                baseUrlAuth + 'auth/telegram-verify/',
+                baseUrlAuth +
+                    `auth/telegram-verify/${
+                        utm_source ? `?utm_source=${utm_source}` : ''
+                    }`,
                 data
             );
             dispatch(

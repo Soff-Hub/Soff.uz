@@ -6,8 +6,9 @@ import { useRouter } from 'next/router';
 import { baseUrlAuth } from '~/repositories/Repository';
 import { useDispatch } from 'react-redux';
 import { login } from '~/store/auth/slice';
+import { useTimeManager } from '~/shared/hooks/useTimeManager';
 
-export const formatTime = seconds => {
+export const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);
     const secondsLeft = seconds % 60;
     return `${String(minutes).padStart(2, '0')}:${String(secondsLeft).padStart(
@@ -17,7 +18,7 @@ export const formatTime = seconds => {
 };
 
 // Helper function to validate slug
-const isValidSlug = slug => {
+const isValidSlug = (slug) => {
     return (
         slug &&
         typeof slug === 'string' &&
@@ -27,7 +28,7 @@ const isValidSlug = slug => {
     );
 };
 
-const isReturnUrlEmpty = returnUrl => {
+const isReturnUrlEmpty = (returnUrl) => {
     return (
         !returnUrl ||
         returnUrl === 'undefined' ||
@@ -39,33 +40,28 @@ const isReturnUrlEmpty = returnUrl => {
 
 export default function CodeVerifyForm({ authCode, onClose, slug, onSuccess }) {
     const [loading, setLoading] = useState(false);
+    const { startInterval, clearAll } = useTimeManager();
     const [secondsRemaining, setSecondsRemaining] = useState(120);
-    const [msg, SetMsg] = useState(null);
+    const [msg, setMsg] = useState(null);
     const router = useRouter();
     const dispatch = useDispatch();
-    const [timerId, setTimerId] = useState(null);
-
 
     useEffect(() => {
-        SetMsg(localStorage.getItem('msg'));
+        setMsg(localStorage.getItem('msg'));
 
         startTimer();
-
-        return () => clearInterval(timerId); // Komponent unmount bo‘lganda intervalni to‘xtatish
     }, []);
 
     const startTimer = () => {
-        if (timerId) clearInterval(timerId); // Eski intervalni to‘xtatish
+        clearAll();
 
-        const newTimerId = setInterval(() => {
-            setSecondsRemaining(prev => {
+        startInterval(() => {
+            setSecondsRemaining((prev) => {
                 if (prev > 0) return prev - 1;
-                clearInterval(newTimerId);
+                clearAll();
                 return 0;
             });
         }, 1000);
-
-        setTimerId(newTimerId);
     };
 
     const handleSubmit = async ({ code }) => {

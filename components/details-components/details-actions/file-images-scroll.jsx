@@ -1,23 +1,43 @@
 import Image from 'next/image';
-import React, { useEffect, useRef } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import Link from 'next/link';
 
 function FileImagesScroll({ product }) {
     const containerRef = useRef(null);
+    const [isScrolledDown, setIsScrolledDown] = useState(false);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
+        const scrollContainer = containerRef.current;
+
+        if (scrollContainer) {
+            scrollContainer.scrollTop = scrollContainer.scrollHeight;
+            scrollContainer.scrollTo({ top: 0 });
+
+            const handleScroll = () => {
+                if (scrollContainer.scrollTop) {
+                    console.log('scrolled to bottom');
+                    setIsScrolledDown(true);
+                } else {
+                    setIsScrolledDown(false);
+                }
+            };
+
+            scrollContainer.addEventListener('scroll', handleScroll);
+
+            return () => {
+                scrollContainer.removeEventListener('scroll', handleScroll);
+            };
+        }
+    }, []);
+
+    const onClickDown = () => {
         const scrollContainer = containerRef.current;
         if (scrollContainer) {
-            // Scrollni eng pastga tushirish
-            scrollContainer.scrollTop = scrollContainer.scrollHeight;
-
-            // 1 soniyadan keyin avtomatik yuqoriga qaytarish
-            setTimeout(() => {
-                scrollContainer.scrollTo({ top: 0, behavior: 'smooth' });
-            }, 1000);
+            setIsScrolledDown(true);
+            scrollContainer.scrollBy({ top: 100, behavior: 'smooth' });
         }
-    }, [product?.document?.images]);
+    };
 
     return (
         <div className="ps-product__thumbnail_seller">
@@ -61,6 +81,31 @@ function FileImagesScroll({ product }) {
                             objectFit="contain"
                         />
                     )}
+                    <div
+                        onClick={onClickDown}
+                        style={{
+                            position: 'sticky',
+                            bottom: 0,
+                            left: 0,
+                            right: 0,
+                            width: '100%',
+                            height: '80px',
+                            background:
+                                'linear-gradient(rgba(0, 0, 0, 0) 0%, rgb(80 80 80) 100%)',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            color: 'white',
+                            fontSize: '24px',
+                            cqursor: 'pointer',
+                            transition: '0.3s ease',
+                            opacity: isScrolledDown ? 0 : 1,
+                            transform: isScrolledDown
+                                ? 'translateY(100%)'
+                                : 'translateY(0)',
+                        }}>
+                        <i className="fa-solid fa-angles-down fa-bounce"></i>
+                    </div>
                 </div>
                 <div className="views">
                     {' '}

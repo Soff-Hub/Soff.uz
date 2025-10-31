@@ -54,7 +54,7 @@ function FileActions({ product }) {
     const { setCartOneItem, removeCartOneItem } = useCart();
     const [basket, setBasket] = useState(false);
     const [messageApi, contextHolder] = message.useMessage();
-    const state = useSelector(state => state.auth.user?.access);
+    const state = useSelector((state) => state.auth.user?.access);
 
     function handleAddItemToCart(e) {
         showModal();
@@ -65,13 +65,13 @@ function FileActions({ product }) {
             setCartOneItem(product.id);
         }
 
-        setBasket(prev => !prev);
+        setBasket((prev) => !prev);
     }
 
     function handleAddItemToWishlist(e) {
         e.preventDefault();
         addSavedItem(product.id);
-        if (wishlist?.find(item => item.id === product?.id)) {
+        if (wishlist?.find((item) => item.id === product?.id)) {
             removeSavedItem(product.id);
         }
     }
@@ -89,10 +89,10 @@ function FileActions({ product }) {
     };
 
     // Nusxa olish
-    const infoSuccess = url => {
+    const infoSuccess = (url) => {
         messageApi.success(`Nusxa ko\'chirildi (${url})`);
     };
-    const infoError = url => {
+    const infoError = (url) => {
         messageApi.error(`Nusxa ko\'chirilmadi (${url})`);
     };
 
@@ -210,9 +210,11 @@ function FileActions({ product }) {
                         <li className="w-100 d-flex align-items-center justify-content-between gap-3">
                             <span>
                                 <i
-                                    className={`fas ${fileIcons[
-                                        product?.document?.file_type
-                                    ] || 'fa-file-archive'}`}
+                                    className={`fas ${
+                                        fileIcons[
+                                            product?.document?.file_type
+                                        ] || 'fa-file-archive'
+                                    }`}
                                     style={{ color: '#00a44f' }}></i>{' '}
                                 Fayl turi:
                             </span>{' '}
@@ -329,7 +331,7 @@ function FileActions({ product }) {
                             </span>
                             <span>
                                 {product.three_d_features.materials
-                                    .map(m => m.name)
+                                    .map((m) => m.name)
                                     .join(', ')}
                             </span>
                         </li>
@@ -366,28 +368,30 @@ function FileActions({ product }) {
                             </span>
 
                             <div className="d-flex gap-2 flex-wrap">
-                                {product.three_d_features.render_obj.map(r => (
-                                    <span
-                                        key={r.id}
-                                        className="d-flex align-items-center gap-2 px-2 rounded"
-                                        style={{
-                                            backgroundColor:
-                                                r.color || '#f0f0f0',
-                                        }}>
-                                        {r.logo && (
-                                            <img
-                                                src={r.logo}
-                                                alt={r.title}
-                                                style={{
-                                                    width: 20,
-                                                    height: 20,
-                                                    objectFit: 'contain',
-                                                }}
-                                            />
-                                        )}
-                                        <span>{r.title}</span>
-                                    </span>
-                                ))}
+                                {product.three_d_features.render_obj.map(
+                                    (r) => (
+                                        <span
+                                            key={r.id}
+                                            className="d-flex align-items-center gap-2 px-2 rounded"
+                                            style={{
+                                                backgroundColor:
+                                                    r.color || '#f0f0f0',
+                                            }}>
+                                            {r.logo && (
+                                                <img
+                                                    src={r.logo}
+                                                    alt={r.title}
+                                                    style={{
+                                                        width: 20,
+                                                        height: 20,
+                                                        objectFit: 'contain',
+                                                    }}
+                                                />
+                                            )}
+                                            <span>{r.title}</span>
+                                        </span>
+                                    )
+                                )}
                             </div>
                         </li>
                     )}
@@ -434,7 +438,7 @@ function FileActions({ product }) {
                                 className="border-2 border-success text-success button_hover"
                                 icon={
                                     wishlist?.some(
-                                        item =>
+                                        (item) =>
                                             Number(item.id) ===
                                             Number(product?.id)
                                     ) ? (
@@ -447,7 +451,10 @@ function FileActions({ product }) {
                         </div>
                     ) : null}
 
-                    <CustomResponsiveLayout handleBuynow={handleBuynow} product={product} />
+                    <CustomResponsiveLayout
+                        handleBuynow={handleBuynow}
+                        product={product}
+                    />
                 </div>
             </div>
 
@@ -485,7 +492,6 @@ function FileActions({ product }) {
 
 const CustomResponsiveLayout = ({ product, handleBuynow }) => {
     const { isMobile, size } = useResponsive();
-
     return (
         <>
             <div
@@ -506,7 +512,7 @@ const CustomResponsiveLayout = ({ product, handleBuynow }) => {
                     </a>
                 ) : (
                     <Button
-                        onClick={e => handleBuynow(e)}
+                        onClick={(e) => handleBuynow(e)}
                         iconPosition="end"
                         style={{ height: '58px', fontSize: '20px' }}
                         type="primary"
@@ -537,7 +543,7 @@ const CustomResponsiveLayout = ({ product, handleBuynow }) => {
                         </a>
                     ) : (
                         <Button
-                            onClick={e => handleBuynow(e)}
+                            onClick={(e) => handleBuynow(e)}
                             iconPosition="end"
                             style={{ height: '58px', fontSize: '20px' }}
                             type="primary"

@@ -9,17 +9,25 @@ import {
     DownloadOutlined,
 } from '@ant-design/icons';
 import styles from '../style/message.module.scss';
-import { Dropdown, message as AntMessage, Modal, Tooltip } from 'antd';
-import useDeleteMessage from '../api/useDeleteMessage';
+import {
+    Dropdown,
+    message as AntMessage,
+    Modal,
+    Tooltip,
+    Spin,
+    Avatar,
+} from 'antd';
 import dayjs from 'dayjs';
 import React, { useCallback, useMemo } from 'react';
 import { truncateTitle } from '~/shared/utilities/TruncateTitle';
+import AvatarTransitioned from './AvatarTransitioned';
 
 const { confirm } = Modal;
 
-const ChatMessage = ({ msg, onEdit, pushUser }) => {
+const ChatMessage = ({ msg, onEdit, onDelete, pushUser }) => {
     const isMyMessage = msg.is_mine;
-    const { mutate: deleteMsg } = useDeleteMessage();
+    const isMessageLoading =
+        msg.status === 'sending' || msg.status === 'updating';
 
     const handleEdit = useCallback(() => {
         onEdit(msg);
@@ -34,85 +42,102 @@ const ChatMessage = ({ msg, onEdit, pushUser }) => {
             okType: 'danger',
             cancelText: 'Bekor qilish',
             onOk() {
-                deleteMsg(msg.id);
+                onDelete(msg.id, msg.status);
             },
         });
-    }, [deleteMsg, msg.id]);
+    }, [onDelete, msg.id]);
 
-    const handleCopy = useCallback(text => {
+    const handleCopy = useCallback((text) => {
         navigator.clipboard
             .writeText(text)
             .then(() => AntMessage.success('Xabar nusxalandi'))
             .catch(() => AntMessage.error('Nusxalashda xatolik yuz berdi'));
     }, []);
 
-    const myMenuItems = useMemo(
-        () => {
-            if (msg.file) {
-                return [
-                    {
-                        key: 'delete',
-                        label: 'O‘chirish',
-                        icon: <DeleteOutlined />,
-                        danger: true,
-                        onClick: handleDeleteConfirm,
-                    },
-                ]
-            } else {
-                return [
-                    {
-                        key: 'edit',
-                        label: 'Tahrirlash',
-                        icon: <EditOutlined />,
-                        onClick: handleEdit,
-                    },
-                    {
-                        key: 'copy',
-                        label: 'Nusxalash',
-                        icon: <CopyOutlined />,
-                        onClick: () => handleCopy(msg.content),
-                    },
-                    {
-                        key: 'delete',
-                        label: 'O‘chirish',
-                        icon: <DeleteOutlined />,
-                        danger: true,
-                        onClick: handleDeleteConfirm,
-                    },
-                ]
+    const myMenuItems = useMemo(() => {
+        if (msg.file && !msg.content) {
+            return [
+                {
+                    key: 'delete',
+                    label: 'O‘chirish',
+                    icon: <DeleteOutlined />,
+                    danger: true,
+                    onClick: handleDeleteConfirm,
+                },
+            ];
+        } else {
+            return [
+                {
+                    key: 'edit',
+                    label: 'Tahrirlash',
+                    icon: <EditOutlined />,
+                    disabled: isMessageLoading,
+                    onClick: handleEdit,
+                },
+                {
+                    key: 'copy',
+                    label: 'Nusxalash',
+                    icon: <CopyOutlined />,
+                    onClick: () => handleCopy(msg.content),
+                },
+                {
+                    key: 'delete',
+                    label: 'O‘chirish',
+                    icon: <DeleteOutlined />,
+                    danger: true,
+                    onClick: handleDeleteConfirm,
+                },
+            ];
+        }
+    }, [
+        msg.content,
+        handleEdit,
+        handleDeleteConfirm,
+        handleCopy,
+        isMessageLoading,
+    ]);
 
-            }
-        },
-        [msg.content, handleEdit, handleDeleteConfirm, handleCopy]
-    );
-
-    const opponentMenuItems = useMemo(
-        () => {
-            if (msg.file) {
-                return [
-                    {
-                        key: 'dowload',
-                        label: 'Yuklab olish',
-                        icon: <DownloadOutlined />,
-                        onClick: () => window.open(msg.file.url, "_blank"),
-                    },
-                ]
-            } else {
-                return [
-                    {
-                        key: 'copy',
-                        label: 'Nusxalash',
-                        icon: <CopyOutlined />,
-                        onClick: () => handleCopy(msg.content),
-                    },
-                ]
-            }
-        },
-        [msg.content, handleCopy]
-    );
+    const opponentMenuItems = useMemo(() => {
+        if (msg.file) {
+            return [
+                {
+                    key: 'dowload',
+                    label: 'Yuklab olish',
+                    icon: <DownloadOutlined />,
+                    onClick: () => window.open(msg.file.url, '_blank'),
+                },
+            ];
+        } else {
+            return [
+                {
+                    key: 'copy',
+                    label: 'Nusxalash',
+                    icon: <CopyOutlined />,
+                    onClick: () => handleCopy(msg.content),
+                },
+            ];
+        }
+    }, [msg.content, handleCopy]);
 
     const readStatus = useMemo(() => {
         if (!isMyMessage) return null;
+
+        if (isMessageLoading) {
+            return (
+                <Tooltip title="Yuborilmoqda...">
+                    <img
+                        src="/static/svg/svg-spinners--clock.svg"
+                        alt="loading"
+                        style={{
+                            fongSize: '10px',
+                            width: '10px',
+                            height: '10px',
+                            marginLeft: 4,
+                        }}
+                    />
+                </Tooltip>
+            );
+        }
 
         return msg.is_read ? (
             <Tooltip title="O‘qildi">
@@ -126,17 +151,22 @@ const ChatMessage = ({ msg, onEdit, pushUser }) => {
         ) : (
             <Tooltip title="Yetib bordi">
                 <CheckOutlined
-                    style={{ fontSize: '8px', color: 'white', marginLeft: 4 }}
+                    style={{
+                        fontSize: '8px',
+                        color: 'white',
+                        marginLeft: 4,
+                    }}
                 />
             </Tooltip>
         );
-    }, [isMyMessage, msg.is_read]);
+    }, [isMyMessage, msg.is_read, isMessageLoading]);
 
     return (
         <div
             key={msg.id}
-            className={`${styles.messageRow} ${isMyMessage ? styles.myRow : styles.otherRow
-                }`}>
+            className={`${styles.messageRow} ${
+                isMyMessage ? styles.myRow : styles.otherRow
+            }`}>
             {!isMyMessage && (
                 <img
                     className={styles.avatar}
@@ -148,32 +178,56 @@ const ChatMessage = ({ msg, onEdit, pushUser }) => {
             )}
 
             <div
-                className={`${styles.chat_message} ${isMyMessage ? styles.my_message : styles.other_message
-                    }`}>
+                className={`${styles.chat_message} ${
+                    isMyMessage ? styles.my_message : styles.other_message
+                }`}
+                style={{
+                    wordBreak: 'break-word',
+                    whiteSpace: 'pre-wrap',
+                }}>
                 <span
                     style={{
-                        display: 'flex',
+                        display: 'grid',
+                        gridTemplateColumns: '1fr auto',
                         justifyContent: 'space-between',
-                        alignItems: 'flex-end',
-                        gap: '6px',
+                        alignItems: 'end',
+                        gap: '5px',
+                        width: '100%',
                     }}>
-                    {msg.content &&
-                        <span>{msg.content}</span>
-                    }
-
-                    {msg.file &&
+                    {msg.file && (
                         <div className={styles.chat_file_box}>
-                            <FileTextOutlined onClick={() => window.open(msg.file.url, '_blank')} className={styles.chat_file} />
+                            <FileTextOutlined
+                                onClick={() =>
+                                    window.open(msg.file.url, '_blank')
+                                }
+                                className={styles.chat_file}
+                            />
                             <div className={styles.chat_file_info}>
-                                <span className={styles.chat_file_name}>{truncateTitle(msg.file.filename, 15)}</span>
-                                <span className={styles.chat_file_size}>{(msg.file.size / (1024 * 1024)).toFixed(2)} MB</span>
+                                <span className={styles.chat_file_name}>
+                                    {truncateTitle(msg.file.filename, 15)}
+                                </span>
+                                <span className={styles.chat_file_size}>
+                                    {(msg.file.size / (1024 * 1024)).toFixed(2)}{' '}
+                                    MB
+                                </span>
                             </div>
                         </div>
-                    }
+                    )}
+                    {msg.content && (
+                        <span
+                            style={{
+                                gridColumn: '1 / 2',
+                                whiteSpace: 'pre-wrap',
+                                wordWrap: 'break-word',
+                                overflowWrap: 'break-word',
+                                minWidth: 0,
+                            }}>
+                            {msg.content}
+                        </span>
+                    )}
                     <span
                         style={{
-                            display: 'flex',
-                            alignItems: 'center',
+                            textAlign: 'right',
                             fontSize: '9.5px',
                             color: isMyMessage ? 'white' : 'black',
                             opacity: 0.7,
@@ -184,7 +238,14 @@ const ChatMessage = ({ msg, onEdit, pushUser }) => {
                     </span>
                 </span>
                 <div
-                    style={isMyMessage ? { left: '-20px' } : { right: '-20px' }}
+                    style={{
+                        ...(isMyMessage
+                            ? { left: '-20px' }
+                            : { right: '-20px' }),
+                        position: 'absolute',
+                        top: '4px',
+                        zIndex: 10,
+                    }}
                     className={styles.moreWrapper}>
                     <Dropdown
                         menu={
@@ -199,15 +260,13 @@ const ChatMessage = ({ msg, onEdit, pushUser }) => {
                 </div>
             </div>
 
-            {isMyMessage && (
-                <img
-                    className={styles.avatar}
-                    src={msg.sender_photo || '/static/img/ozodbek.png'}
-                    alt="avatar"
-                />
-            )}
+            {isMyMessage && <AvatarTransitioned msg={msg} />}
         </div>
     );
 };
 
-export default React.memo(ChatMessage);
+export default React.memo(ChatMessage, areEqual);
+
+function areEqual(prevProps, nextProps) {
+    return prevProps.msg?.status === nextProps.msg?.status;
+}

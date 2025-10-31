@@ -130,7 +130,7 @@ const UserShortItems = ({ type = 'portfolio', id, limit = 4, sectionRef }) => {
     if (!isLoading && items.length === 0) return null;
 
     return (
-        <div className={cn('w-full', 'h-full')}>
+        <div className={cn('w-full')}>
             <div
                 className={cn(
                     'bg-light',

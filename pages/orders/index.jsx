@@ -32,7 +32,7 @@ export default function SoffFreelancerPage({
         <PageContainer>
             <Meta title="Raqamli mahsulot buyurtma berish - Soff.uz" />
 
-            <div className="ps-page--shop my-5 container p-xl-0 p-l-0">
+            <div className="ps-page--shop my-5 container">
                 <ServicesFilterSection
                     parentCategory={parentCategory}
                     childCategory={childCategory}
@@ -74,7 +74,7 @@ export async function getServerSideProps(context) {
         offset = 0,
     } = query;
 
-    const fetchJson = async url => {
+    const fetchJson = async (url) => {
         try {
             const res = await fetch(url);
             if (!res.ok) return null;

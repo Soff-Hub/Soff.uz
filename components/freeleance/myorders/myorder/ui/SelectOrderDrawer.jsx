@@ -104,7 +104,6 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
         onOpen();
     };
     const onSuccessPayment = (orderId, accepted_by_id) => {
-        console.log({ orderId, accepted_by_id });
         if (accepted_by_id) {
             push(`/order/${orderId}`);
             return;

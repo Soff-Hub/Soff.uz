@@ -36,6 +36,7 @@
         top: 4px;
         opacity: 0;
         transition: opacity 0.2s ease;
+        z-index: 10;
     }
 
     .moreIcon {
@@ -67,11 +68,11 @@
     align-self: flex-start;
 }
 
-
-.chat_file_box{
+.chat_file_box {
     display: flex;
     align-items: center;
     gap: 10px;
+    width: 100%;
     margin-top: 5px;
 }
 
@@ -87,7 +88,7 @@
     padding: 6px;
     cursor: pointer;
     color: #00a44f;
-    background:white;
+    background: white;
     transition: all 0.25s ease;
 
     &:hover {

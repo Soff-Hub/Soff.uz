@@ -10,13 +10,15 @@ import {
 import ServiceSteps from './service-steps';
 // import { directions } from '@/components/freeleance/constants/index';
 import { useSelector } from 'react-redux';
+import { useTimeManager } from '~/shared/hooks/useTimeManager';
 
 const { Option } = Select;
 
 const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
     const router = useRouter();
     const { query } = router;
-    const { directions } = useSelector(state => state.profile);
+    const { directions } = useSelector((state) => state.profile);
+    const { startTimeout, stopTimeout } = useTimeManager();
     const directionsWithEmpty = [
         { label: 'Barchasi', value: '' },
         ...directions,
@@ -30,20 +32,20 @@ const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
         query.category_id || ''
     );
 
-    const updateQuery = newQuery => {
+    const updateQuery = (newQuery) => {
         router.push({ pathname: router.pathname, query: newQuery }, undefined, {
             shallow: false,
         });
     };
 
     useEffect(() => {
-        const delay = setTimeout(() => {
+        const delay = startTimeout(() => {
             const newQuery = {
                 ...router.query,
                 search: searchValue || undefined,
                 direction: selectedDirection || undefined,
                 category_id: selectedParentCategory || undefined,
-                offset: 0
+                offset: 0,
             };
 
             if (JSON.stringify(newQuery) !== JSON.stringify(router.query)) {
@@ -51,10 +53,10 @@ const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
             }
         }, 800);
 
-        return () => clearTimeout(delay);
+        return () => stopTimeout(delay);
     }, [searchValue]);
 
-    const updateDirection = value => {
+    const updateDirection = (value) => {
         setSelectedDirection(value);
         setSelectedParentCategory('');
         setSearchValue('');
@@ -62,12 +64,12 @@ const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
             pathname: router.pathname,
             query: {
                 direction: value || undefined,
-                offset: 0
+                offset: 0,
             },
         });
     };
 
-    const onParentCategoryChange = value => {
+    const onParentCategoryChange = (value) => {
         setSelectedParentCategory(value);
         setSearchValue('');
         router.push({
@@ -75,7 +77,7 @@ const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
             query: {
                 direction: selectedDirection || undefined,
                 category_id: value || undefined,
-                offset: 0
+                offset: 0,
             },
         });
     };
@@ -110,7 +112,7 @@ const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
                             placeholder="Yo'nalish"
                             value={selectedDirection || undefined}
                             onChange={updateDirection}>
-                            {directionsWithEmpty.map(d => (
+                            {directionsWithEmpty.map((d) => (
                                 <Option key={d.value} value={d.value}>
                                     {d.label}
                                 </Option>
@@ -127,7 +129,7 @@ const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
                             value={selectedParentCategory || undefined}
                             onChange={onParentCategoryChange}>
                             <Option value="">Barchasi</Option>
-                            {parentCategory?.map(cat => (
+                            {parentCategory?.map((cat) => (
                                 <Option key={cat.id} value={String(cat.id)}>
                                     {cat.title}
                                 </Option>
@@ -145,7 +147,7 @@ const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
                         <div className={styles.searchBox}>
                             <input
                                 value={searchValue}
-                                onChange={e => setSearchValue(e.target.value)}
+                                onChange={(e) => setSearchValue(e.target.value)}
                                 placeholder="Qanday xizmat izlamoqdasiz"
                                 className={styles.input}
                                 type="text"

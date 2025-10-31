@@ -15,6 +15,7 @@ export default function GoogleBox({
 
     const handleGoogleClick = async () => {
         // Build the OAuth URL with proper query parameters
+        const utm_source = localStorage.getItem('utm_source');
         const baseUrl = 'https://api.soff.uz/auth/social/login/customer';
         const params = new URLSearchParams();
 
@@ -24,6 +25,10 @@ export default function GoogleBox({
                 params.append(key, router.query[key]);
             }
         });
+
+        if (utm_source) {
+            params.append('utm_source', utm_source);
+        }
 
         // Add return URL for modals
         if (isModal) {

@@ -58,7 +58,6 @@ function ServiceOrderModal({
         handleClose();
         push(`/order/${id}`);
     };
-    console.log({ order });
 
     useEffect(() => {
         if (externalOpenModal !== undefined) {
