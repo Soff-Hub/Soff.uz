@@ -12,6 +12,17 @@ import useResponsive from '~/shared/utilities/useResponsive';
 import { Button, Checkbox, ConfigProvider, Drawer, Select, Slider } from 'antd';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 
+export const getTitleFromSlug = (array, slug) => {
+    let title = null;
+
+    if (array && slug) {
+        title = array.find((item) => {
+            return item.slug == slug;
+        })?.name;
+    }
+    return title;
+};
+
 const ProductFilterSection = ({ child, parent, path, isFile }) => {
     const { query, pathname, push } = useRouter();
     const parentRef = useRef(null);

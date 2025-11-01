@@ -3,18 +3,35 @@ import React from 'react';
 import PageContainer from '~/widgets/layouts/PageContainer';
 import Meta from '~/components/shared/headers/Meta';
 import { baseUrlUseApi } from '~/repositories/useApi';
-import ProductFilterSection from '~/components/elements/product-filter-section/ProductFilterSection';
+import ProductFilterSection, {
+    getTitleFromSlug,
+} from '~/components/elements/product-filter-section/ProductFilterSection';
 import ProductsByCategory from '~/components/partials/category/ProductsByCategory';
 
-export default function ModelsAndInteriorDesign ({
+export default function ModelsAndInteriorDesign({
     productsData,
     fourChildData,
     childCategoryData,
+    parentCategory,
+    childCategory,
     page,
 }) {
     const router = useRouter();
 
-    const handlePageChange = newPage => {
+    const title = getTitleFromSlug(fourChildData?.results, parentCategory);
+    const subTitle = getTitleFromSlug(
+        childCategoryData?.results,
+        childCategory
+    );
+
+    const fullTitle =
+        title && subTitle
+            ? `${title} - ${subTitle}`
+            : title
+            ? title
+            : '3D moddellar va Interier dizaynlar';
+
+    const handlePageChange = (newPage) => {
         router.push({
             pathname: router.pathname,
             query: { ...router.query, page: newPage },
@@ -22,24 +39,22 @@ export default function ModelsAndInteriorDesign ({
     };
 
     return (
-        <PageContainer
-            title={'Kategoriya'}
-            boxed={true}>
+        <PageContainer>
             <Meta
-                title={`${'3D moddellar va Interier dizaynlar'}`}
+                title={fullTitle}
                 description={`3D moddellar va Interier dizaynlar kategoriyasi: Taqdimotlar Tayyor shablonlar Kurs ishlari Diplom ishlari Referatlar Mustaqil ishlar Labaratoriya Ishlari Dissertatsiya ishlari Testlar O'quv qo'llanmalar Dars ishlanmalar Tarqatma materiallar Amaliy ishlar Blankalar Ijodiy Ishlar Loyihalar Plakatlar Maqola Ixtiro patenti Namunaviy hujjatlar Statistika Elektron kitoblar Dasturlash tillari `}
             />
 
             <ProductFilterSection
                 child={childCategoryData.results}
                 parent={fourChildData.results}
-                path={"/3d-models-and-interior-designs/"}
+                path={'/3d-models-and-interior-designs/'}
             />
-            <div className='ps-page--shop my-5 container p-xl-0 p-l-0'>
+            <div className="ps-page--shop my-5 container p-xl-0 p-l-0">
                 <ProductsByCategory
                     data={productsData}
                     page={page}
-                    handlePagination={number => {
+                    handlePagination={(number) => {
                         handlePageChange(number);
                     }}
                     isLoading={false}
@@ -49,9 +64,7 @@ export default function ModelsAndInteriorDesign ({
     );
 }
 
-
-
-export async function getServerSideProps (context) {
+export async function getServerSideProps(context) {
     const {
         slug,
         page = 1,
@@ -60,7 +73,7 @@ export async function getServerSideProps (context) {
         search = '',
     } = context.query;
 
-    const fetchJson = async url => {
+    const fetchJson = async (url) => {
         const res = await fetch(url);
         if (!res.ok) {
             return null;

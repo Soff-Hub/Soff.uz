@@ -17,8 +17,6 @@ export default function ProductCategoryScreen({
     parentCategory,
     childCategory,
     page,
-    search,
-    productsUrl,
 }) {
     const router = useRouter();
 

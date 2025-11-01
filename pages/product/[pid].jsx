@@ -133,9 +133,7 @@ export default function ProductDefaultPage({ defaultProducts }) {
 
     return (
         <>
-            <PageContainer
-                title={defaultProducts ? defaultProducts?.title : 'Loading...'}
-                boxed={true}>
+            <PageContainer>
                 <Head>
                     <title>
                         {defaultProducts?.title ||

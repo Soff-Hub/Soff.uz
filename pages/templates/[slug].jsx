@@ -4,9 +4,11 @@ import Meta from '~/components/shared/headers/Meta';
 import { useRouter } from 'next/router';
 import { baseUrlUseApi } from '~/repositories/useApi';
 import ProductsByCategory from '~/components/partials/category/ProductsByCategory';
-import ProductFilterSection from '~/components/elements/product-filter-section/ProductFilterSection';
+import ProductFilterSection, {
+    getTitleFromSlug,
+} from '~/components/elements/product-filter-section/ProductFilterSection';
 
-export default function Templates ({
+export default function Templates({
     productsData,
     fourChildData,
     childCategoryData,
@@ -16,8 +18,20 @@ export default function Templates ({
 }) {
     const router = useRouter();
 
-    // Pagination tugmalari uchun funksiya
-    const handlePageChange = newPage => {
+    const title = getTitleFromSlug(fourChildData?.results, parentCategory);
+    const subTitle = getTitleFromSlug(
+        childCategoryData?.results,
+        childCategory
+    );
+
+    const fullTitle =
+        title && subTitle
+            ? `${title} - ${subTitle}`
+            : title
+            ? title
+            : 'Tayyor shablonlar';
+
+    const handlePageChange = (newPage) => {
         router.push({
             pathname: router.pathname,
             query: { ...router.query, page: newPage }, // URL'ga yangi page qo'shish
@@ -25,23 +39,21 @@ export default function Templates ({
     };
 
     return (
-        <PageContainer
-            title={'Kategoriya'}
-            boxed={true}>
+        <PageContainer>
             <Meta
-                title={`${'Tayyor shablonlar'}`}
+                title={fullTitle}
                 description={`Biz siz qidirayotgan mahsulotlarni Soff.uz saytimizning kategoriyasida topdik`}
             />
             <ProductFilterSection
                 child={childCategoryData.results}
                 parent={fourChildData.results}
-                path={"/templates/"}
+                path={'/templates/'}
             />
-            <div className='ps-page--shop container my-5 p-xl-0 p-l-0'>
+            <div className="ps-page--shop container my-5 p-xl-0 p-l-0">
                 <ProductsByCategory
                     data={productsData}
                     page={page}
-                    handlePagination={number => {
+                    handlePagination={(number) => {
                         handlePageChange(number);
                     }}
                     isLoading={false}
@@ -51,7 +63,7 @@ export default function Templates ({
     );
 }
 
-export async function getServerSideProps (context) {
+export async function getServerSideProps(context) {
     const {
         slug,
         page = 1,
@@ -60,7 +72,7 @@ export async function getServerSideProps (context) {
         search = '',
     } = context.query;
 
-    const fetchJson = async url => {
+    const fetchJson = async (url) => {
         const res = await fetch(url);
         if (!res.ok) {
             return null;

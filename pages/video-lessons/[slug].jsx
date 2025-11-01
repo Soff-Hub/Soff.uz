@@ -4,7 +4,9 @@ import Meta from '~/components/shared/headers/Meta';
 import { useRouter } from 'next/router';
 import { baseUrlUseApi } from '~/repositories/useApi';
 import ProductsByCategory from '~/components/partials/category/ProductsByCategory';
-import ProductFilterSection from '~/components/elements/product-filter-section/ProductFilterSection';
+import ProductFilterSection, {
+    getTitleFromSlug,
+} from '~/components/elements/product-filter-section/ProductFilterSection';
 
 export default function VideoLessons({
     productsData,
@@ -16,7 +18,19 @@ export default function VideoLessons({
 }) {
     const router = useRouter();
 
-    // Pagination tugmalari uchun funksiya
+    const title = getTitleFromSlug(fourChildData?.results, parentCategory);
+    const subTitle = getTitleFromSlug(
+        childCategoryData?.results,
+        childCategory
+    );
+
+    const fullTitle =
+        title && subTitle
+            ? `${title} - ${subTitle}`
+            : title
+            ? title
+            : 'Video darsliklar';
+
     const handlePageChange = (newPage) => {
         router.push({
             pathname: router.pathname,
@@ -25,9 +39,9 @@ export default function VideoLessons({
     };
 
     return (
-        <PageContainer title={'Kategoriya'} boxed={true}>
+        <PageContainer>
             <Meta
-                title={`${'Video darsliklar'}`}
+                title={fullTitle}
                 description={`Biz siz qidirayotgan mahsulotlarni Soff.uz saytimizning kategoriyasida topdik`}
             />
             <ProductFilterSection

@@ -11,7 +11,12 @@ function Report() {
     const router = useRouter();
     const [loading, setLoading] = React.useState(false);
     const { productId } = router.query;
-    const { data: product } = useGet("customerDocuments/", `customer/documents/${productId}/`, undefined, { enabled: Boolean(productId) })
+    const { data: product } = useGet(
+        'customerDocuments/',
+        `customer/documents/${productId}/`,
+        undefined,
+        { enabled: Boolean(productId) }
+    );
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -36,7 +41,7 @@ function Report() {
 
     return (
         <div>
-            <PageContainer>
+            <PageContainer title="Mualliflik huquqini buzish to'g'risida xabar berish">
                 <div className="container">
                     <div
                         className="report-page py-5"
