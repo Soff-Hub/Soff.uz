@@ -14,10 +14,15 @@ import { useTimeManager } from '~/shared/hooks/useTimeManager';
 
 const { Option } = Select;
 
-const ServicesFilterSection = ({ count, parentCategory, childCategory }) => {
+const ServicesFilterSection = ({
+    count,
+    parentCategory,
+    directions,
+    childCategory,
+}) => {
     const router = useRouter();
     const { query } = router;
-    const { directions } = useSelector((state) => state.profile);
+    // const { directions } = useSelector((state) => state.profile);
     const { startTimeout, stopTimeout } = useTimeManager();
     const directionsWithEmpty = [
         { label: 'Barchasi', value: '' },

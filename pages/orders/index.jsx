@@ -7,15 +7,42 @@ import ServicesFilterSection from '~/components/freeleance/services/ServicesFilt
 import ServicesCardSection from '~/components/freeleance/services/ServicesCardSection';
 import GrayCard from '~/widgets/gray-card';
 
+const getTitleFromDirection = (directions, value) => {
+    const direction = directions.find((dir) => dir.value === value);
+    return direction ? direction.label : null;
+};
+
+const getTitleFromCategory = (categories, id) => {
+    const category = categories.find((cat) => String(cat.id) === String(id));
+    return category ? category.title : null;
+};
+
 export default function SoffFreelancerPage({
     servicesData,
     parentCategory,
     childCategory,
+    directions,
     offset,
     limit,
+    direction,
+    category_id,
+    search,
 }) {
     const router = useRouter();
     const currentPage = Math.floor(offset / limit) + 1;
+
+    const directionTitle = getTitleFromDirection(directions, direction);
+    const categoryTitle = getTitleFromCategory(parentCategory, category_id);
+
+    const fullTitle =
+        // NOTE: It may conflict with search page SEO
+        directionTitle && categoryTitle && search
+            ? `"${search}" so'rovi bo'yicha xizmatlar - Soff.uz`
+            : directionTitle && categoryTitle
+            ? `${directionTitle} - ${categoryTitle} | Soff.uz`
+            : directionTitle
+            ? `${directionTitle} - Soff.uz`
+            : 'Xizmatlarga buyurtma berish - Soff.uz';
 
     const onChangePage = (page, pageSize) => {
         router.push({
@@ -30,12 +57,13 @@ export default function SoffFreelancerPage({
 
     return (
         <PageContainer>
-            <Meta title="Raqamli mahsulot buyurtma berish - Soff.uz" />
+            <Meta title={fullTitle} />
 
             <div className="ps-page--shop my-5 container">
                 <ServicesFilterSection
                     parentCategory={parentCategory}
                     childCategory={childCategory}
+                    directions={directions}
                     count={servicesData?.total_service}
                 />
 
@@ -92,6 +120,7 @@ export async function getServerSideProps(context) {
         offset,
     });
 
+    const directionsUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/categories/all-directions`;
     const servicesUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/customer?${servicesQuery}`;
     const parentCategoryUrl = direction
         ? `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/categories/?direction=${direction}`
@@ -100,14 +129,28 @@ export async function getServerSideProps(context) {
         ? `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/categories?parent_id=${category_id}`
         : null;
 
-    const [servicesData, parentCategory, childCategory] = await Promise.all([
-        fetchJson(servicesUrl),
-        parentCategoryUrl ? fetchJson(parentCategoryUrl) : Promise.resolve([]),
-        childCategoryUrl ? fetchJson(childCategoryUrl) : Promise.resolve([]),
-    ]);
+    const [directions, servicesData, parentCategory, childCategory] =
+        await Promise.all([
+            fetchJson(directionsUrl),
+            fetchJson(servicesUrl),
+            parentCategoryUrl
+                ? fetchJson(parentCategoryUrl)
+                : Promise.resolve([]),
+            childCategoryUrl
+                ? fetchJson(childCategoryUrl)
+                : Promise.resolve([]),
+        ]);
 
     return {
         props: {
+            search,
+            direction,
+            category_id,
+            directions:
+                directions?.map((dir) => ({
+                    label: dir.title,
+                    value: dir.value,
+                })) || [],
             servicesData: servicesData || { results: [], total_service: 0 },
             parentCategory,
             childCategory,
