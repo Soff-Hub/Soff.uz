@@ -260,15 +260,25 @@ function SearchResultsProductsFilter({ total, childData }) {
                                             </Button>
                                         </Tooltip>
                                     ))}
+                                <Button
+                                    color="danger"
+                                    icon={<IoClose />}
+                                    onClick={handleClearAll}
+                                    iconPosition="end"
+                                    className="filter-danger">
+                                </Button>
                             </div>
-                            <Button
-                                color="danger"
-                                icon={<IoClose />}
-                                onClick={handleClearAll}
-                                iconPosition="end"
-                                className="filter-danger">
-                                Barchasini tozalash
-                            </Button>
+                            <Badge count={mutationsInForm.howManyMutations}>
+                                <Button
+                                    icon={<IoFilter />}
+                                    type="primary"
+                                    onClick={() => setFilterOpen(true)}
+                                    style={{
+                                        width: 'auto',
+                                    }}>
+                                    Filter
+                                </Button>
+                            </Badge>
                         </div>
                     </Card>
                 </Badge.Ribbon>
@@ -277,19 +287,21 @@ function SearchResultsProductsFilter({ total, childData }) {
                 <p className="countProduct text-nowrap m-0">
                     {total ? `${total} ta mahsulot topildi` : ''}
                 </p>
-                <div>
-                    <Badge count={mutationsInForm.howManyMutations}>
-                        <Button
-                            icon={<IoFilter />}
-                            type="primary"
-                            onClick={() => setFilterOpen(true)}
-                            style={{
-                                width: 'auto',
-                            }}>
-                            Filter
-                        </Button>
-                    </Badge>
-                </div>
+                {!mutationsInForm.hasMutation && 
+                    <div>
+                        <Badge count={mutationsInForm.howManyMutations}>
+                            <Button
+                                icon={<IoFilter />}
+                                type="primary"
+                                onClick={() => setFilterOpen(true)}
+                                style={{
+                                    width: 'auto',
+                                }}>
+                                Filter
+                            </Button>
+                        </Badge>
+                    </div>
+                }
             </div>
             <FilterFormDrawer
                 open={filterOpen}

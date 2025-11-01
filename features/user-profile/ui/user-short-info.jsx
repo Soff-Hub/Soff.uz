@@ -283,14 +283,14 @@ const UserShortInfo = ({ seller }) => {
                     )}>
                     {seller?.position}
                 </h4>
-                <Button
+                {/* <Button
                     type="primary"
                     iconPosition="end"
                     variant="solid"
                     icon={<FaRegCopy />}
                     onClick={handleCopyLink}>
                     Pro'fil linkini nusxalash
-                </Button>
+                </Button> */}
             </div>
 
             <div className={cn(marginClass, 'flex', 'flex-col', 'gap-4')}>
