@@ -10,7 +10,7 @@ import Editor from '~/components/Editor';
 
 function OrderCreate() {
     const router = useRouter();
-    const { isLoggedIn, status } = useSelector(state => state.auth);
+    const { isLoggedIn, status } = useSelector((state) => state.auth);
 
     useEffect(() => {
         const handleCheckLogin = async () => {
@@ -25,7 +25,7 @@ function OrderCreate() {
     }, [router, isLoggedIn, status]);
 
     return (
-        <PageContainer title="Order Create">
+        <PageContainer title="Maxsus buyurtma yaratish">
             <div className="ps-page--simple">
                 <Meta title={'Maxsus buyurtma yaratish'} />
                 <div
@@ -245,7 +245,7 @@ const OrderCreateForm = () => {
                 layout="vertical"
                 className="create-order-form"
                 onFinish={handleOpenConfirm}
-                onFinishFailed={errorInfo => {
+                onFinishFailed={(errorInfo) => {
                     const firstErrorField =
                         errorInfo?.errorFields?.[0]?.name?.[0];
                     if (firstErrorField) {
@@ -317,54 +317,59 @@ const OrderCreateForm = () => {
                 open={confirmOpen}
                 onCancel={handleCloseConfirm}
                 footer={[
-                   
                     <Button
                         key="ok"
                         type="primary"
                         loading={isPending}
                         onClick={handleConfirm}>
-                         To'lov qilish
+                        To'lov qilish
                     </Button>,
                 ]}
                 centered>
-               <p style={{
-    lineHeight: '1.6',
-    fontSize: '14px',
-    color: '#333',
-    marginBottom: '0'
-}}>
-    <strong style={{
-        display: 'block',
-        textAlign: 'center',
-        fontSize: '16px',
-        marginBottom: '16px',
-        color: '#1a1a1a'
-    }}>
-        Buyurtma berishni tasdiqlaysizmi?
-    </strong>
-    
-    <div style={{
-        background: '#f8f9fa',
-        padding: '16px',
-        borderRadius: '8px',
-        borderLeft: '4px solid #28a745'
-    }}>
-        <div style={{ marginBottom: '8px' }}>
-            <span style={{ marginRight: '8px' }}>✅</span>
-            Buyurtma yaratilgandan so'ng siz 💳 to'lovni amalga oshirasiz
-        </div>
-        
-        <div style={{ marginBottom: '8px' }}>
-            <span style={{ marginRight: '8px' }}>💼</span>
-            Platformamizdagi malakali frilanserlar sizga narx va tavsif bilan o'z takliflarini taqdim etishadi
-        </div>
-        
-        <div>
-            <span style={{ marginRight: '8px' }}>🎯</span>
-            Siz esa ular orasidan sizga eng mos frilanserni tanlab, u bilan hamkorlikni boshlaysiz
-        </div>
-    </div>
-</p>
+                <p
+                    style={{
+                        lineHeight: '1.6',
+                        fontSize: '14px',
+                        color: '#333',
+                        marginBottom: '0',
+                    }}>
+                    <strong
+                        style={{
+                            display: 'block',
+                            textAlign: 'center',
+                            fontSize: '16px',
+                            marginBottom: '16px',
+                            color: '#1a1a1a',
+                        }}>
+                        Buyurtma berishni tasdiqlaysizmi?
+                    </strong>
+
+                    <div
+                        style={{
+                            background: '#f8f9fa',
+                            padding: '16px',
+                            borderRadius: '8px',
+                            borderLeft: '4px solid #28a745',
+                        }}>
+                        <div style={{ marginBottom: '8px' }}>
+                            <span style={{ marginRight: '8px' }}>✅</span>
+                            Buyurtma yaratilgandan so'ng siz 💳 to'lovni amalga
+                            oshirasiz
+                        </div>
+
+                        <div style={{ marginBottom: '8px' }}>
+                            <span style={{ marginRight: '8px' }}>💼</span>
+                            Platformamizdagi malakali frilanserlar sizga narx va
+                            tavsif bilan o'z takliflarini taqdim etishadi
+                        </div>
+
+                        <div>
+                            <span style={{ marginRight: '8px' }}>🎯</span>
+                            Siz esa ular orasidan sizga eng mos frilanserni
+                            tanlab, u bilan hamkorlikni boshlaysiz
+                        </div>
+                    </div>
+                </p>
             </Modal>
         </div>
     );

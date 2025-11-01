@@ -5,11 +5,11 @@ import Meta from '~/components/shared/headers/Meta';
 
 const AboutUs = () => {
     return (
-        <PageContainer title="FAQ page">
+        <PageContainer title="Soff.uz nima?">
             <div className="ps-page--singlee">
                 <div className="container-faqs">
                     <Meta
-                        title={"Soff.uz nima?"}
+                        title={'Soff.uz nima?'}
                         description="Soff.uz - Sayti haqida shu sahifamizda to'liq bilib olishingiz mumkin"
                     />
                     <AboutContent />
@@ -20,4 +20,3 @@ const AboutUs = () => {
 };
 
 export default AboutUs;
-

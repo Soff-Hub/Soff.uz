@@ -19,8 +19,8 @@ const CheckoutPage = () => {
     ];
 
     return (
-        <PageContainer title='Checkout'>
-            <div className='ps-page--simple'>
+        <PageContainer title="Xarid savati">
+            <div className="ps-page--simple">
                 <Meta title={'Xarid savati'} />
                 <Checkout />
             </div>

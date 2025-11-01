@@ -29,7 +29,7 @@ const RegisterPage = () => {
     }, [user]);
 
     return (
-        <PageContainer title="Register">
+        <PageContainer title="Ro'yxatdan o'tish">
             <div className="ps-page--my-account">
                 <Meta
                     title={"Ro'yxatdan o'tish"}

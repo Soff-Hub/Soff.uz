@@ -1,15 +1,15 @@
-import React from 'react'
+import React from 'react';
 import Chat from '~/components/freeleance/chat/Chat';
-import PageContainer from '~/widgets/layouts/PageContainer'
+import PageContainer from '~/widgets/layouts/PageContainer';
 
 const ChatPage = () => {
     return (
-        <PageContainer>
-            <div className='container'>
-                <Chat/>
+        <PageContainer title="Chat">
+            <div className="container">
+                <Chat />
             </div>
         </PageContainer>
-    )
-}
+    );
+};
 
-export default ChatPage
+export default ChatPage;

@@ -5,12 +5,14 @@ import Meta from '~/components/shared/headers/Meta';
 
 const FormPage = () => {
     return (
-        <PageContainer title="FAQ">
+        <PageContainer title="Savollaringiz bormi? (FAQ)">
             <Meta
-                title={"Savollaringiz bormi?"}
+                title={'Savollaringiz bormi?'}
                 description="Soff.uz - Sayti haqida shu sahifamizda to'liq bilib olishingiz mumkin"
             />
-            <div className='container-faqs ms-lg-5 ms-md-3' style={{ margin: '0 auto' }}>
+            <div
+                className="container-faqs ms-lg-5 ms-md-3"
+                style={{ margin: '0 auto' }}>
                 <FormContent />
             </div>
         </PageContainer>

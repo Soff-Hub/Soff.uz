@@ -16,11 +16,9 @@ const CheckoutOnePage = () => {
     ];
 
     return (
-        <PageContainer title="Checkout">
+        <PageContainer title="Xarid savati">
             <div className="ps-page--simple">
-                <Meta
-                    title={"Xarid savati"}
-                />
+                <Meta title={'Xarid savati'} />
                 <BreadCrumb breacrumb={breadCrumb} />
                 <CheckoutOne />
             </div>

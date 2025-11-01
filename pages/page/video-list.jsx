@@ -11,20 +11,17 @@ const VedioList = () => {
         },
         {
             id: 2,
-            title:
-                'Soff uz’da sotuvchi bo‘lish – qanday ro‘yxatdan o‘tish va savdo qilish?',
+            title: 'Soff uz’da sotuvchi bo‘lish – qanday ro‘yxatdan o‘tish va savdo qilish?',
             vedioUrl: 'l0nDo1mbhf8',
         },
         {
             id: 3,
-            title:
-                'Soff uz sotuvchi profili – barcha imkoniyatlar va funktsiyalar!',
+            title: 'Soff uz sotuvchi profili – barcha imkoniyatlar va funktsiyalar!',
             vedioUrl: 'H6REqhC_NYM',
         },
         {
             id: 4,
-            title:
-                'Soff uz’da birinchi mahsulotingizni qanday yuklash va sotishni boshlash?',
+            title: 'Soff uz’da birinchi mahsulotingizni qanday yuklash va sotishni boshlash?',
             vedioUrl: '_c9CB7Hs50E',
         },
         {
@@ -34,27 +31,24 @@ const VedioList = () => {
         },
         {
             id: 2,
-            title:
-                'Soff uz’da sotuvchi bo‘lish – qanday ro‘yxatdan o‘tish va savdo qilish?',
+            title: 'Soff uz’da sotuvchi bo‘lish – qanday ro‘yxatdan o‘tish va savdo qilish?',
             vedioUrl: 'l0nDo1mbhf8',
         },
         {
             id: 3,
-            title:
-                'Soff uz sotuvchi profili – barcha imkoniyatlar va funktsiyalar!',
+            title: 'Soff uz sotuvchi profili – barcha imkoniyatlar va funktsiyalar!',
             vedioUrl: 'H6REqhC_NYM',
         },
         {
             id: 4,
-            title:
-                'Soff uz’da birinchi mahsulotingizni qanday yuklash va sotishni boshlash?',
+            title: 'Soff uz’da birinchi mahsulotingizni qanday yuklash va sotishni boshlash?',
             vedioUrl: '_c9CB7Hs50E',
         },
     ];
 
     return (
         <div>
-            <PageContainer title="FAQ page">
+            <PageContainer>
                 <Meta
                     title={
                         'Soff.uz platformasidan foydalanish bo‘yicha video qo‘llanma – Raqamli xizmatlar bozori'
@@ -79,7 +73,7 @@ const VedioList = () => {
                             Soff.uz sotuvchilari uchun video qo'llanma:{' '}
                         </h3>
                         <div className="row">
-                            {data?.map(el => (
+                            {data?.map((el) => (
                                 <div className="col-md-6 my-4" key={el.id}>
                                     <h4 className="my-5">{el.title}</h4>
 

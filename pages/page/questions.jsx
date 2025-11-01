@@ -3,18 +3,14 @@ import PageContainer from '~/widgets/layouts/PageContainer';
 import Meta from '~/components/shared/headers/Meta';
 
 const QuestionsPage = () => {
-
-
-
     return (
-        <PageContainer title="FAQ page">
+        <PageContainer title="Savol-javoblar">
             <Meta
-                title={"Savol-javoblar"}
+                title={'Savol-javoblar'}
                 description="Saytdan foydalanish haqida to'liq qo'llanma bizning Savol-javoblar sahifamizda batafsil yoritib berilgan"
             />
             <div className="ps-page--singlee">
-                <div className="container-faqs">
-                </div>
+                <div className="container-faqs"></div>
             </div>
         </PageContainer>
     );

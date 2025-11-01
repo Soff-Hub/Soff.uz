@@ -16,10 +16,10 @@ const WishlistPage = () => {
     ];
 
     return (
-        <PageContainer title="Wishlist">
+        <PageContainer title="Tanlanganlar">
             <div className="ps-page--simple">
                 <Meta
-                    title={"Tanlanganlar"}
+                    title={'Tanlanganlar'}
                     description="Soff.uz - Saytida harid savatiga saqlab qo'ygan mahsuloatlaringizni sotib olishni unutmang"
                 />
                 <BreadCrumb breacrumb={breadCrumb} />

@@ -5,11 +5,11 @@ import Meta from '~/components/shared/headers/Meta';
 
 const BecomeASeller = () => {
     return (
-        <PageContainer title="FAQ page">
+        <PageContainer title="Sotuvchiga aylaning">
             <div className="ps-page--singlee">
                 <div className="container-faqs">
                     <Meta
-                        title={"Sotuvchiga aylaning"}
+                        title={'Sotuvchiga aylaning'}
                         description="Soff.uz - Saytimizda siz sotuvchi bo'lib ro'yxatdan o'tishingiz mumkin albatta"
                     />
                     <BecomeSeller />
@@ -20,4 +20,3 @@ const BecomeASeller = () => {
 };
 
 export default BecomeASeller;
-

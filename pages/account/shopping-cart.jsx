@@ -18,8 +18,8 @@ const breadCrumb = [
 ];
 
 const ShoppingCartScreen = () => {
-    const state = useSelector(state => state.auth.user);
-    const cartItems = useSelector(state => state.ecomerce.cartDataItems);
+    const state = useSelector((state) => state.auth.user);
+    const cartItems = useSelector((state) => state.ecomerce.cartDataItems);
 
     let contentView;
     if (cartItems) {
@@ -102,7 +102,7 @@ const ShoppingCartScreen = () => {
 
     return (
         <>
-            <PageContainer title="Shopping Cart">
+            <PageContainer title="Xarid savati">
                 <div className="ps-page--simple mb-4">
                     <Meta title={'Xarid savati'} />
                     <BreadCrumb breacrumb={breadCrumb} />
@@ -120,4 +120,4 @@ const ShoppingCartScreen = () => {
     );
 };
 
-export default connect(state => state)(ShoppingCartScreen);
+export default connect((state) => state)(ShoppingCartScreen);

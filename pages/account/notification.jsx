@@ -15,7 +15,7 @@ const Notification = () => {
         },
     ];
     return (
-        <PageContainer title="Notifications">
+        <PageContainer title="Yangiliklar">
             <div className="ps-page--my-account">
                 <BreadCrumb breacrumb={breadCrumb} />
                 <Meta title={'Yangiliklar'} />

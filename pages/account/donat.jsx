@@ -3,17 +3,17 @@ import PageContainer from '~/widgets/layouts/PageContainer';
 import SiteDonateForm from '~/components/partials/seller/SiteDonateForm';
 
 const Donat = () => {
+    return (
+        <PageContainer title="Loyiha rivojiga hissa qo'shing">
+            <div className="container my-5 ">
+                <h2 className="text-center mb-5">
+                    Loyiha rivoji uchun o'z hissangizni qo'shing
+                </h2>
 
-    return <PageContainer>
-        <div className="container my-5 ">
-            <h2 className="text-center mb-5">
-                Loyiha  rivoji uchun o'z hissangizni qo'shing
-            </h2>
-
-            <SiteDonateForm />
-
-        </div>
-    </PageContainer>
+                <SiteDonateForm />
+            </div>
+        </PageContainer>
+    );
 };
 
 export default Donat;
