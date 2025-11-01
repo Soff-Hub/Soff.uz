@@ -3,8 +3,8 @@ import OrderMain from './ui/OrderMain';
 import OrderStatus from './ui/OrderStatus';
 import useGetOrderById from './api/useGetOrderById';
 import { useRouter } from 'next/router';
-import CommentSection from '../../services/service-deatail/ui/CommentSection';
 import Loader from '~/components/shared/loader';
+import CommentSection from '../../services/service-deatail/ui/CommentSection';
 import styles from './style/style.module.scss';
 import { MessageOutlined } from '@ant-design/icons';
 import useCreateChat from '~/components/freeleance/chat/api/useCreateChat';
@@ -12,18 +12,28 @@ import Link from 'next/link';
 import { Button } from 'antd';
 import OrderDrawer from './ui/OrderDrawer';
 
-const OrderDetailMain = () => {
+const OrderDetailMain = ({ orderData }) => {
     const router = useRouter();
     const [showStickySeller, setShowStickySeller] = useState(false);
     const [openDrawer, setOpenDrawer] = useState(false);
-    const { data: order, error, isLoading } = useGetOrderById(router.query?.id);
+    const {
+        data: order,
+        isError,
+        isLoading,
+        refetch,
+    } = useGetOrderById(+router.query?.id, orderData, true);
 
     if (isLoading) {
         return <Loader />;
     }
-    if (order === undefined) {
+
+    if (isError) {
         router.push('/404');
     }
+
+    const handleOrderUpdate = async () => {
+        await refetch();
+    };
 
     const handleShowStickySeller = (value) => {
         setShowStickySeller(value);
@@ -31,22 +41,23 @@ const OrderDetailMain = () => {
 
     return (
         <>
-            {order && (
-                <div className="row navTabsPadding position-relative">
-                    <OrderMain order={order} />
-                    <OrderStatus
-                        order={order}
-                        handleShowStickySeller={handleShowStickySeller}
-                    />
-                    <OrderDrawer
-                        open={openDrawer}
-                        onClose={() => setOpenDrawer(false)}
-                        onOpen={() => setOpenDrawer(true)}
-                        order={order}
-                    />
-                    {<StickySeller order={order} isOpen={showStickySeller} />}
-                </div>
-            )}
+            <div className="row navTabsPadding position-relative">
+                <OrderMain
+                    order={order}
+                    handleOrderUpdate={handleOrderUpdate}
+                />
+                <OrderStatus
+                    order={order}
+                    handleShowStickySeller={handleShowStickySeller}
+                />
+                <OrderDrawer
+                    open={openDrawer}
+                    onClose={() => setOpenDrawer(false)}
+                    onOpen={() => setOpenDrawer(true)}
+                    order={order}
+                />
+                {<StickySeller order={order} isOpen={showStickySeller} />}
+            </div>
             {order?.feedback && (
                 <CommentSection id={router.query?.id} type={'order_id'} />
             )}

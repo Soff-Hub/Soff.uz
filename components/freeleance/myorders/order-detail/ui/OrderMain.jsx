@@ -160,7 +160,7 @@ const TelegramNotificationHeader = (
     </div>
 );
 
-const OrderMain = ({ order }) => {
+const OrderMain = ({ order, handleOrderUpdate }) => {
     const [open, setOpen] = useState(false);
     const [congratModal, setCongratModal] = useState(false);
     const [feedbackOpen, setFeedbackOpen] = useState(false);
@@ -217,10 +217,10 @@ const OrderMain = ({ order }) => {
         };
     }, [dispatch]);
 
-    const handleOrderUpdate = () => {
-        // Bu yerda orders listini qayta yuklash yoki state yangilash
-        queryClient.invalidateQueries({ queryKey: ['order'] });
-    };
+    // const handleOrderUpdate = (id) => {
+    //     // Bu yerda orders listini qayta yuklash yoki state yangilash
+    //     queryClient.invalidateQueries({ queryKey: ['order', id] });
+    // };
     return (
         <div className="col-lg-9 col-12 rounded-2 my-4">
             <div className={styles.orderDetailMain}>
