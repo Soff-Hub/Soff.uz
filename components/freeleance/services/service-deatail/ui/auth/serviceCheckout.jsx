@@ -372,8 +372,6 @@ const ServiceCheckout = ({
         },
     ];
 
-    console.log({ code });
-
     return (
         <Tabs
             className="bg-white checkoutstep-1"

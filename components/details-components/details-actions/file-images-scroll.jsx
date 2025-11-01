@@ -16,7 +16,6 @@ function FileImagesScroll({ product }) {
 
             const handleScroll = () => {
                 if (scrollContainer.scrollTop) {
-                    console.log('scrolled to bottom');
                     setIsScrolledDown(true);
                 } else {
                     setIsScrolledDown(false);
