@@ -874,10 +874,21 @@
             flex-wrap: wrap;
 
             .filter_indicators {
-                display: flex;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
                 align-items: center;
                 gap: 10px;
-                flex-wrap: wrap;
+                // flex-wrap: wrap;
+
+                @media (max-width: 768px) {
+                    grid-template-columns: repeat(3, 1fr);
+                    width: 100%;
+                }
+
+                @media (max-width: 578px) {
+                    grid-template-columns: repeat(2, 1fr);
+                    width: 100%;
+                }
             }
 
             .filter-danger {

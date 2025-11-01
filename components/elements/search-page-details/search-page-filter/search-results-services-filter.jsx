@@ -137,44 +137,38 @@ export default function SearchResultsProductsFilter({ total }) {
     return (
         <div className="Search_Results_Products_form_box">
             {mutationsInForm.hasMutation ? (
-                <Badge.Ribbon text="Faol filterlar" placement="start">
-                    <Card className="search_results_filter_card">
-                        <div className="filter_card_action_btns">
-                            <div className="filter_indicators">
-                                {filterIndicatorSelectors
-                                    .filter((selector) => selector.isEnabled)
-                                    .map((selector) => (
-                                        <Tooltip
-                                            placement="top"
-                                            title={
-                                                selector.disabled
-                                                    ? selector.disabledTooltip
-                                                    : selector.tooltip
-                                            }
-                                            key={selector.key}>
-                                            <Button
-                                                color="light"
-                                                icon={selector.icon}
-                                                className="filter-indicator-button"
-                                                disabled={selector.disabled}
-                                                onClick={selector.action}>
-                                                {selector.title}
-                                                <CloseCircleOutlined
-                                                    style={{
-                                                        marginLeft: '4px',
-                                                    }}
-                                                />
-                                            </Button>
-                                        </Tooltip>
-                                    ))}
-                                <Button
-                                    color="danger"
-                                    icon={<IoClose />}
-                                    onClick={handleClearAll}
-                                    iconPosition="end"
-                                    className="filter-danger">
-                                </Button>
-                            </div>
+                // <Badge.Ribbon text="Faol filterlar" placement="start">
+                <Card className="search_results_filter_card">
+                    <div className="filter_card_action_btns">
+                        <div className="filter_indicators">
+                            {filterIndicatorSelectors
+                                .filter((selector) => selector.isEnabled)
+                                .map((selector) => (
+                                    <Tooltip
+                                        placement="top"
+                                        title={
+                                            selector.disabled
+                                                ? selector.disabledTooltip
+                                                : selector.tooltip
+                                        }
+                                        key={selector.key}>
+                                        <Button
+                                            color="light"
+                                            icon={selector.icon}
+                                            className="filter-indicator-button"
+                                            disabled={selector.disabled}
+                                            onClick={selector.action}>
+                                            {selector.title}
+                                            <CloseCircleOutlined
+                                                style={{
+                                                    marginLeft: '4px',
+                                                }}
+                                            />
+                                        </Button>
+                                    </Tooltip>
+                                ))}
+                        </div>
+                        <div className='d-flex gap-2'>
                             <Badge count={mutationsInForm.howManyMutations}>
                                 <Button
                                     icon={<IoFilter />}
@@ -186,9 +180,17 @@ export default function SearchResultsProductsFilter({ total }) {
                                     Filter
                                 </Button>
                             </Badge>
+                            <Button
+                                color="danger"
+                                icon={<IoClose />}
+                                onClick={handleClearAll}
+                                iconPosition="end"
+                                className="filter-danger">
+                            </Button>
                         </div>
-                    </Card>
-                </Badge.Ribbon>
+                    </div>
+                </Card>
+                // </Badge.Ribbon>
             ) : null}
             <div className="search_results_indicator">
                 <p className="countProduct text-nowrap m-0">

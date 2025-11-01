@@ -1,3 +1,4 @@
+import Meta from '~/components/shared/meta';
 import UserProfile from '~/features/user-profile';
 import { d_base_url } from '~/shared/api/base-url';
 import fetchJson from '~/shared/api/fetch-json';
@@ -7,6 +8,12 @@ const SellerPage = ({ seller }) => {
     return (
         <PageContainer>
             <div className="container">
+                <Meta
+                    title={seller?.full_name}
+                    image={seller?.image || ""}
+                    description={seller?.bio}
+                    author={seller?.full_name}
+                />
                 <UserProfile seller={seller} />
             </div>
         </PageContainer>
