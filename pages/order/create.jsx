@@ -25,7 +25,7 @@ function OrderCreate() {
     }, [router, isLoggedIn, status]);
 
     return (
-        <PageContainer title="Maxsus buyurtma yaratish">
+        <PageContainer>
             <div className="ps-page--simple">
                 <Meta title={'Maxsus buyurtma yaratish'} />
                 <div
