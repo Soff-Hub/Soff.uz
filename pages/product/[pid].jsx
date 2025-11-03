@@ -16,6 +16,7 @@ import ProductCard from '~/entities/product/product-card';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { useQuery } from '@tanstack/react-query';
 import Meta from '~/components/shared/headers/Meta';
+import { getOrCreateDeviceId } from '~/shared/utilities/device-id';
 
 const steps = [
     {
@@ -131,8 +132,6 @@ export default function ProductDefaultPage({ defaultProducts }) {
             />
         ),
     };
-
-    console.log('defaultProducts', defaultProducts);
 
     return (
         <PageContainer>
@@ -283,7 +282,10 @@ export async function getServerSideProps({ query, req }) {
         const request = await fetch(
             `${baseUrl}customer/documents/${query.pid}/`,
             {
-                headers,
+                headers: {
+                    ...headers,
+                    'X-Device-ID': getOrCreateDeviceId(),
+                },
             }
         );
 
@@ -296,11 +298,16 @@ export async function getServerSideProps({ query, req }) {
         if (request.status === 404) {
             return { notFound: true };
         }
-
+        console.log({ request });
         defaultProducts = await request.json();
     } catch (error) {
         const request = await fetch(
-            `${baseUrl}customer/documents/${query.pid}/`
+            `${baseUrl}customer/documents/${query.pid}/`,
+            {
+                headers: {
+                    'X-Device-ID': getOrCreateDeviceId(),
+                },
+            }
         );
 
         if (!request.ok) {
@@ -309,6 +316,7 @@ export async function getServerSideProps({ query, req }) {
             };
         }
 
+        console.log({ request });
         defaultProducts = await request.json();
     }
 
