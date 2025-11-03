@@ -24,7 +24,7 @@ function NewHomePage() {
                     { name: 'Soff.uz' },
                 ]}
                 author="Soff.uz"
-                image="c"
+                image="https://soff.uz/static/img/soff/logo-dark.png"
             />
             <Home />
         </PageLayout>

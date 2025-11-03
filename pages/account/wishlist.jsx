@@ -16,7 +16,7 @@ const WishlistPage = () => {
     ];
 
     return (
-        <PageContainer title="Tanlanganlar">
+        <PageContainer>
             <div className="ps-page--simple">
                 <Meta
                     title={'Tanlanganlar'}

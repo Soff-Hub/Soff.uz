@@ -57,7 +57,12 @@ export default function SoffFreelancerPage({
 
     return (
         <PageContainer>
-            <Meta title={fullTitle} />
+            <Meta
+                title={fullTitle}
+                description={
+                    'Soff.uz xizmatlar bo‘limida frilanserlar tomonidan taklif etilgan xizmatlarni toping. Dizayn, dasturlash, marketing va boshqa ko‘plab yo‘nalishlarda mutaxassislarni izlang.'
+                }
+            />
 
             <div className="ps-page--shop my-5 container">
                 <ServicesFilterSection

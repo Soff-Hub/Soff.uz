@@ -4,7 +4,7 @@ import Meta from '~/components/shared/headers/Meta';
 
 const QuestionsPage = () => {
     return (
-        <PageContainer title="Savol-javoblar">
+        <PageContainer>
             <Meta
                 title={'Savol-javoblar'}
                 description="Saytdan foydalanish haqida to'liq qo'llanma bizning Savol-javoblar sahifamizda batafsil yoritib berilgan"

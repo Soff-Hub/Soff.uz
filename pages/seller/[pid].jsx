@@ -10,7 +10,7 @@ const SellerPage = ({ seller }) => {
             <div className="container">
                 <Meta
                     title={seller?.full_name}
-                    image={seller?.image || ""}
+                    image={seller?.image || ''}
                     description={seller?.bio}
                     author={seller?.full_name}
                 />

@@ -102,9 +102,14 @@ const ShoppingCartScreen = () => {
 
     return (
         <>
-            <PageContainer title="Xarid savati">
+            <PageContainer>
                 <div className="ps-page--simple mb-4">
-                    <Meta title={'Xarid savati'} />
+                    <Meta
+                        title={'Xarid savati'}
+                        description={
+                            'Xarid savatingizdagi mahsulot va xizmatlarni ko‘rib chiqing, narxlarni solishtiring va to‘lovni amalga oshiring. Soff.uz — ishonchli onlayn marketplace va frilans platformasi.'
+                        }
+                    />
                     <BreadCrumb breacrumb={breadCrumb} />
                     <div className="ps-section--shopping ps-shopping-cart">
                         <div className="container">

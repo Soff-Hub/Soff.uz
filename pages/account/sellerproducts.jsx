@@ -5,9 +5,14 @@ import Meta from '~/components/shared/headers/Meta';
 
 const SellerProducts = () => {
     return (
-        <PageContainer title="Sotib olinganlar">
+        <PageContainer>
             <div className="ps-page--my-account">
-                <Meta title={'Sotib olinganlar'} />
+                <Meta
+                    title={'Sotib olinganlar'}
+                    description={
+                        'Soff.uz’da sotib olingan mahsulot va xizmatlaringizni bu sahifada ko‘rib chiqing. Yuklab oling, qayta faollashtiring yoki tafsilotlarni boshqaring.'
+                    }
+                />
                 <MyProducts_listSeller />
             </div>
         </PageContainer>

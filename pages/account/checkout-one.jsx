@@ -16,9 +16,14 @@ const CheckoutOnePage = () => {
     ];
 
     return (
-        <PageContainer title="Xarid savati">
+        <PageContainer>
             <div className="ps-page--simple">
-                <Meta title={'Xarid savati'} />
+                <Meta
+                    title={'Xarid savati'}
+                    description={
+                        'Xaridni yakunlash va xizmatlardan foydalanish uchun Soff.uz xarid savatiga tashrif buyuring — qulay, tez va xavfsiz to‘lov tizimi. '
+                    }
+                />
                 <BreadCrumb breacrumb={breadCrumb} />
                 <CheckoutOne />
             </div>

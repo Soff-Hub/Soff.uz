@@ -15,10 +15,15 @@ const Notification = () => {
         },
     ];
     return (
-        <PageContainer title="Yangiliklar">
+        <PageContainer>
             <div className="ps-page--my-account">
                 <BreadCrumb breacrumb={breadCrumb} />
-                <Meta title={'Yangiliklar'} />
+                <Meta
+                    title={'Yangiliklar'}
+                    description={
+                        'Soff.uz bildirishnomalar sahifasida sizga tegishli barcha yangiliklar, buyurtmalar, xabarlar va tizim ogohlantirishlarini ko‘rib chiqing.'
+                    }
+                />
                 <NotificationList />
             </div>
         </PageContainer>

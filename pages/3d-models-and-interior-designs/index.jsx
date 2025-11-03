@@ -8,7 +8,7 @@ export default function ThreeDModelsAndInteriorDesigns() {
         <PageContainer>
             <Meta
                 title="3D Modellar va Interyer Dizaynlari"
-                image="/static/img/3D-moddellar-va-Interier-dizaynlar-2.png"
+                image="https://soff.uz/static/img/3D-moddellar-va-Interier-dizaynlar-2.png"
                 description="Bu sahifa dizaynerlar, arxitektorlar va 3D model mutaxassislari uchun. Bu yerda 3D modellar, interyer dizaynlari va vizualizatsiyalarni topish mumkin."
                 keywords={[
                     { name: '3D' },

@@ -5,7 +5,7 @@ import Meta from '~/components/shared/headers/Meta';
 
 const FormPage = () => {
     return (
-        <PageContainer title="Savollaringiz bormi? (FAQ)">
+        <PageContainer>
             <Meta
                 title={'Savollaringiz bormi?'}
                 description="Soff.uz - Sayti haqida shu sahifamizda to'liq bilib olishingiz mumkin"

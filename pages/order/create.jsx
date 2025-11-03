@@ -27,7 +27,12 @@ function OrderCreate() {
     return (
         <PageContainer>
             <div className="ps-page--simple">
-                <Meta title={'Maxsus buyurtma yaratish'} />
+                <Meta
+                    title={'Maxsus buyurtma yaratish'}
+                    description={
+                        'Soff.uz’da maxsus buyurtma yarating — o‘z loyihangiz uchun kerakli mutaxassisni toping. Talablaringizni yozing, frilanserlardan takliflarni qabul qiling va eng yaxshisini tanlang.'
+                    }
+                />
                 <div
                     className="ps-section--shopping ps-shopping-cart"
                     style={{ paddingTop: '8px', paddingBottom: '8px' }}>

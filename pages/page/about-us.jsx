@@ -5,7 +5,7 @@ import Meta from '~/components/shared/headers/Meta';
 
 const AboutUs = () => {
     return (
-        <PageContainer title="Soff.uz nima?">
+        <PageContainer>
             <div className="ps-page--singlee">
                 <div className="container-faqs">
                     <Meta

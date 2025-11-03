@@ -5,7 +5,7 @@ import Meta from '~/components/shared/headers/Meta';
 
 const BecomeASeller = () => {
     return (
-        <PageContainer title="Sotuvchiga aylaning">
+        <PageContainer>
             <div className="ps-page--singlee">
                 <div className="container-faqs">
                     <Meta

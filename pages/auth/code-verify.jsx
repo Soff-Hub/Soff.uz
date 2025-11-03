@@ -20,11 +20,11 @@ const CodeVerifyPage = () => {
     ];
 
     return (
-        <PageContainer title="Ro'yxatdan o'tish">
+        <PageContainer>
             <div className="ps-page--my-account">
                 <Meta
                     title={"Ro'yxatdan o'tish"}
-                    description="Soff.uz - Saytidan hoziroq ro'yxatdan o'ting va o'z mahsulatlaringizni soting"
+                    description="Soff.uz platformasida ro‘yxatdan o‘ting va frilans xizmatlaridan foydalaning. Ish toping, buyurtma bering yoki o‘z xizmatlaringizni taklif qiling — barchasi bitta joyda."
                 />
                 <BreadCrumb breacrumb={breadCrumb} />
                 <CodeVerifyForm />

@@ -86,6 +86,15 @@ function App({ Component, pageProps }) {
             window.addEventListener('load', handleLoad);
         }
 
+        console.log(`
+        ███████╗ ██████╗ ███████╗███████╗
+        ██╔════╝██╔═══██╗██╔════╝██╔════╝
+        ███████╗██║   ██║█████╗  █████╗  
+        ╚════██║██║   ██║██╔══╝  ██╔══╝  
+        ███████║╚██████╔╝██║     ██║     
+        ╚══════╝ ╚═════╝ ╚═╝     ╚═╝     
+        `);
+
         return () => {
             window.removeEventListener('load', handleLoad);
         };
@@ -101,15 +110,6 @@ function App({ Component, pageProps }) {
     //         });
     //     }
     // }, []);
-
-    console.log(`
-        ███████╗ ██████╗ ███████╗███████╗
-        ██╔════╝██╔═══██╗██╔════╝██╔════╝
-        ███████╗██║   ██║█████╗  █████╗  
-        ╚════██║██║   ██║██╔══╝  ██╔══╝  
-        ███████║╚██████╔╝██║     ██║     
-        ╚══════╝ ╚═════╝ ╚═╝     ╚═╝     
-        `);
 
     return (
         <>
@@ -138,6 +138,12 @@ function App({ Component, pageProps }) {
                             '@type': 'WebSite',
                             name: 'Soff.uz',
                             url: 'https://soff.uz',
+                            logo: 'https://soff.uz/static/img/soff/logo-dark.png',
+                            sameAs: [
+                                'https://t.me/soff_uz',
+                                'https://www.youtube.com/@soffuz',
+                                'https://www.facebook.com/people/Soffuz/61579052952962/',
+                            ],
                             potentialAction: {
                                 '@type': 'SearchAction',
                                 target: 'https://soff.uz/search-page?keyword={search_term_string}',

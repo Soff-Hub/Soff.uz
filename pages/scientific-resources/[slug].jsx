@@ -48,7 +48,7 @@ export default function ProductCategoryScreen({
                     fullTitle +
                     ' bo‘yicha eng yaxshi raqamli mahsulotlarni Soff.uz da toping. Ishonchli sotuvchilar va sifatli kontent!'
                 }
-                image="/static/img/ilmiy-ishlar-2.png"
+                image="https://soff.uz/static/img/ilmiy-ishlar-2.png"
                 keywords={[
                     { name: 'Biznes rejalar' },
                     { name: 'Taqdimotlar' },
