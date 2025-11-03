@@ -14,6 +14,8 @@ import SerachSide from '~/components/elements/search-page-details/search-page-si
 import { useFGet } from '~/shared/hooks/useFApi';
 import { useQuery } from '@tanstack/react-query';
 import { api } from '~/repositories/api';
+import { baseURL } from '~/repositories/Repository';
+import { baseUrlUseApi } from '~/repositories/useApi';
 
 const Search_Results = ({ keyword }) => {
     const inputEl = useRef(null);
@@ -94,15 +96,19 @@ const Search_Results = ({ keyword }) => {
             )
         );
 
-        router.push({
-            pathname: router.pathname,
-            query: {
-                ...newQueries,
-                keyword: debouncedSearchTerm,
-                tab: currentTab || activeTab,
-                type: (currentTab || activeTab) == '1' ? 'file' : 'all',
+        router.push(
+            {
+                pathname: router.pathname,
+                query: {
+                    ...newQueries,
+                    keyword: debouncedSearchTerm,
+                    tab: currentTab,
+                    type: currentTab == '1' ? 'file' : 'all',
+                },
             },
-        });
+            undefined,
+            { shallow: true }
+        );
     };
 
     useEffect(() => {
@@ -125,9 +131,19 @@ const Search_Results = ({ keyword }) => {
 
     useEffect(() => {
         if (debouncedSearchTerm !== String(keyword || '')) {
-            handleSetRouterQuery();
+            router.push(
+                {
+                    pathname: router.pathname,
+                    query: {
+                        ...router.query,
+                        keyword: debouncedSearchTerm,
+                    },
+                },
+                undefined,
+                { shallow: true }
+            );
         }
-    }, [debouncedSearchTerm, router.query]);
+    }, [debouncedSearchTerm, router.query.keyword]);
 
     useEffect(() => {
         if (query?.tab && !defaultTabRefSet.current) {
@@ -265,8 +281,9 @@ const Search_Results = ({ keyword }) => {
                 <Tabs
                     className="order_tabs"
                     destroyInactiveTabPane
-                    defaultActiveKey={String(query?.tab)}
-                    accessKey={activeTab}
+                    activeKey={query?.tab || '1'}
+                    // defaultActiveKey={String(query?.tab)}
+                    // accessKey={activeTab}
                     onChange={handleChangeTab}
                     items={tabItems}
                 />
@@ -278,11 +295,137 @@ const Search_Results = ({ keyword }) => {
 export default Search_Results;
 
 export async function getServerSideProps(context) {
-    const { keyword = '' } = context.query;
+    // const {
+    //     keyword = '',
+    //     page = 1,
+    //     tab,
+    //     type = 'all',
+    //     category = '',
+    //     parentCategory = '',
+    //     order_by = '',
+    //     direction = '',
+    //     limit = 20,
+    //     offset = 0,
+    //     category_id = '',
+    //     service_parent = '',
+    //     file_type = '', // fayl turi (file_type)
+    //     page_from = '', // ✅ yangi qo‘shildi
+    //     page_to = '', // ✅ yangi qo‘shildi
+    // } = context.query;
+
+    // const servicesQuery = new URLSearchParams({
+    //     ...(category_id && { category_id }),
+    //     ...(direction && { direction }),
+    //     limit,
+    //     offset,
+    // });
+
+    // const fetchJson = async (url) => {
+    //     try {
+    //         const res = await fetch(url);
+    //         if (!res.ok) throw new Error('Failed to fetch');
+    //         return await res.json();
+    //     } catch (err) {
+    //         return { error: err.message };
+    //     }
+    // };
+
+    // // ✅ Yangi filterlar qo‘shildi
+    // const searchUrl = `${baseUrlUseApi}customer/same-google-search/?limit=50&${
+    //     page ? `page=${page}&` : ''
+    // }${keyword ? `search=${keyword}&` : ''}${type ? `type=${type}&` : ''}${
+    //     category ? `category=${category}&` : ''
+    // }${order_by ? `order_by=${order_by}&` : ''}${
+    //     file_type ? `file_type=${file_type}&` : ''
+    // }${page_from ? `page_from=${page_from}&` : ''}${
+    //     page_to ? `page_to=${page_to}` : ''
+    // }`;
+
+    // // console.log('searchUrl', searchUrl);
+    // const servicesUrl = `${
+    //     process.env.NEXT_PUBLIC_FREELEANCE_URL
+    // }/api/v1/customer?${servicesQuery.toString()}&search=${keyword}${
+    //     service_parent ? `&category_id=${service_parent}` : ''
+    // }`;
+    // const sellersUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/users/sellers?limit=${limit}&offset=${offset}&search=${keyword}`;
+
+    // const restQueries = {
+    //     fourChildData: null,
+    //     childCategoryData: null,
+    //     searchData: null,
+    //     keyword,
+    //     page,
+    //     type,
+    //     category,
+    //     order_by,
+    //     error: null,
+    //     lastProducts: null,
+    //     service: null,
+    //     serviceParent: null,
+    //     serviceChild: null,
+    //     sellers: null,
+    // };
+
+    // console.log('Tab changed to:', tab);
+    // console.log('😃😄😃😄😃😄😃😄');
+
+    // switch (tab) {
+    //     case '1': {
+    //         const searchData = await fetchJson(searchUrl);
+    //         const searchError = searchData?.error || null;
+
+    //         return {
+    //             props: {
+    //                 ...restQueries,
+    //                 error: searchError,
+    //                 searchData: searchData?.results ? searchData : null,
+    //             },
+    //         };
+    //     }
+    //     case '2': {
+    //         const service = await fetchJson(servicesUrl);
+
+    //         return {
+    //             props: {
+    //                 ...restQueries,
+    //                 error: null,
+    //                 service,
+    //             },
+    //         };
+    //     }
+    //     case '3': {
+    //         const sellers = await fetchJson(sellersUrl);
+
+    //         return {
+    //             props: {
+    //                 ...restQueries,
+    //                 sellers,
+    //             },
+    //         };
+    //     }
+    //     default: {
+    //         const [searchData, service, sellers] = await Promise.all([
+    //             fetchJson(searchUrl),
+    //             fetchJson(servicesUrl),
+    //             fetchJson(sellersUrl),
+    //         ]);
+    //         const searchError = searchData?.error || null;
+
+    //         return {
+    //             props: {
+    //                 ...restQueries,
+    //                 error: searchError,
+    //                 searchData: searchData?.results ? searchData : null,
+    //                 service,
+    //                 sellers,
+    //             },
+    //         };
+    //     }
+    // }
 
     return {
         props: {
-            keyword,
+            keyword: context.query.keyword || '',
         },
     };
 }
