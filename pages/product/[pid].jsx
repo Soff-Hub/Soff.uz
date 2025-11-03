@@ -272,19 +272,20 @@ export default function ProductDefaultPage({ defaultProducts }) {
     );
 }
 
-export async function getServerSideProps({ query, req }) {
+export async function getServerSideProps({ query, req, res }) {
     const cookies = cookie.parse(req.headers.cookie || '');
     const token = cookies.token;
 
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
     let defaultProducts = null;
+    const deviceId = getOrCreateDeviceId({ req, res });
     try {
         const request = await fetch(
             `${baseUrl}customer/documents/${query.pid}/`,
             {
                 headers: {
                     ...headers,
-                    'X-Device-ID': getOrCreateDeviceId(),
+                    'X-Device-ID': deviceId,
                 },
             }
         );
@@ -298,14 +299,14 @@ export async function getServerSideProps({ query, req }) {
         if (request.status === 404) {
             return { notFound: true };
         }
-        console.log({ request });
+        console.log({ request, deviceId });
         defaultProducts = await request.json();
     } catch (error) {
         const request = await fetch(
             `${baseUrl}customer/documents/${query.pid}/`,
             {
                 headers: {
-                    'X-Device-ID': getOrCreateDeviceId(),
+                    'X-Device-ID': deviceId,
                 },
             }
         );
@@ -316,7 +317,7 @@ export async function getServerSideProps({ query, req }) {
             };
         }
 
-        console.log({ request });
+        console.log({ request, deviceId });
         defaultProducts = await request.json();
     }
 
