@@ -21,7 +21,7 @@ export let cutomerAccountLink = [
     },
 ];
 
-const PageLayout = ({ children, title }) => {
+const PageLayout = ({ children, title, withFooter = true } = {}) => {
     const { user } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     const Router = useRouter();
@@ -72,7 +72,7 @@ const PageLayout = ({ children, title }) => {
                     {children}
                 </main>
 
-                <Footer />
+                {withFooter ? <Footer /> : null}
             </div>
 
             {user ? (
