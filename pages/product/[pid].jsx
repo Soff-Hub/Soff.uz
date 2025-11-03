@@ -162,6 +162,12 @@ export default function ProductDefaultPage({ defaultProducts }) {
                     defaultProducts?.poster_url ||
                     'https://soff.uz/static/img/soff/logo-dark.png'
                 }
+                type="product"
+                url={
+                    typeof window !== 'undefined'
+                        ? window.location.href
+                        : 'https://soff.uz'
+                }
                 author={
                     defaultProducts?.seller
                         ? `${defaultProducts?.seller?.first_name} ${defaultProducts?.seller?.last_name}`
