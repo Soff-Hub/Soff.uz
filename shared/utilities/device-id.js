@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 export function getOrCreateDeviceId() {
     if (typeof window === 'undefined') return null; // SSR safety
 
@@ -5,7 +7,7 @@ export function getOrCreateDeviceId() {
     let id = localStorage.getItem(key);
 
     if (!id) {
-        id = crypto.randomUUID();
+        id = uuidv4();
         localStorage.setItem(key, id);
     }
 
