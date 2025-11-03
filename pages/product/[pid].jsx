@@ -15,6 +15,7 @@ import { Skeleton } from 'antd';
 import ProductCard from '~/entities/product/product-card';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { useQuery } from '@tanstack/react-query';
+import Meta from '~/components/shared/headers/Meta';
 
 const steps = [
     {
@@ -131,241 +132,138 @@ export default function ProductDefaultPage({ defaultProducts }) {
         ),
     };
 
+    console.log('defaultProducts', defaultProducts);
+
     return (
-        <>
-            <PageContainer>
-                <Head>
-                    <title>
-                        {defaultProducts?.title ||
-                            'Soff.uz - Intellektual mulk marketi'}
-                    </title>
-                    <meta
-                        name="title"
-                        content={
-                            defaultProducts?.title ||
-                            'soff.uz - Intellektual mulk marketi'
-                        }
-                    />
-                    <meta
-                        name="description"
-                        content={
-                            defaultProducts?.description
-                                ? removeHTMLTags(defaultProducts?.description)
-                                : `${defaultProducts?.title} + ${
-                                      defaultProducts?.tag
-                                          ?.map((e) => e?.name)
-                                          ?.join(', ') ||
-                                      'soff.uz - Intellektual mulk marketi'
-                                  } `
-                        }
-                    />
-                    <meta name="robots" content="index, follow" />
-                    <meta
-                        name="image"
-                        content={
-                            defaultProducts?.poster_url ||
-                            '../../static/img/soff/logo-dark.png'
-                        }
-                    />
-                    <meta
-                        name="keywords"
-                        content={
-                            defaultProducts?.tag
-                                ? defaultProducts?.tag
-                                      ?.map((e) => e?.name)
-                                      ?.join(', ')
-                                : 'kurs ishi, taqdimotlar, slaydlar, diplom ishi, prezentatsiya'
-                        }
-                    />
-
-                    <meta property="og:type" content="website" />
-                    <meta
-                        property="og:title"
-                        content={
-                            defaultProducts?.title ||
-                            'soff.uz - Intellektual mulk marketi'
-                        }
-                    />
-                    <meta
-                        property="og:description"
-                        content={
-                            defaultProducts?.description
-                                ? removeHTMLTags(defaultProducts?.description)
-                                : `${defaultProducts?.title} + ${
-                                      defaultProducts?.tag
-                                          ?.map((e) => e?.name)
-                                          ?.join(', ') ||
-                                      'soff.uz - Intellektual mulk marketi'
-                                  } `
-                        }
-                    />
-                    <meta
-                        property="og:image"
-                        content={
-                            defaultProducts?.poster_url ||
-                            '../../static/img/soff/logo-dark.png'
-                        }
-                    />
-                    <meta property="og:image:width" content="1200" />
-                    <meta property="og:image:height" content="630" />
-                    <meta property="og:url" content="https://soff.uz" />
-                    <meta property="og:site_name" content="soff.uz" />
-                    <meta
-                        property="og:keywords"
-                        content={
-                            defaultProducts?.tag
-                                ? defaultProducts?.tag
-                                      ?.map((e) => e?.name)
-                                      ?.join(', ')
-                                : 'kurs ishi, taqdimotlar, slaydlar, diplom ishi, prezentatsiya'
-                        }
-                    />
-
-                    <meta
-                        property="twitter:image"
-                        content={
-                            defaultProducts?.poster_url ||
-                            '../../static/img/soff/logo-dark.png'
-                        }></meta>
-                    <meta property="twitter:type" content="website" />
-                    <meta property="twitter:image:width" content="1200" />
-                    <meta property="twitter:image:height" content="630" />
-                    <meta
-                        property="twitter:title"
-                        content={
-                            defaultProducts?.title ||
-                            'soff.uz - Intellektual mulk marketi'
-                        }
-                    />
-                    <meta
-                        property="twitter:description"
-                        content={
-                            defaultProducts?.description
-                                ? removeHTMLTags(defaultProducts?.description)
-                                : `${defaultProducts?.title} + ${
-                                      defaultProducts?.tag
-                                          ?.map((e) => e?.name)
-                                          ?.join(', ') ||
-                                      'soff.uz - Intellektual mulk marketi'
-                                  } `
-                        }
-                    />
-                    <meta property="twitter:url" content="https://soff.uz" />
-                    <meta property="twitter:site_name" content="soff.uz" />
-                    <meta
-                        property="twitter:keywords"
-                        content={
-                            defaultProducts?.tag
-                                ? defaultProducts?.tag
-                                      ?.map((e) => e?.name)
-                                      ?.join(', ')
-                                : 'kurs ishi, taqdimotlar, slaydlar, diplom ishi, prezentatsiya'
-                        }
-                    />
-                </Head>
-
-                <div>
+        <PageContainer>
+            <Meta
+                title={
+                    defaultProducts?.title ||
+                    'Soff.uz - Intellektual mulk marketi'
+                }
+                description={
+                    defaultProducts?.description
+                        ? removeHTMLTags(defaultProducts?.description)
+                        : `${defaultProducts?.title} + ${
+                              defaultProducts?.tag
+                                  ?.map((e) => e?.name)
+                                  ?.join(', ') ||
+                              'soff.uz - Intellektual mulk marketi'
+                          } `
+                }
+                keywords={[
+                    { name: defaultProducts?.title },
+                    { name: defaultProducts?.slug },
+                    ...(defaultProducts?.tag ? defaultProducts?.tag : []),
+                    { name: defaultProducts?.seller?.first_name },
+                    { name: defaultProducts?.seller?.last_name },
+                ]}
+                image={
+                    defaultProducts?.poster_url ||
+                    'https://soff.uz/static/img/soff/logo-dark.png'
+                }
+                author={
+                    defaultProducts?.seller
+                        ? `${defaultProducts?.seller?.first_name} ${defaultProducts?.seller?.last_name}`
+                        : 'Soff.uz'
+                }
+            />
+            <div>
+                <div
+                    className="container mb-5"
+                    style={{ position: 'relative' }}>
                     <div
-                        className="container mb-5"
-                        style={{ position: 'relative' }}>
-                        <div
-                            className={`ps-page--product ${
-                                defaultProducts?.price === 0 ? '' : 'pt-2'
-                            }`}>
-                            <div className="ps-container p-0">
-                                <div className="ps-page__container">
-                                    {!defaultProducts && (
-                                        <SkeletonProductDetail />
-                                    )}
-                                    {
-                                        productsDetails[
-                                            defaultProducts?.document
-                                                ?.content_type
-                                        ]
-                                    }
-                                </div>
-                                {defaultProducts?.document?.content_type ==
-                                    'file' && <AISoffiaPresentation />}
-
-                                {!similarProductsError && (
-                                    <div ref={similarRef} className="my-5">
-                                        <h3
-                                            style={{
-                                                fontSize: '25px',
-                                                fontWeight: 400,
-                                            }}
-                                            className="py-4 similar_title">
-                                            O’xshash mahsulotlar
-                                        </h3>
-                                        {similarProductsContent}
-                                    </div>
-                                )}
-                                <h3
-                                    style={{
-                                        fontSize: '25px',
-                                        fontWeight: 400,
-                                    }}
-                                    className="py-4 similar_title">
-                                    So'ngi yuklangan mahsulotlar
-                                </h3>
-                                {lastLoading ? (
-                                    <div className="row g-3 py-3">
-                                        {Array.from({ length: 6 }).map(
-                                            (_, index) => (
-                                                <div
-                                                    key={index}
-                                                    className="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-4 d-flex justify-content-center">
-                                                    <Skeleton.Input
-                                                        active
-                                                        style={{
-                                                            width: 250,
-                                                            height: 300,
-                                                            borderRadius: 8,
-                                                        }}
-                                                    />
-                                                </div>
-                                            )
-                                        )}
-                                    </div>
-                                ) : (
-                                    lastAdded && (
-                                        <div className="row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-gap-4">
-                                            {lastAdded?.results
-                                                ?.slice(0, isMobile ? 6 : 5)
-                                                ?.map((p, i) => (
-                                                    <div
-                                                        key={p?.id}
-                                                        className="col px-3">
-                                                        <ProductCard
-                                                            product={p}
-                                                        />
-                                                    </div>
-                                                ))}
-                                        </div>
-                                    )
-                                )}
+                        className={`ps-page--product ${
+                            defaultProducts?.price === 0 ? '' : 'pt-2'
+                        }`}>
+                        <div className="ps-container p-0">
+                            <div className="ps-page__container">
+                                {!defaultProducts && <SkeletonProductDetail />}
+                                {
+                                    productsDetails[
+                                        defaultProducts?.document?.content_type
+                                    ]
+                                }
                             </div>
+                            {defaultProducts?.document?.content_type ==
+                                'file' && <AISoffiaPresentation />}
+
+                            {!similarProductsError && (
+                                <div ref={similarRef} className="my-5">
+                                    <h3
+                                        style={{
+                                            fontSize: '25px',
+                                            fontWeight: 400,
+                                        }}
+                                        className="py-4 similar_title">
+                                        O’xshash mahsulotlar
+                                    </h3>
+                                    {similarProductsContent}
+                                </div>
+                            )}
+                            <h3
+                                style={{
+                                    fontSize: '25px',
+                                    fontWeight: 400,
+                                }}
+                                className="py-4 similar_title">
+                                So'ngi yuklangan mahsulotlar
+                            </h3>
+                            {lastLoading ? (
+                                <div className="row g-3 py-3">
+                                    {Array.from({ length: 6 }).map(
+                                        (_, index) => (
+                                            <div
+                                                key={index}
+                                                className="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-4 d-flex justify-content-center">
+                                                <Skeleton.Input
+                                                    active
+                                                    style={{
+                                                        width: 250,
+                                                        height: 300,
+                                                        borderRadius: 8,
+                                                    }}
+                                                />
+                                            </div>
+                                        )
+                                    )}
+                                </div>
+                            ) : (
+                                lastAdded && (
+                                    <div className="row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-gap-4">
+                                        {lastAdded?.results
+                                            ?.slice(0, isMobile ? 6 : 5)
+                                            ?.map((p, i) => (
+                                                <div
+                                                    key={p?.id}
+                                                    className="col px-3">
+                                                    <ProductCard product={p} />
+                                                </div>
+                                            ))}
+                                    </div>
+                                )
+                            )}
                         </div>
                     </div>
-                    <Joyride
-                        steps={steps}
-                        run={true}
-                        continuous={true}
-                        showProgress={false}
-                        styles={{
-                            options: {
-                                arrowColor: '#e3ffeb',
-                                primaryColor: '#00A44F',
-                                textColor: '#004a14',
-                                width: 300,
-                                zIndex: 100,
-                            },
-                        }}
-                        locale={joyrideLocales}
-                    />
                 </div>
-            </PageContainer>
-        </>
+                <Joyride
+                    steps={steps}
+                    run={true}
+                    continuous={true}
+                    showProgress={false}
+                    styles={{
+                        options: {
+                            arrowColor: '#e3ffeb',
+                            primaryColor: '#00A44F',
+                            textColor: '#004a14',
+                            width: 300,
+                            zIndex: 100,
+                        },
+                    }}
+                    locale={joyrideLocales}
+                />
+            </div>
+        </PageContainer>
     );
 }
 
