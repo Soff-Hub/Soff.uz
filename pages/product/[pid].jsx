@@ -279,6 +279,7 @@ export async function getServerSideProps({ query, req, res }) {
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
     let defaultProducts = null;
     const deviceId = getOrCreateDeviceId({ req, res });
+
     try {
         const request = await fetch(
             `${baseUrl}customer/documents/${query.pid}/`,
