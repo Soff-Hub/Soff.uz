@@ -68,7 +68,7 @@ const Wishlist = ({ ecomerce }) => {
                                                     product
                                                 )
                                             }>
-                                            <i className="icon-cross"></i>
+                                            <i className="fa fa-times"></i>
                                         </a>
                                     </td>
                                     <td>

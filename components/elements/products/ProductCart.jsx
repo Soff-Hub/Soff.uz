@@ -21,8 +21,8 @@ const ProductCart = ({ product }) => {
             </div>
             <div className="cartCardTitle">{title(product)}</div>
             <div className="cartCardDelete">
-                <a href="#" onClick={e => handleRemoveItem(e, item)}>
-                    <i className="icon-cross"></i>
+                <a href="#" onClick={(e) => handleRemoveItem(e, item)}>
+                    <i className="fa fa-times"></i>
                 </a>
             </div>
         </div>

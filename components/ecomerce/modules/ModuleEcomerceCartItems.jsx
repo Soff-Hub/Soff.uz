@@ -18,7 +18,7 @@ const ModuleEcomerceCartItems = ({ cartItems }) => {
     // View
     let cartItemsViews;
     if (cartItems && cartItems.length > 0) {
-        const items = cartItems.map(item => (
+        const items = cartItems.map((item) => (
             <tr key={item.id}>
                 <td className="cart-product">
                     <ProductCart product={item} />
@@ -44,8 +44,8 @@ const ModuleEcomerceCartItems = ({ cartItems }) => {
                 </td>
                 <td></td>
                 <td>
-                    <a href="#" onClick={e => handleRemoveItem(e, item)}>
-                        <i className="icon-cross"></i>
+                    <a href="#" onClick={(e) => handleRemoveItem(e, item)}>
+                        <i className="fa fa-times"></i>
                     </a>
                 </td>
             </tr>
@@ -74,4 +74,4 @@ const ModuleEcomerceCartItems = ({ cartItems }) => {
     return <>{cartItemsViews}</>;
 };
 
-export default connect(state => state)(ModuleEcomerceCartItems);
+export default connect((state) => state)(ModuleEcomerceCartItems);
