@@ -3,7 +3,7 @@ import React from 'react';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 
 // Helper function to validate slug
-const isValidSlug = slug => {
+const isValidSlug = (slug) => {
     return (
         slug &&
         typeof slug === 'string' &&
@@ -50,10 +50,10 @@ const LastAddedServiceCard = ({ service }) => {
                 backgroundColor: '#fff',
                 flexDirection: 'column',
             }}
-            onMouseEnter={e =>
+            onMouseEnter={(e) =>
                 (e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)')
             }
-            onMouseLeave={e =>
+            onMouseLeave={(e) =>
                 (e.currentTarget.style.boxShadow =
                     '0 0 6px rgba(0, 0, 0, 0.05)')
             }
@@ -63,6 +63,7 @@ const LastAddedServiceCard = ({ service }) => {
                     color: '#111',
                     fontSize: '16px',
                     fontWeight: '600',
+                    overflowWrap: 'anywhere',
                 }}
                 className="m-0">
                 {service?.title}
