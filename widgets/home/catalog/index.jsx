@@ -34,12 +34,12 @@ const data = [
         direction: 'website',
     },
 ];
-const Catalog = ({ inFile }) => {  
-    const router = useRouter()
+const Catalog = ({ inFile }) => {
+    const router = useRouter();
     return (
         <div className={styles.catalogSectionBlock}>
             <div className="container mx-auto">
-                {!inFile &&
+                {!inFile && (
                     <>
                         <div className={styles.catalogHealine}>
                             <div className="d-flex gap-2 flex-fill">
@@ -53,17 +53,19 @@ const Catalog = ({ inFile }) => {
                                     />
                                 </div>
                                 <div className={styles.catalogWrapper}>
-                                    <h1 className={styles.catalogLabel}>
+                                    <h2 className={styles.catalogLabel}>
                                         Tayyor mahsulotlar katalogi
-                                    </h1>
+                                    </h2>
                                     <p className={styles.catalogSubLabel}>
-                                        Sifatli va tayyor ishlardan foydalaning, vaqt va
-                                        kuchingizni tejang.
+                                        Sifatli va tayyor ishlardan foydalaning,
+                                        vaqt va kuchingizni tejang.
                                     </p>
                                 </div>
                             </div>
                             <button
-                                onClick={() => router.push('/scientific-resources/all')}
+                                onClick={() =>
+                                    router.push('/scientific-resources/all')
+                                }
                                 className={styles.catalogSeeAll}>
                                 Barcha mahsulotlar{' '}
                                 <Image
@@ -75,7 +77,7 @@ const Catalog = ({ inFile }) => {
                             </button>
                         </div>
                         <div className={styles.catalogCardsSection}>
-                            {data?.map(item => (
+                            {data?.map((item) => (
                                 <CatalogCard
                                     key={item.direction}
                                     content_type={item.direction}
@@ -84,7 +86,7 @@ const Catalog = ({ inFile }) => {
                             ))}
                         </div>
                     </>
-                }
+                )}
                 <section className={styles.howItWorksSection}>
                     <div className="d-flex justify-content-center my-5">
                         <Image
@@ -145,8 +147,6 @@ const Catalog = ({ inFile }) => {
 
 export default Catalog;
 
-
-
 const service = {
     '3d': '/3d-models-and-interior-designs/all',
     website: '/websites/all',
@@ -160,7 +160,7 @@ const cardImages = {
     '3d': [
         '/static/img/HomePage/3d1.webp',
         '/static/img/HomePage/3d2.webp',
-        '/static/img/HomePage/3d3.webp'
+        '/static/img/HomePage/3d3.webp',
     ],
     website: [
         '/static/img/HomePage/web1.webp',
@@ -187,9 +187,8 @@ const cardImages = {
         '/static/img/HomePage/file2.webp',
         '/static/img/HomePage/file3.webp',
     ],
-}
+};
 const CatalogCard = ({ content_type, title }) => {
-
     return (
         <Link href={service[content_type]}>
             <div className={cardStyles.catalogCard}>
@@ -201,17 +200,19 @@ const CatalogCard = ({ content_type, title }) => {
                 <div className={cardStyles.cardImageBlock}>
                     <div className={cardStyles.cardBlockRight}>
                         <div className={cardStyles.cardBlockRightTop}>
-                            {cardImages[content_type]?.map(img =>
+                            {cardImages[content_type]?.map((img) => (
                                 <div
-                                    className={cardStyles.cardBlockRightTopRight}
+                                    className={
+                                        cardStyles.cardBlockRightTopRight
+                                    }
                                     style={{
-                                        backgroundImage: `url(${img ||
-                                            '/static/img/not-found.png'})`,
-                                        backgroundSize: "cover",
+                                        backgroundImage: `url(${
+                                            img || '/static/img/not-found.png'
+                                        })`,
+                                        backgroundSize: 'cover',
                                         backgroundPosition: 'center',
-                                    }}>
-                                </div>
-                            )}
+                                    }}></div>
+                            ))}
                         </div>
                     </div>
                 </div>
@@ -219,4 +220,3 @@ const CatalogCard = ({ content_type, title }) => {
         </Link>
     );
 };
-

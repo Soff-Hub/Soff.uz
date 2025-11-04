@@ -4,12 +4,15 @@ import Catalog from './catalog';
 import Freelance from './freelance';
 import LastServices from './last-services';
 import Info from './info';
-import LastProducts from './last-products';
+// import LastProducts from './last-products';
 import Statistics from './statistics';
 import Bests from './bests';
 import Title from './title';
 import TwoCard from './two-card';
 import Faqs from './faqs';
+import dynamic from 'next/dynamic';
+
+const LastProducts = dynamic(() => import('./last-products'), { ssr: false });
 
 const Home = () => {
     return (

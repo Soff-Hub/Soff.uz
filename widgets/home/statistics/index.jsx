@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './style.module.scss'; 
+import styles from './style.module.scss';
 
 const stats = [
     { title: 'Raqamli mahsulotlar', value: 250000 },
@@ -16,7 +16,7 @@ const Statistics = () => {
                 alt="badge"
                 className="mb-5"
             />
-            <h1 className={styles.title}>Statistik ma’lumotlar</h1>
+            <h2 className={styles.title}>Statistik ma’lumotlar</h2>
             <div className={styles.statSection}>
                 {stats.map((item, idx) => (
                     <div key={item.title} className={styles.statCard}>

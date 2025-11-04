@@ -33,11 +33,11 @@ const Info = () => {
         <div>
             <div className={styles.titleWrapper}>
                 <img src="/static/img/HomePage/icon.png" alt="" />
-                <h3>Xizmatlardan foydalanish juda oson</h3>
-                <h1>SOFF.UZ</h1>
+                <h2>Xizmatlardan foydalanish juda oson</h2>
+                <h3>SOFF.UZ</h3>
             </div>
             <div className={styles.stepsSection}>
-                {steps.map(step => (
+                {steps.map((step) => (
                     <InfoCard
                         key={step.title}
                         id={step.id}

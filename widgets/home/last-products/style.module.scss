@@ -38,7 +38,7 @@
         }
     }
 
-    h1 {
+    h2 {
         font-size: 40px;
         font-weight: 600;
         color: #24282b;
@@ -91,7 +91,6 @@
         }
 
         &:hover {
-
             h3,
             svg {
                 color: #00a44f !important;
@@ -99,7 +98,6 @@
         }
     }
 }
-
 
 .cardWrapper {
     display: grid;

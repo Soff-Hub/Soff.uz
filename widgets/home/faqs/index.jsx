@@ -5,8 +5,6 @@ import { faqs } from '~/shared/constants';
 
 const { Panel } = Collapse;
 
-
-
 const Faqs = () => {
     const panelStyle = {
         marginBottom: 24,
@@ -24,7 +22,7 @@ const Faqs = () => {
                 style={{ marginBottom: '48px' }}
             />
             <h3 className={styles.subtitle}>Ko‘p so‘raladigan savollar</h3>
-            <h1 className={styles.title}>SAVOLLAR</h1>
+            <h2 className={styles.title}>SAVOLLAR</h2>
 
             <Collapse
                 accordion

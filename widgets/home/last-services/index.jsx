@@ -9,7 +9,7 @@ import { LAST_ADDED_SERVICES } from '~/shared/api/end-points';
 
 const LastServices = () => {
     const { isMobile } = useResponsive();
-    const { data } = useFGet('last-services', LAST_ADDED_SERVICES)
+    const { data } = useFGet('last-services', LAST_ADDED_SERVICES);
 
     const displayedData = React.useMemo(() => {
         if (!data) return [];
@@ -30,9 +30,9 @@ const LastServices = () => {
                             />
                         </div>
                         <div className={styles.titleWrapper}>
-                            <h1 className={styles.labelWrapperH1}>
+                            <h2 className={styles.labelWrapperH1}>
                                 So’ngi ochilgan xizmatlar
-                            </h1>
+                            </h2>
                             <p className={styles.labelWrapperP}>
                                 Xizmatni tanlang – Buyurtma bering
                             </p>
@@ -54,7 +54,7 @@ const LastServices = () => {
 
             {/* Cardlar */}
             <div className={styles.cardSection}>
-                {displayedData.map(item => (
+                {displayedData.map((item) => (
                     <ServiceCard key={item.id} service={item} />
                 ))}
             </div>

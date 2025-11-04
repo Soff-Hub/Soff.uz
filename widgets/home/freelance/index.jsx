@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './style.module.scss';
-import cardStyle from './service.module.scss'
+import cardStyle from './service.module.scss';
 import Link from 'next/link';
 
 const items = [
@@ -71,9 +71,9 @@ const Freelance = () => {
                             />
                         </div>
                         <div className={styles.titleWrapper}>
-                            <h1 className={styles.labelWrapperH1}>
+                            <h2 className={styles.labelWrapperH1}>
                                 Xizmatni tanlang – Buyurtma bering
-                            </h1>
+                            </h2>
 
                             <p className={styles.labelWrapperP}>
                                 Tajribali frilanserlar bilan ishlang va sifatli
@@ -94,7 +94,7 @@ const Freelance = () => {
                 </Link>
             </div>
             <div className={styles.serviceCardSection}>
-                {items.map(item => (
+                {items.map((item) => (
                     <ServiceCard
                         key={item.content_type}
                         content_type={item.content_type}
@@ -116,19 +116,21 @@ const ServiceCard = ({ content_type = 'file', items = {} }) => {
                     <div
                         className={cardStyle.cardBlockLeft}
                         style={{
-                            backgroundImage: `url(${items.left ||
-                                '/static/img/not-found.png'})`,
+                            backgroundImage: `url(${
+                                items.left || '/static/img/not-found.png'
+                            })`,
                             backgroundSize: 'cover',
                             backgroundRepeat: 'no-repeat',
                             backgroundPosition: 'center',
-                        }}>
-                    </div>
+                        }}></div>
                     <div className={cardStyle.cardBlockRight}>
                         <div
                             className={cardStyle.cardBlockRightBottom}
                             style={{
-                                backgroundImage: `url(${items.rightTop ||
-                                    '/static/img/not-found.png'})`,
+                                backgroundImage: `url(${
+                                    items.rightTop ||
+                                    '/static/img/not-found.png'
+                                })`,
                                 backgroundSize: 'cover',
                                 backgroundRepeat: 'no-repeat',
                                 backgroundPosition: 'center',
@@ -136,8 +138,10 @@ const ServiceCard = ({ content_type = 'file', items = {} }) => {
                         <div
                             className={cardStyle.cardBlockRightBottom}
                             style={{
-                                backgroundImage: `url(${items.rightBot ||
-                                    '/static/img/not-found.png'})`,
+                                backgroundImage: `url(${
+                                    items.rightBot ||
+                                    '/static/img/not-found.png'
+                                })`,
                                 backgroundSize: 'cover',
                                 backgroundRepeat: 'no-repeat',
                                 backgroundPosition: 'center',
@@ -145,7 +149,9 @@ const ServiceCard = ({ content_type = 'file', items = {} }) => {
                     </div>
                 </div>
                 <div className="d-flex flex-column flex-fill">
-                    <h3 className={cardStyle.cardTile}>{title[content_type]}</h3>
+                    <h3 className={cardStyle.cardTile}>
+                        {title[content_type]}
+                    </h3>
                 </div>
             </div>
         </Link>
