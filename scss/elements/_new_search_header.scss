@@ -874,8 +874,8 @@
             flex-wrap: wrap;
 
             .filter_indicators {
-                display: grid;
-                grid-template-columns: repeat(4, 1fr);
+                display: flex;
+                flex-wrap: wrap;
                 align-items: center;
                 gap: 10px;
                 // flex-wrap: wrap;

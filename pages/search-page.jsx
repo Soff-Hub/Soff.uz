@@ -28,21 +28,23 @@ const Search_Results = ({
     const [searchTerm, setSearchTerm] = useState(keyword || '');
     const debouncedSearchTerm = useDebounce(searchTerm, 1000);
     const { query } = useRouter();
-    const [activeTab, setActiveTab] = useState(query?.tab || '1');
-    const defaultTabRefSet = useRef(false);
     const { isDesktop } = useResponsive();
     const pageRef = useRef(null);
     const { isLoggedIn } = useSelector((state) => state.auth);
+    const tab = router.query.tab || '1';
 
     const topServicesQuery = new URLSearchParams({
         limit: 6,
-        ...((query.direction || query.ts_direction) && {
+        ...((query.direction || (query.ts_direction && tab !== '1')) && {
             direction: query.direction || query.ts_direction,
         }),
         ...(query.keyword &&
             !query.direction &&
-            !query.ts_direction && { search: query.keyword }),
+            !query.ts_direction &&
+            tab !== '1' && { search: query.keyword }),
     });
+
+    console.log({ topServicesQuery, string: topServicesQuery.toString() });
 
     const { data: topServices, isLoading: topServicesLoading } = useFGet(
         ['top-services', topServicesQuery.toString()],
@@ -124,7 +126,7 @@ const Search_Results = ({
         } else {
             window.scrollIntoView({ behavior: 'smooth' });
         }
-    }, [router.query.tab]);
+    }, [tab]);
 
     const handleClearInput = () => {
         setSearchTerm('');
@@ -132,7 +134,6 @@ const Search_Results = ({
     };
 
     const handleChangeTab = (value) => {
-        setActiveTab(value);
         handleSetRouterQuery(value);
     };
 
@@ -151,13 +152,6 @@ const Search_Results = ({
             );
         }
     }, [debouncedSearchTerm, router.query.keyword]);
-
-    useEffect(() => {
-        if (query?.tab && !defaultTabRefSet.current) {
-            setActiveTab(query?.tab);
-            defaultTabRefSet.current = true;
-        }
-    }, [query?.tab]);
 
     const clearTextView = (
         <span className="ps-form__action">
@@ -303,9 +297,7 @@ const Search_Results = ({
                 <Tabs
                     className="order_tabs"
                     destroyInactiveTabPane
-                    activeKey={query?.tab || '1'}
-                    // defaultActiveKey={String(query?.tab)}
-                    // accessKey={activeTab}
+                    activeKey={tab}
                     onChange={handleChangeTab}
                     items={tabItems}
                 />

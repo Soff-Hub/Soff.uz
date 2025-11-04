@@ -4,8 +4,6 @@ import { useRouter } from 'next/router';
 import { useMounted } from '~/shared/hooks/useMounted';
 import { IoFilter } from 'react-icons/io5';
 import { IoClose } from 'react-icons/io5';
-import { LuFileType2 } from 'react-icons/lu';
-import { FaRegFile } from 'react-icons/fa6';
 import { CloseCircleOutlined } from '@ant-design/icons';
 import { BiCategory } from 'react-icons/bi';
 import { AiOutlineApartment } from 'react-icons/ai';
