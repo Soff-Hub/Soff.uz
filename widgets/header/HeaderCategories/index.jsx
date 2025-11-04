@@ -24,6 +24,7 @@ import { api } from '~/repositories/api';
 import useDebounce from '~/shared/hooks/useDebounce';
 import axiosInstance from '~/shared/api/freeleanceApi';
 import searchStyle from '../navbar-search/style.module.scss';
+import { FiExternalLink } from 'react-icons/fi';
 
 const products = [
     {
@@ -38,7 +39,7 @@ const products = [
         ),
         label: (
             <a
-                className={`ml-3 ${styles.dropLabel}`}
+                className={`ms-3 ${styles.dropLabel}`}
                 href="/scientific-resources/all?slug=all">
                 Ilmiy ishlar
             </a>
@@ -48,7 +49,7 @@ const products = [
         key: '2',
         label: (
             <a
-                className={`ml-3 ${styles.dropLabel}`}
+                className={`ms-3 ${styles.dropLabel}`}
                 href="/3d-models-and-interior-designs/all?slug=all">
                 3D Dizayn va Vizualizatsiya
             </a>
@@ -66,7 +67,7 @@ const products = [
         key: '3',
         label: (
             <a
-                className={`ml-3 ${styles.dropLabel}`}
+                className={`ms-3 ${styles.dropLabel}`}
                 href="/design-developments/all?slug=all">
                 Dizayn shablonlari
             </a>
@@ -92,7 +93,7 @@ const products = [
         ),
         label: (
             <a
-                className={`ml-2 ${styles.dropLabel}`}
+                className={`ms-2 ${styles.dropLabel}`}
                 href="/templates/all?slug=all">
                 Turli sohalar uchun shablonlar
             </a>
@@ -110,7 +111,7 @@ const products = [
         ),
         label: (
             <a
-                className={`ml-3 ${styles.dropLabel}`}
+                className={`ms-3 ${styles.dropLabel}`}
                 href="/video-lessons/all?slug=all">
                 Video darsliklar
             </a>
@@ -128,7 +129,7 @@ const products = [
         ),
         label: (
             <a
-                className={`ml-3 ${styles.dropLabel}`}
+                className={`ms-3 ${styles.dropLabel}`}
                 href="/websites/all?slug=all">
                 Dasturlash xizmatlari
             </a>
@@ -219,7 +220,6 @@ const HeaderCatergories = () => {
     const { isMobile, size } = useResponsive();
     const { isLoggedIn } = useSelector((state) => state.auth);
     const { directions } = useSelector((state) => state.profile);
-    // [...directions, { label: 'Boshqa', value: 'other' }];
     const { push, query, replace, pathname } = useRouter();
     const { data } = useOrdersStatus();
 
@@ -265,7 +265,7 @@ const HeaderCatergories = () => {
                     : templateIcons['not_found'],
                 label: (
                     <a
-                        className={`ml-3 ${styles.dropLabel}`}
+                        className={`ms-3 ${styles.dropLabel}`}
                         href={`/orders?direction=${dir.value}`}>
                         {dir.label}
                     </a>
@@ -290,38 +290,33 @@ const HeaderCatergories = () => {
             {size > 1025 && pathname !== '/' && <HeaderSearch />}
             {isLoggedIn && !isMobile && (
                 <Link href="/order/my-orders">
-                    <Badge
-                        count={totalOrders}
-                        size={isMobile ? 'small' : 'default'}
-                        dot={isMobile ? totalOrders > 0 : false}
-                        overflowCount={9}
-                        offset={isMobile ? [0, 0] : [-10, 0]}>
-                        <Link href={'/order/my-orders'} target="_blank">
-                            <p className={`${styles.navLink} my-0`}>
-                                Buyurtmalarim
-                            </p>
-                        </Link>
-                    </Badge>
+                    <a>
+                        <Badge
+                            count={totalOrders}
+                            className={`${styles.navLink}`}
+                            size={isMobile ? 'small' : 'default'}
+                            dot={isMobile ? totalOrders > 0 : false}
+                            overflowCount={9}
+                            offset={isMobile ? [0, 0] : [6, -5]}>
+                            Buyurtmalarim
+                        </Badge>
+                    </a>
                 </Link>
             )}
             <div className={styles.dropBox}>
                 <Dropdown menu={{ items: products }}>
-                    <a onClick={(e) => e.preventDefault()}>
-                        <Space className={styles.dropLabel}>
-                            Mahsulotlar
-                            <DownOutlined />
-                        </Space>
-                    </a>
+                    <Space className={styles.dropLabel}>
+                        Mahsulotlar
+                        <DownOutlined />
+                    </Space>
                 </Dropdown>
             </div>
             <div className={`${styles.orderBox} ${styles.dropBox}`}>
                 <Dropdown menu={{ items: templates }}>
-                    <a onClick={(e) => e.preventDefault()}>
-                        <Space className={styles.dropLabel}>
-                            Buyurtma berish
-                            <DownOutlined />
-                        </Space>
-                    </a>
+                    <Space className={styles.dropLabel}>
+                        Buyurtma berish
+                        <DownOutlined />
+                    </Space>
                 </Dropdown>
             </div>
         </div>
@@ -445,6 +440,18 @@ const HeaderSearch = () => {
             ));
     } else if (filteredOptions.length) {
         filteredDataOptions = filteredOptions.map((option, index) => (
+            // <Link
+            //     key={index}
+            //     href={
+            //         type === 'mahsulotlar'
+            //             ? `/product/${option.slug}`
+            //             : type === 'xizmatlar'
+            //             ? `/service/${option
+            //                   .replace(/\s+/g, '-')
+            //                   .toLowerCase()}`
+            //             : `/seller/${option.replace(/\s+/g, '-').toLowerCase()}`
+            //     }>
+            //     <a>
             <div
                 key={index}
                 className={searchStyle.searchOption}
@@ -453,7 +460,10 @@ const HeaderSearch = () => {
                     handleSearch();
                 }}>
                 {option}
+                {/* <FiExternalLink /> */}
             </div>
+            //     </a>
+            // </Link>
         ));
     } else {
         filteredDataOptions = (

@@ -1,8 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import '~/public/static/fonts/Linearicons/Font/demo-files/demo.css';
-import '~/public/static/fonts/font-awesome/css/font-awesome.min.css';
-import '~/public/static/css/bootstrap.min.css';
-import '~/public/static/css/slick.min.css';
 import '~/scss/style.scss';
 import '~/scss/electronic.scss';
 import '~/widgets/navbar-menu/popover-override.css';
@@ -38,16 +34,7 @@ function App({ Component, pageProps }) {
         startTimeout(() => {
             document.getElementById('__next').classList.add('loaded');
         }, 10);
-        window.addEventListener('contextmenu', (e) => e.preventDefault());
 
-        return () => {
-            localStorage.removeItem('utm_source');
-            localStorage.removeItem('utm_medium');
-            localStorage.removeItem('utm_campaign');
-        };
-    }, []);
-
-    useEffect(() => {
         const handleKeyDown = (e) => {
             if (
                 (e.ctrlKey && e.shiftKey && e.key === 'I') || // Prevent Ctrl+Shift+I (Windows)
@@ -66,18 +53,24 @@ function App({ Component, pageProps }) {
 
         document.addEventListener('keydown', handleKeyDown);
 
+        window.addEventListener('contextmenu', (e) => e.preventDefault());
+
         return () => {
             document.removeEventListener('keydown', handleKeyDown);
+            window.removeEventListener('contextmenu', (e) =>
+                e.preventDefault()
+            );
+            localStorage.removeItem('utm_source');
+            localStorage.removeItem('utm_medium');
+            localStorage.removeItem('utm_campaign');
         };
     }, []);
 
-    // ✅ Sayt to‘liq yuklanguncha loader ko‘rsatish
     useEffect(() => {
         const handleLoad = () => {
-            // Barcha JS, CSS, img va fontlar yuklandi
             startTimeout(() => {
                 setSiteLoaded(true);
-            }, 400); // biroz delay bilan silliq o'tish
+            }, 400);
         };
 
         if (document.readyState === 'complete') {
@@ -113,6 +106,7 @@ function App({ Component, pageProps }) {
 
     return (
         <>
+            {/* ✅ Loader overlay - doesn't block SSR */}
             <Head>
                 <meta charSet="UTF-8" />
                 <title>Soff</title>
@@ -154,6 +148,23 @@ function App({ Component, pageProps }) {
                     }}></script>
             </Head>
 
+            <div
+                style={{
+                    position: 'fixed',
+                    inset: 0,
+                    background: '#fff',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    zIndex: 9999,
+                    transition: '0.4s ease',
+                    opacity: siteLoaded ? 0 : 1,
+                    pointerEvents: siteLoaded ? 'none' : 'all',
+                    visibility: siteLoaded ? 'hidden' : 'visible',
+                }}>
+                <PacmanLoader color="#00A44F" size={30} />
+            </div>
+
             <NextProgress
                 height="4px"
                 delay={300}
@@ -161,31 +172,13 @@ function App({ Component, pageProps }) {
                 color="#00A44F"
             />
 
-            {/* ✅ Loader — sayt to‘liq yuklanmaguncha PacmanLoader chiqadi */}
-            {!siteLoaded && (
-                <div
-                    style={{
-                        position: 'fixed',
-                        inset: 0,
-                        background: '#fff',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        zIndex: 9999,
-                        transition: 'opacity 0.4s ease',
-                    }}>
-                    <PacmanLoader color="#00A44F" size={30} />
-                </div>
-            )}
-
-            {siteLoaded && (
-                <Providers>
-                    <AffiliateListener />
-                    <Component {...pageProps} />
-                    <Toaster position="top-center" />
-                    <TelegramLink />
-                </Providers>
-            )}
+            {/* ✅ ALWAYS render Component - even during loading */}
+            <Providers>
+                <AffiliateListener />
+                <Component {...pageProps} />
+                <Toaster position="top-center" />
+                <TelegramLink />
+            </Providers>
         </>
     );
 }

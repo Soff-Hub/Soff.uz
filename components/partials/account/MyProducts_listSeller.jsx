@@ -26,8 +26,8 @@ const CATEGORY_LIST = [
 
 export default function PurchasedProducts() {
     const { startTimeout } = useTimeManager();
-    const debouncedSearch = useDebounce(search, 500);
     const [search, setSearch] = useState('');
+    const debouncedSearch = useDebounce(search, 500);
     const [category, setCategory] = useState('file');
     const [currPage, setCurrPage] = useState(1);
     const [pageSize, setPageSize] = useState(5);

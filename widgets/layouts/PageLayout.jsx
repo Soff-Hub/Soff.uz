@@ -3,10 +3,11 @@ import Head from 'next/head';
 import { useDispatch, useSelector } from 'react-redux';
 import { checkAuthorization, setAccountLinks } from '~/store/auth/slice';
 import { useRouter } from 'next/router';
-import Header from '../header';
+// import Header from '../header';
 import { GoogleLogin } from '@react-oauth/google';
 import { fetchDirections, fetchProfile } from '~/store/profile/slice';
-import Footer from '~/widgets/footer';
+import dynamic from 'next/dynamic';
+// import Footer from '~/widgets/footer';
 
 export let cutomerAccountLink = [
     {
@@ -21,11 +22,13 @@ export let cutomerAccountLink = [
     },
 ];
 
+const Header = dynamic(() => import('~/widgets/header'), { ssr: false });
+const Footer = dynamic(() => import('~/widgets/footer'), { ssr: true });
+
 const PageLayout = ({ children, title, withFooter = true } = {}) => {
     const { user } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     const Router = useRouter();
-    const { showFastDownload } = useSelector((state) => state.ui);
 
     async function handleLogin(googleData) {
         Router.push(`/oauth/?token=${googleData}&returnUrl=${Router.asPath}`);
@@ -75,9 +78,7 @@ const PageLayout = ({ children, title, withFooter = true } = {}) => {
                 {withFooter ? <Footer /> : null}
             </div>
 
-            {user ? (
-                ''
-            ) : (
+            {!user && (
                 <div style={{ height: 0, overflow: 'hidden' }}>
                     <GoogleLogin
                         onSuccess={(credentialResponse) => {

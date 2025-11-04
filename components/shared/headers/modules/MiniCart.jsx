@@ -8,8 +8,8 @@ import { Badge, Popover } from 'antd';
 import { cn } from '~/shared/utilities/cn';
 
 const MiniCart = () => {
-    const state = useSelector(state => state.auth.user);
-    const data = useSelector(state => state.ecomerce.cartDataItems);
+    const state = useSelector((state) => state.auth.user);
+    const data = useSelector((state) => state.ecomerce.cartDataItems);
 
     const amount = calculateAmount(data);
     const hisob = addPeriodToThousands(amount);
@@ -19,7 +19,7 @@ const MiniCart = () => {
         data && data.length > 0 ? (
             <div className={'ps-basket__content'}>
                 <div className="ps-basket__content__items">
-                    {data?.map(item => {
+                    {data?.map((item) => {
                         return (
                             <ProductOnCart
                                 product={item}
@@ -66,7 +66,7 @@ const MiniCart = () => {
         <Popover
             content={cartContent}
             title={null}
-            className={cn('px-4 h-36', 'ps-basket')}
+            className={cn('pe-4 h-36', 'ps-basket')}
             classNames={{
                 root: 'ps-basket',
             }}
@@ -97,4 +97,4 @@ const MiniCart = () => {
     );
 };
 
-export default connect(state => state)(MiniCart);
+export default connect((state) => state)(MiniCart);
