@@ -45,8 +45,6 @@ const Search_Results = ({
             tab !== '1' && { search: query.keyword }),
     });
 
-    console.log({ topServicesQuery, string: topServicesQuery.toString() });
-
     const { data: topServices, isLoading: topServicesLoading } = useFGet(
         ['top-services', topServicesQuery.toString()],
         `customer/popular-services?${topServicesQuery.toString()}`
@@ -69,8 +67,6 @@ const Search_Results = ({
             );
         }
     };
-
-    console.log({ searchTerm, debouncedSearchTerm });
 
     const createBtn = () => (
         <>

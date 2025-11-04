@@ -300,7 +300,6 @@ export async function getServerSideProps({ query, req, res }) {
         if (request.status === 404) {
             return { notFound: true };
         }
-        console.log({ request, deviceId });
         defaultProducts = await request.json();
     } catch (error) {
         const request = await fetch(
@@ -318,7 +317,6 @@ export async function getServerSideProps({ query, req, res }) {
             };
         }
 
-        console.log({ request, deviceId });
         defaultProducts = await request.json();
     }
 
