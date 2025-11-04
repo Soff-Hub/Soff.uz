@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import SearchResultsProducts_Card from './search-page-card/searchResultsProducts_Card';
 import { Pagination, Skeleton } from 'antd';
 import SearchResultsProductsFilter from './search-page-filter/search-results-products-filter';
@@ -10,24 +10,34 @@ import { baseUrlUseApi } from '~/repositories/useApi';
 
 const currentTab = '1';
 
-export default function Search_Results_Products({ children }) {
+export default function Search_Results_Products({ children, initialData }) {
     const router = useRouter();
-    const queriesRef = useRef(router.query);
-
-    queriesRef.current =
-        router.query.tab === currentTab ? router.query : queriesRef.current;
-
+    const isFirstRender = useRef(true);
     const {
-        keyword = '',
         page = 1,
-        tab = '1',
-        category = '',
+        keyword = '',
         type = 'file',
+        category = '',
         order_by = '',
         file_type = '',
         page_from = '',
         page_to = '',
-    } = queriesRef.current;
+    } = router.query;
+
+    useEffect(() => {
+        if (isFirstRender.current) {
+            isFirstRender.current = false;
+        }
+    }, [router.query]);
+
+    // NOTE: Requests Enable property
+    const isRequestsEnabled = router.isReady && router.query.tab === currentTab;
+    const isChildCategoryEnabled = isRequestsEnabled && !!router.query.category;
+    const isProductsSearchEnabled =
+        (isRequestsEnabled && !isFirstRender.current) || !initialData;
+    // NOTE: Initial Data for Products Search
+    const productsDataInitialData =
+        isFirstRender.current && initialData ? initialData : undefined;
 
     const { data: childData } = useQuery({
         queryKey: ['four-child', type],
@@ -38,11 +48,11 @@ export default function Search_Results_Products({ children }) {
 
             return await res.json();
         },
-        enabled: tab === currentTab,
+        enabled: isRequestsEnabled,
     });
 
     const { data: parentData } = useQuery({
-        queryKey: ['child-category', category],
+        queryKey: ['child-category', category, type],
         queryFn: async () => {
             const res = await fetch(
                 `${baseUrlUseApi}customer/four-child?direction=${type}&parent__slug=${category}`
@@ -50,7 +60,7 @@ export default function Search_Results_Products({ children }) {
 
             return await res.json();
         },
-        enabled: tab === currentTab && !!category,
+        enabled: isChildCategoryEnabled,
     });
 
     const { data, isLoading } = useQuery({
@@ -80,6 +90,8 @@ export default function Search_Results_Products({ children }) {
 
             return await res.json();
         },
+        enabled: isProductsSearchEnabled,
+        initialData: productsDataInitialData,
     });
 
     const total = data?.count || 0;
@@ -114,17 +126,21 @@ export default function Search_Results_Products({ children }) {
                         marginTop: '20px',
                     }}
                     className=""
-                    current={page}
+                    current={router.query.page || 1}
                     pageSize={50}
                     total={total}
                     onChange={(newPage) => {
-                        router.push({
-                            pathname: router.pathname,
-                            query: {
-                                ...router.query,
-                                page: newPage,
+                        router.push(
+                            {
+                                pathname: router.pathname,
+                                query: {
+                                    ...router.query,
+                                    page: newPage,
+                                },
                             },
-                        });
+                            undefined,
+                            { shallow: true }
+                        );
                     }}
                 />
             </>

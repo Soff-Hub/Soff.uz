@@ -120,7 +120,7 @@ function SearchResultsProductsFilter({ total, childData }) {
                 },
             },
             undefined,
-            { scroll: false }
+            { scroll: false, shallow: true }
         );
     };
 
@@ -138,7 +138,7 @@ function SearchResultsProductsFilter({ total, childData }) {
                 },
             },
             undefined,
-            { scroll: false }
+            { scroll: false, shallow: true }
         );
     };
 
@@ -278,18 +278,17 @@ function SearchResultsProductsFilter({ total, childData }) {
                                 icon={<IoClose />}
                                 onClick={handleClearAll}
                                 iconPosition="end"
-                                className="filter-danger">
-                            </Button>
+                                className="filter-danger"></Button>
                         </div>
                     </div>
                 </Card>
-                // </Badge.Ribbon>
-            ) : null}
+            ) : // </Badge.Ribbon>
+            null}
             <div className="search_results_indicator">
                 <p className="countProduct text-nowrap m-0">
                     {total ? `${total} ta mahsulot topildi` : ''}
                 </p>
-                {!mutationsInForm.hasMutation &&
+                {!mutationsInForm.hasMutation && (
                     <div>
                         <Badge count={mutationsInForm.howManyMutations}>
                             <Button
@@ -303,7 +302,7 @@ function SearchResultsProductsFilter({ total, childData }) {
                             </Button>
                         </Badge>
                     </div>
-                }
+                )}
             </div>
             <FilterFormDrawer
                 open={filterOpen}
@@ -362,7 +361,7 @@ const FilterFormDrawer = ({ open, childData, onClose }) => {
                 },
             },
             undefined,
-            { scroll: false }
+            { scroll: false, shallow: true }
         );
         onClose();
     };

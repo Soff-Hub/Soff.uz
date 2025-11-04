@@ -74,7 +74,7 @@ export default function SearchResultsProductsFilter({ total }) {
                 query: newQueries,
             },
             undefined,
-            { scroll: false }
+            { scroll: false, shallow: true }
         );
     };
 
@@ -92,7 +92,7 @@ export default function SearchResultsProductsFilter({ total }) {
                 },
             },
             undefined,
-            { scroll: false }
+            { scroll: false, shallow: true }
         );
     };
 
@@ -168,7 +168,7 @@ export default function SearchResultsProductsFilter({ total }) {
                                     </Tooltip>
                                 ))}
                         </div>
-                        <div className='d-flex gap-2'>
+                        <div className="d-flex gap-2">
                             <Badge count={mutationsInForm.howManyMutations}>
                                 <Button
                                     icon={<IoFilter />}
@@ -185,18 +185,17 @@ export default function SearchResultsProductsFilter({ total }) {
                                 icon={<IoClose />}
                                 onClick={handleClearAll}
                                 iconPosition="end"
-                                className="filter-danger">
-                            </Button>
+                                className="filter-danger"></Button>
                         </div>
                     </div>
                 </Card>
-                // </Badge.Ribbon>
-            ) : null}
+            ) : // </Badge.Ribbon>
+            null}
             <div className="search_results_indicator">
                 <p className="countProduct text-nowrap m-0">
                     {total ? `${total} ta xizmat topildi` : ''}
                 </p>
-                {!mutationsInForm.hasMutation &&
+                {!mutationsInForm.hasMutation && (
                     <div>
                         <Badge count={mutationsInForm.howManyMutations}>
                             <Button
@@ -210,7 +209,7 @@ export default function SearchResultsProductsFilter({ total }) {
                             </Button>
                         </Badge>
                     </div>
-                }
+                )}
             </div>
             <FilterFormDrawer
                 open={filterOpen}
@@ -288,7 +287,7 @@ const FilterFormDrawer = ({ open, onClose, directions, setCategoriesList }) => {
                 },
             },
             undefined,
-            { scroll: false }
+            { scroll: false, shallow: true }
         );
         onClose();
     };

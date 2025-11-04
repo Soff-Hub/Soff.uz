@@ -8,13 +8,10 @@ import { useFGet } from '~/shared/hooks/useFApi';
 import SearchResultsProductsFilter from './search-page-filter/search-results-services-filter';
 
 const currentTab = '2';
-export default function Search_Results_Services({ children }) {
+export default function Search_Results_Services({ children, initialData }) {
     const router = useRouter();
     const notFoundRef = useRef();
-    const queriesRef = useRef(router.query);
-    queriesRef.current =
-        router.query.tab === currentTab ? router.query : queriesRef.current;
-
+    const isFirstRender = useRef(true);
     const {
         keyword = '',
         service_parent = '',
@@ -23,7 +20,7 @@ export default function Search_Results_Services({ children }) {
         type = '',
         tab = currentTab,
         offset: queryOffset,
-    } = queriesRef.current;
+    } = router.query;
 
     const limit = 50;
     const offset = Number(queryOffset || 0);
@@ -36,6 +33,20 @@ export default function Search_Results_Services({ children }) {
         offset,
     });
 
+    const isRequestsEnabled = router.isReady && router.query.tab === currentTab;
+    const isProductsSearchEnabled =
+        (isRequestsEnabled && !isFirstRender.current) || !initialData;
+
+    // NOTE: Initial Data for Services Search
+    const productsDataInitialData =
+        isFirstRender.current && initialData ? initialData : undefined;
+
+    useEffect(() => {
+        if (isFirstRender.current) {
+            isFirstRender.current = false;
+        }
+    }, [router.query]);
+
     const { data, isLoading } = useFGet(
         [
             'customer/services',
@@ -47,7 +58,11 @@ export default function Search_Results_Services({ children }) {
         ],
         `customer?${servicesQuery.toString()}&search=${keyword}${
             service_parent ? `&category_id=${service_parent}` : ''
-        }`
+        }`,
+        {
+            enabled: isProductsSearchEnabled,
+            initialData: productsDataInitialData,
+        }
     );
 
     const showResults = Array.isArray(data?.items) && data?.items?.length > 0;
@@ -88,14 +103,18 @@ export default function Search_Results_Services({ children }) {
                     pageSizeOptions={[]}
                     onChange={(newPage) => {
                         const newOffset = (newPage - 1) * limit;
-                        router.push({
-                            pathname: router.pathname,
-                            query: {
-                                ...router.query,
-                                offset: newOffset,
-                                limit,
+                        router.push(
+                            {
+                                pathname: router.pathname,
+                                query: {
+                                    ...router.query,
+                                    offset: newOffset,
+                                    limit,
+                                },
                             },
-                        });
+                            undefined,
+                            { shallow: true }
+                        );
                     }}
                 />
             </>
@@ -136,13 +155,17 @@ export default function Search_Results_Services({ children }) {
                     }
                 }
 
-                router.push({
-                    pathname: router.pathname,
-                    query: {
-                        ...router.query,
-                        ts_direction: direction,
+                router.push(
+                    {
+                        pathname: router.pathname,
+                        query: {
+                            ...router.query,
+                            ts_direction: direction,
+                        },
                     },
-                });
+                    undefined,
+                    { shallow: true }
+                );
             }
         };
         defineDirection();

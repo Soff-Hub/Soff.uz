@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Pagination, Skeleton } from 'antd';
 import SearchResultsSpecialists_Filter from './search-page-filter/search-results-specialists-filter';
 import Search_Results_NotFound from './notFound';
@@ -8,22 +8,37 @@ import { useFGet } from '~/shared/hooks/useFApi';
 import SearchSellerCard from '~/entities/seller/search-seller-card';
 
 const currentTab = '3';
-export default function Search_Results_Specialists({ children }) {
+export default function Search_Results_Specialists({ children, initialData }) {
     const router = useRouter();
     const notFoundRef = useRef();
-    const queriesRef = useRef(router.query);
-
-    queriesRef.current =
-        router.query.tab === currentTab ? router.query : queriesRef.current;
-    const { keyword = '', offset: queryOffset } = queriesRef.current;
+    const isFirstRender = useRef(true);
+    const { keyword = '', offset: queryOffset } = router.query;
 
     const limit = 51;
     const offset = Number(queryOffset || 0);
     const currentPage = Math.floor(offset / limit) + 1;
 
+    const isRequestsEnabled = router.isReady && router.query.tab === currentTab;
+    const isSpecialistsSearchEnabled =
+        (isRequestsEnabled && !isFirstRender.current) || !initialData;
+
+    // NOTE: Initial Data for Services Search
+    const specialistsDataInitialData =
+        isFirstRender.current && initialData ? initialData : undefined;
+
+    useEffect(() => {
+        if (isFirstRender.current) {
+            isFirstRender.current = false;
+        }
+    }, [router.query]);
+
     const { data, isLoading } = useFGet(
         ['customer/sellers', keyword, limit, offset],
-        `users/sellers?limit=${limit}&offset=${offset}&search=${keyword}`
+        `users/sellers?limit=${limit}&offset=${offset}&search=${keyword}`,
+        {
+            enabled: isSpecialistsSearchEnabled,
+            initialData: specialistsDataInitialData,
+        }
     );
 
     const showResults =
@@ -51,10 +66,6 @@ export default function Search_Results_Specialists({ children }) {
             <>
                 <div className="Search_Results_Specialists_Wrap">
                     {data.results.map((item) => (
-                        // <SearchResultsSpecialists_Card
-                        //     key={item?.soff_seller_id}
-                        //     data={item}
-                        // />
                         <SearchSellerCard
                             seller={item}
                             key={item?.soff_seller_id}
@@ -73,14 +84,18 @@ export default function Search_Results_Specialists({ children }) {
                     total={data?.count}
                     onChange={(newPage) => {
                         const newOffset = (newPage - 1) * limit;
-                        router.push({
-                            pathname: router.pathname,
-                            query: {
-                                ...router.query,
-                                offset: newOffset,
-                                limit,
+                        router.push(
+                            {
+                                pathname: router.pathname,
+                                query: {
+                                    ...router.query,
+                                    offset: newOffset,
+                                    limit,
+                                },
                             },
-                        });
+                            undefined,
+                            { shallow: true }
+                        );
                     }}
                 />
             </>
@@ -126,13 +141,17 @@ export default function Search_Results_Specialists({ children }) {
                     }
                 }
 
-                router.push({
-                    pathname: router.pathname,
-                    query: {
-                        ...router.query,
-                        ts_direction: direction,
+                router.push(
+                    {
+                        pathname: router.pathname,
+                        query: {
+                            ...router.query,
+                            ts_direction: direction,
+                        },
                     },
-                });
+                    undefined,
+                    { shallow: true }
+                );
             }
         };
         defineDirection();
