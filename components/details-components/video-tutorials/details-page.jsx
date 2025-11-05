@@ -12,7 +12,7 @@ function VideosProductsDetails({ product, isPlay, setIsPlay }) {
     return (
         <div className="seller_container_products_details_videos">
             <div className="ps-container p-0">
-                <div className="ps-product--detail_seller_videos my-5">
+                <div className="ps-product--detail_seller_videos">
                     <div>
                         <p
                             style={{

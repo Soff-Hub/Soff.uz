@@ -5,10 +5,9 @@ import {
     soffiaIconSVG3,
 } from '../../widgets/header/HeaderActions/HeaderAIIcon';
 
-export default function AISoffiaPresentation () {
+export default function AISoffiaPresentation() {
     return (
         <div
-            className='mt-5 mt-sm-0'
             style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -47,9 +46,9 @@ export default function AISoffiaPresentation () {
                 </div>
                 <div>
                     <a
-                        href='https://t.me/soffia_ai_bot'
-                        target='_blank'
-                        rel='noopener noreferrer'
+                        href="https://t.me/soffia_ai_bot"
+                        target="_blank"
+                        rel="noopener noreferrer"
                         style={{ textDecoration: 'none' }}>
                         <h3
                             style={{
@@ -60,7 +59,7 @@ export default function AISoffiaPresentation () {
                             AI yordamida prezentatsiya yarating
                         </h3>
                         <p
-                            className='d-md-block d-none'
+                            className="d-md-block d-none"
                             style={{
                                 margin: 0,
                                 color: '#312f30a0',
@@ -73,14 +72,14 @@ export default function AISoffiaPresentation () {
                 </div>
             </div>
 
-            <div style={{ flexShrink: 0 }} className='d-md-block d-none'>
+            <div style={{ flexShrink: 0 }} className="d-md-block d-none">
                 <a
-                    href='https://t.me/soffia_ai_bot'
-                    target='_blank'
-                    rel='noopener noreferrer'>
+                    href="https://t.me/soffia_ai_bot"
+                    target="_blank"
+                    rel="noopener noreferrer">
                     <Button
-                        type='primary'
-                        size='large'
+                        type="primary"
+                        size="large"
                         style={{
                             borderRadius: '10px',
                             padding: '0 24px',
@@ -99,20 +98,20 @@ export default function AISoffiaPresentation () {
 export const AISoffiaPresentationNotFoundProduct = () => {
     return (
         <>
-            <div className='bg-white p-5 rounded vh-100'>
-                <div className='container'>
-                    <div className='text-center'>
+            <div className="bg-white p-5 rounded vh-100">
+                <div className="container">
+                    <div className="text-center">
                         <img
-                            src='/static/img/noinfo.svg'
-                            className='mb-5'
+                            src="/static/img/noinfo.svg"
+                            className="mb-5"
                             alt="Ma'lumot topilmadi"
                         />
-                        <p className='display-6'>
+                        <p className="display-6">
                             So'rovingiz bo'yicha ma'lumot topilmadi...
                         </p>
                     </div>
                     <div
-                        className='mt-5'
+                        className="mt-5"
                         style={{
                             // display: 'flex',
                             padding: '44px 10px',
@@ -145,11 +144,11 @@ export const AISoffiaPresentationNotFoundProduct = () => {
                                 }}>
                                 ✨
                             </div>
-                            <div className='d-flex'>
+                            <div className="d-flex">
                                 <a
-                                    href='https://t.me/soffia_ai_bot'
-                                    target='_blank'
-                                    rel='noopener noreferrer'
+                                    href="https://t.me/soffia_ai_bot"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                     style={{ textDecoration: 'none' }}>
                                     <h3
                                         style={{
