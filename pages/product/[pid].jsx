@@ -86,13 +86,12 @@ export default function ProductDefaultPage({ defaultProducts }) {
     const [isPlay, setIsPlay] = useState(null);
     const similarRef = useRef();
     const contentType = defaultProducts?.document?.content_type;
+    console.log({ contentType });
     const DetailComponent = productsContentDetails(
         defaultProducts?.document?.content_type
     );
-    const AISoffiaPresentationComponent =
-        defaultProducts?.document?.content_type == 'file'
-            ? AISoffiaPresentation
-            : null;
+    const shouldShowAISoffia =
+        defaultProducts?.document?.content_type === 'file';
 
     const removeHTMLTags = (html) => {
         return html.replace(/<[^>]+>/g, '');
@@ -154,7 +153,7 @@ export default function ProductDefaultPage({ defaultProducts }) {
                                     setIsPlay={setIsPlay}
                                 />
                             </div>
-                            <AISoffiaPresentationComponent />
+                            {shouldShowAISoffia && <AISoffiaPresentation />}
                             <div ref={similarRef} className="my-5">
                                 <h3
                                     style={{
@@ -246,6 +245,8 @@ export async function getServerSideProps({ query, req, res }) {
 
         defaultProducts = await request.json();
     }
+
+    console.log('Default Products:', defaultProducts);
 
     return {
         props: {
