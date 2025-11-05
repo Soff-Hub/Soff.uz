@@ -73,7 +73,10 @@ function App({ Component, pageProps }) {
             }, 400);
         };
 
-        if (document.readyState === 'complete') {
+        if (
+            document.readyState === 'complete' ||
+            document.readyState === 'interactive'
+        ) {
             handleLoad();
         } else {
             window.addEventListener('load', handleLoad);

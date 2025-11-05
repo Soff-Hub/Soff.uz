@@ -33,9 +33,9 @@ const SerachSide = ({
                         fontWeight: 400,
                     }}
                     className="similar_title">
-                    Ommabop xizmatlar
+                    Tavsiya etiladigan xizmatlar
                 </h3>
-                {topServices?.items?.map(s => (
+                {topServices?.items?.map((s) => (
                     <div className="mb-4" key={s?.id}>
                         <LastAddedServiceCard service={s} />
                     </div>
