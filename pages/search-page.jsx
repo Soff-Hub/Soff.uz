@@ -102,19 +102,15 @@ const Search_Results = ({
             )
         );
 
-        router.push(
-            {
-                pathname: router.pathname,
-                query: {
-                    ...newQueries,
-                    keyword: debouncedSearchTerm,
-                    tab: currentTab,
-                    type: currentTab == '1' ? 'file' : 'all',
-                },
+        router.push({
+            pathname: router.pathname,
+            query: {
+                ...newQueries,
+                keyword: debouncedSearchTerm,
+                tab: currentTab,
+                type: currentTab == '1' ? 'file' : 'all',
             },
-            undefined,
-            { shallow: true }
-        );
+        });
     };
 
     useEffect(() => {
@@ -136,17 +132,13 @@ const Search_Results = ({
 
     useEffect(() => {
         if (debouncedSearchTerm !== router.query.keyword) {
-            router.push(
-                {
-                    pathname: router.pathname,
-                    query: {
-                        ...router.query,
-                        keyword: debouncedSearchTerm,
-                    },
+            router.push({
+                pathname: router.pathname,
+                query: {
+                    ...router.query,
+                    keyword: debouncedSearchTerm,
                 },
-                undefined,
-                { shallow: true }
-            );
+            });
         }
     }, [debouncedSearchTerm, router.query.keyword]);
 

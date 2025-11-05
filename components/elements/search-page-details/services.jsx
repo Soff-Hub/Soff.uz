@@ -1,90 +1,30 @@
 import React, { useRef, useEffect } from 'react';
-import { Pagination, Skeleton } from 'antd';
+import { Pagination } from 'antd';
 import Search_Results_NotFound from './notFound';
 import ServiceCard from '~/entities/service/service-card';
 import { useRouter } from 'next/router';
 import useScrollToNotFound from '../../../shared/hooks/useScrollToNotFound';
-import { useFGet } from '~/shared/hooks/useFApi';
 import SearchResultsProductsFilter from './search-page-filter/search-results-services-filter';
 
-const currentTab = '2';
-export default function Search_Results_Services({ children, initialData }) {
+export default function Search_Results_Services({
+    children,
+    initialData: data,
+}) {
     const router = useRouter();
     const notFoundRef = useRef();
-    const isFirstRender = useRef(true);
-    const {
-        keyword = '',
-        service_parent = '',
-        category_id = '',
-        direction = '',
-        type = '',
-        tab = currentTab,
-        offset: queryOffset,
-    } = router.query;
+    const { offset: queryOffset } = router.query;
 
     const limit = 50;
     const offset = Number(queryOffset || 0);
     const currentPage = Math.floor(offset / limit) + 1;
-
-    const servicesQuery = new URLSearchParams({
-        ...(category_id && { category_id }),
-        ...(direction && { direction }),
-        limit,
-        offset,
-    });
-
-    const isRequestsEnabled = router.isReady && router.query.tab === currentTab;
-    const isProductsSearchEnabled =
-        (isRequestsEnabled && !isFirstRender.current) || !initialData;
-
-    // NOTE: Initial Data for Services Search
-    const productsDataInitialData =
-        isFirstRender.current && initialData ? initialData : undefined;
-
-    useEffect(() => {
-        if (isFirstRender.current) {
-            isFirstRender.current = false;
-        }
-    }, [router.query]);
-
-    const { data, isLoading } = useFGet(
-        [
-            'customer/services',
-            keyword,
-            limit,
-            offset,
-            direction,
-            service_parent,
-        ],
-        `customer?${servicesQuery.toString()}&search=${keyword}${
-            service_parent ? `&category_id=${service_parent}` : ''
-        }`,
-        {
-            enabled: isProductsSearchEnabled,
-            initialData: productsDataInitialData,
-        }
-    );
 
     const showResults = Array.isArray(data?.items) && data?.items?.length > 0;
 
     useScrollToNotFound(notFoundRef, showResults, data);
 
     let showResultsContent = null;
-    if (isLoading) {
-        showResultsContent = (
-            <div className="Search_Results_Services_wrap">
-                {Array(12)
-                    .fill(0)
-                    .map((_, i) => (
-                        <Skeleton.Image
-                            key={i}
-                            active
-                            className="Search_Results_Wrap_skeleton"
-                        />
-                    ))}
-            </div>
-        );
-    } else if (showResults) {
+
+    if (showResults) {
         showResultsContent = (
             <>
                 <div className="Search_Results_Services_wrap">
@@ -103,18 +43,14 @@ export default function Search_Results_Services({ children, initialData }) {
                     pageSizeOptions={[]}
                     onChange={(newPage) => {
                         const newOffset = (newPage - 1) * limit;
-                        router.push(
-                            {
-                                pathname: router.pathname,
-                                query: {
-                                    ...router.query,
-                                    offset: newOffset,
-                                    limit,
-                                },
+                        router.push({
+                            pathname: router.pathname,
+                            query: {
+                                ...router.query,
+                                offset: newOffset,
+                                limit,
                             },
-                            undefined,
-                            { shallow: true }
-                        );
+                        });
                     }}
                 />
             </>

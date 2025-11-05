@@ -72,7 +72,7 @@ export default function SearchResultsProductsFilter({ total }) {
                 query: newQueries,
             },
             undefined,
-            { scroll: false, shallow: true }
+            { scroll: false }
         );
     };
 
@@ -90,7 +90,7 @@ export default function SearchResultsProductsFilter({ total }) {
                 },
             },
             undefined,
-            { scroll: false, shallow: true }
+            { scroll: false }
         );
     };
 
@@ -288,7 +288,7 @@ const FilterFormDrawer = ({ open, onClose, directions, setCategoriesList }) => {
                 },
             },
             undefined,
-            { scroll: false, shallow: true }
+            { scroll: false }
         );
         onClose();
     };

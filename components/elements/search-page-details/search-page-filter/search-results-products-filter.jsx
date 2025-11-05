@@ -120,7 +120,7 @@ function SearchResultsProductsFilter({ total, childData }) {
                 },
             },
             undefined,
-            { scroll: false, shallow: true }
+            { scroll: false }
         );
     };
 
@@ -138,7 +138,7 @@ function SearchResultsProductsFilter({ total, childData }) {
                 },
             },
             undefined,
-            { scroll: false, shallow: true }
+            { scroll: false }
         );
     };
 
@@ -364,7 +364,7 @@ const FilterFormDrawer = ({ open, childData, onClose }) => {
                 },
             },
             undefined,
-            { scroll: false, shallow: true }
+            { scroll: false }
         );
         onClose();
     };

@@ -1,45 +1,23 @@
 import React, { useEffect, useRef } from 'react';
-import { Pagination, Skeleton } from 'antd';
+import { Pagination } from 'antd';
 import SearchResultsSpecialists_Filter from './search-page-filter/search-results-specialists-filter';
 import Search_Results_NotFound from './notFound';
 import { useRouter } from 'next/router';
 import useScrollToNotFound from '../../../shared/hooks/useScrollToNotFound';
-import { useFGet } from '~/shared/hooks/useFApi';
 import SearchSellerCard from '~/entities/seller/search-seller-card';
 
 const currentTab = '3';
-export default function Search_Results_Specialists({ children, initialData }) {
+export default function Search_Results_Specialists({
+    children,
+    initialData: data,
+}) {
     const router = useRouter();
     const notFoundRef = useRef();
-    const isFirstRender = useRef(true);
-    const { keyword = '', offset: queryOffset } = router.query;
+    const { offset: queryOffset } = router.query;
 
     const limit = 51;
     const offset = Number(queryOffset || 0);
     const currentPage = Math.floor(offset / limit) + 1;
-
-    const isRequestsEnabled = router.isReady && router.query.tab === currentTab;
-    const isSpecialistsSearchEnabled =
-        (isRequestsEnabled && !isFirstRender.current) || !initialData;
-
-    // NOTE: Initial Data for Services Search
-    const specialistsDataInitialData =
-        isFirstRender.current && initialData ? initialData : undefined;
-
-    useEffect(() => {
-        if (isFirstRender.current) {
-            isFirstRender.current = false;
-        }
-    }, [router.query]);
-
-    const { data, isLoading } = useFGet(
-        ['customer/sellers', keyword, limit, offset],
-        `users/sellers?limit=${limit}&offset=${offset}&search=${keyword}`,
-        {
-            enabled: isSpecialistsSearchEnabled,
-            initialData: specialistsDataInitialData,
-        }
-    );
 
     const showResults =
         Array.isArray(data?.results) && data?.results?.length > 0;
@@ -47,21 +25,7 @@ export default function Search_Results_Specialists({ children, initialData }) {
     useScrollToNotFound(notFoundRef, showResults, data);
 
     let resultsContent = null;
-    if (isLoading) {
-        resultsContent = (
-            <div className="Search_Results_Specialists_Wrap">
-                {Array(12)
-                    .fill(0)
-                    .map((_, i) => (
-                        <Skeleton
-                            key={i}
-                            active
-                            className="Search_Results_Wrap_skeleton"
-                        />
-                    ))}
-            </div>
-        );
-    } else if (showResults) {
+    if (showResults) {
         resultsContent = (
             <>
                 <div className="Search_Results_Specialists_Wrap">
@@ -84,18 +48,14 @@ export default function Search_Results_Specialists({ children, initialData }) {
                     total={data?.count}
                     onChange={(newPage) => {
                         const newOffset = (newPage - 1) * limit;
-                        router.push(
-                            {
-                                pathname: router.pathname,
-                                query: {
-                                    ...router.query,
-                                    offset: newOffset,
-                                    limit,
-                                },
+                        router.push({
+                            pathname: router.pathname,
+                            query: {
+                                ...router.query,
+                                offset: newOffset,
+                                limit,
                             },
-                            undefined,
-                            { shallow: true }
-                        );
+                        });
                     }}
                 />
             </>
