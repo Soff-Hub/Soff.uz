@@ -25,7 +25,7 @@ const Home = () => {
             <Catalog />
             <div className="bg-white ">
                 <div className="container">
-                    {/* <Freelance /> */}
+                    <Freelance />
                     <LastServices />
                     <Info />
                 </div>
