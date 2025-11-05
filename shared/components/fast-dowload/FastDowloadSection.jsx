@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import styles from './FastDownloadSection.module.scss';
 import {
@@ -10,10 +10,12 @@ import { Button } from 'antd';
 import { cn } from '~/shared/utilities/cn';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
+import useCart from '~/shared/hooks/useCart';
 
 const FastDownloadSection = () => {
     const queryClient = useQueryClient();
     const { user } = useSelector((state) => state.auth);
+    const { removeAll } = useCart();
 
     const {
         data: product,
@@ -25,6 +27,14 @@ const FastDownloadSection = () => {
         enabled: user?.access ? true : false,
         staleTime: 1000 * 60 * 5,
     });
+
+    useEffect(() => {
+        const carts = JSON.parse(localStorage.getItem('cart')) || [];
+        const hasProductincart = carts.includes(product?.id);
+        if (hasProductincart) {
+            removeAll();
+        }
+    }, [product]);
 
     if (isLoading) return null;
     if (isError || !product || Object.keys(product).length == 0) return null;

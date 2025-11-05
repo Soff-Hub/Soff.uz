@@ -71,7 +71,7 @@ const CreditCard2 = ({ document, type }) => {
         );
         if (ItemsData?.status === 201) {
             setMessage(true);
-            localStorage.removeItem('cart');
+            // localStorage.removeItem('cart');
             Router.push(ItemsData?.data?.url);
         } else {
             setMessage(true);
@@ -95,7 +95,7 @@ const CreditCard2 = ({ document, type }) => {
             affiliate_code
         );
         if (ItemsData?.status === 201) {
-            localStorage.removeItem('cart');
+            // localStorage.removeItem('cart');
             setMessage(true);
             Router.push(ItemsData?.data?.url);
         } else {
