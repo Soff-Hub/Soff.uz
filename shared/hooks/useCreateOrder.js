@@ -199,6 +199,14 @@ function useCreateOrder() {
         }
     }, [query?.direction]);
 
+    const handleOpenConfirm = () => {
+        setConfirmOpen(true);
+    };
+
+    const handleCloseConfirm = () => {
+        setConfirmOpen(false);
+    };
+
     const { mutate: createOrder, isPending } = useFPost({
         url: 'order/custom-order',
         token: user?.access,
@@ -216,14 +224,6 @@ function useCreateOrder() {
             message.error(errorMsg);
         },
     });
-
-    const handleOpenConfirm = () => {
-        setConfirmOpen(true);
-    };
-
-    const handleCloseConfirm = () => {
-        setConfirmOpen(false);
-    };
 
     const handleThumbProgress = (swiper) => {
         const progress = swiper.progress;
