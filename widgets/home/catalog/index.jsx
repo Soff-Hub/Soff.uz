@@ -87,59 +87,6 @@ const Catalog = ({ inFile }) => {
                         </div>
                     </>
                 )}
-                <section className={styles.howItWorksSection}>
-                    <div className="d-flex justify-content-center my-5">
-                        <Image
-                            width={30}
-                            height={30}
-                            src={'/static/img/star.svg'}
-                            alt="starts"
-                        />
-                    </div>
-                    <h2>Tayyor mahsulotlardan foydalanish qanday ishlaydi?</h2>
-                    <div className={styles.steps}>
-                        <div className={styles.stepItem}>
-                            <img
-                                src={'/static/img/catalogMenu.png'}
-                                alt="starts"
-                            />
-                            <div>
-                                <h3>Qidiring va tanlang</h3>
-                                <p>
-                                    Katalogdan yoki qidiruv orqali sizga kerakli
-                                    tayyor mahsulotni toping.
-                                </p>
-                            </div>
-                        </div>
-                        <div className={styles.stepItem}>
-                            <img
-                                src={'/static/img/catalogCoin.png'}
-                                alt="starts"
-                            />
-                            <div>
-                                <h3>Sotib oling</h3>
-                                <p>
-                                    Xavfsiz to‘lov tizimi orqali mahsulotni
-                                    sotib oling — narx va shartlar oldindan
-                                    ko‘rinadi.
-                                </p>
-                            </div>
-                        </div>
-                        <div className={styles.stepItem}>
-                            <img
-                                src={'/static/img/catalogSecure.png'}
-                                alt="starts"
-                            />
-                            <div>
-                                <h3>Yuklab oling va foydalaning</h3>
-                                <p>
-                                    Mahsulotni darhol yuklab oling va
-                                    ishlatishni boshlang.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
             </div>
         </div>
     );

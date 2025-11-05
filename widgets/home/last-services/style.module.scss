@@ -1,6 +1,6 @@
 @import '/scss/utils/variable';
 .freelance_section {
-    padding: 80px 0 54px;
+    padding: 35px 0;
     border-radius: 24px;
     display: flex;
     align-items: center;
@@ -10,7 +10,7 @@
     .freelance_text {
         .titleWrapper {
             display: flex;
-            flex-direction: column; 
+            flex-direction: column;
             .labelWrapperH1 {
                 font-size: 36px;
                 font-weight: 600;
@@ -61,7 +61,7 @@
     padding-bottom: 80px;
     @media (max-width: 1200px) {
         grid-template-columns: repeat(3, 1fr); /* 481–991px: 2 ta */
-    } 
+    }
     @media (max-width: 768px) {
         grid-template-columns: repeat(2, 1fr); /* 481–991px: 2 ta */
         gap: 10px;

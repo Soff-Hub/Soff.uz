@@ -21,7 +21,7 @@ const LastServices = () => {
             <div className={styles.freelance_section}>
                 <div className={styles.freelance_text}>
                     <div className="d-flex gap-2 flex-fill align-items-start">
-                        <div className="d-none d-md-flex ">
+                        <div className="d-none d-md-flex mt-2">
                             <Image
                                 src={'/static/img/star.svg'}
                                 width={30}
