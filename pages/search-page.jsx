@@ -324,127 +324,121 @@ export async function getServerSideProps(context) {
         page_to = '', // ✅ yangi qo‘shildi
     } = context.query;
 
-    // const servicesQuery = new URLSearchParams({
-    //     ...(category_id && { category_id }),
-    //     ...(direction && { direction }),
-    //     limit,
-    //     offset,
-    // });
+    const servicesQuery = new URLSearchParams({
+        ...(category_id && { category_id }),
+        ...(direction && { direction }),
+        limit,
+        offset,
+    });
 
-    // const fetchJson = async (url) => {
-    //     try {
-    //         const res = await fetch(url);
-    //         if (!res.ok) throw new Error('Failed to fetch');
-    //         return await res.json();
-    //     } catch (err) {
-    //         return { error: err.message };
-    //     }
-    // };
-
-    // // ✅ Yangi filterlar qo‘shildi
-    // const searchUrl = `${baseUrlUseApi}customer/same-google-search/?limit=50&${
-    //     page ? `page=${page}&` : ''
-    // }${keyword ? `search=${keyword}&` : ''}${type ? `type=${type}&` : ''}${
-    //     category ? `category=${category}&` : ''
-    // }${order_by ? `order_by=${order_by}&` : ''}${
-    //     file_type ? `file_type=${file_type}&` : ''
-    // }${page_from ? `page_from=${page_from}&` : ''}${
-    //     page_to ? `page_to=${page_to}` : ''
-    // }`;
-
-    // // console.log('searchUrl', searchUrl);
-    // const servicesUrl = `${
-    //     process.env.NEXT_PUBLIC_FREELEANCE_URL
-    // }/api/v1/customer?${servicesQuery.toString()}&search=${keyword}${
-    //     service_parent ? `&category_id=${service_parent}` : ''
-    // }`;
-    // const sellersUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/users/sellers?limit=${limit}&offset=${offset}&search=${keyword}`;
-
-    // const restQueries = {
-    //     fourChildData: null,
-    //     childCategoryData: null,
-    //     searchData: null,
-    //     keyword,
-    //     page,
-    //     type,
-    //     category,
-    //     order_by,
-    //     error: null,
-    //     lastProducts: null,
-    //     service: null,
-    //     serviceParent: null,
-    //     serviceChild: null,
-    //     sellers: null,
-    // };
-
-    // console.log('Tab changed to:', tab);
-    // console.log('😃😄😃😄😃😄😃😄', Math.round());
-
-    // switch (tab) {
-    //     case '1': {
-    //         const productsInitialData = await fetchJson(searchUrl);
-    //         const searchError = productsInitialData?.error || null;
-
-    //         return {
-    //             props: {
-    //                 ...restQueries,
-    //                 error: searchError,
-    //                 productsInitialData: productsInitialData?.results
-    //                     ? productsInitialData
-    //                     : null,
-    //             },
-    //         };
-    //     }
-    //     case '2': {
-    //         const servicesInitialData = await fetchJson(servicesUrl);
-
-    //         return {
-    //             props: {
-    //                 ...restQueries,
-    //                 error: null,
-    //                 servicesInitialData,
-    //             },
-    //         };
-    //     }
-    //     case '3': {
-    //         const sellersInitialData = await fetchJson(sellersUrl);
-
-    //         return {
-    //             props: {
-    //                 ...restQueries,
-    //                 sellersInitialData,
-    //             },
-    //         };
-    //     }
-    //     default: {
-    //         const [
-    //             productsInitialData,
-    //             servicesInitialData,
-    //             sellersInitialData,
-    //         ] = await Promise.all([
-    //             fetchJson(searchUrl),
-    //             fetchJson(servicesUrl),
-    //             fetchJson(sellersUrl),
-    //         ]);
-    //         const searchError = productsInitialData?.error || null;
-
-    //         return {
-    //             props: {
-    //                 ...restQueries,
-    //                 error: searchError,
-    //                 productsInitialData: productsInitialData?.results
-    //                     ? productsInitialData
-    //                     : null,
-    //                 servicesInitialData,
-    //                 sellersInitialData,
-    //             },
-    //         };
-    //     }
-    // }
-
-    return {
-        props: {
-            keyword: context.query.keyword || '',
-        },
+    const fetchJson = async (url) => {
+        try {
+            const res = await fetch(url);
+            if (!res.ok) throw new Error('Failed to fetch');
+            return await res.json();
+        } catch (err) {
+            return { error: err.message };
+        }
     };
+
+    // ✅ Yangi filterlar qo‘shildi
+    const searchUrl = `${baseUrlUseApi}customer/same-google-search/?limit=50&${
+        page ? `page=${page}&` : ''
+    }${keyword ? `search=${keyword}&` : ''}${type ? `type=${type}&` : ''}${
+        category ? `category=${category}&` : ''
+    }${order_by ? `order_by=${order_by}&` : ''}${
+        file_type ? `file_type=${file_type}&` : ''
+    }${page_from ? `page_from=${page_from}&` : ''}${
+        page_to ? `page_to=${page_to}` : ''
+    }`;
+
+    // console.log('searchUrl', searchUrl);
+    const servicesUrl = `${
+        process.env.NEXT_PUBLIC_FREELEANCE_URL
+    }/api/v1/customer?${servicesQuery.toString()}&search=${keyword}${
+        service_parent ? `&category_id=${service_parent}` : ''
+    }`;
+    const sellersUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/users/sellers?limit=${limit}&offset=${offset}&search=${keyword}`;
+
+    const restQueries = {
+        fourChildData: null,
+        childCategoryData: null,
+        searchData: null,
+        keyword,
+        page,
+        type,
+        category,
+        order_by,
+        error: null,
+        lastProducts: null,
+        service: null,
+        serviceParent: null,
+        serviceChild: null,
+        sellers: null,
+    };
+
+    console.log('Tab changed to:', tab);
+    console.log('😃😄😃😄😃😄😃😄', Math.round());
+
+    switch (tab) {
+        case '1': {
+            const productsInitialData = await fetchJson(searchUrl);
+            const searchError = productsInitialData?.error || null;
+
+            return {
+                props: {
+                    ...restQueries,
+                    error: searchError,
+                    productsInitialData: productsInitialData?.results
+                        ? productsInitialData
+                        : null,
+                },
+            };
+        }
+        case '2': {
+            const servicesInitialData = await fetchJson(servicesUrl);
+
+            return {
+                props: {
+                    ...restQueries,
+                    error: null,
+                    servicesInitialData,
+                },
+            };
+        }
+        case '3': {
+            const sellersInitialData = await fetchJson(sellersUrl);
+
+            return {
+                props: {
+                    ...restQueries,
+                    sellersInitialData,
+                },
+            };
+        }
+        default: {
+            const [
+                productsInitialData,
+                servicesInitialData,
+                sellersInitialData,
+            ] = await Promise.all([
+                fetchJson(searchUrl),
+                fetchJson(servicesUrl),
+                fetchJson(sellersUrl),
+            ]);
+            const searchError = productsInitialData?.error || null;
+
+            return {
+                props: {
+                    ...restQueries,
+                    error: searchError,
+                    productsInitialData: productsInitialData?.results
+                        ? productsInitialData
+                        : null,
+                    servicesInitialData,
+                    sellersInitialData,
+                },
+            };
+        }
+    }
 }

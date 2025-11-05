@@ -260,26 +260,29 @@ function SearchResultsProductsFilter({ total, childData }) {
                                         </Button>
                                     </Tooltip>
                                 ))}
-                        </div>
-                        <div className="d-flex gap-2">
-                            <Badge count={mutationsInForm.howManyMutations}>
+                            <Tooltip
+                                placement="top"
+                                title={'Barcha filterlarni tozalash'}>
                                 <Button
-                                    icon={<IoFilter />}
-                                    type="primary"
-                                    onClick={() => setFilterOpen(true)}
-                                    style={{
-                                        width: 'auto',
-                                    }}>
-                                    Filter
-                                </Button>
-                            </Badge>
-                            <Button
-                                color="danger"
-                                icon={<IoClose />}
-                                onClick={handleClearAll}
-                                iconPosition="end"
-                                className="filter-danger"></Button>
+                                    color="danger"
+                                    icon={<IoClose />}
+                                    onClick={handleClearAll}
+                                    iconPosition="end"
+                                    className="filter-danger"
+                                />
+                            </Tooltip>
                         </div>
+                        <Badge count={mutationsInForm.howManyMutations}>
+                            <Button
+                                icon={<IoFilter />}
+                                type="primary"
+                                onClick={() => setFilterOpen(true)}
+                                style={{
+                                    width: 'auto',
+                                }}>
+                                Filter
+                            </Button>
+                        </Badge>
                     </div>
                 </Card>
             ) : // </Badge.Ribbon>
