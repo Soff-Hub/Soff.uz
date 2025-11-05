@@ -42,7 +42,7 @@ export default function ProductCategoryScreen({
             : 'Ilmiy ishlar kategoriyasi';
 
     return (
-        <PageContainer title={fullTitle} boxed={true}>
+        <PageContainer>
             <Meta
                 title={fullTitle}
                 description={

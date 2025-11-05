@@ -20,7 +20,7 @@ const CodeVerifyPage = () => {
     ];
 
     return (
-        <PageContainer title="Ro'yxatdan o'tish">
+        <PageContainer>
             <div className="ps-page--my-account">
                 <Meta
                     title={"Ro'yxatdan o'tish"}
