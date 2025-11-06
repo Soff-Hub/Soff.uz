@@ -25,7 +25,9 @@ const HeaderActions = ({ auth, isDark }) => {
             <div className="d-flex">
                 {wishlist?.length > 0 && (
                     <Link href="/account/wishlist">
-                        <a className="header__extra">
+                        <a
+                            className="header__extra"
+                            style={{ marginRight: '15px' }}>
                             <a href="#">
                                 <Badge count={wishlist.length}>
                                     <img
