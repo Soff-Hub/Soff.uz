@@ -1,8 +1,11 @@
 @import '/scss/utils/variable';
 
 .mainblock {
+    $section-based-margin: 24px;
     background-color: $mainbg;
     padding: 57px 20px;
+    padding-bottom: 10px;
+    color: #fff;
 
     .footerMainTitle {
         color: #fff;
@@ -34,6 +37,152 @@
 
         @media (max-width: 576px) {
             width: 140px;
+        }
+    }
+
+    .footerContent {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 20px;
+
+        .socialIcon {
+            transition: all 0.3s $timing;
+            border-radius: 10px;
+            border: 1px solid transparent;
+            width: 40px;
+            aspect-ratio: 1/1;
+            display: flex;
+
+            img {
+                object-fit: contain;
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+            }
+
+            :hover {
+                opacity: 0.8;
+                transform: translate(0, -2px);
+
+                img {
+                    border: 1px solid $color-1st;
+                }
+            }
+        }
+
+        .footerLogoSection {
+            grid-column: 1 / span 2;
+        }
+
+        .footerLinksSection {
+            grid-column: 3 / span 4;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(5, auto);
+            gap: 20px;
+
+            ul {
+                height: fit-content;
+            }
+
+            ul:nth-child(1) {
+                grid-row: 1 / 2;
+            }
+            ul:nth-child(2),
+            ul:nth-child(3) {
+                grid-row: 1 / 3;
+            }
+
+            ul:nth-child(4) {
+                grid-row: 2 / 3;
+            }
+        }
+        ul {
+            color: #fff;
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+
+            li {
+                margin-bottom: 5px;
+            }
+        }
+    }
+
+    @media screen and (max-width: 1000px) {
+        $section-based-margin: 16px;
+        .footerContent {
+            grid-template-columns: repeat(3, 1fr);
+            .footerLogoSection {
+                grid-column: 1 / 2;
+            }
+
+            .footerLinksSection {
+                grid-column: 2 / 4;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+
+                ul {
+                    grid-row: auto;
+                    &:nth-child(1) {
+                        grid-row: 1 / 2;
+                        grid-column: 1 / 2;
+                    }
+
+                    &:nth-child(2) {
+                        grid-row: 1 / 3;
+                        grid-column: 2 / 3;
+                    }
+
+                    &:nth-child(3) {
+                        grid-row: 2 / 3;
+                        grid-column: 1 / 2;
+                    }
+
+                    &:nth-child(4) {
+                        margin-top: 30px;
+                        grid-row: 2 / 5;
+                        grid-column: 2 / 3;
+                    }
+                }
+            }
+        }
+    }
+
+    @media screen and (max-width: 868px) {
+        $section-based-margin: 14px;
+        .footerContent {
+            grid-template-columns: repeat(5, 1fr);
+            .footerLogoSection {
+                grid-column: 1 / 4;
+            }
+
+            .footerLinksSection {
+                grid-column: 4 / 6;
+                grid-template-columns: repeat(1, 1fr);
+                grid-template-rows: auto;
+
+                ul:nth-child(n) {
+                    grid-row: auto;
+                    grid-column: 1 / 2;
+                    margin-top: 0;
+                }
+            }
+        }
+    }
+
+    @media screen and (max-width: 576px) {
+        $section-based-margin: 12px;
+        .footerContent {
+            grid-template-columns: repeat(2, 1fr);
+            .footerLogoSection {
+                grid-column: 1 / span 2;
+            }
+
+            .footerLinksSection {
+                grid-column: 1 / span 2;
+                grid-template-columns: repeat(1, 1fr);
+            }
         }
     }
 }
