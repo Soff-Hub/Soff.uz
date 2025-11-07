@@ -27,6 +27,7 @@ import { useTelegram } from '~/shared/hooks/useTelegram';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
+import { useGetDirectionsQuery } from '~/store/profile/slice';
 
 const { TextArea } = Input;
 
@@ -49,13 +50,9 @@ const CreateOrderModal = ({
     const [confirmOpen, setConfirmOpen] = useState(false);
     const [showLeftGradient, setShowLeftGradient] = useState(false);
     const [showRightGradient, setShowRightGradient] = useState(true);
-    const [thumbsSwiper, setThumbsSwiper] = useState(null);
-    // const dispatch = useDispatch();
-    // const { directions } = useSelector((state) => state.profile);
 
     useEffect(() => {
         form.setFieldValue('direction', direction);
-        // dispatch(fetchDirections());
     }, [direction]);
 
     useEffect(() => {
@@ -65,19 +62,7 @@ const CreateOrderModal = ({
         }
     }, [defaultDirection]);
 
-    const { data: directionsData } = useFGet(
-        'directions',
-        'categories/all-directions'
-    );
-
-    const directions = useMemo(() => {
-        return (
-            directionsData?.map((elem) => ({
-                label: elem.title,
-                value: elem.value,
-            })) || []
-        );
-    }, [directionsData]);
+    const { data: directions } = useGetDirectionsQuery();
 
     const { data: categories } = useFGet(
         ['direction-categories', direction],
@@ -479,7 +464,6 @@ const CreateOrderModal = ({
 
                                 <Swiper
                                     modules={[Thumbs]}
-                                    onSwiper={setThumbsSwiper}
                                     spaceBetween={8}
                                     slidesPerView="auto"
                                     freeMode={true}
@@ -659,7 +643,7 @@ export const Info = ({ title }) => {
     return (
         <Tooltip title={title} className="d-flex align-items-center">
             <div
-                className="d-flex align-items-center justify-content-center ml-2"
+                className="d-flex align-items-center justify-content-center ms-2"
                 style={{ width: '15px', height: '15px', cursor: 'pointer' }}>
                 <QuestionCircleOutlined />
             </div>

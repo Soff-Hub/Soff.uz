@@ -5,7 +5,7 @@ import PageContainer from '~/widgets/layouts/PageContainer';
 import Meta from '~/components/shared/headers/Meta';
 import ServicesFilterSection from '~/components/freeleance/services/ServicesFilterSection';
 import ServicesCardSection from '~/components/freeleance/services/ServicesCardSection';
-import GrayCard from '~/widgets/gray-card';
+import { useGetDirectionsQuery } from '~/store/profile/slice';
 
 const getTitleFromDirection = (directions, value) => {
     const direction = directions.find((dir) => dir.value === value);
@@ -21,7 +21,6 @@ export default function SoffFreelancerPage({
     servicesData,
     parentCategory,
     childCategory,
-    directions,
     offset,
     limit,
     direction,
@@ -29,6 +28,8 @@ export default function SoffFreelancerPage({
     search,
 }) {
     const router = useRouter();
+    const { data: directionsData } = useGetDirectionsQuery();
+    const directions = directionsData || [];
     const currentPage = Math.floor(offset / limit) + 1;
 
     const directionTitle = getTitleFromDirection(directions, direction);
@@ -125,7 +126,6 @@ export async function getServerSideProps(context) {
         offset,
     });
 
-    const directionsUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/categories/all-directions`;
     const servicesUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/customer?${servicesQuery}`;
     const parentCategoryUrl = direction
         ? `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/categories/?direction=${direction}`
@@ -134,28 +134,17 @@ export async function getServerSideProps(context) {
         ? `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/categories?parent_id=${category_id}`
         : null;
 
-    const [directions, servicesData, parentCategory, childCategory] =
-        await Promise.all([
-            fetchJson(directionsUrl),
-            fetchJson(servicesUrl),
-            parentCategoryUrl
-                ? fetchJson(parentCategoryUrl)
-                : Promise.resolve([]),
-            childCategoryUrl
-                ? fetchJson(childCategoryUrl)
-                : Promise.resolve([]),
-        ]);
+    const [servicesData, parentCategory, childCategory] = await Promise.all([
+        fetchJson(servicesUrl),
+        parentCategoryUrl ? fetchJson(parentCategoryUrl) : Promise.resolve([]),
+        childCategoryUrl ? fetchJson(childCategoryUrl) : Promise.resolve([]),
+    ]);
 
     return {
         props: {
             search,
             direction,
             category_id,
-            directions:
-                directions?.map((dir) => ({
-                    label: dir.title,
-                    value: dir.value,
-                })) || [],
             servicesData: servicesData || { results: [], total_service: 0 },
             parentCategory,
             childCategory,

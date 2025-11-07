@@ -9,6 +9,7 @@ import { BiCategory } from 'react-icons/bi';
 import { AiOutlineApartment } from 'react-icons/ai';
 import { useFGet } from '~/shared/hooks/useFApi';
 import { useQuery } from '@tanstack/react-query';
+import { useGetDirectionsQuery } from '~/store/profile/slice';
 
 const defaultValues = {
     direction: '',
@@ -21,19 +22,12 @@ export default function SearchResultsProductsFilter({ total }) {
     const router = useRouter();
     const [categoriesList, setCategoriesList] = useState([]);
 
-    const { data: directionsData } = useFGet(
-        'directions',
-        'categories/all-directions'
-    );
+    const { data: directionsData } = useGetDirectionsQuery();
 
     const directions = useMemo(() => {
         return [
             { label: 'Barchasi', value: '' },
-            ,
-            ...(directionsData?.map((elem) => ({
-                label: elem.title,
-                value: elem.value,
-            })) || []),
+            ...(directionsData || []),
         ].filter(Boolean);
     }, [directionsData]);
 

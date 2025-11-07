@@ -24,6 +24,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Thumbs } from 'swiper/modules';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import { setShowSearch } from '~/store/fast-dowload/slice';
+import { useGetDirectionsQuery } from '~/store/profile/slice';
 // import Editor from '~/components/Editor';
 
 const direction_content = (
@@ -131,7 +132,7 @@ function useCreateOrder() {
     const { user } = useSelector((state) => state.auth);
     const { push, query, replace, pathname } = useRouter();
     const [confirmOpen, setConfirmOpen] = useState(false);
-    const { directions } = useSelector((state) => state.profile);
+    const { data: directions } = useGetDirectionsQuery();
     const [showLeftGradient, setShowLeftGradient] = useState(false);
     const [showRightGradient, setShowRightGradient] = useState(true);
     const [thumbsSwiper, setThumbsSwiper] = useState(null);

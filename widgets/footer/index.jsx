@@ -1,8 +1,8 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import styles from './style.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useFGet } from '~/shared/hooks/useFApi';
+import { useGetDirectionsQuery } from '~/store/profile/slice';
 
 const footerMenu = {
     soff: {
@@ -150,19 +150,7 @@ const aboutUsPages = [
 
 export default function Footer() {
     const currentYear = new Date().getFullYear();
-    const { data: directionsData } = useFGet(
-        'directions',
-        'categories/all-directions'
-    );
-
-    const directions = useMemo(() => {
-        return (
-            directionsData?.map((elem) => ({
-                label: elem.title,
-                value: elem.value,
-            })) || []
-        );
-    }, [directionsData]);
+    const { data: directions } = useGetDirectionsQuery();
 
     return (
         <footer className={`${styles.mainblock}`}>
@@ -248,7 +236,7 @@ export default function Footer() {
                         <h5 className="fw-semibold fs-2 text-white">
                             Xizmat turlari
                         </h5>
-                        {directions.map((link) => (
+                        {directions?.map((link) => (
                             <li key={link.value}>
                                 <Link href={`/orders?direction=${link.value}`}>
                                     <a
