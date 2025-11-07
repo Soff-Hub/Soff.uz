@@ -54,6 +54,32 @@
     @include transform(translateY(-50%));
 }
 
+@mixin link-button-style() {
+    background: $color-1st !important;
+    color: $textColorWhite !important;
+    border-radius: 50px;
+    font-size: 20px;
+    font-weight: 400;
+    gap: 10px;
+    border: none;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    padding: 5px 14px;
+    img {
+        margin-left: 10px;
+        height: 15px;
+    }
+
+    &:hover {
+        background: darken($color-1st, 5%) !important;
+    }
+
+    @media screen and (max-width: 576px) {
+        font-size: 16px;
+    }
+}
+
 /// Horizontal, vertical or absolute centering.
 @mixin center($width: null, $height: null) {
     position: absolute;

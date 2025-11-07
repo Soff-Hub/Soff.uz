@@ -1,4 +1,5 @@
 @import '/scss//utils/variable';
+
 .catalogCard {
     background: #fefefe;
     border: 1px solid #f0f0f0;
@@ -8,6 +9,7 @@
     padding: 16px;
     gap: 15px;
     height: 100%;
+    transition: all 0.3s ease;
 
     cursor: pointer;
     display: flex;
@@ -42,7 +44,7 @@
         @media (max-width: 576px) {
             font-size: 10px;
         }
-    } 
+    }
     @media (max-width: 992px) {
         padding: 12px;
         height: 300px;
@@ -63,6 +65,10 @@
         height: 250px;
         gap: 5px;
     }
+}
+.catalogCard:hover {
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
 }
 .cardIcon {
     width: 67px;

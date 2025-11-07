@@ -1,6 +1,8 @@
 @import '/scss/utils/variable';
+@import '/scss/utils/mixin';
+
 .freelance_section {
-    padding: 35px 0;
+    padding: 80px 0 54px 0;
     border-radius: 24px;
     display: flex;
     align-items: center;
@@ -38,20 +40,7 @@
     }
 
     .freelance_button {
-        background: $color-1st !important;
-        color: $textColorWhite !important;
-        border-radius: 50px;
-        font-size: 20px;
-        font-weight: 600;
-        border: none;
-        justify-content: center;
-        display: flex;
-        align-items: center;
-        padding: 5px 14px;
-        img {
-            margin-left: 10px;
-            height: 15px;
-        }
+        @include link-button-style();
     }
 }
 .cardSection {
@@ -68,28 +57,6 @@
     }
 }
 
-/* Large Tablet (≤1200px) */
-@media (max-width: 1200px) {
-    .freelance_section {
-        padding: 60px 30px;
-
-        .freelance_text {
-            h1 {
-                font-size: 40px;
-            }
-
-            p {
-                font-size: 17px;
-            }
-        }
-
-        .freelance_button {
-            font-size: 17px;
-            padding: 16px 26px;
-        }
-    }
-}
-
 /* Tablet (≤992px) */
 @media (max-width: 992px) {
     .freelance_section {
@@ -97,29 +64,30 @@
         text-align: center;
         gap: 24px;
 
-        .freelance_text {
-            max-width: 100%;
-            .titleWrapper {
-                .labelWrapperH1 {
-                    font-size: 28px !important;
-                }
-                .labelWrapperP {
-                    font-size: 14px !important;
-                }
-            }
-        }
+        // .freelance_text {
+        //     max-width: 100%;
+        //     .titleWrapper {
+        //         .labelWrapperH1 {
+        //             font-size: 28px !important;
+        //         }
+        //         .labelWrapperP {
+        //             font-size: 14px !important;
+        //         }
+        //     }
+        // }
 
-        .freelance_button {
-            width: 100%;
-            max-width: 320px;
-        }
+        // .freelance_button {
+        //     width: 100%;
+        //     max-width: 320px;
+        // }
     }
 }
 
 /* Mobile (≤576px) */
 @media (max-width: 576px) {
     .freelance_section {
-        padding: 40px 20px;
+        // padding: 40px 0;
+        gap: 10px;
 
         .freelance_text {
             max-width: 100%;
@@ -133,10 +101,10 @@
             }
         }
 
-        .freelance_button {
-            font-size: 16px;
-            padding: 14px 22px;
-            width: 100%;
-        }
+        // .freelance_button {
+        //     font-size: 16px;
+        //     padding: 14px 22px;
+        //     width: 100%;
+        // }
     }
 }
