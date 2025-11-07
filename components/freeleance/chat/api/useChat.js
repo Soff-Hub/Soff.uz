@@ -165,7 +165,7 @@ const useChat = (chatId) => {
                             if (
                                 !replaced &&
                                 m.status === 'sending' &&
-                                m.content === msg.content
+                                m.content.trim() === msg.content.trim()
                             ) {
                                 replaced = true;
                                 return msg; // replace this one
