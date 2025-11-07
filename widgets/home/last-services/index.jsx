@@ -40,7 +40,7 @@ const LastServices = () => {
                     </div>
                 </div>
                 <Link href="/orders">
-                    <button className={styles.freelance_button}>
+                    <a className={styles.freelance_button}>
                         <span>Barcha xizmatlar</span>
                         <img
                             src={'/static/img/arrowwhite.svg'}
@@ -48,7 +48,7 @@ const LastServices = () => {
                             height={5}
                             alt="arrow"
                         />
-                    </button>
+                    </a>
                 </Link>
             </div>
 

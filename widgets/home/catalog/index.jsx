@@ -62,19 +62,17 @@ const Catalog = ({ inFile }) => {
                                     </p>
                                 </div>
                             </div>
-                            <button
-                                onClick={() =>
-                                    router.push('/scientific-resources/all')
-                                }
-                                className={styles.catalogSeeAll}>
-                                Barcha mahsulotlar{' '}
-                                <Image
-                                    src={'/static/img/arrowwhite.svg'}
-                                    width={40}
-                                    height={20}
-                                    alt="arrow"
-                                />
-                            </button>
+                            <Link href="/scientific-resources/all">
+                                <a className={styles.catalogSeeAll}>
+                                    Barcha mahsulotlar{' '}
+                                    <Image
+                                        src={'/static/img/arrowwhite.svg'}
+                                        width={40}
+                                        height={20}
+                                        alt="arrow"
+                                    />
+                                </a>
+                            </Link>
                         </div>
                         <div className={styles.catalogCardsSection}>
                             {data?.map((item) => (
@@ -138,32 +136,35 @@ const cardImages = {
 const CatalogCard = ({ content_type, title }) => {
     return (
         <Link href={service[content_type]}>
-            <div className={cardStyles.catalogCard}>
-                <div className="d-flex gap-3 align-items-center">
-                    <div>
-                        <h2 className={cardStyles.cardLabel}>{title}</h2>
+            <a>
+                <div className={cardStyles.catalogCard}>
+                    <div className="d-flex gap-3 align-items-center">
+                        <div>
+                            <h2 className={cardStyles.cardLabel}>{title}</h2>
+                        </div>
                     </div>
-                </div>
-                <div className={cardStyles.cardImageBlock}>
-                    <div className={cardStyles.cardBlockRight}>
-                        <div className={cardStyles.cardBlockRightTop}>
-                            {cardImages[content_type]?.map((img) => (
-                                <div
-                                    className={
-                                        cardStyles.cardBlockRightTopRight
-                                    }
-                                    style={{
-                                        backgroundImage: `url(${
-                                            img || '/static/img/not-found.png'
-                                        })`,
-                                        backgroundSize: 'cover',
-                                        backgroundPosition: 'center',
-                                    }}></div>
-                            ))}
+                    <div className={cardStyles.cardImageBlock}>
+                        <div className={cardStyles.cardBlockRight}>
+                            <div className={cardStyles.cardBlockRightTop}>
+                                {cardImages[content_type]?.map((img) => (
+                                    <div
+                                        className={
+                                            cardStyles.cardBlockRightTopRight
+                                        }
+                                        style={{
+                                            backgroundImage: `url(${
+                                                img ||
+                                                '/static/img/not-found.png'
+                                            })`,
+                                            backgroundSize: 'cover',
+                                            backgroundPosition: 'center',
+                                        }}></div>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </a>
         </Link>
     );
 };

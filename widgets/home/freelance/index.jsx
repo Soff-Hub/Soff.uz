@@ -83,14 +83,14 @@ const Freelance = () => {
                     </div>
                 </div>
                 <Link href="/orders">
-                    <button className={styles.freelance_button} size="large">
+                    <a className={styles.freelance_button}>
                         Barcha xizmatlar
                         <img
                             src={'/static/img/arrowwhite.svg'}
                             sizes="15"
                             alt="arrow"
                         />
-                    </button>
+                    </a>
                 </Link>
             </div>
             <div className={styles.serviceCardSection}>
@@ -111,49 +111,51 @@ export default Freelance;
 const ServiceCard = ({ content_type = 'file', items = {} }) => {
     return (
         <Link href={link[content_type]}>
-            <div className={cardStyle.catalogCard}>
-                <div className={cardStyle.cardImageBlock}>
-                    <div
-                        className={cardStyle.cardBlockLeft}
-                        style={{
-                            backgroundImage: `url(${
-                                items.left || '/static/img/not-found.png'
-                            })`,
-                            backgroundSize: 'cover',
-                            backgroundRepeat: 'no-repeat',
-                            backgroundPosition: 'center',
-                        }}></div>
-                    <div className={cardStyle.cardBlockRight}>
+            <a>
+                <div className={cardStyle.catalogCard}>
+                    <div className={cardStyle.cardImageBlock}>
                         <div
-                            className={cardStyle.cardBlockRightBottom}
+                            className={cardStyle.cardBlockLeft}
                             style={{
                                 backgroundImage: `url(${
-                                    items.rightTop ||
-                                    '/static/img/not-found.png'
+                                    items.left || '/static/img/not-found.png'
                                 })`,
                                 backgroundSize: 'cover',
                                 backgroundRepeat: 'no-repeat',
                                 backgroundPosition: 'center',
                             }}></div>
-                        <div
-                            className={cardStyle.cardBlockRightBottom}
-                            style={{
-                                backgroundImage: `url(${
-                                    items.rightBot ||
-                                    '/static/img/not-found.png'
-                                })`,
-                                backgroundSize: 'cover',
-                                backgroundRepeat: 'no-repeat',
-                                backgroundPosition: 'center',
-                            }}></div>
+                        <div className={cardStyle.cardBlockRight}>
+                            <div
+                                className={cardStyle.cardBlockRightBottom}
+                                style={{
+                                    backgroundImage: `url(${
+                                        items.rightTop ||
+                                        '/static/img/not-found.png'
+                                    })`,
+                                    backgroundSize: 'cover',
+                                    backgroundRepeat: 'no-repeat',
+                                    backgroundPosition: 'center',
+                                }}></div>
+                            <div
+                                className={cardStyle.cardBlockRightBottom}
+                                style={{
+                                    backgroundImage: `url(${
+                                        items.rightBot ||
+                                        '/static/img/not-found.png'
+                                    })`,
+                                    backgroundSize: 'cover',
+                                    backgroundRepeat: 'no-repeat',
+                                    backgroundPosition: 'center',
+                                }}></div>
+                        </div>
+                    </div>
+                    <div className="d-flex flex-column flex-fill">
+                        <h3 className={cardStyle.cardTile}>
+                            {title[content_type]}
+                        </h3>
                     </div>
                 </div>
-                <div className="d-flex flex-column flex-fill">
-                    <h3 className={cardStyle.cardTile}>
-                        {title[content_type]}
-                    </h3>
-                </div>
-            </div>
+            </a>
         </Link>
     );
 };
