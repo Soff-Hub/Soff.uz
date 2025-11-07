@@ -31,7 +31,7 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
     const [showChildArrow, setShowChildArrow] = useState(false);
     const [title, setTitle] = useState('Barchasi');
     const [sybTitle, setSybTitle] = useState('');
-    const [search, setSearch] = useState('');
+    const [search, setSearch] = useState(undefined);
     const [drawerOpen, setDrawerOpen] = useState(false);
     const { isMobile } = useResponsive();
     const [selectedCategory, setSelectedCategory] = useState();
@@ -87,6 +87,8 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
     }, [parent]);
 
     useEffect(() => {
+        if (debouncedSearch === undefined) return;
+
         push({
             pathname: `${path}all`,
             query: { ...query, search: debouncedSearch },
@@ -97,7 +99,7 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
         if (query.title) {
             setTitle(query.title);
         }
-    }, [query]);
+    }, [query.title]);
 
     return (
         <div className={`${styles.filter} container`}>

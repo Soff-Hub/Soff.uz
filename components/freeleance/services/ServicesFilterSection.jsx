@@ -1,6 +1,6 @@
 import { Select } from 'antd';
 import { useRouter } from 'next/router';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './ServiceFilterSection.module.scss';
 import {
     DeleteOutlined,
@@ -8,28 +8,21 @@ import {
     SearchOutlined,
 } from '@ant-design/icons';
 import ServiceSteps from './service-steps';
-// import { directions } from '@/components/freeleance/constants/index';
-import { useSelector } from 'react-redux';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
 
 const { Option } = Select;
 
-const ServicesFilterSection = ({
-    count,
-    parentCategory,
-    directions,
-    childCategory,
-}) => {
+const ServicesFilterSection = ({ parentCategory, directions }) => {
     const router = useRouter();
     const { query } = router;
-    // const { directions } = useSelector((state) => state.profile);
     const { startTimeout, stopTimeout } = useTimeManager();
+
     const directionsWithEmpty = [
         { label: 'Barchasi', value: '' },
         ...directions,
     ];
 
-    const [searchValue, setSearchValue] = useState(query.search || '');
+    const [searchValue, setSearchValue] = useState(query.search);
     const [selectedDirection, setSelectedDirection] = useState(
         query.direction || ''
     );
@@ -45,6 +38,7 @@ const ServicesFilterSection = ({
 
     useEffect(() => {
         const delay = startTimeout(() => {
+            if (searchValue === undefined) return;
             const newQuery = {
                 ...router.query,
                 search: searchValue || undefined,
