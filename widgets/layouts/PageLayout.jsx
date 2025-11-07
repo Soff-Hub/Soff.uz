@@ -1,46 +1,36 @@
 import React, { useEffect } from 'react';
 import Head from 'next/head';
 import { useDispatch, useSelector } from 'react-redux';
-import { checkAuthorization, setAccountLinks } from '~/store/auth/slice';
+import { checkAuthorization } from '~/store/auth/slice';
 import { useRouter } from 'next/router';
-// import Header from '../header';
 import { GoogleLogin } from '@react-oauth/google';
-import { fetchDirections, fetchProfile } from '~/store/profile/slice';
+import {
+    useGetDirectionsQuery,
+    useGetProfileQuery,
+} from '~/store/profile/slice';
 import dynamic from 'next/dynamic';
-// import Footer from '~/widgets/footer';
-
-export let cutomerAccountLink = [
-    {
-        text: 'Sotib olinganlar',
-        url: '/account/sellerproducts',
-        icon: 'fa-solid fa-bag-shopping',
-    },
-    {
-        text: 'Buyurtmalarim',
-        url: '/order/my-orders',
-        icon: 'fas fa-truck',
-    },
-];
 
 const Header = dynamic(() => import('~/widgets/header'), { ssr: false });
 const Footer = dynamic(() => import('~/widgets/footer'), { ssr: true });
+const NetworkStatusComponent = dynamic(
+    () => import(`~/components/NetworkStatus`),
+    { ssr: false }
+);
 
 const PageLayout = ({ children, title, withFooter = true } = {}) => {
     const { user } = useSelector((state) => state.auth);
+
+    useGetProfileQuery(undefined, {
+        skip: user?.role !== 'customer',
+    });
+    useGetDirectionsQuery();
+
     const dispatch = useDispatch();
     const Router = useRouter();
 
     async function handleLogin(googleData) {
         Router.push(`/oauth/?token=${googleData}&returnUrl=${Router.asPath}`);
     }
-
-    useEffect(() => {
-        if (user?.role === 'customer') {
-            dispatch(setAccountLinks(cutomerAccountLink));
-            dispatch(fetchProfile());
-        }
-        dispatch(fetchDirections());
-    }, [user?.role]);
 
     const defaultRoutePage = () => {
         dispatch(checkAuthorization());
@@ -65,7 +55,7 @@ const PageLayout = ({ children, title, withFooter = true } = {}) => {
                     minHeight: '100vh',
                 }}>
                 <Header />
-
+                <NetworkStatusComponent />
                 <main
                     style={{
                         flex: '1 0 auto',
