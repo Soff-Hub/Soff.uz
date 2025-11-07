@@ -1,31 +1,5 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-// import { api } from '~/repositories/api';
-import { apiForFreelance } from '~/repositories/api';
-import { authAxios } from '~/repositories/authApi';
-
-export const fetchProfile = createAsyncThunk(
-    'auth/fetchProfile',
-    async (_, { getState }) => {
-        try {
-            const response = await authAxios.get('/auth/profile');
-            return response.data;
-        } catch (error) {}
-    }
-);
-
-export const fetchDirections = createAsyncThunk(
-    'api/v1/categories/all-directions',
-    async (_) => {
-        try {
-            const response = await apiForFreelance.get(
-                'categories/all-directions'
-            );
-            return response.data;
-        } catch (error) {
-            return [];
-        }
-    }
-);
+import { createSlice } from '@reduxjs/toolkit';
+import { apiFreelanceSlice, apiSoffSlice } from '../api/apiSlice';
 
 const initialState = {
     user: null,
@@ -41,36 +15,68 @@ const userProfile = createSlice({
         logout: (state) => {
             state.user = null;
         },
-    },
-    extraReducers: (builder) => {
-        builder
-            .addCase(fetchProfile.pending, (state) => {
-                state.loading = true;
-            })
-            .addCase(fetchProfile.fulfilled, (state, action) => {
-                state.loading = false;
-                state.user = action.payload;
-            })
-            .addCase(fetchProfile.rejected, (state, action) => {
-                state.loading = false;
-                state.error = action.error.message;
-            })
-            .addCase(fetchDirections.pending, (state) => {
-                state.loading = true;
-            })
-            .addCase(fetchDirections.fulfilled, (state, action) => {
-                state.loading = false;
-                state.directions = action.payload.map((dir) => ({
-                    label: dir.title,
-                    value: dir.value,
-                }));
-            })
-            .addCase(fetchDirections.rejected, (state, action) => {
-                state.loading = false;
-                state.error = action.error.message;
-            });
+        setUser: (state, action) => {
+            state.user = action.payload;
+        },
+        setError: (state, action) => {
+            state.error = action.payload;
+        },
+        setDirections: (state, action) => {
+            state.directions = action.payload;
+        },
     },
 });
 
+const extendedSoffSlice = apiSoffSlice.injectEndpoints({
+    endpoints: (builder) => ({
+        getProfile: builder.query({
+            query: () => '/auth/profile',
+            providesTags: ['Profile'],
+            onQueryStarted: async (_arg, { dispatch, queryFulfilled }) => {
+                try {
+                    const { data } = await queryFulfilled;
+                    dispatch(userProfile.actions.setUser(data));
+                } catch (error) {
+                    dispatch(
+                        userProfile.actions.setError(
+                            error.message ||
+                                "Pro'filni olishda xatolik yuz berdi"
+                        )
+                    );
+                }
+            },
+        }),
+    }),
+});
+
+const extendedFreelanceSlice = apiFreelanceSlice.injectEndpoints({
+    endpoints: (builder) => ({
+        getDirections: builder.query({
+            query: () => 'api/v1/categories/all-directions',
+            providesTags: ['Directions'],
+            transformResponse: (response) =>
+                response.map((dir) => ({
+                    label: dir.title,
+                    value: dir.value,
+                })),
+            onQueryStarted: async (_arg, { dispatch, queryFulfilled }) => {
+                try {
+                    const { data } = await queryFulfilled;
+                    dispatch(userProfile.actions.setDirections(data));
+                } catch (error) {
+                    dispatch(
+                        userProfile.actions.setError(
+                            error.message ||
+                                "Yo'nalishlarni olishda xatolik yuz berdi"
+                        )
+                    );
+                }
+            },
+        }),
+    }),
+});
+
+export const { useGetProfileQuery } = extendedSoffSlice;
+export const { useGetDirectionsQuery } = extendedFreelanceSlice;
 export const { logout } = userProfile.actions;
 export default userProfile.reducer;
