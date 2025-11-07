@@ -153,143 +153,149 @@ export default function Footer() {
     const { data: directions } = useGetDirectionsQuery();
 
     return (
-        <footer className={`${styles.mainblock}`}>
-            <div className={styles.footerContent}>
-                <div className={styles.footerLogoSection}>
-                    <img
-                        src={`/static/img/soff_green.png`}
-                        alt="soff logo"
-                        style={{ width: '200px', height: 'auto' }}
-                    />
-                    <a
-                        href={footerMenu.soff.path}
-                        className={styles.footerMainTitle}
-                        style={{
-                            fontSize: '20px',
-                            marginTop: '24px',
-                            marginBottom: 0,
-                        }}>
-                        Tayyor mahsulotlar va xizmatlar bir joyda
-                    </a>
+        <footer className={styles.mainblock}>
+            <div className="container">
+                <div className={styles.footerContent}>
+                    <div className={styles.footerLogoSection}>
+                        <img
+                            src={`/static/img/soff_green.png`}
+                            alt="soff logo"
+                            style={{ width: '200px', height: 'auto' }}
+                        />
+                        <a
+                            href={footerMenu.soff.path}
+                            className={styles.footerMainTitle}
+                            style={{
+                                fontSize: '20px',
+                                marginTop: '24px',
+                                marginBottom: 0,
+                            }}>
+                            Tayyor mahsulotlar va xizmatlar bir joyda
+                        </a>
 
-                    <div
-                        style={{
-                            display: 'flex',
-                            gap: '16px',
-                            alignItems: 'center',
-                            marginTop: '16px',
-                        }}>
-                        {footerMenu.social.items.map((item) => (
-                            <div key={item.url} className={styles.socialIcon}>
-                                <a
-                                    href={item.url}
-                                    target="_blank"
-                                    rel="noreferrer">
-                                    <img src={item.icon} alt={item.name} />
-                                </a>
-                            </div>
-                        ))}
+                        <div
+                            style={{
+                                display: 'flex',
+                                gap: '16px',
+                                alignItems: 'center',
+                                marginTop: '16px',
+                            }}>
+                            {footerMenu.social.items.map((item) => (
+                                <div
+                                    key={item.url}
+                                    className={styles.socialIcon}>
+                                    <a
+                                        href={item.url}
+                                        target="_blank"
+                                        rel="noreferrer">
+                                        <img src={item.icon} alt={item.name} />
+                                    </a>
+                                </div>
+                            ))}
+                        </div>
+                        {/* Xizmatlar (Aloqa) */}
+                        <ul className="mt-5">
+                            <h5 className="fw-semibold fs-2 text-white">
+                                {footerMenu.services.title}
+                            </h5>
+                            {footerMenu.services.links.map((link, i) =>
+                                link.link ? (
+                                    <li key={link.link + i}>
+                                        <Link href={link.link}>
+                                            <a
+                                                target="_blank"
+                                                className="fs-4"
+                                                rel="noopener noreferrer">
+                                                {link.name}
+                                            </a>
+                                        </Link>
+                                    </li>
+                                ) : (
+                                    <li key={i} className="fs-4">
+                                        {link.name}
+                                    </li>
+                                )
+                            )}
+                        </ul>
                     </div>
-                    {/* Xizmatlar (Aloqa) */}
-                    <ul className="mt-5">
-                        <h5 className="fw-semibold fs-2 text-white">
-                            {footerMenu.services.title}
-                        </h5>
-                        {footerMenu.services.links.map((link, i) =>
-                            link.link ? (
-                                <li key={link.link + i}>
+                    <div className={styles.footerLinksSection}>
+                        <ul>
+                            <h5 className="fw-semibold fs-2 text-white">
+                                Tayyor mahsulotlar
+                            </h5>
+                            {products.map((link) => (
+                                <li key={link.key}>
                                     <Link href={link.link}>
                                         <a
-                                            target="_blank"
                                             className="fs-4"
                                             rel="noopener noreferrer">
-                                            {link.name}
+                                            {link.label}
                                         </a>
                                     </Link>
                                 </li>
-                            ) : (
-                                <li key={i} className="fs-4">
-                                    {link.name}
+                            ))}
+                        </ul>
+                        <ul>
+                            <h5 className="fw-semibold fs-2 text-white">
+                                Xizmat turlari
+                            </h5>
+                            {directions?.map((link) => (
+                                <li key={link.value}>
+                                    <Link
+                                        href={`/orders?direction=${link.value}`}>
+                                        <a
+                                            className="fs-4"
+                                            rel="noopener noreferrer">
+                                            {link.label}
+                                        </a>
+                                    </Link>
                                 </li>
-                            )
-                        )}
-                    </ul>
+                            ))}
+                        </ul>
+                        <ul>
+                            <h5 className="fw-semibold fs-2 text-white">
+                                Asosiy sahifalar
+                            </h5>
+                            {mainPages.map((link) => (
+                                <li key={link.key}>
+                                    <Link href={link.link}>
+                                        <a
+                                            className="fs-4"
+                                            rel="noopener noreferrer">
+                                            {link.label}
+                                        </a>
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                        <ul>
+                            <h5 className="fw-semibold fs-2 text-white">
+                                Biz haqimizda
+                            </h5>
+                            {aboutUsPages.map((link) => (
+                                <li key={link.value}>
+                                    <Link
+                                        href={`/orders?direction=${link.value}`}>
+                                        <a
+                                            className="fs-4"
+                                            rel="noopener noreferrer">
+                                            {link.label}
+                                        </a>
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
                 </div>
-                <div className={styles.footerLinksSection}>
-                    <ul>
-                        <h5 className="fw-semibold fs-2 text-white">
-                            Tayyor mahsulotlar
-                        </h5>
-                        {products.map((link) => (
-                            <li key={link.key}>
-                                <Link href={link.link}>
-                                    <a
-                                        className="fs-4"
-                                        rel="noopener noreferrer">
-                                        {link.label}
-                                    </a>
-                                </Link>
-                            </li>
-                        ))}
-                    </ul>
-                    <ul>
-                        <h5 className="fw-semibold fs-2 text-white">
-                            Xizmat turlari
-                        </h5>
-                        {directions?.map((link) => (
-                            <li key={link.value}>
-                                <Link href={`/orders?direction=${link.value}`}>
-                                    <a
-                                        className="fs-4"
-                                        rel="noopener noreferrer">
-                                        {link.label}
-                                    </a>
-                                </Link>
-                            </li>
-                        ))}
-                    </ul>
-                    <ul>
-                        <h5 className="fw-semibold fs-2 text-white">
-                            Asosiy sahifalar
-                        </h5>
-                        {mainPages.map((link) => (
-                            <li key={link.key}>
-                                <Link href={link.link}>
-                                    <a
-                                        className="fs-4"
-                                        rel="noopener noreferrer">
-                                        {link.label}
-                                    </a>
-                                </Link>
-                            </li>
-                        ))}
-                    </ul>
-                    <ul>
-                        <h5 className="fw-semibold fs-2 text-white">
-                            Biz haqimizda
-                        </h5>
-                        {aboutUsPages.map((link) => (
-                            <li key={link.value}>
-                                <Link href={`/orders?direction=${link.value}`}>
-                                    <a
-                                        className="fs-4"
-                                        rel="noopener noreferrer">
-                                        {link.label}
-                                    </a>
-                                </Link>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            </div>
-            <div className="d-flex gap-4 justify-content-between mt-5 border-top pt-4 flex-wrap">
-                <span>
-                    © {currentYear} Soff.uz — Barcha huquqlar himoyalangan.
-                </span>
+                <div className="d-flex gap-4 justify-content-between mt-5 border-top pt-4 flex-wrap">
+                    <span>
+                        © {currentYear} Soff.uz — Barcha huquqlar himoyalangan.
+                    </span>
 
-                <Link href="/page/oferta">
-                    <a>® Terms | Privacy</a>
-                </Link>
+                    <Link href="/page/oferta">
+                        <a>® Terms | Privacy</a>
+                    </Link>
+                </div>
             </div>
         </footer>
     );
