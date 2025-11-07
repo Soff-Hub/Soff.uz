@@ -440,30 +440,22 @@ const HeaderSearch = () => {
             ));
     } else if (filteredOptions.length) {
         filteredDataOptions = filteredOptions.map((option, index) => (
-            // <Link
-            //     key={index}
-            //     href={
-            //         type === 'mahsulotlar'
-            //             ? `/product/${option.slug}`
-            //             : type === 'xizmatlar'
-            //             ? `/service/${option
-            //                   .replace(/\s+/g, '-')
-            //                   .toLowerCase()}`
-            //             : `/seller/${option.replace(/\s+/g, '-').toLowerCase()}`
-            //     }>
-            //     <a>
-            <div
+            <Link
                 key={index}
-                className={searchStyle.searchOption}
-                onClick={() => {
-                    setSearch(option);
-                    handleSearch();
-                }}>
-                {option}
-                {/* <FiExternalLink /> */}
-            </div>
-            //     </a>
-            // </Link>
+                href={
+                    type === 'mahsulotlar'
+                        ? `/search-page/?keyword=${option}&tab=1&type=file`
+                        : type === 'xizmatlar'
+                        ? `/search-page/?keyword=${option}&tab=2&type=all`
+                        : `/search-page/?keyword=${option}&tab=3&type=all`
+                }>
+                <a>
+                    <div key={index} className={searchStyle.searchOption}>
+                        {option}
+                        {/* <FiExternalLink /> */}
+                    </div>
+                </a>
+            </Link>
         ));
     } else {
         filteredDataOptions = (
