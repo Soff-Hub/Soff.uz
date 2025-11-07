@@ -69,7 +69,7 @@ export function StrapiProductPriceExpanded(product) {
         view = (
             <p className="ps-product__price sale">
                 ${formatCurrency(product.price)}
-                <del className="ml-2">
+                <del className="ms-2">
                     ${formatCurrency(product.sale_price)}
                 </del>
                 <small>18% off</small>
@@ -106,7 +106,6 @@ export function StrapiProductThumbnail(product) {
             <Link href="/product/[pid]" as={`/product/${product.slug}`}>
                 <a>
                     <LazyLoad>
-
                         <img src="/static/img/not-found.png" alt="soff" />
                     </LazyLoad>
                 </a>

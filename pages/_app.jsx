@@ -11,6 +11,7 @@ import { useTelegram } from '~/shared/hooks/useTelegram';
 import { PacmanLoader } from 'react-spinners';
 import { TelegramLink } from '~/shared/components/telegram-link';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
+import dynamic from 'next/dynamic';
 
 function App({ Component, pageProps }) {
     const { tg } = useTelegram();
@@ -150,7 +151,6 @@ function App({ Component, pageProps }) {
                         }),
                     }}></script>
             </Head>
-
             <div
                 style={{
                     position: 'fixed',
@@ -167,14 +167,12 @@ function App({ Component, pageProps }) {
                 }}>
                 <PacmanLoader color="#00A44F" size={30} />
             </div>
-
             <NextProgress
                 height="4px"
                 delay={300}
                 options={{ showSpinner: false }}
                 color="#00A44F"
             />
-
             {/* ✅ ALWAYS render Component - even during loading */}
             <Providers>
                 <AffiliateListener />

@@ -199,13 +199,16 @@ export default function PurchasedProducts() {
 
                 {/* Search va Filter */}
                 <div className="row g-3 align-items-center">
-                    <div className="col-12 col-sm-6">
-                        <Input
+                    <div
+                        className="col-12 col-sm-6"
+                        style={{
+                            height: '32px',
+                            paddingLeft: '5px',
+                        }}>
+                        <Input.Search
                             placeholder="Qidiruv"
                             value={search}
-                            size="large"
                             onChange={(e) => setSearch(e.target.value)}
-                            allowClear
                         />
                     </div>
                     <div className="col-12 col-sm-6">

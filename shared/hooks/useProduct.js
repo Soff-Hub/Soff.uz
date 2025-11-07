@@ -42,7 +42,7 @@ export default function useProduct() {
                             <>
                                 {formatCurrency(payload.sale_price)}
                                 <span> so'm</span>
-                                <del className="ml-2">
+                                <del className="ms-2">
                                     {formatCurrency(payload.price)}
                                     <span> so'm</span>
                                 </del>

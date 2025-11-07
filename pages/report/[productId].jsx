@@ -68,7 +68,7 @@ function Report() {
                                             {product?.title}
                                         </h5>
                                     </div>
-                                    <div className="d-flex align-items-center gap-2 ml-auto">
+                                    <div className="d-flex align-items-center gap-2 ms-auto">
                                         <i className="fa fa-user"></i>
                                         <h5 className="m-0 fw-medium">
                                             {product?.seller?.first_name}{' '}
