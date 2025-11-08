@@ -16,7 +16,7 @@ const Loader = () => {
         if (asPath.split('').length > 10) {
             const urlParams = new URLSearchParams(asPath.split('?')[1] || '');
             const firstId = urlParams.get('first');
-            const token = urlParams.get('token')?.slice(0, -12);
+            const token = urlParams.get('token');
 
             returnUrl =
                 urlParams.get('redirect_url') ||
