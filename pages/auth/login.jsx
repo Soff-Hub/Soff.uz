@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import Meta from '~/components/shared/headers/Meta';
 import BreadCrumb from '~/components/elements/BreadCrumb';
@@ -10,6 +10,7 @@ import { message } from 'antd';
 const RegisterPage = () => {
     const { user } = useSelector((state) => state.auth);
     const router = useRouter();
+    const isAlreadyPrinted = useRef(false);
 
     const breadCrumb = [
         {
@@ -22,7 +23,8 @@ const RegisterPage = () => {
     ];
 
     useEffect(() => {
-        if (user) {
+        if (user && !isAlreadyPrinted.current) {
+            isAlreadyPrinted.current = true;
             router.replace('/');
             message.success('Siz allaqachon tizimga kirgansiz');
         }
