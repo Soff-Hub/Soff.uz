@@ -54,7 +54,7 @@ function HeroSearchPart() {
             );
             return data;
         },
-        enabled: type === 'mahsulotlar' && !!debounceSearch.length,
+        enabled: type === 'mahsulotlar',
         cacheTime: 10000,
         retry: 1,
     });
@@ -67,7 +67,7 @@ function HeroSearchPart() {
             );
             return data;
         },
-        enabled: type !== 'mahsulotlar' && !!debounceSearch.length,
+        enabled: type !== 'mahsulotlar',
         cacheTime: 10000,
         retry: 1,
     });
