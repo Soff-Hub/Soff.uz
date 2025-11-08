@@ -100,22 +100,24 @@
         content: '';
         position: absolute;
         width: 150px;
-        height: 150px;
+        // height: 150px;
         border-radius: 50%;
         left: 200px;
         top: 100px;
         z-index: 1;
-        background-image: radial-gradient(circle,
-                #018f45 0%,
-                #038843 40%,
-                white 100%);
+        background-image: radial-gradient(
+            circle,
+            #018f45 0%,
+            #038843 40%,
+            white 100%
+        );
         filter: blur(80px);
         opacity: 0.7;
 
         @media (max-width: 768px) {
             left: 0;
             width: 100px;
-            height: 100px;
+            // height: 100px;
         }
     }
 
@@ -127,10 +129,12 @@
         border-radius: 50%;
         right: 0;
         top: -300px;
-        background-image: radial-gradient(circle,
-                #00a44f 0%,
-                #57aa7f 60%,
-                white 100%);
+        background-image: radial-gradient(
+            circle,
+            #00a44f 0%,
+            #57aa7f 60%,
+            white 100%
+        );
         filter: blur(200px);
         opacity: 0.7;
     }

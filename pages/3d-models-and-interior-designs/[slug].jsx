@@ -50,7 +50,7 @@ export default function ModelsAndInteriorDesign({
                 parent={fourChildData.results}
                 path={'/3d-models-and-interior-designs/'}
             />
-            <div className="ps-page--shop my-5 container p-xl-0 p-l-0">
+            <div className="ps-page--shop container p-xl-0 p-l-0">
                 <ProductsByCategory
                     data={productsData}
                     page={page}

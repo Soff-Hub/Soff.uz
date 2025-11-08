@@ -79,7 +79,7 @@ export default function ProductCategoryScreen({
                 parent={fourChildData?.results}
                 path={'/scientific-resources/'}
             />
-            <div className="ps-page--shop container p-lg-1 my-5">
+            <div className="ps-page--shop container p-lg-10 p-l-0">
                 <ProductsByCategory
                     data={productsData}
                     page={page}

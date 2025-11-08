@@ -155,45 +155,43 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
             </div>
 
             {/* Child carousel */}
-            <div className={styles.carouselTestWrapper}>
-                {showChildArrow && (
-                    <LeftOutlined
-                        className={`${styles.arrow} ${styles.left}`}
-                        onClick={() => scrollLeft(childRef)}
-                    />
-                )}
-                <div
-                    className={styles.carouselTest}
-                    ref={childRef}
-                    style={{
-                        justifyContent: showChildArrow ? 'start' : 'center',
-                    }}>
-                    {query?.parentCategory && (
-                        <>
-                            {child.map((cat) => (
-                                <span
-                                    key={cat.slug}
-                                    onClick={() =>
-                                        handleChild(cat?.slug, cat?.name)
-                                    }
-                                    className={`${styles.childCat} ${
-                                        (query.childCategory === cat.slug ||
-                                            query.slug === cat.slug) &&
-                                        styles.active
-                                    }`}>
-                                    {cat?.name}
-                                </span>
-                            ))}
-                        </>
+            {query?.parentCategory && child?.length ? (
+                <div className={styles.carouselTestWrapper}>
+                    {showChildArrow && (
+                        <LeftOutlined
+                            className={`${styles.arrow} ${styles.left}`}
+                            onClick={() => scrollLeft(childRef)}
+                        />
+                    )}
+                    <div
+                        className={styles.carouselTest}
+                        ref={childRef}
+                        style={{
+                            justifyContent: showChildArrow ? 'start' : 'center',
+                        }}>
+                        {child.map((cat) => (
+                            <span
+                                key={cat.slug}
+                                onClick={() =>
+                                    handleChild(cat?.slug, cat?.name)
+                                }
+                                className={`${styles.childCat} ${
+                                    (query.childCategory === cat.slug ||
+                                        query.slug === cat.slug) &&
+                                    styles.active
+                                }`}>
+                                {cat?.name}
+                            </span>
+                        ))}
+                    </div>
+                    {showChildArrow && (
+                        <RightOutlined
+                            className={`${styles.arrow} ${styles.right}`}
+                            onClick={() => scrollRight(childRef)}
+                        />
                     )}
                 </div>
-                {showChildArrow && (
-                    <RightOutlined
-                        className={`${styles.arrow} ${styles.right}`}
-                        onClick={() => scrollRight(childRef)}
-                    />
-                )}
-            </div>
+            ) : null}
 
             {isMobile && isFile && (
                 <ConfigProvider
@@ -220,8 +218,10 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
                     <Button
                         type="primary"
                         block
-                        onClick={() => setDrawerOpen(true)}
-                        style={{ marginTop: 16 }}>
+                        style={{
+                            marginBottom: 30,
+                        }}
+                        onClick={() => setDrawerOpen(true)}>
                         Filtrlarni ochish
                     </Button>
                     <Drawer

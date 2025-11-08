@@ -1,5 +1,6 @@
 .card {
     background: #fefefe;
+    z-index: 10;
     border: 1px solid #d9d9d9;
     transition: all 0.3s ease;
     width: 100%;
@@ -11,6 +12,7 @@
 
     .cardHead {
         position: relative;
+        background-color: #fefefe;
 
         .cardHeadInfo {
             position: absolute;
