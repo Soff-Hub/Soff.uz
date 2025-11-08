@@ -11,7 +11,8 @@ import { useGetDirectionsQuery } from '~/store/profile/slice';
 import { directionsImg } from '~/shared/constants/directions-img';
 import { useFGet } from '~/shared/hooks/useFApi';
 import SearchSellerCard from '~/entities/seller/search-seller-card';
-import useScrollToNotFound from '~/shared/hooks/useScrollToNotFound';
+import useResponsive from '~/shared/utilities/useResponsive';
+import { rankingsImg } from '~/shared/constants/rankings-img';
 
 const items = [
     {
@@ -65,6 +66,12 @@ const link = {
     design: '/orders?direction=dizayn',
     file: '/orders?direction=scientific_work',
 };
+
+const ranksImg = [
+    rankingsImg['first'],
+    rankingsImg['second'],
+    rankingsImg['third'],
+];
 
 const Freelance = () => {
     return (
@@ -120,12 +127,16 @@ const Freelance = () => {
 export default Freelance;
 
 const TopFreelanceRankings = () => {
+    const { isDesktop } = useResponsive();
     const [isEnd, setIsEnd] = useState(false);
     const [isBeginning, setIsBeginning] = useState(true); // Start with true as initial state
     const [swiperController, setSwiperController] = useState(null);
     const [rankingCategory, setRankingCategory] = useState(null);
     const swiperRef = useRef(null);
-    const notFoundRef = useRef();
+
+    const sizesOptions = isDesktop
+        ? { size: 'large', gap: 20 }
+        : { size: 'middle', gap: 10 };
 
     const { data: directions } = useGetDirectionsQuery();
     const {
@@ -191,49 +202,51 @@ const TopFreelanceRankings = () => {
         );
     } else if (showResults) {
         resultsContent = (
-            <>
-                <div
-                    className="Search_Results_Specialists_Wrap"
-                    style={{ marginTop: '30px' }}>
-                    {sellersData.results.map((item) => (
-                        <SearchSellerCard
-                            seller={item}
-                            key={item?.soff_seller_id}
-                        />
-                    ))}
-                    <div className={styles.card}>
-                        <h3 className={styles.title}>
-                            {sellersData?.count} ta frilanser topildi
-                        </h3>
-                        <Link href="/sellers">
-                            <a className={styles.viewAllButton}>
-                                <button className={styles.btn}>
-                                    Barchasini ko'rish
-                                </button>
-                            </a>
-                        </Link>
-                    </div>
+            <div
+                className={styles.resultsWrapper}
+                style={{ marginTop: '30px' }}>
+                {sellersData.results.map((item, index) => (
+                    <SearchSellerCard
+                        seller={item}
+                        rankImage={ranksImg[index]}
+                        key={item?.soff_seller_id}
+                    />
+                ))}
+                <div className={styles.card}>
+                    <h3 className={styles.title}>
+                        {sellersData?.count} ta frilanser topildi
+                    </h3>
+                    <Link href="/sellers">
+                        <a className={styles.viewAllButton}>
+                            <button className={styles.btn}>
+                                Barchasini ko'rish
+                            </button>
+                        </a>
+                    </Link>
                 </div>
-            </>
+            </div>
         );
     } else {
         resultsContent = (
-            <div ref={notFoundRef}>
+            <div>
                 <div className="Search_Results_not_found">
                     <img
                         src="/static/img/searchNotFound.png"
                         alt=""
                         className="Search_Results_not_found_img"
                     />
-                    <p className="Search_Results_not_found_title">
+                    <p
+                        className="Search_Results_not_found_title"
+                        style={{
+                            marginTop: '20px',
+                            marginBottom: 0,
+                        }}>
                         Afsuski, bu yo'nalishda frilanserlar topilmadi.
                     </p>
                 </div>
             </div>
         );
     }
-
-    useScrollToNotFound(notFoundRef, showResults, sellersData);
 
     useEffect(() => {
         if (swiperRef.current?.swiper) {
@@ -294,7 +307,7 @@ const TopFreelanceRankings = () => {
             <div className={styles.swiperContainer}>
                 <Button
                     aria-label="previous"
-                    size="large"
+                    size={sizesOptions.size}
                     onClick={() => swiperController?.slidePrev()}
                     style={{
                         display: isBeginning ? 'none' : 'flex',
@@ -305,7 +318,7 @@ const TopFreelanceRankings = () => {
                 </Button>
                 <Swiper
                     ref={swiperRef}
-                    spaceBetween={20}
+                    spaceBetween={sizesOptions.gap}
                     navigation={false}
                     freeMode={true}
                     slidesPerView={'auto'}
@@ -319,7 +332,7 @@ const TopFreelanceRankings = () => {
                             <Button
                                 icon={directionsImg[item.value]}
                                 type="text"
-                                size="large"
+                                size={sizesOptions.size}
                                 className={
                                     item.value === rankingCategory
                                         ? styles['categoryButton--selected']
@@ -341,7 +354,7 @@ const TopFreelanceRankings = () => {
                 </Swiper>
                 <Button
                     aria-label="next"
-                    size="large"
+                    size={sizesOptions.size}
                     style={{
                         display: isEnd ? 'none' : 'flex',
                     }}
