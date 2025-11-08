@@ -20,8 +20,8 @@ const NetworkStatusComponent = dynamic(
 const PageLayout = ({ children, title, withFooter = true } = {}) => {
     const { user } = useSelector((state) => state.auth);
 
-    useGetProfileQuery(undefined, {
-        skip: user?.role !== 'customer',
+    useGetProfileQuery(`profile-${user?.role}-${user?.access}`, {
+        skip: user?.role !== 'customer' || !user?.access,
     });
     useGetDirectionsQuery();
 
