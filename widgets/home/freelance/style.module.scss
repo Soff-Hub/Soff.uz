@@ -122,6 +122,43 @@
             @extend .swipe_btn;
         }
     }
+
+    .card {
+        background: #00a44f;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        min-height: 200px;
+        flex-direction: column;
+        gap: 10px;
+        padding: 20px;
+        border-radius: 10px;
+
+        .btn {
+            background: #fefefe;
+            color: #24282b;
+            line-height: 26px;
+            font-size: 14px;
+            border-radius: 10px;
+            border: #fefefe solid 2px;
+            transition: all 0.3s ease-out;
+
+            &:hover {
+                color: #fefefe;
+                background: #00a44f;
+            }
+        }
+
+        .title {
+            margin: 0;
+            text-align: center;
+            color: #fefefe;
+            font-size: 20px;
+            line-height: 30px;
+            font-weight: 600;
+        }
+    }
 }
 
 .freelance_section {

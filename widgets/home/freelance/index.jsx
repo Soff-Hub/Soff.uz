@@ -11,6 +11,7 @@ import { useGetDirectionsQuery } from '~/store/profile/slice';
 import { directionsImg } from '~/shared/constants/directions-img';
 import { useFGet } from '~/shared/hooks/useFApi';
 import SearchSellerCard from '~/entities/seller/search-seller-card';
+import useScrollToNotFound from '~/shared/hooks/useScrollToNotFound';
 
 const items = [
     {
@@ -124,6 +125,7 @@ const TopFreelanceRankings = () => {
     const [swiperController, setSwiperController] = useState(null);
     const [rankingCategory, setRankingCategory] = useState(null);
     const swiperRef = useRef(null);
+    const notFoundRef = useRef();
 
     const { data: directions } = useGetDirectionsQuery();
     const {
@@ -190,19 +192,48 @@ const TopFreelanceRankings = () => {
     } else if (showResults) {
         resultsContent = (
             <>
-                <div className="Search_Results_Specialists_Wrap">
+                <div
+                    className="Search_Results_Specialists_Wrap"
+                    style={{ marginTop: '30px' }}>
                     {sellersData.results.map((item) => (
                         <SearchSellerCard
                             seller={item}
                             key={item?.soff_seller_id}
                         />
                     ))}
+                    <div className={styles.card}>
+                        <h3 className={styles.title}>
+                            {sellersData?.count} ta frilanser topildi
+                        </h3>
+                        <Link href="/sellers">
+                            <a className={styles.viewAllButton}>
+                                <button className={styles.btn}>
+                                    Barchasini ko'rish
+                                </button>
+                            </a>
+                        </Link>
+                    </div>
                 </div>
             </>
         );
     } else {
-        resultsContent = <Search_Results_NotFound ref={notFoundRef} />;
+        resultsContent = (
+            <div ref={notFoundRef}>
+                <div className="Search_Results_not_found">
+                    <img
+                        src="/static/img/searchNotFound.png"
+                        alt=""
+                        className="Search_Results_not_found_img"
+                    />
+                    <p className="Search_Results_not_found_title">
+                        Afsuski, bu yo'nalishda frilanserlar topilmadi.
+                    </p>
+                </div>
+            </div>
+        );
     }
+
+    useScrollToNotFound(notFoundRef, showResults, sellersData);
 
     useEffect(() => {
         if (swiperRef.current?.swiper) {
