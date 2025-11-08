@@ -25,6 +25,8 @@ import useDebounce from '~/shared/hooks/useDebounce';
 import axiosInstance from '~/shared/api/freeleanceApi';
 import searchStyle from '../navbar-search/style.module.scss';
 import { FiExternalLink } from 'react-icons/fi';
+import { GrBook } from 'react-icons/gr';
+import { directionsImg } from '~/shared/constants/directions-img';
 
 const products = [
     {
@@ -260,12 +262,12 @@ const HeaderCatergories = () => {
             },
             ...directions.map((dir) => ({
                 key: dir.value,
-                icon: templateIcons[dir.value]
-                    ? templateIcons[dir.value]
-                    : templateIcons['not_found'],
+                icon: directionsImg[dir.value]
+                    ? directionsImg[dir.value]
+                    : directionsImg['not_found'],
                 label: (
                     <a
-                        className={`ms-3 ${styles.dropLabel}`}
+                        className={`${styles.dropLabel}`}
                         href={`/orders?direction=${dir.value}`}>
                         {dir.label}
                     </a>

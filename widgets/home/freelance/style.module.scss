@@ -1,6 +1,129 @@
 @import '/scss/utils/variable';
 @import '/scss/utils/mixin';
 
+.topFreelanceRankings {
+    .swiperContainer {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        .categorySwiperBeginning::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 60px;
+            height: 100%;
+            z-index: 11;
+            background: linear-gradient(
+                to left,
+                rgba(241, 243, 255, 0.05),
+                rgb(255, 255, 255) 80%
+            );
+        }
+
+        .categorySwiperEnding::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 60px;
+            height: 100%;
+            z-index: 11;
+            background: linear-gradient(
+                to right,
+                rgba(241, 243, 255, 0.05),
+                rgb(255, 255, 255) 80%
+            );
+        }
+
+        .categoryButton {
+            font-size: 16px !important;
+            font-weight: 400 !important;
+            color: $subTextColor !important;
+            padding: 0px 15px !important;
+            border: 1px solid $color-1st;
+
+            svg {
+                color: $color-1st !important;
+                font-size: 20px;
+
+                g {
+                    fill: $color-1st !important;
+                    path {
+                        stroke: $color-1st !important;
+                        fill: $color-1st !important;
+                    }
+                }
+
+                path {
+                    stroke: $color-1st !important;
+                }
+            }
+        }
+
+        .categoryButton--ordinary {
+            @extend .categoryButton;
+            &:hover {
+                background-color: #00a44fb6 !important;
+                color: #fff !important;
+
+                svg {
+                    color: #fff !important;
+
+                    g {
+                        fill: #fff !important;
+                        path {
+                            stroke: #fff !important;
+                            fill: #fff !important;
+                        }
+                    }
+
+                    path {
+                        stroke: #fff !important;
+                    }
+                }
+            }
+        }
+
+        .categoryButton--selected {
+            background-color: $color-1st !important;
+            color: #fff !important;
+
+            svg {
+                font-size: 20px;
+
+                g {
+                    fill: #fff !important;
+                    path {
+                        stroke: #fff !important;
+                        fill: #fff !important;
+                    }
+                }
+
+                path {
+                    stroke: #fff !important;
+                }
+            }
+        }
+
+        .swipe_btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            svg {
+                position: relative;
+            }
+        }
+
+        .swipeNext {
+            transform: rotate(180deg);
+            @extend .swipe_btn;
+        }
+    }
+}
+
 .freelance_section {
     border-radius: 24px;
     display: flex;
