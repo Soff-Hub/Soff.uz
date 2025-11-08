@@ -4,8 +4,6 @@ import { useEffect } from 'react';
 function SwiperController({ getMethods, setEnding, setBeginning }) {
     const swiper = useSwiper();
 
-    swiper.isBeginning;
-
     useEffect(() => {
         getMethods(swiper);
         setEnding(swiper.isEnd);
