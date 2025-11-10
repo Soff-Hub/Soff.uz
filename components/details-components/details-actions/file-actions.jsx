@@ -482,6 +482,7 @@ function FileActions({ product }) {
             <AuthModal
                 open={authModal}
                 onClose={() => setAuthModal(false)}
+                onGoogleSuccessNavigateTo={'/account/checkout'}
                 onSuccess={() => {
                     Router.push('/account/checkout');
                 }}

@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { PacmanLoader } from 'react-spinners';
 import { begin, login } from '~/store/auth/slice';
+import { isReturnUrlEmpty } from '~/shared/utilities/return-url';
 
 const Loader = () => {
     const { user } = useSelector((state) => state.auth);
@@ -13,6 +14,9 @@ const Loader = () => {
 
     useEffect(() => {
         let returnUrl = null;
+        const googleRedirectOnSuccess = localStorage.getItem(
+            'google_redirect_url'
+        );
         if (asPath.split('').length > 10) {
             const urlParams = new URLSearchParams(asPath.split('?')[1] || '');
             const firstId = urlParams.get('first');
@@ -34,12 +38,19 @@ const Loader = () => {
             dispatch(begin({ id: firstId }));
         }
 
+        if (googleRedirectOnSuccess) {
+            returnUrl = googleRedirectOnSuccess;
+            localStorage.removeItem('google_redirect_url');
+        }
+
+        const decodedUrl = decodeURIComponent(returnUrl || '');
+
         if (user?.role === 'admin') {
             localStorage.setItem('is_seller', '1');
         }
 
-        if (returnUrl) {
-            Router.push(decodeURIComponent(returnUrl));
+        if (decodedUrl && !isReturnUrlEmpty(decodedUrl)) {
+            Router.push(decodedUrl);
         } else {
             Router.push('/account/sellerproducts');
         }

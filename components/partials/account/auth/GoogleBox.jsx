@@ -6,7 +6,7 @@ export default function GoogleBox({
     // loading,
     // params,
     isModal,
-    onSuccess,
+    onGoogleSuccessNavigateTo,
     openTelegram,
     // setCode,
 }) {
@@ -18,6 +18,13 @@ export default function GoogleBox({
         const utm_source = localStorage.getItem('utm_source');
         const baseUrl = 'https://api.soff.uz/auth/social/login/customer';
         const params = new URLSearchParams();
+
+        if (onGoogleSuccessNavigateTo) {
+            localStorage.setItem(
+                'google_redirect_url',
+                onGoogleSuccessNavigateTo
+            );
+        }
 
         // Add existing query parameters
         Object.keys(router.query).forEach((key) => {

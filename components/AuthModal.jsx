@@ -4,7 +4,13 @@ import LoginForm from '~/components/partials/account/auth/LoginForm.jsx';
 import CodeVerifyModal from '~/components/CodeVerifyModal';
 import TelegramCodeVerifyModal from '~/components/TelegramCodeVerifyModal.jsx';
 
-const AuthModal = ({ open, onClose, slug, onSuccess }) => {
+const AuthModal = ({
+    open,
+    onClose,
+    slug,
+    onSuccess,
+    onGoogleSuccessNavigateTo,
+}) => {
     const [codeModalOpen, setCodeModalOpen] = useState(false);
     const [telegramCodeModalOpen, setTelegramCodeModalOpen] = useState(false);
     const [authCode, setCode] = useState();
@@ -35,6 +41,7 @@ const AuthModal = ({ open, onClose, slug, onSuccess }) => {
                         setTelegramCodeModalOpen(true);
                     }}
                     onSuccess={() => setCodeModalOpen(true)}
+                    onGoogleSuccessNavigateTo={onGoogleSuccessNavigateTo}
                     isModal={true}
                 />
             </Modal>
