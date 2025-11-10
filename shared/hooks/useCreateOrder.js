@@ -26,6 +26,7 @@ import { Thumbs } from 'swiper/modules';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import { setShowSearch } from '~/store/fast-dowload/slice';
 import { useGetDirectionsQuery } from '~/store/profile/slice';
+import { useTimeManager } from './useTimeManager';
 
 // import Editor from '~/components/Editor';
 
@@ -140,6 +141,7 @@ function useCreateOrder() {
     const [showRightGradient, setShowRightGradient] = useState(true);
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
     const dispatch = useDispatch();
+    const { startTimeout } = useTimeManager();
     const onfirstRender = useRef(true);
 
     useEffect(() => {
@@ -215,10 +217,13 @@ function useCreateOrder() {
         url: 'order/custom-order',
         token: user?.access,
         onSuccess: (data) => {
+            console.log('Order created successfully:', data);
             form.resetFields();
             handleCloseConfirm();
             message.success('Buyurtma muvaffaqiyatli yaratildi!');
-            push(`/order/my-orders?orderId=${data?.order_id}`);
+            startTimeout(() => {
+                push(`/order/my-orders?orderId=${data?.order_id}`);
+            }, 100);
         },
         onError: (err) => {
             const errorMsg =
