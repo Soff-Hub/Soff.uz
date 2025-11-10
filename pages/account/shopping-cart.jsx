@@ -6,6 +6,9 @@ import ModuleEcomerceCartItems from '~/components/ecomerce/modules/ModuleEcomerc
 import Link from 'next/link';
 import ModuleCartSummary from '~/components/ecomerce/modules/ModuleCartSummary';
 import Meta from '~/components/shared/headers/Meta';
+import { FaArrowLeft, FaBoxOpen } from 'react-icons/fa6';
+import { Button } from 'antd';
+import { useRouter } from 'next/router';
 
 const breadCrumb = [
     {
@@ -20,6 +23,7 @@ const breadCrumb = [
 const ShoppingCartScreen = () => {
     const state = useSelector((state) => state.auth.user);
     const cartItems = useSelector((state) => state.ecomerce.cartDataItems);
+    const router = useRouter()
 
     let contentView;
     if (cartItems) {
@@ -73,26 +77,40 @@ const ShoppingCartScreen = () => {
             contentView = (
                 <>
                     <div className="ps-section__content">
-                        <div className="alert alert-info">
-                            <p className="mb-0">Sizning savatingiz bo'sh...</p>
-                        </div>
-
-                        <div className="ps-section__cart-actions">
-                            <Link href="/">
-                                <a
-                                    className="ps-btn btn_color btn_color"
+                        <div style={{ height: "80vh" }} className='d-flex justify-content-center flex-column align-items-center'>
+                            <div
+                                style={{
+                                    borderRadius: "50%",
+                                    background: "#7575751c",
+                                    width: "130px",
+                                    height: "130px",
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    marginBottom: "20px",
+                                }}
+                            >
+                                <FaBoxOpen
                                     style={{
-                                        maxWidth: '120px',
-                                        width: '100%',
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                    }}>
-                                    {' '}
-                                    <i className="fa-solid fa-angles-left"></i>{' '}
-                                    Ortga
-                                </a>
-                            </Link>
+                                        color: "#00a44f",
+                                        fontSize: "70px",
+                                    }}
+                                />
+                            </div>
+                            <h3 style={{fontSize: "30px"}} className='font-bold mb-2 text-gray-800'>
+                                Savat bo'sh
+                            </h3>
+                            <p className='mb-4 text-center text-muted'>
+                                To'lov qilish uchun biror mahsulot qo'shing.
+                            </p>
+                            <Button
+                                type='primary'
+                                size='large'
+                                onClick={() => router.push('/')}
+                            >
+                                <FaArrowLeft />
+                                Xarid qilishni boshlash
+                            </Button>
                         </div>
                     </div>
                 </>
@@ -113,9 +131,11 @@ const ShoppingCartScreen = () => {
                     <BreadCrumb breacrumb={breadCrumb} />
                     <div className="ps-section--shopping ps-shopping-cart">
                         <div className="container">
-                            <div className="ps-section__header">
-                                <h1>Savat</h1>
-                            </div>
+                            {cartItems?.length > 0 &&
+                                <div className="ps-section__header">
+                                    <h1>Savat</h1>
+                                </div>
+                            }
                             {contentView}
                         </div>
                     </div>

@@ -314,12 +314,17 @@ const HeaderCatergories = () => {
                 </Dropdown>
             </div>
             <div className={`${styles.orderBox} ${styles.dropBox}`}>
-                <Dropdown menu={{ items: templates }}>
+                <Link href="/order/create">
+                    <a className={styles.dropLabel}>
+                        Buyurtma berish
+                    </a>
+                </Link>
+                {/* <Dropdown menu={{ items: templates }}>
                     <Space className={styles.dropLabel}>
                         Buyurtma berish
                         <DownOutlined />
                     </Space>
-                </Dropdown>
+                </Dropdown> */}
             </div>
         </div>
     );
