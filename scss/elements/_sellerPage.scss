@@ -76,6 +76,40 @@
     object-fit: cover;
 }
 
+.file-upload-on-forms {
+    height: fit-content !important;
+    display: block;
+
+    .ant-upload {
+        height: fit-content !important;
+    }
+
+    .ant-upload-list-item {
+        height: 40px !important;
+        margin-top: 10px !important;
+    }
+
+    .ant-upload-list-item-thumbnail {
+        height: auto !important;
+        width: auto !important;
+
+        svg {
+            height: 20px !important;
+            width: 20px !important;
+        }
+    }
+}
+
+.order-file-upload {
+    margin-bottom: 24px !important;
+
+    @extend .file-upload-on-forms;
+}
+
+.custom-order-file-upload {
+    @extend .file-upload-on-forms;
+}
+
 .ant-upload {
     height: 50px !important;
 }
