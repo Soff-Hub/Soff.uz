@@ -33,7 +33,7 @@ function App({ Component, pageProps }) {
         if (utmCampaign) localStorage.setItem('utm_campaign', utmCampaign);
 
         startTimeout(() => {
-            document.getElementById('__next').classList.add('loaded');
+            document?.getElementById('__next')?.classList?.add('loaded');
         }, 10);
 
         const handleKeyDown = (e) => {

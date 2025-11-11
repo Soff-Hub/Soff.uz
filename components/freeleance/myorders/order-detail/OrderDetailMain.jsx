@@ -22,13 +22,14 @@ const OrderDetailMain = ({ orderData }) => {
         isLoading,
         refetch,
     } = useGetOrderById(+router.query?.id, orderData, true);
-
+    console.log({ order });
     if (isLoading) {
         return <Loader />;
     }
 
     if (isError) {
         router.push('/404');
+        return null;
     }
 
     const handleOrderUpdate = async () => {

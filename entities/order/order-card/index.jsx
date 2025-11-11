@@ -10,6 +10,9 @@ import { useRouter } from 'next/router';
 import { Avatar, Button, message, Tooltip, Badge } from 'antd';
 import { cn } from '~/shared/utilities/cn';
 import { CancelOrderModal } from '~/components/freeleance/myorders/order-detail/ui/modals/CancelOrderModal';
+import { FaRegCheckCircle } from 'react-icons/fa';
+import { FaRegStopCircle } from 'react-icons/fa';
+import { FaRegTimesCircle } from 'react-icons/fa';
 
 const CompletedOrderWrapper = ({ children }) => {
     return (
@@ -124,7 +127,8 @@ const OrderCard = ({
     onOrderUpdate,
 }) => {
     const router = useRouter();
-    const statusAsset = orderStatusAssets(order.order_status_doing?.status);
+    console.log({ order });
+    const statusAsset = orderStatusAssets(order?.order_status_doing?.status);
 
     const hasSeller = Boolean(order.user);
     const price = order.service?.price ?? order.budget ?? 0;
@@ -317,21 +321,36 @@ const OrderCard = ({
                     </span>
                     {statusAsset.status === 'cancelled' && isPartiallyPaid ? (
                         <span className={styles.paymentRejected}>
-                            <i className="fa fa-times-circle-o" />
+                            {/* <i className="fa fa-solid fa-times-circle-o" /> */}
+                            <FaRegTimesCircle
+                                style={{
+                                    marginRight: '2px',
+                                    marginBottom: '2px',
+                                }}
+                            />
                             To'lov bekor qilindi
                         </span>
                     ) : statusAsset.status ==
                       'cancelled' ? null : isFullyPaid ? (
                         <span className={styles.paymentApproved}>
-                            <i className="fa fa-check-circle-o" />
+                            {/* <i className="fa fa-check-circle-o" /> */}
+                            <FaRegCheckCircle
+                                style={{
+                                    marginRight: '2px',
+                                    marginBottom: '2px',
+                                }}
+                            />
                             To'lov qabul qilindi
                         </span>
                     ) : isPartiallyPaid ? (
                         <span className={styles.paymentHalfApproved}>
-                            <i className="fa fa-stop-circle-o" />
-                            To'lovning {formatCurrencyWithSpace(
-                                notPaidAmount
-                            )}{' '}
+                            <FaRegStopCircle
+                                style={{
+                                    marginRight: '2px',
+                                    marginBottom: '2px',
+                                }}
+                            />
+                            To'lovning {formatCurrencyWithSpace(notPaidAmount)}{' '}
                             so'm qismi amalga oshirilmagan
                         </span>
                     ) : null}
