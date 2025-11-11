@@ -28,8 +28,8 @@ export default function ModelsAndInteriorDesign({
         title && subTitle
             ? `${title} - ${subTitle}`
             : title
-            ? title
-            : '3D moddellar va Interier dizaynlar';
+                ? title
+                : '3D moddellar va Interier dizaynlar';
 
     const handlePageChange = (newPage) => {
         router.push({
@@ -83,7 +83,7 @@ export async function getServerSideProps(context) {
 
     const categoryParam = childCategory ? childCategory : parentCategory;
 
-    const productsUrl = `${baseUrlUseApi}customer/products/?direction=3d&category=${categoryParam}&page=${page}&page_size=48&search=${search}`;
+    const productsUrl = `${baseUrlUseApi}customer/products/?direction=3d&category=${categoryParam}&page=${page}&page_size=50&search=${search}`;
     const fourChildUrl = `${baseUrlUseApi}customer/four-child?direction=3d`;
     const childCategoryUrl = `${baseUrlUseApi}customer/four-child?direction=3d&parent__slug=${parentCategory}`;
 

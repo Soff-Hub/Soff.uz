@@ -27,8 +27,8 @@ export default function DesignDevelopments({
         title && subTitle
             ? `${title} - ${subTitle}`
             : title
-            ? title
-            : 'Dizayn shablonlar';
+                ? title
+                : 'Dizayn shablonlar';
 
     const handlePageChange = (newPage) => {
         router.push({
@@ -81,7 +81,7 @@ export async function getServerSideProps(context) {
 
     const categoryParam = childCategory ? childCategory : parentCategory;
 
-    const productsUrl = `${baseUrlUseApi}customer/products/?direction=design&category=${categoryParam}&page=${page}&page_size=48&search=${search}`;
+    const productsUrl = `${baseUrlUseApi}customer/products/?direction=design&category=${categoryParam}&page=${page}&page_size=50&search=${search}`;
     const fourChildUrl = `${baseUrlUseApi}customer/four-child?direction=design`;
     const childCategoryUrl = `${baseUrlUseApi}customer/four-child?direction=design&parent__slug=${parentCategory}`;
 

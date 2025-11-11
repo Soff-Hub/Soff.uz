@@ -99,6 +99,7 @@ const UserInfo = ({ seller, commentRef, sectionRef }) => {
             <UserShortItems
                 sectionRef={sectionRef}
                 type="product"
+                direction={seller?.most_common_direction}
                 id={seller.id}
                 limit={limit}
             />
