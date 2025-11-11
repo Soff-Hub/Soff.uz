@@ -131,7 +131,7 @@ function useCreateOrder() {
     const budget = Form.useWatch('budget', form);
     const categoryId = Form.useWatch('category_id', form);
     const { isDesktop } = useResponsive();
-    const [direction, setDirection] = useState('scientific_work');
+    const [direction, setDirection] = useState(null);
     const [files, setFiles] = useState(null);
     const { user } = useSelector((state) => state.auth);
     const { push, query, replace, pathname } = useRouter();
@@ -188,16 +188,16 @@ function useCreateOrder() {
         if (onfirstRender.current) {
             onfirstRender.current = false;
 
-            if (!query?.direction) {
-                replace(
-                    {
-                        pathname: pathname,
-                        query: { ...query, direction: 'scientific_work' },
-                    },
-                    undefined,
-                    { shallow: true }
-                );
-            }
+            // if (!query?.direction) {
+            //     replace(
+            //         {
+            //             pathname: pathname,
+            //             query: { ...query, direction: 'scientific_work' },
+            //         },
+            //         undefined,
+            //         { shallow: true }
+            //     );
+            // }
 
             if (query?.direction) {
                 setDirection(query?.direction);
@@ -295,6 +295,7 @@ function useCreateOrder() {
                         className="form-element"
                         size="large"
                         options={directions}
+                        placeholder="Yo'nalishni tanlang"
                     />
                 </Form.Item>
             ),

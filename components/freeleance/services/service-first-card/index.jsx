@@ -5,11 +5,11 @@ import { useRouter } from 'next/router';
 
 const ServiceFirstCard = () => {
     const { isLoggedIn } = useSelector((state) => state.auth);
-    const { push } = useRouter();
+    const { push, query } = useRouter();
 
     const handleOrder = () => {
         if (isLoggedIn) {
-            push('/order/create');
+            push(`/order/create?${query?.direction && `direction=${query.direction}`}`);
         } else {
             push(
                 '/auth/login?returnUrl=' + encodeURIComponent('/order/create')
