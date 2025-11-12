@@ -15,9 +15,9 @@ function FreelancersFilterMenu({ collapsed }) {
 
     // querylardan qiymatlar olish
     const selectedPositions = Array.isArray(router.query.position)
-        ? router.query.position.map((v) => Number(v))
+        ? router.query.position.map((v) => v)
         : router.query.position
-        ? [Number(router.query.position)]
+        ? [router.query.position]
         : [];
 
     const selectedDirection = router.query.direction || '';
@@ -59,17 +59,19 @@ function FreelancersFilterMenu({ collapsed }) {
 
     return (
         <div className={`${styles.radioMenu} ${collapsed ? styles.visible : ''}`}>
-            <div className={styles.clearButton}>
-                <Button
-                    style={{ padding: 0, marginBottom: "10px" }}
-                    type="link"
-                    danger
-                    onClick={handleClear}
-                    icon={<MdOutlineClear />}
-                >
-                    Filtrlarni tozalash
-                </Button>
-            </div>
+            {selectedPositions?.length > 0 && selectedDirection && (
+                <div className={styles.clearButton}>
+                    <Button
+                        style={{ padding: 0, marginBottom: "10px" }}
+                        type="link"
+                        danger
+                        onClick={handleClear}
+                        icon={<MdOutlineClear />}
+                    >
+                        Filtrlarni tozalash
+                    </Button>
+                </div>
+            )}
 
             {/* Yo‘nalish */}
             <div className={styles.filterGroup}>
