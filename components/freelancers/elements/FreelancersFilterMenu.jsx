@@ -22,7 +22,7 @@ function FreelancersFilterMenu({ collapsed }) {
             className={`${styles.radioMenu} ${
                 collapsed ? styles.visible : ''
             }`}>
-            {selectedPositions?.length > 0 && selectedDirection && (
+            {(selectedPositions?.length > 0 || selectedDirection) && (
                 <div className={styles.clearButton}>
                     <Button
                         style={{ padding: 0, marginBottom: '10px' }}

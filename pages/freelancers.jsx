@@ -45,7 +45,6 @@ export async function getServerSideProps(context) {
 
     if (keyword) params.append('search', keyword);
 
-    // position
     if (Array.isArray(position)) {
         position.forEach((p) => params.append('position', p));
     } else if (position) {
@@ -58,7 +57,11 @@ export async function getServerSideProps(context) {
 
     if (sort_by) params.append('sort_by', sort_by);
     params.append('limit', limit);
-    params.append('offset', offset);
+    if (offset){
+        params.append('offset', offset)
+    }else{
+        params.append('offset', 0)
+    } 
 
     const url = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/users/sellers?${params.toString()}`;
 
