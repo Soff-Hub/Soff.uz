@@ -3,71 +3,33 @@ import { Checkbox, Radio, Button } from 'antd';
 import { AiOutlineApartment } from 'react-icons/ai';
 import { MdOutlineClear } from 'react-icons/md';
 import { BiCategory } from 'react-icons/bi';
-import { useGetDirectionsQuery } from '~/store/profile/slice';
-import { useRouter } from 'next/router';
 import styles from '../styles/freelancersFilterMenu.module.scss';
-import { useFGet } from '~/shared/hooks/useFApi';
+import useFreelancers from '../hooks/useFreelancers';
 
 function FreelancersFilterMenu({ collapsed }) {
-    const { data: directions } = useGetDirectionsQuery();
-    const { data: positions } = useFGet("positions", "users/positions");
-    const router = useRouter();
-
-    // querylardan qiymatlar olish
-    const selectedPositions = Array.isArray(router.query.position)
-        ? router.query.position.map((v) => v)
-        : router.query.position
-        ? [router.query.position]
-        : [];
-
-    const selectedDirection = router.query.direction || '';
-
-    // query yangilovchi funksiya
-    const updateQuery = (updates) => {
-        const newQuery = { ...router.query };
-
-        Object.entries(updates).forEach(([key, value]) => {
-            if (value === undefined || value === null || value.length === 0) {
-                delete newQuery[key];
-            } else {
-                newQuery[key] = value;
-            }
-        });
-
-        router.push(
-            {
-                pathname: router.pathname,
-                query: newQuery,
-            },
-        );
-    };
-
-    // Tozalash
-    const handleClear = () => {
-        router.push({ pathname: router.pathname, query: {} });
-    };
-
-    // Position (checkbox)
-    const handlePositionsChange = (vals) => {
-        updateQuery({ position: vals });
-    };
-
-    // Direction (radio)
-    const handleDirectionChange = (value) => {
-        updateQuery({ direction: value });
-    };
+    const {
+        directions,
+        positions,
+        handleClear,
+        handlePositionsChange,
+        handleDirectionChange,
+        selectedPositions,
+        selectedDirection,
+    } = useFreelancers();
 
     return (
-        <div className={`${styles.radioMenu} ${collapsed ? styles.visible : ''}`}>
+        <div
+            className={`${styles.radioMenu} ${
+                collapsed ? styles.visible : ''
+            }`}>
             {selectedPositions?.length > 0 && selectedDirection && (
                 <div className={styles.clearButton}>
                     <Button
-                        style={{ padding: 0, marginBottom: "10px" }}
+                        style={{ padding: 0, marginBottom: '10px' }}
                         type="link"
                         danger
                         onClick={handleClear}
-                        icon={<MdOutlineClear />}
-                    >
+                        icon={<MdOutlineClear />}>
                         Filtrlarni tozalash
                     </Button>
                 </div>
@@ -80,10 +42,13 @@ function FreelancersFilterMenu({ collapsed }) {
                 </h4>
                 <Radio.Group
                     value={selectedDirection}
-                    onChange={(e) => handleDirectionChange(e.target.value)}
-                    style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}
-                >
-                    {directions?.map((dir) => (
+                    onChange={e => handleDirectionChange(e.target.value)}
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '6px',
+                    }}>
+                    {directions?.map(dir => (
                         <Radio key={dir.value} value={dir.value}>
                             {dir.label}
                         </Radio>
@@ -99,9 +64,12 @@ function FreelancersFilterMenu({ collapsed }) {
                 <Checkbox.Group
                     value={selectedPositions}
                     onChange={handlePositionsChange}
-                    style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}
-                >
-                    {positions?.map((pos) => (
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '6px',
+                    }}>
+                    {positions?.map(pos => (
                         <Checkbox key={pos.title} value={pos.title}>
                             {pos.title}
                         </Checkbox>

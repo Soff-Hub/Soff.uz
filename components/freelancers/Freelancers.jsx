@@ -3,7 +3,9 @@ import styles from './styles/freelancers.module.scss';
 import dynamic from 'next/dynamic';
 import FreelancersFilterHeader from './elements/FreelancersFilterHeader';
 import FreelancersFilterMenu from './elements/FreelancersFilterMenu';
+import FreelancersFilterDrawer from './elements/FreelancersFilterDrawer';
 import FreelancersFilterResult from './elements/FreelancersFilterResult';
+import useResponsive from '~/shared/utilities/useResponsive';
 
 const FreelancerSearchInput = dynamic(
     () => import('./elements/FreelancerSearchInput'),
@@ -14,11 +16,11 @@ const FreelancerSearchInput = dynamic(
 
 function Freelancers({ data }) {
     const [collapsed, setCollapsed] = useState(false);
+    const { isMobile, isTablet, isDesktop } = useResponsive();
 
     const toggleCollapsed = () => {
         setCollapsed(!collapsed);
     };
-    console.log('Freelancers component data:', data);
 
     return (
         <div className={`${styles.freelancers} container`}>
@@ -33,10 +35,23 @@ function Freelancers({ data }) {
                 <FreelancerSearchInput />
             </div>
             <div className={styles.freelancersFilter}>
-                <FreelancersFilterHeader toggleCollapsed={toggleCollapsed} collapsed={collapsed} />
+                <FreelancersFilterHeader
+                    toggleCollapsed={toggleCollapsed}
+                    collapsed={collapsed}
+                />
                 <div className={styles.freelancersFilterResult}>
-                    <FreelancersFilterMenu collapsed={collapsed} />
-                    <FreelancersFilterResult collapsed={collapsed} data={data} />
+                    {isDesktop ? (
+                        <FreelancersFilterMenu collapsed={collapsed} />
+                    ) : (
+                        <FreelancersFilterDrawer
+                            collapsed={collapsed}
+                            toggleCollapsed={toggleCollapsed}
+                        />
+                    )}
+                    <FreelancersFilterResult
+                        collapsed={collapsed}
+                        data={data}
+                    />
                 </div>
             </div>
         </div>
