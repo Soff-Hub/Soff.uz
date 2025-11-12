@@ -21,7 +21,7 @@ const meta = {
     ],
 };
 
-function Leaderboard({ data }) {
+function FreelancersPage({ data }) {
     return (
         <PageLayout>
             <Meta {...meta} />
@@ -31,36 +31,48 @@ function Leaderboard({ data }) {
 }
 
 export async function getServerSideProps(context) {
+    const { query } = context;
     const {
         keyword = '',
-        position = '',
+        position = "",
+        direction = "",
         sort_by = '',
-        direction = '',
-        category = '',
         limit = 20,
         offset = 0,
-    } = context.query;
+    } = query;
 
-    const servicesQuery = new URLSearchParams({
-        ...(direction && { direction }),
-        ...(position && { position }),
-        ...(sort_by && { sort_by }),
-        ...(category && { category }),
-        search: keyword,
-        limit,
-        offset,
-    });
+    const params = new URLSearchParams();
 
-    const sellersUrl = `${
-        process.env.NEXT_PUBLIC_FREELEANCE_URL
-    }/api/v1/users/sellers?${servicesQuery.toString()}`;
-    const sellersData = await fetchJson(sellersUrl);
-    console.log('Freelancers data:', sellersData, sellersUrl);
-    return {
-        props: {
-            data: sellersData,
-        },
-    };
+    if (keyword) params.append('search', keyword);
+
+    // position
+    if (Array.isArray(position)) {
+        position.forEach((p) => params.append('position', p));
+    } else if (position) {
+        params.append('position', position);
+    }
+
+    if (direction) {
+        params.append('direction', direction);
+    }
+
+    if (sort_by) params.append('sort_by', sort_by);
+    params.append('limit', limit);
+    params.append('offset', offset);
+
+    const url = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/users/sellers?${params.toString()}`;
+
+    try {
+        const data = await fetchJson(url);
+        return {
+            props: { data },
+        };
+    } catch (error) {
+        console.error('❌ SSR fetch error:', error);
+        return {
+            props: { data: [] },
+        };
+    }
 }
 
-export default Leaderboard;
+export default FreelancersPage;
