@@ -9,8 +9,13 @@ import {
     useGetProfileQuery,
 } from '~/store/profile/slice';
 import dynamic from 'next/dynamic';
+import HeaderLoader from '~/widgets/header/HeaderLoader';
 
-const Header = dynamic(() => import('~/widgets/header'), { ssr: false });
+const Header = dynamic(() => import('~/widgets/header'), {
+    ssr: false,
+    loading: HeaderLoader,
+});
+
 const Footer = dynamic(() => import('~/widgets/footer'), { ssr: true });
 const NetworkStatusComponent = dynamic(
     () => import(`~/components/NetworkStatus`),
@@ -18,7 +23,7 @@ const NetworkStatusComponent = dynamic(
 );
 
 const PageLayout = ({ children, title, withFooter = true } = {}) => {
-    const { user } = useSelector((state) => state.auth);
+    const { user } = useSelector(state => state.auth);
 
     useGetProfileQuery(`profile-${user?.role}-${user?.access}`, {
         skip: user?.role !== 'customer' || !user?.access,
@@ -71,10 +76,10 @@ const PageLayout = ({ children, title, withFooter = true } = {}) => {
             {!user && (
                 <div style={{ height: 0, overflow: 'hidden' }}>
                     <GoogleLogin
-                        onSuccess={(credentialResponse) => {
+                        onSuccess={credentialResponse => {
                             handleLogin(credentialResponse?.credential);
                         }}
-                        intermediate_iframe_close_callback={(e) =>
+                        intermediate_iframe_close_callback={e =>
                             e.preventDefault()
                         }
                         useOneTap

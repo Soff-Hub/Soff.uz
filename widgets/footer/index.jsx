@@ -29,14 +29,14 @@ const footerMenu = {
                 url: 'https://t.me/+y5GpvEz48_hkMzli',
             },
             {
-                name: 'FaceBook',
-                icon: '/static/img/faceb.png',
-                url: 'https://www.facebook.com/profile.php?id=61579052952962#',
+                name: 'YouTube',
+                icon: '/static/img/you_tube.png',
+                url: 'https://www.youtube.com/@soffuz',
             },
             {
                 name: 'Instagram',
                 icon: '/static/img/insta.png',
-                url: 'https://www.instagram.com/soffuz_?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==',
+                url: 'https://www.instagram.com/soff.uz.market/',
             },
         ],
     },
@@ -180,9 +180,12 @@ export default function Footer() {
                                 alignItems: 'center',
                                 marginTop: '16px',
                             }}>
-                            {footerMenu.social.items.map((item) => (
+                            {footerMenu.social.items.map((item, index) => (
                                 <div
                                     key={item.url}
+                                    style={{
+                                        width: index === 1 ? '42px' : '40px',
+                                    }}
                                     className={styles.socialIcon}>
                                     <a
                                         href={item.url}
@@ -223,7 +226,7 @@ export default function Footer() {
                             <h5 className="fw-semibold fs-2 text-white">
                                 Tayyor mahsulotlar
                             </h5>
-                            {products.map((link) => (
+                            {products.map(link => (
                                 <li key={link.key}>
                                     <Link href={link.link}>
                                         <a
@@ -239,7 +242,7 @@ export default function Footer() {
                             <h5 className="fw-semibold fs-2 text-white">
                                 Xizmat turlari
                             </h5>
-                            {directions?.map((link) => (
+                            {directions?.map(link => (
                                 <li key={link.value}>
                                     <Link
                                         href={`/orders?direction=${link.value}`}>
@@ -256,7 +259,7 @@ export default function Footer() {
                             <h5 className="fw-semibold fs-2 text-white">
                                 Asosiy sahifalar
                             </h5>
-                            {mainPages.map((link) => (
+                            {mainPages.map(link => (
                                 <li key={link.key}>
                                     <Link href={link.link}>
                                         <a
@@ -272,7 +275,7 @@ export default function Footer() {
                             <h5 className="fw-semibold fs-2 text-white">
                                 Biz haqimizda
                             </h5>
-                            {aboutUsPages.map((link) => (
+                            {aboutUsPages.map(link => (
                                 <li key={link.value}>
                                     <Link
                                         href={`/orders?direction=${link.value}`}>
