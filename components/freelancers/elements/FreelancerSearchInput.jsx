@@ -3,7 +3,7 @@ import { SearchOutlined } from '@ant-design/icons';
 import { useQuery } from '@tanstack/react-query';
 import { F_SEARCH_OPTIONS } from '~/shared/api/end-points';
 import useDebounce from '~/shared/hooks/useDebounce';
-import axios from 'axios';
+import axiosInstance from '~/shared/api/freeleanceApi';
 import { useRouter } from 'next/router';
 import styles from '../styles/freelanceSearchInput.module.scss';
 import dynamic from 'next/dynamic';
@@ -14,6 +14,7 @@ const AutoComplete = dynamic(() => import('antd/es/auto-complete'), {
 });
 
 function FreelancerSearchInput() {
+    const axios = axiosInstance();
     const [search, setSearch] = useState('');
     const router = useRouter();
     const debounceSearch = useDebounce(search, 500);

@@ -11,8 +11,8 @@
         &::after {
             content: '';
             position: absolute;
-            width: 300px;
-            height: 350px;
+            width: 350px;
+            height: 200px;
             border-radius: 50%;
             left: 200px;
             top: 100px;
@@ -95,6 +95,14 @@
 
         @media (max-width: 576px) {
             font-size: 14px;
+        }
+    }
+
+    .freelancersFilter {
+        margin-top: 50px;
+
+        .freelancersFilterResult {
+            margin-top: 20px;
         }
     }
 }
