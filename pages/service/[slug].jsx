@@ -20,6 +20,7 @@ export async function getServerSideProps(context) {
             `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/customer/${slug}/`
         );
 
+        console.log({ data, status });
         return {
             props: {
                 data,

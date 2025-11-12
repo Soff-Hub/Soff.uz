@@ -60,7 +60,6 @@ const RedesignModulePaymentOrderSummary = ({ ecomerce }) => {
             <p className={cn("text-dark", "font-semibold", "m-0", "px-4", "py-2")}>
                 {ecomerce.cartDataItems.length} ta mahsulot
             </p>
-
             <div className={cn("flex-1", "overflow-y-auto", "px-4", "space-y-3", "py-2", produtsHeightClass)}>
                 {ecomerce.cartDataItems && ecomerce.cartDataItems.length > 0 ? (
                     ecomerce.cartDataItems.map((item) => (
@@ -136,7 +135,9 @@ const RedesignModulePaymentOrderSummary = ({ ecomerce }) => {
 
                     ))
                 ) : (
-                    <Skeleton active paragraph={{ rows: 7 }} />
+                    <>
+
+                    </>
                 )}
             </div>
 

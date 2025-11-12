@@ -8,6 +8,7 @@ import {
     InputNumber,
     Popover,
     TimePicker,
+    Upload,
 } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -25,6 +26,8 @@ import { Thumbs } from 'swiper/modules';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import { setShowSearch } from '~/store/fast-dowload/slice';
 import { useGetDirectionsQuery } from '~/store/profile/slice';
+import { useTimeManager } from './useTimeManager';
+
 // import Editor from '~/components/Editor';
 
 const direction_content = (
@@ -128,7 +131,8 @@ function useCreateOrder() {
     const budget = Form.useWatch('budget', form);
     const categoryId = Form.useWatch('category_id', form);
     const { isDesktop } = useResponsive();
-    const [direction, setDirection] = useState('scientific_work');
+    const [direction, setDirection] = useState(null);
+    const [files, setFiles] = useState(null);
     const { user } = useSelector((state) => state.auth);
     const { push, query, replace, pathname } = useRouter();
     const [confirmOpen, setConfirmOpen] = useState(false);
@@ -137,6 +141,7 @@ function useCreateOrder() {
     const [showRightGradient, setShowRightGradient] = useState(true);
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
     const dispatch = useDispatch();
+    const { startTimeout } = useTimeManager();
     const onfirstRender = useRef(true);
 
     useEffect(() => {
@@ -183,16 +188,16 @@ function useCreateOrder() {
         if (onfirstRender.current) {
             onfirstRender.current = false;
 
-            if (!query?.direction) {
-                replace(
-                    {
-                        pathname: pathname,
-                        query: { ...query, direction: 'scientific_work' },
-                    },
-                    undefined,
-                    { shallow: true }
-                );
-            }
+            // if (!query?.direction) {
+            //     replace(
+            //         {
+            //             pathname: pathname,
+            //             query: { ...query, direction: 'scientific_work' },
+            //         },
+            //         undefined,
+            //         { shallow: true }
+            //     );
+            // }
 
             if (query?.direction) {
                 setDirection(query?.direction);
@@ -212,10 +217,13 @@ function useCreateOrder() {
         url: 'order/custom-order',
         token: user?.access,
         onSuccess: (data) => {
+            console.log('Order created successfully:', data);
             form.resetFields();
             handleCloseConfirm();
             message.success('Buyurtma muvaffaqiyatli yaratildi!');
-            push(`/order/my-orders?orderId=${data?.order_id}`);
+            startTimeout(() => {
+                push(`/order/my-orders?orderId=${data?.order_id}`);
+            }, 100);
         },
         onError: (err) => {
             const errorMsg =
@@ -255,6 +263,10 @@ function useCreateOrder() {
             fd.append(key, value);
         }
 
+        if (files && files.length > 0) {
+            fd.append('file', files[0].originFileObj);
+        }
+
         createOrder(fd);
     };
 
@@ -283,6 +295,7 @@ function useCreateOrder() {
                         className="form-element"
                         size="large"
                         options={directions}
+                        placeholder="Yo'nalishni tanlang"
                     />
                 </Form.Item>
             ),
@@ -333,35 +346,41 @@ function useCreateOrder() {
             id: 'description',
             title: 'Buyurtma tafsilotlari',
             content: (
-                <Form.Item
-                    name="description"
-                    label={
-                        <div className="d-flex align-items-center align-items-sm-center">
-                            <p className="m-0 text-dark">
-                                Buyurtma tavsifini kiriting
-                            </p>
-                            <Info
-                                title={
-                                    inputInfoToCreateOrder['description'].info
-                                }
-                            />
-                        </div>
-                    }
-                    rules={[
-                        {
-                            required: true,
-                            message: 'Buyurtma tavsifini yozing!',
-                        },
-                    ]}>
-                    <TextArea
-                        style={{ resize: 'none' }}
-                        rows={4}
+                <>
+                    <Form.Item
                         name="description"
-                        placeholder={
-                            inputInfoToCreateOrder['description'].placeholder
+                        style={{
+                            marginBottom: 15,
+                        }}
+                        label={
+                            <div className="d-flex align-items-center align-items-sm-center">
+                                <p className="m-0 text-dark">
+                                    Buyurtma tavsifini kiriting
+                                </p>
+                                <Info
+                                    title={
+                                        inputInfoToCreateOrder['description']
+                                            .info
+                                    }
+                                />
+                            </div>
                         }
-                    />
-                    {/* <Editor
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Buyurtma tavsifini yozing!',
+                            },
+                        ]}>
+                        <TextArea
+                            style={{ resize: 'none' }}
+                            rows={4}
+                            name="description"
+                            placeholder={
+                                inputInfoToCreateOrder['description']
+                                    .placeholder
+                            }
+                        />
+                        {/* <Editor
                         onChange={(value) => {
                             form.setFieldValue('description', value);
                         }}
@@ -371,7 +390,37 @@ function useCreateOrder() {
                             inputInfoToCreateOrder['description'].placeholder
                         }
                     /> */}
-                </Form.Item>
+                    </Form.Item>
+                    <Upload
+                        fileList={files}
+                        multiple={false}
+                        listType="picture"
+                        className="order-file-upload"
+                        name="file"
+                        maxCount={1}
+                        beforeUpload={() => {
+                            return false;
+                        }}
+                        onChange={(e) => {
+                            const { file, fileList } = e;
+                            if (file) {
+                                const maxSize = 50 * 1024 * 1024;
+                                if (file.size > maxSize) {
+                                    message.error(
+                                        "Fayl 50 MB dan katta bo'lishi mumkin emas"
+                                    );
+                                    return;
+                                }
+                                setFiles(fileList);
+                            }
+                        }}
+                        onRemove={() => setFiles(null)}>
+                        <Button
+                            icon={<i className="fa-solid fa-paperclip"></i>}>
+                            Fayl yuklash (ixtiyoriy)
+                        </Button>
+                    </Upload>
+                </>
             ),
             popoverContent: description_content,
         },

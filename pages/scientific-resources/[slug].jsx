@@ -177,7 +177,7 @@ export async function getServerSideProps(context) {
     const queryParams = new URLSearchParams({
         direction: 'file',
         page,
-        page_size: 48,
+        page_size: 50,
         search,
     });
 

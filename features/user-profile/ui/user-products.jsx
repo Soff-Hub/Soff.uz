@@ -8,9 +8,9 @@ import ItemsNotFound from './items-not-found';
 import useResponsive from '~/shared/utilities/useResponsive';
 import useDebounce from '~/shared/hooks/useDebounce';
 
-const UserProducts = ({ id }) => {
+const UserProducts = ({ id, direction }) => {
     const [page, setPage] = useState(1);
-    const [type, setType] = useState('file');
+    const [type, setType] = useState(direction || 'file');
     const [search, setSearch] = useState('');
     const debounceSearch = useDebounce(search, 700);
     const { data, isLoading, isFetching } = useSellerProducts(

@@ -1,6 +1,4 @@
 import React from 'react';
-import { Empty } from 'antd';
-import { SmileOutlined } from '@ant-design/icons';
 import styles from './ServiceFilterSection.module.scss';
 import ServiceCard from '../../../entities/service/service-card';
 import ServiceFirstCard from './service-first-card';

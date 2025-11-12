@@ -28,8 +28,8 @@ export default function Websites({
         title && subTitle
             ? `${title} - ${subTitle}`
             : title
-            ? title
-            : 'Veb saytlar';
+                ? title
+                : 'Veb saytlar';
 
     const handlePageChange = (newPage) => {
         router.push({
@@ -82,7 +82,7 @@ export async function getServerSideProps(context) {
 
     const categoryParam = childCategory ? childCategory : parentCategory;
 
-    const productsUrl = `${baseUrlUseApi}customer/products/?direction=website&category=${categoryParam}&page=${page}&page_size=48&search=${search}`;
+    const productsUrl = `${baseUrlUseApi}customer/products/?direction=website&category=${categoryParam}&page=${page}&page_size=50&search=${search}`;
     const fourChildUrl = `${baseUrlUseApi}customer/four-child?direction=website`;
     const childCategoryUrl = `${baseUrlUseApi}customer/four-child?direction=website&parent__slug=${parentCategory}`;
 

@@ -13,6 +13,7 @@ export default function LoginForm({
     isModal,
     setCode,
     openTelegram,
+    onGoogleSuccessNavigateTo,
 }) {
     const [type, setType] = useState('t'); // t, e
     const router = useRouter();
@@ -79,7 +80,9 @@ export default function LoginForm({
                         </div>
                         <GoogleBox
                             isModal={isModal}
-                            onSuccess={onSuccess}
+                            onGoogleSuccessNavigateTo={
+                                onGoogleSuccessNavigateTo
+                            }
                             openTelegram={openTelegram}
                             setCode={setCode}
                             params={

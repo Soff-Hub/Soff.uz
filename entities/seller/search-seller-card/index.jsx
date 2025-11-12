@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import styles from './style.module.scss';
 import { IoTimeOutline, IoLocationOutline } from 'react-icons/io5';
+import Link from 'next/link';
 
 const formatLastActive = (lastActive) => {
     if (!lastActive) return 'Noma’lum';
@@ -24,7 +25,7 @@ const formatLastActive = (lastActive) => {
     return `${diffDays} kun oldin faol edi`;
 };
 
-const SearchSellerCard = ({ seller }) => {
+const SearchSellerCard = ({ seller, rankImage }) => {
     const { push } = useRouter();
 
     const isOnline = useMemo(() => {
@@ -37,6 +38,9 @@ const SearchSellerCard = ({ seller }) => {
 
     return (
         <div className={styles.card}>
+            {rankImage && (
+                <div className={styles.rankImageWrapper}>{rankImage}</div>
+            )}
             <div className={styles.header}>
                 <Badge
                     dot
@@ -85,13 +89,16 @@ const SearchSellerCard = ({ seller }) => {
                     </p>
                 )}
             </div>
-
-            <Button
-                onClick={() => push(`/seller/${seller?.soff_seller_id}`)}
-                type="primary"
-                className={styles.btn}>
-                Batafsil <FaArrowRightLong />
-            </Button>
+            <Link href={`/seller/${seller?.soff_seller_id}`}>
+                <a>
+                    <Button
+                        onClick={() => push()}
+                        type="primary"
+                        className={styles.btn}>
+                        Batafsil <FaArrowRightLong />
+                    </Button>
+                </a>
+            </Link>
         </div>
     );
 };

@@ -1,0 +1,54 @@
+@import '/scss/utils/variable';
+@import '/scss/utils/mixin';
+
+.orderPayment {
+    padding: 30px;
+    .orderPaymentHeader {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+
+        .orderButton {
+            border-radius: 5px;
+            font-family: 'Poppins';
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 21px;
+
+            padding: 8px 16px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .orderButtonInactive {
+            @extend .orderButton;
+            background: #fff1f0;
+            border: 1px solid #ffa39e;
+        }
+
+        .orderButtonActive {
+            @extend .orderButton;
+            background: #f6ffed;
+            border: 1px solid #b7eb8f;
+        }
+
+        .orderButtonWarn {
+            @extend .orderButton;
+            background: #fffbe6;
+            border: 1px solid #ffe58f;
+        }
+    }
+
+    @media (max-width: 576px) {
+        padding: 0px;
+        .orderPaymentHeader {
+            margin-top: 30px;
+            .orderButton,
+            .backButton {
+                font-size: 12px;
+                padding: 5px 10px;
+            }
+        }
+    }
+}

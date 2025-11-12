@@ -1,0 +1,27 @@
+@import '/scss/utils/variable';
+@import '/scss/utils/mixin';
+
+.radioMenu {
+    max-width: 300px;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background-color: #ffffff !important;
+    padding: 15px !important;
+    border-radius: 10px !important;
+    border: 1px solid #d9d9d9 !important;
+    transition: all 0.3s ease;
+    
+    /* boshlang‘ich holat */
+    display:none;
+
+    &.visible {
+        opacity: 1;
+        display: block;
+    }
+}
+
+
+.filterGroup{
+    margin-bottom: 14px;
+}
