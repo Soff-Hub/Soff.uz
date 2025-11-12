@@ -97,10 +97,12 @@
 
     .freelancersFilter {
         margin-top: 50px;
+        position: relative;
 
         .freelancersFilterResult {
             margin-top: 20px;
             display: flex;
+            gap: 20px;
         }
     }
 }

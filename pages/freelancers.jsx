@@ -32,10 +32,11 @@ function Leaderboard({ data }) {
 
 export async function getServerSideProps(context) {
     const {
-        keyword = 'xa',
-        position = 'Fullstack Dasturchi',
-        sort_by = 'rating',
-        direction = 'web',
+        keyword = '',
+        position = '',
+        sort_by = '',
+        direction = '',
+        category = '',
         limit = 20,
         offset = 0,
     } = context.query;
@@ -44,6 +45,7 @@ export async function getServerSideProps(context) {
         ...(direction && { direction }),
         ...(position && { position }),
         ...(sort_by && { sort_by }),
+        ...(category && { category }),
         search: keyword,
         limit,
         offset,

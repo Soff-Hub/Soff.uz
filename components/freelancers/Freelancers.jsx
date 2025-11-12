@@ -33,10 +33,10 @@ function Freelancers({ data }) {
                 <FreelancerSearchInput />
             </div>
             <div className={styles.freelancersFilter}>
-                <FreelancersFilterHeader toggleCollapsed={toggleCollapsed} />
+                <FreelancersFilterHeader toggleCollapsed={toggleCollapsed} collapsed={collapsed} />
                 <div className={styles.freelancersFilterResult}>
                     <FreelancersFilterMenu collapsed={collapsed} />
-                    <FreelancersFilterResult data={data} />
+                    <FreelancersFilterResult collapsed={collapsed} data={data} />
                 </div>
             </div>
         </div>

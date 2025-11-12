@@ -29,7 +29,7 @@ function FreelancerSearchInput() {
     });
 
     const options = freelanceSuccess
-        ? freelanceData?.services?.map((item) => ({ value: item }))
+        ? freelanceData?.position?.map((item) => ({ value: item }))
         : [];
 
     const handleSearch = () => {
