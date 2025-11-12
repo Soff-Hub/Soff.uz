@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import '~/scss/style.scss';
 import '~/scss/electronic.scss';
 import '~/widgets/navbar-menu/popover-override.css';
@@ -8,15 +8,12 @@ import { Toaster } from 'react-hot-toast';
 import { Providers } from '~/app/providers';
 import AffiliateListener from '~/entities/affiliate';
 import { useTelegram } from '~/shared/hooks/useTelegram';
-import { PacmanLoader } from 'react-spinners';
 import { TelegramLink } from '~/shared/components/telegram-link';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
-import dynamic from 'next/dynamic';
 
 function App({ Component, pageProps }) {
     const { tg } = useTelegram();
     const { startTimeout } = useTimeManager();
-    const [siteLoaded, setSiteLoaded] = useState(false);
 
     useEffect(() => {
         tg?.ready();
@@ -36,7 +33,7 @@ function App({ Component, pageProps }) {
             document.getElementById('__next').classList.add('loaded');
         }, 10);
 
-        const handleKeyDown = (e) => {
+        const handleKeyDown = e => {
             if (
                 (e.ctrlKey && e.shiftKey && e.key === 'I') || // Prevent Ctrl+Shift+I (Windows)
                 (e.metaKey && e.altKey && e.key === 'I') || // Prevent Command+Option+I (macOS)
@@ -52,37 +49,6 @@ function App({ Component, pageProps }) {
             }
         };
 
-        document.addEventListener('keydown', handleKeyDown);
-
-        window.addEventListener('contextmenu', (e) => e.preventDefault());
-
-        return () => {
-            document.removeEventListener('keydown', handleKeyDown);
-            window.removeEventListener('contextmenu', (e) =>
-                e.preventDefault()
-            );
-            localStorage.removeItem('utm_source');
-            localStorage.removeItem('utm_medium');
-            localStorage.removeItem('utm_campaign');
-        };
-    }, []);
-
-    useEffect(() => {
-        const handleLoad = () => {
-            startTimeout(() => {
-                setSiteLoaded(true);
-            }, 400);
-        };
-
-        if (
-            document.readyState === 'complete' ||
-            document.readyState === 'interactive'
-        ) {
-            handleLoad();
-        } else {
-            window.addEventListener('load', handleLoad);
-        }
-
         console.log(`
         ███████╗ ██████╗ ███████╗███████╗
         ██╔════╝██╔═══██╗██╔════╝██╔════╝
@@ -92,25 +58,21 @@ function App({ Component, pageProps }) {
         ╚══════╝ ╚═════╝ ╚═╝     ╚═╝     
         `);
 
+        document.addEventListener('keydown', handleKeyDown);
+
+        window.addEventListener('contextmenu', e => e.preventDefault());
+
         return () => {
-            window.removeEventListener('load', handleLoad);
+            document.removeEventListener('keydown', handleKeyDown);
+            window.removeEventListener('contextmenu', e => e.preventDefault());
+            localStorage.removeItem('utm_source');
+            localStorage.removeItem('utm_medium');
+            localStorage.removeItem('utm_campaign');
         };
     }, []);
 
-    // useEffect(() => {
-    //     if (typeof window !== 'undefined') {
-    //         OneSignal.init({
-    //             appId: '4c89c0b3-5aea-4145-b4cc-de98a7c8397a',
-    //             notifyButton: {
-    //                 enable: true,
-    //             }
-    //         });
-    //     }
-    // }, []);
-
     return (
         <>
-            {/* ✅ Loader overlay - doesn't block SSR */}
             <Head>
                 <meta charSet="UTF-8" />
                 <title>Soff</title>
@@ -136,7 +98,8 @@ function App({ Component, pageProps }) {
                             '@type': 'WebSite',
                             name: 'Soff.uz',
                             url: 'https://soff.uz',
-                            logo: 'https://soff.uz/static/img/soff/logo-dark.png',
+                            logo:
+                                'https://soff.uz/static/img/soff/logo-dark.png',
                             sameAs: [
                                 'https://t.me/soff_uz',
                                 'https://www.youtube.com/@soffuz',
@@ -144,36 +107,20 @@ function App({ Component, pageProps }) {
                             ],
                             potentialAction: {
                                 '@type': 'SearchAction',
-                                target: 'https://soff.uz/search-page?keyword={search_term_string}',
+                                target:
+                                    'https://soff.uz/search-page?keyword={search_term_string}',
                                 'query-input':
                                     'required name=search_term_string',
                             },
                         }),
                     }}></script>
             </Head>
-            <div
-                style={{
-                    position: 'fixed',
-                    inset: 0,
-                    background: '#fff',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    zIndex: 9999,
-                    transition: '0.4s ease',
-                    opacity: siteLoaded ? 0 : 1,
-                    pointerEvents: siteLoaded ? 'none' : 'all',
-                    visibility: siteLoaded ? 'hidden' : 'visible',
-                }}>
-                <PacmanLoader color="#00A44F" size={30} />
-            </div>
             <NextProgress
                 height="4px"
                 delay={300}
                 options={{ showSpinner: false }}
                 color="#00A44F"
             />
-            {/* ✅ ALWAYS render Component - even during loading */}
             <Providers>
                 <AffiliateListener />
                 <Component {...pageProps} />
