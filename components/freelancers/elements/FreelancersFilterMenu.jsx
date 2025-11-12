@@ -1,85 +1,84 @@
-import React from 'react';
-import { Radio, Menu } from 'antd';
+import React, { useState } from 'react';
+import { Radio, Button } from 'antd';
 import { BiCategory } from 'react-icons/bi';
 import { AiOutlineApartment } from 'react-icons/ai';
-import { useGetDirectionsQuery } from '~/store/profile/slice';
-import styles from '../styles/freelancersFilterMenu.module.scss';
 import { MdOutlineClear } from 'react-icons/md';
+import { useGetDirectionsQuery } from '~/store/profile/slice';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
+import styles from '../styles/freelancersFilterMenu.module.scss';
 
-const overallMenuItemStyle = {
-    paddingLeft: '15px',
-    marginBottom: '15px',
-};
-
-function FreelancersFilterMenu({ collapsed }) {
-    const { data } = useGetDirectionsQuery();
+function FreelancersFilterMenu({ collapsed, onChange }) {
+    const { data: directions } = useGetDirectionsQuery();
     const router = useRouter();
     const { direction } = router.query;
+    const [selectedDirection, setSelectedDirection] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState('');
 
     const { data: parentData } = useQuery({
-        queryKey: ['service-parent', direction],
+        queryKey: ['service-parent', selectedDirection],
         queryFn: async () => {
             const res = await fetch(
-                `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/categories?direction=${direction}`
+                `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/categories?direction=${selectedDirection}`
             );
-
             return await res.json();
         },
-        enabled: !!direction,
+        enabled: !!selectedDirection,
     });
 
-    const items = [
-        {
-            key: 'clear',
-            label: 'Filtrlarni tozalash',
-            icon: <MdOutlineClear />,
-            danger: true,
-            style: {
-                backgroundColor: '#ffecec',
-                ...overallMenuItemStyle,
-            },
-        },
-        {
-            key: 'direction',
-            label: 'Yo‘nalish',
-            icon: <AiOutlineApartment />,
-            // style: overallMenuItemStyle,
-            children:
-                data?.map((dir) => ({ key: dir.value, label: dir.label })) ||
-                [],
-        },
-        {
-            key: 'service_parent',
-            label: 'Kategoriya',
-            icon: <BiCategory />,
-            // style: overallMenuItemStyle,
-            children: [
-                { key: '9', label: 'Option 9' },
-                { key: '10', label: 'Option 10' },
-                {
-                    key: 'sub3',
-                    label: 'Submenu',
-                    children: [
-                        { key: '11', label: 'Option 11' },
-                        { key: '12', label: 'Option 12' },
-                    ],
-                },
-            ],
-        },
-    ];
+
+    console.log(selectedDirection);
+    const handleClear = () => {
+        setSelectedDirection('');
+        setSelectedCategory('');
+        if (onChange) onChange({ direction: '', category: '' });
+    };
 
     return (
-        <>
-            <Menu
-                className={styles.freelancersFilterMenu}
-                mode="inline"
-                // theme="dark"
-                inlineCollapsed={collapsed}
-                items={items}
-            />
-        </>
+        <div className={styles.radioMenu}>
+            <div className={styles.clearButton}>
+                <Button type="link" danger onClick={handleClear} icon={<MdOutlineClear />}>
+                    Filtrlarni tozalash
+                </Button>
+            </div>
+
+            <div className={styles.filterGroup}>
+                <h4><AiOutlineApartment /> Yo‘nalish</h4>
+                <Radio.Group
+                    value={selectedDirection}
+                    onChange={(e) => {
+                        setSelectedDirection(e.target.value);
+                        if (onChange) onChange({ direction: e.target.value, category: selectedCategory });
+                    }}
+                    style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}
+                >
+                    {directions?.map((dir) => (
+                        <Radio key={dir.value} value={dir.value}>
+                            {dir.label}
+                        </Radio>
+                    ))}
+                </Radio.Group>
+            </div>
+            {selectedDirection &&
+                <div className={styles.filterGroup}>
+                    <h4><BiCategory /> Kategoriya</h4>
+                    <Radio.Group
+                        value={selectedCategory}
+                        onChange={(e) => {
+                            setSelectedCategory(e.target.value);
+                            if (onChange) onChange({ direction: selectedDirection, category: e.target.value });
+                        }}
+                        style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}
+                    >
+                        {parentData?.map((cat) => (
+                            <Radio key={cat.id} value={cat.id}>
+                                {cat.title}
+                            </Radio>
+                        ))}
+                    </Radio.Group>
+                </div>
+            }
+        </div>
     );
 }
 

@@ -4,6 +4,7 @@ import useGetChatById from './useGetChatById';
 import useDeleteMessage from './useDeleteMessage';
 import useSendMessage from './useSendMessage';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
+import { message } from 'antd';
 
 const useChat = (chatId) => {
     const [messages, setMessages] = useState([]);
@@ -154,6 +155,11 @@ const useChat = (chatId) => {
                 msg = JSON.parse(event.data);
             } catch (e) {
                 console.warn('⚠️ JSON emas data:', event.data);
+                return;
+            }
+
+            if (msg.error) {
+                message.error(msg.error);
                 return;
             }
             switch (msg.event) {
