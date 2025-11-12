@@ -11,7 +11,6 @@ import { useTelegram } from '~/shared/hooks/useTelegram';
 import { PacmanLoader } from 'react-spinners';
 import { TelegramLink } from '~/shared/components/telegram-link';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
-import dynamic from 'next/dynamic';
 
 function App({ Component, pageProps }) {
     const { tg } = useTelegram();

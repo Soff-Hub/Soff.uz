@@ -21,7 +21,7 @@ const PortfolioModal = dynamic(
     }
 );
 
-const UserShortItems = ({ type = 'portfolio', id, limit = 4, sectionRef }) => {
+const UserShortItems = ({ type = 'portfolio', id, limit = 4, sectionRef, direction }) => {
     const { isDesktop } = useResponsive();
     const router = useRouter();
     const [selected, setSelected] = useState(null);
@@ -60,7 +60,7 @@ const UserShortItems = ({ type = 'portfolio', id, limit = 4, sectionRef }) => {
     const { data: productData, isLoading: productLoading } = useSellerProducts(
         id,
         1,
-        'file'
+        direction || 'file'
     );
     const { data: otherData, isLoading: otherLoading } = useFGet(key, url, {
         enabled: !!id && !isProduct,
@@ -156,9 +156,9 @@ const UserShortItems = ({ type = 'portfolio', id, limit = 4, sectionRef }) => {
                                 key={item.id}
                                 {...(type === 'portfolio'
                                     ? {
-                                          portfolio: item,
-                                          setPortfolio: handleClick,
-                                      }
+                                        portfolio: item,
+                                        setPortfolio: handleClick,
+                                    }
                                     : {})}
                                 {...(type === 'service'
                                     ? { service: item, hasFooter: false }
