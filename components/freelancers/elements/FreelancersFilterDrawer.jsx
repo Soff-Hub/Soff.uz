@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Drawer, Button, Select } from 'antd';
 import { CloseOutlined } from '@ant-design/icons';
 import { AiOutlineApartment } from 'react-icons/ai';
@@ -7,6 +7,7 @@ import useFreelancers from '../hooks/useFreelancers';
 import useResponsive from '~/shared/utilities/useResponsive';
 
 function FreelancerFilterCollide({ collapsed, toggleCollapsed }) {
+    const onfirstLoad = useRef(true);
     const [formVal, setFormVal] = useState({ direction: null, positions: [] });
     const { isMobile } = useResponsive();
     const {
@@ -34,6 +35,7 @@ function FreelancerFilterCollide({ collapsed, toggleCollapsed }) {
     const handleClearAll = () => {
         handleClear();
         toggleCollapsed();
+        setFormVal({ direction: null, positions: [] });
     };
 
     const onChangeDirection = value => {
@@ -45,18 +47,20 @@ function FreelancerFilterCollide({ collapsed, toggleCollapsed }) {
     };
 
     useEffect(() => {
-        setFormVal({
-            direction: selectedDirection,
-            positions: selectedPositions,
-        });
-    }, [selectedDirection, selectedPositions]);
+        if (onfirstLoad.current) {
+            onfirstLoad.current = false;
+            setFormVal({
+                direction: selectedDirection,
+                positions: selectedPositions,
+            });
+        }
+    }, []);
 
     return (
         <Drawer
             style={{
                 borderRadius: '20px 20px 0 0',
             }}
-            destroyOnClose
             placement="bottom"
             onClose={toggleCollapsed}
             open={collapsed}
@@ -92,7 +96,7 @@ function FreelancerFilterCollide({ collapsed, toggleCollapsed }) {
                     id="directions"
                     size={inputSizes}
                     placeholder="Yo'nalishni tanlang"
-                    value={selectedDirection}
+                    value={formVal.direction}
                     onChange={onChangeDirection}
                     style={{ width: '100%' }}
                     options={directions}
@@ -113,7 +117,7 @@ function FreelancerFilterCollide({ collapsed, toggleCollapsed }) {
                     mode="multiple"
                     size={inputSizes}
                     placeholder="Kasblarni tanlang"
-                    defaultValue={selectedPositions}
+                    defaultValue={formVal.positions}
                     onChange={onChangePositions}
                     style={{ width: '100%' }}
                     options={positionOptions}
