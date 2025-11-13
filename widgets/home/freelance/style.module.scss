@@ -60,6 +60,16 @@
                     stroke: $color-1st !important;
                 }
             }
+
+            @media screen and (max-width: 576px) {
+                font-size: 14px !important;
+                padding: 5px 10px !important;
+                height: 27px;
+
+                svg {
+                    font-size: 16px;
+                }
+            }
         }
 
         .categoryButton--ordinary {
@@ -89,6 +99,16 @@
         .categoryButton--selected {
             background-color: $color-1st !important;
             color: #fff !important;
+
+            @media screen and (max-width: 576px) {
+                font-size: 14px !important;
+                padding: 5px 10px !important;
+                height: 27px;
+
+                svg {
+                    font-size: 16px;
+                }
+            }
 
             svg {
                 font-size: 20px;
