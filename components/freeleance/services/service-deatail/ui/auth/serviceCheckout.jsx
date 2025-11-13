@@ -55,12 +55,12 @@ const ServiceCheckout = ({
                 order_requirement_file: files?.[0]?.originFileObj,
             },
             {
-                onSuccess: (data) => {
+                onSuccess: data => {
                     if (onClose) onClose();
                     // window.open(data?.url, '_blank');
                     router.push(data.url);
                 },
-                onError: (err) => {
+                onError: err => {
                     AlertMessage.error(err.response.data.detail);
                 },
                 onSettled: () => {
@@ -86,7 +86,7 @@ const ServiceCheckout = ({
 
         if (order_id) payload.order_id = order_id;
         createOrder.mutate(payload, {
-            onSuccess: async (data) => {
+            onSuccess: async data => {
                 if (
                     data.msg === 'Success' &&
                     data.payment_method === 'wallet'
@@ -112,7 +112,7 @@ const ServiceCheckout = ({
                 setResData(data);
                 reset();
             },
-            onError: (err) => {
+            onError: err => {
                 console.error('❌ Click payment error:', err);
                 setMessage(false);
                 setResData({
@@ -131,7 +131,7 @@ const ServiceCheckout = ({
                 code,
             },
             {
-                onSuccess: async (data) => {
+                onSuccess: async data => {
                     await queryClient.invalidateQueries({
                         queryKey: ['orders'],
                     });
@@ -147,7 +147,7 @@ const ServiceCheckout = ({
                     if (!order_id) push('/order/my-orders?tab=2');
                     if (onClose) onClose();
                 },
-                onError: (error) => {
+                onError: error => {
                     const errorMessage = error?.response?.data || {
                         detail: "Noma'lum xato",
                     };
@@ -163,7 +163,7 @@ const ServiceCheckout = ({
         setResData(null);
     }
 
-    const handleCardNumberChange = (e) => {
+    const handleCardNumberChange = e => {
         const inputValue = e.target.value.replace(/\D/g, '');
         let formattedValue = '';
 
@@ -179,7 +179,7 @@ const ServiceCheckout = ({
         setFormattedCardNumber(formattedValue);
     };
 
-    const handleCardNumberDate = (e) => {
+    const handleCardNumberDate = e => {
         const inputValue = e.target.value.replace(/\D/g, '');
         let formattedValue = '';
 
@@ -460,7 +460,7 @@ const ServiceCheckout = ({
                                     {resData?.phone_number}
                                 </p>
                                 <input
-                                    onChange={(e) => setCode(e.target.value)}
+                                    onChange={e => setCode(e.target.value)}
                                     type="tel"
                                     placeholder="000000"
                                     disabled={verifyCode?.isPending}
@@ -576,7 +576,7 @@ const ServiceCheckout = ({
                         </h4>
                     </div>
                 </div>
-                <div
+                {/* <div
                     style={{
                         marginTop: '10px',
                         borderTop: '1px solid #dee2e6',
@@ -594,7 +594,7 @@ const ServiceCheckout = ({
                             0 so'm
                         </h3>
                     </div>
-                </div>
+                </div> */}
             </div>
 
             {!message ? (
