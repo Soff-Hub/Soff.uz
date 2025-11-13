@@ -222,10 +222,8 @@ const OrderMain = ({ order, handleOrderUpdate }) => {
     };
 
     useEffect(() => {
-        if (!balanceDisabled) {
-            setMode(false);
-        }
-    }, [balanceDisabled]);
+        setMode(Number(data?.wallet || 0) > 0);
+    }, [data?.wallet]);
 
     useEffect(() => {
         if (!isFullyPaid) {
@@ -260,9 +258,8 @@ const OrderMain = ({ order, handleOrderUpdate }) => {
                     <div className={styles.orderPayCardFlex}>
                         <div className={styles.orderPayCardInfo}>
                             <h5
-                                className={`mb-0 ${
-                                    !isDesktop && 'text-center'
-                                }`}>
+                                className={`mb-0 ${!isDesktop &&
+                                    'text-center'}`}>
                                 Frilanser ish boshlashiga to'lov qiling.
                             </h5>
                         </div>
@@ -459,8 +456,9 @@ const OrderMain = ({ order, handleOrderUpdate }) => {
                                     whiteSpace: 'pre-line',
                                 }}
                                 dangerouslySetInnerHTML={{
-                                    __html: order.order_requirement[0]
-                                        ?.order_requirement_description,
+                                    __html:
+                                        order.order_requirement[0]
+                                            ?.order_requirement_description,
                                 }}
                             />
                             {/* Fayl bo‘lsa tugma chiqadi */}
@@ -569,13 +567,13 @@ const OrderMain = ({ order, handleOrderUpdate }) => {
                         <Rate
                             allowHalf={false}
                             value={rate}
-                            onChange={(val) => setRate(val)}
+                            onChange={val => setRate(val)}
                         />
                         <TextArea
                             placeholder="Xizmat haqida fikrlaringizni yozib qoldiring"
                             rows={3}
                             value={text}
-                            onChange={(e) => setText(e.target.value)}
+                            onChange={e => setText(e.target.value)}
                         />
                     </div>
                 )}
@@ -590,7 +588,7 @@ const OrderMain = ({ order, handleOrderUpdate }) => {
                             placeholder="Ishning aniqlangan kamchiliklarini yozing"
                             rows={3}
                             value={text}
-                            onChange={(e) => setText(e.target.value)}
+                            onChange={e => setText(e.target.value)}
                         />
                     </>
                 )}
@@ -687,7 +685,7 @@ const OrderMain = ({ order, handleOrderUpdate }) => {
                             <div className={modalStyles.orderPaymentHeader}>
                                 <Tooltip title="To'lov uchun balansingizdan foydalaning">
                                     <Button
-                                        onClick={() => setMode((pre) => !pre)}
+                                        onClick={() => setMode(pre => !pre)}
                                         className={
                                             mode && isSufficientBalance
                                                 ? modalStyles.orderButtonActive

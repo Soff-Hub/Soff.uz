@@ -38,7 +38,7 @@ import styles from '../style/select-order-drawer.module.scss';
 const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
     const [selectedOffer, setSelectedOffer] = useState(null);
     // const [verfiedOffer, setVerfiedOffer] = useState(null);
-    const { user } = useSelector((state) => state.auth);
+    const { user } = useSelector(state => state.auth);
     const [paymentModal, setPaymentModal] = useState(false);
     const { isDesktop } = useResponsive();
     const { push } = useRouter();
@@ -61,10 +61,8 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
     });
 
     useEffect(() => {
-        if (!balanceDisabled) {
-            setMode(false);
-        }
-    }, [balanceDisabled]);
+        setMode(Number(data?.wallet || 0) > 0);
+    }, [data?.wallet]);
 
     useEffect(() => {
         if (initialOffers && open) {
@@ -75,7 +73,7 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
     const { mutate: selectOffer, isPending } = useFPost({
         url: 'offer/select-offer',
         token: user?.access,
-        onSuccess: (data) => {
+        onSuccess: data => {
             if (!data.success) {
                 message.warning(
                     `Frilanser tanlash uchun iltimos qo'shimcha ${formatCurrencyWithSpace(
@@ -168,7 +166,7 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
 
                 <div className={cn('w-full')}>
                     {offers?.length > 0 ? (
-                        offers.map((item) => (
+                        offers.map(item => (
                             <div
                                 key={item?.id}
                                 className={cn(
@@ -450,7 +448,7 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                     <div className={styles.orderPaymentHeader}>
                         <Tooltip title="To'lov uchun balansingizdan foydalaning">
                             <Button
-                                onClick={() => setMode((pre) => !pre)}
+                                onClick={() => setMode(pre => !pre)}
                                 className={
                                     mode && isSufficientBalance
                                         ? styles.orderButtonActive

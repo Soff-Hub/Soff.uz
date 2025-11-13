@@ -19,10 +19,8 @@ function OrderPaymentPrompt({ isOpen, onClose, order }) {
     const isSufficientBalance = balance >= order?.price;
 
     useEffect(() => {
-        if (!balanceDisabled) {
-            setMode(false);
-        }
-    }, [balanceDisabled]);
+        setMode(Number(data?.wallet || 0) > 0);
+    }, [data?.wallet]);
 
     return (
         <Modal open={isOpen} onCancel={onClose} footer={null} width={600}>
@@ -83,7 +81,7 @@ function OrderPaymentPrompt({ isOpen, onClose, order }) {
                         <div className={styles.orderPaymentHeader}>
                             <Tooltip title="To'lov uchun balansingizdan foydalaning">
                                 <Button
-                                    onClick={() => setMode((pre) => !pre)}
+                                    onClick={() => setMode(pre => !pre)}
                                     className={
                                         mode && isSufficientBalance
                                             ? styles.orderButtonActive

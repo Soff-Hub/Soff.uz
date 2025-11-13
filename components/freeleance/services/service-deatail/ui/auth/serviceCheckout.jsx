@@ -607,7 +607,7 @@ const ServiceCheckout = ({
                         color: '#fff',
                         marginTop: '10px',
                     }}>
-                    Sotib olish
+                    To'lov qilish
                 </button>
             ) : (
                 <button

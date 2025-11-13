@@ -29,6 +29,8 @@ function ServiceOrderModal({
     const balanceDisabled = balance > 0;
     const { price, id, title } = order;
 
+    console.log({ balanceDisabled, mode });
+
     const leftBalance = formatCurrencyWithSpace(Number(balance));
     const isSufficientBalance = balance >= order?.price;
     const componentProperties = {
@@ -84,10 +86,8 @@ function ServiceOrderModal({
     }, []);
 
     useEffect(() => {
-        if (!balanceDisabled) {
-            setMode(false);
-        }
-    }, [balanceDisabled]);
+        setMode(Number(data?.wallet || 0) > 0);
+    }, [data?.wallet]);
 
     return (
         <>
