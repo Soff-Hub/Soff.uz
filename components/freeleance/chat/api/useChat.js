@@ -189,17 +189,19 @@ const useChat = chatId => {
                     setMessages(prev => {
                         let replaced = false;
 
-                        const updated = prev.map(m => {
-                            if (
-                                !replaced &&
-                                m.status === 'sending' &&
-                                m.content.trim() === msg.content.trim()
-                            ) {
-                                replaced = true;
-                                return msg; // replace this one
-                            }
-                            return m;
-                        });
+                        const updated = !msg.is_mine
+                            ? [...prev, msg]
+                            : prev.map(m => {
+                                  if (
+                                      !replaced &&
+                                      m.status === 'sending' &&
+                                      m.content.trim() === msg.content.trim()
+                                  ) {
+                                      replaced = true;
+                                      return msg; // replace this one
+                                  }
+                                  return m;
+                              });
 
                         sendUnreadMessages(ws, updated);
                         return updated;
