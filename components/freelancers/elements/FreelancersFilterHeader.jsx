@@ -41,13 +41,13 @@ function FreelancersFilterHeader({ toggleCollapsed, collapsed }) {
             >
                 Filterlar
             </Button>
-            <Select
+            {/* <Select
                 value={router.query.sort_by || "rating"}
                 onChange={handleSortChange}
                 options={options}
                 style={{ width: 150 }}
                 placeholder={"Saralash"}
-            />
+            /> */}
         </div>
     );
 }

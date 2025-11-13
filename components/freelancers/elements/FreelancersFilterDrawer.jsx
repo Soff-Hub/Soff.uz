@@ -60,7 +60,7 @@ function FreelancerFilterCollide({ collapsed, toggleCollapsed }) {
             placement="bottom"
             onClose={toggleCollapsed}
             open={collapsed}
-            height="90%"
+            height="60%"
             closeIcon={
                 <Button
                     type="text"
