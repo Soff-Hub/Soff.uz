@@ -5,6 +5,7 @@ import useDeleteMessage from './useDeleteMessage';
 import useSendMessage from './useSendMessage';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
 import { message } from 'antd';
+// import { sleep } from '~/shared/utilities/sleep';
 
 const useChat = chatId => {
     const [messages, setMessages] = useState([]);
