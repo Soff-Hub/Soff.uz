@@ -112,7 +112,7 @@ const Freelance = () => {
                 </Link>
             </div>
             <div className={styles.serviceCardSection}>
-                {items.map((item) => (
+                {items.map(item => (
                     <ServiceCard
                         key={item.content_type}
                         content_type={item.content_type}
@@ -127,7 +127,7 @@ const Freelance = () => {
 export default Freelance;
 
 const TopFreelanceRankings = () => {
-    const { isDesktop } = useResponsive();
+    const { isDesktop, isMobile } = useResponsive();
     const [isEnd, setIsEnd] = useState(false);
     const [isBeginning, setIsBeginning] = useState(true); // Start with true as initial state
     const [swiperController, setSwiperController] = useState(null);
@@ -136,35 +136,31 @@ const TopFreelanceRankings = () => {
 
     const sizesOptions = isDesktop
         ? { size: 'large', gap: 20 }
+        : isMobile
+        ? { size: 'small', gap: 8 }
         : { size: 'middle', gap: 10 };
 
     const { data: directions } = useGetDirectionsQuery();
-    const {
-        data: sellersData,
-        isSuccess,
-        isLoading,
-    } = useFGet(
+    const { data: sellersData, isSuccess, isLoading } = useFGet(
         ['customer/sellers', rankingCategory],
         `users/sellers?limit=3&offset=0${
             rankingCategory ? `&direction=${rankingCategory}` : ''
         }`
     );
 
-    console.log({ sellersData });
-
-    const getMethods = (swiperClass) => {
+    const getMethods = swiperClass => {
         setSwiperController(swiperClass);
     };
 
-    const setEnding = (status) => {
+    const setEnding = status => {
         setIsEnd(status);
     };
-    const setBeginning = (status) => {
+    const setBeginning = status => {
         setIsBeginning(status);
     };
 
     // Function to update swiper state
-    const updateSwiperState = (swiper) => {
+    const updateSwiperState = swiper => {
         if (swiper) {
             setIsEnd(swiper.isEnd);
             setIsBeginning(swiper.isBeginning);
@@ -172,13 +168,13 @@ const TopFreelanceRankings = () => {
     };
 
     // Handle swiper initialization
-    const handleSwiperInit = (swiper) => {
+    const handleSwiperInit = swiper => {
         // Set initial state
         updateSwiperState(swiper);
     };
 
     // Handle slide change
-    const handleSlideChange = (swiper) => {
+    const handleSlideChange = swiper => {
         updateSwiperState(swiper);
     };
 
@@ -324,10 +320,10 @@ const TopFreelanceRankings = () => {
                     slidesPerView={'auto'}
                     onSwiper={handleSwiperInit}
                     onSlideChange={handleSlideChange}
-                    className={` ${!isEnd && styles.categorySwiperEnding} ${
-                        !isBeginning && styles.categorySwiperBeginning
-                    }`}>
-                    {directions?.map((item) => (
+                    className={` ${!isEnd &&
+                        styles.categorySwiperEnding} ${!isBeginning &&
+                        styles.categorySwiperBeginning}`}>
+                    {directions?.map(item => (
                         <SwiperSlide key={item.value}>
                             <Button
                                 icon={directionsImg[item.value]}
@@ -378,9 +374,8 @@ const ServiceCard = ({ content_type = 'file', items = {} }) => {
                         <div
                             className={cardStyle.cardBlockLeft}
                             style={{
-                                backgroundImage: `url(${
-                                    items.left || '/static/img/not-found.png'
-                                })`,
+                                backgroundImage: `url(${items.left ||
+                                    '/static/img/not-found.png'})`,
                                 backgroundSize: 'cover',
                                 backgroundRepeat: 'no-repeat',
                                 backgroundPosition: 'center',
@@ -389,10 +384,8 @@ const ServiceCard = ({ content_type = 'file', items = {} }) => {
                             <div
                                 className={cardStyle.cardBlockRightBottom}
                                 style={{
-                                    backgroundImage: `url(${
-                                        items.rightTop ||
-                                        '/static/img/not-found.png'
-                                    })`,
+                                    backgroundImage: `url(${items.rightTop ||
+                                        '/static/img/not-found.png'})`,
                                     backgroundSize: 'cover',
                                     backgroundRepeat: 'no-repeat',
                                     backgroundPosition: 'center',
@@ -400,10 +393,8 @@ const ServiceCard = ({ content_type = 'file', items = {} }) => {
                             <div
                                 className={cardStyle.cardBlockRightBottom}
                                 style={{
-                                    backgroundImage: `url(${
-                                        items.rightBot ||
-                                        '/static/img/not-found.png'
-                                    })`,
+                                    backgroundImage: `url(${items.rightBot ||
+                                        '/static/img/not-found.png'})`,
                                     backgroundSize: 'cover',
                                     backgroundRepeat: 'no-repeat',
                                     backgroundPosition: 'center',
