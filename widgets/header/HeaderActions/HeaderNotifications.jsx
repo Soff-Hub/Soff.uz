@@ -1,6 +1,5 @@
 import React, { useMemo, useState } from 'react';
 import Link from 'next/link';
-
 import { Badge, notification } from 'antd';
 import { SmileOutlined } from '@ant-design/icons';
 import { api as axios } from '~/repositories/api';
@@ -24,7 +23,7 @@ export default function HeaderNotifications({ color }) {
     const [notificationsCount, setNotificationsCount] = useState(0);
 
     const {} = useWebSocket(`${wssBaseUrl}ws/user-notification/`, {
-        onMessage: (event) => {
+        onMessage: event => {
             const newNotification = JSON.parse(event.data);
             if (newNotification?.count > 0) {
                 setNotificationsCount(newNotification?.count);
@@ -116,12 +115,12 @@ export default function HeaderNotifications({ color }) {
         <div>
             {contextHolder}
             {token ? (
-                <Link href={`/chat`} style={{ marginRight: '10px' }}>
-                    <Badge
-                        offset={[-10, 3]}
-                        size="small"
-                        count={data?.unread_messages}
-                        color="#00a44f">
+                <Badge
+                    offset={[-10, 3]}
+                    size="small"
+                    count={data?.unread_messages}
+                    color="#00a44f">
+                    <Link href={`/chat`} style={{ marginRight: '10px' }}>
                         <a
                             className="header__extra fs-1"
                             style={{ cursor: 'pointer' }}>
@@ -129,8 +128,8 @@ export default function HeaderNotifications({ color }) {
                                 style={{ marginRight: '10px' }}
                                 className={`fa-regular fa-comment-dots ${color}`}></i>
                         </a>
-                    </Badge>
-                </Link>
+                    </Link>
+                </Badge>
             ) : (
                 ''
             )}
@@ -138,19 +137,22 @@ export default function HeaderNotifications({ color }) {
                 <Link
                     href={`/account/notification`}
                     style={{ marginRight: '10px' }}>
-                    <Badge
-                        offset={[-10, 3]}
-                        size="small"
-                        count={notificationsCount}
-                        color="#00a44f">
-                        <a
-                            className="header__extra fs-1"
-                            style={{ cursor: 'pointer' }}>
+                    <a
+                        className="header__extra fs-1"
+                        style={{ cursor: 'pointer' }}>
+                        <Badge
+                            offset={[-10, 3]}
+                            size="small"
+                            count={notificationsCount}
+                            color="#00a44f">
                             <i
-                                style={{ marginRight: '10px' }}
+                                style={{
+                                    marginRight: '10px',
+                                    fontSize: '30px',
+                                }}
                                 className={`fa-regular fa-bell ${color}`}></i>
-                        </a>
-                    </Badge>
+                        </Badge>
+                    </a>
                 </Link>
             ) : (
                 ''

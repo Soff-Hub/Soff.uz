@@ -13,7 +13,7 @@ import HeaderCatergories from '../HeaderCategories';
 const HeaderActions = ({ auth, isDark }) => {
     const { wishlist } = useWishlist();
     const { isMobile, isTablet } = useResponsive();
-    const data = useSelector((state) => state.ecomerce.cartDataItems);
+    const data = useSelector(state => state.ecomerce.cartDataItems);
 
     return (
         <div
@@ -28,15 +28,13 @@ const HeaderActions = ({ auth, isDark }) => {
                         <a
                             className="header__extra"
                             style={{ marginRight: '15px' }}>
-                            <a href="#">
-                                <Badge count={wishlist.length}>
-                                    <img
-                                        src="/static/img/heart1.png"
-                                        width={'20px'}
-                                        alt=""
-                                    />{' '}
-                                </Badge>
-                            </a>
+                            <Badge count={wishlist.length}>
+                                <img
+                                    src="/static/img/heart1.png"
+                                    width={'20px'}
+                                    alt=""
+                                />{' '}
+                            </Badge>
                         </a>
                     </Link>
                 )}
@@ -52,4 +50,4 @@ const HeaderActions = ({ auth, isDark }) => {
     );
 };
 
-export default connect((state) => state)(HeaderActions);
+export default connect(state => state)(HeaderActions);
