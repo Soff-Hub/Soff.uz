@@ -9,14 +9,15 @@ import {
 import { useRouter } from 'next/router';
 import useDebounce from '~/shared/hooks/useDebounce';
 import useResponsive from '~/shared/utilities/useResponsive';
-import { Button, Checkbox, ConfigProvider, Drawer, Select, Slider } from 'antd';
+import { Button, Checkbox, Drawer, Select, Slider } from 'antd';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
+import { useDisableWindowScroll } from '~/shared/hooks/useDisableWindowScroll';
 
 export const getTitleFromSlug = (array, slug) => {
     let title = null;
 
     if (array && slug) {
-        title = array.find((item) => {
+        title = array.find(item => {
             return item.slug == slug;
         })?.name;
     }
@@ -41,6 +42,8 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
     const [pageRange, setPageRange] = useState([0, 100]);
 
     const debouncedSearch = useDebounce(search, 500);
+    // Prevent body scroll when drawer is open
+    useDisableWindowScroll(drawerOpen);
 
     const handleParent = (slug, name) => {
         push({
@@ -64,11 +67,11 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
         setSybTitle(name);
     };
 
-    const scrollLeft = (ref) => {
+    const scrollLeft = ref => {
         ref.current.scrollBy({ left: -200, behavior: 'smooth' });
     };
 
-    const scrollRight = (ref) => {
+    const scrollRight = ref => {
         ref.current.scrollBy({ left: 200, behavior: 'smooth' });
     };
 
@@ -109,7 +112,7 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
             </h1>
             <div className={`${styles.searchBox} container`}>
                 <input
-                    onChange={(e) => setSearch(e.target.value)}
+                    onChange={e => setSearch(e.target.value)}
                     placeholder="Qanday mahsulot izlamoqdasiz?"
                     className={styles.input}
                     type="text"
@@ -137,11 +140,11 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
                         <span
                             key={cat.slug}
                             onClick={() => handleParent(cat?.slug, cat?.name)}
-                            className={`${styles.parentCat} ${
-                                (query.parentCategory === cat.slug ||
-                                    query.slug === cat.slug) &&
-                                styles.active
-                            }`}>
+                            className={`${
+                                styles.parentCat
+                            } ${(query.parentCategory === cat.slug ||
+                                query.slug === cat.slug) &&
+                                styles.active}`}>
                             {cat?.name}
                         </span>
                     ))}
@@ -169,17 +172,17 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
                         style={{
                             justifyContent: showChildArrow ? 'start' : 'center',
                         }}>
-                        {child.map((cat) => (
+                        {child.map(cat => (
                             <span
                                 key={cat.slug}
                                 onClick={() =>
                                     handleChild(cat?.slug, cat?.name)
                                 }
-                                className={`${styles.childCat} ${
-                                    (query.childCategory === cat.slug ||
-                                        query.slug === cat.slug) &&
-                                    styles.active
-                                }`}>
+                                className={`${
+                                    styles.childCat
+                                } ${(query.childCategory === cat.slug ||
+                                    query.slug === cat.slug) &&
+                                    styles.active}`}>
                                 {cat?.name}
                             </span>
                         ))}
@@ -194,27 +197,7 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
             ) : null}
 
             {isMobile && isFile && (
-                <ConfigProvider
-                    theme={{
-                        token: {
-                            colorPrimary: '#00a44f',
-                            borderRadiusLG: 20,
-                        },
-                        components: {
-                            Button: {
-                                colorPrimary: '#00a44f',
-                            },
-                            Checkbox: {
-                                colorPrimary: '#00a44f',
-                            },
-                            Slider: {
-                                colorPrimary: '#00a44f',
-                            },
-                            Select: {
-                                colorPrimary: '#00a44f',
-                            },
-                        },
-                    }}>
+                <>
                     <Button
                         type="primary"
                         block
@@ -258,7 +241,7 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
                                 style={{ width: '100%' }}
                                 allowClear
                                 value={query.parentCategory || undefined}
-                                onChange={(val) => {
+                                onChange={val => {
                                     if (!val) {
                                         setSelectedCategory(undefined);
                                         setSybTitle('');
@@ -276,7 +259,7 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
                                         setSelectedCategory(val);
                                         // shu yerda handleParent ishlatyapmiz
                                         const category = parent.find(
-                                            (item) => item.slug === val
+                                            item => item.slug === val
                                         );
                                         if (category)
                                             handleParent(
@@ -285,11 +268,11 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
                                             );
                                     }
                                 }}
-                                options={parent.map((item) => ({
+                                options={parent.map(item => ({
                                     label: item.name,
                                     value: item.slug,
                                 }))}
-                                getPopupContainer={(triggerNode) =>
+                                getPopupContainer={triggerNode =>
                                     triggerNode.parentNode
                                 }
                             />
@@ -304,7 +287,7 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
                                     style={{ width: '100%' }}
                                     allowClear
                                     value={query.childCategory || undefined}
-                                    onChange={(val) => {
+                                    onChange={val => {
                                         if (!val) {
                                             setSelectedSubCategory(undefined);
                                             push({
@@ -319,7 +302,7 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
                                         } else {
                                             setSelectedSubCategory(val);
                                             const subCategory = child.find(
-                                                (item) => item.slug === val
+                                                item => item.slug === val
                                             );
                                             if (subCategory)
                                                 handleChild(
@@ -328,11 +311,11 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
                                                 );
                                         }
                                     }}
-                                    options={child.map((item) => ({
+                                    options={child.map(item => ({
                                         label: item.name,
                                         value: item.slug,
                                     }))}
-                                    getPopupContainer={(triggerNode) =>
+                                    getPopupContainer={triggerNode =>
                                         triggerNode.parentNode
                                     }
                                 />
@@ -348,7 +331,7 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
                                     gap: 8,
                                 }}
                                 value={fileTypes}
-                                onChange={(vals) => setFileTypes(vals)}
+                                onChange={vals => setFileTypes(vals)}
                                 options={[
                                     { label: 'DOCX', value: '.docx' },
                                     { label: 'DOC', value: '.doc' },
@@ -380,7 +363,7 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
                                 min={0}
                                 max={1000000}
                                 value={priceRange}
-                                onChange={(value) => setPriceRange(value)}
+                                onChange={value => setPriceRange(value)}
                             />
                         </div>
 
@@ -399,7 +382,7 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
                                 min={0}
                                 max={100}
                                 value={pageRange}
-                                onChange={(value) => setPageRange(value)}
+                                onChange={value => setPageRange(value)}
                             />
                         </div>
 
@@ -458,7 +441,7 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
                             </Button>
                         </div>
                     </Drawer>
-                </ConfigProvider>
+                </>
             )}
         </div>
     );

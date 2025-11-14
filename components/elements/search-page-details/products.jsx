@@ -16,16 +16,7 @@ export default function Search_Results_Products({
 }) {
     const router = useRouter();
     const isFirstRender = useRef(true);
-    const {
-        page = 1,
-        keyword = '',
-        type = 'file',
-        category = '',
-        order_by = '',
-        file_type = '',
-        page_from = '',
-        page_to = '',
-    } = router.query;
+    const { type = 'file', category = '' } = router.query;
 
     useEffect(() => {
         if (isFirstRender.current) {
@@ -36,11 +27,6 @@ export default function Search_Results_Products({
     // NOTE: Requests Enable property
     const isRequestsEnabled = router.isReady && router.query.tab === currentTab;
     const isChildCategoryEnabled = isRequestsEnabled && !!router.query.category;
-    // const isProductsSearchEnabled =
-    //     (isRequestsEnabled && !isFirstRender.current) || !initialData;
-    // NOTE: Initial Data for Products Search
-    // const productsDataInitialData =
-    //     isFirstRender.current && initialData ? initialData : undefined;
 
     const { data: childData } = useQuery({
         queryKey: ['four-child', type],
@@ -66,37 +52,6 @@ export default function Search_Results_Products({
         enabled: isChildCategoryEnabled,
     });
 
-    // const { data, isLoading } = useQuery({
-    //     queryKey: [
-    //         'products-search',
-    //         page,
-    //         keyword,
-    //         type,
-    //         category,
-    //         order_by,
-    //         file_type,
-    //         page_from,
-    //         page_to,
-    //     ],
-    //     queryFn: async () => {
-    //         const res = await fetch(
-    //             `${baseUrlUseApi}customer/same-google-search/?limit=50&${
-    //                 page ? `page=${page}&` : ''
-    //             }${keyword ? `search=${keyword}&` : ''}${
-    //                 type ? `type=${type}&` : ''
-    //             }${category ? `category=${category}&` : ''}${
-    //                 order_by ? `order_by=${order_by}&` : ''
-    //             }${file_type ? `file_type=${file_type}&` : ''}${
-    //                 page_from ? `page_from=${page_from}&` : ''
-    //             }${page_to ? `page_to=${page_to}` : ''}`
-    //         );
-
-    //         return await res.json();
-    //     },
-    //     enabled: isProductsSearchEnabled,
-    //     initialData: productsDataInitialData,
-    // });
-
     const total = data?.count || 0;
     const notFoundRef = useRef();
     const showResults =
@@ -105,17 +60,7 @@ export default function Search_Results_Products({
     useScrollToNotFound(notFoundRef, showResults, data);
 
     let resultsContent = null;
-    // if (isLoading) {
-    //     resultsContent = Array(12)
-    //         .fill(0)
-    //         .map((_, i) => (
-    //             <Skeleton
-    //                 key={i}
-    //                 active
-    //                 className="Search_Results_Wrap_skeleton"
-    //             />
-    //         ));
-    // } else
+
     if (showResults) {
         resultsContent = (
             <>
@@ -133,7 +78,7 @@ export default function Search_Results_Products({
                     current={router.query.page || 1}
                     pageSize={50}
                     total={total}
-                    onChange={(newPage) => {
+                    onChange={newPage => {
                         router.push(
                             {
                                 pathname: router.pathname,

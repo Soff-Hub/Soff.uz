@@ -14,11 +14,12 @@ import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import { IoCard } from 'react-icons/io5';
 import { FaWallet } from 'react-icons/fa';
 
+const balanceMode = false;
 const ServiceCheckout = ({
     document,
     order_id,
     order,
-    balanceMode = false,
+    // balanceMode = false,
     balance,
     files,
     description,

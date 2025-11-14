@@ -305,21 +305,23 @@ function SearchResultsProductsFilter({ total, childData }) {
             ) : // </Badge.Ribbon>
             null}
             <div className="search_results_indicator">
-                <p className="countProduct text-nowrap m-0">
-                    {total ? `${total} ta mahsulot topildi` : ''}
-                </p>
-                {/* NOTE: Working code don't delete this shit*/}
-                {/* <Button
-                         icon={<IoDocumentsSharp />}
-                         type="primary"
-                         onClick={handleLoadSimilarDocuments}
-                         style={{
-                             position: 'relative',
-                             right: '10px',
-                             flexShrink: 1,
-                         }}>
-                         O'xshash mahsulotlar
-                     </Button> */}
+                {total ? (
+                    <p className="countProduct text-nowrap m-0">
+                        {`${total} ta mahsulot topildi`}
+                    </p>
+                ) : (
+                    <Button
+                        icon={<IoDocumentsSharp />}
+                        type="primary"
+                        onClick={handleLoadSimilarDocuments}
+                        style={{
+                            position: 'relative',
+                            right: '10px',
+                            flexShrink: 1,
+                        }}>
+                        O'xshash mahsulotlar
+                    </Button>
+                )}
 
                 {!mutationsInForm.hasMutation && (
                     <div>
