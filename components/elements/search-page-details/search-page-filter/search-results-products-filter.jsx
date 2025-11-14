@@ -28,6 +28,7 @@ import { MdOutlineFirstPage } from 'react-icons/md';
 import { MdOutlineLastPage } from 'react-icons/md';
 import { PiSortDescendingBold } from 'react-icons/pi';
 import { useMounted } from '~/shared/hooks/useMounted';
+import { IoDocumentsSharp } from 'react-icons/io5';
 
 const fileTypes = [
     { label: 'Barchasi', value: '' },
@@ -88,7 +89,7 @@ function SearchResultsProductsFilter({ total, childData }) {
 
         let hasMutation = false;
         let howManyMutations = 0;
-        Object.keys(defaultValues).forEach((key) => {
+        Object.keys(defaultValues).forEach(key => {
             if (router.query[key] && router.query[key] !== defaultValues[key]) {
                 hasMutation = true;
                 howManyMutations += 1;
@@ -109,6 +110,7 @@ function SearchResultsProductsFilter({ total, childData }) {
         delete newQueries.order_by;
         delete newQueries.page_from;
         delete newQueries.page_to;
+        delete newQueries.similar_documents;
 
         router.push(
             {
@@ -126,7 +128,8 @@ function SearchResultsProductsFilter({ total, childData }) {
 
     const deleteQuerySelectively = (...keys) => {
         const newParams = { ...router.query };
-        keys.forEach((key) => {
+        delete newParams.similar_documents;
+        keys.forEach(key => {
             delete newParams[key];
         });
         router.push(
@@ -144,17 +147,17 @@ function SearchResultsProductsFilter({ total, childData }) {
 
     const filterIndicatorSelectors = useMemo(() => {
         const currentType = allTypes.find(
-            (type) => type.value == router.query.type
+            type => type.value == router.query.type
         );
         const currentFileType = fileTypes.find(
-            (type) => type.value == router.query.file_type
+            type => type.value == router.query.file_type
         );
         const currentParentCategory = childData?.results?.find(
-            (cat) => cat.slug === router.query.parentCategory
+            cat => cat.slug === router.query.parentCategory
         );
 
         const currentOrderBy = orders.find(
-            (order) => order.value === router.query.order_by
+            order => order.value === router.query.order_by
         );
 
         return [
@@ -227,6 +230,20 @@ function SearchResultsProductsFilter({ total, childData }) {
         setFilterOpen(false);
     };
 
+    const handleLoadSimilarDocuments = () => {
+        router.push(
+            {
+                pathname: router.pathname,
+                query: {
+                    ...router.query,
+                    similar_documents: true,
+                },
+            },
+            undefined,
+            { scroll: false }
+        );
+    };
+
     return (
         <div className="Search_Results_Products_form_box">
             {mutationsInForm.hasMutation ? (
@@ -235,8 +252,8 @@ function SearchResultsProductsFilter({ total, childData }) {
                     <div className="filter_card_action_btns">
                         <div className="filter_indicators">
                             {filterIndicatorSelectors
-                                .filter((selector) => selector.isEnabled)
-                                .map((selector) => (
+                                .filter(selector => selector.isEnabled)
+                                .map(selector => (
                                     <Tooltip
                                         placement="top"
                                         title={
@@ -291,6 +308,19 @@ function SearchResultsProductsFilter({ total, childData }) {
                 <p className="countProduct text-nowrap m-0">
                     {total ? `${total} ta mahsulot topildi` : ''}
                 </p>
+                {/* NOTE: Working code don't delete this shit*/}
+                {/* <Button
+                         icon={<IoDocumentsSharp />}
+                         type="primary"
+                         onClick={handleLoadSimilarDocuments}
+                         style={{
+                             position: 'relative',
+                             right: '10px',
+                             flexShrink: 1,
+                         }}>
+                         O'xshash mahsulotlar
+                     </Button> */}
+
                 {!mutationsInForm.hasMutation && (
                     <div>
                         <Badge count={mutationsInForm.howManyMutations}>
@@ -335,7 +365,7 @@ const FilterFormDrawer = ({ open, childData, onClose }) => {
     const [filterValues, setFilterValues] = useState(initialFilterValues);
 
     const handleChangeFilterValues = (key, value) => {
-        setFilterValues((prev) => {
+        setFilterValues(prev => {
             if (typeof key === 'object') {
                 return {
                     ...prev,
@@ -349,15 +379,18 @@ const FilterFormDrawer = ({ open, childData, onClose }) => {
         });
     };
 
-    const handleSaveFilters = (e) => {
+    const handleSaveFilters = e => {
         e.preventDefault();
         const { pageRange, ...restFilterValues } = filterValues;
+        const newQueries = { ...router.query };
+        delete newQueries.similar_documents;
         router.push(
             {
                 pathname: router.pathname,
                 query: {
-                    ...router.query,
+                    ...newQueries,
                     ...restFilterValues,
+
                     page_from: pageRange[0] === 1 ? '' : pageRange[0],
                     page_to: pageRange[1] === 100 ? '' : pageRange[1],
                     page: 1,
@@ -399,7 +432,7 @@ const FilterFormDrawer = ({ open, childData, onClose }) => {
                     style={{ width: '100%' }}
                     value={filterValues.type}
                     onClear={handleClear}
-                    onChange={(value) =>
+                    onChange={value =>
                         handleChangeFilterValues({
                             type: value,
                             parentCategory: '',
@@ -408,7 +441,7 @@ const FilterFormDrawer = ({ open, childData, onClose }) => {
                             pageRange: [1, 100],
                         })
                     }>
-                    {allTypes.map((item) => (
+                    {allTypes.map(item => (
                         <Option key={item.value} value={item.value}>
                             <span className="d-flex align-items-center gap-2">
                                 {item.icon} {item.title}
@@ -424,7 +457,7 @@ const FilterFormDrawer = ({ open, childData, onClose }) => {
                     disabled={filterValues?.type !== 'file'}
                     allowClear
                     onClear={() => handleChangeFilterValues({ file_type: '' })}
-                    onChange={(value) =>
+                    onChange={value =>
                         handleChangeFilterValues({ file_type: value })
                     }
                     options={fileTypes}
@@ -441,16 +474,16 @@ const FilterFormDrawer = ({ open, childData, onClose }) => {
                             category: '',
                         })
                     }
-                    onChange={(value) => {
+                    onChange={value => {
                         const selected = childData?.results?.find(
-                            (cat) => cat.slug === value
+                            cat => cat.slug === value
                         );
                         handleChangeFilterValues({
                             parentCategory: selected?.slug || '',
                             category: selected?.id,
                         });
                     }}
-                    options={childData?.results?.map((cat) => ({
+                    options={childData?.results?.map(cat => ({
                         value: cat.slug,
                         label: cat.name,
                     }))}
@@ -464,7 +497,7 @@ const FilterFormDrawer = ({ open, childData, onClose }) => {
                     value={filterValues.order_by || undefined}
                     allowClear
                     onClear={() => handleChangeFilterValues({ order_by: '' })}
-                    onChange={(value) =>
+                    onChange={value =>
                         handleChangeFilterValues({ order_by: value })
                     }
                     options={orders}
@@ -478,7 +511,7 @@ const FilterFormDrawer = ({ open, childData, onClose }) => {
                             min={1}
                             max={100}
                             value={filterValues.pageRange}
-                            onChange={(val) =>
+                            onChange={val =>
                                 handleChangeFilterValues('pageRange', val)
                             }
                             style={{

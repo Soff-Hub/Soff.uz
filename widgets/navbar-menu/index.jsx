@@ -1,12 +1,10 @@
 import React, { useRef, useState, useEffect } from 'react';
 import styles from './style.module.scss';
 import menuItemStyle from './menuItem.module.scss';
-// import './popover-override.css'; // Import the override CSS
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useFGet } from '~/shared/hooks/useFApi';
 import { NAVBAR_MENU_CATEGORIES } from '~/shared/api/end-points';
-// import { directions } from '~/components/freeleance/constants';
 import { IoIosArrowBack } from 'react-icons/io';
 import { Popover, Button } from 'antd';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -17,7 +15,7 @@ import { useSelector } from 'react-redux';
 const NavbarMenu = () => {
     const { data, isLoading } = useFGet('navbar-items', NAVBAR_MENU_CATEGORIES);
     const [isEnd, setIsEnd] = useState(false);
-    const [isBeginning, setIsBeginning] = useState(true); // Start with true as initial state
+    const [isBeginning, setIsBeginning] = useState(true);
     const [swiperController, setSwiperController] = useState(null);
     const swiperRef = useRef(null);
 
@@ -32,7 +30,6 @@ const NavbarMenu = () => {
         setIsBeginning(status);
     };
 
-    // Function to update swiper state
     const updateSwiperState = swiper => {
         if (swiper) {
             setIsEnd(swiper.isEnd);
@@ -40,18 +37,14 @@ const NavbarMenu = () => {
         }
     };
 
-    // Handle swiper initialization
     const handleSwiperInit = swiper => {
-        // Set initial state
         updateSwiperState(swiper);
     };
 
-    // Handle slide change
     const handleSlideChange = swiper => {
         updateSwiperState(swiper);
     };
 
-    // Remove the old useEffect and replace with proper event handling
     useEffect(() => {
         if (swiperRef.current?.swiper) {
             const swiper = swiperRef.current.swiper;
@@ -59,7 +52,6 @@ const NavbarMenu = () => {
             // Set initial state
             updateSwiperState(swiper);
 
-            // Add event listeners
             swiper.on('slideChange', () => updateSwiperState(swiper));
             swiper.on('reachEnd', () => setIsEnd(true));
             swiper.on('reachBeginning', () => setIsBeginning(true));
@@ -67,7 +59,6 @@ const NavbarMenu = () => {
                 updateSwiperState(swiper);
             });
 
-            // Cleanup function
             return () => {
                 swiper.off('slideChange');
                 swiper.off('reachEnd');
@@ -75,7 +66,7 @@ const NavbarMenu = () => {
                 swiper.off('fromEdge');
             };
         }
-    }, [data]); // Depend on data so it runs when swiper is ready
+    }, [data]);
 
     if (isLoading && !data) return null;
 

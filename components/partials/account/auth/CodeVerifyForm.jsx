@@ -7,6 +7,7 @@ import { baseUrlAuth } from '~/repositories/Repository';
 import { useDispatch } from 'react-redux';
 import { login } from '~/store/auth/slice';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
+import { isReturnUrlEmpty } from '~/shared/utilities/return-url';
 
 export const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);
@@ -25,16 +26,6 @@ const isValidSlug = (slug) => {
         slug.trim().length > 0 &&
         slug !== 'undefined' &&
         slug !== 'null'
-    );
-};
-
-const isReturnUrlEmpty = (returnUrl) => {
-    return (
-        !returnUrl ||
-        returnUrl === 'undefined' ||
-        returnUrl === 'null' ||
-        returnUrl.trim() === '/' ||
-        returnUrl.trim() === ''
     );
 };
 

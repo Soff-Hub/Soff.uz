@@ -1,4 +1,4 @@
-import { Tabs } from 'antd';
+import { Badge, Tabs } from 'antd';
 import { useRouter } from 'next/router';
 import React, {
     forwardRef,
@@ -17,13 +17,7 @@ import UserProducts from './user-products';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
 
-const items = [
-    { key: 'about', label: 'Muallif haqida' },
-    { key: 'portfolio', label: 'Portfolio' },
-    { key: 'service', label: 'Xizmatlar' },
-    { key: 'product', label: 'Mahsulotlar' },
-    { key: 'comments', label: 'Izohlar' },
-];
+
 
 const UserTabs = ({ seller }) => {
     const router = useRouter();
@@ -77,6 +71,43 @@ const UserTabs = ({ seller }) => {
         }
     }, [activeKey]);
 
+
+    const items = [
+        { key: 'about', label: 'Muallif haqida' },
+        {
+            key: 'portfolio',
+            label: (
+                <span>
+                    Portfolio {seller?.portfolio_count > 0 && `(${seller.portfolio_count})`}
+                </span>
+            )
+        },
+        {
+            key: 'service',
+            label: (
+                <span>
+                    Xizmatlar {seller?.service_count > 0 && `(${seller.service_count})`}
+                </span>
+            )
+        },
+        {
+            key: 'product',
+            label: (
+                <span>
+                    Mahsulotlar {seller?.total_products_count > 0 && `(${seller.total_products_count})`}
+                </span>
+            )
+        },
+        {
+            key: 'comments',
+            label: (
+                <span>
+                    Izohlar {seller?.total_comments_count > 0 && `(${seller.total_comments_count})`}
+                </span>
+            )
+        },
+    ];
+
     const renderContent = useMemo(() => {
         switch (activeKey) {
             case 'portfolio':
@@ -84,7 +115,7 @@ const UserTabs = ({ seller }) => {
             case 'service':
                 return <UserServices />;
             case 'product':
-                return <UserProducts id={seller?.id} />;
+                return <UserProducts direction={seller?.most_common_direction} id={seller?.id} />;
             default:
                 return (
                     <UserInfo
@@ -111,9 +142,7 @@ const UserTabs = ({ seller }) => {
 
 export default memo(UserTabs);
 
-const DynamicTabs = forwardRef(({ activeKey, onChange }, ref) => {
-    const { isMobile } = useResponsive();
-
+const DynamicTabs = forwardRef(({ activeKey, onChange, items }, ref) => {
     return (
         <div
             style={{ scrollMarginTop: '150px' }}

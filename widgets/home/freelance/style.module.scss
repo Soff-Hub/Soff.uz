@@ -1,6 +1,228 @@
 @import '/scss/utils/variable';
 @import '/scss/utils/mixin';
 
+.topFreelanceRankings {
+    .swiperContainer {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        .categorySwiperBeginning::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 60px;
+            height: 100%;
+            z-index: 11;
+            background: linear-gradient(
+                to left,
+                rgba(241, 243, 255, 0.05),
+                rgb(255, 255, 255) 80%
+            );
+
+            @media screen and (max-width: 576px) {
+                width: 20px;
+            }
+        }
+
+        .categorySwiperEnding::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 60px;
+            height: 100%;
+            z-index: 11;
+            background: linear-gradient(
+                to right,
+                rgba(241, 243, 255, 0.05),
+                rgb(255, 255, 255) 80%
+            );
+
+            @media screen and (max-width: 576px) {
+                width: 20px;
+            }
+        }
+
+        .categoryButton {
+            font-size: 16px !important;
+            font-weight: 400 !important;
+            color: $subTextColor !important;
+            padding: 0px 15px !important;
+            border: 1px solid $color-1st;
+
+            svg {
+                color: $color-1st !important;
+                font-size: 20px;
+
+                g {
+                    fill: $color-1st !important;
+                    path {
+                        stroke: $color-1st !important;
+                        fill: $color-1st !important;
+                    }
+                }
+
+                path {
+                    stroke: $color-1st !important;
+                }
+            }
+
+            @media screen and (max-width: 576px) {
+                font-size: 14px !important;
+                padding: 5px 10px !important;
+                height: 27px;
+
+                svg {
+                    font-size: 16px;
+                }
+            }
+        }
+
+        .categoryButton--ordinary {
+            @extend .categoryButton;
+            &:hover {
+                background-color: #00a44fb6 !important;
+                color: #fff !important;
+
+                svg {
+                    color: #fff !important;
+
+                    g {
+                        fill: #fff !important;
+                        path {
+                            stroke: #fff !important;
+                            fill: #fff !important;
+                        }
+                    }
+
+                    path {
+                        stroke: #fff !important;
+                    }
+                }
+            }
+        }
+
+        .categoryButton--selected {
+            background-color: $color-1st !important;
+            color: #fff !important;
+
+            @media (max-width: 576px) {
+                font-size: 14px !important;
+                padding: 5px 10px !important;
+                height: 27px;
+
+                svg {
+                    font-size: 16px;
+                }
+            }
+
+            svg {
+                font-size: 20px;
+
+                g {
+                    fill: #fff !important;
+                    path {
+                        stroke: #fff !important;
+                        fill: #fff !important;
+                    }
+                }
+
+                path {
+                    stroke: #fff !important;
+                }
+            }
+        }
+
+        .swipe_btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            svg {
+                position: relative;
+            }
+        }
+
+        .swipeNext {
+            transform: rotate(180deg);
+            @extend .swipe_btn;
+        }
+    }
+
+    .resultsWrapper {
+        margin-top: 30px;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+
+        .card {
+            background: #00a44f;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            min-height: 200px;
+            flex-direction: column;
+            gap: 10px;
+            padding: 20px;
+            border-radius: 10px;
+
+            .btn {
+                background: #fefefe;
+                color: #24282b;
+                line-height: 26px;
+                font-size: 14px;
+                border-radius: 10px;
+                border: #fefefe solid 2px;
+                transition: all 0.3s ease-out;
+
+                &:hover {
+                    color: #fefefe;
+                    background: #00a44f;
+                }
+            }
+
+            .title {
+                margin: 0;
+                text-align: center;
+                color: #fefefe;
+                font-size: 20px;
+                line-height: 30px;
+                font-weight: 600;
+            }
+        }
+
+        @media (max-width: 992px) {
+            grid-template-columns: repeat(3, 1fr);
+            .card {
+                grid-column: 1 / 4;
+            }
+        }
+
+        @media (max-width: 576px) {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+
+            .card {
+                grid-column: auto;
+            }
+
+            .card {
+                .title {
+                    font-size: 12.5px;
+                    line-height: normal;
+                }
+
+                .btn {
+                    font-size: 11px;
+                }
+            }
+        }
+    }
+}
+
 .freelance_section {
     border-radius: 24px;
     display: flex;

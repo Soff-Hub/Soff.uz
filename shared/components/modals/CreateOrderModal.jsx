@@ -9,6 +9,7 @@ import {
     InputNumber,
     Tooltip,
     TimePicker,
+    Upload,
 } from 'antd';
 import React, { useEffect, useMemo, useState } from 'react';
 import { QuestionCircleOutlined } from '@ant-design/icons';
@@ -50,6 +51,7 @@ const CreateOrderModal = ({
     const [confirmOpen, setConfirmOpen] = useState(false);
     const [showLeftGradient, setShowLeftGradient] = useState(false);
     const [showRightGradient, setShowRightGradient] = useState(true);
+    const [files, setFiles] = useState(null);
 
     useEffect(() => {
         form.setFieldValue('direction', direction);
@@ -155,6 +157,11 @@ const CreateOrderModal = ({
         for (const [key, value] of Object.entries(order)) {
             fd.append(key, value);
         }
+
+        if (files && files.length > 0) {
+            fd.append('file', files[0].originFileObj);
+        }
+
         if (id) {
             createDirectOrder(fd);
         } else {
@@ -332,36 +339,74 @@ const CreateOrderModal = ({
                             />
                         </Form.Item>
                     )}
-                    <Form.Item
-                        name="description"
-                        label={
-                            <div className="d-flex align-items-center align-items-sm-center">
-                                <p className="m-0 text-dark">
-                                    Buyurtma tavsifini kiriting
-                                </p>
-                                <Info
-                                    title={
-                                        inputInfoToCreateOrder['description']
-                                            .info
-                                    }
-                                />
-                            </div>
-                        }
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Buyurtma tavsifini yozing!',
-                            },
-                        ]}>
-                        <TextArea
-                            style={{ resize: 'none' }}
-                            rows={6}
-                            placeholder={
-                                inputInfoToCreateOrder['description']
-                                    .placeholder
+                    <div
+                        style={{
+                            marginBottom: '20px',
+                        }}>
+                        <Form.Item
+                            name="description"
+                            style={{ marginBottom: '15px' }}
+                            label={
+                                <div className="d-flex align-items-center align-items-sm-center">
+                                    <p className="m-0 text-dark">
+                                        Buyurtma tavsifini kiriting
+                                    </p>
+                                    <Info
+                                        title={
+                                            inputInfoToCreateOrder[
+                                                'description'
+                                            ].info
+                                        }
+                                    />
+                                </div>
                             }
-                        />
-                    </Form.Item>
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Buyurtma tavsifini yozing!',
+                                },
+                            ]}>
+                            <TextArea
+                                style={{ resize: 'none' }}
+                                rows={6}
+                                placeholder={
+                                    inputInfoToCreateOrder['description']
+                                        .placeholder
+                                }
+                            />
+                        </Form.Item>
+                        <Upload
+                            fileList={files}
+                            multiple={false}
+                            listType="picture"
+                            className="custom-order-file-upload"
+                            name="file"
+                            maxCount={1}
+                            beforeUpload={() => {
+                                return false;
+                            }}
+                            onChange={(e) => {
+                                const { file, fileList } = e;
+                                if (file) {
+                                    const maxSize = 50 * 1024 * 1024;
+                                    if (file.size > maxSize) {
+                                        message.error(
+                                            "Fayl 50 MB dan katta bo'lishi mumkin emas"
+                                        );
+                                        return;
+                                    }
+                                    setFiles(fileList);
+                                }
+                            }}
+                            onRemove={() => setFiles(null)}>
+                            <Button
+                                icon={
+                                    <i className="fa-solid fa-paperclip"></i>
+                                }>
+                                Fayl yuklash (ixtiyoriy)
+                            </Button>
+                        </Upload>
+                    </div>
                     <Form.Item
                         name="language"
                         label={

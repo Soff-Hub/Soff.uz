@@ -7,6 +7,8 @@ import {
     Rate,
     Alert,
     Radio,
+    Tooltip,
+    Switch,
 } from 'antd';
 import {
     DownloadOutlined,
@@ -16,6 +18,7 @@ import {
 } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
 import styles from '../style/style.module.scss';
+import modalStyles from '~/features/user-profile/styles/orderPaymentPrompt.module.scss';
 import Link from 'next/link';
 import dayjs from 'dayjs';
 import 'dayjs/locale/uz-latn';
@@ -26,7 +29,7 @@ import useGetFile from '../api/useGetFile';
 import useSubmit from '../api/useSubmit';
 import { useQueryClient } from '@tanstack/react-query';
 import ReactConfetti from 'react-confetti';
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
 import OrderCard from '~/entities/order/order-card';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { useDispatch } from 'react-redux';
@@ -34,6 +37,8 @@ import { setShowSearch } from '~/store/fast-dowload/slice';
 import { IoCheckboxOutline } from 'react-icons/io5';
 import TelegramNotification from '~/shared/components/telegram-notlification';
 import duration from 'dayjs/plugin/duration';
+import useGetCustomBalance from '~/components/freeleance/myorders/myorder/api/useGetCustomBalance';
+
 dayjs.locale('uz-latn');
 dayjs.extend(duration);
 
@@ -172,11 +177,18 @@ const OrderMain = ({ order, handleOrderUpdate }) => {
     const { data: file } = useGetFile(order?.id);
     const submit = useSubmit();
     const queryClient = useQueryClient();
-    const { query, push } = useRouter();
+    // const { query, push } = useRouter();
     const { isDesktop } = useResponsive();
     const dispatch = useDispatch();
 
     const price = order?.service?.price || order?.budget || 0;
+    const [mode, setMode] = useState(true);
+    const { data } = useGetCustomBalance();
+    const balance = Number(data?.wallet || 0);
+    const balanceDisabled = balance > 0;
+
+    const leftBalance = formatCurrencyWithSpace(Number(balance));
+    const isSufficientBalance = balance >= price;
 
     const items = [
         { title: <Link href={'/order/my-orders'}>Mening buyurtmalarim</Link> },
@@ -202,6 +214,16 @@ const OrderMain = ({ order, handleOrderUpdate }) => {
         order?.approved_transaction_amount > 0 &&
         order?.approved_transaction_amount < price;
     const notPaidAmount = price - (order?.approved_transaction_amount || 0);
+
+    const serviceCheckoutOrder = {
+        id: order?.id,
+        price: isPartiallyPaid ? notPaidAmount : price,
+        title: order?.title,
+    };
+
+    useEffect(() => {
+        setMode(Number(data?.wallet || 0) > 0);
+    }, [data?.wallet]);
 
     useEffect(() => {
         if (!isFullyPaid) {
@@ -236,9 +258,8 @@ const OrderMain = ({ order, handleOrderUpdate }) => {
                     <div className={styles.orderPayCardFlex}>
                         <div className={styles.orderPayCardInfo}>
                             <h5
-                                className={`mb-0 ${
-                                    !isDesktop && 'text-center'
-                                }`}>
+                                className={`mb-0 ${!isDesktop &&
+                                    'text-center'}`}>
                                 Frilanser ish boshlashiga to'lov qiling.
                             </h5>
                         </div>
@@ -435,8 +456,9 @@ const OrderMain = ({ order, handleOrderUpdate }) => {
                                     whiteSpace: 'pre-line',
                                 }}
                                 dangerouslySetInnerHTML={{
-                                    __html: order.order_requirement[0]
-                                        ?.order_requirement_description,
+                                    __html:
+                                        order.order_requirement[0]
+                                            ?.order_requirement_description,
                                 }}
                             />
                             {/* Fayl bo‘lsa tugma chiqadi */}
@@ -545,13 +567,13 @@ const OrderMain = ({ order, handleOrderUpdate }) => {
                         <Rate
                             allowHalf={false}
                             value={rate}
-                            onChange={(val) => setRate(val)}
+                            onChange={val => setRate(val)}
                         />
                         <TextArea
                             placeholder="Xizmat haqida fikrlaringizni yozib qoldiring"
                             rows={3}
                             value={text}
-                            onChange={(e) => setText(e.target.value)}
+                            onChange={e => setText(e.target.value)}
                         />
                     </div>
                 )}
@@ -566,7 +588,7 @@ const OrderMain = ({ order, handleOrderUpdate }) => {
                             placeholder="Ishning aniqlangan kamchiliklarini yozing"
                             rows={3}
                             value={text}
-                            onChange={(e) => setText(e.target.value)}
+                            onChange={e => setText(e.target.value)}
                         />
                     </>
                 )}
@@ -580,14 +602,14 @@ const OrderMain = ({ order, handleOrderUpdate }) => {
                 }}
                 footer={null}
                 width={600}>
-                <div className="type_payment">
+                <div className={modalStyles.serviceOrderModal}>
                     {!showPayment ? (
-                        <div className={styles.showPayment}>
-                            <h3 className="type_payment_h3 text-center mb-4">
+                        <div className={modalStyles.servicePreOrder}>
+                            <h3 className={modalStyles.title}>
                                 Buyurtma uchun to'lovni amalga oshiring
                             </h3>
 
-                            <div className="security-message mb-4 text-center">
+                            <div className={modalStyles.securityMessage}>
                                 <i className="fa-solid fa-shield-halved text-success fs-4 mb-2"></i>
                                 <p className="text-muted mb-0">
                                     Sizning to'lovingiz Soff tizimi tomonidan
@@ -597,8 +619,8 @@ const OrderMain = ({ order, handleOrderUpdate }) => {
                                 </p>
                             </div>
 
-                            <div className="text-center mb-4 text-warning">
-                                {isPartiallyPaid && (
+                            {isPartiallyPaid && (
+                                <div className="text-center mb-4 text-warning">
                                     <p className="text-warning mb-0 mt-2">
                                         Eslatma: Siz ilgari{' '}
                                         {formatCurrencyWithSpace(
@@ -609,37 +631,39 @@ const OrderMain = ({ order, handleOrderUpdate }) => {
                                         {formatCurrencyWithSpace(notPaidAmount)}{' '}
                                         so'm to'lovni amalga oshiring.
                                     </p>
-                                )}
-                            </div>
+                                </div>
+                            )}
 
-                            <div className="service-details-box bg-white border rounded p-3 mb-4">
-                                <div className="d-flex justify-content-between align-items-center">
-                                    <div className="d-flex align-items-center">
-                                        <i className="fa-solid fa-file-lines text-primary me-3 fs-4"></i>
-                                        <div>
-                                            {/* <h5 className="mb-1 fw-bold">{title}</h5> */}
-                                            <p className="text-muted mb-0">
-                                                {order?.service?.title ||
-                                                    order?.title}
-                                            </p>
+                            {!mode ? (
+                                <div className="service-details-box bg-white border rounded p-3 mb-4">
+                                    <div className="d-flex justify-content-between align-items-center">
+                                        <div className="d-flex align-items-center">
+                                            <i className="fa-solid fa-file-lines text-primary me-3 fs-4"></i>
+                                            <div>
+                                                {/* <h5 className="mb-1 fw-bold">{title}</h5> */}
+                                                <p className="text-muted mb-0">
+                                                    {order?.service?.title ||
+                                                        order?.title}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div className="text-end">
+                                            <h4
+                                                className="text-primary white-space-nowrap mb-0 fw-bold"
+                                                style={{
+                                                    whiteSpace: 'nowrap',
+                                                }}>
+                                                {formatCurrencyWithSpace(
+                                                    isPartiallyPaid
+                                                        ? notPaidAmount
+                                                        : price
+                                                )}{' '}
+                                                so'm
+                                            </h4>
                                         </div>
                                     </div>
-                                    <div className="text-end">
-                                        <h4
-                                            className="text-primary white-space-nowrap mb-0 fw-bold"
-                                            style={{
-                                                whiteSpace: 'nowrap',
-                                            }}>
-                                            {formatCurrencyWithSpace(
-                                                isPartiallyPaid
-                                                    ? notPaidAmount
-                                                    : price
-                                            )}{' '}
-                                            so'm
-                                        </h4>
-                                    </div>
                                 </div>
-                            </div>
+                            ) : null}
 
                             <div className={'text-center'}>
                                 <Button
@@ -657,13 +681,27 @@ const OrderMain = ({ order, handleOrderUpdate }) => {
                             </div>
                         </div>
                     ) : (
-                        <>
-                            <div className="d-flex justify-content-between align-items-center mb-4">
-                                <h3 className="type_payment_h3 mb-0">
-                                    To'lov turini tanlang:
-                                </h3>
+                        <div className={modalStyles.orderPayment}>
+                            <div className={modalStyles.orderPaymentHeader}>
+                                <Tooltip title="To'lov uchun balansingizdan foydalaning">
+                                    <Button
+                                        onClick={() => setMode(pre => !pre)}
+                                        className={
+                                            mode && isSufficientBalance
+                                                ? modalStyles.orderButtonActive
+                                                : mode && !isSufficientBalance
+                                                ? modalStyles.orderButtonWarn
+                                                : modalStyles.orderButtonInactive
+                                        }
+                                        disabled={!balanceDisabled}>
+                                        <Switch value={mode} size="small" />
+                                        Balance - {leftBalance} so'm
+                                    </Button>
+                                </Tooltip>
+
                                 <Button
                                     type="text"
+                                    className={modalStyles.backButton}
                                     icon={
                                         <i className="fa-solid fa-arrow-left"></i>
                                     }
@@ -674,11 +712,14 @@ const OrderMain = ({ order, handleOrderUpdate }) => {
                             <div className="bg-white">
                                 <ServiceCheckout
                                     onClose={onClose}
+                                    order={serviceCheckoutOrder}
+                                    balanceMode={mode}
+                                    balance={balance}
                                     document={order?.service?.id}
                                     order_id={order?.id}
                                 />
                             </div>
-                        </>
+                        </div>
                     )}
                 </div>
             </Modal>

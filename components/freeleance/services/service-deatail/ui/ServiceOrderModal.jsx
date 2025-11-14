@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Input, Modal, Upload } from 'antd';
+import React, { useEffect, useRef, useState } from 'react';
+import { Button, Input, Modal, Upload, Switch, Radio, Tooltip } from 'antd';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import ServiceCheckout from './auth/serviceCheckout';
 import AuthModal from '~/components/AuthModal';
 import { useRouter } from 'next/router';
-import { on } from 'events';
-
+import styles from './styles/service-checkout.module.scss';
+import useGetCustomBalance from '~/components/freeleance/myorders/myorder/api/useGetCustomBalance';
 const { TextArea } = Input;
 
 function ServiceOrderModal({
@@ -19,16 +19,25 @@ function ServiceOrderModal({
     const [isOpen, setIsOpen] = useState(false);
     const [showPayment, setShowPayment] = useState(false);
     const [actionTracker, setActionTracker] = useState(null);
+    const [mode, setMode] = useState(true);
     const [files, setFiles] = useState([]);
     const [description, setDescription] = useState('');
     const { push } = useRouter();
+    const { data } = useGetCustomBalance();
+    const switchRef = useRef(null);
+    const balance = Number(data?.wallet || 0);
+    const balanceDisabled = balance > 0;
     const { price, id, title } = order;
 
+    console.log({ balanceDisabled, mode });
+
+    const leftBalance = formatCurrencyWithSpace(Number(balance));
+    const isSufficientBalance = balance >= order?.price;
     const componentProperties = {
         modalOpen: isOpen,
-        setModalOpen: (value) => setIsOpen(value),
+        setModalOpen: value => setIsOpen(value),
         authOpen: openAuth,
-        setAuthOpen: (value) => setOpenAuth(value),
+        setAuthOpen: value => setOpenAuth(value),
         actionTracker,
         setActionTracker,
     };
@@ -54,7 +63,7 @@ function ServiceOrderModal({
         handleAuthSuccess && handleAuthSuccess(componentProperties);
     };
 
-    const onPaymentSuccess = (id) => {
+    const onPaymentSuccess = id => {
         handleClose();
         push(`/order/${id}`);
     };
@@ -65,6 +74,21 @@ function ServiceOrderModal({
         }
     }, [externalOpenModal]);
 
+    useEffect(() => {
+        if (switchRef.current) {
+            switchRef.addEventListener('click', e => e.stopPropagation());
+            return () => {
+                switchRef.current.removeEventListener('click', e =>
+                    e.stopPropagation()
+                );
+            };
+        }
+    }, []);
+
+    useEffect(() => {
+        setMode(Number(data?.wallet || 0) > 0);
+    }, [data?.wallet]);
+
     return (
         <>
             {childrenContent}
@@ -73,14 +97,26 @@ function ServiceOrderModal({
                 onCancel={handleClose}
                 footer={null}
                 width={600}>
-                <div className="type_payment p-lg-5 p-md-5 p-4">
+                <div
+                    className={
+                        styles.serviceOrderModal
+                        // "type_payment"
+                    }>
                     {!showPayment ? (
-                        <>
-                            <h3 className="type_payment_h3 text-center mb-4">
+                        <div className={styles.servicePreOrder}>
+                            <h3
+                                className={
+                                    styles.title
+                                    // "type_payment_h3 text-center mb-4"
+                                }>
                                 Buyurtma uchun to'lovni amalga oshiring
                             </h3>
 
-                            <div className="security-message mb-4 text-center">
+                            <div
+                                className={
+                                    styles.securityMessage
+                                    // "security-message mb-4 text-center"
+                                }>
                                 <i className="fa-solid fa-shield-halved text-success fs-4 mb-2"></i>
                                 <p className="text-muted mb-0">
                                     Sizning to'lovingiz Soff tizimi tomonidan
@@ -141,7 +177,7 @@ function ServiceOrderModal({
                             <TextArea
                                 rows={4}
                                 value={description}
-                                onChange={(e) => {
+                                onChange={e => {
                                     setDescription(e.target.value);
                                 }}
                                 placeholder="Buyurtma bo'yicha qo'shimcha ma'lumot (ixtiyoriy)"
@@ -160,7 +196,7 @@ function ServiceOrderModal({
                                 beforeUpload={() => {
                                     return false;
                                 }}
-                                onChange={(e) => {
+                                onChange={e => {
                                     const { file, fileList } = e;
                                     if (file) {
                                         const maxSize = 50 * 1024 * 1024;
@@ -195,19 +231,33 @@ function ServiceOrderModal({
                                     onClick={() => {
                                         handleToPaymentPart();
                                     }}>
-                                    Buyurtma berish
+                                    Buyurtmani rasmiylashtirish
                                     <i className="fa-solid fa-arrow-right ms-2"></i>
                                 </Button>
                             </div>
-                        </>
+                        </div>
                     ) : (
-                        <>
-                            <div className="d-flex justify-content-between align-items-center mb-4">
-                                <h3 className="type_payment_h3 mb-0">
-                                    {/* To'lov turini tanlang: */}
-                                </h3>
+                        <div className={styles.orderPayment}>
+                            <div className={styles.orderPaymentHeader}>
+                                <Tooltip title="To'lov uchun balansingizdan foydalaning">
+                                    <Button
+                                        onClick={() => setMode(pre => !pre)}
+                                        className={
+                                            mode && isSufficientBalance
+                                                ? styles.orderButtonActive
+                                                : mode && !isSufficientBalance
+                                                ? styles.orderButtonWarn
+                                                : styles.orderButtonInactive
+                                        }
+                                        disabled={!balanceDisabled}>
+                                        <Switch value={mode} size="small" />
+                                        Balance - {leftBalance} so'm
+                                    </Button>
+                                </Tooltip>
+
                                 <Button
                                     type="text"
+                                    className={styles.backButton}
                                     icon={
                                         <i className="fa-solid fa-arrow-left"></i>
                                     }
@@ -215,16 +265,18 @@ function ServiceOrderModal({
                                     Orqaga
                                 </Button>
                             </div>
-                            <div className="bg-white">
-                                <ServiceCheckout
-                                    document={id}
-                                    files={files}
-                                    description={description}
-                                    onClose={handleClose}
-                                    onSuccess={onPaymentSuccess}
-                                />
-                            </div>
-                        </>
+
+                            <ServiceCheckout
+                                document={id}
+                                order={order}
+                                balanceMode={mode}
+                                balance={balance}
+                                files={files}
+                                description={description}
+                                onClose={handleClose}
+                                onSuccess={onPaymentSuccess}
+                            />
+                        </div>
                     )}
                 </div>
             </Modal>

@@ -16,6 +16,7 @@ import { useQuery } from '@tanstack/react-query';
 import { api } from '~/repositories/api';
 import { baseURL } from '~/repositories/Repository';
 import { baseUrlUseApi } from '~/repositories/useApi';
+import { getOrCreateDeviceId } from '~/shared/utilities/device-id';
 
 const Search_Results = ({
     keyword,
@@ -30,7 +31,7 @@ const Search_Results = ({
     const { query } = useRouter();
     const { isDesktop } = useResponsive();
     const pageRef = useRef(null);
-    const { isLoggedIn } = useSelector((state) => state.auth);
+    const { isLoggedIn } = useSelector(state => state.auth);
     const tab = router.query.tab || '1';
 
     const topServicesQuery = new URLSearchParams({
@@ -80,7 +81,7 @@ const Search_Results = ({
         </>
     );
 
-    const handleSetRouterQuery = (currentTab) => {
+    const handleSetRouterQuery = currentTab => {
         const omitKeys = [
             'direction',
             'ts_direction',
@@ -126,12 +127,15 @@ const Search_Results = ({
         inputEl.current.value = '';
     };
 
-    const handleChangeTab = (value) => {
+    const handleChangeTab = value => {
         handleSetRouterQuery(value);
     };
 
     useEffect(() => {
         if (debouncedSearchTerm !== router.query.keyword) {
+            const newQueries = router.query;
+            delete newQueries.similar_documents;
+
             router.push({
                 pathname: router.pathname,
                 query: {
@@ -269,7 +273,7 @@ const Search_Results = ({
                                     type="text"
                                     value={searchTerm}
                                     placeholder="Izlayotgan mahsulotingizni toping..."
-                                    onChange={(e) =>
+                                    onChange={e =>
                                         setSearchTerm(e.target.value)
                                     }
                                 />
@@ -301,7 +305,7 @@ export async function getServerSideProps(context) {
     const {
         keyword = '',
         page = 1,
-        tab,
+        tab = '1',
         type = 'all',
         category = '',
         parentCategory = '',
@@ -314,7 +318,13 @@ export async function getServerSideProps(context) {
         file_type = '', // fayl turi (file_type)
         page_from = '', // ✅ yangi qo‘shildi
         page_to = '', // ✅ yangi qo‘shildi
+        similar_documents = '',
     } = context.query;
+
+    const deviceId = getOrCreateDeviceId({
+        req: context.req,
+        res: context.res,
+    });
 
     const servicesQuery = new URLSearchParams({
         ...(category_id && { category_id }),
@@ -323,7 +333,7 @@ export async function getServerSideProps(context) {
         offset,
     });
 
-    const fetchJson = async (url) => {
+    const fetchJson = async url => {
         try {
             const res = await fetch(url);
             if (!res.ok) throw new Error('Failed to fetch');
@@ -334,15 +344,15 @@ export async function getServerSideProps(context) {
     };
 
     // ✅ Yangi filterlar qo‘shildi
-    const searchUrl = `${baseUrlUseApi}customer/same-google-search/?limit=50&${
-        page ? `page=${page}&` : ''
-    }${keyword ? `search=${keyword}&` : ''}${type ? `type=${type}&` : ''}${
-        category ? `category=${category}&` : ''
-    }${order_by ? `order_by=${order_by}&` : ''}${
-        file_type ? `file_type=${file_type}&` : ''
-    }${page_from ? `page_from=${page_from}&` : ''}${
-        page_to ? `page_to=${page_to}` : ''
-    }`;
+    const searchUrl = `${baseUrlUseApi}customer/same-google-search/?limit=50${
+        page ? `&page=${page}` : ''
+    }${keyword ? `&search=${keyword}` : ''}${type ? `&type=${type}` : ''}${
+        category ? `&category=${category}` : ''
+    }${order_by ? `&order_by=${order_by}` : ''}${
+        file_type ? `&file_type=${file_type}` : ''
+    }${page_from ? `&page_from=${page_from}` : ''}${
+        page_to ? `&page_to=${page_to}` : ''
+    }${similar_documents ? `&similar_documents=${similar_documents}` : ''}`;
 
     // console.log('searchUrl', searchUrl);
     const servicesUrl = `${
@@ -374,9 +384,19 @@ export async function getServerSideProps(context) {
 
     switch (tab) {
         case '1': {
-            const productsInitialData = await fetchJson(searchUrl);
+            let productsInitialData = null;
+            try {
+                const productsFetch = await fetch(searchUrl, {
+                    headers: {
+                        'X-Device-ID': deviceId,
+                    },
+                });
+                productsInitialData = await productsFetch.json();
+            } catch (error) {
+                console.error('Error fetching products:', error);
+            }
             const searchError = productsInitialData?.error || null;
-
+            console.log({ productsInitialData, searchUrl });
             return {
                 props: {
                     ...restQueries,

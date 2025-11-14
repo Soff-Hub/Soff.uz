@@ -45,12 +45,12 @@ export default function ProductsByCategory({
                 </div>
             )}
 
-            {data?.count >= 48 && (
+            {data?.count >= 50 && (
                 <div className="d-flex justify-content-center mt-5">
                     <Pagination
                         className="text-success"
                         total={data?.count}
-                        pageSize={48}
+                        pageSize={50}
                         responsive={true}
                         showSizeChanger={false}
                         current={page}

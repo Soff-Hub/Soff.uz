@@ -1,22 +1,37 @@
-import React, { useState } from 'react';
-import { Button, Modal } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Button, Modal, Tooltip, Switch } from 'antd';
 import ServiceCheckout from '~/components/freeleance/services/service-deatail/ui/auth/serviceCheckout';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import { useRouter } from 'next/router';
+import useGetCustomBalance from '~/components/freeleance/myorders/myorder/api/useGetCustomBalance';
+import styles from '../styles/orderPaymentPrompt.module.scss';
 
 function OrderPaymentPrompt({ isOpen, onClose, order }) {
     const [showPayment, setShowPayment] = useState(false);
     const { push } = useRouter();
+    const [mode, setMode] = useState(true);
+    const { data } = useGetCustomBalance();
+    const balance = Number(data?.wallet || 0);
+    const balanceDisabled = balance > 0;
+    // const { price, id, title } = order;
+
+    const leftBalance = formatCurrencyWithSpace(Number(balance));
+    const isSufficientBalance = balance >= order?.price;
+
+    useEffect(() => {
+        setMode(Number(data?.wallet || 0) > 0);
+    }, [data?.wallet]);
+
     return (
         <Modal open={isOpen} onCancel={onClose} footer={null} width={600}>
-            <div className="type_payment p-lg-5 p-md-5 p-4">
+            <div className={styles.serviceOrderModal}>
                 {!showPayment ? (
-                    <>
-                        <h3 className="type_payment_h3 text-center mb-4">
+                    <div className={styles.servicePreOrder}>
+                        <h3 className={styles.title}>
                             Buyurtma uchun to'lovni amalga oshiring
                         </h3>
 
-                        <div className="security-message mb-4 text-center">
+                        <div className={styles.securityMessage}>
                             <i className="fa-solid fa-shield-halved text-success fs-4 mb-2"></i>
                             <p className="text-muted mb-0">
                                 Sizning to'lovingiz Soff tizimi tomonidan
@@ -60,15 +75,28 @@ function OrderPaymentPrompt({ isOpen, onClose, order }) {
                                 <i className="fa-solid fa-arrow-right ms-2"></i>
                             </Button>
                         </div>
-                    </>
+                    </div>
                 ) : (
-                    <>
-                        <div className="d-flex justify-content-between align-items-center mb-4">
-                            <h3 className="type_payment_h3 mb-0">
-                                {/* To'lov turini tanlang: */}
-                            </h3>
+                    <div className={styles.orderPayment}>
+                        <div className={styles.orderPaymentHeader}>
+                            <Tooltip title="To'lov uchun balansingizdan foydalaning">
+                                <Button
+                                    onClick={() => setMode(pre => !pre)}
+                                    className={
+                                        mode && isSufficientBalance
+                                            ? styles.orderButtonActive
+                                            : mode && !isSufficientBalance
+                                            ? styles.orderButtonWarn
+                                            : styles.orderButtonInactive
+                                    }
+                                    disabled={!balanceDisabled}>
+                                    <Switch value={mode} size="small" />
+                                    Balance - {leftBalance} so'm
+                                </Button>
+                            </Tooltip>
                             <Button
                                 type="text"
+                                className={styles.backButton}
                                 icon={
                                     <i className="fa-solid fa-arrow-left"></i>
                                 }
@@ -76,14 +104,15 @@ function OrderPaymentPrompt({ isOpen, onClose, order }) {
                                 Orqaga
                             </Button>
                         </div>
-                        <div className="bg-white">
-                            <ServiceCheckout
-                                order_id={order?.id}
-                                onSuccess={() => push(`/order/${order?.id}`)}
-                                onClose={onClose}
-                            />
-                        </div>
-                    </>
+                        <ServiceCheckout
+                            order_id={order?.id}
+                            order={order}
+                            balanceMode={mode}
+                            balance={balance}
+                            onSuccess={() => push(`/order/${order?.id}`)}
+                            onClose={onClose}
+                        />
+                    </div>
                 )}
             </div>
         </Modal>

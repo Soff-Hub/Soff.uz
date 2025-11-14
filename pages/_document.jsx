@@ -161,6 +161,24 @@ export default function Document() {
                             `,
                         }}></script>
                 )}
+                {process.env.NODE_ENV === 'production' && (
+                    <script
+                        defer
+                        dangerouslySetInnerHTML={{
+                            __html: `
+                        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+                        !function(f,b,e,v,n,t,s)
+                        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+                        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+                        t.src=v;s=b.getElementsByTagName(e)[0];
+                        n.queue=[];t=b.createElement(e);t.async=!0;
+                        'https://connect.facebook.net/en_US/fbevents.js');
+                        s.parentNode.insertBefore(t,s)}(window, document,'script',
+                        fbq('track', 'PageView');
+                        fbq('init', '2024989874941740');
+                        `,
+                        }}></script>
+                )}
                 <script
                     src="https://telegram.org/js/telegram-web-app.js"
                     defer></script>
@@ -172,6 +190,14 @@ export default function Document() {
                             alt=""
                         />
                     </div>
+                </noscript>
+                <noscript>
+                    <img
+                        height="1"
+                        width="1"
+                        style={{ display: 'none' }}
+                        src="https://www.facebook.com/tr?id=2024989874941740&ev=PageView&noscript=1"
+                    />
                 </noscript>
                 <noscript>
                     <img

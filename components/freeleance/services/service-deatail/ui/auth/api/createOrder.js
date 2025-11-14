@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import { useMutation } from '@tanstack/react-query';
 import axiosInstance from '~/shared/api/freeleanceApi';
 
-export default function useCreateOrder() {
+export default function useCreateOrder(balanceMode) {
     const { user } = useSelector((state) => state.auth);
     const axios = axiosInstance(user?.access);
     return useMutation({
@@ -19,6 +19,7 @@ export default function useCreateOrder() {
             const formData = new FormData();
             if (service_id) formData.append('service_id', service_id);
             formData.append('payment_type', payment_type);
+            formData.append('from_balance', balanceMode);
 
             if (card_number) {
                 formData.append('card_number', card_number);

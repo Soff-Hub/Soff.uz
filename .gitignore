@@ -29,6 +29,7 @@ yarn.lock
 .now
 .env
 .xml
+.vscode
 
 # Playwright
 node_modules/

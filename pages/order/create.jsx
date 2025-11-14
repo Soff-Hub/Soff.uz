@@ -6,7 +6,7 @@ import useCreateOrder from '~/shared/hooks/useCreateOrder';
 import { useRouter } from 'next/router';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { useSelector } from 'react-redux';
-import Editor from '~/components/Editor';
+// import Editor from '~/components/Editor';
 
 function OrderCreate() {
     const router = useRouter();

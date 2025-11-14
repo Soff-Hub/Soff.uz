@@ -74,26 +74,40 @@ export default memo(ProductComments)
 const CommentCard = memo(({ item }) => {
     const date = useMemo(() => item.created_at?.split('T')[0], [item.created_at])
     const { push } = useRouter()
-
     return (
-        <div>
-            <div className={cn("flex", "gap-1", "flex-col")}>
+        <div className={cn("flex", "flex-col", "gap-2")}>
+            <div className={cn("flex", "flex-col", "gap-1")}>
                 <div className={cn("flex", "items-center", "gap-3")}>
-                    <div className={cn("flex", "items-center", "gap-3")}>
-                        <span className={cn("font-semibold", "block", "text-[14px]")}>
-                            {item.user_full_name}
-                        </span>
-                        {item.rating > 0 && (
-                            <Rate disabled value={item.rating} className={cn("text-[12px]")} />
-                        )}
-                    </div>
+                    <span className={cn("font-semibold", "text-[14px]")}>
+                        {item.user_full_name}
+                    </span>
+                    {item.rating > 0 && (
+                        <Rate disabled value={item.rating} className={cn("text-[12px]")} />
+                    )}
                 </div>
                 <span className={cn("text-[13px]", "text-secondary")}>
-                    {date} | <span className={cn("cursor-pointer", "hover-text-primary", "transition")} onClick={() => push(`/product/${item?.document_slug}`)}>{item.document_title}</span>  
+                    {date} |{" "}
+                    <span
+                        className={cn("cursor-pointer", "hover-text-primary")}
+                        onClick={() => push(`/product/${item?.document_slug}`)}
+                    >
+                        {item.document_title}
+                    </span>
                 </span>
+                {item.text && (
+                    <p className={cn("text-[14px]", "text-dark", "mt-1")}>{item.text}</p>
+                )}
             </div>
-            {item.text && (
-                <p className={cn("text-[14px]", "text-dark", "mt-1")}>{item.text}</p>
+
+            {item.replies?.length > 0 && (
+                <div style={{
+                    borderLeft: '1px solid #e5e5e5',
+                }}
+                    className={`${cn("ml-4", "pl-4", "mt-2", "space-y-3")}`}>
+                    {item.replies.map((reply) => (
+                        <CommentCard key={reply.id} item={reply} />
+                    ))}
+                </div>
             )}
         </div>
     )

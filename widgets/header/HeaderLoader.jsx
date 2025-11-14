@@ -13,6 +13,7 @@ function HeaderLoader() {
                 position: 'sticky',
                 top: 0,
                 zIndex: 1000,
+                overflow: 'hidden',
             }}>
             <div
                 style={{

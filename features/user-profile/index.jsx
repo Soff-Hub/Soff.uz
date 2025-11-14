@@ -6,6 +6,7 @@ import useResponsive from '~/shared/utilities/useResponsive';
 
 const UserProfile = ({ seller }) => {
     const { isDesktop } = useResponsive();
+
     const gridClass = useRcn({
         mobile: 'grid-cols-1',
         tablet: 'grid-cols-1',
@@ -26,9 +27,9 @@ const UserProfile = ({ seller }) => {
 
     const sidebarStyle = isDesktop
         ? {
-              position: 'sticky',
-              top: '125px',
-          }
+            position: 'sticky',
+            top: '125px',
+        }
         : {};
 
     return (

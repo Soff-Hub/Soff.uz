@@ -1,5 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Drawer, Avatar, Button, Tag, message, Modal, Spin, Card } from 'antd';
+import {
+    Drawer,
+    Avatar,
+    Button,
+    Tag,
+    message,
+    Modal,
+    Spin,
+    Switch,
+    Tooltip,
+} from 'antd';
 import TextSlicer from '~/shared/utilities/TextSlicer';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { useFGet, useFPost } from '~/shared/hooks/useFApi';
@@ -11,7 +21,10 @@ import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import { cn } from '~/shared/utilities/cn';
 import useOffers from '../api/useOffers';
 import ServiceCheckout from '~/components/freeleance/services/service-deatail/ui/auth/serviceCheckout';
-import { useTelegram } from '~/shared/hooks/useTelegram';
+import useGetCustomBalance from '~/components/freeleance/myorders/myorder/api/useGetCustomBalance';
+import styles from '../style/select-order-drawer.module.scss';
+
+// import { useTelegram } from '~/shared/hooks/useTelegram';
 
 // NOTE: on equal payment done
 // {"success":true,"extra_amount":0,"order_id":367,"freelancer_id":281}
@@ -24,14 +37,20 @@ import { useTelegram } from '~/shared/hooks/useTelegram';
 
 const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
     const [selectedOffer, setSelectedOffer] = useState(null);
-    const [verfiedOffer, setVerfiedOffer] = useState(null);
-    const { user } = useSelector((state) => state.auth);
+    // const [verfiedOffer, setVerfiedOffer] = useState(null);
+    const { user } = useSelector(state => state.auth);
     const [paymentModal, setPaymentModal] = useState(false);
     const { isDesktop } = useResponsive();
     const { push } = useRouter();
     const { offers, setOffers, isConnected } = useOffers(order?.id, open);
-    const { tg } = useTelegram();
     const price = order?.service?.price || order?.budget || 0;
+    const [mode, setMode] = useState(true);
+    const { data } = useGetCustomBalance();
+    const balance = Number(data?.wallet || 0);
+    const balanceDisabled = balance > 0;
+
+    const leftBalance = formatCurrencyWithSpace(Number(balance));
+    const isSufficientBalance = balance >= price;
 
     const { data: initialOffers } = useFGet(order?.id, `offer/${order?.id}/`, {
         enabled: open && !!order?.id && !!user?.access,
@@ -42,6 +61,10 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
     });
 
     useEffect(() => {
+        setMode(Number(data?.wallet || 0) > 0);
+    }, [data?.wallet]);
+
+    useEffect(() => {
         if (initialOffers && open) {
             setOffers(initialOffers);
         }
@@ -50,7 +73,7 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
     const { mutate: selectOffer, isPending } = useFPost({
         url: 'offer/select-offer',
         token: user?.access,
-        onSuccess: (data) => {
+        onSuccess: data => {
             if (!data.success) {
                 message.warning(
                     `Frilanser tanlash uchun iltimos qo'shimcha ${formatCurrencyWithSpace(
@@ -60,7 +83,7 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                 );
                 setPaymentModal(true);
                 onClose();
-                setVerfiedOffer(selectedOffer);
+                // setVerfiedOffer(selectedOffer);
                 setSelectedOffer(null);
                 return;
             }
@@ -120,6 +143,12 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
     const offerAmount =
         (selectedOffer?.money || 0) - (order?.approved_transaction_amount || 0);
 
+    const serviceCheckoutOrder = {
+        id: order?.id,
+        price: isPartiallyPaid ? notPaidAmount : price,
+        title: order?.title,
+    };
+
     let orderDrawerContent = null;
     if (isFullyPaid) {
         orderDrawerContent = (
@@ -137,7 +166,7 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
 
                 <div className={cn('w-full')}>
                     {offers?.length > 0 ? (
-                        offers.map((item) => (
+                        offers.map(item => (
                             <div
                                 key={item?.id}
                                 className={cn(
@@ -412,40 +441,62 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
             <Modal
                 open={paymentModal}
                 onCancel={handleRetreatDrawer}
+                destroyOnClose
                 footer={null}
                 width={600}>
-                <div className="type_payment p-lg-5 p-md-5 p-4">
-                    <div className="d-flex justify-content-between align-items-center mb-4">
+                <div className={styles.orderPayment}>
+                    <div className={styles.orderPaymentHeader}>
+                        <Tooltip title="To'lov uchun balansingizdan foydalaning">
+                            <Button
+                                onClick={() => setMode(pre => !pre)}
+                                className={
+                                    mode && isSufficientBalance
+                                        ? styles.orderButtonActive
+                                        : mode && !isSufficientBalance
+                                        ? styles.orderButtonWarn
+                                        : styles.orderButtonInactive
+                                }
+                                disabled={!balanceDisabled}>
+                                <Switch value={mode} size="small" />
+                                Balance - {leftBalance} so'm
+                            </Button>
+                        </Tooltip>
                         <Button
                             type="text"
+                            className={styles.backButton}
                             icon={<i className="fa-solid fa-arrow-left"></i>}
                             onClick={handleRetreatDrawer}>
                             Orqaga
                         </Button>
                     </div>
-                    <div className="service-details-box bg-white border rounded p-3 mb-4">
-                        <div className="d-flex justify-content-between align-items-center">
-                            <div className="d-flex align-items-center">
-                                <i className="fa-solid fa-file-lines text-primary me-3 fs-4"></i>
-                                <div>
-                                    <h5 className="mb-1 checkout_title fw-bold">
-                                        {order?.title}
-                                    </h5>
+                    {!mode ? (
+                        <div className="service-details-box bg-white border rounded p-3 my-4">
+                            <div className="d-flex justify-content-between align-items-center">
+                                <div className="d-flex align-items-center">
+                                    <i className="fa-solid fa-file-lines text-primary me-3 fs-4"></i>
+                                    <div>
+                                        <h5 className="mb-1 checkout_title fw-bold">
+                                            {order?.title}
+                                        </h5>
+                                    </div>
+                                </div>
+                                <div className="text-end">
+                                    <h4 className="text-primary checkout_price mb-0 fw-bold">
+                                        {formatCurrencyWithSpace(
+                                            serviceCheckoutOrder.price
+                                        )}{' '}
+                                        so'm
+                                    </h4>
                                 </div>
                             </div>
-                            <div className="text-end">
-                                <h4 className="text-primary checkout_price mb-0 fw-bold">
-                                    {formatCurrencyWithSpace(
-                                        isPartiallyPaid ? notPaidAmount : price
-                                    )}{' '}
-                                    so'm
-                                </h4>
-                            </div>
                         </div>
-                    </div>
+                    ) : null}
                     <div className="bg-white">
                         <ServiceCheckout
                             order_id={order?.id}
+                            order={serviceCheckoutOrder}
+                            balanceMode={mode}
+                            balance={balance}
                             onClose={handleClosePaymentModal}
                             onSuccess={onSuccessPayment}
                         />

@@ -82,7 +82,7 @@ export async function getServerSideProps(context) {
 
     const categoryParam = childCategory ? childCategory : parentCategory;
 
-    const productsUrl = `${baseUrlUseApi}customer/products/?direction=template&category=${categoryParam}&page=${page}&page_size=48&search=${search}`;
+    const productsUrl = `${baseUrlUseApi}customer/products/?direction=template&category=${categoryParam}&page=${page}&page_size=50&search=${search}`;
     const fourChildUrl = `${baseUrlUseApi}customer/four-child?direction=template`;
     const childCategoryUrl = `${baseUrlUseApi}customer/four-child?direction=template&parent__slug=${parentCategory}`;
 

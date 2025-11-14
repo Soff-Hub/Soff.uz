@@ -28,8 +28,8 @@ export default function VideoLessons({
         title && subTitle
             ? `${title} - ${subTitle}`
             : title
-            ? title
-            : 'Video darsliklar';
+                ? title
+                : 'Video darsliklar';
 
     const handlePageChange = (newPage) => {
         router.push({
@@ -82,7 +82,7 @@ export async function getServerSideProps(context) {
 
     const categoryParam = childCategory ? childCategory : parentCategory;
 
-    const productsUrl = `${baseUrlUseApi}customer/products/?direction=video&category=${categoryParam}&page=${page}&page_size=48&search=${search}`;
+    const productsUrl = `${baseUrlUseApi}customer/products/?direction=video&category=${categoryParam}&page=${page}&page_size=50&search=${search}`;
     const fourChildUrl = `${baseUrlUseApi}customer/four-child?direction=video`;
     const childCategoryUrl = `${baseUrlUseApi}customer/four-child?direction=video&parent__slug=${parentCategory}`;
 
