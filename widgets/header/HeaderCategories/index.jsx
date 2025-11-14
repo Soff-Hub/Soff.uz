@@ -220,8 +220,8 @@ export const EmptyTab = ({ description }) => {
 
 const HeaderCatergories = () => {
     const { isMobile, size } = useResponsive();
-    const { isLoggedIn } = useSelector((state) => state.auth);
-    const { directions } = useSelector((state) => state.profile);
+    const { isLoggedIn } = useSelector(state => state.auth);
+    const { directions } = useSelector(state => state.profile);
     const { push, query, replace, pathname } = useRouter();
     const { data } = useOrdersStatus();
 
@@ -247,12 +247,11 @@ const HeaderCatergories = () => {
                         className="fa-solid fa-plus"></i>
                 ),
                 label: (
-                    <a
-                        href="/order/create"
-                        onClick={(e) => e.preventDefault()}
-                        className={` ${styles.dropLabel}  `}>
-                        Maxsus buyurtma berish
-                    </a>
+                    <Link href="/order/create">
+                        <a className={` ${styles.dropLabel}  `}>
+                            Maxsus buyurtma berish
+                        </a>
+                    </Link>
                 ),
                 onClick: handleOrder,
                 style: {
@@ -260,17 +259,15 @@ const HeaderCatergories = () => {
                     borderRadius: '0px',
                 },
             },
-            ...directions.map((dir) => ({
+            ...directions.map(dir => ({
                 key: dir.value,
                 icon: directionsImg[dir.value]
                     ? directionsImg[dir.value]
                     : directionsImg['not_found'],
                 label: (
-                    <a
-                        className={`${styles.dropLabel}`}
-                        href={`/orders?direction=${dir.value}`}>
-                        {dir.label}
-                    </a>
+                    <Link href={`/orders?direction=${dir.value}`}>
+                        <a className={`${styles.dropLabel}`}>{dir.label}</a>
+                    </Link>
                 ),
             })),
         ],
@@ -315,9 +312,7 @@ const HeaderCatergories = () => {
             </div>
             <div className={`${styles.orderBox} ${styles.dropBox}`}>
                 <Link href="/order/create">
-                    <a className={styles.dropLabel}>
-                        Buyurtma berish
-                    </a>
+                    <a className={styles.dropLabel}>Buyurtma berish</a>
                 </Link>
                 {/* <Dropdown menu={{ items: templates }}>
                     <Space className={styles.dropLabel}>
@@ -342,11 +337,7 @@ const HeaderSearch = () => {
 
     const debounceSearch = useDebounce(search, 500);
 
-    const {
-        data,
-        isSuccess,
-        isFetching: isDataLoading,
-    } = useQuery({
+    const { data, isSuccess, isFetching: isDataLoading } = useQuery({
         queryKey: ['searchResults', debounceSearch, type],
         queryFn: async () => {
             const { data } = await api.get(
@@ -376,8 +367,8 @@ const HeaderSearch = () => {
 
     const isLoading = isDataLoading || isFreelanceDataLoading;
 
-    const searchOptions = (options) => {
-        return options?.filter((option) => {
+    const searchOptions = options => {
+        return options?.filter(option => {
             // Ensure option is a string before applying string methods
             if (typeof option !== 'string' || !option) return false;
             return option
@@ -417,10 +408,10 @@ const HeaderSearch = () => {
         if (openSearch && searchRef.current) {
             searchRef.current.focus();
         }
-        const handleOnKeydown = (e) => {
+        const handleOnKeydown = e => {
             if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
                 e.preventDefault();
-                setOpenSearch((prev) => !prev);
+                setOpenSearch(prev => !prev);
             }
         };
         window.addEventListener('keydown', handleOnKeydown);
@@ -541,7 +532,7 @@ const HeaderSearch = () => {
                         <div className="d-flex w-100">
                             <Select
                                 value={type}
-                                onChange={(val) => setType(val)}
+                                onChange={val => setType(val)}
                                 className={searchStyle.select}
                                 bordered={false}>
                                 <Option value="mahsulotlar">Mahsulotlar</Option>
@@ -558,7 +549,7 @@ const HeaderSearch = () => {
                                 onFocus={() => setIsSearchFocused(true)}
                                 onBlur={() => setIsSearchFocused(false)}
                                 value={search}
-                                onChange={(e) => setSearch(e.target.value)}
+                                onChange={e => setSearch(e.target.value)}
                                 onPressEnter={handleSearch}
                                 bordered={false}
                             />
