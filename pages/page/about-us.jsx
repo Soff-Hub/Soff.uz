@@ -6,15 +6,11 @@ import Meta from '~/components/shared/headers/Meta';
 const AboutUs = () => {
     return (
         <PageContainer>
-            <div className="ps-page--singlee">
-                <div className="container-faqs">
-                    <Meta
-                        title={'Soff.uz nima?'}
-                        description="Soff.uz - Sayti haqida shu sahifamizda to'liq bilib olishingiz mumkin"
-                    />
-                    <AboutContent />
-                </div>
-            </div>
+            <Meta
+                title={'Soff.uz nima?'}
+                description="Soff.uz - Sayti haqida shu sahifamizda to'liq bilib olishingiz mumkin"
+            />
+            <AboutContent />
         </PageContainer>
     );
 };

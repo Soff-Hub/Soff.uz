@@ -239,21 +239,25 @@ function ServiceOrderModal({
                     ) : (
                         <div className={styles.orderPayment}>
                             <div className={styles.orderPaymentHeader}>
-                                <Tooltip title="To'lov uchun balansingizdan foydalaning">
-                                    <Button
-                                        onClick={() => setMode(pre => !pre)}
-                                        className={
-                                            mode && isSufficientBalance
-                                                ? styles.orderButtonActive
-                                                : mode && !isSufficientBalance
-                                                ? styles.orderButtonWarn
-                                                : styles.orderButtonInactive
-                                        }
-                                        disabled={!balanceDisabled}>
-                                        <Switch value={mode} size="small" />
-                                        Balance - {leftBalance} so'm
-                                    </Button>
-                                </Tooltip>
+                                {/* NOTE: Balance button temporarily commented */}
+                                {/* {balanceDisabled ? (
+                                    <Tooltip title="To'lov uchun balansingizdan foydalaning">
+                                        <Button
+                                            onClick={() => setMode(pre => !pre)}
+                                            className={
+                                                mode && isSufficientBalance
+                                                    ? styles.orderButtonActive
+                                                    : mode &&
+                                                      !isSufficientBalance
+                                                    ? styles.orderButtonWarn
+                                                    : styles.orderButtonInactive
+                                            }
+                                            disabled={!balanceDisabled}>
+                                            <Switch value={mode} size="small" />
+                                            Balance - {leftBalance} so'm
+                                        </Button>
+                                    </Tooltip>
+                                ) : null} */}
 
                                 <Button
                                     type="text"

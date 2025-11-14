@@ -148,7 +148,7 @@ export default function HeaderNotifications({ color }) {
                             <i
                                 style={{
                                     marginRight: '10px',
-                                    fontSize: '30px',
+                                    fontSize: '25px',
                                 }}
                                 className={`fa-regular fa-bell ${color}`}></i>
                         </Badge>

@@ -10,9 +10,7 @@ const FormPage = () => {
                 title={'Savollaringiz bormi?'}
                 description="Soff.uz - Sayti haqida shu sahifamizda to'liq bilib olishingiz mumkin"
             />
-            <div
-                className="container-faqs ms-lg-5 ms-md-3"
-                style={{ margin: '0 auto' }}>
+            <div className="container my-3" style={{ margin: '0 auto' }}>
                 <FormContent />
             </div>
         </PageContainer>

@@ -277,8 +277,7 @@ export default function Footer() {
                             </h5>
                             {aboutUsPages.map(link => (
                                 <li key={link.value}>
-                                    <Link
-                                        href={`/orders?direction=${link.value}`}>
+                                    <Link href={`${link.link}`}>
                                         <a
                                             className="fs-4"
                                             rel="noopener noreferrer">
