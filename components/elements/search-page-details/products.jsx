@@ -79,17 +79,13 @@ export default function Search_Results_Products({
                     pageSize={50}
                     total={total}
                     onChange={newPage => {
-                        router.push(
-                            {
-                                pathname: router.pathname,
-                                query: {
-                                    ...router.query,
-                                    page: newPage,
-                                },
+                        router.push({
+                            pathname: router.pathname,
+                            query: {
+                                ...router.query,
+                                page: newPage,
                             },
-                            undefined,
-                            { shallow: true }
-                        );
+                        });
                     }}
                 />
             </>
