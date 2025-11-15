@@ -230,20 +230,6 @@ function SearchResultsProductsFilter({ total, childData }) {
         setFilterOpen(false);
     };
 
-    const handleLoadSimilarDocuments = () => {
-        router.push(
-            {
-                pathname: router.pathname,
-                query: {
-                    ...router.query,
-                    similar_documents: true,
-                },
-            },
-            undefined,
-            { scroll: false }
-        );
-    };
-
     return (
         <div className="Search_Results_Products_form_box">
             {mutationsInForm.hasMutation ? (
@@ -305,23 +291,9 @@ function SearchResultsProductsFilter({ total, childData }) {
             ) : // </Badge.Ribbon>
             null}
             <div className="search_results_indicator">
-                {total ? (
-                    <p className="countProduct text-nowrap m-0">
-                        {`${total} ta mahsulot topildi`}
-                    </p>
-                ) : (
-                    <Button
-                        icon={<IoDocumentsSharp />}
-                        type="primary"
-                        onClick={handleLoadSimilarDocuments}
-                        style={{
-                            position: 'relative',
-                            right: '10px',
-                            flexShrink: 1,
-                        }}>
-                        O'xshash mahsulotlar
-                    </Button>
-                )}
+                <p className="countProduct text-nowrap m-0">
+                    {`${total} ta mahsulot topildi`}
+                </p>
 
                 {!mutationsInForm.hasMutation && (
                     <div>

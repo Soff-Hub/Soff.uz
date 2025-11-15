@@ -3,7 +3,7 @@ import SearchResultsProducts_Card from './search-page-card/searchResultsProducts
 import { Pagination } from 'antd';
 import SearchResultsProductsFilter from './search-page-filter/search-results-products-filter';
 import { useRouter } from 'next/router';
-import Search_Results_NotFound from './notFound';
+import NotFound, { SearchProductsNotFound } from './notFound';
 import useScrollToNotFound from '../../../shared/hooks/useScrollToNotFound';
 import { useQuery } from '@tanstack/react-query';
 import { baseUrlUseApi } from '~/repositories/useApi';
@@ -16,7 +16,7 @@ export default function Search_Results_Products({
 }) {
     const router = useRouter();
     const isFirstRender = useRef(true);
-    const { type = 'file', category = '' } = router.query;
+    const { type = 'file', category = '', similar_documents } = router.query;
 
     useEffect(() => {
         if (isFirstRender.current) {
@@ -56,6 +56,7 @@ export default function Search_Results_Products({
     const notFoundRef = useRef();
     const showResults =
         Array.isArray(data?.results) && data?.results?.length > 0;
+    const isSimilarsNotFound = !showResults && similar_documents === 'true';
 
     useScrollToNotFound(notFoundRef, showResults, data);
 
@@ -90,8 +91,10 @@ export default function Search_Results_Products({
                 />
             </>
         );
+    } else if (isSimilarsNotFound) {
+        resultsContent = <NotFound ref={notFoundRef} />;
     } else {
-        resultsContent = <Search_Results_NotFound ref={notFoundRef} />;
+        resultsContent = <SearchProductsNotFound ref={notFoundRef} />;
     }
 
     return (

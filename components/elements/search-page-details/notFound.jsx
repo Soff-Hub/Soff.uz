@@ -1,12 +1,13 @@
 import React, { forwardRef } from 'react';
 import ServiceCard from '~/entities/service/service-card';
 import { useFGet } from '~/shared/hooks/useFApi';
-import { Skeleton } from 'antd';
+import { Skeleton, Button } from 'antd';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
+import { IoDocumentsSharp } from 'react-icons/io5';
 
 const Search_Results_NotFound = forwardRef(({ isSearchPage = true }, ref) => {
-    const { isLoggedIn } = useSelector((state) => state.auth);
+    const { isLoggedIn } = useSelector(state => state.auth);
     const { data, isLoading } = useFGet(
         'top-services',
         'customer/popular-services?limit=6',
@@ -26,7 +27,7 @@ const Search_Results_NotFound = forwardRef(({ isSearchPage = true }, ref) => {
 
     return (
         <div ref={ref}>
-            <div className="Search_Results_not_found" ref={ref}>
+            <div className="Search_Results_not_found">
                 <img
                     src="/static/img/searchNotFound.png"
                     alt=""
@@ -63,7 +64,7 @@ const Search_Results_NotFound = forwardRef(({ isSearchPage = true }, ref) => {
                                   />
                               </div>
                           ))
-                        : data?.items?.map((service) => (
+                        : data?.items?.map(service => (
                               <div
                                   key={service.id}
                                   className="col-6 col-sm-6 col-md-4 px-1">
@@ -72,6 +73,55 @@ const Search_Results_NotFound = forwardRef(({ isSearchPage = true }, ref) => {
                           ))}
                 </div>
             )}
+        </div>
+    );
+});
+
+export const SearchProductsNotFound = forwardRef((props, ref) => {
+    const router = useRouter();
+    const handleLoadSimilarDocuments = () => {
+        router.push(
+            {
+                pathname: router.pathname,
+                query: {
+                    ...router.query,
+                    similar_documents: true,
+                },
+            },
+            undefined,
+            { scroll: false }
+        );
+    };
+
+    return (
+        <div ref={ref}>
+            <div
+                className="Search_Results_not_found"
+                style={{ marginBottom: '50px' }}>
+                <img
+                    src="/static/img/searchNotFound.png"
+                    alt=""
+                    className="Search_Results_not_found_img"
+                />
+                <p className="Search_Results_not_found_title">
+                    Afsuski, izlagan narsangiz topilmadi. Lekin siz o'xshash
+                    mahsulotlarni ko'rib chiqishingiz mumkin.
+                </p>
+                <p className="Search_Results_not_found_subtitle">
+                    <Button
+                        icon={<IoDocumentsSharp />}
+                        type="primary"
+                        onClick={handleLoadSimilarDocuments}
+                        style={{
+                            position: 'relative',
+                            right: '10px',
+                            fontSize: '18px',
+                            fontWeight: 'bold',
+                        }}>
+                        O'xshash mahsulotlar
+                    </Button>
+                </p>
+            </div>
         </div>
     );
 });
