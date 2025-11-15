@@ -42,7 +42,7 @@ const ServiceCard = ({ service, hasFooter = true }) => {
             return;
         }
         push(`/service/${service.slug}`);
-    }, [push, service?.slug]);
+    }, [service?.slug]);
 
     // Don't render if service or slug is invalid
     if (!service || !isValidSlug(service?.slug)) {
@@ -55,7 +55,11 @@ const ServiceCard = ({ service, hasFooter = true }) => {
             <div className={styles.card}>
                 <div className={styles.cardBody}>
                     <Link href={`/service/${service.slug}`}>
-                        <h1 className={styles.cardTitle}>{service?.title}</h1>
+                        <a>
+                            <h1 className={styles.cardTitle}>
+                                {service?.title}
+                            </h1>
+                        </a>
                     </Link>
                     <div className="d-flex justify-content-between align-items-center">
                         {service?.avg_rating !== 0 && service?.avg_rating ? (
@@ -96,28 +100,32 @@ const ServiceCard = ({ service, hasFooter = true }) => {
                         </button>
                     </div>
                 </div>
-                {hasFooter &&
+                {hasFooter && (
                     <>
                         <div className={styles.divider} />
                         <div className={styles.footer}>
-                            <Link href={`/seller/${service?.user?.soff_seller_id}`}>
-                                <img
-                                    className={styles.userImg}
-                                    src={
-                                        service?.user?.photo_url ||
-                                        '/static/img/ozodbek.png'
-                                    }
-                                    alt="user_img"
-                                />
+                            <Link
+                                href={`/seller/${service?.user?.soff_seller_id}`}>
+                                <a>
+                                    <img
+                                        className={styles.userImg}
+                                        src={
+                                            service?.user?.photo_url ||
+                                            '/static/img/ozodbek.png'
+                                        }
+                                        alt="user_img"
+                                    />
+                                </a>
                             </Link>
                             <Link
-                                href={`/seller/${service?.user?.soff_seller_id}`}
-                                className={styles.username}>
-                                {service?.user?.full_name}
+                                href={`/seller/${service?.user?.soff_seller_id}`}>
+                                <a className={styles.username}>
+                                    {service?.user?.full_name}
+                                </a>
                             </Link>
                         </div>
                     </>
-                }
+                )}
             </div>
             <AuthModal
                 slug={service?.slug}
