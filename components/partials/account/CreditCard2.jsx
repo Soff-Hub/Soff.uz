@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Modal, Tabs } from 'antd';
+import { Modal, Tabs, Alert, Input } from 'antd';
 import PostRepository from '~/repositories/PostRepository';
 import { BeatLoader } from 'react-spinners';
 import Router, { useRouter } from 'next/router';
@@ -9,12 +9,52 @@ import ProductRepository from '~/repositories/ProductRepository';
 import { calculateAmount } from '~/shared/utilities/ecomerce-helpers';
 import { addPeriodToThousands } from './price-formatter';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
+import { RiSecurePaymentLine } from 'react-icons/ri';
+import { FaRegCreditCard } from 'react-icons/fa6';
+import { FaRegCalendarDays } from 'react-icons/fa6';
+
+export const SecurePaymentAlert = ({ style, ...rest }) => (
+    <Alert
+        message="To'lov jarayoni to'liq himoyalangan."
+        type="success"
+        showIcon
+        style={{
+            lineHeight: 'normal',
+            fontSize: '15px',
+            color: 'green',
+            marginTop: '10px',
+            ...style,
+        }}
+        icon={<RiSecurePaymentLine fontSize={25} />}
+        {...rest}
+    />
+);
+
+const FormSubmitButton = ({ hisob, message, className, ...rest }) => (
+    <div className={`w-100 ${className}`} {...rest}>
+        <button
+            type="submit"
+            className="ps-btn w-100"
+            style={{
+                color: 'white',
+            }}>
+            {message ? `To'lash (${hisob} so'm)` : <BeatLoader color="#fff" />}
+        </button>
+        <button
+            type="submit"
+            className="ps-btn ps-btn--fullwidth w-100 sticky_color_btn"
+            style={{
+                color: 'white',
+            }}>
+            {message ? `To'lash (${hisob} so'm)` : <BeatLoader color="#fff" />}
+        </button>
+    </div>
+);
 
 const CreditCard2 = ({ document, type }) => {
-    const router = useRouter();
-    const { user } = useSelector((state) => state.auth);
-    const ecomerce = useSelector((state) => state.ecomerce.cartDataItems);
-    const { affiliateId } = useSelector((state) => state.affiliate);
+    const { user } = useSelector(state => state.auth);
+    const ecomerce = useSelector(state => state.ecomerce.cartDataItems);
+    const { affiliateId } = useSelector(state => state.affiliate);
     const { removeAll } = useCart();
     const { startTimeout } = useTimeManager();
     const [numberCardVal, SetNumberCardVal] = useState(null);
@@ -31,7 +71,7 @@ const CreditCard2 = ({ document, type }) => {
     const [percentage, setPercentage] = useState(0);
 
     const affiliate_code = affiliateId;
-    const numberTyper = (value) => {
+    const numberTyper = value => {
         SetNumberCardVal(value);
         if (!value == 0) {
             let numberPlaceholder = '';
@@ -191,7 +231,7 @@ const CreditCard2 = ({ document, type }) => {
         if (resData?.status === 201) {
             setTime(120);
             const timerID = setInterval(() => {
-                setTime((prevTime) => {
+                setTime(prevTime => {
                     if (prevTime <= 0) {
                         clearInterval(timerID);
                         setResData(null);
@@ -217,7 +257,7 @@ const CreditCard2 = ({ document, type }) => {
     const [formattedCardNumber, setFormattedCardNumber] = useState('');
     const [numberDate, setNumberDate] = useState('');
 
-    const handleCardNumberChange = (e) => {
+    const handleCardNumberChange = e => {
         const inputValue = e.target.value.replace(/\D/g, ''); // Raqam va probilni olib tashlash
         let formattedValue = '';
 
@@ -234,7 +274,7 @@ const CreditCard2 = ({ document, type }) => {
         setFormattedCardNumber(formattedValue);
     };
 
-    const handleCardNumberDate = (e) => {
+    const handleCardNumberDate = e => {
         const inputValue = e.target.value.replace(/\D/g, ''); // Raqam va probilni olib tashlash
         let formattedValue = '';
 
@@ -250,87 +290,87 @@ const CreditCard2 = ({ document, type }) => {
         setNumberDate(formattedValue);
     };
 
-    const onChange = (key) => {
+    const onChange = key => {
         setTab(key);
     };
+
     const items = [
         {
             key: '1',
             label: (
                 <div className="click ">
-                    <img src="/static/img/uzcard_humo.png" alt="" />
+                    <img
+                        src="/static/img/uzcard_humo.png"
+                        alt="uzcard_humo_payment_card"
+                    />
                 </div>
             ),
             children: (
-                <div className="row mx-auto m-0">
-                    <div className=" px-4 mx-md-auto rounded click-b">
-                        <div>
-                            <form
-                                onSubmit={handleClickCardPosts}
-                                className="pb-3 d-flex align-items-end justify-content-between row gap-xxs-0 gap-xs-0 gap-lg-0 gap-md-0 gap-3 bg-white">
-                                <div className="col-xl-7 col-lg-12 p-0 col-md-7 col-sm-6 click-form-item my-2">
-                                    <p className="cardNumber">Karta raqam</p>
-                                    <label htmlFor="ccn" className="m-0">
-                                        <i className="fa-regular fa-credit-card i "></i>
-                                        <input
-                                            required
-                                            id="ccn"
-                                            type="tel"
-                                            className="form-control rounded-3 card__number "
-                                            inputMode="numeric"
-                                            pattern="[0-9\s]{13,19}"
-                                            autoComplete="cc-number"
-                                            maxLength="19"
-                                            placeholder="0000 0000 0000 0000"
-                                            value={formattedCardNumber}
-                                            onChange={handleCardNumberChange}
+                <div className="w-100 px-4">
+                    <SecurePaymentAlert />
+                    <form
+                        onSubmit={handleClickCardPosts}
+                        style={{ marginInline: '1px' }}
+                        className="pb-3 d-flex align-items-end justify-content-between row gap-4 bg-white">
+                        <div className="col-xl-7 p-0 my-2" style={{ flex: 1 }}>
+                            <p className="cardNumber">Karta raqam</p>
+                            <label htmlFor="ccn" style={{ width: '100%' }}>
+                                <Input
+                                    required
+                                    prefix={
+                                        <FaRegCreditCard
+                                            style={{
+                                                width: '45px',
+                                                fontSize: '20px',
+                                            }}
                                         />
-                                    </label>
-                                </div>
-                                <div className="col-xl-4 col-lg-6 p-0 col-md-4 col-sm-6 click-form-item my-2">
-                                    <label className="m-0">
-                                        <i className="fa-regular fa-calendar-days"></i>
-                                        <input
-                                            required
-                                            id="ccn"
-                                            className="form-control rounded-3 card__number"
-                                            inputMode="numeric"
-                                            autoComplete="cc-number"
-                                            maxLength="5"
-                                            placeholder="MM/YY"
-                                            value={numberDate}
-                                            onChange={handleCardNumberDate}
-                                        />
-                                    </label>
-                                </div>
-                                <div className="col-12 p-0 ">
-                                    {message ? (
-                                        <div>
-                                            <button
-                                                type="submit"
-                                                className="ps-btn w-100 text-center btn_color">
-                                                To'lash ({hisob} so'm)
-                                            </button>
-                                            <button
-                                                type="submit"
-                                                className="ps-btn w-100 text-center btn_color sticky_color_btn">
-                                                To'lash ({hisob} so'm)
-                                            </button>
-                                        </div>
-                                    ) : (
-                                        <div>
-                                            <button className="ps-btn ps-btn--fullwidth w-100 text-center">
-                                                <BeatLoader color="#fff" />
-                                            </button>
-                                            <button className="ps-btn ps-btn--fullwidth w-100 text-center sticky_color_btn">
-                                                <BeatLoader color="#fff" />
-                                            </button>
-                                        </div>
-                                    )}
-                                </div>
-                            </form>
+                                    }
+                                    style={{
+                                        height: '50px',
+                                    }}
+                                    id="ccn"
+                                    type="tel"
+                                    inputMode="numeric"
+                                    pattern="[0-9\s]{13,19}"
+                                    autoComplete="cc-number"
+                                    maxLength="19"
+                                    placeholder="0000 0000 0000 0000"
+                                    value={formattedCardNumber}
+                                    onChange={handleCardNumberChange}
+                                />
+                            </label>
                         </div>
-                    </div>
+                        <div className="col-xl-4 p-0 click-form-item my-2">
+                            <label className="m-0">
+                                <Input
+                                    required
+                                    prefix={
+                                        <FaRegCalendarDays
+                                            style={{
+                                                width: '45px',
+                                                fontSize: '20px',
+                                            }}
+                                        />
+                                    }
+                                    id="ccn"
+                                    inputMode="numeric"
+                                    style={{
+                                        height: '50px',
+                                    }}
+                                    autoComplete="cc-number"
+                                    maxLength="5"
+                                    placeholder="MM/YY"
+                                    value={numberDate}
+                                    onChange={handleCardNumberDate}
+                                />
+                            </label>
+                        </div>
+                        <FormSubmitButton
+                            hisob={hisob}
+                            message={message}
+                            className={'col-12 p-0'}
+                        />
+                    </form>
 
                     <Modal
                         width={500}
@@ -340,6 +380,7 @@ const CreditCard2 = ({ document, type }) => {
                         onOk={handleSubmitCode}
                         onCancel={handleCancale}
                         maskClosable={false}
+                        destroyOnClose
                         okButtonProps={{
                             style: { backgroundColor: 'green', color: 'white' },
                         }}
@@ -357,7 +398,7 @@ const CreditCard2 = ({ document, type }) => {
                                 {resData?.data?.phone_number}
                             </p>
                             <input
-                                onChange={(e) => setCode(e.target.value)}
+                                onChange={e => setCode(e.target.value)}
                                 type="tel"
                                 placeholder="000000"
                                 maxLength={6}
@@ -379,42 +420,17 @@ const CreditCard2 = ({ document, type }) => {
             key: '2',
             label: (
                 <div className="click">
-                    <img src="/static/img/click.png" alt="" />
+                    <img src="/static/img/click.png" alt="click_payment" />
                 </div>
             ),
             children: (
-                <div className="row   mx-auto m-0">
-                    <div className=" px-4 rounded click-b">
-                        <form
-                            onSubmit={handleClickCardPostsclick}
-                            className=" pt-3 pb-3 d-flex align-items-end justify-content-between row gap-xxs-0 gap-xs-0 gap-lg-0 gap-md-0 gap-3">
-                            <div className="col-12 p-0 px-4 my-3">
-                                {message ? (
-                                    <div>
-                                        <button
-                                            type="submit"
-                                            className="ps-btn w-100 text-center btn_color">
-                                            To'lash ({hisob} so'm)
-                                        </button>
-                                        <button
-                                            type="submit"
-                                            className="ps-btn w-100 text-center btn_color sticky_color_btn">
-                                            To'lash ({hisob} so'm)
-                                        </button>
-                                    </div>
-                                ) : (
-                                    <div>
-                                        <button className="ps-btn ps-btn--fullwidth w-100 text-center">
-                                            <BeatLoader color="#fff" />
-                                        </button>
-                                        <button className="ps-btn ps-btn--fullwidth w-100 text-center sticky_color_btn">
-                                            <BeatLoader color="#fff" />
-                                        </button>
-                                    </div>
-                                )}
-                            </div>
-                        </form>
-                    </div>
+                <div className="w-100 px-4">
+                    <SecurePaymentAlert />
+                    <form
+                        onSubmit={handleClickCardPostsclick}
+                        className="pt-4 pb-3 d-flex align-items-end justify-content-between">
+                        <FormSubmitButton hisob={hisob} message={message} />
+                    </form>
                 </div>
             ),
         },
@@ -423,42 +439,20 @@ const CreditCard2 = ({ document, type }) => {
             key: '3',
             label: (
                 <div className="click">
-                    <img src="/static/img/soff/paymee-r.png" alt="" />
+                    <img
+                        src="/static/img/soff/paymee-r.png"
+                        alt="payme_payment"
+                    />
                 </div>
             ),
             children: (
-                <div className="row   mx-auto m-0">
-                    <div className=" px-4 rounded click-b">
-                        <form
-                            onSubmit={handleClickCardPostsPayme}
-                            className=" pt-3 pb-3 d-flex align-items-end justify-content-between row gap-xxs-0 gap-xs-0 gap-lg-0 gap-md-0 gap-3">
-                            <div className="col-12 p-0 px-4 my-3">
-                                {message ? (
-                                    <div>
-                                        <button
-                                            type="submit"
-                                            className="ps-btn w-100 text-center btn_color">
-                                            To'lash ({hisob} so'm)
-                                        </button>
-                                        <button
-                                            type="submit"
-                                            className="ps-btn w-100 text-center btn_color sticky_color_btn">
-                                            To'lash ({hisob} so'm)
-                                        </button>
-                                    </div>
-                                ) : (
-                                    <div>
-                                        <button className="ps-btn ps-btn--fullwidth w-100 text-center">
-                                            <BeatLoader color="#fff" />
-                                        </button>
-                                        <button className="ps-btn ps-btn--fullwidth w-100 text-center sticky_color_btn">
-                                            <BeatLoader color="#fff" />
-                                        </button>
-                                    </div>
-                                )}
-                            </div>
-                        </form>
-                    </div>
+                <div className="w-100 px-4">
+                    <SecurePaymentAlert />
+                    <form
+                        onSubmit={handleClickCardPostsPayme}
+                        className="pt-4 pb-3 d-flex align-items-end justify-content-between">
+                        <FormSubmitButton hisob={hisob} message={message} />
+                    </form>
                 </div>
             ),
         },
@@ -467,10 +461,12 @@ const CreditCard2 = ({ document, type }) => {
     return (
         <Tabs
             className="bg-white  checkoutstep-1"
+            centered
             defaultActiveKey="1"
             items={items}
             onChange={onChange}
         />
     );
 };
+
 export default CreditCard2;

@@ -13,6 +13,7 @@ import { FaRegCalendarDays } from 'react-icons/fa6';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import { IoCard } from 'react-icons/io5';
 import { FaWallet } from 'react-icons/fa';
+import { SecurePaymentAlert } from '~/components/partials/account/CreditCard2';
 
 const balanceMode = false;
 const ServiceCheckout = ({
@@ -338,8 +339,10 @@ const ServiceCheckout = ({
                         !isBalanceSufficient &&
                         childrenWithInsufficientBalance}
                     <div style={{ marginInline: '10px' }}>
+                        <SecurePaymentAlert />
                         <form
                             onSubmit={handleCardPayment}
+                            style={{ marginInline: '1px' }}
                             className="pb-3 d-flex align-items-end justify-content-between row gap-4 bg-white">
                             <div
                                 className="col-xl-7 p-0 my-2"
@@ -417,7 +420,6 @@ const ServiceCheckout = ({
                                         disabled={createOrder?.isPending}
                                         style={{
                                             color: '#fff',
-                                            marginTop: '10px',
                                         }}>
                                         Davom etish
                                     </button>
@@ -496,31 +498,31 @@ const ServiceCheckout = ({
                     {balanceMode &&
                         !isBalanceSufficient &&
                         childrenWithInsufficientBalance}
-                    <div style={{ marginInline: '10px' }}>
-                        <div className="px-4 rounded click-b">
+                    <div
+                        style={{
+                            margin: '0 auto',
+                        }}>
+                        <div className="px-4 rounded">
+                            <SecurePaymentAlert />
                             <form
                                 onSubmit={handleClickPayment}
-                                className="pt-3 pb-3 d-flex row">
-                                <div className="col-12 p-0 px-4 my-3">
-                                    {!message ? (
-                                        <button
-                                            type="submit"
-                                            className="w-100 ps-btn"
-                                            disabled={createOrder?.isPending}
-                                            style={{
-                                                color: '#fff',
-                                                marginTop: '10px',
-                                            }}>
-                                            Davom etish
-                                        </button>
-                                    ) : (
-                                        <button
-                                            className="ps-btn w-100"
-                                            disabled>
-                                            <BeatLoader color="#fff" />
-                                        </button>
-                                    )}
-                                </div>
+                                className="pt-3 pb-3 d-flex">
+                                {!message ? (
+                                    <button
+                                        type="submit"
+                                        className="w-100 ps-btn"
+                                        disabled={createOrder?.isPending}
+                                        style={{
+                                            color: '#fff',
+                                            marginTop: '10px',
+                                        }}>
+                                        Davom etish
+                                    </button>
+                                ) : (
+                                    <button className="ps-btn w-100" disabled>
+                                        <BeatLoader color="#fff" />
+                                    </button>
+                                )}
                             </form>
                         </div>
                     </div>
