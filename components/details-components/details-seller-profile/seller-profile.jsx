@@ -8,12 +8,12 @@ import { setActiveIndex } from '~/store/seller/slice';
 
 function SellerProfile({ product }) {
     const router = useRouter();
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
     const handleOrder = () => {
-        router.push(`/seller/${product?.seller?.id}`)
-        dispatch(setActiveIndex("services"))
-    }
+        router.push(`/seller/${product?.seller?.id}`);
+        dispatch(setActiveIndex('services'));
+    };
 
     return (
         <div className="seller_products_actions_secound">
@@ -30,11 +30,19 @@ function SellerProfile({ product }) {
                     />
                 </div>
                 <div>
+                    <span
+                        style={{
+                            color: 'gray',
+                        }}>
+                        Muallif:
+                    </span>
                     <Link href={`/seller/${product?.seller?.id}`}>
-                        <h3 className="sellerNameHover">
-                            {product?.seller?.first_name}{' '}
-                            {product?.seller?.last_name}
-                        </h3>
+                        <a>
+                            <h3 className="sellerNameHover">
+                                {product?.seller?.first_name}{' '}
+                                {product?.seller?.last_name}
+                            </h3>
+                        </a>
                     </Link>
                 </div>
             </div>
@@ -60,7 +68,7 @@ function SellerProfile({ product }) {
                     </span>
                 </div>
             </div>
-            <Button
+            {/* <Button
                 iconPosition="end"
                 style={{ height: '58px', fontSize: '20px' }}
                 type="primary"
@@ -69,7 +77,7 @@ function SellerProfile({ product }) {
                 size={'large'}
                 onClick={handleOrder}>
                 Buyurtma berish
-            </Button>
+            </Button> */}
         </div>
     );
 }

@@ -28,7 +28,6 @@ import { MdOutlineFirstPage } from 'react-icons/md';
 import { MdOutlineLastPage } from 'react-icons/md';
 import { PiSortDescendingBold } from 'react-icons/pi';
 import { useMounted } from '~/shared/hooks/useMounted';
-import { IoDocumentsSharp } from 'react-icons/io5';
 
 const fileTypes = [
     { label: 'Barchasi', value: '' },
@@ -230,20 +229,6 @@ function SearchResultsProductsFilter({ total, childData }) {
         setFilterOpen(false);
     };
 
-    const handleLoadSimilarDocuments = () => {
-        router.push(
-            {
-                pathname: router.pathname,
-                query: {
-                    ...router.query,
-                    similar_documents: true,
-                },
-            },
-            undefined,
-            { scroll: false }
-        );
-    };
-
     return (
         <div className="Search_Results_Products_form_box">
             {mutationsInForm.hasMutation ? (
@@ -305,23 +290,9 @@ function SearchResultsProductsFilter({ total, childData }) {
             ) : // </Badge.Ribbon>
             null}
             <div className="search_results_indicator">
-                {total ? (
-                    <p className="countProduct text-nowrap m-0">
-                        {`${total} ta mahsulot topildi`}
-                    </p>
-                ) : (
-                    <Button
-                        icon={<IoDocumentsSharp />}
-                        type="primary"
-                        onClick={handleLoadSimilarDocuments}
-                        style={{
-                            position: 'relative',
-                            right: '10px',
-                            flexShrink: 1,
-                        }}>
-                        O'xshash mahsulotlar
-                    </Button>
-                )}
+                <p className="countProduct text-nowrap m-0">
+                    {`${total} ta mahsulot topildi`}
+                </p>
 
                 {!mutationsInForm.hasMutation && (
                     <div>
@@ -381,8 +352,7 @@ const FilterFormDrawer = ({ open, childData, onClose }) => {
         });
     };
 
-    const handleSaveFilters = e => {
-        e.preventDefault();
+    const handleSaveFilters = () => {
         const { pageRange, ...restFilterValues } = filterValues;
         const newQueries = { ...router.query };
         delete newQueries.similar_documents;
@@ -408,6 +378,16 @@ const FilterFormDrawer = ({ open, childData, onClose }) => {
         setFilterValues(defaultValues);
     };
 
+    const handleSaveAndClose = () => {
+        handleSaveFilters();
+        onClose();
+    };
+
+    const saveAndCloseForm = e => {
+        e.preventDefault();
+        handleSaveAndClose();
+    };
+
     useEffect(() => {
         setFilterValues(initialFilterValues);
     }, [initialFilterValues]);
@@ -416,7 +396,7 @@ const FilterFormDrawer = ({ open, childData, onClose }) => {
         <Drawer
             title="Filterlar"
             placement="left"
-            onClose={onClose}
+            onClose={handleSaveAndClose}
             open={open}
             closable={false}
             extra={
@@ -428,7 +408,7 @@ const FilterFormDrawer = ({ open, childData, onClose }) => {
                 </Space>
             }>
             <form
-                onSubmit={handleSaveFilters}
+                onSubmit={saveAndCloseForm}
                 className="search_results_filter_form">
                 <Select
                     style={{ width: '100%' }}
