@@ -18,23 +18,24 @@ import { EmptyTab } from './MyOrderTabs';
 // ];
 
 export const AllOrdersTable = ({ type }) => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedOrder, setSelectedOrder] = useState(null);
-    const [reason, setReason] = useState(null);
+    const queryClient = useQueryClient();
+    const router = useRouter();
     const { data: orders, isLoading: ordersLoading } = useGetOrders();
     const { mutate: cancelOrder, isPending: isCancelling } = useCancelOrder();
     const { data: reasons } = useGetReasons();
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedOrder, setSelectedOrder] = useState(null);
+    const [reason, setReason] = useState(null);
     const [openDrawer, setOpenDrawer] = useState(false);
-    const queryClient = useQueryClient();
-    const router = useRouter();
+
     const { orderId } = router.query;
 
-    const handleOpenDrawer = (order) => {
+    const handleOpenDrawer = order => {
         setSelectedOrder(order);
         setOpenDrawer(true);
     };
 
-    const handleCancelClick = (order) => {
+    const handleCancelClick = order => {
         setSelectedOrder(order);
         setIsModalOpen(true);
     };
@@ -65,7 +66,7 @@ export const AllOrdersTable = ({ type }) => {
     };
 
     const statusFilter =
-        orders?.filter((order) =>
+        orders?.filter(order =>
             type
                 ? type?.includes(order.order_status_doing?.status || 'pending')
                 : true
@@ -82,7 +83,7 @@ export const AllOrdersTable = ({ type }) => {
             </div>
         );
     } else if (statusFilter.length) {
-        ordersContent = statusFilter.map((order) => (
+        ordersContent = statusFilter.map(order => (
             <OrderCard
                 key={order.id}
                 order={order}
@@ -98,7 +99,7 @@ export const AllOrdersTable = ({ type }) => {
 
     useEffect(() => {
         if (orderId && orders) {
-            const found = orders.find((o) => o.id === Number(orderId));
+            const found = orders.find(o => o.id === Number(orderId));
             if (found) {
                 setSelectedOrder(found);
                 setOpenDrawer(true);
@@ -118,9 +119,9 @@ export const AllOrdersTable = ({ type }) => {
 
     useEffect(() => {
         if (orders?.length) {
-            setSelectedOrder((prev) => {
+            setSelectedOrder(prev => {
                 if (!prev) return null;
-                return orders.find((o) => o.id === prev.id) || null;
+                return orders.find(o => o.id === prev.id) || null;
             });
         }
     }, [orders]);
@@ -149,8 +150,8 @@ export const AllOrdersTable = ({ type }) => {
                     className="w-100"
                     placeholder="Bekor qilish sababini tanlang..."
                     value={reason}
-                    onChange={(val) => setReason(val)}
-                    options={reasons?.map((reason) => ({
+                    onChange={val => setReason(val)}
+                    options={reasons?.map(reason => ({
                         value: reason.id,
                         label: reason.reason,
                     }))}

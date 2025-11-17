@@ -1,12 +1,80 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Divider, Form, Input, Modal, Segmented } from 'antd';
 import { MailOutlined, PhoneOutlined } from '@ant-design/icons';
 import GoogleBox from './GoogleBox';
 import { BeatLoader } from 'react-spinners';
-import Axios from 'axios';
+import axios from 'axios';
 import { useRouter } from 'next/router';
 import { baseUrlAuth } from '~/repositories/Repository';
 import { useMutation } from '@tanstack/react-query';
+
+const formInputs = {
+    phone: (
+        <Form.Item
+            name="phone"
+            rules={[
+                {
+                    required: true,
+                    message: 'Telefon raqam kiritish majburiy',
+                },
+                {
+                    pattern: /^\d{9}$/,
+                    message: 'Iltimos, haqiqiy telefon raqam kiriting',
+                },
+            ]}
+            normalize={value => value.replace(/\D/g, '').slice(0, 9)}>
+            <Input
+                autoComplete="off"
+                style={{ height: '50px', fontSize: '16px' }}
+                type="text"
+                placeholder="Telefon raqam"
+                addonBefore="+998"
+            />
+        </Form.Item>
+    ),
+    email: (
+        <Form.Item
+            name="email"
+            className="mb-4"
+            rules={[
+                {
+                    required: true,
+                    message: 'Elektron pochta kiritish majburiy',
+                },
+                {
+                    type: 'email',
+                    message: 'Iltimos, haqiqiy elektron pochta kiriting',
+                },
+            ]}>
+            <Input
+                style={{ height: '50px', fontSize: '16px' }}
+                addonBefore={
+                    <MailOutlined
+                        style={{
+                            fontSize: '16px',
+                            padding: '0 8px',
+                        }}
+                    />
+                }
+                type="email"
+                placeholder="Elektron pochta"
+            />
+        </Form.Item>
+    ),
+};
+
+const segmentOptions = [
+    {
+        label: 'Telefon raqam',
+        value: 'phone',
+        icon: <PhoneOutlined />,
+    },
+    {
+        label: 'Elektron pochta',
+        value: 'email',
+        icon: <MailOutlined />,
+    },
+];
 
 export default function LoginForm({
     onSuccess,
@@ -15,58 +83,64 @@ export default function LoginForm({
     openTelegram,
     onGoogleSuccessNavigateTo,
 }) {
-    const [type, setType] = useState('t'); // t, e
+    const [type, setType] = useState('phone'); // phone, email
     const router = useRouter();
-    const [loading, setLoading] = useState(false);
 
-    const { mutate: handleSubmit } = useMutation({
-        mutationKey: ['auth-register'],
-        mutationFn: async ({ phone, email }) => {
-            setLoading(true);
-            const utm_source = localStorage.getItem('utm_source');
-            const data = {
-                phone_or_email: type === 't' ? '+998' + phone : email,
-                role: 'customer',
-            };
-            const resp = await Axios.post(
-                baseUrlAuth +
-                    `auth/register/${
-                        utm_source ? `?utm_source=${utm_source}` : ''
-                    }`,
-                data
-            );
-            localStorage.setItem('via_', resp?.data?.via_);
-            localStorage.setItem('msg', resp?.data?.msg);
-            localStorage.setItem('data', JSON.stringify(data));
-            return resp;
-        },
-        onSuccess: (resp) => {
-            setLoading(false);
-            if (isModal) {
-                onSuccess();
-                setCode(resp.data?.user);
-            } else {
-                router.push({
-                    query: {
-                        ...router.query,
-                        user: resp.data?.user,
-                    },
-                    pathname: '/auth/code-verify',
+    const { mutate: handleSubmit, isPending: loading, isSuccess } = useMutation(
+        {
+            mutationKey: ['auth-register'],
+            mutationFn: async ({ phone, email }) => {
+                const utm_source = localStorage.getItem('utm_source');
+                const data = {
+                    phone_or_email: type === 'phone' ? '+998' + phone : email,
+                    role: 'customer',
+                };
+                const resp = await axios.post(
+                    baseUrlAuth +
+                        `auth/register/${
+                            utm_source ? `?utm_source=${utm_source}` : ''
+                        }`,
+                    data
+                );
+                localStorage.setItem('via_', resp?.data?.via_);
+                localStorage.setItem('msg', resp?.data?.msg);
+                localStorage.setItem('data', JSON.stringify(data));
+                return resp;
+            },
+            onSuccess: resp => {
+                if (isModal) {
+                    onSuccess();
+                    setCode(resp.data?.user);
+                } else {
+                    router.push({
+                        query: {
+                            ...router.query,
+                            user: resp.data?.user,
+                        },
+                        pathname: '/auth/code-verify',
+                    });
+                }
+            },
+            onError: error => {
+                const modal = Modal.error({
+                    centered: true,
+                    title: 'Xatolik',
+                    content:
+                        error?.response?.data?.msg ||
+                        JSON.stringify(error?.response),
                 });
-            }
-        },
-        onError: (error) => {
-            setLoading(false);
-            const modal = Modal.error({
-                centered: true,
-                title: 'Xatolik',
-                content:
-                    error?.response?.data?.msg ||
-                    JSON.stringify(error?.response),
-            });
-            modal.update;
-        },
-    });
+                modal.update;
+            },
+        }
+    );
+
+    const disableAllInputs = loading || isSuccess;
+
+    const submitButtonContent = disableAllInputs ? (
+        <BeatLoader color="#fff" />
+    ) : (
+        "Ko'dni olish"
+    );
 
     return (
         <div style={{ backgroundColor: '#f1f1f1', padding: '50px 20px' }}>
@@ -96,19 +170,8 @@ export default function LoginForm({
                             Yoki
                         </Divider>
                         <Segmented
-                            onChange={(value) => setType(value)}
-                            options={[
-                                {
-                                    label: 'Telefon raqam',
-                                    value: 't',
-                                    icon: <PhoneOutlined />,
-                                },
-                                {
-                                    label: 'Elektron pochta',
-                                    value: 'e',
-                                    icon: <MailOutlined />,
-                                },
-                            ]}
+                            onChange={setType}
+                            options={segmentOptions}
                             block
                             className="mb-5"
                             size="small"
@@ -116,79 +179,16 @@ export default function LoginForm({
                             value={type}
                         />
 
-                        {type === 'e' ? (
-                            <Form.Item
-                                name="email"
-                                className="mb-4"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message:
-                                            'Elektron pochta kiritish majburiy',
-                                    },
-                                    {
-                                        type: 'email',
-                                        message:
-                                            'Iltimos, haqiqiy elektron pochta kiriting',
-                                    },
-                                ]}>
-                                <Input
-                                    style={{ height: '50px', fontSize: '16px' }}
-                                    addonBefore={
-                                        <MailOutlined
-                                            style={{
-                                                fontSize: '16px',
-                                                padding: '0 8px',
-                                            }}
-                                        />
-                                    }
-                                    type="email"
-                                    placeholder="Elektron pochta"
-                                />
-                            </Form.Item>
-                        ) : (
-                            <Form.Item
-                                name="phone"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message:
-                                            'Telefon raqam kiritish majburiy',
-                                    },
-                                    {
-                                        pattern: /^\d{9}$/,
-                                        message:
-                                            'Iltimos, haqiqiy telefon raqam kiriting',
-                                    },
-                                ]}
-                                normalize={(value) =>
-                                    value.replace(/\D/g, '').slice(0, 9)
-                                }>
-                                <Input
-                                    autoComplete="off"
-                                    style={{ height: '50px', fontSize: '16px' }}
-                                    type="text"
-                                    placeholder="Telefon raqam"
-                                    addonBefore="+998"
-                                />
-                            </Form.Item>
-                        )}
+                        {/* NOTE: Dynamic inputs based segment*/}
+                        {formInputs[type]}
 
                         <div className="form-group submit mt-5">
-                            {loading ? (
-                                <button
-                                    disabled={true}
-                                    type="submit"
-                                    className="ps-btn ps-btn--fullwidth">
-                                    <BeatLoader color="#fff" />
-                                </button>
-                            ) : (
-                                <button
-                                    type="submit"
-                                    className="ps-btn text-white fw-normal ps-btn--fullwidth">
-                                    Ko'dni olish
-                                </button>
-                            )}
+                            <button
+                                type="submit"
+                                disabled={disableAllInputs}
+                                className="ps-btn text-white fw-normal ps-btn--fullwidth">
+                                {submitButtonContent}
+                            </button>
                         </div>
                     </Form>
                 </div>

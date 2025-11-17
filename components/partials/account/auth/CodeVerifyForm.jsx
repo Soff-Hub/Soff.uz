@@ -9,7 +9,7 @@ import { login } from '~/store/auth/slice';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
 import { isReturnUrlEmpty } from '~/shared/utilities/return-url';
 
-export const formatTime = (seconds) => {
+export const formatTime = seconds => {
     const minutes = Math.floor(seconds / 60);
     const secondsLeft = seconds % 60;
     return `${String(minutes).padStart(2, '0')}:${String(secondsLeft).padStart(
@@ -19,7 +19,7 @@ export const formatTime = (seconds) => {
 };
 
 // Helper function to validate slug
-const isValidSlug = (slug) => {
+const isValidSlug = slug => {
     return (
         slug &&
         typeof slug === 'string' &&
@@ -47,7 +47,7 @@ export default function CodeVerifyForm({ authCode, onClose, slug, onSuccess }) {
         clearAll();
 
         startInterval(() => {
-            setSecondsRemaining((prev) => {
+            setSecondsRemaining(prev => {
                 if (prev > 0) return prev - 1;
                 clearAll();
                 return 0;
@@ -180,20 +180,16 @@ export default function CodeVerifyForm({ authCode, onClose, slug, onSuccess }) {
                         )}
 
                         <div className="form-group submit mt-3">
-                            {loading ? (
-                                <button
-                                    disabled
-                                    type="submit"
-                                    className="ps-btn ps-btn--fullwidth">
+                            <button
+                                type="submit"
+                                disabled={loading}
+                                className="ps-btn text-white fw-normal ps-btn--fullwidth">
+                                {loading ? (
                                     <BeatLoader color="#fff" />
-                                </button>
-                            ) : (
-                                <button
-                                    type="submit"
-                                    className="ps-btn ps-btn--fullwidth">
-                                    Tasdiqlash
-                                </button>
-                            )}
+                                ) : (
+                                    'Tasdiqlash'
+                                )}
+                            </button>
                         </div>
                     </Form>
                 </div>

@@ -1,4 +1,10 @@
-import React, { useState } from 'react';
+import React, {
+    useEffect,
+    useState,
+    useImperativeHandle,
+    forwardRef,
+    useRef,
+} from 'react';
 import { Input, Modal, Tabs, Alert, Card } from 'antd';
 import { BeatLoader } from 'react-spinners';
 import { useRouter } from 'next/router';
@@ -27,27 +33,34 @@ const ServiceCheckout = ({
     onSuccess,
 }) => {
     const [message, setMessage] = useState(false);
-    const [open, setOpen] = useState(false);
-    const [code, setCode] = useState(null);
+    const verificationModalRef = useRef();
+    const [isVerificationModalOpen, setIsVerificationModalOpen] = useState(
+        false
+    );
     const [resData, setResData] = useState(null);
-    const [resDataCode, setResDataCode] = useState(null);
-    const [buttonOk, setButtonOk] = useState(false);
     const [type, setType] = useState('card');
-    const createOrder = useCreateOrder(balanceMode);
+    const {
+        mutateAsync: createOrder,
+        isPending: isOrderCreatePending,
+        isSuccess: isOrderCreateSuccess,
+    } = useCreateOrder(balanceMode);
     const [formattedCardNumber, setFormattedCardNumber] = useState('');
     const [numberDate, setNumberDate] = useState('');
     const { push } = useRouter();
     const queryClient = useQueryClient();
     const router = useRouter();
-    // sms uchun vaqt orqaga sanash
-    const { display, left, reset } = useCountdown(120);
-    const verifyCode = useVerifyCode();
+
+    const resetVerificationModal = () => {
+        if (verificationModalRef.current) {
+            verificationModalRef.current.reset();
+        }
+    };
 
     async function handleClickPayment(e) {
         e.preventDefault();
         setMessage(true);
 
-        createOrder.mutate(
+        await createOrder(
             {
                 service_id: document,
                 payment_type: type,
@@ -86,7 +99,7 @@ const ServiceCheckout = ({
         };
 
         if (order_id) payload.order_id = order_id;
-        createOrder.mutate(payload, {
+        await createOrder(payload, {
             onSuccess: async data => {
                 if (
                     data.msg === 'Success' &&
@@ -108,10 +121,9 @@ const ServiceCheckout = ({
                     if (!order_id) push('/order/my-orders?tab=2');
                     if (onClose) onClose();
                 }
-                setMessage(false);
-                setOpen(true);
+                setIsVerificationModalOpen(true);
                 setResData(data);
-                reset();
+                resetVerificationModal();
             },
             onError: err => {
                 console.error('❌ Click payment error:', err);
@@ -123,44 +135,8 @@ const ServiceCheckout = ({
         });
     }
 
-    // 📌 SMS kodi tasdiqlash
-    async function handleVerifyCode() {
-        setButtonOk(true);
-        verifyCode.mutate(
-            {
-                transaction_id: resData?.transaction_id,
-                code,
-            },
-            {
-                onSuccess: async data => {
-                    await queryClient.invalidateQueries({
-                        queryKey: ['orders'],
-                    });
-                    await queryClient.invalidateQueries({
-                        queryKey: ['getCustomBalance'],
-                    });
-                    setResDataCode(data);
-                    setOpen(false);
-                    if (onSuccess) {
-                        onSuccess(data?.order_id, data?.accepted_by_id);
-                        return;
-                    }
-                    if (!order_id) push('/order/my-orders?tab=2');
-                    if (onClose) onClose();
-                },
-                onError: error => {
-                    const errorMessage = error?.response?.data || {
-                        detail: "Noma'lum xato",
-                    };
-                    setResDataCode(errorMessage);
-                },
-            }
-        );
-        setButtonOk(false);
-    }
-
-    function handleCancel() {
-        setOpen(false);
+    function handleCancelVerification() {
+        setIsVerificationModalOpen(false);
         setResData(null);
     }
 
@@ -196,12 +172,292 @@ const ServiceCheckout = ({
     };
 
     const isBalanceSufficient = balance >= order?.price;
-    const extraPayment = order?.price - balance;
     const isInputsDisabled = balanceMode ? isBalanceSufficient : false;
     const isInputsRequired = balanceMode ? !isBalanceSufficient : true;
+    const isBalanceMode = isBalanceSufficient && balanceMode;
     console.log({ balance, order, isBalanceSufficient });
 
-    const childrenWithInsufficientBalance = (
+    const items = [
+        {
+            key: 'card',
+            label: (
+                <div className="click" height={80} width={'auto'}>
+                    <img
+                        src="/static/img/uzcard_humo.png"
+                        alt=""
+                        height={80}
+                        width={'auto'}
+                    />
+                </div>
+            ),
+            children: (
+                <>
+                    <ChildrenWithInsufficientBalance
+                        order={order}
+                        balance={balance}
+                        isVisible={balanceMode && !isBalanceSufficient}
+                    />
+                    <div style={{ marginInline: '10px' }}>
+                        <form
+                            onSubmit={handleCardPayment}
+                            className="pb-3 d-flex align-items-end justify-content-between row gap-4 bg-white">
+                            <div
+                                className="col-xl-7 p-0 my-2"
+                                style={{ flex: 1 }}>
+                                <p className="cardNumber">Karta raqam</p>
+                                <label
+                                    htmlFor="ccn"
+                                    className="m-0"
+                                    style={{ width: '100%' }}>
+                                    {/* <i className="fa-regular fa-credit-card i"></i> */}
+                                    <Input
+                                        prefix={
+                                            <FaRegCreditCard
+                                                style={{
+                                                    width: '45px',
+                                                    fontSize: '20px',
+                                                }}
+                                            />
+                                        }
+                                        required={isInputsRequired}
+                                        disabled={isInputsDisabled}
+                                        type="tel"
+                                        // className="form-control rounded-3 card__number"
+                                        style={{
+                                            height: '50px',
+                                        }}
+                                        inputMode="numeric"
+                                        maxLength="19"
+                                        placeholder="0000 0000 0000 0000"
+                                        value={formattedCardNumber}
+                                        onChange={handleCardNumberChange}
+                                    />
+                                </label>
+                            </div>
+                            <div className="col-xl-4 p-0 click-form-item my-2">
+                                <label className="m-0">
+                                    <Input
+                                        prefix={
+                                            <FaRegCalendarDays
+                                                style={{
+                                                    width: '45px',
+                                                    fontSize: '20px',
+                                                }}
+                                            />
+                                        }
+                                        required={isInputsRequired}
+                                        disabled={isInputsDisabled}
+                                        // className="form-control rounded-3 card__number"
+                                        style={{
+                                            height: '50px',
+                                        }}
+                                        inputMode="numeric"
+                                        maxLength="5"
+                                        placeholder="MM/YY"
+                                        value={numberDate}
+                                        onChange={handleCardNumberDate}
+                                    />
+                                </label>
+                            </div>
+
+                            <div className="col-12 p-0">
+                                {resData?.detail && (
+                                    <p
+                                        style={{
+                                            color: 'red',
+                                            marginBottom: '0px',
+                                        }}>
+                                        {resData.detail}
+                                    </p>
+                                )}
+                                <button
+                                    type="submit"
+                                    className="w-100 ps-btn"
+                                    disabled={isOrderCreatePending}
+                                    style={{
+                                        color: '#fff',
+                                        marginTop: '10px',
+                                    }}>
+                                    {isOrderCreatePending ? (
+                                        <BeatLoader color="#fff" />
+                                    ) : (
+                                        'Davom etish'
+                                    )}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <VerificationCodeModal
+                        ref={verificationModalRef}
+                        isVerificationModalOpen={isVerificationModalOpen}
+                        order_id={order_id}
+                        resData={resData}
+                        onSuccess={onSuccess}
+                        onClose={onClose}
+                        closeVerificationModal={() =>
+                            setIsVerificationModalOpen(false)
+                        }
+                        handleCancelVerification={handleCancelVerification}
+                    />
+                </>
+            ),
+        },
+        {
+            key: 'click',
+            label: (
+                <div className="click" height={80} width={'auto'}>
+                    <img src="/static/img/click.png" alt="" />
+                </div>
+            ),
+            children: (
+                <>
+                    <ChildrenWithInsufficientBalance
+                        order={order}
+                        balance={balance}
+                        isVisible={balanceMode && !isBalanceSufficient}
+                    />
+                    <div style={{ marginInline: '10px' }}>
+                        <div className="px-4 rounded click-b">
+                            <form
+                                onSubmit={handleClickPayment}
+                                className="pt-3 pb-3 d-flex row">
+                                <div className="col-12 p-0 px-4 my-3">
+                                    {!message ? (
+                                        <button
+                                            type="submit"
+                                            className="w-100 ps-btn"
+                                            disabled={isOrderCreatePending}
+                                            style={{
+                                                color: '#fff',
+                                                marginTop: '10px',
+                                            }}>
+                                            Davom etish
+                                        </button>
+                                    ) : (
+                                        <button
+                                            className="ps-btn w-100"
+                                            disabled>
+                                            <BeatLoader color="#fff" />
+                                        </button>
+                                    )}
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </>
+            ),
+        },
+    ];
+
+    return isBalanceMode ? (
+        <div>
+            <Alert
+                message="Sizning balansingizda yetarli mablag' mavjud. To'lovni balansdan to'lash mumkin - karta kerak emas."
+                type="success"
+                showIcon
+                style={{ marginBlock: '20px' }}
+            />
+            <div className="service-details-box bg-white border rounded p-3 mb-4">
+                <div
+                    className="d-flex justify-content-between align-items-center"
+                    style={{
+                        gap: '8px',
+                    }}>
+                    <div className="d-flex align-items-start">
+                        <div
+                            style={{
+                                width: '20px',
+                            }}>
+                            <IoCard
+                                fontSize={16}
+                                style={{
+                                    marginRight: '8px',
+                                    marginBottom: '5px',
+                                }}
+                            />
+                        </div>
+                        <h5
+                            className="mb-1"
+                            style={{
+                                overflowWrap: 'anywhere',
+                                fontWeight: 'normal',
+                            }}>
+                            {order?.title}
+                        </h5>
+                    </div>
+                    <div className="text-end">
+                        <h4
+                            className=" mb-0"
+                            style={{
+                                whiteSpace: 'nowrap',
+                                fontWeight: 'normal',
+                                fontSize: '16px',
+                            }}>
+                            {formatCurrencyWithSpace(order?.price)} so'm
+                        </h4>
+                    </div>
+                </div>
+                {/* <div
+                    style={{
+                        marginTop: '10px',
+                        borderTop: '1px solid #dee2e6',
+                    }}></div>
+                <div
+                    className="d-flex justify-content-between align-items-center"
+                    style={{ marginTop: '10px' }}>
+                    <h4 className="fw-bold mb-0">Qoldiq to'lov</h4>
+                    <div className="text-end">
+                        <h3
+                            className="text-primary mb-0 fw-bold"
+                            style={{
+                                fontSize: '20px',
+                            }}>
+                            0 so'm
+                        </h3>
+                    </div>
+                </div> */}
+            </div>
+
+            {!message ? (
+                <button
+                    type="submit"
+                    className="w-100 ps-btn"
+                    disabled={isOrderCreatePending}
+                    onClick={handleCardPayment}
+                    style={{
+                        color: '#fff',
+                        marginTop: '10px',
+                    }}>
+                    To'lov qilish
+                </button>
+            ) : (
+                <button
+                    className="ps-btn w-100"
+                    disabled={isOrderCreatePending}
+                    type="button">
+                    <BeatLoader color="#fff" />
+                </button>
+            )}
+        </div>
+    ) : (
+        <Tabs
+            centered
+            style={{
+                marginTop: '20px',
+                marginBottom: 0,
+            }}
+            items={items}
+            onChange={setType}
+        />
+    );
+};
+
+const ChildrenWithInsufficientBalance = ({ order, balance, isVisible }) => {
+    const extraPayment = order?.price - balance;
+
+    if (!isVisible) return null;
+
+    return (
         <>
             <Alert
                 message="Balansingizdagi mablag' to'lvoni bir qismini qoplaydi. Qolgan summani karta yoki Click orqali to'lashingiz mumkin."
@@ -318,318 +574,118 @@ const ServiceCheckout = ({
             </div>
         </>
     );
-
-    const items = [
-        {
-            key: 'card',
-            label: (
-                <div className="click" height={80} width={'auto'}>
-                    <img
-                        src="/static/img/uzcard_humo.png"
-                        alt=""
-                        height={80}
-                        width={'auto'}
-                    />
-                </div>
-            ),
-            children: (
-                <>
-                    {balanceMode &&
-                        !isBalanceSufficient &&
-                        childrenWithInsufficientBalance}
-                    <div style={{ marginInline: '10px' }}>
-                        <form
-                            onSubmit={handleCardPayment}
-                            className="pb-3 d-flex align-items-end justify-content-between row gap-4 bg-white">
-                            <div
-                                className="col-xl-7 p-0 my-2"
-                                style={{ flex: 1 }}>
-                                <p className="cardNumber">Karta raqam</p>
-                                <label
-                                    htmlFor="ccn"
-                                    className="m-0"
-                                    style={{ width: '100%' }}>
-                                    {/* <i className="fa-regular fa-credit-card i"></i> */}
-                                    <Input
-                                        prefix={
-                                            <FaRegCreditCard
-                                                style={{
-                                                    width: '45px',
-                                                    fontSize: '20px',
-                                                }}
-                                            />
-                                        }
-                                        required={isInputsRequired}
-                                        disabled={isInputsDisabled}
-                                        type="tel"
-                                        // className="form-control rounded-3 card__number"
-                                        style={{
-                                            height: '50px',
-                                        }}
-                                        inputMode="numeric"
-                                        maxLength="19"
-                                        placeholder="0000 0000 0000 0000"
-                                        value={formattedCardNumber}
-                                        onChange={handleCardNumberChange}
-                                    />
-                                </label>
-                            </div>
-                            <div className="col-xl-4 p-0 click-form-item my-2">
-                                <label className="m-0">
-                                    <Input
-                                        prefix={
-                                            <FaRegCalendarDays
-                                                style={{
-                                                    width: '45px',
-                                                    fontSize: '20px',
-                                                }}
-                                            />
-                                        }
-                                        required={isInputsRequired}
-                                        disabled={isInputsDisabled}
-                                        // className="form-control rounded-3 card__number"
-                                        style={{
-                                            height: '50px',
-                                        }}
-                                        inputMode="numeric"
-                                        maxLength="5"
-                                        placeholder="MM/YY"
-                                        value={numberDate}
-                                        onChange={handleCardNumberDate}
-                                    />
-                                </label>
-                            </div>
-
-                            <div className="col-12 p-0">
-                                {resData?.detail && (
-                                    <p
-                                        style={{
-                                            color: 'red',
-                                            marginBottom: '0px',
-                                        }}>
-                                        {resData.detail}
-                                    </p>
-                                )}
-                                {!message ? (
-                                    <button
-                                        type="submit"
-                                        className="w-100 ps-btn"
-                                        disabled={createOrder?.isPending}
-                                        style={{
-                                            color: '#fff',
-                                            marginTop: '10px',
-                                        }}>
-                                        Davom etish
-                                    </button>
-                                ) : (
-                                    <button
-                                        className="ps-btn w-100"
-                                        disabled={createOrder?.isPending}
-                                        type="button">
-                                        <BeatLoader color="#fff" />
-                                    </button>
-                                )}
-                            </div>
-                        </form>
-                        <Modal
-                            width={500}
-                            title="Tez orada!"
-                            centered
-                            open={open}
-                            onOk={handleVerifyCode}
-                            onCancel={handleCancel}
-                            destroyOnClose
-                            okButtonProps={{
-                                style: {
-                                    backgroundColor: 'green',
-                                    color: 'white',
-                                },
-                                disabled:
-                                    verifyCode?.isPending || !code?.length,
-                            }}
-                            okText={
-                                buttonOk ? (
-                                    <BeatLoader color="#fff" />
-                                ) : (
-                                    "To'lov qilish"
-                                )
-                            }
-                            cancelText="Orqaga">
-                            <>
-                                <p>
-                                    Kod quyidagi raqamga yuborildi:{' '}
-                                    {resData?.phone_number}
-                                </p>
-                                <input
-                                    onChange={e => setCode(e.target.value)}
-                                    type="tel"
-                                    placeholder="000000"
-                                    disabled={verifyCode?.isPending}
-                                    maxLength={6}
-                                    className="form-control text-center rounded-3 fs-3"
-                                />
-                                <strong className="text-danger">
-                                    {display}
-                                </strong>
-                                {resDataCode?.detail && (
-                                    <p className="text-danger">
-                                        {typeof resDataCode.detail == 'string'
-                                            ? resDataCode.detail
-                                            : "Noma'lum xato"}
-                                    </p>
-                                )}
-                            </>
-                        </Modal>
-                    </div>
-                </>
-            ),
-        },
-        {
-            key: 'click',
-            label: (
-                <div className="click" height={80} width={'auto'}>
-                    <img src="/static/img/click.png" alt="" />
-                </div>
-            ),
-            children: (
-                <>
-                    {balanceMode &&
-                        !isBalanceSufficient &&
-                        childrenWithInsufficientBalance}
-                    <div style={{ marginInline: '10px' }}>
-                        <div className="px-4 rounded click-b">
-                            <form
-                                onSubmit={handleClickPayment}
-                                className="pt-3 pb-3 d-flex row">
-                                <div className="col-12 p-0 px-4 my-3">
-                                    {!message ? (
-                                        <button
-                                            type="submit"
-                                            className="w-100 ps-btn"
-                                            disabled={createOrder?.isPending}
-                                            style={{
-                                                color: '#fff',
-                                                marginTop: '10px',
-                                            }}>
-                                            Davom etish
-                                        </button>
-                                    ) : (
-                                        <button
-                                            className="ps-btn w-100"
-                                            disabled>
-                                            <BeatLoader color="#fff" />
-                                        </button>
-                                    )}
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </>
-            ),
-        },
-    ];
-
-    return isBalanceSufficient && balanceMode ? (
-        <div>
-            <Alert
-                message="Sizning balansingizda yetarli mablag' mavjud. To'lovni balansdan to'lash mumkin - karta kerak emas."
-                type="success"
-                showIcon
-                style={{ marginBlock: '20px' }}
-            />
-            <div className="service-details-box bg-white border rounded p-3 mb-4">
-                <div
-                    className="d-flex justify-content-between align-items-center"
-                    style={{
-                        gap: '8px',
-                    }}>
-                    <div className="d-flex align-items-start">
-                        <div
-                            style={{
-                                width: '20px',
-                            }}>
-                            <IoCard
-                                fontSize={16}
-                                style={{
-                                    marginRight: '8px',
-                                    marginBottom: '5px',
-                                }}
-                            />
-                        </div>
-                        <h5
-                            className="mb-1"
-                            style={{
-                                overflowWrap: 'anywhere',
-                                fontWeight: 'normal',
-                            }}>
-                            {order?.title}
-                        </h5>
-                    </div>
-                    <div className="text-end">
-                        <h4
-                            className=" mb-0"
-                            style={{
-                                whiteSpace: 'nowrap',
-                                fontWeight: 'normal',
-                                fontSize: '16px',
-                            }}>
-                            {formatCurrencyWithSpace(order?.price)} so'm
-                        </h4>
-                    </div>
-                </div>
-                {/* <div
-                    style={{
-                        marginTop: '10px',
-                        borderTop: '1px solid #dee2e6',
-                    }}></div>
-                <div
-                    className="d-flex justify-content-between align-items-center"
-                    style={{ marginTop: '10px' }}>
-                    <h4 className="fw-bold mb-0">Qoldiq to'lov</h4>
-                    <div className="text-end">
-                        <h3
-                            className="text-primary mb-0 fw-bold"
-                            style={{
-                                fontSize: '20px',
-                            }}>
-                            0 so'm
-                        </h3>
-                    </div>
-                </div> */}
-            </div>
-
-            {!message ? (
-                <button
-                    type="submit"
-                    className="w-100 ps-btn"
-                    disabled={createOrder?.isPending}
-                    onClick={handleCardPayment}
-                    style={{
-                        color: '#fff',
-                        marginTop: '10px',
-                    }}>
-                    To'lov qilish
-                </button>
-            ) : (
-                <button
-                    className="ps-btn w-100"
-                    disabled={createOrder?.isPending}
-                    type="button">
-                    <BeatLoader color="#fff" />
-                </button>
-            )}
-        </div>
-    ) : (
-        <Tabs
-            centered
-            style={{
-                marginTop: '20px',
-                marginBottom: 0,
-            }}
-            items={items}
-            onChange={setType}
-        />
-    );
 };
+
+const VerificationCodeModal = forwardRef(
+    (
+        {
+            isVerificationModalOpen,
+            resData,
+            order_id,
+            onSuccess,
+            onClose,
+            closeVerificationModal,
+            handleCancelVerification,
+        } = props,
+        ref
+    ) => {
+        const queryClient = useQueryClient();
+        const { display, reset } = useCountdown(120);
+        const {
+            mutateAsync: mutateVerifyCode,
+            isPending: isVerifyCodePending,
+            isSuccess: isVerifyCodeSuccess,
+        } = useVerifyCode();
+        const [code, setCode] = useState(null);
+        const [resDataCode, setResDataCode] = useState(null);
+
+        // 📌 SMS kodi tasdiqlash
+        async function handleVerifyCode() {
+            await mutateVerifyCode(
+                {
+                    transaction_id: resData?.transaction_id,
+                    code,
+                },
+                {
+                    onSuccess: async data => {
+                        await queryClient.invalidateQueries({
+                            queryKey: ['orders'],
+                        });
+                        await queryClient.invalidateQueries({
+                            queryKey: ['getCustomBalance'],
+                        });
+                        setResDataCode(data);
+                        closeVerificationModal();
+                        if (onSuccess) {
+                            onSuccess(data?.order_id, data?.accepted_by_id);
+                            return;
+                        }
+                        if (!order_id) push('/order/my-orders?tab=2');
+                        if (onClose) onClose();
+                    },
+                    onError: error => {
+                        const errorMessage = error?.response?.data || {
+                            detail: "Noma'lum xato",
+                        };
+                        setResDataCode(errorMessage);
+                    },
+                }
+            );
+        }
+
+        useImperativeHandle(
+            ref,
+            () => ({
+                reset,
+            }),
+            [reset]
+        );
+
+        const isLoadingOrSuccess = isVerifyCodePending || isVerifyCodeSuccess;
+
+        const errorMessage = resData?.detail
+            ? typeof resDataCode?.detail == 'string'
+                ? resDataCode?.detail
+                : "Noma'lum xato"
+            : '';
+
+        return (
+            <Modal
+                width={500}
+                title="Tez orada!"
+                centered
+                open={isVerificationModalOpen}
+                onOk={handleVerifyCode}
+                onCancel={handleCancelVerification}
+                destroyOnClose
+                confirmLoading={isLoadingOrSuccess}
+                okButtonProps={{
+                    style: {
+                        backgroundColor: 'green',
+                        color: 'white',
+                    },
+                    disabled: isLoadingOrSuccess || !code?.length,
+                }}
+                okText={"To'lov qilish"}
+                cancelText="Orqaga">
+                <>
+                    <p>
+                        Kod quyidagi raqamga yuborildi: {resData?.phone_number}
+                    </p>
+                    <input
+                        onChange={e => setCode(e.target.value)}
+                        type="tel"
+                        placeholder="000000"
+                        disabled={isVerifyCodePending || isVerifyCodeSuccess}
+                        maxLength={6}
+                        className="form-control text-center rounded-3 fs-3"
+                    />
+                    <strong className="text-danger">{display}</strong>
+                    <p className="text-danger">{errorMessage}</p>
+                </>
+            </Modal>
+        );
+    }
+);
 
 export default ServiceCheckout;

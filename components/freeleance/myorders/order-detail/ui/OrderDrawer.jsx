@@ -32,7 +32,7 @@ const OrderDrawer = ({
 }) => {
     const [selectedOffer, setSelectedOffer] = useState(null);
     const [verfiedOffer, setVerfiedOffer] = useState(null);
-    const { user } = useSelector((state) => state.auth);
+    const { user } = useSelector(state => state.auth);
     const { isDesktop } = useResponsive();
     const { push } = useRouter();
     const { offers, setOffers, isConnected } = useOffers(order?.id, open);
@@ -56,7 +56,7 @@ const OrderDrawer = ({
     const { mutate: selectOffer, isPending } = useFPost({
         url: 'offer/select-offer',
         token: user?.access,
-        onSuccess: (data) => {
+        onSuccess: data => {
             if (!data.success) {
                 message.warning(
                     `Frilanser tanlash uchun iltimos qo'shimcha ${formatCurrencyWithSpace(
@@ -143,7 +143,7 @@ const OrderDrawer = ({
 
                 <div className={cn('w-full')}>
                     {offers?.length > 0 ? (
-                        offers.map((item) => (
+                        offers.map(item => (
                             <div
                                 key={item?.id}
                                 className={cn(
