@@ -28,7 +28,6 @@ import { MdOutlineFirstPage } from 'react-icons/md';
 import { MdOutlineLastPage } from 'react-icons/md';
 import { PiSortDescendingBold } from 'react-icons/pi';
 import { useMounted } from '~/shared/hooks/useMounted';
-import { IoDocumentsSharp } from 'react-icons/io5';
 
 const fileTypes = [
     { label: 'Barchasi', value: '' },
@@ -353,8 +352,7 @@ const FilterFormDrawer = ({ open, childData, onClose }) => {
         });
     };
 
-    const handleSaveFilters = e => {
-        e.preventDefault();
+    const handleSaveFilters = () => {
         const { pageRange, ...restFilterValues } = filterValues;
         const newQueries = { ...router.query };
         delete newQueries.similar_documents;
@@ -380,6 +378,16 @@ const FilterFormDrawer = ({ open, childData, onClose }) => {
         setFilterValues(defaultValues);
     };
 
+    const handleSaveAndClose = () => {
+        handleSaveFilters();
+        onClose();
+    };
+
+    const saveAndCloseForm = e => {
+        e.preventDefault();
+        handleSaveAndClose();
+    };
+
     useEffect(() => {
         setFilterValues(initialFilterValues);
     }, [initialFilterValues]);
@@ -388,7 +396,7 @@ const FilterFormDrawer = ({ open, childData, onClose }) => {
         <Drawer
             title="Filterlar"
             placement="left"
-            onClose={onClose}
+            onClose={handleSaveAndClose}
             open={open}
             closable={false}
             extra={
@@ -400,7 +408,7 @@ const FilterFormDrawer = ({ open, childData, onClose }) => {
                 </Space>
             }>
             <form
-                onSubmit={handleSaveFilters}
+                onSubmit={saveAndCloseForm}
                 className="search_results_filter_form">
                 <Select
                     style={{ width: '100%' }}

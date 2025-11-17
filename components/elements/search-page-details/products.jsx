@@ -16,7 +16,12 @@ export default function Search_Results_Products({
 }) {
     const router = useRouter();
     const isFirstRender = useRef(true);
-    const { type = 'file', category = '', similar_documents } = router.query;
+    const {
+        type = 'file',
+        category = '',
+        similar_documents,
+        tab = '1',
+    } = router.query;
 
     useEffect(() => {
         if (isFirstRender.current) {
@@ -25,7 +30,7 @@ export default function Search_Results_Products({
     }, [router.query]);
 
     // NOTE: Requests Enable property
-    const isRequestsEnabled = router.isReady && router.query.tab === currentTab;
+    const isRequestsEnabled = router.isReady && tab === currentTab;
     const isChildCategoryEnabled = isRequestsEnabled && !!router.query.category;
 
     const { data: childData } = useQuery({
@@ -66,9 +71,7 @@ export default function Search_Results_Products({
         resultsContent = (
             <>
                 {data.results.map((item, index) => (
-                    <div key={index}>
-                        <SearchResultsProducts_Card product={item} />
-                    </div>
+                    <SearchResultsProducts_Card product={item} key={index} />
                 ))}
                 <Pagination
                     style={{

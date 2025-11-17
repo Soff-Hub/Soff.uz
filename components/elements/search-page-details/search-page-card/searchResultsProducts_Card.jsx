@@ -25,42 +25,29 @@ export default function SearchResultsProducts_Card({ product }) {
         const windowHeight = window.innerHeight;
         const padding = 20;
 
-        let top = 0; // Start aligned with the image
-        let left = 'auto';
-        let right = 'auto';
+        let top = 0;
 
-        // Default: position to the right of the image
-        let horizontalPosition = imgRect.width + 10; // 10px gap between image and preview
+        let horizontalPosition = imgRect.width + 10;
 
-        // Check if preview overflows to the right
         if (imgRect.right + previewWidth + 10 > windowWidth - padding) {
-            // Position to the left instead
             horizontalPosition = -(previewWidth + 10);
         }
 
-        // Vertical positioning: try to keep it aligned with the card
-        // Check if preview overflows to the bottom when aligned with image
         if (imgRect.top + previewHeight > windowHeight - padding) {
-            // Try to position it so it fits within viewport but still near the image
             const spaceBelow = windowHeight - imgRect.top - padding;
             const spaceAbove = imgRect.bottom - padding;
 
             if (spaceBelow >= previewHeight) {
-                // Enough space below, keep aligned
                 top = 0;
             } else if (spaceAbove >= previewHeight) {
-                // Position above but try to keep some alignment
                 top = Math.max(
                     -(previewHeight - imgRect.height),
                     -(imgRect.top - padding)
                 );
             } else {
-                // Not enough space in either direction, position to show maximum content
                 if (spaceBelow > spaceAbove) {
-                    // Position at bottom of available space
                     top = windowHeight - imgRect.top - previewHeight - padding;
                 } else {
-                    // Position at top of available space
                     top = -imgRect.top + padding;
                 }
             }

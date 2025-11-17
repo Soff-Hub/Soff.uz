@@ -7,7 +7,6 @@ import { IoClose } from 'react-icons/io5';
 import { CloseCircleOutlined } from '@ant-design/icons';
 import { BiCategory } from 'react-icons/bi';
 import { AiOutlineApartment } from 'react-icons/ai';
-import { useFGet } from '~/shared/hooks/useFApi';
 import { useQuery } from '@tanstack/react-query';
 import { useGetDirectionsQuery } from '~/store/profile/slice';
 
@@ -41,7 +40,7 @@ export default function SearchResultsProductsFilter({ total }) {
 
         let hasMutation = false;
         let howManyMutations = 0;
-        Object.keys(defaultValues).forEach((key) => {
+        Object.keys(defaultValues).forEach(key => {
             if (router.query[key] && router.query[key] !== defaultValues[key]) {
                 hasMutation = true;
                 howManyMutations += 1;
@@ -72,7 +71,7 @@ export default function SearchResultsProductsFilter({ total }) {
 
     const deleteQuerySelectively = (...keys) => {
         const newParams = { ...router.query };
-        keys.forEach((key) => {
+        keys.forEach(key => {
             delete newParams[key];
         });
         router.push(
@@ -90,11 +89,11 @@ export default function SearchResultsProductsFilter({ total }) {
 
     const filterIndicatorSelectors = useMemo(() => {
         const currentType = directions?.find(
-            (type) => type?.value == router.query.direction
+            type => type?.value == router.query.direction
         );
 
         const currentFileType = categoriesList.find(
-            (type) => type.value == router.query.service_parent
+            type => type.value == router.query.service_parent
         );
 
         return [
@@ -134,8 +133,8 @@ export default function SearchResultsProductsFilter({ total }) {
                     <div className="filter_card_action_btns">
                         <div className="filter_indicators">
                             {filterIndicatorSelectors
-                                .filter((selector) => selector.isEnabled)
-                                .map((selector) => (
+                                .filter(selector => selector.isEnabled)
+                                .map(selector => (
                                     <Tooltip
                                         placement="top"
                                         title={
@@ -240,14 +239,14 @@ const FilterFormDrawer = ({ open, onClose, directions, setCategoriesList }) => {
     });
 
     const categories = useMemo(() => {
-        return (parentData || []).map((parent) => ({
+        return (parentData || []).map(parent => ({
             label: parent.title,
             value: String(parent.id),
         }));
     }, [parentData]);
 
     const handleChangeFilterValues = (key, value) => {
-        setFilterValues((prev) => {
+        setFilterValues(prev => {
             if (typeof key === 'object') {
                 return {
                     ...prev,
@@ -261,18 +260,14 @@ const FilterFormDrawer = ({ open, onClose, directions, setCategoriesList }) => {
         });
     };
 
-    const handleSaveFilters = (e) => {
-        e.preventDefault();
-
-        const validFilterValues = Object.keys(filterValues)
-            .filter(
-                (key) =>
-                    filterValues[key] !== undefined && filterValues[key] !== ''
-            )
-            .reduce((obj, key) => {
+    const handleSaveFilters = () => {
+        const validFilterValues = Object.keys(filterValues).reduce(
+            (obj, key) => {
                 obj[key] = filterValues[key];
                 return obj;
-            }, {});
+            },
+            {}
+        );
         router.push(
             {
                 pathname: router.pathname,
@@ -291,6 +286,16 @@ const FilterFormDrawer = ({ open, onClose, directions, setCategoriesList }) => {
         setFilterValues(defaultValues);
     };
 
+    const handleSaveAndClose = () => {
+        handleSaveFilters();
+        onClose();
+    };
+
+    const saveAndCloseForm = e => {
+        e.preventDefault();
+        handleSaveAndClose();
+    };
+
     useEffect(() => {
         setFilterValues(initialFilterValues);
     }, [initialFilterValues]);
@@ -303,7 +308,7 @@ const FilterFormDrawer = ({ open, onClose, directions, setCategoriesList }) => {
         <Drawer
             title="Filterlar"
             placement="left"
-            onClose={onClose}
+            onClose={handleSaveAndClose}
             open={open}
             closable={false}
             extra={
@@ -316,12 +321,12 @@ const FilterFormDrawer = ({ open, onClose, directions, setCategoriesList }) => {
             }>
             <form
                 className="search_results_filter_form"
-                onSubmit={handleSaveFilters}>
+                onSubmit={saveAndCloseForm}>
                 <Select
                     style={{ width: '100%', maxWidth: '159px' }}
                     placeholder="Yo‘nalish"
                     value={filterValues.direction}
-                    onChange={(value) =>
+                    onChange={value =>
                         handleChangeFilterValues({
                             direction: value,
                             service_parent: undefined,
@@ -340,7 +345,7 @@ const FilterFormDrawer = ({ open, onClose, directions, setCategoriesList }) => {
                             service_parent: '',
                         })
                     }
-                    onChange={(value) =>
+                    onChange={value =>
                         handleChangeFilterValues({
                             service_parent: value,
                         })
