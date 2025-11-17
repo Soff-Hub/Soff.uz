@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Breadcrumb } from 'antd';
 import { fileColors } from '~/components/details-components/details-actions/file-actions';
 import { addPeriodToThousands } from '~/components/partials/account/price-formatter';
@@ -8,6 +8,83 @@ import Link from 'next/link';
 export default function SearchResultsProducts_Card({ product }) {
     const { isDesktop } = useResponsive();
     const [isHovering, setIsHovering] = useState(false);
+    const [previewPosition, setPreviewPosition] = useState({
+        top: '0',
+        right: '-420px',
+    });
+    const imgRef = useRef(null);
+    const previewRef = useRef(null);
+
+    const updatePreviewPosition = () => {
+        if (!imgRef.current || !previewRef.current || !isHovering) return;
+
+        const imgRect = imgRef.current.getBoundingClientRect();
+        const previewWidth = 400;
+        const previewHeight = 400;
+        const windowWidth = window.innerWidth;
+        const windowHeight = window.innerHeight;
+        const padding = 20;
+
+        let top = 0; // Start aligned with the image
+        let left = 'auto';
+        let right = 'auto';
+
+        // Default: position to the right of the image
+        let horizontalPosition = imgRect.width + 10; // 10px gap between image and preview
+
+        // Check if preview overflows to the right
+        if (imgRect.right + previewWidth + 10 > windowWidth - padding) {
+            // Position to the left instead
+            horizontalPosition = -(previewWidth + 10);
+        }
+
+        // Vertical positioning: try to keep it aligned with the card
+        // Check if preview overflows to the bottom when aligned with image
+        if (imgRect.top + previewHeight > windowHeight - padding) {
+            // Try to position it so it fits within viewport but still near the image
+            const spaceBelow = windowHeight - imgRect.top - padding;
+            const spaceAbove = imgRect.bottom - padding;
+
+            if (spaceBelow >= previewHeight) {
+                // Enough space below, keep aligned
+                top = 0;
+            } else if (spaceAbove >= previewHeight) {
+                // Position above but try to keep some alignment
+                top = Math.max(
+                    -(previewHeight - imgRect.height),
+                    -(imgRect.top - padding)
+                );
+            } else {
+                // Not enough space in either direction, position to show maximum content
+                if (spaceBelow > spaceAbove) {
+                    // Position at bottom of available space
+                    top = windowHeight - imgRect.top - previewHeight - padding;
+                } else {
+                    // Position at top of available space
+                    top = -imgRect.top + padding;
+                }
+            }
+        }
+
+        setPreviewPosition({
+            top: `${top}px`,
+            left: `${horizontalPosition}px`,
+            right: 'auto',
+        });
+    };
+
+    useEffect(() => {
+        if (isHovering && isDesktop) {
+            updatePreviewPosition();
+            window.addEventListener('scroll', updatePreviewPosition);
+            window.addEventListener('resize', updatePreviewPosition);
+
+            return () => {
+                window.removeEventListener('scroll', updatePreviewPosition);
+                window.removeEventListener('resize', updatePreviewPosition);
+            };
+        }
+    }, [isHovering, isDesktop]);
 
     return (
         <Link href={`/product/${product.slug}`}>
@@ -91,6 +168,7 @@ export default function SearchResultsProducts_Card({ product }) {
                         className="Search_Results_Products_card_img_container preview-container"
                         style={{ position: 'relative' }}>
                         <img
+                            ref={imgRef}
                             src={product.poster}
                             alt={product.title}
                             className="Search_Results_Products_card_img"
@@ -110,10 +188,12 @@ export default function SearchResultsProducts_Card({ product }) {
                         {/* Full size preview */}
                         {isHovering && isDesktop && (
                             <div
+                                ref={previewRef}
                                 style={{
                                     position: 'absolute',
-                                    top: '0',
-                                    right: '-420px',
+                                    top: previewPosition.top,
+                                    right: previewPosition.right,
+                                    left: previewPosition.left,
                                     width: '400px',
                                     height: '400px',
                                     border:

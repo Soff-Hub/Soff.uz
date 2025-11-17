@@ -3,32 +3,48 @@ import { useSelector } from 'react-redux';
 import { Modal, Tabs, Alert, Input } from 'antd';
 import PostRepository from '~/repositories/PostRepository';
 import { BeatLoader } from 'react-spinners';
-import Router, { useRouter } from 'next/router';
+import Router from 'next/router';
 import useCart from '~/shared/hooks/useCart';
 import ProductRepository from '~/repositories/ProductRepository';
 import { calculateAmount } from '~/shared/utilities/ecomerce-helpers';
 import { addPeriodToThousands } from './price-formatter';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
-import { RiSecurePaymentLine } from 'react-icons/ri';
 import { FaRegCreditCard } from 'react-icons/fa6';
 import { FaRegCalendarDays } from 'react-icons/fa6';
 
-export const SecurePaymentAlert = ({ style, ...rest }) => (
-    <Alert
-        message="To'lov jarayoni to'liq himoyalangan."
-        type="success"
-        showIcon
-        style={{
-            lineHeight: 'normal',
-            fontSize: '15px',
-            color: 'green',
-            marginTop: '10px',
-            ...style,
-        }}
-        icon={<RiSecurePaymentLine fontSize={25} />}
-        {...rest}
-    />
-);
+import { IoShieldCheckmarkOutline } from 'react-icons/io5';
+
+export const SecurePaymentAlert = ({ style, bordered = true, ...rest }) =>
+    bordered ? (
+        <Alert
+            message="To‘lov jarayoni ishonchli, shifrlangan va xavfsiz tarzda amalga oshiriladi."
+            type="success"
+            showIcon
+            style={{
+                lineHeight: 'normal',
+                color: 'green',
+                marginTop: '10px',
+                ...style,
+            }}
+            icon={<IoShieldCheckmarkOutline fontSize={25} />}
+            {...rest}
+        />
+    ) : (
+        <div>
+            <IoShieldCheckmarkOutline
+                style={{
+                    color: 'green',
+                    fontSize: '20px',
+                    marginRight: '5px',
+                    marginBottom: '4px',
+                }}
+            />
+            <span style={{ color: 'green', fontSize: '13px' }}>
+                To‘lov jarayoni ishonchli, shifrlangan va xavfsiz tarzda amalga
+                oshiriladi.
+            </span>
+        </div>
+    );
 
 const FormSubmitButton = ({ hisob, message, className, ...rest }) => (
     <div className={`w-100 ${className}`} {...rest}>
@@ -307,7 +323,6 @@ const CreditCard2 = ({ document, type }) => {
             ),
             children: (
                 <div className="w-100 px-4">
-                    <SecurePaymentAlert />
                     <form
                         onSubmit={handleClickCardPosts}
                         style={{ marginInline: '1px' }}
@@ -371,6 +386,7 @@ const CreditCard2 = ({ document, type }) => {
                             className={'col-12 p-0'}
                         />
                     </form>
+                    <SecurePaymentAlert bordered={false} />
 
                     <Modal
                         width={500}
@@ -425,12 +441,12 @@ const CreditCard2 = ({ document, type }) => {
             ),
             children: (
                 <div className="w-100 px-4">
-                    <SecurePaymentAlert />
                     <form
                         onSubmit={handleClickCardPostsclick}
                         className="pt-4 pb-3 d-flex align-items-end justify-content-between">
                         <FormSubmitButton hisob={hisob} message={message} />
                     </form>
+                    <SecurePaymentAlert />
                 </div>
             ),
         },
@@ -447,12 +463,12 @@ const CreditCard2 = ({ document, type }) => {
             ),
             children: (
                 <div className="w-100 px-4">
-                    <SecurePaymentAlert />
                     <form
                         onSubmit={handleClickCardPostsPayme}
                         className="pt-4 pb-3 d-flex align-items-end justify-content-between">
                         <FormSubmitButton hisob={hisob} message={message} />
                     </form>
+                    <SecurePaymentAlert />
                 </div>
             ),
         },

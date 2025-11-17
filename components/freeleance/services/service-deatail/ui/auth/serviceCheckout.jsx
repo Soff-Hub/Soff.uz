@@ -339,7 +339,6 @@ const ServiceCheckout = ({
                         !isBalanceSufficient &&
                         childrenWithInsufficientBalance}
                     <div style={{ marginInline: '10px' }}>
-                        <SecurePaymentAlert />
                         <form
                             onSubmit={handleCardPayment}
                             style={{ marginInline: '1px' }}
@@ -433,6 +432,7 @@ const ServiceCheckout = ({
                                 )}
                             </div>
                         </form>
+                        <SecurePaymentAlert bordered={false} />
                         <Modal
                             width={500}
                             title="Tez orada!"
@@ -503,7 +503,6 @@ const ServiceCheckout = ({
                             margin: '0 auto',
                         }}>
                         <div className="px-4 rounded">
-                            <SecurePaymentAlert />
                             <form
                                 onSubmit={handleClickPayment}
                                 className="pt-3 pb-3 d-flex">
@@ -524,6 +523,7 @@ const ServiceCheckout = ({
                                     </button>
                                 )}
                             </form>
+                            <SecurePaymentAlert bordered={false} />
                         </div>
                     </div>
                 </>
