@@ -10,6 +10,12 @@ import AffiliateListener from '~/entities/affiliate';
 import { useTelegram } from '~/shared/hooks/useTelegram';
 import { TelegramLink } from '~/shared/components/telegram-link';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
+import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
+import 'dayjs/locale/uz-latn';
+
+dayjs.locale('uz-latn');
+dayjs.extend(duration);
 
 function App({ Component, pageProps }) {
     const { tg } = useTelegram();

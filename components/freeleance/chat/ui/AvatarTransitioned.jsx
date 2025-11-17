@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { sleep } from '~/shared/utilities/sleep';
-import { Spin } from 'antd';
+import { Spin, Avatar } from 'antd';
+import { useSelector } from 'react-redux';
+import { FaRegUserCircle } from 'react-icons/fa';
 
 const containerStyle = {
     position: 'relative',
@@ -20,7 +22,7 @@ const commonTransition = {
     transition: 'opacity 0.3s ease',
 };
 
-function AvatarTransitioned({ msg }) {
+function AvatarTransitioned({ msg, image }) {
     const isLoading = msg.status === 'sending' || msg.status === 'updating';
     const [showSpinner, setShowSpinner] = useState(false);
     const spinnerContainerStyle = {
@@ -29,6 +31,7 @@ function AvatarTransitioned({ msg }) {
         alignItems: 'center',
         justifyContent: 'center',
         opacity: isLoading ? 1 : 0,
+        zIndex: 2,
     };
 
     const imgStyle = {
@@ -56,15 +59,16 @@ function AvatarTransitioned({ msg }) {
                 <div style={spinnerContainerStyle}>
                     <Spin
                         style={{
-                            marginBottom: '5px',
+                            marginBottom: '3px',
                         }}
                     />
                 </div>
             )}
-            <img
+            <Avatar
+                size={32}
+                src={image}
+                icon={<FaRegUserCircle />}
                 className={imgStyle}
-                src={msg.sender_photo || '/static/img/ozodbek.png'}
-                alt="avatar"
             />
         </div>
     );

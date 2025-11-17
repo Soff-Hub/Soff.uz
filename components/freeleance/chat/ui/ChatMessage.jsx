@@ -21,10 +21,18 @@ import dayjs from 'dayjs';
 import React, { useCallback, useMemo } from 'react';
 import { truncateTitle } from '~/shared/utilities/TruncateTitle';
 import AvatarTransitioned from './AvatarTransitioned';
+import { FaRegUserCircle } from 'react-icons/fa';
 
 const { confirm } = Modal;
 
-const ChatMessage = ({ msg, onEdit, onDelete, pushUser }) => {
+const ChatMessage = ({
+    msg,
+    onEdit,
+    onDelete,
+    pushUser,
+    myImg,
+    recipientImg,
+}) => {
     const isMyMessage = msg.is_mine;
     const isMessageLoading =
         msg.status === 'sending' || msg.status === 'updating';
@@ -47,7 +55,7 @@ const ChatMessage = ({ msg, onEdit, onDelete, pushUser }) => {
         });
     }, [onDelete, msg.id]);
 
-    const handleCopy = useCallback((text) => {
+    const handleCopy = useCallback(text => {
         navigator.clipboard
             .writeText(text)
             .then(() => AntMessage.success('Xabar nusxalandi'))
@@ -168,12 +176,10 @@ const ChatMessage = ({ msg, onEdit, onDelete, pushUser }) => {
                 isMyMessage ? styles.myRow : styles.otherRow
             }`}>
             {!isMyMessage && (
-                <img
-                    className={styles.avatar}
-                    src={msg.sender_photo || '/static/img/ozodbek.png'}
-                    alt="avatar"
-                    style={{ cursor: 'pointer' }}
-                    onClick={pushUser}
+                <Avatar
+                    size={32}
+                    src={recipientImg}
+                    icon={<FaRegUserCircle />}
                 />
             )}
 
@@ -260,7 +266,7 @@ const ChatMessage = ({ msg, onEdit, onDelete, pushUser }) => {
                 </div>
             </div>
 
-            {isMyMessage && <AvatarTransitioned msg={msg} />}
+            {isMyMessage && <AvatarTransitioned msg={msg} image={myImg} />}
         </div>
     );
 };

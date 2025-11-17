@@ -26,12 +26,16 @@ import { useQueryClient } from '@tanstack/react-query';
 import CreateOrderModal from '~/shared/components/modals/CreateOrderModal';
 import SafetyAlert from './SafetyAlert';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
+import { FaRegUserCircle } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
+import ChatDateSeperator from './ChatDateSeperator';
 
 const { TextArea } = Input;
 const maxSize = 50 * 1024 * 1024;
 
 const ChatWindow = ({ chatId, goBack }) => {
     const [edit, setEdit] = useState(null);
+    const { user } = useSelector(state => state.profile);
     const [openDownIcon, setOpenDownIcon] = useState(false);
     const messagesContainerRef = useRef(null);
     const scrollPositionRef = useRef(0);
@@ -49,22 +53,21 @@ const ChatWindow = ({ chatId, goBack }) => {
         isFetching,
         isMessageWithFilePending,
     } = useChat(chatId);
+    const recipient = chat?.opponent;
+
+    console.log({ chat, user, messages });
 
     const handleFetchNext = async () => {
         if (!messagesContainerRef.current) return;
 
         const el = messagesContainerRef.current;
 
-        // Store the current scroll position from the bottom
         const scrollFromBottom =
             el.scrollHeight - el.scrollTop - el.clientHeight;
 
         await fetchNextPage();
 
-        // Wait for DOM to update with new messages
-
         if (messagesContainerRef.current) {
-            // Restore scroll position relative to bottom
             const newScrollTop =
                 el.scrollHeight - el.clientHeight - scrollFromBottom;
             el.scrollTop = newScrollTop;
@@ -106,15 +109,8 @@ const ChatWindow = ({ chatId, goBack }) => {
                 )}
                 <Avatar
                     size={50}
-                    src={
-                        <img
-                            src={
-                                chat?.opponent?.photo_url ||
-                                '/static/img/ozodbek.png'
-                            }
-                            alt="user img"
-                        />
-                    }
+                    src={recipient?.photo_url}
+                    icon={<FaRegUserCircle />}
                     onClick={() => router.push(`seller/${chat?.opponent?.id}`)}
                     style={{ cursor: 'pointer' }}
                 />
@@ -146,20 +142,17 @@ const ChatWindow = ({ chatId, goBack }) => {
                     overflowX: 'hidden',
                     position: 'relative',
                 }}
-                className={`${styles.chat_messages}  p-3`}>
+                className={`${styles.chat_messages} p-3`}>
                 <InfiniteScroll
                     dataLength={messages.length}
                     next={handleFetchNext}
                     hasMore={hasNextPage}
-                    loader={
-                        <div className="d-flex justify-content-center align-items-center py-2">
-                            <ClipLoader color="#00A44F" size={20} />
-                        </div>
-                    }
+                    loader={<InfiniteLoaderComponent />}
                     style={{
                         display: 'flex',
                         flexDirection: 'column-reverse',
                         overflow: 'visible',
+                        position: 'relative',
                     }}
                     scrollableTarget="scrollableDiv"
                     inverse={true}>
@@ -175,19 +168,28 @@ const ChatWindow = ({ chatId, goBack }) => {
                                 <Spin />
                             </div>
                         ) : messages?.length ? (
-                            messages.map((msg) => (
-                                <ChatMessage
-                                    pushUser={() =>
-                                        router.push(
-                                            `seller/${chat?.chat?.opponent?.id}`
-                                        )
-                                    }
-                                    key={msg.id}
-                                    msg={msg}
-                                    onEdit={setEdit}
-                                    onDelete={deleteMessage}
-                                />
-                            ))
+                            messages.map(msg =>
+                                msg.type === 'date-separator' ? (
+                                    <ChatDateSeperator
+                                        chatDate={msg}
+                                        key={msg.id}
+                                    />
+                                ) : (
+                                    <ChatMessage
+                                        pushUser={() =>
+                                            router.push(
+                                                `seller/${chat?.chat?.opponent?.id}`
+                                            )
+                                        }
+                                        key={msg.id}
+                                        recipientImg={recipient?.photo_url}
+                                        myImg={user?.image}
+                                        msg={msg}
+                                        onEdit={setEdit}
+                                        onDelete={deleteMessage}
+                                    />
+                                )
+                            )
                         ) : (
                             <Empty
                                 description="Hozircha xabarlar yo'q"
@@ -214,6 +216,12 @@ const ChatWindow = ({ chatId, goBack }) => {
         </div>
     );
 };
+
+const InfiniteLoaderComponent = () => (
+    <div className="d-flex justify-content-center align-items-center py-2">
+        <ClipLoader color="#00A44F" size={20} />
+    </div>
+);
 
 const ChatInputParts = ({
     edit,
@@ -273,7 +281,7 @@ const ChatInputParts = ({
                         startTimeout(scrollToBottom, 100);
                         message.success('Fayl muvaffaqiyatli yuborildi');
                     },
-                    onError: (err) => {
+                    onError: err => {
                         message.error(
                             err?.response?.data?.detail ||
                                 'Faylni yuborishda xatolik yuz berdi'
@@ -327,8 +335,8 @@ const ChatInputParts = ({
 
             onProgress({ percent: progress });
 
-            setFileList((prev) =>
-                prev.map((f) =>
+            setFileList(prev =>
+                prev.map(f =>
                     f.uid === uid
                         ? {
                               ...f,
@@ -346,12 +354,12 @@ const ChatInputParts = ({
         }, 150);
     };
 
-    const handleRemove = (file) => {
-        setFileList((prev) => prev.filter((f) => f.uid !== file.uid));
+    const handleRemove = file => {
+        setFileList(prev => prev.filter(f => f.uid !== file.uid));
         fileMapRef.current.delete(file.uid);
     };
 
-    const handleKeyPress = (e) => {
+    const handleKeyPress = e => {
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
             handleSend();
@@ -393,7 +401,7 @@ const ChatInputParts = ({
                     showPreviewIcon: false,
                     showDownloadIcon: false,
                 }}
-                beforeUpload={(file) => {
+                beforeUpload={file => {
                     if (file.size > maxSize) {
                         message.error('Fayl hajmi 50MB dan oshmasligi kerak');
                         return Upload.LIST_IGNORE;
@@ -437,7 +445,7 @@ const ChatInputParts = ({
                 <TextArea
                     value={newMessage}
                     disabled={isMessageWithFilePending}
-                    onChange={(e) => setNewMessage(e.target.value)}
+                    onChange={e => setNewMessage(e.target.value)}
                     onKeyDown={handleKeyPress}
                     autoSize={{ minRows: 1, maxRows: 6 }}
                     placeholder={

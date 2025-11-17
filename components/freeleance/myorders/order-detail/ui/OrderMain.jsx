@@ -21,7 +21,6 @@ import styles from '../style/style.module.scss';
 import modalStyles from '~/features/user-profile/styles/orderPaymentPrompt.module.scss';
 import Link from 'next/link';
 import dayjs from 'dayjs';
-import 'dayjs/locale/uz-latn';
 import RequirementModal from './modals/RequirementModal';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import ServiceCheckout from '~/components/freeleance/services/service-deatail/ui/auth/serviceCheckout';
@@ -36,11 +35,7 @@ import { useDispatch } from 'react-redux';
 import { setShowSearch } from '~/store/fast-dowload/slice';
 import { IoCheckboxOutline } from 'react-icons/io5';
 import TelegramNotification from '~/shared/components/telegram-notlification';
-import duration from 'dayjs/plugin/duration';
 import useGetCustomBalance from '~/components/freeleance/myorders/myorder/api/useGetCustomBalance';
-
-dayjs.locale('uz-latn');
-dayjs.extend(duration);
 
 // TimerComponent to show time remaining until deadline
 const TimerComponent = ({ deadlineDate }) => {

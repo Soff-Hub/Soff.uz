@@ -5,6 +5,7 @@ import useDeleteMessage from './useDeleteMessage';
 import useSendMessage from './useSendMessage';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
 import { message } from 'antd';
+import dayjs from 'dayjs';
 // import { sleep } from '~/shared/utilities/sleep';
 
 const useChat = chatId => {
@@ -35,6 +36,26 @@ const useChat = chatId => {
             allMsgs = allMsgs.sort(
                 (a, b) => new Date(a.created_at) - new Date(b.created_at)
             );
+
+            // batch date separators
+            allMsgs = allMsgs.reduce((acc, msg, index) => {
+                const msgDate = new Date(msg.created_at).toDateString();
+                const prevMsgDate =
+                    index > 0
+                        ? new Date(allMsgs[index - 1].created_at).toDateString()
+                        : null;
+                if (msgDate !== prevMsgDate) {
+                    acc.push({
+                        id: `date-separator-${msgDate}-${index}`,
+                        type: 'date-separator',
+                        date: dayjs(msgDate).format('MMMM D, YYYY'),
+                    });
+                }
+                acc.push(msg);
+                return acc;
+            }, []);
+
+            // remove duplicates
 
             const uniqueMsgs = Array.from(
                 new Map(allMsgs.map(m => [m.id, m])).values()
