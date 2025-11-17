@@ -4,7 +4,7 @@ import React, {
     forwardRef,
     useRef,
 } from 'react';
-import { Input, Modal, Tabs, Alert } from 'antd';
+import { Input, Modal, Tabs, Alert, Button } from 'antd';
 import { BeatLoader } from 'react-spinners';
 import { useRouter } from 'next/router';
 import useCreateOrder from './api/createOrder';
@@ -17,6 +17,8 @@ import { FaRegCalendarDays } from 'react-icons/fa6';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import { IoCard } from 'react-icons/io5';
 import { FaWallet } from 'react-icons/fa';
+import { SecurePaymentAlert } from '~/components/partials/account/CreditCard2';
+import { TbReload } from 'react-icons/tb';
 
 const ServiceCheckout = ({
     document,
@@ -77,7 +79,7 @@ const ServiceCheckout = ({
 
     // 📌 Oddiy karta raqami orqali to'lov
     async function handleCardPayment(e) {
-        e.preventDefault();
+        e?.preventDefault();
 
         const payload = {
             service_id: document,
@@ -164,7 +166,6 @@ const ServiceCheckout = ({
     const isInputsDisabled = balanceMode ? isBalanceSufficient : false;
     const isInputsRequired = balanceMode ? !isBalanceSufficient : true;
     const isBalanceMode = isBalanceSufficient && balanceMode;
-    console.log({ balance, order, isBalanceSufficient });
 
     const items = [
         {
@@ -276,6 +277,12 @@ const ServiceCheckout = ({
                             </div>
                         </form>
                     </div>
+                    <SecurePaymentAlert
+                        bordered={false}
+                        style={{
+                            width: '100%',
+                        }}
+                    />
                     <VerificationCodeModal
                         ref={verificationModalRef}
                         isVerificationModalOpen={isVerificationModalOpen}
@@ -287,6 +294,7 @@ const ServiceCheckout = ({
                             setIsVerificationModalOpen(false)
                         }
                         handleCancelVerification={handleCancelVerification}
+                        handleCardPayment={handleCardPayment}
                     />
                 </>
             ),
@@ -305,28 +313,35 @@ const ServiceCheckout = ({
                         balance={balance}
                         isVisible={balanceMode && !isBalanceSufficient}
                     />
-                    <div style={{ marginInline: '10px' }}>
-                        <div className="px-4 rounded click-b">
+                    <div
+                        style={{
+                            margin: '0 auto',
+                        }}>
+                        <div className="px-4 rounded">
                             <form
                                 onSubmit={handleClickPayment}
-                                className="py-3 d-flex row">
-                                <div className="col-12 p-0 px-4 my-3">
-                                    <button
-                                        type="submit"
-                                        className="w-100 ps-btn"
-                                        disabled={isOrderCreatePending}
-                                        style={{
-                                            color: '#fff',
-                                            marginTop: '10px',
-                                        }}>
-                                        {!isOrderCreatePending ? (
-                                            'Davom etish'
-                                        ) : (
-                                            <BeatLoader color="#fff" />
-                                        )}
-                                    </button>
-                                </div>
+                                className="pt-3 pb-3 d-flex">
+                                <button
+                                    type="submit"
+                                    className="w-100 ps-btn"
+                                    disabled={isOrderCreatePending}
+                                    style={{
+                                        color: '#fff',
+                                        marginTop: '10px',
+                                    }}>
+                                    {!isOrderCreatePending ? (
+                                        'Davom etish'
+                                    ) : (
+                                        <BeatLoader color="#fff" />
+                                    )}
+                                </button>
                             </form>
+                            <SecurePaymentAlert
+                                bordered={false}
+                                style={{
+                                    width: '100%',
+                                }}
+                            />
                         </div>
                     </div>
                 </>
@@ -382,25 +397,6 @@ const ServiceCheckout = ({
                         </h4>
                     </div>
                 </div>
-                <div
-                    style={{
-                        marginTop: '10px',
-                        borderTop: '1px solid #dee2e6',
-                    }}></div>
-                <div
-                    className="d-flex justify-content-between align-items-center"
-                    style={{ marginTop: '10px' }}>
-                    <h4 className="fw-bold mb-0">Qoldiq to'lov</h4>
-                    <div className="text-end">
-                        <h3
-                            className="text-primary mb-0 fw-bold"
-                            style={{
-                                fontSize: '20px',
-                            }}>
-                            0 so'm
-                        </h3>
-                    </div>
-                </div>
             </div>
 
             <button
@@ -418,6 +414,12 @@ const ServiceCheckout = ({
                     <BeatLoader color="#fff" />
                 )}
             </button>
+            <SecurePaymentAlert
+                bordered={false}
+                style={{
+                    marginTop: '10px',
+                }}
+            />
         </div>
     ) : (
         <Tabs
@@ -566,11 +568,12 @@ const VerificationCodeModal = forwardRef(
             onClose,
             closeVerificationModal,
             handleCancelVerification,
+            handleCardPayment,
         } = props,
         ref
     ) => {
         const queryClient = useQueryClient();
-        const { display, reset } = useCountdown(120);
+        const { display, left, reset } = useCountdown(120);
         const {
             mutateAsync: mutateVerifyCode,
             isPending: isVerifyCodePending,
@@ -612,6 +615,11 @@ const VerificationCodeModal = forwardRef(
                 }
             );
         }
+
+        const handleResendCode = async () => {
+            await handleCardPayment();
+            reset();
+        };
 
         useImperativeHandle(
             ref,
@@ -660,7 +668,21 @@ const VerificationCodeModal = forwardRef(
                         maxLength={6}
                         className="form-control text-center rounded-3 fs-3"
                     />
-                    <strong className="text-danger">{display}</strong>
+                    <strong className="text-danger">
+                        {left ? (
+                            display
+                        ) : (
+                            <Button
+                                icon={<TbReload />}
+                                style={{
+                                    padding: '0px 2px',
+                                }}
+                                type="link"
+                                onClick={handleResendCode}>
+                                Kodni qayta yuborish
+                            </Button>
+                        )}
+                    </strong>
                     <p className="text-danger">{errorMessage}</p>
                 </>
             </Modal>

@@ -14,7 +14,6 @@ import SerachSide from '~/components/elements/search-page-details/search-page-si
 import { useFGet } from '~/shared/hooks/useFApi';
 import { useQuery } from '@tanstack/react-query';
 import { api } from '~/repositories/api';
-import { baseURL } from '~/repositories/Repository';
 import { baseUrlUseApi } from '~/repositories/useApi';
 import { getOrCreateDeviceId } from '~/shared/utilities/device-id';
 
@@ -59,26 +58,22 @@ const Search_Results = ({
         },
     });
 
-    const handleCreateOrder = () => {
-        if (isLoggedIn) {
-            router.push('/order/create');
-        } else {
-            router.push(
-                '/auth/login?returnUrl=' + encodeURIComponent('/order/create')
-            );
-        }
-    };
+    const dynamicCreateBtnLink = isLoggedIn
+        ? '/order/create'
+        : '/auth/login?returnUrl=' + encodeURIComponent('/order/create');
 
     const createBtn = () => (
-        <>
+        <div className="w-100">
             {isDesktop && (
-                <span
-                    onClick={handleCreateOrder}
-                    className="Search_Results_not_found_btn w-100 text-center py-3">
-                    Buyurtma yaratish
-                </span>
+                <Link href={dynamicCreateBtnLink}>
+                    <a>
+                        <div className="Search_Results_not_found_btn w-100 text-center py-3">
+                            Buyurtma yaratish
+                        </div>
+                    </a>
+                </Link>
             )}
-        </>
+        </div>
     );
 
     const handleSetRouterQuery = currentTab => {
