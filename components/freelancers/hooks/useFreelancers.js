@@ -10,6 +10,16 @@ function useFreelancers() {
         data: directions,
         isFetching: isDirectionsFetching,
     } = useGetDirectionsQuery();
+
+    const directionsMap = useMemo(() => {
+        if (!directions) return {};
+        const map = {};
+        directions.forEach(dir => {
+            map[dir.value] = dir;
+        });
+        return map;
+    }, [directions]);
+
     const selectedDirection = useMemo(
         () => router.query.direction || undefined,
         [router.query.direction]
@@ -121,7 +131,13 @@ function useFreelancers() {
 
     // Direction (radio)
     const handleDirectionChange = value => {
-        updateQuery({ direction: value });
+        updateQuery({
+            direction: value,
+            directionValue: directionsMap[value]
+                ? directionsMap[value].label
+                : undefined,
+            position: undefined,
+        });
     };
 
     return {

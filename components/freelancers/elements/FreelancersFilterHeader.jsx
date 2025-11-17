@@ -23,7 +23,7 @@ function FreelancersFilterHeader({ toggleCollapsed, collapsed }) {
             pathname: router.pathname,
             query: {
                 ...router.query,
-                sort_by: value,
+                sorted_by: value,
             },
         });
     };
@@ -42,7 +42,7 @@ function FreelancersFilterHeader({ toggleCollapsed, collapsed }) {
                 Filterlar
             </Button>
             <Select
-                value={router.query.sort_by || 'rating'}
+                value={router.query.sorted_by || 'rating'}
                 onChange={handleSortChange}
                 options={options}
                 style={{ width: 150 }}

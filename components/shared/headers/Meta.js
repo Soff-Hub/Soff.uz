@@ -10,15 +10,16 @@ const Meta = ({
     description,
     keywords,
     author = 'Soff.uz',
+    canonicalUrl,
     children,
 }) => {
     const router = useRouter();
-    const removeHTMLTags = (html) => {
+    const removeHTMLTags = html => {
         return html.replace(/<[^>]+>/g, '');
     };
 
     // Build canonical URL (always HTTPS + no query params)
-    const canonicalUrl = `https://soff.uz${router.asPath.split('?')[0]}`;
+    const staticCanonicalUrl = `https://soff.uz${router.asPath.split('?')[0]}`;
 
     return (
         <Head>
@@ -32,11 +33,11 @@ const Meta = ({
             <meta
                 name="keywords"
                 content={
-                    keywords ? keywords.map((e) => e?.name).join(', ') : title
+                    keywords ? keywords.map(e => e?.name).join(', ') : title
                 }
             />
 
-            <link rel="canonical" href={canonicalUrl} />
+            <link rel="canonical" href={canonicalUrl || staticCanonicalUrl} />
 
             <meta property="og:locale" content="uz_UZ" />
             <meta property="og:type" content={type} />
@@ -52,7 +53,7 @@ const Meta = ({
             <meta
                 property="og:keywords"
                 content={
-                    keywords ? keywords.map((e) => e?.name).join(', ') : title
+                    keywords ? keywords.map(e => e?.name).join(', ') : title
                 }
             />
 
@@ -73,7 +74,7 @@ const Meta = ({
             <meta
                 property="twitter:keywords"
                 content={
-                    keywords ? keywords.map((e) => e?.name).join(', ') : title
+                    keywords ? keywords.map(e => e?.name).join(', ') : title
                 }
             />
             {children}

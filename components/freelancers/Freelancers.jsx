@@ -16,7 +16,7 @@ const FreelancerSearchInput = dynamic(
 
 function Freelancers({ data }) {
     const [collapsed, setCollapsed] = useState(false);
-    const { isMobile, isTablet, isDesktop } = useResponsive();
+    const { isDesktop } = useResponsive();
 
     const toggleCollapsed = () => {
         setCollapsed(!collapsed);
