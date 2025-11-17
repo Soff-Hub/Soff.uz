@@ -80,7 +80,7 @@ function OrderPaymentPrompt({ isOpen, onClose, order }) {
                     <div className={styles.orderPayment}>
                         <div className={styles.orderPaymentHeader}>
                             {/* NOTE: Balance button temporarily commented */}
-                            {/* {balanceDisabled ? (
+                            {balanceDisabled ? (
                                 <Tooltip title="To'lov uchun balansingizdan foydalaning">
                                     <Button
                                         onClick={() => setMode(pre => !pre)}
@@ -96,7 +96,7 @@ function OrderPaymentPrompt({ isOpen, onClose, order }) {
                                         Balance - {leftBalance} so'm
                                     </Button>
                                 </Tooltip>
-                            ) : null} */}
+                            ) : null}
                             <Button
                                 type="text"
                                 className={styles.backButton}

@@ -240,7 +240,7 @@ function ServiceOrderModal({
                         <div className={styles.orderPayment}>
                             <div className={styles.orderPaymentHeader}>
                                 {/* NOTE: Balance button temporarily commented */}
-                                {/* {balanceDisabled ? (
+                                {balanceDisabled ? (
                                     <Tooltip title="To'lov uchun balansingizdan foydalaning">
                                         <Button
                                             onClick={() => setMode(pre => !pre)}
@@ -257,7 +257,7 @@ function ServiceOrderModal({
                                             Balance - {leftBalance} so'm
                                         </Button>
                                     </Tooltip>
-                                ) : null} */}
+                                ) : null}
 
                                 <Button
                                     type="text"

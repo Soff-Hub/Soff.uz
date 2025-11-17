@@ -1,11 +1,10 @@
 import React, {
-    useEffect,
     useState,
     useImperativeHandle,
     forwardRef,
     useRef,
 } from 'react';
-import { Input, Modal, Tabs, Alert, Card } from 'antd';
+import { Input, Modal, Tabs, Alert } from 'antd';
 import { BeatLoader } from 'react-spinners';
 import { useRouter } from 'next/router';
 import useCreateOrder from './api/createOrder';
@@ -13,26 +12,23 @@ import { useVerifyCode } from './api/verifyCode';
 import { useCountdown } from '~/shared/hooks/useCountDown';
 import { useQueryClient } from '@tanstack/react-query';
 import { message as AlertMessage } from 'antd';
-import styles from '../styles/service-checkout.module.scss';
 import { FaRegCreditCard } from 'react-icons/fa6';
 import { FaRegCalendarDays } from 'react-icons/fa6';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import { IoCard } from 'react-icons/io5';
 import { FaWallet } from 'react-icons/fa';
 
-const balanceMode = false;
 const ServiceCheckout = ({
     document,
     order_id,
     order,
-    // balanceMode = false,
+    balanceMode = false,
     balance,
     files,
     description,
     onClose,
     onSuccess,
 }) => {
-    const [message, setMessage] = useState(false);
     const verificationModalRef = useRef();
     const [isVerificationModalOpen, setIsVerificationModalOpen] = useState(
         false
@@ -58,7 +54,6 @@ const ServiceCheckout = ({
 
     async function handleClickPayment(e) {
         e.preventDefault();
-        setMessage(true);
 
         await createOrder(
             {
@@ -71,14 +66,10 @@ const ServiceCheckout = ({
             {
                 onSuccess: data => {
                     if (onClose) onClose();
-                    // window.open(data?.url, '_blank');
                     router.push(data.url);
                 },
                 onError: err => {
                     AlertMessage.error(err.response.data.detail);
-                },
-                onSettled: () => {
-                    setMessage(false);
                 },
             }
         );
@@ -87,7 +78,6 @@ const ServiceCheckout = ({
     // 📌 Oddiy karta raqami orqali to'lov
     async function handleCardPayment(e) {
         e.preventDefault();
-        setMessage(true);
 
         const payload = {
             service_id: document,
@@ -127,7 +117,6 @@ const ServiceCheckout = ({
             },
             onError: err => {
                 console.error('❌ Click payment error:', err);
-                setMessage(false);
                 setResData({
                     detail: err?.response?.data?.detail || "Noma'lum xato",
                 });
@@ -320,26 +309,22 @@ const ServiceCheckout = ({
                         <div className="px-4 rounded click-b">
                             <form
                                 onSubmit={handleClickPayment}
-                                className="pt-3 pb-3 d-flex row">
+                                className="py-3 d-flex row">
                                 <div className="col-12 p-0 px-4 my-3">
-                                    {!message ? (
-                                        <button
-                                            type="submit"
-                                            className="w-100 ps-btn"
-                                            disabled={isOrderCreatePending}
-                                            style={{
-                                                color: '#fff',
-                                                marginTop: '10px',
-                                            }}>
-                                            Davom etish
-                                        </button>
-                                    ) : (
-                                        <button
-                                            className="ps-btn w-100"
-                                            disabled>
+                                    <button
+                                        type="submit"
+                                        className="w-100 ps-btn"
+                                        disabled={isOrderCreatePending}
+                                        style={{
+                                            color: '#fff',
+                                            marginTop: '10px',
+                                        }}>
+                                        {!isOrderCreatePending ? (
+                                            'Davom etish'
+                                        ) : (
                                             <BeatLoader color="#fff" />
-                                        </button>
-                                    )}
+                                        )}
+                                    </button>
                                 </div>
                             </form>
                         </div>
@@ -397,7 +382,7 @@ const ServiceCheckout = ({
                         </h4>
                     </div>
                 </div>
-                {/* <div
+                <div
                     style={{
                         marginTop: '10px',
                         borderTop: '1px solid #dee2e6',
@@ -415,29 +400,24 @@ const ServiceCheckout = ({
                             0 so'm
                         </h3>
                     </div>
-                </div> */}
+                </div>
             </div>
 
-            {!message ? (
-                <button
-                    type="submit"
-                    className="w-100 ps-btn"
-                    disabled={isOrderCreatePending}
-                    onClick={handleCardPayment}
-                    style={{
-                        color: '#fff',
-                        marginTop: '10px',
-                    }}>
-                    To'lov qilish
-                </button>
-            ) : (
-                <button
-                    className="ps-btn w-100"
-                    disabled={isOrderCreatePending}
-                    type="button">
+            <button
+                type="submit"
+                className="w-100 ps-btn"
+                disabled={isOrderCreatePending}
+                onClick={handleCardPayment}
+                style={{
+                    color: '#fff',
+                    marginTop: '10px',
+                }}>
+                {!isOrderCreatePending ? (
+                    "To'lov qilish"
+                ) : (
                     <BeatLoader color="#fff" />
-                </button>
-            )}
+                )}
+            </button>
         </div>
     ) : (
         <Tabs

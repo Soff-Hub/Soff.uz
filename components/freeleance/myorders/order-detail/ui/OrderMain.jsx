@@ -684,7 +684,7 @@ const OrderMain = ({ order, handleOrderUpdate }) => {
                         <div className={modalStyles.orderPayment}>
                             <div className={modalStyles.orderPaymentHeader}>
                                 {/* NOTE: Balance button temporarily commented */}
-                                {/* {balanceDisabled ? (
+                                {balanceDisabled ? (
                                     <Tooltip title="To'lov uchun balansingizdan foydalaning">
                                         <Button
                                             onClick={() => setMode(pre => !pre)}
@@ -701,7 +701,7 @@ const OrderMain = ({ order, handleOrderUpdate }) => {
                                             Balance - {leftBalance} so'm
                                         </Button>
                                     </Tooltip>
-                                ) : null} */}
+                                ) : null}
 
                                 <Button
                                     type="text"
