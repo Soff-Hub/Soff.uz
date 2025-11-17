@@ -8,8 +8,8 @@ import useFreelancers from '../hooks/useFreelancers';
 
 function FreelancersFilterMenu({ collapsed }) {
     const {
-        directions,
-        positions,
+        directionsGroup,
+        positionsGroup,
         handleClear,
         handlePositionsChange,
         handleDirectionChange,
@@ -25,8 +25,13 @@ function FreelancersFilterMenu({ collapsed }) {
             {(selectedPositions?.length > 0 || selectedDirection) && (
                 <div className={styles.clearButton}>
                     <Button
-                        style={{ padding: 0, marginBottom: '10px' }}
-                        type="link"
+                        style={{
+                            marginRight: 'auto',
+                            marginBottom: '15px',
+                            width: '100%',
+                            border: '1px solid red',
+                        }}
+                        type="text"
                         danger
                         onClick={handleClear}
                         icon={<MdOutlineClear />}>
@@ -48,11 +53,7 @@ function FreelancersFilterMenu({ collapsed }) {
                         flexDirection: 'column',
                         gap: '6px',
                     }}>
-                    {directions?.map(dir => (
-                        <Radio key={dir.value} value={dir.value}>
-                            {dir.label}
-                        </Radio>
-                    ))}
+                    {directionsGroup}
                 </Radio.Group>
             </div>
 
@@ -69,11 +70,7 @@ function FreelancersFilterMenu({ collapsed }) {
                         flexDirection: 'column',
                         gap: '6px',
                     }}>
-                    {positions?.map(pos => (
-                        <Checkbox key={pos.title} value={pos.title}>
-                            {pos.title}
-                        </Checkbox>
-                    ))}
+                    {positionsGroup}
                 </Checkbox.Group>
             </div>
         </div>
