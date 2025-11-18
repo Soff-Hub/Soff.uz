@@ -1,7 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import styles from './style.module.scss';
 import menuItemStyle from './menuItem.module.scss';
-import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useFGet } from '~/shared/hooks/useFApi';
 import { NAVBAR_MENU_CATEGORIES } from '~/shared/api/end-points';
@@ -11,6 +10,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import SwiperController from './swiperController';
 import { useSelector } from 'react-redux';
+import { FiExternalLink } from 'react-icons/fi';
 
 const NavbarMenu = () => {
     const { data, isLoading } = useFGet('navbar-items', NAVBAR_MENU_CATEGORIES);
@@ -149,7 +149,6 @@ const templateLink = {
 };
 
 const MenuItem = ({ products, templates, label }) => {
-    const router = useRouter();
     const { directions } = useSelector(state => state.profile);
 
     const option = directions.reduce((acc, item) => {
@@ -161,12 +160,18 @@ const MenuItem = ({ products, templates, label }) => {
     if (templates?.length) {
         readyTemplates = (
             <div className="templates">
-                <h3
-                    style={{ cursor: 'pointer' }}
-                    onClick={() => router.push(`/${templateLink[label]}/all`)}
-                    className="section-label">
-                    Tayyor mahsulotlar
-                </h3>
+                <Link href={`/${templateLink[label]}/all`}>
+                    <a className="section-label">
+                        Tayyor mahsulotlar{' '}
+                        <FiExternalLink
+                            fontSize={14}
+                            style={{
+                                marginBottom: '3px',
+                            }}
+                        />
+                    </a>
+                </Link>
+
                 <ul className="details-list">
                     {templates.map(item => (
                         <Link
@@ -184,12 +189,18 @@ const MenuItem = ({ products, templates, label }) => {
     if (products?.length) {
         readyProducts = (
             <div className="orders">
-                <h3
-                    style={{ cursor: 'pointer' }}
-                    onClick={() => router.push(`/orders?direction=${label}`)}
-                    className="section-label">
-                    Buyurtma berish
-                </h3>
+                <Link href={`/orders?direction=${label}`}>
+                    <a className="section-label">
+                        Buyurtma berish{' '}
+                        <FiExternalLink
+                            fontSize={14}
+                            style={{
+                                marginBottom: '3px',
+                            }}
+                        />
+                    </a>
+                </Link>
+
                 <ul className="details-list">
                     {products.map(item => (
                         <Link

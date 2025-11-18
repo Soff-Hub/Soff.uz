@@ -20,7 +20,7 @@ import useResponsive from '~/shared/utilities/useResponsive';
 import { useRouter } from 'next/router';
 import OrderPaymentPrompt from './OrderPaymentPrompt';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
-import { FaRegCopy } from 'react-icons/fa';
+import { FaLink } from 'react-icons/fa6';
 
 dayjs.extend(relativeTime);
 dayjs.locale('uz-latn');
@@ -284,12 +284,17 @@ const UserShortInfo = ({ seller }) => {
                 </h4>
                 <Button
                     type="primary"
+                    shape="round"
                     iconPosition="end"
                     variant="solid"
-                    icon={<FaRegCopy />}
-                    onClick={handleCopyLink}>
-                    Pro'fil linkini nusxalash
-                </Button>
+                    style={{
+                        padding: '6px',
+                        position: 'absolute',
+                        top: '10px',
+                        right: '10px',
+                    }}
+                    icon={<FaLink fontSize={18} />}
+                    onClick={handleCopyLink}></Button>
             </div>
 
             <div className={cn(marginClass, 'flex', 'flex-col', 'gap-4')}>

@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import parse from 'html-react-parser';
 import { useQuery } from '@tanstack/react-query';
+import SidebarLayout from '~/widgets/sidebar/SidebarLayout';
 
 export default function NotificationList() {
     const { user } = useSelector(state => state.auth);
@@ -56,12 +57,14 @@ export default function NotificationList() {
     }
 
     return (
-        <div className="ps-section--shopping ps-whishlist">
-            <div className="container">
-                <div className="ps-section__header pb-4">
-                    <h1>Bildirishnomalar</h1>
-                </div>
-                <div className="ps-section__content">{notificationContent}</div>
+        <div className=" ps-whishlist">
+            <div className="container mb-5">
+                <h1 className="page-title mt-5">Bildirishnomalar</h1>
+                <SidebarLayout>
+                    <div className="ps-section__content">
+                        {notificationContent}
+                    </div>
+                </SidebarLayout>
             </div>
         </div>
     );
