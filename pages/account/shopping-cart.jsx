@@ -9,6 +9,7 @@ import Meta from '~/components/shared/headers/Meta';
 import { FaArrowLeft, FaBoxOpen } from 'react-icons/fa6';
 import { Button } from 'antd';
 import { useRouter } from 'next/router';
+import SidebarLayout from '~/widgets/sidebar/SidebarLayout';
 
 const breadCrumb = [
     {
@@ -21,9 +22,9 @@ const breadCrumb = [
 ];
 
 const ShoppingCartScreen = () => {
-    const state = useSelector((state) => state.auth.user);
-    const cartItems = useSelector((state) => state.ecomerce.cartDataItems);
-    const router = useRouter()
+    const state = useSelector(state => state.auth.user);
+    const cartItems = useSelector(state => state.ecomerce.cartDataItems);
+    const router = useRouter();
 
     let contentView;
     if (cartItems) {
@@ -76,38 +77,40 @@ const ShoppingCartScreen = () => {
         } else {
             contentView = (
                 <>
-                    <div className="ps-section__content">
-                        <div style={{ height: "80vh" }} className='d-flex justify-content-center flex-column align-items-center'>
+                    <div className="ps-section__content w-100">
+                        <div
+                            style={{ height: '50vh' }}
+                            className="d-flex justify-content-center flex-column align-items-center">
                             <div
                                 style={{
-                                    borderRadius: "50%",
-                                    background: "#7575751c",
-                                    width: "130px",
-                                    height: "130px",
-                                    display: "flex",
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                    marginBottom: "20px",
-                                }}
-                            >
+                                    borderRadius: '50%',
+                                    background: '#7575751c',
+                                    width: '130px',
+                                    height: '130px',
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    marginBottom: '20px',
+                                }}>
                                 <FaBoxOpen
                                     style={{
-                                        color: "#00a44f",
-                                        fontSize: "70px",
+                                        color: '#00a44f',
+                                        fontSize: '70px',
                                     }}
                                 />
                             </div>
-                            <h3 style={{fontSize: "30px"}} className='font-bold mb-2 text-gray-800'>
+                            <h3
+                                style={{ fontSize: '30px' }}
+                                className="font-bold mb-2 text-gray-800">
                                 Savat bo'sh
                             </h3>
-                            <p className='mb-4 text-center text-muted'>
+                            <p className="mb-4 text-center text-muted">
                                 To'lov qilish uchun biror mahsulot qo'shing.
                             </p>
                             <Button
-                                type='primary'
-                                size='large'
-                                onClick={() => router.push('/')}
-                            >
+                                type="primary"
+                                size="large"
+                                onClick={() => router.push('/')}>
                                 <FaArrowLeft />
                                 Xarid qilishni boshlash
                             </Button>
@@ -129,14 +132,10 @@ const ShoppingCartScreen = () => {
                         }
                     />
                     <BreadCrumb breacrumb={breadCrumb} />
-                    <div className="ps-section--shopping ps-shopping-cart">
-                        <div className="container">
-                            {cartItems?.length > 0 &&
-                                <div className="ps-section__header">
-                                    <h1>Savat</h1>
-                                </div>
-                            }
-                            {contentView}
+                    <div className="ps-shopping-cart">
+                        <div className="container my-5">
+                            <h1 className="page-title">Savat</h1>
+                            <SidebarLayout>{contentView}</SidebarLayout>
                         </div>
                     </div>
                 </div>
@@ -145,4 +144,4 @@ const ShoppingCartScreen = () => {
     );
 };
 
-export default connect((state) => state)(ShoppingCartScreen);
+export default connect(state => state)(ShoppingCartScreen);

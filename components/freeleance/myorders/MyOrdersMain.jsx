@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
+import { Button } from 'antd';
 import useGetCustomBalance from './myorder/api/useGetCustomBalance';
 import TelegramNotification from '~/shared/components/telegram-notlification';
 import MyOrderTabs from './myorder/MyOrderTabs';
-import { Button } from 'antd';
 import BreadCrumb from '~/components/elements/BreadCrumb';
 import BalanceWithDrawModal from '~/shared/components/modals/balance-with-draw-modal';
 import { useSafeBack } from '~/shared/hooks/useSafeBack';
 import { FaMoneyCheck } from 'react-icons/fa';
+import SidebarLayout from '~/widgets/sidebar/SidebarLayout';
 
 const MyOrdersMain = () => {
     const { data } = useGetCustomBalance();
@@ -50,7 +51,9 @@ const MyOrdersMain = () => {
                             so'm
                         </Button>
                     </div>
-                    <MyOrderTabs />
+                    <SidebarLayout>
+                        <MyOrderTabs />
+                    </SidebarLayout>
 
                     <BalanceWithDrawModal
                         open={open}

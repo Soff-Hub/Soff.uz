@@ -12,6 +12,7 @@ import { useQuery } from '@tanstack/react-query';
 import { cn } from '~/shared/utilities/cn';
 import dayjs from 'dayjs';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
+import SidebarLayout from '~/widgets/sidebar/SidebarLayout';
 
 const { Option } = Select;
 
@@ -49,7 +50,7 @@ export default function PurchasedProducts() {
         }, 1000);
     }, []);
 
-    const handleDownloadThroughTelegram = async (getId) => {
+    const handleDownloadThroughTelegram = async getId => {
         try {
             const fileSourceValue = await api.get(
                 `seller/return-telegram-link/${getId}/`
@@ -114,7 +115,7 @@ export default function PurchasedProducts() {
                 title: 'Rasm',
                 dataIndex: 'document',
                 key: 'image',
-                render: (document) =>
+                render: document =>
                     document?.poster_url ? (
                         <img
                             src={document?.poster_url}
@@ -130,7 +131,7 @@ export default function PurchasedProducts() {
                 dataIndex: 'document',
                 key: 'name',
 
-                render: (document) => (
+                render: document => (
                     <Link
                         href={`/product/${document?.slug || ''}`}
                         classdocument="cursor-pointer">
@@ -142,19 +143,19 @@ export default function PurchasedProducts() {
                 title: 'Kategoriyasi',
                 dataIndex: 'document',
                 key: 'category',
-                render: (document) => document?.category?.name || '-',
+                render: document => document?.category?.name || '-',
             },
             {
                 title: 'Narxi',
                 dataIndex: 'price',
                 key: 'price',
-                render: (p) => <span>{formatCurrencyWithSpace(p)} so'm</span>,
+                render: p => <span>{formatCurrencyWithSpace(p)} so'm</span>,
             },
             {
                 title: 'Xarid sanasi',
                 dataIndex: 'created_at',
                 key: 'created_at',
-                render: (date) => (
+                render: date => (
                     <span>{dayjs(date).format('YYYY-MM-DD HH:mm')}</span>
                 ),
             },
@@ -192,65 +193,63 @@ export default function PurchasedProducts() {
     return (
         <Card className="p-4 mb-3">
             <div className="container mt-4">
-                <div className="d-flex align-items-center gap-2 fs-4 my-3">
-                    <ShoppingCartOutlined />
-                    <span className="fw-bold">Xarid Qilingan Materiallar</span>
-                </div>
+                <h1 className="page-title">Xarid Qilingan Materiallar</h1>
+                <SidebarLayout>
+                    {/* Search va Filter */}
+                    <div className="row g-3 align-items-center">
+                        <div
+                            className="col-12 col-sm-6"
+                            style={{
+                                height: '32px',
+                                paddingLeft: '5px',
+                            }}>
+                            <Input.Search
+                                placeholder="Qidiruv"
+                                value={search}
+                                onChange={e => setSearch(e.target.value)}
+                            />
+                        </div>
+                        <div className="col-12 col-sm-6">
+                            <Select
+                                value={category}
+                                className="w-100"
+                                onChange={value => setCategory(value)}
+                                allowClear>
+                                {CATEGORY_LIST.map(item => (
+                                    <Option key={item.value} value={item.value}>
+                                        {item.title}
+                                    </Option>
+                                ))}
+                            </Select>
+                        </div>
+                    </div>
 
-                {/* Search va Filter */}
-                <div className="row g-3 align-items-center">
-                    <div
-                        className="col-12 col-sm-6"
-                        style={{
-                            height: '32px',
-                            paddingLeft: '5px',
-                        }}>
-                        <Input.Search
-                            placeholder="Qidiruv"
-                            value={search}
-                            onChange={(e) => setSearch(e.target.value)}
+                    {/* Purchased Products */}
+                    <PurchasedProductsLayout
+                        products={productsData?.results}
+                        columns={columns}
+                        loadingTable={loadingTable}
+                        handleDownload={handleDownload}
+                        handleDownloadThroughTelegram={
+                            handleDownloadThroughTelegram
+                        }
+                        loadingId={loadingId}
+                    />
+                    {/* Pagination */}
+                    <div className="d-flex justify-content-center mt-2">
+                        <Pagination
+                            current={currPage}
+                            total={productsData?.count || 0}
+                            pageSize={pageSize}
+                            onChange={(page, size) => {
+                                setCurrPage(page);
+                                setPageSize(size);
+                            }}
+                            showSizeChanger
+                            pageSizeOptions={['5', '10', '20']}
                         />
                     </div>
-                    <div className="col-12 col-sm-6">
-                        <Select
-                            value={category}
-                            className="w-100"
-                            onChange={(value) => setCategory(value)}
-                            allowClear>
-                            {CATEGORY_LIST.map((item) => (
-                                <Option key={item.value} value={item.value}>
-                                    {item.title}
-                                </Option>
-                            ))}
-                        </Select>
-                    </div>
-                </div>
-
-                {/* Purchased Products */}
-                <PurchasedProductsLayout
-                    products={productsData?.results}
-                    columns={columns}
-                    loadingTable={loadingTable}
-                    handleDownload={handleDownload}
-                    handleDownloadThroughTelegram={
-                        handleDownloadThroughTelegram
-                    }
-                    loadingId={loadingId}
-                />
-                {/* Pagination */}
-                <div className="d-flex justify-content-center mt-2">
-                    <Pagination
-                        current={currPage}
-                        total={productsData?.count || 0}
-                        pageSize={pageSize}
-                        onChange={(page, size) => {
-                            setCurrPage(page);
-                            setPageSize(size);
-                        }}
-                        showSizeChanger
-                        pageSizeOptions={['5', '10', '20']}
-                    />
-                </div>
+                </SidebarLayout>
             </div>
         </Card>
     );
@@ -297,6 +296,7 @@ const PurchasedProductsLayout = ({
                     fontWeight: '600',
                     color: '#374151',
                     marginBottom: '8px',
+                    textAlign: 'center',
                 }}>
                 Xarid qilingan mahsulotlar topilmadi
             </h3>
@@ -357,7 +357,7 @@ const PurchasedProductsLayout = ({
                     flexDirection: 'column',
                     gap: '16px',
                 }}>
-                {products.map((item) => (
+                {products.map(item => (
                     <div
                         key={item.id}
                         className={cn(

@@ -7,13 +7,14 @@ import useWishlist from '~/shared/hooks/useWishlist';
 import useCart from '~/shared/hooks/useCart';
 import { audioDownloaderSale } from '~/shared/utilities/common-helpers';
 import { addPeriodToThousands } from './price-formatter';
+import SidebarLayout from '~/widgets/sidebar/SidebarLayout';
 
 const Wishlist = ({ ecomerce }) => {
     const { removeSavedItem } = useWishlist();
     const { setCartOneItem } = useCart();
     const [loading, setLoading] = useState(false);
 
-    const { wishlist } = useSelector((state) => state.ecomerce);
+    const { wishlist } = useSelector(state => state.ecomerce);
     const { setAllSaved } = useWishlist();
 
     useEffect(() => {
@@ -57,12 +58,12 @@ const Wishlist = ({ ecomerce }) => {
                     </thead>
                     <tbody>
                         {wishlist?.length > 0 &&
-                            wishlist?.map((product) => (
+                            wishlist?.map(product => (
                                 <tr key={product?.id}>
                                     <td>
                                         <a
                                             href="#"
-                                            onClick={(e) =>
+                                            onClick={e =>
                                                 handleRemoveWishlistItem(
                                                     e,
                                                     product
@@ -109,7 +110,7 @@ const Wishlist = ({ ecomerce }) => {
                                             <a
                                                 className="ps-btn d-inline-block"
                                                 href=""
-                                                onClick={(e) =>
+                                                onClick={e =>
                                                     handleAddItemToCart(
                                                         e,
                                                         product
@@ -127,7 +128,7 @@ const Wishlist = ({ ecomerce }) => {
                                                 }}
                                                 className="ps-btn d-inline-block"
                                                 href=""
-                                                onClick={async (e) => {
+                                                onClick={async e => {
                                                     e.preventDefault();
                                                     setLoading(true);
                                                     try {
@@ -177,14 +178,16 @@ const Wishlist = ({ ecomerce }) => {
         // }
     }
     return (
-        <div className="ps-section--shopping ps-whishlist">
-            <div className="container">
-                <div className="ps-section__header">
-                    <h1>Tanlanganlar</h1>
-                </div>
-                <div className="ps-section__content">{wishlistItemsView}</div>
+        <div className="ps-whishlist">
+            <div className="container my-5">
+                <h1 className="page-title">Tanlanganlar</h1>
+                <SidebarLayout>
+                    <div className="ps-section__content">
+                        {wishlistItemsView}
+                    </div>
+                </SidebarLayout>
             </div>
         </div>
     );
 };
-export default connect((state) => state)(Wishlist);
+export default connect(state => state)(Wishlist);
