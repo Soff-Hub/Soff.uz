@@ -446,7 +446,7 @@ const CreditCard2 = ({ document, type }) => {
                         className="pt-4 pb-3 d-flex align-items-end justify-content-between">
                         <FormSubmitButton hisob={hisob} message={message} />
                     </form>
-                    <SecurePaymentAlert />
+                    <SecurePaymentAlert bordered={false} />
                 </div>
             ),
         },
@@ -468,7 +468,7 @@ const CreditCard2 = ({ document, type }) => {
                         className="pt-4 pb-3 d-flex align-items-end justify-content-between">
                         <FormSubmitButton hisob={hisob} message={message} />
                     </form>
-                    <SecurePaymentAlert />
+                    <SecurePaymentAlert bordered={false} />
                 </div>
             ),
         },
