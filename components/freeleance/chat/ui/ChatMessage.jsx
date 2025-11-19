@@ -239,7 +239,9 @@ const ChatMessage = ({
                             opacity: 0.7,
                             whiteSpace: 'nowrap',
                         }}>
-                        {dayjs(msg.created_at).format('HH:mm')}
+                        {msg.created_at
+                            ? dayjs(msg.created_at).format('HH:mm')
+                            : '--:--'}
                         {readStatus}
                     </span>
                 </span>

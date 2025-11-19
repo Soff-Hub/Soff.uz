@@ -39,16 +39,44 @@ const useChat = chatId => {
 
             // batch date separators
             allMsgs = allMsgs.reduce((acc, msg, index) => {
+                if (!msg.created_at) {
+                    acc.push(msg);
+                    return acc;
+                }
+
                 const msgDate = new Date(msg.created_at).toDateString();
                 const prevMsgDate =
-                    index > 0
+                    index > 0 && allMsgs[index - 1].created_at
                         ? new Date(allMsgs[index - 1].created_at).toDateString()
                         : null;
+
                 if (msgDate !== prevMsgDate) {
+                    // Create a proper date object and format it safely in Uzbek
+                    const dateObj = new Date(msg.created_at);
+                    const uzbekMonths = [
+                        'Yanvar',
+                        'Fevral',
+                        'Mart',
+                        'Aprel',
+                        'May',
+                        'Iyun',
+                        'Iyul',
+                        'Avgust',
+                        'Sentyabr',
+                        'Oktyabr',
+                        'Noyabr',
+                        'Dekabr',
+                    ];
+
+                    const day = dateObj.getDate();
+                    const month = uzbekMonths[dateObj.getMonth()];
+                    const year = dateObj.getFullYear();
+                    const formattedDate = `${month} ${day}, ${year}`;
+
                     acc.push({
                         id: `date-separator-${msgDate}-${index}`,
                         type: 'date-separator',
-                        date: dayjs(msgDate).format('MMMM D, YYYY'),
+                        date: formattedDate,
                     });
                 }
                 acc.push(msg);
