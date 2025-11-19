@@ -16,13 +16,12 @@ const OrderDetailMain = ({ orderData }) => {
     const router = useRouter();
     const [showStickySeller, setShowStickySeller] = useState(false);
     const [openDrawer, setOpenDrawer] = useState(false);
-    const {
-        data: order,
-        isError,
-        isLoading,
-        refetch,
-    } = useGetOrderById(+router.query?.id, orderData, true);
-    console.log({ order });
+    const { data: order, isError, isLoading, refetch } = useGetOrderById(
+        +router.query?.id,
+        orderData,
+        true
+    );
+
     if (isLoading) {
         return <Loader />;
     }
@@ -36,7 +35,7 @@ const OrderDetailMain = ({ orderData }) => {
         await refetch();
     };
 
-    const handleShowStickySeller = (value) => {
+    const handleShowStickySeller = value => {
         setShowStickySeller(value);
     };
 

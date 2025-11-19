@@ -27,7 +27,7 @@ export default function GoogleBox({
         }
 
         // Add existing query parameters
-        Object.keys(router.query).forEach((key) => {
+        Object.keys(router.query).forEach(key => {
             if (router.query[key]) {
                 params.append(key, router.query[key]);
             }
@@ -46,7 +46,6 @@ export default function GoogleBox({
         const fullUrl = params.toString()
             ? `${baseUrl}?${params.toString()}`
             : baseUrl;
-        console.log('Redirecting to Google OAuth URL:', fullUrl);
         // Use window.location for external redirects - this works reliably on iOS 18
         window.location.href = fullUrl;
     };

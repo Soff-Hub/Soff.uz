@@ -5,7 +5,6 @@ export function getOrCreateDeviceId({ req, res } = {}) {
     try {
         const cookies = cookie.parse(req.headers.cookie || '');
         let deviceId = cookies.device_id;
-        console.log('Device ID:', deviceId);
 
         if (!deviceId) {
             deviceId = uuidv4();

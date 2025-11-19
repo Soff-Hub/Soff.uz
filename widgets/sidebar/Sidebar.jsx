@@ -210,7 +210,8 @@ function Sidebar({ collapsed, onChangeCollapse }) {
                                 marginBottom: '0px',
                                 overflowWrap: 'anywhere',
                             }}>
-                            {user?.first_name || 'Foydalanuvchi'}
+                            {`${user?.first_name} ${user?.last_name}` ||
+                                'Foydalanuvchi'}
                         </h4>
                         <p
                             style={{

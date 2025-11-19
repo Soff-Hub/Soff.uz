@@ -11,7 +11,7 @@ const initialState = {
     wishlist: [],
     replied_count: 0,
     profile: null,
-    status: 'idle',
+    status: 'loading',
     error: null,
 };
 
@@ -33,19 +33,27 @@ export const initLocalCart = createAsyncThunk(
     async (payload, { rejectWithValue }) => {
         const wishL = JSON.parse(localStorage.getItem('wishlist')) || [];
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
         if (wishL.length > 0 || cart.length > 0) {
             try {
-                const resp = await api.post(baseUrl + 'customer/documents-list/', {
-                    documents: [...wishL, ...cart],
-                });
+                const resp = await api.post(
+                    baseUrl + 'customer/documents-list/',
+                    {
+                        documents: [...wishL, ...cart],
+                    }
+                );
                 return {
                     wishlist: wishL.map((el, i) => resp.data?.data?.[i]),
-                    cart: cart.map((el, i) => resp.data?.data?.[wishL.length + i]),
+                    cart: cart.map(
+                        (el, i) => resp.data?.data?.[wishL.length + i]
+                    ),
                 };
             } catch (error) {
                 return {
                     wishlist: wishL.map((el, i) => resp.data?.data?.[i]),
-                    cart: cart.map((el, i) => resp.data?.data?.[wishL.length + i]),
+                    cart: cart.map(
+                        (el, i) => resp.data?.data?.[wishL.length + i]
+                    ),
                 };
             }
         } else {
@@ -78,7 +86,7 @@ const ecommerceSlice = createSlice({
             state.compareItems = action.payload;
         },
         setCartDataItems: (state, action) => {
-            const localData = action.payload.map((item) => item.id);
+            const localData = action.payload.map(item => item.id);
             localStorage.setItem('cart', JSON.stringify(localData));
             state.cartDataItems = action.payload;
         },
@@ -91,7 +99,7 @@ const ecommerceSlice = createSlice({
             state.cartDataItems.push(action.payload[0]);
         },
         setSaved: (state, action) => {
-            const localData = action.payload.map((item) => item.id);
+            const localData = action.payload.map(item => item.id);
             localStorage.setItem('wishlist', JSON.stringify(localData));
             state.wishlist = action.payload;
         },
@@ -111,9 +119,9 @@ const ecommerceSlice = createSlice({
             state.profile = action.payload;
         },
     },
-    extraReducers: (builder) => {
+    extraReducers: builder => {
         builder
-            .addCase(setWishlistItems.pending, (state) => {
+            .addCase(setWishlistItems.pending, state => {
                 state.status = 'loading';
             })
             .addCase(setWishlistItems.fulfilled, (state, action) => {
@@ -124,7 +132,7 @@ const ecommerceSlice = createSlice({
                 state.status = 'failed';
                 state.error = action.payload;
             })
-            .addCase(setCartItems.pending, (state) => {
+            .addCase(setCartItems.pending, state => {
                 state.status = 'loading';
             })
             .addCase(setCartItems.fulfilled, (state, action) => {
@@ -136,9 +144,10 @@ const ecommerceSlice = createSlice({
                 state.error = action.payload;
             })
             .addCase(initLocalCart.fulfilled, (state, action) => {
-                state.wishlist = action.payload.wishlist
-                state.cartDataItems = action.payload.cart
-            })
+                state.wishlist = action.payload.wishlist;
+                state.cartDataItems = action.payload.cart;
+                state.status = 'idle';
+            });
     },
 });
 

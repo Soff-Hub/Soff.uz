@@ -29,8 +29,6 @@ function ServiceOrderModal({
     const balanceDisabled = balance > 0;
     const { price, id, title } = order;
 
-    console.log({ balanceDisabled, mode });
-
     const leftBalance = formatCurrencyWithSpace(Number(balance));
     const isSufficientBalance = balance >= order?.price;
     const componentProperties = {

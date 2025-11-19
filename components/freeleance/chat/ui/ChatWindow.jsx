@@ -55,8 +55,6 @@ const ChatWindow = ({ chatId, goBack }) => {
     } = useChat(chatId);
     const recipient = chat?.opponent;
 
-    console.log({ chat, user, messages });
-
     const handleFetchNext = async () => {
         if (!messagesContainerRef.current) return;
 

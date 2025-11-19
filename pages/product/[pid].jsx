@@ -66,7 +66,7 @@ const joyrideLocales = {
     skip: 'Bilaman',
 };
 
-const productsContentDetails = (contentType) => {
+const productsContentDetails = contentType => {
     switch (contentType) {
         case 'file':
             return FileProductDetatails;
@@ -86,14 +86,13 @@ export default function ProductDefaultPage({ defaultProducts }) {
     const [isPlay, setIsPlay] = useState(null);
     const similarRef = useRef();
     const contentType = defaultProducts?.document?.content_type;
-    console.log({ contentType });
     const DetailComponent = productsContentDetails(
         defaultProducts?.document?.content_type
     );
     const shouldShowAISoffia =
         defaultProducts?.document?.content_type === 'file';
 
-    const removeHTMLTags = (html) => {
+    const removeHTMLTags = html => {
         return html.replace(/<[^>]+>/g, '');
     };
 
@@ -107,12 +106,12 @@ export default function ProductDefaultPage({ defaultProducts }) {
                 description={
                     defaultProducts?.description
                         ? removeHTMLTags(defaultProducts?.description)
-                        : `${defaultProducts?.title} + ${
-                              defaultProducts?.tag
-                                  ?.map((e) => e?.name)
-                                  ?.join(', ') ||
-                              'soff.uz - Intellektual mulk marketi'
-                          } `
+                        : `${
+                              defaultProducts?.title
+                          } + ${defaultProducts?.tag
+                              ?.map(e => e?.name)
+                              ?.join(', ') ||
+                              'soff.uz - Intellektual mulk marketi'} `
                 }
                 keywords={[
                     { name: defaultProducts?.title },
@@ -245,8 +244,6 @@ export async function getServerSideProps({ query, req, res }) {
 
         defaultProducts = await request.json();
     }
-
-    console.log('Default Products:', defaultProducts);
 
     return {
         props: {
