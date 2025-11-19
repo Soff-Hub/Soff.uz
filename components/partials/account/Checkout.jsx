@@ -9,13 +9,13 @@ import { Button } from 'antd';
 
 const Checkout = () => {
     const router = useRouter();
-    const cartItems = useSelector(state => state.ecomerce.cartDataItems);
+    const { cartDataItems, status } = useSelector(state => state.ecomerce);
     if (!router.isReady) return null;
 
-    const isCartEmpty = !cartItems || cartItems.length === 0;
+    const isCartEmpty = !cartDataItems || cartDataItems.length === 0;
     let checkoutContent = null;
 
-    if (isCartEmpty) {
+    if (isCartEmpty && status !== 'loading') {
         checkoutContent = (
             <div
                 style={{ height: '80vh' }}
@@ -61,11 +61,11 @@ const Checkout = () => {
                 <div className="row d-flex justify-content-between my-5">
                     <div className="col-xl-7 col-lg-8 col-md-12 col-12">
                         <RedesignModulePaymentOrderSummary
-                            ecomerce={cartItems}
+                            ecomerce={cartDataItems}
                         />
                     </div>
-                    <div className="col-xl-5 col-lg-4 col-md-12 col-12 mt-3">
-                        <FormCheckoutInformation ecomerce={cartItems} />
+                    <div className="col-xl-5 col-lg-4 col-md-12 col-12">
+                        <FormCheckoutInformation ecomerce={cartDataItems} />
                     </div>
                 </div>
             </div>

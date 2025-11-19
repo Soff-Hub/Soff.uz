@@ -24,7 +24,7 @@ const LastAddedServiceCard = ({ service }) => {
     }
 
     return (
-        <Link href={`/servie/${service.slug}`}>
+        <Link href={`/service/${service.slug}`}>
             <a>
                 <div
                     style={{

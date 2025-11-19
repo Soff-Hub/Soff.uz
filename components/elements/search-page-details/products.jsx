@@ -1,5 +1,6 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import SearchResultsProducts_Card from './search-page-card/searchResultsProducts_Card';
+import SearchResultsLoading from './search-page-card/searchResultsLoading';
 import { Pagination } from 'antd';
 import SearchResultsProductsFilter from './search-page-filter/search-results-products-filter';
 import { useRouter } from 'next/router';
@@ -21,6 +22,12 @@ export default function Search_Results_Products({
         category = '',
         similar_documents,
         tab = '1',
+        page = 1,
+        keyword = '',
+        order_by = '',
+        file_type = '',
+        page_from = '',
+        page_to = '',
     } = router.query;
 
     useEffect(() => {
@@ -32,6 +39,39 @@ export default function Search_Results_Products({
     // NOTE: Requests Enable property
     const isRequestsEnabled = router.isReady && tab === currentTab;
     const isChildCategoryEnabled = isRequestsEnabled && !!router.query.category;
+    const similarDocumentsEnabled = data?.count < 50 && Number(page) === 1;
+    const keysChangeOnSimilarDocuments = `${page}-${keyword}-${type}-${category}-${order_by}-${file_type}-${page_from}-${page_to}`;
+
+    const {
+        data: similarDocuments,
+        isFetching: isFetchingSimilarDocuments,
+    } = useQuery({
+        queryKey: ['similar-documents', keysChangeOnSimilarDocuments],
+        queryFn: async () => {
+            const res = await fetch(
+                `${baseUrlUseApi}customer/same-google-search/?limit=50${
+                    page ? `&page=${page}` : ''
+                }${keyword ? `&search=${keyword}` : ''}${
+                    type ? `&type=${type}` : ''
+                }${category ? `&category=${category}` : ''}${
+                    order_by ? `&order_by=${order_by}` : ''
+                }${file_type ? `&file_type=${file_type}` : ''}${
+                    page_from ? `&page_from=${page_from}` : ''
+                }${page_to ? `&page_to=${page_to}` : ''}&similar_documents=true`
+            );
+            return await res.json();
+        },
+        enabled: similarDocumentsEnabled,
+    });
+
+    const mergedData = useMemo(() => {
+        return [
+            ...((data && data.results) || []),
+            ...(isFetchingSimilarDocuments
+                ? Array(10).fill({ type: 'skeleton' })
+                : (similarDocuments && similarDocuments.results) || []),
+        ];
+    }, [data, similarDocuments, isFetchingSimilarDocuments]);
 
     const { data: childData } = useQuery({
         queryKey: ['four-child', type],
@@ -57,22 +97,44 @@ export default function Search_Results_Products({
         enabled: isChildCategoryEnabled,
     });
 
-    const total = data?.count || 0;
+    const total = data?.count + (similarDocuments?.count || 0) || 0;
     const notFoundRef = useRef();
     const showResults =
         Array.isArray(data?.results) && data?.results?.length > 0;
-    const isSimilarsNotFound = !showResults && similar_documents === 'true';
 
     useScrollToNotFound(notFoundRef, showResults, data);
+
+    useEffect(() => {
+        if (similarDocuments && similarDocuments.results.length) {
+            router.push(
+                {
+                    pathname: router.pathname,
+                    query: {
+                        ...router.query,
+                        similar_documents: 'true',
+                    },
+                },
+                undefined,
+                { shallow: true }
+            );
+        }
+    }, [similarDocuments]);
 
     let resultsContent = null;
 
     if (showResults) {
         resultsContent = (
             <>
-                {data.results.map((item, index) => (
-                    <SearchResultsProducts_Card product={item} key={index} />
-                ))}
+                {mergedData.map((item, index) =>
+                    item.type === 'skeleton' ? (
+                        <SearchResultsLoading key={index} />
+                    ) : (
+                        <SearchResultsProducts_Card
+                            product={item}
+                            key={index}
+                        />
+                    )
+                )}
                 <Pagination
                     style={{
                         marginBottom: '100px',
@@ -94,10 +156,8 @@ export default function Search_Results_Products({
                 />
             </>
         );
-    } else if (isSimilarsNotFound) {
-        resultsContent = <NotFound ref={notFoundRef} />;
     } else {
-        resultsContent = <SearchProductsNotFound ref={notFoundRef} />;
+        resultsContent = <NotFound ref={notFoundRef} />;
     }
 
     return (

@@ -1,5 +1,6 @@
 const nextSettings = {
     optimizeFonts: true,
+    // output: 'standalone',
     eslint: {
         ignoreDuringBuilds: true,
     },
@@ -38,7 +39,8 @@ const nextSettings = {
         return [
             // Caching static files for 1 year
             {
-                source: '/:all*(svg|jpg|png|jpeg|gif|ico|webp|avif|jfif|pjpeg|pjp|apng|bmp|tif|tiff|js|css|woff2)',
+                source:
+                    '/:all*(svg|jpg|png|jpeg|gif|ico|webp|avif|jfif|pjpeg|pjp|apng|bmp|tif|tiff|js|css|woff2)',
                 headers: [
                     {
                         key: 'Cache-Control',
@@ -52,7 +54,8 @@ const nextSettings = {
                 headers: [
                     {
                         key: 'Cache-Control',
-                        value: 'public, max-age=300, s-maxage=600, stale-while-revalidate=59',
+                        value:
+                            'public, max-age=300, s-maxage=600, stale-while-revalidate=59',
                     },
                 ],
             },
@@ -62,7 +65,8 @@ const nextSettings = {
                 headers: [
                     {
                         key: 'Cache-Control',
-                        value: 'public, max-age=60, s-maxage=120, stale-while-revalidate=59',
+                        value:
+                            'public, max-age=60, s-maxage=120, stale-while-revalidate=59',
                     },
                 ],
             },
