@@ -99,8 +99,7 @@ export default function Search_Results_Products({
 
     const total = data?.count + (similarDocuments?.count || 0) || 0;
     const notFoundRef = useRef();
-    const showResults =
-        Array.isArray(data?.results) && data?.results?.length > 0;
+    const showResults = Array.isArray(mergedData) && mergedData?.length > 0;
 
     useScrollToNotFound(notFoundRef, showResults, data);
 

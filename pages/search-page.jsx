@@ -391,7 +391,7 @@ export async function getServerSideProps(context) {
                 console.error('Error fetching products:', error);
             }
             const searchError = productsInitialData?.error || null;
-            console.log({ productsInitialData, searchUrl });
+
             return {
                 props: {
                     ...restQueries,
