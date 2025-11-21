@@ -133,7 +133,7 @@ function useCreateOrder() {
     const { isDesktop } = useResponsive();
     const [direction, setDirection] = useState(null);
     const [files, setFiles] = useState(null);
-    const { user } = useSelector(state => state.auth);
+    const { user } = useSelector((state) => state.auth);
     const { push, query, replace, pathname } = useRouter();
     const [confirmOpen, setConfirmOpen] = useState(false);
     const { data: directions } = useGetDirectionsQuery();
@@ -166,10 +166,8 @@ function useCreateOrder() {
         }
     );
 
-    const priceList = priceData?.[0]?.service_delivery_price_options?.[0]?.price?.slice(
-        0,
-        7
-    );
+    const priceList =
+        priceData?.[0]?.service_delivery_price_options?.[0]?.price?.slice(0, 7);
 
     const minPrice = priceList ? priceList[0]?.amount : 2000;
 
@@ -218,7 +216,7 @@ function useCreateOrder() {
     const { mutate: createOrder, isPending } = useFPost({
         url: 'order/custom-order',
         token: user?.access,
-        onSuccess: data => {
+        onSuccess: (data) => {
             form.resetFields();
             handleCloseConfirm();
             message.success('Buyurtma muvaffaqiyatli yaratildi!');
@@ -226,7 +224,7 @@ function useCreateOrder() {
                 push(`/order/my-orders?orderId=${data?.order_id}`);
             }, 100);
         },
-        onError: err => {
+        onError: (err) => {
             const errorMsg =
                 err?.response?.data?.detail ||
                 err?.response?.data?.message ||
@@ -235,7 +233,7 @@ function useCreateOrder() {
         },
     });
 
-    const handleThumbProgress = swiper => {
+    const handleThumbProgress = (swiper) => {
         const progress = swiper.progress;
         const isBeginning = swiper.isBeginning;
         const isEnd = swiper.isEnd;
@@ -271,7 +269,7 @@ function useCreateOrder() {
         createOrder(fd);
     };
 
-    const handleDirectionChange = val => {
+    const handleDirectionChange = (val) => {
         setDirection(val);
         form.resetFields(['category_id']);
         form.setFieldValue('title', '');
@@ -334,7 +332,7 @@ function useCreateOrder() {
                             'category'
                         ].placeholder(directions)}
                         size="large"
-                        options={categories?.map(cat => ({
+                        options={categories?.map((cat) => ({
                             label: cat?.title,
                             value: cat?.id,
                         }))}
@@ -402,7 +400,7 @@ function useCreateOrder() {
                         beforeUpload={() => {
                             return false;
                         }}
-                        onChange={e => {
+                        onChange={(e) => {
                             const { file, fileList } = e;
                             if (file) {
                                 const maxSize = 50 * 1024 * 1024;
@@ -481,7 +479,7 @@ function useCreateOrder() {
                         className="form-element"
                         placeholder={inputInfoToCreateOrder.price.placeholder}
                         size="large"
-                        formatter={value =>
+                        formatter={(value) =>
                             value
                                 ? `${value}`.replace(
                                       /\B(?=(\d{3})+(?!\d))/g,
@@ -489,11 +487,11 @@ function useCreateOrder() {
                                   )
                                 : ''
                         }
-                        parser={value =>
+                        parser={(value) =>
                             value.replace(/\s/g, '').replace(/[^\d]/g, '')
                         }
                         value={budget}
-                        onChange={val => form.setFieldValue('budget', val)}
+                        onChange={(val) => form.setFieldValue('budget', val)}
                     />
                     <div className="my-3 position-relative">
                         <div className="position-relative">
@@ -622,7 +620,7 @@ function useCreateOrder() {
                                 className="form-element"
                                 placeholder="Buyurtma tayyor bo‘lish sanasi va soatini tanlang"
                                 size="large"
-                                disabledDate={current =>
+                                disabledDate={(current) =>
                                     current && current < dayjs().startOf('day')
                                 }
                             />
@@ -636,7 +634,7 @@ function useCreateOrder() {
                                 placeholder="Soat"
                                 size="large"
                                 className="ant-picker-time-panel-column form-element"
-                                disabledDate={current =>
+                                disabledDate={(current) =>
                                     current && current < dayjs().startOf('day')
                                 }
                             />
@@ -648,7 +646,7 @@ function useCreateOrder() {
         },
     ];
 
-    const formItemsContent = formItems.map(formItem =>
+    const formItemsContent = formItems.map((formItem) =>
         withPopover(
             formItem,
             isDesktop,
