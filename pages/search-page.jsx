@@ -128,18 +128,29 @@ const Search_Results = ({
 
     useEffect(() => {
         if (debouncedSearchTerm !== router.query.keyword) {
-            const newQueries = router.query;
-            delete newQueries.similar_documents;
+            // When a new search term is entered, reset pagination and filter params
+            const omitKeys = [
+                'page',
+                'offset',
+                'similar_documents',
+            ];
+
+            const newQueries = Object.fromEntries(
+                Object.entries(router.query).filter(
+                    ([key]) => !omitKeys.includes(key)
+                )
+            );
 
             router.push({
                 pathname: router.pathname,
                 query: {
-                    ...router.query,
+                    ...newQueries,
                     keyword: debouncedSearchTerm,
                 },
             });
         }
-    }, [debouncedSearchTerm, router.query.keyword]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [debouncedSearchTerm]);
 
     const clearTextView = (
         <span className="ps-form__action">
