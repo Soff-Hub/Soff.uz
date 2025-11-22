@@ -1,13 +1,12 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useMemo, useEffect, useCallback } from 'react';
 import PageContainer from '~/widgets/layouts/PageContainer';
 import { baseUrl } from '~/repositories/Repository';
-import { useState } from 'react';
-import Joyride from 'react-joyride';
 import * as cookie from 'cookie';
 import Meta from '~/components/shared/headers/Meta';
 import { getOrCreateDeviceId } from '~/shared/utilities/device-id';
 import dynamic from 'next/dynamic';
 
+// Lazy load heavy components
 const LastAddedProducts = dynamic(
     () => import('~/components/details-components/LastAddedProducts'),
     { ssr: false }
@@ -22,6 +21,11 @@ const AISoffiaPresentation = dynamic(
     () => import('~/components/elements/AISoffiaPresentation'),
     { ssr: false }
 );
+
+// Conditionally load Joyride only when needed (first visit)
+const Joyride = dynamic(() => import('react-joyride'), {
+    ssr: false,
+});
 
 const FileProductDetatails = dynamic(
     () =>
@@ -38,6 +42,7 @@ const ThreeDesignProductDetails = dynamic(
         ),
     { ssr: true }
 );
+
 const VideosProductDetails = dynamic(
     () =>
         import('~/components/details-components/video-tutorials/details-page'),
@@ -84,66 +89,97 @@ const productsContentDetails = contentType => {
 
 export default function ProductDefaultPage({ defaultProducts }) {
     const [isPlay, setIsPlay] = useState(null);
+    const [showJoyride, setShowJoyride] = useState(false);
     const similarRef = useRef();
-    const contentType = defaultProducts?.document?.content_type;
-    const DetailComponent = productsContentDetails(
-        defaultProducts?.document?.content_type
+    const lastProductsRef = useRef();
+    
+    // Memoize expensive computations
+    const contentType = useMemo(
+        () => defaultProducts?.document?.content_type,
+        [defaultProducts?.document?.content_type]
     );
-    const shouldShowAISoffia =
-        defaultProducts?.document?.content_type === 'file';
 
-    const removeHTMLTags = html => {
-        return html.replace(/<[^>]+>/g, '');
-    };
+    const DetailComponent = useMemo(
+        () => productsContentDetails(contentType),
+        [contentType]
+    );
+
+    const shouldShowAISoffia = useMemo(
+        () => contentType === 'file',
+        [contentType]
+    );
+
+    // Check if Joyride should run (only on first visit)
+    useEffect(() => {
+        if (typeof window === 'undefined') return;
+        
+        const hasSeenProductTour = localStorage.getItem('product-tour-completed');
+        if (!hasSeenProductTour) {
+            // Delay Joyride to prevent blocking initial render
+            const timer = setTimeout(() => {
+                setShowJoyride(true);
+            }, 2000);
+            return () => clearTimeout(timer);
+        }
+    }, []);
+
+    // Memoize Meta props to prevent unnecessary re-renders
+    const metaProps = useMemo(() => {
+        const removeHTMLTags = html => html.replace(/<[^>]+>/g, '');
+        
+        const title = defaultProducts?.title || 'Soff.uz - Intellektual mulk marketi';
+        const description = defaultProducts?.description
+            ? removeHTMLTags(defaultProducts.description)
+            : `${defaultProducts?.title || ''} + ${
+                  defaultProducts?.tag?.map(e => e?.name)?.join(', ') ||
+                  'soff.uz - Intellektual mulk marketi'
+              }`;
+
+        const keywords = [
+            { name: defaultProducts?.title },
+            { name: defaultProducts?.slug },
+            ...(defaultProducts?.tag || []),
+            { name: defaultProducts?.seller?.first_name },
+            { name: defaultProducts?.seller?.last_name },
+        ].filter(kw => kw.name); // Remove undefined/null keywords
+
+        return {
+            title,
+            description,
+            keywords,
+            image:
+                defaultProducts?.poster_url ||
+                'https://soff.uz/static/img/soff/logo-dark.png',
+            type: 'product',
+            url:
+                typeof window !== 'undefined'
+                    ? window.location.href
+                    : 'https://soff.uz',
+            author: defaultProducts?.seller
+                ? `${defaultProducts.seller.first_name} ${defaultProducts.seller.last_name}`
+                : 'Soff.uz',
+        };
+    }, [defaultProducts]);
+
+    // Memoize container class name
+    const containerClassName = useMemo(
+        () => `ps-page--product ${defaultProducts?.price === 0 ? '' : 'pt-2'}`,
+        [defaultProducts?.price]
+    );
+
+    const handleJoyrideCallback = useCallback(data => {
+        if (data.status === 'finished' || data.status === 'skipped') {
+            localStorage.setItem('product-tour-completed', 'true');
+            setShowJoyride(false);
+        }
+    }, []);
 
     return (
         <PageContainer>
-            <Meta
-                title={
-                    defaultProducts?.title ||
-                    'Soff.uz - Intellektual mulk marketi'
-                }
-                description={
-                    defaultProducts?.description
-                        ? removeHTMLTags(defaultProducts?.description)
-                        : `${
-                              defaultProducts?.title
-                          } + ${defaultProducts?.tag
-                              ?.map(e => e?.name)
-                              ?.join(', ') ||
-                              'soff.uz - Intellektual mulk marketi'} `
-                }
-                keywords={[
-                    { name: defaultProducts?.title },
-                    { name: defaultProducts?.slug },
-                    ...(defaultProducts?.tag ? defaultProducts?.tag : []),
-                    { name: defaultProducts?.seller?.first_name },
-                    { name: defaultProducts?.seller?.last_name },
-                ]}
-                image={
-                    defaultProducts?.poster_url ||
-                    'https://soff.uz/static/img/soff/logo-dark.png'
-                }
-                type="product"
-                url={
-                    typeof window !== 'undefined'
-                        ? window.location.href
-                        : 'https://soff.uz'
-                }
-                author={
-                    defaultProducts?.seller
-                        ? `${defaultProducts?.seller?.first_name} ${defaultProducts?.seller?.last_name}`
-                        : 'Soff.uz'
-                }
-            />
+            <Meta {...metaProps} />
             <div>
-                <div
-                    className="container mb-5"
-                    style={{ position: 'relative' }}>
-                    <div
-                        className={`ps-page--product ${
-                            defaultProducts?.price === 0 ? '' : 'pt-2'
-                        }`}>
+                <div className="container mb-5" style={{ position: 'relative' }}>
+                    <div className={containerClassName}>
                         <div className="ps-container p-0">
                             <div className="ps-page__container">
                                 <DetailComponent
@@ -160,89 +196,131 @@ export default function ProductDefaultPage({ defaultProducts }) {
                                         fontWeight: 400,
                                     }}
                                     className="py-4 similar_title">
-                                    O’xshash mahsulotlar
+                                    O'xshash mahsulotlar
                                 </h3>
                                 <SimilarProducts />
                             </div>
-                            <h3
-                                style={{
-                                    fontSize: '25px',
-                                    fontWeight: 400,
-                                }}
-                                className="py-4 similar_title">
-                                So'ngi yuklangan mahsulotlar
-                            </h3>
-                            <LastAddedProducts contentType={contentType} />
+                            <div ref={lastProductsRef}>
+                                <h3
+                                    style={{
+                                        fontSize: '25px',
+                                        fontWeight: 400,
+                                    }}
+                                    className="py-4 similar_title">
+                                    So'ngi yuklangan mahsulotlar
+                                </h3>
+                                <LastAddedProducts contentType={contentType} />
+                            </div>
                         </div>
                     </div>
                 </div>
-                <Joyride
-                    steps={steps}
-                    run={true}
-                    continuous={true}
-                    showProgress={false}
-                    styles={{
-                        options: {
-                            arrowColor: '#e3ffeb',
-                            primaryColor: '#00A44F',
-                            textColor: '#004a14',
-                            width: 300,
-                            zIndex: 100,
-                        },
-                    }}
-                    locale={joyrideLocales}
-                />
+                {showJoyride && (
+                    <Joyride
+                        steps={steps}
+                        run={showJoyride}
+                        continuous={true}
+                        showProgress={false}
+                        callback={handleJoyrideCallback}
+                        styles={{
+                            options: {
+                                arrowColor: '#e3ffeb',
+                                primaryColor: '#00A44F',
+                                textColor: '#004a14',
+                                width: 300,
+                                zIndex: 100,
+                            },
+                        }}
+                        locale={joyrideLocales}
+                    />
+                )}
             </div>
         </PageContainer>
     );
 }
 
 export async function getServerSideProps({ query, req, res }) {
+    const { pid } = query;
+
+    // Early return if pid is missing
+    if (!pid) {
+        return { notFound: true };
+    }
+
     const cookies = cookie.parse(req.headers.cookie || '');
     const token = cookies.token;
-
-    const headers = token ? { Authorization: `Bearer ${token}` } : {};
-    let defaultProducts = null;
     const deviceId = getOrCreateDeviceId({ req, res });
+
+    // Prepare headers once
+    const headers = {
+        'X-Device-ID': deviceId,
+        ...(token && { Authorization: `Bearer ${token}` }),
+    };
+
+    let defaultProducts = null;
 
     try {
         const request = await fetch(
-            `${baseUrl}customer/documents/${query.pid}/`,
+            `${baseUrl}customer/documents/${pid}/`,
             {
-                headers: {
-                    ...headers,
-                    'X-Device-ID': deviceId,
-                },
+                headers,
             }
         );
 
-        if (request.status === 403 || request.status === 401) {
-            throw new Error(
-                'Token invalid yoki muddati o‘tgan. Iltimos, qaytadan tizimga kiring.'
-            );
-        }
-
+        // Handle specific status codes
         if (request.status === 404) {
             return { notFound: true };
         }
-        defaultProducts = await request.json();
-    } catch (error) {
-        const request = await fetch(
-            `${baseUrl}customer/documents/${query.pid}/`,
-            {
-                headers: {
-                    'X-Device-ID': deviceId,
-                },
-            }
-        );
 
-        if (!request.ok) {
-            return {
-                notFound: true,
+        if (request.status === 403 || request.status === 401) {
+            // Retry without auth token
+            const retryHeaders = {
+                'X-Device-ID': deviceId,
             };
-        }
 
-        defaultProducts = await request.json();
+            const retryRequest = await fetch(
+                `${baseUrl}customer/documents/${pid}/`,
+                {
+                    headers: retryHeaders,
+                }
+            );
+
+            if (!retryRequest.ok) {
+                return { notFound: true };
+            }
+
+            defaultProducts = await retryRequest.json();
+        } else {
+            if (!request.ok) {
+                return { notFound: true };
+            }
+            defaultProducts = await request.json();
+        }
+    } catch (error) {
+        // Final fallback - try without auth
+        try {
+            const fallbackRequest = await fetch(
+                `${baseUrl}customer/documents/${pid}/`,
+                {
+                    headers: {
+                        'X-Device-ID': deviceId,
+                    },
+                }
+            );
+
+            if (!fallbackRequest.ok) {
+                return { notFound: true };
+            }
+
+            defaultProducts = await fallbackRequest.json();
+        } catch (fallbackError) {
+            console.error('Error fetching product:', fallbackError);
+            return { notFound: true };
+        }
+    }
+
+    // Validate that we have product data
+    if (!defaultProducts) {
+        return { notFound: true };
     }
 
     return {

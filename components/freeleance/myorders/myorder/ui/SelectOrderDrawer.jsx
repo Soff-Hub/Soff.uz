@@ -40,7 +40,7 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
     // const [verfiedOffer, setVerfiedOffer] = useState(null);
     const { user } = useSelector(state => state.auth);
     const [paymentModal, setPaymentModal] = useState(false);
-    const { isDesktop } = useResponsive();
+    const { isDesktop, isMobile } = useResponsive();
     const { push } = useRouter();
     const { offers, setOffers, isConnected } = useOffers(order?.id, open);
     const price = order?.service?.price || order?.budget || 0;
@@ -366,7 +366,7 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
             <Drawer
                 title="Frilanser takliflari"
                 placement="right"
-                width={isDesktop ? '70%' : '80%'}
+                width={isDesktop ? '70%' : isMobile ? '100%' : '80%'}
                 onClose={onClose}
                 open={open}
                 destroyOnClose>
