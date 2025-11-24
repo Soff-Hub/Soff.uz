@@ -9,7 +9,7 @@
         "build": "next build",
         "build:analyze": "ANALYZE=true npm run build",
         "start": "npm-run-all --parallel start:server start:scheduler",
-        "start:server": "next start -p 3003",
+        "start:server": "node .next/standalone/server.js",
         "start:scheduler": "node scripts/scheduler.js",
         "clean": "antd-tools run clean && rm -rf es lib coverage dist report.html",
         "compile": "npm run clean && antd-tools",
