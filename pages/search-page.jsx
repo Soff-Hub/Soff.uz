@@ -30,7 +30,7 @@ const Search_Results = ({
     const { query } = useRouter();
     const { isDesktop } = useResponsive();
     const pageRef = useRef(null);
-    const { isLoggedIn } = useSelector(state => state.auth);
+    const { isLoggedIn } = useSelector((state) => state.auth);
     const tab = router.query.tab || '1';
 
     const topServicesQuery = new URLSearchParams({
@@ -76,7 +76,7 @@ const Search_Results = ({
         </div>
     );
 
-    const handleSetRouterQuery = currentTab => {
+    const handleSetRouterQuery = (currentTab) => {
         const omitKeys = [
             'direction',
             'ts_direction',
@@ -122,18 +122,14 @@ const Search_Results = ({
         inputEl.current.value = '';
     };
 
-    const handleChangeTab = value => {
+    const handleChangeTab = (value) => {
         handleSetRouterQuery(value);
     };
 
     useEffect(() => {
         if (debouncedSearchTerm !== router.query.keyword) {
             // When a new search term is entered, reset pagination and filter params
-            const omitKeys = [
-                'page',
-                'offset',
-                'similar_documents',
-            ];
+            const omitKeys = ['page', 'offset', 'similar_documents'];
 
             const newQueries = Object.fromEntries(
                 Object.entries(router.query).filter(
@@ -279,9 +275,12 @@ const Search_Results = ({
                                     type="text"
                                     value={searchTerm}
                                     placeholder="Izlayotgan mahsulotingizni toping..."
-                                    onChange={e =>
+                                    onChange={(e) =>
                                         setSearchTerm(e.target.value)
                                     }
+                                    style={{
+                                        width: 'calc(100% - 30px)',
+                                    }}
                                 />
                                 {clearTextView}
                             </div>
@@ -339,7 +338,7 @@ export async function getServerSideProps(context) {
         offset,
     });
 
-    const fetchJson = async url => {
+    const fetchJson = async (url) => {
         try {
             const res = await fetch(url);
             if (!res.ok) throw new Error('Failed to fetch');
@@ -398,6 +397,7 @@ export async function getServerSideProps(context) {
                     },
                 });
                 productsInitialData = await productsFetch.json();
+                console.log({ productsInitialData, servicesUrl });
             } catch (error) {
                 console.error('Error fetching products:', error);
             }
