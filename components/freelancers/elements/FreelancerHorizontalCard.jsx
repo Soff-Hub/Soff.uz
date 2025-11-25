@@ -92,10 +92,10 @@ const FreelancerHorizontalCard = ({ seller, onCreateChat }) => {
             <Button
                 type="default"
                 className={styles.messageBtn}
-                onClick={() => onCreateChat(seller?.soff_seller_id)}>
+                onClick={() => onCreateChat(seller?.seller_id)}>
                 Xabar
             </Button>
-            <Link href={`/seller/${seller?.soff_seller_id}`}>
+            <Link href={`/seller/${seller?.seller_id}`}>
                 <a>
                     <Button type="primary" className={styles.detailsBtn}>
                         Batafsil
@@ -108,7 +108,9 @@ const FreelancerHorizontalCard = ({ seller, onCreateChat }) => {
     const cardInfo = (
         <>
             <div className={styles.nameRow}>
-                <h3 className={styles.name}>{seller?.full_name}</h3>
+                <Link href={`/seller/${seller?.seller_id}`}>
+                    <a className={styles.name}>{seller?.full_name}</a>
+                </Link>
                 {/* {seller?.has_service && seller?.has_portfolio && (
                     <span className={styles.verifiedBadge}>Tasdiqlangan</span>
                 )} */}
@@ -280,11 +282,11 @@ const FreelancerHorizontalCard = ({ seller, onCreateChat }) => {
                                     className={styles.serviceSlide}>
                                     <div className={styles.card}>
                                         <h3 className={styles.title}>
-                                            {displayServices.length} ta
+                                            {seller.services_length} ta
                                             xizmatlar topildi
                                         </h3>
                                         <Link
-                                            href={`/seller/${seller?.soff_seller_id}/?tab=service`}>
+                                            href={`/seller/${seller?.seller_id}/?tab=service`}>
                                             <a className={styles.viewAllButton}>
                                                 <button className={styles.btn}>
                                                     Barchasini ko'rish
