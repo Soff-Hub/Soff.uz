@@ -24,9 +24,9 @@ function Sidebar({ collapsed, onChangeCollapse }) {
     const { logOutAuth } = useAuth();
     const { size } = useResponsive();
     const router = useRouter();
-    const { user } = useSelector(state => state.profile);
+    const { user } = useSelector((state) => state.profile);
     const dispatch = useDispatch();
-    const refresh = useSelector(state => state.auth?.user?.refresh);
+    const refresh = useSelector((state) => state.auth?.user?.refresh);
     const [lastPathSegment, setLasPathSegment] = useState();
     const profileImg = user?.image;
 
@@ -119,39 +119,33 @@ function Sidebar({ collapsed, onChangeCollapse }) {
         []
     );
 
-    const onClickMenuItem = menuItem => {
-        if (collapsed) {
-            console.log('collapsed', menuItem);
-            switch (menuItem.key) {
-                case 'sellerproducts':
-                    router.push('/account/sellerproducts');
-                    break;
-                case 'my-orders':
-                    router.push('/order/my-orders');
-                    break;
-                case 'wishlist':
-                    router.push('/account/wishlist');
-                    break;
-                case 'shopping-cart':
-                    router.push('/account/shopping-cart');
-                    break;
-                case 'chat':
-                    router.push('/chat');
-                    break;
-                case 'notification':
-                    router.push('/account/notification');
-                    break;
-            }
+    const onClickMenuItem = (menuItem) => {
+        switch (menuItem.key) {
+            case 'sellerproducts':
+                router.push('/account/sellerproducts');
+                break;
+            case 'my-orders':
+                router.push('/order/my-orders');
+                break;
+            case 'wishlist':
+                router.push('/account/wishlist');
+                break;
+            case 'shopping-cart':
+                router.push('/account/shopping-cart');
+                break;
+            case 'chat':
+                router.push('/chat');
+                break;
+            case 'notification':
+                router.push('/account/notification');
+                break;
         }
     };
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
             setLasPathSegment(
-                window.location.pathname
-                    .split('/')
-                    .filter(Boolean)
-                    .pop()
+                window.location.pathname.split('/').filter(Boolean).pop()
             );
         }
     }, []);
@@ -217,6 +211,7 @@ function Sidebar({ collapsed, onChangeCollapse }) {
                             style={{
                                 marginBottom: '0px',
                                 color: 'gray',
+                                overflowWrap: 'anywhere',
                             }}>
                             {user?.phone || user?.email || 'Email mavjud emas'}
                         </p>
