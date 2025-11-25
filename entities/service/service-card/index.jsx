@@ -6,9 +6,10 @@ import { useSelector } from 'react-redux';
 import AuthModal from '~/components/AuthModal';
 import { useRouter } from 'next/router';
 import { StarFilled } from '@ant-design/icons';
+import { Button } from 'antd';
 
 // Helper function to validate slug
-const isValidSlug = slug => {
+const isValidSlug = (slug) => {
     return (
         slug &&
         typeof slug === 'string' &&
@@ -19,7 +20,7 @@ const isValidSlug = slug => {
 };
 
 const ServiceCard = ({ service, hasFooter = true }) => {
-    const { isLoggedIn } = useSelector(state => state.auth);
+    const { isLoggedIn } = useSelector((state) => state.auth);
     const [open, setOpen] = useState(false);
     const { push } = useRouter();
 
@@ -87,17 +88,19 @@ const ServiceCard = ({ service, hasFooter = true }) => {
                         </h3>
                     </div>
                     <div className={styles.btns}>
-                        <button
+                        <Button
+                            type="default"
                             onClick={handleViewDetails}
                             className={styles.secondaryBtn}>
                             Batafsil
-                        </button>
+                        </Button>
 
-                        <button
+                        <Button
+                            type="primary"
                             onClick={handleOrder}
                             className={styles.primaryBtn}>
                             Buyurtma berish
-                        </button>
+                        </Button>
                     </div>
                 </div>
                 {hasFooter && (

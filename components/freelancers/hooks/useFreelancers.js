@@ -4,32 +4,47 @@ import { useRouter } from 'next/router';
 import { useFGet } from '~/shared/hooks/useFApi';
 import { Checkbox, Skeleton, Radio } from 'antd';
 
-function useFreelancers() {
+function useFreelancers(collapsed) {
     const router = useRouter();
-    const {
-        data: directions,
-        isFetching: isDirectionsFetching,
-    } = useGetDirectionsQuery();
+    const limit = collapsed ? 21 : 20;
+    const { data: directions, isFetching: isDirectionsFetching } =
+        useGetDirectionsQuery();
 
     const directionsMap = useMemo(() => {
         if (!directions) return {};
         const map = {};
-        directions.forEach(dir => {
+        directions.forEach((dir) => {
             map[dir.value] = dir;
         });
         return map;
     }, [directions]);
 
     const selectedDirection = useMemo(
-        () => router.query.direction || undefined,
+        () =>
+            Array.isArray(router.query.direction)
+                ? router.query.direction.map((v) => v)
+                : router.query.direction
+                ? [router.query.direction]
+                : [],
         [router.query.direction]
     );
-    const { data: positions, isFetching: isPositionsFetching } = useFGet(
-        ['positions', selectedDirection],
-        `users/positions${
-            selectedDirection ? `?direction=${selectedDirection}` : ''
-        }`
+
+    const { data: dataPositions, isFetching: isPositionsFetching } = useFGet(
+        ['positions'],
+        `users/positions`
     );
+
+    const positions = useMemo(() => {
+        if (dataPositions) {
+            return dataPositions.filter((pos) => {
+                if (router.query.direction) {
+                    return router.query.direction.includes(pos.direction);
+                }
+                return true;
+            });
+        }
+        return [];
+    }, [dataPositions, router.query.direction]);
 
     const positionsGroup = useMemo(() => {
         if (isPositionsFetching)
@@ -50,7 +65,7 @@ function useFreelancers() {
         if (!positions || !positions.length)
             return <p>Hech qanday kasblar topilmadi</p>;
 
-        return positions.map(pos => (
+        return positions.map((pos) => (
             <Checkbox key={pos.title} value={pos.title}>
                 {pos.title}
             </Checkbox>
@@ -77,17 +92,17 @@ function useFreelancers() {
         if (!directions || !directions.length)
             return <p>Hech qanday yo'nalishlar topilmadi</p>;
 
-        return directions.map(dir => (
-            <Radio key={dir.value} value={dir.value}>
+        return directions.map((dir) => (
+            <Checkbox key={dir.value} value={dir.value}>
                 {dir.label}
-            </Radio>
+            </Checkbox>
         ));
     }, [directions, isDirectionsFetching]);
 
     const selectedPositions = useMemo(
         () =>
             Array.isArray(router.query.position)
-                ? router.query.position.map(v => v)
+                ? router.query.position.map((v) => v)
                 : router.query.position
                 ? [router.query.position]
                 : [],
@@ -95,8 +110,9 @@ function useFreelancers() {
     );
 
     // query yangilovchi funksiya
-    const updateQuery = updates => {
-        const newQuery = { ...router.query };
+    const updateQuery = (updates) => {
+        console.log('updateQuery called with', updates);
+        const newQuery = { ...router.query, limit, offset: 0 };
 
         Object.entries(updates).forEach(([key, value]) => {
             if (value === undefined || value === null || value.length === 0) {
@@ -125,16 +141,18 @@ function useFreelancers() {
     };
 
     // Position (checkbox)
-    const handlePositionsChange = vals => {
+    const handlePositionsChange = (vals) => {
         updateQuery({ position: vals });
     };
 
     // Direction (radio)
-    const handleDirectionChange = value => {
+    const handleDirectionChange = (vals) => {
         updateQuery({
-            direction: value,
-            directionValue: directionsMap[value]
-                ? directionsMap[value].label
+            direction: vals,
+            directionValue: Array.isArray(vals)
+                ? vals.map((val) => directionsMap[val].label)
+                : directionsMap[vals]
+                ? directionsMap[vals].label
                 : undefined,
             position: undefined,
         });

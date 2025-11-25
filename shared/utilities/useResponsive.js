@@ -1,12 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState, useLayoutEffect } from 'react';
 
 const useResponsive = () => {
     const [isMobile, setIsMobile] = useState(false);
     const [isTablet, setIsTablet] = useState(false);
-    const [isDesktop, setIsDesktop] = useState(true);
+    const [isDesktop, setIsDesktop] = useState(false);
     const [size, setSize] = useState(0);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         setSize(window.innerWidth);
         const handleResize = () => {
             const { innerWidth } = window;
