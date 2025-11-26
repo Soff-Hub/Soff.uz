@@ -220,7 +220,10 @@ const TopFreelanceRankings = () => {
                     <h3 className={styles.title}>
                         {sellersData?.count} ta frilanser topildi
                     </h3>
-                    <Link href="/freelancers">
+                    <Link
+                        href={
+                            '/freelancers?direction=' + (rankingCategory || '')
+                        }>
                         <a className={styles.viewAllButton}>
                             <button className={styles.btn}>
                                 Barchasini ko'rish

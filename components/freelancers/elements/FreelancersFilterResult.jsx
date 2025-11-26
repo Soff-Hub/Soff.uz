@@ -14,7 +14,7 @@ function FreelancersFilterResult({ data, collapsed, viewType = 'grid' }) {
     const router = useRouter();
     const { isDesktop } = useResponsive();
     const { startTimeout } = useTimeManager();
-    const { isLoggedIn, status } = useSelector((state) => state?.auth);
+    const { isLoggedIn } = useSelector((state) => state?.auth);
     const [selectedSellerId, setSelectedSellerId] = useState(null);
     const { mutate: createChat } = useCreateChat();
     const [authModal, setAuthModal] = useState(false);
@@ -52,7 +52,7 @@ function FreelancersFilterResult({ data, collapsed, viewType = 'grid' }) {
     };
 
     useEffect(() => {
-        router.push({
+        router.replace({
             pathname: router.pathname,
             query: {
                 ...router.query,

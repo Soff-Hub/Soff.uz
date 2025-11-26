@@ -251,7 +251,7 @@ const FreelancerHorizontalCard = ({ seller, onCreateChat }) => {
                                     }`}
                                     disabled={isBeginning}
                                     aria-label="Previous">
-                                    <IoIosArrowBack />
+                                    <IoIosArrowBack fontSize={18} />
                                 </button>
                                 <button
                                     ref={nextRef}
@@ -260,7 +260,7 @@ const FreelancerHorizontalCard = ({ seller, onCreateChat }) => {
                                     }`}
                                     disabled={isEnd}
                                     aria-label="Next">
-                                    <IoIosArrowForward />
+                                    <IoIosArrowForward fontSize={18} />
                                 </button>
                             </div>
                         ) : null}
@@ -274,16 +274,18 @@ const FreelancerHorizontalCard = ({ seller, onCreateChat }) => {
                                     overflow: 'hidden',
                                     paddingBottom: '10px',
                                 }}>
-                                {[1, 2, 3, 4].map((_, index) => (
-                                    <Skeleton.Button
-                                        key={index}
-                                        active
-                                        style={{
-                                            width: '280px',
-                                            height: '130px',
-                                        }}
-                                    />
-                                ))}
+                                {Array(4)
+                                    .fill(undefined)
+                                    .map((_, index) => (
+                                        <Skeleton.Button
+                                            key={index}
+                                            active
+                                            style={{
+                                                width: '280px',
+                                                height: '130px',
+                                            }}
+                                        />
+                                    ))}
                             </div>
                         ) : (
                             <Swiper
@@ -297,9 +299,12 @@ const FreelancerHorizontalCard = ({ seller, onCreateChat }) => {
                                 onSwiper={handleSwiperInit}
                                 onSlideChange={handleSlideChange}
                                 className={`${styles.servicesSwiper} ${
-                                    !isEnd && styles.categorySwiperEnding
+                                    !isEnd &&
+                                    !isMobile &&
+                                    styles.categorySwiperEnding
                                 } ${
                                     !isBeginning &&
+                                    !isMobile &&
                                     styles.categorySwiperBeginning
                                 }`}>
                                 {displayServices.map((service) => (
