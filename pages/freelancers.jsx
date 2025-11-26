@@ -75,9 +75,10 @@ export async function getServerSideProps(context) {
         keyword = '',
         position = '',
         direction = '',
-        sort_by = '',
+        sort_by = 'average_rating',
         limit = 20,
         offset = 0,
+        order = '',
     } = query;
 
     const params = new URLSearchParams();
@@ -98,13 +99,16 @@ export async function getServerSideProps(context) {
         params.append('direction', direction);
     }
 
-    if (sort_by) params.append('sort_by', sort_by);
+    if (sort_by && (sort_by !== 'average_rating' || order === 'asc'))
+        params.append('sort_by', sort_by);
     params.append('limit', limit);
     if (offset) {
         params.append('offset', offset);
     } else {
         params.append('offset', 0);
     }
+
+    if (order) params.append('order', order);
 
     const url = `${
         process.env.NEXT_PUBLIC_FREELEANCE_URL

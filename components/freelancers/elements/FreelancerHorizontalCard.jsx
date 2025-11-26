@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Badge, Button, Divider } from 'antd';
+import { Badge, Button, Divider, Skeleton } from 'antd';
 import { FaStar } from 'react-icons/fa';
 import { IoTimeOutline, IoLocationOutline } from 'react-icons/io5';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -13,6 +13,9 @@ import ServiceCard from '~/entities/service/service-card';
 import { AiOutlineRise } from 'react-icons/ai';
 import styles from '../styles/freelancerHorizontalCard.module.scss';
 import useResponsive from '~/shared/utilities/useResponsive';
+import { FaRegCommentDots } from 'react-icons/fa';
+import { FaArrowRightLong } from 'react-icons/fa6';
+import { useTimeManager } from '~/shared/hooks/useTimeManager';
 
 const formatLastActive = (lastActive) => {
     if (!lastActive) return "Noma'lum";
@@ -33,13 +36,14 @@ const formatLastActive = (lastActive) => {
 
 const FreelancerHorizontalCard = ({ seller, onCreateChat }) => {
     const { isMobile, isDesktop } = useResponsive();
+    const { startTimeout } = useTimeManager();
+    const [isCustomServicesLoading, setIsCustomServicesLoading] =
+        useState(true);
     const [swiperInstance, setSwiperInstance] = useState(null);
     const [isBeginning, setIsBeginning] = useState(true);
     const [isEnd, setIsEnd] = useState(false);
     const prevRef = useRef(null);
     const nextRef = useRef(null);
-
-    console.log({ seller });
 
     const isOnline = React.useMemo(() => {
         if (!seller?.last_active) return false;
@@ -91,13 +95,19 @@ const FreelancerHorizontalCard = ({ seller, onCreateChat }) => {
         <div className={styles.actions}>
             <Button
                 type="default"
+                iconPosition="start"
+                icon={<FaRegCommentDots />}
                 className={styles.messageBtn}
                 onClick={() => onCreateChat(seller?.seller_id)}>
                 Xabar
             </Button>
             <Link href={`/seller/${seller?.seller_id}`}>
                 <a>
-                    <Button type="primary" className={styles.detailsBtn}>
+                    <Button
+                        type="primary"
+                        iconPosition="end"
+                        icon={<FaArrowRightLong />}
+                        className={styles.detailsBtn}>
                         Batafsil
                     </Button>
                 </a>
@@ -124,7 +134,7 @@ const FreelancerHorizontalCard = ({ seller, onCreateChat }) => {
                         <FaStar className={styles.metaStar} />
                         <span>
                             {seller?.average_rating} (
-                            {seller?.completed_orders_count || 0} ta izoh)
+                            {seller?.feedbacks_count || 0} ta izoh)
                         </span>
                     </div>
                 )}
@@ -168,6 +178,14 @@ const FreelancerHorizontalCard = ({ seller, onCreateChat }) => {
             swiperInstance.navigation.update();
         }
     }, [swiperInstance, displayServices]);
+
+    useEffect(() => {
+        if (isCustomServicesLoading) {
+            startTimeout(() => {
+                setIsCustomServicesLoading(false);
+            }, 800);
+        }
+    }, [isCustomServicesLoading]);
 
     return (
         <div className={styles.horizontalCard}>
@@ -249,54 +267,83 @@ const FreelancerHorizontalCard = ({ seller, onCreateChat }) => {
                         ) : null}
                     </div>
                     <div className={styles.servicesSwiperWrapper}>
-                        <Swiper
-                            modules={[Navigation]}
-                            spaceBetween={16}
-                            slidesPerView="auto"
-                            navigation={{
-                                prevEl: prevRef.current,
-                                nextEl: nextRef.current,
-                            }}
-                            onSwiper={handleSwiperInit}
-                            onSlideChange={handleSlideChange}
-                            className={`${styles.servicesSwiper} ${
-                                !isEnd && styles.categorySwiperEnding
-                            } ${
-                                !isBeginning && styles.categorySwiperBeginning
-                            }`}>
-                            {displayServices.map((service) => (
-                                <SwiperSlide
-                                    key={service.id}
-                                    className={styles.serviceSlide}>
-                                    <div className={styles.serviceCardWrapper}>
-                                        <ServiceCard
-                                            service={service}
-                                            hasFooter={false}
-                                        />
-                                    </div>
-                                </SwiperSlide>
-                            ))}
-                            {seller.services_length > 3 && (
-                                <SwiperSlide
-                                    key="see_more"
-                                    className={styles.serviceSlide}>
-                                    <div className={styles.card}>
-                                        <h3 className={styles.title}>
-                                            {seller.services_length} ta
-                                            xizmatlar topildi
-                                        </h3>
-                                        <Link
-                                            href={`/seller/${seller?.seller_id}/?tab=service`}>
-                                            <a className={styles.viewAllButton}>
-                                                <button className={styles.btn}>
-                                                    Barchasini ko'rish
-                                                </button>
-                                            </a>
-                                        </Link>
-                                    </div>
-                                </SwiperSlide>
-                            )}
-                        </Swiper>
+                        {isCustomServicesLoading ? (
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    gap: '16px',
+                                    overflow: 'hidden',
+                                    paddingBottom: '10px',
+                                }}>
+                                {[1, 2, 3, 4].map((_, index) => (
+                                    <Skeleton.Button
+                                        key={index}
+                                        active
+                                        style={{
+                                            width: '280px',
+                                            height: '130px',
+                                        }}
+                                    />
+                                ))}
+                            </div>
+                        ) : (
+                            <Swiper
+                                modules={[Navigation]}
+                                spaceBetween={16}
+                                slidesPerView="auto"
+                                navigation={{
+                                    prevEl: prevRef.current,
+                                    nextEl: nextRef.current,
+                                }}
+                                onSwiper={handleSwiperInit}
+                                onSlideChange={handleSlideChange}
+                                className={`${styles.servicesSwiper} ${
+                                    !isEnd && styles.categorySwiperEnding
+                                } ${
+                                    !isBeginning &&
+                                    styles.categorySwiperBeginning
+                                }`}>
+                                {displayServices.map((service) => (
+                                    <SwiperSlide
+                                        key={service.id}
+                                        className={styles.serviceSlide}>
+                                        <div
+                                            className={
+                                                styles.serviceCardWrapper
+                                            }>
+                                            <ServiceCard
+                                                service={service}
+                                                hasFooter={false}
+                                            />
+                                        </div>
+                                    </SwiperSlide>
+                                ))}
+                                {seller.services_length > 3 && (
+                                    <SwiperSlide
+                                        key="see_more"
+                                        className={styles.serviceSlide}>
+                                        <div className={styles.card}>
+                                            <h3 className={styles.title}>
+                                                {seller.services_length} ta
+                                                xizmatlar topildi
+                                            </h3>
+                                            <Link
+                                                href={`/seller/${seller?.seller_id}/?tab=service`}>
+                                                <a
+                                                    className={
+                                                        styles.viewAllButton
+                                                    }>
+                                                    <button
+                                                        className={styles.btn}>
+                                                        Barchasini ko'rish
+                                                    </button>
+                                                </a>
+                                            </Link>
+                                        </div>
+                                    </SwiperSlide>
+                                )}
+                            </Swiper>
+                        )}
                     </div>
                 </div>
             ) : null}

@@ -1,4 +1,5 @@
-import { useState, useLayoutEffect } from 'react';
+import { useState } from 'react';
+import useIsomorphicLayoutEffect from '../hooks/useIsomorphicLayoutEffect';
 
 const useResponsive = () => {
     const [isMobile, setIsMobile] = useState(false);
@@ -6,7 +7,7 @@ const useResponsive = () => {
     const [isDesktop, setIsDesktop] = useState(false);
     const [size, setSize] = useState(0);
 
-    useLayoutEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         setSize(window.innerWidth);
         const handleResize = () => {
             const { innerWidth } = window;

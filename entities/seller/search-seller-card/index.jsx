@@ -3,7 +3,6 @@ import { Button, Badge } from 'antd';
 import { FaStar } from 'react-icons/fa';
 import { FaArrowRightLong } from 'react-icons/fa6';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
 import styles from './style.module.scss';
 import { IoTimeOutline, IoLocationOutline } from 'react-icons/io5';
 import Link from 'next/link';
@@ -26,8 +25,6 @@ const formatLastActive = (lastActive) => {
 };
 
 const SearchSellerCard = ({ seller, rankImage }) => {
-    const { push } = useRouter();
-
     const isOnline = useMemo(() => {
         if (!seller?.last_active) return false;
         const lastActiveTime = new Date(seller.last_active);
@@ -35,6 +32,8 @@ const SearchSellerCard = ({ seller, rankImage }) => {
         const diffMinutes = (now - lastActiveTime) / 1000 / 60;
         return diffMinutes <= 5;
     }, [seller?.last_active]);
+
+    console.log({ seller });
 
     return (
         <div className={styles.card}>
@@ -66,7 +65,7 @@ const SearchSellerCard = ({ seller, rankImage }) => {
                                 {seller?.average_rating}
                             </span>
                             <span className={styles.reviewCount}>
-                                ({seller?.completed_orders_count} ta izoh)
+                                ({seller?.total_feedbacks_count} ta izoh)
                             </span>
                         </div>
                     )}
@@ -91,10 +90,7 @@ const SearchSellerCard = ({ seller, rankImage }) => {
             </div>
             <Link href={`/seller/${seller?.soff_seller_id}`}>
                 <a>
-                    <Button
-                        onClick={() => push()}
-                        type="primary"
-                        className={styles.btn}>
+                    <Button type="primary" className={styles.btn}>
                         Batafsil <FaArrowRightLong />
                     </Button>
                 </a>

@@ -113,7 +113,7 @@ const ServiceDetail = ({ data }) => {
                     <MoneyBack />
                     <UserBox
                         rating={service?.avg_rating}
-                        feedbacks={service?.feedback_count}
+                        feedbacks={service?.user?.total_feedbacks_count} // NOTE: check this
                         priceBox={priceBox}
                         pushUser={pushUser}
                     />

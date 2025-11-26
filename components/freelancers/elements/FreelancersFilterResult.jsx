@@ -76,9 +76,16 @@ function FreelancersFilterResult({ data, collapsed, viewType = 'grid' }) {
                             className={`row row-gap-4 row-cols-2 row-cols-sm-2 row-cols-md-3 ${
                                 collapsed ? 'row-cols-lg-3' : 'row-cols-lg-4'
                             } `}>
-                            {data?.results?.map((s) => (
-                                <div key={s.id}>
-                                    <SearchSellerCard seller={s} />
+                            {data?.results?.map((item) => (
+                                <div key={item.id}>
+                                    <SearchSellerCard
+                                        seller={{
+                                            ...item,
+                                            total_feedbacks_count:
+                                                item?.feedbacks_count,
+                                            soff_seller_id: item.seller_id,
+                                        }}
+                                    />
                                 </div>
                             ))}
                         </div>
