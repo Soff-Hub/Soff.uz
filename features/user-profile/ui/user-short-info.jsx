@@ -46,7 +46,7 @@ const InfoRow = memo(({ icon, label, value }) => (
 
 const UserShortInfo = ({ seller }) => {
     const router = useRouter();
-    const { isLoggedIn, status } = useSelector(state => state?.auth);
+    const { isLoggedIn, status } = useSelector((state) => state?.auth);
     const { mutate: createChat } = useCreateChat();
     const { isMobile } = useResponsive();
     const { startTimeout } = useTimeManager();
@@ -54,9 +54,8 @@ const UserShortInfo = ({ seller }) => {
     const [authModal, setAuthModal] = useState(false);
     const [createOrderModal, setCreateOrderModal] = useState(false);
     const [latelyCreatedOrder, setLatelyCreatedOrder] = useState(null);
-    const [orderPaymentPromptModal, setOrderPaymentPromptModal] = useState(
-        false
-    );
+    const [orderPaymentPromptModal, setOrderPaymentPromptModal] =
+        useState(false);
 
     const lastActive = useMemo(
         () =>
@@ -160,7 +159,7 @@ const UserShortInfo = ({ seller }) => {
         }
     };
 
-    const onOrderCreateSuccess = orderId => {
+    const onOrderCreateSuccess = (orderId) => {
         setLatelyCreatedOrder(orderId);
         setOrderPaymentPromptModal(true);
     };
@@ -185,12 +184,14 @@ const UserShortInfo = ({ seller }) => {
         );
     };
 
-    const imageSrc = useMemo(() => seller?.image || '/static/img/ozodbek.png', [
-        seller?.image,
-    ]);
-    const imageAlt = useMemo(() => seller?.full_name || 'User image', [
-        seller?.full_name,
-    ]);
+    const imageSrc = useMemo(
+        () => seller?.image || '/static/img/ozodbek.png',
+        [seller?.image]
+    );
+    const imageAlt = useMemo(
+        () => seller?.full_name || 'User image',
+        [seller?.full_name]
+    );
 
     const handleSuccessAuth = () => {
         if (activeModal === 'createOrder') {
@@ -383,7 +384,7 @@ const UserShortInfo = ({ seller }) => {
                     Statistikalar
                 </span>
                 <div className={cn('flex', 'flex-col', 'gap-2')}>
-                    {sellerStats.map(stat => (
+                    {sellerStats.map((stat) => (
                         <div
                             key={stat.title}
                             className={cn(

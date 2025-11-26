@@ -6,9 +6,7 @@ import useResponsive from '~/shared/utilities/useResponsive';
 import ProductCard from '~/entities/product/product-card';
 import { LAST_ADDED_PRODUCTS } from '~/shared/api/end-points';
 import { Skeleton } from 'antd';
-import { AiOutlineRight } from "react-icons/ai";
-
-
+import { AiOutlineRight } from 'react-icons/ai';
 
 const LastProducts = () => {
     const { isMobile } = useResponsive();
@@ -24,8 +22,6 @@ const LastProducts = () => {
         cacheTime: 1000 * 60 * 10,
         enabled: isVisible,
     };
-
-
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -89,13 +85,37 @@ const LastProducts = () => {
     );
 
     const data = [
-        { title: 'Fayllar', href: '/scientific-resources/all', data: fileData?.results },
-        { title: '3D moddellar', href: '/3d-models-and-interior-designs/all', data: threeDData?.results },
-        { title: 'Dizayn shablonlari', href: '/design-developments/all', data: designData?.results },
-        { title: 'Video ishlanmalar', href: '/video-lessons/all', data: videoData?.results },
-        { title: 'Tayyor shablonlar', href: '/templates/all', data: templateData?.results },
-        { title: 'Vebsaytlar', href: '/websites/all', data: websiteData?.results },
-    ]
+        {
+            title: 'Fayllar',
+            href: '/scientific-resources/all',
+            data: fileData?.results,
+        },
+        {
+            title: '3D moddellar',
+            href: '/3d-models-and-interior-designs/all',
+            data: threeDData?.results,
+        },
+        {
+            title: 'Dizayn shablonlari',
+            href: '/design-developments/all',
+            data: designData?.results,
+        },
+        {
+            title: 'Video ishlanmalar',
+            href: '/video-lessons/all',
+            data: videoData?.results,
+        },
+        {
+            title: 'Tayyor shablonlar',
+            href: '/templates/all',
+            data: templateData?.results,
+        },
+        {
+            title: 'Vebsaytlar',
+            href: '/websites/all',
+            data: websiteData?.results,
+        },
+    ];
 
     const isLoading =
         fileLoading ||
@@ -105,7 +125,6 @@ const LastProducts = () => {
         websiteLoading ||
         templateLoading;
 
-
     useEffect(() => {
         if (!isLoading && isVisible) {
             const timeout = setTimeout(() => setAnimate(true), 100);
@@ -114,7 +133,9 @@ const LastProducts = () => {
     }, [isLoading, isVisible]);
 
     return (
-        <section ref={sectionRef} className={`${styles.wrapper} ${isVisible ? styles.visible : ''}`}>
+        <section
+            ref={sectionRef}
+            className={`${styles.wrapper} ${isVisible ? styles.visible : ''}`}>
             <div className={styles.titleWrapper}>
                 <img
                     src="/static/img/star.svg"
@@ -128,7 +149,8 @@ const LastProducts = () => {
 
             {!isLoading && (
                 <>
-                    {data.filter((section) => section.data?.length > 0)
+                    {data
+                        .filter((section) => section.data?.length > 0)
                         .map((section, index) => (
                             <ProductSection
                                 key={section.title}
@@ -149,9 +171,8 @@ export default LastProducts;
 
 const ProductSection = memo(({ title, href, data, isVisible, delay }) => (
     <div
-        className={`${styles.productBox} ${isVisible ? styles.fadeIn : ""}`}
-        style={{ transitionDelay: `${delay}s` }}
-    >
+        className={`${styles.productBox} ${isVisible ? styles.fadeIn : ''}`}
+        style={{ transitionDelay: `${delay}s` }}>
         <Link href={href}>
             <div className={styles.titleBox}>
                 <h3>{title}</h3>
@@ -173,9 +194,7 @@ const ProductSkeleton = memo(({ limit = 5 }) => {
         <div className="px-2 py-6 mt-4">
             <div className="row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-gap-4">
                 {Array.from({ length: limit * 6 }).map((_, i) => (
-                    <div
-                        className='col d-flex flex-column'
-                    >
+                    <div key={i} className="col d-flex flex-column">
                         <Skeleton.Image
                             active
                             style={{
@@ -186,7 +205,10 @@ const ProductSkeleton = memo(({ limit = 5 }) => {
                         />
                         <Skeleton
                             active
-                            paragraph={{ rows: 3, width: ['100%', '100%', "100%"] }}
+                            paragraph={{
+                                rows: 3,
+                                width: ['100%', '100%', '100%'],
+                            }}
                             title={false}
                             className="mt-4"
                         />
@@ -195,4 +217,4 @@ const ProductSkeleton = memo(({ limit = 5 }) => {
             </div>
         </div>
     );
-})
+});

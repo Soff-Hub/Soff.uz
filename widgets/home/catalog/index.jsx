@@ -146,8 +146,9 @@ const CatalogCard = ({ content_type, title }) => {
                     <div className={cardStyles.cardImageBlock}>
                         <div className={cardStyles.cardBlockRight}>
                             <div className={cardStyles.cardBlockRightTop}>
-                                {cardImages[content_type]?.map((img) => (
+                                {cardImages[content_type]?.map((img, i) => (
                                     <div
+                                        key={i}
                                         className={
                                             cardStyles.cardBlockRightTopRight
                                         }

@@ -46,7 +46,7 @@ const PendingOrderWrapper = ({ children }) => {
     );
 };
 
-const orderStatusAssets = status => {
+const orderStatusAssets = (status) => {
     switch (status) {
         case 'completed':
             return {
@@ -259,7 +259,7 @@ const OrderCard = ({
 
                         {showMoreBtn && (
                             <span
-                                onClick={() => setShowMore(prev => !prev)}
+                                onClick={() => setShowMore((prev) => !prev)}
                                 style={{
                                     color: '#1677ff',
                                     fontWeight: 500,
@@ -401,8 +401,9 @@ const OrderCard = ({
                                                     backgroundColor: '#00a44f',
                                                 },
                                             }}>
-                                            {order?.offers?.map(item => (
+                                            {order?.offers?.map((item, i) => (
                                                 <Avatar
+                                                    key={i}
                                                     size={25}
                                                     src={
                                                         item?.photo_url ||
@@ -415,13 +416,14 @@ const OrderCard = ({
                                 )}
                             </button>
                         )}
-                        {statusAsset.status === 'cancelled' && isPartiallyPaid && (
-                            <div className={styles.rejectedLabel}>
-                                <i className="fa fa-exclamation-circle" />
-                                Buyurtma to'lovingiz 24 soat ichida
-                                profilingizga qaytariladi.
-                            </div>
-                        )}
+                        {statusAsset.status === 'cancelled' &&
+                            isPartiallyPaid && (
+                                <div className={styles.rejectedLabel}>
+                                    <i className="fa fa-exclamation-circle" />
+                                    Buyurtma to'lovingiz 24 soat ichida
+                                    profilingizga qaytariladi.
+                                </div>
+                            )}
                     </div>
                 )}
                 {infoOnly && (

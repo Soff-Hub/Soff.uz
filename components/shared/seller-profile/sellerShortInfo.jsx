@@ -14,12 +14,12 @@ import { setActiveIndex } from '../../../store/seller/slice';
 import { apiForFreelance } from '~/repositories/api';
 import CreateOrderModal from '~/shared/components/modals/CreateOrderModal';
 import AuthModal from '~/components/AuthModal';
-export default function     SellerShortInfo({ sellerInfo, pid }) {
+export default function SellerShortInfo({ sellerInfo, pid }) {
     const [nameModal, setNameModal] = useState(false);
     const [fullName, setFullName] = useState(false);
     const [surName, setSurname] = useState(false);
     const { mutate: createChat } = useCreateChat();
-    const { isLoggedIn } = useSelector(state => state.auth);
+    const { isLoggedIn } = useSelector((state) => state.auth);
     const { push } = useRouter();
     const dispatch = useDispatch();
     const { data: servicesCat, isLoading } = useQuery({
@@ -27,11 +27,11 @@ export default function     SellerShortInfo({ sellerInfo, pid }) {
         queryFn: () =>
             fetch(
                 `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/customer/top-categories/${sellerInfo?.id}`
-            ).then(res => res.json()),
+            ).then((res) => res.json()),
         enabled: !!sellerInfo?.id,
     });
     const [createModal, setCreateModal] = useState(false);
-    const [ authModal, setAuthModal ] = useState(false)
+    const [authModal, setAuthModal] = useState(false);
 
     const { data: services } = useQuery({
         queryKey: ['getSellerServices'],
@@ -61,12 +61,12 @@ export default function     SellerShortInfo({ sellerInfo, pid }) {
     };
 
     const handleOrder = () => {
-        if(isLoggedIn){
-            setCreateModal(true)
-        }else{
-            setAuthModal(true)
+        if (isLoggedIn) {
+            setCreateModal(true);
+        } else {
+            setAuthModal(true);
         }
-    }
+    };
 
     return (
         <div className="sellerInfo">
@@ -211,8 +211,9 @@ export default function     SellerShortInfo({ sellerInfo, pid }) {
                     Xizmatlar
                 </h4>
                 <ul>
-                    {servicesCat?.map(cat => (
+                    {servicesCat?.map((cat) => (
                         <li
+                            key={cat?.title}
                             style={{ fontWeight: 300, fontSize: '14px' }}
                             className="m-0">
                             {cat?.title}
@@ -274,7 +275,7 @@ export default function     SellerShortInfo({ sellerInfo, pid }) {
                 id={sellerInfo?.id}
             />
 
-            <AuthModal 
+            <AuthModal
                 open={authModal}
                 onClose={() => setAuthModal(false)}
                 onSuccess={() => setCreateModal(true)}

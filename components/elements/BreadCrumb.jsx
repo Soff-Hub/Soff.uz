@@ -28,7 +28,7 @@ const BreadCrumb = ({ breacrumb, fixedToHeader }) => {
                     <ul className="breadcrumb">
                         {breacrumb.map((item, index) => {
                             if (!item.url) {
-                                return <li key={index}>{item.text}</li>;
+                                return <li key={item.text}>{item.text}</li>;
                             } else {
                                 return (
                                     <li key={item.text}>

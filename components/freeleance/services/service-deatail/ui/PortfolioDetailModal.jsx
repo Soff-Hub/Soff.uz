@@ -83,6 +83,7 @@ const PortfolioDetailModal = ({ open, onClose, portfolio }) => {
                     {galleryVideos.length > 0 ? (
                         galleryVideos.map((video, index) => (
                             <div
+                                key={index}
                                 className="video-wrapper"
                                 style={{
                                     width: '100%',

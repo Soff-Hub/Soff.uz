@@ -86,7 +86,7 @@ const PortfolioModal = ({ open, onClose, portfolio }) => {
                     )}
                     {galleryVideos.length > 0 ? (
                         galleryVideos.map((video, index) => (
-                            <div className="video-wrapper">
+                            <div className="video-wrapper" key={index}>
                                 <iframe
                                     src={`${getYouTubeEmbed(
                                         video.video_url

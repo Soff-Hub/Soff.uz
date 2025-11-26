@@ -58,15 +58,12 @@ const SellerPage = ({ seller, sellerr }) => {
         }
     };
 
-
     const getSellerDocumentType = async (slug) => {
         const respons = await ProductRepository.getSellerProductNameSlug(slug);
         if (respons?.status === 200) {
             setProductType(respons?.data);
-
-        }         
+        }
     };
-
 
     const handlePagination = async (e) => {
         setPage(e);
@@ -93,15 +90,11 @@ const SellerPage = ({ seller, sellerr }) => {
         },
     ];
 
-
-
-
     useEffect(() => {
         if (pid) {
             getSellerDocumentType(pid);
         }
     }, [pid]);
-
 
     useEffect(() => {
         if (pid) {
@@ -109,11 +102,12 @@ const SellerPage = ({ seller, sellerr }) => {
         }
     }, [pid, typeSelect, search]);
 
-
     function checkIfUserIsOnline(lastVisit) {
         const currentTime = new Date();
         const lastVisitTime = new Date(lastVisit);
-        const fiveMinutesAgo = new Date(currentTime.getTime() - lastVisitTime?.getTime());
+        const fiveMinutesAgo = new Date(
+            currentTime.getTime() - lastVisitTime?.getTime()
+        );
 
         if (300000 >= fiveMinutesAgo) {
             return setDateTime(true);
@@ -123,10 +117,8 @@ const SellerPage = ({ seller, sellerr }) => {
     }
 
     useEffect(() => {
-        checkIfUserIsOnline(sellerr?.seller?.last_login)
-    }, [sellerr?.seller?.last_login])
-
-
+        checkIfUserIsOnline(sellerr?.seller?.last_login);
+    }, [sellerr?.seller?.last_login]);
 
     return (
         <PageContainer>
@@ -174,28 +166,35 @@ const SellerPage = ({ seller, sellerr }) => {
                             <div
                                 className="user_profile_card"
                                 style={{
-                                    backgroundImage: `url(${(isBigScreen ?
-                                        sellerr?.seller?.mobile_background_image :
-                                        sellerr?.seller?.background_image) || '/static/img/orqafon1.avif'
-                                        })`,
+                                    backgroundImage: `url(${
+                                        (isBigScreen
+                                            ? sellerr?.seller
+                                                  ?.mobile_background_image
+                                            : sellerr?.seller
+                                                  ?.background_image) ||
+                                        '/static/img/orqafon1.avif'
+                                    })`,
                                 }}>
                                 <div className="profile_images_card">
                                     <Image.PreviewGroup>
                                         <Image
                                             width={200}
-                                            src={`${sellerr?.seller?.image
-                                                ? sellerr?.seller?.image
-                                                : '/static/img/ozodbek.png'
-                                                }`}
+                                            src={`${
+                                                sellerr?.seller?.image
+                                                    ? sellerr?.seller?.image
+                                                    : '/static/img/ozodbek.png'
+                                            }`}
                                         />
                                     </Image.PreviewGroup>
-                                    <i className={`fa-solid fa-circle iconOnlayn text-${dateTime ? "success" : "secondary"}`}></i>
+                                    <i
+                                        className={`fa-solid fa-circle iconOnlayn text-${
+                                            dateTime ? 'success' : 'secondary'
+                                        }`}></i>
                                 </div>
                             </div>
                             <div className="user_profile_body usr_bodyy">
                                 {sellerr?.seller && (
                                     <div className="d-flex justify-content-between user_titleCard ">
-
                                         <div>
                                             <h1>
                                                 {sellerr?.seller?.full_name}{' '}
@@ -205,17 +204,23 @@ const SellerPage = ({ seller, sellerr }) => {
                                                 Ro'yxatdan o'tgan sana:{' '}
                                                 {sellerr?.created_at}{' '}
                                             </p>
-                                            {dateTime ?
-                                                <p className='text-success fw-bold'>Onlayn</p> :
-                                                (
-                                                    sellerr?.seller?.last_login &&
+                                            {dateTime ? (
+                                                <p className="text-success fw-bold">
+                                                    Onlayn
+                                                </p>
+                                            ) : (
+                                                sellerr?.seller?.last_login && (
                                                     <p>
-                                                        Oxirgi  marta:{' '}
-                                                        <CalculateTimeDifference targetDate={sellerr?.seller?.last_login} />
-
+                                                        Oxirgi marta:{' '}
+                                                        <CalculateTimeDifference
+                                                            targetDate={
+                                                                sellerr?.seller
+                                                                    ?.last_login
+                                                            }
+                                                        />
                                                     </p>
                                                 )
-                                            }
+                                            )}
                                         </div>
 
                                         <div className="col-12 col-md-9 user_cardss">
@@ -275,10 +280,11 @@ const SellerPage = ({ seller, sellerr }) => {
                                             <div className="d-xl-flex d-lg-flex d-md-flex d-sm-flex justify-content-center align-items-center gap-5 py-4 ">
                                                 <a
                                                     href="#products"
-                                                    className={`text-white ps-btn w-100 text-center pb-4 pt-4 ${tab === 'tab-1'
-                                                        ? 'donate-color-btn'
-                                                        : ''
-                                                        }`}
+                                                    className={`text-white ps-btn w-100 text-center pb-4 pt-4 ${
+                                                        tab === 'tab-1'
+                                                            ? 'donate-color-btn'
+                                                            : ''
+                                                    }`}
                                                     style={{
                                                         textDecoration: 'none',
                                                     }}
@@ -290,20 +296,22 @@ const SellerPage = ({ seller, sellerr }) => {
                                                     Mahsulotlari
                                                 </a>
                                                 <button
-                                                    className={`text-white ps-btn w-100 mt-3 mt-xl-0 mt-lg-0 mt-md-0 mt-sm-0 ${tab === 'tab-2'
-                                                        ? 'donate-color-btn'
-                                                        : ''
-                                                        }`}
+                                                    className={`text-white ps-btn w-100 mt-3 mt-xl-0 mt-lg-0 mt-md-0 mt-sm-0 ${
+                                                        tab === 'tab-2'
+                                                            ? 'donate-color-btn'
+                                                            : ''
+                                                    }`}
                                                     onClick={showModal}>
                                                     {' '}
                                                     <i className="fa-regular fa-pen-to-square"></i>{' '}
                                                     Buyurtma berish
                                                 </button>
                                                 <button
-                                                    className={`text-white ps-btn w-100 mt-3 mt-xl-0 mt-lg-0 mt-md-0 mt-sm-0 ${tab === 'tab-3'
-                                                        ? 'donate-color-btn'
-                                                        : ''
-                                                        }`}
+                                                    className={`text-white ps-btn w-100 mt-3 mt-xl-0 mt-lg-0 mt-md-0 mt-sm-0 ${
+                                                        tab === 'tab-3'
+                                                            ? 'donate-color-btn'
+                                                            : ''
+                                                    }`}
                                                     // onClick={showModalDonate}
                                                     onClick={() =>
                                                         setTab('tab-3')
@@ -320,22 +328,25 @@ const SellerPage = ({ seller, sellerr }) => {
 
                             <div className="seller_contaoner2">
                                 <select
-
                                     onChange={(e) =>
                                         setTypeSelect(e.target.value)
                                     }
                                     className="form-control seller_filter rounded-3">
                                     {productType?.map((e) => {
                                         return (
-                                            <option value={e.type} selected={e?.type === typeSelect} >
-                                                {
-
-                                                    e?.type === 'audio' ? "Audio materiallar" :
-                                                        e?.type === 'video' ? "Video materiallar" :
-                                                            e?.type === 'template' ? "Shablon materiallar" : "Hujjat materiallar"
-
-
+                                            <option
+                                                value={e.type}
+                                                selected={
+                                                    e?.type === typeSelect
                                                 }
+                                                key={e?.type}>
+                                                {e?.type === 'audio'
+                                                    ? 'Audio materiallar'
+                                                    : e?.type === 'video'
+                                                    ? 'Video materiallar'
+                                                    : e?.type === 'template'
+                                                    ? 'Shablon materiallar'
+                                                    : 'Hujjat materiallar'}
                                                 {e?.count !== 0
                                                     ? `- ${e?.count} ta`
                                                     : ''}
@@ -349,7 +360,6 @@ const SellerPage = ({ seller, sellerr }) => {
                                     onInput={(e) => setSearch(e.target.value)}
                                     className="form-control  rounded-3 seller_filter_option"
                                 />
-
                             </div>
                         </div>
                     </div>
@@ -370,14 +380,12 @@ const SellerPage = ({ seller, sellerr }) => {
                     <SellerDonateForm />
                 )}
             </div>
-        </PageContainer >
+        </PageContainer>
     );
 };
 
 export async function getServerSideProps({ query }) {
-    const response = await fetch(
-        baseUrl + `customer/top-sellers/${query.pid}`
-    );
+    const response = await fetch(baseUrl + `customer/top-sellers/${query.pid}`);
 
     // Agar topilmasa yoki status 404 bo‘lsa
     if (!response.ok) {
@@ -398,7 +406,7 @@ export async function getServerSideProps({ query }) {
     return {
         props: {
             seller: {},
-            sellerr
+            sellerr,
         },
     };
 }

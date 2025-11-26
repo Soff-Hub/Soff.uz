@@ -19,13 +19,9 @@ const MiniCart = () => {
         data && data.length > 0 ? (
             <div className={'ps-basket__content'}>
                 <div className="ps-basket__content__items">
-                    {data?.map((item) => {
-                        return (
-                            <ProductOnCart
-                                product={item}
-                                key={item?.id}></ProductOnCart>
-                        );
-                    })}
+                    {data?.map((item) => (
+                        <ProductOnCart product={item} key={item?.id} />
+                    ))}
                 </div>
                 <div className="ps-basket__content__footer">
                     <h3>
