@@ -95,20 +95,19 @@ const FreelancerHorizontalCard = ({ seller, onCreateChat }) => {
         <div className={styles.actions}>
             <Button
                 type="default"
-                iconPosition="start"
-                icon={<FaRegCommentDots />}
-                className={styles.messageBtn}
                 onClick={() => onCreateChat(seller?.seller_id)}>
-                Xabar
+                <span>
+                    <FaRegCommentDots style={{ marginRight: '6px' }} />
+                    Xabar
+                </span>
             </Button>
             <Link href={`/seller/${seller?.seller_id}`}>
                 <a>
-                    <Button
-                        type="primary"
-                        iconPosition="end"
-                        icon={<FaArrowRightLong />}
-                        className={styles.detailsBtn}>
-                        Batafsil
+                    <Button type="primary">
+                        <span>
+                            Batafsil
+                            <FaArrowRightLong style={{ marginLeft: '6px' }} />
+                        </span>
                     </Button>
                 </a>
             </Link>
