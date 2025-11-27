@@ -10,7 +10,7 @@ import styles from '../styles/freelancers.module.scss';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
 import useResponsive from '~/shared/utilities/useResponsive';
 
-function FreelancersFilterResult({ data, collapsed, viewType = 'grid' }) {
+function FreelancersFilterResult({ data, collapsed, viewType }) {
     const router = useRouter();
     const { isDesktop } = useResponsive();
     const { startTimeout } = useTimeManager();
@@ -52,15 +52,19 @@ function FreelancersFilterResult({ data, collapsed, viewType = 'grid' }) {
     };
 
     useEffect(() => {
-        router.replace({
-            pathname: router.pathname,
-            query: {
-                ...router.query,
-                offset: undefined,
-                limit,
+        router.replace(
+            {
+                pathname: router.pathname,
+                query: {
+                    ...router.query,
+                    offset: undefined,
+                    limit,
+                },
             },
-        });
-    }, [collapsed]);
+            undefined,
+            { shallow: viewType === 'horizontal' }
+        );
+    }, [collapsed, viewType]);
 
     return (
         <div

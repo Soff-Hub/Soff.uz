@@ -33,9 +33,14 @@ function FreelancerSearchInput() {
         : [];
 
     const handleSearch = () => {
+        const newQueries = router.query;
+
+        delete newQueries.position;
+        delete newQueries.direction;
+
         router.push({
             pathname: router.pathname,
-            query: { ...router.query, keyword: search },
+            query: { ...newQueries, keyword: search },
         });
     };
 

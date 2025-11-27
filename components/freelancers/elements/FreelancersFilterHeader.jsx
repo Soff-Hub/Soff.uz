@@ -33,7 +33,7 @@ function FreelancersFilterHeader({
             query: {
                 ...router.query,
                 sort_by: value,
-                order: value === 'average_rating' ? 'desc' : 'asc',
+                order: 'desc',
             },
         });
     };
