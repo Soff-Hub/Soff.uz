@@ -3,7 +3,9 @@ import ProductRepository from '~/repositories/ProductRepository';
 import { setSaved, setSavedItem } from '~/store/ecomerce/slice';
 export default function useWishlist() {
     const dispatch = useDispatch();
-    const { wishlist } = useSelector((state) => state.ecomerce);
+    const { ecomerce } = useSelector((state) => state);
+    const wishlist = ecomerce?.wishlist || [];
+    const cartItems = ecomerce?.cartDataItems || [];
 
     return {
         wishlist,
@@ -27,7 +29,7 @@ export default function useWishlist() {
         },
 
         isSavedItem: (itemId) => {
-            return wishlist.some((el) => el.id === itemId);
+            return cartItems.some((el) => el.id === itemId);
         },
 
         removeSavedItem: (newItem) => {
