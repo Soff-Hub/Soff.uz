@@ -1,4 +1,10 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, {
+    useState,
+    useCallback,
+    useMemo,
+    useRef,
+    useEffect,
+} from 'react';
 import styles from '../style/chat.module.scss';
 import { Button, Empty, Input, Spin } from 'antd';
 import { truncateTitle } from '~/shared/utilities/TruncateTitle';
@@ -6,6 +12,7 @@ import { useRouter } from 'next/router';
 import useChats from '../api/useChats';
 import useDebounce from '~/shared/hooks/useDebounce';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
+import useCreateChat from '../api/useCreateChat';
 
 function BackButton() {
     const router = useRouter();
@@ -31,10 +38,20 @@ function BackButton() {
     );
 }
 
+const STATIC_OPPONENT_ID = 30;
+
+const DEFAULT_STATIC_CHAT_COPY = {
+    opponent_name: 'Zufarbek Abdurakhmonov',
+    opponent_photo_url: '/static/img/ozodbek.png',
+    last_message: { content: '' },
+};
+
 const ChatSidebar = ({ setChatId, chatId }) => {
     const [search, setSearch] = useState('');
     const debouncedSearch = useDebounce(search, 300);
     const router = useRouter();
+    const { mutate: createChat, isPending: isCreatingChat } = useCreateChat();
+    const [persistedStaticChat, setPersistedStaticChat] = useState(null);
 
     const handleChatId = useCallback(
         (id) => {
@@ -48,6 +65,75 @@ const ChatSidebar = ({ setChatId, chatId }) => {
     );
 
     const { chats, isLoading } = useChats(debouncedSearch);
+
+    const getOpponentId = useCallback((chat) => {
+        if (!chat) return null;
+        return (
+            chat?.opponent?.id ??
+            chat?.opponent_id ??
+            chat?.opponentId ??
+            chat?.opponent?.soff_seller_id ??
+            null
+        );
+    }, []);
+
+    const existingStaticChat = useMemo(
+        () => chats?.find((chat) => getOpponentId(chat) === STATIC_OPPONENT_ID),
+        [chats, getOpponentId]
+    );
+
+    useEffect(() => {
+        if (existingStaticChat?.chat_id) {
+            setPersistedStaticChat(existingStaticChat);
+        }
+    }, [existingStaticChat]);
+
+    const resolvedStaticChat = persistedStaticChat ?? existingStaticChat;
+
+    const staticChat = useMemo(() => {
+        if (resolvedStaticChat) {
+            return {
+                ...resolvedStaticChat,
+                chat_id:
+                    resolvedStaticChat.chat_id ?? `static-${STATIC_OPPONENT_ID}`,
+                __isStatic: true,
+            };
+        }
+
+        return {
+            chat_id: `static-${STATIC_OPPONENT_ID}`,
+            unread_count: 0,
+            ...DEFAULT_STATIC_CHAT_COPY,
+            last_message: {
+                content: DEFAULT_STATIC_CHAT_COPY.last_message.content,
+            },
+            __isStatic: true,
+        };
+    }, [resolvedStaticChat]);
+
+    const orderedChats = useMemo(() => {
+        const dynamicChats =
+            chats?.filter((chat) => getOpponentId(chat) !== STATIC_OPPONENT_ID) ??
+            [];
+
+        return [staticChat, ...dynamicChats];
+    }, [chats, staticChat, getOpponentId]);
+
+    const handleStaticChatClick = useCallback(() => {
+        const activeStaticChatId =
+            resolvedStaticChat?.chat_id ?? existingStaticChat?.chat_id;
+
+        if (activeStaticChatId) {
+            handleChatId(activeStaticChatId);
+            return;
+        }
+        createChat(STATIC_OPPONENT_ID);
+    }, [createChat, existingStaticChat, handleChatId, resolvedStaticChat]);
+
+    const hasDynamicChats = useMemo(
+        () => orderedChats?.some((chat) => !chat?.__isStatic),
+        [orderedChats]
+    );
 
     return (
         <div className={styles.chat_sidebar}>
@@ -66,18 +152,31 @@ const ChatSidebar = ({ setChatId, chatId }) => {
                         <Spin size="large" tip="Qidirilmoqda..." />
                     </div>
                 )}
-                {!isLoading && chats?.length === 0 && (
+                {!isLoading && !hasDynamicChats && (
                     <Empty
                         description="Chat topilmadi"
                         image={Empty.PRESENTED_IMAGE_SIMPLE}
                     />
                 )}
                 {!isLoading &&
-                    chats?.map((chat) => (
+                    orderedChats?.map((chat, index) => {
+                        const isStatic = chat?.__isStatic;
+                        const key =
+                            chat?.chat_id ??
+                            (isStatic
+                                ? `static-${STATIC_OPPONENT_ID}`
+                                : `chat-${index}`);
+
+                        return (
                         <div
-                            key={chat.chat_id}
-                            onClick={() => handleChatId(chat?.chat_id)}
-                            className={styles.sidebar_chat}>
+                                key={key}
+                                onClick={() =>
+                                    isStatic
+                                        ? handleStaticChatClick()
+                                        : handleChatId(chat?.chat_id)
+                                }
+                                className={`${styles.sidebar_chat} `}
+                                aria-disabled={isStatic && isCreatingChat}>
                             <img
                                 src={
                                     chat?.opponent_photo_url ||
@@ -96,14 +195,19 @@ const ChatSidebar = ({ setChatId, chatId }) => {
                                     </span>
                                 </div>
                                 <div className={styles.box2}>
-                                    <p></p>
-                                    {chat?.unread_count > 0 && (
+                                    <p>
+                                        {isStatic && isCreatingChat && (
+                                            <Spin size="small" />
+                                        )}
+                                    </p>
+                                    {!isStatic && chat?.unread_count > 0 && (
                                         <span>{chat?.unread_count}</span>
                                     )}
                                 </div>
                             </div>
                         </div>
-                    ))}
+                        );
+                    })}
             </div>
         </div>
     );
