@@ -21,6 +21,11 @@ import { useRouter } from 'next/router';
 import OrderPaymentPrompt from './OrderPaymentPrompt';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
 import { FaLink } from 'react-icons/fa6';
+import styles from '../styles/user-short-info.module.scss';
+import { FaDollarSign, FaChartLine } from 'react-icons/fa'; // example icons
+import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
+import { GiTakeMyMoney } from 'react-icons/gi';
+import { PiMoneyWavyBold } from 'react-icons/pi';
 
 dayjs.extend(relativeTime);
 dayjs.locale('uz-latn');
@@ -71,7 +76,7 @@ const UserShortInfo = ({ seller }) => {
     );
 
     const flexClass = useRcn({
-        mobile: 'hidden',
+        mobile: 'flex',
         tablet: 'flex',
         desktop: 'flex',
     });
@@ -85,7 +90,7 @@ const UserShortInfo = ({ seller }) => {
     const marginClass = useRcn({
         mobile: 'mt-4',
         tablet: 'mt-4',
-        desktop: 'mt-5',
+        desktop: 'mt-4',
     });
 
     const sellerStats = useMemo(
@@ -283,6 +288,31 @@ const UserShortInfo = ({ seller }) => {
                     )}>
                     {seller?.position}
                 </h4>
+                {Boolean(seller?.total_income) && (
+                    <div className={styles.totalIncome}>
+                        <div className={styles.card}>
+                            {/* <div className={styles.iconBg}>
+                                <FaDollarSign className={styles.icon} />
+                                </div> */}
+                            <div className={styles.right}>
+                                <PiMoneyWavyBold className={styles.icon} />
+                            </div>
+                            <div className={styles.info}>
+                                <p className={styles.label}>Jami daromad</p>
+                                <div className={styles.amount}>
+                                    <span className={styles.value}>
+                                        {formatCurrencyWithSpace(
+                                            seller?.total_income
+                                        )}
+                                    </span>
+                                    <span className={styles.currency}>
+                                        so'm
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
                 <Button
                     type="primary"
                     shape="round"
@@ -333,7 +363,7 @@ const UserShortInfo = ({ seller }) => {
                 />
             </div>
 
-            <Divider size="small" className={cn(flexClass)} />
+            <Divider size="small" style={{ marginBlock: '16px' }} />
             <div className={cn(marginClass, flexClass, 'gap-3')}>
                 <Button
                     type="default"
@@ -372,7 +402,7 @@ const UserShortInfo = ({ seller }) => {
                 </Button>
             </div>
 
-            <Divider size="small" className={cn(flexClass)} />
+            <Divider size="small" style={{ marginBlock: '16px' }} />
             <div className={cn(marginClass)}>
                 <span
                     className={cn(
