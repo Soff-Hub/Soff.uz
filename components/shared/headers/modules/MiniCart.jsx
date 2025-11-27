@@ -4,8 +4,23 @@ import Link from 'next/link';
 import ProductOnCart from '~/components/elements/products/ProductOnCart';
 import { calculateAmount } from '~/shared/utilities/ecomerce-helpers';
 import { addPeriodToThousands } from '~/components/partials/account/price-formatter';
-import { Badge, Popover } from 'antd';
+import { Badge, Popover, Button } from 'antd';
 import { cn } from '~/shared/utilities/cn';
+
+const flexStyle = {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '10px',
+    justifyContent: 'center',
+};
+
+const flexItemStyle = {
+    flex: '1',
+};
+
+const fullWidthStyle = {
+    width: '100%',
+};
 
 const MiniCart = () => {
     const state = useSelector((state) => state.auth.user);
@@ -26,24 +41,51 @@ const MiniCart = () => {
                 <div className="ps-basket__content__footer">
                     <h3>
                         Jami:
-                        <strong>{hisob ? hisob : 0} so'm</strong>
+                        <strong
+                            style={{
+                                fontWeight: 'bold',
+                            }}>
+                            {hisob ? hisob : 0} so'm
+                        </strong>
                     </h3>
-                    <div className="ps-basket__content__footer__figure">
+                    <div
+                        // className="ps-basket__content__footer__figure"
+                        style={flexStyle}>
                         <Link href="/account/shopping-cart">
-                            <a className="ps-basket__content__footer__figure__btn--secondary">
-                                Savat
+                            <a
+                                // className="ps-basket__content__footer__figure__btn--secondary"
+                                style={flexItemStyle}>
+                                <Button size="large" style={fullWidthStyle}>
+                                    Savat
+                                </Button>
                             </a>
                         </Link>
                         {state !== null ? (
                             <Link href="/account/checkout">
-                                <a className="ps-basket__content__footer__figure__btn--primary">
-                                    Sotib olish
+                                <a
+                                    // className="ps-basket__content__footer__figure__btn--primary"
+                                    style={flexItemStyle}>
+                                    <Button
+                                        size="large"
+                                        variant="filled"
+                                        type="primary"
+                                        style={fullWidthStyle}>
+                                        Sotib olish
+                                    </Button>
                                 </a>
                             </Link>
                         ) : (
                             <Link href="/auth/login?returnUrl=/account/checkout">
-                                <a className="ps-basket__content__footer__figure__btn--primary">
-                                    Sotib olish
+                                <a
+                                    // className="ps-basket__content__footer__figure__btn--primary"
+                                    style={flexItemStyle}>
+                                    <Button
+                                        size="large"
+                                        variant="filled"
+                                        type="primary"
+                                        style={fullWidthStyle}>
+                                        Sotib olish
+                                    </Button>
                                 </a>
                             </Link>
                         )}

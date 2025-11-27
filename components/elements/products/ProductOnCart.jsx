@@ -4,6 +4,7 @@ import useProduct from '~/shared/hooks/useProduct';
 import { addPeriodToThousands } from '~/components/partials/account/price-formatter';
 import useCart from '~/shared/hooks/useCart';
 import { Button } from 'antd';
+import { IoIosClose } from 'react-icons/io';
 
 const ProductOnCart = ({ product }) => {
     const { thumbnailImage, title } = useProduct();
@@ -48,11 +49,13 @@ const ProductOnCart = ({ product }) => {
                 </p>
             </div>
             <Button
-                className="ps-basket__content__items__item__remove"
-                style={{ cursor: 'pointer' }}
-                onClick={(e) => handleRemoveItem(e, product)}>
-                <i className="fa fa-times"></i>
-            </Button>
+                type="default"
+                danger
+                size="small"
+                icon={<IoIosClose fontSize={30} />}
+                onClick={(e) => handleRemoveItem(e, product)}
+                aria-label="O'chirish"
+            />
         </div>
     );
 };
