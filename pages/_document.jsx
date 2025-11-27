@@ -138,6 +138,7 @@ export default function Document() {
                         ym(96098801, "init", {
                              clickmap:true,
                              trackLinks:true,
+                             webvisor:true,
                              accurateTrackBounce:true
                         });
                     `,
