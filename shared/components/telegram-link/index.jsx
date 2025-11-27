@@ -3,14 +3,16 @@ import styles from './style.module.scss';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { useRouter } from 'next/router';
 
+const disabledLocations = ['/chat', '/order/', '/auth', 'shopping-cart'];
+
 export function TelegramLink() {
     const { isMobile, isTablet } = useResponsive();
     const location = useRouter().pathname;
 
     if (
-        location === '/chat' ||
-        location.includes('/order/') ||
-        location.includes('/auth')
+        disabledLocations.some(
+            (path) => location === path || location.includes(path)
+        )
     ) {
         return null;
     }
