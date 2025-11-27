@@ -214,6 +214,9 @@ export default function Oferta() {
                     ettirish taqiqlanadi. Bu qoidani buzgan sotuvchilar
                     platformadan chetlashtirilishi mumkin.
                 </p>
+                <p>
+                    5.2.10. Sotuvchi Platformada ishtirok etib, yuzaga kelgan soliq va byudjet to‘lovlari bo‘yicha javobgarligi yuzasidan O‘zbekiston Respublikasining Soliq kodeksining 352, 386, 387, 393, 395, 396 va 397-moddalarining talablariga asosan mas’ul hisoblanadi.
+                </p>
                 <h4>6. Javobgarlik</h4>
                 <p>
                     6.1. Platforma ma’muriyati Foydalanuvchining noto’g’ri
