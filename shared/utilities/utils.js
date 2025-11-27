@@ -1,4 +1,23 @@
 export const truncateText = (title, maxLength = 7) => {
-  if (!title) return '';
-  return title.length > maxLength ? title.slice(0, maxLength) + '...' : title;
+    if (!title) return '';
+    return title.length > maxLength ? title.slice(0, maxLength) + '...' : title;
 };
+
+export function formatFileSize(bytes) {
+    if (bytes < 1024) return bytes + ' B'; // bytes
+    else if (bytes < 1024 * 1024)
+        return (bytes / 1024).toFixed(1) + ' KB'; // kilobytes
+    else if (bytes < 1024 * 1024 * 1024)
+        return (bytes / (1024 * 1024)).toFixed(2) + ' MB'; // megabytes
+    else return (bytes / (1024 * 1024 * 1024)).toFixed(2) + ' GB'; // gigabytes
+}
+
+export function downloadFile(s3Link) {
+    const downloadUrl = `/api/download?url=${encodeURIComponent(s3Link)}`;
+
+    const win = window.open(downloadUrl, '_blank');
+
+    setTimeout(() => {
+        if (win) win.close();
+    }, 2000);
+}
