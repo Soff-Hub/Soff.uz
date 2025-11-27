@@ -33,11 +33,11 @@ export const Providers = ({ children }) => (
         <QueryClientProvider client={queryClient}>
             <GoogleOAuthProvider clientId="203103939049-2ste634q2uc1io9oaup8gt35tsmucru0.apps.googleusercontent.com">
                 <CookiesProvider>
-                    <ProductProvider>
-                        <AudioProvider>
-                            <AntdProvider>{children}</AntdProvider>
-                        </AudioProvider>
-                    </ProductProvider>
+                    {/* <ProductProvider> */}
+                    <AudioProvider>
+                        <AntdProvider>{children}</AntdProvider>
+                    </AudioProvider>
+                    {/* </ProductProvider> */}
                 </CookiesProvider>
             </GoogleOAuthProvider>
         </QueryClientProvider>
