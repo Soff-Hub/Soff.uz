@@ -17,18 +17,30 @@ import { logOut } from '~/store/auth/slice';
 import { setSavedPrfileData } from '~/store/ecomerce/slice';
 import useAuth from '~/shared/hooks/useAuth';
 import useResponsive from '~/shared/utilities/useResponsive';
+import useDebounce from '~/shared/hooks/useDebounce';
 
 const { Sider } = Layout;
+
+const disableLinkStyle = {
+    pointerEvents: 'none',
+};
 
 function Sidebar({ collapsed, onChangeCollapse }) {
     const { logOutAuth } = useAuth();
     const { size } = useResponsive();
+    const isStyleApplicable = useDebounce(!collapsed, 200);
     const router = useRouter();
     const { user } = useSelector((state) => state.profile);
     const dispatch = useDispatch();
     const refresh = useSelector((state) => state.auth?.user?.refresh);
     const [lastPathSegment, setLasPathSegment] = useState();
     const profileImg = user?.image;
+    const isAuthorized = Boolean(user && Object.keys(user).length);
+    const fullName =
+        `${user?.first_name || ''} ${user?.last_name || ''}`.trim() ||
+        'Foydalanuvchi';
+
+    console.log({ isStyleApplicable, collapsed });
 
     const handleLogout = () => {
         const data = {
@@ -48,19 +60,24 @@ function Sidebar({ collapsed, onChangeCollapse }) {
             {
                 key: 'sellerproducts',
                 icon: <RiShoppingBasketFill size={20} />,
-                onClick: () => router.push('/account/sellerproducts'),
+                disabled: !isAuthorized,
                 label: (
                     <Link href={'/account/sellerproducts'}>
-                        <a>Sotib olinganlar</a>
+                        <a style={!isAuthorized ? disableLinkStyle : {}}>
+                            Sotib olinganlar
+                        </a>
                     </Link>
                 ),
             },
             {
                 key: 'my-orders',
                 icon: <FaTruck size={20} />,
+                disabled: !isAuthorized,
                 label: (
                     <Link href={'/order/my-orders'}>
-                        <a>Buyurtmalarim</a>
+                        <a style={!isAuthorized ? disableLinkStyle : {}}>
+                            Buyurtmalarim
+                        </a>
                     </Link>
                 ),
             },
@@ -89,18 +106,24 @@ function Sidebar({ collapsed, onChangeCollapse }) {
             {
                 key: 'chat',
                 icon: <FaRegCommentDots size={20} />,
+                disabled: !isAuthorized,
                 label: (
                     <Link href={'/chat'}>
-                        <a>Chat</a>
+                        <a style={!isAuthorized ? disableLinkStyle : {}}>
+                            Chat
+                        </a>
                     </Link>
                 ),
             },
             {
                 key: 'notification',
                 icon: <FaRegBell size={20} />,
+                disabled: !isAuthorized,
                 label: (
                     <Link href={'/account/notification'}>
-                        <a>Bildirishnomalar</a>
+                        <a style={!isAuthorized ? disableLinkStyle : {}}>
+                            Bildirishnomalar
+                        </a>
                     </Link>
                 ),
             },
@@ -111,12 +134,13 @@ function Sidebar({ collapsed, onChangeCollapse }) {
             {
                 key: 'logout',
                 icon: <PiSignOutBold size={20} />,
+                disabled: !isAuthorized,
                 label: 'Chiqish',
                 onClick: handleLogout,
                 danger: true,
             },
         ],
-        []
+        [isAuthorized]
     );
 
     const onClickMenuItem = (menuItem) => {
@@ -158,6 +182,9 @@ function Sidebar({ collapsed, onChangeCollapse }) {
             width={300}
             collapsible
             collapsed={collapsed}
+            onEnded={(smth) => {
+                console.log('Animation ended', smth);
+            }}
             className="sidebar-layout"
             theme="light">
             <div
@@ -177,7 +204,8 @@ function Sidebar({ collapsed, onChangeCollapse }) {
                         ) : (
                             <MdKeyboardDoubleArrowLeft size={20} />
                         )
-                    }></Button>
+                    }
+                />
             </div>
             <div
                 style={{
@@ -202,24 +230,29 @@ function Sidebar({ collapsed, onChangeCollapse }) {
                         <h4
                             style={{
                                 marginBottom: '0px',
-                                overflowWrap: 'anywhere',
+                                overflowWrap: isStyleApplicable && 'anywhere',
                             }}>
-                            {`${user?.first_name} ${user?.last_name}` ||
-                                'Foydalanuvchi'}
+                            {fullName}
                         </h4>
                         <p
                             style={{
                                 marginBottom: '0px',
                                 color: 'gray',
-                                overflowWrap: 'anywhere',
+                                overflowWrap: isStyleApplicable && 'anywhere',
                             }}>
-                            {user?.phone || user?.email || 'Email mavjud emas'}
+                            {user?.phone || user?.email || ''}
                         </p>
                     </div>
                 ) : null}
             </div>
             <Menu
                 mode="inline"
+                onOpenChange={() => {
+                    console.log('ajsdfkl;sadfkjl');
+                }}
+                onChange={() => {
+                    console.log('Menu changed');
+                }}
                 selectedKeys={[lastPathSegment]}
                 onSelect={onClickMenuItem}
                 items={items}
