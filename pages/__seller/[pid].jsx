@@ -12,10 +12,11 @@ import SellerProducts from '~/components/partials/seller/SellerProducts';
 import SellerDonateForm from '~/components/partials/seller/SellerDonateForm';
 import CalculateTimeDifference from '~/components/partials/account/DateFormatter';
 import { addPeriodToThousands } from '~/components/partials/account/price-formatter';
-import { useMediaQuery } from 'react-responsive';
+import useResponsive from '~/shared/utilities/useResponsive';
 
 const SellerPage = ({ seller, sellerr }) => {
-    const isBigScreen = useMediaQuery({ query: '(max-width: 430px)' });
+    const { size } = useResponsive();
+    const isSmallScreen = size <= 430;
     const [data, setData] = useState(seller);
     const [page, setPage] = useState(1);
     const router = useRouter();
@@ -167,7 +168,7 @@ const SellerPage = ({ seller, sellerr }) => {
                                 className="user_profile_card"
                                 style={{
                                     backgroundImage: `url(${
-                                        (isBigScreen
+                                        (isSmallScreen
                                             ? sellerr?.seller
                                                   ?.mobile_background_image
                                             : sellerr?.seller
