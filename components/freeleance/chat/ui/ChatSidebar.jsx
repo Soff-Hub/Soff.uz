@@ -3,6 +3,7 @@ import React, {
     useCallback,
     useMemo,
     useRef,
+    memo,
     useEffect,
 } from 'react';
 import styles from '../style/chat.module.scss';
@@ -46,7 +47,7 @@ const DEFAULT_STATIC_CHAT_COPY = {
     last_message: { content: '' },
 };
 
-const ChatSidebar = ({ setChatId, chatId }) => {
+const ChatSidebar = ({ setChatId }) => {
     const [search, setSearch] = useState('');
     const debouncedSearch = useDebounce(search, 300);
     const router = useRouter();
@@ -95,7 +96,8 @@ const ChatSidebar = ({ setChatId, chatId }) => {
             return {
                 ...resolvedStaticChat,
                 chat_id:
-                    resolvedStaticChat.chat_id ?? `static-${STATIC_OPPONENT_ID}`,
+                    resolvedStaticChat.chat_id ??
+                    `static-${STATIC_OPPONENT_ID}`,
                 __isStatic: true,
             };
         }
@@ -113,8 +115,9 @@ const ChatSidebar = ({ setChatId, chatId }) => {
 
     const orderedChats = useMemo(() => {
         const dynamicChats =
-            chats?.filter((chat) => getOpponentId(chat) !== STATIC_OPPONENT_ID) ??
-            [];
+            chats?.filter(
+                (chat) => getOpponentId(chat) !== STATIC_OPPONENT_ID
+            ) ?? [];
 
         return [staticChat, ...dynamicChats];
     }, [chats, staticChat, getOpponentId]);
@@ -147,11 +150,11 @@ const ChatSidebar = ({ setChatId, chatId }) => {
                 />
             </div>
             <div className={styles.sidebar_chats}>
-                {isLoading && (
+                {isLoading ? (
                     <div style={{ textAlign: 'center', padding: '20px' }}>
                         <Spin size="large" tip="Qidirilmoqda..." />
                     </div>
-                )}
+                ) : null}
                 {!isLoading && !hasDynamicChats && (
                     <Empty
                         description="Chat topilmadi"
@@ -168,7 +171,7 @@ const ChatSidebar = ({ setChatId, chatId }) => {
                                 : `chat-${index}`);
 
                         return (
-                        <div
+                            <div
                                 key={key}
                                 onClick={() =>
                                     isStatic
@@ -177,35 +180,38 @@ const ChatSidebar = ({ setChatId, chatId }) => {
                                 }
                                 className={`${styles.sidebar_chat} `}
                                 aria-disabled={isStatic && isCreatingChat}>
-                            <img
-                                src={
-                                    chat?.opponent_photo_url ||
-                                    '/static/img/ozodbek.png'
-                                }
-                                alt="user img"
-                            />
-                            <div className={styles.sidebar_chat_wrapper}>
-                                <div className={styles.box1}>
-                                    <h4>{chat?.opponent_name}</h4>
-                                    <span>
-                                        {truncateTitle(
-                                            chat?.last_message?.content,
-                                            15
-                                        )}
-                                    </span>
-                                </div>
-                                <div className={styles.box2}>
-                                    <p>
-                                        {isStatic && isCreatingChat && (
-                                            <Spin size="small" />
-                                        )}
-                                    </p>
-                                    {!isStatic && chat?.unread_count > 0 && (
-                                        <span>{chat?.unread_count}</span>
-                                    )}
+                                <img
+                                    src={
+                                        chat?.opponent_photo_url ||
+                                        '/static/img/ozodbek.png'
+                                    }
+                                    alt="user img"
+                                />
+                                <div className={styles.sidebar_chat_wrapper}>
+                                    <div className={styles.box1}>
+                                        <h4>{chat?.opponent_name}</h4>
+                                        <span>
+                                            {truncateTitle(
+                                                chat?.last_message?.content,
+                                                15
+                                            )}
+                                        </span>
+                                    </div>
+                                    <div className={styles.box2}>
+                                        <p>
+                                            {isStatic && isCreatingChat && (
+                                                <Spin size="small" />
+                                            )}
+                                        </p>
+                                        {!isStatic &&
+                                            chat?.unread_count > 0 && (
+                                                <span>
+                                                    {chat?.unread_count}
+                                                </span>
+                                            )}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                         );
                     })}
             </div>
@@ -213,4 +219,4 @@ const ChatSidebar = ({ setChatId, chatId }) => {
     );
 };
 
-export default ChatSidebar;
+export default memo(ChatSidebar);

@@ -38,7 +38,9 @@ const Chat = () => {
     const isSmallScreen = isMobile || isTablet;
 
     const Sidebar = <ChatSidebar chatId={chatId} setChatId={setChatId} />;
-    const Window = <ChatWindow chatId={chatId} goBack={clearChatId} />;
+    const Window = (
+        <ChatWindow key={chatId} chatId={chatId} goBack={clearChatId} />
+    );
 
     return (
         <div className="my-2">

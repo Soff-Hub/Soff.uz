@@ -7,9 +7,11 @@ const useGetChats = (search = '') => {
     const axios = axiosInstance(user?.access);
 
     return useQuery({
-        queryKey: ["chats", search],
+        queryKey: ['chats', search, user?.access],
         queryFn: async () => {
-            const { data } = await axios.get(`chats?search=${encodeURIComponent(search)}`);
+            const { data } = await axios.get(
+                `chats?search=${encodeURIComponent(search)}`
+            );
             return data;
         },
         enabled: !!user?.access,
