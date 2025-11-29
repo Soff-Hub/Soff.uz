@@ -328,6 +328,14 @@
     }
 }
 
+.ranking_section {
+    padding-top: 0px;
+    padding-bottom: 20px;
+    @media (max-width: 576px) {
+        padding-top: 25px;
+    }
+}
+
 .serviceCardSection {
     display: grid;
     grid-template-columns: repeat(4, 1fr); /* <= 480px: 1 ta */

@@ -289,10 +289,7 @@ const TopFreelanceRankings = () => {
     return (
         <div className={styles.topFreelanceRankings}>
             <div
-                className={styles.freelance_section}
-                style={{
-                    paddingBottom: '20px',
-                }}>
+                className={`${styles.freelance_section} ${styles.ranking_section}`}>
                 <div className={styles.freelance_text}>
                     <div className="d-flex gap-2 flex-fill">
                         <div className="d-none d-md-flex">
