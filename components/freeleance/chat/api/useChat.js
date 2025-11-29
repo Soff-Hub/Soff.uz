@@ -7,6 +7,14 @@ import useSendMessage from './useSendMessage';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
 import { message } from 'antd';
 
+// WebSocket readyState constants (safe for SSR)
+const WS_READY_STATE = {
+    CONNECTING: 0,
+    OPEN: 1,
+    CLOSING: 2,
+    CLOSED: 3,
+};
+
 const useChat = (chatId) => {
     const [messages, setMessages] = useState([]);
     const [chat, setChat] = useState();
@@ -73,7 +81,7 @@ const useChat = (chatId) => {
     });
 
     // Derive connection state from readyState
-    const isConnected = readyState === WebSocket.OPEN;
+    const isConnected = readyState === WS_READY_STATE.OPEN;
 
     // Track pending messages to match with server responses
     const pendingMessagesRef = useRef(new Map()); // content -> tempId
@@ -94,56 +102,101 @@ const useChat = (chatId) => {
 
         // Find messages still in "sending" status and clean them up if confirmed
         setMessages((prev) => {
-            let hasChanges = false;
-            const updated = prev.map((m) => {
-                // Skip if not a pending message
-                if (m.status !== 'sending' || !isTempId(m.id)) {
-                    return m;
-                }
+            // Map to track which pending messages should be replaced with which real messages
+            const pendingToRealMessage = new Map(); // tempId -> realMessage
+            const contentToRealMessage = new Map(); // content -> realMessage
 
-                // Try to find matching message in API data with improved matching
-                const contentTrimmed = m.content.trim();
-                const matchingMessage = allApiMessages.find((apiMsg) => {
-                    // Exact content match
-                    const contentMatch =
-                        apiMsg.content?.trim() === contentTrimmed;
-                    // Sender match
-                    const senderMatch =
-                        apiMsg.sender_id === m.sender_id &&
-                        apiMsg.sender_id === user.id;
-                    // Time-based check: message should be recent (within last 5 minutes)
-                    const msgTime = new Date(m.created_at);
-                    const apiMsgTime = new Date(apiMsg.created_at);
-                    const timeDiff = Math.abs(apiMsgTime - msgTime);
-                    const isRecent = timeDiff < 5 * 60 * 1000; // 5 minutes
+            // First pass: find all matches
+            prev.forEach((m) => {
+                if (m.status === 'sending' && isTempId(m.id)) {
+                    const contentTrimmed = m.content.trim();
 
-                    return contentMatch && senderMatch && isRecent;
-                });
+                    // Try to find matching message in API data
+                    const matchingMessage = allApiMessages.find((apiMsg) => {
+                        // Exact content match
+                        const contentMatch =
+                            apiMsg.content?.trim() === contentTrimmed;
+                        // Sender match
+                        const senderMatch =
+                            apiMsg.sender_id === m.sender_id &&
+                            apiMsg.sender_id === user.id;
+                        // Time-based check: message should be recent (within last 5 minutes)
+                        const msgTime = new Date(m.created_at);
+                        const apiMsgTime = new Date(apiMsg.created_at);
+                        const timeDiff = Math.abs(apiMsgTime - msgTime);
+                        const isRecent = timeDiff < 5 * 60 * 1000; // 5 minutes
 
-                if (matchingMessage) {
-                    hasChanges = true;
-                    // Message confirmed! Clean up all pending refs
-                    pendingMessagesRef.current.delete(contentTrimmed);
+                        return contentMatch && senderMatch && isRecent;
+                    });
 
-                    const timeoutId = pendingMessageTimeoutsRef.current.get(
-                        m.id
-                    );
-                    if (timeoutId) {
-                        clearTimeout(timeoutId);
-                        pendingMessageTimeoutsRef.current.delete(m.id);
+                    if (matchingMessage) {
+                        pendingToRealMessage.set(m.id, matchingMessage);
+                        contentToRealMessage.set(
+                            contentTrimmed,
+                            matchingMessage
+                        );
+
+                        // Clean up refs
+                        pendingMessagesRef.current.delete(contentTrimmed);
+                        const timeoutId = pendingMessageTimeoutsRef.current.get(
+                            m.id
+                        );
+                        if (timeoutId) {
+                            clearTimeout(timeoutId);
+                            pendingMessageTimeoutsRef.current.delete(m.id);
+                        }
                     }
-
-                    // Replace with real message (remove status)
-                    const { status, ...cleanMsg } = matchingMessage;
-                    return cleanMsg;
                 }
-
-                return m;
             });
 
-            return hasChanges ? updated : prev;
+            if (pendingToRealMessage.size === 0) {
+                return prev; // No changes
+            }
+
+            // Second pass: replace pending messages and remove duplicates
+            const seenRealIds = new Set();
+            const updated = [];
+
+            for (const m of prev) {
+                // If this is a pending message that has a match, replace it
+                if (pendingToRealMessage.has(m.id)) {
+                    const realMessage = pendingToRealMessage.get(m.id);
+                    const { status, ...cleanMsg } = realMessage;
+
+                    // Only add if we haven't seen this real message ID yet
+                    if (!seenRealIds.has(cleanMsg.id)) {
+                        updated.push(cleanMsg);
+                        seenRealIds.add(cleanMsg.id);
+                    }
+                    // Skip the pending message (replaced with real one)
+                    continue;
+                }
+
+                // If this is a temp message with content that matches a real message, skip it
+                if (isTempId(m.id) && m.status === 'sending') {
+                    const contentTrimmed = m.content.trim();
+                    const realMessage =
+                        contentToRealMessage.get(contentTrimmed);
+                    if (realMessage && seenRealIds.has(realMessage.id)) {
+                        // Real message already added, skip this temp one
+                        continue;
+                    }
+                }
+
+                // Track real message IDs to avoid duplicates
+                if (!isTempId(m.id)) {
+                    if (seenRealIds.has(m.id)) {
+                        continue; // Skip duplicate real message
+                    }
+                    seenRealIds.add(m.id);
+                }
+
+                updated.push(m);
+            }
+
+            return updated;
         });
-    }, [chatId, data, user?.id]);
+    }, [chatId, data, user?.id, isTempId]);
 
     // Update last message time on any WebSocket message
     useEffect(() => {
@@ -187,28 +240,26 @@ const useChat = (chatId) => {
         switch (msg.event) {
             case 'message': {
                 setMessages((prev) => {
-                    let replaced = false;
-
                     // If it's my message, try to replace temp message
                     if (msg.is_mine) {
                         const contentTrimmed = msg.content?.trim();
                         const tempId =
                             pendingMessagesRef.current.get(contentTrimmed);
 
-                        const updated = prev.map((m) => {
-                            // Match by temp ID or by content if status is 'sending'
+                        // First, filter out ALL pending messages with matching content
+                        // This is more aggressive and handles reconnection cases
+                        const filtered = prev.filter((m) => {
+                            // Remove any pending messages that match this content
                             if (
-                                !replaced &&
-                                (m.id === tempId ||
-                                    (m.status === 'sending' &&
-                                        m.content.trim() === contentTrimmed &&
-                                        m.sender_id === user.id))
+                                m.status === 'sending' &&
+                                m.content.trim() === contentTrimmed &&
+                                m.sender_id === user.id &&
+                                isTempId(m.id)
                             ) {
-                                replaced = true;
+                                // Clean up refs
                                 pendingMessagesRef.current.delete(
                                     contentTrimmed
                                 );
-                                // Clear timeout if exists (WebSocket response came first)
                                 const timeoutId =
                                     pendingMessageTimeoutsRef.current.get(m.id);
                                 if (timeoutId) {
@@ -217,24 +268,35 @@ const useChat = (chatId) => {
                                         m.id
                                     );
                                 }
-                                // Replace temp message with real one, remove status
-                                const { status, ...cleanMsg } = msg;
-                                return cleanMsg;
+                                return false; // Remove this pending message
                             }
-                            return m;
+                            return true;
                         });
 
-                        // If not replaced and it's my message, add it (shouldn't happen but safety)
-                        if (!replaced) {
-                            const { status, ...cleanMsg } = msg;
-                            sendUnreadMessages([...updated, cleanMsg]);
-                            return [...updated, cleanMsg];
+                        // Check if message with this real ID already exists (avoid duplicates)
+                        const alreadyExists = filtered.some(
+                            (m) => m.id === msg.id && !isTempId(m.id)
+                        );
+
+                        if (alreadyExists) {
+                            // Message already exists, just return filtered (pending removed)
+                            sendUnreadMessages(filtered);
+                            return filtered;
                         }
 
-                        sendUnreadMessages(updated);
-                        return updated;
+                        // Add the real message (without status)
+                        const { status, ...cleanMsg } = msg;
+                        const finalMessages = [...filtered, cleanMsg];
+                        sendUnreadMessages(finalMessages);
+                        return finalMessages;
                     } else {
-                        // Not my message, just add it
+                        // Not my message, just add it (but check for duplicates first)
+                        const alreadyExists = prev.some(
+                            (m) => m.id === msg.id && !isTempId(m.id)
+                        );
+                        if (alreadyExists) {
+                            return prev;
+                        }
                         const updated = [...prev, msg];
                         sendUnreadMessages(updated);
                         return updated;
@@ -467,13 +529,39 @@ const useChat = (chatId) => {
                 );
 
                 // Remove duplicates (prioritize server messages over pending if same ID)
-                const uniqueMsgs = Array.from(
+                const uniqueMsgsById = Array.from(
                     new Map(
                         messagesWithSeparators.map((m) => [m.id, m])
                     ).values()
                 );
 
-                return uniqueMsgs;
+                // Additional deduplication: remove pending messages if real message with same content exists
+                const seenContentToRealId = new Map(); // content -> real message ID
+                const finalMessages = uniqueMsgsById.filter((m) => {
+                    const contentTrimmed = m.content?.trim();
+
+                    // Track real messages by content
+                    if (!isTempId(m.id) && contentTrimmed) {
+                        seenContentToRealId.set(contentTrimmed, m.id);
+                    }
+
+                    // If this is a pending message and we have a real message with same content, remove it
+                    if (
+                        isTempId(m.id) &&
+                        m.status === 'sending' &&
+                        contentTrimmed
+                    ) {
+                        const realId = seenContentToRealId.get(contentTrimmed);
+                        if (realId) {
+                            // Real message exists with this content, remove pending
+                            return false;
+                        }
+                    }
+
+                    return true;
+                });
+
+                return finalMessages;
             });
         }
     }, [chatId, data, user?.id]);
@@ -482,7 +570,7 @@ const useChat = (chatId) => {
     const sendUnreadMessages = useCallback(
         (msgs = messages) => {
             const ws = getWebSocket();
-            if (!ws || ws.readyState !== WebSocket.OPEN) {
+            if (!ws || ws.readyState !== WS_READY_STATE.OPEN) {
                 return;
             }
 
@@ -596,8 +684,45 @@ const useChat = (chatId) => {
     useEffect(() => {
         if (isConnected) {
             lastMessageTimeRef.current = Date.now();
+
+            // When connection opens (especially after reconnect), check for pending messages
+            // that might have been sent successfully but not yet matched
+            if (data && pendingMessagesRef.current.size > 0) {
+                // Small delay to ensure any pending messages from the new connection are processed
+                const checkTimeout = setTimeout(() => {
+                    checkPendingMessages();
+                    // Also refetch to get the latest messages from server
+                    refetchMessages();
+                }, 2000);
+
+                return () => clearTimeout(checkTimeout);
+            }
         }
-    }, [isConnected, reconnectKey]);
+    }, [isConnected, data, checkPendingMessages, refetchMessages]);
+
+    // Clean up stuck messages periodically
+    useEffect(() => {
+        const stuckMessageTimeout = setInterval(() => {
+            const now = Date.now();
+            setMessages((prev) => {
+                const updated = prev.filter((m) => {
+                    if (m.status === 'sending' && isTempId(m.id)) {
+                        // Extract timestamp from temp ID (format: temp-1234567890)
+                        const tempTime = parseInt(m.id.split('-')[1]);
+                        const age = now - tempTime;
+                        if (age > 30000) {
+                            pendingMessagesRef.current.delete(m.content.trim());
+                            return false;
+                        }
+                    }
+                    return true;
+                });
+                return updated;
+            });
+        }, 5000);
+
+        return () => clearInterval(stuckMessageTimeout);
+    }, [isTempId]);
 
     // Clean up pending messages when chatId changes
     useEffect(() => {
@@ -616,31 +741,6 @@ const useChat = (chatId) => {
             }
         };
     }, [chatId]);
-
-    // Timeout for stuck messages (remove after 30 seconds if not replaced)
-    // This is a safety net in case the 5s fallback and health check don't catch it
-    useEffect(() => {
-        const stuckMessageTimeout = setInterval(() => {
-            setMessages((prev) => {
-                const now = Date.now();
-                const updated = prev.filter((m) => {
-                    if (m.status === 'sending' && isTempId(m.id)) {
-                        // Extract timestamp from temp ID (format: temp-1234567890)
-                        const tempTime = parseInt(m.id.split('-')[1]);
-                        const age = now - tempTime;
-                        if (age > 30000) {
-                            pendingMessagesRef.current.delete(m.content.trim());
-                            return false;
-                        }
-                    }
-                    return true;
-                });
-                return updated;
-            });
-        }, 5000);
-
-        return () => clearInterval(stuckMessageTimeout);
-    }, []);
 
     const sendMessage = async (content) => {
         if (!isConnected) {
@@ -844,8 +944,8 @@ const useChat = (chatId) => {
             const ws = getWebSocket();
             return {
                 exists: !!ws,
-                isClosed: ws?.readyState === WebSocket.CLOSED,
-                isOpen: ws?.readyState === WebSocket.OPEN,
+                isClosed: ws?.readyState === WS_READY_STATE.CLOSED,
+                isOpen: ws?.readyState === WS_READY_STATE.OPEN,
                 readyState: ws?.readyState,
             };
         },
