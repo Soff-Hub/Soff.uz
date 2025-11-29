@@ -7,7 +7,7 @@ import { addPeriodToThousands } from '~/components/partials/account/price-format
 import SidebarLayout from '~/widgets/sidebar/SidebarLayout';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Button, Modal } from 'antd';
+import { Button, Modal, Skeleton } from 'antd';
 import { ShoppingCartOutlined, CloseOutlined } from '@ant-design/icons';
 import {
     fileIcons,
@@ -16,7 +16,7 @@ import {
 import { FiDownload } from 'react-icons/fi';
 import styles from './wishlist.module.scss';
 import { downloadFile } from '~/shared/utilities/utils';
-// import LegacyWishlist from '~/components/partials/account/Wishlist';
+import { FaArrowLeft, FaBoxOpen } from 'react-icons/fa6';
 
 const breadCrumb = [
     {
@@ -40,10 +40,12 @@ const extendedFileIcons = {
 };
 
 function Wishlist() {
-    const { wishlist } = useSelector((state) => state.ecomerce);
+    const { wishlist, status } = useSelector((state) => state.ecomerce);
+    console.log('Wishlist status:', status);
     const { removeSavedItem, setAllSaved, isSavedItem } = useWishlist();
     const { setCartOneItem } = useCart();
     const hasItems = wishlist && wishlist.length > 0;
+    const isLoading = status === 'loading';
 
     useEffect(() => {
         const localWishlist =
@@ -70,7 +72,23 @@ function Wishlist() {
     };
 
     let contentView;
-    if (hasItems) {
+    if (isLoading) {
+        contentView = (
+            <div className={styles.wishlistContent}>
+                <h2 className={styles.wishlistTitle}>
+                    Tanlanganlar ({wishlist.length})
+                </h2>
+                <div className={styles.wishlistProducts}>
+                    {[...Array(4)].map((_, index) => (
+                        <Skeleton.Button
+                            style={{ height: '80px', width: '100%' }}
+                            active
+                            key={index}></Skeleton.Button>
+                    ))}
+                </div>
+            </div>
+        );
+    } else if (hasItems) {
         contentView = (
             <div className={styles.wishlistContent}>
                 <h2 className={styles.wishlistTitle}>
@@ -206,9 +224,45 @@ function Wishlist() {
         );
     } else {
         contentView = (
-            <div className={styles.wishlistEmpty}>
-                <div className={styles.wishlistEmptyContent}>
-                    <p>Tanlaganlar yo'q!</p>
+            <div className="ps-section__content w-100 h-100">
+                <div
+                    style={{ height: '100%' }}
+                    className="d-flex justify-content-center flex-column align-items-center">
+                    <div
+                        style={{
+                            borderRadius: '50%',
+                            background: '#7575751c',
+                            width: '130px',
+                            height: '130px',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            marginBottom: '20px',
+                        }}>
+                        <FaBoxOpen
+                            style={{
+                                color: '#00a44f',
+                                fontSize: '70px',
+                            }}
+                        />
+                    </div>
+                    <h3
+                        style={{ fontSize: '30px' }}
+                        className="font-bold mb-2 text-gray-800 text-center">
+                        Tanlangan mahsulotlar yo'q
+                    </h3>
+                    <p className="mb-4 text-center text-muted">
+                        Mahsulotni tanlash uchun yurakcha belgisini bosing va
+                        ularni bu yerda saqlang.
+                    </p>
+                    <Link href={'/scientific-resources/all'}>
+                        <a>
+                            <Button type="primary" size="large">
+                                <FaArrowLeft />
+                                Mahsulotlar tanlash
+                            </Button>
+                        </a>
+                    </Link>
                 </div>
             </div>
         );

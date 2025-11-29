@@ -16,6 +16,7 @@ import {
 import { IoIosClose } from 'react-icons/io';
 import styles from './shopping-cart.module.scss';
 import { cn } from '~/shared/utilities/cn';
+import { FaArrowLeft, FaBoxOpen } from 'react-icons/fa6';
 
 const breadCrumb = [
     {
@@ -250,13 +251,56 @@ function ShoppingCart() {
                 </div>
             </div>
         );
+    } else {
+        contentView = (
+            <div className="ps-section__content w-100 h-100">
+                <div
+                    style={{ height: '100%' }}
+                    className="d-flex justify-content-center flex-column align-items-center">
+                    <div
+                        style={{
+                            borderRadius: '50%',
+                            background: '#7575751c',
+                            width: '130px',
+                            height: '130px',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            marginBottom: '20px',
+                        }}>
+                        <FaBoxOpen
+                            style={{
+                                color: '#00a44f',
+                                fontSize: '70px',
+                            }}
+                        />
+                    </div>
+                    <h3
+                        style={{ fontSize: '30px' }}
+                        className="font-bold mb-2 text-gray-800 text-center">
+                        Savat bo'sh
+                    </h3>
+                    <p className="mb-4 text-center text-muted">
+                        To'lov qilish uchun biror mahsulot qo'shing.
+                    </p>
+                    <Link href={'/scientific-resources/all'}>
+                        <a>
+                            <Button type="primary" size="large">
+                                <FaArrowLeft />
+                                Xarid qilishni boshlash
+                            </Button>
+                        </a>
+                    </Link>
+                </div>
+            </div>
+        );
     }
 
     return (
         <div className="ps-page--simple mb-4">
             <BreadCrumb breacrumb={breadCrumb} />
             <div className="ps-shopping-cart">
-                <div className="container my-5">
+                <div className="container my-5 h-100">
                     <h1 className="page-title">Savat</h1>
                     <SidebarLayout>{contentView}</SidebarLayout>
                 </div>
