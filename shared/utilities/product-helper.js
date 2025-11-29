@@ -1,5 +1,4 @@
 import React from 'react';
-import LazyLoad from 'react-lazyload';
 import { baseUrl } from '~/repositories/Repository';
 import Link from 'next/link';
 
@@ -92,12 +91,11 @@ export function StrapiProductThumbnail(product) {
         view = (
             <Link href="/product/[pid]" as={`/product/${product.slug}`}>
                 <a>
-                    <LazyLoad>
-                        <img
-                            src={`${baseUrl}${product.thumbnail.url}`}
-                            alt={product.title}
-                        />
-                    </LazyLoad>
+                    <img
+                        src={`${baseUrl}${product.thumbnail.url}`}
+                        alt={product.title}
+                        loading="lazy"
+                    />
                 </a>
             </Link>
         );
@@ -105,9 +103,11 @@ export function StrapiProductThumbnail(product) {
         view = (
             <Link href="/product/[pid]" as={`/product/${product.slug}`}>
                 <a>
-                    <LazyLoad>
-                        <img src="/static/img/not-found.png" alt="soff" />
-                    </LazyLoad>
+                    <img
+                        src="/static/img/not-found.png"
+                        alt="soff"
+                        loading="lazy"
+                    />
                 </a>
             </Link>
         );
