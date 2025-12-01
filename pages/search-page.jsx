@@ -359,7 +359,6 @@ export async function getServerSideProps(context) {
         page_to ? `&page_to=${page_to}` : ''
     }${similar_documents ? `&similar_documents=${similar_documents}` : ''}`;
 
-    // console.log('searchUrl', searchUrl);
     const servicesUrl = `${
         process.env.NEXT_PUBLIC_FREELEANCE_URL
     }/api/v1/customer?${servicesQuery.toString()}&search=${keyword}${
@@ -384,9 +383,6 @@ export async function getServerSideProps(context) {
         sellers: null,
     };
 
-    console.log('Tab changed to:', tab);
-    console.log('😃😄😃😄😃😄😃😄', Math.round());
-
     switch (tab) {
         case '1': {
             let productsInitialData = null;
@@ -397,7 +393,6 @@ export async function getServerSideProps(context) {
                     },
                 });
                 productsInitialData = await productsFetch.json();
-                console.log({ productsInitialData, servicesUrl });
             } catch (error) {
                 console.error('Error fetching products:', error);
             }

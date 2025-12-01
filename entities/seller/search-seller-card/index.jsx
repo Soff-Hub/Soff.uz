@@ -33,8 +33,6 @@ const SearchSellerCard = ({ seller, rankImage }) => {
         return diffMinutes <= 5;
     }, [seller?.last_active]);
 
-    console.log({ seller });
-
     return (
         <div className={styles.card}>
             {rankImage && (

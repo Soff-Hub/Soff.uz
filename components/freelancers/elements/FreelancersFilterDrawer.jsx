@@ -33,12 +33,9 @@ function FreelancerFilterCollide({ collapsed, toggleCollapsed }) {
               })) || []
         : [];
 
-    console.log('positionOptions:', positionOptions, formVal.positions);
-
     const inputSizes = isMobile ? 'middle' : 'large';
 
     const handleSave = () => {
-        console.log('handlesave called with', formVal);
         updateQuery({
             direction: formVal.direction,
             position: formVal.positions,

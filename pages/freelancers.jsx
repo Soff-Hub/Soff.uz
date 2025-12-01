@@ -113,13 +113,9 @@ export async function getServerSideProps(context) {
     const url = `${
         process.env.NEXT_PUBLIC_FREELEANCE_URL
     }/api/v1/users/freelancers/list/?${params.toString()}`;
-    // const url = `${
-    //     process.env.NEXT_PUBLIC_FREELEANCE_URL
-    // }/api/v1/users/sellers?${params.toString()}`;
 
     try {
         const data = await fetchJson(url);
-        console.log({ data, params, url });
         return {
             props: { data, metaTags },
         };

@@ -41,7 +41,6 @@ const extendedFileIcons = {
 
 function Wishlist() {
     const { wishlist, status } = useSelector((state) => state.ecomerce);
-    console.log('Wishlist status:', status);
     const { removeSavedItem, setAllSaved, isSavedItem } = useWishlist();
     const { setCartOneItem } = useCart();
     const hasItems = wishlist && wishlist.length > 0;

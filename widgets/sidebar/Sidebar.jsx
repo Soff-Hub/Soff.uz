@@ -40,8 +40,6 @@ function Sidebar({ collapsed, onChangeCollapse }) {
         `${user?.first_name || ''} ${user?.last_name || ''}`.trim() ||
         'Foydalanuvchi';
 
-    console.log({ isStyleApplicable, collapsed });
-
     const handleLogout = () => {
         const data = {
             refresh: refresh,
@@ -182,9 +180,6 @@ function Sidebar({ collapsed, onChangeCollapse }) {
             width={300}
             collapsible
             collapsed={collapsed}
-            onEnded={(smth) => {
-                console.log('Animation ended', smth);
-            }}
             className="sidebar-layout"
             theme="light">
             <div
@@ -247,12 +242,6 @@ function Sidebar({ collapsed, onChangeCollapse }) {
             </div>
             <Menu
                 mode="inline"
-                onOpenChange={() => {
-                    console.log('ajsdfkl;sadfkjl');
-                }}
-                onChange={() => {
-                    console.log('Menu changed');
-                }}
                 selectedKeys={[lastPathSegment]}
                 onSelect={onClickMenuItem}
                 items={items}

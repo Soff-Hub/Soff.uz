@@ -111,7 +111,6 @@ function useFreelancers(collapsed) {
 
     // query yangilovchi funksiya
     const updateQuery = (updates) => {
-        console.log('updateQuery called with', updates);
         const newQuery = { ...router.query, limit, offset: 0 };
 
         Object.entries(updates).forEach(([key, value]) => {
