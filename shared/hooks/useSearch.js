@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import useDebounce from './useDebounce';
 import axiosInstance from '../api/freeleanceApi';
 import { useQuery } from '@tanstack/react-query';
@@ -32,7 +32,7 @@ const staticOptions = {
 };
 
 function useSearch() {
-    const { push } = useRouter();
+    const router = useRouter();
     const [search, setSearch] = useState('');
     const [type, setType] = useState('mahsulotlar');
     const debouncedSearch = useDebounce(search, 500);
@@ -155,17 +155,38 @@ function useSearch() {
         retry: 1,
     });
 
-    const handleSearch = () => {
+    const handleSearch = async () => {
         if (type === 'mahsulotlar') {
+            await router.push(
+                `/search-page/?keyword=${search}&tab=1&type=file`
+            );
             addSearchHistoryItem({ value: search, type: 'mahsulotlar' });
-            push(`/search-page/?keyword=${search}&tab=1&type=file`);
         } else if (type === 'xizmatlar') {
+            await router.push(`/search-page/?keyword=${search}&tab=2&type=all`);
             addSearchHistoryItem({ value: search, type: 'xizmatlar' });
-            push(`/search-page/?keyword=${search}&tab=2&type=all`);
         } else if (type === 'mutaxasislar') {
+            await router.push(`/search-page/?keyword=${search}&tab=3&type=all`);
             addSearchHistoryItem({ value: search, type: 'mutaxasislar' });
-            push(`/search-page/?keyword=${search}&tab=3&type=all`);
         }
+    };
+
+    const handleClickOption = async (optionValue) => {
+        setSearch(optionValue);
+
+        if (type === 'mahsulotlar') {
+            await router.push(
+                `/search-page/?keyword=${optionValue}&tab=1&type=file`
+            );
+        } else if (type === 'xizmatlar') {
+            await router.push(
+                `/search-page/?keyword=${optionValue}&tab=2&type=all`
+            );
+        } else if (type === 'mutaxasislar') {
+            await router.push(
+                `/search-page/?keyword=${optionValue}&tab=3&type=all`
+            );
+        }
+        addSearchHistoryItem({ value: optionValue, type });
     };
 
     const options = useMemo(() => {
@@ -222,6 +243,7 @@ function useSearch() {
         debouncedSearch,
         isLoading: productsLoading || servicesLoading || specialistsLoading,
         handleSearch,
+        handleClickOption,
         options,
     };
 }

@@ -22,6 +22,7 @@ function SearchModal({ onClose, open, defaultType = 'mahsulotlar' }) {
         type,
         setType,
         handleSearch,
+        handleClickOption,
         options,
         isLoading,
     } = useSearch();
@@ -184,6 +185,8 @@ function SearchModal({ onClose, open, defaultType = 'mahsulotlar' }) {
         );
     }
 
+    console.log({ options });
+
     let filteredDataOptions = null;
     if (isLoading) {
         filteredDataOptions = Array(10)
@@ -207,24 +210,14 @@ function SearchModal({ onClose, open, defaultType = 'mahsulotlar' }) {
                     borderRadius: '10px',
                 }}>
                 {options.map((option) => (
-                    <Link
+                    <div
                         key={option.key}
-                        href={
-                            type === 'mahsulotlar'
-                                ? `/search-page/?keyword=${option.value}&tab=1&type=file`
-                                : type === 'xizmatlar'
-                                ? `/search-page/?keyword=${option.value}&tab=2&type=all`
-                                : `/search-page/?keyword=${option.value}&tab=3&type=all`
-                        }>
-                        <a>
-                            <div className={searchStyle.searchOption}>
-                                <IoSearch
-                                    className={searchStyle.searchOptionIcon}
-                                />
-                                {highlightMatch(option.value, search)}
-                            </div>
-                        </a>
-                    </Link>
+                        className={searchStyle.searchOption}
+                        onClick={() => handleClickOption(option.value)}
+                        style={{ cursor: 'pointer' }}>
+                        <IoSearch className={searchStyle.searchOptionIcon} />
+                        {highlightMatch(option.value, search)}
+                    </div>
                 ))}
             </div>
         );

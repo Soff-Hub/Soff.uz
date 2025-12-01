@@ -30,7 +30,7 @@ const searchSlice = createSlice({
                 (item) => item.value === action.payload.value
             );
             if (existingIndex === -1) {
-                state.searchHistory.push(action.payload);
+                state.searchHistory.unshift(action.payload);
                 localStorage.setItem(
                     'searchHistory',
                     JSON.stringify(state.searchHistory)
