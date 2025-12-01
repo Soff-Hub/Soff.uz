@@ -82,7 +82,9 @@ function App({ Component, pageProps }) {
         <>
             <Head>
                 <meta charSet="UTF-8" />
-                <title>Soff</title>
+                <title>
+                    Raqamli mahsulotlar va onlayn xizmatlar bozori – Soff.uz
+                </title>
                 <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
                 <meta
                     name="viewport"
