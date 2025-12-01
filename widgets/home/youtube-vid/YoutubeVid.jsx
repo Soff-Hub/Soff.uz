@@ -72,11 +72,6 @@ function YoutubeVid({
                                 d="M 64, 64 m -58, 0 a 58,58 0 1,1 116,0 a 58,58 0 1,1 -116,0"
                             />
                         </defs>
-                        <text className={styles.rotatingText}>
-                            <textPath href="#circlePath" startOffset="0">
-                                {repeatedText}
-                            </textPath>
-                        </text>
                     </svg>
                 </div>
 

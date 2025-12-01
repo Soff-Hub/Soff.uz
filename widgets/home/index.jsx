@@ -7,7 +7,6 @@ import Statistics from './statistics';
 import Title from './title';
 import TwoCard from './two-card';
 import dynamic from 'next/dynamic';
-import Catalog from './catalog';
 
 const Bests = dynamic(() => import('./bests'), { ssr: false });
 const LastProducts = dynamic(() => import('./last-products'), { ssr: false });
@@ -22,13 +21,15 @@ const Home = () => {
                     <Hero />
                 </div>
             </div>
-            <Catalog />
-            {/* <YoutubeVid
-                videoId={'https://youtu.be/8wEOv3SkwOw?si=YHUWZ3oPglPGmImc'}
-            /> */}
-            <div className="bg-white ">
+            <YoutubeVid
+                text={'Soff - Raqamli mahsulotlar va onlayn xizmatlar bozori'}
+                videoId={'https://www.youtube.com/watch?v=hn55AZoxWes'}
+            />
+            <div className="container">
+                <Freelance />
+            </div>
+            <div className="bg-white">
                 <div className="container">
-                    <Freelance />
                     <LastServices />
                     <Info />
                 </div>
