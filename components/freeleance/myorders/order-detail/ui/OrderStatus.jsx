@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import styles from '../style/style.module.scss';
-import { Button, Steps, Tooltip } from 'antd';
-import { MessageOutlined } from '@ant-design/icons';
+import { Button, Steps, Tooltip, Badge } from 'antd';
+import { FaRegCommentDots } from 'react-icons/fa';
 import useCreateChat from '~/components/freeleance/chat/api/useCreateChat';
 import Link from 'next/link';
 
@@ -102,24 +102,23 @@ const OrderStatus = ({ order, handleShowStickySeller }) => {
                         </div>
                     </div>
                     {order?.user?.soff_seller_id && (
-                        <Button
+                        <Badge
+                            offset={[-10, 3]}
+                            size="small"
+                            count={order?.unread_messages_count}
                             onClick={() =>
                                 createChat(order?.user?.soff_seller_id)
                             }
-                            type="text"
-                            icon={
-                                <span className={styles.unreadChatsWrapper}>
-                                    {order?.unread_messages_count !== 0 && (
-                                        <span className={styles.unreadChats}>
-                                            {order?.unread_messages_count}
-                                        </span>
-                                    )}
-                                    <MessageOutlined
+                            color="#00a44f">
+                            <Button
+                                type="text"
+                                icon={
+                                    <FaRegCommentDots
                                         style={{ fontSize: '30px' }}
                                     />
-                                </span>
-                            }
-                        />
+                                }
+                            />
+                        </Badge>
                     )}
                 </div>
             </div>

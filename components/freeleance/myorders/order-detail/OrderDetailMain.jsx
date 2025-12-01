@@ -6,21 +6,22 @@ import { useRouter } from 'next/router';
 import Loader from '~/components/shared/loader';
 import CommentSection from '../../services/service-deatail/ui/CommentSection';
 import styles from './style/style.module.scss';
-import { MessageOutlined } from '@ant-design/icons';
+import { FaRegCommentDots } from 'react-icons/fa';
 import useCreateChat from '~/components/freeleance/chat/api/useCreateChat';
 import Link from 'next/link';
-import { Button } from 'antd';
+import { Button, Badge } from 'antd';
 import OrderDrawer from './ui/OrderDrawer';
 
 const OrderDetailMain = ({ orderData }) => {
     const router = useRouter();
     const [showStickySeller, setShowStickySeller] = useState(false);
     const [openDrawer, setOpenDrawer] = useState(false);
-    const { data: order, isError, isLoading, refetch } = useGetOrderById(
-        +router.query?.id,
-        orderData,
-        true
-    );
+    const {
+        data: order,
+        isError,
+        isLoading,
+        refetch,
+    } = useGetOrderById(+router.query?.id, orderData, true);
 
     if (isLoading) {
         return <Loader />;
@@ -35,7 +36,7 @@ const OrderDetailMain = ({ orderData }) => {
         await refetch();
     };
 
-    const handleShowStickySeller = value => {
+    const handleShowStickySeller = (value) => {
         setShowStickySeller(value);
     };
 
@@ -92,20 +93,21 @@ const StickySeller = ({ order, isOpen }) => {
                     </div>
                 </div>
                 {order?.user?.soff_seller_id && (
-                    <Button
+                    <Badge
+                        offset={[-10, 3]}
+                        size="small"
+                        count={order?.unread_messages_count}
                         onClick={() => createChat(order?.user?.soff_seller_id)}
-                        type="text"
-                        icon={
-                            <span className={styles.unreadChatsWrapper}>
-                                {order?.unread_messages_count !== 0 && (
-                                    <span className={styles.unreadChats}>
-                                        {order?.unread_messages_count}
-                                    </span>
-                                )}
-                                <MessageOutlined style={{ fontSize: '30px' }} />
-                            </span>
-                        }
-                    />
+                        color="#00a44f">
+                        <Button
+                            type="text"
+                            icon={
+                                <FaRegCommentDots
+                                    style={{ fontSize: '30px' }}
+                                />
+                            }
+                        />
+                    </Badge>
                 )}
             </div>
         </div>
