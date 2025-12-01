@@ -52,6 +52,26 @@
     }
 }
 
+.searchModalContent {
+    padding: 20px 15px !important;
+}
+
+.searchBoxMobile {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+
+    .input {
+        height: 35px;
+
+        .inputIconPrefix {
+            padding-inline: 8px;
+            color: #888;
+        }
+    }
+}
+
 .searchOption {
     padding: 8px 12px;
     color: #000000e0;

@@ -1,32 +1,15 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from './style.module.scss';
 import Image from 'next/image';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { DownOutlined } from '@ant-design/icons';
-import {
-    Dropdown,
-    Space,
-    Badge,
-    Button,
-    Modal,
-    Select,
-    Input,
-    Skeleton,
-    Empty,
-} from 'antd';
+import { Dropdown, Space, Badge, Button, Empty } from 'antd';
 import Link from 'next/link';
 import useOrdersStatus from '~/components/freeleance/myorders/myorder/api/useOrderStatus';
 import { IoSearch } from 'react-icons/io5';
-import { useQuery } from '@tanstack/react-query';
-import { api } from '~/repositories/api';
-import useDebounce from '~/shared/hooks/useDebounce';
-import axiosInstance from '~/shared/api/freeleanceApi';
-import searchStyle from '../navbar-search/style.module.scss';
-import { FiExternalLink } from 'react-icons/fi';
-import { GrBook } from 'react-icons/gr';
-import { directionsImg } from '~/shared/constants/directions-img';
+import SearchModal from '~/shared/components/modals/search-modal/SearchModal';
 
 const products = [
     {
@@ -139,66 +122,6 @@ const products = [
     },
 ];
 
-const templateIcons = {
-    scientific_work: (
-        <Image
-            src={'/static/svg/book-saved.svg'}
-            alt=""
-            width={20}
-            height={20}
-        />
-    ),
-    dizayn: (
-        <Image src={'/static/svg/image.svg'} alt="" width={20} height={20} />
-    ),
-    web: (
-        <Image src={'/static/svg/monitor.svg'} alt="" width={20} height={20} />
-    ),
-    three_d: (
-        <Image src={'/static/svg/3dcube.svg'} alt="" width={20} height={20} />
-    ),
-    marketing: (
-        <Image
-            src={'/static/img/icons/megaphone.png'}
-            alt=""
-            width={20}
-            height={20}
-        />
-    ),
-    seo_traffic: (
-        <Image
-            src={'/static/img/icons/seo.png'}
-            alt=""
-            width={20}
-            height={20}
-        />
-    ),
-    audio_video: (
-        <Image
-            src={'/static/img/icons/soundtrack.png'}
-            alt=""
-            width={20}
-            height={20}
-        />
-    ),
-    business: (
-        <Image
-            src={'/static/img/icons/briefcase.png'}
-            alt=""
-            width={20}
-            height={20}
-        />
-    ),
-    not_found: (
-        <Image
-            src={'/static/svg/not-found.svg'}
-            alt=""
-            width={20}
-            height={20}
-        />
-    ),
-};
-
 export const EmptyTab = ({ description }) => {
     return (
         <Empty
@@ -220,59 +143,13 @@ export const EmptyTab = ({ description }) => {
 
 const HeaderCatergories = () => {
     const { isMobile, size } = useResponsive();
-    const { isLoggedIn } = useSelector(state => state.auth);
-    const { directions } = useSelector(state => state.profile);
+    const { isLoggedIn } = useSelector((state) => state.auth);
     const { push, query, replace, pathname } = useRouter();
     const { data } = useOrdersStatus();
 
     const totalOrders = data
         ? (data.pending || 0) + (data.requirement_process || 0)
         : 0;
-
-    const handleOrder = () => {
-        if (isLoggedIn) {
-            push('/order/create');
-        } else {
-            push('/auth/login?returnUrl=%2Forder%2Fcreate');
-        }
-    };
-
-    const templates = useMemo(
-        () => [
-            {
-                key: '1',
-                icon: (
-                    <i
-                        style={{ fontSize: '20px', color: 'rgba(0,0,0,0.6)' }}
-                        className="fa-solid fa-plus"></i>
-                ),
-                label: (
-                    <Link href="/order/create">
-                        <a className={` ${styles.dropLabel}  `}>
-                            Maxsus buyurtma berish
-                        </a>
-                    </Link>
-                ),
-                onClick: handleOrder,
-                style: {
-                    borderBottom: '1px solid rgba(0,0,0,0.2)',
-                    borderRadius: '0px',
-                },
-            },
-            ...directions.map(dir => ({
-                key: dir.value,
-                icon: directionsImg[dir.value]
-                    ? directionsImg[dir.value]
-                    : directionsImg['not_found'],
-                label: (
-                    <Link href={`/orders?direction=${dir.value}`}>
-                        <a className={`${styles.dropLabel}`}>{dir.label}</a>
-                    </Link>
-                ),
-            })),
-        ],
-        [directions]
-    );
 
     useEffect(() => {
         if (query?.modal === 'open' && isLoggedIn) {
@@ -314,152 +191,30 @@ const HeaderCatergories = () => {
                 <Link href="/order/create">
                     <a className={styles.dropLabel}>Buyurtma berish</a>
                 </Link>
-                {/* <Dropdown menu={{ items: templates }}>
-                    <Space className={styles.dropLabel}>
-                        Buyurtma berish
-                        <DownOutlined />
-                    </Space>
-                </Dropdown> */}
             </div>
         </div>
     );
 };
 
-const HeaderSearch = () => {
-    const { push } = useRouter();
-    const [type, setType] = useState('mahsulotlar');
-    const [freezeSearch, setFreezeSearch] = useState(false);
+export const HeaderSearch = () => {
     const [openSearch, setOpenSearch] = useState(false);
-    const [search, setSearch] = useState('');
-    const [isSearchFocused, setIsSearchFocused] = useState(false);
-    const searchRef = useRef(null);
-    const axios = axiosInstance();
 
-    const debounceSearch = useDebounce(search, 500);
-
-    const { data, isSuccess, isFetching: isDataLoading } = useQuery({
-        queryKey: ['searchResults', debounceSearch, type],
-        queryFn: async () => {
-            const { data } = await api.get(
-                `doc-search/?search=${debounceSearch}`
-            );
-            return data;
-        },
-        enabled: type === 'mahsulotlar' && !freezeSearch,
-        retry: 1,
-    });
-
-    const {
-        data: freelanceData,
-        isSuccess: freelanceSuccess,
-        isFetching: isFreelanceDataLoading,
-    } = useQuery({
-        queryKey: ['freelanceData', debounceSearch, type],
-        queryFn: async () => {
-            const { data } = await axios.get(
-                `customer/search-page?search=${debounceSearch}`
-            );
-            return data;
-        },
-        enabled: type !== 'mahsulotlar' && !freezeSearch,
-        retry: 1,
-    });
-
-    const isLoading = isDataLoading || isFreelanceDataLoading;
-
-    const searchOptions = options => {
-        return options?.filter(option => {
-            // Ensure option is a string before applying string methods
-            if (typeof option !== 'string' || !option) return false;
-            return option
-                .toLowerCase()
-                .trim()
-                .includes(debounceSearch.toLowerCase().trim());
-        });
-    };
-
-    const filteredOptions = useMemo(() => {
-        if (type === 'mahsulotlar') {
-            return isSuccess ? searchOptions(data) : [];
-        } else if (type === 'mutaxasislar') {
-            return freelanceSuccess
-                ? searchOptions(freelanceData?.position)
-                : [];
-        } else if (type === 'xizmatlar') {
-            return freelanceSuccess
-                ? searchOptions(freelanceData?.services)
-                : [];
-        }
-    }, [type, isSuccess, freelanceSuccess, data, freelanceData]);
-
-    const handleSearch = () => {
-        if (!search) return;
-        setFreezeSearch(true);
-        if (type === 'mahsulotlar') {
-            push(`/search-page/?keyword=${search}&tab=1&type=file`);
-        } else if (type === 'xizmatlar') {
-            push(`/search-page/?keyword=${search}&tab=2&type=all`);
-        } else if (type === 'mutaxasislar') {
-            push(`/search-page/?keyword=${search}&tab=3&type=all`);
-        }
+    const onClose = () => {
+        setOpenSearch(false);
     };
 
     useEffect(() => {
-        if (openSearch && searchRef.current) {
-            searchRef.current.focus();
-        }
-        const handleOnKeydown = e => {
+        const handleOnKeydown = (e) => {
             if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
                 e.preventDefault();
-                setOpenSearch(prev => !prev);
+                setOpenSearch((prev) => !prev);
             }
         };
         window.addEventListener('keydown', handleOnKeydown);
         return () => {
             window.removeEventListener('keydown', handleOnKeydown);
-            setFreezeSearch(false);
         };
     }, [openSearch]);
-
-    let filteredDataOptions = null;
-    if (isLoading) {
-        filteredDataOptions = Array(10)
-            .fill(null)
-            .map((_, i) => (
-                <Skeleton
-                    key={i}
-                    active
-                    className="Search_Results_Wrap_skeleton"
-                    style={{
-                        width: '100% !important',
-                        padding: '10px 10px 10px 0',
-                    }}
-                />
-            ));
-    } else if (filteredOptions.length) {
-        filteredDataOptions = filteredOptions.map((option, index) => (
-            <Link
-                key={index}
-                href={
-                    type === 'mahsulotlar'
-                        ? `/search-page/?keyword=${option}&tab=1&type=file`
-                        : type === 'xizmatlar'
-                        ? `/search-page/?keyword=${option}&tab=2&type=all`
-                        : `/search-page/?keyword=${option}&tab=3&type=all`
-                }>
-                <a>
-                    <div key={index} className={searchStyle.searchOption}>
-                        {option}
-                        {/* <FiExternalLink /> */}
-                    </div>
-                </a>
-            </Link>
-        ));
-    } else {
-        filteredDataOptions = (
-            <EmptyTab description="So'rov bo'yicha ma'lumotlar topilmadi" />
-        );
-    }
 
     return (
         <div
@@ -477,7 +232,6 @@ const HeaderSearch = () => {
                     marginRight: '15px',
                     width: '90%',
                     height: '40px',
-
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
@@ -515,62 +269,7 @@ const HeaderSearch = () => {
                     <span>+ K</span>
                 </div>
             </Button>
-            <Modal
-                title={'Qidiruv'}
-                open={openSearch}
-                width={560}
-                footer={null}
-                onCancel={() => setOpenSearch(false)}>
-                <div>
-                    <div
-                        className={searchStyle.searchBox}
-                        style={{
-                            boxShadow: isSearchFocused
-                                ? '0 0 0 2px rgba(0, 164, 79, 0.5)'
-                                : 'none',
-                        }}>
-                        <div className="d-flex w-100">
-                            <Select
-                                value={type}
-                                onChange={val => setType(val)}
-                                className={searchStyle.select}
-                                bordered={false}>
-                                <Option value="mahsulotlar">Mahsulotlar</Option>
-                                <Option value="xizmatlar">Xizmatlar</Option>
-                                <Option value="mutaxasislar">
-                                    Mutaxassislar
-                                </Option>
-                            </Select>
-
-                            <Input
-                                ref={searchRef}
-                                className={searchStyle.input}
-                                placeholder={'izlash...'}
-                                onFocus={() => setIsSearchFocused(true)}
-                                onBlur={() => setIsSearchFocused(false)}
-                                value={search}
-                                onChange={e => setSearch(e.target.value)}
-                                onPressEnter={handleSearch}
-                                bordered={false}
-                            />
-                        </div>
-
-                        <span
-                            className={searchStyle.searchIcon}
-                            onClick={handleSearch}>
-                            <IoSearch />
-                        </span>
-                    </div>
-                    <div
-                        style={{
-                            marginTop: '10px',
-                            maxHeight: '300px',
-                            overflowY: 'auto',
-                        }}>
-                        {filteredDataOptions}
-                    </div>
-                </div>
-            </Modal>
+            <SearchModal open={openSearch} onClose={onClose} />
         </div>
     );
 };

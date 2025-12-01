@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import HeaderTop from './HeaderTop';
 import HeaderLogo from './HeaderLogo';
 import HeaderActions from './HeaderActions';
@@ -8,17 +8,19 @@ import useResponsive from '~/shared/utilities/useResponsive';
 import NavbarSearch from './navbar-search';
 import NavbarMenu from '~/widgets/navbar-menu';
 import FastDownloadSection from '~/shared/components/fast-dowload/FastDowloadSection';
+import { initSearchHistory } from '~/store/search/slice';
 
 const Header = () => {
     const { isMobile } = useResponsive();
     const dispatch = useDispatch();
-    const cartItems = useSelector((state) => state.ecomerce.cartDataItems);
-    const { showSearch, showFastDownload } = useSelector((state) => state.ui);
+    const { showFastDownload } = useSelector((state) => state.ui);
 
     useEffect(() => {
-        if (!cartItems.length) {
+        const initFunctions = async () => {
             dispatch(initLocalCart());
-        }
+            dispatch(initSearchHistory());
+        };
+        initFunctions();
     }, []);
 
     return (

@@ -5,6 +5,7 @@ import ecomerce from './ecomerce/slice';
 import affiliate from './affiliate/slice';
 import user from './seller/slice';
 import profile from './profile/slice';
+import search from './search/slice';
 import ui from './fast-dowload/slice';
 import { apiFreelanceSlice, apiSoffSlice } from './api/apiSlice';
 
@@ -14,6 +15,7 @@ export const store = configureStore({
         ecomerce,
         affiliate,
         user,
+        search,
         profile,
         ui,
         [apiSoffSlice.reducerPath]: apiSoffSlice.reducer,

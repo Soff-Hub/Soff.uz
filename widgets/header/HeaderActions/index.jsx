@@ -8,12 +8,13 @@ import HeaderUserDropdown from './HeaderUserDropdown';
 import { Badge } from 'antd';
 import MenuCategoriesDropdown from '~/components/shared/menu/MenuCategoriesDropdown';
 import useResponsive from '~/shared/utilities/useResponsive';
-import HeaderCatergories from '../HeaderCategories';
+import HeaderCatergories, { HeaderSearch } from '../HeaderCategories';
 
 const HeaderActions = ({ auth, isDark }) => {
     const { wishlist } = useWishlist();
-    const { isMobile, isTablet } = useResponsive();
-    const data = useSelector(state => state.ecomerce.cartDataItems);
+    const { isMobile, isTablet, size } = useResponsive();
+    const isTabletLimit = size >= 650;
+    const data = useSelector((state) => state.ecomerce.cartDataItems);
 
     return (
         <div
@@ -22,6 +23,7 @@ const HeaderActions = ({ auth, isDark }) => {
             }`}>
             {!isMobile && !isTablet && <HeaderCatergories />}
             {!isMobile && !isTablet && <MenuCategoriesDropdown />}
+            {isTabletLimit && <HeaderSearch />}
             <div className="d-flex">
                 {wishlist?.length > 0 && (
                     <Link href="/account/wishlist">
@@ -50,4 +52,4 @@ const HeaderActions = ({ auth, isDark }) => {
     );
 };
 
-export default connect(state => state)(HeaderActions);
+export default connect((state) => state)(HeaderActions);
