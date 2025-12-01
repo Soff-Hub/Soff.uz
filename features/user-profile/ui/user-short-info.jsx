@@ -62,6 +62,8 @@ const UserShortInfo = ({ seller }) => {
     const [orderPaymentPromptModal, setOrderPaymentPromptModal] =
         useState(false);
 
+    const isFreelancer = seller?.has_portfolio && seller?.has_service;
+
     const lastActive = useMemo(
         () =>
             seller?.last_login
@@ -333,7 +335,7 @@ const UserShortInfo = ({ seller }) => {
                     icon={<i className="fa-solid fa-clipboard-list"></i>}
                     label="Xizmatlar uchun ochiq"
                     value={
-                        seller?.has_service && seller?.has_portfolio ? (
+                        isFreelancer ? (
                             <CheckCircleOutlined
                                 className={cn('text-primary', 'text-[16px]')}
                             />
@@ -371,7 +373,16 @@ const UserShortInfo = ({ seller }) => {
                     onClick={handleCreateChat}>
                     <i className="fa-solid fa-comment-dots"></i>
                 </Button>
-                <Button type="primary" block onClick={handleCreateOrder}>
+                <Button
+                    type="primary"
+                    block
+                    onClick={handleCreateOrder}
+                    title={
+                        !isFreelancer
+                            ? "Frilanser xizmatlari mavjud emas, shuning uchun buyurtma berib bo'lmaydi."
+                            : ''
+                    }
+                    disabled={!isFreelancer}>
                     <i className="fa-solid fa-calendar"></i> Buyurtma berish
                 </Button>
             </div>
@@ -397,7 +408,16 @@ const UserShortInfo = ({ seller }) => {
                     onClick={handleCreateChat}>
                     <i className="fa-solid fa-comment-dots"></i>
                 </Button>
-                <Button block type="primary" onClick={handleCreateOrder}>
+                <Button
+                    block
+                    type="primary"
+                    onClick={handleCreateOrder}
+                    title={
+                        !isFreelancer
+                            ? "Frilanser xizmatlari mavjud emas, shuning uchun buyurtma berib bo'lmaydi."
+                            : ''
+                    }
+                    disabled={!isFreelancer}>
                     <i className="fa-solid fa-calendar"></i> Buyurtma berish
                 </Button>
             </div>

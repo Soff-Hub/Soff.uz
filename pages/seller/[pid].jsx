@@ -7,13 +7,13 @@ import PageContainer from '~/widgets/layouts/PageContainer';
 const SellerPage = ({ seller }) => {
     return (
         <PageContainer>
+            <Meta
+                title={seller?.full_name}
+                image={seller?.image || ''}
+                description={seller?.bio}
+                author={seller?.full_name}
+            />
             <div className="container">
-                <Meta
-                    title={seller?.full_name}
-                    image={seller?.image || ''}
-                    description={seller?.bio}
-                    author={seller?.full_name}
-                />
                 <UserProfile seller={seller} />
             </div>
         </PageContainer>
