@@ -12,8 +12,8 @@ import HeaderCatergories, { HeaderSearch } from '../HeaderCategories';
 
 const HeaderActions = ({ auth, isDark }) => {
     const { wishlist } = useWishlist();
-    const { isMobile, isTablet, size } = useResponsive();
-    const isTabletLimit = size >= 650;
+    const { isMobile, isTablet, isDesktop, size } = useResponsive();
+    const isTabletLimit = !isDesktop && size >= 650;
     const data = useSelector((state) => state.ecomerce.cartDataItems);
 
     return (
