@@ -10,6 +10,9 @@ const nextSettings = {
             level: 'verbose',
         },
     },
+    // Note: optimizePackageImports is Next.js 13+ only
+    // For Next.js 12, tree shaking works automatically with named imports
+    // Your imports are already correct: import { Button } from 'antd'
     // Show more detailed hydration mismatches
     reactStrictMode: true,
     env: {
@@ -39,8 +42,7 @@ const nextSettings = {
         return [
             // Caching static files for 1 year
             {
-                source:
-                    '/:all*(svg|jpg|png|jpeg|gif|ico|webp|avif|jfif|pjpeg|pjp|apng|bmp|tif|tiff|js|css|woff2)',
+                source: '/:all*(svg|jpg|png|jpeg|gif|ico|webp|avif|jfif|pjpeg|pjp|apng|bmp|tif|tiff|js|css|woff2)',
                 headers: [
                     {
                         key: 'Cache-Control',
@@ -54,8 +56,7 @@ const nextSettings = {
                 headers: [
                     {
                         key: 'Cache-Control',
-                        value:
-                            'public, max-age=300, s-maxage=600, stale-while-revalidate=59',
+                        value: 'public, max-age=300, s-maxage=600, stale-while-revalidate=59',
                     },
                 ],
             },
@@ -65,8 +66,7 @@ const nextSettings = {
                 headers: [
                     {
                         key: 'Cache-Control',
-                        value:
-                            'public, max-age=60, s-maxage=120, stale-while-revalidate=59',
+                        value: 'public, max-age=60, s-maxage=120, stale-while-revalidate=59',
                     },
                 ],
             },
