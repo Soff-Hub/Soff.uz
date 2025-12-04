@@ -33,9 +33,9 @@ function ServiceOrderModal({
     const isSufficientBalance = balance >= order?.price;
     const componentProperties = {
         modalOpen: isOpen,
-        setModalOpen: value => setIsOpen(value),
+        setModalOpen: (value) => setIsOpen(value),
         authOpen: openAuth,
-        setAuthOpen: value => setOpenAuth(value),
+        setAuthOpen: (value) => setOpenAuth(value),
         actionTracker,
         setActionTracker,
     };
@@ -61,7 +61,7 @@ function ServiceOrderModal({
         handleAuthSuccess && handleAuthSuccess(componentProperties);
     };
 
-    const onPaymentSuccess = id => {
+    const onPaymentSuccess = (id) => {
         handleClose();
         push(`/order/${id}`);
     };
@@ -74,9 +74,9 @@ function ServiceOrderModal({
 
     useEffect(() => {
         if (switchRef.current) {
-            switchRef.addEventListener('click', e => e.stopPropagation());
+            switchRef.addEventListener('click', (e) => e.stopPropagation());
             return () => {
-                switchRef.current.removeEventListener('click', e =>
+                switchRef.current.removeEventListener('click', (e) =>
                     e.stopPropagation()
                 );
             };
@@ -92,6 +92,9 @@ function ServiceOrderModal({
             {childrenContent}
             <Modal
                 open={isOpen}
+                classNames={{
+                    content: styles.serviceOrderModalContainer,
+                }}
                 onCancel={handleClose}
                 footer={null}
                 width={600}>
@@ -175,7 +178,7 @@ function ServiceOrderModal({
                             <TextArea
                                 rows={4}
                                 value={description}
-                                onChange={e => {
+                                onChange={(e) => {
                                     setDescription(e.target.value);
                                 }}
                                 placeholder="Buyurtma bo'yicha qo'shimcha ma'lumot (ixtiyoriy)"
@@ -194,7 +197,7 @@ function ServiceOrderModal({
                                 beforeUpload={() => {
                                     return false;
                                 }}
-                                onChange={e => {
+                                onChange={(e) => {
                                     const { file, fileList } = e;
                                     if (file) {
                                         const maxSize = 50 * 1024 * 1024;
@@ -241,7 +244,9 @@ function ServiceOrderModal({
                                 {balanceDisabled ? (
                                     <Tooltip title="To'lov uchun balansingizdan foydalaning">
                                         <Button
-                                            onClick={() => setMode(pre => !pre)}
+                                            onClick={() =>
+                                                setMode((pre) => !pre)
+                                            }
                                             className={
                                                 mode && isSufficientBalance
                                                     ? styles.orderButtonActive

@@ -1,6 +1,10 @@
 @import '/scss/utils/variable';
 @import '/scss/utils/mixin';
 
+.serviceOrderModalContainer {
+    padding: 20px 15px !important;
+}
+
 .serviceOrderModal {
     background: #fff;
     border-radius: 10px !important;

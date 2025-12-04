@@ -32,9 +32,8 @@ const ServiceCheckout = ({
     onSuccess,
 }) => {
     const verificationModalRef = useRef();
-    const [isVerificationModalOpen, setIsVerificationModalOpen] = useState(
-        false
-    );
+    const [isVerificationModalOpen, setIsVerificationModalOpen] =
+        useState(false);
     const [resData, setResData] = useState(null);
     const [type, setType] = useState('card');
     const {
@@ -66,11 +65,34 @@ const ServiceCheckout = ({
                 order_requirement_file: files?.[0]?.originFileObj,
             },
             {
-                onSuccess: data => {
+                onSuccess: (data) => {
                     if (onClose) onClose();
                     router.push(data.url);
                 },
-                onError: err => {
+                onError: (err) => {
+                    AlertMessage.error(err.response.data.detail);
+                },
+            }
+        );
+    }
+
+    async function handlePaymePayment(e) {
+        e.preventDefault();
+
+        await createOrder(
+            {
+                service_id: document,
+                payment_type: type,
+                order_id,
+                order_requirement_description: description,
+                order_requirement_file: files?.[0]?.originFileObj,
+            },
+            {
+                onSuccess: (data) => {
+                    if (onClose) onClose();
+                    router.push(data.url);
+                },
+                onError: (err) => {
                     AlertMessage.error(err.response.data.detail);
                 },
             }
@@ -92,7 +114,7 @@ const ServiceCheckout = ({
 
         if (order_id) payload.order_id = order_id;
         await createOrder(payload, {
-            onSuccess: async data => {
+            onSuccess: async (data) => {
                 if (
                     data.msg === 'Success' &&
                     data.payment_method === 'wallet'
@@ -117,7 +139,7 @@ const ServiceCheckout = ({
                 setResData(data);
                 resetVerificationModal();
             },
-            onError: err => {
+            onError: (err) => {
                 console.error('❌ Click payment error:', err);
                 setResData({
                     detail: err?.response?.data?.detail || "Noma'lum xato",
@@ -131,7 +153,7 @@ const ServiceCheckout = ({
         setResData(null);
     }
 
-    const handleCardNumberChange = e => {
+    const handleCardNumberChange = (e) => {
         const inputValue = e.target.value.replace(/\D/g, '');
         let formattedValue = '';
 
@@ -147,7 +169,7 @@ const ServiceCheckout = ({
         setFormattedCardNumber(formattedValue);
     };
 
-    const handleCardNumberDate = e => {
+    const handleCardNumberDate = (e) => {
         const inputValue = e.target.value.replace(/\D/g, '');
         let formattedValue = '';
 
@@ -303,7 +325,10 @@ const ServiceCheckout = ({
             key: 'click',
             label: (
                 <div className="click" height={80} width={'auto'}>
-                    <img src="/static/img/click.png" alt="" />
+                    <img
+                        src="/static/img/payment-method/click-logo.png"
+                        alt=""
+                    />
                 </div>
             ),
             children: (
@@ -320,6 +345,57 @@ const ServiceCheckout = ({
                         <div className="px-4 rounded">
                             <form
                                 onSubmit={handleClickPayment}
+                                className="pt-3 pb-3 d-flex">
+                                <button
+                                    type="submit"
+                                    className="w-100 ps-btn"
+                                    disabled={isOrderCreatePending}
+                                    style={{
+                                        color: '#fff',
+                                        marginTop: '10px',
+                                    }}>
+                                    {!isOrderCreatePending ? (
+                                        'Davom etish'
+                                    ) : (
+                                        <BeatLoader color="#fff" />
+                                    )}
+                                </button>
+                            </form>
+                            <SecurePaymentAlert
+                                bordered={false}
+                                style={{
+                                    width: '100%',
+                                }}
+                            />
+                        </div>
+                    </div>
+                </>
+            ),
+        },
+        {
+            key: 'payme',
+            label: (
+                <div className="click" height={80} style={{ width: '100%' }}>
+                    <img
+                        src="/static/img/payment-method/payme-logo.png"
+                        alt=""
+                    />
+                </div>
+            ),
+            children: (
+                <>
+                    <ChildrenWithInsufficientBalance
+                        order={order}
+                        balance={balance}
+                        isVisible={balanceMode && !isBalanceSufficient}
+                    />
+                    <div
+                        style={{
+                            margin: '0 auto',
+                        }}>
+                        <div className="px-4 rounded">
+                            <form
+                                onSubmit={handlePaymePayment}
                                 className="pt-3 pb-3 d-flex">
                                 <button
                                     type="submit"
@@ -590,7 +666,7 @@ const VerificationCodeModal = forwardRef(
                     code,
                 },
                 {
-                    onSuccess: async data => {
+                    onSuccess: async (data) => {
                         await queryClient.invalidateQueries({
                             queryKey: ['orders'],
                         });
@@ -606,7 +682,7 @@ const VerificationCodeModal = forwardRef(
                         if (!order_id) push('/order/my-orders?tab=2');
                         if (onClose) onClose();
                     },
-                    onError: error => {
+                    onError: (error) => {
                         const errorMessage = error?.response?.data || {
                             detail: "Noma'lum xato",
                         };
@@ -661,7 +737,7 @@ const VerificationCodeModal = forwardRef(
                         Kod quyidagi raqamga yuborildi: {resData?.phone_number}
                     </p>
                     <input
-                        onChange={e => setCode(e.target.value)}
+                        onChange={(e) => setCode(e.target.value)}
                         type="tel"
                         placeholder="000000"
                         disabled={isVerifyCodePending || isVerifyCodeSuccess}

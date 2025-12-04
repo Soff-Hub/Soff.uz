@@ -24,21 +24,9 @@ import ServiceCheckout from '~/components/freeleance/services/service-deatail/ui
 import useGetCustomBalance from '~/components/freeleance/myorders/myorder/api/useGetCustomBalance';
 import styles from '../style/select-order-drawer.module.scss';
 
-// import { useTelegram } from '~/shared/hooks/useTelegram';
-
-// NOTE: on equal payment done
-// {"success":true,"extra_amount":0,"order_id":367,"freelancer_id":281}
-
-// NOTE: on more payment required
-// {"success":false,"extra_amount":75000.0,"order_id":371,"freelancer_id":281}
-
-// NOTE: on payment with lower amount
-// {"success":true,"extra_amount":0,"order_id":372,"freelancer_id":281}
-
 const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
     const [selectedOffer, setSelectedOffer] = useState(null);
-    // const [verfiedOffer, setVerfiedOffer] = useState(null);
-    const { user } = useSelector(state => state.auth);
+    const { user } = useSelector((state) => state.auth);
     const [paymentModal, setPaymentModal] = useState(false);
     const { isDesktop, isMobile } = useResponsive();
     const { push } = useRouter();
@@ -73,7 +61,7 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
     const { mutate: selectOffer, isPending } = useFPost({
         url: 'offer/select-offer',
         token: user?.access,
-        onSuccess: data => {
+        onSuccess: (data) => {
             if (!data.success) {
                 message.warning(
                     `Frilanser tanlash uchun iltimos qo'shimcha ${formatCurrencyWithSpace(
@@ -83,7 +71,6 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                 );
                 setPaymentModal(true);
                 onClose();
-                // setVerfiedOffer(selectedOffer);
                 setSelectedOffer(null);
                 return;
             }
@@ -166,7 +153,7 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
 
                 <div className={cn('w-full')}>
                     {offers?.length > 0 ? (
-                        offers.map(item => (
+                        offers.map((item) => (
                             <div
                                 key={item?.id}
                                 className={cn(
@@ -441,6 +428,9 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
             <Modal
                 open={paymentModal}
                 onCancel={handleRetreatDrawer}
+                classNames={{
+                    content: styles.paymentOrderModalContainer,
+                }}
                 destroyOnClose
                 footer={null}
                 width={600}>
@@ -450,7 +440,7 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                         {balanceDisabled ? (
                             <Tooltip title="To'lov uchun balansingizdan foydalaning">
                                 <Button
-                                    onClick={() => setMode(pre => !pre)}
+                                    onClick={() => setMode((pre) => !pre)}
                                     className={
                                         mode && isSufficientBalance
                                             ? styles.orderButtonActive

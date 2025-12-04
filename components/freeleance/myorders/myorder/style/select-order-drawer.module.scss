@@ -1,6 +1,10 @@
 @import '/scss/utils/variable';
 @import '/scss/utils/mixin';
 
+.paymentOrderModalContainer {
+    padding: 20px 15px !important;
+}
+
 .orderPayment {
     padding: 30px;
     .orderPaymentHeader {
