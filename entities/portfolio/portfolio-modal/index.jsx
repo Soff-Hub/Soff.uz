@@ -52,7 +52,11 @@ const PortfolioModal = ({ open, onClose, portfolio }) => {
                     </Descriptions.Item>
 
                     {!isMobile && (
-                        <Descriptions.Item label="Tavsif">
+                        <Descriptions.Item
+                            label="Tavsif"
+                            style={{
+                                whiteSpace: 'pre-wrap',
+                            }}>
                             {portfolio?.description || 'Tavsif mavjud emas'}
                         </Descriptions.Item>
                     )}
