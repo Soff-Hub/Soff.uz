@@ -1,10 +1,24 @@
-import React, { useRef, useState, useMemo, useEffect, useCallback } from 'react';
+import React, {
+    useRef,
+    useState,
+    useMemo,
+    useEffect,
+    useCallback,
+} from 'react';
 import PageContainer from '~/widgets/layouts/PageContainer';
 import { baseUrl } from '~/repositories/Repository';
 import * as cookie from 'cookie';
 import Meta from '~/components/shared/headers/Meta';
 import { getOrCreateDeviceId } from '~/shared/utilities/device-id';
 import dynamic from 'next/dynamic';
+
+const video_url = 'https://www.youtube.com/watch?v=oJre9mbRE2U';
+
+// Lazy load ProductVideoBanner
+const ProductVideoBanner = dynamic(
+    () => import('~/components/product/ProductVideoBanner'),
+    { ssr: false }
+);
 
 // Lazy load heavy components
 const LastAddedProducts = dynamic(
@@ -71,7 +85,7 @@ const joyrideLocales = {
     skip: 'Bilaman',
 };
 
-const productsContentDetails = contentType => {
+const productsContentDetails = (contentType) => {
     switch (contentType) {
         case 'file':
             return FileProductDetatails;
@@ -92,7 +106,7 @@ export default function ProductDefaultPage({ defaultProducts }) {
     const [showJoyride, setShowJoyride] = useState(false);
     const similarRef = useRef();
     const lastProductsRef = useRef();
-    
+
     // Memoize expensive computations
     const contentType = useMemo(
         () => defaultProducts?.document?.content_type,
@@ -112,8 +126,10 @@ export default function ProductDefaultPage({ defaultProducts }) {
     // Check if Joyride should run (only on first visit)
     useEffect(() => {
         if (typeof window === 'undefined') return;
-        
-        const hasSeenProductTour = localStorage.getItem('product-tour-completed');
+
+        const hasSeenProductTour = localStorage.getItem(
+            'product-tour-completed'
+        );
         if (!hasSeenProductTour) {
             // Delay Joyride to prevent blocking initial render
             const timer = setTimeout(() => {
@@ -125,13 +141,14 @@ export default function ProductDefaultPage({ defaultProducts }) {
 
     // Memoize Meta props to prevent unnecessary re-renders
     const metaProps = useMemo(() => {
-        const removeHTMLTags = html => html.replace(/<[^>]+>/g, '');
-        
-        const title = defaultProducts?.title || 'Soff.uz - Intellektual mulk marketi';
+        const removeHTMLTags = (html) => html.replace(/<[^>]+>/g, '');
+
+        const title =
+            defaultProducts?.title || 'Soff.uz - Intellektual mulk marketi';
         const description = defaultProducts?.description
             ? removeHTMLTags(defaultProducts.description)
             : `${defaultProducts?.title || ''} + ${
-                  defaultProducts?.tag?.map(e => e?.name)?.join(', ') ||
+                  defaultProducts?.tag?.map((e) => e?.name)?.join(', ') ||
                   'soff.uz - Intellektual mulk marketi'
               }`;
 
@@ -141,7 +158,7 @@ export default function ProductDefaultPage({ defaultProducts }) {
             ...(defaultProducts?.tag || []),
             { name: defaultProducts?.seller?.first_name },
             { name: defaultProducts?.seller?.last_name },
-        ].filter(kw => kw.name); // Remove undefined/null keywords
+        ].filter((kw) => kw.name); // Remove undefined/null keywords
 
         return {
             title,
@@ -167,7 +184,7 @@ export default function ProductDefaultPage({ defaultProducts }) {
         [defaultProducts?.price]
     );
 
-    const handleJoyrideCallback = useCallback(data => {
+    const handleJoyrideCallback = useCallback((data) => {
         if (data.status === 'finished' || data.status === 'skipped') {
             localStorage.setItem('product-tour-completed', 'true');
             setShowJoyride(false);
@@ -178,7 +195,11 @@ export default function ProductDefaultPage({ defaultProducts }) {
         <PageContainer>
             <Meta {...metaProps} />
             <div>
-                <div className="container mb-5" style={{ position: 'relative' }}>
+                <ProductVideoBanner videoUrl={video_url} />
+                {/* Video helper banner */}
+                <div
+                    className="container mb-5"
+                    style={{ position: 'relative' }}>
                     <div className={containerClassName}>
                         <div className="ps-container p-0">
                             <div className="ps-page__container">
@@ -259,12 +280,9 @@ export async function getServerSideProps({ query, req, res }) {
     let defaultProducts = null;
 
     try {
-        const request = await fetch(
-            `${baseUrl}customer/documents/${pid}/`,
-            {
-                headers,
-            }
-        );
+        const request = await fetch(`${baseUrl}customer/documents/${pid}/`, {
+            headers,
+        });
 
         // Handle specific status codes
         if (request.status === 404) {
