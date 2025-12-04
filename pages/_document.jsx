@@ -21,47 +21,46 @@ export default function Document() {
                     href={'/static/img/soff logo.png'}
                 />
 
+                <link rel="preconnect" href="https://fonts.googleapis.com" />
                 <link
-                    href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-                    rel="stylesheet"
-                    // as="style"
-                    // onload="this.media='all'"
+                    rel="preconnect"
+                    href="https://fonts.gstatic.com"
+                    crossOrigin="anonymous"
                 />
-                {/* <noscript>
+
+                <link
+                    rel="preload"
+                    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+                    as="style"
+                />
+                <script
+                    dangerouslySetInnerHTML={{
+                        __html: `
+                            (function() {
+                                var link = document.createElement('link');
+                                link.rel = 'stylesheet';
+                                link.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap';
+                                document.head.appendChild(link);
+                            })();
+                        `,
+                    }}
+                />
+                <noscript>
                     <link
-                        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+                        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
                         rel="stylesheet"
                     />
-                </noscript> */}
+                </noscript>
 
                 <link
                     rel="stylesheet"
                     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-                    // as="style"
-                    // onload="this.media='all'"
                 />
-                {/* <noscript>
-                    <link
-                        rel="stylesheet"
-                        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-                    />
-                </noscript> */}
-                {/* <link
-                    rel="stylesheet"
-                    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
-                /> */}
+
                 <link
                     rel="stylesheet"
                     href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
-                    // as="style"
-                    // onload="this.media='all'"
                 />
-                {/* <noscript>
-                    <link
-                        rel="stylesheet"
-                        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
-                    />
-                </noscript> */}
 
                 {/* ✅ OneSignal qo‘shilgan joy */}
                 {/* <script
@@ -167,16 +166,16 @@ export default function Document() {
                         defer
                         dangerouslySetInnerHTML={{
                             __html: `
-                        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
                         !function(f,b,e,v,n,t,s)
-                        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+                        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
                         n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-                        t.src=v;s=b.getElementsByTagName(e)[0];
+                        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
                         n.queue=[];t=b.createElement(e);t.async=!0;
-                        'https://connect.facebook.net/en_US/fbevents.js');
+                        t.src=v;s=b.getElementsByTagName(e)[0];
                         s.parentNode.insertBefore(t,s)}(window, document,'script',
-                        fbq('track', 'PageView');
+                        'https://connect.facebook.net/en_US/fbevents.js');
                         fbq('init', '2024989874941740');
+                        fbq('track', 'PageView');
                         `,
                         }}></script>
                 )}

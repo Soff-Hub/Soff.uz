@@ -1,20 +1,34 @@
 import React, { useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import ImageCarousel from './ui/ImageCarousel';
 import styles from './styles/detail.module.scss';
 import PriceBox from './ui/PriceBox';
 import MoneyBack from './ui/MoneyBack';
 import UserBox from './ui/UserBox';
 import ServiceDescription from './ui/ServiceDescription';
-import FaqSection from './ui/FaqSection';
-import PortfolioSection from './ui/PortfolioSection';
 import { useRouter } from 'next/router';
-import CommentSection from './ui/CommentSection';
-import Meta from '~/components/shared/meta';
+import Meta from '~/components/shared/headers/Meta';
 import ServiceCard from '../../../../entities/service/service-card';
-import StickyBox from './ui/sticky-box';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { useDispatch } from 'react-redux';
 import { setShowSearch } from '~/store/fast-dowload/slice';
+
+// Lazy load below-the-fold components
+const FaqSection = dynamic(() => import('./ui/FaqSection'), {
+    ssr: true, // Keep SSR for SEO
+});
+
+const PortfolioSection = dynamic(() => import('./ui/PortfolioSection'), {
+    ssr: true, // Keep SSR for SEO
+});
+
+const CommentSection = dynamic(() => import('./ui/CommentSection'), {
+    ssr: true, // Keep SSR for SEO
+});
+
+const StickyBox = dynamic(() => import('./ui/sticky-box'), {
+    ssr: false, // No need for SSR, only shows on mobile
+});
 
 const ServiceDetail = ({ data }) => {
     const { push } = useRouter();
