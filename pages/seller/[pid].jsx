@@ -1,4 +1,5 @@
-import Meta from '~/components/shared/meta';
+// import Meta from '~/components/shared/meta';
+import Meta from '~/components/shared/headers/Meta';
 import UserProfile from '~/features/user-profile';
 import { d_base_url } from '~/shared/api/base-url';
 import fetchJson from '~/shared/api/fetch-json';

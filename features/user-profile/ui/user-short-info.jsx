@@ -63,6 +63,8 @@ const UserShortInfo = ({ seller }) => {
         useState(false);
 
     const isFreelancer = seller?.has_portfolio && seller?.has_service;
+    const isOpenToAcceptOrders = seller?.accepting_orders;
+    const isOrderingOpen = isFreelancer && isOpenToAcceptOrders;
 
     const lastActive = useMemo(
         () =>
@@ -335,7 +337,7 @@ const UserShortInfo = ({ seller }) => {
                     icon={<i className="fa-solid fa-clipboard-list"></i>}
                     label="Xizmatlar uchun ochiq"
                     value={
-                        isFreelancer ? (
+                        isOrderingOpen ? (
                             <CheckCircleOutlined
                                 className={cn('text-primary', 'text-[16px]')}
                             />
@@ -378,11 +380,11 @@ const UserShortInfo = ({ seller }) => {
                     block
                     onClick={handleCreateOrder}
                     title={
-                        !isFreelancer
+                        !isOrderingOpen
                             ? "Frilanser xizmatlari mavjud emas, shuning uchun buyurtma berib bo'lmaydi."
                             : ''
                     }
-                    disabled={!isFreelancer}>
+                    disabled={!isOrderingOpen}>
                     <i className="fa-solid fa-calendar"></i> Buyurtma berish
                 </Button>
             </div>
@@ -413,11 +415,11 @@ const UserShortInfo = ({ seller }) => {
                     type="primary"
                     onClick={handleCreateOrder}
                     title={
-                        !isFreelancer
+                        !isOrderingOpen
                             ? "Frilanser xizmatlari mavjud emas, shuning uchun buyurtma berib bo'lmaydi."
                             : ''
                     }
-                    disabled={!isFreelancer}>
+                    disabled={!isOrderingOpen}>
                     <i className="fa-solid fa-calendar"></i> Buyurtma berish
                 </Button>
             </div>
