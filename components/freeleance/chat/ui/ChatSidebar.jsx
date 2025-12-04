@@ -47,7 +47,7 @@ const DEFAULT_STATIC_CHAT_COPY = {
     last_message: { content: '' },
 };
 
-const ChatSidebar = ({ setChatId }) => {
+const ChatSidebar = ({ setChatId, containerHeight }) => {
     const [search, setSearch] = useState('');
     const debouncedSearch = useDebounce(search, 300);
     const router = useRouter();
@@ -133,13 +133,10 @@ const ChatSidebar = ({ setChatId }) => {
         createChat(STATIC_OPPONENT_ID);
     }, [createChat, existingStaticChat, handleChatId, resolvedStaticChat]);
 
-    const hasDynamicChats = useMemo(
-        () => orderedChats?.some((chat) => !chat?.__isStatic),
-        [orderedChats]
-    );
-
     return (
-        <div className={styles.chat_sidebar}>
+        <div
+            className={styles.chat_sidebar}
+            style={{ height: containerHeight }}>
             <div className={styles.chat_search}>
                 <BackButton />
                 <Input.Search
@@ -155,12 +152,6 @@ const ChatSidebar = ({ setChatId }) => {
                         <Spin size="large" tip="Qidirilmoqda..." />
                     </div>
                 ) : null}
-                {!isLoading && !hasDynamicChats && (
-                    <Empty
-                        description="Chat topilmadi"
-                        image={Empty.PRESENTED_IMAGE_SIMPLE}
-                    />
-                )}
                 {!isLoading &&
                     orderedChats?.map((chat, index) => {
                         const isStatic = chat?.__isStatic;

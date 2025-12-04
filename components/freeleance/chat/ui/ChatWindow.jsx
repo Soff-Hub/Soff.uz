@@ -35,7 +35,7 @@ import ChatDateSeperator from './ChatDateSeperator';
 const { TextArea } = Input;
 const maxSize = 50 * 1024 * 1024;
 
-const ChatWindow = ({ chatId, goBack }) => {
+const ChatWindow = ({ chatId, goBack, containerHeight }) => {
     const [edit, setEdit] = useState(null);
     const { user } = useSelector((state) => state.profile);
     const [openDownIcon, setOpenDownIcon] = useState(false);
@@ -43,6 +43,7 @@ const ChatWindow = ({ chatId, goBack }) => {
     const dragCounterRef = useRef(0);
     const messagesContainerRef = useRef(null);
     const scrollPositionRef = useRef(0);
+    const chatWindowRef = useRef(null);
     const router = useRouter();
 
     const {
@@ -231,12 +232,13 @@ const ChatWindow = ({ chatId, goBack }) => {
 
     return (
         <div
+            ref={chatWindowRef}
             className={styles.chat_window}
             onDragEnter={handleDragEnter}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
-            style={{ position: 'relative' }}>
+            style={{ position: 'relative', height: `${containerHeight}px` }}>
             {/* Drag and Drop Overlay */}
             {isDragging && (
                 <div
@@ -277,7 +279,6 @@ const ChatWindow = ({ chatId, goBack }) => {
                     </Card>
                 </div>
             )}
-            {/* header */}
             <div className={styles.chat_user}>
                 {goBack && (
                     <ArrowLeftOutlined
@@ -309,13 +310,14 @@ const ChatWindow = ({ chatId, goBack }) => {
                 </div>
             </div>
             <SafetyAlert />
+
             <div
                 onScroll={handlScroll}
                 ref={messagesContainerRef}
                 id="scrollableDiv"
                 style={{
                     width: '100%',
-                    height: '100vh',
+                    height: `100%`,
                     overflowY: 'scroll',
                     display: 'flex',
                     flexDirection: 'column-reverse',
