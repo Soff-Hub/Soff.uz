@@ -9,6 +9,8 @@ import {
     Radio,
     Tooltip,
     Switch,
+    Card,
+    Skeleton,
 } from 'antd';
 import {
     DownloadOutlined,
@@ -16,7 +18,7 @@ import {
     WarningOutlined,
     BellOutlined,
 } from '@ant-design/icons';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import styles from '../style/style.module.scss';
 import modalStyles from '~/features/user-profile/styles/orderPaymentPrompt.module.scss';
 import Link from 'next/link';
@@ -36,6 +38,13 @@ import { setShowSearch } from '~/store/fast-dowload/slice';
 import { IoCheckboxOutline } from 'react-icons/io5';
 import TelegramNotification from '~/shared/components/telegram-notlification';
 import useGetCustomBalance from '~/components/freeleance/myorders/myorder/api/useGetCustomBalance';
+import { FiFileText } from 'react-icons/fi';
+import { formatFileSize } from '~/shared/utilities/utils';
+import { downloadFile } from '~/shared/utilities/utils';
+
+function extractName(url) {
+    return url.split('/').pop().split('?')[0];
+}
 
 // TimerComponent to show time remaining until deadline
 const TimerComponent = ({ deadlineDate }) => {
@@ -169,10 +178,9 @@ const OrderMain = ({ order, handleOrderUpdate }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [showPayment, setShowPayment] = useState(false);
     const [rate, setRate] = useState();
-    const { data: file } = useGetFile(order?.id);
+    const { data: file, isFetching: fileIsFetching } = useGetFile(order?.id);
     const submit = useSubmit();
     const queryClient = useQueryClient();
-    // const { query, push } = useRouter();
     const { isDesktop } = useResponsive();
     const dispatch = useDispatch();
 
@@ -234,6 +242,94 @@ const OrderMain = ({ order, handleOrderUpdate }) => {
         };
     }, [dispatch]);
 
+    const pendingFiles = useMemo(() => {
+        if (!file || !file?.files?.length) return [];
+        return file?.files?.filter((f) => f.status === 'pending');
+    }, [file]);
+
+    const completedFiles = useMemo(() => {
+        if (!file || !file?.files?.length) return [];
+        return file?.files?.filter((f) => f.status === 'completed');
+    }, [file]);
+
+    const hasPendingFiles = pendingFiles.length;
+
+    let filesContent = null;
+    if (fileIsFetching) {
+        filesContent = (
+            <div
+                style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '10px',
+                }}>
+                {Array(3)
+                    .fill(null)
+                    .map((_, index) => (
+                        <Skeleton.Button
+                            key={index}
+                            style={{ height: '80px', width: '100%' }}
+                        />
+                    ))}
+            </div>
+        );
+    } else if (hasPendingFiles) {
+        filesContent = pendingFiles.map((f) => (
+            <div key={f.url} className={styles.orderConfirmFile}>
+                <div className={styles.orderConfirmFileInfo}>
+                    <div className={styles.orderConfirmFileIconWrapper}>
+                        <FiFileText className={styles.orderConfirmFileIcon} />
+                    </div>
+                    <div className={styles.orderConfirmFileText}>
+                        <p>{extractName(f.url)}</p>
+                        <p>
+                            {formatFileSize(f?.size)} •{' '}
+                            {dayjs(f?.created_at).format('YYYY-MM-DD HH:mm')}
+                        </p>
+                    </div>
+                </div>
+                <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => downloadFile(f.url)}
+                    className="ml-4 flex-shrink-0">
+                    <DownloadOutlined className="w-4 h-4 mr-2" />
+                    Yuklab olish
+                </Button>
+            </div>
+        ));
+    } else {
+        filesContent = <p>Hozircha yuklangan fayllar mavjud emas.</p>;
+    }
+
+    const completedFilesContent = null;
+    if (completedFiles.length) {
+        completedFilesContent = completedFiles.map((f) => (
+            <div key={f.url} className={styles.orderConfirmFile}>
+                <div className={styles.orderConfirmFileInfo}>
+                    <div className={styles.orderConfirmFileIconWrapper}>
+                        <FiFileText className={styles.orderConfirmFileIcon} />
+                    </div>
+                    <div className={styles.orderConfirmFileText}>
+                        <p>{extractName(f.url)}</p>
+                        <p>
+                            {formatFileSize(f?.size)} •{' '}
+                            {dayjs(f?.created_at).format('YYYY-MM-DD HH:mm')}
+                        </p>
+                    </div>
+                </div>
+                <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => downloadFile(f.url)}
+                    className="ml-4 flex-shrink-0">
+                    <DownloadOutlined className="w-4 h-4 mr-2" />
+                    Yuklab olish
+                </Button>
+            </div>
+        ));
+    }
+
     // const handleOrderUpdate = (id) => {
     //     // Bu yerda orders listini qayta yuklash yoki state yangilash
     //     queryClient.invalidateQueries({ queryKey: ['order', id] });
@@ -253,8 +349,9 @@ const OrderMain = ({ order, handleOrderUpdate }) => {
                     <div className={styles.orderPayCardFlex}>
                         <div className={styles.orderPayCardInfo}>
                             <h5
-                                className={`mb-0 ${!isDesktop &&
-                                    'text-center'}`}>
+                                className={`mb-0 ${
+                                    !isDesktop && 'text-center'
+                                }`}>
                                 Frilanser ish boshlashiga to'lov qiling.
                             </h5>
                         </div>
@@ -345,53 +442,56 @@ const OrderMain = ({ order, handleOrderUpdate }) => {
                 )}
 
                 {order?.order_status_doing?.status == 'order_file_sent' && (
-                    <>
-                        {/* <Alert
-                            icon={<WarningOutlined />}
-                            message="Buyurtma 24 soat ichida ko'rib chiqilmasa avtomatik ravishta qabul qilingan deb hisoblanadi."
+                    <div className={styles.orderPayCardGrid}>
+                        <h3 className={styles.orderConfirmTitle}>
+                            Ishni qabul qilish
+                        </h3>
+                        <p>
+                            Mutahasis buyurtmani yakunladi va natijani sizga
+                            jo'natdi. Natijani yuklab olib ko'rib chiqing va
+                            tasdiqlang yoki rad eting.
+                        </p>
+                        <Alert
+                            message="Eslatma:"
+                            description="Agar siz 24 soat ichida ishni holatini o'zgartirmasangiz, buyurtma avtomatik ravishda qabul qilinadi va to'lov mutaxassisga o'tkaziladi."
                             type="warning"
-                        /> */}
-                        <div className={styles.orderPayCardGrid}>
-                            <div className={styles.orderPayCardInfo}>
-                                <h3 className={styles.orderNameLink}>
-                                    Ishni qabul qilish
-                                </h3>
-                                <p>
-                                    Mutahasis buyurtmani yakunladi va natijani
-                                    sizga jo'natdi. Natijani yuklab olib ko'rib
-                                    chiqing va tasdiqlang yoki rad eting.
-                                </p>
-                            </div>
-
+                            showIcon
+                            style={{
+                                marginBottom: '10px',
+                            }}
+                        />
+                        <h4
+                            className="mb-3"
+                            style={{
+                                fontWeight: '400',
+                                color: '#333',
+                            }}>
+                            Yuklangan fayllar
+                        </h4>
+                        {filesContent}
+                        <div className={styles.orderConfirmFileActions}>
                             <Button
-                                icon={<DownloadOutlined />}
-                                onClick={() =>
-                                    window.open(file?.file, '_blank')
-                                }>
-                                Faylni yuklab olish
+                                color="danger"
+                                variant="outlined"
+                                // value="end"
+                                onClick={() => {
+                                    setRes('rejected');
+                                    setFeedbackOpen(true);
+                                }}>
+                                Kamchilik aniqlandi
                             </Button>
-
-                            <Radio.Group
-                                className={styles.orderPayCardQualityCheck}>
-                                <Radio.Button
-                                    value="end"
-                                    onClick={() => {
-                                        setRes('rejected');
-                                        setFeedbackOpen(true);
-                                    }}>
-                                    Kamchilik aniqlandi
-                                </Radio.Button>
-                                <Radio.Button
-                                    value="start"
-                                    onClick={() => {
-                                        setRes('complected');
-                                        setFeedbackOpen(true);
-                                    }}>
-                                    Qabul qilish
-                                </Radio.Button>
-                            </Radio.Group>
+                            <Button
+                                type="primary"
+                                variant="contained"
+                                // value="start"
+                                onClick={() => {
+                                    setRes('complected');
+                                    setFeedbackOpen(true);
+                                }}>
+                                Qabul qilish
+                            </Button>
                         </div>
-                    </>
+                    </div>
                 )}
 
                 {order?.order_status_doing?.status === 'rejected' && (
@@ -412,12 +512,18 @@ const OrderMain = ({ order, handleOrderUpdate }) => {
                     onOrderUpdate={handleOrderUpdate}
                 />
                 {order?.order_status_doing?.status === 'completed' && (
-                    <div className="d-flex justify-content-end align-items-center mt-3">
-                        <Button
-                            icon={<DownloadOutlined />}
-                            onClick={() => window.open(file?.file, '_blank')}>
-                            Faylni yuklab olish
-                        </Button>
+                    <div className=" mt-3">
+                        <div className={styles.orderPayCardGrid}>
+                            <h4
+                                className="mb-3"
+                                style={{
+                                    fontWeight: '400',
+                                    color: '#333',
+                                }}>
+                                Buyurtma fayllari
+                            </h4>
+                            {completedFilesContent}
+                        </div>
                     </div>
                 )}
 
@@ -451,9 +557,8 @@ const OrderMain = ({ order, handleOrderUpdate }) => {
                                     whiteSpace: 'pre-line',
                                 }}
                                 dangerouslySetInnerHTML={{
-                                    __html:
-                                        order.order_requirement[0]
-                                            ?.order_requirement_description,
+                                    __html: order.order_requirement[0]
+                                        ?.order_requirement_description,
                                 }}
                             />
                             {/* Fayl bo‘lsa tugma chiqadi */}
@@ -463,10 +568,9 @@ const OrderMain = ({ order, handleOrderUpdate }) => {
                                     <Button
                                         icon={<DownloadOutlined />}
                                         onClick={() =>
-                                            window.open(
+                                            downloadFile(
                                                 order.order_requirement[0]
-                                                    .order_requirement_file,
-                                                '_blank'
+                                                    .order_requirement_file
                                             )
                                         }>
                                         Faylni yuklab olish
@@ -562,13 +666,13 @@ const OrderMain = ({ order, handleOrderUpdate }) => {
                         <Rate
                             allowHalf={false}
                             value={rate}
-                            onChange={val => setRate(val)}
+                            onChange={(val) => setRate(val)}
                         />
                         <TextArea
                             placeholder="Xizmat haqida fikrlaringizni yozib qoldiring"
                             rows={3}
                             value={text}
-                            onChange={e => setText(e.target.value)}
+                            onChange={(e) => setText(e.target.value)}
                         />
                     </div>
                 )}
@@ -583,7 +687,7 @@ const OrderMain = ({ order, handleOrderUpdate }) => {
                             placeholder="Ishning aniqlangan kamchiliklarini yozing"
                             rows={3}
                             value={text}
-                            onChange={e => setText(e.target.value)}
+                            onChange={(e) => setText(e.target.value)}
                         />
                     </>
                 )}
@@ -682,7 +786,9 @@ const OrderMain = ({ order, handleOrderUpdate }) => {
                                 {balanceDisabled ? (
                                     <Tooltip title="To'lov uchun balansingizdan foydalaning">
                                         <Button
-                                            onClick={() => setMode(pre => !pre)}
+                                            onClick={() =>
+                                                setMode((pre) => !pre)
+                                            }
                                             className={
                                                 mode && isSufficientBalance
                                                     ? modalStyles.orderButtonActive
