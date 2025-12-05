@@ -178,7 +178,11 @@ const OrderMain = ({ order, handleOrderUpdate }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [showPayment, setShowPayment] = useState(false);
     const [rate, setRate] = useState();
-    const { data: file, isFetching: fileIsFetching } = useGetFile(order?.id);
+    const {
+        data: file,
+        isFetching: fileIsFetching,
+        refetch: refetchFiles,
+    } = useGetFile(order?.id);
     const submit = useSubmit();
     const queryClient = useQueryClient();
     const { isDesktop } = useResponsive();
@@ -640,6 +644,7 @@ const OrderMain = ({ order, handleOrderUpdate }) => {
                                     queryClient.invalidateQueries({
                                         queryKey: ['order'],
                                     });
+                                    refetchFiles();
                                     setText('');
                                     setRate(undefined);
                                     if (payload.status == 'completed') {
