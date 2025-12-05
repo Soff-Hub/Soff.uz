@@ -14,12 +14,7 @@ export function formatFileSize(bytes) {
 
 export function downloadFile(s3Link) {
     const downloadUrl = `/api/download?url=${encodeURIComponent(s3Link)}`;
-
-    const win = window.open(downloadUrl, '_blank');
-
-    setTimeout(() => {
-        if (win) win.close();
-    }, 2000);
+    window.open(downloadUrl, '_blank');
 }
 
 export function highlightMatch(text, query) {
