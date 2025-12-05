@@ -7,6 +7,7 @@ import axiosInstance from '~/shared/api/freeleanceApi';
 import { useRouter } from 'next/router';
 import styles from '../styles/freelanceSearchInput.module.scss';
 import dynamic from 'next/dynamic';
+import { Input } from 'antd';
 
 const AutoComplete = dynamic(() => import('antd/es/auto-complete'), {
     ssr: false,
@@ -46,22 +47,20 @@ function FreelancerSearchInput() {
 
     return (
         <div className={styles.searchBox}>
-            <AutoComplete
-                value={search}
-                style={{ width: '100%' }}
+            <Input
+                allowClear
+                variant="borderless"
+                className={styles.input}
                 placeholder={'Qaysi turdagi mutaxassislar qidirmoqdasiz?'}
-                onChange={(val) => setSearch(val)}
-                options={options}>
-                <input
-                    className={styles.input}
-                    style={{ width: '100%' }}
-                    onKeyDown={(e) => {
-                        if (e.key === 'Enter') {
-                            handleSearch();
-                        }
-                    }}
-                />
-            </AutoComplete>
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                style={{ width: '100%' }}
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                        handleSearch();
+                    }
+                }}
+            />
 
             <span className={styles.searchIcon} onClick={handleSearch}>
                 <SearchOutlined />

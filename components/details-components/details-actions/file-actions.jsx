@@ -10,8 +10,7 @@ import { addPeriodToThousands } from '~/components/partials/account/price-format
 import useWishlist from '~/shared/hooks/useWishlist';
 import useCart from '~/shared/hooks/useCart';
 import { useRouter } from 'next/router';
-import { setOneShopDoc } from '~/store/auth/slice';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import AuthModal from '~/components/AuthModal';
