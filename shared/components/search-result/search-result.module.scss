@@ -1,0 +1,40 @@
+.searchHistoryHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+
+    h4 {
+        font-size: 16px;
+        font-weight: 600;
+        margin: 0;
+    }
+
+    button {
+        font-size: 14px;
+    }
+}
+
+.searchOption {
+    padding: 8px 12px;
+    color: #000000e0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+
+    .searchOptionIcon {
+        color: #888;
+        margin-right: 8px;
+        font-size: 18px;
+        float: left;
+    }
+
+    .deleteHistoryBtn {
+        float: right;
+        font-size: 14px;
+        padding: 0;
+    }
+
+    &:hover {
+        background-color: #f5f5f5;
+    }
+}
