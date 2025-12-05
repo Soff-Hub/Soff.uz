@@ -36,6 +36,7 @@ const nextSettings = {
             'freelance.soff.uz',
             'freelance.ilmiyish.uz',
             'placehold.co',
+            'freelance-media.s3.amazonaws.com',
         ],
     },
     async headers() {
