@@ -32,6 +32,8 @@ const extendedSoffSlice = apiSoffSlice.injectEndpoints({
         getProfile: builder.query({
             query: () => '/auth/profile',
             providesTags: ['Profile'],
+            // Keep cached data for 5 minutes (300 seconds)
+            keepUnusedDataFor: 300,
             onQueryStarted: async (_arg, { dispatch, queryFulfilled }) => {
                 try {
                     const { data } = await queryFulfilled;

@@ -19,16 +19,9 @@ const initialState = {
         },
     ],
     data: {},
-    products: {},
-    shop: [],
-    category_lists: [],
-    top_category_lists: [],
-    category: true,
-    categorySlug: [],
     id: null,
     status: 'idle',
     error: null,
-    telegramWebApp: false,
 };
 
 // Asenkron funksiyalarni yaratish
@@ -41,13 +34,16 @@ export const login = createAsyncThunk(
             Cookies.set('token', user?.access, {
                 expires: jwtDecode(user?.access)?.exp || 8,
             });
-            localStorage.setItem(
-                'data',
-                JSON.stringify({ ...data, password: null })
-            );
+            // Store data in localStorage for backward compatibility, but not in Redux state
+            if (data) {
+                localStorage.setItem(
+                    'data',
+                    JSON.stringify({ ...data, password: null })
+                );
+            }
             return {
                 user,
-                data: { ...data, password: null },
+                data: data ? { ...data, password: null } : {},
                 status: 'succeeded',
             };
         } catch (error) {
@@ -100,24 +96,6 @@ const authSlice = createSlice({
         setAccountLinks: (state, action) => {
             state.accountLinks = action.payload;
         },
-        setMyProducts: (state, action) => {
-            state.products = action.payload;
-        },
-        setOneShopDoc: (state, action) => {
-            state.shop = action.payload;
-        },
-        setCategoryLists: (state, action) => {
-            state.category_lists = action.payload;
-        },
-        setTopCategoryLists: (state, action) => {
-            state.top_category_lists = action.payload;
-        },
-        setCategory: (state, action) => {
-            state.category = action.payload;
-        },
-        setCategorySlug: (state, action) => {
-            state.categorySlug = action.payload;
-        },
         begin: (state, action) => {
             state.id = action.payload;
         },
@@ -131,7 +109,7 @@ const authSlice = createSlice({
                 state.status = 'succeeded';
                 state.isLoggedIn = true;
                 state.user = action.payload.user;
-                state.data = action.payload.data;
+                state.data = action.payload.data || {};
             })
             .addCase(login.rejected, (state, action) => {
                 state.status = 'failed';
@@ -140,8 +118,8 @@ const authSlice = createSlice({
             .addCase(logOut.fulfilled, (state) => {
                 state.isLoggedIn = false;
                 state.user = null;
-                state.status = 'idle';
                 state.data = {};
+                state.status = 'idle';
             })
             .addCase(checkAuthorization.rejected, (state, action) => {
                 state.status = 'failed';
@@ -156,15 +134,6 @@ const authSlice = createSlice({
 });
 
 // Reducer va actionlarni eksport qilish
-export const {
-    setAccountLinks,
-    setMyProducts,
-    setOneShopDoc,
-    setCategoryLists,
-    setTopCategoryLists,
-    setCategory,
-    setCategorySlug,
-    begin,
-} = authSlice.actions;
+export const { setAccountLinks, begin } = authSlice.actions;
 
 export default authSlice.reducer;

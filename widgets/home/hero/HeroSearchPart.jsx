@@ -1,13 +1,9 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { SearchOutlined } from '@ant-design/icons';
+import { Input, Popover } from 'antd';
 import styles from './style.module.scss';
-import dynamic from 'next/dynamic';
 import useSearch from '~/shared/hooks/useSearch';
-
-const AutoComplete = dynamic(() => import('antd/es/auto-complete'), {
-    ssr: false,
-    loading: () => <p>Loading...</p>,
-});
+import SearchResult from '~/shared/components/search-result';
 
 const placeholders = {
     mahsulotlar: 'Qaysi turdagi tayyor mahsulot qidirmoqdasiz?',
@@ -16,8 +12,68 @@ const placeholders = {
 };
 
 function HeroSearchPart() {
-    const { options, search, setSearch, type, setType, handleSearch } =
-        useSearch();
+    const {
+        options,
+        search,
+        setSearch,
+        type,
+        setType,
+        handleSearch,
+        debouncedSearch,
+        handleClickOption,
+        isLoading,
+    } = useSearch();
+    const [popoverVisible, setPopoverVisible] = useState(false);
+    const [popoverWidth, setPopoverWidth] = useState(null);
+    const inputRef = useRef(null);
+    const searchBoxRef = useRef(null);
+
+    const handleInputChange = (e) => {
+        setSearch(e.target.value);
+        setPopoverVisible(true);
+    };
+
+    const handleInputFocus = () => {
+        setPopoverVisible(true);
+    };
+
+    const handleInputBlur = () => {
+        // Delay hiding to allow clicks on popover items
+        setTimeout(() => {
+            setPopoverVisible(false);
+        }, 200);
+    };
+
+    const handleOptionClick = (value) => {
+        handleClickOption(value);
+        setPopoverVisible(false);
+    };
+
+    useEffect(() => {
+        const updatePopoverWidth = () => {
+            if (searchBoxRef.current) {
+                const width = searchBoxRef.current.offsetWidth;
+                setPopoverWidth(width);
+            }
+        };
+
+        updatePopoverWidth();
+        window.addEventListener('resize', updatePopoverWidth);
+        return () => window.removeEventListener('resize', updatePopoverWidth);
+    }, []);
+
+    const popoverContent = (
+        <div style={{ width: '100%', maxWidth: '600px', minWidth: '300px' }}>
+            <SearchResult
+                debouncedSearch={debouncedSearch}
+                handleClickOption={handleOptionClick}
+                options={options}
+                isLoading={isLoading}
+            />
+        </div>
+    );
+
+    console.log('popoverWidth', popoverWidth);
 
     return (
         <div className={styles.heroButtons}>
@@ -51,27 +107,46 @@ function HeroSearchPart() {
                 </span>
             </div>
 
-            <div className={styles.searchBox}>
-                <AutoComplete
-                    value={search}
-                    style={{ width: '100%' }}
-                    placeholder={placeholders[type]}
-                    onChange={(val) => setSearch(val)}
-                    options={options}>
-                    <input
-                        className={styles.input}
-                        style={{ width: '100%' }}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter') {
-                                handleSearch();
-                            }
-                        }}
-                    />
-                </AutoComplete>
+            <div ref={searchBoxRef} className={styles.searchBoxWrapper}>
+                <Popover
+                    content={popoverContent}
+                    open={popoverVisible}
+                    overlayClassName={styles.searchPopover}
+                    placement="bottomLeft"
+                    overlayInnerStyle={{ padding: 0 }}
+                    overlayStyle={{
+                        ...(popoverWidth ? { width: `${popoverWidth}px` } : {}),
+                    }}
+                    getPopupContainer={() =>
+                        document.getElementById('my-portal')
+                    }>
+                    <div className={styles.searchBox}>
+                        <Input
+                            ref={inputRef}
+                            size="large"
+                            value={search}
+                            onChange={handleInputChange}
+                            onFocus={handleInputFocus}
+                            onBlur={handleInputBlur}
+                            placeholder={placeholders[type]}
+                            className={styles.input}
+                            bordered={false}
+                            allowClear
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter') {
+                                    handleSearch();
+                                    setPopoverVisible(false);
+                                }
+                            }}
+                        />
 
-                <span className={styles.searchIcon} onClick={handleSearch}>
-                    <SearchOutlined />
-                </span>
+                        <span
+                            className={styles.searchIcon}
+                            onClick={handleSearch}>
+                            <SearchOutlined />
+                        </span>
+                    </div>
+                </Popover>
             </div>
         </div>
     );
