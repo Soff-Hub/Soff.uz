@@ -153,7 +153,7 @@ export function TelegramLink({ videoUrl }) {
                                 <MdOndemandVideo />
                             </div>
                             <span className={styles.buttonText}>
-                                Xarid qilish
+                                Qanday xarid qilaman?
                             </span>
                         </div>
                         <a
