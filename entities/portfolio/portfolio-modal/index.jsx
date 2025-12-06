@@ -19,7 +19,14 @@ const PortfolioModal = ({ open, onClose, portfolio }) => {
     const { isMobile } = useResponsive();
 
     const galleryImages = useMemo(
-        () => portfolio?.portfolio_images || [],
+        () =>
+            portfolio?.portfolio_images?.map((img) => {
+                const baseImageUrl = img?.image || '/static/img/orqafon1.avif';
+                const imageUrl = baseImageUrl.startsWith('http')
+                    ? baseImageUrl
+                    : `https://freelance.soff.uz/media${baseImageUrl}`;
+                return { ...img, image: imageUrl };
+            }) || [],
         [portfolio?.portfolio_images]
     );
 
