@@ -18,7 +18,7 @@
             background: linear-gradient(
                 to left,
                 rgba(241, 243, 255, 0.05),
-                rgb(255, 255, 255) 80%
+                #f5f6f7 80%
             );
 
             @media screen and (max-width: 576px) {
@@ -37,7 +37,7 @@
             background: linear-gradient(
                 to right,
                 rgba(241, 243, 255, 0.05),
-                rgb(255, 255, 255) 80%
+                #f5f6f7 80%
             );
 
             @media screen and (max-width: 576px) {
@@ -328,6 +328,14 @@
     }
 }
 
+.ranking_section {
+    padding-top: 80px;
+    padding-bottom: 20px;
+    @media (max-width: 576px) {
+        padding-top: 60px;
+    }
+}
+
 .serviceCardSection {
     display: grid;
     grid-template-columns: repeat(4, 1fr); /* <= 480px: 1 ta */
@@ -337,7 +345,9 @@
         gap: 10px;
     }
 
-    @media (max-width: 568px) {
+    padding-bottom: 80px;
+    @media (max-width: 576px) {
         gap: 5px;
+        padding-bottom: 60px;
     }
 }

@@ -55,7 +55,7 @@ const ChatMessage = ({
         });
     }, [onDelete, msg.id]);
 
-    const handleCopy = useCallback(text => {
+    const handleCopy = useCallback((text) => {
         navigator.clipboard
             .writeText(text)
             .then(() => AntMessage.success('Xabar nusxalandi'))
@@ -276,5 +276,5 @@ const ChatMessage = ({
 export default React.memo(ChatMessage, areEqual);
 
 function areEqual(prevProps, nextProps) {
-    return prevProps.msg?.status === nextProps.msg?.status;
+    return prevProps.msg === nextProps.msg;
 }

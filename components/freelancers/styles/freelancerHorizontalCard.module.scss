@@ -8,6 +8,7 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
     margin-bottom: 24px;
     transition: 0.3s ease;
+    width: 100%;
 
     &:hover {
         box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
@@ -19,16 +20,10 @@
     justify-content: space-between;
     align-items: flex-start;
     gap: 24px;
-    margin-bottom: 24px;
-    padding-bottom: 24px;
-    border-bottom: 1px solid #f0f0f0;
-
-    @media (max-width: 992px) {
-        gap: 16px;
-    }
 
     @media (max-width: 768px) {
         flex-direction: column;
+        margin-bottom: 16px;
         gap: 16px;
     }
 }
@@ -37,16 +32,14 @@
     display: flex;
     gap: 20px;
     flex: 1;
+    width: 100%;
     min-width: 0;
 
-    @media (max-width: 992px) {
+    @media (max-width: 768px) {
         gap: 16px;
-    }
-
-    @media (max-width: 576px) {
         flex-direction: column;
         align-items: center;
-        text-align: center;
+        justify-content: center;
     }
 }
 
@@ -67,7 +60,11 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+
+    @media (max-width: 768px) {
+        align-items: center;
+        justify-content: center;
+    }
 }
 
 .nameRow {
@@ -79,9 +76,8 @@
 
 .name {
     font-weight: 600;
-    font-size: 20px;
+    font-size: 16px;
     margin: 0;
-    color: #24282b;
 }
 
 .verifiedBadge {
@@ -123,23 +119,26 @@
 
 .statsRow {
     display: flex;
-    gap: 12px;
+    width: fit-content;
+    margin-top: 8px;
     flex-wrap: wrap;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
 
-    @media (max-width: 576px) {
-        justify-content: center;
-        gap: 8px;
-    }
+.statDivider {
+    height: 32px;
+    align-self: center;
+    border-left: 1px solid #e9ecef;
 }
 
 .statCard {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 8px 12px;
-    background: #f8f9fa;
-    border-radius: 8px;
-    border: 1px solid #e9ecef;
+    padding: 6px 8px;
+
     min-width: 140px;
 
     @media (max-width: 576px) {
@@ -163,18 +162,18 @@
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    background: #f6ffed;
+    background: #e1f7db;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
 }
 
-.statCardIconFailed {
+.statCardIconSuccessRate {
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    background: #fff1f0;
+    background: #f8f0ff;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -196,12 +195,12 @@
 
 .statIconSuccess {
     font-size: 16px;
-    color: #52c41a;
+    color: $color-1st;
 }
 
-.statIconFailed {
+.statIconSuccessRate {
     font-size: 16px;
-    color: #ff4d4f;
+    color: #8200db;
 }
 
 .statValue {
@@ -214,14 +213,14 @@
 .statValueSuccess {
     font-weight: 600;
     font-size: 16px;
-    color: #52c41a;
+    color: $color-1st;
     line-height: 1.2;
 }
 
-.statValueFailed {
+.statValueSuccessRate {
     font-weight: 600;
     font-size: 16px;
-    color: #ff4d4f;
+    color: #8200db;
     line-height: 1.2;
 }
 
@@ -237,10 +236,6 @@
     align-items: center;
     gap: 16px;
     flex-wrap: wrap;
-
-    @media (max-width: 576px) {
-        justify-content: center;
-    }
 }
 
 .metaItem {
@@ -267,11 +262,6 @@
     flex-shrink: 0;
     align-items: flex-start;
 
-    @media (max-width: 992px) {
-        flex-direction: column;
-        width: 100%;
-    }
-
     @media (max-width: 768px) {
         width: 100%;
     }
@@ -290,7 +280,6 @@
 }
 
 .servicesSection {
-    margin-top: 24px;
     width: 100%;
     max-width: 100%;
     overflow: hidden;
@@ -301,7 +290,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 16px;
+    min-height: 32px;
+    margin-block: 6px;
 }
 
 .servicesTitle {
@@ -330,8 +320,8 @@
     color: #666;
 
     &:hover:not(:disabled) {
-        border-color: #1890ff;
-        color: #1890ff;
+        border-color: $color-1st;
+        color: $color-1st;
     }
 
     &:disabled {
@@ -347,6 +337,43 @@
 
 .servicesSwiperWrapper {
     width: 100%;
+    padding-inline: 8px;
+
+    .card {
+        background: #00a44f;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        flex-direction: column;
+        gap: 10px;
+        padding: 20px;
+        border-radius: 10px;
+
+        .btn {
+            background: #fefefe;
+            color: #24282b;
+            line-height: 26px;
+            font-size: 14px;
+            border-radius: 10px;
+            border: #fefefe solid 2px;
+            transition: all 0.3s ease-out;
+
+            &:hover {
+                color: #fefefe;
+                background: #00a44f;
+            }
+        }
+
+        .title {
+            margin: 0;
+            text-align: center;
+            color: #fefefe;
+            font-size: 20px;
+            line-height: 30px;
+            font-weight: 600;
+        }
+    }
 }
 
 .servicesSwiper {
@@ -360,8 +387,48 @@
     }
 }
 
+.categorySwiperBeginning::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 60px;
+    height: 100%;
+    z-index: 11;
+    background: linear-gradient(
+        to left,
+        rgba(241, 243, 255, 0.05),
+        rgb(255, 255, 255) 80%
+    );
+
+    @media screen and (max-width: 576px) {
+        width: 20px;
+    }
+}
+
+.categorySwiperEnding::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 60px;
+    height: 100%;
+    z-index: 11;
+    background: linear-gradient(
+        to right,
+        rgba(241, 243, 255, 0.05),
+        rgb(255, 255, 255) 80%
+    );
+
+    @media screen and (max-width: 576px) {
+        width: 20px;
+    }
+}
+
 .serviceSlide {
-    width: 280px !important;
+    width: 100%;
+    min-width: 280px;
+    max-width: 400px;
     height: auto;
 
     @media (max-width: 768px) {
@@ -369,7 +436,9 @@
     }
 
     @media (max-width: 576px) {
-        width: 200px !important;
+        width: 200px;
+        min-width: 200px;
+        max-width: 200px;
     }
 }
 
@@ -414,40 +483,27 @@
         padding: 16px;
     }
 
-    .cardHeader {
-        padding-bottom: 16px;
-        margin-bottom: 16px;
-    }
-
     .name {
         font-size: 18px;
     }
 
     .actions {
         width: 100%;
+        display: flex;
+        flex-direction: row;
 
-        button {
+        :nth-child(n) {
             flex: 1;
+
+            button {
+                width: 100%;
+            }
         }
     }
 }
 
 @media (max-width: 576px) {
-    .horizontalCard {
-        padding: 12px;
-    }
-
     .name {
         font-size: 16px;
-    }
-
-    .statsRow {
-        flex-direction: column;
-        gap: 8px;
-    }
-
-    .statCard {
-        width: 100%;
-        min-width: auto;
     }
 }

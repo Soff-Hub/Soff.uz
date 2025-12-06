@@ -19,7 +19,14 @@ const PortfolioModal = ({ open, onClose, portfolio }) => {
     const { isMobile } = useResponsive();
 
     const galleryImages = useMemo(
-        () => portfolio?.portfolio_images || [],
+        () =>
+            portfolio?.portfolio_images?.map((img) => {
+                const baseImageUrl = img?.image || '/static/img/orqafon1.avif';
+                const imageUrl = baseImageUrl.startsWith('http')
+                    ? baseImageUrl
+                    : `https://freelance.soff.uz/media${baseImageUrl}`;
+                return { ...img, image: imageUrl };
+            }) || [],
         [portfolio?.portfolio_images]
     );
 
@@ -52,7 +59,11 @@ const PortfolioModal = ({ open, onClose, portfolio }) => {
                     </Descriptions.Item>
 
                     {!isMobile && (
-                        <Descriptions.Item label="Tavsif">
+                        <Descriptions.Item
+                            label="Tavsif"
+                            style={{
+                                whiteSpace: 'pre-wrap',
+                            }}>
                             {portfolio?.description || 'Tavsif mavjud emas'}
                         </Descriptions.Item>
                     )}
@@ -86,7 +97,7 @@ const PortfolioModal = ({ open, onClose, portfolio }) => {
                     )}
                     {galleryVideos.length > 0 ? (
                         galleryVideos.map((video, index) => (
-                            <div className="video-wrapper">
+                            <div className="video-wrapper" key={index}>
                                 <iframe
                                     src={`${getYouTubeEmbed(
                                         video.video_url

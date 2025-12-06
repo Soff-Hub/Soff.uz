@@ -72,3 +72,42 @@
 .ant-select-selection-placeholder {
     width: fit-content !important;
 }
+
+// FloatButton overflow prevention on mobile - without affecting body overflow
+@media (max-width: 768px) {
+    .ant-float-btn-group {
+        right: 16px !important;
+        bottom: 90px !important;
+        z-index: 101 !important;
+        position: fixed !important;
+        contain: layout style paint !important;
+        max-width: calc(100vw - 32px) !important;
+        overflow: visible !important;
+    }
+
+    // Custom styling for FloatButton.Group with gradient background
+    .ant-float-btn-group-open {
+        background: linear-gradient(
+            135deg,
+            rgba(0, 164, 79, 0.95) 0%,
+            rgba(0, 164, 79, 0.85) 100%
+        ) !important;
+        backdrop-filter: blur(10px);
+        border-radius: 24px !important;
+        padding: 8px !important;
+        box-shadow: 0 8px 24px rgba(0, 164, 79, 0.4) !important;
+        max-width: calc(100vw - 32px) !important;
+        overflow: hidden !important;
+    }
+
+    // Ensure custom buttons are visible and don't overflow
+    .ant-float-btn-group-open .customFloatButton,
+    .ant-float-btn-group .customFloatButton {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        max-width: 100% !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+}

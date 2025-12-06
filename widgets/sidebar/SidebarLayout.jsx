@@ -6,7 +6,7 @@ function SidebarLayout({ children }) {
     const [collapsed, setCollapsed] = useState(false);
 
     const onChangeCollapse = () => {
-        setCollapsed(pre => !pre);
+        setCollapsed((pre) => !pre);
     };
 
     return (
@@ -20,7 +20,7 @@ function SidebarLayout({ children }) {
                 collapsed={collapsed}
                 onChangeCollapse={onChangeCollapse}
             />
-            <Layout style={{ backgroundColor: 'transparent', height: '100%' }}>
+            <Layout style={{ backgroundColor: 'transparent' }}>
                 {children}
             </Layout>
         </Layout>

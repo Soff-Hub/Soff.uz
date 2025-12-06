@@ -8,6 +8,7 @@ import ImageLightBox from './image-lightbox';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import DemoButton from '~/components/form/demoBtn';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const getYouTubeEmbed = (url) => {
     if (!url) return null;
@@ -116,6 +117,9 @@ const ImageCarousel = ({
                 {images?.length > 1 && (
                     <i
                         ref={prevRef}
+                        role="button"
+                        tabIndex={0}
+                        aria-label="Oldingi rasm"
                         className="fa-solid fa-chevron-left image_prev_left"
                         style={{
                             position: 'absolute',
@@ -198,29 +202,39 @@ const ImageCarousel = ({
                                     className="image-wrapper"
                                     style={{
                                         width: '100%',
-                                        height: 'auto',
+                                        height: '450px',
+                                        position: 'relative',
+                                        overflow: 'hidden',
+                                        backgroundColor: '#f5f5f5',
                                         display: 'flex',
                                         alignItems: 'center',
                                         justifyContent: 'center',
-                                        overflow: 'hidden',
                                     }}>
-                                    <img
-                                        src={item?.image_url || item?.thumbUrl}
-                                        alt="Product"
-                                        className="swiper-image rounded-3"
+                                    <div
                                         style={{
                                             width: '100%',
-                                            height: '450px',
-                                            objectFit: 'contain',
-                                            display: 'block',
-                                            userSelect: 'none',
-                                        }}
-                                        onError={(e) => {
-                                            e.target.onerror = null; // Prevent infinite loop
-                                            e.target.src =
-                                                '/static/img/no-document.png';
-                                        }}
-                                    />
+                                            height: '100%',
+                                            position: 'relative',
+                                        }}>
+                                        <Image
+                                            src={
+                                                item?.image_url ||
+                                                item?.thumbUrl ||
+                                                '/static/img/no-document.png'
+                                            }
+                                            alt="Product"
+                                            layout="fill"
+                                            objectFit="contain"
+                                            className="swiper-image rounded-3"
+                                            style={{
+                                                userSelect: 'none',
+                                            }}
+                                            priority={index === 0}
+                                            loading={
+                                                index === 0 ? 'eager' : 'lazy'
+                                            }
+                                        />
+                                    </div>
                                 </div>
                             )}
                         </SwiperSlide>
@@ -230,6 +244,9 @@ const ImageCarousel = ({
                 {images?.length > 1 && (
                     <i
                         ref={nextRef}
+                        role="button"
+                        tabIndex={0}
+                        aria-label="Keyingi rasm"
                         className="fa-solid fa-chevron-right image_prev_rigth"
                         style={{
                             position: 'absolute',
@@ -360,6 +377,7 @@ const ImageCarousel = ({
                                                 activeIndex === index
                                                     ? '0 0 10px rgba(40, 167, 69, 0.3)'
                                                     : 'none',
+                                            position: 'relative',
                                         }}
                                         onClick={() => {
                                             if (mainSwiper) {
@@ -385,30 +403,25 @@ const ImageCarousel = ({
                                                 }
                                             }
                                         }}>
-                                        <img
+                                        <Image
                                             src={
                                                 item?.image_url ||
                                                 item?.thumbUrl ||
                                                 getYouTubeThumbnail(
                                                     item?.video_url
-                                                )
+                                                ) ||
+                                                '/static/img/no-document.png'
                                             }
                                             alt="Thumbnail"
-                                            width={71}
-                                            height={46}
+                                            layout="fill"
+                                            quality={20}
+                                            objectFit="cover"
                                             className="rounded"
                                             style={{
                                                 cursor: 'pointer',
-                                                display: 'block',
-                                                width: '100%',
-                                                height: '100%',
-                                                objectFit: 'contain',
+                                                userSelect: 'none',
                                             }}
-                                            onError={(e) => {
-                                                e.target.onerror = null; // Prevent infinite loop
-                                                e.target.src =
-                                                    '/static/img/no-document.png';
-                                            }}
+                                            loading="lazy"
                                         />
                                     </div>
                                 </SwiperSlide>

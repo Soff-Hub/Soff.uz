@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Drawer, Button, Select } from 'antd';
 import { CloseOutlined } from '@ant-design/icons';
 import { AiOutlineApartment } from 'react-icons/ai';
@@ -8,7 +8,6 @@ import useResponsive from '~/shared/utilities/useResponsive';
 import { useDisableWindowScroll } from '~/shared/hooks/useDisableWindowScroll';
 
 function FreelancerFilterCollide({ collapsed, toggleCollapsed }) {
-    const onfirstLoad = useRef(true);
     const [formVal, setFormVal] = useState({
         direction: null,
         positions: [],
@@ -21,15 +20,18 @@ function FreelancerFilterCollide({ collapsed, toggleCollapsed }) {
         updateQuery,
         selectedPositions,
         selectedDirection,
-    } = useFreelancers();
+    } = useFreelancers(collapsed);
     // Prevent body scroll when drawer is open
     useDisableWindowScroll(collapsed);
 
-    const positionOptions =
-        positions?.map(el => ({
-            label: el.title,
-            value: el.title,
-        })) || [];
+    const positionOptions = formVal.direction
+        ? positions
+              .filter((pos) => formVal.direction.includes(pos.direction))
+              ?.map((el) => ({
+                  label: el.title,
+                  value: el.title,
+              })) || []
+        : [];
 
     const inputSizes = isMobile ? 'middle' : 'large';
 
@@ -50,29 +52,28 @@ function FreelancerFilterCollide({ collapsed, toggleCollapsed }) {
         });
     };
 
-    const onChangeDirection = value => {
-        setFormVal(prev => ({
+    const onChangeDirection = (value) => {
+        setFormVal((prev) => ({
             ...prev,
             direction: value,
         }));
     };
 
-    const onChangePositions = value => {
-        setFormVal(prev => ({
+    const onChangePositions = (value) => {
+        setFormVal((prev) => ({
             ...prev,
             positions: value,
         }));
     };
 
     useEffect(() => {
-        if (onfirstLoad.current) {
-            onfirstLoad.current = false;
+        if (collapsed) {
             setFormVal({
                 direction: selectedDirection,
                 positions: selectedPositions,
             });
         }
-    }, []);
+    }, [collapsed]);
 
     return (
         <Drawer
@@ -112,6 +113,7 @@ function FreelancerFilterCollide({ collapsed, toggleCollapsed }) {
                 </label>
                 <Select
                     id="directions"
+                    mode="multiple"
                     size={inputSizes}
                     placeholder="Yo'nalishni tanlang"
                     value={formVal.direction}
@@ -140,7 +142,7 @@ function FreelancerFilterCollide({ collapsed, toggleCollapsed }) {
                     mode="multiple"
                     size={inputSizes}
                     placeholder="Kasblarni tanlang"
-                    defaultValue={formVal.positions}
+                    value={formVal.positions}
                     onChange={onChangePositions}
                     style={{
                         width: '100%',

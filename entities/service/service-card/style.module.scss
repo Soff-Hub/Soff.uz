@@ -3,6 +3,7 @@
     padding: 10px;
     background: #fff;
     height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -54,39 +55,15 @@
             row-gap: 5px; // Gap when wrapped to new line
             column-gap: 20px; // Gap when on same line
 
-            .primaryBtn {
-                background: #00a44f;
-                color: #fefefe;
-                flex: 1;
-                white-space: nowrap;
-
-                &:hover {
-                    color: #24282b;
-                    background: #fefefe;
-                }
-            }
-
             .secondaryBtn,
             .primaryBtn {
-                border: 1px solid #00a44f;
+                flex: 1;
+                white-space: nowrap;
                 font-size: 14px;
                 font-weight: 600;
                 line-height: 26px;
                 letter-spacing: 0%;
                 text-align: center;
-                transition: all 0.3s ease-out;
-                border-radius: 10px;
-            }
-
-            .secondaryBtn {
-                background: #fefefe;
-                color: #24282b;
-                flex: 1;
-
-                &:hover {
-                    color: #fefefe;
-                    background: #00a44f;
-                }
             }
         }
     }

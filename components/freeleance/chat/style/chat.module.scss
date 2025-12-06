@@ -3,7 +3,7 @@
     border-radius: 8px 0 0 8px;
     background: #ffffff;
     padding: 12px;
-    height: 80vh;
+    height: 100%;
     overflow-y: auto;
 
     .chat_search {
@@ -128,6 +128,7 @@
     /* Mobile */
     @media (max-width: 576px) {
         padding: 8px;
+        height: calc(100vh - 90px);
 
         .sidebar_chat {
             gap: 8px;
@@ -171,7 +172,7 @@
     background: #ffffff;
     padding: 12px;
     overflow: hidden;
-    height: 80vh;
+    height: 100%;
     width: 100%;
     display: flex;
     position: relative;
@@ -183,8 +184,8 @@
 .chat_messages {
     flex: 1;
     overflow-y: auto;
-    padding: 10px;
     display: flex;
+    padding: 10px;
     flex-direction: column;
     gap: 10px;
     background-color: #f9f9f9;
@@ -285,4 +286,31 @@
     // border: 1px solid #ddd;
     height: 35px;
     transition: all 0.3s ease;
+}
+
+// CSS sticky header solution for ChatWindow2 with dynamic keyboard height
+.chat_header_sticky {
+    position: sticky;
+    // top is set dynamically via inline styles based on keyboard height
+    z-index: 100;
+    background-color: #fff;
+    padding: 12px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0; // Prevent shrinking
+
+    .chat_user {
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 12px;
+        margin-bottom: 0;
+    }
+}
+
+.chat_safety_alert_sticky {
+    position: sticky;
+    // top is set dynamically via inline styles based on keyboard height + header height
+    z-index: 99;
+    background-color: #fff;
+    padding: 0 12px 10px;
+    flex-shrink: 0;
 }

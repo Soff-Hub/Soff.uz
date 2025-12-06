@@ -13,7 +13,9 @@ import { cn } from '~/shared/utilities/cn';
 
 const HeaderUserDropdown = (props) => {
     const dispatch = useDispatch();
-    const { accountLinks, user } = useSelector((state) => state.auth);
+    const { accountLinks, user, isLoggedIn } = useSelector(
+        (state) => state.auth
+    );
     const { user: profile } = useSelector((state) => state.profile);
     const refresh = useSelector((state) => state.auth?.user?.refresh);
     const router = useRouter();
@@ -26,19 +28,7 @@ const HeaderUserDropdown = (props) => {
         const res = logOutAuth(data);
 
         if (res) {
-            if (router.asPath == '/account/dashbord') {
-                Router.push('/auth/login');
-            } else if ('/account/myproducts') {
-                Router.push('/auth/login');
-            } else if ('/account/sellerproducts') {
-                Router.push('/auth/login');
-            } else if ('/account/myproducts/product-selection') {
-                Router.push('/auth/login');
-            } else if ('/account/orders') {
-                Router.push('/auth/login');
-            } else if ('/account/settings') {
-                Router.push('/auth/login');
-            } else if ('/account/application') {
+            if (router.asPath && router.asPath.includes('account')) {
                 Router.push('/auth/login');
             }
             dispatch(logOut());
@@ -51,7 +41,6 @@ const HeaderUserDropdown = (props) => {
         token: user?.access,
     });
 
-    const { isLoggedIn, color } = props;
     const linksView = accountLinks.map((item, index) => (
         <li key={index} className={styles.hoverAction}>
             <Link href={item.url}>
@@ -126,7 +115,7 @@ const HeaderUserDropdown = (props) => {
                         <li className="ps-block__footer">
                             <a href="#" onClick={handleLogout}>
                                 <i
-                                    className={`fa-solid fa-right-from-bracket me-3 mx-2 text-dark fs-4  ${color}`}></i>{' '}
+                                    className={`fa-solid fa-right-from-bracket me-3 mx-2 text-dark fs-4`}></i>{' '}
                                 Chiqish
                             </a>
                         </li>

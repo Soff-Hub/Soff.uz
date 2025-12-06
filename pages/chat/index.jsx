@@ -4,16 +4,15 @@ import PageContainer from '~/widgets/layouts/PageContainer';
 
 const ChatPage = () => {
     return (
-        <PageContainer title="Chat" withFooter={false}>
-            <div
-                className="container"
-                style={{
-                    maxWidth: '1370px',
-                    marginTop: '10px',
-                }}>
+        <div
+            style={{
+                overflowY: 'scroll',
+                WebkitOverflowScrolling: 'touch',
+            }}>
+            <PageContainer title="Chat" withFooter={false}>
                 <Chat />
-            </div>
-        </PageContainer>
+            </PageContainer>
+        </div>
     );
 };
 

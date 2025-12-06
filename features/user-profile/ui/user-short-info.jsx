@@ -21,6 +21,11 @@ import { useRouter } from 'next/router';
 import OrderPaymentPrompt from './OrderPaymentPrompt';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
 import { FaLink } from 'react-icons/fa6';
+import styles from '../styles/user-short-info.module.scss';
+import { FaDollarSign, FaChartLine } from 'react-icons/fa'; // example icons
+import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
+import { GiTakeMyMoney } from 'react-icons/gi';
+import { PiMoneyWavyBold } from 'react-icons/pi';
 
 dayjs.extend(relativeTime);
 dayjs.locale('uz-latn');
@@ -46,7 +51,7 @@ const InfoRow = memo(({ icon, label, value }) => (
 
 const UserShortInfo = ({ seller }) => {
     const router = useRouter();
-    const { isLoggedIn, status } = useSelector(state => state?.auth);
+    const { isLoggedIn, status } = useSelector((state) => state?.auth);
     const { mutate: createChat } = useCreateChat();
     const { isMobile } = useResponsive();
     const { startTimeout } = useTimeManager();
@@ -54,9 +59,12 @@ const UserShortInfo = ({ seller }) => {
     const [authModal, setAuthModal] = useState(false);
     const [createOrderModal, setCreateOrderModal] = useState(false);
     const [latelyCreatedOrder, setLatelyCreatedOrder] = useState(null);
-    const [orderPaymentPromptModal, setOrderPaymentPromptModal] = useState(
-        false
-    );
+    const [orderPaymentPromptModal, setOrderPaymentPromptModal] =
+        useState(false);
+
+    const isFreelancer = seller?.has_portfolio && seller?.has_service;
+    const isOpenToAcceptOrders = seller?.accepting_orders;
+    const isOrderingOpen = isFreelancer && isOpenToAcceptOrders;
 
     const lastActive = useMemo(
         () =>
@@ -72,7 +80,7 @@ const UserShortInfo = ({ seller }) => {
     );
 
     const flexClass = useRcn({
-        mobile: 'hidden',
+        mobile: 'flex',
         tablet: 'flex',
         desktop: 'flex',
     });
@@ -86,7 +94,7 @@ const UserShortInfo = ({ seller }) => {
     const marginClass = useRcn({
         mobile: 'mt-4',
         tablet: 'mt-4',
-        desktop: 'mt-5',
+        desktop: 'mt-4',
     });
 
     const sellerStats = useMemo(
@@ -160,7 +168,7 @@ const UserShortInfo = ({ seller }) => {
         }
     };
 
-    const onOrderCreateSuccess = orderId => {
+    const onOrderCreateSuccess = (orderId) => {
         setLatelyCreatedOrder(orderId);
         setOrderPaymentPromptModal(true);
     };
@@ -185,12 +193,14 @@ const UserShortInfo = ({ seller }) => {
         );
     };
 
-    const imageSrc = useMemo(() => seller?.image || '/static/img/ozodbek.png', [
-        seller?.image,
-    ]);
-    const imageAlt = useMemo(() => seller?.full_name || 'User image', [
-        seller?.full_name,
-    ]);
+    const imageSrc = useMemo(
+        () => seller?.image || '/static/img/ozodbek.png',
+        [seller?.image]
+    );
+    const imageAlt = useMemo(
+        () => seller?.full_name || 'User image',
+        [seller?.full_name]
+    );
 
     const handleSuccessAuth = () => {
         if (activeModal === 'createOrder') {
@@ -282,6 +292,31 @@ const UserShortInfo = ({ seller }) => {
                     )}>
                     {seller?.position}
                 </h4>
+                {Boolean(seller?.total_income) && (
+                    <div className={styles.totalIncome}>
+                        <div className={styles.card}>
+                            {/* <div className={styles.iconBg}>
+                                <FaDollarSign className={styles.icon} />
+                                </div> */}
+                            <div className={styles.right}>
+                                <PiMoneyWavyBold className={styles.icon} />
+                            </div>
+                            <div className={styles.info}>
+                                <p className={styles.label}>Jami daromad</p>
+                                <div className={styles.amount}>
+                                    <span className={styles.value}>
+                                        {formatCurrencyWithSpace(
+                                            seller?.total_income
+                                        )}
+                                    </span>
+                                    <span className={styles.currency}>
+                                        so'm
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
                 <Button
                     type="primary"
                     shape="round"
@@ -302,7 +337,7 @@ const UserShortInfo = ({ seller }) => {
                     icon={<i className="fa-solid fa-clipboard-list"></i>}
                     label="Xizmatlar uchun ochiq"
                     value={
-                        seller?.has_service && seller?.has_portfolio ? (
+                        isOrderingOpen ? (
                             <CheckCircleOutlined
                                 className={cn('text-primary', 'text-[16px]')}
                             />
@@ -332,7 +367,7 @@ const UserShortInfo = ({ seller }) => {
                 />
             </div>
 
-            <Divider size="small" className={cn(flexClass)} />
+            <Divider size="small" style={{ marginBlock: '16px' }} />
             <div className={cn(marginClass, flexClass, 'gap-3')}>
                 <Button
                     type="default"
@@ -340,7 +375,16 @@ const UserShortInfo = ({ seller }) => {
                     onClick={handleCreateChat}>
                     <i className="fa-solid fa-comment-dots"></i>
                 </Button>
-                <Button type="primary" block onClick={handleCreateOrder}>
+                <Button
+                    type="primary"
+                    block
+                    onClick={handleCreateOrder}
+                    title={
+                        !isOrderingOpen
+                            ? "Frilanser xizmatlari mavjud emas, shuning uchun buyurtma berib bo'lmaydi."
+                            : ''
+                    }
+                    disabled={!isOrderingOpen}>
                     <i className="fa-solid fa-calendar"></i> Buyurtma berish
                 </Button>
             </div>
@@ -366,12 +410,21 @@ const UserShortInfo = ({ seller }) => {
                     onClick={handleCreateChat}>
                     <i className="fa-solid fa-comment-dots"></i>
                 </Button>
-                <Button block type="primary" onClick={handleCreateOrder}>
+                <Button
+                    block
+                    type="primary"
+                    onClick={handleCreateOrder}
+                    title={
+                        !isOrderingOpen
+                            ? "Frilanser xizmatlari mavjud emas, shuning uchun buyurtma berib bo'lmaydi."
+                            : ''
+                    }
+                    disabled={!isOrderingOpen}>
                     <i className="fa-solid fa-calendar"></i> Buyurtma berish
                 </Button>
             </div>
 
-            <Divider size="small" className={cn(flexClass)} />
+            <Divider size="small" style={{ marginBlock: '16px' }} />
             <div className={cn(marginClass)}>
                 <span
                     className={cn(
@@ -383,7 +436,7 @@ const UserShortInfo = ({ seller }) => {
                     Statistikalar
                 </span>
                 <div className={cn('flex', 'flex-col', 'gap-2')}>
-                    {sellerStats.map(stat => (
+                    {sellerStats.map((stat) => (
                         <div
                             key={stat.title}
                             className={cn(

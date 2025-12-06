@@ -2,12 +2,11 @@ import { Skeleton, Alert } from 'antd';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import GetRepository from '~/reositoriy-admin/GetRepository';
-import parse from 'html-react-parser';
 import { useQuery } from '@tanstack/react-query';
 import SidebarLayout from '~/widgets/sidebar/SidebarLayout';
 
 export default function NotificationList() {
-    const { user } = useSelector(state => state.auth);
+    const { user } = useSelector((state) => state.auth);
 
     const { data, isLoading, isError } = useQuery({
         queryKey: ['notifications', user?.access],
@@ -84,7 +83,9 @@ const Notification = ({ notification, link, index }) => {
             </div>
 
             {body && (
-                <p className="m-0 text-dark-emphasis mb-3">{parse(body)}</p>
+                <div
+                    className="m-0 text-dark-emphasis mb-3"
+                    dangerouslySetInnerHTML={{ __html: body }}></div>
             )}
 
             {link && (

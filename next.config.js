@@ -10,6 +10,9 @@ const nextSettings = {
             level: 'verbose',
         },
     },
+    // Note: optimizePackageImports is Next.js 13+ only
+    // For Next.js 12, tree shaking works automatically with named imports
+    // Your imports are already correct: import { Button } from 'antd'
     // Show more detailed hydration mismatches
     reactStrictMode: true,
     env: {
@@ -33,6 +36,7 @@ const nextSettings = {
             'freelance.soff.uz',
             'freelance.ilmiyish.uz',
             'placehold.co',
+            'freelance-media.s3.amazonaws.com',
         ],
     },
     async headers() {

@@ -4,8 +4,13 @@ import Image from 'next/image';
 import { truncateText } from '~/shared/utilities/utils';
 
 const PortfolioCard = ({ portfolio, setPortfolio }) => {
-    const imageUrl =
+    const baseImageUrl =
         portfolio?.portfolio_images?.[0]?.image || '/static/img/orqafon1.avif';
+
+    // Check if the image URL already has a base URL (starts with http/https)
+    const imageUrl = baseImageUrl.startsWith('http')
+        ? baseImageUrl
+        : `https://freelance.soff.uz/media${baseImageUrl}`;
 
     return (
         <div onClick={() => setPortfolio(portfolio)} className={styles.card}>

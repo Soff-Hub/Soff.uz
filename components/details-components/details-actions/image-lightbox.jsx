@@ -26,6 +26,7 @@ const ImageLightBox = ({ gallery = [] }) => {
             <button
                 type="button"
                 onClick={() => setIsOpen(true)}
+                aria-label="Rasmlarni to'liq ekranda ko'rish"
                 style={{
                     border: 'none',
                     backgroundColor: 'white',

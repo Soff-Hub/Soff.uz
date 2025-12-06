@@ -4,7 +4,6 @@ import '~/scss/electronic.scss';
 import '~/widgets/navbar-menu/popover-override.css';
 import Head from 'next/head';
 import NextProgress from 'next-progress';
-import { Toaster } from 'react-hot-toast';
 import { Providers } from '~/app/providers';
 import AffiliateListener from '~/entities/affiliate';
 import { useTelegram } from '~/shared/hooks/useTelegram';
@@ -39,7 +38,7 @@ function App({ Component, pageProps }) {
             document?.getElementById('__next')?.classList?.add('loaded');
         }, 10);
 
-        const handleKeyDown = e => {
+        const handleKeyDown = (e) => {
             if (
                 (e.ctrlKey && e.shiftKey && e.key === 'I') || // Prevent Ctrl+Shift+I (Windows)
                 (e.metaKey && e.altKey && e.key === 'I') || // Prevent Command+Option+I (macOS)
@@ -66,11 +65,13 @@ function App({ Component, pageProps }) {
 
         document.addEventListener('keydown', handleKeyDown);
 
-        window.addEventListener('contextmenu', e => e.preventDefault());
+        window.addEventListener('contextmenu', (e) => e.preventDefault());
 
         return () => {
             document.removeEventListener('keydown', handleKeyDown);
-            window.removeEventListener('contextmenu', e => e.preventDefault());
+            window.removeEventListener('contextmenu', (e) =>
+                e.preventDefault()
+            );
             localStorage.removeItem('utm_source');
             localStorage.removeItem('utm_medium');
             localStorage.removeItem('utm_campaign');
@@ -81,7 +82,9 @@ function App({ Component, pageProps }) {
         <>
             <Head>
                 <meta charSet="UTF-8" />
-                <title>Soff</title>
+                <title>
+                    Raqamli mahsulotlar va onlayn xizmatlar bozori – Soff.uz
+                </title>
                 <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
                 <meta
                     name="viewport"
@@ -104,8 +107,7 @@ function App({ Component, pageProps }) {
                             '@type': 'WebSite',
                             name: 'Soff.uz',
                             url: 'https://soff.uz',
-                            logo:
-                                'https://soff.uz/static/img/soff/logo-dark.png',
+                            logo: 'https://soff.uz/static/img/soff/logo-dark.png',
                             sameAs: [
                                 'https://t.me/soff_uz',
                                 'https://www.youtube.com/@soffuz',
@@ -113,8 +115,7 @@ function App({ Component, pageProps }) {
                             ],
                             potentialAction: {
                                 '@type': 'SearchAction',
-                                target:
-                                    'https://soff.uz/search-page?keyword={search_term_string}',
+                                target: 'https://soff.uz/search-page?keyword={search_term_string}',
                                 'query-input':
                                     'required name=search_term_string',
                             },
@@ -130,7 +131,6 @@ function App({ Component, pageProps }) {
             <Providers>
                 <AffiliateListener />
                 <Component {...pageProps} />
-                <Toaster position="top-center" />
                 <TelegramLink />
             </Providers>
         </>

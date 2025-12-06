@@ -3,7 +3,6 @@
     padding-top: 20px;
     align-items: center;
     position: relative;
-    padding-bottom: 30px;
 
     .heroInfoSection {
         padding-top: 50px;
@@ -13,7 +12,6 @@
         flex-direction: column;
         align-items: center;
         padding-bottom: 50px;
-        z-index: 50 !important;
 
         .heroTitle {
             font-size: 36px;
@@ -77,54 +75,6 @@
             }
         }
 
-        .searchBox {
-            border: 1px solid #00a44f;
-            border-radius: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 4px;
-            width: 100%;
-            background-color: #fff;
-            max-width: 600px;
-            position: relative;
-            z-index: 10;
-
-            .input {
-                font-size: 15px;
-                outline: none;
-                border: none;
-                background-color: #fff !important;
-                width: 100%;
-                margin-left: 9px;
-                margin-top: 5px;
-                z-index: 3;
-            }
-
-            .searchIcon {
-                font-size: 18px;
-                background: #00a44f;
-                cursor: pointer;
-                position: relative;
-                z-index: 10;
-                color: white;
-                border-radius: 50%;
-                padding: 10px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-
-            input {
-                outline: none !important;
-                z-index: 3;
-
-                &::placeholder {
-                    color: #24282b;
-                }
-            }
-        }
-
         &::after {
             content: '';
             position: absolute;
@@ -133,13 +83,68 @@
             border-radius: 50%;
             top: 200px;
             z-index: 3;
-            background-image: radial-gradient(circle,
-                    #a3e4c3 0%,
-                    #9ecdb4 60%,
-                    #ecf3f0 100%);
+            background-image: radial-gradient(
+                circle,
+                #a3e4c3 0%,
+                #9ecdb4 60%,
+                #ecf3f0 100%
+            );
 
             filter: blur(80px);
             opacity: 1;
+        }
+    }
+}
+
+.searchBoxWrapper {
+    width: 100%;
+    max-width: 600px;
+    z-index: 10;
+}
+
+.searchBox {
+    border: 1px solid #00a44f;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px;
+    width: 100%;
+    background-color: #fff;
+    max-width: 600px;
+    z-index: 10;
+
+    .input {
+        font-size: 15px;
+        outline: none;
+        border: none;
+        padding: 0px 15px !important;
+        background-color: #fff !important;
+        width: 100%;
+        height: 100% !important;
+        z-index: 3;
+    }
+
+    .searchIcon {
+        font-size: 18px;
+        background: #00a44f;
+        cursor: pointer;
+        position: relative;
+        z-index: 10;
+        color: white;
+        border-radius: 50%;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    input {
+        outline: none !important;
+        z-index: 3;
+
+        &::placeholder {
+            color: #24282b;
         }
     }
 }
@@ -187,7 +192,6 @@
 
             .heroButtons {
                 .heroFilterButtons {
-
                     .heroBtn,
                     .activeHeroBtn {
                         padding: 5px 8px !important;
@@ -221,7 +225,6 @@
 
             .heroButtons {
                 .heroFilterButtons {
-
                     .heroBtn,
                     .activeHeroBtn {
                         padding: 5px 8px !important;
@@ -254,12 +257,13 @@
 
             .heroButtons {
                 .heroFilterButtons {
-                    gap: 2px;
+                    gap: 5px;
                     display: flex;
 
                     .heroBtn,
                     .activeHeroBtn {
                         flex: 1;
+                        gap: 5px;
                         font-size: 12px !important;
                         justify-content: center;
                     }
@@ -300,7 +304,6 @@
         .heroInfoSection {
             .heroButtons {
                 .heroFilterButtons {
-
                     .heroBtn,
                     .activeHeroBtn {
                         flex: 1;
@@ -428,5 +431,32 @@
     @media (max-width: 992px) {
         grid-template-columns: 1fr;
         margin-top: 30px;
+    }
+}
+
+.searchPopover {
+    padding: 10px 0 10px 10px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+
+    :global(.ant-popover) {
+        transform: translate(10px, 10px) !important;
+    }
+
+    :global(.ant-popover-content) {
+        width: 100% !important;
+        max-height: 300px !important;
+        padding-right: 10px;
+        overflow-y: scroll;
+    }
+
+    :global(.ant-popover-inner) {
+        width: 100% !important;
+        box-shadow: none;
+    }
+
+    :global(.ant-popover-inner-content) {
+        width: 100% !important;
     }
 }

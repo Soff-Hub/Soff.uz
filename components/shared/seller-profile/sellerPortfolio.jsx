@@ -23,7 +23,7 @@ export default function SellerPortfolio({ pid }) {
 
     useEffect(() => {
         if (typeof parentCategory === 'number') {
-            const parent = categories?.find(cat => cat.id === parentCategory);
+            const parent = categories?.find((cat) => cat.id === parentCategory);
             setChildCategories(parent?.children || []);
         } else {
             setChildCategories([]);
@@ -62,11 +62,11 @@ export default function SellerPortfolio({ pid }) {
                             ))}
                     </div>
                 ) : portfolios?.length == 0 ? (
-                    <ServiceIsUnavailable type='portfolio' />
+                    <ServiceIsUnavailable type="portfolio" />
                 ) : (
                     <div className="row">
                         {portfolios?.map((item, index) => (
-                            <div className="col-6 col-md-4 p-1">
+                            <div className="col-6 col-md-4 p-1" key={index}>
                                 <PortfolioCard portfolio={item} />
                             </div>
                         ))}

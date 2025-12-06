@@ -1,16 +1,14 @@
 import { useDispatch, useSelector } from 'react-redux';
 import ProductRepository from '~/repositories/ProductRepository';
-import {
-    setSaved,
-    setSavedItem,
-} from '~/store/ecomerce/slice';
+import { setSaved, setSavedItem } from '~/store/ecomerce/slice';
 export default function useWishlist() {
     const dispatch = useDispatch();
-    const { wishlist } = useSelector((state) => state.ecomerce);
+    const { ecomerce } = useSelector((state) => state);
+    const wishlist = ecomerce?.wishlist || [];
+    const cartItems = ecomerce?.cartDataItems || [];
+
     return {
-
         wishlist,
-
         setAllSaved: async () => {
             const data = JSON.parse(localStorage.getItem('wishlist'));
             if (data?.length > 0) {
@@ -21,7 +19,6 @@ export default function useWishlist() {
             }
         },
 
-
         addSavedItem: async (newItem) => {
             const resp = await ProductRepository.postCartData([newItem]);
             if (resp?.data) {
@@ -31,13 +28,17 @@ export default function useWishlist() {
             }
         },
 
+        isSavedItem: (itemId) => {
+            return cartItems.some((el) => el.id === itemId);
+        },
+
         removeSavedItem: (newItem) => {
             const filtered = wishlist.filter((el) => el.id !== newItem);
             dispatch(setSaved(filtered));
         },
 
         removeAllSaved: () => {
-            dispatch(setSaved([]))
+            dispatch(setSaved([]));
         },
     };
 }

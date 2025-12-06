@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, memo } from 'react';
 import styles from '../style/chat.module.scss';
 import {
     Input,
@@ -9,6 +9,7 @@ import {
     Tooltip,
     Upload,
     Spin,
+    Card,
 } from 'antd';
 import {
     ArrowDownOutlined,
@@ -16,6 +17,7 @@ import {
     PaperClipOutlined,
     SendOutlined,
     ShoppingCartOutlined,
+    CloudUploadOutlined,
 } from '@ant-design/icons';
 import ChatMessage from './ChatMessage';
 import { useRouter } from 'next/router';
@@ -33,12 +35,15 @@ import ChatDateSeperator from './ChatDateSeperator';
 const { TextArea } = Input;
 const maxSize = 50 * 1024 * 1024;
 
-const ChatWindow = ({ chatId, goBack }) => {
+const ChatWindow = ({ chatId, goBack, containerHeight }) => {
     const [edit, setEdit] = useState(null);
-    const { user } = useSelector(state => state.profile);
+    const { user } = useSelector((state) => state.profile);
     const [openDownIcon, setOpenDownIcon] = useState(false);
+    const [isDragging, setIsDragging] = useState(false);
+    const dragCounterRef = useRef(0);
     const messagesContainerRef = useRef(null);
     const scrollPositionRef = useRef(0);
+    const chatWindowRef = useRef(null);
     const router = useRouter();
 
     const {
@@ -52,8 +57,138 @@ const ChatWindow = ({ chatId, goBack }) => {
         hasNextPage,
         isFetching,
         isMessageWithFilePending,
+        wsRef,
     } = useChat(chatId);
     const recipient = chat?.opponent;
+    const queryClient = useQueryClient();
+
+    // Handle paste image
+    useEffect(() => {
+        const handlePaste = async (e) => {
+            if (!chatId || edit) return;
+
+            const items = e.clipboardData?.items;
+            if (!items) return;
+
+            for (let i = 0; i < items.length; i++) {
+                const item = items[i];
+                if (item.type.indexOf('image') !== -1) {
+                    e.preventDefault();
+                    const file = item.getAsFile();
+                    if (file) {
+                        // Check file size
+                        if (file.size > maxSize) {
+                            message.error(
+                                'Fayl hajmi 50MB dan oshmasligi kerak'
+                            );
+                            return;
+                        }
+
+                        // Upload the pasted image
+                        sendMessageWithFile(
+                            {
+                                chat_id: chatId,
+                                file: file,
+                                content: '',
+                            },
+                            {
+                                onSuccess: () => {
+                                    queryClient.invalidateQueries({
+                                        queryKey: ['chat-messages', chatId],
+                                    });
+                                    message.success(
+                                        'Rasm muvaffaqiyatli yuborildi'
+                                    );
+                                },
+                                onError: (err) => {
+                                    message.error(
+                                        err?.response?.data?.detail ||
+                                            'Rasmni yuborishda xatolik yuz berdi'
+                                    );
+                                },
+                            }
+                        );
+                    }
+                    break;
+                }
+            }
+        };
+
+        document.addEventListener('paste', handlePaste);
+        return () => {
+            document.removeEventListener('paste', handlePaste);
+        };
+    }, [chatId, edit, sendMessageWithFile, queryClient]);
+
+    // Handle drag and drop
+    const handleDragEnter = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        dragCounterRef.current++;
+        if (e.dataTransfer.types.includes('Files')) {
+            setIsDragging(true);
+        }
+    };
+
+    const handleDragLeave = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        dragCounterRef.current--;
+        // Only hide if we've left all nested elements
+        if (dragCounterRef.current === 0) {
+            setIsDragging(false);
+        }
+    };
+
+    const handleDragOver = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+    };
+
+    const handleDrop = async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        dragCounterRef.current = 0;
+        setIsDragging(false);
+
+        if (!chatId || edit) return;
+
+        const files = Array.from(e.dataTransfer.files);
+        const imageFile = files.find((file) => file.type.startsWith('image/'));
+
+        if (imageFile) {
+            // Check file size
+            if (imageFile.size > maxSize) {
+                message.error('Fayl hajmi 50MB dan oshmasligi kerak');
+                return;
+            }
+
+            // Upload the dropped image
+            sendMessageWithFile(
+                {
+                    chat_id: chatId,
+                    file: imageFile,
+                    content: '',
+                },
+                {
+                    onSuccess: () => {
+                        queryClient.invalidateQueries({
+                            queryKey: ['chat-messages', chatId],
+                        });
+                        message.success('Rasm muvaffaqiyatli yuborildi');
+                    },
+                    onError: (err) => {
+                        message.error(
+                            err?.response?.data?.detail ||
+                                'Rasmni yuborishda xatolik yuz berdi'
+                        );
+                    },
+                }
+            );
+        } else if (files.length > 0) {
+            message.warning('Faqat rasm fayllari qo‘llab-quvvatlanadi');
+        }
+    };
 
     const handleFetchNext = async () => {
         if (!messagesContainerRef.current) return;
@@ -96,13 +231,62 @@ const ChatWindow = ({ chatId, goBack }) => {
     }
 
     return (
-        <div className={styles.chat_window}>
-            {/* header */}
+        <div
+            ref={chatWindowRef}
+            className={styles.chat_window}
+            onDragEnter={handleDragEnter}
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
+            style={{ position: 'relative', height: `${containerHeight}px` }}>
+            {/* Drag and Drop Overlay */}
+            {isDragging && (
+                <div
+                    style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        backgroundColor: 'rgba(0, 0, 0, 0.3)',
+                        zIndex: 1000,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        pointerEvents: 'none',
+                    }}>
+                    <Card
+                        style={{
+                            backgroundColor: 'white',
+                            padding: '40px 60px',
+                            borderRadius: '12px',
+                            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.15)',
+                            textAlign: 'center',
+                        }}>
+                        <CloudUploadOutlined
+                            style={{
+                                fontSize: '64px',
+                                color: '#1890ff',
+                                marginBottom: '16px',
+                            }}
+                        />
+                        <h3 style={{ margin: 0, color: '#1890ff' }}>
+                            Rasmni yuklash
+                        </h3>
+                        <p style={{ margin: '8px 0 0 0', color: '#666' }}>
+                            Rasmni bu yerga tashlang
+                        </p>
+                    </Card>
+                </div>
+            )}
             <div className={styles.chat_user}>
                 {goBack && (
                     <ArrowLeftOutlined
                         style={{ cursor: 'pointer' }}
-                        onClick={goBack}
+                        onClick={() => {
+                            goBack();
+                            wsRef.current.close();
+                        }}
                     />
                 )}
                 <Avatar
@@ -126,13 +310,14 @@ const ChatWindow = ({ chatId, goBack }) => {
                 </div>
             </div>
             <SafetyAlert />
+
             <div
                 onScroll={handlScroll}
                 ref={messagesContainerRef}
                 id="scrollableDiv"
                 style={{
                     width: '100%',
-                    height: '100vh',
+                    height: `100%`,
                     overflowY: 'scroll',
                     display: 'flex',
                     flexDirection: 'column-reverse',
@@ -166,7 +351,7 @@ const ChatWindow = ({ chatId, goBack }) => {
                                 <Spin />
                             </div>
                         ) : messages?.length ? (
-                            messages.map(msg =>
+                            messages.map((msg) =>
                                 msg.type === 'date-separator' ? (
                                     <ChatDateSeperator
                                         chatDate={msg}
@@ -279,7 +464,7 @@ const ChatInputParts = ({
                         startTimeout(scrollToBottom, 100);
                         message.success('Fayl muvaffaqiyatli yuborildi');
                     },
-                    onError: err => {
+                    onError: (err) => {
                         message.error(
                             err?.response?.data?.detail ||
                                 'Faylni yuborishda xatolik yuz berdi'
@@ -333,8 +518,8 @@ const ChatInputParts = ({
 
             onProgress({ percent: progress });
 
-            setFileList(prev =>
-                prev.map(f =>
+            setFileList((prev) =>
+                prev.map((f) =>
                     f.uid === uid
                         ? {
                               ...f,
@@ -352,12 +537,12 @@ const ChatInputParts = ({
         }, 150);
     };
 
-    const handleRemove = file => {
-        setFileList(prev => prev.filter(f => f.uid !== file.uid));
+    const handleRemove = (file) => {
+        setFileList((prev) => prev.filter((f) => f.uid !== file.uid));
         fileMapRef.current.delete(file.uid);
     };
 
-    const handleKeyPress = e => {
+    const handleKeyPress = (e) => {
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
             handleSend();
@@ -399,7 +584,7 @@ const ChatInputParts = ({
                     showPreviewIcon: false,
                     showDownloadIcon: false,
                 }}
-                beforeUpload={file => {
+                beforeUpload={(file) => {
                     if (file.size > maxSize) {
                         message.error('Fayl hajmi 50MB dan oshmasligi kerak');
                         return Upload.LIST_IGNORE;
@@ -443,7 +628,7 @@ const ChatInputParts = ({
                 <TextArea
                     value={newMessage}
                     disabled={isMessageWithFilePending}
-                    onChange={e => setNewMessage(e.target.value)}
+                    onChange={(e) => setNewMessage(e.target.value)}
                     onKeyDown={handleKeyPress}
                     autoSize={{ minRows: 1, maxRows: 6 }}
                     placeholder={
@@ -475,4 +660,4 @@ const ChatInputParts = ({
         </>
     );
 };
-export default ChatWindow;
+export default memo(ChatWindow);

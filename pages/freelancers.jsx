@@ -12,9 +12,11 @@ const baseKeywords = [
     'Soff.uz',
 ];
 
-const generateMetaTags = query => {
+const generateMetaTags = (query) => {
     const { directionValue = '', position = '', keyword = '' } = query;
-    const parts = [directionValue, position, keyword].filter(Boolean);
+    const parts = [directionValue, position, keyword]
+        .filter(Boolean)
+        .flat(Infinity);
     const titlePrefix = parts.length
         ? parts.join(' - ')
         : 'Eng yaxshi frilanserlar va mutaxassislar';
@@ -30,7 +32,7 @@ const generateMetaTags = query => {
             : ''
     } ${keyword ? `Qidiruvingiz: "${keyword}" bo'yicha natijalar.` : ''}`;
 
-    const dynamicKeywords = parts.flatMap(part => [
+    const dynamicKeywords = parts.flatMap((part) => [
         `${part} frilanserlar`,
         `${part} frilanser`,
         `${part} mutaxassisi`,
@@ -54,7 +56,7 @@ const generateMetaTags = query => {
         }${position ? `/${position}` : ''}${
             keyword ? `?keyword=${keyword}` : ''
         }`,
-        keywords: keywords.map(name => ({ name })),
+        keywords: keywords.map((name) => ({ name })),
     };
 };
 
@@ -73,9 +75,10 @@ export async function getServerSideProps(context) {
         keyword = '',
         position = '',
         direction = '',
-        sorted_by = '',
+        sort_by = 'average_rating',
         limit = 20,
         offset = 0,
+        order = '',
     } = query;
 
     const params = new URLSearchParams();
@@ -85,16 +88,19 @@ export async function getServerSideProps(context) {
     if (keyword) params.append('search', keyword);
 
     if (Array.isArray(position)) {
-        position.forEach(p => params.append('position', p));
+        position.forEach((p) => params.append('position', p));
     } else if (position) {
         params.append('position', position);
     }
 
-    if (direction) {
+    if (Array.isArray(direction)) {
+        direction.forEach((d) => params.append('direction', d));
+    } else if (direction) {
         params.append('direction', direction);
     }
 
-    if (sorted_by) params.append('sorted_by', sorted_by);
+    if (sort_by && (sort_by !== 'average_rating' || order === 'asc'))
+        params.append('sort_by', sort_by);
     params.append('limit', limit);
     if (offset) {
         params.append('offset', offset);
@@ -102,9 +108,11 @@ export async function getServerSideProps(context) {
         params.append('offset', 0);
     }
 
+    if (order) params.append('order', order);
+
     const url = `${
         process.env.NEXT_PUBLIC_FREELEANCE_URL
-    }/api/v1/users/sellers?${params.toString()}`;
+    }/api/v1/users/freelancers/list/?${params.toString()}`;
 
     try {
         const data = await fetchJson(url);

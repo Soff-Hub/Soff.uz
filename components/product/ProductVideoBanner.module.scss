@@ -1,0 +1,133 @@
+@import '/scss/utils/variable';
+
+.banner {
+    position: sticky;
+    z-index: 1000;
+    background-color: #e8f1ee;
+    border-top: 1px solid rgba(0, 164, 79, 0.1);
+    border-bottom: 1px solid rgba(0, 164, 79, 0.1);
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+        background-color: #d4f1e8;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    }
+
+    @media (max-width: 768px) {
+        display: none;
+    }
+}
+
+.bannerContent {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    max-width: 1400px;
+    padding: 8px 15px;
+    margin: 0 auto;
+    height: 70px;
+    min-height: 70px;
+    max-height: 80px;
+
+    @media (max-width: 768px) {
+        padding: 6px 10px;
+        height: 65px;
+        min-height: 65px;
+        max-height: 75px;
+    }
+}
+
+.iconWrapper {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 164, 79, 0.08);
+    border-radius: 50%;
+
+    @media (max-width: 768px) {
+        width: 32px;
+        height: 32px;
+    }
+}
+
+.questionIcon {
+    font-size: 18px;
+    color: $color-1st;
+
+    @media (max-width: 768px) {
+        font-size: 16px;
+    }
+}
+
+.textContent {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    justify-content: center;
+}
+
+.title {
+    font-size: 15px;
+    font-weight: 600;
+    color: $color-heading;
+    margin: 0;
+    padding: 0;
+    line-height: 1.2;
+
+    @media (max-width: 768px) {
+        font-size: 13px;
+    }
+}
+
+.subtitle {
+    font-size: 12px;
+    color: $color-text;
+    margin: 0;
+    padding: 0;
+    line-height: 1.2;
+
+    @media (max-width: 768px) {
+        font-size: 11px;
+    }
+}
+
+// Button styles are imported from youtube-vid.module.scss
+.buttonWrapper {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+// Tablet responsiveness
+@media (max-width: 1024px) {
+    .bannerContent {
+        gap: 10px;
+    }
+
+    .title {
+        font-size: 14px;
+    }
+
+    .subtitle {
+        font-size: 11px;
+    }
+}
+
+// Mobile responsiveness
+@media (max-width: 768px) {
+    .bannerContent {
+        gap: 8px;
+    }
+
+    .textContent {
+        min-width: 0;
+    }
+}

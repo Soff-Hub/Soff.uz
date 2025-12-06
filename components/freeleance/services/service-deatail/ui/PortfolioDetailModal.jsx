@@ -3,6 +3,7 @@ import { Modal, Descriptions, Tag } from 'antd';
 
 import styles from './styles/detail.module.scss';
 import useResponsive from '~/shared/utilities/useResponsive';
+import Image from 'next/image';
 
 const getYouTubeEmbed = (url) => {
     if (!url) return null;
@@ -64,14 +65,31 @@ const PortfolioDetailModal = ({ open, onClose, portfolio }) => {
                 <div className={styles.galleryBox}>
                     {galleryImages.length > 0 ? (
                         galleryImages.map((img, idx) => (
-                            <div key={idx} className={styles.imageWrapper}>
-                                <img
+                            <div
+                                key={idx}
+                                style={{
+                                    width: '100%',
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                }}>
+                                <Image
                                     src={
                                         img?.image ||
                                         '/static/img/orqafon1.avif'
                                     }
                                     alt={`Image ${idx + 1}`}
-                                    className={styles.image}
+                                    width={800}
+                                    height={450}
+                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 800px"
+                                    style={{
+                                        objectFit: 'contain',
+                                        maxWidth: '100%',
+                                        height: 'auto',
+                                        borderRadius: '8px',
+                                    }}
+                                    loading={idx === 0 ? 'eager' : 'lazy'}
+                                    className="rounded"
                                 />
                             </div>
                         ))
@@ -83,6 +101,7 @@ const PortfolioDetailModal = ({ open, onClose, portfolio }) => {
                     {galleryVideos.length > 0 ? (
                         galleryVideos.map((video, index) => (
                             <div
+                                key={index}
                                 className="video-wrapper"
                                 style={{
                                     width: '100%',

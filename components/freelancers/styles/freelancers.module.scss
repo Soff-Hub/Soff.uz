@@ -109,11 +109,24 @@
     .freelancersFilter {
         margin-top: 50px;
         position: relative;
+        width: 100%;
 
         .freelancersFilterResult {
             margin-top: 20px;
             display: flex;
             gap: 20px;
+
+            // @media (max-width: 992px) {
+            //     flex-direction: column;
+            // }
         }
     }
+}
+
+.freelancersFilterResultContent {
+    width: calc(100% - 300px);
+}
+
+.freelancersFilterResultCollapsedContent {
+    width: 100%;
 }

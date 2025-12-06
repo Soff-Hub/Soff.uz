@@ -4,6 +4,7 @@ import { fileColors } from '~/components/details-components/details-actions/file
 import { addPeriodToThousands } from '~/components/partials/account/price-formatter';
 import useResponsive from '~/shared/utilities/useResponsive';
 import Link from 'next/link';
+import { formatFileSize } from '~/shared/utilities/utils';
 
 export default function SearchResultsProducts_Card({ product }) {
     const { isDesktop } = useResponsive();
@@ -143,7 +144,7 @@ export default function SearchResultsProducts_Card({ product }) {
                                 <p className="Search_Results_Products_card_price">
                                     <i className="fas fa-database price_icon "></i>
                                     <span className="Search_Results_Products_card_price_boldspan">
-                                        {product?.file_size}
+                                        {formatFileSize(product?.file_size)}
                                     </span>
                                 </p>
                             </div>
@@ -183,8 +184,7 @@ export default function SearchResultsProducts_Card({ product }) {
                                     left: previewPosition.left,
                                     width: '400px',
                                     height: '400px',
-                                    border:
-                                        '2px solid rgba(255, 255, 255, 0.8)',
+                                    border: '2px solid rgba(255, 255, 255, 0.8)',
                                     borderRadius: '8px',
                                     overflow: 'hidden',
                                     backgroundColor: 'white',

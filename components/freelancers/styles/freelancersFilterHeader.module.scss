@@ -1,2 +1,30 @@
 @import '/scss/utils/variable';
 @import '/scss/utils/mixin';
+
+.headerWrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    @media (max-width: 768px) {
+        justify-content: space-between;
+    }
+}
+
+.viewToggle {
+    @media (max-width: 576px) {
+        font-size: 12px;
+    }
+}

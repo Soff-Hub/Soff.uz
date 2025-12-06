@@ -1,19 +1,9 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { SearchOutlined } from '@ant-design/icons';
-import { useState } from 'react';
-import { useRouter } from 'next/router';
-import { useQuery } from '@tanstack/react-query';
+import { Input, Popover } from 'antd';
 import styles from './style.module.scss';
-import { api } from '~/repositories/api';
-import useDebounce from '~/shared/hooks/useDebounce';
-import axiosInstance from '~/shared/api/freeleanceApi';
-import { D_SEARCH_OPTIONS, F_SEARCH_OPTIONS } from '~/shared/api/end-points';
-import dynamic from 'next/dynamic';
-
-const AutoComplete = dynamic(() => import('antd/es/auto-complete'), {
-    ssr: false,
-    loading: () => <p>Loading...</p>,
-});
+import useSearch from '~/shared/hooks/useSearch';
+import SearchResult from '~/shared/components/search-result';
 
 const placeholders = {
     mahsulotlar: 'Qaysi turdagi tayyor mahsulot qidirmoqdasiz?',
@@ -21,81 +11,67 @@ const placeholders = {
     mutaxasislar: 'Qaysi turdagi mutaxassislar qidirmoqdasiz?',
 };
 
-const staticOptions = {
-    xizmatlar: [
-        { value: 'Web Dasturlash' },
-        { value: 'Mobile App Dasturlash' },
-        { value: 'UI/UX Dizayn' },
-        { value: 'SEO Optimization' },
-        { value: 'Logo Dizayn' },
-    ],
-    mutaxasislar: [
-        { value: 'Frontend Dasturchi' },
-        { value: 'Backend Dasturchi' },
-        { value: 'Fullstack Dasturchi' },
-        { value: 'UI/UX Designer' },
-        { value: 'Project Manager' },
-    ],
-};
-
 function HeroSearchPart() {
-    const { push } = useRouter();
-    const [type, setType] = useState('mahsulotlar');
-    const [search, setSearch] = useState('');
-    const axios = axiosInstance();
+    const {
+        options,
+        search,
+        setSearch,
+        type,
+        setType,
+        handleSearch,
+        debouncedSearch,
+        handleClickOption,
+        isLoading,
+    } = useSearch();
+    const [popoverVisible, setPopoverVisible] = useState(false);
+    const [popoverWidth, setPopoverWidth] = useState(null);
+    const inputRef = useRef(null);
+    const searchBoxRef = useRef(null);
 
-    const debounceSearch = useDebounce(search, 500);
-
-    const { data, isSuccess } = useQuery({
-        queryKey: ['searchResults', debounceSearch],
-        queryFn: async () => {
-            const { data } = await api.get(
-                `${D_SEARCH_OPTIONS}${debounceSearch}`
-            );
-            return data;
-        },
-        enabled: type === 'mahsulotlar',
-        cacheTime: 10000,
-        retry: 1,
-    });
-
-    const { data: freelanceData, isSuccess: freelanceSuccess } = useQuery({
-        queryKey: ['freelanceData', debounceSearch],
-        queryFn: async () => {
-            const { data } = await axios.get(
-                `${F_SEARCH_OPTIONS}${debounceSearch}`
-            );
-            return data;
-        },
-        enabled: type !== 'mahsulotlar',
-        cacheTime: 10000,
-        retry: 1,
-    });
-
-    const getOptions = () => {
-        if (type === 'mahsulotlar') {
-            return isSuccess ? data?.map((item) => ({ value: item })) : [];
-        } else if (type === 'mutaxasislar') {
-            return freelanceSuccess
-                ? freelanceData?.position?.map((item) => ({ value: item }))
-                : [];
-        } else if (type == 'xizmatlar') {
-            return freelanceSuccess
-                ? freelanceData?.services?.map((item) => ({ value: item }))
-                : [];
-        }
-        return staticOptions[type] || [];
+    const handleInputChange = (e) => {
+        setSearch(e.target.value);
+        setPopoverVisible(true);
     };
 
-    const handleSearch = () => {
-        if (type === 'mahsulotlar') {
-            push(`/search-page/?keyword=${search}&tab=1&type=file`);
-        } else if (type === 'xizmatlar') {
-            push(`/search-page/?keyword=${search}&tab=2&type=all`);
-        } else if (type === 'mutaxasislar') {
-            push(`/search-page/?keyword=${search}&tab=3&type=all`);
-        }
+    const handleInputFocus = () => {
+        setPopoverVisible(true);
     };
+
+    const handleInputBlur = () => {
+        // Delay hiding to allow clicks on popover items
+        setTimeout(() => {
+            setPopoverVisible(false);
+        }, 200);
+    };
+
+    const handleOptionClick = (value) => {
+        handleClickOption(value);
+        setPopoverVisible(false);
+    };
+
+    useEffect(() => {
+        const updatePopoverWidth = () => {
+            if (searchBoxRef.current) {
+                const width = searchBoxRef.current.offsetWidth;
+                setPopoverWidth(width);
+            }
+        };
+
+        updatePopoverWidth();
+        window.addEventListener('resize', updatePopoverWidth);
+        return () => window.removeEventListener('resize', updatePopoverWidth);
+    }, []);
+
+    const popoverContent = (
+        <div style={{ width: '100%', maxWidth: '600px', minWidth: '300px' }}>
+            <SearchResult
+                debouncedSearch={debouncedSearch}
+                handleClickOption={handleOptionClick}
+                options={options}
+                isLoading={isLoading}
+            />
+        </div>
+    );
 
     return (
         <div className={styles.heroButtons}>
@@ -129,27 +105,46 @@ function HeroSearchPart() {
                 </span>
             </div>
 
-            <div className={styles.searchBox}>
-                <AutoComplete
-                    value={search}
-                    style={{ width: '100%' }}
-                    placeholder={placeholders[type]}
-                    onChange={(val) => setSearch(val)}
-                    options={getOptions()}>
-                    <input
-                        className={styles.input}
-                        style={{ width: '100%' }}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter') {
-                                handleSearch();
-                            }
-                        }}
-                    />
-                </AutoComplete>
+            <div ref={searchBoxRef} className={styles.searchBoxWrapper}>
+                <Popover
+                    content={popoverContent}
+                    open={popoverVisible}
+                    overlayClassName={styles.searchPopover}
+                    placement="bottomLeft"
+                    overlayInnerStyle={{ padding: 0 }}
+                    overlayStyle={{
+                        ...(popoverWidth ? { width: `${popoverWidth}px` } : {}),
+                    }}
+                    getPopupContainer={() =>
+                        document.getElementById('my-portal')
+                    }>
+                    <div className={styles.searchBox}>
+                        <Input
+                            ref={inputRef}
+                            size="large"
+                            value={search}
+                            onChange={handleInputChange}
+                            onFocus={handleInputFocus}
+                            onBlur={handleInputBlur}
+                            placeholder={placeholders[type]}
+                            className={styles.input}
+                            bordered={false}
+                            allowClear
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter') {
+                                    handleSearch();
+                                    setPopoverVisible(false);
+                                }
+                            }}
+                        />
 
-                <span className={styles.searchIcon} onClick={handleSearch}>
-                    <SearchOutlined />
-                </span>
+                        <span
+                            className={styles.searchIcon}
+                            onClick={handleSearch}>
+                            <SearchOutlined />
+                        </span>
+                    </div>
+                </Popover>
             </div>
         </div>
     );

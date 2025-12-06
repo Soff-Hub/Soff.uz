@@ -197,96 +197,106 @@ export default function Footer() {
                             ))}
                         </div>
                         {/* Xizmatlar (Aloqa) */}
-                        <ul className="mt-5">
+                        <div className="mt-5">
                             <h5 className="fw-semibold fs-2 text-white">
                                 {footerMenu.services.title}
                             </h5>
-                            {footerMenu.services.links.map((link, i) =>
-                                link.link ? (
-                                    <li key={link.link + i}>
-                                        <Link href={link.link}>
-                                            <a
-                                                target="_blank"
-                                                className="fs-4"
-                                                rel="noopener noreferrer">
-                                                {link.name}
-                                            </a>
-                                        </Link>
-                                    </li>
-                                ) : (
-                                    <li key={i} className="fs-4">
-                                        {link.name}
-                                    </li>
-                                )
-                            )}
-                        </ul>
+                            <ul>
+                                {footerMenu.services.links.map((link, i) =>
+                                    link.link ? (
+                                        <li key={link.link + i}>
+                                            <Link href={link.link}>
+                                                <a
+                                                    target="_blank"
+                                                    className="fs-4"
+                                                    rel="noopener noreferrer">
+                                                    {link.name}
+                                                </a>
+                                            </Link>
+                                        </li>
+                                    ) : (
+                                        <li key={i} className="fs-4">
+                                            {link.name}
+                                        </li>
+                                    )
+                                )}
+                            </ul>
+                        </div>
                     </div>
                     <div className={styles.footerLinksSection}>
-                        <ul>
+                        <div>
                             <h5 className="fw-semibold fs-2 text-white">
                                 Tayyor mahsulotlar
                             </h5>
-                            {products.map(link => (
-                                <li key={link.key}>
-                                    <Link href={link.link}>
-                                        <a
-                                            className="fs-4"
-                                            rel="noopener noreferrer">
-                                            {link.label}
-                                        </a>
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                        <ul>
+                            <ul>
+                                {products.map((link) => (
+                                    <li key={link.key}>
+                                        <Link href={link.link}>
+                                            <a
+                                                className="fs-4"
+                                                rel="noopener noreferrer">
+                                                {link.label}
+                                            </a>
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                        <div>
                             <h5 className="fw-semibold fs-2 text-white">
                                 Xizmat turlari
                             </h5>
-                            {directions?.map(link => (
-                                <li key={link.value}>
-                                    <Link
-                                        href={`/orders?direction=${link.value}`}>
-                                        <a
-                                            className="fs-4"
-                                            rel="noopener noreferrer">
-                                            {link.label}
-                                        </a>
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                        <ul>
+                            <ul>
+                                {directions?.map((link) => (
+                                    <li key={link.value}>
+                                        <Link
+                                            href={`/orders?direction=${link.value}`}>
+                                            <a
+                                                className="fs-4"
+                                                rel="noopener noreferrer">
+                                                {link.label}
+                                            </a>
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                        <div>
                             <h5 className="fw-semibold fs-2 text-white">
                                 Asosiy sahifalar
                             </h5>
-                            {mainPages.map(link => (
-                                <li key={link.key}>
-                                    <Link href={link.link}>
-                                        <a
-                                            className="fs-4"
-                                            rel="noopener noreferrer">
-                                            {link.label}
-                                        </a>
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                        <ul>
+                            <ul>
+                                {mainPages.map((link) => (
+                                    <li key={link.key}>
+                                        <Link href={link.link}>
+                                            <a
+                                                className="fs-4"
+                                                rel="noopener noreferrer">
+                                                {link.label}
+                                            </a>
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                        <div>
                             <h5 className="fw-semibold fs-2 text-white">
                                 Biz haqimizda
                             </h5>
-                            {aboutUsPages.map(link => (
-                                <li key={link.value}>
-                                    <Link href={`${link.link}`}>
-                                        <a
-                                            className="fs-4"
-                                            rel="noopener noreferrer">
-                                            {link.label}
-                                        </a>
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
+                            <ul>
+                                {aboutUsPages.map((link) => (
+                                    <li key={link.value}>
+                                        <Link href={`${link.link}`}>
+                                            <a
+                                                className="fs-4"
+                                                rel="noopener noreferrer">
+                                                {link.label}
+                                            </a>
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 <div className="d-flex gap-4 justify-content-between mt-5 border-top pt-4 flex-wrap">

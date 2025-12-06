@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Link from 'next/link';
 import useWishlist from '~/shared/hooks/useWishlist';
 import MiniCart from '~/components/shared/headers/modules/MiniCart';
@@ -8,46 +8,40 @@ import HeaderUserDropdown from './HeaderUserDropdown';
 import { Badge } from 'antd';
 import MenuCategoriesDropdown from '~/components/shared/menu/MenuCategoriesDropdown';
 import useResponsive from '~/shared/utilities/useResponsive';
-import HeaderCatergories from '../HeaderCategories';
+import HeaderCatergories, { HeaderSearch } from '../HeaderCategories';
+import { FaRegHeart } from 'react-icons/fa';
+import { useRouter } from 'next/router';
+import styles from './header-actions.module.scss';
 
-const HeaderActions = ({ auth, isDark }) => {
+const HeaderActions = () => {
     const { wishlist } = useWishlist();
-    const { isMobile, isTablet } = useResponsive();
-    const data = useSelector(state => state.ecomerce.cartDataItems);
+    const { pathname } = useRouter();
+    const { isDesktop, size } = useResponsive();
+    const isTabletLimit = !isDesktop && size >= 650 && pathname !== '/';
+    const data = useSelector((state) => state.ecomerce?.cartDataItems);
+    const isWishlistVisible = wishlist && wishlist.length > 0;
+    const isMiniCartVisible = data && data.length > 0;
 
     return (
-        <div
-            className={`site-header-actions flex-1 ${
-                isDark ? 'text-black' : 'text-white'
-            }`}>
-            {!isMobile && !isTablet && <HeaderCatergories />}
-            {!isMobile && !isTablet && <MenuCategoriesDropdown />}
-            <div className="d-flex">
-                {wishlist?.length > 0 && (
-                    <Link href="/account/wishlist">
-                        <a
-                            className="header__extra"
-                            style={{ marginRight: '15px' }}>
-                            <Badge count={wishlist.length}>
-                                <img
-                                    src="/static/img/heart1.png"
-                                    width={'20px'}
-                                    alt=""
-                                />{' '}
-                            </Badge>
-                        </a>
-                    </Link>
-                )}
+        <div className={`site-header-actions flex-1`}>
+            {isDesktop && <HeaderCatergories />}
+            {isDesktop && <MenuCategoriesDropdown />}
+            {isTabletLimit && <HeaderSearch />}
+            {isWishlistVisible && (
+                <Link href="/account/wishlist">
+                    <a className="header__extra">
+                        <Badge count={wishlist.length} offset={[0, -2]}>
+                            <FaRegHeart className={styles.headerIconLike} />
+                        </Badge>
+                    </a>
+                </Link>
+            )}
 
-                {data?.length > 0 && <MiniCart />}
-            </div>
-            <HeaderNotifications color={isDark ? 'text-black' : 'text-white'} />
-            <HeaderUserDropdown
-                color={isDark ? 'text-black' : 'text-white'}
-                isLoggedIn={auth.isLoggedIn && Boolean(auth.isLoggedIn)}
-            />
+            {isMiniCartVisible && <MiniCart />}
+            <HeaderNotifications />
+            <HeaderUserDropdown />
         </div>
     );
 };
 
-export default connect(state => state)(HeaderActions);
+export default HeaderActions;

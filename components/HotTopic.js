@@ -23,18 +23,16 @@ export default () => {
             navigation
             controller={{ control: Swiper }}
             pagination={{ clickable: true }}>
-            {data?.map(el => (
-                <SwiperSlide>
-                    <div
-                        key={el.id}
-                        className='modal-vedio-tutorial_container-carousel'>
+            {data?.map((el) => (
+                <SwiperSlide key={el.id}>
+                    <div className="modal-vedio-tutorial_container-carousel">
                         <iframe
-                            width='100%'
-                            height='300px'
+                            width="100%"
+                            height="300px"
                             src={`${el.vedioUrl}`}
-                            title='YouTube video player'
-                            frameborder='0'
-                            allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen'
+                            title="YouTube video player"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
                             allowfullscreen></iframe>
                     </div>
                 </SwiperSlide>

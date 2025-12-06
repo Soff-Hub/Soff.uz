@@ -30,7 +30,7 @@ const Search_Results = ({
     const { query } = useRouter();
     const { isDesktop } = useResponsive();
     const pageRef = useRef(null);
-    const { isLoggedIn } = useSelector(state => state.auth);
+    const { isLoggedIn } = useSelector((state) => state.auth);
     const tab = router.query.tab || '1';
 
     const topServicesQuery = new URLSearchParams({
@@ -76,7 +76,7 @@ const Search_Results = ({
         </div>
     );
 
-    const handleSetRouterQuery = currentTab => {
+    const handleSetRouterQuery = (currentTab) => {
         const omitKeys = [
             'direction',
             'ts_direction',
@@ -122,24 +122,31 @@ const Search_Results = ({
         inputEl.current.value = '';
     };
 
-    const handleChangeTab = value => {
+    const handleChangeTab = (value) => {
         handleSetRouterQuery(value);
     };
 
     useEffect(() => {
         if (debouncedSearchTerm !== router.query.keyword) {
-            const newQueries = router.query;
-            delete newQueries.similar_documents;
+            // When a new search term is entered, reset pagination and filter params
+            const omitKeys = ['page', 'offset', 'similar_documents'];
+
+            const newQueries = Object.fromEntries(
+                Object.entries(router.query).filter(
+                    ([key]) => !omitKeys.includes(key)
+                )
+            );
 
             router.push({
                 pathname: router.pathname,
                 query: {
-                    ...router.query,
+                    ...newQueries,
                     keyword: debouncedSearchTerm,
                 },
             });
         }
-    }, [debouncedSearchTerm, router.query.keyword]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [debouncedSearchTerm]);
 
     const clearTextView = (
         <span className="ps-form__action">
@@ -268,9 +275,12 @@ const Search_Results = ({
                                     type="text"
                                     value={searchTerm}
                                     placeholder="Izlayotgan mahsulotingizni toping..."
-                                    onChange={e =>
+                                    onChange={(e) =>
                                         setSearchTerm(e.target.value)
                                     }
+                                    style={{
+                                        width: 'calc(100% - 30px)',
+                                    }}
                                 />
                                 {clearTextView}
                             </div>
@@ -328,7 +338,7 @@ export async function getServerSideProps(context) {
         offset,
     });
 
-    const fetchJson = async url => {
+    const fetchJson = async (url) => {
         try {
             const res = await fetch(url);
             if (!res.ok) throw new Error('Failed to fetch');
@@ -349,7 +359,6 @@ export async function getServerSideProps(context) {
         page_to ? `&page_to=${page_to}` : ''
     }${similar_documents ? `&similar_documents=${similar_documents}` : ''}`;
 
-    // console.log('searchUrl', searchUrl);
     const servicesUrl = `${
         process.env.NEXT_PUBLIC_FREELEANCE_URL
     }/api/v1/customer?${servicesQuery.toString()}&search=${keyword}${
@@ -373,9 +382,6 @@ export async function getServerSideProps(context) {
         serviceChild: null,
         sellers: null,
     };
-
-    console.log('Tab changed to:', tab);
-    console.log('😃😄😃😄😃😄😃😄', Math.round());
 
     switch (tab) {
         case '1': {

@@ -39,7 +39,7 @@
 // 2.12 product
 @import 'elements/product';
 // 2.13 banner
-@import 'elements/banner';
+// @import 'elements/banner';
 
 // 2.15 table
 @import 'elements/table';
@@ -91,12 +91,11 @@
 
 @import './elements/productAudio';
 @import './elements/productVideo';
-@import 'node_modules/react-modal-video/scss/modal-video.scss';
 
 @import './elements/seller_products_details';
 
 @import './blocks/header';
-@import './blocks/hero';
+// @import './blocks/hero';
 @import './elements/affiliate_program';
 
 // service Page

@@ -2157,6 +2157,29 @@
     }
 }
 
+.ant-filter-segmented {
+    padding: 3px;
+
+    .ant-segmented-group {
+        .ant-segmented-item-selected {
+            .ant-segmented-item-label {
+                font-weight: 600 !important;
+            }
+        }
+
+        .ant-segmented-item {
+            margin: 0;
+
+            .ant-segmented-item-label {
+                padding-block: 2px;
+                font-size: 16px;
+                color: #121c25;
+                font-weight: 500;
+            }
+        }
+    }
+}
+
 @media (max-width: 520px) {
     .ant-segmented {
         padding: 3px;

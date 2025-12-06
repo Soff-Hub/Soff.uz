@@ -22,7 +22,7 @@ function FreelancersFilterMenu({ collapsed }) {
             className={`${styles.radioMenu} ${
                 collapsed ? styles.visible : ''
             }`}>
-            {(selectedPositions?.length > 0 || selectedDirection) && (
+            {selectedPositions?.length || selectedDirection?.length ? (
                 <div className={styles.clearButton}>
                     <Button
                         style={{
@@ -38,23 +38,23 @@ function FreelancersFilterMenu({ collapsed }) {
                         Filtrlarni tozalash
                     </Button>
                 </div>
-            )}
+            ) : null}
 
             {/* Yo‘nalish */}
             <div className={styles.filterGroup}>
                 <h4>
                     <AiOutlineApartment /> Yo‘nalish
                 </h4>
-                <Radio.Group
+                <Checkbox.Group
                     value={selectedDirection}
-                    onChange={e => handleDirectionChange(e.target.value)}
+                    onChange={handleDirectionChange}
                     style={{
                         display: 'flex',
                         flexDirection: 'column',
                         gap: '6px',
                     }}>
                     {directionsGroup}
-                </Radio.Group>
+                </Checkbox.Group>
             </div>
 
             {/* Kasb */}

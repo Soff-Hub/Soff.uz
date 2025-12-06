@@ -23,10 +23,10 @@ const NetworkStatusComponent = dynamic(
 );
 
 const PageLayout = ({ children, title, withFooter = true } = {}) => {
-    const { user } = useSelector(state => state.auth);
+    const { user } = useSelector((state) => state.auth);
 
-    useGetProfileQuery(`profile-${user?.role}-${user?.access}`, {
-        skip: user?.role !== 'customer' || !user?.access,
+    useGetProfileQuery('userfetch', {
+        skip: !user?.access,
     });
     useGetDirectionsQuery();
 
@@ -57,15 +57,15 @@ const PageLayout = ({ children, title, withFooter = true } = {}) => {
                 style={{
                     display: 'flex',
                     flexDirection: 'column',
-                    minHeight: '100vh',
+                    height: '100vh',
+                    height: '100dvh',
+                    height: '-webkit-fill-available',
                 }}>
                 <Header />
                 <NetworkStatusComponent />
                 <main
                     style={{
-                        flex: '1 0 auto',
-                        display: 'flex',
-                        flexDirection: 'column',
+                        flex: '1',
                     }}>
                     {children}
                 </main>
@@ -76,10 +76,10 @@ const PageLayout = ({ children, title, withFooter = true } = {}) => {
             {!user && (
                 <div style={{ height: 0, overflow: 'hidden' }}>
                     <GoogleLogin
-                        onSuccess={credentialResponse => {
+                        onSuccess={(credentialResponse) => {
                             handleLogin(credentialResponse?.credential);
                         }}
-                        intermediate_iframe_close_callback={e =>
+                        intermediate_iframe_close_callback={(e) =>
                             e.preventDefault()
                         }
                         useOneTap

@@ -6,9 +6,11 @@ import { useSelector } from 'react-redux';
 import AuthModal from '~/components/AuthModal';
 import { useRouter } from 'next/router';
 import { StarFilled } from '@ant-design/icons';
+import { Button } from 'antd';
+import Image from 'next/image';
 
 // Helper function to validate slug
-const isValidSlug = slug => {
+const isValidSlug = (slug) => {
     return (
         slug &&
         typeof slug === 'string' &&
@@ -19,7 +21,7 @@ const isValidSlug = slug => {
 };
 
 const ServiceCard = ({ service, hasFooter = true }) => {
-    const { isLoggedIn } = useSelector(state => state.auth);
+    const { isLoggedIn } = useSelector((state) => state.auth);
     const [open, setOpen] = useState(false);
     const { push } = useRouter();
 
@@ -87,17 +89,19 @@ const ServiceCard = ({ service, hasFooter = true }) => {
                         </h3>
                     </div>
                     <div className={styles.btns}>
-                        <button
+                        <Button
+                            type="default"
                             onClick={handleViewDetails}
                             className={styles.secondaryBtn}>
                             Batafsil
-                        </button>
+                        </Button>
 
-                        <button
+                        <Button
+                            type="primary"
                             onClick={handleOrder}
                             className={styles.primaryBtn}>
                             Buyurtma berish
-                        </button>
+                        </Button>
                     </div>
                 </div>
                 {hasFooter && (
@@ -107,14 +111,28 @@ const ServiceCard = ({ service, hasFooter = true }) => {
                             <Link
                                 href={`/seller/${service?.user?.soff_seller_id}`}>
                                 <a>
-                                    <img
-                                        className={styles.userImg}
-                                        src={
-                                            service?.user?.photo_url ||
-                                            '/static/img/ozodbek.png'
-                                        }
-                                        alt="user_img"
-                                    />
+                                    <div
+                                        style={{
+                                            width: '30px',
+                                            height: '30px',
+                                            position: 'relative',
+                                            overflow: 'hidden',
+                                            borderRadius: '50%',
+                                            flexShrink: 0,
+                                        }}>
+                                        <Image
+                                            src={
+                                                service?.user?.photo_url ||
+                                                '/static/img/ozodbek.png'
+                                            }
+                                            alt="user_img"
+                                            width={30}
+                                            height={30}
+                                            objectFit="cover"
+                                            className={styles.userImg}
+                                            loading="lazy"
+                                        />
+                                    </div>
                                 </a>
                             </Link>
                             <Link
