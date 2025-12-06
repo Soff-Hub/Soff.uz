@@ -1,11 +1,13 @@
 import React from 'react';
-import { connect, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Link from 'next/link';
 import ProductOnCart from '~/components/elements/products/ProductOnCart';
 import { calculateAmount } from '~/shared/utilities/ecomerce-helpers';
 import { addPeriodToThousands } from '~/components/partials/account/price-formatter';
+import { MdOutlineShoppingCart } from 'react-icons/md';
 import { Badge, Popover, Button } from 'antd';
 import { cn } from '~/shared/utilities/cn';
+import styles from '@/widgets/header/HeaderActions/header-actions.module.scss';
 
 const flexStyle = {
     display: 'flex',
@@ -104,7 +106,7 @@ const MiniCart = () => {
         <Popover
             content={cartContent}
             title={null}
-            className={cn('pe-4 h-36', 'ps-basket')}
+            className={cn('h-36', 'ps-basket')}
             classNames={{
                 root: 'ps-basket',
             }}
@@ -121,11 +123,8 @@ const MiniCart = () => {
                     )}>
                     <a>
                         <Badge count={data.length}>
-                            <img
-                                src="/static/img/wishlist.png"
-                                width={'25px'}
-                                alt="Savat"
-                                className="transition-all duration-200"
+                            <MdOutlineShoppingCart
+                                className={styles.headerIcon}
                             />
                         </Badge>
                     </a>
@@ -135,4 +134,4 @@ const MiniCart = () => {
     );
 };
 
-export default connect((state) => state)(MiniCart);
+export default MiniCart;

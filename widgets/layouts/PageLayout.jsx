@@ -24,8 +24,7 @@ const NetworkStatusComponent = dynamic(
 
 const PageLayout = ({ children, title, withFooter = true } = {}) => {
     const { user } = useSelector((state) => state.auth);
-    const { user: profile } = useSelector((state) => state.profile);
-    console.log({ user, profile });
+
     useGetProfileQuery('userfetch', {
         skip: !user?.access,
     });

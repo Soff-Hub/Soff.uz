@@ -3,15 +3,17 @@ import Link from 'next/link';
 import { Badge, notification } from 'antd';
 import { SmileOutlined } from '@ant-design/icons';
 import { api as axios } from '~/repositories/api';
-
+import { FaRegCommentDots } from 'react-icons/fa';
+import { FaRegBell } from 'react-icons/fa';
 import useCredentials from '~/shared/hooks/useCredentials';
 import useWebSocket from '~/shared/hooks/useWebSocket';
 import { CHAT_UNSEENS, wssBaseUrl } from '~/shared/api/end-points';
 import { useFGet } from '~/shared/hooks/useFApi';
 import { cn } from '~/shared/utilities/cn';
 import { useQueryClient } from '@tanstack/react-query';
+import styles from './header-actions.module.scss';
 
-export default function HeaderNotifications({ color }) {
+export default function HeaderNotifications() {
     const queryClient = useQueryClient();
     const { token } = useCredentials();
     const [api, contextHolder] = notification.useNotification();
@@ -22,8 +24,8 @@ export default function HeaderNotifications({ color }) {
     const [notifications, setNotifications] = useState([]);
     const [notificationsCount, setNotificationsCount] = useState(0);
 
-    const {} = useWebSocket(`${wssBaseUrl}ws/user-notification/`, {
-        onMessage: event => {
+    useWebSocket(`${wssBaseUrl}ws/user-notification/`, {
+        onMessage: (event) => {
             const newNotification = JSON.parse(event.data);
             if (newNotification?.count > 0) {
                 setNotificationsCount(newNotification?.count);
@@ -112,51 +114,30 @@ export default function HeaderNotifications({ color }) {
     }, [notifications]);
 
     return (
-        <div>
+        <>
             {contextHolder}
             {token ? (
-                <Badge
-                    offset={[-10, 3]}
-                    size="small"
-                    count={data?.unread_messages}
-                    color="#00a44f">
-                    <Link href={`/chat`} style={{ marginRight: '10px' }}>
-                        <a
-                            className="header__extra fs-1"
-                            style={{ cursor: 'pointer' }}>
-                            <i
-                                style={{ marginRight: '10px' }}
-                                className={`fa-regular fa-comment-dots ${color}`}></i>
-                        </a>
-                    </Link>
-                </Badge>
-            ) : (
-                ''
-            )}
-            {token ? (
-                <Link
-                    href={`/account/notification`}
-                    style={{ marginRight: '10px' }}>
-                    <a
-                        className="header__extra fs-1"
-                        style={{ cursor: 'pointer' }}>
-                        <Badge
-                            offset={[-10, 3]}
-                            size="small"
-                            count={notificationsCount}
-                            color="#00a44f">
-                            <i
-                                style={{
-                                    marginRight: '10px',
-                                    fontSize: '25px',
-                                }}
-                                className={`fa-regular fa-bell ${color}`}></i>
+                <Link href={`/chat`}>
+                    <a className="header__extra" style={{ cursor: 'pointer' }}>
+                        <Badge count={data?.unread_messages} color="#00a44f">
+                            <FaRegCommentDots className={styles.headerIcon} />
                         </Badge>
                     </a>
                 </Link>
             ) : (
                 ''
             )}
-        </div>
+            {token ? (
+                <Link href={`/account/notification`}>
+                    <a className="header__extra" style={{ cursor: 'pointer' }}>
+                        <Badge count={notificationsCount} color="#00a44f">
+                            <FaRegBell className={styles.headerIcon} />
+                        </Badge>
+                    </a>
+                </Link>
+            ) : (
+                ''
+            )}
+        </>
     );
 }

@@ -31,7 +31,7 @@ const Header = () => {
                     <div className="">
                         <div className="header-inner">
                             <HeaderLogo mode={'dark'} />
-                            <HeaderActions isDark={true} />
+                            <HeaderActions />
                         </div>
                     </div>
                 </div>

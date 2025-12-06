@@ -1,0 +1,15 @@
+.headerIcon {
+    font-size: 25px;
+
+    @media (max-width: 576px) {
+        font-size: 20px;
+    }
+}
+
+.headerIconLike {
+    font-size: 21px;
+
+    @media (max-width: 576px) {
+        font-size: 17px;
+    }
+}

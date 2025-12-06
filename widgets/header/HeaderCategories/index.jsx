@@ -173,7 +173,7 @@ const HeaderCatergories = () => {
                             size={isMobile ? 'small' : 'default'}
                             dot={isMobile ? totalOrders > 0 : false}
                             overflowCount={9}
-                            offset={isMobile ? [0, 0] : [6, -5]}>
+                            offset={isMobile ? [0, 0] : [2, -3]}>
                             Buyurtmalarim
                         </Badge>
                     </a>
@@ -187,7 +187,7 @@ const HeaderCatergories = () => {
                     </Space>
                 </Dropdown>
             </div>
-            <div className={`${styles.orderBox} ${styles.dropBox}`}>
+            <div className={`${styles.orderBox} `}>
                 <Link href="/order/create">
                     <a className={styles.dropLabel}>Buyurtma berish</a>
                 </Link>

@@ -1,7 +1,7 @@
 @import '/scss/utils/variable';
 .dropBlock {
     display: flex;
-    align-items: center;
+    align-items: baseline;
     flex: 1;
     justify-content: end;
 
@@ -99,12 +99,13 @@
         margin-right: 0px;
     }
     .orderBox {
-        margin-right: 15px;
+        margin-right: 5px;
+        @media (max-width: 992px) {
+            margin-right: 15px;
+            // flex: 1;
+        }
         @media (max-width: 568px) {
             flex: 1;
-        }
-        @media (max-width: 400px) {
-            margin-right: 5px;
         }
     }
     .navLink {
@@ -115,20 +116,21 @@
         display: flex;
         align-items: center;
         gap: 3px;
-        margin-right: 20px;
         cursor: pointer;
         transition: all 0.3 ease-out;
-        // @media (max-width: 992px) {
-        //     font-size: 15px;
-        //     margin-right: 0px;
-        // }
-        // @media (max-width: 480px) {
-        //     font-size: 12px;
-        //     margin-right: 0px;
-        // }
-        // @media (max-width: 340px) {
-        //     font-size: 11px;
-        // }
+        margin-right: 17px;
+
+        @media (max-width: 992px) {
+            font-size: 15px;
+            margin-right: 0;
+        }
+        @media (max-width: 480px) {
+            font-size: 12px;
+        }
+        @media (max-width: 340px) {
+            font-size: 11px;
+        }
+
         &:hover {
             color: $color-1st;
         }

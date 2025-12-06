@@ -73,8 +73,6 @@ function HeroSearchPart() {
         </div>
     );
 
-    console.log('popoverWidth', popoverWidth);
-
     return (
         <div className={styles.heroButtons}>
             <div className={styles.heroFilterButtons}>
