@@ -106,6 +106,16 @@ if (fs.existsSync(path.join(scriptsDir, 'scheduler.js'))) {
     );
 }
 
+// Copy server.js wrapper (includes scheduler initialization)
+console.log('📦 Copying server wrapper...');
+const serverWrapperPath = path.join(process.cwd(), 'server.js');
+if (fs.existsSync(serverWrapperPath)) {
+    fs.copyFileSync(serverWrapperPath, path.join(deployDir, 'server.js'));
+    console.log('   ✅ Server wrapper copied');
+} else {
+    console.warn('   ⚠️  server.js not found - scheduler will not be initialized');
+}
+
 // Copy .env file if it exists (for runtime configuration)
 console.log('📦 Checking for environment files...');
 const envFiles = ['.env', '.env.local', '.env.production'];
@@ -147,8 +157,8 @@ const deployPackageJson = {
     version: '1.0.0',
     private: true,
     scripts: {
-        start: 'pm2 start ecosystem.config.json',
-        'start:server': 'node .next/standalone/server.js',
+        start: 'node server.js',
+        'start:server': 'node server.js',
         'start:scheduler': 'node scripts/scheduler.js',
         'pm2:start': 'pm2 start ecosystem.config.json',
         'pm2:reload': 'pm2 reload ecosystem.config.json',
@@ -158,6 +168,8 @@ const deployPackageJson = {
     },
     dependencies: {
         'npm-run-all': '^4.1.5',
+        'pm2': '^5.3.0',
+        'node-cron': '^3.0.3',
     },
 };
 
@@ -166,13 +178,13 @@ fs.writeFileSync(
     JSON.stringify(deployPackageJson, null, 2)
 );
 
-// Create ecosystem.config.json for deployment (using standalone server)
+// Create ecosystem.config.json for deployment (using server wrapper with integrated scheduler)
 console.log('📦 Creating deployment ecosystem.config.json...');
 const deployEcosystemConfig = {
     apps: [
         {
             name: 'soff-web',
-            script: '.next/standalone/server.js',
+            script: 'server.js',
             instances: 2,
             exec_mode: 'cluster',
             watch: false,
@@ -183,19 +195,7 @@ const deployEcosystemConfig = {
                 // Environment variables can be set here or in .env file
                 // NEXT_PUBLIC_* vars from build time are used for client-side
                 // Server-side code can use runtime env vars from .env or here
-            },
-        },
-        {
-            name: 'soff-scheduler',
-            script: 'scripts/scheduler.js',
-            instances: 1,
-            exec_mode: 'fork',
-            watch: false,
-            autorestart: false,
-            cron_restart: '0 3 * * *',
-            max_memory_restart: '200M',
-            env: {
-                NODE_ENV: 'production',
+                // Note: Scheduler is integrated and runs automatically (daily at 3 AM)
             },
         },
     ],
@@ -215,14 +215,14 @@ This is a standalone deployment package. No build step required on the server.
 ## Quick Start
 
 \`\`\`bash
-# Install minimal dependencies (only npm-run-all)
+# Install minimal dependencies (node-cron, pm2, npm-run-all)
 npm install
 
 # Start with PM2 (recommended)
 npm run pm2:start
 
-# Or start directly (for testing)
-npm run start:server
+# Or start directly (scheduler runs automatically!)
+node server.js
 \`\`\`
 
 ## PM2 Commands
@@ -260,8 +260,8 @@ npm run pm2:reload
 - ✅ Standalone Next.js server (no node_modules needed)
 - ✅ Static assets
 - ✅ Public files
-- ✅ Scheduler script (runs daily at 3 AM via PM2 cron)
-- ✅ PM2 configuration
+- ✅ **Integrated scheduler** (runs automatically daily at 3:00 AM - no separate process needed!)
+- ✅ PM2 configuration (optional, for process management)
 
 ## Access Your App
 
@@ -279,7 +279,8 @@ Look for the line: \`Listening on port XXXX\`
 
 ## Notes
 
-- The scheduler runs automatically via PM2 cron at 3:00 AM daily
+- **The scheduler is integrated** - runs automatically when you start the server (daily at 3:00 AM)
+- **No separate scheduler process needed** - just run \`node server.js\` and everything works!
 - Server runs on port 3000 by default (or PORT env variable if set)
 - Use PM2 reload for zero-downtime deployments
 `;
@@ -294,17 +295,19 @@ console.log('✅ Deployment package created in ./deploy folder');
 console.log('📤 Ready to share with backend team!');
 console.log('');
 console.log('📋 Package contents:');
+console.log('   - server.js (server wrapper with integrated scheduler)');
 console.log('   - .next/standalone/ (Next.js server)');
 console.log('   - .next/static/ (static assets)');
 console.log('   - public/ (public files)');
 console.log('   - scripts/scheduler.js');
 console.log('   - package.json (minimal)');
-console.log('   - ecosystem.config.json (PM2 config)');
+console.log('   - ecosystem.config.json (PM2 config, optional)');
 console.log('');
 console.log('🚀 Backend team can now:');
 console.log('   1. cd deploy');
 console.log('   2. npm install');
-console.log('   3. npm run pm2:start');
+console.log('   3. node server.js  ← Scheduler runs automatically!');
+console.log('   OR: npm run pm2:start  (for PM2 process management)');
 console.log('');
 console.log('🔄 For updates (zero-downtime):');
 console.log('   1. Replace deploy folder with new version');

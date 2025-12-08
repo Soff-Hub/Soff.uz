@@ -10,20 +10,25 @@ async function clearCache() {
             console.log('✅ Cache cleared successfully');
         } catch (err) {
             console.error('❌ Failed to clear cache:', err);
-            process.exit(1);
+            throw err;
         }
     } else {
         console.log('ℹ️  Cache directory does not exist');
     }
 }
 
-// Run once and exit (PM2 cron will handle the scheduling)
-clearCache()
-    .then(() => {
-        console.log('✅ Scheduler completed');
-        process.exit(0);
-    })
-    .catch((err) => {
-        console.error('❌ Scheduler error:', err);
-        process.exit(1);
-    });
+// Export for use in server wrapper
+module.exports = { clearCache };
+
+// Run once and exit (for standalone PM2 cron usage)
+if (require.main === module) {
+    clearCache()
+        .then(() => {
+            console.log('✅ Scheduler completed');
+            process.exit(0);
+        })
+        .catch((err) => {
+            console.error('❌ Scheduler error:', err);
+            process.exit(1);
+        });
+}

@@ -1,0 +1,49 @@
+name: Build and Deploy
+
+on:
+    push:
+        branches:
+            - main
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout main branch
+              uses: actions/checkout@v3
+              with:
+                  fetch-depth: 0
+
+            - name: Setup Node
+              uses: actions/setup-node@v3
+              with:
+                  node-version: 18
+
+            - name: Install dependencies
+              run: npm install
+
+            - name: Build project
+              run: npm run build
+
+            # IMPORTANT: change "dist" to whatever your standalone folder is called
+            - name: Copy build folder
+              run: |
+                  rm -rf deployment-folder
+                  mkdir deployment-folder
+                  cp -r .next/standalone/* deployment-folder/
+
+            - name: Switch to deployments branch
+              run: |
+                  git config user.name "github-actions"
+                  git config user.email "github-actions@github.com"
+
+                  git checkout deployments || git checkout -b deployments
+                  rm -rf ./*
+                  cp -r deployment-folder/* .
+
+            - name: Commit and push changes
+              run: |
+                  git add .
+                  git commit -m "Deploy from main branch" || echo "No changes to commit"
+                  git push origin deployments --force

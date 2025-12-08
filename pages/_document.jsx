@@ -5,14 +5,17 @@ export default function Document() {
     return (
         <Html lang="uz" style={{ overflowX: 'hidden' }}>
             <Head>
-                <link rel="shortcut icon" href={'/static/img/soff logo.png'} />
+                <link rel="shortcut icon" href={'/favicon.ico'} />
+                <link rel="icon" type="image/x-icon" href={'/favicon.ico'} />
                 <link
                     rel="icon"
+                    type="image/png"
                     href={'/static/img/soff logo.png'}
                     sizes="32x32"
                 />
                 <link
                     rel="icon"
+                    type="image/png"
                     href={'/static/img/soff logo.png'}
                     sizes="192x192"
                 />
