@@ -9,6 +9,10 @@ concurrency:
     group: deploy-${{ github.ref }}
     cancel-in-progress: true
 
+# Grant write permissions to push to repository
+permissions:
+    contents: write
+
 jobs:
     deploy:
         runs-on: ubuntu-latest
