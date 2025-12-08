@@ -1,9 +1,8 @@
-name: Deploy Standalone Next.js
+name: Fast Deploy
 
 on:
     push:
-        branches:
-            - main
+        branches: [main]
 
 jobs:
     deploy:
@@ -18,35 +17,36 @@ jobs:
               with:
                   node-version: 18
 
-            - name: Install deps
-              run: npm install
+            - uses: actions/cache@v3
+              with:
+                  path: |
+                      ~/.npm
+                      .next/cache
+                  key:
+                      ${{ runner.os }}-cache-${{
+                      hashFiles('**/package-lock.json') }}
+                  restore-keys: |
+                      ${{ runner.os }}-cache-
 
-            - name: Build Next.js standalone
+            - name: Install deps
+              run: npm ci
+
+            - name: Build standalone
               run: npm run build
 
-            - name: Check standalone output
-              run: ls -R .next/standalone
-
-            - name: Prepare deployment folder
+            - name: Package standalone
               run: |
-                  mkdir -p deployment-folder
-                  cp -r .next/standalone/* deployment-folder/
+                  mkdir deploy
+                  cp -r .next/standalone/* deploy/
 
             - name: Deploy to deployments branch
               run: |
                   git config user.name "github-actions"
                   git config user.email "github-actions@github.com"
 
-                  # Switch to deployments branch
                   git checkout deployments || git checkout -b deployments
-
-                  # Clean branch
-                  git rm -rf . || true
-                  git clean -fd
-
-                  # Copy new build
-                  cp -r $GITHUB_WORKSPACE/deployment-folder/* .
-
+                  rm -rf ./*
+                  cp -r $GITHUB_WORKSPACE/deploy/* .
                   git add .
-                  git commit -m "Deploy standalone build" || echo "No changes"
-                  git push origin deployments --force
+                  git commit -m "Deploy" || echo "No changes"
+                  git push origin deployments --force --depth=1
