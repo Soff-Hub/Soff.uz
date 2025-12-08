@@ -122,7 +122,7 @@ export default function SellerInfo({ sellerInfo, onChange }) {
                         </div>
                         <img src="/static/img/ArrowRight.svg" alt="" />
                         <div className="SellerInfoSecondCard">
-                            <img src="/static/img/To’lov_qiling.svg " alt="" />
+                            <img src="/static/img/Tolov_qiling.svg " alt="" />
                             <p className="SellerInfoSecondCardTitle">
                                 To’lov qiling
                             </p>
