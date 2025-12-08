@@ -4,58 +4,79 @@ on:
     push:
         branches: [main]
 
+# Prevent concurrent deployments
+concurrency:
+    group: deploy-${{ github.ref }}
+    cancel-in-progress: true
+
 jobs:
     deploy:
         runs-on: ubuntu-latest
 
         steps:
-            - uses: actions/checkout@v3
+            - name: Checkout code
+              uses: actions/checkout@v4
               with:
-                  fetch-depth: 0
+                  fetch-depth: 1 # Shallow clone - only need latest commit
 
-            - uses: actions/setup-node@v3
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
               with:
                   node-version: 18
+                  cache: 'npm' # Built-in npm caching
 
-            - uses: actions/cache@v3
+            - name: Install dependencies
+              run: npm ci --prefer-offline --no-audit --no-fund
+
+            - name: Cache Next.js build
+              uses: actions/cache@v4
               with:
                   path: |
-                      ~/.npm
                       .next/cache
                   key:
-                      ${{ runner.os }}-cache-${{
-                      hashFiles('**/package-lock.json') }}
+                      ${{ runner.os }}-nextjs-${{
+                      hashFiles('**/package-lock.json') }}-${{
+                      hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
                   restore-keys: |
-                      ${{ runner.os }}-cache-
+                      ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
 
-            - name: Install deps
-              run: npm ci
-
-            - name: Build standalone
+            - name: Build application
               run: npm run build
 
-            - name: Verify standalone output
-              run: |
-                  echo "Checking standalone directory..."
-                  ls -la .next/standalone/ || echo "Standalone folder not found!"
-
-            - name: Package standalone
+            - name: Prepare deployment
               run: |
                   mkdir -p deploy
                   cp -r .next/standalone/. deploy/
-                  echo "Deploy folder contents:"
-                  ls -la deploy/
+                  echo "✅ Deployment package ready ($(du -sh deploy | cut -f1))"
 
-            - name: Deploy to deployments branch
+            - name: Deploy to branch
               run: |
-                  git config user.name "github-actions"
-                  git config user.email "github-actions@github.com"
+                  git config --global user.name "github-actions[bot]"
+                  git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-                  git checkout --orphan deployments || git checkout deployments
-                  git rm -rf . || true
+                  # Fetch only the deployments branch if it exists
+                  git fetch origin deployments:deployments 2>/dev/null || git checkout --orphan deployments
 
-                  cp -r deploy/. .
+                  # Switch to deployments branch
+                  git checkout deployments 2>/dev/null || true
 
+                  # Remove all files except .git and deploy folder
+                  find . -mindepth 1 -maxdepth 1 ! -name '.git' ! -name 'deploy' -exec rm -rf {} +
+
+                  # Move deployment files to root
+                  mv deploy/* deploy/.[!.]* . 2>/dev/null || mv deploy/* .
+                  rmdir deploy
+
+                  # Commit and push
                   git add -A
-                  git commit -m "Deploy $(date +'%Y-%m-%d %H:%M:%S')" || echo "No changes"
-                  git push origin deployments --force
+
+                  if git diff --staged --quiet; then
+                      echo "ℹ️  No changes to deploy"
+                      exit 0
+                  fi
+
+                  COMMIT_MSG="Deploy: $(date +'%Y-%m-%d %H:%M:%S') [$(echo ${{ github.sha }} | cut -c1-7)]"
+                  git commit -m "$COMMIT_MSG"
+                  git push origin deployments --force-with-lease
+
+                  echo "✅ Deployed successfully!"
