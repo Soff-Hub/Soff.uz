@@ -80,7 +80,7 @@ export default function SearchResultsProducts_Card({ product }) {
                 <div className="Search_Results_Products_card">
                     <div
                         className="Search_Results_Products_card_body"
-                        style={{ cursor: 'pointer' }}>
+                        style={{ cursor: 'pointer', flex: '1' }}>
                         <Breadcrumb
                             className="Breadcrumb"
                             items={[
@@ -109,16 +109,14 @@ export default function SearchResultsProducts_Card({ product }) {
                         </p>
 
                         <div className="Search_Results_Products_card_info">
-                            <div>
-                                <p className="Search_Results_Products_card_price">
-                                    <i className="fas fa-money-bill price_icon"></i>
-                                    <span className="Search_Results_Products_card_price_boldspan">
-                                        {addPeriodToThousands(
-                                            product.discount_price
-                                        )}
-                                    </span>
-                                </p>
-                            </div>
+                            <p className="Search_Results_Products_card_price">
+                                <i className="fas fa-money-bill price_icon"></i>
+                                <span className="Search_Results_Products_card_price_boldspan">
+                                    {addPeriodToThousands(
+                                        product.discount_price
+                                    )}
+                                </span>
+                            </p>
                             <div className="search_main_info">
                                 <p className="Search_Results_Products_card_type">
                                     <span
@@ -152,23 +150,11 @@ export default function SearchResultsProducts_Card({ product }) {
                     </div>
 
                     {/* Image with preview */}
-                    <div
-                        className="Search_Results_Products_card_img_container preview-container"
-                        style={{ position: 'relative' }}>
+                    <div className="Search_Results_Products_card_img">
                         <img
                             ref={imgRef}
                             src={product.poster}
                             alt={product.title}
-                            className="Search_Results_Products_card_img"
-                            style={{
-                                width: '100px',
-                                height: '100px',
-                                display: 'block',
-                                cursor: 'pointer',
-                                objectFit: 'cover',
-                                borderRadius: '8px',
-                                border: '1px solid #e0e0e0',
-                            }}
                             onMouseEnter={() => setIsHovering(true)}
                             onMouseLeave={() => setIsHovering(false)}
                         />

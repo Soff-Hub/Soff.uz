@@ -39,30 +39,33 @@ export default function Search_Results_Products({
     // NOTE: Requests Enable property
     const isRequestsEnabled = router.isReady && tab === currentTab;
     const isChildCategoryEnabled = isRequestsEnabled && !!router.query.category;
-    const similarDocumentsEnabled = data?.count < 50 && Number(page) === 1;
+    const similarDocumentsEnabled = false;
+    // data?.count < 50 && Number(page) === 1;
     const keysChangeOnSimilarDocuments = `${page}-${keyword}-${type}-${category}-${order_by}-${file_type}-${page_from}-${page_to}`;
 
-    const {
-        data: similarDocuments,
-        isFetching: isFetchingSimilarDocuments,
-    } = useQuery({
-        queryKey: ['similar-documents', keysChangeOnSimilarDocuments],
-        queryFn: async () => {
-            const res = await fetch(
-                `${baseUrlUseApi}customer/same-google-search/?limit=50${
-                    page ? `&page=${page}` : ''
-                }${keyword ? `&search=${keyword}` : ''}${
-                    type ? `&type=${type}` : ''
-                }${category ? `&category=${category}` : ''}${
-                    order_by ? `&order_by=${order_by}` : ''
-                }${file_type ? `&file_type=${file_type}` : ''}${
-                    page_from ? `&page_from=${page_from}` : ''
-                }${page_to ? `&page_to=${page_to}` : ''}&similar_documents=true`
-            );
-            return await res.json();
-        },
-        enabled: similarDocumentsEnabled,
-    });
+    const { data: similarDocuments, isFetching: isFetchingSimilarDocuments } =
+        useQuery({
+            queryKey: ['similar-documents', keysChangeOnSimilarDocuments],
+            queryFn: async () => {
+                const res = await fetch(
+                    `${baseUrlUseApi}customer/same-google-search/?limit=50${
+                        page ? `&page=${page}` : ''
+                    }${keyword ? `&search=${keyword}` : ''}${
+                        type ? `&type=${type}` : ''
+                    }${category ? `&category=${category}` : ''}${
+                        order_by ? `&order_by=${order_by}` : ''
+                    }${file_type ? `&file_type=${file_type}` : ''}${
+                        page_from ? `&page_from=${page_from}` : ''
+                    }${
+                        page_to ? `&page_to=${page_to}` : ''
+                    }&similar_documents=true`
+                );
+                return await res.json();
+            },
+            enabled: similarDocumentsEnabled,
+        });
+
+    console.log({ similarDocuments });
 
     const mergedData = useMemo(() => {
         return [
@@ -143,7 +146,7 @@ export default function Search_Results_Products({
                     current={router.query.page || 1}
                     pageSize={50}
                     total={total}
-                    onChange={newPage => {
+                    onChange={(newPage) => {
                         router.push({
                             pathname: router.pathname,
                             query: {

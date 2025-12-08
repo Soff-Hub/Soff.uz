@@ -41,6 +41,7 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
     const [fileTypes, setFileTypes] = useState([]);
     const [priceRange, setPriceRange] = useState([0, 500000]);
     const [pageRange, setPageRange] = useState([0, 100]);
+    const { search: querySearch } = query;
 
     const debouncedSearch = useDebounce(search, 500);
     // Prevent body scroll when drawer is open
@@ -92,7 +93,7 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
 
     useEffect(() => {
         if (debouncedSearch === undefined) return;
-
+        delete query.similar_documents;
         push({
             pathname: `${path}all`,
             query: { ...query, search: debouncedSearch },
@@ -130,7 +131,7 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
                 )}
                 <div className={`${styles.searchBox} container`}>
                     <Input
-                        value={search}
+                        defaultValue={querySearch || ''}
                         allowClear
                         variant="borderless"
                         onChange={(e) => setSearch(e.target.value)}

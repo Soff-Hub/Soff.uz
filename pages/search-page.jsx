@@ -23,6 +23,7 @@ const Search_Results = ({
     servicesInitialData,
     sellersInitialData,
 }) => {
+    console.log({ productsInitialData });
     const inputEl = useRef(null);
     const router = useRouter();
     const [searchTerm, setSearchTerm] = useState(keyword || '');
