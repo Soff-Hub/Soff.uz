@@ -51,23 +51,36 @@ jobs:
 
             - name: Deploy to branch
               run: |
+                  set -e  # Exit on any error
+
                   git config --global user.name "github-actions[bot]"
                   git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-                  # Fetch only the deployments branch if it exists
-                  git fetch origin deployments:deployments 2>/dev/null || git checkout --orphan deployments
-
-                  # Switch to deployments branch
-                  git checkout deployments 2>/dev/null || true
+                  # Check if deployments branch exists on remote
+                  echo "🔍 Checking for existing deployments branch..."
+                  if git ls-remote --heads origin deployments | grep deployments; then
+                      echo "   Found existing branch, fetching..."
+                      git fetch origin deployments
+                      git checkout deployments
+                  else
+                      echo "   Creating new deployments branch..."
+                      git checkout --orphan deployments
+                  fi
 
                   # Remove all files except .git and deploy folder
-                  find . -mindepth 1 -maxdepth 1 ! -name '.git' ! -name 'deploy' -exec rm -rf {} +
+                  echo "🗑️  Cleaning deployment branch..."
+                  find . -mindepth 1 -maxdepth 1 ! -name '.git' ! -name 'deploy' -exec rm -rf {} + 2>/dev/null || true
 
                   # Move deployment files to root
+                  echo "📦 Copying deployment files..."
                   mv deploy/* deploy/.[!.]* . 2>/dev/null || mv deploy/* .
                   rmdir deploy
 
-                  # Commit and push
+                  # Show what we're deploying
+                  echo "📊 Deployment contents:"
+                  ls -lah | head -20
+
+                  # Commit
                   git add -A
 
                   if git diff --staged --quiet; then
@@ -76,7 +89,19 @@ jobs:
                   fi
 
                   COMMIT_MSG="Deploy: $(date +'%Y-%m-%d %H:%M:%S') [$(echo ${{ github.sha }} | cut -c1-7)]"
-                  git commit -m "$COMMIT_MSG"
-                  git push origin deployments --force-with-lease
 
-                  echo "✅ Deployed successfully!"
+                  echo "💾 Committing changes..."
+                  git commit -m "$COMMIT_MSG" --quiet
+
+                  FILE_COUNT=$(git diff-tree --no-commit-id --numstat -r HEAD | wc -l)
+                  echo "   📝 $FILE_COUNT files changed"
+
+                  # Push with verbose output to see what's happening
+                  echo "🚀 Pushing to origin/deployments..."
+                  git push origin deployments --force || {
+                      echo "❌ Push failed! Trying with --set-upstream..."
+                      git push --set-upstream origin deployments --force
+                  }
+
+                  echo "✅ Deployment completed successfully!"
+                  echo "🌐 Check branch at: https://github.com/${{ github.repository }}/tree/deployments"
