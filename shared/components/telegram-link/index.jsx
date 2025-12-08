@@ -1,10 +1,6 @@
 import Link from 'next/link';
 import { FloatButton } from 'antd';
-import {
-    CustomerServiceOutlined,
-    QuestionCircleOutlined,
-    CloseOutlined,
-} from '@ant-design/icons';
+import { QuestionCircleOutlined, CloseOutlined } from '@ant-design/icons';
 import styles from './style.module.scss';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { useRouter } from 'next/router';
