@@ -37,6 +37,7 @@ const nextSettings = {
             'freelance.ilmiyish.uz',
             'placehold.co',
             'freelance-media.s3.amazonaws.com',
+            'img.youtube.com',
         ],
     },
     async headers() {
