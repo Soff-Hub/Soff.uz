@@ -16,9 +16,11 @@
             "name": "soff-scheduler",
             "script": "scripts/scheduler.js",
             "instances": 1,
+            "exec_mode": "fork",
             "watch": false,
+            "autorestart": false,
+            "cron_restart": "0 3 * * *",
             "max_memory_restart": "200M",
-            "restart_delay": 5000,
             "env": {
                 "NODE_ENV": "production"
             }
