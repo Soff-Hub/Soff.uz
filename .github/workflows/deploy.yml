@@ -1,4 +1,4 @@
-name: Build and Deploy
+name: Deploy Standalone Next.js
 
 on:
     push:
@@ -10,7 +10,7 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-            - name: Checkout main branch
+            - name: Checkout code
               uses: actions/checkout@v3
               with:
                   fetch-depth: 0
@@ -21,29 +21,33 @@ jobs:
                   node-version: 18
 
             - name: Install dependencies
-              run: npm install
+              run: npm ci
 
-            - name: Build project
+            - name: Build Next.js standalone
               run: npm run build
 
-            # IMPORTANT: change "dist" to whatever your standalone folder is called
-            - name: Copy build folder
+            # Debug to confirm standalone folder exists
+            - name: Debug standalone folder
+              run: ls -R .next/standalone
+
+            # Prepare deployment folder
+            - name: Copy standalone build
               run: |
                   rm -rf deployment-folder
                   mkdir deployment-folder
+
                   cp -r .next/standalone/* deployment-folder/
 
-            - name: Switch to deployments branch
+            - name: Deploy to deployments branch
               run: |
                   git config user.name "github-actions"
                   git config user.email "github-actions@github.com"
 
                   git checkout deployments || git checkout -b deployments
-                  rm -rf ./*
-                  cp -r deployment-folder/* .
 
-            - name: Commit and push changes
-              run: |
+                  rm -rf ./*
+                  cp -r ../deployment-folder/* .
+
                   git add .
-                  git commit -m "Deploy from main branch" || echo "No changes to commit"
+                  git commit -m "Deploy standalone build" || echo "Nothing to commit"
                   git push origin deployments --force
