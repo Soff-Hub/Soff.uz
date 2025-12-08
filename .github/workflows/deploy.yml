@@ -34,19 +34,28 @@ jobs:
             - name: Build standalone
               run: npm run build
 
+            - name: Verify standalone output
+              run: |
+                  echo "Checking standalone directory..."
+                  ls -la .next/standalone/ || echo "Standalone folder not found!"
+
             - name: Package standalone
               run: |
-                  mkdir deploy
-                  cp -r .next/standalone/* deploy/
+                  mkdir -p deploy
+                  cp -r .next/standalone/. deploy/
+                  echo "Deploy folder contents:"
+                  ls -la deploy/
 
             - name: Deploy to deployments branch
               run: |
                   git config user.name "github-actions"
                   git config user.email "github-actions@github.com"
 
-                  git checkout deployments || git checkout -b deployments
-                  rm -rf ./*
-                  cp -r $GITHUB_WORKSPACE/deploy/* .
-                  git add .
-                  git commit -m "Deploy" || echo "No changes"
-                  git push origin deployments --force --depth=1
+                  git checkout --orphan deployments || git checkout deployments
+                  git rm -rf . || true
+
+                  cp -r deploy/. .
+
+                  git add -A
+                  git commit -m "Deploy $(date +'%Y-%m-%d %H:%M:%S')" || echo "No changes"
+                  git push origin deployments --force
