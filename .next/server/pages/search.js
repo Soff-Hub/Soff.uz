@@ -1,3 +1,4 @@
+;{try{(function(){var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof globalThis?globalThis:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="89dc4f4c-5858-4a03-b52c-ccec365c5986",e._sentryDebugIdIdentifier="sentry-dbid-89dc4f4c-5858-4a03-b52c-ccec365c5986");})();}catch(e){}};
 "use strict";
 (() => {
 var exports = {};
@@ -5,19 +6,23 @@ exports.id = 9603;
 exports.ids = [9603];
 exports.modules = {
 
-/***/ 1025:
+/***/ 7900:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
-/* harmony export */   "getServerSideProps": () => (/* binding */ getServerSideProps)
+/* harmony export */   "default": () => (/* binding */ pageWrapperTemplate),
+/* harmony export */   "getServerSideProps": () => (/* binding */ getServerSideProps),
+/* harmony export */   "getStaticProps": () => (/* binding */ getStaticProps)
 /* harmony export */ });
+/* harmony import */ var _sentry_nextjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8097);
+/* harmony import */ var _sentry_nextjs__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_sentry_nextjs__WEBPACK_IMPORTED_MODULE_0__);
+
+
 const SearchPage = ()=>{
     return null;
 };
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SearchPage);
-async function getServerSideProps(ctx) {
+async function getServerSideProps$1(ctx) {
     return {
         redirect: {
             destination: `/search-page${ctx.resolvedUrl.includes("?") ? ctx.resolvedUrl.substring(ctx.resolvedUrl.indexOf("?")) : ""}`,
@@ -26,6 +31,67 @@ async function getServerSideProps(ctx) {
     };
 }
 
+var serverComponentModule = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    default: SearchPage,
+    getServerSideProps: getServerSideProps$1
+});
+
+/*
+ * This file is a template for the code which will be substituted when our webpack loader handles non-API files in the
+ * `pages/` directory.
+ *
+ * We use `__SENTRY_WRAPPING_TARGET_FILE__.cjs` as a placeholder for the path to the file being wrapped. Because it's not a real package,
+ * this causes both TS and ESLint to complain, hence the pragma comments below.
+ */
+
+
+const userPageModule = serverComponentModule ;
+
+const pageComponent = userPageModule ? userPageModule.default : undefined;
+
+const origGetInitialProps = pageComponent ? pageComponent.getInitialProps : undefined;
+const origGetStaticProps = userPageModule ? userPageModule.getStaticProps : undefined;
+const origGetServerSideProps = userPageModule ? userPageModule.getServerSideProps : undefined;
+
+// Rollup will aggressively tree-shake what it perceives to be unused properties
+// on objects. Because the key that's used to index into this object (/search)
+// is replaced during bundling, Rollup can't see that these properties are in fact
+// used. Using `Object.freeze` signals to Rollup that it should not tree-shake
+// this object.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const getInitialPropsWrappers = Object.freeze({
+  '/_app': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_0__.wrapAppGetInitialPropsWithSentry,
+  '/_document': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_0__.wrapDocumentGetInitialPropsWithSentry,
+  '/_error': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_0__.wrapErrorGetInitialPropsWithSentry,
+});
+
+const getInitialPropsWrapper = getInitialPropsWrappers['/search'] || _sentry_nextjs__WEBPACK_IMPORTED_MODULE_0__.wrapGetInitialPropsWithSentry;
+
+if (pageComponent && typeof origGetInitialProps === 'function') {
+  pageComponent.getInitialProps = getInitialPropsWrapper(origGetInitialProps) ;
+}
+
+const getStaticProps =
+  typeof origGetStaticProps === 'function'
+    ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_0__.wrapGetStaticPropsWithSentry(origGetStaticProps, '/search')
+    : undefined;
+const getServerSideProps =
+  typeof origGetServerSideProps === 'function'
+    ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_0__.wrapGetServerSidePropsWithSentry(origGetServerSideProps, '/search')
+    : undefined;
+
+const pageWrapperTemplate = pageComponent ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_0__.wrapPageComponentWithSentry(pageComponent ) : pageComponent;
+
+
+
+
+/***/ }),
+
+/***/ 8097:
+/***/ ((module) => {
+
+module.exports = require("@sentry/nextjs");
 
 /***/ })
 
@@ -36,7 +102,8 @@ async function getServerSideProps(ctx) {
 var __webpack_require__ = require("../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = (__webpack_exec__(1025));
+var __webpack_exports__ = (__webpack_exec__(7900));
 module.exports = __webpack_exports__;
 
 })();
+//# sourceMappingURL=search.js.map

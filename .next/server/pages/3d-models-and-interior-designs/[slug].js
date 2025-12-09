@@ -1,3 +1,4 @@
+;{try{(function(){var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof globalThis?globalThis:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="e143ab48-0b3d-413a-a18d-dd5f92ebeb0b",e._sentryDebugIdIdentifier="sentry-dbid-e143ab48-0b3d-413a-a18d-dd5f92ebeb0b");})();}catch(e){}};
 "use strict";
 (() => {
 var exports = {};
@@ -5,14 +6,15 @@ exports.id = 3202;
 exports.ids = [3202];
 exports.modules = {
 
-/***/ 8516:
+/***/ 7413:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ ModelsAndInteriorDesign),
-/* harmony export */   "getServerSideProps": () => (/* binding */ getServerSideProps)
+/* harmony export */   "default": () => (/* binding */ pageWrapperTemplate),
+/* harmony export */   "getServerSideProps": () => (/* binding */ getServerSideProps),
+/* harmony export */   "getStaticProps": () => (/* binding */ getStaticProps)
 /* harmony export */ });
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(997);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
@@ -20,13 +22,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6689);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7109);
-/* harmony import */ var _components_shared_headers_Meta__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(4796);
-/* harmony import */ var _repositories_useApi__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(4013);
-/* harmony import */ var _components_elements_product_filter_section_ProductFilterSection__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(1455);
-/* harmony import */ var _components_partials_category_ProductsByCategory__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(1131);
+/* harmony import */ var _widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8454);
+/* harmony import */ var _components_shared_headers_Meta__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1218);
+/* harmony import */ var _repositories_useApi__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(9410);
+/* harmony import */ var _components_elements_product_filter_section_ProductFilterSection__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(131);
+/* harmony import */ var _components_partials_category_ProductsByCategory__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(6184);
+/* harmony import */ var _sentry_nextjs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(8097);
+/* harmony import */ var _sentry_nextjs__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_sentry_nextjs__WEBPACK_IMPORTED_MODULE_8__);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_3__, _repositories_useApi__WEBPACK_IMPORTED_MODULE_5__, _components_elements_product_filter_section_ProductFilterSection__WEBPACK_IMPORTED_MODULE_6__, _components_partials_category_ProductsByCategory__WEBPACK_IMPORTED_MODULE_7__]);
 ([_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_3__, _repositories_useApi__WEBPACK_IMPORTED_MODULE_5__, _components_elements_product_filter_section_ProductFilterSection__WEBPACK_IMPORTED_MODULE_6__, _components_partials_category_ProductsByCategory__WEBPACK_IMPORTED_MODULE_7__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+
+
 
 
 
@@ -51,18 +57,18 @@ function ModelsAndInteriorDesign({ productsData , fourChildData , childCategoryD
     };
     return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .Z, {
         children: [
-            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_shared_headers_Meta__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z, {
+            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_shared_headers_Meta__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z, {
                 title: fullTitle,
                 description: `3D moddellar va Interier dizaynlar kategoriyasi: Taqdimotlar Tayyor shablonlar Kurs ishlari Diplom ishlari Referatlar Mustaqil ishlar Labaratoriya Ishlari Dissertatsiya ishlari Testlar O'quv qo'llanmalar Dars ishlanmalar Tarqatma materiallar Amaliy ishlar Blankalar Ijodiy Ishlar Loyihalar Plakatlar Maqola Ixtiro patenti Namunaviy hujjatlar Statistika Elektron kitoblar Dasturlash tillari `
             }),
-            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_elements_product_filter_section_ProductFilterSection__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .Z, {
+            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_elements_product_filter_section_ProductFilterSection__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .Z, {
                 child: childCategoryData.results,
                 parent: fourChildData.results,
                 path: "/3d-models-and-interior-designs/"
             }),
-            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
                 className: "ps-page--shop container p-xl-0 p-l-0",
-                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_partials_category_ProductsByCategory__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Z, {
+                children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_partials_category_ProductsByCategory__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Z, {
                     data: productsData,
                     page: page,
                     handlePagination: (number)=>{
@@ -74,7 +80,7 @@ function ModelsAndInteriorDesign({ productsData , fourChildData , childCategoryD
         ]
     });
 }
-async function getServerSideProps(context) {
+async function getServerSideProps$1(context) {
     const { slug , page =1 , parentCategory ="" , childCategory ="" , search ="" ,  } = context.query;
     const fetchJson = async (url)=>{
         const res = await fetch(url);
@@ -104,6 +110,60 @@ async function getServerSideProps(context) {
     };
 }
 
+var serverComponentModule = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    default: ModelsAndInteriorDesign,
+    getServerSideProps: getServerSideProps$1
+});
+
+/*
+ * This file is a template for the code which will be substituted when our webpack loader handles non-API files in the
+ * `pages/` directory.
+ *
+ * We use `__SENTRY_WRAPPING_TARGET_FILE__.cjs` as a placeholder for the path to the file being wrapped. Because it's not a real package,
+ * this causes both TS and ESLint to complain, hence the pragma comments below.
+ */
+
+
+const userPageModule = serverComponentModule ;
+
+const pageComponent = userPageModule ? userPageModule.default : undefined;
+
+const origGetInitialProps = pageComponent ? pageComponent.getInitialProps : undefined;
+const origGetStaticProps = userPageModule ? userPageModule.getStaticProps : undefined;
+const origGetServerSideProps = userPageModule ? userPageModule.getServerSideProps : undefined;
+
+// Rollup will aggressively tree-shake what it perceives to be unused properties
+// on objects. Because the key that's used to index into this object (/3d-models-and-interior-designs/[slug])
+// is replaced during bundling, Rollup can't see that these properties are in fact
+// used. Using `Object.freeze` signals to Rollup that it should not tree-shake
+// this object.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const getInitialPropsWrappers = Object.freeze({
+  '/_app': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_8__.wrapAppGetInitialPropsWithSentry,
+  '/_document': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_8__.wrapDocumentGetInitialPropsWithSentry,
+  '/_error': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_8__.wrapErrorGetInitialPropsWithSentry,
+});
+
+const getInitialPropsWrapper = getInitialPropsWrappers['/3d-models-and-interior-designs/[slug]'] || _sentry_nextjs__WEBPACK_IMPORTED_MODULE_8__.wrapGetInitialPropsWithSentry;
+
+if (pageComponent && typeof origGetInitialProps === 'function') {
+  pageComponent.getInitialProps = getInitialPropsWrapper(origGetInitialProps) ;
+}
+
+const getStaticProps =
+  typeof origGetStaticProps === 'function'
+    ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_8__.wrapGetStaticPropsWithSentry(origGetStaticProps, '/3d-models-and-interior-designs/[slug]')
+    : undefined;
+const getServerSideProps =
+  typeof origGetServerSideProps === 'function'
+    ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_8__.wrapGetServerSidePropsWithSentry(origGetServerSideProps, '/3d-models-and-interior-designs/[slug]')
+    : undefined;
+
+const pageWrapperTemplate = pageComponent ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_8__.wrapPageComponentWithSentry(pageComponent ) : pageComponent;
+
+
+
 __webpack_async_result__();
 } catch(e) { __webpack_async_result__(e); } });
 
@@ -120,6 +180,13 @@ module.exports = require("@ant-design/icons");
 /***/ ((module) => {
 
 module.exports = require("@react-oauth/google");
+
+/***/ }),
+
+/***/ 8097:
+/***/ ((module) => {
+
+module.exports = require("@sentry/nextjs");
 
 /***/ }),
 
@@ -417,7 +484,8 @@ module.exports = import("react-icons/lu");;
 var __webpack_require__ = require("../../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [676,1664,5675,5152,4846,4246,7697,4796,5913,740,3328,1602,5177,6156,4013,1131,2930,1455], () => (__webpack_exec__(8516)));
+var __webpack_exports__ = __webpack_require__.X(0, [676,1664,5675,5152,6017,8550,4747,1218,7567,9075,280,75,5419,6316,9410,6184,910,131], () => (__webpack_exec__(7413)));
 module.exports = __webpack_exports__;
 
 })();
+//# sourceMappingURL=[slug].js.map

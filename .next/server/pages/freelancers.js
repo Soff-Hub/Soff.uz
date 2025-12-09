@@ -1,10 +1,200 @@
+;{try{(function(){var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof globalThis?globalThis:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="6979a572-bb59-4291-a37b-21eb1497fc9b",e._sentryDebugIdIdentifier="sentry-dbid-6979a572-bb59-4291-a37b-21eb1497fc9b");})();}catch(e){}};
 (() => {
 var exports = {};
 exports.id = 2990;
 exports.ids = [2990];
 exports.modules = {
 
-/***/ 4252:
+/***/ 7701:
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ pageWrapperTemplate),
+/* harmony export */   "getServerSideProps": () => (/* binding */ getServerSideProps),
+/* harmony export */   "getStaticProps": () => (/* binding */ getStaticProps)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(997);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6689);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _components_freelancers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4162);
+/* harmony import */ var _components_shared_headers_Meta__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1218);
+/* harmony import */ var _shared_api_fetch_json__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(5954);
+/* harmony import */ var _widgets_layouts_PageLayout__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(4747);
+/* harmony import */ var _sentry_nextjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(8097);
+/* harmony import */ var _sentry_nextjs__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_sentry_nextjs__WEBPACK_IMPORTED_MODULE_5__);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_components_freelancers__WEBPACK_IMPORTED_MODULE_2__, _widgets_layouts_PageLayout__WEBPACK_IMPORTED_MODULE_4__]);
+([_components_freelancers__WEBPACK_IMPORTED_MODULE_2__, _widgets_layouts_PageLayout__WEBPACK_IMPORTED_MODULE_4__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+
+
+
+
+
+
+
+
+const baseKeywords = [
+    "frilanserslar",
+    "frilanser xizmatlari",
+    "onlayn ishchilar",
+    "mustaqil ishchilar",
+    "Soff.uz", 
+];
+const generateMetaTags = (query)=>{
+    const { directionValue ="" , position ="" , keyword =""  } = query;
+    const parts = [
+        directionValue,
+        position,
+        keyword
+    ].filter(Boolean).flat(Infinity);
+    const titlePrefix = parts.length ? parts.join(" - ") : "Eng yaxshi frilanserlar va mutaxassislar";
+    const title = `${titlePrefix} | Soff.uz`;
+    const description = `Soff.uz platformasidagi eng yaxshi frilanserlar va mutaxassislarni kashf eting, loyihangiz uchun mukammal mutaxassislarni toping. ${directionValue ? `${directionValue} sohasidagi eng tajribali frilanserlarni Soff.uz platformasida toping va ularning xizmatlaridan foydalaning.` : ""} ${position ? `${position} bo'yicha malakali frilanserlarni ishga oling.` : ""} ${keyword ? `Qidiruvingiz: "${keyword}" bo'yicha natijalar.` : ""}`;
+    const dynamicKeywords = parts.flatMap((part)=>[
+            `${part} frilanserlar`,
+            `${part} frilanser`,
+            `${part} mutaxassisi`,
+            `${part} xizmatlari`,
+            `${part} ish`,
+            `${part} topish`,
+            `frilanser ${part}`, 
+        ]);
+    const keywords = [
+        ...dynamicKeywords,
+        ...baseKeywords
+    ];
+    return {
+        title,
+        description,
+        author: "Soff.uz",
+        image: "https://soff.uz/static/img/soff/logo-dark.png",
+        type: "website",
+        url: "https://soff.uz/freelancers",
+        canonicalUrl: `https://soff.uz/freelancers${directionValue ? `/${directionValue}` : ""}${position ? `/${position}` : ""}${keyword ? `?keyword=${keyword}` : ""}`,
+        keywords: keywords.map((name)=>({
+                name
+            }))
+    };
+};
+function FreelancersPage({ data , metaTags  }) {
+    return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_widgets_layouts_PageLayout__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z, {
+        children: [
+            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_shared_headers_Meta__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .Z, {
+                ...metaTags
+            }),
+            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_freelancers__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .Z, {
+                data: data
+            })
+        ]
+    });
+}
+async function getServerSideProps$1(context) {
+    const { query  } = context;
+    const { keyword ="" , position ="" , direction ="" , sort_by ="average_rating" , limit =20 , offset =0 , order ="" ,  } = query;
+    const params = new URLSearchParams();
+    const metaTags = generateMetaTags(query);
+    if (keyword) params.append("search", keyword);
+    if (Array.isArray(position)) {
+        position.forEach((p)=>params.append("position", p));
+    } else if (position) {
+        params.append("position", position);
+    }
+    if (Array.isArray(direction)) {
+        direction.forEach((d)=>params.append("direction", d));
+    } else if (direction) {
+        params.append("direction", direction);
+    }
+    if (sort_by && (sort_by !== "average_rating" || order === "asc")) params.append("sort_by", sort_by);
+    params.append("limit", limit);
+    if (offset) {
+        params.append("offset", offset);
+    } else {
+        params.append("offset", 0);
+    }
+    if (order) params.append("order", order);
+    const url = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/users/freelancers/list/?${params.toString()}`;
+    try {
+        const data = await (0,_shared_api_fetch_json__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .Z)(url);
+        return {
+            props: {
+                data,
+                metaTags
+            }
+        };
+    } catch (error) {
+        console.error("❌ SSR fetch error:", error);
+        return {
+            props: {
+                data: [],
+                metaTags
+            }
+        };
+    }
+}
+
+var serverComponentModule = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    default: FreelancersPage,
+    getServerSideProps: getServerSideProps$1
+});
+
+/*
+ * This file is a template for the code which will be substituted when our webpack loader handles non-API files in the
+ * `pages/` directory.
+ *
+ * We use `__SENTRY_WRAPPING_TARGET_FILE__.cjs` as a placeholder for the path to the file being wrapped. Because it's not a real package,
+ * this causes both TS and ESLint to complain, hence the pragma comments below.
+ */
+
+
+const userPageModule = serverComponentModule ;
+
+const pageComponent = userPageModule ? userPageModule.default : undefined;
+
+const origGetInitialProps = pageComponent ? pageComponent.getInitialProps : undefined;
+const origGetStaticProps = userPageModule ? userPageModule.getStaticProps : undefined;
+const origGetServerSideProps = userPageModule ? userPageModule.getServerSideProps : undefined;
+
+// Rollup will aggressively tree-shake what it perceives to be unused properties
+// on objects. Because the key that's used to index into this object (/freelancers)
+// is replaced during bundling, Rollup can't see that these properties are in fact
+// used. Using `Object.freeze` signals to Rollup that it should not tree-shake
+// this object.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const getInitialPropsWrappers = Object.freeze({
+  '/_app': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_5__.wrapAppGetInitialPropsWithSentry,
+  '/_document': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_5__.wrapDocumentGetInitialPropsWithSentry,
+  '/_error': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_5__.wrapErrorGetInitialPropsWithSentry,
+});
+
+const getInitialPropsWrapper = getInitialPropsWrappers['/freelancers'] || _sentry_nextjs__WEBPACK_IMPORTED_MODULE_5__.wrapGetInitialPropsWithSentry;
+
+if (pageComponent && typeof origGetInitialProps === 'function') {
+  pageComponent.getInitialProps = getInitialPropsWrapper(origGetInitialProps) ;
+}
+
+const getStaticProps =
+  typeof origGetStaticProps === 'function'
+    ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_5__.wrapGetStaticPropsWithSentry(origGetStaticProps, '/freelancers')
+    : undefined;
+const getServerSideProps =
+  typeof origGetServerSideProps === 'function'
+    ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_5__.wrapGetServerSidePropsWithSentry(origGetServerSideProps, '/freelancers')
+    : undefined;
+
+const pageWrapperTemplate = pageComponent ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_5__.wrapPageComponentWithSentry(pageComponent ) : pageComponent;
+
+
+
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } });
+
+/***/ }),
+
+/***/ 835:
 /***/ ((module) => {
 
 // Exports
@@ -65,7 +255,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 9567:
+/***/ 605:
 /***/ ((module) => {
 
 // Exports
@@ -83,7 +273,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 3658:
+/***/ 4062:
 /***/ ((module) => {
 
 // Exports
@@ -96,7 +286,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 2562:
+/***/ 4330:
 /***/ ((module) => {
 
 // Exports
@@ -109,7 +299,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 7342:
+/***/ 9634:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -121,15 +311,15 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6689);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _styles_freelancers_module_scss__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(9567);
+/* harmony import */ var _styles_freelancers_module_scss__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(605);
 /* harmony import */ var _styles_freelancers_module_scss__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_styles_freelancers_module_scss__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var next_dynamic__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5152);
 /* harmony import */ var next_dynamic__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(next_dynamic__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _elements_FreelancersFilterHeader__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(927);
-/* harmony import */ var _elements_FreelancersFilterMenu__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(6792);
-/* harmony import */ var _elements_FreelancersFilterDrawer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(5334);
-/* harmony import */ var _elements_FreelancersFilterResult__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(9708);
-/* harmony import */ var _shared_utilities_useResponsive__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(4903);
+/* harmony import */ var _elements_FreelancersFilterHeader__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8798);
+/* harmony import */ var _elements_FreelancersFilterMenu__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(3029);
+/* harmony import */ var _elements_FreelancersFilterDrawer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(8098);
+/* harmony import */ var _elements_FreelancersFilterResult__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(5515);
+/* harmony import */ var _shared_utilities_useResponsive__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(1834);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_elements_FreelancersFilterHeader__WEBPACK_IMPORTED_MODULE_3__, _elements_FreelancersFilterMenu__WEBPACK_IMPORTED_MODULE_4__, _elements_FreelancersFilterDrawer__WEBPACK_IMPORTED_MODULE_5__, _elements_FreelancersFilterResult__WEBPACK_IMPORTED_MODULE_6__]);
 ([_elements_FreelancersFilterHeader__WEBPACK_IMPORTED_MODULE_3__, _elements_FreelancersFilterMenu__WEBPACK_IMPORTED_MODULE_4__, _elements_FreelancersFilterDrawer__WEBPACK_IMPORTED_MODULE_5__, _elements_FreelancersFilterResult__WEBPACK_IMPORTED_MODULE_6__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
@@ -220,7 +410,7 @@ __webpack_async_result__();
 
 /***/ }),
 
-/***/ 1516:
+/***/ 871:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -243,13 +433,13 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var next_image__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(next_image__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(1664);
 /* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(next_link__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _entities_service_service_card__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(9842);
+/* harmony import */ var _entities_service_service_card__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(7460);
 /* harmony import */ var react_icons_ai__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(7425);
-/* harmony import */ var _styles_freelancerHorizontalCard_module_scss__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(4252);
+/* harmony import */ var _styles_freelancerHorizontalCard_module_scss__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(835);
 /* harmony import */ var _styles_freelancerHorizontalCard_module_scss__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_styles_freelancerHorizontalCard_module_scss__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _shared_utilities_useResponsive__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(4903);
+/* harmony import */ var _shared_utilities_useResponsive__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(1834);
 /* harmony import */ var react_icons_fa6__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(7333);
-/* harmony import */ var _shared_hooks_useTimeManager__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(5913);
+/* harmony import */ var _shared_hooks_useTimeManager__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(7567);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([react_icons_fa__WEBPACK_IMPORTED_MODULE_3__, react_icons_io5__WEBPACK_IMPORTED_MODULE_4__, swiper_react__WEBPACK_IMPORTED_MODULE_5__, swiper_modules__WEBPACK_IMPORTED_MODULE_6__, react_icons_io__WEBPACK_IMPORTED_MODULE_7__, _entities_service_service_card__WEBPACK_IMPORTED_MODULE_10__, react_icons_ai__WEBPACK_IMPORTED_MODULE_11__, react_icons_fa6__WEBPACK_IMPORTED_MODULE_13__]);
 ([react_icons_fa__WEBPACK_IMPORTED_MODULE_3__, react_icons_io5__WEBPACK_IMPORTED_MODULE_4__, swiper_react__WEBPACK_IMPORTED_MODULE_5__, swiper_modules__WEBPACK_IMPORTED_MODULE_6__, react_icons_io__WEBPACK_IMPORTED_MODULE_7__, _entities_service_service_card__WEBPACK_IMPORTED_MODULE_10__, react_icons_ai__WEBPACK_IMPORTED_MODULE_11__, react_icons_fa6__WEBPACK_IMPORTED_MODULE_13__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
@@ -685,7 +875,7 @@ __webpack_async_result__();
 
 /***/ }),
 
-/***/ 5334:
+/***/ 8098:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -703,9 +893,9 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var _ant_design_icons__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_ant_design_icons__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var react_icons_ai__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(7425);
 /* harmony import */ var react_icons_bi__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(6157);
-/* harmony import */ var _hooks_useFreelancers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(7949);
-/* harmony import */ var _shared_utilities_useResponsive__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(4903);
-/* harmony import */ var _shared_hooks_useDisableWindowScroll__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(2930);
+/* harmony import */ var _hooks_useFreelancers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(5815);
+/* harmony import */ var _shared_utilities_useResponsive__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(1834);
+/* harmony import */ var _shared_hooks_useDisableWindowScroll__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(910);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([react_icons_ai__WEBPACK_IMPORTED_MODULE_4__, react_icons_bi__WEBPACK_IMPORTED_MODULE_5__, _hooks_useFreelancers__WEBPACK_IMPORTED_MODULE_6__]);
 ([react_icons_ai__WEBPACK_IMPORTED_MODULE_4__, react_icons_bi__WEBPACK_IMPORTED_MODULE_5__, _hooks_useFreelancers__WEBPACK_IMPORTED_MODULE_6__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
@@ -880,7 +1070,7 @@ __webpack_async_result__();
 
 /***/ }),
 
-/***/ 927:
+/***/ 8798:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -895,7 +1085,7 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var react_icons_lu__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(577);
 /* harmony import */ var _ant_design_icons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7066);
 /* harmony import */ var _ant_design_icons__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_ant_design_icons__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _styles_freelancersFilterHeader_module_scss__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(3658);
+/* harmony import */ var _styles_freelancersFilterHeader_module_scss__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(4062);
 /* harmony import */ var _styles_freelancersFilterHeader_module_scss__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_styles_freelancersFilterHeader_module_scss__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(5725);
 /* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(antd__WEBPACK_IMPORTED_MODULE_4__);
@@ -1012,7 +1202,7 @@ __webpack_async_result__();
 
 /***/ }),
 
-/***/ 6792:
+/***/ 3029:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -1029,9 +1219,9 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var react_icons_ai__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7425);
 /* harmony import */ var react_icons_md__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(6905);
 /* harmony import */ var react_icons_bi__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(6157);
-/* harmony import */ var _styles_freelancersFilterMenu_module_scss__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(2562);
+/* harmony import */ var _styles_freelancersFilterMenu_module_scss__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(4330);
 /* harmony import */ var _styles_freelancersFilterMenu_module_scss__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_styles_freelancersFilterMenu_module_scss__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _hooks_useFreelancers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(7949);
+/* harmony import */ var _hooks_useFreelancers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(5815);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([react_icons_ai__WEBPACK_IMPORTED_MODULE_3__, react_icons_md__WEBPACK_IMPORTED_MODULE_4__, react_icons_bi__WEBPACK_IMPORTED_MODULE_5__, _hooks_useFreelancers__WEBPACK_IMPORTED_MODULE_6__]);
 ([react_icons_ai__WEBPACK_IMPORTED_MODULE_3__, react_icons_md__WEBPACK_IMPORTED_MODULE_4__, react_icons_bi__WEBPACK_IMPORTED_MODULE_5__, _hooks_useFreelancers__WEBPACK_IMPORTED_MODULE_6__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
@@ -1115,7 +1305,7 @@ __webpack_async_result__();
 
 /***/ }),
 
-/***/ 9708:
+/***/ 5515:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -1131,16 +1321,16 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(6689);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _entities_seller_search_seller_card__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1272);
-/* harmony import */ var _FreelancerHorizontalCard__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1516);
-/* harmony import */ var _components_AuthModal__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(5265);
+/* harmony import */ var _entities_seller_search_seller_card__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(8269);
+/* harmony import */ var _FreelancerHorizontalCard__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(871);
+/* harmony import */ var _components_AuthModal__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(2789);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(6022);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react_redux__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _components_freeleance_chat_api_useCreateChat__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(7878);
-/* harmony import */ var _styles_freelancers_module_scss__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(9567);
+/* harmony import */ var _components_freeleance_chat_api_useCreateChat__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(1066);
+/* harmony import */ var _styles_freelancers_module_scss__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(605);
 /* harmony import */ var _styles_freelancers_module_scss__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_styles_freelancers_module_scss__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var _shared_hooks_useTimeManager__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(5913);
-/* harmony import */ var _shared_utilities_useResponsive__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(4903);
+/* harmony import */ var _shared_hooks_useTimeManager__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(7567);
+/* harmony import */ var _shared_utilities_useResponsive__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(1834);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_entities_seller_search_seller_card__WEBPACK_IMPORTED_MODULE_4__, _FreelancerHorizontalCard__WEBPACK_IMPORTED_MODULE_5__, _components_AuthModal__WEBPACK_IMPORTED_MODULE_6__, _components_freeleance_chat_api_useCreateChat__WEBPACK_IMPORTED_MODULE_8__]);
 ([_entities_seller_search_seller_card__WEBPACK_IMPORTED_MODULE_4__, _FreelancerHorizontalCard__WEBPACK_IMPORTED_MODULE_5__, _components_AuthModal__WEBPACK_IMPORTED_MODULE_6__, _components_freeleance_chat_api_useCreateChat__WEBPACK_IMPORTED_MODULE_8__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
@@ -1276,7 +1466,7 @@ __webpack_async_result__();
 
 /***/ }),
 
-/***/ 7949:
+/***/ 5815:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -1288,10 +1478,10 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6689);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _store_profile_slice__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(9498);
+/* harmony import */ var _store_profile_slice__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7623);
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1853);
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _shared_hooks_useFApi__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(4333);
+/* harmony import */ var _shared_hooks_useFApi__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(7440);
 /* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(5725);
 /* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(antd__WEBPACK_IMPORTED_MODULE_5__);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_store_profile_slice__WEBPACK_IMPORTED_MODULE_2__, _shared_hooks_useFApi__WEBPACK_IMPORTED_MODULE_4__]);
@@ -1453,7 +1643,7 @@ __webpack_async_result__();
 
 /***/ }),
 
-/***/ 6240:
+/***/ 4162:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -1461,7 +1651,7 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "Z": () => (/* reexport safe */ _Freelancers__WEBPACK_IMPORTED_MODULE_0__.Z)
 /* harmony export */ });
-/* harmony import */ var _Freelancers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7342);
+/* harmony import */ var _Freelancers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9634);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_Freelancers__WEBPACK_IMPORTED_MODULE_0__]);
 _Freelancers__WEBPACK_IMPORTED_MODULE_0__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
 
@@ -1472,138 +1662,7 @@ __webpack_async_result__();
 
 /***/ }),
 
-/***/ 6122:
-/***/ ((module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
-/* harmony export */   "getServerSideProps": () => (/* binding */ getServerSideProps)
-/* harmony export */ });
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(997);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6689);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _components_freelancers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6240);
-/* harmony import */ var _components_shared_headers_Meta__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(4796);
-/* harmony import */ var _shared_api_fetch_json__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(3222);
-/* harmony import */ var _widgets_layouts_PageLayout__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(7697);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_components_freelancers__WEBPACK_IMPORTED_MODULE_2__, _widgets_layouts_PageLayout__WEBPACK_IMPORTED_MODULE_4__]);
-([_components_freelancers__WEBPACK_IMPORTED_MODULE_2__, _widgets_layouts_PageLayout__WEBPACK_IMPORTED_MODULE_4__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
-
-
-
-
-
-
-const baseKeywords = [
-    "frilanserslar",
-    "frilanser xizmatlari",
-    "onlayn ishchilar",
-    "mustaqil ishchilar",
-    "Soff.uz", 
-];
-const generateMetaTags = (query)=>{
-    const { directionValue ="" , position ="" , keyword =""  } = query;
-    const parts = [
-        directionValue,
-        position,
-        keyword
-    ].filter(Boolean).flat(Infinity);
-    const titlePrefix = parts.length ? parts.join(" - ") : "Eng yaxshi frilanserlar va mutaxassislar";
-    const title = `${titlePrefix} | Soff.uz`;
-    const description = `Soff.uz platformasidagi eng yaxshi frilanserlar va mutaxassislarni kashf eting, loyihangiz uchun mukammal mutaxassislarni toping. ${directionValue ? `${directionValue} sohasidagi eng tajribali frilanserlarni Soff.uz platformasida toping va ularning xizmatlaridan foydalaning.` : ""} ${position ? `${position} bo'yicha malakali frilanserlarni ishga oling.` : ""} ${keyword ? `Qidiruvingiz: "${keyword}" bo'yicha natijalar.` : ""}`;
-    const dynamicKeywords = parts.flatMap((part)=>[
-            `${part} frilanserlar`,
-            `${part} frilanser`,
-            `${part} mutaxassisi`,
-            `${part} xizmatlari`,
-            `${part} ish`,
-            `${part} topish`,
-            `frilanser ${part}`, 
-        ]);
-    const keywords = [
-        ...dynamicKeywords,
-        ...baseKeywords
-    ];
-    return {
-        title,
-        description,
-        author: "Soff.uz",
-        image: "https://soff.uz/static/img/soff/logo-dark.png",
-        type: "website",
-        url: "https://soff.uz/freelancers",
-        canonicalUrl: `https://soff.uz/freelancers${directionValue ? `/${directionValue}` : ""}${position ? `/${position}` : ""}${keyword ? `?keyword=${keyword}` : ""}`,
-        keywords: keywords.map((name)=>({
-                name
-            }))
-    };
-};
-function FreelancersPage({ data , metaTags  }) {
-    return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_widgets_layouts_PageLayout__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z, {
-        children: [
-            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_shared_headers_Meta__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .Z, {
-                ...metaTags
-            }),
-            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_freelancers__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .Z, {
-                data: data
-            })
-        ]
-    });
-}
-async function getServerSideProps(context) {
-    const { query  } = context;
-    const { keyword ="" , position ="" , direction ="" , sort_by ="average_rating" , limit =20 , offset =0 , order ="" ,  } = query;
-    const params = new URLSearchParams();
-    const metaTags = generateMetaTags(query);
-    if (keyword) params.append("search", keyword);
-    if (Array.isArray(position)) {
-        position.forEach((p)=>params.append("position", p));
-    } else if (position) {
-        params.append("position", position);
-    }
-    if (Array.isArray(direction)) {
-        direction.forEach((d)=>params.append("direction", d));
-    } else if (direction) {
-        params.append("direction", direction);
-    }
-    if (sort_by && (sort_by !== "average_rating" || order === "asc")) params.append("sort_by", sort_by);
-    params.append("limit", limit);
-    if (offset) {
-        params.append("offset", offset);
-    } else {
-        params.append("offset", 0);
-    }
-    if (order) params.append("order", order);
-    const url = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/users/freelancers/list/?${params.toString()}`;
-    try {
-        const data = await (0,_shared_api_fetch_json__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z)(url);
-        return {
-            props: {
-                data,
-                metaTags
-            }
-        };
-    } catch (error) {
-        console.error("❌ SSR fetch error:", error);
-        return {
-            props: {
-                data: [],
-                metaTags
-            }
-        };
-    }
-}
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FreelancersPage);
-
-__webpack_async_result__();
-} catch(e) { __webpack_async_result__(e); } });
-
-/***/ }),
-
-/***/ 3222:
+/***/ 5954:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -1638,6 +1697,14 @@ module.exports = require("@ant-design/icons");
 
 "use strict";
 module.exports = require("@react-oauth/google");
+
+/***/ }),
+
+/***/ 8097:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("@sentry/nextjs");
 
 /***/ }),
 
@@ -2064,7 +2131,8 @@ module.exports = import("swiper/react");;
 var __webpack_require__ = require("../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [676,1664,5675,5152,4846,4246,7697,4796,5913,740,1042,9277,6466,5265,4333,2930,1635,7878,1272], () => (__webpack_exec__(6122)));
+var __webpack_exports__ = __webpack_require__.X(0, [676,1664,5675,5152,6017,8550,4747,1218,7567,9075,1080,1708,2653,2789,7440,910,7460,1066,8269], () => (__webpack_exec__(7701)));
 module.exports = __webpack_exports__;
 
 })();
+//# sourceMappingURL=freelancers.js.map

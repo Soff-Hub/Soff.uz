@@ -1,10 +1,224 @@
+;{try{(function(){var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof globalThis?globalThis:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="8ee2bfc2-62b5-4cb9-b2ad-584ac0970a3b",e._sentryDebugIdIdentifier="sentry-dbid-8ee2bfc2-62b5-4cb9-b2ad-584ac0970a3b");})();}catch(e){}};
 (() => {
 var exports = {};
 exports.id = 6660;
 exports.ids = [6660];
 exports.modules = {
 
-/***/ 31:
+/***/ 1231:
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ pageWrapperTemplate),
+/* harmony export */   "getServerSideProps": () => (/* binding */ getServerSideProps),
+/* harmony export */   "getStaticProps": () => (/* binding */ getStaticProps)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(997);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6689);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5725);
+/* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(antd__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1853);
+/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(8454);
+/* harmony import */ var _components_shared_headers_Meta__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1218);
+/* harmony import */ var _components_freeleance_services_ServicesFilterSection__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(3589);
+/* harmony import */ var _components_freeleance_services_ServicesCardSection__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(2810);
+/* harmony import */ var _store_profile_slice__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(7623);
+/* harmony import */ var _sentry_nextjs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(8097);
+/* harmony import */ var _sentry_nextjs__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_sentry_nextjs__WEBPACK_IMPORTED_MODULE_9__);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_4__, _components_freeleance_services_ServicesCardSection__WEBPACK_IMPORTED_MODULE_7__, _store_profile_slice__WEBPACK_IMPORTED_MODULE_8__]);
+([_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_4__, _components_freeleance_services_ServicesCardSection__WEBPACK_IMPORTED_MODULE_7__, _store_profile_slice__WEBPACK_IMPORTED_MODULE_8__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+
+
+
+
+
+
+
+
+
+
+
+const getTitleFromDirection = (directions, value)=>{
+    const direction = directions.find((dir)=>dir.value === value);
+    return direction ? direction.label : null;
+};
+const getTitleFromCategory = (categories, id)=>{
+    const category = categories.find((cat)=>String(cat.id) === String(id));
+    return category ? category.title : null;
+};
+function SoffFreelancerPage({ servicesData , parentCategory , childCategory , offset , limit , direction , category_id , search ,  }) {
+    const router = (0,next_router__WEBPACK_IMPORTED_MODULE_3__.useRouter)();
+    const { data: directionsData  } = (0,_store_profile_slice__WEBPACK_IMPORTED_MODULE_8__/* .useGetDirectionsQuery */ .P5)();
+    const directions = directionsData || [];
+    const currentPage = Math.floor(offset / limit) + 1;
+    const directionTitle = getTitleFromDirection(directions, direction);
+    const categoryTitle = getTitleFromCategory(parentCategory, category_id);
+    const fullTitle = // NOTE: It may conflict with search page SEO
+    directionTitle && categoryTitle && search ? `"${search}" so'rovi bo'yicha xizmatlar - Soff.uz` : directionTitle && categoryTitle ? `${directionTitle} - ${categoryTitle} | Soff.uz` : directionTitle ? `${directionTitle} - Soff.uz` : "Xizmatlarga buyurtma berish - Soff.uz";
+    const onChangePage = (page, pageSize)=>{
+        router.push({
+            pathname: router.pathname,
+            query: {
+                ...router.query,
+                offset: (page - 1) * pageSize,
+                limit: pageSize
+            }
+        });
+    };
+    return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z, {
+        children: [
+            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_shared_headers_Meta__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z, {
+                title: fullTitle,
+                description: "Soff.uz xizmatlar bo‘limida frilanserlar tomonidan taklif etilgan xizmatlarni toping. Dizayn, dasturlash, marketing va boshqa ko‘plab yo‘nalishlarda mutaxassislarni izlang."
+            }),
+            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                className: "ps-page--shop my-5 container",
+                children: [
+                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_freeleance_services_ServicesFilterSection__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .Z, {
+                        parentCategory: parentCategory,
+                        childCategory: childCategory,
+                        directions: directions,
+                        count: servicesData?.total_service
+                    }),
+                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_freeleance_services_ServicesCardSection__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Z, {
+                        services: servicesData
+                    }),
+                    servicesData.total_service != 0 && /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+                        className: "d-flex justify-content-center mt-5",
+                        children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(antd__WEBPACK_IMPORTED_MODULE_2__.Pagination, {
+                            current: currentPage,
+                            pageSize: Number(limit),
+                            total: servicesData?.total_service || 0,
+                            showSizeChanger: true,
+                            pageSizeOptions: [
+                                "10",
+                                "20",
+                                "50"
+                            ],
+                            onChange: onChangePage
+                        })
+                    })
+                ]
+            })
+        ]
+    });
+}
+async function getServerSideProps$1(context) {
+    const { query  } = context;
+    const { category_id ="" , search ="" , direction ="" , limit =23 , offset =0 ,  } = query;
+    const fetchJson = async (url)=>{
+        try {
+            const res = await fetch(url);
+            if (!res.ok) return null;
+            return await res.json();
+        } catch  {
+            return null;
+        }
+    };
+    const servicesQuery = new URLSearchParams({
+        ...category_id && {
+            category_id
+        },
+        ...search && {
+            search
+        },
+        ...direction && {
+            direction
+        },
+        limit,
+        offset
+    });
+    const servicesUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/customer?${servicesQuery}`;
+    const parentCategoryUrl = direction ? `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/categories/?direction=${direction}` : null;
+    const childCategoryUrl = category_id ? `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/categories?parent_id=${category_id}` : null;
+    const [servicesData, parentCategory, childCategory] = await Promise.all([
+        fetchJson(servicesUrl),
+        parentCategoryUrl ? fetchJson(parentCategoryUrl) : Promise.resolve([]),
+        childCategoryUrl ? fetchJson(childCategoryUrl) : Promise.resolve([]), 
+    ]);
+    return {
+        props: {
+            search,
+            direction,
+            category_id,
+            servicesData: servicesData || {
+                results: [],
+                total_service: 0
+            },
+            parentCategory,
+            childCategory,
+            offset: Number(offset),
+            limit: Number(limit)
+        }
+    };
+}
+
+var serverComponentModule = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    default: SoffFreelancerPage,
+    getServerSideProps: getServerSideProps$1
+});
+
+/*
+ * This file is a template for the code which will be substituted when our webpack loader handles non-API files in the
+ * `pages/` directory.
+ *
+ * We use `__SENTRY_WRAPPING_TARGET_FILE__.cjs` as a placeholder for the path to the file being wrapped. Because it's not a real package,
+ * this causes both TS and ESLint to complain, hence the pragma comments below.
+ */
+
+
+const userPageModule = serverComponentModule ;
+
+const pageComponent = userPageModule ? userPageModule.default : undefined;
+
+const origGetInitialProps = pageComponent ? pageComponent.getInitialProps : undefined;
+const origGetStaticProps = userPageModule ? userPageModule.getStaticProps : undefined;
+const origGetServerSideProps = userPageModule ? userPageModule.getServerSideProps : undefined;
+
+// Rollup will aggressively tree-shake what it perceives to be unused properties
+// on objects. Because the key that's used to index into this object (/orders)
+// is replaced during bundling, Rollup can't see that these properties are in fact
+// used. Using `Object.freeze` signals to Rollup that it should not tree-shake
+// this object.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const getInitialPropsWrappers = Object.freeze({
+  '/_app': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_9__.wrapAppGetInitialPropsWithSentry,
+  '/_document': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_9__.wrapDocumentGetInitialPropsWithSentry,
+  '/_error': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_9__.wrapErrorGetInitialPropsWithSentry,
+});
+
+const getInitialPropsWrapper = getInitialPropsWrappers['/orders'] || _sentry_nextjs__WEBPACK_IMPORTED_MODULE_9__.wrapGetInitialPropsWithSentry;
+
+if (pageComponent && typeof origGetInitialProps === 'function') {
+  pageComponent.getInitialProps = getInitialPropsWrapper(origGetInitialProps) ;
+}
+
+const getStaticProps =
+  typeof origGetStaticProps === 'function'
+    ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_9__.wrapGetStaticPropsWithSentry(origGetStaticProps, '/orders')
+    : undefined;
+const getServerSideProps =
+  typeof origGetServerSideProps === 'function'
+    ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_9__.wrapGetServerSidePropsWithSentry(origGetServerSideProps, '/orders')
+    : undefined;
+
+const pageWrapperTemplate = pageComponent ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_9__.wrapPageComponentWithSentry(pageComponent ) : pageComponent;
+
+
+
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } });
+
+/***/ }),
+
+/***/ 8045:
 /***/ ((module) => {
 
 // Exports
@@ -27,7 +241,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 7866:
+/***/ 1123:
 /***/ ((module) => {
 
 // Exports
@@ -40,7 +254,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 849:
+/***/ 6074:
 /***/ ((module) => {
 
 // Exports
@@ -54,7 +268,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 3478:
+/***/ 2810:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -66,11 +280,11 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6689);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _ServiceFilterSection_module_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(31);
+/* harmony import */ var _ServiceFilterSection_module_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(8045);
 /* harmony import */ var _ServiceFilterSection_module_scss__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_ServiceFilterSection_module_scss__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _entities_service_service_card__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(9842);
-/* harmony import */ var _service_first_card__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(6056);
-/* harmony import */ var _components_elements_search_page_details_notFound__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(5428);
+/* harmony import */ var _entities_service_service_card__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7460);
+/* harmony import */ var _service_first_card__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(3154);
+/* harmony import */ var _components_elements_search_page_details_notFound__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(4188);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_entities_service_service_card__WEBPACK_IMPORTED_MODULE_2__, _components_elements_search_page_details_notFound__WEBPACK_IMPORTED_MODULE_4__]);
 ([_entities_service_service_card__WEBPACK_IMPORTED_MODULE_2__, _components_elements_search_page_details_notFound__WEBPACK_IMPORTED_MODULE_4__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
@@ -130,7 +344,7 @@ __webpack_async_result__();
 
 /***/ }),
 
-/***/ 9930:
+/***/ 3589:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -149,12 +363,12 @@ var router_ = __webpack_require__(1853);
 // EXTERNAL MODULE: external "react"
 var external_react_ = __webpack_require__(6689);
 // EXTERNAL MODULE: ./components/freeleance/services/ServiceFilterSection.module.scss
-var ServiceFilterSection_module = __webpack_require__(31);
+var ServiceFilterSection_module = __webpack_require__(8045);
 var ServiceFilterSection_module_default = /*#__PURE__*/__webpack_require__.n(ServiceFilterSection_module);
 // EXTERNAL MODULE: external "@ant-design/icons"
 var icons_ = __webpack_require__(7066);
 // EXTERNAL MODULE: ./components/freeleance/services/service-steps/style.module.scss
-var style_module = __webpack_require__(849);
+var style_module = __webpack_require__(6074);
 var style_module_default = /*#__PURE__*/__webpack_require__.n(style_module);
 ;// CONCATENATED MODULE: ./components/freeleance/services/service-steps/index.jsx
 
@@ -205,7 +419,7 @@ const StepCard = ({ number , title  })=>{
 };
 
 // EXTERNAL MODULE: ./shared/hooks/useTimeManager.js
-var useTimeManager = __webpack_require__(5913);
+var useTimeManager = __webpack_require__(7567);
 ;// CONCATENATED MODULE: ./components/freeleance/services/ServicesFilterSection.jsx
 
 
@@ -391,7 +605,7 @@ const ServicesFilterSection = ({ parentCategory , directions  })=>{
 
 /***/ }),
 
-/***/ 6056:
+/***/ 3154:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -402,7 +616,7 @@ const ServicesFilterSection = ({ parentCategory , directions  })=>{
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6689);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(7866);
+/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1123);
 /* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6022);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_redux__WEBPACK_IMPORTED_MODULE_2__);
@@ -443,161 +657,7 @@ const ServiceFirstCard = ()=>{
 
 /***/ }),
 
-/***/ 6114:
-/***/ ((module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ SoffFreelancerPage),
-/* harmony export */   "getServerSideProps": () => (/* binding */ getServerSideProps)
-/* harmony export */ });
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(997);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6689);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5725);
-/* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(antd__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1853);
-/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(7109);
-/* harmony import */ var _components_shared_headers_Meta__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(4796);
-/* harmony import */ var _components_freeleance_services_ServicesFilterSection__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(9930);
-/* harmony import */ var _components_freeleance_services_ServicesCardSection__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(3478);
-/* harmony import */ var _store_profile_slice__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(9498);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_4__, _components_freeleance_services_ServicesCardSection__WEBPACK_IMPORTED_MODULE_7__, _store_profile_slice__WEBPACK_IMPORTED_MODULE_8__]);
-([_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_4__, _components_freeleance_services_ServicesCardSection__WEBPACK_IMPORTED_MODULE_7__, _store_profile_slice__WEBPACK_IMPORTED_MODULE_8__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
-
-
-
-
-
-
-
-
-
-const getTitleFromDirection = (directions, value)=>{
-    const direction = directions.find((dir)=>dir.value === value);
-    return direction ? direction.label : null;
-};
-const getTitleFromCategory = (categories, id)=>{
-    const category = categories.find((cat)=>String(cat.id) === String(id));
-    return category ? category.title : null;
-};
-function SoffFreelancerPage({ servicesData , parentCategory , childCategory , offset , limit , direction , category_id , search ,  }) {
-    const router = (0,next_router__WEBPACK_IMPORTED_MODULE_3__.useRouter)();
-    const { data: directionsData  } = (0,_store_profile_slice__WEBPACK_IMPORTED_MODULE_8__/* .useGetDirectionsQuery */ .P5)();
-    const directions = directionsData || [];
-    const currentPage = Math.floor(offset / limit) + 1;
-    const directionTitle = getTitleFromDirection(directions, direction);
-    const categoryTitle = getTitleFromCategory(parentCategory, category_id);
-    const fullTitle = // NOTE: It may conflict with search page SEO
-    directionTitle && categoryTitle && search ? `"${search}" so'rovi bo'yicha xizmatlar - Soff.uz` : directionTitle && categoryTitle ? `${directionTitle} - ${categoryTitle} | Soff.uz` : directionTitle ? `${directionTitle} - Soff.uz` : "Xizmatlarga buyurtma berish - Soff.uz";
-    const onChangePage = (page, pageSize)=>{
-        router.push({
-            pathname: router.pathname,
-            query: {
-                ...router.query,
-                offset: (page - 1) * pageSize,
-                limit: pageSize
-            }
-        });
-    };
-    return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z, {
-        children: [
-            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_shared_headers_Meta__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z, {
-                title: fullTitle,
-                description: "Soff.uz xizmatlar bo‘limida frilanserlar tomonidan taklif etilgan xizmatlarni toping. Dizayn, dasturlash, marketing va boshqa ko‘plab yo‘nalishlarda mutaxassislarni izlang."
-            }),
-            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                className: "ps-page--shop my-5 container",
-                children: [
-                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_freeleance_services_ServicesFilterSection__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .Z, {
-                        parentCategory: parentCategory,
-                        childCategory: childCategory,
-                        directions: directions,
-                        count: servicesData?.total_service
-                    }),
-                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_freeleance_services_ServicesCardSection__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Z, {
-                        services: servicesData
-                    }),
-                    servicesData.total_service != 0 && /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                        className: "d-flex justify-content-center mt-5",
-                        children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_2__.Pagination, {
-                            current: currentPage,
-                            pageSize: Number(limit),
-                            total: servicesData?.total_service || 0,
-                            showSizeChanger: true,
-                            pageSizeOptions: [
-                                "10",
-                                "20",
-                                "50"
-                            ],
-                            onChange: onChangePage
-                        })
-                    })
-                ]
-            })
-        ]
-    });
-}
-async function getServerSideProps(context) {
-    const { query  } = context;
-    const { category_id ="" , search ="" , direction ="" , limit =23 , offset =0 ,  } = query;
-    const fetchJson = async (url)=>{
-        try {
-            const res = await fetch(url);
-            if (!res.ok) return null;
-            return await res.json();
-        } catch  {
-            return null;
-        }
-    };
-    const servicesQuery = new URLSearchParams({
-        ...category_id && {
-            category_id
-        },
-        ...search && {
-            search
-        },
-        ...direction && {
-            direction
-        },
-        limit,
-        offset
-    });
-    const servicesUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/customer?${servicesQuery}`;
-    const parentCategoryUrl = direction ? `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/categories/?direction=${direction}` : null;
-    const childCategoryUrl = category_id ? `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/categories?parent_id=${category_id}` : null;
-    const [servicesData, parentCategory, childCategory] = await Promise.all([
-        fetchJson(servicesUrl),
-        parentCategoryUrl ? fetchJson(parentCategoryUrl) : Promise.resolve([]),
-        childCategoryUrl ? fetchJson(childCategoryUrl) : Promise.resolve([]), 
-    ]);
-    return {
-        props: {
-            search,
-            direction,
-            category_id,
-            servicesData: servicesData || {
-                results: [],
-                total_service: 0
-            },
-            parentCategory,
-            childCategory,
-            offset: Number(offset),
-            limit: Number(limit)
-        }
-    };
-}
-
-__webpack_async_result__();
-} catch(e) { __webpack_async_result__(e); } });
-
-/***/ }),
-
-/***/ 7109:
+/***/ 8454:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -609,7 +669,7 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6689);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _PageLayout__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7697);
+/* harmony import */ var _PageLayout__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4747);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_PageLayout__WEBPACK_IMPORTED_MODULE_2__]);
 _PageLayout__WEBPACK_IMPORTED_MODULE_2__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
 
@@ -642,6 +702,14 @@ module.exports = require("@ant-design/icons");
 
 "use strict";
 module.exports = require("@react-oauth/google");
+
+/***/ }),
+
+/***/ 8097:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("@sentry/nextjs");
 
 /***/ }),
 
@@ -988,7 +1056,8 @@ module.exports = import("react-icons/io5");;
 var __webpack_require__ = require("../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [676,1664,5675,5152,4846,4246,7697,4796,5913,740,1042,9277,6466,5265,4333,1635,5428], () => (__webpack_exec__(6114)));
+var __webpack_exports__ = __webpack_require__.X(0, [676,1664,5675,5152,6017,8550,4747,1218,7567,9075,1080,1708,2653,2789,7440,7460,4188], () => (__webpack_exec__(1231)));
 module.exports = __webpack_exports__;
 
 })();
+//# sourceMappingURL=orders.js.map

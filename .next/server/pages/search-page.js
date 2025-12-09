@@ -1,3 +1,4 @@
+;{try{(function(){var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof globalThis?globalThis:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="8fe1bac3-fb7b-446c-aba6-569004e6d302",e._sentryDebugIdIdentifier="sentry-dbid-8fe1bac3-fb7b-446c-aba6-569004e6d302");})();}catch(e){}};
 "use strict";
 (() => {
 var exports = {};
@@ -5,7 +6,495 @@ exports.id = 9763;
 exports.ids = [9763];
 exports.modules = {
 
-/***/ 2134:
+/***/ 1427:
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ pageWrapperTemplate),
+/* harmony export */   "getServerSideProps": () => (/* binding */ getServerSideProps),
+/* harmony export */   "getStaticProps": () => (/* binding */ getStaticProps)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(997);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6689);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1853);
+/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1664);
+/* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(next_link__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var next_head__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(968);
+/* harmony import */ var next_head__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(next_head__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _components_nextImagecard__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(9583);
+/* harmony import */ var _components_elements_search_page_details_products__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(8323);
+/* harmony import */ var _shared_hooks_useDebounce__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(6138);
+/* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(5725);
+/* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(antd__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _components_elements_search_page_details_services__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(3484);
+/* harmony import */ var _components_elements_search_page_details_specialists__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(8602);
+/* harmony import */ var _shared_utilities_useResponsive__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(1834);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(6022);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(react_redux__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var _components_elements_search_page_details_search_page_side__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(3753);
+/* harmony import */ var _shared_hooks_useFApi__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(7440);
+/* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(9752);
+/* harmony import */ var _repositories_api__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(5168);
+/* harmony import */ var _repositories_useApi__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(9410);
+/* harmony import */ var _shared_utilities_device_id__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(1401);
+/* harmony import */ var _sentry_nextjs__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(8097);
+/* harmony import */ var _sentry_nextjs__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_sentry_nextjs__WEBPACK_IMPORTED_MODULE_19__);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_components_elements_search_page_details_products__WEBPACK_IMPORTED_MODULE_6__, _components_elements_search_page_details_services__WEBPACK_IMPORTED_MODULE_9__, _components_elements_search_page_details_specialists__WEBPACK_IMPORTED_MODULE_10__, _components_elements_search_page_details_search_page_side__WEBPACK_IMPORTED_MODULE_13__, _shared_hooks_useFApi__WEBPACK_IMPORTED_MODULE_14__, _tanstack_react_query__WEBPACK_IMPORTED_MODULE_15__, _repositories_api__WEBPACK_IMPORTED_MODULE_16__, _repositories_useApi__WEBPACK_IMPORTED_MODULE_17__, _shared_utilities_device_id__WEBPACK_IMPORTED_MODULE_18__]);
+([_components_elements_search_page_details_products__WEBPACK_IMPORTED_MODULE_6__, _components_elements_search_page_details_services__WEBPACK_IMPORTED_MODULE_9__, _components_elements_search_page_details_specialists__WEBPACK_IMPORTED_MODULE_10__, _components_elements_search_page_details_search_page_side__WEBPACK_IMPORTED_MODULE_13__, _shared_hooks_useFApi__WEBPACK_IMPORTED_MODULE_14__, _tanstack_react_query__WEBPACK_IMPORTED_MODULE_15__, _repositories_api__WEBPACK_IMPORTED_MODULE_16__, _repositories_useApi__WEBPACK_IMPORTED_MODULE_17__, _shared_utilities_device_id__WEBPACK_IMPORTED_MODULE_18__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const Search_Results = ({ keyword , productsInitialData , servicesInitialData , sellersInitialData ,  })=>{
+    console.log({
+        productsInitialData
+    });
+    const inputEl = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(null);
+    const router = (0,next_router__WEBPACK_IMPORTED_MODULE_2__.useRouter)();
+    const { 0: searchTerm , 1: setSearchTerm  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(keyword || "");
+    const debouncedSearchTerm = (0,_shared_hooks_useDebounce__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Z)(searchTerm, 1000);
+    const { query  } = (0,next_router__WEBPACK_IMPORTED_MODULE_2__.useRouter)();
+    const { isDesktop  } = (0,_shared_utilities_useResponsive__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .Z)();
+    const pageRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(null);
+    const { isLoggedIn  } = (0,react_redux__WEBPACK_IMPORTED_MODULE_12__.useSelector)((state)=>state.auth);
+    const tab = router.query.tab || "1";
+    const topServicesQuery = new URLSearchParams({
+        limit: 6,
+        ...(query.direction || query.ts_direction) && tab !== "1" && {
+            direction: query.direction || query.ts_direction
+        },
+        ...query.keyword && !query.direction && !query.ts_direction && tab !== "1" && {
+            search: query.keyword
+        }
+    });
+    const { data: topServices , isLoading: topServicesLoading  } = (0,_shared_hooks_useFApi__WEBPACK_IMPORTED_MODULE_14__/* .useFGet */ .oh)([
+        "top-services",
+        topServicesQuery.toString()
+    ], `customer/popular-services?${topServicesQuery.toString()}`);
+    const { data: lastProducts , isLoading: lastProductsLoading  } = (0,_tanstack_react_query__WEBPACK_IMPORTED_MODULE_15__.useQuery)({
+        queryKey: [
+            `last-products`
+        ],
+        queryFn: async ()=>{
+            const res = await _repositories_api__WEBPACK_IMPORTED_MODULE_16__/* .api.get */ .hi.get(`customer/last-added?limit=10`);
+            return res.data;
+        }
+    });
+    const dynamicCreateBtnLink = isLoggedIn ? "/order/create" : "/auth/login?returnUrl=" + encodeURIComponent("/order/create");
+    const createBtn = ()=>/*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+            className: "w-100",
+            children: isDesktop && /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)((next_link__WEBPACK_IMPORTED_MODULE_3___default()), {
+                href: dynamicCreateBtnLink,
+                children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("a", {
+                    children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+                        className: "Search_Results_not_found_btn w-100 text-center py-3",
+                        children: "Buyurtma yaratish"
+                    })
+                })
+            })
+        });
+    const handleSetRouterQuery = (currentTab)=>{
+        const omitKeys = [
+            "direction",
+            "ts_direction",
+            "page",
+            "offset",
+            "limit",
+            "category",
+            "parentCategory",
+            "service_parent",
+            "file_type",
+            "order_by",
+            "page_from",
+            "page_to", 
+        ];
+        const newQueries = Object.fromEntries(Object.entries(router.query).filter(([key])=>!omitKeys.includes(key)));
+        router.push({
+            pathname: router.pathname,
+            query: {
+                ...newQueries,
+                keyword: debouncedSearchTerm,
+                tab: currentTab,
+                type: currentTab == "1" ? "file" : "all"
+            }
+        });
+    };
+    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(()=>{
+        if (pageRef.current) {
+            pageRef.current.scrollIntoView({
+                behavior: "smooth"
+            });
+        } else {
+            window.scrollIntoView({
+                behavior: "smooth"
+            });
+        }
+    }, [
+        tab
+    ]);
+    const handleClearInput = ()=>{
+        setSearchTerm("");
+        inputEl.current.value = "";
+    };
+    const handleChangeTab = (value)=>{
+        handleSetRouterQuery(value);
+    };
+    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(()=>{
+        if (debouncedSearchTerm !== router.query.keyword) {
+            // When a new search term is entered, reset pagination and filter params
+            const omitKeys = [
+                "page",
+                "offset",
+                "similar_documents"
+            ];
+            const newQueries = Object.fromEntries(Object.entries(router.query).filter(([key])=>!omitKeys.includes(key)));
+            router.push({
+                pathname: router.pathname,
+                query: {
+                    ...newQueries,
+                    keyword: debouncedSearchTerm
+                }
+            });
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [
+        debouncedSearchTerm
+    ]);
+    const clearTextView = /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
+        className: "ps-form__action",
+        children: searchTerm ? /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+            className: "ps-form__action_search_btn m-auto cursor-pointer",
+            onClick: handleClearInput,
+            children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("svg", {
+                xmlns: "http://www.w3.org/2000/svg",
+                width: "14",
+                height: "14",
+                viewBox: "0 0 24 24",
+                children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("path", {
+                    fill: "#7B7B7B",
+                    d: "M18.3 5.71a1 1 0 0 0-1.41 0L12 10.59 7.11 5.7a1 1 0 0 0-1.41 1.41L10.59 12l-4.89 4.89a1 1 0 0 0 1.41 1.41L12 13.41l4.89 4.89a1 1 0 0 0 1.41-1.41L13.41 12l4.89-4.89a1 1 0 0 0 0-1.4Z"
+                })
+            })
+        }) : /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+            className: "ps-form__action_search_btn m-auto",
+            children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("svg", {
+                xmlns: "http://www.w3.org/2000/svg",
+                width: "12",
+                height: "13",
+                viewBox: "0 0 12 13",
+                children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("path", {
+                    d: "M9.47006 9.13465L12 11.6646L11.1646 12.5L8.63465 9.97006C7.72497 10.6978 6.57133 11.1332 5.31661 11.1332C2.38184 11.1332 0 8.75138 0 5.81661C0 2.88184 2.38184 0.5 5.31661 0.5C8.25138 0.5 10.6332 2.88184 10.6332 5.81661C10.6332 7.07133 10.1978 8.22497 9.47006 9.13465ZM8.28487 8.69632C9.00722 7.95188 9.45175 6.93641 9.45175 5.81661C9.45175 3.53194 7.60127 1.68147 5.31661 1.68147C3.03194 1.68147 1.18147 3.53194 1.18147 5.81661C1.18147 8.10127 3.03194 9.95175 5.31661 9.95175C6.43641 9.95175 7.45188 9.50722 8.19632 8.78487L8.28487 8.69632Z",
+                    fill: "#7B7B7B"
+                })
+            })
+        })
+    });
+    const sideElements = /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_elements_search_page_details_search_page_side__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .Z, {
+        createBtn: createBtn,
+        topServices: topServices,
+        topServicesLoading: topServicesLoading,
+        lastProducts: lastProducts,
+        lastProductsLoading: lastProductsLoading
+    });
+    const tabItems = [
+        {
+            key: "1",
+            label: "Mahsulotlar",
+            children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_elements_search_page_details_products__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .Z, {
+                children: sideElements,
+                initialData: productsInitialData
+            })
+        },
+        {
+            key: "2",
+            label: "Xizmatlar",
+            children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_elements_search_page_details_services__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Z, {
+                children: sideElements,
+                initialData: servicesInitialData
+            })
+        },
+        {
+            key: "3",
+            label: "Mutahasislar",
+            children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_elements_search_page_details_specialists__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .Z, {
+                children: sideElements,
+                initialData: sellersInitialData
+            })
+        }, 
+    ];
+    return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+        ref: pageRef,
+        className: "global_search_results",
+        children: [
+            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)((next_head__WEBPACK_IMPORTED_MODULE_4___default()), {
+                children: [
+                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("title", {
+                        children: keyword ? `“${keyword}”` : "Soff.uz - Qidiruv natijalar"
+                    }),
+                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("meta", {
+                        name: "robots",
+                        content: "index, follow"
+                    }),
+                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("meta", {
+                        name: "description",
+                        content: keyword ? `“${keyword}” bo‘yicha topilgan natijalar. Soff.uz orqali kerakli bo'lgan raqamli mahsulotlarni yuklab olishingiz mumkin` : "Soff.uz orqali kerakli bo'lgan raqamli mahsulotlarni yuklab olishingiz mumkin"
+                    })
+                ]
+            }),
+            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("nav", {
+                className: "global_navbar",
+                children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+                    className: "container d-flex align-items-center",
+                    children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                        className: "d-flex align-items-center gap-5 width_full_screen",
+                        children: [
+                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)((next_link__WEBPACK_IMPORTED_MODULE_3___default()), {
+                                href: "/",
+                                children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("a", {
+                                    className: "ps-logo",
+                                    children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_nextImagecard__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z, {
+                                        url: "/static/img/soff/logo-dark.png",
+                                        className: "logoo",
+                                        width: "120px",
+                                        height: "50px"
+                                    })
+                                })
+                            }),
+                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+                                className: "ps-form--quick-search",
+                                children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                                    style: {
+                                        background: "white"
+                                    },
+                                    className: keyword === "" ? "ps-form__input" : "ps-form__input active_search_input",
+                                    children: [
+                                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", {
+                                            ref: inputEl,
+                                            autoFocus: true,
+                                            className: keyword === "" ? "form-control input2" : "input1 form-control active_search_input",
+                                            type: "text",
+                                            value: searchTerm,
+                                            placeholder: "Izlayotgan mahsulotingizni toping...",
+                                            onChange: (e)=>setSearchTerm(e.target.value),
+                                            style: {
+                                                width: "calc(100% - 30px)"
+                                            }
+                                        }),
+                                        clearTextView
+                                    ]
+                                })
+                            })
+                        ]
+                    })
+                })
+            }),
+            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+                className: "container ",
+                children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(antd__WEBPACK_IMPORTED_MODULE_8__.Tabs, {
+                    className: "order_tabs",
+                    destroyInactiveTabPane: true,
+                    activeKey: tab,
+                    onChange: handleChangeTab,
+                    items: tabItems
+                })
+            })
+        ]
+    });
+};
+async function getServerSideProps$1(context) {
+    const { keyword ="" , page =1 , tab ="1" , type ="all" , category ="" , parentCategory ="" , order_by ="" , direction ="" , limit =20 , offset =0 , category_id ="" , service_parent ="" , file_type ="" , page_from ="" , page_to ="" , similar_documents ="" ,  } = context.query;
+    const deviceId = (0,_shared_utilities_device_id__WEBPACK_IMPORTED_MODULE_18__/* .getOrCreateDeviceId */ .n)({
+        req: context.req,
+        res: context.res
+    });
+    const servicesQuery = new URLSearchParams({
+        ...category_id && {
+            category_id
+        },
+        ...direction && {
+            direction
+        },
+        limit,
+        offset
+    });
+    const fetchJson = async (url)=>{
+        try {
+            const res = await fetch(url);
+            if (!res.ok) throw new Error("Failed to fetch");
+            return await res.json();
+        } catch (err) {
+            return {
+                error: err.message
+            };
+        }
+    };
+    // ✅ Yangi filterlar qo‘shildi
+    const searchUrl = `${_repositories_useApi__WEBPACK_IMPORTED_MODULE_17__/* .baseUrlUseApi */ .q}customer/same-google-search/?limit=50${page ? `&page=${page}` : ""}${keyword ? `&search=${keyword}` : ""}${type ? `&type=${type}` : ""}${category ? `&category=${category}` : ""}${order_by ? `&order_by=${order_by}` : ""}${file_type ? `&file_type=${file_type}` : ""}${page_from ? `&page_from=${page_from}` : ""}${page_to ? `&page_to=${page_to}` : ""}${similar_documents ? `&similar_documents=${similar_documents}` : ""}`;
+    const servicesUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/customer?${servicesQuery.toString()}&search=${keyword}${service_parent ? `&category_id=${service_parent}` : ""}`;
+    const sellersUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/users/sellers?limit=${limit}&offset=${offset}&search=${keyword}`;
+    const restQueries = {
+        fourChildData: null,
+        childCategoryData: null,
+        searchData: null,
+        keyword,
+        page,
+        type,
+        category,
+        order_by,
+        error: null,
+        lastProducts: null,
+        service: null,
+        serviceParent: null,
+        serviceChild: null,
+        sellers: null
+    };
+    switch(tab){
+        case "1":
+            {
+                let productsInitialData = null;
+                try {
+                    const productsFetch = await fetch(searchUrl, {
+                        headers: {
+                            "X-Device-ID": deviceId
+                        }
+                    });
+                    productsInitialData = await productsFetch.json();
+                } catch (error) {
+                    console.error("Error fetching products:", error);
+                }
+                const searchError = productsInitialData?.error || null;
+                return {
+                    props: {
+                        ...restQueries,
+                        error: searchError,
+                        productsInitialData: productsInitialData?.results ? productsInitialData : null
+                    }
+                };
+            }
+        case "2":
+            {
+                const servicesInitialData = await fetchJson(servicesUrl);
+                return {
+                    props: {
+                        ...restQueries,
+                        error: null,
+                        servicesInitialData
+                    }
+                };
+            }
+        case "3":
+            {
+                const sellersInitialData = await fetchJson(sellersUrl);
+                return {
+                    props: {
+                        ...restQueries,
+                        sellersInitialData
+                    }
+                };
+            }
+        default:
+            {
+                const [productsInitialData1, servicesInitialData1, sellersInitialData1, ] = await Promise.all([
+                    fetchJson(searchUrl),
+                    fetchJson(servicesUrl),
+                    fetchJson(sellersUrl), 
+                ]);
+                const searchError1 = productsInitialData1?.error || null;
+                return {
+                    props: {
+                        ...restQueries,
+                        error: searchError1,
+                        productsInitialData: productsInitialData1?.results ? productsInitialData1 : null,
+                        servicesInitialData: servicesInitialData1,
+                        sellersInitialData: sellersInitialData1
+                    }
+                };
+            }
+    }
+}
+
+var serverComponentModule = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    default: Search_Results,
+    getServerSideProps: getServerSideProps$1
+});
+
+/*
+ * This file is a template for the code which will be substituted when our webpack loader handles non-API files in the
+ * `pages/` directory.
+ *
+ * We use `__SENTRY_WRAPPING_TARGET_FILE__.cjs` as a placeholder for the path to the file being wrapped. Because it's not a real package,
+ * this causes both TS and ESLint to complain, hence the pragma comments below.
+ */
+
+
+const userPageModule = serverComponentModule ;
+
+const pageComponent = userPageModule ? userPageModule.default : undefined;
+
+const origGetInitialProps = pageComponent ? pageComponent.getInitialProps : undefined;
+const origGetStaticProps = userPageModule ? userPageModule.getStaticProps : undefined;
+const origGetServerSideProps = userPageModule ? userPageModule.getServerSideProps : undefined;
+
+// Rollup will aggressively tree-shake what it perceives to be unused properties
+// on objects. Because the key that's used to index into this object (/search-page)
+// is replaced during bundling, Rollup can't see that these properties are in fact
+// used. Using `Object.freeze` signals to Rollup that it should not tree-shake
+// this object.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const getInitialPropsWrappers = Object.freeze({
+  '/_app': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_19__.wrapAppGetInitialPropsWithSentry,
+  '/_document': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_19__.wrapDocumentGetInitialPropsWithSentry,
+  '/_error': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_19__.wrapErrorGetInitialPropsWithSentry,
+});
+
+const getInitialPropsWrapper = getInitialPropsWrappers['/search-page'] || _sentry_nextjs__WEBPACK_IMPORTED_MODULE_19__.wrapGetInitialPropsWithSentry;
+
+if (pageComponent && typeof origGetInitialProps === 'function') {
+  pageComponent.getInitialProps = getInitialPropsWrapper(origGetInitialProps) ;
+}
+
+const getStaticProps =
+  typeof origGetStaticProps === 'function'
+    ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_19__.wrapGetStaticPropsWithSentry(origGetStaticProps, '/search-page')
+    : undefined;
+const getServerSideProps =
+  typeof origGetServerSideProps === 'function'
+    ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_19__.wrapGetServerSidePropsWithSentry(origGetServerSideProps, '/search-page')
+    : undefined;
+
+const pageWrapperTemplate = pageComponent ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_19__.wrapPageComponentWithSentry(pageComponent ) : pageComponent;
+
+
+
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } });
+
+/***/ }),
+
+/***/ 8323:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
@@ -16,17 +505,17 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6689);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _search_page_card_searchResultsProducts_Card__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5790);
-/* harmony import */ var _search_page_card_searchResultsLoading__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(3269);
+/* harmony import */ var _search_page_card_searchResultsProducts_Card__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7454);
+/* harmony import */ var _search_page_card_searchResultsLoading__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1288);
 /* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(5725);
 /* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(antd__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _search_page_filter_search_results_products_filter__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(2674);
+/* harmony import */ var _search_page_filter_search_results_products_filter__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(899);
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(1853);
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _notFound__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(5428);
-/* harmony import */ var _shared_hooks_useScrollToNotFound__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(3213);
+/* harmony import */ var _notFound__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(4188);
+/* harmony import */ var _shared_hooks_useScrollToNotFound__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(1004);
 /* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(9752);
-/* harmony import */ var _repositories_useApi__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(4013);
+/* harmony import */ var _repositories_useApi__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(9410);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_search_page_card_searchResultsProducts_Card__WEBPACK_IMPORTED_MODULE_2__, _search_page_filter_search_results_products_filter__WEBPACK_IMPORTED_MODULE_5__, _notFound__WEBPACK_IMPORTED_MODULE_7__, _tanstack_react_query__WEBPACK_IMPORTED_MODULE_9__, _repositories_useApi__WEBPACK_IMPORTED_MODULE_10__]);
 ([_search_page_card_searchResultsProducts_Card__WEBPACK_IMPORTED_MODULE_2__, _search_page_filter_search_results_products_filter__WEBPACK_IMPORTED_MODULE_5__, _notFound__WEBPACK_IMPORTED_MODULE_7__, _tanstack_react_query__WEBPACK_IMPORTED_MODULE_9__, _repositories_useApi__WEBPACK_IMPORTED_MODULE_10__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
@@ -194,7 +683,7 @@ __webpack_async_result__();
 
 /***/ }),
 
-/***/ 4854:
+/***/ 659:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
@@ -207,8 +696,8 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(next_link__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6689);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _components_details_components_details_actions_file_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(414);
-/* harmony import */ var _components_partials_account_price_formatter__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(7799);
+/* harmony import */ var _components_details_components_details_actions_file_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(9245);
+/* harmony import */ var _components_partials_account_price_formatter__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(5282);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_components_details_components_details_actions_file_actions__WEBPACK_IMPORTED_MODULE_3__]);
 _components_details_components_details_actions_file_actions__WEBPACK_IMPORTED_MODULE_3__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
 
@@ -305,7 +794,7 @@ __webpack_async_result__();
 
 /***/ }),
 
-/***/ 56:
+/***/ 9597:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
@@ -316,7 +805,7 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6689);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _shared_utilities_product_helper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(740);
+/* harmony import */ var _shared_utilities_product_helper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(9075);
 /* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1664);
 /* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(next_link__WEBPACK_IMPORTED_MODULE_3__);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_shared_utilities_product_helper__WEBPACK_IMPORTED_MODULE_2__]);
@@ -393,7 +882,7 @@ __webpack_async_result__();
 
 /***/ }),
 
-/***/ 3269:
+/***/ 1288:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -422,7 +911,7 @@ function searchResultsLoading() {
 
 /***/ }),
 
-/***/ 5790:
+/***/ 7454:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
@@ -435,12 +924,12 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5725);
 /* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(antd__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _components_details_components_details_actions_file_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(414);
-/* harmony import */ var _components_partials_account_price_formatter__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(7799);
-/* harmony import */ var _shared_utilities_useResponsive__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(4903);
+/* harmony import */ var _components_details_components_details_actions_file_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(9245);
+/* harmony import */ var _components_partials_account_price_formatter__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(5282);
+/* harmony import */ var _shared_utilities_useResponsive__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1834);
 /* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1664);
 /* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(next_link__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _shared_utilities_utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(7403);
+/* harmony import */ var _shared_utilities_utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(7971);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_components_details_components_details_actions_file_actions__WEBPACK_IMPORTED_MODULE_3__]);
 _components_details_components_details_actions_file_actions__WEBPACK_IMPORTED_MODULE_3__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
 
@@ -653,7 +1142,7 @@ __webpack_async_result__();
 
 /***/ }),
 
-/***/ 2674:
+/***/ 899:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
@@ -675,7 +1164,7 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var react_icons_fa6__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(7333);
 /* harmony import */ var react_icons_md__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(6905);
 /* harmony import */ var react_icons_pi__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(1154);
-/* harmony import */ var _shared_hooks_useMounted__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(2770);
+/* harmony import */ var _shared_hooks_useMounted__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(8458);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([react_icons_io5__WEBPACK_IMPORTED_MODULE_5__, react_icons_lu__WEBPACK_IMPORTED_MODULE_6__, react_icons_fa6__WEBPACK_IMPORTED_MODULE_7__, react_icons_md__WEBPACK_IMPORTED_MODULE_8__, react_icons_pi__WEBPACK_IMPORTED_MODULE_9__]);
 ([react_icons_io5__WEBPACK_IMPORTED_MODULE_5__, react_icons_lu__WEBPACK_IMPORTED_MODULE_6__, react_icons_fa6__WEBPACK_IMPORTED_MODULE_7__, react_icons_md__WEBPACK_IMPORTED_MODULE_8__, react_icons_pi__WEBPACK_IMPORTED_MODULE_9__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
@@ -1249,7 +1738,7 @@ __webpack_async_result__();
 
 /***/ }),
 
-/***/ 7618:
+/***/ 5424:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
@@ -1264,14 +1753,14 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(antd__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1853);
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _shared_hooks_useMounted__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(2770);
+/* harmony import */ var _shared_hooks_useMounted__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(8458);
 /* harmony import */ var react_icons_io5__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1185);
 /* harmony import */ var _ant_design_icons__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(7066);
 /* harmony import */ var _ant_design_icons__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_ant_design_icons__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var react_icons_bi__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(6157);
 /* harmony import */ var react_icons_ai__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(7425);
 /* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(9752);
-/* harmony import */ var _store_profile_slice__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(9498);
+/* harmony import */ var _store_profile_slice__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(7623);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([react_icons_io5__WEBPACK_IMPORTED_MODULE_5__, react_icons_bi__WEBPACK_IMPORTED_MODULE_7__, react_icons_ai__WEBPACK_IMPORTED_MODULE_8__, _tanstack_react_query__WEBPACK_IMPORTED_MODULE_9__, _store_profile_slice__WEBPACK_IMPORTED_MODULE_10__]);
 ([react_icons_io5__WEBPACK_IMPORTED_MODULE_5__, react_icons_bi__WEBPACK_IMPORTED_MODULE_7__, react_icons_ai__WEBPACK_IMPORTED_MODULE_8__, _tanstack_react_query__WEBPACK_IMPORTED_MODULE_9__, _store_profile_slice__WEBPACK_IMPORTED_MODULE_10__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
@@ -1646,7 +2135,7 @@ __webpack_async_result__();
 
 /***/ }),
 
-/***/ 8147:
+/***/ 9312:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -1668,7 +2157,7 @@ function SearchResultsSpecialists_Filter({ total  }) {
 
 /***/ }),
 
-/***/ 2869:
+/***/ 3753:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
@@ -1677,8 +2166,8 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony export */ });
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(997);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _search_page_card_lastAddedProductCard__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4854);
-/* harmony import */ var _search_page_card_lastAddedServiceCard__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(56);
+/* harmony import */ var _search_page_card_lastAddedProductCard__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(659);
+/* harmony import */ var _search_page_card_lastAddedServiceCard__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(9597);
 /* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(5725);
 /* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(antd__WEBPACK_IMPORTED_MODULE_3__);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_search_page_card_lastAddedProductCard__WEBPACK_IMPORTED_MODULE_1__, _search_page_card_lastAddedServiceCard__WEBPACK_IMPORTED_MODULE_2__]);
@@ -1765,7 +2254,7 @@ __webpack_async_result__();
 
 /***/ }),
 
-/***/ 5308:
+/***/ 3484:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
@@ -1778,12 +2267,12 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5725);
 /* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(antd__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _notFound__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(5428);
-/* harmony import */ var _entities_service_service_card__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(9842);
+/* harmony import */ var _notFound__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(4188);
+/* harmony import */ var _entities_service_service_card__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(7460);
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1853);
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _shared_hooks_useScrollToNotFound__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(3213);
-/* harmony import */ var _search_page_filter_search_results_services_filter__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(7618);
+/* harmony import */ var _shared_hooks_useScrollToNotFound__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(1004);
+/* harmony import */ var _search_page_filter_search_results_services_filter__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(5424);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_notFound__WEBPACK_IMPORTED_MODULE_3__, _entities_service_service_card__WEBPACK_IMPORTED_MODULE_4__, _search_page_filter_search_results_services_filter__WEBPACK_IMPORTED_MODULE_7__]);
 ([_notFound__WEBPACK_IMPORTED_MODULE_3__, _entities_service_service_card__WEBPACK_IMPORTED_MODULE_4__, _search_page_filter_search_results_services_filter__WEBPACK_IMPORTED_MODULE_7__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
@@ -1911,7 +2400,7 @@ __webpack_async_result__();
 
 /***/ }),
 
-/***/ 5786:
+/***/ 8602:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
@@ -1924,12 +2413,12 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5725);
 /* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(antd__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _search_page_filter_search_results_specialists_filter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8147);
-/* harmony import */ var _notFound__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(5428);
+/* harmony import */ var _search_page_filter_search_results_specialists_filter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(9312);
+/* harmony import */ var _notFound__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(4188);
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1853);
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _shared_hooks_useScrollToNotFound__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(3213);
-/* harmony import */ var _entities_seller_search_seller_card__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(1272);
+/* harmony import */ var _shared_hooks_useScrollToNotFound__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(1004);
+/* harmony import */ var _entities_seller_search_seller_card__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(8269);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_notFound__WEBPACK_IMPORTED_MODULE_4__, _entities_seller_search_seller_card__WEBPACK_IMPORTED_MODULE_7__]);
 ([_notFound__WEBPACK_IMPORTED_MODULE_4__, _entities_seller_search_seller_card__WEBPACK_IMPORTED_MODULE_7__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
@@ -2059,437 +2548,7 @@ __webpack_async_result__();
 
 /***/ }),
 
-/***/ 4117:
-/***/ ((module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
-/* harmony export */   "getServerSideProps": () => (/* binding */ getServerSideProps)
-/* harmony export */ });
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(997);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6689);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1853);
-/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1664);
-/* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(next_link__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var next_head__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(968);
-/* harmony import */ var next_head__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(next_head__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _components_nextImagecard__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(7216);
-/* harmony import */ var _components_elements_search_page_details_products__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(2134);
-/* harmony import */ var _shared_hooks_useDebounce__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(114);
-/* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(5725);
-/* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(antd__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _components_elements_search_page_details_services__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(5308);
-/* harmony import */ var _components_elements_search_page_details_specialists__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(5786);
-/* harmony import */ var _shared_utilities_useResponsive__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(4903);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(6022);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(react_redux__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _components_elements_search_page_details_search_page_side__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(2869);
-/* harmony import */ var _shared_hooks_useFApi__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(4333);
-/* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(9752);
-/* harmony import */ var _repositories_api__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(598);
-/* harmony import */ var _repositories_useApi__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(4013);
-/* harmony import */ var _shared_utilities_device_id__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(3714);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_components_elements_search_page_details_products__WEBPACK_IMPORTED_MODULE_6__, _components_elements_search_page_details_services__WEBPACK_IMPORTED_MODULE_9__, _components_elements_search_page_details_specialists__WEBPACK_IMPORTED_MODULE_10__, _components_elements_search_page_details_search_page_side__WEBPACK_IMPORTED_MODULE_13__, _shared_hooks_useFApi__WEBPACK_IMPORTED_MODULE_14__, _tanstack_react_query__WEBPACK_IMPORTED_MODULE_15__, _repositories_api__WEBPACK_IMPORTED_MODULE_16__, _repositories_useApi__WEBPACK_IMPORTED_MODULE_17__, _shared_utilities_device_id__WEBPACK_IMPORTED_MODULE_18__]);
-([_components_elements_search_page_details_products__WEBPACK_IMPORTED_MODULE_6__, _components_elements_search_page_details_services__WEBPACK_IMPORTED_MODULE_9__, _components_elements_search_page_details_specialists__WEBPACK_IMPORTED_MODULE_10__, _components_elements_search_page_details_search_page_side__WEBPACK_IMPORTED_MODULE_13__, _shared_hooks_useFApi__WEBPACK_IMPORTED_MODULE_14__, _tanstack_react_query__WEBPACK_IMPORTED_MODULE_15__, _repositories_api__WEBPACK_IMPORTED_MODULE_16__, _repositories_useApi__WEBPACK_IMPORTED_MODULE_17__, _shared_utilities_device_id__WEBPACK_IMPORTED_MODULE_18__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-const Search_Results = ({ keyword , productsInitialData , servicesInitialData , sellersInitialData ,  })=>{
-    console.log({
-        productsInitialData
-    });
-    const inputEl = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(null);
-    const router = (0,next_router__WEBPACK_IMPORTED_MODULE_2__.useRouter)();
-    const { 0: searchTerm , 1: setSearchTerm  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(keyword || "");
-    const debouncedSearchTerm = (0,_shared_hooks_useDebounce__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Z)(searchTerm, 1000);
-    const { query  } = (0,next_router__WEBPACK_IMPORTED_MODULE_2__.useRouter)();
-    const { isDesktop  } = (0,_shared_utilities_useResponsive__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .Z)();
-    const pageRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(null);
-    const { isLoggedIn  } = (0,react_redux__WEBPACK_IMPORTED_MODULE_12__.useSelector)((state)=>state.auth);
-    const tab = router.query.tab || "1";
-    const topServicesQuery = new URLSearchParams({
-        limit: 6,
-        ...(query.direction || query.ts_direction) && tab !== "1" && {
-            direction: query.direction || query.ts_direction
-        },
-        ...query.keyword && !query.direction && !query.ts_direction && tab !== "1" && {
-            search: query.keyword
-        }
-    });
-    const { data: topServices , isLoading: topServicesLoading  } = (0,_shared_hooks_useFApi__WEBPACK_IMPORTED_MODULE_14__/* .useFGet */ .oh)([
-        "top-services",
-        topServicesQuery.toString()
-    ], `customer/popular-services?${topServicesQuery.toString()}`);
-    const { data: lastProducts , isLoading: lastProductsLoading  } = (0,_tanstack_react_query__WEBPACK_IMPORTED_MODULE_15__.useQuery)({
-        queryKey: [
-            `last-products`
-        ],
-        queryFn: async ()=>{
-            const res = await _repositories_api__WEBPACK_IMPORTED_MODULE_16__/* .api.get */ .hi.get(`customer/last-added?limit=10`);
-            return res.data;
-        }
-    });
-    const dynamicCreateBtnLink = isLoggedIn ? "/order/create" : "/auth/login?returnUrl=" + encodeURIComponent("/order/create");
-    const createBtn = ()=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-            className: "w-100",
-            children: isDesktop && /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((next_link__WEBPACK_IMPORTED_MODULE_3___default()), {
-                href: dynamicCreateBtnLink,
-                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("a", {
-                    children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                        className: "Search_Results_not_found_btn w-100 text-center py-3",
-                        children: "Buyurtma yaratish"
-                    })
-                })
-            })
-        });
-    const handleSetRouterQuery = (currentTab)=>{
-        const omitKeys = [
-            "direction",
-            "ts_direction",
-            "page",
-            "offset",
-            "limit",
-            "category",
-            "parentCategory",
-            "service_parent",
-            "file_type",
-            "order_by",
-            "page_from",
-            "page_to", 
-        ];
-        const newQueries = Object.fromEntries(Object.entries(router.query).filter(([key])=>!omitKeys.includes(key)));
-        router.push({
-            pathname: router.pathname,
-            query: {
-                ...newQueries,
-                keyword: debouncedSearchTerm,
-                tab: currentTab,
-                type: currentTab == "1" ? "file" : "all"
-            }
-        });
-    };
-    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(()=>{
-        if (pageRef.current) {
-            pageRef.current.scrollIntoView({
-                behavior: "smooth"
-            });
-        } else {
-            window.scrollIntoView({
-                behavior: "smooth"
-            });
-        }
-    }, [
-        tab
-    ]);
-    const handleClearInput = ()=>{
-        setSearchTerm("");
-        inputEl.current.value = "";
-    };
-    const handleChangeTab = (value)=>{
-        handleSetRouterQuery(value);
-    };
-    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(()=>{
-        if (debouncedSearchTerm !== router.query.keyword) {
-            // When a new search term is entered, reset pagination and filter params
-            const omitKeys = [
-                "page",
-                "offset",
-                "similar_documents"
-            ];
-            const newQueries = Object.fromEntries(Object.entries(router.query).filter(([key])=>!omitKeys.includes(key)));
-            router.push({
-                pathname: router.pathname,
-                query: {
-                    ...newQueries,
-                    keyword: debouncedSearchTerm
-                }
-            });
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [
-        debouncedSearchTerm
-    ]);
-    const clearTextView = /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
-        className: "ps-form__action",
-        children: searchTerm ? /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("p", {
-            className: "ps-form__action_search_btn m-auto cursor-pointer",
-            onClick: handleClearInput,
-            children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("svg", {
-                xmlns: "http://www.w3.org/2000/svg",
-                width: "14",
-                height: "14",
-                viewBox: "0 0 24 24",
-                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("path", {
-                    fill: "#7B7B7B",
-                    d: "M18.3 5.71a1 1 0 0 0-1.41 0L12 10.59 7.11 5.7a1 1 0 0 0-1.41 1.41L10.59 12l-4.89 4.89a1 1 0 0 0 1.41 1.41L12 13.41l4.89 4.89a1 1 0 0 0 1.41-1.41L13.41 12l4.89-4.89a1 1 0 0 0 0-1.4Z"
-                })
-            })
-        }) : /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("p", {
-            className: "ps-form__action_search_btn m-auto",
-            children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("svg", {
-                xmlns: "http://www.w3.org/2000/svg",
-                width: "12",
-                height: "13",
-                viewBox: "0 0 12 13",
-                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("path", {
-                    d: "M9.47006 9.13465L12 11.6646L11.1646 12.5L8.63465 9.97006C7.72497 10.6978 6.57133 11.1332 5.31661 11.1332C2.38184 11.1332 0 8.75138 0 5.81661C0 2.88184 2.38184 0.5 5.31661 0.5C8.25138 0.5 10.6332 2.88184 10.6332 5.81661C10.6332 7.07133 10.1978 8.22497 9.47006 9.13465ZM8.28487 8.69632C9.00722 7.95188 9.45175 6.93641 9.45175 5.81661C9.45175 3.53194 7.60127 1.68147 5.31661 1.68147C3.03194 1.68147 1.18147 3.53194 1.18147 5.81661C1.18147 8.10127 3.03194 9.95175 5.31661 9.95175C6.43641 9.95175 7.45188 9.50722 8.19632 8.78487L8.28487 8.69632Z",
-                    fill: "#7B7B7B"
-                })
-            })
-        })
-    });
-    const sideElements = /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_elements_search_page_details_search_page_side__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .Z, {
-        createBtn: createBtn,
-        topServices: topServices,
-        topServicesLoading: topServicesLoading,
-        lastProducts: lastProducts,
-        lastProductsLoading: lastProductsLoading
-    });
-    const tabItems = [
-        {
-            key: "1",
-            label: "Mahsulotlar",
-            children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_elements_search_page_details_products__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .Z, {
-                children: sideElements,
-                initialData: productsInitialData
-            })
-        },
-        {
-            key: "2",
-            label: "Xizmatlar",
-            children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_elements_search_page_details_services__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Z, {
-                children: sideElements,
-                initialData: servicesInitialData
-            })
-        },
-        {
-            key: "3",
-            label: "Mutahasislar",
-            children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_elements_search_page_details_specialists__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .Z, {
-                children: sideElements,
-                initialData: sellersInitialData
-            })
-        }, 
-    ];
-    return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-        ref: pageRef,
-        className: "global_search_results",
-        children: [
-            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)((next_head__WEBPACK_IMPORTED_MODULE_4___default()), {
-                children: [
-                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("title", {
-                        children: keyword ? `“${keyword}”` : "Soff.uz - Qidiruv natijalar"
-                    }),
-                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("meta", {
-                        name: "robots",
-                        content: "index, follow"
-                    }),
-                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("meta", {
-                        name: "description",
-                        content: keyword ? `“${keyword}” bo‘yicha topilgan natijalar. Soff.uz orqali kerakli bo'lgan raqamli mahsulotlarni yuklab olishingiz mumkin` : "Soff.uz orqali kerakli bo'lgan raqamli mahsulotlarni yuklab olishingiz mumkin"
-                    })
-                ]
-            }),
-            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("nav", {
-                className: "global_navbar",
-                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                    className: "container d-flex align-items-center",
-                    children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                        className: "d-flex align-items-center gap-5 width_full_screen",
-                        children: [
-                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((next_link__WEBPACK_IMPORTED_MODULE_3___default()), {
-                                href: "/",
-                                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("a", {
-                                    className: "ps-logo",
-                                    children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_nextImagecard__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z, {
-                                        url: "/static/img/soff/logo-dark.png",
-                                        className: "logoo",
-                                        width: "120px",
-                                        height: "50px"
-                                    })
-                                })
-                            }),
-                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                                className: "ps-form--quick-search",
-                                children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                                    style: {
-                                        background: "white"
-                                    },
-                                    className: keyword === "" ? "ps-form__input" : "ps-form__input active_search_input",
-                                    children: [
-                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("input", {
-                                            ref: inputEl,
-                                            autoFocus: true,
-                                            className: keyword === "" ? "form-control input2" : "input1 form-control active_search_input",
-                                            type: "text",
-                                            value: searchTerm,
-                                            placeholder: "Izlayotgan mahsulotingizni toping...",
-                                            onChange: (e)=>setSearchTerm(e.target.value),
-                                            style: {
-                                                width: "calc(100% - 30px)"
-                                            }
-                                        }),
-                                        clearTextView
-                                    ]
-                                })
-                            })
-                        ]
-                    })
-                })
-            }),
-            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                className: "container ",
-                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_8__.Tabs, {
-                    className: "order_tabs",
-                    destroyInactiveTabPane: true,
-                    activeKey: tab,
-                    onChange: handleChangeTab,
-                    items: tabItems
-                })
-            })
-        ]
-    });
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Search_Results);
-async function getServerSideProps(context) {
-    const { keyword ="" , page =1 , tab ="1" , type ="all" , category ="" , parentCategory ="" , order_by ="" , direction ="" , limit =20 , offset =0 , category_id ="" , service_parent ="" , file_type ="" , page_from ="" , page_to ="" , similar_documents ="" ,  } = context.query;
-    const deviceId = (0,_shared_utilities_device_id__WEBPACK_IMPORTED_MODULE_18__/* .getOrCreateDeviceId */ .n)({
-        req: context.req,
-        res: context.res
-    });
-    const servicesQuery = new URLSearchParams({
-        ...category_id && {
-            category_id
-        },
-        ...direction && {
-            direction
-        },
-        limit,
-        offset
-    });
-    const fetchJson = async (url)=>{
-        try {
-            const res = await fetch(url);
-            if (!res.ok) throw new Error("Failed to fetch");
-            return await res.json();
-        } catch (err) {
-            return {
-                error: err.message
-            };
-        }
-    };
-    // ✅ Yangi filterlar qo‘shildi
-    const searchUrl = `${_repositories_useApi__WEBPACK_IMPORTED_MODULE_17__/* .baseUrlUseApi */ .q}customer/same-google-search/?limit=50${page ? `&page=${page}` : ""}${keyword ? `&search=${keyword}` : ""}${type ? `&type=${type}` : ""}${category ? `&category=${category}` : ""}${order_by ? `&order_by=${order_by}` : ""}${file_type ? `&file_type=${file_type}` : ""}${page_from ? `&page_from=${page_from}` : ""}${page_to ? `&page_to=${page_to}` : ""}${similar_documents ? `&similar_documents=${similar_documents}` : ""}`;
-    const servicesUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/customer?${servicesQuery.toString()}&search=${keyword}${service_parent ? `&category_id=${service_parent}` : ""}`;
-    const sellersUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/users/sellers?limit=${limit}&offset=${offset}&search=${keyword}`;
-    const restQueries = {
-        fourChildData: null,
-        childCategoryData: null,
-        searchData: null,
-        keyword,
-        page,
-        type,
-        category,
-        order_by,
-        error: null,
-        lastProducts: null,
-        service: null,
-        serviceParent: null,
-        serviceChild: null,
-        sellers: null
-    };
-    switch(tab){
-        case "1":
-            {
-                let productsInitialData = null;
-                try {
-                    const productsFetch = await fetch(searchUrl, {
-                        headers: {
-                            "X-Device-ID": deviceId
-                        }
-                    });
-                    productsInitialData = await productsFetch.json();
-                } catch (error) {
-                    console.error("Error fetching products:", error);
-                }
-                const searchError = productsInitialData?.error || null;
-                return {
-                    props: {
-                        ...restQueries,
-                        error: searchError,
-                        productsInitialData: productsInitialData?.results ? productsInitialData : null
-                    }
-                };
-            }
-        case "2":
-            {
-                const servicesInitialData = await fetchJson(servicesUrl);
-                return {
-                    props: {
-                        ...restQueries,
-                        error: null,
-                        servicesInitialData
-                    }
-                };
-            }
-        case "3":
-            {
-                const sellersInitialData = await fetchJson(sellersUrl);
-                return {
-                    props: {
-                        ...restQueries,
-                        sellersInitialData
-                    }
-                };
-            }
-        default:
-            {
-                const [productsInitialData1, servicesInitialData1, sellersInitialData1, ] = await Promise.all([
-                    fetchJson(searchUrl),
-                    fetchJson(servicesUrl),
-                    fetchJson(sellersUrl), 
-                ]);
-                const searchError1 = productsInitialData1?.error || null;
-                return {
-                    props: {
-                        ...restQueries,
-                        error: searchError1,
-                        productsInitialData: productsInitialData1?.results ? productsInitialData1 : null,
-                        servicesInitialData: servicesInitialData1,
-                        sellersInitialData: sellersInitialData1
-                    }
-                };
-            }
-    }
-}
-
-__webpack_async_result__();
-} catch(e) { __webpack_async_result__(e); } });
-
-/***/ }),
-
-/***/ 114:
+/***/ 6138:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -2497,7 +2556,7 @@ __webpack_async_result__();
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6689);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _useTimeManager__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5913);
+/* harmony import */ var _useTimeManager__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7567);
 
 
 function useDebounce(value, delay) {
@@ -2520,7 +2579,7 @@ function useDebounce(value, delay) {
 
 /***/ }),
 
-/***/ 2770:
+/***/ 8458:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -2528,7 +2587,7 @@ function useDebounce(value, delay) {
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6689);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _useTimeManager__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5913);
+/* harmony import */ var _useTimeManager__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7567);
 
 
 const useMounted = (timer)=>{
@@ -2548,7 +2607,7 @@ const useMounted = (timer)=>{
 
 /***/ }),
 
-/***/ 3213:
+/***/ 1004:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -2556,7 +2615,7 @@ const useMounted = (timer)=>{
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6689);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _useTimeManager__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5913);
+/* harmony import */ var _useTimeManager__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7567);
 
 
 function useScrollToNotFound(ref, showResults, data) {
@@ -2581,7 +2640,7 @@ function useScrollToNotFound(ref, showResults, data) {
 
 /***/ }),
 
-/***/ 3714:
+/***/ 1401:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
@@ -2629,6 +2688,13 @@ module.exports = require("@ant-design/icons");
 /***/ ((module) => {
 
 module.exports = require("@ant-design/icons/ShareAltOutlined");
+
+/***/ }),
+
+/***/ 8097:
+/***/ ((module) => {
+
+module.exports = require("@sentry/nextjs");
 
 /***/ }),
 
@@ -2989,7 +3055,8 @@ module.exports = import("uuid");;
 var __webpack_require__ = require("../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [676,1664,5675,4846,4246,5913,740,3328,1602,5177,1042,9277,6466,5265,4333,598,4013,414,1635,7403,1272,5428,7216], () => (__webpack_exec__(4117)));
+var __webpack_exports__ = __webpack_require__.X(0, [676,1664,5675,6017,8550,7567,9075,280,75,5419,1080,1708,2653,2789,7440,5168,9410,9245,7460,7971,8269,4188,9583], () => (__webpack_exec__(1427)));
 module.exports = __webpack_exports__;
 
 })();
+//# sourceMappingURL=search-page.js.map

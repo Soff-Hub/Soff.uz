@@ -21,6 +21,7 @@
         "@ckeditor/ckeditor5-react": "^11.0.0",
         "@react-oauth/google": "^0.12.1",
         "@reduxjs/toolkit": "^2.3.0",
+        "@sentry/nextjs": "^10.29.0",
         "@tanstack/react-query": "^4.36.1",
         "ant-design": "^1.0.0",
         "antd": "^5.21.1",

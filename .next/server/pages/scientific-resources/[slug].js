@@ -1,80 +1,46 @@
+;{try{(function(){var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof globalThis?globalThis:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="896a7846-fe95-460c-ad9b-c4b48726951e",e._sentryDebugIdIdentifier="sentry-dbid-896a7846-fe95-460c-ad9b-c4b48726951e");})();}catch(e){}};
 (() => {
 var exports = {};
 exports.id = 3992;
 exports.ids = [3992];
 exports.modules = {
 
-/***/ 325:
-/***/ ((module) => {
-
-// Exports
-module.exports = {
-	"readyProducts": "style_readyProducts__yjuab",
-	"block": "style_block__GVofM",
-	"title": "style_title__VnSgG",
-	"title2": "style_title2__mGQwJ",
-	"catalogSeeAll": "style_catalogSeeAll__tdlBu"
-};
-
-
-/***/ }),
-
-/***/ 6074:
-/***/ ((module) => {
-
-// Exports
-module.exports = {
-	"catalogSectionBlock": "style_catalogSectionBlock__W9FUs",
-	"catalogHealine": "style_catalogHealine__JjrjA",
-	"catalogWrapper": "style_catalogWrapper__GATnu",
-	"catalogLabel": "style_catalogLabel__5Nu52",
-	"catalogSubLabel": "style_catalogSubLabel__koSK_",
-	"catalogSeeAll": "style_catalogSeeAll__Ci3_k",
-	"catalogCardsSection": "style_catalogCardsSection__1z_LL",
-	"howItWorksSection": "style_howItWorksSection__kWx64",
-	"steps": "style_steps__xtHyM",
-	"stepItem": "style_stepItem__s00bI",
-	"readyProducts": "style_readyProducts__usVJn",
-	"block": "style_block__R24x4",
-	"title": "style_title__q9r8D",
-	"title2": "style_title2__zpPsy",
-	"backdrop": "style_backdrop__EKn_z"
-};
-
-
-/***/ }),
-
-/***/ 5775:
+/***/ 3692:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ ProductCategoryScreen),
-/* harmony export */   "getServerSideProps": () => (/* binding */ getServerSideProps)
+/* harmony export */   "default": () => (/* binding */ pageWrapperTemplate),
+/* harmony export */   "getServerSideProps": () => (/* binding */ getServerSideProps),
+/* harmony export */   "getStaticProps": () => (/* binding */ getStaticProps)
 /* harmony export */ });
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(997);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6689);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7109);
-/* harmony import */ var _components_shared_headers_Meta__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(4796);
-/* harmony import */ var _components_partials_category_ProductsByCategory__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1131);
-/* harmony import */ var _components_elements_ScientificResourcesFilterSection__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(5237);
+/* harmony import */ var _widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8454);
+/* harmony import */ var _components_shared_headers_Meta__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1218);
+/* harmony import */ var _components_partials_category_ProductsByCategory__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(6184);
+/* harmony import */ var _components_elements_ScientificResourcesFilterSection__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(2766);
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(1853);
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _repositories_useApi__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(4013);
-/* harmony import */ var _widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(6074);
-/* harmony import */ var _widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var _repositories_useApi__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(9410);
+/* harmony import */ var _widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(8505);
+/* harmony import */ var _widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_14__);
 /* harmony import */ var next_image__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(5675);
 /* harmony import */ var next_image__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(next_image__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _components_elements_product_filter_section_ProductFilterSection__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(1455);
-/* harmony import */ var _widgets_gray_card__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(4674);
+/* harmony import */ var _components_elements_product_filter_section_ProductFilterSection__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(131);
+/* harmony import */ var _widgets_gray_card__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(4308);
 /* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(9752);
-/* harmony import */ var _shared_utilities_utils__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(7403);
+/* harmony import */ var _shared_utilities_utils__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(7971);
+/* harmony import */ var _sentry_nextjs__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(8097);
+/* harmony import */ var _sentry_nextjs__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_sentry_nextjs__WEBPACK_IMPORTED_MODULE_13__);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_2__, _components_partials_category_ProductsByCategory__WEBPACK_IMPORTED_MODULE_4__, _repositories_useApi__WEBPACK_IMPORTED_MODULE_7__, _components_elements_product_filter_section_ProductFilterSection__WEBPACK_IMPORTED_MODULE_9__, _tanstack_react_query__WEBPACK_IMPORTED_MODULE_11__]);
 ([_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_2__, _components_partials_category_ProductsByCategory__WEBPACK_IMPORTED_MODULE_4__, _repositories_useApi__WEBPACK_IMPORTED_MODULE_7__, _components_elements_product_filter_section_ProductFilterSection__WEBPACK_IMPORTED_MODULE_9__, _tanstack_react_query__WEBPACK_IMPORTED_MODULE_11__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+
+
 
 
 
@@ -135,7 +101,7 @@ function ProductCategoryScreen({ productsData , fourChildData , childCategoryDat
             const res = await fetch(`${_repositories_useApi__WEBPACK_IMPORTED_MODULE_7__/* .baseUrlUseApi */ .q}customer/same-google-search/?${params.toString()}`);
             return await res.json();
         },
-        enabled: similarDocumentsEnabled && router.isReady
+        enabled: similarDocumentsEnabled
     });
     // Transform similar documents to match ProductCard expected structure
     const transformSimilarDocument = (item)=>{
@@ -206,7 +172,7 @@ function ProductCategoryScreen({ productsData , fourChildData , childCategoryDat
     const fullTitle = title && subTitle ? `${title} - ${subTitle}` : title ? title : "Ilmiy ishlar kategoriyasi";
     return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .Z, {
         children: [
-            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_shared_headers_Meta__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .Z, {
+            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_shared_headers_Meta__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .Z, {
                 title: fullTitle,
                 description: fullTitle + " bo‘yicha eng yaxshi raqamli mahsulotlarni Soff.uz da toping. Ishonchli sotuvchilar va sifatli kontent!",
                 image: "https://soff.uz/static/img/ilmiy-ishlar-2.png",
@@ -271,15 +237,15 @@ function ProductCategoryScreen({ productsData , fourChildData , childCategoryDat
                 ],
                 author: "Soff.uz"
             }),
-            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_elements_product_filter_section_ProductFilterSection__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Z, {
+            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_elements_product_filter_section_ProductFilterSection__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Z, {
                 isFile: true,
                 child: childCategoryData?.results,
                 parent: fourChildData?.results,
                 path: "/scientific-resources/"
             }),
-            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
                 className: "ps-page--shop container p-lg-10 p-l-0",
-                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_partials_category_ProductsByCategory__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z, {
+                children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_partials_category_ProductsByCategory__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z, {
                     data: mergedData,
                     page: Number(queryPage),
                     handlePagination: (number)=>{
@@ -288,42 +254,42 @@ function ProductCategoryScreen({ productsData , fourChildData , childCategoryDat
                     isLoading: false
                 })
             }),
-            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                className: (_widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_13___default().catalogSectionBlock),
+            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+                className: (_widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_14___default().catalogSectionBlock),
                 children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
                     className: "container mx-auto px-5",
                     children: [
                         /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("section", {
-                            className: (_widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_13___default().howItWorksSection),
+                            className: (_widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_14___default().howItWorksSection),
                             children: [
-                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
                                     className: "d-flex justify-content-center my-5",
-                                    children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((next_image__WEBPACK_IMPORTED_MODULE_8___default()), {
+                                    children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)((next_image__WEBPACK_IMPORTED_MODULE_8___default()), {
                                         width: 30,
                                         height: 30,
                                         src: "/static/img/star.svg",
                                         alt: "starts"
                                     })
                                 }),
-                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("h2", {
+                                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", {
                                     children: "Tayyor mahsulotlardan foydalanish qanday ishlaydi?"
                                 }),
                                 /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                                    className: (_widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_13___default().steps),
+                                    className: (_widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_14___default().steps),
                                     children: [
                                         /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                                            className: (_widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_13___default().stepItem),
+                                            className: (_widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_14___default().stepItem),
                                             children: [
-                                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("img", {
+                                                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("img", {
                                                     src: "/static/img/catalogMenu.png",
                                                     alt: "starts"
                                                 }),
                                                 /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
                                                     children: [
-                                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("h3", {
+                                                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
                                                             children: "Qidiring va tanlang"
                                                         }),
-                                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("p", {
+                                                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
                                                             children: "Katalogdan yoki qidiruv orqali sizga kerakli tayyor mahsulotni toping."
                                                         })
                                                     ]
@@ -331,18 +297,18 @@ function ProductCategoryScreen({ productsData , fourChildData , childCategoryDat
                                             ]
                                         }),
                                         /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                                            className: (_widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_13___default().stepItem),
+                                            className: (_widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_14___default().stepItem),
                                             children: [
-                                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("img", {
+                                                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("img", {
                                                     src: "/static/img/catalogCoin.png",
                                                     alt: "starts"
                                                 }),
                                                 /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
                                                     children: [
-                                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("h3", {
+                                                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
                                                             children: "Sotib oling"
                                                         }),
-                                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("p", {
+                                                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
                                                             children: "Xavfsiz to‘lov tizimi orqali mahsulotni sotib oling — narx va shartlar oldindan ko‘rinadi."
                                                         })
                                                     ]
@@ -350,18 +316,18 @@ function ProductCategoryScreen({ productsData , fourChildData , childCategoryDat
                                             ]
                                         }),
                                         /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                                            className: (_widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_13___default().stepItem),
+                                            className: (_widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_14___default().stepItem),
                                             children: [
-                                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("img", {
+                                                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("img", {
                                                     src: "/static/img/catalogSecure.png",
                                                     alt: "starts"
                                                 }),
                                                 /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
                                                     children: [
-                                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("h3", {
+                                                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
                                                             children: "Yuklab oling va foydalaning"
                                                         }),
-                                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("p", {
+                                                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
                                                             children: "Mahsulotni darhol yuklab oling va ishlatishni boshlang."
                                                         })
                                                     ]
@@ -372,7 +338,7 @@ function ProductCategoryScreen({ productsData , fourChildData , childCategoryDat
                                 })
                             ]
                         }),
-                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_widgets_gray_card__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .Z, {
+                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_widgets_gray_card__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .Z, {
                             title: "Kerakli mahsulotni topa olmadingizmi? Buyurtma berishingiz mumkin.",
                             btn: "Buyurtmar berish",
                             link: "/orders?direction=scientific_work"
@@ -383,7 +349,7 @@ function ProductCategoryScreen({ productsData , fourChildData , childCategoryDat
         ]
     });
 }
-async function getServerSideProps(context) {
+async function getServerSideProps$1(context) {
     const { slug , page =1 , parentCategory ="" , childCategory ="" , search ="" , category ="" , content_extensions =[] , price_from ="" , price_to ="" , from_page ="" , to_page ="" ,  } = context.query;
     const queryParams = new URLSearchParams({
         direction: "file",
@@ -454,12 +420,106 @@ async function getServerSideProps(context) {
     };
 }
 
+var serverComponentModule = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    default: ProductCategoryScreen,
+    getServerSideProps: getServerSideProps$1
+});
+
+/*
+ * This file is a template for the code which will be substituted when our webpack loader handles non-API files in the
+ * `pages/` directory.
+ *
+ * We use `__SENTRY_WRAPPING_TARGET_FILE__.cjs` as a placeholder for the path to the file being wrapped. Because it's not a real package,
+ * this causes both TS and ESLint to complain, hence the pragma comments below.
+ */
+
+
+const userPageModule = serverComponentModule ;
+
+const pageComponent = userPageModule ? userPageModule.default : undefined;
+
+const origGetInitialProps = pageComponent ? pageComponent.getInitialProps : undefined;
+const origGetStaticProps = userPageModule ? userPageModule.getStaticProps : undefined;
+const origGetServerSideProps = userPageModule ? userPageModule.getServerSideProps : undefined;
+
+// Rollup will aggressively tree-shake what it perceives to be unused properties
+// on objects. Because the key that's used to index into this object (/scientific-resources/[slug])
+// is replaced during bundling, Rollup can't see that these properties are in fact
+// used. Using `Object.freeze` signals to Rollup that it should not tree-shake
+// this object.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const getInitialPropsWrappers = Object.freeze({
+  '/_app': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_13__.wrapAppGetInitialPropsWithSentry,
+  '/_document': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_13__.wrapDocumentGetInitialPropsWithSentry,
+  '/_error': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_13__.wrapErrorGetInitialPropsWithSentry,
+});
+
+const getInitialPropsWrapper = getInitialPropsWrappers['/scientific-resources/[slug]'] || _sentry_nextjs__WEBPACK_IMPORTED_MODULE_13__.wrapGetInitialPropsWithSentry;
+
+if (pageComponent && typeof origGetInitialProps === 'function') {
+  pageComponent.getInitialProps = getInitialPropsWrapper(origGetInitialProps) ;
+}
+
+const getStaticProps =
+  typeof origGetStaticProps === 'function'
+    ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_13__.wrapGetStaticPropsWithSentry(origGetStaticProps, '/scientific-resources/[slug]')
+    : undefined;
+const getServerSideProps =
+  typeof origGetServerSideProps === 'function'
+    ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_13__.wrapGetServerSidePropsWithSentry(origGetServerSideProps, '/scientific-resources/[slug]')
+    : undefined;
+
+const pageWrapperTemplate = pageComponent ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_13__.wrapPageComponentWithSentry(pageComponent ) : pageComponent;
+
+
+
 __webpack_async_result__();
 } catch(e) { __webpack_async_result__(e); } });
 
 /***/ }),
 
-/***/ 4674:
+/***/ 1624:
+/***/ ((module) => {
+
+// Exports
+module.exports = {
+	"readyProducts": "style_readyProducts__yjuab",
+	"block": "style_block__GVofM",
+	"title": "style_title__VnSgG",
+	"title2": "style_title2__mGQwJ",
+	"catalogSeeAll": "style_catalogSeeAll__tdlBu"
+};
+
+
+/***/ }),
+
+/***/ 8505:
+/***/ ((module) => {
+
+// Exports
+module.exports = {
+	"catalogSectionBlock": "style_catalogSectionBlock__W9FUs",
+	"catalogHealine": "style_catalogHealine__JjrjA",
+	"catalogWrapper": "style_catalogWrapper__GATnu",
+	"catalogLabel": "style_catalogLabel__5Nu52",
+	"catalogSubLabel": "style_catalogSubLabel__koSK_",
+	"catalogSeeAll": "style_catalogSeeAll__Ci3_k",
+	"catalogCardsSection": "style_catalogCardsSection__1z_LL",
+	"howItWorksSection": "style_howItWorksSection__kWx64",
+	"steps": "style_steps__xtHyM",
+	"stepItem": "style_stepItem__s00bI",
+	"readyProducts": "style_readyProducts__usVJn",
+	"block": "style_block__R24x4",
+	"title": "style_title__q9r8D",
+	"title2": "style_title2__zpPsy",
+	"backdrop": "style_backdrop__EKn_z"
+};
+
+
+/***/ }),
+
+/***/ 4308:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -470,7 +530,7 @@ __webpack_async_result__();
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6689);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(325);
+/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1624);
 /* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6022);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_redux__WEBPACK_IMPORTED_MODULE_2__);
@@ -539,6 +599,14 @@ module.exports = require("@ant-design/icons");
 
 "use strict";
 module.exports = require("@react-oauth/google");
+
+/***/ }),
+
+/***/ 8097:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("@sentry/nextjs");
 
 /***/ }),
 
@@ -877,7 +945,8 @@ module.exports = import("react-icons/lu");;
 var __webpack_require__ = require("../../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [676,1664,5675,5152,4846,4246,7697,4796,5913,740,3328,1602,5177,6156,4013,1131,2930,1455,7403,5237], () => (__webpack_exec__(5775)));
+var __webpack_exports__ = __webpack_require__.X(0, [676,1664,5675,5152,6017,8550,4747,1218,7567,9075,280,75,5419,6316,9410,6184,910,131,7971,2766], () => (__webpack_exec__(3692)));
 module.exports = __webpack_exports__;
 
 })();
+//# sourceMappingURL=[slug].js.map

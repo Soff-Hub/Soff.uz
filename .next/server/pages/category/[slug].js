@@ -1,3 +1,4 @@
+;{try{(function(){var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof globalThis?globalThis:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="4079fb1a-48a3-44e6-9c0a-55d47d0d0ddc",e._sentryDebugIdIdentifier="sentry-dbid-4079fb1a-48a3-44e6-9c0a-55d47d0d0ddc");})();}catch(e){}};
 "use strict";
 (() => {
 var exports = {};
@@ -5,7 +6,240 @@ exports.id = 8024;
 exports.ids = [8024];
 exports.modules = {
 
-/***/ 1478:
+/***/ 9902:
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ pageWrapperTemplate),
+/* harmony export */   "getServerSideProps": () => (/* binding */ getServerSideProps),
+/* harmony export */   "getStaticProps": () => (/* binding */ getStaticProps)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(997);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6689);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8454);
+/* harmony import */ var _components_shared_headers_Meta__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1218);
+/* harmony import */ var _components_partials_category_ProductsByCategory__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(6184);
+/* harmony import */ var _components_elements_ScientificResourcesFilterSection__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(2766);
+/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(1853);
+/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _repositories_useApi__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(9410);
+/* harmony import */ var _components_elements_AISoffiaPresentation__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(4855);
+/* harmony import */ var _components_elements_CategoryFilterSecion__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(4807);
+/* harmony import */ var _components_elements_CategorySearchSection__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(5926);
+/* harmony import */ var _sentry_nextjs__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(8097);
+/* harmony import */ var _sentry_nextjs__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_sentry_nextjs__WEBPACK_IMPORTED_MODULE_11__);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_2__, _components_partials_category_ProductsByCategory__WEBPACK_IMPORTED_MODULE_4__, _repositories_useApi__WEBPACK_IMPORTED_MODULE_7__]);
+([_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_2__, _components_partials_category_ProductsByCategory__WEBPACK_IMPORTED_MODULE_4__, _repositories_useApi__WEBPACK_IMPORTED_MODULE_7__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+
+
+
+
+
+
+
+
+
+
+
+
+
+function ProductCategoryScreen({ productsData , fourChildData , childCategoryData , slug , childCategory , page ,  }) {
+    const router = (0,next_router__WEBPACK_IMPORTED_MODULE_6__.useRouter)();
+    const handlePageChange = (newPage)=>{
+        router.push({
+            pathname: router.pathname,
+            query: {
+                ...router.query,
+                page: newPage
+            }
+        });
+    };
+    const title = (0,_components_elements_ScientificResourcesFilterSection__WEBPACK_IMPORTED_MODULE_5__/* .getTitleFromSlug */ .h)(fourChildData?.results, slug);
+    const subTitle = (0,_components_elements_ScientificResourcesFilterSection__WEBPACK_IMPORTED_MODULE_5__/* .getTitleFromSlug */ .h)(childCategoryData?.results, childCategory);
+    const fullTitle = title && subTitle ? `${title} - ${subTitle}` : title ? title : "Ilmiy ishlar kategoriyasi";
+    return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .Z, {
+        children: [
+            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_shared_headers_Meta__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .Z, {
+                title: fullTitle,
+                description: fullTitle + " bo‘yicha eng yaxshi raqamli mahsulotlarni Soff.uz da toping. Ishonchli sotuvchilar va sifatli kontent!",
+                image: "https://soff.uz/static/img/ilmiy-ishlar-2.png",
+                keywords: [
+                    {
+                        name: "Biznes rejalar"
+                    },
+                    {
+                        name: "Taqdimotlar"
+                    },
+                    {
+                        name: "Kurs ishlari"
+                    },
+                    {
+                        name: "Diplom ishlari"
+                    },
+                    {
+                        name: "Referatlar"
+                    },
+                    {
+                        name: "Mustaqil ishlar"
+                    },
+                    {
+                        name: "Labaratoriya Ishlari"
+                    },
+                    {
+                        name: "Dissertatsiya ishlari"
+                    },
+                    {
+                        name: "Testlar"
+                    },
+                    {
+                        name: "O'quv qo'llanmalar"
+                    },
+                    {
+                        name: "MustDars ishlanmalaraqil"
+                    },
+                    {
+                        name: "Tarqatma materiallar"
+                    },
+                    {
+                        name: "Amaliy ishlar"
+                    },
+                    {
+                        name: "Blankalar"
+                    },
+                    {
+                        name: "Ijodiy Ishlar"
+                    },
+                    {
+                        name: "Loyihalar"
+                    },
+                    {
+                        name: "Plakatlar"
+                    },
+                    {
+                        name: "Elektron kitoblar"
+                    },
+                    {
+                        name: "Dasturlash tillari"
+                    }, 
+                ],
+                author: "Soff.uz"
+            }),
+            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                className: "ps-page--shop container p-lg-1",
+                children: [
+                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_elements_AISoffiaPresentation__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Z, {}),
+                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_elements_CategorySearchSection__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .Z, {}),
+                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_elements_CategoryFilterSecion__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Z, {
+                        breacrumb: fourChildData,
+                        count: productsData?.count,
+                        isLoading: false,
+                        childCategoryData: childCategoryData
+                    }),
+                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_partials_category_ProductsByCategory__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z, {
+                        data: productsData,
+                        page: page,
+                        handlePagination: handlePageChange,
+                        isLoading: false
+                    })
+                ]
+            })
+        ]
+    });
+}
+// ✅ getServerSideProps to'g'rilangan
+async function getServerSideProps$1(context) {
+    const { slug ="" , page =1 , childCategory ="" , search ="" ,  } = context.query;
+    const fetchJson = async (url)=>{
+        const res = await fetch(url);
+        if (!res.ok) return null;
+        return res.json();
+    };
+    // Agar slug === 'all' bo‘lsa, category bo‘sh bo‘lishi kerak
+    const categoryParam = slug === "all" ? "" : childCategory || slug;
+    const productsUrl = `${_repositories_useApi__WEBPACK_IMPORTED_MODULE_7__/* .baseUrlUseApi */ .q}customer/products/?direction=file&category=${categoryParam}&page=${page}&page_size=48&search=${search}`;
+    const fourChildUrl = `${_repositories_useApi__WEBPACK_IMPORTED_MODULE_7__/* .baseUrlUseApi */ .q}customer/four-child?direction=file`;
+    const childCategoryUrl = slug && slug !== "all" ? `${_repositories_useApi__WEBPACK_IMPORTED_MODULE_7__/* .baseUrlUseApi */ .q}customer/four-child?direction=file&parent__slug=${slug}` : null;
+    const [productsData, fourChildData, childCategoryData] = await Promise.all([
+        fetchJson(productsUrl),
+        fetchJson(fourChildUrl),
+        childCategoryUrl ? fetchJson(childCategoryUrl) : Promise.resolve(null), 
+    ]);
+    return {
+        props: {
+            productsData: productsData || null,
+            fourChildData: fourChildData || null,
+            childCategoryData: childCategoryData || null,
+            slug,
+            childCategory,
+            page
+        }
+    };
+}
+
+var serverComponentModule = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    default: ProductCategoryScreen,
+    getServerSideProps: getServerSideProps$1
+});
+
+/*
+ * This file is a template for the code which will be substituted when our webpack loader handles non-API files in the
+ * `pages/` directory.
+ *
+ * We use `__SENTRY_WRAPPING_TARGET_FILE__.cjs` as a placeholder for the path to the file being wrapped. Because it's not a real package,
+ * this causes both TS and ESLint to complain, hence the pragma comments below.
+ */
+
+
+const userPageModule = serverComponentModule ;
+
+const pageComponent = userPageModule ? userPageModule.default : undefined;
+
+const origGetInitialProps = pageComponent ? pageComponent.getInitialProps : undefined;
+const origGetStaticProps = userPageModule ? userPageModule.getStaticProps : undefined;
+const origGetServerSideProps = userPageModule ? userPageModule.getServerSideProps : undefined;
+
+// Rollup will aggressively tree-shake what it perceives to be unused properties
+// on objects. Because the key that's used to index into this object (/category/[slug])
+// is replaced during bundling, Rollup can't see that these properties are in fact
+// used. Using `Object.freeze` signals to Rollup that it should not tree-shake
+// this object.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const getInitialPropsWrappers = Object.freeze({
+  '/_app': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_11__.wrapAppGetInitialPropsWithSentry,
+  '/_document': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_11__.wrapDocumentGetInitialPropsWithSentry,
+  '/_error': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_11__.wrapErrorGetInitialPropsWithSentry,
+});
+
+const getInitialPropsWrapper = getInitialPropsWrappers['/category/[slug]'] || _sentry_nextjs__WEBPACK_IMPORTED_MODULE_11__.wrapGetInitialPropsWithSentry;
+
+if (pageComponent && typeof origGetInitialProps === 'function') {
+  pageComponent.getInitialProps = getInitialPropsWrapper(origGetInitialProps) ;
+}
+
+const getStaticProps =
+  typeof origGetStaticProps === 'function'
+    ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_11__.wrapGetStaticPropsWithSentry(origGetStaticProps, '/category/[slug]')
+    : undefined;
+const getServerSideProps =
+  typeof origGetServerSideProps === 'function'
+    ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_11__.wrapGetServerSidePropsWithSentry(origGetServerSideProps, '/category/[slug]')
+    : undefined;
+
+const pageWrapperTemplate = pageComponent ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_11__.wrapPageComponentWithSentry(pageComponent ) : pageComponent;
+
+
+
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } });
+
+/***/ }),
+
+/***/ 4855:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -18,7 +252,7 @@ exports.modules = {
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5725);
 /* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(antd__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _widgets_header_HeaderActions_HeaderAIIcon__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(2690);
+/* harmony import */ var _widgets_header_HeaderActions_HeaderAIIcon__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(5431);
 
 
 
@@ -220,7 +454,7 @@ const AISoffiaPresentationNotFoundProduct = ()=>{
 
 /***/ }),
 
-/***/ 8452:
+/***/ 4807:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -533,7 +767,7 @@ const CategoryFilterSecion = ({ breacrumb , count , isLoading , childCategoryDat
 
 /***/ }),
 
-/***/ 7334:
+/***/ 5926:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -547,7 +781,7 @@ const CategoryFilterSecion = ({ breacrumb , count , isLoading , childCategoryDat
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(6689);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _shared_hooks_useTimeManager__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(5913);
+/* harmony import */ var _shared_hooks_useTimeManager__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(7567);
 
 
 
@@ -607,184 +841,17 @@ function CategorySearchSection() {
 
 /***/ }),
 
-/***/ 6419:
-/***/ ((module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ ProductCategoryScreen),
-/* harmony export */   "getServerSideProps": () => (/* binding */ getServerSideProps)
-/* harmony export */ });
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(997);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6689);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7109);
-/* harmony import */ var _components_shared_headers_Meta__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(4796);
-/* harmony import */ var _components_partials_category_ProductsByCategory__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1131);
-/* harmony import */ var _components_elements_ScientificResourcesFilterSection__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(5237);
-/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(1853);
-/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _repositories_useApi__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(4013);
-/* harmony import */ var _components_elements_AISoffiaPresentation__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(1478);
-/* harmony import */ var _components_elements_CategoryFilterSecion__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(8452);
-/* harmony import */ var _components_elements_CategorySearchSection__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(7334);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_2__, _components_partials_category_ProductsByCategory__WEBPACK_IMPORTED_MODULE_4__, _repositories_useApi__WEBPACK_IMPORTED_MODULE_7__]);
-([_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_2__, _components_partials_category_ProductsByCategory__WEBPACK_IMPORTED_MODULE_4__, _repositories_useApi__WEBPACK_IMPORTED_MODULE_7__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
-
-
-
-
-
-
-
-
-
-
-
-function ProductCategoryScreen({ productsData , fourChildData , childCategoryData , slug , childCategory , page ,  }) {
-    const router = (0,next_router__WEBPACK_IMPORTED_MODULE_6__.useRouter)();
-    const handlePageChange = (newPage)=>{
-        router.push({
-            pathname: router.pathname,
-            query: {
-                ...router.query,
-                page: newPage
-            }
-        });
-    };
-    const title = (0,_components_elements_ScientificResourcesFilterSection__WEBPACK_IMPORTED_MODULE_5__/* .getTitleFromSlug */ .h)(fourChildData?.results, slug);
-    const subTitle = (0,_components_elements_ScientificResourcesFilterSection__WEBPACK_IMPORTED_MODULE_5__/* .getTitleFromSlug */ .h)(childCategoryData?.results, childCategory);
-    const fullTitle = title && subTitle ? `${title} - ${subTitle}` : title ? title : "Ilmiy ishlar kategoriyasi";
-    return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .Z, {
-        children: [
-            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_shared_headers_Meta__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .Z, {
-                title: fullTitle,
-                description: fullTitle + " bo‘yicha eng yaxshi raqamli mahsulotlarni Soff.uz da toping. Ishonchli sotuvchilar va sifatli kontent!",
-                image: "https://soff.uz/static/img/ilmiy-ishlar-2.png",
-                keywords: [
-                    {
-                        name: "Biznes rejalar"
-                    },
-                    {
-                        name: "Taqdimotlar"
-                    },
-                    {
-                        name: "Kurs ishlari"
-                    },
-                    {
-                        name: "Diplom ishlari"
-                    },
-                    {
-                        name: "Referatlar"
-                    },
-                    {
-                        name: "Mustaqil ishlar"
-                    },
-                    {
-                        name: "Labaratoriya Ishlari"
-                    },
-                    {
-                        name: "Dissertatsiya ishlari"
-                    },
-                    {
-                        name: "Testlar"
-                    },
-                    {
-                        name: "O'quv qo'llanmalar"
-                    },
-                    {
-                        name: "MustDars ishlanmalaraqil"
-                    },
-                    {
-                        name: "Tarqatma materiallar"
-                    },
-                    {
-                        name: "Amaliy ishlar"
-                    },
-                    {
-                        name: "Blankalar"
-                    },
-                    {
-                        name: "Ijodiy Ishlar"
-                    },
-                    {
-                        name: "Loyihalar"
-                    },
-                    {
-                        name: "Plakatlar"
-                    },
-                    {
-                        name: "Elektron kitoblar"
-                    },
-                    {
-                        name: "Dasturlash tillari"
-                    }, 
-                ],
-                author: "Soff.uz"
-            }),
-            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                className: "ps-page--shop container p-lg-1",
-                children: [
-                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_elements_AISoffiaPresentation__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Z, {}),
-                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_elements_CategorySearchSection__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .Z, {}),
-                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_elements_CategoryFilterSecion__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Z, {
-                        breacrumb: fourChildData,
-                        count: productsData?.count,
-                        isLoading: false,
-                        childCategoryData: childCategoryData
-                    }),
-                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_partials_category_ProductsByCategory__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z, {
-                        data: productsData,
-                        page: page,
-                        handlePagination: handlePageChange,
-                        isLoading: false
-                    })
-                ]
-            })
-        ]
-    });
-}
-// ✅ getServerSideProps to'g'rilangan
-async function getServerSideProps(context) {
-    const { slug ="" , page =1 , childCategory ="" , search ="" ,  } = context.query;
-    const fetchJson = async (url)=>{
-        const res = await fetch(url);
-        if (!res.ok) return null;
-        return res.json();
-    };
-    // Agar slug === 'all' bo‘lsa, category bo‘sh bo‘lishi kerak
-    const categoryParam = slug === "all" ? "" : childCategory || slug;
-    const productsUrl = `${_repositories_useApi__WEBPACK_IMPORTED_MODULE_7__/* .baseUrlUseApi */ .q}customer/products/?direction=file&category=${categoryParam}&page=${page}&page_size=48&search=${search}`;
-    const fourChildUrl = `${_repositories_useApi__WEBPACK_IMPORTED_MODULE_7__/* .baseUrlUseApi */ .q}customer/four-child?direction=file`;
-    const childCategoryUrl = slug && slug !== "all" ? `${_repositories_useApi__WEBPACK_IMPORTED_MODULE_7__/* .baseUrlUseApi */ .q}customer/four-child?direction=file&parent__slug=${slug}` : null;
-    const [productsData, fourChildData, childCategoryData] = await Promise.all([
-        fetchJson(productsUrl),
-        fetchJson(fourChildUrl),
-        childCategoryUrl ? fetchJson(childCategoryUrl) : Promise.resolve(null), 
-    ]);
-    return {
-        props: {
-            productsData: productsData || null,
-            fourChildData: fourChildData || null,
-            childCategoryData: childCategoryData || null,
-            slug,
-            childCategory,
-            page
-        }
-    };
-}
-
-__webpack_async_result__();
-} catch(e) { __webpack_async_result__(e); } });
-
-/***/ }),
-
 /***/ 6999:
 /***/ ((module) => {
 
 module.exports = require("@react-oauth/google");
+
+/***/ }),
+
+/***/ 8097:
+/***/ ((module) => {
+
+module.exports = require("@sentry/nextjs");
 
 /***/ }),
 
@@ -1075,7 +1142,8 @@ module.exports = import("jwt-decode");;
 var __webpack_require__ = require("../../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [676,1664,5675,5152,4846,4246,7697,4796,5913,740,3328,1602,5177,6156,4013,1131,5237,2690], () => (__webpack_exec__(6419)));
+var __webpack_exports__ = __webpack_require__.X(0, [676,1664,5675,5152,6017,8550,4747,1218,7567,9075,280,75,5419,6316,9410,6184,2766,5431], () => (__webpack_exec__(9902)));
 module.exports = __webpack_exports__;
 
 })();
+//# sourceMappingURL=[slug].js.map
