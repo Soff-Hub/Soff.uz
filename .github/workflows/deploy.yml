@@ -30,7 +30,9 @@ jobs:
                   cache: 'npm' # Built-in npm caching
 
             - name: Install dependencies
-              run: npm ci --prefer-offline --no-audit --no-fund
+              run:
+                  npm ci --prefer-offline --no-audit --no-fund
+                  --legacy-peer-deps
 
             - name: Cache Next.js build
               uses: actions/cache@v4
