@@ -54,3 +54,16 @@ export default function WebsitesPage() {
         </PageContainer>
     );
 }
+
+export async function getServerSideProps(ctx) {
+    return {
+        redirect: {
+            destination: `/websites/all${
+                ctx.resolvedUrl.includes('?')
+                    ? ctx.resolvedUrl.substring(ctx.resolvedUrl.indexOf('?'))
+                    : ''
+            }`,
+            permanent: false, // Use 302 redirect (temporary)
+        },
+    };
+}

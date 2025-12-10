@@ -54,3 +54,16 @@ export default function ThreeDModelsAndInteriorDesigns() {
         </PageContainer>
     );
 }
+
+export async function getServerSideProps(ctx) {
+    return {
+        redirect: {
+            destination: `/3d-models-and-interior-designs/all${
+                ctx.resolvedUrl.includes('?')
+                    ? ctx.resolvedUrl.substring(ctx.resolvedUrl.indexOf('?'))
+                    : ''
+            }`,
+            permanent: false, // Use 302 redirect (temporary)
+        },
+    };
+}

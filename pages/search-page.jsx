@@ -22,8 +22,8 @@ const Search_Results = ({
     productsInitialData,
     servicesInitialData,
     sellersInitialData,
+    searchUrl,
 }) => {
-    console.log({ productsInitialData });
     const inputEl = useRef(null);
     const router = useRouter();
     const [searchTerm, setSearchTerm] = useState(keyword || '');
@@ -358,7 +358,9 @@ export async function getServerSideProps(context) {
         file_type ? `&file_type=${file_type}` : ''
     }${page_from ? `&page_from=${page_from}` : ''}${
         page_to ? `&page_to=${page_to}` : ''
-    }${similar_documents ? `&similar_documents=${similar_documents}` : ''}`;
+    }${parentCategory ? `&parentCategory=${parentCategory}` : ''}${
+        similar_documents ? `&similar_documents=${similar_documents}` : ''
+    }`;
 
     const servicesUrl = `${
         process.env.NEXT_PUBLIC_FREELEANCE_URL
@@ -403,6 +405,7 @@ export async function getServerSideProps(context) {
                 props: {
                     ...restQueries,
                     error: searchError,
+                    searchUrl,
                     productsInitialData: productsInitialData?.results
                         ? productsInitialData
                         : null,

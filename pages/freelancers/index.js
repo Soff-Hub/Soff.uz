@@ -81,7 +81,10 @@ export async function getServerSideProps(context) {
         order = '',
     } = query;
 
-    const params = new URLSearchParams();
+    const params = new URLSearchParams({
+        limit: limit.toString(),
+        offset: offset.toString(),
+    });
 
     const metaTags = generateMetaTags(query);
 
@@ -101,12 +104,6 @@ export async function getServerSideProps(context) {
 
     if (sort_by && (sort_by !== 'average_rating' || order === 'asc'))
         params.append('sort_by', sort_by);
-    params.append('limit', limit);
-    if (offset) {
-        params.append('offset', offset);
-    } else {
-        params.append('offset', 0);
-    }
 
     if (order) params.append('order', order);
 

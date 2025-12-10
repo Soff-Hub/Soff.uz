@@ -1,13 +1,14 @@
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 import SearchResultsProducts_Card from './search-page-card/searchResultsProducts_Card';
 import SearchResultsLoading from './search-page-card/searchResultsLoading';
 import { Pagination } from 'antd';
 import SearchResultsProductsFilter from './search-page-filter/search-results-products-filter';
 import { useRouter } from 'next/router';
-import NotFound, { SearchProductsNotFound } from './notFound';
+import NotFound from './notFound';
 import useScrollToNotFound from '../../../shared/hooks/useScrollToNotFound';
 import { useQuery } from '@tanstack/react-query';
 import { baseUrlUseApi } from '~/repositories/useApi';
+import useSimilarSearch from '~/shared/hooks/useSimilarSearch';
 
 const currentTab = '1';
 
@@ -15,57 +16,20 @@ export default function Search_Results_Products({
     children,
     initialData: data,
 }) {
+    const { similarDocuments, isFetchingSimilarDocuments } = useSimilarSearch({
+        defaultData: data,
+    });
     const router = useRouter();
-    const isFirstRender = useRef(true);
     const {
         type = 'file',
+        page = '1',
         category = '',
-        similar_documents,
         tab = '1',
-        page = 1,
-        keyword = '',
-        order_by = '',
-        file_type = '',
-        page_from = '',
-        page_to = '',
     } = router.query;
-
-    useEffect(() => {
-        if (isFirstRender.current) {
-            isFirstRender.current = false;
-        }
-    }, [router.query]);
 
     // NOTE: Requests Enable property
     const isRequestsEnabled = router.isReady && tab === currentTab;
     const isChildCategoryEnabled = isRequestsEnabled && !!router.query.category;
-    const similarDocumentsEnabled = false;
-    // data?.count < 50 && Number(page) === 1;
-    const keysChangeOnSimilarDocuments = `${page}-${keyword}-${type}-${category}-${order_by}-${file_type}-${page_from}-${page_to}`;
-
-    const { data: similarDocuments, isFetching: isFetchingSimilarDocuments } =
-        useQuery({
-            queryKey: ['similar-documents', keysChangeOnSimilarDocuments],
-            queryFn: async () => {
-                const res = await fetch(
-                    `${baseUrlUseApi}customer/same-google-search/?limit=50${
-                        page ? `&page=${page}` : ''
-                    }${keyword ? `&search=${keyword}` : ''}${
-                        type ? `&type=${type}` : ''
-                    }${category ? `&category=${category}` : ''}${
-                        order_by ? `&order_by=${order_by}` : ''
-                    }${file_type ? `&file_type=${file_type}` : ''}${
-                        page_from ? `&page_from=${page_from}` : ''
-                    }${
-                        page_to ? `&page_to=${page_to}` : ''
-                    }&similar_documents=true`
-                );
-                return await res.json();
-            },
-            enabled: similarDocumentsEnabled,
-        });
-
-    console.log({ similarDocuments });
 
     const mergedData = useMemo(() => {
         return [
@@ -106,22 +70,6 @@ export default function Search_Results_Products({
 
     useScrollToNotFound(notFoundRef, showResults, data);
 
-    useEffect(() => {
-        if (similarDocuments && similarDocuments.results.length) {
-            router.push(
-                {
-                    pathname: router.pathname,
-                    query: {
-                        ...router.query,
-                        similar_documents: 'true',
-                    },
-                },
-                undefined,
-                { shallow: true }
-            );
-        }
-    }, [similarDocuments]);
-
     let resultsContent = null;
 
     if (showResults) {
@@ -142,8 +90,7 @@ export default function Search_Results_Products({
                         marginBottom: '100px',
                         marginTop: '20px',
                     }}
-                    className=""
-                    current={router.query.page || 1}
+                    current={Number(page)}
                     pageSize={50}
                     total={total}
                     onChange={(newPage) => {

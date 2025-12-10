@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import styles from './ProductFilter.module.scss';
 import {
     SearchOutlined,
@@ -9,10 +9,12 @@ import {
 import { useRouter } from 'next/router';
 import useDebounce from '~/shared/hooks/useDebounce';
 import useResponsive from '~/shared/utilities/useResponsive';
+import { baseUrlUseApi } from '~/repositories/useApi';
 import { Button, Checkbox, Drawer, Input, Select, Slider } from 'antd';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import { useDisableWindowScroll } from '~/shared/hooks/useDisableWindowScroll';
 import { LuSettings2 } from 'react-icons/lu';
+import { useQuery } from '@tanstack/react-query';
 
 export const getTitleFromSlug = (array, slug) => {
     let title = null;
@@ -25,48 +27,46 @@ export const getTitleFromSlug = (array, slug) => {
     return title;
 };
 
-const ProductFilterSection = ({ child, parent, path, isFile }) => {
-    const { query, pathname, push } = useRouter();
-    const parentRef = useRef(null);
-    const childRef = useRef(null);
+export const clearEmptyQueries = (obj) => {
+    const newObj = { ...obj };
+    Object.keys(newObj).forEach((key) => {
+        if (!String(newObj[key])) {
+            delete newObj[key];
+        }
+    });
+    return newObj;
+};
+
+const ProductFilterSection = ({ child, parent, path, isFile, title }) => {
     const [showParentArrow, setShowParentArrow] = useState(false);
     const [showChildArrow, setShowChildArrow] = useState(false);
-    const [title, setTitle] = useState('Barchasi');
-    const [sybTitle, setSybTitle] = useState('');
     const [search, setSearch] = useState(undefined);
     const [drawerOpen, setDrawerOpen] = useState(false);
+    const parentRef = useRef(null);
+    const childRef = useRef(null);
     const { isMobile } = useResponsive();
-    const [selectedCategory, setSelectedCategory] = useState();
-    const [selectedSubCategory, setSelectedSubCategory] = useState();
-    const [fileTypes, setFileTypes] = useState([]);
-    const [priceRange, setPriceRange] = useState([0, 500000]);
-    const [pageRange, setPageRange] = useState([0, 100]);
-    const { search: querySearch } = query;
-
+    const { query, push } = useRouter();
+    const { search: querySearch, parentCategory, childCategory } = query;
     const debouncedSearch = useDebounce(search, 500);
-    // Prevent body scroll when drawer is open
-    useDisableWindowScroll(drawerOpen);
 
-    const handleParent = (slug, name) => {
+    const handleParent = (slug, id) => {
+        const newQuery = clearEmptyQueries(query);
         push({
             pathname: `${path}${slug}`,
             query: {
-                ...query,
+                ...newQuery,
                 parentCategory: slug,
-                childCategory: '',
-                title: name,
+                parentCategoryId: id,
             },
         });
-        setTitle(name);
-        setSybTitle('');
     };
 
-    const handleChild = (slug, name) => {
+    const handleChild = (slug, id) => {
+        const newQuery = clearEmptyQueries(query);
         push({
             pathname: `${path}${slug}`,
-            query: { ...query, childCategory: slug, title: title },
+            query: { ...newQuery, childCategory: slug, childCategoryId: id },
         });
-        setSybTitle(name);
     };
 
     const scrollLeft = (ref) => {
@@ -95,22 +95,17 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
         if (debouncedSearch === undefined) return;
         delete query.similar_documents;
         push({
-            pathname: `${path}all`,
+            pathname: query.pathname,
             query: { ...query, search: debouncedSearch },
         });
     }, [debouncedSearch]);
 
-    useEffect(() => {
-        if (query.title) {
-            setTitle(query.title);
-        }
-    }, [query.title]);
+    useDisableWindowScroll(drawerOpen);
 
     return (
         <div className={`${styles.filter} container`}>
             <h1 className={styles.title}>
-                {(title || 'Barchasi').replace('-', ' ')}
-                {sybTitle && ` & ${sybTitle.replace(`${title}-`, ' ')}`}
+                {title ? title.split('-').join('&') : 'Barcha mahsulotlar'}
             </h1>
             <div
                 style={{
@@ -120,14 +115,12 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
                     gap: 12,
                 }}>
                 {!isMobile && (
-                    <>
-                        <Button
-                            size="large"
-                            type="primary"
-                            onClick={() => setDrawerOpen(true)}>
-                            <LuSettings2 fontSize={20} />
-                        </Button>
-                    </>
+                    <Button
+                        size="large"
+                        type="primary"
+                        onClick={() => setDrawerOpen(true)}>
+                        <LuSettings2 fontSize={20} />
+                    </Button>
                 )}
                 <div className={`${styles.searchBox} container`}>
                     <Input
@@ -159,16 +152,16 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
                     style={{
                         justifyContent: showParentArrow ? 'start' : 'center',
                     }}>
-                    {parent?.map((cat, index) => (
+                    {parent?.map((cat) => (
                         <span
-                            key={cat.slug}
-                            onClick={() => handleParent(cat?.slug, cat?.name)}
+                            key={cat.id}
+                            onClick={() => handleParent(cat.slug, cat.id)}
                             className={`${styles.parentCat} ${
-                                (query.parentCategory === cat.slug ||
+                                (parentCategory === cat.slug ||
                                     query.slug === cat.slug) &&
                                 styles.active
                             }`}>
-                            {cat?.name}
+                            {cat.name}
                         </span>
                     ))}
                 </div>
@@ -181,7 +174,7 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
             </div>
 
             {/* Child carousel */}
-            {query?.parentCategory && child?.length ? (
+            {parentCategory && child?.length ? (
                 <div className={styles.carouselTestWrapper}>
                     {showChildArrow && (
                         <LeftOutlined
@@ -198,11 +191,9 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
                         {child.map((cat) => (
                             <span
                                 key={cat.slug}
-                                onClick={() =>
-                                    handleChild(cat?.slug, cat?.name)
-                                }
+                                onClick={() => handleChild(cat?.slug, cat?.id)}
                                 className={`${styles.childCat} ${
-                                    (query.childCategory === cat.slug ||
+                                    (childCategory === cat.slug ||
                                         query.slug === cat.slug) &&
                                     styles.active
                                 }`}>
@@ -219,132 +210,226 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
                 </div>
             ) : null}
 
-            {isMobile && isFile && (
-                <>
-                    <Button
-                        type="primary"
-                        block
-                        style={{
-                            marginBottom: 30,
-                        }}
-                        onClick={() => setDrawerOpen(true)}>
-                        <LuSettings2 />
-                        Filtrlarni ochish
-                    </Button>
-                </>
+            {isMobile && (
+                <Button
+                    type="primary"
+                    block
+                    style={{
+                        marginBottom: 30,
+                    }}
+                    onClick={() => setDrawerOpen(true)}>
+                    <LuSettings2 />
+                    Filtrlarni ochish
+                </Button>
             )}
-            <Drawer
-                style={{
-                    borderRadius: isMobile ? '20px 20px 0 0' : '0',
-                }}
-                placement={isMobile ? 'bottom' : 'left'}
-                onClose={() => setDrawerOpen(false)}
+            <ProductFilterForm
                 open={drawerOpen}
-                height="90%"
-                closeIcon={
-                    <Button
-                        type="text"
-                        shape="circle"
-                        icon={
-                            <CloseOutlined
-                                style={{
-                                    fontSize: 20,
-                                    color: '#00a44f',
-                                }}
-                            />
+                onClose={() => setDrawerOpen(false)}
+                path={path}
+                isFile={isFile}
+                parent={parent}
+                child={child}
+            />
+        </div>
+    );
+};
+
+const ProductFilterForm = ({ open, onClose, path, isFile, parent, child }) => {
+    const [selectedCategory, setSelectedCategory] = useState({
+        slug: null,
+        id: null,
+    });
+    const [selectedSubCategory, setSelectedSubCategory] = useState({
+        slug: null,
+        id: null,
+    });
+    const [fileTypes, setFileTypes] = useState([]);
+    const [priceRange, setPriceRange] = useState([0, 500000]);
+    const [pageRange, setPageRange] = useState([0, 100]);
+    const isEnableChanged = useRef(false);
+    const { isMobile } = useResponsive();
+    const { query, push } = useRouter();
+
+    const isChildOptionsEnabled =
+        open &&
+        ((Boolean(selectedCategory?.slug) &&
+            selectedCategory?.slug !== query.parentCategory) ||
+            isEnableChanged.current);
+
+    const { data: childData, isFetchingChildData } = useQuery({
+        queryKey: ['child-categories', selectedCategory?.slug],
+        queryFn: async () => {
+            const res = await fetch(
+                `${baseUrlUseApi}customer/four-child?direction=file&parent__slug=${selectedCategory?.slug}`
+            );
+            isEnableChanged.current = true;
+            return await res.json();
+        },
+        enabled: isChildOptionsEnabled,
+    });
+
+    const parentOptions = useMemo(() => {
+        return parent.map((item) => ({
+            label: item.name,
+            value: item.slug,
+            id: item.id,
+        }));
+    }, [parent]);
+
+    const childOptions = useMemo(() => {
+        if (childData?.results && childData.results.length) {
+            return childData.results.map((item) => ({
+                label: item.name,
+                value: item.slug,
+                id: item.id,
+            }));
+        }
+        return child.map((item) => ({
+            label: item.name,
+            value: item.slug,
+            id: item.id,
+        }));
+    }, [child, childData]);
+
+    useEffect(() => {
+        if (open) {
+            setSelectedCategory({
+                slug: query.parentCategory,
+                id: query.parentCategoryId,
+            });
+            setSelectedSubCategory({
+                slug: query.childCategory,
+                id: query.childCategoryId,
+            });
+            setFileTypes(
+                query.content_extensions
+                    ? Array.isArray(query.content_extensions)
+                        ? query.content_extensions
+                        : [query.content_extensions]
+                    : []
+            );
+            setPriceRange([
+                query.price_from ? Number(query.price_from) : 0,
+                query.price_to ? Number(query.price_to) : 500000,
+            ]);
+            setPageRange([
+                query.from_page ? Number(query.from_page) : 0,
+                query.to_page ? Number(query.to_page) : 100,
+            ]);
+        }
+    }, [open]);
+
+    const handleSaveOnClose = () => {
+        const filters = {
+            parentCategory: selectedCategory.slug,
+            parentCategoryId: selectedCategory.id,
+            childCategory: selectedSubCategory.slug,
+            childCategoryId: selectedSubCategory.id,
+            content_extensions: fileTypes,
+            price_from: priceRange[0],
+            price_to: priceRange[1],
+            from_page: pageRange[0],
+            to_page: pageRange[1],
+        };
+
+        const newQuery = clearEmptyQueries({ ...query, ...filters });
+        push({
+            pathname: `${path}${
+                selectedSubCategory.slug || selectedCategory.slug || 'all'
+            }`,
+            query: newQuery,
+        });
+        onClose();
+    };
+
+    const handleClear = () => {
+        push({
+            pathname: `${path}all`,
+            query: {},
+        });
+        onClose();
+    };
+
+    return (
+        <Drawer
+            destroyOnClose
+            style={{
+                borderRadius: isMobile ? '20px 20px 0 0' : '0',
+            }}
+            placement={isMobile ? 'bottom' : 'left'}
+            onClose={handleSaveOnClose}
+            open={open}
+            height="90%"
+            closeIcon={
+                <Button
+                    type="text"
+                    shape="circle"
+                    icon={
+                        <CloseOutlined
+                            style={{
+                                fontSize: 20,
+                                color: '#00a44f',
+                            }}
+                        />
+                    }
+                />
+            }
+            headerStyle={{
+                flexDirection: 'column-reverse',
+                alignItems: 'flex-end',
+            }}>
+            {/* Kategoriya Select */}
+            <div style={{ marginBottom: 24 }}>
+                <h4>Kategoriya</h4>
+                <Select
+                    placeholder="Kategoriya tanlang"
+                    style={{ width: '100%' }}
+                    allowClear
+                    defaultValue={query.parentCategory || undefined}
+                    onChange={(val, valObj) => {
+                        if (!val) {
+                            setSelectedCategory(undefined);
+                        } else {
+                            setSelectedCategory({
+                                slug: valObj.slug,
+                                id: valObj.id,
+                            });
                         }
-                    />
-                }
-                headerStyle={{
-                    flexDirection: 'column-reverse',
-                    alignItems: 'flex-end',
-                }}>
-                {/* Kategoriya Select */}
+                    }}
+                    options={parentOptions}
+                    getPopupContainer={(triggerNode) => triggerNode.parentNode}
+                />
+            </div>
+
+            {/* Sub kategoriya Select */}
+            {selectedCategory?.slug && (
                 <div style={{ marginBottom: 24 }}>
-                    <h4>Kategoriya</h4>
+                    <h4>Sub kategoriya</h4>
                     <Select
-                        placeholder="Kategoriya tanlang"
+                        loading={isFetchingChildData}
+                        placeholder="Sub kategoriyani tanlang"
                         style={{ width: '100%' }}
                         allowClear
-                        value={query.parentCategory || undefined}
-                        onChange={(val) => {
+                        defaultValue={query.childCategory || undefined}
+                        onChange={(val, valObj) => {
                             if (!val) {
-                                setSelectedCategory(undefined);
-                                setSybTitle('');
-                                push({
-                                    pathname: `${path}all`,
-                                    query: {
-                                        ...query,
-                                        parentCategory: '',
-                                        childCategory: '',
-                                        title: 'Barchasi',
-                                    },
-                                });
-                                setTitle('Barchasi');
+                                setSelectedSubCategory(undefined);
                             } else {
-                                setSelectedCategory(val);
-                                // shu yerda handleParent ishlatyapmiz
-                                const category = parent.find(
-                                    (item) => item.slug === val
-                                );
-                                if (category)
-                                    handleParent(category.slug, category.name);
+                                setSelectedSubCategory({
+                                    slug: val,
+                                    id: valObj.id,
+                                });
                             }
                         }}
-                        options={parent.map((item) => ({
-                            label: item.name,
-                            value: item.slug,
-                        }))}
+                        options={childOptions}
                         getPopupContainer={(triggerNode) =>
                             triggerNode.parentNode
                         }
                     />
                 </div>
+            )}
 
-                {/* Sub kategoriya Select */}
-                {query?.parentCategory && (
-                    <div style={{ marginBottom: 24 }}>
-                        <h4>Sub kategoriya</h4>
-                        <Select
-                            placeholder="Sub kategoriyani tanlang"
-                            style={{ width: '100%' }}
-                            allowClear
-                            value={query.childCategory || undefined}
-                            onChange={(val) => {
-                                if (!val) {
-                                    setSelectedSubCategory(undefined);
-                                    push({
-                                        pathname,
-                                        query: {
-                                            ...query,
-                                            childCategory: '',
-                                            title,
-                                        },
-                                    });
-                                    setSybTitle('');
-                                } else {
-                                    setSelectedSubCategory(val);
-                                    const subCategory = child.find(
-                                        (item) => item.slug === val
-                                    );
-                                    if (subCategory)
-                                        handleChild(
-                                            subCategory.slug,
-                                            subCategory.name
-                                        );
-                                }
-                            }}
-                            options={child.map((item) => ({
-                                label: item.name,
-                                value: item.slug,
-                            }))}
-                            getPopupContainer={(triggerNode) =>
-                                triggerNode.parentNode
-                            }
-                        />
-                    </div>
-                )}
-
+            {isFile && (
                 <div style={{ marginBottom: 24 }}>
                     <h4>Fayl turlari</h4>
                     <Checkbox.Group
@@ -364,30 +449,28 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
                         ]}
                     />
                 </div>
+            )}
 
-                <div style={{ marginBottom: 24 }}>
-                    <h4>Narx oralig‘i</h4>
-                    <div
-                        style={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                        }}>
-                        <span>
-                            {formatCurrencyWithSpace(priceRange[0])} so'm
-                        </span>
-                        <span>
-                            {formatCurrencyWithSpace(priceRange[1])} so'm
-                        </span>
-                    </div>
-                    <Slider
-                        range
-                        min={0}
-                        max={1000000}
-                        value={priceRange}
-                        onChange={(value) => setPriceRange(value)}
-                    />
+            <div style={{ marginBottom: 24 }}>
+                <h4>Narx oralig‘i</h4>
+                <div
+                    style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                    }}>
+                    <span>{formatCurrencyWithSpace(priceRange[0])} so'm</span>
+                    <span>{formatCurrencyWithSpace(priceRange[1])} so'm</span>
                 </div>
+                <Slider
+                    range
+                    min={0}
+                    max={1000000}
+                    value={priceRange}
+                    onChange={(value) => setPriceRange(value)}
+                />
+            </div>
 
+            {isFile && (
                 <div>
                     <h4>Varoqlar oralig‘i</h4>
                     <div
@@ -406,63 +489,18 @@ const ProductFilterSection = ({ child, parent, path, isFile }) => {
                         onChange={(value) => setPageRange(value)}
                     />
                 </div>
+            )}
 
-                <div style={{ display: 'flex', gap: 12, marginTop: 24 }}>
-                    <Button
-                        block
-                        onClick={() => {
-                            setSelectedCategory(undefined);
-                            setSelectedSubCategory(undefined);
-                            setFileTypes([]);
-                            setPriceRange([0, 500000]);
-                            setPageRange([0, 100]);
-                            setTitle('Barchasi');
-                            setSybTitle('');
+            <div style={{ display: 'flex', gap: 12, marginTop: 24 }}>
+                <Button block onClick={handleClear}>
+                    Filtrni tozalash
+                </Button>
 
-                            push({
-                                pathname: `${path}all`,
-                                query: {
-                                    ...query,
-                                    parentCategory: '',
-                                    childCategory: '',
-                                    title: 'Barchasi',
-                                },
-                            });
-
-                            setDrawerOpen(false);
-                        }}>
-                        Filtrni tozalash
-                    </Button>
-
-                    <Button
-                        type="primary"
-                        block
-                        onClick={() => {
-                            const filters = {
-                                category:
-                                    selectedSubCategory ||
-                                    selectedCategory ||
-                                    '',
-                                content_extensions: fileTypes,
-                                price_from: priceRange[0],
-                                price_to: priceRange[1],
-                                from_page: pageRange[0],
-                                to_page: pageRange[1],
-                            };
-
-                            push({
-                                pathname,
-                                query: { ...query, ...filters },
-                            });
-
-                            setDrawerOpen(false);
-                        }}>
-                        Filtrni qo‘llash
-                    </Button>
-                </div>
-            </Drawer>
-        </div>
+                <Button type="primary" block onClick={handleSaveOnClose}>
+                    Filtrni qo‘llash
+                </Button>
+            </div>
+        </Drawer>
     );
 };
-
 export default ProductFilterSection;

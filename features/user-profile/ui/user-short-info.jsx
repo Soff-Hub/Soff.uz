@@ -65,7 +65,6 @@ const UserShortInfo = ({ seller }) => {
     const isFreelancer = seller?.has_portfolio && seller?.has_service;
     const isOpenToAcceptOrders = seller?.accepting_orders;
     const isOrderingOpen = isFreelancer && isOpenToAcceptOrders;
-
     const lastActive = useMemo(
         () =>
             seller?.last_login

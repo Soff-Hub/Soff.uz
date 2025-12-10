@@ -55,3 +55,16 @@ export default function DesignDevelopmentsPage() {
         </PageContainer>
     );
 }
+
+export async function getServerSideProps(ctx) {
+    return {
+        redirect: {
+            destination: `/design-developments/all${
+                ctx.resolvedUrl.includes('?')
+                    ? ctx.resolvedUrl.substring(ctx.resolvedUrl.indexOf('?'))
+                    : ''
+            }`,
+            permanent: false, // Use 302 redirect (temporary)
+        },
+    };
+}

@@ -232,7 +232,6 @@ function SearchResultsProductsFilter({ total, childData }) {
     return (
         <div className="Search_Results_Products_form_box">
             {mutationsInForm.hasMutation ? (
-                // <Badge.Ribbon text="Faol filterlar" placement="start">
                 <Card className="search_results_filter_card">
                     <div className="filter_card_action_btns">
                         <div className="filter_indicators">
@@ -287,8 +286,7 @@ function SearchResultsProductsFilter({ total, childData }) {
                         </Badge>
                     </div>
                 </Card>
-            ) : // </Badge.Ribbon>
-            null}
+            ) : null}
             <div className="search_results_indicator">
                 <p className="countProduct text-nowrap m-0">
                     {`${total} ta mahsulot topildi`}
