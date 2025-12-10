@@ -1,4 +1,4 @@
-;{try{(function(){var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof globalThis?globalThis:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="896a7846-fe95-460c-ad9b-c4b48726951e",e._sentryDebugIdIdentifier="sentry-dbid-896a7846-fe95-460c-ad9b-c4b48726951e");})();}catch(e){}};
+;{try{(function(){var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof globalThis?globalThis:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="225442e3-78d8-4570-adc5-dfa0a0e166fb",e._sentryDebugIdIdentifier="sentry-dbid-225442e3-78d8-4570-adc5-dfa0a0e166fb");})();}catch(e){}};
 (() => {
 var exports = {};
 exports.id = 3992;
@@ -27,18 +27,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(1853);
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _repositories_useApi__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(9410);
-/* harmony import */ var _widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(8505);
-/* harmony import */ var _widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var _widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(8505);
+/* harmony import */ var _widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_13__);
 /* harmony import */ var next_image__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(5675);
 /* harmony import */ var next_image__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(next_image__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _components_elements_product_filter_section_ProductFilterSection__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(131);
 /* harmony import */ var _widgets_gray_card__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(4308);
-/* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(9752);
-/* harmony import */ var _shared_utilities_utils__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(7971);
-/* harmony import */ var _sentry_nextjs__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(8097);
-/* harmony import */ var _sentry_nextjs__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_sentry_nextjs__WEBPACK_IMPORTED_MODULE_13__);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_2__, _components_partials_category_ProductsByCategory__WEBPACK_IMPORTED_MODULE_4__, _repositories_useApi__WEBPACK_IMPORTED_MODULE_7__, _components_elements_product_filter_section_ProductFilterSection__WEBPACK_IMPORTED_MODULE_9__, _tanstack_react_query__WEBPACK_IMPORTED_MODULE_11__]);
-([_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_2__, _components_partials_category_ProductsByCategory__WEBPACK_IMPORTED_MODULE_4__, _repositories_useApi__WEBPACK_IMPORTED_MODULE_7__, _components_elements_product_filter_section_ProductFilterSection__WEBPACK_IMPORTED_MODULE_9__, _tanstack_react_query__WEBPACK_IMPORTED_MODULE_11__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+/* harmony import */ var _shared_hooks_useSimilarSearch__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(3356);
+/* harmony import */ var _sentry_nextjs__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(8097);
+/* harmony import */ var _sentry_nextjs__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_sentry_nextjs__WEBPACK_IMPORTED_MODULE_12__);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_2__, _components_partials_category_ProductsByCategory__WEBPACK_IMPORTED_MODULE_4__, _repositories_useApi__WEBPACK_IMPORTED_MODULE_7__, _components_elements_product_filter_section_ProductFilterSection__WEBPACK_IMPORTED_MODULE_9__, _shared_hooks_useSimilarSearch__WEBPACK_IMPORTED_MODULE_11__]);
+([_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_2__, _components_partials_category_ProductsByCategory__WEBPACK_IMPORTED_MODULE_4__, _repositories_useApi__WEBPACK_IMPORTED_MODULE_7__, _components_elements_product_filter_section_ProductFilterSection__WEBPACK_IMPORTED_MODULE_9__, _shared_hooks_useSimilarSearch__WEBPACK_IMPORTED_MODULE_11__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
 
 
@@ -54,110 +53,78 @@ var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_wid
 
 
 
-
-function ProductCategoryScreen({ productsData , fourChildData , childCategoryData , parentCategory , childCategory , page ,  }) {
-    const router = (0,next_router__WEBPACK_IMPORTED_MODULE_6__.useRouter)();
-    const isFirstRender = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(true);
-    console.log("productsData:", productsData);
-    const { page: queryPage = page || 1 , search ="" , category ="" , content_extensions =[] , price_from ="" , price_to ="" , from_page ="" , to_page ="" , similar_documents ,  } = router.query;
-    // Determine category parameter (same logic as getServerSideProps)
-    const categoryParam = childCategory || parentCategory || category;
-    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(()=>{
-        if (isFirstRender.current) {
-            isFirstRender.current = false;
-        }
-    }, [
-        router.query
-    ]);
-    // Similar documents enabled when count < 50 and page === 1
-    const similarDocumentsEnabled = false;
-    // productsData?.count < 50 && Number(queryPage) === 1;
-    // Build query key for similar documents
-    const fileTypes = Array.isArray(content_extensions) ? content_extensions : content_extensions ? [
-        content_extensions
-    ] : [];
-    const keysChangeOnSimilarDocuments = `${queryPage}-${search}-file-${categoryParam}-${fileTypes.join("-")}-${price_from}-${price_to}-${from_page}-${to_page}`;
-    const { data: similarDocuments , isFetching: isFetchingSimilarDocuments  } = (0,_tanstack_react_query__WEBPACK_IMPORTED_MODULE_11__.useQuery)({
-        queryKey: [
-            "similar-documents-scientific",
-            keysChangeOnSimilarDocuments, 
-        ],
-        queryFn: async ()=>{
-            const params = new URLSearchParams({
-                limit: "50",
-                page: queryPage,
-                type: "file",
-                similar_documents: "true"
-            });
-            if (search) params.append("search", search);
-            if (categoryParam) params.append("category", categoryParam);
-            if (fileTypes.length) {
-                fileTypes.forEach((ext)=>params.append("file_type", ext));
-            }
-            if (price_from) params.append("price_from", price_from);
-            if (price_to) params.append("price_to", price_to);
-            if (from_page) params.append("page_from", from_page);
-            if (to_page) params.append("page_to", to_page);
-            const res = await fetch(`${_repositories_useApi__WEBPACK_IMPORTED_MODULE_7__/* .baseUrlUseApi */ .q}customer/same-google-search/?${params.toString()}`);
-            return await res.json();
+const metaProps = {
+    image: "https://soff.uz/static/img/ilmiy-ishlar-2.png",
+    keywords: [
+        {
+            name: "Biznes rejalar"
         },
-        enabled: similarDocumentsEnabled
-    });
-    // Transform similar documents to match ProductCard expected structure
-    const transformSimilarDocument = (item)=>{
-        // Check if item is already in the correct format (from products API)
-        if (item.document) {
-            return item;
-        }
-        // Transform from same-google-search API format to ProductCard format
-        return {
-            ...item,
-            poster_url: item.poster || item.poster_url,
-            price: parseFloat(item.discount_price) || 0,
-            discount_price: parseFloat(item.discount_price) || 0,
-            views_count: item.views_count || 0,
-            document: {
-                file_type: item.file_type || ".zip",
-                file_size: (0,_shared_utilities_utils__WEBPACK_IMPORTED_MODULE_12__/* .formatFileSize */ .sS)(item.file_size || 0),
-                page_count: item.page_count || 0,
-                content_type: item.content_type || "file"
-            }
-        };
-    };
-    const mergedData = (0,react__WEBPACK_IMPORTED_MODULE_1__.useMemo)(()=>{
-        const initialResults = productsData && productsData.results || [];
-        const similarResults = isFetchingSimilarDocuments ? [] : similarDocuments && similarDocuments.results || [];
-        // Transform both SSR initial results and client-side similar documents
-        // to match ProductCard structure (both may come from same-google-search API)
-        const transformedInitialResults = initialResults.map(transformSimilarDocument);
-        const transformedSimilarResults = similarResults.map(transformSimilarDocument);
-        return {
-            results: [
-                ...transformedInitialResults,
-                ...transformedSimilarResults, 
-            ],
-            count: (productsData?.count || 0) + (similarDocuments?.count || 0)
-        };
-    }, [
-        productsData,
-        similarDocuments,
-        isFetchingSimilarDocuments
-    ]);
-    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(()=>{
-        if (similarDocuments && similarDocuments.results && similarDocuments.results.length > 0) {
-            router.push({
-                pathname: router.pathname,
-                query: {
-                    ...router.query,
-                    similar_documents: "true"
-                }
-            }, undefined, {
-                shallow: true
-            });
-        }
-    }, [
-        similarDocuments
-    ]);
+        {
+            name: "Taqdimotlar"
+        },
+        {
+            name: "Kurs ishlari"
+        },
+        {
+            name: "Diplom ishlari"
+        },
+        {
+            name: "Referatlar"
+        },
+        {
+            name: "Mustaqil ishlar"
+        },
+        {
+            name: "Labaratoriya Ishlari"
+        },
+        {
+            name: "Dissertatsiya ishlari"
+        },
+        {
+            name: "Testlar"
+        },
+        {
+            name: "O'quv qo'llanmalar"
+        },
+        {
+            name: "MustDars ishlanmalaraqil"
+        },
+        {
+            name: "Tarqatma materiallar"
+        },
+        {
+            name: "Amaliy ishlar"
+        },
+        {
+            name: "Blankalar"
+        },
+        {
+            name: "Ijodiy Ishlar"
+        },
+        {
+            name: "Loyihalar"
+        },
+        {
+            name: "Plakatlar"
+        },
+        {
+            name: "Elektron kitoblar"
+        },
+        {
+            name: "Dasturlash tillari"
+        }, 
+    ],
+    author: "Soff.uz"
+};
+const type = "file";
+const defaultTitle = "Ilmiy ishlar kategoriyasi";
+function ProductCategoryScreen({ productsData , fourChildData , childCategoryData , parentCategory , childCategory , page ,  }) {
+    // NOTE: changed temporarily to productsData to avoid issues with search results
+    // const { mergedData } = useSimilarSearch({
+    //     defaultData: productsData,
+    //     defaultType: 'file',
+    // });
+    const router = (0,next_router__WEBPACK_IMPORTED_MODULE_6__.useRouter)();
     const handlePageChange = (newPage)=>{
         router.push({
             pathname: router.pathname,
@@ -169,76 +136,18 @@ function ProductCategoryScreen({ productsData , fourChildData , childCategoryDat
     };
     const title = (0,_components_elements_ScientificResourcesFilterSection__WEBPACK_IMPORTED_MODULE_5__/* .getTitleFromSlug */ .h)(fourChildData?.results, parentCategory);
     const subTitle = (0,_components_elements_ScientificResourcesFilterSection__WEBPACK_IMPORTED_MODULE_5__/* .getTitleFromSlug */ .h)(childCategoryData?.results, childCategory);
-    const fullTitle = title && subTitle ? `${title} - ${subTitle}` : title ? title : "Ilmiy ishlar kategoriyasi";
+    const fullTitle = title && subTitle ? `${title} - ${subTitle}` : title;
+    const finalTitle = fullTitle || defaultTitle;
     return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .Z, {
         children: [
             /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_shared_headers_Meta__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .Z, {
-                title: fullTitle,
-                description: fullTitle + " bo‘yicha eng yaxshi raqamli mahsulotlarni Soff.uz da toping. Ishonchli sotuvchilar va sifatli kontent!",
-                image: "https://soff.uz/static/img/ilmiy-ishlar-2.png",
-                keywords: [
-                    {
-                        name: "Biznes rejalar"
-                    },
-                    {
-                        name: "Taqdimotlar"
-                    },
-                    {
-                        name: "Kurs ishlari"
-                    },
-                    {
-                        name: "Diplom ishlari"
-                    },
-                    {
-                        name: "Referatlar"
-                    },
-                    {
-                        name: "Mustaqil ishlar"
-                    },
-                    {
-                        name: "Labaratoriya Ishlari"
-                    },
-                    {
-                        name: "Dissertatsiya ishlari"
-                    },
-                    {
-                        name: "Testlar"
-                    },
-                    {
-                        name: "O'quv qo'llanmalar"
-                    },
-                    {
-                        name: "MustDars ishlanmalaraqil"
-                    },
-                    {
-                        name: "Tarqatma materiallar"
-                    },
-                    {
-                        name: "Amaliy ishlar"
-                    },
-                    {
-                        name: "Blankalar"
-                    },
-                    {
-                        name: "Ijodiy Ishlar"
-                    },
-                    {
-                        name: "Loyihalar"
-                    },
-                    {
-                        name: "Plakatlar"
-                    },
-                    {
-                        name: "Elektron kitoblar"
-                    },
-                    {
-                        name: "Dasturlash tillari"
-                    }, 
-                ],
-                author: "Soff.uz"
+                title: finalTitle,
+                description: finalTitle + " bo‘yicha eng yaxshi raqamli mahsulotlarni Soff.uz da toping. Ishonchli sotuvchilar va sifatli kontent!",
+                ...metaProps
             }),
-            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_elements_product_filter_section_ProductFilterSection__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Z, {
+            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_elements_product_filter_section_ProductFilterSection__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .ZP, {
                 isFile: true,
+                title: fullTitle,
                 child: childCategoryData?.results,
                 parent: fourChildData?.results,
                 path: "/scientific-resources/"
@@ -246,8 +155,10 @@ function ProductCategoryScreen({ productsData , fourChildData , childCategoryDat
             /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
                 className: "ps-page--shop container p-lg-10 p-l-0",
                 children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_partials_category_ProductsByCategory__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z, {
-                    data: mergedData,
-                    page: Number(queryPage),
+                    // NOTE: changed temporarily to productsData to avoid issues with search results
+                    // data={mergedData}
+                    data: productsData,
+                    page: page,
                     handlePagination: (number)=>{
                         handlePageChange(number);
                     },
@@ -255,12 +166,12 @@ function ProductCategoryScreen({ productsData , fourChildData , childCategoryDat
                 })
             }),
             /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-                className: (_widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_14___default().catalogSectionBlock),
+                className: (_widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_13___default().catalogSectionBlock),
                 children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
                     className: "container mx-auto px-5",
                     children: [
                         /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("section", {
-                            className: (_widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_14___default().howItWorksSection),
+                            className: (_widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_13___default().howItWorksSection),
                             children: [
                                 /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
                                     className: "d-flex justify-content-center my-5",
@@ -275,10 +186,10 @@ function ProductCategoryScreen({ productsData , fourChildData , childCategoryDat
                                     children: "Tayyor mahsulotlardan foydalanish qanday ishlaydi?"
                                 }),
                                 /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                                    className: (_widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_14___default().steps),
+                                    className: (_widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_13___default().steps),
                                     children: [
                                         /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                                            className: (_widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_14___default().stepItem),
+                                            className: (_widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_13___default().stepItem),
                                             children: [
                                                 /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("img", {
                                                     src: "/static/img/catalogMenu.png",
@@ -297,7 +208,7 @@ function ProductCategoryScreen({ productsData , fourChildData , childCategoryDat
                                             ]
                                         }),
                                         /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                                            className: (_widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_14___default().stepItem),
+                                            className: (_widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_13___default().stepItem),
                                             children: [
                                                 /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("img", {
                                                     src: "/static/img/catalogCoin.png",
@@ -316,7 +227,7 @@ function ProductCategoryScreen({ productsData , fourChildData , childCategoryDat
                                             ]
                                         }),
                                         /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                                            className: (_widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_14___default().stepItem),
+                                            className: (_widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_13___default().stepItem),
                                             children: [
                                                 /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("img", {
                                                     src: "/static/img/catalogSecure.png",
@@ -350,9 +261,9 @@ function ProductCategoryScreen({ productsData , fourChildData , childCategoryDat
     });
 }
 async function getServerSideProps$1(context) {
-    const { slug , page =1 , parentCategory ="" , childCategory ="" , search ="" , category ="" , content_extensions =[] , price_from ="" , price_to ="" , from_page ="" , to_page ="" ,  } = context.query;
+    const { page =1 , parentCategory ="" , parentCategoryId ="" , childCategory ="" , childCategoryId ="" , search ="" , category ="" , content_extensions =[] , price_from ="" , price_to ="" , from_page ="" , to_page ="" ,  } = context.query;
     const queryParams = new URLSearchParams({
-        direction: "file",
+        direction: type,
         page,
         page_size: 50,
         search
@@ -371,24 +282,24 @@ async function getServerSideProps$1(context) {
     if (from_page) queryParams.append("from_page", from_page);
     if (to_page) queryParams.append("to_page", to_page);
     const searchParams = new URLSearchParams({
-        type: "file",
+        type,
         limit: 50,
         page,
         search
     });
-    if (category) searchParams.append("parentCategory", category);
+    if (parentCategoryId) searchParams.append("category", parentCategoryId);
+    if (childCategoryId) searchParams.append("child_category", childCategoryId);
     if (content_extensions && content_extensions.length) {
         const exts1 = Array.isArray(content_extensions) ? content_extensions : [
             content_extensions
         ];
-        exts1.forEach((ext)=>{
-            searchParams.append("file_type", ext);
-        });
+        const filteredExts = exts1.map((ext)=>ext.includes(".") ? ext.slice(1) : ext);
+        searchParams.append("file_type", filteredExts.toString());
     }
     if (price_from) searchParams.append("price_from", price_from);
     if (price_to) searchParams.append("price_to", price_to);
-    if (from_page) searchParams.append("from_page", from_page);
-    if (to_page) searchParams.append("to_page", to_page);
+    if (+to_page) searchParams.append("page_to", to_page);
+    if (+from_page) searchParams.append("page_from", from_page);
     const fetchJson = async (url)=>{
         const res = await fetch(url);
         if (!res.ok) {
@@ -398,11 +309,13 @@ async function getServerSideProps$1(context) {
     };
     const categoryParam = childCategory ? childCategory : parentCategory;
     const productsUrl = `${_repositories_useApi__WEBPACK_IMPORTED_MODULE_7__/* .baseUrlUseApi */ .q}customer/products/?${queryParams.toString()}&category=${categoryParam}`;
-    const searchPageUrl = `${_repositories_useApi__WEBPACK_IMPORTED_MODULE_7__/* .baseUrlUseApi */ .q}customer/same-google-search/?${queryParams.toString()}`;
-    const fourChildUrl = `${_repositories_useApi__WEBPACK_IMPORTED_MODULE_7__/* .baseUrlUseApi */ .q}customer/four-child?direction=file`;
-    const childCategoryUrl = `${_repositories_useApi__WEBPACK_IMPORTED_MODULE_7__/* .baseUrlUseApi */ .q}customer/four-child?direction=file&parent__slug=${parentCategory}`;
+    const searchPageUrl = `${_repositories_useApi__WEBPACK_IMPORTED_MODULE_7__/* .baseUrlUseApi */ .q}customer/same-google-search/?${searchParams.toString().replace(/%2C/g, ",")}`;
+    const fourChildUrl = `${_repositories_useApi__WEBPACK_IMPORTED_MODULE_7__/* .baseUrlUseApi */ .q}customer/four-child?direction=${type}`;
+    const childCategoryUrl = `${_repositories_useApi__WEBPACK_IMPORTED_MODULE_7__/* .baseUrlUseApi */ .q}customer/four-child?direction=${type}&parent__slug=${parentCategory}`;
     const [productsData, fourChildData, childCategoryData] = await Promise.all([
-        fetchJson(search ? searchPageUrl : productsUrl),
+        // NOTE: changed temporarily to productsUrl to avoid issues with search results
+        // fetchJson(search ? searchPageUrl : productsUrl),
+        fetchJson(productsUrl),
         fetchJson(fourChildUrl),
         fetchJson(childCategoryUrl), 
     ]);
@@ -415,7 +328,9 @@ async function getServerSideProps$1(context) {
             childCategory,
             page,
             search,
-            productsUrl
+            productsUrl,
+            searchPageUrl,
+            content_extensions
         }
     };
 }
@@ -450,12 +365,12 @@ const origGetServerSideProps = userPageModule ? userPageModule.getServerSideProp
 // this object.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getInitialPropsWrappers = Object.freeze({
-  '/_app': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_13__.wrapAppGetInitialPropsWithSentry,
-  '/_document': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_13__.wrapDocumentGetInitialPropsWithSentry,
-  '/_error': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_13__.wrapErrorGetInitialPropsWithSentry,
+  '/_app': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_12__.wrapAppGetInitialPropsWithSentry,
+  '/_document': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_12__.wrapDocumentGetInitialPropsWithSentry,
+  '/_error': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_12__.wrapErrorGetInitialPropsWithSentry,
 });
 
-const getInitialPropsWrapper = getInitialPropsWrappers['/scientific-resources/[slug]'] || _sentry_nextjs__WEBPACK_IMPORTED_MODULE_13__.wrapGetInitialPropsWithSentry;
+const getInitialPropsWrapper = getInitialPropsWrappers['/scientific-resources/[slug]'] || _sentry_nextjs__WEBPACK_IMPORTED_MODULE_12__.wrapGetInitialPropsWithSentry;
 
 if (pageComponent && typeof origGetInitialProps === 'function') {
   pageComponent.getInitialProps = getInitialPropsWrapper(origGetInitialProps) ;
@@ -463,14 +378,14 @@ if (pageComponent && typeof origGetInitialProps === 'function') {
 
 const getStaticProps =
   typeof origGetStaticProps === 'function'
-    ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_13__.wrapGetStaticPropsWithSentry(origGetStaticProps, '/scientific-resources/[slug]')
+    ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_12__.wrapGetStaticPropsWithSentry(origGetStaticProps, '/scientific-resources/[slug]')
     : undefined;
 const getServerSideProps =
   typeof origGetServerSideProps === 'function'
-    ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_13__.wrapGetServerSidePropsWithSentry(origGetServerSideProps, '/scientific-resources/[slug]')
+    ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_12__.wrapGetServerSidePropsWithSentry(origGetServerSideProps, '/scientific-resources/[slug]')
     : undefined;
 
-const pageWrapperTemplate = pageComponent ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_13__.wrapPageComponentWithSentry(pageComponent ) : pageComponent;
+const pageWrapperTemplate = pageComponent ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_12__.wrapPageComponentWithSentry(pageComponent ) : pageComponent;
 
 
 
@@ -945,7 +860,7 @@ module.exports = import("react-icons/lu");;
 var __webpack_require__ = require("../../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [676,1664,5675,5152,6017,8550,4747,1218,7567,9075,280,75,5419,6316,9410,6184,910,131,7971,2766], () => (__webpack_exec__(3692)));
+var __webpack_exports__ = __webpack_require__.X(0, [676,1664,5675,5152,6017,8550,4747,1218,7567,9075,280,75,5419,7971,6316,9410,3537,6184,910,131,2766], () => (__webpack_exec__(3692)));
 module.exports = __webpack_exports__;
 
 })();

@@ -1,11 +1,11 @@
-;{try{(function(){var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof globalThis?globalThis:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="6979a572-bb59-4291-a37b-21eb1497fc9b",e._sentryDebugIdIdentifier="sentry-dbid-6979a572-bb59-4291-a37b-21eb1497fc9b");})();}catch(e){}};
+;{try{(function(){var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof globalThis?globalThis:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="8b388556-a3bb-4b5c-9c94-c0118c32efd0",e._sentryDebugIdIdentifier="sentry-dbid-8b388556-a3bb-4b5c-9c94-c0118c32efd0");})();}catch(e){}};
 (() => {
 var exports = {};
 exports.id = 2990;
 exports.ids = [2990];
 exports.modules = {
 
-/***/ 7701:
+/***/ 3978:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -94,7 +94,10 @@ function FreelancersPage({ data , metaTags  }) {
 async function getServerSideProps$1(context) {
     const { query  } = context;
     const { keyword ="" , position ="" , direction ="" , sort_by ="average_rating" , limit =20 , offset =0 , order ="" ,  } = query;
-    const params = new URLSearchParams();
+    const params = new URLSearchParams({
+        limit: limit.toString(),
+        offset: offset.toString()
+    });
     const metaTags = generateMetaTags(query);
     if (keyword) params.append("search", keyword);
     if (Array.isArray(position)) {
@@ -108,12 +111,6 @@ async function getServerSideProps$1(context) {
         params.append("direction", direction);
     }
     if (sort_by && (sort_by !== "average_rating" || order === "asc")) params.append("sort_by", sort_by);
-    params.append("limit", limit);
-    if (offset) {
-        params.append("offset", offset);
-    } else {
-        params.append("offset", 0);
-    }
     if (order) params.append("order", order);
     const url = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/users/freelancers/list/?${params.toString()}`;
     try {
@@ -2131,7 +2128,7 @@ module.exports = import("swiper/react");;
 var __webpack_require__ = require("../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [676,1664,5675,5152,6017,8550,4747,1218,7567,9075,1080,1708,2653,2789,7440,910,7460,1066,8269], () => (__webpack_exec__(7701)));
+var __webpack_exports__ = __webpack_require__.X(0, [676,1664,5675,5152,6017,8550,4747,1218,7567,9075,1080,1708,2653,2789,7440,910,7460,1066,8269], () => (__webpack_exec__(3978)));
 module.exports = __webpack_exports__;
 
 })();

@@ -1,4 +1,4 @@
-;{try{(function(){var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof globalThis?globalThis:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="e143ab48-0b3d-413a-a18d-dd5f92ebeb0b",e._sentryDebugIdIdentifier="sentry-dbid-e143ab48-0b3d-413a-a18d-dd5f92ebeb0b");})();}catch(e){}};
+;{try{(function(){var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof globalThis?globalThis:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="e8a1798e-d8f2-4e7b-a9f9-61b186faba6e",e._sentryDebugIdIdentifier="sentry-dbid-e8a1798e-d8f2-4e7b-a9f9-61b186faba6e");})();}catch(e){}};
 "use strict";
 (() => {
 var exports = {};
@@ -27,10 +27,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _repositories_useApi__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(9410);
 /* harmony import */ var _components_elements_product_filter_section_ProductFilterSection__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(131);
 /* harmony import */ var _components_partials_category_ProductsByCategory__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(6184);
-/* harmony import */ var _sentry_nextjs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(8097);
-/* harmony import */ var _sentry_nextjs__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_sentry_nextjs__WEBPACK_IMPORTED_MODULE_8__);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_3__, _repositories_useApi__WEBPACK_IMPORTED_MODULE_5__, _components_elements_product_filter_section_ProductFilterSection__WEBPACK_IMPORTED_MODULE_6__, _components_partials_category_ProductsByCategory__WEBPACK_IMPORTED_MODULE_7__]);
-([_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_3__, _repositories_useApi__WEBPACK_IMPORTED_MODULE_5__, _components_elements_product_filter_section_ProductFilterSection__WEBPACK_IMPORTED_MODULE_6__, _components_partials_category_ProductsByCategory__WEBPACK_IMPORTED_MODULE_7__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+/* harmony import */ var _shared_hooks_useSimilarSearch__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(3356);
+/* harmony import */ var _sentry_nextjs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(8097);
+/* harmony import */ var _sentry_nextjs__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_sentry_nextjs__WEBPACK_IMPORTED_MODULE_9__);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_3__, _repositories_useApi__WEBPACK_IMPORTED_MODULE_5__, _components_elements_product_filter_section_ProductFilterSection__WEBPACK_IMPORTED_MODULE_6__, _components_partials_category_ProductsByCategory__WEBPACK_IMPORTED_MODULE_7__, _shared_hooks_useSimilarSearch__WEBPACK_IMPORTED_MODULE_8__]);
+([_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_3__, _repositories_useApi__WEBPACK_IMPORTED_MODULE_5__, _components_elements_product_filter_section_ProductFilterSection__WEBPACK_IMPORTED_MODULE_6__, _components_partials_category_ProductsByCategory__WEBPACK_IMPORTED_MODULE_7__, _shared_hooks_useSimilarSearch__WEBPACK_IMPORTED_MODULE_8__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
 
 
@@ -41,11 +42,16 @@ var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_wid
 
 
 
+
+const type = "3d";
+const defaultTitle = "3D moddellar va Interier dizaynlar";
 function ModelsAndInteriorDesign({ productsData , fourChildData , childCategoryData , parentCategory , childCategory , page ,  }) {
+    // NOTE: changed temporarily to productsData to avoid issues with search results
+    // const { mergedData } = useSimilarSearch({
+    //     defaultData: productsData,
+    //     defaultType: type,
+    // });
     const router = (0,next_router__WEBPACK_IMPORTED_MODULE_1__.useRouter)();
-    const title = (0,_components_elements_product_filter_section_ProductFilterSection__WEBPACK_IMPORTED_MODULE_6__/* .getTitleFromSlug */ .h)(fourChildData?.results, parentCategory);
-    const subTitle = (0,_components_elements_product_filter_section_ProductFilterSection__WEBPACK_IMPORTED_MODULE_6__/* .getTitleFromSlug */ .h)(childCategoryData?.results, childCategory);
-    const fullTitle = title && subTitle ? `${title} - ${subTitle}` : title ? title : "3D moddellar va Interier dizaynlar";
     const handlePageChange = (newPage)=>{
         router.push({
             pathname: router.pathname,
@@ -55,13 +61,18 @@ function ModelsAndInteriorDesign({ productsData , fourChildData , childCategoryD
             }
         });
     };
+    const title = (0,_components_elements_product_filter_section_ProductFilterSection__WEBPACK_IMPORTED_MODULE_6__/* .getTitleFromSlug */ .hX)(fourChildData?.results, parentCategory);
+    const subTitle = (0,_components_elements_product_filter_section_ProductFilterSection__WEBPACK_IMPORTED_MODULE_6__/* .getTitleFromSlug */ .hX)(childCategoryData?.results, childCategory);
+    const fullTitle = title && subTitle ? `${title} - ${subTitle}` : title;
+    const finalTitle = fullTitle || defaultTitle;
     return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .Z, {
         children: [
             /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_shared_headers_Meta__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z, {
-                title: fullTitle,
+                title: finalTitle,
                 description: `3D moddellar va Interier dizaynlar kategoriyasi: Taqdimotlar Tayyor shablonlar Kurs ishlari Diplom ishlari Referatlar Mustaqil ishlar Labaratoriya Ishlari Dissertatsiya ishlari Testlar O'quv qo'llanmalar Dars ishlanmalar Tarqatma materiallar Amaliy ishlar Blankalar Ijodiy Ishlar Loyihalar Plakatlar Maqola Ixtiro patenti Namunaviy hujjatlar Statistika Elektron kitoblar Dasturlash tillari `
             }),
-            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_elements_product_filter_section_ProductFilterSection__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .Z, {
+            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_elements_product_filter_section_ProductFilterSection__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .ZP, {
+                title: fullTitle,
                 child: childCategoryData.results,
                 parent: fourChildData.results,
                 path: "/3d-models-and-interior-designs/"
@@ -69,6 +80,8 @@ function ModelsAndInteriorDesign({ productsData , fourChildData , childCategoryD
             /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
                 className: "ps-page--shop container p-xl-0 p-l-0",
                 children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_partials_category_ProductsByCategory__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Z, {
+                    // NOTE: changed temporarily to productsData to avoid issues with search results
+                    // data={mergedData}
                     data: productsData,
                     page: page,
                     handlePagination: (number)=>{
@@ -81,7 +94,7 @@ function ModelsAndInteriorDesign({ productsData , fourChildData , childCategoryD
     });
 }
 async function getServerSideProps$1(context) {
-    const { slug , page =1 , parentCategory ="" , childCategory ="" , search ="" ,  } = context.query;
+    const { slug , page =1 , parentCategory ="" , parentCategoryId , childCategory ="" , childCategoryId , search ="" , price_from ="" , price_to ="" ,  } = context.query;
     const fetchJson = async (url)=>{
         const res = await fetch(url);
         if (!res.ok) {
@@ -89,11 +102,24 @@ async function getServerSideProps$1(context) {
         }
         return res.json();
     };
+    const searchParams = new URLSearchParams({
+        type,
+        limit: 50,
+        page,
+        search
+    });
+    if (parentCategoryId) searchParams.append("category", parentCategoryId);
+    if (childCategoryId) searchParams.append("child_category", childCategoryId);
+    if (price_from) searchParams.append("price_from", price_from);
+    if (price_to) searchParams.append("price_to", price_to);
     const categoryParam = childCategory ? childCategory : parentCategory;
-    const productsUrl = `${_repositories_useApi__WEBPACK_IMPORTED_MODULE_5__/* .baseUrlUseApi */ .q}customer/products/?direction=3d&category=${categoryParam}&page=${page}&page_size=50&search=${search}`;
-    const fourChildUrl = `${_repositories_useApi__WEBPACK_IMPORTED_MODULE_5__/* .baseUrlUseApi */ .q}customer/four-child?direction=3d`;
-    const childCategoryUrl = `${_repositories_useApi__WEBPACK_IMPORTED_MODULE_5__/* .baseUrlUseApi */ .q}customer/four-child?direction=3d&parent__slug=${parentCategory}`;
+    `${_repositories_useApi__WEBPACK_IMPORTED_MODULE_5__/* .baseUrlUseApi */ .q}customer/same-google-search/?${searchParams.toString()}`;
+    const productsUrl = `${_repositories_useApi__WEBPACK_IMPORTED_MODULE_5__/* .baseUrlUseApi */ .q}customer/products/?direction=${type}&category=${categoryParam}&page=${page}&page_size=50&search=${search}`;
+    const fourChildUrl = `${_repositories_useApi__WEBPACK_IMPORTED_MODULE_5__/* .baseUrlUseApi */ .q}customer/four-child?direction=${type}`;
+    const childCategoryUrl = `${_repositories_useApi__WEBPACK_IMPORTED_MODULE_5__/* .baseUrlUseApi */ .q}customer/four-child?direction=${type}&parent__slug=${parentCategory}`;
     const [productsData, fourChildData, childCategoryData] = await Promise.all([
+        // NOTE: changed temporarily to productsUrl to avoid issues with search results
+        // fetchJson(search ? searchPageUrl : productsUrl),
         fetchJson(productsUrl),
         fetchJson(fourChildUrl),
         fetchJson(childCategoryUrl), 
@@ -140,12 +166,12 @@ const origGetServerSideProps = userPageModule ? userPageModule.getServerSideProp
 // this object.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getInitialPropsWrappers = Object.freeze({
-  '/_app': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_8__.wrapAppGetInitialPropsWithSentry,
-  '/_document': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_8__.wrapDocumentGetInitialPropsWithSentry,
-  '/_error': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_8__.wrapErrorGetInitialPropsWithSentry,
+  '/_app': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_9__.wrapAppGetInitialPropsWithSentry,
+  '/_document': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_9__.wrapDocumentGetInitialPropsWithSentry,
+  '/_error': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_9__.wrapErrorGetInitialPropsWithSentry,
 });
 
-const getInitialPropsWrapper = getInitialPropsWrappers['/3d-models-and-interior-designs/[slug]'] || _sentry_nextjs__WEBPACK_IMPORTED_MODULE_8__.wrapGetInitialPropsWithSentry;
+const getInitialPropsWrapper = getInitialPropsWrappers['/3d-models-and-interior-designs/[slug]'] || _sentry_nextjs__WEBPACK_IMPORTED_MODULE_9__.wrapGetInitialPropsWithSentry;
 
 if (pageComponent && typeof origGetInitialProps === 'function') {
   pageComponent.getInitialProps = getInitialPropsWrapper(origGetInitialProps) ;
@@ -153,14 +179,14 @@ if (pageComponent && typeof origGetInitialProps === 'function') {
 
 const getStaticProps =
   typeof origGetStaticProps === 'function'
-    ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_8__.wrapGetStaticPropsWithSentry(origGetStaticProps, '/3d-models-and-interior-designs/[slug]')
+    ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_9__.wrapGetStaticPropsWithSentry(origGetStaticProps, '/3d-models-and-interior-designs/[slug]')
     : undefined;
 const getServerSideProps =
   typeof origGetServerSideProps === 'function'
-    ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_8__.wrapGetServerSidePropsWithSentry(origGetServerSideProps, '/3d-models-and-interior-designs/[slug]')
+    ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_9__.wrapGetServerSidePropsWithSentry(origGetServerSideProps, '/3d-models-and-interior-designs/[slug]')
     : undefined;
 
-const pageWrapperTemplate = pageComponent ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_8__.wrapPageComponentWithSentry(pageComponent ) : pageComponent;
+const pageWrapperTemplate = pageComponent ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_9__.wrapPageComponentWithSentry(pageComponent ) : pageComponent;
 
 
 
@@ -484,7 +510,7 @@ module.exports = import("react-icons/lu");;
 var __webpack_require__ = require("../../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [676,1664,5675,5152,6017,8550,4747,1218,7567,9075,280,75,5419,6316,9410,6184,910,131], () => (__webpack_exec__(7413)));
+var __webpack_exports__ = __webpack_require__.X(0, [676,1664,5675,5152,6017,8550,4747,1218,7567,9075,280,75,5419,7971,6316,9410,3537,6184,910,131], () => (__webpack_exec__(7413)));
 module.exports = __webpack_exports__;
 
 })();

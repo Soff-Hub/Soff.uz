@@ -1,4 +1,4 @@
-;{try{(function(){var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof globalThis?globalThis:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="1c866a92-1f9f-4ec8-b790-45f1e4eb9e1e",e._sentryDebugIdIdentifier="sentry-dbid-1c866a92-1f9f-4ec8-b790-45f1e4eb9e1e");})();}catch(e){}};
+;{try{(function(){var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof globalThis?globalThis:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="ef428112-2b92-4684-8b76-67b2697b7617",e._sentryDebugIdIdentifier="sentry-dbid-ef428112-2b92-4684-8b76-67b2697b7617");})();}catch(e){}};
 exports.id = 4538;
 exports.ids = [4538];
 exports.modules = {
@@ -22,7 +22,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 7346:
+/***/ 2012:
 /***/ ((module) => {
 
 // Exports
@@ -61,7 +61,7 @@ var external_react_ = __webpack_require__(6689);
 var detail_module = __webpack_require__(2165);
 var detail_module_default = /*#__PURE__*/__webpack_require__.n(detail_module);
 // EXTERNAL MODULE: ./components/freeleance/services/service-deatail/ui/styles/style.module.scss
-var style_module = __webpack_require__(7346);
+var style_module = __webpack_require__(2012);
 var style_module_default = /*#__PURE__*/__webpack_require__.n(style_module);
 // EXTERNAL MODULE: ./shared/utilities/TruncateTitle.js
 var TruncateTitle = __webpack_require__(1716);

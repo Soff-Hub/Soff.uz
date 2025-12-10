@@ -1,4 +1,4 @@
-;{try{(function(){var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof globalThis?globalThis:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="cf0684c5-b77b-4682-85e7-a70970339b51",e._sentryDebugIdIdentifier="sentry-dbid-cf0684c5-b77b-4682-85e7-a70970339b51");})();}catch(e){}};
+;{try{(function(){var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof globalThis?globalThis:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="8974d4da-76d4-466a-a734-f2d950e28cf3",e._sentryDebugIdIdentifier="sentry-dbid-8974d4da-76d4-466a-a734-f2d950e28cf3");})();}catch(e){}};
 (() => {
 var exports = {};
 exports.id = 8800;
@@ -2038,6 +2038,7 @@ const UserShortInfo = ({ seller  })=>{
                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_7__.Button, {
                         type: "default",
                         className: (0,_shared_utilities_cn__WEBPACK_IMPORTED_MODULE_6__.cn)("border-primary", "text-primary"),
+                        disabled: !isOrderingOpen,
                         onClick: handleCreateChat,
                         children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("i", {
                             className: "fa-solid fa-comment-dots"
@@ -3877,7 +3878,7 @@ module.exports = import("swiper/react");;
 var __webpack_require__ = require("../../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [676,1664,5675,5152,6017,8550,4747,1218,7567,9075,280,75,5419,8215,1080,1708,2653,2789,7440,156,5168,6316,1159,7460,7971,1066,6532,5605], () => (__webpack_exec__(3230)));
+var __webpack_exports__ = __webpack_require__.X(0, [676,1664,5675,5152,6017,8550,4747,1218,7567,9075,280,75,5419,8215,1080,1708,2653,2789,7971,7440,156,5168,6316,1159,7460,1066,6532,5605], () => (__webpack_exec__(3230)));
 module.exports = __webpack_exports__;
 
 })();

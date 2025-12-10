@@ -1,4 +1,4 @@
-;{try{(function(){var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof globalThis?globalThis:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="f584f383-e4be-445b-b151-32be77bfe408",e._sentryDebugIdIdentifier="sentry-dbid-f584f383-e4be-445b-b151-32be77bfe408");})();}catch(e){}};
+;{try{(function(){var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof globalThis?globalThis:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="78823412-4b35-455c-ad84-a479675d141f",e._sentryDebugIdIdentifier="sentry-dbid-78823412-4b35-455c-ad84-a479675d141f");})();}catch(e){}};
 exports.id = 131;
 exports.ids = [131];
 exports.modules = {
@@ -38,28 +38,33 @@ module.exports = {
 "use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__),
-/* harmony export */   "h": () => (/* binding */ getTitleFromSlug)
+/* harmony export */   "ZP": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   "hX": () => (/* binding */ getTitleFromSlug)
 /* harmony export */ });
+/* unused harmony export clearEmptyQueries */
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(997);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6689);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _ProductFilter_module_scss__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(3052);
-/* harmony import */ var _ProductFilter_module_scss__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_ProductFilter_module_scss__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _ProductFilter_module_scss__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(3052);
+/* harmony import */ var _ProductFilter_module_scss__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_ProductFilter_module_scss__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _ant_design_icons__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7066);
 /* harmony import */ var _ant_design_icons__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_ant_design_icons__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1853);
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _shared_hooks_useDebounce__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(6138);
 /* harmony import */ var _shared_utilities_useResponsive__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1834);
-/* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(5725);
-/* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(antd__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _shared_utilities_product_helper__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(9075);
-/* harmony import */ var _shared_hooks_useDisableWindowScroll__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(910);
-/* harmony import */ var react_icons_lu__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(577);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_shared_utilities_product_helper__WEBPACK_IMPORTED_MODULE_7__, react_icons_lu__WEBPACK_IMPORTED_MODULE_9__]);
-([_shared_utilities_product_helper__WEBPACK_IMPORTED_MODULE_7__, react_icons_lu__WEBPACK_IMPORTED_MODULE_9__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+/* harmony import */ var _repositories_useApi__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(9410);
+/* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(5725);
+/* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(antd__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _shared_utilities_product_helper__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(9075);
+/* harmony import */ var _shared_hooks_useDisableWindowScroll__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(910);
+/* harmony import */ var react_icons_lu__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(577);
+/* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(9752);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_repositories_useApi__WEBPACK_IMPORTED_MODULE_6__, _shared_utilities_product_helper__WEBPACK_IMPORTED_MODULE_8__, react_icons_lu__WEBPACK_IMPORTED_MODULE_10__, _tanstack_react_query__WEBPACK_IMPORTED_MODULE_11__]);
+([_repositories_useApi__WEBPACK_IMPORTED_MODULE_6__, _shared_utilities_product_helper__WEBPACK_IMPORTED_MODULE_8__, react_icons_lu__WEBPACK_IMPORTED_MODULE_10__, _tanstack_react_query__WEBPACK_IMPORTED_MODULE_11__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+
+
 
 
 
@@ -80,55 +85,49 @@ const getTitleFromSlug = (array, slug)=>{
     }
     return title;
 };
-const ProductFilterSection = ({ child , parent , path , isFile  })=>{
-    const { query , pathname , push  } = (0,next_router__WEBPACK_IMPORTED_MODULE_3__.useRouter)();
-    const parentRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(null);
-    const childRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(null);
+const clearEmptyQueries = (obj)=>{
+    const newObj = {
+        ...obj
+    };
+    Object.keys(newObj).forEach((key)=>{
+        if (!String(newObj[key])) {
+            delete newObj[key];
+        }
+    });
+    return newObj;
+};
+const ProductFilterSection = ({ child , parent , path , isFile , title  })=>{
     const { 0: showParentArrow , 1: setShowParentArrow  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
     const { 0: showChildArrow , 1: setShowChildArrow  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
-    const { 0: title , 1: setTitle  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("Barchasi");
-    const { 0: sybTitle , 1: setSybTitle  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("");
     const { 0: search , 1: setSearch  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(undefined);
     const { 0: drawerOpen , 1: setDrawerOpen  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    const parentRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(null);
+    const childRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(null);
     const { isMobile  } = (0,_shared_utilities_useResponsive__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z)();
-    const { 0: selectedCategory , 1: setSelectedCategory  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)();
-    const { 0: selectedSubCategory , 1: setSelectedSubCategory  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)();
-    const { 0: fileTypes , 1: setFileTypes  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]);
-    const { 0: priceRange , 1: setPriceRange  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([
-        0,
-        500000
-    ]);
-    const { 0: pageRange , 1: setPageRange  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([
-        0,
-        100
-    ]);
-    const { search: querySearch  } = query;
+    const { query , push  } = (0,next_router__WEBPACK_IMPORTED_MODULE_3__.useRouter)();
+    const { search: querySearch , parentCategory , childCategory  } = query;
     const debouncedSearch = (0,_shared_hooks_useDebounce__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z)(search, 500);
-    // Prevent body scroll when drawer is open
-    (0,_shared_hooks_useDisableWindowScroll__WEBPACK_IMPORTED_MODULE_8__/* .useDisableWindowScroll */ .a)(drawerOpen);
-    const handleParent = (slug, name)=>{
+    const handleParent = (slug, id)=>{
+        const newQuery = clearEmptyQueries(query);
         push({
             pathname: `${path}${slug}`,
             query: {
-                ...query,
+                ...newQuery,
                 parentCategory: slug,
-                childCategory: "",
-                title: name
+                parentCategoryId: id
             }
         });
-        setTitle(name);
-        setSybTitle("");
     };
-    const handleChild = (slug, name)=>{
+    const handleChild = (slug, id)=>{
+        const newQuery = clearEmptyQueries(query);
         push({
             pathname: `${path}${slug}`,
             query: {
-                ...query,
+                ...newQuery,
                 childCategory: slug,
-                title: title
+                childCategoryId: id
             }
         });
-        setSybTitle(name);
     };
     const scrollLeft = (ref)=>{
         ref.current.scrollBy({
@@ -160,7 +159,7 @@ const ProductFilterSection = ({ child , parent , path , isFile  })=>{
         if (debouncedSearch === undefined) return;
         delete query.similar_documents;
         push({
-            pathname: `${path}all`,
+            pathname: query.pathname,
             query: {
                 ...query,
                 search: debouncedSearch
@@ -169,22 +168,13 @@ const ProductFilterSection = ({ child , parent , path , isFile  })=>{
     }, [
         debouncedSearch
     ]);
-    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(()=>{
-        if (query.title) {
-            setTitle(query.title);
-        }
-    }, [
-        query.title
-    ]);
+    (0,_shared_hooks_useDisableWindowScroll__WEBPACK_IMPORTED_MODULE_9__/* .useDisableWindowScroll */ .a)(drawerOpen);
     return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-        className: `${(_ProductFilter_module_scss__WEBPACK_IMPORTED_MODULE_10___default().filter)} container`,
+        className: `${(_ProductFilter_module_scss__WEBPACK_IMPORTED_MODULE_12___default().filter)} container`,
         children: [
-            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h1", {
-                className: (_ProductFilter_module_scss__WEBPACK_IMPORTED_MODULE_10___default().title),
-                children: [
-                    (title || "Barchasi").replace("-", " "),
-                    sybTitle && ` & ${sybTitle.replace(`${title}-`, " ")}`
-                ]
+            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("h1", {
+                className: (_ProductFilter_module_scss__WEBPACK_IMPORTED_MODULE_12___default().title),
+                children: title ? title.split("-").join("&") : "Barcha mahsulotlar"
             }),
             /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
                 style: {
@@ -194,30 +184,28 @@ const ProductFilterSection = ({ child , parent , path , isFile  })=>{
                     gap: 12
                 },
                 children: [
-                    !isMobile && /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
-                        children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_6__.Button, {
-                            size: "large",
-                            type: "primary",
-                            onClick: ()=>setDrawerOpen(true),
-                            children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_icons_lu__WEBPACK_IMPORTED_MODULE_9__.LuSettings2, {
-                                fontSize: 20
-                            })
+                    !isMobile && /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_7__.Button, {
+                        size: "large",
+                        type: "primary",
+                        onClick: ()=>setDrawerOpen(true),
+                        children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_icons_lu__WEBPACK_IMPORTED_MODULE_10__.LuSettings2, {
+                            fontSize: 20
                         })
                     }),
                     /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                        className: `${(_ProductFilter_module_scss__WEBPACK_IMPORTED_MODULE_10___default().searchBox)} container`,
+                        className: `${(_ProductFilter_module_scss__WEBPACK_IMPORTED_MODULE_12___default().searchBox)} container`,
                         children: [
-                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_6__.Input, {
+                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_7__.Input, {
                                 defaultValue: querySearch || "",
                                 allowClear: true,
                                 variant: "borderless",
                                 onChange: (e)=>setSearch(e.target.value),
                                 placeholder: "Qanday mahsulot izlamoqdasiz?",
-                                className: (_ProductFilter_module_scss__WEBPACK_IMPORTED_MODULE_10___default().input),
+                                className: (_ProductFilter_module_scss__WEBPACK_IMPORTED_MODULE_12___default().input),
                                 type: "text"
                             }),
                             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
-                                className: (_ProductFilter_module_scss__WEBPACK_IMPORTED_MODULE_10___default().searchIcon),
+                                className: (_ProductFilter_module_scss__WEBPACK_IMPORTED_MODULE_12___default().searchIcon),
                                 children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_ant_design_icons__WEBPACK_IMPORTED_MODULE_2__.SearchOutlined, {})
                             })
                         ]
@@ -225,349 +213,406 @@ const ProductFilterSection = ({ child , parent , path , isFile  })=>{
                 ]
             }),
             /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                className: (_ProductFilter_module_scss__WEBPACK_IMPORTED_MODULE_10___default().carouselTestWrapper),
+                className: (_ProductFilter_module_scss__WEBPACK_IMPORTED_MODULE_12___default().carouselTestWrapper),
                 children: [
                     showParentArrow && /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_ant_design_icons__WEBPACK_IMPORTED_MODULE_2__.LeftOutlined, {
-                        className: `${(_ProductFilter_module_scss__WEBPACK_IMPORTED_MODULE_10___default().arrow)} ${(_ProductFilter_module_scss__WEBPACK_IMPORTED_MODULE_10___default().left)}`,
+                        className: `${(_ProductFilter_module_scss__WEBPACK_IMPORTED_MODULE_12___default().arrow)} ${(_ProductFilter_module_scss__WEBPACK_IMPORTED_MODULE_12___default().left)}`,
                         onClick: ()=>scrollLeft(parentRef)
                     }),
                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                        className: (_ProductFilter_module_scss__WEBPACK_IMPORTED_MODULE_10___default().carouselTest),
+                        className: (_ProductFilter_module_scss__WEBPACK_IMPORTED_MODULE_12___default().carouselTest),
                         ref: parentRef,
                         style: {
                             justifyContent: showParentArrow ? "start" : "center"
                         },
-                        children: parent?.map((cat, index)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
-                                onClick: ()=>handleParent(cat?.slug, cat?.name),
-                                className: `${(_ProductFilter_module_scss__WEBPACK_IMPORTED_MODULE_10___default().parentCat)} ${(query.parentCategory === cat.slug || query.slug === cat.slug) && (_ProductFilter_module_scss__WEBPACK_IMPORTED_MODULE_10___default().active)}`,
-                                children: cat?.name
-                            }, cat.slug))
+                        children: parent?.map((cat)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
+                                onClick: ()=>handleParent(cat.slug, cat.id),
+                                className: `${(_ProductFilter_module_scss__WEBPACK_IMPORTED_MODULE_12___default().parentCat)} ${(parentCategory === cat.slug || query.slug === cat.slug) && (_ProductFilter_module_scss__WEBPACK_IMPORTED_MODULE_12___default().active)}`,
+                                children: cat.name
+                            }, cat.id))
                     }),
                     showParentArrow && /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_ant_design_icons__WEBPACK_IMPORTED_MODULE_2__.RightOutlined, {
-                        className: `${(_ProductFilter_module_scss__WEBPACK_IMPORTED_MODULE_10___default().arrow)} ${(_ProductFilter_module_scss__WEBPACK_IMPORTED_MODULE_10___default().right)}`,
+                        className: `${(_ProductFilter_module_scss__WEBPACK_IMPORTED_MODULE_12___default().arrow)} ${(_ProductFilter_module_scss__WEBPACK_IMPORTED_MODULE_12___default().right)}`,
                         onClick: ()=>scrollRight(parentRef)
                     })
                 ]
             }),
-            query?.parentCategory && child?.length ? /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                className: (_ProductFilter_module_scss__WEBPACK_IMPORTED_MODULE_10___default().carouselTestWrapper),
+            parentCategory && child?.length ? /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                className: (_ProductFilter_module_scss__WEBPACK_IMPORTED_MODULE_12___default().carouselTestWrapper),
                 children: [
                     showChildArrow && /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_ant_design_icons__WEBPACK_IMPORTED_MODULE_2__.LeftOutlined, {
-                        className: `${(_ProductFilter_module_scss__WEBPACK_IMPORTED_MODULE_10___default().arrow)} ${(_ProductFilter_module_scss__WEBPACK_IMPORTED_MODULE_10___default().left)}`,
+                        className: `${(_ProductFilter_module_scss__WEBPACK_IMPORTED_MODULE_12___default().arrow)} ${(_ProductFilter_module_scss__WEBPACK_IMPORTED_MODULE_12___default().left)}`,
                         onClick: ()=>scrollLeft(childRef)
                     }),
                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                        className: (_ProductFilter_module_scss__WEBPACK_IMPORTED_MODULE_10___default().carouselTest),
+                        className: (_ProductFilter_module_scss__WEBPACK_IMPORTED_MODULE_12___default().carouselTest),
                         ref: childRef,
                         style: {
                             justifyContent: showChildArrow ? "start" : "center"
                         },
                         children: child.map((cat)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
-                                onClick: ()=>handleChild(cat?.slug, cat?.name),
-                                className: `${(_ProductFilter_module_scss__WEBPACK_IMPORTED_MODULE_10___default().childCat)} ${(query.childCategory === cat.slug || query.slug === cat.slug) && (_ProductFilter_module_scss__WEBPACK_IMPORTED_MODULE_10___default().active)}`,
+                                onClick: ()=>handleChild(cat?.slug, cat?.id),
+                                className: `${(_ProductFilter_module_scss__WEBPACK_IMPORTED_MODULE_12___default().childCat)} ${(childCategory === cat.slug || query.slug === cat.slug) && (_ProductFilter_module_scss__WEBPACK_IMPORTED_MODULE_12___default().active)}`,
                                 children: cat?.name
                             }, cat.slug))
                     }),
                     showChildArrow && /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_ant_design_icons__WEBPACK_IMPORTED_MODULE_2__.RightOutlined, {
-                        className: `${(_ProductFilter_module_scss__WEBPACK_IMPORTED_MODULE_10___default().arrow)} ${(_ProductFilter_module_scss__WEBPACK_IMPORTED_MODULE_10___default().right)}`,
+                        className: `${(_ProductFilter_module_scss__WEBPACK_IMPORTED_MODULE_12___default().arrow)} ${(_ProductFilter_module_scss__WEBPACK_IMPORTED_MODULE_12___default().right)}`,
                         onClick: ()=>scrollRight(childRef)
                     })
                 ]
             }) : null,
-            isMobile && isFile && /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
-                children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(antd__WEBPACK_IMPORTED_MODULE_6__.Button, {
-                    type: "primary",
-                    block: true,
-                    style: {
-                        marginBottom: 30
-                    },
-                    onClick: ()=>setDrawerOpen(true),
-                    children: [
-                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_icons_lu__WEBPACK_IMPORTED_MODULE_9__.LuSettings2, {}),
-                        "Filtrlarni ochish"
-                    ]
-                })
-            }),
-            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(antd__WEBPACK_IMPORTED_MODULE_6__.Drawer, {
+            isMobile && /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(antd__WEBPACK_IMPORTED_MODULE_7__.Button, {
+                type: "primary",
+                block: true,
                 style: {
-                    borderRadius: isMobile ? "20px 20px 0 0" : "0"
+                    marginBottom: 30
                 },
-                placement: isMobile ? "bottom" : "left",
-                onClose: ()=>setDrawerOpen(false),
+                onClick: ()=>setDrawerOpen(true),
+                children: [
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_icons_lu__WEBPACK_IMPORTED_MODULE_10__.LuSettings2, {}),
+                    "Filtrlarni ochish"
+                ]
+            }),
+            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(ProductFilterForm, {
                 open: drawerOpen,
-                height: "90%",
-                closeIcon: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_6__.Button, {
-                    type: "text",
-                    shape: "circle",
-                    icon: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_ant_design_icons__WEBPACK_IMPORTED_MODULE_2__.CloseOutlined, {
-                        style: {
-                            fontSize: 20,
-                            color: "#00a44f"
-                        }
-                    })
-                }),
-                headerStyle: {
-                    flexDirection: "column-reverse",
-                    alignItems: "flex-end"
+                onClose: ()=>setDrawerOpen(false),
+                path: path,
+                isFile: isFile,
+                parent: parent,
+                child: child
+            })
+        ]
+    });
+};
+const ProductFilterForm = ({ open , onClose , path , isFile , parent , child  })=>{
+    const { 0: selectedCategory , 1: setSelectedCategory  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({
+        slug: null,
+        id: null
+    });
+    const { 0: selectedSubCategory , 1: setSelectedSubCategory  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({
+        slug: null,
+        id: null
+    });
+    const { 0: fileTypes , 1: setFileTypes  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]);
+    const { 0: priceRange , 1: setPriceRange  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([
+        0,
+        500000
+    ]);
+    const { 0: pageRange , 1: setPageRange  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([
+        0,
+        100
+    ]);
+    const isEnableChanged = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(false);
+    const { isMobile  } = (0,_shared_utilities_useResponsive__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z)();
+    const { query , push  } = (0,next_router__WEBPACK_IMPORTED_MODULE_3__.useRouter)();
+    const isChildOptionsEnabled = open && (Boolean(selectedCategory?.slug) && selectedCategory?.slug !== query.parentCategory || isEnableChanged.current);
+    const { data: childData , isFetchingChildData  } = (0,_tanstack_react_query__WEBPACK_IMPORTED_MODULE_11__.useQuery)({
+        queryKey: [
+            "child-categories",
+            selectedCategory?.slug
+        ],
+        queryFn: async ()=>{
+            const res = await fetch(`${_repositories_useApi__WEBPACK_IMPORTED_MODULE_6__/* .baseUrlUseApi */ .q}customer/four-child?direction=file&parent__slug=${selectedCategory?.slug}`);
+            isEnableChanged.current = true;
+            return await res.json();
+        },
+        enabled: isChildOptionsEnabled
+    });
+    const parentOptions = (0,react__WEBPACK_IMPORTED_MODULE_1__.useMemo)(()=>{
+        return parent.map((item)=>({
+                label: item.name,
+                value: item.slug,
+                id: item.id
+            }));
+    }, [
+        parent
+    ]);
+    const childOptions = (0,react__WEBPACK_IMPORTED_MODULE_1__.useMemo)(()=>{
+        if (childData?.results && childData.results.length) {
+            return childData.results.map((item)=>({
+                    label: item.name,
+                    value: item.slug,
+                    id: item.id
+                }));
+        }
+        return child.map((item)=>({
+                label: item.name,
+                value: item.slug,
+                id: item.id
+            }));
+    }, [
+        child,
+        childData
+    ]);
+    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(()=>{
+        if (open) {
+            setSelectedCategory({
+                slug: query.parentCategory,
+                id: query.parentCategoryId
+            });
+            setSelectedSubCategory({
+                slug: query.childCategory,
+                id: query.childCategoryId
+            });
+            setFileTypes(query.content_extensions ? Array.isArray(query.content_extensions) ? query.content_extensions : [
+                query.content_extensions
+            ] : []);
+            setPriceRange([
+                query.price_from ? Number(query.price_from) : 0,
+                query.price_to ? Number(query.price_to) : 500000, 
+            ]);
+            setPageRange([
+                query.from_page ? Number(query.from_page) : 0,
+                query.to_page ? Number(query.to_page) : 100, 
+            ]);
+        }
+    }, [
+        open
+    ]);
+    const handleSaveOnClose = ()=>{
+        const filters = {
+            parentCategory: selectedCategory.slug,
+            parentCategoryId: selectedCategory.id,
+            childCategory: selectedSubCategory.slug,
+            childCategoryId: selectedSubCategory.id,
+            content_extensions: fileTypes,
+            price_from: priceRange[0],
+            price_to: priceRange[1],
+            from_page: pageRange[0],
+            to_page: pageRange[1]
+        };
+        const newQuery = clearEmptyQueries({
+            ...query,
+            ...filters
+        });
+        push({
+            pathname: `${path}${selectedSubCategory.slug || selectedCategory.slug || "all"}`,
+            query: newQuery
+        });
+        onClose();
+    };
+    const handleClear = ()=>{
+        push({
+            pathname: `${path}all`,
+            query: {}
+        });
+        onClose();
+    };
+    return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(antd__WEBPACK_IMPORTED_MODULE_7__.Drawer, {
+        destroyOnClose: true,
+        style: {
+            borderRadius: isMobile ? "20px 20px 0 0" : "0"
+        },
+        placement: isMobile ? "bottom" : "left",
+        onClose: handleSaveOnClose,
+        open: open,
+        height: "90%",
+        closeIcon: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_7__.Button, {
+            type: "text",
+            shape: "circle",
+            icon: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_ant_design_icons__WEBPACK_IMPORTED_MODULE_2__.CloseOutlined, {
+                style: {
+                    fontSize: 20,
+                    color: "#00a44f"
+                }
+            })
+        }),
+        headerStyle: {
+            flexDirection: "column-reverse",
+            alignItems: "flex-end"
+        },
+        children: [
+            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                style: {
+                    marginBottom: 24
                 },
                 children: [
-                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                        style: {
-                            marginBottom: 24
-                        },
-                        children: [
-                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("h4", {
-                                children: "Kategoriya"
-                            }),
-                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_6__.Select, {
-                                placeholder: "Kategoriya tanlang",
-                                style: {
-                                    width: "100%"
-                                },
-                                allowClear: true,
-                                value: query.parentCategory || undefined,
-                                onChange: (val)=>{
-                                    if (!val) {
-                                        setSelectedCategory(undefined);
-                                        setSybTitle("");
-                                        push({
-                                            pathname: `${path}all`,
-                                            query: {
-                                                ...query,
-                                                parentCategory: "",
-                                                childCategory: "",
-                                                title: "Barchasi"
-                                            }
-                                        });
-                                        setTitle("Barchasi");
-                                    } else {
-                                        setSelectedCategory(val);
-                                        // shu yerda handleParent ishlatyapmiz
-                                        const category = parent.find((item)=>item.slug === val);
-                                        if (category) handleParent(category.slug, category.name);
-                                    }
-                                },
-                                options: parent.map((item)=>({
-                                        label: item.name,
-                                        value: item.slug
-                                    })),
-                                getPopupContainer: (triggerNode)=>triggerNode.parentNode
-                            })
-                        ]
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("h4", {
+                        children: "Kategoriya"
                     }),
-                    query?.parentCategory && /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_7__.Select, {
+                        placeholder: "Kategoriya tanlang",
                         style: {
-                            marginBottom: 24
+                            width: "100%"
                         },
-                        children: [
-                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("h4", {
-                                children: "Sub kategoriya"
-                            }),
-                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_6__.Select, {
-                                placeholder: "Sub kategoriyani tanlang",
-                                style: {
-                                    width: "100%"
-                                },
-                                allowClear: true,
-                                value: query.childCategory || undefined,
-                                onChange: (val)=>{
-                                    if (!val) {
-                                        setSelectedSubCategory(undefined);
-                                        push({
-                                            pathname,
-                                            query: {
-                                                ...query,
-                                                childCategory: "",
-                                                title
-                                            }
-                                        });
-                                        setSybTitle("");
-                                    } else {
-                                        setSelectedSubCategory(val);
-                                        const subCategory = child.find((item)=>item.slug === val);
-                                        if (subCategory) handleChild(subCategory.slug, subCategory.name);
-                                    }
-                                },
-                                options: child.map((item)=>({
-                                        label: item.name,
-                                        value: item.slug
-                                    })),
-                                getPopupContainer: (triggerNode)=>triggerNode.parentNode
-                            })
-                        ]
+                        allowClear: true,
+                        defaultValue: query.parentCategory || undefined,
+                        onChange: (val, valObj)=>{
+                            if (!val) {
+                                setSelectedCategory(undefined);
+                            } else {
+                                setSelectedCategory({
+                                    slug: valObj.slug,
+                                    id: valObj.id
+                                });
+                            }
+                        },
+                        options: parentOptions,
+                        getPopupContainer: (triggerNode)=>triggerNode.parentNode
+                    })
+                ]
+            }),
+            selectedCategory?.slug && /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                style: {
+                    marginBottom: 24
+                },
+                children: [
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("h4", {
+                        children: "Sub kategoriya"
                     }),
-                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_7__.Select, {
+                        loading: isFetchingChildData,
+                        placeholder: "Sub kategoriyani tanlang",
                         style: {
-                            marginBottom: 24
+                            width: "100%"
                         },
-                        children: [
-                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("h4", {
-                                children: "Fayl turlari"
-                            }),
-                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_6__.Checkbox.Group, {
-                                style: {
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    gap: 8
-                                },
-                                value: fileTypes,
-                                onChange: (vals)=>setFileTypes(vals),
-                                options: [
-                                    {
-                                        label: "DOCX",
-                                        value: ".docx"
-                                    },
-                                    {
-                                        label: "DOC",
-                                        value: ".doc"
-                                    },
-                                    {
-                                        label: "PPTX",
-                                        value: ".pptx"
-                                    },
-                                    {
-                                        label: "PPT",
-                                        value: ".ppt"
-                                    },
-                                    {
-                                        label: "PDF",
-                                        value: ".pdf"
-                                    }, 
-                                ]
-                            })
-                        ]
+                        allowClear: true,
+                        defaultValue: query.childCategory || undefined,
+                        onChange: (val, valObj)=>{
+                            if (!val) {
+                                setSelectedSubCategory(undefined);
+                            } else {
+                                setSelectedSubCategory({
+                                    slug: val,
+                                    id: valObj.id
+                                });
+                            }
+                        },
+                        options: childOptions,
+                        getPopupContainer: (triggerNode)=>triggerNode.parentNode
+                    })
+                ]
+            }),
+            isFile && /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                style: {
+                    marginBottom: 24
+                },
+                children: [
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("h4", {
+                        children: "Fayl turlari"
                     }),
-                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_7__.Checkbox.Group, {
                         style: {
-                            marginBottom: 24
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: 8
                         },
-                        children: [
-                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("h4", {
-                                children: "Narx oralig‘i"
-                            }),
-                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                                style: {
-                                    display: "flex",
-                                    justifyContent: "space-between"
-                                },
-                                children: [
-                                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("span", {
-                                        children: [
-                                            (0,_shared_utilities_product_helper__WEBPACK_IMPORTED_MODULE_7__/* .formatCurrencyWithSpace */ .O$)(priceRange[0]),
-                                            " so'm"
-                                        ]
-                                    }),
-                                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("span", {
-                                        children: [
-                                            (0,_shared_utilities_product_helper__WEBPACK_IMPORTED_MODULE_7__/* .formatCurrencyWithSpace */ .O$)(priceRange[1]),
-                                            " so'm"
-                                        ]
-                                    })
-                                ]
-                            }),
-                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_6__.Slider, {
-                                range: true,
-                                min: 0,
-                                max: 1000000,
-                                value: priceRange,
-                                onChange: (value)=>setPriceRange(value)
-                            })
+                        value: fileTypes,
+                        onChange: (vals)=>setFileTypes(vals),
+                        options: [
+                            {
+                                label: "DOCX",
+                                value: ".docx"
+                            },
+                            {
+                                label: "DOC",
+                                value: ".doc"
+                            },
+                            {
+                                label: "PPTX",
+                                value: ".pptx"
+                            },
+                            {
+                                label: "PPT",
+                                value: ".ppt"
+                            },
+                            {
+                                label: "PDF",
+                                value: ".pdf"
+                            }, 
                         ]
-                    }),
-                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                        children: [
-                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("h4", {
-                                children: "Varoqlar oralig‘i"
-                            }),
-                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                                style: {
-                                    display: "flex",
-                                    justifyContent: "space-between"
-                                },
-                                children: [
-                                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("span", {
-                                        children: [
-                                            pageRange[0],
-                                            " bet"
-                                        ]
-                                    }),
-                                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("span", {
-                                        children: [
-                                            pageRange[1],
-                                            " bet"
-                                        ]
-                                    })
-                                ]
-                            }),
-                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_6__.Slider, {
-                                range: true,
-                                min: 0,
-                                max: 100,
-                                value: pageRange,
-                                onChange: (value)=>setPageRange(value)
-                            })
-                        ]
+                    })
+                ]
+            }),
+            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                style: {
+                    marginBottom: 24
+                },
+                children: [
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("h4", {
+                        children: "Narx oralig‘i"
                     }),
                     /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
                         style: {
                             display: "flex",
-                            gap: 12,
-                            marginTop: 24
+                            justifyContent: "space-between"
                         },
                         children: [
-                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_6__.Button, {
-                                block: true,
-                                onClick: ()=>{
-                                    setSelectedCategory(undefined);
-                                    setSelectedSubCategory(undefined);
-                                    setFileTypes([]);
-                                    setPriceRange([
-                                        0,
-                                        500000
-                                    ]);
-                                    setPageRange([
-                                        0,
-                                        100
-                                    ]);
-                                    setTitle("Barchasi");
-                                    setSybTitle("");
-                                    push({
-                                        pathname: `${path}all`,
-                                        query: {
-                                            ...query,
-                                            parentCategory: "",
-                                            childCategory: "",
-                                            title: "Barchasi"
-                                        }
-                                    });
-                                    setDrawerOpen(false);
-                                },
-                                children: "Filtrni tozalash"
+                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("span", {
+                                children: [
+                                    (0,_shared_utilities_product_helper__WEBPACK_IMPORTED_MODULE_8__/* .formatCurrencyWithSpace */ .O$)(priceRange[0]),
+                                    " so'm"
+                                ]
                             }),
-                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_6__.Button, {
-                                type: "primary",
-                                block: true,
-                                onClick: ()=>{
-                                    const filters = {
-                                        category: selectedSubCategory || selectedCategory || "",
-                                        content_extensions: fileTypes,
-                                        price_from: priceRange[0],
-                                        price_to: priceRange[1],
-                                        from_page: pageRange[0],
-                                        to_page: pageRange[1]
-                                    };
-                                    push({
-                                        pathname,
-                                        query: {
-                                            ...query,
-                                            ...filters
-                                        }
-                                    });
-                                    setDrawerOpen(false);
-                                },
-                                children: "Filtrni qo‘llash"
+                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("span", {
+                                children: [
+                                    (0,_shared_utilities_product_helper__WEBPACK_IMPORTED_MODULE_8__/* .formatCurrencyWithSpace */ .O$)(priceRange[1]),
+                                    " so'm"
+                                ]
                             })
                         ]
+                    }),
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_7__.Slider, {
+                        range: true,
+                        min: 0,
+                        max: 1000000,
+                        value: priceRange,
+                        onChange: (value)=>setPriceRange(value)
+                    })
+                ]
+            }),
+            isFile && /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                children: [
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("h4", {
+                        children: "Varoqlar oralig‘i"
+                    }),
+                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                        style: {
+                            display: "flex",
+                            justifyContent: "space-between"
+                        },
+                        children: [
+                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("span", {
+                                children: [
+                                    pageRange[0],
+                                    " bet"
+                                ]
+                            }),
+                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("span", {
+                                children: [
+                                    pageRange[1],
+                                    " bet"
+                                ]
+                            })
+                        ]
+                    }),
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_7__.Slider, {
+                        range: true,
+                        min: 0,
+                        max: 100,
+                        value: pageRange,
+                        onChange: (value)=>setPageRange(value)
+                    })
+                ]
+            }),
+            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                style: {
+                    display: "flex",
+                    gap: 12,
+                    marginTop: 24
+                },
+                children: [
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_7__.Button, {
+                        block: true,
+                        onClick: handleClear,
+                        children: "Filtrni tozalash"
+                    }),
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_7__.Button, {
+                        type: "primary",
+                        block: true,
+                        onClick: handleSaveOnClose,
+                        children: "Filtrni qo‘llash"
                     })
                 ]
             })
@@ -578,38 +623,6 @@ const ProductFilterSection = ({ child , parent , path , isFile  })=>{
 
 __webpack_async_result__();
 } catch(e) { __webpack_async_result__(e); } });
-
-/***/ }),
-
-/***/ 6138:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Z": () => (/* binding */ useDebounce)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6689);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _useTimeManager__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7567);
-
-
-function useDebounce(value, delay) {
-    const { startTimeout , stopTimeout  } = (0,_useTimeManager__WEBPACK_IMPORTED_MODULE_1__/* .useTimeManager */ .h)();
-    const { 0: debouncedValue , 1: setDebouncedValue  } = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(value);
-    (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(()=>{
-        const handler = startTimeout(()=>{
-            setDebouncedValue(value);
-        }, delay);
-        return ()=>{
-            stopTimeout(handler);
-        };
-    }, [
-        value,
-        delay
-    ]);
-    return debouncedValue;
-}
-
 
 /***/ })
 
