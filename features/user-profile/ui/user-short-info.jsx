@@ -65,6 +65,7 @@ const UserShortInfo = ({ seller }) => {
     const isFreelancer = seller?.has_portfolio && seller?.has_service;
     const isOpenToAcceptOrders = seller?.accepting_orders;
     const isOrderingOpen = isFreelancer && isOpenToAcceptOrders;
+
     const lastActive = useMemo(
         () =>
             seller?.last_login
@@ -371,6 +372,7 @@ const UserShortInfo = ({ seller }) => {
                 <Button
                     type="default"
                     className={cn('border-primary', 'text-primary')}
+                    disabled={!isOrderingOpen}
                     onClick={handleCreateChat}>
                     <i className="fa-solid fa-comment-dots"></i>
                 </Button>
