@@ -26,7 +26,7 @@ export const useFPost = ({
 } = {}) => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: async body => {
+        mutationFn: async (body) => {
             const { data } = await axiosInstance(token).post(url, body);
             return data;
         },
@@ -49,7 +49,7 @@ export const useFPatch = ({
 } = {}) => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: async body => {
+        mutationFn: async (body) => {
             const { data } = await axiosInstance(token).patch(url, body);
             return data;
         },
@@ -71,7 +71,7 @@ export const useFDelete = ({
 } = {}) => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: async id => {
+        mutationFn: async (id) => {
             const { data } = await axiosInstance(token).delete(`${url}/${id}`);
             return data;
         },

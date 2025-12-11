@@ -11,7 +11,7 @@ import {
     TimePicker,
     Upload,
 } from 'antd';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { useFGet, useFPost } from '../../hooks/useFApi';
 import dayjs from 'dayjs';
@@ -29,6 +29,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
 import { useGetDirectionsQuery } from '~/store/profile/slice';
+import PhoneNumberModal from '~/components/order/PhoneNumberModal';
 
 const { TextArea } = Input;
 
@@ -52,6 +53,8 @@ const CreateOrderModal = ({
     const [showLeftGradient, setShowLeftGradient] = useState(false);
     const [showRightGradient, setShowRightGradient] = useState(true);
     const [files, setFiles] = useState(null);
+    const [phoneModalOpen, setPhoneModalOpen] = useState(false);
+    const [pendingOrderData, setPendingOrderData] = useState(null);
 
     useEffect(() => {
         form.setFieldValue('direction', direction);
@@ -124,10 +127,29 @@ const CreateOrderModal = ({
             setConfirmOpen(false);
         },
         onError: (err) => {
-            const errorMsg =
-                err?.response?.data?.detail ||
-                err?.response?.data?.message ||
-                'Noma’lum xato yuz berdi';
+            setConfirmOpen(false);
+
+            const errorData = err?.response?.data;
+            const errorDetail =
+                errorData?.detail || errorData?.message || err.message;
+            console.log({ errorDetail });
+            if (errorDetail.includes('telefon raqam')) {
+                const values = form.getFieldsValue();
+                const order = {
+                    direction: direction,
+                    category_id: values.category_id,
+                    title: form.getFieldValue('title'),
+                    description: values.description,
+                    language: values.language,
+                    budget: values.budget,
+                    deadline_date: `${dayjs(values.deadline_date).format(
+                        'YYYY-MM-DD'
+                    )} ${dayjs(values.deadline_time).format('HH:mm')}`,
+                };
+                setPendingOrderData({ order, files });
+                setPhoneModalOpen(true);
+            }
+            const errorMsg = errorDetail || "Noma'lum xato yuz berdi";
             message.error(errorMsg);
         },
     });
@@ -167,6 +189,33 @@ const CreateOrderModal = ({
         } else {
             createOrder(fd);
         }
+    };
+
+    const handlePhoneSubmit = (phoneNumber) => {
+        if (!pendingOrderData) return;
+
+        const fd = new FormData();
+
+        // Use pending order data
+        for (const [key, value] of Object.entries(pendingOrderData.order)) {
+            fd.append(key, value);
+        }
+
+        // Add phone number
+        fd.append('contact_phonenumber', phoneNumber);
+
+        // Add file if exists
+        if (pendingOrderData.files && pendingOrderData.files.length > 0) {
+            fd.append('file', pendingOrderData.files[0].originFileObj);
+        }
+
+        setPhoneModalOpen(false);
+        createDirectOrder(fd);
+    };
+
+    const handlePhoneModalCancel = () => {
+        setPhoneModalOpen(false);
+        setPendingOrderData(null);
     };
 
     const handleThumbProgress = (swiper) => {
@@ -678,6 +727,12 @@ const CreateOrderModal = ({
                     </p>
                 )}
             </Modal>
+            <PhoneNumberModal
+                open={phoneModalOpen}
+                onCancel={handlePhoneModalCancel}
+                onSubmit={handlePhoneSubmit}
+                loading={isPending}
+            />
         </>
     );
 };

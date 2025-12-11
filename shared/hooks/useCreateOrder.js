@@ -143,6 +143,8 @@ function useCreateOrder() {
     const dispatch = useDispatch();
     const { startTimeout } = useTimeManager();
     const onfirstRender = useRef(true);
+    const [phoneModalOpen, setPhoneModalOpen] = useState(false);
+    const [pendingOrderData, setPendingOrderData] = useState(null);
 
     useEffect(() => {
         dispatch(setShowSearch(false));
@@ -219,16 +221,38 @@ function useCreateOrder() {
         onSuccess: (data) => {
             form.resetFields();
             handleCloseConfirm();
+            setPhoneModalOpen(false);
+            setPendingOrderData(null);
             message.success('Buyurtma muvaffaqiyatli yaratildi!');
             startTimeout(() => {
                 push(`/order/my-orders?orderId=${data?.order_id}`);
             }, 100);
         },
         onError: (err) => {
-            const errorMsg =
-                err?.response?.data?.detail ||
-                err?.response?.data?.message ||
-                'Noma’lum xato yuz berdi';
+            setConfirmOpen(false);
+
+            const errorData = err?.response?.data;
+            const errorDetail =
+                errorData?.detail || errorData?.message || err.message;
+
+            if (errorDetail.includes('telefon raqam')) {
+                const values = form.getFieldsValue();
+                const order = {
+                    direction: direction,
+                    category_id: values.category_id,
+                    title: form.getFieldValue('title'),
+                    description: values.description,
+                    language: values.language,
+                    budget: values.budget,
+                    deadline_date: `${dayjs(values.deadline_date).format(
+                        'YYYY-MM-DD'
+                    )} ${dayjs(values.deadline_time).format('HH:mm')}`,
+                };
+                setPendingOrderData({ order, files });
+                setPhoneModalOpen(true);
+            }
+
+            const errorMsg = errorDetail || "Noma'lum xato yuz berdi";
             message.error(errorMsg);
         },
     });
@@ -267,6 +291,33 @@ function useCreateOrder() {
         }
 
         createOrder(fd);
+    };
+
+    const handlePhoneSubmit = (phoneNumber) => {
+        if (!pendingOrderData) return;
+
+        const fd = new FormData();
+
+        // Use pending order data
+        for (const [key, value] of Object.entries(pendingOrderData.order)) {
+            fd.append(key, value);
+        }
+
+        // Add phone number
+        fd.append('contact_phonenumber', phoneNumber);
+
+        // Add file if exists
+        if (pendingOrderData.files && pendingOrderData.files.length > 0) {
+            fd.append('file', pendingOrderData.files[0].originFileObj);
+        }
+
+        setPhoneModalOpen(false);
+        createOrder(fd);
+    };
+
+    const handlePhoneModalCancel = () => {
+        setPhoneModalOpen(false);
+        setPendingOrderData(null);
     };
 
     const handleDirectionChange = (val) => {
@@ -663,6 +714,9 @@ function useCreateOrder() {
         handleConfirm,
         handleOpenConfirm,
         handleCloseConfirm,
+        phoneModalOpen,
+        handlePhoneSubmit,
+        handlePhoneModalCancel,
     };
 }
 const withPopover = (item, isDesktop, position) => {

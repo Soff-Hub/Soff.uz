@@ -6,6 +6,7 @@ import useCreateOrder from '~/shared/hooks/useCreateOrder';
 import { useRouter } from 'next/router';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { useSelector } from 'react-redux';
+import PhoneNumberModal from '~/components/order/PhoneNumberModal';
 // import Editor from '~/components/Editor';
 
 function OrderCreate() {
@@ -67,6 +68,9 @@ const OrderCreateForm = () => {
         handleConfirm,
         handleOpenConfirm,
         handleCloseConfirm,
+        phoneModalOpen,
+        handlePhoneSubmit,
+        handlePhoneModalCancel,
     } = useCreateOrder();
     const { isMobile } = useResponsive();
 
@@ -376,6 +380,13 @@ const OrderCreateForm = () => {
                     </div>
                 </p>
             </Modal>
+
+            <PhoneNumberModal
+                open={phoneModalOpen}
+                onCancel={handlePhoneModalCancel}
+                onSubmit={handlePhoneSubmit}
+                loading={isPending}
+            />
         </div>
     );
 };
