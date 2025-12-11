@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Modal, Select, message } from 'antd';
 import { useQueryClient } from '@tanstack/react-query';
 import useGetOrders from './api/useGetOrders';
@@ -9,6 +9,7 @@ import OrderCard from '~/entities/order/order-card';
 import Loader from '~/components/shared/loader';
 import { useRouter } from 'next/router';
 import { EmptyTab } from './MyOrderTabs';
+import { ClipLoader } from 'react-spinners';
 
 // const rejectableStatuses = [
 //     'order_accepted',
@@ -20,13 +21,20 @@ import { EmptyTab } from './MyOrderTabs';
 export const AllOrdersTable = ({ type }) => {
     const queryClient = useQueryClient();
     const router = useRouter();
-    const { data: orders, isLoading: ordersLoading } = useGetOrders();
+    const {
+        data: orders,
+        fetchNextPage,
+        hasNextPage,
+        isFetchingNextPage,
+        isLoading: ordersLoading,
+    } = useGetOrders({ status: type });
     const { mutate: cancelOrder, isPending: isCancelling } = useCancelOrder();
     const { data: reasons } = useGetReasons();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState(null);
     const [reason, setReason] = useState(null);
     const [openDrawer, setOpenDrawer] = useState(false);
+    const loadMoreRef = useRef(null);
 
     const { orderId } = router.query;
 
@@ -70,12 +78,35 @@ export const AllOrdersTable = ({ type }) => {
         setSelectedOrder(null);
     };
 
-    const statusFilter =
-        orders?.filter((order) =>
-            type
-                ? type?.includes(order.order_status_doing?.status || 'pending')
-                : true
-        ) || [];
+    const statusFilter = useMemo(() => {
+        if (!orders || !orders?.pages?.length) return [];
+        const mergedOrders = orders.pages.flatMap((page) => page.results);
+        return mergedOrders;
+    }, [orders, type]);
+
+    useEffect(() => {
+        if (!loadMoreRef.current) return;
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (
+                    entries[0].isIntersecting &&
+                    hasNextPage &&
+                    !isFetchingNextPage
+                ) {
+                    fetchNextPage();
+                }
+            },
+            { threshold: 1 }
+        );
+        observer.observe(loadMoreRef.current);
+
+        return () => {
+            if (loadMoreRef.current) {
+                observer.unobserve(loadMoreRef.current);
+            }
+        };
+    }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
     let ordersContent = null;
     if (ordersLoading) {
@@ -88,14 +119,25 @@ export const AllOrdersTable = ({ type }) => {
             </div>
         );
     } else if (statusFilter.length) {
-        ordersContent = statusFilter.map((order) => (
-            <OrderCard
-                key={order.id}
-                order={order}
-                onOpenDrawer={handleOpenDrawer}
-                onCancel={handleCancelClick}
-            />
-        ));
+        ordersContent = (
+            <>
+                {statusFilter.map((order) => (
+                    <OrderCard
+                        key={order.id}
+                        order={order}
+                        onOpenDrawer={handleOpenDrawer}
+                        onCancel={handleCancelClick}
+                    />
+                ))}
+                <div ref={loadMoreRef} style={{ height: 1 }} />
+
+                {hasNextPage && (
+                    <div style={{ margin: '10px auto' }}>
+                        <ClipLoader color="green" />
+                    </div>
+                )}
+            </>
+        );
     } else {
         ordersContent = (
             <EmptyTab description="Sizda buyurtmalar mavjud emas" />

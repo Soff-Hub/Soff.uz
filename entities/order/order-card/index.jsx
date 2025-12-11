@@ -4,7 +4,7 @@ import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import { getRemainingDays } from '~/shared/utilities/calculateTime';
 import { IoCheckmarkDone } from 'react-icons/io5';
 import { MdErrorOutline } from 'react-icons/md';
-import { RiH2, RiProgress5Line } from 'react-icons/ri';
+import { RiProgress5Line } from 'react-icons/ri';
 import { MdOutlinePendingActions } from 'react-icons/md';
 import { useRouter } from 'next/router';
 import { Avatar, Button, message, Tooltip, Badge } from 'antd';
@@ -354,7 +354,6 @@ const OrderCard = ({
                         </span>
                     ) : null}
                 </div>
-
                 <div className={styles.date}>
                     <span className={styles.dateTitle}>
                         <i className="fa-regular fa-calendar mr-1" /> Topshirish

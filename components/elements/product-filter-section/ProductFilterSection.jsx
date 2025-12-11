@@ -269,7 +269,7 @@ const ProductFilterForm = ({ open, onClose, path, isFile, parent, child }) => {
     });
 
     const parentOptions = useMemo(() => {
-        return parent.map((item) => ({
+        return parent?.map((item) => ({
             label: item.name,
             value: item.slug,
             id: item.id,
@@ -284,7 +284,7 @@ const ProductFilterForm = ({ open, onClose, path, isFile, parent, child }) => {
                 id: item.id,
             }));
         }
-        return child.map((item) => ({
+        return child?.map((item) => ({
             label: item.name,
             value: item.slug,
             id: item.id,

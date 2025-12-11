@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
     Drawer,
     Avatar,
@@ -12,7 +12,7 @@ import {
 } from 'antd';
 import TextSlicer from '~/shared/utilities/TextSlicer';
 import useResponsive from '~/shared/utilities/useResponsive';
-import { useFGet, useFPost } from '~/shared/hooks/useFApi';
+import { useFPost } from '~/shared/hooks/useFApi';
 import { useSelector } from 'react-redux';
 import { ExclamationCircleOutlined, StarFilled } from '@ant-design/icons';
 import { useRouter } from 'next/router';
@@ -23,6 +23,9 @@ import useOffers from '../api/useOffers';
 import ServiceCheckout from '~/components/freeleance/services/service-deatail/ui/auth/serviceCheckout';
 import useGetCustomBalance from '~/components/freeleance/myorders/myorder/api/useGetCustomBalance';
 import styles from '../style/select-order-drawer.module.scss';
+import useGetOffers from '../api/useGetOffers';
+import { ClipLoader } from 'react-spinners';
+import { useDisableWindowScroll } from '~/shared/hooks/useDisableWindowScroll';
 
 const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
     const [selectedOffer, setSelectedOffer] = useState(null);
@@ -36,27 +39,78 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
     const { data } = useGetCustomBalance();
     const balance = Number(data?.wallet || 0);
     const balanceDisabled = balance > 0;
+    const loadMoreRef = useRef(null);
 
     const leftBalance = formatCurrencyWithSpace(Number(balance));
     const isSufficientBalance = balance >= price;
 
-    const { data: initialOffers } = useFGet(order?.id, `offer/${order?.id}/`, {
-        enabled: open && !!order?.id && !!user?.access,
-        token: user?.access,
-        refetchOnWindowFocus: true,
-        refetchOnMount: true,
-        staleTime: 0,
-    });
+    const isFullyPaid = order?.approved_transaction_amount >= price;
+    const isPartiallyPaid =
+        order?.approved_transaction_amount > 0 &&
+        order?.approved_transaction_amount < price;
+    const notPaidAmount = price - (order?.approved_transaction_amount || 0);
+
+    const offerAmount =
+        (selectedOffer?.money || 0) - (order?.approved_transaction_amount || 0);
+
+    const serviceCheckoutOrder = {
+        id: order?.id,
+        price: isPartiallyPaid ? notPaidAmount : price,
+        title: order?.title,
+    };
+
+    const {
+        data: initialOffers,
+        fetchNextPage,
+        hasNextPage,
+        isFetchingNextPage,
+    } = useGetOffers({ orderId: order?.id, enabled: isFullyPaid && open });
+
+    useEffect(() => {
+        if (!open || !loadMoreRef.current) return;
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (
+                    entries[0].isIntersecting &&
+                    hasNextPage &&
+                    !isFetchingNextPage
+                ) {
+                    console.log('Fetching next page of offers...');
+                    fetchNextPage();
+                }
+            },
+            { threshold: 1 }
+        );
+        observer.observe(loadMoreRef.current);
+
+        return () => {
+            if (loadMoreRef.current) {
+                observer.unobserve(loadMoreRef.current);
+            }
+        };
+    }, [
+        hasNextPage,
+        isFetchingNextPage,
+        fetchNextPage,
+        open,
+        loadMoreRef.current,
+    ]);
 
     useEffect(() => {
         setMode(Number(data?.wallet || 0) > 0);
     }, [data?.wallet]);
 
     useEffect(() => {
-        if (initialOffers && open) {
-            setOffers(initialOffers);
+        if (open) {
+            if (!initialOffers || !initialOffers?.pages?.length) return;
+            let mergedOffers = [];
+            mergedOffers = initialOffers.pages.flatMap((page) => page.results);
+            setOffers(mergedOffers);
         }
     }, [initialOffers, open]);
+
+    useDisableWindowScroll(open);
 
     const { mutate: selectOffer, isPending } = useFPost({
         url: 'offer/select-offer',
@@ -121,21 +175,6 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
         handleRetreatDrawer();
     };
 
-    const isFullyPaid = order?.approved_transaction_amount >= price;
-    const isPartiallyPaid =
-        order?.approved_transaction_amount > 0 &&
-        order?.approved_transaction_amount < price;
-    const notPaidAmount = price - (order?.approved_transaction_amount || 0);
-
-    const offerAmount =
-        (selectedOffer?.money || 0) - (order?.approved_transaction_amount || 0);
-
-    const serviceCheckoutOrder = {
-        id: order?.id,
-        price: isPartiallyPaid ? notPaidAmount : price,
-        title: order?.title,
-    };
-
     let orderDrawerContent = null;
     if (isFullyPaid) {
         orderDrawerContent = (
@@ -153,158 +192,175 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
 
                 <div className={cn('w-full')}>
                     {offers?.length > 0 ? (
-                        offers.map((item) => (
-                            <div
-                                key={item?.id}
-                                className={cn(
-                                    'shadow-lg',
-                                    'p-[16px]',
-                                    'bg-light',
-                                    'rounded-2xl',
-                                    'flex',
-                                    'flex-col',
-                                    'gap-3',
-                                    'border',
-                                    'mb-2'
-                                )}>
+                        <>
+                            {offers.map((item) => (
                                 <div
+                                    key={item?.id}
                                     className={cn(
+                                        'shadow-lg',
+                                        'p-[16px]',
+                                        'bg-light',
+                                        'rounded-2xl',
                                         'flex',
-                                        'items-center',
-                                        'gap-4'
+                                        'flex-col',
+                                        'gap-3',
+                                        'border',
+                                        'mb-2'
                                     )}>
-                                    <a
-                                        href={`/seller/${item?.seller?.soff_seller_id}`}
-                                        target="_blank"
-                                        rel="noopener noreferrer">
-                                        <Avatar
-                                            src={
-                                                item?.seller?.photo_url ||
-                                                '/static/img/ozodbek.png'
-                                            }
-                                            size={50}
-                                            style={{ minWidth: '50px' }}
-                                            className={cn('cursor-pointer')}
-                                        />
-                                    </a>
-                                    <div className={cn('flex', 'flex-col')}>
+                                    <div
+                                        className={cn(
+                                            'flex',
+                                            'items-center',
+                                            'gap-4'
+                                        )}>
                                         <a
                                             href={`/seller/${item?.seller?.soff_seller_id}`}
                                             target="_blank"
                                             rel="noopener noreferrer">
-                                            <h3
-                                                className={cn(
-                                                    'text-[24px]',
-                                                    'mb-0',
-                                                    'cursor-pointer',
-                                                    'hover-text-primary',
-                                                    'transition'
-                                                )}>
-                                                {item?.seller?.full_name}
-                                            </h3>
+                                            <Avatar
+                                                src={
+                                                    item?.seller?.photo_url ||
+                                                    '/static/img/ozodbek.png'
+                                                }
+                                                size={50}
+                                                style={{ minWidth: '50px' }}
+                                                className={cn('cursor-pointer')}
+                                            />
                                         </a>
-                                        <span className={cn('text-primary')}>
-                                            {item?.seller?.position?.title}
-                                        </span>
-                                    </div>
-                                </div>
-                                <p
-                                    className={cn(
-                                        'mb-0',
-                                        'text-lg',
-                                        'text-dark'
-                                    )}>
-                                    {item.comment}
-                                </p>
-                                <div
-                                    className={cn(
-                                        'flex',
-                                        'justify-between',
-                                        'items-center'
-                                    )}>
-                                    <div>
-                                        <div
-                                            className={cn(
-                                                'flex',
-                                                'items-center',
-                                                'gap-1'
-                                            )}>
-                                            <i
-                                                style={{
-                                                    fontSize: '14px',
-                                                    color: 'rgba(0,0,0,0.6)',
-                                                }}
-                                                className="fa-solid fa-sack-dollar"></i>
+                                        <div className={cn('flex', 'flex-col')}>
+                                            <a
+                                                href={`/seller/${item?.seller?.soff_seller_id}`}
+                                                target="_blank"
+                                                rel="noopener noreferrer">
+                                                <h3
+                                                    className={cn(
+                                                        'text-[24px]',
+                                                        'mb-0',
+                                                        'cursor-pointer',
+                                                        'hover-text-primary',
+                                                        'transition'
+                                                    )}>
+                                                    {item?.seller?.full_name}
+                                                </h3>
+                                            </a>
                                             <span
-                                                className={cn(
-                                                    'text-[14px]',
-                                                    'text-secondary'
-                                                )}>
-                                                Taklif narxi:
+                                                className={cn('text-primary')}>
+                                                {item?.seller?.position?.title}
                                             </span>
                                         </div>
-                                        <span
-                                            className={cn(
-                                                'text-base',
-                                                'font-semibold'
-                                            )}>
-                                            {formatCurrencyWithSpace(
-                                                item?.money
-                                            )}{' '}
-                                            so‘m
-                                        </span>
                                     </div>
-                                    {item?.seller?.avg_rating &&
-                                        item?.seller?.avg_rating !== 0 && (
-                                            <div>
+                                    <p
+                                        className={cn(
+                                            'mb-0',
+                                            'text-lg',
+                                            'text-dark'
+                                        )}>
+                                        {item.comment}
+                                    </p>
+                                    <div
+                                        className={cn(
+                                            'flex',
+                                            'justify-between',
+                                            'items-center'
+                                        )}>
+                                        <div>
+                                            <div
+                                                className={cn(
+                                                    'flex',
+                                                    'items-center',
+                                                    'gap-1'
+                                                )}>
+                                                <i
+                                                    style={{
+                                                        fontSize: '14px',
+                                                        color: 'rgba(0,0,0,0.6)',
+                                                    }}
+                                                    className="fa-solid fa-sack-dollar"></i>
                                                 <span
                                                     className={cn(
                                                         'text-[14px]',
                                                         'text-secondary'
                                                     )}>
-                                                    Reytingi:
+                                                    Taklif narxi:
                                                 </span>
-                                                <div
-                                                    className={cn(
-                                                        'flex',
-                                                        'items-center',
-                                                        'gap-1'
-                                                    )}>
-                                                    <StarFilled
-                                                        className={cn(
-                                                            'text-base',
-                                                            'text-warning'
-                                                        )}
-                                                    />
+                                            </div>
+                                            <span
+                                                className={cn(
+                                                    'text-base',
+                                                    'font-semibold'
+                                                )}>
+                                                {formatCurrencyWithSpace(
+                                                    item?.money
+                                                )}{' '}
+                                                so‘m
+                                            </span>
+                                        </div>
+                                        {item?.seller?.avg_rating &&
+                                            item?.seller?.avg_rating !== 0 && (
+                                                <div>
                                                     <span
                                                         className={cn(
-                                                            'text-base',
-                                                            'text-warning'
+                                                            'text-[14px]',
+                                                            'text-secondary'
                                                         )}>
-                                                        {
-                                                            item?.seller
-                                                                ?.avg_rating
-                                                        }
+                                                        Reytingi:
                                                     </span>
-                                                    <span>
-                                                        (
-                                                        {
-                                                            item?.seller
-                                                                ?.feedback_count
-                                                        }{' '}
-                                                        izoh)
-                                                    </span>
+                                                    <div
+                                                        className={cn(
+                                                            'flex',
+                                                            'items-center',
+                                                            'gap-1'
+                                                        )}>
+                                                        <StarFilled
+                                                            className={cn(
+                                                                'text-base',
+                                                                'text-warning'
+                                                            )}
+                                                        />
+                                                        <span
+                                                            className={cn(
+                                                                'text-base',
+                                                                'text-warning'
+                                                            )}>
+                                                            {
+                                                                item?.seller
+                                                                    ?.avg_rating
+                                                            }
+                                                        </span>
+                                                        <span>
+                                                            (
+                                                            {
+                                                                item?.seller
+                                                                    ?.feedback_count
+                                                            }{' '}
+                                                            izoh)
+                                                        </span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        )}
-                                    <Button
-                                        onClick={() => setSelectedOffer(item)}
-                                        type="primary">
-                                        Tanlash
-                                    </Button>
+                                            )}
+                                        <Button
+                                            onClick={() =>
+                                                setSelectedOffer(item)
+                                            }
+                                            type="primary">
+                                            Tanlash
+                                        </Button>
+                                    </div>
                                 </div>
-                            </div>
-                        ))
+                            ))}
+
+                            {hasNextPage && (
+                                <div
+                                    style={{
+                                        width: '100%',
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        margin: '10px auto',
+                                    }}>
+                                    <ClipLoader color="green" />
+                                </div>
+                            )}
+                        </>
                     ) : (
                         <div
                             className={cn(
@@ -360,6 +416,7 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                 {!isFullyPaid && orderDrawerContent}
                 <OrderCard order={order} infoOnly />
                 {isFullyPaid && orderDrawerContent}
+                <div ref={loadMoreRef} style={{ height: 1 }} />
             </Drawer>
 
             <Modal

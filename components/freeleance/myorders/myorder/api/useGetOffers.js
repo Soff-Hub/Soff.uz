@@ -2,17 +2,17 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
 import axiosInstance from '~/shared/api/freeleanceApi';
 
-const useGetOrders = ({ status }) => {
+function useGetOffers({ orderId, enabled = true }) {
     const { user } = useSelector((state) => state.auth);
     const axios = axiosInstance(user?.access);
-    const currentStatus = Array.isArray(status) ? status.join(',') : status;
+
+    const isEnabled = !!user?.access && !!orderId && enabled;
+
     return useInfiniteQuery({
-        queryKey: ['orders', currentStatus || 'all'],
+        queryKey: ['offers', orderId],
         queryFn: async ({ pageParam = 1 }) => {
             const { data } = await axios.get(
-                `order/?page=${pageParam}&limit=10&${
-                    status ? `status=${currentStatus}` : ''
-                }`
+                `offer/${orderId}/?page=${pageParam}&limit=10`
             );
             return data;
         },
@@ -25,11 +25,11 @@ const useGetOrders = ({ status }) => {
 
             return undefined;
         },
-        enabled: !!user?.access,
+        enabled: isEnabled,
         refetchOnWindowFocus: true,
         refetchOnMount: true,
         staleTime: 0,
     });
-};
+}
 
-export default useGetOrders;
+export default useGetOffers;
