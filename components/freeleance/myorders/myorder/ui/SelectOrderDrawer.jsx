@@ -106,7 +106,13 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
             if (!initialOffers || !initialOffers?.pages?.length) return;
             let mergedOffers = [];
             mergedOffers = initialOffers.pages.flatMap((page) => page.results);
-            setOffers(mergedOffers);
+            setOffers((pre) => {
+                const existingOfferIds = new Set(pre.map((offer) => offer.id));
+                const newOffers = mergedOffers.filter(
+                    (offer) => !existingOfferIds.has(offer.id)
+                );
+                return [...pre, ...newOffers];
+            });
         }
     }, [initialOffers, open]);
 
