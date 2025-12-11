@@ -1,0 +1,2 @@
+(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[9603],{32252:function(n,u,_){(window.__NEXT_P=window.__NEXT_P||[]).push(["/search",function(){return _(31025)}])},31025:function(n,u,_){"use strict";_.r(u),_.d(u,{__N_SSP:function(){return r}});var t=function(){return null},r=!0;u.default=t}},function(n){n.O(0,[9774,2888,179],function(){return n(n.s=32252)}),_N_E=n.O()}]);
+//# sourceMappingURL=search-4f56cd0a12da902d.js.map
