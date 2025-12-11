@@ -1,4 +1,3 @@
-;{try{(function(){var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof globalThis?globalThis:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="f3cca784-944e-4e6f-ad54-e95986a63a6a",e._sentryDebugIdIdentifier="sentry-dbid-f3cca784-944e-4e6f-ad54-e95986a63a6a");})();}catch(e){}};
 "use strict";
 (() => {
 var exports = {};
@@ -6,7 +5,7 @@ exports.id = 5260;
 exports.ids = [5260];
 exports.modules = {
 
-/***/ 3144:
+/***/ 5358:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
@@ -16,22 +15,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "getServerSideProps": () => (/* binding */ getServerSideProps),
 /* harmony export */   "getStaticProps": () => (/* binding */ getStaticProps)
 /* harmony export */ });
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(997);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6689);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8454);
-/* harmony import */ var _repositories_Repository__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1869);
-/* harmony import */ var cookie__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(4802);
-/* harmony import */ var cookie__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(cookie__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _components_shared_headers_Meta__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1218);
-/* harmony import */ var _shared_utilities_device_id__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(1401);
-/* harmony import */ var next_dynamic__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(5152);
-/* harmony import */ var next_dynamic__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(next_dynamic__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _sentry_nextjs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(8097);
-/* harmony import */ var _sentry_nextjs__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_sentry_nextjs__WEBPACK_IMPORTED_MODULE_8__);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_2__, _repositories_Repository__WEBPACK_IMPORTED_MODULE_3__, _shared_utilities_device_id__WEBPACK_IMPORTED_MODULE_6__]);
-([_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_2__, _repositories_Repository__WEBPACK_IMPORTED_MODULE_3__, _shared_utilities_device_id__WEBPACK_IMPORTED_MODULE_6__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+/* harmony import */ var _sentry_server_config_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5780);
+/* harmony import */ var _sentry_nextjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8097);
+/* harmony import */ var _sentry_nextjs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_sentry_nextjs__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(997);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(6689);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(4705);
+/* harmony import */ var _repositories_Repository__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(3608);
+/* harmony import */ var cookie__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(4802);
+/* harmony import */ var cookie__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(cookie__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _components_shared_headers_Meta__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(6985);
+/* harmony import */ var _shared_utilities_device_id__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(9894);
+/* harmony import */ var next_dynamic__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(5152);
+/* harmony import */ var next_dynamic__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(next_dynamic__WEBPACK_IMPORTED_MODULE_9__);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_4__, _repositories_Repository__WEBPACK_IMPORTED_MODULE_5__, _shared_utilities_device_id__WEBPACK_IMPORTED_MODULE_8__]);
+([_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_4__, _repositories_Repository__WEBPACK_IMPORTED_MODULE_5__, _shared_utilities_device_id__WEBPACK_IMPORTED_MODULE_8__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+
 
 
 
@@ -44,7 +45,7 @@ var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_wid
 
 const video_url = "https://www.youtube.com/watch?v=oJre9mbRE2U";
 // Lazy load ProductVideoBanner
-const ProductVideoBanner = next_dynamic__WEBPACK_IMPORTED_MODULE_7___default()(null, {
+const ProductVideoBanner = next_dynamic__WEBPACK_IMPORTED_MODULE_9___default()(null, {
     loadableGenerated: {
         modules: [
             "product/[pid].jsx -> " + "~/components/product/ProductVideoBanner"
@@ -53,7 +54,7 @@ const ProductVideoBanner = next_dynamic__WEBPACK_IMPORTED_MODULE_7___default()(n
     ssr: false
 });
 // Lazy load heavy components
-const LastAddedProducts = next_dynamic__WEBPACK_IMPORTED_MODULE_7___default()(null, {
+const LastAddedProducts = next_dynamic__WEBPACK_IMPORTED_MODULE_9___default()(null, {
     loadableGenerated: {
         modules: [
             "product/[pid].jsx -> " + "~/components/details-components/LastAddedProducts"
@@ -61,7 +62,7 @@ const LastAddedProducts = next_dynamic__WEBPACK_IMPORTED_MODULE_7___default()(nu
     },
     ssr: false
 });
-const SimilarProducts = next_dynamic__WEBPACK_IMPORTED_MODULE_7___default()(null, {
+const SimilarProducts = next_dynamic__WEBPACK_IMPORTED_MODULE_9___default()(null, {
     loadableGenerated: {
         modules: [
             "product/[pid].jsx -> " + "~/components/details-components/SimilarProducts"
@@ -69,7 +70,7 @@ const SimilarProducts = next_dynamic__WEBPACK_IMPORTED_MODULE_7___default()(null
     },
     ssr: false
 });
-const AISoffiaPresentation = next_dynamic__WEBPACK_IMPORTED_MODULE_7___default()(null, {
+const AISoffiaPresentation = next_dynamic__WEBPACK_IMPORTED_MODULE_9___default()(null, {
     loadableGenerated: {
         modules: [
             "product/[pid].jsx -> " + "~/components/elements/AISoffiaPresentation"
@@ -78,7 +79,7 @@ const AISoffiaPresentation = next_dynamic__WEBPACK_IMPORTED_MODULE_7___default()
     ssr: false
 });
 // Conditionally load Joyride only when needed (first visit)
-const Joyride = next_dynamic__WEBPACK_IMPORTED_MODULE_7___default()(null, {
+const Joyride = next_dynamic__WEBPACK_IMPORTED_MODULE_9___default()(null, {
     loadableGenerated: {
         modules: [
             "product/[pid].jsx -> " + "react-joyride"
@@ -86,7 +87,7 @@ const Joyride = next_dynamic__WEBPACK_IMPORTED_MODULE_7___default()(null, {
     },
     ssr: false
 });
-const FileProductDetatails = next_dynamic__WEBPACK_IMPORTED_MODULE_7___default()(()=>Promise.all(/* import() */[__webpack_require__.e(7567), __webpack_require__.e(9075), __webpack_require__.e(280), __webpack_require__.e(75), __webpack_require__.e(5419), __webpack_require__.e(1080), __webpack_require__.e(1708), __webpack_require__.e(2653), __webpack_require__.e(2789), __webpack_require__.e(5168), __webpack_require__.e(9245), __webpack_require__.e(5931), __webpack_require__.e(9706), __webpack_require__.e(9257), __webpack_require__.e(5533), __webpack_require__.e(772)]).then(__webpack_require__.bind(__webpack_require__, 772)), {
+const FileProductDetatails = next_dynamic__WEBPACK_IMPORTED_MODULE_9___default()(()=>Promise.all(/* import() */[__webpack_require__.e(6598), __webpack_require__.e(3701), __webpack_require__.e(7534), __webpack_require__.e(5758), __webpack_require__.e(5029), __webpack_require__.e(6020), __webpack_require__.e(2536), __webpack_require__.e(3060), __webpack_require__.e(3944), __webpack_require__.e(8310), __webpack_require__.e(9409), __webpack_require__.e(986), __webpack_require__.e(9708), __webpack_require__.e(5138), __webpack_require__.e(1393), __webpack_require__.e(5917)]).then(__webpack_require__.bind(__webpack_require__, 5917)), {
     loadableGenerated: {
         modules: [
             "product/[pid].jsx -> " + "~/components/details-components/file-products-detail/details-page"
@@ -94,7 +95,7 @@ const FileProductDetatails = next_dynamic__WEBPACK_IMPORTED_MODULE_7___default()
     },
     ssr: true
 });
-const ThreeDesignProductDetails = next_dynamic__WEBPACK_IMPORTED_MODULE_7___default()(()=>Promise.all(/* import() */[__webpack_require__.e(7567), __webpack_require__.e(9075), __webpack_require__.e(280), __webpack_require__.e(75), __webpack_require__.e(5419), __webpack_require__.e(1080), __webpack_require__.e(1708), __webpack_require__.e(2653), __webpack_require__.e(2789), __webpack_require__.e(5168), __webpack_require__.e(9245), __webpack_require__.e(5931), __webpack_require__.e(9706), __webpack_require__.e(9257), __webpack_require__.e(1395), __webpack_require__.e(5533), __webpack_require__.e(6218)]).then(__webpack_require__.bind(__webpack_require__, 6218)), {
+const ThreeDesignProductDetails = next_dynamic__WEBPACK_IMPORTED_MODULE_9___default()(()=>Promise.all(/* import() */[__webpack_require__.e(6598), __webpack_require__.e(3701), __webpack_require__.e(7534), __webpack_require__.e(5758), __webpack_require__.e(5029), __webpack_require__.e(6020), __webpack_require__.e(2536), __webpack_require__.e(3060), __webpack_require__.e(3944), __webpack_require__.e(8310), __webpack_require__.e(9409), __webpack_require__.e(986), __webpack_require__.e(9708), __webpack_require__.e(5138), __webpack_require__.e(583), __webpack_require__.e(1393), __webpack_require__.e(4162)]).then(__webpack_require__.bind(__webpack_require__, 4162)), {
     loadableGenerated: {
         modules: [
             "product/[pid].jsx -> " + "~/components/details-components/templates-details/details-page"
@@ -102,7 +103,7 @@ const ThreeDesignProductDetails = next_dynamic__WEBPACK_IMPORTED_MODULE_7___defa
     },
     ssr: true
 });
-const VideosProductDetails = next_dynamic__WEBPACK_IMPORTED_MODULE_7___default()(()=>Promise.all(/* import() */[__webpack_require__.e(7567), __webpack_require__.e(9075), __webpack_require__.e(280), __webpack_require__.e(75), __webpack_require__.e(5419), __webpack_require__.e(1080), __webpack_require__.e(1708), __webpack_require__.e(2653), __webpack_require__.e(2789), __webpack_require__.e(9245), __webpack_require__.e(9706), __webpack_require__.e(1469)]).then(__webpack_require__.bind(__webpack_require__, 1469)), {
+const VideosProductDetails = next_dynamic__WEBPACK_IMPORTED_MODULE_9___default()(()=>Promise.all(/* import() */[__webpack_require__.e(6598), __webpack_require__.e(3701), __webpack_require__.e(7534), __webpack_require__.e(5758), __webpack_require__.e(5029), __webpack_require__.e(6020), __webpack_require__.e(2536), __webpack_require__.e(3060), __webpack_require__.e(3944), __webpack_require__.e(9409), __webpack_require__.e(9708), __webpack_require__.e(2201)]).then(__webpack_require__.bind(__webpack_require__, 2201)), {
     loadableGenerated: {
         modules: [
             "product/[pid].jsx -> " + "~/components/details-components/video-tutorials/details-page"
@@ -141,32 +142,32 @@ const productsContentDetails = (contentType)=>{
         case "video":
             return VideosProductDetails;
         default:
-            return ()=>/*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+            return ()=>/*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
                     children: "Mahsulot topilmadi"
                 });
     }
 };
 function ProductDefaultPage({ defaultProducts  }) {
-    const { 0: isPlay , 1: setIsPlay  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
-    const { 0: showJoyride , 1: setShowJoyride  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
-    const similarRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)();
-    const lastProductsRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)();
+    const { 0: isPlay , 1: setIsPlay  } = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(null);
+    const { 0: showJoyride , 1: setShowJoyride  } = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(false);
+    const similarRef = (0,react__WEBPACK_IMPORTED_MODULE_3__.useRef)();
+    const lastProductsRef = (0,react__WEBPACK_IMPORTED_MODULE_3__.useRef)();
     // Memoize expensive computations
-    const contentType = (0,react__WEBPACK_IMPORTED_MODULE_1__.useMemo)(()=>defaultProducts?.document?.content_type, [
+    const contentType = (0,react__WEBPACK_IMPORTED_MODULE_3__.useMemo)(()=>defaultProducts?.document?.content_type, [
         defaultProducts?.document?.content_type
     ]);
-    const DetailComponent = (0,react__WEBPACK_IMPORTED_MODULE_1__.useMemo)(()=>productsContentDetails(contentType), [
+    const DetailComponent = (0,react__WEBPACK_IMPORTED_MODULE_3__.useMemo)(()=>productsContentDetails(contentType), [
         contentType
     ]);
-    const shouldShowAISoffia = (0,react__WEBPACK_IMPORTED_MODULE_1__.useMemo)(()=>contentType === "file", [
+    const shouldShowAISoffia = (0,react__WEBPACK_IMPORTED_MODULE_3__.useMemo)(()=>contentType === "file", [
         contentType
     ]);
     // Check if Joyride should run (only on first visit)
-    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(()=>{
+    (0,react__WEBPACK_IMPORTED_MODULE_3__.useEffect)(()=>{
         return;
     }, []);
     // Memoize Meta props to prevent unnecessary re-renders
-    const metaProps = (0,react__WEBPACK_IMPORTED_MODULE_1__.useMemo)(()=>{
+    const metaProps = (0,react__WEBPACK_IMPORTED_MODULE_3__.useMemo)(()=>{
         const removeHTMLTags = (html)=>html.replace(/<[^>]+>/g, "");
         const title = defaultProducts?.title || "Soff.uz - Intellektual mulk marketi";
         const description = defaultProducts?.description ? removeHTMLTags(defaultProducts.description) : `${defaultProducts?.title || ""} + ${defaultProducts?.tag?.map((e)=>e?.name)?.join(", ") || "soff.uz - Intellektual mulk marketi"}`;
@@ -198,49 +199,49 @@ function ProductDefaultPage({ defaultProducts  }) {
         defaultProducts
     ]);
     // Memoize container class name
-    const containerClassName = (0,react__WEBPACK_IMPORTED_MODULE_1__.useMemo)(()=>`ps-page--product ${defaultProducts?.price === 0 ? "" : "pt-2"}`, [
+    const containerClassName = (0,react__WEBPACK_IMPORTED_MODULE_3__.useMemo)(()=>`ps-page--product ${defaultProducts?.price === 0 ? "" : "pt-2"}`, [
         defaultProducts?.price
     ]);
-    const handleJoyrideCallback = (0,react__WEBPACK_IMPORTED_MODULE_1__.useCallback)((data)=>{
+    const handleJoyrideCallback = (0,react__WEBPACK_IMPORTED_MODULE_3__.useCallback)((data)=>{
         if (data.status === "finished" || data.status === "skipped") {
             localStorage.setItem("product-tour-completed", "true");
             setShowJoyride(false);
         }
     }, []);
-    return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .Z, {
+    return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z, {
         children: [
-            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_shared_headers_Meta__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z, {
+            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_components_shared_headers_Meta__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Z, {
                 ...metaProps
             }),
-            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                 children: [
-                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(ProductVideoBanner, {
+                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(ProductVideoBanner, {
                         videoUrl: video_url
                     }),
-                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
                         className: "container mb-5",
                         style: {
                             position: "relative"
                         },
-                        children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+                        children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
                             className: containerClassName,
-                            children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                            children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                                 className: "ps-container p-0",
                                 children: [
-                                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+                                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
                                         className: "ps-page__container",
-                                        children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(DetailComponent, {
+                                        children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(DetailComponent, {
                                             product: defaultProducts,
                                             isPlay: isPlay,
                                             setIsPlay: setIsPlay
                                         })
                                     }),
-                                    shouldShowAISoffia && /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(AISoffiaPresentation, {}),
-                                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                                    shouldShowAISoffia && /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(AISoffiaPresentation, {}),
+                                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                                         ref: similarRef,
                                         className: "my-5",
                                         children: [
-                                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
+                                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h3", {
                                                 style: {
                                                     fontSize: "25px",
                                                     fontWeight: 400
@@ -248,13 +249,13 @@ function ProductDefaultPage({ defaultProducts  }) {
                                                 className: "py-4 similar_title",
                                                 children: "O'xshash mahsulotlar"
                                             }),
-                                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(SimilarProducts, {})
+                                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(SimilarProducts, {})
                                         ]
                                     }),
-                                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                                         ref: lastProductsRef,
                                         children: [
-                                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
+                                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h3", {
                                                 style: {
                                                     fontSize: "25px",
                                                     fontWeight: 400
@@ -262,7 +263,7 @@ function ProductDefaultPage({ defaultProducts  }) {
                                                 className: "py-4 similar_title",
                                                 children: "So'ngi yuklangan mahsulotlar"
                                             }),
-                                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(LastAddedProducts, {
+                                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(LastAddedProducts, {
                                                 contentType: contentType
                                             })
                                         ]
@@ -271,7 +272,7 @@ function ProductDefaultPage({ defaultProducts  }) {
                             })
                         })
                     }),
-                    showJoyride && /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(Joyride, {
+                    showJoyride && /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(Joyride, {
                         steps: steps,
                         run: showJoyride,
                         continuous: true,
@@ -301,9 +302,9 @@ async function getServerSideProps$1({ query , req , res  }) {
             notFound: true
         };
     }
-    const cookies = cookie__WEBPACK_IMPORTED_MODULE_4__.parse(req.headers.cookie || "");
+    const cookies = cookie__WEBPACK_IMPORTED_MODULE_6__.parse(req.headers.cookie || "");
     const token = cookies.token;
-    const deviceId = (0,_shared_utilities_device_id__WEBPACK_IMPORTED_MODULE_6__/* .getOrCreateDeviceId */ .n)({
+    const deviceId = (0,_shared_utilities_device_id__WEBPACK_IMPORTED_MODULE_8__/* .getOrCreateDeviceId */ .n)({
         req,
         res
     });
@@ -316,7 +317,7 @@ async function getServerSideProps$1({ query , req , res  }) {
     };
     let defaultProducts = null;
     try {
-        const request = await fetch(`${_repositories_Repository__WEBPACK_IMPORTED_MODULE_3__/* .baseUrl */ .FH}customer/documents/${pid}/`, {
+        const request = await fetch(`${_repositories_Repository__WEBPACK_IMPORTED_MODULE_5__/* .baseUrl */ .FH}customer/documents/${pid}/`, {
             headers
         });
         // Handle specific status codes
@@ -330,7 +331,7 @@ async function getServerSideProps$1({ query , req , res  }) {
             const retryHeaders = {
                 "X-Device-ID": deviceId
             };
-            const retryRequest = await fetch(`${_repositories_Repository__WEBPACK_IMPORTED_MODULE_3__/* .baseUrl */ .FH}customer/documents/${pid}/`, {
+            const retryRequest = await fetch(`${_repositories_Repository__WEBPACK_IMPORTED_MODULE_5__/* .baseUrl */ .FH}customer/documents/${pid}/`, {
                 headers: retryHeaders
             });
             if (!retryRequest.ok) {
@@ -350,7 +351,7 @@ async function getServerSideProps$1({ query , req , res  }) {
     } catch (error) {
         // Final fallback - try without auth
         try {
-            const fallbackRequest = await fetch(`${_repositories_Repository__WEBPACK_IMPORTED_MODULE_3__/* .baseUrl */ .FH}customer/documents/${pid}/`, {
+            const fallbackRequest = await fetch(`${_repositories_Repository__WEBPACK_IMPORTED_MODULE_5__/* .baseUrl */ .FH}customer/documents/${pid}/`, {
                 headers: {
                     "X-Device-ID": deviceId
                 }
@@ -383,7 +384,7 @@ async function getServerSideProps$1({ query , req , res  }) {
 
 var serverComponentModule = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    default: ProductDefaultPage,
+    'default': ProductDefaultPage,
     getServerSideProps: getServerSideProps$1
 });
 
@@ -395,7 +396,6 @@ var serverComponentModule = /*#__PURE__*/Object.freeze({
  * this causes both TS and ESLint to complain, hence the pragma comments below.
  */
 
-
 const userPageModule = serverComponentModule ;
 
 const pageComponent = userPageModule ? userPageModule.default : undefined;
@@ -404,19 +404,14 @@ const origGetInitialProps = pageComponent ? pageComponent.getInitialProps : unde
 const origGetStaticProps = userPageModule ? userPageModule.getStaticProps : undefined;
 const origGetServerSideProps = userPageModule ? userPageModule.getServerSideProps : undefined;
 
-// Rollup will aggressively tree-shake what it perceives to be unused properties
-// on objects. Because the key that's used to index into this object (/product/[pid])
-// is replaced during bundling, Rollup can't see that these properties are in fact
-// used. Using `Object.freeze` signals to Rollup that it should not tree-shake
-// this object.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const getInitialPropsWrappers = Object.freeze({
-  '/_app': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_8__.wrapAppGetInitialPropsWithSentry,
-  '/_document': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_8__.wrapDocumentGetInitialPropsWithSentry,
-  '/_error': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_8__.wrapErrorGetInitialPropsWithSentry,
-});
+const getInitialPropsWrappers = {
+  '/_app': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_1__.wrapAppGetInitialPropsWithSentry,
+  '/_document': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_1__.wrapDocumentGetInitialPropsWithSentry,
+  '/_error': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_1__.wrapErrorGetInitialPropsWithSentry,
+};
 
-const getInitialPropsWrapper = getInitialPropsWrappers['/product/[pid]'] || _sentry_nextjs__WEBPACK_IMPORTED_MODULE_8__.wrapGetInitialPropsWithSentry;
+const getInitialPropsWrapper = getInitialPropsWrappers['/product/[pid]'] || _sentry_nextjs__WEBPACK_IMPORTED_MODULE_1__.wrapGetInitialPropsWithSentry;
 
 if (pageComponent && typeof origGetInitialProps === 'function') {
   pageComponent.getInitialProps = getInitialPropsWrapper(origGetInitialProps) ;
@@ -424,14 +419,14 @@ if (pageComponent && typeof origGetInitialProps === 'function') {
 
 const getStaticProps =
   typeof origGetStaticProps === 'function'
-    ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_8__.wrapGetStaticPropsWithSentry(origGetStaticProps, '/product/[pid]')
+    ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_1__.wrapGetStaticPropsWithSentry(origGetStaticProps, '/product/[pid]')
     : undefined;
 const getServerSideProps =
   typeof origGetServerSideProps === 'function'
-    ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_8__.wrapGetServerSidePropsWithSentry(origGetServerSideProps, '/product/[pid]')
+    ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_1__.wrapGetServerSidePropsWithSentry(origGetServerSideProps, '/product/[pid]')
     : undefined;
 
-const pageWrapperTemplate = pageComponent ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_8__.wrapPageComponentWithSentry(pageComponent ) : pageComponent;
+const pageWrapperTemplate = pageComponent ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_1__.wrapPageComponentWithSentry(pageComponent ) : pageComponent;
 
 
 
@@ -440,7 +435,7 @@ __webpack_async_result__();
 
 /***/ }),
 
-/***/ 1401:
+/***/ 9894:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
@@ -477,7 +472,7 @@ __webpack_async_result__();
 
 /***/ }),
 
-/***/ 8454:
+/***/ 4705:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
@@ -488,7 +483,7 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6689);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _PageLayout__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4747);
+/* harmony import */ var _PageLayout__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2315);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_PageLayout__WEBPACK_IMPORTED_MODULE_2__]);
 _PageLayout__WEBPACK_IMPORTED_MODULE_2__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
 
@@ -865,7 +860,7 @@ module.exports = import("swiper/modules");;
 
 /***/ }),
 
-/***/ 3015:
+/***/ 7840:
 /***/ ((module) => {
 
 module.exports = import("swiper/react");;
@@ -893,7 +888,7 @@ module.exports = import("yet-another-react-lightbox");;
 var __webpack_require__ = require("../../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [676,1664,5675,5152,6017,8550,4747,1218], () => (__webpack_exec__(3144)));
+var __webpack_exports__ = __webpack_require__.X(0, [676,1664,5675,5152,5780,3015,7864,2315,6985], () => (__webpack_exec__(5358)));
 module.exports = __webpack_exports__;
 
 })();

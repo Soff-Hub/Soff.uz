@@ -1,4 +1,3 @@
-;{try{(function(){var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof globalThis?globalThis:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="3c639a11-bc3b-4895-a5e0-3682dd4eae0b",e._sentryDebugIdIdentifier="sentry-dbid-3c639a11-bc3b-4895-a5e0-3682dd4eae0b");})();}catch(e){}};
 "use strict";
 (() => {
 var exports = {};
@@ -6,7 +5,7 @@ exports.id = 4820;
 exports.ids = [4820];
 exports.modules = {
 
-/***/ 4713:
+/***/ 8941:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 // ESM COMPAT FLAG
@@ -19,14 +18,17 @@ __webpack_require__.d(__webpack_exports__, {
   "getStaticProps": () => (/* binding */ getStaticProps)
 });
 
-// EXTERNAL MODULE: external "react/jsx-runtime"
-var jsx_runtime_ = __webpack_require__(997);
+// EXTERNAL MODULE: ./sentry.server.config.js
+var sentry_server_config = __webpack_require__(5780);
 // EXTERNAL MODULE: external "@sentry/nextjs"
 var nextjs_ = __webpack_require__(8097);
+// EXTERNAL MODULE: external "react/jsx-runtime"
+var jsx_runtime_ = __webpack_require__(997);
 ;// CONCATENATED MODULE: external "next/error"
 const error_namespaceObject = require("next/error");
 var error_default = /*#__PURE__*/__webpack_require__.n(error_namespaceObject);
 ;// CONCATENATED MODULE: ./pages/_error.jsx
+
 
 
 
@@ -46,7 +48,7 @@ CustomErrorComponent.getInitialProps = async (contextData)=>{
 
 var serverComponentModule = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    default: CustomErrorComponent
+    'default': CustomErrorComponent
 });
 
 /*
@@ -57,7 +59,6 @@ var serverComponentModule = /*#__PURE__*/Object.freeze({
  * this causes both TS and ESLint to complain, hence the pragma comments below.
  */
 
-
 const userPageModule = serverComponentModule ;
 
 const pageComponent = userPageModule ? userPageModule.default : undefined;
@@ -66,17 +67,12 @@ const origGetInitialProps = pageComponent ? pageComponent.getInitialProps : unde
 const origGetStaticProps = userPageModule ? userPageModule.getStaticProps : undefined;
 const origGetServerSideProps = userPageModule ? userPageModule.getServerSideProps : undefined;
 
-// Rollup will aggressively tree-shake what it perceives to be unused properties
-// on objects. Because the key that's used to index into this object (/_error)
-// is replaced during bundling, Rollup can't see that these properties are in fact
-// used. Using `Object.freeze` signals to Rollup that it should not tree-shake
-// this object.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const getInitialPropsWrappers = Object.freeze({
+const getInitialPropsWrappers = {
   '/_app': nextjs_.wrapAppGetInitialPropsWithSentry,
   '/_document': nextjs_.wrapDocumentGetInitialPropsWithSentry,
   '/_error': nextjs_.wrapErrorGetInitialPropsWithSentry,
-});
+};
 
 const getInitialPropsWrapper = getInitialPropsWrappers['/_error'] || nextjs_.wrapGetInitialPropsWithSentry;
 
@@ -121,7 +117,7 @@ module.exports = require("react/jsx-runtime");
 var __webpack_require__ = require("../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = (__webpack_exec__(4713));
+var __webpack_exports__ = __webpack_require__.X(0, [5780], () => (__webpack_exec__(8941)));
 module.exports = __webpack_exports__;
 
 })();

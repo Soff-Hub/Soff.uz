@@ -1,0 +1,2 @@
+(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[7234],{86730:function(n,u,r){(window.__NEXT_P=window.__NEXT_P||[]).push(["/scientific-resources",function(){return r(95179)}])},95179:function(n,u,r){"use strict";r.r(u),r.d(u,{__N_SSP:function(){return t},default:function(){return _}});var t=!0;function _(){return null}}},function(n){n.O(0,[9774,2888,179],(function(){return u=86730,n(n.s=u);var u}));var u=n.O();_N_E=u}]);
+//# sourceMappingURL=scientific-resources-5f9ff466f33b45d8.js.map

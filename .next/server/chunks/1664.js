@@ -1,4 +1,3 @@
-;{try{(function(){var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof globalThis?globalThis:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="632c0d41-0227-4cf5-b766-0b0d29070ed1",e._sentryDebugIdIdentifier="sentry-dbid-632c0d41-0227-4cf5-b766-0b0d29070ed1");})();}catch(e){}};
 exports.id = 1664;
 exports.ids = [1664];
 exports.modules = {
@@ -175,7 +174,7 @@ function _objectWithoutPropertiesLoose(source, excluded) {
 
 /***/ }),
 
-/***/ 7192:
+/***/ 1417:
 /***/ ((module, exports, __webpack_require__) => {
 
 "use strict";
@@ -185,7 +184,7 @@ Object.defineProperty(exports, "__esModule", ({
 }));
 exports.addBasePath = addBasePath;
 var _addPathPrefix = __webpack_require__(1751);
-var _normalizeTrailingSlash = __webpack_require__(2866);
+var _normalizeTrailingSlash = __webpack_require__(4005);
 const basePath =  false || "";
 function addBasePath(path, required) {
     if (false) {}
@@ -202,7 +201,7 @@ if ((typeof exports.default === "function" || typeof exports.default === "object
 
 /***/ }),
 
-/***/ 3607:
+/***/ 5017:
 /***/ ((module, exports, __webpack_require__) => {
 
 "use strict";
@@ -211,7 +210,7 @@ Object.defineProperty(exports, "__esModule", ({
     value: true
 }));
 exports.addLocale = void 0;
-var _normalizeTrailingSlash = __webpack_require__(2866);
+var _normalizeTrailingSlash = __webpack_require__(4005);
 const addLocale = (path, ...args)=>{
     if (false) {}
     return path;
@@ -228,7 +227,7 @@ if ((typeof exports.default === "function" || typeof exports.default === "object
 
 /***/ }),
 
-/***/ 6728:
+/***/ 6919:
 /***/ ((module, exports) => {
 
 "use strict";
@@ -252,7 +251,7 @@ if ((typeof exports.default === "function" || typeof exports.default === "object
 
 /***/ }),
 
-/***/ 30:
+/***/ 358:
 /***/ ((module, exports) => {
 
 "use strict";
@@ -278,7 +277,7 @@ if ((typeof exports.default === "function" || typeof exports.default === "object
 
 /***/ }),
 
-/***/ 6864:
+/***/ 6732:
 /***/ ((module, exports, __webpack_require__) => {
 
 "use strict";
@@ -303,7 +302,7 @@ if ((typeof exports.default === "function" || typeof exports.default === "object
 
 /***/ }),
 
-/***/ 6623:
+/***/ 2714:
 /***/ ((module, exports) => {
 
 "use strict";
@@ -436,7 +435,7 @@ if ((typeof exports.default === "function" || typeof exports.default === "object
 
 /***/ }),
 
-/***/ 5170:
+/***/ 2994:
 /***/ ((module, exports, __webpack_require__) => {
 
 "use strict";
@@ -449,13 +448,13 @@ exports["default"] = void 0;
 var _interop_require_default = (__webpack_require__(2648)/* ["default"] */ .Z);
 var _object_without_properties_loose = (__webpack_require__(7273)/* ["default"] */ .Z);
 var _react = _interop_require_default(__webpack_require__(6689));
-var _router = __webpack_require__(2997);
-var _addLocale = __webpack_require__(3607);
+var _router = __webpack_require__(755);
+var _addLocale = __webpack_require__(5017);
 var _routerContext = __webpack_require__(4964);
 var _appRouterContext = __webpack_require__(3280);
-var _useIntersection = __webpack_require__(920);
-var _getDomainLocale = __webpack_require__(30);
-var _addBasePath = __webpack_require__(7192);
+var _useIntersection = __webpack_require__(7549);
+var _getDomainLocale = __webpack_require__(358);
+var _addBasePath = __webpack_require__(1417);
 "client";
 const prefetched = {};
 function prefetch(router, href, as, options) {
@@ -670,7 +669,7 @@ if ((typeof exports.default === "function" || typeof exports.default === "object
 
 /***/ }),
 
-/***/ 2866:
+/***/ 4005:
 /***/ ((module, exports, __webpack_require__) => {
 
 "use strict";
@@ -701,7 +700,7 @@ if ((typeof exports.default === "function" || typeof exports.default === "object
 
 /***/ }),
 
-/***/ 8961:
+/***/ 4209:
 /***/ ((module, exports, __webpack_require__) => {
 
 "use strict";
@@ -710,7 +709,7 @@ Object.defineProperty(exports, "__esModule", ({
     value: true
 }));
 exports.removeBasePath = removeBasePath;
-var _hasBasePath = __webpack_require__(6864);
+var _hasBasePath = __webpack_require__(6732);
 const basePath =  false || "";
 function removeBasePath(path) {
     if (false) {}
@@ -729,7 +728,7 @@ if ((typeof exports.default === "function" || typeof exports.default === "object
 
 /***/ }),
 
-/***/ 5637:
+/***/ 9886:
 /***/ ((module, exports, __webpack_require__) => {
 
 "use strict";
@@ -754,7 +753,7 @@ if ((typeof exports.default === "function" || typeof exports.default === "object
 
 /***/ }),
 
-/***/ 3436:
+/***/ 517:
 /***/ ((module, exports) => {
 
 "use strict";
@@ -790,7 +789,7 @@ if ((typeof exports.default === "function" || typeof exports.default === "object
 
 /***/ }),
 
-/***/ 769:
+/***/ 3203:
 /***/ ((module, exports, __webpack_require__) => {
 
 "use strict";
@@ -804,8 +803,8 @@ exports.getClientBuildManifest = getClientBuildManifest;
 exports.createRouteLoader = createRouteLoader;
 var _interop_require_default = (__webpack_require__(2648)/* ["default"] */ .Z);
 var _getAssetPathFromRoute = _interop_require_default(__webpack_require__(9565));
-var _trustedTypes = __webpack_require__(6912);
-var _requestIdleCallback = __webpack_require__(3436);
+var _trustedTypes = __webpack_require__(7978);
+var _requestIdleCallback = __webpack_require__(517);
 // 3.8s was arbitrarily chosen as it's what https://web.dev/interactive
 // considers as "Good" time-to-interactive. We must assume something went
 // wrong beyond this point, and then fall-back to a full page transition to
@@ -1066,7 +1065,7 @@ if ((typeof exports.default === "function" || typeof exports.default === "object
 
 /***/ }),
 
-/***/ 5354:
+/***/ 7616:
 /***/ ((module, exports, __webpack_require__) => {
 
 "use strict";
@@ -1083,8 +1082,8 @@ var _interop_require_wildcard = (__webpack_require__(1598)/* ["default"] */ .Z);
 var _object_without_properties_loose = (__webpack_require__(7273)/* ["default"] */ .Z);
 var _react = _interop_require_wildcard(__webpack_require__(6689));
 var _headManagerContext = __webpack_require__(2796);
-var _headManager = __webpack_require__(6623);
-var _requestIdleCallback = __webpack_require__(3436);
+var _headManager = __webpack_require__(2714);
+var _requestIdleCallback = __webpack_require__(517);
 "client";
 const ScriptCache = new Map();
 const LoadCache = new Set();
@@ -1296,7 +1295,7 @@ if ((typeof exports.default === "function" || typeof exports.default === "object
 
 /***/ }),
 
-/***/ 6912:
+/***/ 7978:
 /***/ ((module, exports) => {
 
 "use strict";
@@ -1331,7 +1330,7 @@ if ((typeof exports.default === "function" || typeof exports.default === "object
 
 /***/ }),
 
-/***/ 920:
+/***/ 7549:
 /***/ ((module, exports, __webpack_require__) => {
 
 "use strict";
@@ -1341,7 +1340,7 @@ Object.defineProperty(exports, "__esModule", ({
 }));
 exports.useIntersection = useIntersection;
 var _react = __webpack_require__(6689);
-var _requestIdleCallback = __webpack_require__(3436);
+var _requestIdleCallback = __webpack_require__(517);
 const hasIntersectionObserver = typeof IntersectionObserver === "function";
 const observers = new Map();
 const idList = [];
@@ -1442,7 +1441,7 @@ if ((typeof exports.default === "function" || typeof exports.default === "object
 
 /***/ }),
 
-/***/ 2997:
+/***/ 755:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -1460,10 +1459,10 @@ var _async_to_generator = (__webpack_require__(932)/* ["default"] */ .Z);
 var _extends = (__webpack_require__(6495)/* ["default"] */ .Z);
 var _interop_require_default = (__webpack_require__(2648)/* ["default"] */ .Z);
 var _interop_require_wildcard = (__webpack_require__(1598)/* ["default"] */ .Z);
-var _normalizeTrailingSlash = __webpack_require__(2866);
+var _normalizeTrailingSlash = __webpack_require__(4005);
 var _removeTrailingSlash = __webpack_require__(3297);
-var _routeLoader = __webpack_require__(769);
-var _script = __webpack_require__(5354);
+var _routeLoader = __webpack_require__(3203);
+var _script = __webpack_require__(7616);
 var _isError = _interop_require_wildcard(__webpack_require__(676));
 var _denormalizePagePath = __webpack_require__(4406);
 var _normalizeLocalePath = __webpack_require__(4014);
@@ -1476,13 +1475,13 @@ var _resolveRewrites = _interop_require_default(__webpack_require__(6052));
 var _routeMatcher = __webpack_require__(4226);
 var _routeRegex = __webpack_require__(5052);
 var _formatUrl = __webpack_require__(3938);
-var _detectDomainLocale = __webpack_require__(6728);
+var _detectDomainLocale = __webpack_require__(6919);
 var _parsePath = __webpack_require__(8854);
-var _addLocale = __webpack_require__(3607);
-var _removeLocale = __webpack_require__(5637);
-var _removeBasePath = __webpack_require__(8961);
-var _addBasePath = __webpack_require__(7192);
-var _hasBasePath = __webpack_require__(6864);
+var _addLocale = __webpack_require__(5017);
+var _removeLocale = __webpack_require__(9886);
+var _removeBasePath = __webpack_require__(4209);
+var _addBasePath = __webpack_require__(1417);
+var _hasBasePath = __webpack_require__(6732);
 var _getNextPathnameInfo = __webpack_require__(5789);
 var _formatNextPathnameInfo = __webpack_require__(299);
 var _compareStates = __webpack_require__(6220);
@@ -1692,14 +1691,12 @@ function getMiddlewareData(source, response, options) {
                     as = (0, _addBasePath).addBasePath(parsedSource.pathname);
                     parsedRewriteTarget.pathname = as;
                 }
-                if (true) {
-                    const result = (0, _resolveRewrites).default(as, pages, rewrites, parsedRewriteTarget.query, (path)=>resolveDynamicRoute(path, pages), options.router.locales);
-                    if (result.matchedPage) {
-                        parsedRewriteTarget.pathname = result.parsedAs.pathname;
-                        as = parsedRewriteTarget.pathname;
-                        Object.assign(parsedRewriteTarget.query, result.parsedAs.query);
+                if (false) {} else if (!pages.includes(fsPathname)) {
+                    const resolvedPathname = resolveDynamicRoute(fsPathname, pages);
+                    if (resolvedPathname !== fsPathname) {
+                        fsPathname = resolvedPathname;
                     }
-                } else {}
+                }
                 const resolvedHref = !pages.includes(fsPathname) ? resolveDynamicRoute((0, _normalizeLocalePath).normalizeLocalePath((0, _removeBasePath).removeBasePath(parsedRewriteTarget.pathname), options.router.locales).pathname, pages) : fsPathname;
                 if ((0, _isDynamic).isDynamicRoute(resolvedHref)) {
                     const matches = (0, _routeMatcher).getRouteMatcher((0, _routeRegex).getRouteRegex(resolvedHref))(as);
@@ -2088,28 +2085,7 @@ class Router {
             }
             if (shouldResolveHref && pathname !== "/_error") {
                 options._shouldResolveHref = true;
-                if ( true && as.startsWith("/")) {
-                    const rewritesResult = (0, _resolveRewrites).default((0, _addBasePath).addBasePath((0, _addLocale).addLocale(cleanedAs, nextState.locale), true), pages, rewrites, query, (p)=>resolveDynamicRoute(p, pages), _this.locales);
-                    if (rewritesResult.externalDest) {
-                        handleHardNavigation({
-                            url: as,
-                            router: _this
-                        });
-                        return true;
-                    }
-                    if (!isMiddlewareMatch) {
-                        resolvedAs = rewritesResult.asPath;
-                    }
-                    if (rewritesResult.matchedPage && rewritesResult.resolvedHref) {
-                        // if this directly matches a page we need to update the href to
-                        // allow the correct page chunk to be loaded
-                        pathname = rewritesResult.resolvedHref;
-                        parsed.pathname = (0, _addBasePath).addBasePath(pathname);
-                        if (!isMiddlewareMatch) {
-                            url = (0, _formatUrl).formatWithValidation(parsed);
-                        }
-                    }
-                } else {
+                if (false) {} else {
                     parsed.pathname = resolveDynamicRoute(pathname, pages);
                     if (parsed.pathname !== pathname) {
                         pathname = parsed.pathname;
@@ -2605,22 +2581,7 @@ class Router {
             const pages = yield _this.pageLoader.getPageList();
             let resolvedAs = asPath;
             const locale = typeof options.locale !== "undefined" ? options.locale || undefined : _this.locale;
-            if ( true && asPath.startsWith("/")) {
-                let rewrites;
-                ({ __rewrites: rewrites  } = yield (0, _routeLoader).getClientBuildManifest());
-                const rewritesResult = (0, _resolveRewrites).default((0, _addBasePath).addBasePath((0, _addLocale).addLocale(asPath, _this.locale), true), pages, rewrites, parsed.query, (p)=>resolveDynamicRoute(p, pages), _this.locales);
-                if (rewritesResult.externalDest) {
-                    return;
-                }
-                resolvedAs = (0, _removeLocale).removeLocale((0, _removeBasePath).removeBasePath(rewritesResult.asPath), _this.locale);
-                if (rewritesResult.matchedPage && rewritesResult.resolvedHref) {
-                    // if this directly matches a page we need to update the href to
-                    // allow the correct page chunk to be loaded
-                    pathname = rewritesResult.resolvedHref;
-                    parsed.pathname = pathname;
-                    url = (0, _formatUrl).formatWithValidation(parsed);
-                }
-            }
+            if (false) {}
             parsed.pathname = resolveDynamicRoute(parsed.pathname, pages);
             if ((0, _isDynamic).isDynamicRoute(parsed.pathname)) {
                 pathname = parsed.pathname;
@@ -2827,7 +2788,7 @@ class Router {
         // back from external site
         this.isSsr = true;
         this.isLocaleDomain = false;
-        this.isReady = !!(self.__NEXT_DATA__.gssp || self.__NEXT_DATA__.gip || self.__NEXT_DATA__.appGip && !self.__NEXT_DATA__.gsp || !autoExportDynamic && !self.location.search && !true);
+        this.isReady = !!(self.__NEXT_DATA__.gssp || self.__NEXT_DATA__.gip || self.__NEXT_DATA__.appGip && !self.__NEXT_DATA__.gsp || !autoExportDynamic && !self.location.search && !false);
         if (false) {}
         this.state = {
             route,
@@ -2851,7 +2812,7 @@ exports["default"] = Router; //# sourceMappingURL=router.js.map
 /***/ 1664:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-module.exports = __webpack_require__(5170)
+module.exports = __webpack_require__(2994)
 
 
 /***/ })

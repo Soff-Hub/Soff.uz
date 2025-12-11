@@ -1,4 +1,3 @@
-;{try{(function(){var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof globalThis?globalThis:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="e315f3fb-b9df-4d88-abc6-e60b6a5fb852",e._sentryDebugIdIdentifier="sentry-dbid-e315f3fb-b9df-4d88-abc6-e60b6a5fb852");})();}catch(e){}};
 "use strict";
 (() => {
 var exports = {};
@@ -6,7 +5,7 @@ exports.id = 8024;
 exports.ids = [8024];
 exports.modules = {
 
-/***/ 9902:
+/***/ 4604:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
@@ -16,24 +15,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "getServerSideProps": () => (/* binding */ getServerSideProps),
 /* harmony export */   "getStaticProps": () => (/* binding */ getStaticProps)
 /* harmony export */ });
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(997);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6689);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8454);
-/* harmony import */ var _components_shared_headers_Meta__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1218);
-/* harmony import */ var _components_partials_category_ProductsByCategory__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(6184);
-/* harmony import */ var _components_elements_ScientificResourcesFilterSection__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(2766);
-/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(1853);
-/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _repositories_useApi__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(9410);
-/* harmony import */ var _components_elements_AISoffiaPresentation__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(4855);
-/* harmony import */ var _components_elements_CategoryFilterSecion__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(4807);
-/* harmony import */ var _components_elements_CategorySearchSection__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(5926);
-/* harmony import */ var _sentry_nextjs__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(8097);
-/* harmony import */ var _sentry_nextjs__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_sentry_nextjs__WEBPACK_IMPORTED_MODULE_11__);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_2__, _components_partials_category_ProductsByCategory__WEBPACK_IMPORTED_MODULE_4__, _repositories_useApi__WEBPACK_IMPORTED_MODULE_7__]);
-([_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_2__, _components_partials_category_ProductsByCategory__WEBPACK_IMPORTED_MODULE_4__, _repositories_useApi__WEBPACK_IMPORTED_MODULE_7__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+/* harmony import */ var _sentry_server_config_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5780);
+/* harmony import */ var _sentry_nextjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8097);
+/* harmony import */ var _sentry_nextjs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_sentry_nextjs__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(997);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(6689);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(4705);
+/* harmony import */ var _components_shared_headers_Meta__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(6985);
+/* harmony import */ var _components_partials_category_ProductsByCategory__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(4345);
+/* harmony import */ var _components_elements_ScientificResourcesFilterSection__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(7973);
+/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(1853);
+/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _repositories_useApi__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(1064);
+/* harmony import */ var _components_elements_AISoffiaPresentation__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(3473);
+/* harmony import */ var _components_elements_CategoryFilterSecion__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(7453);
+/* harmony import */ var _components_elements_CategorySearchSection__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(863);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_4__, _components_partials_category_ProductsByCategory__WEBPACK_IMPORTED_MODULE_6__, _repositories_useApi__WEBPACK_IMPORTED_MODULE_9__]);
+([_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_4__, _components_partials_category_ProductsByCategory__WEBPACK_IMPORTED_MODULE_6__, _repositories_useApi__WEBPACK_IMPORTED_MODULE_9__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+
 
 
 
@@ -48,7 +49,7 @@ var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_wid
 
 
 function ProductCategoryScreen({ productsData , fourChildData , childCategoryData , slug , childCategory , page ,  }) {
-    const router = (0,next_router__WEBPACK_IMPORTED_MODULE_6__.useRouter)();
+    const router = (0,next_router__WEBPACK_IMPORTED_MODULE_8__.useRouter)();
     const handlePageChange = (newPage)=>{
         router.push({
             pathname: router.pathname,
@@ -58,12 +59,12 @@ function ProductCategoryScreen({ productsData , fourChildData , childCategoryDat
             }
         });
     };
-    const title = (0,_components_elements_ScientificResourcesFilterSection__WEBPACK_IMPORTED_MODULE_5__/* .getTitleFromSlug */ .h)(fourChildData?.results, slug);
-    const subTitle = (0,_components_elements_ScientificResourcesFilterSection__WEBPACK_IMPORTED_MODULE_5__/* .getTitleFromSlug */ .h)(childCategoryData?.results, childCategory);
+    const title = (0,_components_elements_ScientificResourcesFilterSection__WEBPACK_IMPORTED_MODULE_7__/* .getTitleFromSlug */ .h)(fourChildData?.results, slug);
+    const subTitle = (0,_components_elements_ScientificResourcesFilterSection__WEBPACK_IMPORTED_MODULE_7__/* .getTitleFromSlug */ .h)(childCategoryData?.results, childCategory);
     const fullTitle = title && subTitle ? `${title} - ${subTitle}` : title ? title : "Ilmiy ishlar kategoriyasi";
-    return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .Z, {
+    return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z, {
         children: [
-            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_shared_headers_Meta__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .Z, {
+            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_components_shared_headers_Meta__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z, {
                 title: fullTitle,
                 description: fullTitle + " bo‘yicha eng yaxshi raqamli mahsulotlarni Soff.uz da toping. Ishonchli sotuvchilar va sifatli kontent!",
                 image: "https://soff.uz/static/img/ilmiy-ishlar-2.png",
@@ -128,18 +129,18 @@ function ProductCategoryScreen({ productsData , fourChildData , childCategoryDat
                 ],
                 author: "Soff.uz"
             }),
-            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                 className: "ps-page--shop container p-lg-1",
                 children: [
-                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_elements_AISoffiaPresentation__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Z, {}),
-                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_elements_CategorySearchSection__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .Z, {}),
-                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_elements_CategoryFilterSecion__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Z, {
+                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_components_elements_AISoffiaPresentation__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .Z, {}),
+                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_components_elements_CategorySearchSection__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .Z, {}),
+                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_components_elements_CategoryFilterSecion__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .Z, {
                         breacrumb: fourChildData,
                         count: productsData?.count,
                         isLoading: false,
                         childCategoryData: childCategoryData
                     }),
-                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_partials_category_ProductsByCategory__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z, {
+                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_components_partials_category_ProductsByCategory__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .Z, {
                         data: productsData,
                         page: page,
                         handlePagination: handlePageChange,
@@ -160,9 +161,9 @@ async function getServerSideProps$1(context) {
     };
     // Agar slug === 'all' bo‘lsa, category bo‘sh bo‘lishi kerak
     const categoryParam = slug === "all" ? "" : childCategory || slug;
-    const productsUrl = `${_repositories_useApi__WEBPACK_IMPORTED_MODULE_7__/* .baseUrlUseApi */ .q}customer/products/?direction=file&category=${categoryParam}&page=${page}&page_size=48&search=${search}`;
-    const fourChildUrl = `${_repositories_useApi__WEBPACK_IMPORTED_MODULE_7__/* .baseUrlUseApi */ .q}customer/four-child?direction=file`;
-    const childCategoryUrl = slug && slug !== "all" ? `${_repositories_useApi__WEBPACK_IMPORTED_MODULE_7__/* .baseUrlUseApi */ .q}customer/four-child?direction=file&parent__slug=${slug}` : null;
+    const productsUrl = `${_repositories_useApi__WEBPACK_IMPORTED_MODULE_9__/* .baseUrlUseApi */ .q}customer/products/?direction=file&category=${categoryParam}&page=${page}&page_size=48&search=${search}`;
+    const fourChildUrl = `${_repositories_useApi__WEBPACK_IMPORTED_MODULE_9__/* .baseUrlUseApi */ .q}customer/four-child?direction=file`;
+    const childCategoryUrl = slug && slug !== "all" ? `${_repositories_useApi__WEBPACK_IMPORTED_MODULE_9__/* .baseUrlUseApi */ .q}customer/four-child?direction=file&parent__slug=${slug}` : null;
     const [productsData, fourChildData, childCategoryData] = await Promise.all([
         fetchJson(productsUrl),
         fetchJson(fourChildUrl),
@@ -182,7 +183,7 @@ async function getServerSideProps$1(context) {
 
 var serverComponentModule = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    default: ProductCategoryScreen,
+    'default': ProductCategoryScreen,
     getServerSideProps: getServerSideProps$1
 });
 
@@ -194,7 +195,6 @@ var serverComponentModule = /*#__PURE__*/Object.freeze({
  * this causes both TS and ESLint to complain, hence the pragma comments below.
  */
 
-
 const userPageModule = serverComponentModule ;
 
 const pageComponent = userPageModule ? userPageModule.default : undefined;
@@ -203,19 +203,14 @@ const origGetInitialProps = pageComponent ? pageComponent.getInitialProps : unde
 const origGetStaticProps = userPageModule ? userPageModule.getStaticProps : undefined;
 const origGetServerSideProps = userPageModule ? userPageModule.getServerSideProps : undefined;
 
-// Rollup will aggressively tree-shake what it perceives to be unused properties
-// on objects. Because the key that's used to index into this object (/category/[slug])
-// is replaced during bundling, Rollup can't see that these properties are in fact
-// used. Using `Object.freeze` signals to Rollup that it should not tree-shake
-// this object.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const getInitialPropsWrappers = Object.freeze({
-  '/_app': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_11__.wrapAppGetInitialPropsWithSentry,
-  '/_document': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_11__.wrapDocumentGetInitialPropsWithSentry,
-  '/_error': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_11__.wrapErrorGetInitialPropsWithSentry,
-});
+const getInitialPropsWrappers = {
+  '/_app': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_1__.wrapAppGetInitialPropsWithSentry,
+  '/_document': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_1__.wrapDocumentGetInitialPropsWithSentry,
+  '/_error': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_1__.wrapErrorGetInitialPropsWithSentry,
+};
 
-const getInitialPropsWrapper = getInitialPropsWrappers['/category/[slug]'] || _sentry_nextjs__WEBPACK_IMPORTED_MODULE_11__.wrapGetInitialPropsWithSentry;
+const getInitialPropsWrapper = getInitialPropsWrappers['/category/[slug]'] || _sentry_nextjs__WEBPACK_IMPORTED_MODULE_1__.wrapGetInitialPropsWithSentry;
 
 if (pageComponent && typeof origGetInitialProps === 'function') {
   pageComponent.getInitialProps = getInitialPropsWrapper(origGetInitialProps) ;
@@ -223,14 +218,14 @@ if (pageComponent && typeof origGetInitialProps === 'function') {
 
 const getStaticProps =
   typeof origGetStaticProps === 'function'
-    ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_11__.wrapGetStaticPropsWithSentry(origGetStaticProps, '/category/[slug]')
+    ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_1__.wrapGetStaticPropsWithSentry(origGetStaticProps, '/category/[slug]')
     : undefined;
 const getServerSideProps =
   typeof origGetServerSideProps === 'function'
-    ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_11__.wrapGetServerSidePropsWithSentry(origGetServerSideProps, '/category/[slug]')
+    ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_1__.wrapGetServerSidePropsWithSentry(origGetServerSideProps, '/category/[slug]')
     : undefined;
 
-const pageWrapperTemplate = pageComponent ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_11__.wrapPageComponentWithSentry(pageComponent ) : pageComponent;
+const pageWrapperTemplate = pageComponent ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_1__.wrapPageComponentWithSentry(pageComponent ) : pageComponent;
 
 
 
@@ -239,7 +234,7 @@ __webpack_async_result__();
 
 /***/ }),
 
-/***/ 4855:
+/***/ 3473:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -252,7 +247,7 @@ __webpack_async_result__();
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5725);
 /* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(antd__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _widgets_header_HeaderActions_HeaderAIIcon__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(5431);
+/* harmony import */ var _widgets_header_HeaderActions_HeaderAIIcon__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8663);
 
 
 
@@ -454,7 +449,7 @@ const AISoffiaPresentationNotFoundProduct = ()=>{
 
 /***/ }),
 
-/***/ 4807:
+/***/ 7453:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -767,7 +762,7 @@ const CategoryFilterSecion = ({ breacrumb , count , isLoading , childCategoryDat
 
 /***/ }),
 
-/***/ 5926:
+/***/ 863:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -781,7 +776,7 @@ const CategoryFilterSecion = ({ breacrumb , count , isLoading , childCategoryDat
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(6689);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _shared_hooks_useTimeManager__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(7567);
+/* harmony import */ var _shared_hooks_useTimeManager__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(6598);
 
 
 
@@ -1142,7 +1137,7 @@ module.exports = import("jwt-decode");;
 var __webpack_require__ = require("../../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [676,1664,5675,5152,6017,8550,4747,1218,7567,9075,280,75,5419,6316,9410,6184,2766,5431], () => (__webpack_exec__(9902)));
+var __webpack_exports__ = __webpack_require__.X(0, [676,1664,5675,5152,5780,3015,7864,2315,6985,6598,3701,7534,5758,5029,6908,1064,4345,7973,8663], () => (__webpack_exec__(4604)));
 module.exports = __webpack_exports__;
 
 })();

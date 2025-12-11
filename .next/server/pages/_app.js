@@ -1,11 +1,10 @@
-;{try{(function(){var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof globalThis?globalThis:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="51ae7af6-f29e-4f20-a41f-174097585bd1",e._sentryDebugIdIdentifier="sentry-dbid-51ae7af6-f29e-4f20-a41f-174097585bd1");})();}catch(e){}};
 (() => {
 var exports = {};
 exports.id = 2888;
 exports.ids = [2888];
 exports.modules = {
 
-/***/ 3420:
+/***/ 552:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -16,29 +15,30 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "getServerSideProps": () => (/* binding */ getServerSideProps),
 /* harmony export */   "getStaticProps": () => (/* binding */ getStaticProps)
 /* harmony export */ });
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(997);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6689);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var next_head__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(968);
-/* harmony import */ var next_head__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(next_head__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var next_progress__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(3797);
-/* harmony import */ var next_progress__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(next_progress__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _app_providers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(4811);
-/* harmony import */ var _entities_affiliate__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(7392);
-/* harmony import */ var _shared_hooks_useTelegram__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(4830);
-/* harmony import */ var _shared_components_telegram_link__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(7434);
-/* harmony import */ var _shared_hooks_useTimeManager__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(7567);
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(1635);
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var dayjs_plugin_duration__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(756);
-/* harmony import */ var dayjs_plugin_duration__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(dayjs_plugin_duration__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var dayjs_locale_uz_latn__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(3984);
-/* harmony import */ var dayjs_locale_uz_latn__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(dayjs_locale_uz_latn__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var _sentry_nextjs__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(8097);
-/* harmony import */ var _sentry_nextjs__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_sentry_nextjs__WEBPACK_IMPORTED_MODULE_12__);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_app_providers__WEBPACK_IMPORTED_MODULE_4__, _entities_affiliate__WEBPACK_IMPORTED_MODULE_5__, _shared_components_telegram_link__WEBPACK_IMPORTED_MODULE_7__]);
-([_app_providers__WEBPACK_IMPORTED_MODULE_4__, _entities_affiliate__WEBPACK_IMPORTED_MODULE_5__, _shared_components_telegram_link__WEBPACK_IMPORTED_MODULE_7__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+/* harmony import */ var _sentry_server_config_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5780);
+/* harmony import */ var _sentry_nextjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8097);
+/* harmony import */ var _sentry_nextjs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_sentry_nextjs__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(997);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(6689);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var next_head__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(968);
+/* harmony import */ var next_head__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(next_head__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var next_progress__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(3797);
+/* harmony import */ var next_progress__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(next_progress__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _app_providers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(1825);
+/* harmony import */ var _entities_affiliate__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(8091);
+/* harmony import */ var _shared_hooks_useTelegram__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(5047);
+/* harmony import */ var _shared_components_telegram_link__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(2246);
+/* harmony import */ var _shared_hooks_useTimeManager__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(6598);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(1635);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var dayjs_plugin_duration__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(756);
+/* harmony import */ var dayjs_plugin_duration__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(dayjs_plugin_duration__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var dayjs_locale_uz_latn__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(3984);
+/* harmony import */ var dayjs_locale_uz_latn__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(dayjs_locale_uz_latn__WEBPACK_IMPORTED_MODULE_13__);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_app_providers__WEBPACK_IMPORTED_MODULE_6__, _entities_affiliate__WEBPACK_IMPORTED_MODULE_7__, _shared_components_telegram_link__WEBPACK_IMPORTED_MODULE_9__]);
+([_app_providers__WEBPACK_IMPORTED_MODULE_6__, _entities_affiliate__WEBPACK_IMPORTED_MODULE_7__, _shared_components_telegram_link__WEBPACK_IMPORTED_MODULE_9__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
 
 
@@ -56,17 +56,18 @@ var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_app
 
 
 
-dayjs__WEBPACK_IMPORTED_MODULE_9___default().locale("uz-latn");
-dayjs__WEBPACK_IMPORTED_MODULE_9___default().extend((dayjs_plugin_duration__WEBPACK_IMPORTED_MODULE_10___default()));
+
+dayjs__WEBPACK_IMPORTED_MODULE_11___default().locale("uz-latn");
+dayjs__WEBPACK_IMPORTED_MODULE_11___default().extend((dayjs_plugin_duration__WEBPACK_IMPORTED_MODULE_12___default()));
 function App({ Component , pageProps  }) {
-    const { tg  } = (0,_shared_hooks_useTelegram__WEBPACK_IMPORTED_MODULE_6__/* .useTelegram */ .f)();
-    const { startTimeout  } = (0,_shared_hooks_useTimeManager__WEBPACK_IMPORTED_MODULE_8__/* .useTimeManager */ .h)();
-    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(()=>{
+    const { tg  } = (0,_shared_hooks_useTelegram__WEBPACK_IMPORTED_MODULE_8__/* .useTelegram */ .f)();
+    const { startTimeout  } = (0,_shared_hooks_useTimeManager__WEBPACK_IMPORTED_MODULE_10__/* .useTimeManager */ .h)();
+    (0,react__WEBPACK_IMPORTED_MODULE_3__.useEffect)(()=>{
         tg?.ready();
     }, [
         tg
     ]);
-    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(()=>{
+    (0,react__WEBPACK_IMPORTED_MODULE_3__.useEffect)(()=>{
         const params = new URLSearchParams(window.location.search);
         const utmSource = params.get("utm_source");
         const utmMedium = params.get("utm_medium");
@@ -108,42 +109,42 @@ function App({ Component , pageProps  }) {
             localStorage.removeItem("utm_campaign");
         };
     }, []);
-    return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+    return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
         children: [
-            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)((next_head__WEBPACK_IMPORTED_MODULE_2___default()), {
+            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)((next_head__WEBPACK_IMPORTED_MODULE_4___default()), {
                 children: [
-                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("meta", {
+                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("meta", {
                         charSet: "UTF-8"
                     }),
-                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("title", {
+                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("title", {
                         children: "Raqamli mahsulotlar va onlayn xizmatlar bozori – Soff.uz"
                     }),
-                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("meta", {
+                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("meta", {
                         httpEquiv: "X-UA-Compatible",
                         content: "IE=edge"
                     }),
-                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("meta", {
+                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("meta", {
                         name: "viewport",
                         content: "width=device-width, initial-scale=1.0"
                     }),
-                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("meta", {
+                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("meta", {
                         name: "format-detection",
                         content: "telephone=no"
                     }),
-                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("meta", {
+                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("meta", {
                         name: "mobile-web-app-capable",
                         content: "yes"
                     }),
-                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("meta", {
+                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("meta", {
                         name: "google-adsense-account",
                         content: "ca-pub-2651864926558603"
                     }),
-                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("link", {
+                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("link", {
                         rel: "alternate",
                         href: "https://soff.uz/",
                         hrefLang: "uz"
                     }),
-                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("script", {
+                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("script", {
                         defer: true,
                         type: "application/ld+json",
                         dangerouslySetInnerHTML: {
@@ -168,7 +169,7 @@ function App({ Component , pageProps  }) {
                     })
                 ]
             }),
-            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)((next_progress__WEBPACK_IMPORTED_MODULE_3___default()), {
+            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)((next_progress__WEBPACK_IMPORTED_MODULE_5___default()), {
                 height: "4px",
                 delay: 300,
                 options: {
@@ -176,13 +177,13 @@ function App({ Component , pageProps  }) {
                 },
                 color: "#00A44F"
             }),
-            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_app_providers__WEBPACK_IMPORTED_MODULE_4__/* .Providers */ .C, {
+            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_app_providers__WEBPACK_IMPORTED_MODULE_6__/* .Providers */ .C, {
                 children: [
-                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_entities_affiliate__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z, {}),
-                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(Component, {
+                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_entities_affiliate__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Z, {}),
+                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(Component, {
                         ...pageProps
                     }),
-                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_shared_components_telegram_link__WEBPACK_IMPORTED_MODULE_7__/* .TelegramLink */ .$, {})
+                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_shared_components_telegram_link__WEBPACK_IMPORTED_MODULE_9__/* .TelegramLink */ .$, {})
                 ]
             })
         ]
@@ -191,7 +192,7 @@ function App({ Component , pageProps  }) {
 
 var serverComponentModule = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    default: App
+    'default': App
 });
 
 /*
@@ -202,7 +203,6 @@ var serverComponentModule = /*#__PURE__*/Object.freeze({
  * this causes both TS and ESLint to complain, hence the pragma comments below.
  */
 
-
 const userPageModule = serverComponentModule ;
 
 const pageComponent = userPageModule ? userPageModule.default : undefined;
@@ -211,19 +211,14 @@ const origGetInitialProps = pageComponent ? pageComponent.getInitialProps : unde
 const origGetStaticProps = userPageModule ? userPageModule.getStaticProps : undefined;
 const origGetServerSideProps = userPageModule ? userPageModule.getServerSideProps : undefined;
 
-// Rollup will aggressively tree-shake what it perceives to be unused properties
-// on objects. Because the key that's used to index into this object (/_app)
-// is replaced during bundling, Rollup can't see that these properties are in fact
-// used. Using `Object.freeze` signals to Rollup that it should not tree-shake
-// this object.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const getInitialPropsWrappers = Object.freeze({
-  '/_app': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_12__.wrapAppGetInitialPropsWithSentry,
-  '/_document': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_12__.wrapDocumentGetInitialPropsWithSentry,
-  '/_error': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_12__.wrapErrorGetInitialPropsWithSentry,
-});
+const getInitialPropsWrappers = {
+  '/_app': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_1__.wrapAppGetInitialPropsWithSentry,
+  '/_document': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_1__.wrapDocumentGetInitialPropsWithSentry,
+  '/_error': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_1__.wrapErrorGetInitialPropsWithSentry,
+};
 
-const getInitialPropsWrapper = getInitialPropsWrappers['/_app'] || _sentry_nextjs__WEBPACK_IMPORTED_MODULE_12__.wrapGetInitialPropsWithSentry;
+const getInitialPropsWrapper = getInitialPropsWrappers['/_app'] || _sentry_nextjs__WEBPACK_IMPORTED_MODULE_1__.wrapGetInitialPropsWithSentry;
 
 if (pageComponent && typeof origGetInitialProps === 'function') {
   pageComponent.getInitialProps = getInitialPropsWrapper(origGetInitialProps) ;
@@ -231,14 +226,14 @@ if (pageComponent && typeof origGetInitialProps === 'function') {
 
 const getStaticProps =
   typeof origGetStaticProps === 'function'
-    ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_12__.wrapGetStaticPropsWithSentry(origGetStaticProps, '/_app')
+    ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_1__.wrapGetStaticPropsWithSentry(origGetStaticProps, '/_app')
     : undefined;
 const getServerSideProps =
   typeof origGetServerSideProps === 'function'
-    ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_12__.wrapGetServerSidePropsWithSentry(origGetServerSideProps, '/_app')
+    ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_1__.wrapGetServerSidePropsWithSentry(origGetServerSideProps, '/_app')
     : undefined;
 
-const pageWrapperTemplate = pageComponent ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_12__.wrapPageComponentWithSentry(pageComponent ) : pageComponent;
+const pageWrapperTemplate = pageComponent ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_1__.wrapPageComponentWithSentry(pageComponent ) : pageComponent;
 
 
 
@@ -247,7 +242,7 @@ __webpack_async_result__();
 
 /***/ }),
 
-/***/ 3793:
+/***/ 6628:
 /***/ ((module) => {
 
 // Exports
@@ -266,7 +261,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 2101:
+/***/ 4649:
 /***/ ((module) => {
 
 // Exports
@@ -284,7 +279,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 8841:
+/***/ 4295:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -316,7 +311,7 @@ const AntdProvider = ({ children  })=>{
 
 /***/ }),
 
-/***/ 4811:
+/***/ 1825:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -328,11 +323,11 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6022);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_redux__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7506);
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5398);
 /* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(9752);
 /* harmony import */ var _react_oauth_google__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(6999);
 /* harmony import */ var _react_oauth_google__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_react_oauth_google__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _AntdProvider__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(8841);
+/* harmony import */ var _AntdProvider__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(4295);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_store__WEBPACK_IMPORTED_MODULE_2__, _tanstack_react_query__WEBPACK_IMPORTED_MODULE_3__]);
 ([_store__WEBPACK_IMPORTED_MODULE_2__, _tanstack_react_query__WEBPACK_IMPORTED_MODULE_3__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
@@ -378,7 +373,7 @@ __webpack_async_result__();
 
 /***/ }),
 
-/***/ 7392:
+/***/ 8091:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -392,7 +387,7 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6022);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_redux__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _store_affiliate_slice__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(6818);
+/* harmony import */ var _store_affiliate_slice__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(124);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_store_affiliate_slice__WEBPACK_IMPORTED_MODULE_3__]);
 _store_affiliate_slice__WEBPACK_IMPORTED_MODULE_3__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
 
@@ -423,7 +418,7 @@ __webpack_async_result__();
 
 /***/ }),
 
-/***/ 7434:
+/***/ 2246:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -439,14 +434,14 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(antd__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _ant_design_icons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7066);
 /* harmony import */ var _ant_design_icons__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_ant_design_icons__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(3793);
+/* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(6628);
 /* harmony import */ var _style_module_scss__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_style_module_scss__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _shared_utilities_useResponsive__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1834);
+/* harmony import */ var _shared_utilities_useResponsive__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(6603);
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1853);
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(6689);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _widgets_home_youtube_vid_VideoModal__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(1172);
+/* harmony import */ var _widgets_home_youtube_vid_VideoModal__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(430);
 /* harmony import */ var react_icons_md__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(6905);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_widgets_home_youtube_vid_VideoModal__WEBPACK_IMPORTED_MODULE_7__, react_icons_md__WEBPACK_IMPORTED_MODULE_8__]);
 ([_widgets_home_youtube_vid_VideoModal__WEBPACK_IMPORTED_MODULE_7__, react_icons_md__WEBPACK_IMPORTED_MODULE_8__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
@@ -641,7 +636,7 @@ __webpack_async_result__();
 
 /***/ }),
 
-/***/ 4830:
+/***/ 5047:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -667,7 +662,7 @@ function useTelegram() {
 
 /***/ }),
 
-/***/ 6818:
+/***/ 124:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -700,7 +695,7 @@ __webpack_async_result__();
 
 /***/ }),
 
-/***/ 3006:
+/***/ 2393:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -737,7 +732,7 @@ __webpack_async_result__();
 
 /***/ }),
 
-/***/ 7506:
+/***/ 5398:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -746,14 +741,14 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony export */   "h": () => (/* binding */ store)
 /* harmony export */ });
 /* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3258);
-/* harmony import */ var _auth_slice__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6017);
-/* harmony import */ var _ecomerce_slice__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6146);
-/* harmony import */ var _affiliate_slice__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(6818);
-/* harmony import */ var _seller_slice__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(8417);
-/* harmony import */ var _profile_slice__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(7623);
-/* harmony import */ var _search_slice__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(1554);
-/* harmony import */ var _fast_dowload_slice__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(3006);
-/* harmony import */ var _api_apiSlice__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(5297);
+/* harmony import */ var _auth_slice__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3015);
+/* harmony import */ var _ecomerce_slice__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2160);
+/* harmony import */ var _affiliate_slice__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(124);
+/* harmony import */ var _seller_slice__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(4146);
+/* harmony import */ var _profile_slice__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(9880);
+/* harmony import */ var _search_slice__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(9561);
+/* harmony import */ var _fast_dowload_slice__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(2393);
+/* harmony import */ var _api_apiSlice__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(4729);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__, _auth_slice__WEBPACK_IMPORTED_MODULE_1__, _ecomerce_slice__WEBPACK_IMPORTED_MODULE_2__, _affiliate_slice__WEBPACK_IMPORTED_MODULE_3__, _seller_slice__WEBPACK_IMPORTED_MODULE_4__, _profile_slice__WEBPACK_IMPORTED_MODULE_5__, _search_slice__WEBPACK_IMPORTED_MODULE_6__, _fast_dowload_slice__WEBPACK_IMPORTED_MODULE_7__, _api_apiSlice__WEBPACK_IMPORTED_MODULE_8__]);
 ([_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__, _auth_slice__WEBPACK_IMPORTED_MODULE_1__, _ecomerce_slice__WEBPACK_IMPORTED_MODULE_2__, _affiliate_slice__WEBPACK_IMPORTED_MODULE_3__, _seller_slice__WEBPACK_IMPORTED_MODULE_4__, _profile_slice__WEBPACK_IMPORTED_MODULE_5__, _search_slice__WEBPACK_IMPORTED_MODULE_6__, _fast_dowload_slice__WEBPACK_IMPORTED_MODULE_7__, _api_apiSlice__WEBPACK_IMPORTED_MODULE_8__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
@@ -785,7 +780,7 @@ __webpack_async_result__();
 
 /***/ }),
 
-/***/ 1554:
+/***/ 9561:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -849,7 +844,7 @@ __webpack_async_result__();
 
 /***/ }),
 
-/***/ 8417:
+/***/ 4146:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -887,7 +882,7 @@ __webpack_async_result__();
 
 /***/ }),
 
-/***/ 1172:
+/***/ 430:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -902,7 +897,7 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6405);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var react_icons_io5__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1185);
-/* harmony import */ var _VideoModal_module_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(2101);
+/* harmony import */ var _VideoModal_module_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(4649);
 /* harmony import */ var _VideoModal_module_scss__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_VideoModal_module_scss__WEBPACK_IMPORTED_MODULE_4__);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([react_icons_io5__WEBPACK_IMPORTED_MODULE_3__]);
 react_icons_io5__WEBPACK_IMPORTED_MODULE_3__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
@@ -1352,7 +1347,7 @@ module.exports = import("react-icons/md");;
 var __webpack_require__ = require("../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [676,1664,6017,8550,7567], () => (__webpack_exec__(3420)));
+var __webpack_exports__ = __webpack_require__.X(0, [676,1664,5780,3015,7864,6598], () => (__webpack_exec__(552)));
 module.exports = __webpack_exports__;
 
 })();

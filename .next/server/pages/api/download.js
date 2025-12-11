@@ -1,4 +1,3 @@
-;{try{(function(){var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof globalThis?globalThis:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="c0c68cdd-cb97-4830-8459-38169236606f",e._sentryDebugIdIdentifier="sentry-dbid-c0c68cdd-cb97-4830-8459-38169236606f");})();}catch(e){}};
 "use strict";
 (() => {
 var exports = {};
@@ -20,7 +19,7 @@ module.exports = import("axios");;
 
 /***/ }),
 
-/***/ 6937:
+/***/ 314:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
@@ -29,11 +28,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "config": () => (/* binding */ config),
 /* harmony export */   "default": () => (/* binding */ wrappedHandler$1)
 /* harmony export */ });
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9648);
+/* harmony import */ var _sentry_server_config_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1024);
 /* harmony import */ var _sentry_nextjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8097);
 /* harmony import */ var _sentry_nextjs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_sentry_nextjs__WEBPACK_IMPORTED_MODULE_1__);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([axios__WEBPACK_IMPORTED_MODULE_0__]);
-axios__WEBPACK_IMPORTED_MODULE_0__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(9648);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([axios__WEBPACK_IMPORTED_MODULE_2__]);
+axios__WEBPACK_IMPORTED_MODULE_2__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
+
 
 
 
@@ -45,7 +46,7 @@ async function handler(req, res) {
                 error: "Missing URL"
             });
         }
-        const response = await axios__WEBPACK_IMPORTED_MODULE_0__["default"].get(fileUrl, {
+        const response = await axios__WEBPACK_IMPORTED_MODULE_2__["default"].get(fileUrl, {
             responseType: "arraybuffer"
         });
         const filename = fileUrl.split("/").pop().split("?")[0] || "file";
@@ -63,7 +64,7 @@ async function handler(req, res) {
 
 var serverComponentModule = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    default: handler
+    'default': handler
 });
 
 /*
@@ -74,11 +75,10 @@ var serverComponentModule = /*#__PURE__*/Object.freeze({
  * this causes both TS and ESLint to complain, hence the pragma comments below.
  */
 
-
 const userApiModule = serverComponentModule ;
 
 // Default to undefined. It's possible for Next.js users to not define any exports/handlers in an API route. If that is
-// the case Next.js will crash during runtime but the Sentry SDK should definitely not crash so we need to handle it.
+// the case Next.js wil crash during runtime but the Sentry SDK should definitely not crash so we need tohandle it.
 let userProvidedHandler = undefined;
 
 if ('default' in userApiModule && typeof userApiModule.default === 'function') {
@@ -105,11 +105,11 @@ const config = {
 
 let wrappedHandler = userProvidedHandler;
 
-if (wrappedHandler && undefined) {}
-
 if (wrappedHandler) {
   wrappedHandler = _sentry_nextjs__WEBPACK_IMPORTED_MODULE_1__.wrapApiHandlerWithSentry(wrappedHandler, '/api/download');
 }
+
+if (wrappedHandler && undefined) {}
 
 const wrappedHandler$1 = wrappedHandler;
 
@@ -127,7 +127,7 @@ __webpack_async_result__();
 var __webpack_require__ = require("../../webpack-api-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = (__webpack_exec__(6937));
+var __webpack_exports__ = __webpack_require__.X(0, [1024], () => (__webpack_exec__(314)));
 module.exports = __webpack_exports__;
 
 })();

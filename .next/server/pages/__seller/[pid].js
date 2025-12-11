@@ -1,4 +1,3 @@
-;{try{(function(){var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof globalThis?globalThis:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="7c31aa7c-bec1-4ed7-aa08-2ffca44404e9",e._sentryDebugIdIdentifier="sentry-dbid-7c31aa7c-bec1-4ed7-aa08-2ffca44404e9");})();}catch(e){}};
 "use strict";
 (() => {
 var exports = {};
@@ -6,7 +5,7 @@ exports.id = 6634;
 exports.ids = [6634];
 exports.modules = {
 
-/***/ 8036:
+/***/ 8777:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
@@ -16,28 +15,30 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "getServerSideProps": () => (/* binding */ getServerSideProps),
 /* harmony export */   "getStaticProps": () => (/* binding */ getStaticProps)
 /* harmony export */ });
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(997);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6689);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _components_elements_BreadCrumb__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5026);
-/* harmony import */ var _widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8454);
-/* harmony import */ var _repositories_Repository__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1869);
-/* harmony import */ var _components_shared_headers_Meta__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1218);
-/* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(5725);
-/* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(antd__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(1853);
-/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _repositories_ProductRepository__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(280);
-/* harmony import */ var _components_partials_seller_SellerProducts__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(999);
-/* harmony import */ var _components_partials_seller_SellerDonateForm__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(8977);
-/* harmony import */ var _components_partials_account_DateFormatter__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(7525);
-/* harmony import */ var _components_partials_account_price_formatter__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(5282);
-/* harmony import */ var _shared_utilities_useResponsive__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(1834);
-/* harmony import */ var _sentry_nextjs__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(8097);
-/* harmony import */ var _sentry_nextjs__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_sentry_nextjs__WEBPACK_IMPORTED_MODULE_13__);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_3__, _repositories_Repository__WEBPACK_IMPORTED_MODULE_4__, _repositories_ProductRepository__WEBPACK_IMPORTED_MODULE_8__, _components_partials_seller_SellerProducts__WEBPACK_IMPORTED_MODULE_9__, _components_partials_seller_SellerDonateForm__WEBPACK_IMPORTED_MODULE_10__]);
-([_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_3__, _repositories_Repository__WEBPACK_IMPORTED_MODULE_4__, _repositories_ProductRepository__WEBPACK_IMPORTED_MODULE_8__, _components_partials_seller_SellerProducts__WEBPACK_IMPORTED_MODULE_9__, _components_partials_seller_SellerDonateForm__WEBPACK_IMPORTED_MODULE_10__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+/* harmony import */ var _sentry_server_config_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5780);
+/* harmony import */ var _sentry_nextjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8097);
+/* harmony import */ var _sentry_nextjs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_sentry_nextjs__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(997);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(6689);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _components_elements_BreadCrumb__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(2920);
+/* harmony import */ var _widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(4705);
+/* harmony import */ var _repositories_Repository__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(3608);
+/* harmony import */ var _components_shared_headers_Meta__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(6985);
+/* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(5725);
+/* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(antd__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(1853);
+/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _repositories_ProductRepository__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(7534);
+/* harmony import */ var _components_partials_seller_SellerProducts__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(4947);
+/* harmony import */ var _components_partials_seller_SellerDonateForm__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(7592);
+/* harmony import */ var _components_partials_account_DateFormatter__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(8664);
+/* harmony import */ var _components_partials_account_price_formatter__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(1621);
+/* harmony import */ var _shared_utilities_useResponsive__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(6603);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_5__, _repositories_Repository__WEBPACK_IMPORTED_MODULE_6__, _repositories_ProductRepository__WEBPACK_IMPORTED_MODULE_10__, _components_partials_seller_SellerProducts__WEBPACK_IMPORTED_MODULE_11__, _components_partials_seller_SellerDonateForm__WEBPACK_IMPORTED_MODULE_12__]);
+([_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_5__, _repositories_Repository__WEBPACK_IMPORTED_MODULE_6__, _repositories_ProductRepository__WEBPACK_IMPORTED_MODULE_10__, _components_partials_seller_SellerProducts__WEBPACK_IMPORTED_MODULE_11__, _components_partials_seller_SellerDonateForm__WEBPACK_IMPORTED_MODULE_12__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+
 
 
 
@@ -55,20 +56,20 @@ var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_wid
 
 
 const SellerPage = ({ seller , sellerr  })=>{
-    const { size  } = (0,_shared_utilities_useResponsive__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .Z)();
+    const { size  } = (0,_shared_utilities_useResponsive__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .Z)();
     const isSmallScreen = size <= 430;
-    const { 0: data , 1: setData  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(seller);
-    const { 0: page , 1: setPage  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(1);
-    const router = (0,next_router__WEBPACK_IMPORTED_MODULE_7__.useRouter)();
+    const { 0: data , 1: setData  } = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(seller);
+    const { 0: page , 1: setPage  } = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(1);
+    const router = (0,next_router__WEBPACK_IMPORTED_MODULE_9__.useRouter)();
     if (!router.isReady) return null;
     const { pid  } = router.query;
-    const { 0: isModalOpen , 1: setIsModalOpen  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
-    const { 0: isModalOpenDonate , 1: setIsModalOpenDonate  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
-    const { 0: tab , 1: setTab  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("tab-1");
-    const { 0: typeSelect , 1: setTypeSelect  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("file");
-    const { 0: search , 1: setSearch  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("");
-    const { 0: productType , 1: setProductType  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
-    const { 0: dateTime , 1: setDateTime  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    const { 0: isModalOpen , 1: setIsModalOpen  } = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(false);
+    const { 0: isModalOpenDonate , 1: setIsModalOpenDonate  } = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(false);
+    const { 0: tab , 1: setTab  } = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)("tab-1");
+    const { 0: typeSelect , 1: setTypeSelect  } = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)("file");
+    const { 0: search , 1: setSearch  } = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)("");
+    const { 0: productType , 1: setProductType  } = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(null);
+    const { 0: dateTime , 1: setDateTime  } = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(false);
     const showModal = ()=>{
         setIsModalOpen(true);
     };
@@ -85,20 +86,20 @@ const SellerPage = ({ seller , sellerr  })=>{
         setIsModalOpenDonate(false);
     };
     const getSellerProduct = async (slug)=>{
-        const respons = await _repositories_ProductRepository__WEBPACK_IMPORTED_MODULE_8__/* ["default"].getSellerProductSlugProducts */ .Z.getSellerProductSlugProducts(slug, page, typeSelect, search);
+        const respons = await _repositories_ProductRepository__WEBPACK_IMPORTED_MODULE_10__/* ["default"].getSellerProductSlugProducts */ .Z.getSellerProductSlugProducts(slug, page, typeSelect, search);
         if (respons) {
             setData(respons.data);
         }
     };
     const getSellerDocumentType = async (slug)=>{
-        const respons = await _repositories_ProductRepository__WEBPACK_IMPORTED_MODULE_8__/* ["default"].getSellerProductNameSlug */ .Z.getSellerProductNameSlug(slug);
+        const respons = await _repositories_ProductRepository__WEBPACK_IMPORTED_MODULE_10__/* ["default"].getSellerProductNameSlug */ .Z.getSellerProductNameSlug(slug);
         if (respons?.status === 200) {
             setProductType(respons?.data);
         }
     };
     const handlePagination = async (e)=>{
         setPage(e);
-        const respons = await _repositories_ProductRepository__WEBPACK_IMPORTED_MODULE_8__/* ["default"].getSellerProductSlugProducts */ .Z.getSellerProductSlugProducts(pid, e, typeSelect, search);
+        const respons = await _repositories_ProductRepository__WEBPACK_IMPORTED_MODULE_10__/* ["default"].getSellerProductSlugProducts */ .Z.getSellerProductSlugProducts(pid, e, typeSelect, search);
         if (respons) {
             setData(respons.data);
         }
@@ -112,14 +113,14 @@ const SellerPage = ({ seller , sellerr  })=>{
             text: sellerr?.seller?.full_name ? sellerr?.seller?.full_name : "Loading..."
         }, 
     ];
-    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(()=>{
+    (0,react__WEBPACK_IMPORTED_MODULE_3__.useEffect)(()=>{
         if (pid) {
             getSellerDocumentType(pid);
         }
     }, [
         pid
     ]);
-    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(()=>{
+    (0,react__WEBPACK_IMPORTED_MODULE_3__.useEffect)(()=>{
         if (pid) {
             getSellerProduct(pid);
         }
@@ -138,22 +139,22 @@ const SellerPage = ({ seller , sellerr  })=>{
             return setDateTime(false);
         }
     }
-    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(()=>{
+    (0,react__WEBPACK_IMPORTED_MODULE_3__.useEffect)(()=>{
         checkIfUserIsOnline(sellerr?.seller?.last_login);
     }, [
         sellerr?.seller?.last_login
     ]);
-    return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .Z, {
+    return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z, {
         children: [
-            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_elements_BreadCrumb__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .Z, {
+            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_components_elements_BreadCrumb__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z, {
                 breacrumb: breadCrumb,
                 layout: "fullwidth"
             }),
-            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_shared_headers_Meta__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z, {
+            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_components_shared_headers_Meta__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Z, {
                 title: `${sellerr?.seller?.full_name}  `,
                 description: `Soff.uz sayti sotuvchisi - ${sellerr?.seller?.full_name} ning barcha mahsulotlarini shu yerda ko'rishingiz mumkin`
             }),
-            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(antd__WEBPACK_IMPORTED_MODULE_6__.Modal, {
+            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(antd__WEBPACK_IMPORTED_MODULE_8__.Modal, {
                 title: "Buyurtma berish ",
                 open: isModalOpen,
                 onOk: handleOk,
@@ -169,15 +170,15 @@ const SellerPage = ({ seller , sellerr  })=>{
                     }
                 },
                 children: [
-                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
                         children: "Tez kunda!"
                     }),
-                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
                         children: "Xurmatli Soff.uz foyalanuvchisi, siz bu yerda Sotuvchiga mahsulot yoki xizmat buyurtmasini berishingiz mumkin bo'ladi."
                     })
                 ]
             }),
-            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(antd__WEBPACK_IMPORTED_MODULE_6__.Modal, {
+            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(antd__WEBPACK_IMPORTED_MODULE_8__.Modal, {
                 title: "Qo'llab quvvatlash",
                 open: isModalOpenDonate,
                 onOk: handleOkDonate,
@@ -193,58 +194,58 @@ const SellerPage = ({ seller , sellerr  })=>{
                     }
                 },
                 children: [
-                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
                         children: "Tez kunda!"
                     }),
-                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
                         children: "Xurmatli Soff.uz foyalanuvchisi, siz bu yerda Sotuvchiga O'zingizni Anonim yoki ismingizni kiritgan holda xabar yo'llashingiz va ular uchun donat summasini o'tkazishingiz mumkin bo'ladi. Sotuvchiga siz ko‘rsatgan summa to‘liq o‘tkazilib beriladi. Hamda qo'llab quvvatlash maqsadida biror bir mahsulotini sotib olishingiz mumkin."
                     })
                 ]
             }),
-            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                 className: "ps-product-list mb-5",
                 children: [
-                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
                         className: "seller-account-page",
-                        children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+                        children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
                             className: "container",
-                            children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                            children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                                 className: "user_profile_container mt-5",
                                 children: [
-                                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+                                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
                                         className: "user_profile_card",
                                         style: {
                                             backgroundImage: `url(${(isSmallScreen ? sellerr?.seller?.mobile_background_image : sellerr?.seller?.background_image) || "/static/img/orqafon1.avif"})`
                                         },
-                                        children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                                        children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                                             className: "profile_images_card",
                                             children: [
-                                                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(antd__WEBPACK_IMPORTED_MODULE_6__.Image.PreviewGroup, {
-                                                    children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(antd__WEBPACK_IMPORTED_MODULE_6__.Image, {
+                                                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(antd__WEBPACK_IMPORTED_MODULE_8__.Image.PreviewGroup, {
+                                                    children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(antd__WEBPACK_IMPORTED_MODULE_8__.Image, {
                                                         width: 200,
                                                         src: `${sellerr?.seller?.image ? sellerr?.seller?.image : "/static/img/ozodbek.png"}`
                                                     })
                                                 }),
-                                                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("i", {
+                                                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
                                                     className: `fa-solid fa-circle iconOnlayn text-${dateTime ? "success" : "secondary"}`
                                                 })
                                             ]
                                         })
                                     }),
-                                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+                                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
                                         className: "user_profile_body usr_bodyy",
-                                        children: sellerr?.seller && /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                                        children: sellerr?.seller && /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                                             className: "d-flex justify-content-between user_titleCard ",
                                             children: [
-                                                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                                                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                                                     children: [
-                                                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h1", {
+                                                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("h1", {
                                                             children: [
                                                                 sellerr?.seller?.full_name,
                                                                 " "
                                                             ]
                                                         }),
-                                                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
+                                                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("p", {
                                                             children: [
                                                                 "Ro'yxatdan o'tgan sana:",
                                                                 " ",
@@ -252,37 +253,37 @@ const SellerPage = ({ seller , sellerr  })=>{
                                                                 " "
                                                             ]
                                                         }),
-                                                        dateTime ? /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+                                                        dateTime ? /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
                                                             className: "text-success fw-bold",
                                                             children: "Onlayn"
-                                                        }) : sellerr?.seller?.last_login && /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
+                                                        }) : sellerr?.seller?.last_login && /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("p", {
                                                             children: [
                                                                 "Oxirgi marta:",
                                                                 " ",
-                                                                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_partials_account_DateFormatter__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .Z, {
+                                                                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_components_partials_account_DateFormatter__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .Z, {
                                                                     targetDate: sellerr?.seller?.last_login
                                                                 })
                                                             ]
                                                         })
                                                     ]
                                                 }),
-                                                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                                                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                                                     className: "col-12 col-md-9 user_cardss",
                                                     children: [
-                                                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                                                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                                                             className: "row justify-content-center",
                                                             children: [
-                                                                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+                                                                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
                                                                     className: "col-10 col-sm-6 col-md-4 mt-3",
-                                                                    children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                                                                    children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                                                                         className: "d-flex align-items-center",
                                                                         children: [
-                                                                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("i", {
+                                                                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
                                                                                 className: "fa-regular fa-hard-drive fa-2x mr-4"
                                                                             }),
-                                                                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                                                                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                                                                                 children: [
-                                                                                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
+                                                                                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("p", {
                                                                                         className: "h1",
                                                                                         children: [
                                                                                             sellerr?.total_approved_documents,
@@ -290,7 +291,7 @@ const SellerPage = ({ seller , sellerr  })=>{
                                                                                             "ta"
                                                                                         ]
                                                                                     }),
-                                                                                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+                                                                                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
                                                                                         className: "h4",
                                                                                         children: "Jami mahsulotlar soni"
                                                                                     })
@@ -299,17 +300,17 @@ const SellerPage = ({ seller , sellerr  })=>{
                                                                         ]
                                                                     })
                                                                 }),
-                                                                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+                                                                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
                                                                     className: "col-10 col-sm-6 col-md-4 my-3",
-                                                                    children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                                                                    children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                                                                         className: "d-flex align-items-center",
                                                                         children: [
-                                                                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("i", {
+                                                                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
                                                                                 className: "fa-regular fa-handshake fa-2x mr-4"
                                                                             }),
-                                                                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                                                                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                                                                                 children: [
-                                                                                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
+                                                                                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("p", {
                                                                                         className: "h1",
                                                                                         children: [
                                                                                             sellerr?.total_sold_documents,
@@ -317,7 +318,7 @@ const SellerPage = ({ seller , sellerr  })=>{
                                                                                             "ta"
                                                                                         ]
                                                                                     }),
-                                                                                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+                                                                                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
                                                                                         className: "h4",
                                                                                         children: "Sotilgan mahsulotlari soni"
                                                                                     })
@@ -326,25 +327,25 @@ const SellerPage = ({ seller , sellerr  })=>{
                                                                         ]
                                                                     })
                                                                 }),
-                                                                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+                                                                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
                                                                     className: "col-10 col-sm-6 col-md-4 my-3",
-                                                                    children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                                                                    children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                                                                         className: "d-flex align-items-center",
                                                                         children: [
-                                                                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("i", {
+                                                                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
                                                                                 className: "fa-regular fa-gem fa-2x mr-4"
                                                                             }),
-                                                                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                                                                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                                                                                 children: [
-                                                                                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
+                                                                                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("p", {
                                                                                         className: "h1",
                                                                                         children: [
-                                                                                            (0,_components_partials_account_price_formatter__WEBPACK_IMPORTED_MODULE_14__/* .addPeriodToThousands */ .Y)(sellerr?.total_income),
+                                                                                            (0,_components_partials_account_price_formatter__WEBPACK_IMPORTED_MODULE_15__/* .addPeriodToThousands */ .Y)(sellerr?.total_income),
                                                                                             " ",
                                                                                             "so'm"
                                                                                         ]
                                                                                     }),
-                                                                                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+                                                                                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
                                                                                         className: "h4",
                                                                                         children: "Daromad"
                                                                                     })
@@ -355,10 +356,10 @@ const SellerPage = ({ seller , sellerr  })=>{
                                                                 })
                                                             ]
                                                         }),
-                                                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                                                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                                                             className: "d-xl-flex d-lg-flex d-md-flex d-sm-flex justify-content-center align-items-center gap-5 py-4 ",
                                                             children: [
-                                                                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("a", {
+                                                                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("a", {
                                                                     href: "#products",
                                                                     className: `text-white ps-btn w-100 text-center pb-4 pt-4 ${tab === "tab-1" ? "donate-color-btn" : ""}`,
                                                                     style: {
@@ -367,32 +368,32 @@ const SellerPage = ({ seller , sellerr  })=>{
                                                                     onClick: ()=>setTab("tab-1"),
                                                                     children: [
                                                                         " ",
-                                                                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("i", {
+                                                                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
                                                                             className: "fa-regular fa-pen-to-square"
                                                                         }),
                                                                         " ",
                                                                         "Mahsulotlari"
                                                                     ]
                                                                 }),
-                                                                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("button", {
+                                                                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("button", {
                                                                     className: `text-white ps-btn w-100 mt-3 mt-xl-0 mt-lg-0 mt-md-0 mt-sm-0 ${tab === "tab-2" ? "donate-color-btn" : ""}`,
                                                                     onClick: showModal,
                                                                     children: [
                                                                         " ",
-                                                                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("i", {
+                                                                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
                                                                             className: "fa-regular fa-pen-to-square"
                                                                         }),
                                                                         " ",
                                                                         "Buyurtma berish"
                                                                     ]
                                                                 }),
-                                                                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("button", {
+                                                                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("button", {
                                                                     className: `text-white ps-btn w-100 mt-3 mt-xl-0 mt-lg-0 mt-md-0 mt-sm-0 ${tab === "tab-3" ? "donate-color-btn" : ""}`,
                                                                     // onClick={showModalDonate}
                                                                     onClick: ()=>setTab("tab-3"),
                                                                     children: [
                                                                         " ",
-                                                                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("i", {
+                                                                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
                                                                             className: "fa-solid fa-hand-holding-medical"
                                                                         }),
                                                                         " ",
@@ -406,14 +407,14 @@ const SellerPage = ({ seller , sellerr  })=>{
                                             ]
                                         })
                                     }),
-                                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                                         className: "seller_contaoner2",
                                         children: [
-                                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("select", {
+                                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("select", {
                                                 onChange: (e)=>setTypeSelect(e.target.value),
                                                 className: "form-control seller_filter rounded-3",
                                                 children: productType?.map((e)=>{
-                                                    return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("option", {
+                                                    return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("option", {
                                                         value: e.type,
                                                         selected: e?.type === typeSelect,
                                                         children: [
@@ -423,7 +424,7 @@ const SellerPage = ({ seller , sellerr  })=>{
                                                     }, e?.type);
                                                 })
                                             }),
-                                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", {
+                                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
                                                 type: "text",
                                                 placeholder: "Qidiruv...",
                                                 onInput: (e)=>setSearch(e.target.value),
@@ -435,22 +436,22 @@ const SellerPage = ({ seller , sellerr  })=>{
                             })
                         })
                     }),
-                    tab === "tab-1" ? /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_partials_seller_SellerProducts__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Z, {
+                    tab === "tab-1" ? /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_components_partials_seller_SellerProducts__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .Z, {
                         data: data,
                         page: page,
                         handlePagination: handlePagination
-                    }) : tab === "tab-2" ? /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_partials_seller_SellerProducts__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Z, {
+                    }) : tab === "tab-2" ? /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_components_partials_seller_SellerProducts__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .Z, {
                         data: data,
                         page: page,
                         handlePagination: handlePagination
-                    }) : /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_partials_seller_SellerDonateForm__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .Z, {})
+                    }) : /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_components_partials_seller_SellerDonateForm__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .Z, {})
                 ]
             })
         ]
     });
 };
 async function getServerSideProps$1({ query  }) {
-    const response = await fetch(_repositories_Repository__WEBPACK_IMPORTED_MODULE_4__/* .baseUrl */ .FH + `customer/top-sellers/${query.pid}`);
+    const response = await fetch(_repositories_Repository__WEBPACK_IMPORTED_MODULE_6__/* .baseUrl */ .FH + `customer/top-sellers/${query.pid}`);
     // Agar topilmasa yoki status 404 bo‘lsa
     if (!response.ok) {
         return {
@@ -474,8 +475,8 @@ async function getServerSideProps$1({ query  }) {
 
 var serverComponentModule = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    default: SellerPage,
-    getServerSideProps: getServerSideProps$1
+    getServerSideProps: getServerSideProps$1,
+    'default': SellerPage
 });
 
 /*
@@ -486,7 +487,6 @@ var serverComponentModule = /*#__PURE__*/Object.freeze({
  * this causes both TS and ESLint to complain, hence the pragma comments below.
  */
 
-
 const userPageModule = serverComponentModule ;
 
 const pageComponent = userPageModule ? userPageModule.default : undefined;
@@ -495,19 +495,14 @@ const origGetInitialProps = pageComponent ? pageComponent.getInitialProps : unde
 const origGetStaticProps = userPageModule ? userPageModule.getStaticProps : undefined;
 const origGetServerSideProps = userPageModule ? userPageModule.getServerSideProps : undefined;
 
-// Rollup will aggressively tree-shake what it perceives to be unused properties
-// on objects. Because the key that's used to index into this object (/__seller/[pid])
-// is replaced during bundling, Rollup can't see that these properties are in fact
-// used. Using `Object.freeze` signals to Rollup that it should not tree-shake
-// this object.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const getInitialPropsWrappers = Object.freeze({
-  '/_app': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_13__.wrapAppGetInitialPropsWithSentry,
-  '/_document': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_13__.wrapDocumentGetInitialPropsWithSentry,
-  '/_error': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_13__.wrapErrorGetInitialPropsWithSentry,
-});
+const getInitialPropsWrappers = {
+  '/_app': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_1__.wrapAppGetInitialPropsWithSentry,
+  '/_document': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_1__.wrapDocumentGetInitialPropsWithSentry,
+  '/_error': _sentry_nextjs__WEBPACK_IMPORTED_MODULE_1__.wrapErrorGetInitialPropsWithSentry,
+};
 
-const getInitialPropsWrapper = getInitialPropsWrappers['/__seller/[pid]'] || _sentry_nextjs__WEBPACK_IMPORTED_MODULE_13__.wrapGetInitialPropsWithSentry;
+const getInitialPropsWrapper = getInitialPropsWrappers['/__seller/[pid]'] || _sentry_nextjs__WEBPACK_IMPORTED_MODULE_1__.wrapGetInitialPropsWithSentry;
 
 if (pageComponent && typeof origGetInitialProps === 'function') {
   pageComponent.getInitialProps = getInitialPropsWrapper(origGetInitialProps) ;
@@ -515,14 +510,14 @@ if (pageComponent && typeof origGetInitialProps === 'function') {
 
 const getStaticProps =
   typeof origGetStaticProps === 'function'
-    ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_13__.wrapGetStaticPropsWithSentry(origGetStaticProps, '/__seller/[pid]')
+    ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_1__.wrapGetStaticPropsWithSentry(origGetStaticProps, '/__seller/[pid]')
     : undefined;
 const getServerSideProps =
   typeof origGetServerSideProps === 'function'
-    ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_13__.wrapGetServerSidePropsWithSentry(origGetServerSideProps, '/__seller/[pid]')
+    ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_1__.wrapGetServerSidePropsWithSentry(origGetServerSideProps, '/__seller/[pid]')
     : undefined;
 
-const pageWrapperTemplate = pageComponent ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_13__.wrapPageComponentWithSentry(pageComponent ) : pageComponent;
+const pageWrapperTemplate = pageComponent ? _sentry_nextjs__WEBPACK_IMPORTED_MODULE_1__.wrapPageComponentWithSentry(pageComponent ) : pageComponent;
 
 
 
@@ -531,7 +526,7 @@ __webpack_async_result__();
 
 /***/ }),
 
-/***/ 2843:
+/***/ 2181:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
@@ -544,8 +539,8 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1664);
 /* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(next_link__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _shared_hooks_useProduct__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(2633);
-/* harmony import */ var _components_partials_account_price_formatter__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(5282);
+/* harmony import */ var _shared_hooks_useProduct__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(5001);
+/* harmony import */ var _components_partials_account_price_formatter__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1621);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_shared_hooks_useProduct__WEBPACK_IMPORTED_MODULE_3__]);
 _shared_hooks_useProduct__WEBPACK_IMPORTED_MODULE_3__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
 
@@ -644,7 +639,7 @@ __webpack_async_result__();
 
 /***/ }),
 
-/***/ 7525:
+/***/ 8664:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -704,7 +699,7 @@ function CalculateTimeDifference({ targetDate , className  }) {
 
 /***/ }),
 
-/***/ 5282:
+/***/ 1621:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -721,7 +716,7 @@ function addPeriodToThousands(number) {
 
 /***/ }),
 
-/***/ 8977:
+/***/ 7592:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
@@ -734,12 +729,12 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5725);
 /* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(antd__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _shared_utilities_product_helper__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(9075);
-/* harmony import */ var _shared_utilities_ecomerce_helpers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(156);
+/* harmony import */ var _shared_utilities_product_helper__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(3701);
+/* harmony import */ var _shared_utilities_ecomerce_helpers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(8909);
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1853);
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(9648);
-/* harmony import */ var _reositoriy_admin_Repository__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(6620);
+/* harmony import */ var _reositoriy_admin_Repository__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(3098);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_shared_utilities_product_helper__WEBPACK_IMPORTED_MODULE_3__, axios__WEBPACK_IMPORTED_MODULE_6__, _reositoriy_admin_Repository__WEBPACK_IMPORTED_MODULE_7__]);
 ([_shared_utilities_product_helper__WEBPACK_IMPORTED_MODULE_3__, axios__WEBPACK_IMPORTED_MODULE_6__, _reositoriy_admin_Repository__WEBPACK_IMPORTED_MODULE_7__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
@@ -1170,7 +1165,7 @@ __webpack_async_result__();
 
 /***/ }),
 
-/***/ 999:
+/***/ 4947:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
@@ -1181,7 +1176,7 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6689);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _components_elements_products_Product__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2843);
+/* harmony import */ var _components_elements_products_Product__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2181);
 /* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(5725);
 /* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(antd__WEBPACK_IMPORTED_MODULE_3__);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_components_elements_products_Product__WEBPACK_IMPORTED_MODULE_2__]);
@@ -1238,7 +1233,7 @@ __webpack_async_result__();
 
 /***/ }),
 
-/***/ 6620:
+/***/ 3098:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
@@ -1274,7 +1269,7 @@ __webpack_async_result__();
 
 /***/ }),
 
-/***/ 2633:
+/***/ 5001:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
@@ -1285,10 +1280,10 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6689);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _shared_utilities_product_helper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(9075);
+/* harmony import */ var _shared_utilities_product_helper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(3701);
 /* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1664);
 /* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(next_link__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _components_nextImagecard__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(9583);
+/* harmony import */ var _components_nextImagecard__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(5922);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_shared_utilities_product_helper__WEBPACK_IMPORTED_MODULE_2__]);
 _shared_utilities_product_helper__WEBPACK_IMPORTED_MODULE_2__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
 
@@ -1389,7 +1384,7 @@ __webpack_async_result__();
 
 /***/ }),
 
-/***/ 8454:
+/***/ 4705:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
@@ -1400,7 +1395,7 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6689);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _PageLayout__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4747);
+/* harmony import */ var _PageLayout__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2315);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_PageLayout__WEBPACK_IMPORTED_MODULE_2__]);
 _PageLayout__WEBPACK_IMPORTED_MODULE_2__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
 
@@ -1714,7 +1709,7 @@ module.exports = import("jwt-decode");;
 var __webpack_require__ = require("../../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [676,1664,5675,5152,6017,8550,4747,1218,7567,9075,280,8215,5026,156,9583], () => (__webpack_exec__(8036)));
+var __webpack_exports__ = __webpack_require__.X(0, [676,1664,5675,5152,5780,3015,7864,2315,6985,6598,3701,7534,2495,2920,8909,5922], () => (__webpack_exec__(8777)));
 module.exports = __webpack_exports__;
 
 })();

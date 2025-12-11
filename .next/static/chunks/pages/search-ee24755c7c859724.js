@@ -1,0 +1,2 @@
+(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[9603],{32252:function(n,u,_){(window.__NEXT_P=window.__NEXT_P||[]).push(["/search",function(){return _(31025)}])},31025:function(n,u,_){"use strict";_.r(u),_.d(u,{__N_SSP:function(){return r}});var r=!0;u.default=function(){return null}}},function(n){n.O(0,[9774,2888,179],(function(){return u=32252,n(n.s=u);var u}));var u=n.O();_N_E=u}]);
+//# sourceMappingURL=search-ee24755c7c859724.js.map
