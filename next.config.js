@@ -1,14 +1,23 @@
 const nextSettings = {
     optimizeFonts: true,
     output: 'standalone',
+
+    // NOTE: Compressing responses can improve performance
+    compress: true,
+    // NOTE: Enable SWC minification for smaller bundle sizes
+    swcMinify: true,
+
     eslint: {
         ignoreDuringBuilds: true,
     },
-    // Enable detailed hydration error logging
+
     experimental: {
         logging: {
             level: 'verbose',
         },
+        // ADD: These help with performance
+        optimizeCss: true,
+        esmExternals: true,
     },
     // Note: optimizePackageImports is Next.js 13+ only
     // For Next.js 12, tree shaking works automatically with named imports
@@ -39,6 +48,11 @@ const nextSettings = {
             'freelance-media.s3.amazonaws.com',
             'img.youtube.com',
         ],
+        // Better image optimization
+        formats: ['image/avif', 'image/webp'],
+        minimumCacheTTL: 60,
+        deviceSizes: [640, 750, 828, 1080, 1200, 1920],
+        imageSizes: [16, 32, 48, 64, 96, 128, 256],
     },
     async headers() {
         return [
@@ -100,23 +114,35 @@ const nextSettings = {
             },
         ];
     },
+
+    // Optimize build
+    productionBrowserSourceMaps: false,
+    // ADD: Better build performance
+    webpack: (config, { dev, isServer }) => {
+        // Production optimizations
+        if (!dev) {
+            config.optimization = {
+                ...config.optimization,
+                moduleIds: 'deterministic',
+            };
+        }
+
+        return config;
+    },
 };
 
 module.exports = nextSettings;
 
-
 // Injected content via Sentry wizard below
 
-const { withSentryConfig } = require("@sentry/nextjs");
+const { withSentryConfig } = require('@sentry/nextjs');
 
-module.exports = withSentryConfig(
-  module.exports,
-  {
+module.exports = withSentryConfig(module.exports, {
     // For all available options, see:
     // https://www.npmjs.com/package/@sentry/webpack-plugin#options
 
-    org: "for-personal-use-jw",
-    project: "javascript-nextjs",
+    org: 'for-personal-use-jw',
+    project: 'javascript-nextjs',
 
     // Only print logs for uploading source maps in CI
     silent: !process.env.CI,
@@ -131,7 +157,7 @@ module.exports = withSentryConfig(
     // This can increase your server load as well as your hosting bill.
     // Note: Check that the configured route will not match with your Next.js middleware, otherwise reporting of client-
     // side errors will fail.
-    tunnelRoute: "/monitoring",
+    tunnelRoute: '/monitoring',
 
     // Automatically tree-shake Sentry logger statements to reduce bundle size
     disableLogger: true,
@@ -141,5 +167,4 @@ module.exports = withSentryConfig(
     // https://docs.sentry.io/product/crons/
     // https://vercel.com/docs/cron-jobs
     automaticVercelMonitors: true,
-  }
-);
+});
