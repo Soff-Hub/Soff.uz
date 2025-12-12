@@ -19,6 +19,14 @@ jobs:
     deploy:
         runs-on: ubuntu-latest
 
+        env:
+            NEXT_PUBLIC_BASE_URL: ${{ secrets.NEXT_PUBLIC_BASE_URL }}
+            NEXT_PUBLIC_FREELEANCE_URL:
+                ${{ secrets.NEXT_PUBLIC_FREELEANCE_URL }}
+            NEXT_PUBLIC_WS_BASE_URL: ${{ secrets.NEXT_PUBLIC_WS_BASE_URL }}
+            NEXT_PUBLIC_WS_FREELEANCE_URL:
+                ${{ secrets.NEXT_PUBLIC_WS_FREELEANCE_URL }}
+
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
