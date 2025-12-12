@@ -16,7 +16,7 @@ const nextSettings = {
             level: 'verbose',
         },
         // ADD: These help with performance
-        optimizeCss: true,
+        ...(process.env.NODE_ENV === 'production' && { optimizeCss: true }),
         esmExternals: true,
     },
     // Note: optimizePackageImports is Next.js 13+ only

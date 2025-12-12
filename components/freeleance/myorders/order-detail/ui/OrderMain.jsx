@@ -477,7 +477,7 @@ const OrderMain = ({ order, handleOrderUpdate }) => {
                             <Button
                                 color="danger"
                                 variant="outlined"
-                                // value="end"
+                                disabled={fileIsFetching}
                                 onClick={() => {
                                     setRes('rejected');
                                     setFeedbackOpen(true);
@@ -487,7 +487,7 @@ const OrderMain = ({ order, handleOrderUpdate }) => {
                             <Button
                                 type="primary"
                                 variant="contained"
-                                // value="start"
+                                disabled={fileIsFetching}
                                 onClick={() => {
                                     setRes('complected');
                                     setFeedbackOpen(true);

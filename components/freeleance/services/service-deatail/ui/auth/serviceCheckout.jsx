@@ -651,16 +651,19 @@ const VerificationCodeModal = forwardRef(
         const queryClient = useQueryClient();
         const { display, left, reset } = useCountdown(120);
         const {
-            mutateAsync: mutateVerifyCode,
+            mutate: mutateVerifyCode,
+            reset: resetVerifyCode,
             isPending: isVerifyCodePending,
             isSuccess: isVerifyCodeSuccess,
+            isError: isVerifyCodeError,
         } = useVerifyCode();
         const [code, setCode] = useState(null);
         const [resDataCode, setResDataCode] = useState(null);
 
         // 📌 SMS kodi tasdiqlash
-        async function handleVerifyCode() {
-            await mutateVerifyCode(
+        function handleVerifyCode() {
+            setResDataCode(null);
+            mutateVerifyCode(
                 {
                     transaction_id: resData?.transaction_id,
                     code,
@@ -683,6 +686,7 @@ const VerificationCodeModal = forwardRef(
                         if (onClose) onClose();
                     },
                     onError: (error) => {
+                        console.log('❌ Verify code error:', error);
                         const errorMessage = error?.response?.data || {
                             detail: "Noma'lum xato",
                         };
@@ -695,6 +699,7 @@ const VerificationCodeModal = forwardRef(
         const handleResendCode = async () => {
             await handleCardPayment();
             reset();
+            resetVerifyCode();
         };
 
         useImperativeHandle(
@@ -707,11 +712,12 @@ const VerificationCodeModal = forwardRef(
 
         const isLoadingOrSuccess = isVerifyCodePending || isVerifyCodeSuccess;
 
-        const errorMessage = resData?.detail
-            ? typeof resDataCode?.detail == 'string'
+        const errorMessage =
+            isVerifyCodeError &&
+            Boolean(left) &&
+            (typeof resDataCode?.detail == 'string'
                 ? resDataCode?.detail
-                : "Noma'lum xato"
-            : '';
+                : "Noma'lum xato");
 
         return (
             <Modal

@@ -201,6 +201,7 @@ const CreateOrderModal = ({
             fd.append(key, value);
         }
 
+        if (id) fd.append('seller_id', id);
         // Add phone number
         fd.append('contact_phonenumber', phoneNumber);
 
@@ -257,6 +258,7 @@ const CreateOrderModal = ({
                                     className="user-avatar d-flex align-items-center justify-content-center rounded-circle"
                                     style={{
                                         width: '50px',
+                                        overflow: 'hidden',
                                         aspectRatio: '1/1',
                                         background: '#fff',
                                         fontSize: '20px',
@@ -273,7 +275,7 @@ const CreateOrderModal = ({
                                                 aspectRatio: '1/1',
                                             }}
                                             src={sellerInfo.image}
-                                            alt="seller-image"
+                                            alt="No"
                                         />
                                     ) : (
                                         seller?.charAt(0)?.toUpperCase()

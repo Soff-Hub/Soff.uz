@@ -22,7 +22,7 @@ export const AllOrdersTable = ({ type }) => {
     const queryClient = useQueryClient();
     const router = useRouter();
     const {
-        data: orders,
+        data: ordersData,
         fetchNextPage,
         hasNextPage,
         isFetchingNextPage,
@@ -78,11 +78,11 @@ export const AllOrdersTable = ({ type }) => {
         setSelectedOrder(null);
     };
 
-    const statusFilter = useMemo(() => {
-        if (!orders || !orders?.pages?.length) return [];
-        const mergedOrders = orders.pages.flatMap((page) => page.results);
+    const orders = useMemo(() => {
+        if (!ordersData || !ordersData?.pages?.length) return [];
+        const mergedOrders = ordersData.pages.flatMap((page) => page.results);
         return mergedOrders;
-    }, [orders, type]);
+    }, [ordersData, type]);
 
     useEffect(() => {
         if (!loadMoreRef.current) return;
@@ -118,10 +118,10 @@ export const AllOrdersTable = ({ type }) => {
                 <Loader />
             </div>
         );
-    } else if (statusFilter.length) {
+    } else if (orders.length) {
         ordersContent = (
             <>
-                {statusFilter.map((order) => (
+                {orders.map((order) => (
                     <OrderCard
                         key={order.id}
                         order={order}
@@ -145,7 +145,7 @@ export const AllOrdersTable = ({ type }) => {
     }
 
     useEffect(() => {
-        if (orderId && orders) {
+        if (orderId && orders.length) {
             const found = orders.find((o) => o.id === Number(orderId));
             if (found) {
                 setSelectedOrder(found);
@@ -165,7 +165,7 @@ export const AllOrdersTable = ({ type }) => {
     }, [orderId, orders]);
 
     useEffect(() => {
-        if (orders?.length) {
+        if (orders.length) {
             setSelectedOrder((prev) => {
                 if (!prev) return null;
                 return orders.find((o) => o.id === prev.id) || null;
