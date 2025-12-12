@@ -816,12 +816,13 @@ const ChildrenWithInsufficientBalance = ({ order , balance , isVisible  })=>{
 const VerificationCodeModal = /*#__PURE__*/ (0,react__WEBPACK_IMPORTED_MODULE_1__.forwardRef)(({ isVerificationModalOpen , resData , order_id , onSuccess , onClose , closeVerificationModal , handleCancelVerification , handleCardPayment ,  } = props, ref)=>{
     const queryClient = (0,_tanstack_react_query__WEBPACK_IMPORTED_MODULE_8__.useQueryClient)();
     const { display , left , reset  } = (0,_shared_hooks_useCountDown__WEBPACK_IMPORTED_MODULE_7__/* .useCountdown */ .au)(120);
-    const { mutateAsync: mutateVerifyCode , isPending: isVerifyCodePending , isSuccess: isVerifyCodeSuccess ,  } = (0,_api_verifyCode__WEBPACK_IMPORTED_MODULE_6__/* .useVerifyCode */ .$)();
+    const { mutate: mutateVerifyCode , reset: resetVerifyCode , isPending: isVerifyCodePending , isSuccess: isVerifyCodeSuccess , isError: isVerifyCodeError ,  } = (0,_api_verifyCode__WEBPACK_IMPORTED_MODULE_6__/* .useVerifyCode */ .$)();
     const { 0: code , 1: setCode  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
     const { 0: resDataCode , 1: setResDataCode  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
     // 📌 SMS kodi tasdiqlash
-    async function handleVerifyCode() {
-        await mutateVerifyCode({
+    function handleVerifyCode() {
+        setResDataCode(null);
+        mutateVerifyCode({
             transaction_id: resData?.transaction_id,
             code
         }, {
@@ -846,6 +847,7 @@ const VerificationCodeModal = /*#__PURE__*/ (0,react__WEBPACK_IMPORTED_MODULE_1_
                 if (onClose) onClose();
             },
             onError: (error)=>{
+                console.log("❌ Verify code error:", error);
                 const errorMessage = error?.response?.data || {
                     detail: "Noma'lum xato"
                 };
@@ -856,6 +858,7 @@ const VerificationCodeModal = /*#__PURE__*/ (0,react__WEBPACK_IMPORTED_MODULE_1_
     const handleResendCode = async ()=>{
         await handleCardPayment();
         reset();
+        resetVerifyCode();
     };
     (0,react__WEBPACK_IMPORTED_MODULE_1__.useImperativeHandle)(ref, ()=>({
             reset
@@ -863,7 +866,7 @@ const VerificationCodeModal = /*#__PURE__*/ (0,react__WEBPACK_IMPORTED_MODULE_1_
         reset
     ]);
     const isLoadingOrSuccess = isVerifyCodePending || isVerifyCodeSuccess;
-    const errorMessage = resData?.detail ? typeof resDataCode?.detail == "string" ? resDataCode?.detail : "Noma'lum xato" : "";
+    const errorMessage = isVerifyCodeError && Boolean(left) && (typeof resDataCode?.detail == "string" ? resDataCode?.detail : "Noma'lum xato");
     return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_2__.Modal, {
         width: 500,
         title: "Tez orada!",

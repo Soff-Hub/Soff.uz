@@ -289,6 +289,7 @@ const CreateOrderModal = ({ open , onClose , id , seller , sellerInfo , defaultD
         for (const [key, value] of Object.entries(pendingOrderData.order)){
             fd.append(key, value);
         }
+        if (id) fd.append("seller_id", id);
         // Add phone number
         fd.append("contact_phonenumber", phoneNumber);
         // Add file if exists
@@ -338,6 +339,7 @@ const CreateOrderModal = ({ open , onClose , id , seller , sellerInfo , defaultD
                                             className: "user-avatar d-flex align-items-center justify-content-center rounded-circle",
                                             style: {
                                                 width: "50px",
+                                                overflow: "hidden",
                                                 aspectRatio: "1/1",
                                                 background: "#fff",
                                                 fontSize: "20px",
@@ -351,7 +353,7 @@ const CreateOrderModal = ({ open , onClose , id , seller , sellerInfo , defaultD
                                                     aspectRatio: "1/1"
                                                 },
                                                 src: sellerInfo.image,
-                                                alt: "seller-image"
+                                                alt: "No"
                                             }) : seller?.charAt(0)?.toUpperCase()
                                         }),
                                         /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
