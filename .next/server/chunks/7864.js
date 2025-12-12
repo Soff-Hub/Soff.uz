@@ -19,10 +19,10 @@ var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([axio
 axios__WEBPACK_IMPORTED_MODULE_0__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
 
 // BASE DOMAINS
-const baseDomain = `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/`;
-const basePostUrl = `${process.env.NEXT_PUBLIC_BASE_URL}`;
-const baseStoreURL = `${process.env.NEXT_PUBLIC_BASE_URL}`;
-const baseUrlAuth = `${process.env.NEXT_PUBLIC_BASE_URL}/`;
+const baseDomain = `${"https://api.soff.uz"}/api/v1/`;
+const basePostUrl = `${"https://api.soff.uz"}`;
+const baseStoreURL = (/* unused pure expression or super */ null && (`${"https://api.soff.uz"}`));
+const baseUrlAuth = `${"https://api.soff.uz"}/`;
 const baseUrlSoffNew = `${process.env.NEXT_PUBLIC_BASE_URL_SOFFNEW}/`;
 const customHeaders = {
     Accept: "application/json"
@@ -52,7 +52,7 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([axios__WEBPACK_IMPORTED_MODULE_0__]);
 axios__WEBPACK_IMPORTED_MODULE_0__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
 
-const baseURL =  false ? 0 : process.env.NEXT_PUBLIC_BASE_URL;
+const baseURL =  false ? 0 : "https://api.soff.uz";
 const api = axios__WEBPACK_IMPORTED_MODULE_0__["default"].create({
     baseURL
 });
@@ -79,10 +79,10 @@ __webpack_async_result__();
 /* harmony export */   "t8": () => (/* binding */ d_base_url)
 /* harmony export */ });
 /* unused harmony export d_base_ws_url */
-const d_base_url = process.env.NEXT_PUBLIC_BASE_URL;
-const f_base_url = process.env.NEXT_PUBLIC_FREELEANCE_URL;
-const d_base_ws_url = process.env.NEXT_PUBLIC_WS_BASE_URL;
-const f_base_ws_url = process.env.NEXT_PUBLIC_WS_FREELEANCE_URL;
+const d_base_url = "https://api.soff.uz";
+const f_base_url = "https://freelance.soff.uz";
+const d_base_ws_url = (/* unused pure expression or super */ null && ("wss://api.soff.uz/"));
+const f_base_ws_url = "wss://freelance.soff.uz/api/v1/ws/";
 
 
 /***/ }),
@@ -150,13 +150,13 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony export */   "b": () => (/* binding */ apiSoffSlice)
 /* harmony export */ });
 /* harmony import */ var _reduxjs_toolkit_query_react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9943);
-/* harmony import */ var _shared_api_base_url__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8749);
-/* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6734);
-/* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(js_cookie__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _store_auth_slice__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(3015);
-/* harmony import */ var _store_ecomerce_slice__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(2160);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_reduxjs_toolkit_query_react__WEBPACK_IMPORTED_MODULE_0__, _store_auth_slice__WEBPACK_IMPORTED_MODULE_3__, _store_ecomerce_slice__WEBPACK_IMPORTED_MODULE_4__]);
-([_reduxjs_toolkit_query_react__WEBPACK_IMPORTED_MODULE_0__, _store_auth_slice__WEBPACK_IMPORTED_MODULE_3__, _store_ecomerce_slice__WEBPACK_IMPORTED_MODULE_4__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+/* harmony import */ var _shared_api_base_url__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(8749);
+/* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6734);
+/* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(js_cookie__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _store_auth_slice__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(3015);
+/* harmony import */ var _store_ecomerce_slice__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(2160);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_reduxjs_toolkit_query_react__WEBPACK_IMPORTED_MODULE_0__, _store_auth_slice__WEBPACK_IMPORTED_MODULE_2__, _store_ecomerce_slice__WEBPACK_IMPORTED_MODULE_3__]);
+([_reduxjs_toolkit_query_react__WEBPACK_IMPORTED_MODULE_0__, _store_auth_slice__WEBPACK_IMPORTED_MODULE_2__, _store_ecomerce_slice__WEBPACK_IMPORTED_MODULE_3__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
 
 
@@ -193,7 +193,7 @@ const baseQueryWithLogout = (baseQuery)=>{
 const apiSoffSlice = (0,_reduxjs_toolkit_query_react__WEBPACK_IMPORTED_MODULE_0__.createApi)({
     reducerPath: "apiSoff",
     baseQuery: baseQueryWithLogout((0,_reduxjs_toolkit_query_react__WEBPACK_IMPORTED_MODULE_0__.fetchBaseQuery)({
-        baseUrl: _shared_api_base_url__WEBPACK_IMPORTED_MODULE_1__/* .d_base_url */ .t8,
+        baseUrl: _shared_api_base_url__WEBPACK_IMPORTED_MODULE_4__/* .d_base_url */ .t8,
         prepareHeaders: (headers)=>{
             const token = getToken();
             if (token) {
@@ -221,7 +221,7 @@ apiSoffSlice.enhanceEndpoints({
 const apiFreelanceSlice = (0,_reduxjs_toolkit_query_react__WEBPACK_IMPORTED_MODULE_0__.createApi)({
     reducerPath: "apiFreelance",
     baseQuery: baseQueryWithLogout((0,_reduxjs_toolkit_query_react__WEBPACK_IMPORTED_MODULE_0__.fetchBaseQuery)({
-        baseUrl: _shared_api_base_url__WEBPACK_IMPORTED_MODULE_1__/* .f_base_url */ .RI,
+        baseUrl: _shared_api_base_url__WEBPACK_IMPORTED_MODULE_4__/* .f_base_url */ .RI,
         prepareHeaders: (headers)=>{
             const token = getToken();
             if (token) {

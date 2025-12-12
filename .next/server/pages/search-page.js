@@ -350,8 +350,8 @@ async function getServerSideProps$1(context) {
     };
     // ✅ Yangi filterlar qo‘shildi
     const searchUrl = `${_repositories_useApi__WEBPACK_IMPORTED_MODULE_19__/* .baseUrlUseApi */ .q}customer/same-google-search/?limit=50${page ? `&page=${page}` : ""}${keyword ? `&search=${keyword}` : ""}${type ? `&type=${type}` : ""}${category ? `&category=${category}` : ""}${order_by ? `&order_by=${order_by}` : ""}${file_type ? `&file_type=${file_type}` : ""}${page_from ? `&page_from=${page_from}` : ""}${page_to ? `&page_to=${page_to}` : ""}${parentCategory ? `&parentCategory=${parentCategory}` : ""}${similar_documents ? `&similar_documents=${similar_documents}` : ""}`;
-    const servicesUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/customer?${servicesQuery.toString()}&search=${keyword}${service_parent ? `&category_id=${service_parent}` : ""}`;
-    const sellersUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/users/sellers?limit=${limit}&offset=${offset}&search=${keyword}`;
+    const servicesUrl = `${"https://freelance.soff.uz"}/api/v1/customer?${servicesQuery.toString()}&search=${keyword}${service_parent ? `&category_id=${service_parent}` : ""}`;
+    const sellersUrl = `${"https://freelance.soff.uz"}/api/v1/users/sellers?limit=${limit}&offset=${offset}&search=${keyword}`;
     const restQueries = {
         fourChildData: null,
         childCategoryData: null,
@@ -1947,7 +1947,7 @@ const FilterFormDrawer = ({ open , onClose , directions , setCategoriesList  })=
             filterValues.direction
         ],
         queryFn: async ()=>{
-            const res = await fetch(`${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/categories?direction=${filterValues.direction}`);
+            const res = await fetch(`${"https://freelance.soff.uz"}/api/v1/categories?direction=${filterValues.direction}`);
             return await res.json();
         },
         enabled: !!filterValues.direction && filterValues.direction !== "all"

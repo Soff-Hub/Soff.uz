@@ -47,7 +47,7 @@ async function getServerSideProps$1(context) {
     const { slug  } = context.params;
     const axios = (0,_shared_api_freeleanceApi__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .Z)();
     try {
-        const { data , status  } = await axios.get(`${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/customer/${slug}/`);
+        const { data , status  } = await axios.get(`${"https://freelance.soff.uz"}/api/v1/customer/${slug}/`);
         return {
             props: {
                 data,

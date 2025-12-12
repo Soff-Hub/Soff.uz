@@ -16,8 +16,8 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([axios__WEBPACK_IMPORTED_MODULE_0__]);
 axios__WEBPACK_IMPORTED_MODULE_0__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
 
-const baseURL = `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/`;
-const baseURLFreelance = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/`;
+const baseURL = `${"https://api.soff.uz"}/api/v1/`;
+const baseURLFreelance = `${"https://freelance.soff.uz"}/api/v1/`;
 const api = axios__WEBPACK_IMPORTED_MODULE_0__["default"].create({
     baseURL: baseURL,
     timeout: 30000

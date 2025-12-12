@@ -859,10 +859,10 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var _ant_design_icons__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_ant_design_icons__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _repositories_https__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(7754);
 /* harmony import */ var _shared_utilities_useResponsive__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(6603);
-/* harmony import */ var _shared_api_end_points__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(6343);
-/* harmony import */ var _shared_hooks_useTelegram__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(5047);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(6022);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(react_redux__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _shared_api_end_points__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(6343);
+/* harmony import */ var _shared_hooks_useTelegram__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(5047);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(6022);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react_redux__WEBPACK_IMPORTED_MODULE_7__);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_repositories_https__WEBPACK_IMPORTED_MODULE_4__]);
 _repositories_https__WEBPACK_IMPORTED_MODULE_4__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
 
@@ -876,14 +876,14 @@ _repositories_https__WEBPACK_IMPORTED_MODULE_4__ = (__webpack_async_dependencies
 
 function TelegramNotification({ header , hideIfActivated  }) {
     const { isMobile  } = (0,_shared_utilities_useResponsive__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z)();
-    const { user  } = (0,react_redux__WEBPACK_IMPORTED_MODULE_8__.useSelector)((state)=>state.auth);
+    const { user  } = (0,react_redux__WEBPACK_IMPORTED_MODULE_7__.useSelector)((state)=>state.auth);
     const { 0: checked , 1: setChecked  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
-    const { data: tg_link  } = (0,_repositories_https__WEBPACK_IMPORTED_MODULE_4__/* .useGet */ .XD)("tg_link", `${process.env.NEXT_PUBLIC_BASE_URL}${_shared_api_end_points__WEBPACK_IMPORTED_MODULE_6__/* .TELEGRAM_LINK */ .Ko}`);
-    const { data: newProfile  } = (0,_repositories_https__WEBPACK_IMPORTED_MODULE_4__/* .useGet */ .XD)("new-profile", `${process.env.NEXT_PUBLIC_BASE_URL}${_shared_api_end_points__WEBPACK_IMPORTED_MODULE_6__/* .NEW_PROFILE */ .an}`);
+    const { data: tg_link  } = (0,_repositories_https__WEBPACK_IMPORTED_MODULE_4__/* .useGet */ .XD)("tg_link", `${"https://api.soff.uz"}${_shared_api_end_points__WEBPACK_IMPORTED_MODULE_8__/* .TELEGRAM_LINK */ .Ko}`);
+    const { data: newProfile  } = (0,_repositories_https__WEBPACK_IMPORTED_MODULE_4__/* .useGet */ .XD)("new-profile", `${"https://api.soff.uz"}${_shared_api_end_points__WEBPACK_IMPORTED_MODULE_8__/* .NEW_PROFILE */ .an}`);
     const { mutate , isLoading  } = (0,_repositories_https__WEBPACK_IMPORTED_MODULE_4__/* .usePatch */ .aH)("nimadir");
     const handleOff = ()=>{
         mutate({
-            url: `${process.env.NEXT_PUBLIC_BASE_URL}${_shared_api_end_points__WEBPACK_IMPORTED_MODULE_6__/* .AUTH_PROFILE */ .jt}`,
+            url: `${"https://api.soff.uz"}${_shared_api_end_points__WEBPACK_IMPORTED_MODULE_8__/* .AUTH_PROFILE */ .jt}`,
             payload: {
                 telegram_chat_id: null
             }

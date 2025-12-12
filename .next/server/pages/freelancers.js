@@ -113,7 +113,7 @@ async function getServerSideProps$1(context) {
     }
     if (sort_by && (sort_by !== "average_rating" || order === "asc")) params.append("sort_by", sort_by);
     if (order) params.append("order", order);
-    const url = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/users/freelancers/list/?${params.toString()}`;
+    const url = `${"https://freelance.soff.uz"}/api/v1/users/freelancers/list/?${params.toString()}`;
     try {
         const data = await (0,_shared_api_fetch_json__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Z)(url);
         return {

@@ -22,11 +22,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _components_shared_headers_Meta__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(6985);
 /* harmony import */ var _features_user_profile__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(9829);
-/* harmony import */ var _shared_api_base_url__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(8749);
+/* harmony import */ var _shared_api_base_url__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(8749);
 /* harmony import */ var _shared_api_fetch_json__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(1969);
-/* harmony import */ var _widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(4705);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_features_user_profile__WEBPACK_IMPORTED_MODULE_4__, _widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_6__]);
-([_features_user_profile__WEBPACK_IMPORTED_MODULE_4__, _widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_6__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+/* harmony import */ var _widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(4705);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_features_user_profile__WEBPACK_IMPORTED_MODULE_4__, _widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_5__]);
+([_features_user_profile__WEBPACK_IMPORTED_MODULE_4__, _widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_5__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
 
 
@@ -38,7 +38,7 @@ var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_fea
 
 // import Meta from '~/components/shared/meta';
 const SellerPage = ({ seller  })=>{
-    return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .Z, {
+    return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z, {
         children: [
             /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_components_shared_headers_Meta__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .Z, {
                 title: seller?.full_name,
@@ -58,7 +58,7 @@ const SellerPage = ({ seller  })=>{
 async function getServerSideProps$1(context) {
     const { pid  } = context.params;
     try {
-        const url = `${_shared_api_base_url__WEBPACK_IMPORTED_MODULE_5__/* .d_base_url */ .t8}/auth/freelance-profile/${pid}/`;
+        const url = `${_shared_api_base_url__WEBPACK_IMPORTED_MODULE_6__/* .d_base_url */ .t8}/auth/freelance-profile/${pid}/`;
         const res = await (0,_shared_api_fetch_json__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Z)(url);
         if (res.error?.includes("Unexpected token")) {
             return {
@@ -458,22 +458,22 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony export */   "f": () => (/* binding */ useServiceComments)
 /* harmony export */ });
 /* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9752);
-/* harmony import */ var _shared_api_end_points__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6343);
-/* harmony import */ var _shared_api_freeleanceApi__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2417);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_tanstack_react_query__WEBPACK_IMPORTED_MODULE_0__, _shared_api_freeleanceApi__WEBPACK_IMPORTED_MODULE_2__]);
-([_tanstack_react_query__WEBPACK_IMPORTED_MODULE_0__, _shared_api_freeleanceApi__WEBPACK_IMPORTED_MODULE_2__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+/* harmony import */ var _shared_api_end_points__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6343);
+/* harmony import */ var _shared_api_freeleanceApi__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2417);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_tanstack_react_query__WEBPACK_IMPORTED_MODULE_0__, _shared_api_freeleanceApi__WEBPACK_IMPORTED_MODULE_1__]);
+([_tanstack_react_query__WEBPACK_IMPORTED_MODULE_0__, _shared_api_freeleanceApi__WEBPACK_IMPORTED_MODULE_1__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
 
 
 const useServiceComments = (id)=>{
-    const axios = (0,_shared_api_freeleanceApi__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .Z)();
+    const axios = (0,_shared_api_freeleanceApi__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .Z)();
     return (0,_tanstack_react_query__WEBPACK_IMPORTED_MODULE_0__.useInfiniteQuery)({
         queryKey: [
             "service-comments",
             id
         ],
         queryFn: async ({ pageParam =1  })=>{
-            const { data  } = await axios.get(`${_shared_api_end_points__WEBPACK_IMPORTED_MODULE_1__/* .SERVICE_COMMENTS */ .tI}?user_id=${id}&page=${pageParam}`);
+            const { data  } = await axios.get(`${_shared_api_end_points__WEBPACK_IMPORTED_MODULE_2__/* .SERVICE_COMMENTS */ .tI}?user_id=${id}&page=${pageParam}`);
             return data;
         },
         getNextPageParam: (lastPage, allPages)=>{
@@ -1371,14 +1371,14 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(6689);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _entities_portfolio_portfolio_card__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(2632);
-/* harmony import */ var _shared_api_end_points__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(6343);
-/* harmony import */ var _shared_hooks_useFApi__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(6400);
-/* harmony import */ var _shared_utilities_cn__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(2495);
-/* harmony import */ var next_dynamic__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(5152);
-/* harmony import */ var next_dynamic__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(next_dynamic__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _items_not_found__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(6705);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_shared_hooks_useFApi__WEBPACK_IMPORTED_MODULE_6__]);
-_shared_hooks_useFApi__WEBPACK_IMPORTED_MODULE_6__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
+/* harmony import */ var _shared_api_end_points__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(6343);
+/* harmony import */ var _shared_hooks_useFApi__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(6400);
+/* harmony import */ var _shared_utilities_cn__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(2495);
+/* harmony import */ var next_dynamic__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(5152);
+/* harmony import */ var next_dynamic__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(next_dynamic__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _items_not_found__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(6705);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_shared_hooks_useFApi__WEBPACK_IMPORTED_MODULE_5__]);
+_shared_hooks_useFApi__WEBPACK_IMPORTED_MODULE_5__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
 
 
 
@@ -1389,7 +1389,7 @@ _shared_hooks_useFApi__WEBPACK_IMPORTED_MODULE_6__ = (__webpack_async_dependenci
 
 
 
-const PortfolioModal = next_dynamic__WEBPACK_IMPORTED_MODULE_8___default()(null, {
+const PortfolioModal = next_dynamic__WEBPACK_IMPORTED_MODULE_7___default()(null, {
     loadableGenerated: {
         modules: [
             "../features/user-profile/ui/user-portfolios.jsx -> " + "~/entities/portfolio/portfolio-modal"
@@ -1401,13 +1401,13 @@ const UserPortfolios = ()=>{
     const router = (0,next_router__WEBPACK_IMPORTED_MODULE_2__.useRouter)();
     const { 0: portfolio , 1: setPortfolio  } = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)();
     const { pid  } = router.query;
-    const { data: portfolios , isLoading  } = (0,_shared_hooks_useFApi__WEBPACK_IMPORTED_MODULE_6__/* .useFGet */ .oh)(`${pid}-portfolio`, `${_shared_api_end_points__WEBPACK_IMPORTED_MODULE_5__/* .SELLER_PORTFOLIOS */ .tG}${pid}`, {
+    const { data: portfolios , isLoading  } = (0,_shared_hooks_useFApi__WEBPACK_IMPORTED_MODULE_5__/* .useFGet */ .oh)(`${pid}-portfolio`, `${_shared_api_end_points__WEBPACK_IMPORTED_MODULE_9__/* .SELLER_PORTFOLIOS */ .tG}${pid}`, {
         enabled: !!pid,
         token: null,
         staleTime: 1000 * 60 * 5,
         cacheTime: 1000 * 60 * 10
     });
-    const gridClass = (0,_shared_utilities_cn__WEBPACK_IMPORTED_MODULE_7__/* .useRcn */ .Q)({
+    const gridClass = (0,_shared_utilities_cn__WEBPACK_IMPORTED_MODULE_6__/* .useRcn */ .Q)({
         mobile: "grid-cols-2",
         tablet: "grid-cols-3",
         desktop: "grid-cols-4"
@@ -1415,18 +1415,18 @@ const UserPortfolios = ()=>{
     const notFound = !isLoading && (!portfolios || portfolios?.length === 0);
     const handleSetPortfolio = (0,react__WEBPACK_IMPORTED_MODULE_3__.useCallback)((item)=>setPortfolio(item), []);
     if (notFound) return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-        className: (0,_shared_utilities_cn__WEBPACK_IMPORTED_MODULE_7__.cn)("w-full", "flex", "flex-col", "gap-4", "flex-1"),
-        children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_items_not_found__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Z, {
+        className: (0,_shared_utilities_cn__WEBPACK_IMPORTED_MODULE_6__.cn)("w-full", "flex", "flex-col", "gap-4", "flex-1"),
+        children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_items_not_found__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Z, {
             type: "portfolio"
         })
     });
     return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-        className: (0,_shared_utilities_cn__WEBPACK_IMPORTED_MODULE_7__.cn)("w-full", "h-full", "flex", "flex-col", "gap-4", "flex-1"),
+        className: (0,_shared_utilities_cn__WEBPACK_IMPORTED_MODULE_6__.cn)("w-full", "h-full", "flex", "flex-col", "gap-4", "flex-1"),
         children: [
             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                className: (0,_shared_utilities_cn__WEBPACK_IMPORTED_MODULE_7__.cn)("bg-light", "p-3", "shadow", "rounded-xl", "h-full"),
+                className: (0,_shared_utilities_cn__WEBPACK_IMPORTED_MODULE_6__.cn)("bg-light", "p-3", "shadow", "rounded-xl", "h-full"),
                 children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                    className: (0,_shared_utilities_cn__WEBPACK_IMPORTED_MODULE_7__.cn)("grid", "gap-4", gridClass),
+                    className: (0,_shared_utilities_cn__WEBPACK_IMPORTED_MODULE_6__.cn)("grid", "gap-4", gridClass),
                     children: [
                         portfolios?.map((portfolio)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_entities_portfolio_portfolio_card__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z, {
                                 setPortfolio: handleSetPortfolio,
@@ -1654,12 +1654,12 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(6689);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _entities_service_service_card__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(681);
-/* harmony import */ var _shared_api_end_points__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(6343);
-/* harmony import */ var _shared_hooks_useFApi__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(6400);
-/* harmony import */ var _shared_utilities_cn__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(2495);
-/* harmony import */ var _items_not_found__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(6705);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_entities_service_service_card__WEBPACK_IMPORTED_MODULE_4__, _shared_hooks_useFApi__WEBPACK_IMPORTED_MODULE_6__]);
-([_entities_service_service_card__WEBPACK_IMPORTED_MODULE_4__, _shared_hooks_useFApi__WEBPACK_IMPORTED_MODULE_6__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+/* harmony import */ var _shared_api_end_points__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(6343);
+/* harmony import */ var _shared_hooks_useFApi__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(6400);
+/* harmony import */ var _shared_utilities_cn__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(2495);
+/* harmony import */ var _items_not_found__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(6705);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_entities_service_service_card__WEBPACK_IMPORTED_MODULE_4__, _shared_hooks_useFApi__WEBPACK_IMPORTED_MODULE_5__]);
+([_entities_service_service_card__WEBPACK_IMPORTED_MODULE_4__, _shared_hooks_useFApi__WEBPACK_IMPORTED_MODULE_5__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
 
 
@@ -1672,30 +1672,30 @@ var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_ent
 const UserServices = ()=>{
     const router = (0,next_router__WEBPACK_IMPORTED_MODULE_2__.useRouter)();
     const { pid  } = router.query;
-    const { data , isLoading  } = (0,_shared_hooks_useFApi__WEBPACK_IMPORTED_MODULE_6__/* .useFGet */ .oh)(`${pid}-service`, `${_shared_api_end_points__WEBPACK_IMPORTED_MODULE_5__/* .SELLER_SERVICES */ .b8}${pid}`, {
+    const { data , isLoading  } = (0,_shared_hooks_useFApi__WEBPACK_IMPORTED_MODULE_5__/* .useFGet */ .oh)(`${pid}-service`, `${_shared_api_end_points__WEBPACK_IMPORTED_MODULE_8__/* .SELLER_SERVICES */ .b8}${pid}`, {
         enabled: !!pid,
         token: null,
         staleTime: 1000 * 60 * 5,
         cacheTime: 1000 * 60 * 10
     });
-    const gridClass = (0,_shared_utilities_cn__WEBPACK_IMPORTED_MODULE_7__/* .useRcn */ .Q)({
+    const gridClass = (0,_shared_utilities_cn__WEBPACK_IMPORTED_MODULE_6__/* .useRcn */ .Q)({
         mobile: "grid-cols-2",
         tablet: "grid-cols-3",
         desktop: "grid-cols-4"
     });
     const notFound = !isLoading && (!Array.isArray(data) || data.length === 0);
     if (notFound) return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-        className: (0,_shared_utilities_cn__WEBPACK_IMPORTED_MODULE_7__.cn)("w-full", "h-full", "flex", "flex-col", "gap-4", "flex-1"),
-        children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_items_not_found__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Z, {
+        className: (0,_shared_utilities_cn__WEBPACK_IMPORTED_MODULE_6__.cn)("w-full", "h-full", "flex", "flex-col", "gap-4", "flex-1"),
+        children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_items_not_found__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Z, {
             type: "service"
         })
     });
     return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-        className: (0,_shared_utilities_cn__WEBPACK_IMPORTED_MODULE_7__.cn)("w-full", "h-full", "flex", "flex-col", "gap-4", "flex-1"),
+        className: (0,_shared_utilities_cn__WEBPACK_IMPORTED_MODULE_6__.cn)("w-full", "h-full", "flex", "flex-col", "gap-4", "flex-1"),
         children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-            className: (0,_shared_utilities_cn__WEBPACK_IMPORTED_MODULE_7__.cn)("bg-light", "p-3", "shadow", "rounded-xl", "h-full"),
+            className: (0,_shared_utilities_cn__WEBPACK_IMPORTED_MODULE_6__.cn)("bg-light", "p-3", "shadow", "rounded-xl", "h-full"),
             children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                className: (0,_shared_utilities_cn__WEBPACK_IMPORTED_MODULE_7__.cn)("grid", "gap-4", gridClass),
+                className: (0,_shared_utilities_cn__WEBPACK_IMPORTED_MODULE_6__.cn)("grid", "gap-4", gridClass),
                 children: [
                     data?.map((service)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_entities_service_service_card__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z, {
                             hasFooter: false,
@@ -2269,10 +2269,10 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var _entities_portfolio_portfolio_card__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(2632);
 /* harmony import */ var _entities_service_service_card__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(681);
 /* harmony import */ var _entities_product_product_card__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(1169);
-/* harmony import */ var _shared_api_end_points__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(6343);
-/* harmony import */ var _api_useSellerProducts__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(5919);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_shared_hooks_useFApi__WEBPACK_IMPORTED_MODULE_7__, _entities_service_service_card__WEBPACK_IMPORTED_MODULE_10__, _entities_product_product_card__WEBPACK_IMPORTED_MODULE_11__, _api_useSellerProducts__WEBPACK_IMPORTED_MODULE_13__]);
-([_shared_hooks_useFApi__WEBPACK_IMPORTED_MODULE_7__, _entities_service_service_card__WEBPACK_IMPORTED_MODULE_10__, _entities_product_product_card__WEBPACK_IMPORTED_MODULE_11__, _api_useSellerProducts__WEBPACK_IMPORTED_MODULE_13__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+/* harmony import */ var _shared_api_end_points__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(6343);
+/* harmony import */ var _api_useSellerProducts__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(5919);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_shared_hooks_useFApi__WEBPACK_IMPORTED_MODULE_7__, _entities_service_service_card__WEBPACK_IMPORTED_MODULE_10__, _entities_product_product_card__WEBPACK_IMPORTED_MODULE_11__, _api_useSellerProducts__WEBPACK_IMPORTED_MODULE_12__]);
+([_shared_hooks_useFApi__WEBPACK_IMPORTED_MODULE_7__, _entities_service_service_card__WEBPACK_IMPORTED_MODULE_10__, _entities_product_product_card__WEBPACK_IMPORTED_MODULE_11__, _api_useSellerProducts__WEBPACK_IMPORTED_MODULE_12__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
 
 
@@ -2309,7 +2309,7 @@ const UserShortItems = ({ type ="portfolio" , id , limit =4 , sectionRef , direc
             case "service":
                 return {
                     key: `${id}-service`,
-                    url: `${_shared_api_end_points__WEBPACK_IMPORTED_MODULE_12__/* .SELLER_SERVICES */ .b8}${id}`,
+                    url: `${_shared_api_end_points__WEBPACK_IMPORTED_MODULE_13__/* .SELLER_SERVICES */ .b8}${id}`,
                     Card: _entities_service_service_card__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .Z
                 };
             case "product":
@@ -2321,7 +2321,7 @@ const UserShortItems = ({ type ="portfolio" , id , limit =4 , sectionRef , direc
             default:
                 return {
                     key: `${id}-portfolio`,
-                    url: `${_shared_api_end_points__WEBPACK_IMPORTED_MODULE_12__/* .SELLER_PORTFOLIOS */ .tG}${id}`,
+                    url: `${_shared_api_end_points__WEBPACK_IMPORTED_MODULE_13__/* .SELLER_PORTFOLIOS */ .tG}${id}`,
                     Card: _entities_portfolio_portfolio_card__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Z
                 };
         }
@@ -2330,7 +2330,7 @@ const UserShortItems = ({ type ="portfolio" , id , limit =4 , sectionRef , direc
         id
     ]);
     const isProduct = type === "product";
-    const { data: productData , isLoading: productLoading  } = (0,_api_useSellerProducts__WEBPACK_IMPORTED_MODULE_13__/* .useSellerProducts */ .H)(id, 1, direction || "file");
+    const { data: productData , isLoading: productLoading  } = (0,_api_useSellerProducts__WEBPACK_IMPORTED_MODULE_12__/* .useSellerProducts */ .H)(id, 1, direction || "file");
     const { data: otherData , isLoading: otherLoading  } = (0,_shared_hooks_useFApi__WEBPACK_IMPORTED_MODULE_7__/* .useFGet */ .oh)(key, url, {
         enabled: !!id && !isProduct,
         token: null,
@@ -2681,7 +2681,7 @@ const BESTS = "customer/top-seller-statistics/";
 const TELEGRAM_LINK = "/auth/get-telegram-link/";
 const AUTH_PROFILE = "/auth/profile/";
 const NEW_PROFILE = "/auth/new-profile/";
-const wssBaseUrl = process.env.NEXT_PUBLIC_WS_BASE_URL;
+const wssBaseUrl = (/* unused pure expression or super */ null && ("wss://api.soff.uz/"));
 const PRODUCT_SEARCH = "customer/same-google-search/";
 const CUSTOMER_SERVICES = "customer";
 const SEARCH_SPECIALISTS = "users/sellers";

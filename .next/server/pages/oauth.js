@@ -191,9 +191,9 @@ var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([axio
 axios__WEBPACK_IMPORTED_MODULE_0__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
 
 // BASE DOMAINS
-const baseDomain = `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/seller/`;
-const baseDomainProfile = `${process.env.NEXT_PUBLIC_BASE_URL}/`;
-const baseUrlCustomer = `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/`;
+const baseDomain = `${"https://api.soff.uz"}/api/v1/seller/`;
+const baseDomainProfile = `${"https://api.soff.uz"}/`;
+const baseUrlCustomer = `${"https://api.soff.uz"}/api/v1/`;
 const baseUrl = `${baseDomain}`;
 const baseUrlProfie = `${baseDomainProfile}`;
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (axios__WEBPACK_IMPORTED_MODULE_0__["default"].create({

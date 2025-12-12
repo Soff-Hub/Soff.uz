@@ -3,7 +3,7 @@
     "id": 99921,
     "files": [
       "static/css/c15131905760da3c.css",
-      "static/chunks/9921.fa6218986e99965b.js"
+      "static/chunks/9921.6939da23e50d641e.js"
     ]
   },
   "../components/freelancers/elements/FreelancerSearchInput.jsx -> antd/es/auto-complete": {
@@ -69,7 +69,7 @@
       "static/chunks/136-7e1a7e16b004fc95.js",
       "static/chunks/1203-a9d8715f7f6c2631.js",
       "static/chunks/4504.4b318680f03fbcb5.js",
-      "static/chunks/7818.48b35107a7801439.js",
+      "static/chunks/7818.ffdbe0457e620ddb.js",
       "static/css/ace1c2f136f5f2f7.css",
       "static/chunks/3631.5713c8090e6c64a9.js"
     ]
@@ -78,7 +78,7 @@
     "id": 76357,
     "files": [
       "static/css/edf215a4bf2aa656.css",
-      "static/chunks/6357.5f2dd247f8c1b786.js"
+      "static/chunks/6357.0e8ed74f31e69cef.js"
     ]
   },
   "../widgets/home/index.jsx -> ./faqs": {
@@ -95,7 +95,7 @@
       "static/chunks/2e3a845b-c02b617f7f663864.js",
       "static/chunks/3328-18be7a447af987f2.js",
       "static/css/12b43c8e02e7632e.css",
-      "static/chunks/8961.1dbbb9bfc03ff026.js"
+      "static/chunks/8961.bcd8a3df6b6a7272.js"
     ]
   },
   "../widgets/home/index.jsx -> ./youtube-vid": {
@@ -143,9 +143,9 @@
       "static/chunks/3328-18be7a447af987f2.js",
       "static/css/7a6f1027bcaf6b4d.css",
       "static/chunks/7150-1803b18223acf96a.js",
-      "static/chunks/7818.48b35107a7801439.js",
+      "static/chunks/7818.ffdbe0457e620ddb.js",
       "static/css/c8b97cf3468806ec.css",
-      "static/chunks/6241.380490d0ef970309.js"
+      "static/chunks/6241.ab1d2e87a8fbfbfa.js"
     ]
   },
   "product/[pid].jsx -> react-joyride": {
@@ -193,7 +193,7 @@
       "static/chunks/3328-18be7a447af987f2.js",
       "static/chunks/9599-a8fb1a85958cf92d.js",
       "static/chunks/414-9afbad9c46b72c32.js",
-      "static/chunks/5570.b13d8c8f9f30f010.js",
+      "static/chunks/5570.9d8251268d65ea9d.js",
       "static/css/4f7bc7c7a87ec306.css",
       "static/chunks/8277.c5d5e879632f3677.js"
     ]
@@ -217,7 +217,7 @@
       "static/chunks/3328-18be7a447af987f2.js",
       "static/chunks/9599-a8fb1a85958cf92d.js",
       "static/chunks/414-9afbad9c46b72c32.js",
-      "static/chunks/5570.b13d8c8f9f30f010.js",
+      "static/chunks/5570.9d8251268d65ea9d.js",
       "static/css/fca0a6fe6217ea67.css",
       "static/chunks/2021.fbe74a169c850049.js"
     ]

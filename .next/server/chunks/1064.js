@@ -14,7 +14,7 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_tanstack_react_query__WEBPACK_IMPORTED_MODULE_0__]);
 _tanstack_react_query__WEBPACK_IMPORTED_MODULE_0__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
 
-const baseUrlUseApi = `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/`;
+const baseUrlUseApi = `${"https://api.soff.uz"}/api/v1/`;
 const useApi = (key, endpoint, method = "GET", options = {})=>{
     const queryClient = useQueryClient();
     const fetcher = async ({ body  } = {})=>{

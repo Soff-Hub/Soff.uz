@@ -135,9 +135,9 @@ async function getServerSideProps$1(context) {
         limit,
         offset
     });
-    const servicesUrl = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/customer?${servicesQuery}`;
-    const parentCategoryUrl = direction ? `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/categories/?direction=${direction}` : null;
-    const childCategoryUrl = category_id ? `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/categories?parent_id=${category_id}` : null;
+    const servicesUrl = `${"https://freelance.soff.uz"}/api/v1/customer?${servicesQuery}`;
+    const parentCategoryUrl = direction ? `${"https://freelance.soff.uz"}/api/v1/categories/?direction=${direction}` : null;
+    const childCategoryUrl = category_id ? `${"https://freelance.soff.uz"}/api/v1/categories?parent_id=${category_id}` : null;
     const [servicesData, parentCategory, childCategory] = await Promise.all([
         fetchJson(servicesUrl),
         parentCategoryUrl ? fetchJson(parentCategoryUrl) : Promise.resolve([]),
