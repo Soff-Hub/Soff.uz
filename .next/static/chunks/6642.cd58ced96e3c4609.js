@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[6642],{46642:function(n,e,a){a.r(e);var r=a(85893);a(67294);var s=a(47221),i=a(4145),l=a.n(i),c=function(n){var e=n.faqs;return(0,r.jsxs)("div",{className:l().faq,children:[(0,r.jsx)("h2",{children:"Ko‘p beriladigan savollar"}),(0,r.jsx)(s.Z,{accordion:!0,items:null==e?void 0:e.map(function(n){return{key:n.answer,label:n.question,children:(0,r.jsx)("p",{children:n.answer})}})})]})};e.default=c}}]);
-//# sourceMappingURL=6642.cd58ced96e3c4609.js.map
