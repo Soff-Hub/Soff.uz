@@ -1733,7 +1733,7 @@ const ChatWindow = ({ chatId , goBack , containerHeight  })=>{
                         size: 50,
                         src: recipient?.photo_url,
                         icon: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_icons_fa__WEBPACK_IMPORTED_MODULE_13__.FaRegUserCircle, {}),
-                        onClick: ()=>router.push(`seller/${chat?.opponent?.id}`),
+                        onClick: ()=>router.push(`/seller/${chat?.opponent?.id}`),
                         style: {
                             cursor: "pointer"
                         }
@@ -1744,7 +1744,7 @@ const ChatWindow = ({ chatId , goBack , containerHeight  })=>{
                             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
                                 className: (_style_chat_module_scss__WEBPACK_IMPORTED_MODULE_16___default().user_names),
                                 children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("h4", {
-                                    onClick: ()=>router.push(`seller/${chat?.opponent?.id}`),
+                                    onClick: ()=>router.push(`/seller/${chat?.opponent?.id}`),
                                     style: {
                                         cursor: "pointer"
                                     },
