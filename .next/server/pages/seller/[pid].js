@@ -1,7 +1,7 @@
 (() => {
 var exports = {};
 exports.id = 8800;
-exports.ids = [8800,6343,1703];
+exports.ids = [8800,7732,6343];
 exports.modules = {
 
 /***/ 1942:
@@ -205,10 +205,152 @@ module.exports = {
 
 /***/ }),
 
-/***/ 8172:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ 2187:
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9752);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6022);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_redux__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _shared_api_freeleanceApi__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2417);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_tanstack_react_query__WEBPACK_IMPORTED_MODULE_0__, _shared_api_freeleanceApi__WEBPACK_IMPORTED_MODULE_2__]);
+([_tanstack_react_query__WEBPACK_IMPORTED_MODULE_0__, _shared_api_freeleanceApi__WEBPACK_IMPORTED_MODULE_2__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+
+
+
+const useGetCustomBalance = ()=>{
+    const { user  } = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)((state)=>state.auth);
+    const axios = (0,_shared_api_freeleanceApi__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .Z)(user?.access);
+    return (0,_tanstack_react_query__WEBPACK_IMPORTED_MODULE_0__.useQuery)({
+        queryKey: [
+            "getCustomBalance"
+        ],
+        queryFn: async ()=>{
+            const { data  } = await axios.get(`users/wallet`);
+            return data;
+        },
+        retry: 1,
+        enabled: !!user?.access,
+        refetchOnWindowFocus: true
+    });
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (useGetCustomBalance);
+
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } });
+
+/***/ }),
+
+/***/ 3914:
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Z": () => (/* binding */ useCreateOrder)
+/* harmony export */ });
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6022);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_redux__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(9752);
+/* harmony import */ var _shared_api_freeleanceApi__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2417);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_tanstack_react_query__WEBPACK_IMPORTED_MODULE_1__, _shared_api_freeleanceApi__WEBPACK_IMPORTED_MODULE_2__]);
+([_tanstack_react_query__WEBPACK_IMPORTED_MODULE_1__, _shared_api_freeleanceApi__WEBPACK_IMPORTED_MODULE_2__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+
+
+
+function useCreateOrder(balanceMode) {
+    const { user  } = (0,react_redux__WEBPACK_IMPORTED_MODULE_0__.useSelector)((state)=>state.auth);
+    const axios = (0,_shared_api_freeleanceApi__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .Z)(user?.access);
+    return (0,_tanstack_react_query__WEBPACK_IMPORTED_MODULE_1__.useMutation)({
+        mutationFn: async (orderData)=>{
+            const { service_id , payment_type , card_number , expire_date , order_id , order_requirement_description , order_requirement_file ,  } = orderData;
+            const formData = new FormData();
+            if (service_id) formData.append("service_id", service_id);
+            formData.append("payment_type", payment_type);
+            formData.append("from_balance", balanceMode);
+            if (card_number) {
+                formData.append("card_number", card_number);
+            }
+            if (expire_date) {
+                formData.append("expire_date", expire_date);
+            }
+            if (order_id) {
+                formData.append("order_id", order_id);
+            }
+            if (order_requirement_description) {
+                formData.append("order_requirement_description", order_requirement_description);
+            }
+            if (order_requirement_file) {
+                formData.append("order_requirement_file", order_requirement_file);
+            }
+            const reponse = await axios.post("payment/create-service-order/", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data"
+                }
+            });
+            return reponse.data;
+        }
+    });
+}
+
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } });
+
+/***/ }),
+
+/***/ 1653:
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "$": () => (/* binding */ useVerifyCode)
+/* harmony export */ });
+/* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9752);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6022);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_redux__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _shared_api_freeleanceApi__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2417);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_tanstack_react_query__WEBPACK_IMPORTED_MODULE_0__, _shared_api_freeleanceApi__WEBPACK_IMPORTED_MODULE_2__]);
+([_tanstack_react_query__WEBPACK_IMPORTED_MODULE_0__, _shared_api_freeleanceApi__WEBPACK_IMPORTED_MODULE_2__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+
+
+
+const verifyCode = async ({ token , transaction_id , code  })=>{
+    const axios = (0,_shared_api_freeleanceApi__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .Z)(token);
+    const payload = {
+        code,
+        transaction_id
+    };
+    const { data  } = await axios.post("payment/verify-card-order/", payload);
+    return data;
+};
+const useVerifyCode = ()=>{
+    const { user  } = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)((state)=>state.auth);
+    const token = user?.access; // tokenni auth’dan olamiz
+    return (0,_tanstack_react_query__WEBPACK_IMPORTED_MODULE_0__.useMutation)({
+        mutationFn: ({ transaction_id , code  })=>verifyCode({
+                token,
+                transaction_id,
+                code
+            })
+    });
+};
+const cardNumber = "9860 3501 4326 6863";
+
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } });
+
+/***/ }),
+
+/***/ 4547:
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
@@ -218,85 +360,794 @@ module.exports = {
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5725);
 /* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(antd__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react_spinners__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8176);
+/* harmony import */ var react_spinners__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_spinners__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1853);
+/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _api_createOrder__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(3914);
+/* harmony import */ var _api_verifyCode__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(1653);
+/* harmony import */ var _shared_hooks_useCountDown__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(8314);
+/* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(9752);
+/* harmony import */ var react_icons_fa6__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(7333);
+/* harmony import */ var _shared_utilities_product_helper__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(3701);
+/* harmony import */ var react_icons_io5__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(1185);
+/* harmony import */ var react_icons_fa__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(1301);
+/* harmony import */ var _components_partials_account_CreditCard2__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(3215);
+/* harmony import */ var react_icons_tb__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(6949);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_api_createOrder__WEBPACK_IMPORTED_MODULE_5__, _api_verifyCode__WEBPACK_IMPORTED_MODULE_6__, _tanstack_react_query__WEBPACK_IMPORTED_MODULE_8__, react_icons_fa6__WEBPACK_IMPORTED_MODULE_9__, _shared_utilities_product_helper__WEBPACK_IMPORTED_MODULE_10__, react_icons_io5__WEBPACK_IMPORTED_MODULE_11__, react_icons_fa__WEBPACK_IMPORTED_MODULE_12__, _components_partials_account_CreditCard2__WEBPACK_IMPORTED_MODULE_13__, react_icons_tb__WEBPACK_IMPORTED_MODULE_14__]);
+([_api_createOrder__WEBPACK_IMPORTED_MODULE_5__, _api_verifyCode__WEBPACK_IMPORTED_MODULE_6__, _tanstack_react_query__WEBPACK_IMPORTED_MODULE_8__, react_icons_fa6__WEBPACK_IMPORTED_MODULE_9__, _shared_utilities_product_helper__WEBPACK_IMPORTED_MODULE_10__, react_icons_io5__WEBPACK_IMPORTED_MODULE_11__, react_icons_fa__WEBPACK_IMPORTED_MODULE_12__, _components_partials_account_CreditCard2__WEBPACK_IMPORTED_MODULE_13__, react_icons_tb__WEBPACK_IMPORTED_MODULE_14__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
 
 
-const PhoneNumberModal = ({ open , onCancel , onSubmit , loading  })=>{
-    const [form] = antd__WEBPACK_IMPORTED_MODULE_2__.Form.useForm();
-    const handleSubmit = (values)=>{
-        const phoneNumber = "+998" + values.phone;
-        onSubmit(phoneNumber);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const ServiceCheckout = ({ document , order_id , order , balanceMode =false , balance , files , description , onClose , onSuccess ,  })=>{
+    const verificationModalRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)();
+    const { 0: isVerificationModalOpen , 1: setIsVerificationModalOpen  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    const { 0: resData , 1: setResData  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
+    const { 0: type , 1: setType  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("card");
+    const { mutateAsync: createOrder , isPending: isOrderCreatePending , isSuccess: isOrderCreateSuccess ,  } = (0,_api_createOrder__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z)(balanceMode);
+    const { 0: formattedCardNumber , 1: setFormattedCardNumber  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("");
+    const { 0: numberDate , 1: setNumberDate  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("");
+    const { push: push1  } = (0,next_router__WEBPACK_IMPORTED_MODULE_4__.useRouter)();
+    const queryClient = (0,_tanstack_react_query__WEBPACK_IMPORTED_MODULE_8__.useQueryClient)();
+    const router = (0,next_router__WEBPACK_IMPORTED_MODULE_4__.useRouter)();
+    const resetVerificationModal = ()=>{
+        if (verificationModalRef.current) {
+            verificationModalRef.current.reset();
+        }
     };
-    return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(antd__WEBPACK_IMPORTED_MODULE_2__.Modal, {
-        title: "Telefon raqamni kiriting",
-        open: open,
-        onCancel: onCancel,
-        footer: null,
-        centered: true,
-        closable: !loading,
-        children: [
-            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_2__.Alert, {
-                description: "Buyurtma berishda iltimos, telefon raqamingizni kiriting. Bu buyurtma bajarilish davomida siz bilan bog‘lana olishimiz uchun muhim.",
-                type: "warning",
-                showIcon: true
+    async function handleClickPayment(e) {
+        e.preventDefault();
+        await createOrder({
+            service_id: document,
+            payment_type: type,
+            order_id,
+            order_requirement_description: description,
+            order_requirement_file: files?.[0]?.originFileObj
+        }, {
+            onSuccess: (data)=>{
+                if (onClose) onClose();
+                router.push(data.url);
+            },
+            onError: (err)=>{
+                antd__WEBPACK_IMPORTED_MODULE_2__.message.error(err.response.data.detail);
+            }
+        });
+    }
+    async function handlePaymePayment(e) {
+        e.preventDefault();
+        await createOrder({
+            service_id: document,
+            payment_type: type,
+            order_id,
+            order_requirement_description: description,
+            order_requirement_file: files?.[0]?.originFileObj
+        }, {
+            onSuccess: (data)=>{
+                if (onClose) onClose();
+                router.push(data.url);
+            },
+            onError: (err)=>{
+                antd__WEBPACK_IMPORTED_MODULE_2__.message.error(err.response.data.detail);
+            }
+        });
+    }
+    // 📌 Oddiy karta raqami orqali to'lov
+    async function handleCardPayment(e) {
+        e?.preventDefault();
+        const payload = {
+            service_id: document,
+            payment_type: type,
+            card_number: formattedCardNumber.replace(/\s/g, ""),
+            expire_date: numberDate.replace("/", ""),
+            order_requirement_description: description,
+            order_requirement_file: files?.[0]?.originFileObj
+        };
+        if (order_id) payload.order_id = order_id;
+        await createOrder(payload, {
+            onSuccess: async (data)=>{
+                if (data.msg === "Success" && data.payment_method === "wallet") {
+                    await queryClient.invalidateQueries({
+                        queryKey: [
+                            "orders"
+                        ]
+                    });
+                    await queryClient.invalidateQueries({
+                        queryKey: [
+                            "getCustomBalance"
+                        ]
+                    });
+                    antd__WEBPACK_IMPORTED_MODULE_2__.message.success("To'lov muvaffaqiyatli amalga oshirildi");
+                    if (onSuccess) {
+                        onSuccess(data?.order_id);
+                        return;
+                    }
+                    if (!order_id) push1("/order/my-orders?tab=2");
+                    if (onClose) onClose();
+                }
+                setIsVerificationModalOpen(true);
+                setResData(data);
+                resetVerificationModal();
+            },
+            onError: (err)=>{
+                console.error("❌ Click payment error:", err);
+                setResData({
+                    detail: err?.response?.data?.detail || "Noma'lum xato"
+                });
+            }
+        });
+    }
+    function handleCancelVerification() {
+        setIsVerificationModalOpen(false);
+        setResData(null);
+    }
+    const handleCardNumberChange = (e)=>{
+        const inputValue = e.target.value.replace(/\D/g, "");
+        let formattedValue = "";
+        if (inputValue.length <= 16) {
+            for(let i = 0; i < inputValue.length; i++){
+                if (i > 0 && i % 4 === 0) {
+                    formattedValue += " ";
+                }
+                formattedValue += inputValue[i];
+            }
+        }
+        setFormattedCardNumber(formattedValue);
+    };
+    const handleCardNumberDate = (e)=>{
+        const inputValue = e.target.value.replace(/\D/g, "");
+        let formattedValue = "";
+        if (inputValue.length <= 4) {
+            for(let i = 0; i < inputValue.length; i++){
+                if (i > 0 && i % 2 === 0) {
+                    formattedValue += "/";
+                }
+                formattedValue += inputValue[i];
+            }
+        }
+        setNumberDate(formattedValue);
+    };
+    const isBalanceSufficient = balance >= order?.price;
+    const isInputsDisabled = balanceMode ? isBalanceSufficient : false;
+    const isInputsRequired = balanceMode ? !isBalanceSufficient : true;
+    const isBalanceMode = isBalanceSufficient && balanceMode;
+    const items = [
+        {
+            key: "card",
+            label: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                className: "click",
+                height: 80,
+                width: "auto",
+                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("img", {
+                    src: "/static/img/uzcard_humo.png",
+                    alt: "",
+                    height: 80,
+                    width: "auto"
+                })
             }),
-            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(antd__WEBPACK_IMPORTED_MODULE_2__.Form, {
-                form: form,
-                layout: "vertical",
-                onFinish: handleSubmit,
-                style: {
-                    marginTop: "20px"
-                },
+            children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
                 children: [
-                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_2__.Form.Item, {
-                        name: "phone",
-                        label: "Telefon raqam",
-                        rules: [
-                            {
-                                required: true,
-                                message: "Telefon raqam kiritish majburiy"
-                            },
-                            {
-                                pattern: /^\d{9}$/,
-                                message: "Iltimos, haqiqiy telefon raqam kiriting"
-                            }, 
-                        ],
-                        normalize: (value)=>value.replace(/\D/g, "").slice(0, 9),
-                        children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_2__.Input, {
-                            autoComplete: "off",
-                            style: {
-                                height: "50px",
-                                fontSize: "16px"
-                            },
-                            type: "text",
-                            placeholder: "Telefon raqam",
-                            addonBefore: "+998",
-                            disabled: loading
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(ChildrenWithInsufficientBalance, {
+                        order: order,
+                        balance: balance,
+                        isVisible: balanceMode && !isBalanceSufficient
+                    }),
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                        style: {
+                            marginInline: "10px"
+                        },
+                        children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("form", {
+                            onSubmit: handleCardPayment,
+                            className: "pb-3 d-flex align-items-end justify-content-between row gap-4 bg-white",
+                            children: [
+                                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                                    className: "col-xl-7 p-0 my-2",
+                                    style: {
+                                        flex: 1
+                                    },
+                                    children: [
+                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("p", {
+                                            className: "cardNumber",
+                                            children: "Karta raqam"
+                                        }),
+                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("label", {
+                                            htmlFor: "ccn",
+                                            className: "m-0",
+                                            style: {
+                                                width: "100%"
+                                            },
+                                            children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_2__.Input, {
+                                                prefix: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_icons_fa6__WEBPACK_IMPORTED_MODULE_9__.FaRegCreditCard, {
+                                                    style: {
+                                                        width: "45px",
+                                                        fontSize: "20px"
+                                                    }
+                                                }),
+                                                required: isInputsRequired,
+                                                disabled: isInputsDisabled,
+                                                type: "tel",
+                                                // className="form-control rounded-3 card__number"
+                                                style: {
+                                                    height: "50px"
+                                                },
+                                                inputMode: "numeric",
+                                                maxLength: "19",
+                                                placeholder: "0000 0000 0000 0000",
+                                                value: formattedCardNumber,
+                                                onChange: handleCardNumberChange
+                                            })
+                                        })
+                                    ]
+                                }),
+                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                                    className: "col-xl-4 p-0 click-form-item my-2",
+                                    children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("label", {
+                                        className: "m-0",
+                                        children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_2__.Input, {
+                                            prefix: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_icons_fa6__WEBPACK_IMPORTED_MODULE_9__.FaRegCalendarDays, {
+                                                style: {
+                                                    width: "45px",
+                                                    fontSize: "20px"
+                                                }
+                                            }),
+                                            required: isInputsRequired,
+                                            disabled: isInputsDisabled,
+                                            // className="form-control rounded-3 card__number"
+                                            style: {
+                                                height: "50px"
+                                            },
+                                            inputMode: "numeric",
+                                            maxLength: "5",
+                                            placeholder: "MM/YY",
+                                            value: numberDate,
+                                            onChange: handleCardNumberDate
+                                        })
+                                    })
+                                }),
+                                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                                    className: "col-12 p-0",
+                                    children: [
+                                        resData?.detail && /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("p", {
+                                            style: {
+                                                color: "red",
+                                                marginBottom: "0px"
+                                            },
+                                            children: resData.detail
+                                        }),
+                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("button", {
+                                            type: "submit",
+                                            className: "w-100 ps-btn",
+                                            disabled: isOrderCreatePending,
+                                            style: {
+                                                color: "#fff",
+                                                marginTop: "10px"
+                                            },
+                                            children: isOrderCreatePending ? /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_spinners__WEBPACK_IMPORTED_MODULE_3__.BeatLoader, {
+                                                color: "#fff"
+                                            }) : "Davom etish"
+                                        })
+                                    ]
+                                })
+                            ]
                         })
                     }),
-                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_2__.Form.Item, {
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_partials_account_CreditCard2__WEBPACK_IMPORTED_MODULE_13__/* .SecurePaymentAlert */ .c, {
+                        bordered: false,
                         style: {
-                            marginBottom: 0,
-                            marginTop: "24px"
+                            width: "100%"
+                        }
+                    }),
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(VerificationCodeModal, {
+                        ref: verificationModalRef,
+                        isVerificationModalOpen: isVerificationModalOpen,
+                        order_id: order_id,
+                        resData: resData,
+                        onSuccess: onSuccess,
+                        onClose: onClose,
+                        closeVerificationModal: ()=>setIsVerificationModalOpen(false),
+                        handleCancelVerification: handleCancelVerification,
+                        handleCardPayment: handleCardPayment
+                    })
+                ]
+            })
+        },
+        {
+            key: "click",
+            label: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                className: "click",
+                height: 80,
+                width: "auto",
+                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("img", {
+                    src: "/static/img/payment-method/click-logo.png",
+                    alt: ""
+                })
+            }),
+            children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+                children: [
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(ChildrenWithInsufficientBalance, {
+                        order: order,
+                        balance: balance,
+                        isVisible: balanceMode && !isBalanceSufficient
+                    }),
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                        style: {
+                            margin: "0 auto"
                         },
-                        children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_2__.Button, {
-                            type: "primary",
-                            htmlType: "submit",
-                            loading: loading,
-                            block: true,
-                            style: {
-                                height: "45px",
-                                fontSize: "16px"
-                            },
-                            children: loading ? "Yuborilmoqda..." : "Tasdiqlash"
+                        children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                            className: "px-4 rounded",
+                            children: [
+                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("form", {
+                                    onSubmit: handleClickPayment,
+                                    className: "pt-3 pb-3 d-flex",
+                                    children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("button", {
+                                        type: "submit",
+                                        className: "w-100 ps-btn",
+                                        disabled: isOrderCreatePending,
+                                        style: {
+                                            color: "#fff",
+                                            marginTop: "10px"
+                                        },
+                                        children: !isOrderCreatePending ? "Davom etish" : /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_spinners__WEBPACK_IMPORTED_MODULE_3__.BeatLoader, {
+                                            color: "#fff"
+                                        })
+                                    })
+                                }),
+                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_partials_account_CreditCard2__WEBPACK_IMPORTED_MODULE_13__/* .SecurePaymentAlert */ .c, {
+                                    bordered: false,
+                                    style: {
+                                        width: "100%"
+                                    }
+                                })
+                            ]
                         })
+                    })
+                ]
+            })
+        },
+        {
+            key: "payme",
+            label: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                className: "click",
+                height: 80,
+                style: {
+                    width: "100%"
+                },
+                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("img", {
+                    src: "/static/img/payment-method/payme-logo.png",
+                    alt: ""
+                })
+            }),
+            children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+                children: [
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(ChildrenWithInsufficientBalance, {
+                        order: order,
+                        balance: balance,
+                        isVisible: balanceMode && !isBalanceSufficient
+                    }),
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                        style: {
+                            margin: "0 auto"
+                        },
+                        children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                            className: "px-4 rounded",
+                            children: [
+                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("form", {
+                                    onSubmit: handlePaymePayment,
+                                    className: "pt-3 pb-3 d-flex",
+                                    children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("button", {
+                                        type: "submit",
+                                        className: "w-100 ps-btn",
+                                        disabled: isOrderCreatePending,
+                                        style: {
+                                            color: "#fff",
+                                            marginTop: "10px"
+                                        },
+                                        children: !isOrderCreatePending ? "Davom etish" : /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_spinners__WEBPACK_IMPORTED_MODULE_3__.BeatLoader, {
+                                            color: "#fff"
+                                        })
+                                    })
+                                }),
+                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_partials_account_CreditCard2__WEBPACK_IMPORTED_MODULE_13__/* .SecurePaymentAlert */ .c, {
+                                    bordered: false,
+                                    style: {
+                                        width: "100%"
+                                    }
+                                })
+                            ]
+                        })
+                    })
+                ]
+            })
+        }, 
+    ];
+    return isBalanceMode ? /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+        children: [
+            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_2__.Alert, {
+                message: "Sizning balansingizda yetarli mablag' mavjud. To'lovni balansdan to'lash mumkin - karta kerak emas.",
+                type: "success",
+                showIcon: true,
+                style: {
+                    marginBlock: "20px"
+                }
+            }),
+            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                className: "service-details-box bg-white border rounded p-3 mb-4",
+                children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                    className: "d-flex justify-content-between align-items-center",
+                    style: {
+                        gap: "8px"
+                    },
+                    children: [
+                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                            className: "d-flex align-items-start",
+                            children: [
+                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                                    style: {
+                                        width: "20px"
+                                    },
+                                    children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_icons_io5__WEBPACK_IMPORTED_MODULE_11__.IoCard, {
+                                        fontSize: 16,
+                                        style: {
+                                            marginRight: "8px",
+                                            marginBottom: "5px"
+                                        }
+                                    })
+                                }),
+                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("h5", {
+                                    className: "mb-1",
+                                    style: {
+                                        overflowWrap: "anywhere",
+                                        fontWeight: "normal"
+                                    },
+                                    children: order?.title
+                                })
+                            ]
+                        }),
+                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                            className: "text-end",
+                            children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h4", {
+                                className: " mb-0",
+                                style: {
+                                    whiteSpace: "nowrap",
+                                    fontWeight: "normal",
+                                    fontSize: "16px"
+                                },
+                                children: [
+                                    (0,_shared_utilities_product_helper__WEBPACK_IMPORTED_MODULE_10__/* .formatCurrencyWithSpace */ .O$)(order?.price),
+                                    " so'm"
+                                ]
+                            })
+                        })
+                    ]
+                })
+            }),
+            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("button", {
+                type: "submit",
+                className: "w-100 ps-btn",
+                disabled: isOrderCreatePending,
+                onClick: handleCardPayment,
+                style: {
+                    color: "#fff",
+                    marginTop: "10px"
+                },
+                children: !isOrderCreatePending ? "To'lov qilish" : /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_spinners__WEBPACK_IMPORTED_MODULE_3__.BeatLoader, {
+                    color: "#fff"
+                })
+            }),
+            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_partials_account_CreditCard2__WEBPACK_IMPORTED_MODULE_13__/* .SecurePaymentAlert */ .c, {
+                bordered: false,
+                style: {
+                    marginTop: "10px"
+                }
+            })
+        ]
+    }) : /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_2__.Tabs, {
+        centered: true,
+        style: {
+            marginTop: "20px",
+            marginBottom: 0
+        },
+        items: items,
+        onChange: setType
+    });
+};
+const ChildrenWithInsufficientBalance = ({ order , balance , isVisible  })=>{
+    const extraPayment = order?.price - balance;
+    if (!isVisible) return null;
+    return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+        children: [
+            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_2__.Alert, {
+                message: "Balansingizdagi mablag' to'lvoni bir qismini qoplaydi. Qolgan summani karta yoki Click orqali to'lashingiz mumkin.",
+                type: "warning",
+                showIcon: true,
+                style: {
+                    marginBottom: "20px"
+                }
+            }),
+            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                className: "service-details-box bg-white border rounded p-3",
+                children: [
+                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                        className: "d-flex justify-content-between align-items-center",
+                        style: {
+                            gap: "10px"
+                        },
+                        children: [
+                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                                className: "d-flex align-items-center",
+                                children: [
+                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                                        style: {
+                                            width: "20px"
+                                        },
+                                        children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_icons_io5__WEBPACK_IMPORTED_MODULE_11__.IoCard, {
+                                            fontSize: 16,
+                                            style: {
+                                                marginRight: "8px",
+                                                marginBottom: "5px"
+                                            }
+                                        })
+                                    }),
+                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("h5", {
+                                        className: "mb-1",
+                                        style: {
+                                            overflowWrap: "anywhere",
+                                            fontWeight: "normal"
+                                        },
+                                        children: order?.title
+                                    })
+                                ]
+                            }),
+                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                                className: "text-end",
+                                children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h4", {
+                                    className: "mb-0",
+                                    style: {
+                                        whiteSpace: "nowrap",
+                                        fontWeight: "normal",
+                                        fontSize: "16px"
+                                    },
+                                    children: [
+                                        (0,_shared_utilities_product_helper__WEBPACK_IMPORTED_MODULE_10__/* .formatCurrencyWithSpace */ .O$)(order?.price),
+                                        " so'm"
+                                    ]
+                                })
+                            })
+                        ]
+                    }),
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                        style: {
+                            marginTop: "8px",
+                            borderTop: "1px solid #dee2e6"
+                        }
+                    }),
+                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                        className: "d-flex justify-content-between align-items-center",
+                        style: {
+                            gap: "8px",
+                            marginTop: "8px"
+                        },
+                        children: [
+                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                                className: "d-flex align-items-center",
+                                children: [
+                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                                        style: {
+                                            width: "20px"
+                                        },
+                                        children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_icons_fa__WEBPACK_IMPORTED_MODULE_12__.FaWallet, {
+                                            style: {
+                                                marginRight: "8px",
+                                                marginBottom: "5px"
+                                            }
+                                        })
+                                    }),
+                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("h5", {
+                                        style: {
+                                            overflowWrap: "anywhere",
+                                            fontWeight: "normal",
+                                            marginBottom: "0px"
+                                        },
+                                        children: "Balans"
+                                    })
+                                ]
+                            }),
+                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                                className: "text-end",
+                                children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h4", {
+                                    className: " mb-0",
+                                    style: {
+                                        whiteSpace: "nowrap",
+                                        fontWeight: "normal",
+                                        fontSize: "16px"
+                                    },
+                                    children: [
+                                        (0,_shared_utilities_product_helper__WEBPACK_IMPORTED_MODULE_10__/* .formatCurrencyWithSpace */ .O$)(balance),
+                                        " so'm"
+                                    ]
+                                })
+                            })
+                        ]
+                    }),
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                        style: {
+                            marginTop: "8px",
+                            borderTop: "1px solid #dee2e6"
+                        }
+                    }),
+                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                        className: "d-flex justify-content-between align-items-center",
+                        style: {
+                            marginTop: "9px",
+                            fontWeight: "normal"
+                        },
+                        children: [
+                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("h4", {
+                                className: " mb-0",
+                                children: "Qoldiq to'lov"
+                            }),
+                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                                className: "text-end",
+                                children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h3", {
+                                    className: "mb-0 text-primary fw-bold",
+                                    style: {
+                                        fontSize: "20px"
+                                    },
+                                    children: [
+                                        (0,_shared_utilities_product_helper__WEBPACK_IMPORTED_MODULE_10__/* .formatCurrencyWithSpace */ .O$)(extraPayment),
+                                        " so'm"
+                                    ]
+                                })
+                            })
+                        ]
                     })
                 ]
             })
         ]
     });
 };
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (PhoneNumberModal);
+const VerificationCodeModal = /*#__PURE__*/ (0,react__WEBPACK_IMPORTED_MODULE_1__.forwardRef)(({ isVerificationModalOpen , resData , order_id , onSuccess , onClose , closeVerificationModal , handleCancelVerification , handleCardPayment ,  } = props, ref)=>{
+    const queryClient = (0,_tanstack_react_query__WEBPACK_IMPORTED_MODULE_8__.useQueryClient)();
+    const { display , left , reset  } = (0,_shared_hooks_useCountDown__WEBPACK_IMPORTED_MODULE_7__/* .useCountdown */ .au)(120);
+    const { mutate: mutateVerifyCode , reset: resetVerifyCode , isPending: isVerifyCodePending , isSuccess: isVerifyCodeSuccess , isError: isVerifyCodeError ,  } = (0,_api_verifyCode__WEBPACK_IMPORTED_MODULE_6__/* .useVerifyCode */ .$)();
+    const { 0: code , 1: setCode  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
+    const { 0: resDataCode , 1: setResDataCode  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
+    // 📌 SMS kodi tasdiqlash
+    function handleVerifyCode() {
+        setResDataCode(null);
+        mutateVerifyCode({
+            transaction_id: resData?.transaction_id,
+            code
+        }, {
+            onSuccess: async (data)=>{
+                await queryClient.invalidateQueries({
+                    queryKey: [
+                        "orders"
+                    ]
+                });
+                await queryClient.invalidateQueries({
+                    queryKey: [
+                        "getCustomBalance"
+                    ]
+                });
+                setResDataCode(data);
+                closeVerificationModal();
+                if (onSuccess) {
+                    onSuccess(data?.order_id, data?.accepted_by_id);
+                    return;
+                }
+                if (!order_id) push("/order/my-orders?tab=2");
+                if (onClose) onClose();
+            },
+            onError: (error)=>{
+                console.log("❌ Verify code error:", error);
+                const errorMessage = error?.response?.data || {
+                    detail: "Noma'lum xato"
+                };
+                setResDataCode(errorMessage);
+            }
+        });
+    }
+    const handleResendCode = async ()=>{
+        await handleCardPayment();
+        reset();
+        resetVerifyCode();
+    };
+    (0,react__WEBPACK_IMPORTED_MODULE_1__.useImperativeHandle)(ref, ()=>({
+            reset
+        }), [
+        reset
+    ]);
+    const isLoadingOrSuccess = isVerifyCodePending || isVerifyCodeSuccess;
+    const errorMessage = isVerifyCodeError && Boolean(left) && (typeof resDataCode?.detail == "string" ? resDataCode?.detail : "Noma'lum xato");
+    return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_2__.Modal, {
+        width: 500,
+        title: "Tez orada!",
+        centered: true,
+        open: isVerificationModalOpen,
+        onOk: handleVerifyCode,
+        onCancel: handleCancelVerification,
+        destroyOnClose: true,
+        confirmLoading: isLoadingOrSuccess,
+        okButtonProps: {
+            style: {
+                backgroundColor: "green",
+                color: "white"
+            },
+            disabled: isLoadingOrSuccess || !code?.length
+        },
+        okText: "To'lov qilish",
+        cancelText: "Orqaga",
+        children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+            children: [
+                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
+                    children: [
+                        "Kod quyidagi raqamga yuborildi: ",
+                        resData?.phone_number
+                    ]
+                }),
+                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("input", {
+                    onChange: (e)=>setCode(e.target.value),
+                    type: "tel",
+                    placeholder: "000000",
+                    disabled: isVerifyCodePending || isVerifyCodeSuccess,
+                    maxLength: 6,
+                    className: "form-control text-center rounded-3 fs-3"
+                }),
+                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("strong", {
+                    className: "text-danger",
+                    children: left ? display : /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_2__.Button, {
+                        icon: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_icons_tb__WEBPACK_IMPORTED_MODULE_14__.TbReload, {}),
+                        style: {
+                            padding: "0px 2px"
+                        },
+                        type: "link",
+                        onClick: handleResendCode,
+                        children: "Kodni qayta yuborish"
+                    })
+                }),
+                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("p", {
+                    className: "text-danger",
+                    children: errorMessage
+                })
+            ]
+        })
+    });
+});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ServiceCheckout);
+
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } });
+
+/***/ }),
+
+/***/ 1621:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Y": () => (/* binding */ addPeriodToThousands)
+/* harmony export */ });
+function addPeriodToThousands(number) {
+    const numStr = String(number);
+    const [integerPart, decimalPart] = numStr.split(".");
+    const formattedIntegerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    const formattedNumber = decimalPart !== undefined ? `${formattedIntegerPart}.${decimalPart}` : formattedIntegerPart;
+    return formattedNumber;
+}
 
 
 /***/ }),
@@ -2717,764 +3568,6 @@ async function fetchJson(url) {
 
 /***/ }),
 
-/***/ 1703:
-/***/ ((module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__),
-/* harmony export */   "k": () => (/* binding */ Info)
-/* harmony export */ });
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(997);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5725);
-/* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(antd__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6689);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _ant_design_icons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7066);
-/* harmony import */ var _ant_design_icons__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_ant_design_icons__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _hooks_useFApi__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(6400);
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1635);
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(6022);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react_redux__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(1853);
-/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _shared_constants_createOrder__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(1904);
-/* harmony import */ var _shared_utilities_product_helper__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(3701);
-/* harmony import */ var swiper_react__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(7840);
-/* harmony import */ var swiper_modules__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(2184);
-/* harmony import */ var _shared_hooks_useTelegram__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(5047);
-/* harmony import */ var _store_profile_slice__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(9880);
-/* harmony import */ var _components_order_PhoneNumberModal__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(8172);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_hooks_useFApi__WEBPACK_IMPORTED_MODULE_4__, _shared_utilities_product_helper__WEBPACK_IMPORTED_MODULE_9__, swiper_react__WEBPACK_IMPORTED_MODULE_10__, swiper_modules__WEBPACK_IMPORTED_MODULE_11__, _store_profile_slice__WEBPACK_IMPORTED_MODULE_13__]);
-([_hooks_useFApi__WEBPACK_IMPORTED_MODULE_4__, _shared_utilities_product_helper__WEBPACK_IMPORTED_MODULE_9__, swiper_react__WEBPACK_IMPORTED_MODULE_10__, swiper_modules__WEBPACK_IMPORTED_MODULE_11__, _store_profile_slice__WEBPACK_IMPORTED_MODULE_13__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-const { TextArea  } = antd__WEBPACK_IMPORTED_MODULE_1__.Input;
-const CreateOrderModal = ({ open , onClose , id , seller , sellerInfo , defaultDirection , onSuccess ,  })=>{
-    const [form] = antd__WEBPACK_IMPORTED_MODULE_1__.Form.useForm();
-    const { tg  } = (0,_shared_hooks_useTelegram__WEBPACK_IMPORTED_MODULE_12__/* .useTelegram */ .f)();
-    const budget = antd__WEBPACK_IMPORTED_MODULE_1__.Form.useWatch("budget", form);
-    const categoryId = antd__WEBPACK_IMPORTED_MODULE_1__.Form.useWatch("category_id", form);
-    const { 0: direction , 1: setDirection  } = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)("scientific_work");
-    const { user  } = (0,react_redux__WEBPACK_IMPORTED_MODULE_6__.useSelector)((state)=>state.auth);
-    const { push  } = (0,next_router__WEBPACK_IMPORTED_MODULE_7__.useRouter)();
-    const { 0: confirmOpen , 1: setConfirmOpen  } = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(false);
-    const { 0: showLeftGradient , 1: setShowLeftGradient  } = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(false);
-    const { 0: showRightGradient , 1: setShowRightGradient  } = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(true);
-    const { 0: files , 1: setFiles  } = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(null);
-    const { 0: phoneModalOpen , 1: setPhoneModalOpen  } = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(false);
-    const { 0: pendingOrderData , 1: setPendingOrderData  } = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(null);
-    (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(()=>{
-        form.setFieldValue("direction", direction);
-    }, [
-        direction
-    ]);
-    (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(()=>{
-        if (defaultDirection) {
-            setDirection(defaultDirection);
-            form.setFieldValue("direction", defaultDirection);
-        }
-    }, [
-        defaultDirection
-    ]);
-    const { data: directions  } = (0,_store_profile_slice__WEBPACK_IMPORTED_MODULE_13__/* .useGetDirectionsQuery */ .P5)();
-    const { data: categories  } = (0,_hooks_useFApi__WEBPACK_IMPORTED_MODULE_4__/* .useFGet */ .oh)([
-        "direction-categories",
-        direction
-    ], `categories/?direction=${direction}`, {
-        enabled: !!direction
-    });
-    const { data: priceData  } = (0,_hooks_useFApi__WEBPACK_IMPORTED_MODULE_4__/* .useFGet */ .oh)([
-        "price-range",
-        direction,
-        categoryId
-    ], `categories/?direction=${direction}&category_id=${categoryId}`, {
-        enabled: !!direction && !!categoryId
-    });
-    const priceList = priceData?.[0]?.service_delivery_price_options?.[0]?.price?.slice(0, 5);
-    const minPrice = priceList ? priceList[0]?.amount : 2000;
-    const { mutate: createOrder , isPending  } = (0,_hooks_useFApi__WEBPACK_IMPORTED_MODULE_4__/* .useFPost */ .PQ)({
-        url: "order/custom-order",
-        token: user?.access,
-        onSuccess: (data)=>{
-            form.resetFields();
-            onClose();
-            antd__WEBPACK_IMPORTED_MODULE_1__.message.success("Buyurtma muvaffaqiyatli yaratildi!");
-            tg?.close();
-            push(`/order/my-orders?orderId=${data?.id}`);
-            setConfirmOpen(false);
-        },
-        onError: (err)=>{
-            const errorMsg = err?.response?.data?.detail || err?.response?.data?.message || "Noma’lum xato yuz berdi";
-            antd__WEBPACK_IMPORTED_MODULE_1__.message.error(errorMsg);
-        }
-    });
-    const { mutate: createDirectOrder , isPending: createPending  } = (0,_hooks_useFApi__WEBPACK_IMPORTED_MODULE_4__/* .useFPost */ .PQ)({
-        url: "order/direct-order",
-        token: user?.access,
-        onSuccess: (data)=>{
-            antd__WEBPACK_IMPORTED_MODULE_1__.message.success("Buyurtma muvaffaqiyatli yuborildi!");
-            if (onSuccess) {
-                onSuccess({
-                    id: data?.id,
-                    price: form.getFieldValue("budget"),
-                    title: form.getFieldValue("title")
-                });
-            } else {
-                push(`/order/${data?.id}`);
-            }
-            form.resetFields();
-            onClose();
-            setConfirmOpen(false);
-        },
-        onError: (err)=>{
-            setConfirmOpen(false);
-            const errorData = err?.response?.data;
-            const errorDetail = errorData?.detail || errorData?.message || err.message;
-            console.log({
-                errorDetail
-            });
-            if (errorDetail.includes("telefon raqam")) {
-                const values = form.getFieldsValue();
-                const order = {
-                    direction: direction,
-                    category_id: values.category_id,
-                    title: form.getFieldValue("title"),
-                    description: values.description,
-                    language: values.language,
-                    budget: values.budget,
-                    deadline_date: `${dayjs__WEBPACK_IMPORTED_MODULE_5___default()(values.deadline_date).format("YYYY-MM-DD")} ${dayjs__WEBPACK_IMPORTED_MODULE_5___default()(values.deadline_time).format("HH:mm")}`
-                };
-                setPendingOrderData({
-                    order,
-                    files
-                });
-                setPhoneModalOpen(true);
-            }
-            const errorMsg = errorDetail || "Noma'lum xato yuz berdi";
-            antd__WEBPACK_IMPORTED_MODULE_1__.message.error(errorMsg);
-        }
-    });
-    const handleFinish = ()=>{
-        setConfirmOpen(true);
-    };
-    const handleConfirm = ()=>{
-        const values = form.getFieldsValue();
-        const order = {
-            direction: direction,
-            category_id: values.category_id,
-            title: form.getFieldValue("title"),
-            description: values.description,
-            language: values.language,
-            budget: values.budget,
-            deadline_date: `${dayjs__WEBPACK_IMPORTED_MODULE_5___default()(values.deadline_date).format("YYYY-MM-DD")} ${dayjs__WEBPACK_IMPORTED_MODULE_5___default()(values.deadline_time).format("HH:mm")}`
-        };
-        if (id) order.seller_id = id;
-        const fd = new FormData();
-        for (const [key, value] of Object.entries(order)){
-            fd.append(key, value);
-        }
-        if (files && files.length > 0) {
-            fd.append("file", files[0].originFileObj);
-        }
-        if (id) {
-            createDirectOrder(fd);
-        } else {
-            createOrder(fd);
-        }
-    };
-    const handlePhoneSubmit = (phoneNumber)=>{
-        if (!pendingOrderData) return;
-        const fd = new FormData();
-        // Use pending order data
-        for (const [key, value] of Object.entries(pendingOrderData.order)){
-            fd.append(key, value);
-        }
-        if (id) fd.append("seller_id", id);
-        // Add phone number
-        fd.append("contact_phonenumber", phoneNumber);
-        // Add file if exists
-        if (pendingOrderData.files && pendingOrderData.files.length > 0) {
-            fd.append("file", pendingOrderData.files[0].originFileObj);
-        }
-        setPhoneModalOpen(false);
-        createDirectOrder(fd);
-    };
-    const handlePhoneModalCancel = ()=>{
-        setPhoneModalOpen(false);
-        setPendingOrderData(null);
-    };
-    const handleThumbProgress = (swiper)=>{
-        const progress = swiper.progress;
-        const isBeginning = swiper.isBeginning;
-        const isEnd = swiper.isEnd;
-        setShowLeftGradient(!isBeginning);
-        setShowRightGradient(!isEnd);
-    };
-    return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
-        children: [
-            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(antd__WEBPACK_IMPORTED_MODULE_1__.Modal, {
-                width: 600,
-                title: seller ? `${seller} uchun maxsus buyurtma berish` : "Maxsus buyurtma yaratish",
-                open: open,
-                onCancel: onClose,
-                footer: null,
-                style: {
-                    zIndex: 11100
-                },
-                centered: true,
-                children: [
-                    seller && sellerInfo && /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                        className: "user-card mb-3 p-3 rounded-4",
-                        style: {
-                            background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-                            border: "1px solid #e8e8e8"
-                        },
-                        children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                            className: "d-flex align-items-center gap-1 justify-content-between",
-                            children: [
-                                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                                    className: "d-flex align-items-center gap-3",
-                                    children: [
-                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                                            className: "user-avatar d-flex align-items-center justify-content-center rounded-circle",
-                                            style: {
-                                                width: "50px",
-                                                overflow: "hidden",
-                                                aspectRatio: "1/1",
-                                                background: "#fff",
-                                                fontSize: "20px",
-                                                fontWeight: "bold",
-                                                color: "#667eea"
-                                            },
-                                            children: sellerInfo?.image ? /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("img", {
-                                                className: "rounded-circle object-fit-cover",
-                                                style: {
-                                                    width: "50px",
-                                                    aspectRatio: "1/1"
-                                                },
-                                                src: sellerInfo.image,
-                                                alt: "No"
-                                            }) : seller?.charAt(0)?.toUpperCase()
-                                        }),
-                                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                                            children: [
-                                                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                                                    className: "d-flex align-items-center gap-2",
-                                                    children: [
-                                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("h6", {
-                                                            className: "m-0 text-white fw-bold",
-                                                            children: seller
-                                                        }),
-                                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
-                                                            className: "verified-badge",
-                                                            style: {
-                                                                color: "#4CAF50",
-                                                                fontSize: "16px"
-                                                            },
-                                                            children: "✓"
-                                                        })
-                                                    ]
-                                                }),
-                                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                                                    className: "d-flex align-items-center gap-1 position-relative text-white-50 small",
-                                                    style: {
-                                                        bottom: "3px"
-                                                    },
-                                                    children: sellerInfo?.position || "No profession"
-                                                })
-                                            ]
-                                        })
-                                    ]
-                                }),
-                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                                    className: "text-end"
-                                })
-                            ]
-                        })
-                    }),
-                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(antd__WEBPACK_IMPORTED_MODULE_1__.Form, {
-                        form: form,
-                        layout: "vertical",
-                        onFinish: handleFinish,
-                        children: [
-                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_1__.Form.Item, {
-                                name: "direction",
-                                label: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                                    className: "d-flex align-items-start text-wrap flex-column flex-sm-row align-items-sm-center",
-                                    children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("p", {
-                                        className: "m-0 text-dark",
-                                        children: "Yo’nalishni tanlang"
-                                    })
-                                }),
-                                rules: [
-                                    {
-                                        required: true,
-                                        message: "Yo'nalish tanlang!"
-                                    }, 
-                                ],
-                                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_1__.Select, {
-                                    onChange: (val)=>{
-                                        setDirection(val);
-                                        form.resetFields([
-                                            "category_id"
-                                        ]);
-                                        form.setFieldValue("title", "");
-                                    },
-                                    placeholder: "",
-                                    options: directions
-                                })
-                            }),
-                            direction && /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_1__.Form.Item, {
-                                name: "category_id",
-                                label: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                                    className: "d-flex align-items-center",
-                                    children: [
-                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("p", {
-                                            className: "m-0 text-dark",
-                                            children: "Kategoriya tanlang"
-                                        }),
-                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(Info, {
-                                            title: _shared_constants_createOrder__WEBPACK_IMPORTED_MODULE_8__/* .inputInfoToCreateOrder.category.info */ .X.category.info
-                                        })
-                                    ]
-                                }),
-                                rules: [
-                                    {
-                                        required: true,
-                                        message: "Kategoriya tanlang!"
-                                    }, 
-                                ],
-                                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_1__.Select, {
-                                    onSelect: (_, option)=>{
-                                        form.setFieldValue("title", (0,_shared_constants_createOrder__WEBPACK_IMPORTED_MODULE_8__/* .titleDescription */ .f)(option?.label));
-                                    },
-                                    placeholder: _shared_constants_createOrder__WEBPACK_IMPORTED_MODULE_8__/* .inputInfoToCreateOrder.category.placeholder */ .X.category.placeholder(directions),
-                                    options: categories?.map((cat)=>({
-                                            label: cat?.title,
-                                            value: cat?.id
-                                        }))
-                                })
-                            }),
-                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                                style: {
-                                    marginBottom: "20px"
-                                },
-                                children: [
-                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_1__.Form.Item, {
-                                        name: "description",
-                                        style: {
-                                            marginBottom: "15px"
-                                        },
-                                        label: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                                            className: "d-flex align-items-center align-items-sm-center",
-                                            children: [
-                                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("p", {
-                                                    className: "m-0 text-dark",
-                                                    children: "Buyurtma tavsifini kiriting"
-                                                }),
-                                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(Info, {
-                                                    title: _shared_constants_createOrder__WEBPACK_IMPORTED_MODULE_8__/* .inputInfoToCreateOrder.description.info */ .X.description.info
-                                                })
-                                            ]
-                                        }),
-                                        rules: [
-                                            {
-                                                required: true,
-                                                message: "Buyurtma tavsifini yozing!"
-                                            }, 
-                                        ],
-                                        children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(TextArea, {
-                                            style: {
-                                                resize: "none"
-                                            },
-                                            rows: 6,
-                                            placeholder: _shared_constants_createOrder__WEBPACK_IMPORTED_MODULE_8__/* .inputInfoToCreateOrder.description.placeholder */ .X.description.placeholder
-                                        })
-                                    }),
-                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_1__.Upload, {
-                                        fileList: files,
-                                        multiple: false,
-                                        listType: "picture",
-                                        className: "custom-order-file-upload",
-                                        name: "file",
-                                        maxCount: 1,
-                                        beforeUpload: ()=>{
-                                            return false;
-                                        },
-                                        onChange: (e)=>{
-                                            const { file , fileList  } = e;
-                                            if (file) {
-                                                const maxSize = 50 * 1024 * 1024;
-                                                if (file.size > maxSize) {
-                                                    antd__WEBPACK_IMPORTED_MODULE_1__.message.error("Fayl 50 MB dan katta bo'lishi mumkin emas");
-                                                    return;
-                                                }
-                                                setFiles(fileList);
-                                            }
-                                        },
-                                        onRemove: ()=>setFiles(null),
-                                        children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_1__.Button, {
-                                            icon: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("i", {
-                                                className: "fa-solid fa-paperclip"
-                                            }),
-                                            children: "Fayl yuklash (ixtiyoriy)"
-                                        })
-                                    })
-                                ]
-                            }),
-                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_1__.Form.Item, {
-                                name: "language",
-                                label: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                                    className: "d-flex align-items-center text-wrap align-items-sm-center",
-                                    children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("p", {
-                                        className: "m-0 text-dark",
-                                        children: "Buyurtma tili"
-                                    })
-                                }),
-                                rules: [
-                                    {
-                                        required: true,
-                                        message: "Bajarilish tilini tanlang!"
-                                    }, 
-                                ],
-                                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_1__.Select, {
-                                    placeholder: _shared_constants_createOrder__WEBPACK_IMPORTED_MODULE_8__/* .inputInfoToCreateOrder.lang.placeholder */ .X.lang.placeholder,
-                                    options: [
-                                        {
-                                            label: "O'zbekcha",
-                                            value: "uzb"
-                                        },
-                                        {
-                                            label: "Ruscha",
-                                            value: "rus"
-                                        },
-                                        {
-                                            label: "Ingilizcha",
-                                            value: "eng"
-                                        }, 
-                                    ]
-                                })
-                            }),
-                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(antd__WEBPACK_IMPORTED_MODULE_1__.Form.Item, {
-                                name: "budget",
-                                label: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                                    className: "d-flex align-items-center",
-                                    children: [
-                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("p", {
-                                            className: "m-0 text-dark",
-                                            children: "Byudjetingizni kiriting"
-                                        }),
-                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
-                                            children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(Info, {
-                                                title: _shared_constants_createOrder__WEBPACK_IMPORTED_MODULE_8__/* .inputInfoToCreateOrder.price.info */ .X.price.info
-                                            })
-                                        })
-                                    ]
-                                }),
-                                rules: [
-                                    {
-                                        required: true,
-                                        message: "Narx kiriting!"
-                                    }
-                                ],
-                                style: {
-                                    position: "relative"
-                                },
-                                children: [
-                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_1__.InputNumber, {
-                                        min: minPrice,
-                                        style: {
-                                            width: "100%"
-                                        },
-                                        placeholder: _shared_constants_createOrder__WEBPACK_IMPORTED_MODULE_8__/* .inputInfoToCreateOrder.price.placeholder */ .X.price.placeholder,
-                                        formatter: (value)=>value ? `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ") : "",
-                                        parser: (value)=>value.replace(/\s/g, "").replace(/[^\d]/g, ""),
-                                        value: budget,
-                                        onChange: (val)=>form.setFieldValue("budget", val)
-                                    }),
-                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                                        className: "my-3 position-relative",
-                                        children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                                            className: "position-relative",
-                                            children: [
-                                                showLeftGradient && /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                                                    style: {
-                                                        position: "absolute",
-                                                        left: 0,
-                                                        top: 0,
-                                                        bottom: 0,
-                                                        width: "30px",
-                                                        background: "linear-gradient(to right, rgba(255,255,255,0.9), transparent)",
-                                                        zIndex: 5,
-                                                        pointerEvents: "none"
-                                                    }
-                                                }),
-                                                showRightGradient && priceList?.length > 7 && /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                                                    style: {
-                                                        position: "absolute",
-                                                        right: 0,
-                                                        top: 0,
-                                                        bottom: 0,
-                                                        width: "30px",
-                                                        background: "linear-gradient(to left, rgba(255,255,255,0.9), transparent)",
-                                                        zIndex: 5,
-                                                        pointerEvents: "none"
-                                                    }
-                                                }),
-                                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(swiper_react__WEBPACK_IMPORTED_MODULE_10__.Swiper, {
-                                                    modules: [
-                                                        swiper_modules__WEBPACK_IMPORTED_MODULE_11__.Thumbs
-                                                    ],
-                                                    spaceBetween: 8,
-                                                    slidesPerView: "auto",
-                                                    freeMode: true,
-                                                    watchSlidesProgress: true,
-                                                    centeredSlides: false,
-                                                    allowTouchMove: true,
-                                                    className: "thumbs-swiper mt-2",
-                                                    style: {
-                                                        width: "100%",
-                                                        overflow: "hidden",
-                                                        paddingLeft: "5px",
-                                                        paddingRight: "5px"
-                                                    },
-                                                    onProgress: handleThumbProgress,
-                                                    onSlideChange: handleThumbProgress,
-                                                    onReachBeginning: ()=>setShowLeftGradient(false),
-                                                    onReachEnd: ()=>setShowRightGradient(false),
-                                                    children: priceList?.map((option, index)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(swiper_react__WEBPACK_IMPORTED_MODULE_10__.SwiperSlide, {
-                                                            style: {
-                                                                width: "fit-content",
-                                                                height: "35px",
-                                                                flexShrink: 0
-                                                            },
-                                                            children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_1__.Button, {
-                                                                variant: "solid",
-                                                                className: "option-price-btn",
-                                                                type: "default",
-                                                                onClick: ()=>{
-                                                                    form.setFieldValue("budget", option.amount);
-                                                                },
-                                                                children: (0,_shared_utilities_product_helper__WEBPACK_IMPORTED_MODULE_9__/* .formatCurrencyWithSpace */ .O$)(option.amount)
-                                                            }, option.amount)
-                                                        }, `thumb-${option.amount}-${index}`))
-                                                })
-                                            ]
-                                        })
-                                    })
-                                ]
-                            }),
-                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                                className: "d-flex align-items-start mb-2",
-                                children: [
-                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
-                                        style: {
-                                            marginRight: "5px",
-                                            width: "5px",
-                                            height: "5px"
-                                        },
-                                        className: "text-danger fs-6",
-                                        children: "*"
-                                    }),
-                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("p", {
-                                        className: "m-0 text-dark",
-                                        children: "Buyurtma tayyor bo‘lish muddatini belgilang"
-                                    })
-                                ]
-                            }),
-                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                                className: "d-flex gap-2 mb-3",
-                                children: [
-                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_1__.Form.Item, {
-                                        name: "deadline_date",
-                                        style: {
-                                            flex: 1,
-                                            margin: 0,
-                                            width: "100%"
-                                        },
-                                        className: "flex-fill",
-                                        rules: [
-                                            {
-                                                required: true,
-                                                message: "Yetkazib berish sanasini va vaqtini tanlang!"
-                                            }, 
-                                        ],
-                                        children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_1__.DatePicker, {
-                                            format: "MMM DD, YYYY",
-                                            placement: "bottom",
-                                            style: {
-                                                width: "100%",
-                                                height: "32px"
-                                            },
-                                            placeholder: "Buyurtma tayyor bo‘lish sanasi va soatini tanlang",
-                                            size: "small",
-                                            disabledDate: (current)=>current && current < dayjs__WEBPACK_IMPORTED_MODULE_5___default()().startOf("day")
-                                        })
-                                    }),
-                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_1__.Form.Item, {
-                                        name: "deadline_time",
-                                        rules: [
-                                            {
-                                                required: true,
-                                                message: ""
-                                            }
-                                        ],
-                                        children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_1__.TimePicker, {
-                                            format: "HH:mm",
-                                            style: {
-                                                height: "32px"
-                                            },
-                                            placeholder: "Soat",
-                                            size: "small",
-                                            className: "ant-picker-time-panel-column",
-                                            disabledDate: (current)=>current && current < dayjs__WEBPACK_IMPORTED_MODULE_5___default()().startOf("day")
-                                        })
-                                    })
-                                ]
-                            }),
-                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_1__.Form.Item, {
-                                className: "mb-2",
-                                children: id ? /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_1__.Button, {
-                                    loading: createPending,
-                                    type: "primary",
-                                    htmlType: "submit",
-                                    className: "mt-3 py-4 fs-4",
-                                    block: true,
-                                    children: createPending ? /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                                        className: "d-flex align-items-center gap-3",
-                                        children: "Buyurtmani yuborilmoqda..."
-                                    }) : "Buyurtmani yuborish"
-                                }) : /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_1__.Button, {
-                                    loading: isPending,
-                                    type: "primary",
-                                    htmlType: "submit",
-                                    className: "mt-3 py-4 fs-4",
-                                    block: true,
-                                    children: isPending ? /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                                        className: "d-flex align-items-center gap-3",
-                                        children: "Buyurtmani joylashtirilmoqda..."
-                                    }) : "Buyurtmani joylashtirish"
-                                })
-                            })
-                        ]
-                    })
-                ]
-            }),
-            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_1__.Modal, {
-                title: "Buyurtmani tasdiqlash",
-                open: confirmOpen,
-                onCancel: ()=>setConfirmOpen(false),
-                footer: [
-                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_1__.Button, {
-                        onClick: ()=>setConfirmOpen(false),
-                        children: "Yo‘q"
-                    }, "cancel"),
-                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_1__.Button, {
-                        type: "primary",
-                        loading: isPending || createPending,
-                        onClick: handleConfirm,
-                        children: "Ha, buyurtmani yubor"
-                    }, "ok"), 
-                ],
-                centered: true,
-                children: seller ? /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
-                    children: [
-                        "Rostdan ham ",
-                        seller,
-                        " uchun buyurtma berishni xohlaysizmi?"
-                    ]
-                }) : /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("p", {
-                    children: "Rostdan ham buyurtma berishni xohlaysizmi? Buyurtmangiz 10 000 dan ortiq frilanserlarga yuboriladi, ular siz bilan hamkorlik qilish uchun taklif yuborishadi."
-                })
-            }),
-            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_order_PhoneNumberModal__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .Z, {
-                open: phoneModalOpen,
-                onCancel: handlePhoneModalCancel,
-                onSubmit: handlePhoneSubmit,
-                loading: isPending
-            })
-        ]
-    });
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (CreateOrderModal);
-const Info = ({ title  })=>{
-    return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_1__.Tooltip, {
-        title: title,
-        className: "d-flex align-items-center",
-        children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-            className: "d-flex align-items-center justify-content-center ms-2",
-            style: {
-                width: "15px",
-                height: "15px",
-                cursor: "pointer"
-            },
-            children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_ant_design_icons__WEBPACK_IMPORTED_MODULE_3__.QuestionCircleOutlined, {})
-        })
-    });
-};
-
-__webpack_async_result__();
-} catch(e) { __webpack_async_result__(e); } });
-
-/***/ }),
-
-/***/ 1904:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "X": () => (/* binding */ inputInfoToCreateOrder),
-/* harmony export */   "f": () => (/* binding */ titleDescription)
-/* harmony export */ });
-const titleDescription = (direction)=>{
-    return `${direction} bo'yicha xizmat kerak.`;
-};
-const inputInfoToCreateOrder = {
-    category: {
-        placeholder: (categories)=>Array.isArray(categories) && categories.length ? categories.map((el)=>el.label).slice(0, 2).join(", ") + " v.k" : "Taqdimot, Kurs ishi, v.k",
-        info: `Iltimos, buyurtmangizni to‘g‘ri yo‘naltirish uchun quyidagi kategoriyalardan birini tanlang. Har bir kategoriya ma’lum bir xizmat turiga mos keladi, shuning uchun tanlovingiz siz izlayotgan mutaxassisni topishda muhim rol o‘ynaydi.`
-    },
-    description: {
-        placeholder: `- Buyurtma mavzusi yoki yo‘nalishi
-- Kerakli hajmi (bet, so‘z, slayd va h.k.)
-- Asosiy talablar yoki reja
-- Qaysi formatda kerak (Word, PDF, PPT va b.)
-- h.k.     
-      `,
-        info: `Iltimos, buyurtmangizning mavzusi va talablarini aniq va tushunarli tarzda yozing. Bu ijrochining ishni tez va to‘g‘ri bajarishiga yordam beradi.`
-    },
-    lang: {
-        placeholder: "Qaysi tilda tayyorlanishini xohlaysiz?"
-    },
-    price: {
-        placeholder: "50 000",
-        info: `Iltimos, ushbu ish uchun ajratmoqchi bo‘lgan byudjetni so‘mda yozing.`
-    }
-};
-
-
-/***/ }),
-
 /***/ 1639:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -3559,6 +3652,153 @@ const digitalDirections = [
 
 /***/ }),
 
+/***/ 8314:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "au": () => (/* binding */ useCountdown)
+/* harmony export */ });
+/* unused harmony exports useCountOrderTime, useCountTimeBack */
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6689);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1635);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_1__);
+
+
+function useCountdown(secondsStart = 120) {
+    const { 0: left , 1: setLeft  } = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(secondsStart);
+    (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(()=>{
+        if (left <= 0) return;
+        const id = setInterval(()=>setLeft((s)=>s - 1), 1000);
+        return ()=>clearInterval(id);
+    }, [
+        left
+    ]);
+    const reset = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(()=>setLeft(secondsStart), [
+        secondsStart
+    ]);
+    const fmt = (s)=>{
+        const m = Math.floor(s / 60), ss = String(s % 60).padStart(2, "0");
+        return `${String(m).padStart(2, "0")}:${ss}`;
+    };
+    return {
+        left,
+        display: fmt(left),
+        reset
+    };
+}
+// Hook: Buyurtma qabul qilingan vaqtdan topshirish muddatigacha qolgan vaqtni hisoblaydi
+const useCountOrderTime = (acceptedDate, deliveryDays)=>{
+    const { 0: timeLeft , 1: setTimeLeft  } = useState({
+        days: 0,
+        hours: 0,
+        minutes: 0,
+        seconds: 0
+    });
+    useEffect(()=>{
+        // Agar acceptedDate yoki deliveryDays mavjud bo'lmasa, hisoblashni to'xtatamiz
+        if (!acceptedDate || !deliveryDays) {
+            setTimeLeft({
+                days: 0,
+                hours: 0,
+                minutes: 0,
+                seconds: 0
+            });
+            return;
+        }
+        // Topshirish muddatini hisoblash (acceptedDate + deliveryDays)
+        const deadline = dayjs(acceptedDate).add(deliveryDays, "day");
+        // Har soniya yangilanish uchun interval
+        const interval = setInterval(()=>{
+            const now = dayjs();
+            const diff = deadline.diff(now); // Qolgan vaqt (millisekundlarda)
+            if (diff <= 0) {
+                // Agar vaqt tugagan bo'lsa, intervalni to'xtatamiz
+                setTimeLeft({
+                    days: 0,
+                    hours: 0,
+                    minutes: 0,
+                    seconds: 0
+                });
+                clearInterval(interval);
+                return;
+            }
+            // Millisekundlarni kun, soat, daqiqa va soniyalarga aylantirish
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor(diff % (1000 * 60 * 60 * 24) / (1000 * 60 * 60));
+            const minutes = Math.floor(diff % (1000 * 60 * 60) / (1000 * 60));
+            const seconds = Math.floor(diff % (1000 * 60) / 1000);
+            setTimeLeft({
+                days,
+                hours,
+                minutes,
+                seconds
+            });
+        }, 1000); // Har soniya yangilash
+        // Komponent o'chirilganda intervalni tozalash
+        return ()=>clearInterval(interval);
+    }, [
+        acceptedDate,
+        deliveryDays
+    ]);
+    return timeLeft;
+};
+const useCountTimeBack = (deadline_date)=>{
+    const { 0: timeLeft , 1: setTimeLeft  } = useState({
+        days: 0,
+        hours: 0,
+        minutes: 0,
+        seconds: 0
+    });
+    useEffect(()=>{
+        if (!deadline_date) {
+            setTimeLeft({
+                days: 0,
+                hours: 0,
+                minutes: 0,
+                seconds: 0
+            });
+            return;
+        }
+        const deadline = dayjs(deadline_date);
+        const updateTime = ()=>{
+            const now = dayjs();
+            const diff = deadline.diff(now);
+            if (diff <= 0) {
+                setTimeLeft({
+                    days: 0,
+                    hours: 0,
+                    minutes: 0,
+                    seconds: 0
+                });
+                return;
+            }
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor(diff % (1000 * 60 * 60 * 24) / (1000 * 60 * 60));
+            const minutes = Math.floor(diff % (1000 * 60 * 60) / (1000 * 60));
+            const seconds = Math.floor(diff % (1000 * 60) / 1000);
+            setTimeLeft({
+                days,
+                hours,
+                minutes,
+                seconds
+            });
+        };
+        // Boshlang‘ich chaqirish
+        updateTime();
+        // Har 1 sekundda yangilash
+        const interval = setInterval(updateTime, 1000);
+        return ()=>clearInterval(interval);
+    }, [
+        deadline_date
+    ]);
+    return timeLeft;
+};
+
+
+/***/ }),
+
 /***/ 1275:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -3586,32 +3826,6 @@ function useDebounce(value, delay) {
         delay
     ]);
     return debouncedValue;
-}
-
-
-/***/ }),
-
-/***/ 5047:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "f": () => (/* binding */ useTelegram)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6689);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-
-function useTelegram() {
-    const { 0: telegramData , 1: setTelegramData  } = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
-        tg: null,
-        queryId: null,
-        tgId: null
-    });
-    (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(()=>{
-        // Only run on client side
-        if (false) {}
-    }, []);
-    return telegramData;
 }
 
 
@@ -4064,7 +4278,7 @@ module.exports = import("swiper/react");;
 var __webpack_require__ = require("../../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [676,1664,5675,5152,5780,3015,7864,2315,6985,6598,3701,7534,5758,5029,2495,6020,2536,3060,3944,1324,6400,8909,8310,6908,3215,681,2998,7732], () => (__webpack_exec__(1942)));
+var __webpack_exports__ = __webpack_require__.X(0, [676,1664,5675,5152,5780,3015,7864,2315,6985,6598,3701,7534,5758,5029,2495,6020,2536,3060,3944,1324,6400,8909,8310,6908,3215,681,2998,1703], () => (__webpack_exec__(1942)));
 module.exports = __webpack_exports__;
 
 })();

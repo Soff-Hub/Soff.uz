@@ -852,6 +852,31 @@ const inputInfoToCreateOrder = {
 };
 
 
+/***/ }),
+
+/***/ 5047:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "f": () => (/* binding */ useTelegram)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6689);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+function useTelegram() {
+    const { 0: telegramData , 1: setTelegramData  } = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+        tg: null,
+        queryId: null,
+        tgId: null
+    });
+    (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(()=>{
+        // Only run on client side
+        if (false) {}
+    }, []);
+    return telegramData;
+}
+
+
 /***/ })
 
 };

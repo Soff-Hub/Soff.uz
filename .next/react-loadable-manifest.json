@@ -123,7 +123,7 @@
   "../widgets/layouts/PageLayout.jsx -> ~/widgets/header": {
     "id": 68323,
     "files": [
-      "static/chunks/cb355538-31ec9fd62efe868f.js",
+      "static/chunks/cb355538-d52c09e65d685e92.js",
       "static/chunks/ebc70433-d543ed1768f6826d.js",
       "static/chunks/4866-6d81902271e1d5ea.js",
       "static/chunks/4426-7db11542ae3dfdec.js",
@@ -250,7 +250,7 @@
   "product/[pid].jsx -> ~/components/product/ProductVideoBanner": {
     "id": 20451,
     "files": [
-      "static/chunks/cb355538-31ec9fd62efe868f.js",
+      "static/chunks/cb355538-d52c09e65d685e92.js",
       "static/css/79c32230e7b149e1.css",
       "static/chunks/451.35533b08ad023d0d.js"
     ]
