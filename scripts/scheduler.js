@@ -5,30 +5,14 @@ async function clearCache() {
     const cacheDir = path.join(process.cwd(), '.next', 'cache');
 
     if (fs.existsSync(cacheDir)) {
-        try {
-            await fs.promises.rm(cacheDir, { recursive: true, force: true });
-            console.log('✅ Cache cleared successfully');
-        } catch (err) {
-            console.error('❌ Failed to clear cache:', err);
-            throw err;
-        }
-    } else {
-        console.log('ℹ️  Cache directory does not exist');
+        fs.rm(cacheDir, { recursive: true, force: true }, (err) => {
+            if (err) console.error('Failed to clear cache', err);
+        });
     }
 }
 
-// Export for use in server wrapper
-module.exports = { clearCache };
+// Run every 1 day
+const oneDayInterval = 24 * 60 * 60 * 1000;
+setInterval(clearCache, oneDayInterval);
 
-// Run once and exit (for standalone PM2 cron usage)
-if (require.main === module) {
-    clearCache()
-        .then(() => {
-            console.log('✅ Scheduler completed');
-            process.exit(0);
-        })
-        .catch((err) => {
-            console.error('❌ Scheduler error:', err);
-            process.exit(1);
-        });
-}
+clearCache();

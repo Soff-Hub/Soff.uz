@@ -1,22 +1,14 @@
 const nextSettings = {
     optimizeFonts: true,
-    // output: 'standalone',
-    // NOTE: Compressing responses can improve performance
-    compress: true,
-    // NOTE: Enable SWC minification for smaller bundle sizes
-    swcMinify: true,
-
+    output: 'standalone',
     eslint: {
         ignoreDuringBuilds: true,
     },
-
+    // Enable detailed hydration error logging
     experimental: {
         logging: {
             level: 'verbose',
         },
-        // ADD: These help with performance
-        ...(process.env.NODE_ENV === 'production' && { optimizeCss: true }),
-        esmExternals: true,
     },
     // Note: optimizePackageImports is Next.js 13+ only
     // For Next.js 12, tree shaking works automatically with named imports
@@ -47,11 +39,6 @@ const nextSettings = {
             'freelance-media.s3.amazonaws.com',
             'img.youtube.com',
         ],
-        // Better image optimization
-        formats: ['image/avif', 'image/webp'],
-        minimumCacheTTL: 60,
-        deviceSizes: [640, 750, 828, 1080, 1200, 1920],
-        imageSizes: [16, 32, 48, 64, 96, 128, 256],
     },
     async headers() {
         return [
@@ -112,21 +99,6 @@ const nextSettings = {
                 ],
             },
         ];
-    },
-
-    // Optimize build
-    productionBrowserSourceMaps: false,
-    // ADD: Better build performance
-    webpack: (config, { dev, isServer }) => {
-        // Production optimizations
-        if (!dev) {
-            config.optimization = {
-                ...config.optimization,
-                moduleIds: 'deterministic',
-            };
-        }
-
-        return config;
     },
 };
 
