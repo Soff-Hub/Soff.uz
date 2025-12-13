@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {
     Drawer,
-    Avatar,
     Button,
     Tag,
     message,
@@ -26,12 +25,20 @@ import styles from '../style/select-order-drawer.module.scss';
 import useGetOffers from '../api/useGetOffers';
 import { ClipLoader } from 'react-spinners';
 import { useDisableWindowScroll } from '~/shared/hooks/useDisableWindowScroll';
+import OfferCard from './OfferCard';
+import ChatWindow from '~/components/freeleance/chat/ui/ChatWindow';
+import { useContentViewport } from '~/shared/hooks/useContentViewport';
+import { useQueryClient } from '@tanstack/react-query';
+import axiosInstance from '~/shared/api/freeleanceApi';
 
 const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
     const [selectedOffer, setSelectedOffer] = useState(null);
     const { user } = useSelector((state) => state.auth);
     const [paymentModal, setPaymentModal] = useState(false);
+    const [chatDrawerOpen, setChatDrawerOpen] = useState(false);
+    const [currentChatId, setCurrentChatId] = useState(null);
     const { isDesktop, isMobile } = useResponsive();
+    const { containerHeight } = useContentViewport();
     const { push } = useRouter();
     const { offers, setOffers, isConnected } = useOffers(order?.id, open);
     const price = order?.service?.price || order?.budget || 0;
@@ -40,6 +47,32 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
     const balance = Number(data?.wallet || 0);
     const balanceDisabled = balance > 0;
     const loadMoreRef = useRef(null);
+    const queryClient = useQueryClient();
+    const axios = axiosInstance(user?.access);
+
+    const handleCreateChat = async (sellerId) => {
+        try {
+            const formData = new FormData();
+            formData.append('participant_id', sellerId);
+
+            const { data } = await axios.post('chats/create', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+
+            if (data?.chat_id) {
+                queryClient.invalidateQueries({ queryKey: ['chats'] });
+                message.success('Chat yaratildi');
+                setCurrentChatId(data.chat_id);
+                setChatDrawerOpen(true);
+            }
+        } catch (error) {
+            const errorMsg =
+                error?.response?.data?.detail || 'Xatolik yuz berdi';
+            message.error(errorMsg);
+        }
+    };
 
     const leftBalance = formatCurrencyWithSpace(Number(balance));
     const isSufficientBalance = balance >= price;
@@ -108,9 +141,11 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
             mergedOffers = initialOffers.pages.flatMap((page) => page.results);
             setOffers((pre) => {
                 const existingOfferIds = new Set(pre.map((offer) => offer.id));
-                const newOffers = mergedOffers.filter(
-                    (offer) => !existingOfferIds.has(offer.id)
-                );
+                const newOffers = mergedOffers
+                    .filter((offer) => !existingOfferIds.has(offer.id))
+                    .map((offer) => ({
+                        ...offer,
+                    }));
                 return [...pre, ...newOffers];
             });
         }
@@ -200,159 +235,12 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                     {offers?.length > 0 ? (
                         <>
                             {offers.map((item) => (
-                                <div
+                                <OfferCard
                                     key={item?.id}
-                                    className={cn(
-                                        'shadow-lg',
-                                        'p-[16px]',
-                                        'bg-light',
-                                        'rounded-2xl',
-                                        'flex',
-                                        'flex-col',
-                                        'gap-3',
-                                        'border',
-                                        'mb-2'
-                                    )}>
-                                    <div
-                                        className={cn(
-                                            'flex',
-                                            'items-center',
-                                            'gap-4'
-                                        )}>
-                                        <a
-                                            href={`/seller/${item?.seller?.soff_seller_id}`}
-                                            target="_blank"
-                                            rel="noopener noreferrer">
-                                            <Avatar
-                                                src={
-                                                    item?.seller?.photo_url ||
-                                                    '/static/img/ozodbek.png'
-                                                }
-                                                size={50}
-                                                style={{ minWidth: '50px' }}
-                                                className={cn('cursor-pointer')}
-                                            />
-                                        </a>
-                                        <div className={cn('flex', 'flex-col')}>
-                                            <a
-                                                href={`/seller/${item?.seller?.soff_seller_id}`}
-                                                target="_blank"
-                                                rel="noopener noreferrer">
-                                                <h3
-                                                    className={cn(
-                                                        'text-[24px]',
-                                                        'mb-0',
-                                                        'cursor-pointer',
-                                                        'hover-text-primary',
-                                                        'transition'
-                                                    )}>
-                                                    {item?.seller?.full_name}
-                                                </h3>
-                                            </a>
-                                            <span
-                                                className={cn('text-primary')}>
-                                                {item?.seller?.position?.title}
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <p
-                                        className={cn(
-                                            'mb-0',
-                                            'text-lg',
-                                            'text-dark'
-                                        )}>
-                                        {item.comment}
-                                    </p>
-                                    <div
-                                        className={cn(
-                                            'flex',
-                                            'justify-between',
-                                            'items-center'
-                                        )}>
-                                        <div>
-                                            <div
-                                                className={cn(
-                                                    'flex',
-                                                    'items-center',
-                                                    'gap-1'
-                                                )}>
-                                                <i
-                                                    style={{
-                                                        fontSize: '14px',
-                                                        color: 'rgba(0,0,0,0.6)',
-                                                    }}
-                                                    className="fa-solid fa-sack-dollar"></i>
-                                                <span
-                                                    className={cn(
-                                                        'text-[14px]',
-                                                        'text-secondary'
-                                                    )}>
-                                                    Taklif narxi:
-                                                </span>
-                                            </div>
-                                            <span
-                                                className={cn(
-                                                    'text-base',
-                                                    'font-semibold'
-                                                )}>
-                                                {formatCurrencyWithSpace(
-                                                    item?.money
-                                                )}{' '}
-                                                so‘m
-                                            </span>
-                                        </div>
-                                        {item?.seller?.avg_rating &&
-                                            item?.seller?.avg_rating !== 0 && (
-                                                <div>
-                                                    <span
-                                                        className={cn(
-                                                            'text-[14px]',
-                                                            'text-secondary'
-                                                        )}>
-                                                        Reytingi:
-                                                    </span>
-                                                    <div
-                                                        className={cn(
-                                                            'flex',
-                                                            'items-center',
-                                                            'gap-1'
-                                                        )}>
-                                                        <StarFilled
-                                                            className={cn(
-                                                                'text-base',
-                                                                'text-warning'
-                                                            )}
-                                                        />
-                                                        <span
-                                                            className={cn(
-                                                                'text-base',
-                                                                'text-warning'
-                                                            )}>
-                                                            {
-                                                                item?.seller
-                                                                    ?.avg_rating
-                                                            }
-                                                        </span>
-                                                        <span>
-                                                            (
-                                                            {
-                                                                item?.seller
-                                                                    ?.feedback_count
-                                                            }{' '}
-                                                            izoh)
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            )}
-                                        <Button
-                                            onClick={() =>
-                                                setSelectedOffer(item)
-                                            }
-                                            type="primary">
-                                            Tanlash
-                                        </Button>
-                                    </div>
-                                </div>
+                                    offer={item}
+                                    onSelect={setSelectedOffer}
+                                    onCreateChat={handleCreateChat}
+                                />
                             ))}
 
                             {hasNextPage && (
@@ -410,19 +298,107 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
             </div>
         );
     }
+    const drawerWidth = chatDrawerOpen
+        ? isDesktop
+            ? '90%'
+            : '100%'
+        : isDesktop
+        ? '70%'
+        : isMobile
+        ? '100%'
+        : '80%';
+
     return (
         <>
             <Drawer
                 title="Frilanser takliflari"
                 placement="right"
-                width={isDesktop ? '70%' : isMobile ? '100%' : '80%'}
+                width={drawerWidth}
                 onClose={onClose}
                 open={open}
-                destroyOnClose>
-                {!isFullyPaid && orderDrawerContent}
-                <OrderCard order={order} infoOnly />
-                {isFullyPaid && orderDrawerContent}
-                <div ref={loadMoreRef} style={{ height: 1 }} />
+                destroyOnClose
+                bodyStyle={{
+                    padding: 0,
+                    overflow: 'hidden',
+                }}>
+                <div
+                    className={styles.drawerContent}
+                    style={{
+                        display: chatDrawerOpen ? 'flex' : 'block',
+                        height: '100%',
+                    }}>
+                    <div
+                        className={styles.offersSection}
+                        style={{
+                            width: chatDrawerOpen
+                                ? isMobile
+                                    ? '0'
+                                    : '50%'
+                                : '100%',
+                            display:
+                                chatDrawerOpen && isMobile ? 'none' : 'block',
+                            overflowY: 'auto',
+                            overflowX: 'hidden',
+                        }}>
+                        <div className={styles.offersContent}>
+                            {!isFullyPaid && orderDrawerContent}
+                            <OrderCard order={order} infoOnly />
+                            {isFullyPaid && orderDrawerContent}
+                            <div ref={loadMoreRef} style={{ height: 1 }} />
+                        </div>
+                    </div>
+                    {chatDrawerOpen && (
+                        <div
+                            className={styles.chatSection}
+                            style={{
+                                width: isMobile ? '100%' : '50%',
+                                height: '100%',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                position: 'relative',
+                            }}>
+                            <div
+                                style={{
+                                    padding: '16px',
+                                    borderBottom: '1px solid #f0f0f0',
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center',
+                                    flexShrink: 0,
+                                }}>
+                                <h3 style={{ margin: 0 }}>Chat</h3>
+                                {isMobile && (
+                                    <Button
+                                        onClick={() => {
+                                            setChatDrawerOpen(false);
+                                            setCurrentChatId(null);
+                                        }}>
+                                        Orqaga
+                                    </Button>
+                                )}
+                            </div>
+                            <div
+                                style={{
+                                    flex: 1,
+                                    overflow: 'hidden',
+                                    height: '100%',
+                                    minHeight: 0,
+                                }}>
+                                {currentChatId && (
+                                    <ChatWindow
+                                        key={currentChatId}
+                                        chatId={currentChatId}
+                                        goBack={() => {
+                                            setChatDrawerOpen(false);
+                                            setCurrentChatId(null);
+                                        }}
+                                        // containerHeight={containerHeight}
+                                    />
+                                )}
+                            </div>
+                        </div>
+                    )}
+                </div>
             </Drawer>
 
             <Modal

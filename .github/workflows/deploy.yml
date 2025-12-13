@@ -47,6 +47,11 @@ jobs:
             - name: Build application
               run: npm run build
 
+            - name: Install sharp in standalone
+              run: |
+                  cd .next/standalone
+                  npm install --no-save --omit=dev sharp
+
             - name: Prepare deployment
               run: |
                   mkdir -p deploy

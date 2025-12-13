@@ -56,3 +56,310 @@
         }
     }
 }
+
+.offerCard {
+    position: relative;
+    background: #fff;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    margin-bottom: 16px;
+    border: 1px solid #e9ecef;
+    transition: 0.3s ease;
+
+    &:hover {
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+    }
+}
+
+.cardHeader {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.badge {
+    :global(.ant-badge-dot) {
+        width: 14px !important;
+        height: 14px !important;
+        box-shadow: 0 0 0 2px #fff;
+    }
+}
+
+.avatar {
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    cursor: pointer;
+    width: 64px !important;
+    height: 64px !important;
+}
+
+.profileInfo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.name {
+    font-weight: 600;
+    font-size: 20px;
+    margin: 0;
+    cursor: pointer;
+    transition: color 0.3s;
+
+    &:hover {
+        color: $color-1st;
+    }
+}
+
+.position {
+    color: #666;
+    font-size: 14px;
+    margin: 0;
+}
+
+.ratingBox {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    line-height: normal;
+}
+
+.star {
+    font-size: 16px;
+    color: #ffae00;
+}
+
+.ratingValue {
+    font-weight: 600;
+    color: #ffae00;
+    font-size: 16px;
+}
+
+.reviewCount {
+    color: #999;
+    font-size: 14px;
+}
+
+.commentWrapper {
+    position: relative;
+    margin-bottom: 12px;
+    display: block;
+    width: 100%;
+}
+
+.comment {
+    margin: 0;
+    font-size: 16px;
+    color: #24282b;
+    line-height: 1.5;
+    word-wrap: break-word;
+    position: relative;
+}
+
+.commentInlineWrapper {
+    display: inline;
+    position: relative;
+}
+
+.commentText {
+    display: inline;
+    position: relative;
+}
+
+.commentGradient {
+    display: inline-block;
+    width: 90px;
+    height: 1.5em;
+    margin-left: -90px;
+    margin-right: 0;
+    vertical-align: text-bottom;
+    background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.2) 20%,
+        rgba(255, 255, 255, 0.6) 50%,
+        rgba(255, 255, 255, 0.9) 80%,
+        rgba(255, 255, 255, 1) 100%
+    );
+    pointer-events: none;
+    z-index: 1;
+    position: relative;
+}
+
+.expandButton {
+    display: inline;
+    background: none;
+    border: none;
+    color: $color-1st;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    text-decoration: underline;
+    transition: color 0.3s;
+    position: relative;
+    z-index: 2;
+    vertical-align: baseline;
+
+    &:hover {
+        color: darken($color-1st, 10%);
+    }
+}
+
+.cardFooter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding-top: 12px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.priceSection {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.priceLabel {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.6);
+    margin-bottom: 0;
+}
+
+.priceValue {
+    font-size: 16px;
+    font-weight: 600;
+    color: #24282b;
+}
+
+.actionButtons {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.chatButton {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #fff;
+    border: 1px solid #d9d9d9;
+    color: #666;
+    font-weight: 500;
+    height: auto;
+    border-radius: 6px;
+    transition: all 0.3s;
+
+    &:hover {
+        border-color: $color-1st;
+        color: $color-1st;
+    }
+}
+
+.chatIcon {
+    font-size: 14px;
+}
+
+.selectButton {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+    height: auto;
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+.selectIcon {
+    font-size: 14px;
+}
+
+@media (max-width: 768px) {
+    .offerCard {
+        padding: 12px;
+    }
+
+    .name {
+        font-size: 18px;
+    }
+
+    .cardFooter {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+
+        .actionButtons {
+            width: 100%;
+            display: flex;
+            gap: 8px;
+
+            .chatButton,
+            .selectButton {
+                flex: 1;
+            }
+        }
+    }
+}
+
+.drawerContent {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.offersSection {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+
+    &::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: #d9d9d9;
+        border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        background: #bfbfbf;
+    }
+}
+
+.offersContent {
+    padding: 24px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.offersContainer {
+    width: 100%;
+    overflow-x: hidden;
+    box-sizing: border-box;
+}
+
+.chatSection {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+}

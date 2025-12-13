@@ -238,7 +238,10 @@ const ChatWindow = ({ chatId, goBack, containerHeight }) => {
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
-            style={{ position: 'relative', height: `${containerHeight}px` }}>
+            style={{
+                position: 'relative',
+                height: containerHeight ? `${containerHeight}px` : '100%',
+            }}>
             {/* Drag and Drop Overlay */}
             {isDragging && (
                 <div

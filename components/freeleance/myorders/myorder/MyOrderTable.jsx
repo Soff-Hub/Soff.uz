@@ -11,13 +11,6 @@ import { useRouter } from 'next/router';
 import { EmptyTab } from './MyOrderTabs';
 import { ClipLoader } from 'react-spinners';
 
-// const rejectableStatuses = [
-//     'order_accepted',
-//     'order_file_sent',
-//     'rejected',
-//     'pending',
-// ];
-
 export const AllOrdersTable = ({ type }) => {
     const queryClient = useQueryClient();
     const router = useRouter();
