@@ -1,5 +1,5 @@
-exports.id = 6536;
-exports.ids = [6536];
+exports.id = 7057;
+exports.ids = [7057];
 exports.modules = {
 
 /***/ 8323:
@@ -2108,59 +2108,6 @@ const SafetyAlert = ()=>{
 
 /***/ }),
 
-/***/ 1265:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "D": () => (/* binding */ useContentViewport)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6689);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-
-function useContentViewport(...args) {
-    const { 0: containerHeight , 1: setContainerHeight  } = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("100vh");
-    const { 0: headerHeight , 1: setHeaderHeight  } = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0);
-    (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(()=>{
-        const calculateHeight = ()=>{
-            // Find the site header element
-            const siteHeader = document.querySelector(".site-header");
-            if (!siteHeader) return;
-            // Get the dynamic header height (includes FastDownloadSection when visible)
-            const siteHeaderHeight = siteHeader.offsetHeight;
-            // Set header height
-            setHeaderHeight(siteHeaderHeight);
-            // Pure viewport height minus header height
-            const availableHeight = window.innerHeight - siteHeaderHeight;
-            // Set this height directly on the chat window container
-            setContainerHeight(availableHeight);
-        };
-        const timeoutId = setTimeout(calculateHeight, 0);
-        window.addEventListener("resize", calculateHeight);
-        const siteHeader = document.querySelector(".site-header");
-        const resizeObserver = new ResizeObserver(()=>{
-            calculateHeight();
-        });
-        if (siteHeader) {
-            resizeObserver.observe(siteHeader);
-        }
-        return ()=>{
-            clearTimeout(timeoutId);
-            window.removeEventListener("resize", calculateHeight);
-            resizeObserver.disconnect();
-        };
-    }, [
-        args
-    ]);
-    return {
-        containerHeight,
-        headerHeight
-    };
-}
-
-
-/***/ }),
-
 /***/ 696:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -2225,4 +2172,4 @@ async function sleep(ms = 1000) {
 
 };
 ;
-//# sourceMappingURL=6536.js.map
+//# sourceMappingURL=7057.js.map
