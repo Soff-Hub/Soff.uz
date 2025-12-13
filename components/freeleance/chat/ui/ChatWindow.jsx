@@ -296,14 +296,14 @@ const ChatWindow = ({ chatId, goBack, containerHeight }) => {
                     size={50}
                     src={recipient?.photo_url}
                     icon={<FaRegUserCircle />}
-                    onClick={() => router.push(`seller/${chat?.opponent?.id}`)}
+                    onClick={() => router.push(`/seller/${chat?.opponent?.id}`)}
                     style={{ cursor: 'pointer' }}
                 />
                 <div className={styles.user_box}>
                     <div className={styles.user_names}>
                         <h4
                             onClick={() =>
-                                router.push(`seller/${chat?.opponent?.id}`)
+                                router.push(`/seller/${chat?.opponent?.id}`)
                             }
                             style={{ cursor: 'pointer' }}>
                             {chat?.opponent?.name}
