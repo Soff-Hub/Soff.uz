@@ -1,7 +1,6 @@
 const nextSettings = {
     optimizeFonts: true,
-    output: 'standalone',
-
+    // output: 'standalone',
     // NOTE: Compressing responses can improve performance
     compress: true,
     // NOTE: Enable SWC minification for smaller bundle sizes
