@@ -18,13 +18,9 @@ const OfferCard = ({ offer, onSelect, onCreateChat }) => {
     const isOnline = checkIsOnline(offer?.seller?.last_active);
 
     // Add fake data for testing
-    const fakeRating =
-        offer?.seller?.avg_rating || (Math.random() * 2 + 3).toFixed(1); // Random between 3.0-5.0
-    const fakeFeedbackCount =
-        offer?.seller?.feedback_count || Math.floor(Math.random() * 50) + 5; // Random between 5-55
-    const extendedComment = offer.comment
-        ? `${offer.comment} Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.`
-        : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.';
+    const fakeRating = offer?.seller?.avg_rating;
+    const fakeFeedbackCount = offer?.seller?.feedback_count;
+    const extendedComment = offer.comment;
 
     const MAX_COMMENT_LENGTH = 150;
     const isLongComment = extendedComment.length > MAX_COMMENT_LENGTH;
@@ -75,15 +71,19 @@ const OfferCard = ({ offer, onSelect, onCreateChat }) => {
                         {offer?.seller?.position?.title}
                     </span>
                     <div className={styles.ratingBox}>
-                        <FaStar className={styles.star} />
-                        <span className={styles.ratingValue}>
-                            {offer?.seller?.avg_rating || fakeRating}
-                        </span>
-                        <span className={styles.reviewCount}>
-                            (
-                            {offer?.seller?.feedback_count || fakeFeedbackCount}{' '}
-                            ta izoh)
-                        </span>
+                        {fakeRating ? (
+                            <>
+                                <FaStar className={styles.star} />
+                                <span className={styles.ratingValue}>
+                                    {offer?.seller?.avg_rating || fakeRating}
+                                </span>
+                            </>
+                        ) : null}
+                        {fakeFeedbackCount ? (
+                            <span className={styles.reviewCount}>
+                                ({fakeFeedbackCount} ta izoh)
+                            </span>
+                        ) : null}
                     </div>
                 </div>
             </div>

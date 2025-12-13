@@ -13,7 +13,7 @@ import TextSlicer from '~/shared/utilities/TextSlicer';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { useFPost } from '~/shared/hooks/useFApi';
 import { useSelector } from 'react-redux';
-import { ExclamationCircleOutlined, StarFilled } from '@ant-design/icons';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import OrderCard from '~/entities/order/order-card';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
@@ -27,9 +27,10 @@ import { ClipLoader } from 'react-spinners';
 import { useDisableWindowScroll } from '~/shared/hooks/useDisableWindowScroll';
 import OfferCard from './OfferCard';
 import ChatWindow from '~/components/freeleance/chat/ui/ChatWindow';
-import { useContentViewport } from '~/shared/hooks/useContentViewport';
 import { useQueryClient } from '@tanstack/react-query';
 import axiosInstance from '~/shared/api/freeleanceApi';
+import useGetChatById from '~/components/freeleance/chat/api/useGetChatById';
+import { FaEye } from 'react-icons/fa';
 
 const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
     const [selectedOffer, setSelectedOffer] = useState(null);
@@ -37,8 +38,7 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
     const [paymentModal, setPaymentModal] = useState(false);
     const [chatDrawerOpen, setChatDrawerOpen] = useState(false);
     const [currentChatId, setCurrentChatId] = useState(null);
-    const { isDesktop, isMobile } = useResponsive();
-    const { containerHeight } = useContentViewport();
+    const { isDesktop, isMobile, isTablet, size } = useResponsive();
     const { push } = useRouter();
     const { offers, setOffers, isConnected } = useOffers(order?.id, open);
     const price = order?.service?.price || order?.budget || 0;
@@ -49,6 +49,21 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
     const loadMoreRef = useRef(null);
     const queryClient = useQueryClient();
     const axios = axiosInstance(user?.access);
+
+    // Get chat data to find matching offer
+    const { data: chatData } = useGetChatById(currentChatId);
+    const chat = chatData?.pages?.[0]?.chat;
+    const opponentId =
+        chat?.opponent?.id ||
+        chat?.opponent?.soff_seller_id ||
+        chat?.opponent_id;
+
+    // Find the offer that matches the chat's seller
+    const matchingOffer = offers?.find(
+        (offer) =>
+            offer?.seller?.soff_seller_id === opponentId ||
+            offer?.seller?.id === opponentId
+    );
 
     const handleCreateChat = async (sellerId) => {
         try {
@@ -149,6 +164,10 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                 return [...pre, ...newOffers];
             });
         }
+        return () => {
+            setChatDrawerOpen(false);
+            setCurrentChatId(null);
+        };
     }, [initialOffers, open]);
 
     useDisableWindowScroll(open);
@@ -298,13 +317,15 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
             </div>
         );
     }
+
+    const isSmallScreen = isMobile || isTablet;
     const drawerWidth = chatDrawerOpen
-        ? isDesktop
+        ? size > 1400
             ? '90%'
             : '100%'
         : isDesktop
         ? '70%'
-        : isMobile
+        : isSmallScreen
         ? '100%'
         : '80%';
 
@@ -331,12 +352,14 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                         className={styles.offersSection}
                         style={{
                             width: chatDrawerOpen
-                                ? isMobile
+                                ? isSmallScreen
                                     ? '0'
                                     : '50%'
                                 : '100%',
                             display:
-                                chatDrawerOpen && isMobile ? 'none' : 'block',
+                                chatDrawerOpen && isSmallScreen
+                                    ? 'none'
+                                    : 'block',
                             overflowY: 'auto',
                             overflowX: 'hidden',
                         }}>
@@ -365,17 +388,37 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                                     justifyContent: 'space-between',
                                     alignItems: 'center',
                                     flexShrink: 0,
+                                    gap: '12px',
                                 }}>
                                 <h3 style={{ margin: 0 }}>Chat</h3>
-                                {isMobile && (
-                                    <Button
-                                        onClick={() => {
-                                            setChatDrawerOpen(false);
-                                            setCurrentChatId(null);
-                                        }}>
-                                        Orqaga
-                                    </Button>
-                                )}
+                                <div
+                                    style={{
+                                        display: 'flex',
+                                        gap: '8px',
+                                        alignItems: 'center',
+                                    }}>
+                                    {matchingOffer && (
+                                        <Button
+                                            type="primary"
+                                            icon={<FaEye />}
+                                            onClick={() => {
+                                                setSelectedOffer(matchingOffer);
+                                                setChatDrawerOpen(false);
+                                                setCurrentChatId(null);
+                                            }}>
+                                            Taklifni tanlash
+                                        </Button>
+                                    )}
+                                    {isMobile && (
+                                        <Button
+                                            onClick={() => {
+                                                setChatDrawerOpen(false);
+                                                setCurrentChatId(null);
+                                            }}>
+                                            Orqaga
+                                        </Button>
+                                    )}
+                                </div>
                             </div>
                             <div
                                 style={{
@@ -392,7 +435,6 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                                             setChatDrawerOpen(false);
                                             setCurrentChatId(null);
                                         }}
-                                        // containerHeight={containerHeight}
                                     />
                                 )}
                             </div>
