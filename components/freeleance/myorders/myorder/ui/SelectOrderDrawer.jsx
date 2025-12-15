@@ -14,6 +14,8 @@ import useResponsive from '~/shared/utilities/useResponsive';
 import { useFPost } from '~/shared/hooks/useFApi';
 import { useSelector } from 'react-redux';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
+import { FaRegCommentDots } from 'react-icons/fa';
+import { LiaHandshake } from 'react-icons/lia';
 import { useRouter } from 'next/router';
 import OrderCard from '~/entities/order/order-card';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
@@ -30,14 +32,16 @@ import ChatWindow from '~/components/freeleance/chat/ui/ChatWindow';
 import { useQueryClient } from '@tanstack/react-query';
 import axiosInstance from '~/shared/api/freeleanceApi';
 import useGetChatById from '~/components/freeleance/chat/api/useGetChatById';
-import { FaEye } from 'react-icons/fa';
+import { MODERATOR_ID } from '~/shared/constants';
+import { FaHeadset } from 'react-icons/fa';
+import { IoMdArrowBack } from 'react-icons/io';
 
 const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
     const [selectedOffer, setSelectedOffer] = useState(null);
     const { user } = useSelector((state) => state.auth);
     const [paymentModal, setPaymentModal] = useState(false);
     const [chatDrawerOpen, setChatDrawerOpen] = useState(false);
-    const [currentChatId, setCurrentChatId] = useState(null);
+    const [currentChat, setCurrentChat] = useState(null);
     const { isDesktop, isMobile, isTablet, size } = useResponsive();
     const { push } = useRouter();
     const { offers, setOffers, isConnected } = useOffers(order?.id, open);
@@ -51,7 +55,7 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
     const axios = axiosInstance(user?.access);
 
     // Get chat data to find matching offer
-    const { data: chatData } = useGetChatById(currentChatId);
+    const { data: chatData } = useGetChatById(currentChat?.opponentId);
     const chat = chatData?.pages?.[0]?.chat;
     const opponentId =
         chat?.opponent?.id ||
@@ -76,10 +80,11 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                 },
             });
 
+            console.log({ data });
+
             if (data?.chat_id) {
                 queryClient.invalidateQueries({ queryKey: ['chats'] });
-                message.success('Chat yaratildi');
-                setCurrentChatId(data.chat_id);
+                setCurrentChat({ chatId: data.chat_id, opponentId: sellerId });
                 setChatDrawerOpen(true);
             }
         } catch (error) {
@@ -88,6 +93,8 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
             message.error(errorMsg);
         }
     };
+
+    const isModerator = currentChat?.opponentId === MODERATOR_ID;
 
     const leftBalance = formatCurrencyWithSpace(Number(balance));
     const isSufficientBalance = balance >= price;
@@ -164,10 +171,6 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                 return [...pre, ...newOffers];
             });
         }
-        return () => {
-            setChatDrawerOpen(false);
-            setCurrentChatId(null);
-        };
     }, [initialOffers, open]);
 
     useDisableWindowScroll(open);
@@ -239,6 +242,29 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
     if (isFullyPaid) {
         orderDrawerContent = (
             <>
+                {/* Moderator Chat Card */}
+                <div className={styles.moderatorCard}>
+                    <div className={styles.moderatorIconWrapper}>
+                        <FaHeadset className={styles.moderatorIcon} />
+                    </div>
+                    <div className={styles.moderatorContent}>
+                        <h3 className={styles.moderatorTitle}>
+                            Moderator bilan bog'lanish
+                        </h3>
+                        <p className={styles.moderatorDescription}>
+                            Savol yoki muammo yuzasidan moderatorlarimizga
+                            murojaat qilishingiz mumkin.
+                        </p>
+                    </div>
+                    <Button
+                        type="primary"
+                        size="middle"
+                        icon={<FaRegCommentDots />}
+                        onClick={() => handleCreateChat(MODERATOR_ID)}
+                        className={styles.moderatorButton}>
+                        Chat ochish
+                    </Button>
+                </div>
                 <Tag
                     className="w-100 my-4 fs-4 text-wrap"
                     style={{
@@ -329,13 +355,20 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
         ? '100%'
         : '80%';
 
+    const handleCloseDrawer = () => {
+        setChatDrawerOpen(false);
+        setCurrentChat(null);
+        onClose();
+    };
+
     return (
         <>
             <Drawer
                 title="Frilanser takliflari"
                 placement="right"
+                className={styles.selectOrderDrawer}
                 width={drawerWidth}
-                onClose={onClose}
+                onClose={handleCloseDrawer}
                 open={open}
                 destroyOnClose
                 bodyStyle={{
@@ -390,30 +423,43 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                                     flexShrink: 0,
                                     gap: '12px',
                                 }}>
-                                <h3 style={{ margin: 0 }}>Chat</h3>
+                                {!isMobile && (
+                                    <h3 style={{ margin: 0 }}>Chat</h3>
+                                )}
+
                                 <div
                                     style={{
                                         display: 'flex',
                                         gap: '8px',
                                         alignItems: 'center',
+                                        width: isMobile ? '100%' : 'auto',
+                                        justifyContent: isMobile
+                                            ? 'space-between'
+                                            : 'flex-end',
+                                        flexDirection: isMobile
+                                            ? 'row-reverse'
+                                            : 'row',
                                     }}>
-                                    {matchingOffer && (
+                                    {matchingOffer && !isModerator && (
                                         <Button
                                             type="primary"
-                                            icon={<FaEye />}
+                                            icon={
+                                                <LiaHandshake fontSize={18} />
+                                            }
                                             onClick={() => {
                                                 setSelectedOffer(matchingOffer);
                                                 setChatDrawerOpen(false);
-                                                setCurrentChatId(null);
+                                                setCurrentChat(null);
                                             }}>
                                             Taklifni tanlash
                                         </Button>
                                     )}
                                     {isMobile && (
                                         <Button
+                                            icon={<IoMdArrowBack />}
                                             onClick={() => {
                                                 setChatDrawerOpen(false);
-                                                setCurrentChatId(null);
+                                                setCurrentChat(null);
                                             }}>
                                             Orqaga
                                         </Button>
@@ -427,13 +473,14 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                                     height: '100%',
                                     minHeight: 0,
                                 }}>
-                                {currentChatId && (
+                                {currentChat.chatId && (
                                     <ChatWindow
-                                        key={currentChatId}
-                                        chatId={currentChatId}
+                                        isModerator={isModerator}
+                                        key={currentChat.chatId}
+                                        chatId={currentChat.chatId}
                                         goBack={() => {
                                             setChatDrawerOpen(false);
-                                            setCurrentChatId(null);
+                                            setCurrentChat(null);
                                         }}
                                     />
                                 )}

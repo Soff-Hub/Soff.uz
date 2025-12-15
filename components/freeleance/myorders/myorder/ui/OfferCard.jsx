@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Avatar, Badge, Button } from 'antd';
 import { FaStar, FaRegCommentDots, FaEye } from 'react-icons/fa';
+import { LiaHandshake } from 'react-icons/lia';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import styles from '../style/select-order-drawer.module.scss';
 
@@ -140,7 +141,10 @@ const OfferCard = ({ offer, onSelect, onCreateChat }) => {
                         onClick={() => onSelect(offer)}
                         type="primary"
                         className={styles.selectButton}>
-                        <FaEye className={styles.selectIcon} />
+                        <LiaHandshake
+                            className={styles.selectIcon}
+                            fontSize={18}
+                        />
                         Tanlash
                     </Button>
                 </div>
