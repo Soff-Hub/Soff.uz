@@ -14,6 +14,7 @@ import { MdKeyboardDoubleArrowRight } from 'react-icons/md';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { logOut } from '~/store/auth/slice';
+import { logout as profileLogout } from '~/store/profile/slice';
 import { setSavedPrfileData } from '~/store/ecomerce/slice';
 import useAuth from '~/shared/hooks/useAuth';
 import useResponsive from '~/shared/utilities/useResponsive';
@@ -47,9 +48,20 @@ function Sidebar({ collapsed, onChangeCollapse }) {
         const res = logOutAuth(data);
 
         if (res) {
-            router.push('/auth/login');
             dispatch(logOut());
+            dispatch(profileLogout());
             dispatch(setSavedPrfileData(null));
+            // Navigate to login page after logout
+            const currentPath = router.asPath;
+            // Don't redirect if already on login page or auth pages
+            if (
+                !currentPath.includes('/auth/login') &&
+                !currentPath.includes('/auth/register') &&
+                !currentPath.includes('/auth/reset-password') &&
+                !currentPath.includes('/oauth')
+            ) {
+                router.push('/auth/login');
+            }
         }
     };
 

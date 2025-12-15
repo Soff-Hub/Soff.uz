@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { d_base_url, f_base_url } from '~/shared/api/base-url';
 import Cookies from 'js-cookie';
 import { logOut } from '~/store/auth/slice';
+import { logout as profileLogout } from '~/store/profile/slice';
 import { setSavedPrfileData } from '~/store/ecomerce/slice';
 
 const getToken = () => {
@@ -42,6 +43,21 @@ const baseQueryWithLogout = (baseQuery) => {
                 Cookies.remove('token');
                 api.dispatch(setSavedPrfileData(null));
                 api.dispatch(logOut());
+                api.dispatch(profileLogout());
+                
+                // Navigate to login page if on a protected/account page
+                const currentPath = window.location.pathname;
+                if (
+                    (currentPath.includes('/account') ||
+                        currentPath.includes('/order') ||
+                        currentPath.includes('/chat')) &&
+                    !currentPath.includes('/auth/login') &&
+                    !currentPath.includes('/auth/register') &&
+                    !currentPath.includes('/auth/reset-password') &&
+                    !currentPath.includes('/oauth')
+                ) {
+                    window.location.href = '/auth/login';
+                }
             }
         }
 

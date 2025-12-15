@@ -14,6 +14,8 @@ const userProfile = createSlice({
     reducers: {
         logout: (state) => {
             state.user = null;
+            apiSoffSlice.util.resetApiState();
+            apiFreelanceSlice.util.resetApiState();
         },
         setUser: (state, action) => {
             state.user = action.payload;
