@@ -132,7 +132,6 @@ const CreateOrderModal = ({
             const errorData = err?.response?.data;
             const errorDetail =
                 errorData?.detail || errorData?.message || err.message;
-            console.log({ errorDetail });
             if (errorDetail.includes('telefon raqam')) {
                 const values = form.getFieldsValue();
                 const order = {

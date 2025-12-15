@@ -88,7 +88,6 @@ const ChatSidebar = ({ setChat, containerHeight, chatId: selectedChatId }) => {
         try {
             const data = await createChat(MODERATOR_ID);
             setChat({ chat_id: data.chat_id, opponent_id: MODERATOR_ID });
-            console.log({ data });
         } catch (error) {
             console.error('⚠️ Xatolik yuz berdi:', error);
         }

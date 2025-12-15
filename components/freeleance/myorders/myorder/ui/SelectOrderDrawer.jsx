@@ -80,8 +80,6 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                 },
             });
 
-            console.log({ data });
-
             if (data?.chat_id) {
                 queryClient.invalidateQueries({ queryKey: ['chats'] });
                 setCurrentChat({ chatId: data.chat_id, opponentId: sellerId });
@@ -131,7 +129,6 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                     hasNextPage &&
                     !isFetchingNextPage
                 ) {
-                    console.log('Fetching next page of offers...');
                     fetchNextPage();
                 }
             },

@@ -43,7 +43,6 @@ const Chat = () => {
 
     const isSmallScreen = isMobile || isTablet;
     const isModerator = MODERATOR_ID == opponent_id;
-    console.log({ isModerator, chatId, MODERATOR_ID });
 
     const Sidebar = (
         <ChatSidebar
