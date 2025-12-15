@@ -322,16 +322,13 @@ const ProductFilterForm = ({ open, onClose, path, isFile, parent, child }) => {
     const handleSaveOnClose = () => {
         const filters = {
             parentCategory: selectedCategory.slug,
-            parentCategoryId: selectedCategory.id,
             childCategory: selectedSubCategory.slug,
-            childCategoryId: selectedSubCategory.id,
             content_extensions: fileTypes,
             price_from: priceRange[0],
             price_to: priceRange[1],
             from_page: pageRange[0],
             to_page: pageRange[1],
         };
-
         const newQuery = clearEmptyQueries({ ...query, ...filters });
         push({
             pathname: `${path}${
@@ -391,7 +388,7 @@ const ProductFilterForm = ({ open, onClose, path, isFile, parent, child }) => {
                             setSelectedCategory(undefined);
                         } else {
                             setSelectedCategory({
-                                slug: valObj.slug,
+                                slug: val,
                                 id: valObj.id,
                             });
                         }

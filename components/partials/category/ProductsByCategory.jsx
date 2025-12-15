@@ -11,7 +11,7 @@ export default function ProductsByCategory({
     return (
         <section className="">
             <div className="row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-gap-2 row-gap-md-5 row-gap-lg-3 mb-5">
-                {data?.results?.map(item => (
+                {data?.results?.map((item) => (
                     <div key={item.id} className="col px-1 px-md-3 px-lg-2">
                         <ProductCard product={item} />
                     </div>
@@ -46,7 +46,7 @@ export default function ProductsByCategory({
             )}
 
             {data?.count >= 50 && (
-                <div className="d-flex justify-content-center mt-5">
+                <div className="d-flex justify-content-center my-5">
                     <Pagination
                         className="text-success"
                         total={data?.count}
@@ -54,7 +54,7 @@ export default function ProductsByCategory({
                         responsive={true}
                         showSizeChanger={false}
                         current={page}
-                        onChange={e => handlePagination(e)}
+                        onChange={(e) => handlePagination(e)}
                     />
                 </div>
             )}

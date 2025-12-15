@@ -9,7 +9,6 @@ import styles from '~/widgets/home/catalog/style.module.scss';
 import Image from 'next/image';
 import ProductFilterSection from '~/components/elements/product-filter-section/ProductFilterSection';
 import GrayCard from '~/widgets/gray-card';
-import useSimilarSearch from '~/shared/hooks/useSimilarSearch';
 
 const metaProps = {
     image: 'https://soff.uz/static/img/ilmiy-ishlar-2.png',
@@ -48,11 +47,6 @@ export default function ProductCategoryScreen({
     childCategory,
     page,
 }) {
-    // NOTE: changed temporarily to productsData to avoid issues with search results
-    // const { mergedData } = useSimilarSearch({
-    //     defaultData: productsData,
-    //     defaultType: 'file',
-    // });
     const router = useRouter();
 
     const handlePageChange = (newPage) => {
@@ -92,8 +86,6 @@ export default function ProductCategoryScreen({
             />
             <div className="ps-page--shop container p-lg-10 p-l-0">
                 <ProductsByCategory
-                    // NOTE: changed temporarily to productsData to avoid issues with search results
-                    // data={mergedData}
                     data={productsData}
                     page={page}
                     handlePagination={(number) => {
@@ -175,11 +167,8 @@ export async function getServerSideProps(context) {
     const {
         page = 1,
         parentCategory = '',
-        parentCategoryId = '',
         childCategory = '',
-        childCategoryId = '',
         search = '',
-        category = '',
         content_extensions = [],
         price_from = '',
         price_to = '',
@@ -191,10 +180,11 @@ export async function getServerSideProps(context) {
         direction: type,
         page,
         page_size: 50,
-        search,
     });
 
-    if (category) queryParams.append('category', category);
+    const categoryParam = childCategory ? childCategory : parentCategory;
+    if (search) queryParams.append('search', search);
+    if (categoryParam) queryParams.append('category', categoryParam);
     if (content_extensions && content_extensions.length) {
         const exts = Array.isArray(content_extensions)
             ? content_extensions
@@ -207,33 +197,8 @@ export async function getServerSideProps(context) {
 
     if (price_from) queryParams.append('price_from', price_from);
     if (price_to) queryParams.append('price_to', price_to);
-    if (from_page) queryParams.append('from_page', from_page);
-    if (to_page) queryParams.append('to_page', to_page);
-
-    const searchParams = new URLSearchParams({
-        type,
-        limit: 50,
-        page,
-        search,
-    });
-
-    if (parentCategoryId) searchParams.append('category', parentCategoryId);
-    if (childCategoryId) searchParams.append('child_category', childCategoryId);
-    if (content_extensions && content_extensions.length) {
-        const exts = Array.isArray(content_extensions)
-            ? content_extensions
-            : [content_extensions];
-        const filteredExts = exts.map((ext) =>
-            ext.includes('.') ? ext.slice(1) : ext
-        );
-
-        searchParams.append('file_type', filteredExts.toString());
-    }
-
-    if (price_from) searchParams.append('price_from', price_from);
-    if (price_to) searchParams.append('price_to', price_to);
-    if (+to_page) searchParams.append('page_to', to_page);
-    if (+from_page) searchParams.append('page_from', from_page);
+    if (Number(from_page)) queryParams.append('from_page', from_page);
+    if (Number(to_page) < 100) queryParams.append('to_page', to_page);
 
     const fetchJson = async (url) => {
         const res = await fetch(url);
@@ -243,18 +208,11 @@ export async function getServerSideProps(context) {
         return res.json();
     };
 
-    const categoryParam = childCategory ? childCategory : parentCategory;
-
-    const productsUrl = `${baseUrlUseApi}customer/products/?${queryParams.toString()}&category=${categoryParam}`;
-    const searchPageUrl = `${baseUrlUseApi}customer/same-google-search/?${searchParams
-        .toString()
-        .replace(/%2C/g, ',')}`;
+    const productsUrl = `${baseUrlUseApi}customer/products/?${queryParams.toString()}`;
     const fourChildUrl = `${baseUrlUseApi}customer/four-child?direction=${type}`;
     const childCategoryUrl = `${baseUrlUseApi}customer/four-child?direction=${type}&parent__slug=${parentCategory}`;
 
     const [productsData, fourChildData, childCategoryData] = await Promise.all([
-        // NOTE: changed temporarily to productsUrl to avoid issues with search results
-        // fetchJson(search ? searchPageUrl : productsUrl),
         fetchJson(productsUrl),
         fetchJson(fourChildUrl),
         fetchJson(childCategoryUrl),
@@ -270,7 +228,6 @@ export async function getServerSideProps(context) {
             page,
             search,
             productsUrl,
-            searchPageUrl,
             content_extensions,
         },
     };

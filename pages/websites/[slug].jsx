@@ -7,7 +7,6 @@ import ProductsByCategory from '~/components/partials/category/ProductsByCategor
 import ProductFilterSection, {
     getTitleFromSlug,
 } from '~/components/elements/product-filter-section/ProductFilterSection';
-import useSimilarSearch from '~/shared/hooks/useSimilarSearch';
 
 const type = 'website';
 const defaultTitle = 'Veb saytlar';
@@ -20,12 +19,6 @@ export default function Websites({
     childCategoryData,
     page,
 }) {
-    // NOTE: changed temporarily to productsData to avoid issues with search results
-    // const { mergedData } = useSimilarSearch({
-    //     defaultData: productsData,
-    //     defaultType: type,
-    // });
-
     const router = useRouter();
     const handlePageChange = (newPage) => {
         router.push({
@@ -58,8 +51,6 @@ export default function Websites({
             />
             <div className="ps-page--shop container my-5">
                 <ProductsByCategory
-                    // NOTE: changed temporarily to productsData to avoid issues with search results
-                    // data={mergedData}
                     data={productsData}
                     page={page}
                     handlePagination={(number) => {
@@ -74,12 +65,9 @@ export default function Websites({
 
 export async function getServerSideProps(context) {
     const {
-        slug,
         page = 1,
         parentCategory = '',
-        parentCategoryId,
         childCategory = '',
-        childCategoryId,
         price_from = '',
         price_to = '',
         search = '',
@@ -95,27 +83,21 @@ export async function getServerSideProps(context) {
 
     const categoryParam = childCategory ? childCategory : parentCategory;
 
-    const searchParams = new URLSearchParams({
-        type,
-        search,
-        limit: 50,
+    const queryParams = new URLSearchParams({
+        direction: type,
         page,
-        category: categoryParam,
+        page_size: 50,
     });
+    if (search) queryParams.append('search', search);
+    if (categoryParam) queryParams.append('category', categoryParam);
+    if (price_from) queryParams.append('price_from', price_from);
+    if (price_to) queryParams.append('price_to', price_to);
 
-    if (parentCategoryId) searchParams.append('category', parentCategoryId);
-    if (childCategoryId) searchParams.append('child_category', childCategoryId);
-    if (price_from) searchParams.append('price_from', price_from);
-    if (price_to) searchParams.append('price_to', price_to);
-
-    const searchPageUrl = `${baseUrlUseApi}customer/same-google-search/?${searchParams.toString()}`;
-    const productsUrl = `${baseUrlUseApi}customer/products/?direction=${type}&category=${categoryParam}&page=${page}&page_size=50&search=${search}`;
+    const productsUrl = `${baseUrlUseApi}customer/products/?${queryParams.toString()}`;
     const fourChildUrl = `${baseUrlUseApi}customer/four-child?direction=${type}`;
     const childCategoryUrl = `${baseUrlUseApi}customer/four-child?direction=${type}&parent__slug=${parentCategory}`;
 
     const [productsData, fourChildData, childCategoryData] = await Promise.all([
-        // NOTE: changed temporarily to productsUrl to avoid issues with search results
-        // fetchJson(search ? searchPageUrl : productsUrl),
         fetchJson(productsUrl),
         fetchJson(fourChildUrl),
         fetchJson(childCategoryUrl),
@@ -128,7 +110,6 @@ export async function getServerSideProps(context) {
             childCategoryData: childCategoryData || null,
             parentCategory,
             childCategory,
-            searchPageUrl,
             page,
         },
     };
