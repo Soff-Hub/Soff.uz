@@ -11,7 +11,7 @@ exports.modules = {
 var _sentryCollisionFreeGlobalObject =  false ? 0 : typeof global != "undefined" ? global : typeof self != "undefined" ? self : {};
 _sentryCollisionFreeGlobalObject["__sentryRewritesTunnelPath__"] = undefined;
 _sentryCollisionFreeGlobalObject["SENTRY_RELEASE"] = {
-    "id": "062bc22c36f88012045bfd42a5e832684456742e"
+    "id": "f4c7eae54fd694eb77167a6f030cbef5e23b04fa"
 };
 _sentryCollisionFreeGlobalObject["__sentryBasePath"] = undefined;
 _sentryCollisionFreeGlobalObject["__rewriteFramesDistDir__"] = ".next";

@@ -29,16 +29,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(1853);
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _repositories_useApi__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(1064);
-/* harmony import */ var _widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(7795);
-/* harmony import */ var _widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var _widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(7795);
+/* harmony import */ var _widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_13__);
 /* harmony import */ var next_image__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(5675);
 /* harmony import */ var next_image__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(next_image__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _components_elements_product_filter_section_ProductFilterSection__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(6070);
 /* harmony import */ var _widgets_gray_card__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(3829);
-/* harmony import */ var _shared_hooks_useSimilarSearch__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(3801);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_4__, _components_partials_category_ProductsByCategory__WEBPACK_IMPORTED_MODULE_6__, _repositories_useApi__WEBPACK_IMPORTED_MODULE_9__, _components_elements_product_filter_section_ProductFilterSection__WEBPACK_IMPORTED_MODULE_11__, _shared_hooks_useSimilarSearch__WEBPACK_IMPORTED_MODULE_13__]);
-([_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_4__, _components_partials_category_ProductsByCategory__WEBPACK_IMPORTED_MODULE_6__, _repositories_useApi__WEBPACK_IMPORTED_MODULE_9__, _components_elements_product_filter_section_ProductFilterSection__WEBPACK_IMPORTED_MODULE_11__, _shared_hooks_useSimilarSearch__WEBPACK_IMPORTED_MODULE_13__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
-
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_4__, _components_partials_category_ProductsByCategory__WEBPACK_IMPORTED_MODULE_6__, _repositories_useApi__WEBPACK_IMPORTED_MODULE_9__, _components_elements_product_filter_section_ProductFilterSection__WEBPACK_IMPORTED_MODULE_11__]);
+([_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_4__, _components_partials_category_ProductsByCategory__WEBPACK_IMPORTED_MODULE_6__, _repositories_useApi__WEBPACK_IMPORTED_MODULE_9__, _components_elements_product_filter_section_ProductFilterSection__WEBPACK_IMPORTED_MODULE_11__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
 
 
@@ -120,11 +118,6 @@ const metaProps = {
 const type = "file";
 const defaultTitle = "Ilmiy ishlar kategoriyasi";
 function ProductCategoryScreen({ productsData , fourChildData , childCategoryData , parentCategory , childCategory , page ,  }) {
-    // NOTE: changed temporarily to productsData to avoid issues with search results
-    // const { mergedData } = useSimilarSearch({
-    //     defaultData: productsData,
-    //     defaultType: 'file',
-    // });
     const router = (0,next_router__WEBPACK_IMPORTED_MODULE_8__.useRouter)();
     const handlePageChange = (newPage)=>{
         router.push({
@@ -156,8 +149,6 @@ function ProductCategoryScreen({ productsData , fourChildData , childCategoryDat
             /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
                 className: "ps-page--shop container p-lg-10 p-l-0",
                 children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_components_partials_category_ProductsByCategory__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .Z, {
-                    // NOTE: changed temporarily to productsData to avoid issues with search results
-                    // data={mergedData}
                     data: productsData,
                     page: page,
                     handlePagination: (number)=>{
@@ -167,12 +158,12 @@ function ProductCategoryScreen({ productsData , fourChildData , childCategoryDat
                 })
             }),
             /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-                className: (_widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_14___default().catalogSectionBlock),
+                className: (_widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_13___default().catalogSectionBlock),
                 children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                     className: "container mx-auto px-5",
                     children: [
                         /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("section", {
-                            className: (_widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_14___default().howItWorksSection),
+                            className: (_widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_13___default().howItWorksSection),
                             children: [
                                 /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
                                     className: "d-flex justify-content-center my-5",
@@ -187,10 +178,10 @@ function ProductCategoryScreen({ productsData , fourChildData , childCategoryDat
                                     children: "Tayyor mahsulotlardan foydalanish qanday ishlaydi?"
                                 }),
                                 /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-                                    className: (_widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_14___default().steps),
+                                    className: (_widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_13___default().steps),
                                     children: [
                                         /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-                                            className: (_widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_14___default().stepItem),
+                                            className: (_widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_13___default().stepItem),
                                             children: [
                                                 /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
                                                     src: "/static/img/catalogMenu.png",
@@ -209,7 +200,7 @@ function ProductCategoryScreen({ productsData , fourChildData , childCategoryDat
                                             ]
                                         }),
                                         /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-                                            className: (_widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_14___default().stepItem),
+                                            className: (_widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_13___default().stepItem),
                                             children: [
                                                 /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
                                                     src: "/static/img/catalogCoin.png",
@@ -228,7 +219,7 @@ function ProductCategoryScreen({ productsData , fourChildData , childCategoryDat
                                             ]
                                         }),
                                         /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-                                            className: (_widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_14___default().stepItem),
+                                            className: (_widgets_home_catalog_style_module_scss__WEBPACK_IMPORTED_MODULE_13___default().stepItem),
                                             children: [
                                                 /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
                                                     src: "/static/img/catalogSecure.png",
@@ -262,14 +253,15 @@ function ProductCategoryScreen({ productsData , fourChildData , childCategoryDat
     });
 }
 async function getServerSideProps$1(context) {
-    const { page =1 , parentCategory ="" , parentCategoryId ="" , childCategory ="" , childCategoryId ="" , search ="" , category ="" , content_extensions =[] , price_from ="" , price_to ="" , from_page ="" , to_page ="" ,  } = context.query;
+    const { page =1 , parentCategory ="" , childCategory ="" , search ="" , content_extensions =[] , price_from ="" , price_to ="" , from_page ="" , to_page ="" ,  } = context.query;
     const queryParams = new URLSearchParams({
         direction: type,
         page,
-        page_size: 50,
-        search
+        page_size: 50
     });
-    if (category) queryParams.append("category", category);
+    const categoryParam = childCategory ? childCategory : parentCategory;
+    if (search) queryParams.append("search", search);
+    if (categoryParam) queryParams.append("category", categoryParam);
     if (content_extensions && content_extensions.length) {
         const exts = Array.isArray(content_extensions) ? content_extensions : [
             content_extensions
@@ -280,27 +272,8 @@ async function getServerSideProps$1(context) {
     }
     if (price_from) queryParams.append("price_from", price_from);
     if (price_to) queryParams.append("price_to", price_to);
-    if (from_page) queryParams.append("from_page", from_page);
-    if (to_page) queryParams.append("to_page", to_page);
-    const searchParams = new URLSearchParams({
-        type,
-        limit: 50,
-        page,
-        search
-    });
-    if (parentCategoryId) searchParams.append("category", parentCategoryId);
-    if (childCategoryId) searchParams.append("child_category", childCategoryId);
-    if (content_extensions && content_extensions.length) {
-        const exts1 = Array.isArray(content_extensions) ? content_extensions : [
-            content_extensions
-        ];
-        const filteredExts = exts1.map((ext)=>ext.includes(".") ? ext.slice(1) : ext);
-        searchParams.append("file_type", filteredExts.toString());
-    }
-    if (price_from) searchParams.append("price_from", price_from);
-    if (price_to) searchParams.append("price_to", price_to);
-    if (+to_page) searchParams.append("page_to", to_page);
-    if (+from_page) searchParams.append("page_from", from_page);
+    if (Number(from_page)) queryParams.append("from_page", from_page);
+    if (Number(to_page) < 100) queryParams.append("to_page", to_page);
     const fetchJson = async (url)=>{
         const res = await fetch(url);
         if (!res.ok) {
@@ -308,14 +281,10 @@ async function getServerSideProps$1(context) {
         }
         return res.json();
     };
-    const categoryParam = childCategory ? childCategory : parentCategory;
-    const productsUrl = `${_repositories_useApi__WEBPACK_IMPORTED_MODULE_9__/* .baseUrlUseApi */ .q}customer/products/?${queryParams.toString()}&category=${categoryParam}`;
-    const searchPageUrl = `${_repositories_useApi__WEBPACK_IMPORTED_MODULE_9__/* .baseUrlUseApi */ .q}customer/same-google-search/?${searchParams.toString().replace(/%2C/g, ",")}`;
+    const productsUrl = `${_repositories_useApi__WEBPACK_IMPORTED_MODULE_9__/* .baseUrlUseApi */ .q}customer/products/?${queryParams.toString()}`;
     const fourChildUrl = `${_repositories_useApi__WEBPACK_IMPORTED_MODULE_9__/* .baseUrlUseApi */ .q}customer/four-child?direction=${type}`;
     const childCategoryUrl = `${_repositories_useApi__WEBPACK_IMPORTED_MODULE_9__/* .baseUrlUseApi */ .q}customer/four-child?direction=${type}&parent__slug=${parentCategory}`;
     const [productsData, fourChildData, childCategoryData] = await Promise.all([
-        // NOTE: changed temporarily to productsUrl to avoid issues with search results
-        // fetchJson(search ? searchPageUrl : productsUrl),
         fetchJson(productsUrl),
         fetchJson(fourChildUrl),
         fetchJson(childCategoryUrl), 
@@ -330,7 +299,6 @@ async function getServerSideProps$1(context) {
             page,
             search,
             productsUrl,
-            searchPageUrl,
             content_extensions
         }
     };
@@ -1200,7 +1168,7 @@ module.exports = import("react-icons/lu");;
 var __webpack_require__ = require("../../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [676,1664,5675,5152,5780,3015,7864,2315,6985,6598,3701,5758,5029,1324,9187,4237,3801,9516], () => (__webpack_exec__(3163)));
+var __webpack_exports__ = __webpack_require__.X(0, [676,1664,5675,5152,5780,3015,8335,2315,6985,6598,3701,5758,5029,9187,4237,1064,9516], () => (__webpack_exec__(3163)));
 module.exports = __webpack_exports__;
 
 })();

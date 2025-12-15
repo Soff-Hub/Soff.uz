@@ -372,9 +372,7 @@ const ProductFilterForm = ({ open , onClose , path , isFile , parent , child  })
     const handleSaveOnClose = ()=>{
         const filters = {
             parentCategory: selectedCategory.slug,
-            parentCategoryId: selectedCategory.id,
             childCategory: selectedSubCategory.slug,
-            childCategoryId: selectedSubCategory.id,
             content_extensions: fileTypes,
             price_from: priceRange[0],
             price_to: priceRange[1],
@@ -442,7 +440,7 @@ const ProductFilterForm = ({ open , onClose , path , isFile , parent , child  })
                                 setSelectedCategory(undefined);
                             } else {
                                 setSelectedCategory({
-                                    slug: valObj.slug,
+                                    slug: val,
                                     id: valObj.id
                                 });
                             }
@@ -696,7 +694,7 @@ function ProductsByCategory({ data =[] , page , handlePagination ,  }) {
                 })
             }),
             data?.count >= 50 && /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                className: "d-flex justify-content-center mt-5",
+                className: "d-flex justify-content-center my-5",
                 children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_2__.Pagination, {
                     className: "text-success",
                     total: data?.count,

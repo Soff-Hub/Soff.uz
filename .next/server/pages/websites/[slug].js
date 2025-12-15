@@ -29,10 +29,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _repositories_useApi__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(1064);
 /* harmony import */ var _components_partials_category_ProductsByCategory__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(4345);
 /* harmony import */ var _components_elements_product_filter_section_ProductFilterSection__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(6070);
-/* harmony import */ var _shared_hooks_useSimilarSearch__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(3801);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_4__, _repositories_useApi__WEBPACK_IMPORTED_MODULE_7__, _components_partials_category_ProductsByCategory__WEBPACK_IMPORTED_MODULE_8__, _components_elements_product_filter_section_ProductFilterSection__WEBPACK_IMPORTED_MODULE_9__, _shared_hooks_useSimilarSearch__WEBPACK_IMPORTED_MODULE_10__]);
-([_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_4__, _repositories_useApi__WEBPACK_IMPORTED_MODULE_7__, _components_partials_category_ProductsByCategory__WEBPACK_IMPORTED_MODULE_8__, _components_elements_product_filter_section_ProductFilterSection__WEBPACK_IMPORTED_MODULE_9__, _shared_hooks_useSimilarSearch__WEBPACK_IMPORTED_MODULE_10__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
-
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_4__, _repositories_useApi__WEBPACK_IMPORTED_MODULE_7__, _components_partials_category_ProductsByCategory__WEBPACK_IMPORTED_MODULE_8__, _components_elements_product_filter_section_ProductFilterSection__WEBPACK_IMPORTED_MODULE_9__]);
+([_widgets_layouts_PageContainer__WEBPACK_IMPORTED_MODULE_4__, _repositories_useApi__WEBPACK_IMPORTED_MODULE_7__, _components_partials_category_ProductsByCategory__WEBPACK_IMPORTED_MODULE_8__, _components_elements_product_filter_section_ProductFilterSection__WEBPACK_IMPORTED_MODULE_9__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
 
 
@@ -47,11 +45,6 @@ var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_wid
 const type = "website";
 const defaultTitle = "Veb saytlar";
 function Websites({ productsData , parentCategory , childCategory , fourChildData , childCategoryData , page ,  }) {
-    // NOTE: changed temporarily to productsData to avoid issues with search results
-    // const { mergedData } = useSimilarSearch({
-    //     defaultData: productsData,
-    //     defaultType: type,
-    // });
     const router = (0,next_router__WEBPACK_IMPORTED_MODULE_6__.useRouter)();
     const handlePageChange = (newPage)=>{
         router.push({
@@ -81,8 +74,6 @@ function Websites({ productsData , parentCategory , childCategory , fourChildDat
             /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
                 className: "ps-page--shop container my-5",
                 children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_components_partials_category_ProductsByCategory__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Z, {
-                    // NOTE: changed temporarily to productsData to avoid issues with search results
-                    // data={mergedData}
                     data: productsData,
                     page: page,
                     handlePagination: (number)=>{
@@ -95,7 +86,7 @@ function Websites({ productsData , parentCategory , childCategory , fourChildDat
     });
 }
 async function getServerSideProps$1(context) {
-    const { slug , page =1 , parentCategory ="" , parentCategoryId , childCategory ="" , childCategoryId , price_from ="" , price_to ="" , search ="" ,  } = context.query;
+    const { page =1 , parentCategory ="" , childCategory ="" , price_from ="" , price_to ="" , search ="" ,  } = context.query;
     const fetchJson = async (url)=>{
         const res = await fetch(url);
         if (!res.ok) {
@@ -104,24 +95,19 @@ async function getServerSideProps$1(context) {
         return res.json();
     };
     const categoryParam = childCategory ? childCategory : parentCategory;
-    const searchParams = new URLSearchParams({
-        type,
-        search,
-        limit: 50,
+    const queryParams = new URLSearchParams({
+        direction: type,
         page,
-        category: categoryParam
+        page_size: 50
     });
-    if (parentCategoryId) searchParams.append("category", parentCategoryId);
-    if (childCategoryId) searchParams.append("child_category", childCategoryId);
-    if (price_from) searchParams.append("price_from", price_from);
-    if (price_to) searchParams.append("price_to", price_to);
-    const searchPageUrl = `${_repositories_useApi__WEBPACK_IMPORTED_MODULE_7__/* .baseUrlUseApi */ .q}customer/same-google-search/?${searchParams.toString()}`;
-    const productsUrl = `${_repositories_useApi__WEBPACK_IMPORTED_MODULE_7__/* .baseUrlUseApi */ .q}customer/products/?direction=${type}&category=${categoryParam}&page=${page}&page_size=50&search=${search}`;
+    if (search) queryParams.append("search", search);
+    if (categoryParam) queryParams.append("category", categoryParam);
+    if (price_from) queryParams.append("price_from", price_from);
+    if (price_to) queryParams.append("price_to", price_to);
+    const productsUrl = `${_repositories_useApi__WEBPACK_IMPORTED_MODULE_7__/* .baseUrlUseApi */ .q}customer/products/?${queryParams.toString()}`;
     const fourChildUrl = `${_repositories_useApi__WEBPACK_IMPORTED_MODULE_7__/* .baseUrlUseApi */ .q}customer/four-child?direction=${type}`;
     const childCategoryUrl = `${_repositories_useApi__WEBPACK_IMPORTED_MODULE_7__/* .baseUrlUseApi */ .q}customer/four-child?direction=${type}&parent__slug=${parentCategory}`;
     const [productsData, fourChildData, childCategoryData] = await Promise.all([
-        // NOTE: changed temporarily to productsUrl to avoid issues with search results
-        // fetchJson(search ? searchPageUrl : productsUrl),
         fetchJson(productsUrl),
         fetchJson(fourChildUrl),
         fetchJson(childCategoryUrl), 
@@ -133,7 +119,6 @@ async function getServerSideProps$1(context) {
             childCategoryData: childCategoryData || null,
             parentCategory,
             childCategory,
-            searchPageUrl,
             page
         }
     };
@@ -507,7 +492,7 @@ module.exports = import("react-icons/lu");;
 var __webpack_require__ = require("../../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [676,1664,5675,5152,5780,3015,7864,2315,6985,6598,3701,5758,5029,1324,9187,4237,3801,9516], () => (__webpack_exec__(3300)));
+var __webpack_exports__ = __webpack_require__.X(0, [676,1664,5675,5152,5780,3015,8335,2315,6985,6598,3701,5758,5029,9187,4237,1064,9516], () => (__webpack_exec__(3300)));
 module.exports = __webpack_exports__;
 
 })();

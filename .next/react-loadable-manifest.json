@@ -87,7 +87,7 @@
     "files": [
       "static/chunks/7221-1778201e61e30082.js",
       "static/css/28d062d5651f6852.css",
-      "static/chunks/438.7c3ed2a5596c6e97.js"
+      "static/chunks/438.1dfd405c074d5957.js"
     ]
   },
   "../widgets/home/index.jsx -> ./last-products": {
@@ -142,7 +142,7 @@
       "static/chunks/7150-8214926854f25dbd.js",
       "static/chunks/7818.b5a8bd15e0fa6828.js",
       "static/css/c8b97cf3468806ec.css",
-      "static/chunks/6935.c8490a9b73d46d35.js"
+      "static/chunks/6935.e049571d001c2bea.js"
     ]
   },
   "product/[pid].jsx -> react-joyride": {

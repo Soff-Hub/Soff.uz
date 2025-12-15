@@ -1,5 +1,5 @@
-exports.id = 7057;
-exports.ids = [7057];
+exports.id = 9227;
+exports.ids = [9227];
 exports.modules = {
 
 /***/ 8323:
@@ -11,6 +11,15 @@ module.exports = {
 	"chat_search": "chat_chat_search__3ZpEO",
 	"sidebar_chats": "chat_sidebar_chats__jbXug",
 	"sidebar_chat": "chat_sidebar_chat___aShD",
+	"selectedChat": "chat_selectedChat__D8gfx",
+	"moderatorCard": "chat_moderatorCard__MZB3g",
+	"selectedModerator": "chat_selectedModerator__DMJjC",
+	"moderatorAccent": "chat_moderatorAccent__Ln2Tk",
+	"moderatorAvatar": "chat_moderatorAvatar__W1HTk",
+	"moderatorInfo": "chat_moderatorInfo__2S7uc",
+	"moderatorHeaderRow": "chat_moderatorHeaderRow__mVF0L",
+	"moderatorBadge": "chat_moderatorBadge__HqDZD",
+	"moderatorSubtext": "chat_moderatorSubtext__CfVRv",
 	"sidebar_chat_wrapper": "chat_sidebar_chat_wrapper__5OiMK",
 	"box1": "chat_box1__5Rnob",
 	"box2": "chat_box2__WRqUW",
@@ -1507,9 +1516,10 @@ var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_Cha
 
 
 
+
 const { TextArea  } = antd__WEBPACK_IMPORTED_MODULE_2__.Input;
 const maxSize = 50 * 1024 * 1024;
-const ChatWindow = ({ chatId , goBack , containerHeight  })=>{
+const ChatWindow = ({ chatId , goBack , containerHeight , isModerator =false ,  })=>{
     const { 0: edit , 1: setEdit  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
     const { user  } = (0,react_redux__WEBPACK_IMPORTED_MODULE_14__.useSelector)((state)=>state.profile);
     const { 0: openDownIcon , 1: setOpenDownIcon  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
@@ -1649,6 +1659,10 @@ const ChatWindow = ({ chatId , goBack , containerHeight  })=>{
             setOpenDownIcon(false);
         }
     };
+    const handleNavigateSellerProfile = ()=>{
+        if (isModerator) return;
+        router.push(`/seller/${chat?.opponent?.id}`);
+    };
     if (!chatId) {
         return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
             className: `${(_style_chat_module_scss__WEBPACK_IMPORTED_MODULE_16___default().chat_window)} d-flex align-items-center justify-content-center`,
@@ -1731,11 +1745,12 @@ const ChatWindow = ({ chatId , goBack , containerHeight  })=>{
                     }),
                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_2__.Avatar, {
                         size: 50,
-                        src: recipient?.photo_url,
-                        icon: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_icons_fa__WEBPACK_IMPORTED_MODULE_13__.FaRegUserCircle, {}),
-                        onClick: ()=>router.push(`/seller/${chat?.opponent?.id}`),
+                        src: isModerator ? null : recipient?.photo_url,
+                        icon: isModerator ? /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_icons_fa__WEBPACK_IMPORTED_MODULE_13__.FaHeadset, {}) : /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_icons_fa__WEBPACK_IMPORTED_MODULE_13__.FaRegUserCircle, {}),
+                        onClick: handleNavigateSellerProfile,
                         style: {
-                            cursor: "pointer"
+                            cursor: "pointer",
+                            backgroundColor: isModerator ? "#1677ff" : undefined
                         }
                     }),
                     /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
@@ -1744,7 +1759,7 @@ const ChatWindow = ({ chatId , goBack , containerHeight  })=>{
                             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
                                 className: (_style_chat_module_scss__WEBPACK_IMPORTED_MODULE_16___default().user_names),
                                 children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("h4", {
-                                    onClick: ()=>router.push(`/seller/${chat?.opponent?.id}`),
+                                    onClick: handleNavigateSellerProfile,
                                     style: {
                                         cursor: "pointer"
                                     },
@@ -1752,7 +1767,7 @@ const ChatWindow = ({ chatId , goBack , containerHeight  })=>{
                                 })
                             }),
                             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
-                                children: chat?.opponent?.last_seen
+                                children: isModerator ? "Online" : chat?.opponent?.last_seen
                             })
                         ]
                     })
@@ -1813,6 +1828,7 @@ const ChatWindow = ({ chatId , goBack , containerHeight  })=>{
                 })
             }),
             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(ChatInputParts, {
+                isModerator: isModerator,
                 edit: edit,
                 chatId: chatId,
                 chat: chat,
@@ -1836,7 +1852,7 @@ const InfiniteLoaderComponent = ()=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMP
             size: 20
         })
     });
-const ChatInputParts = ({ edit , chat , chatId , messagesContainerRef , openDownIcon , sendMessage , sendMessageWithFile , isMessageWithFilePending , updateMessage , setEdit ,  })=>{
+const ChatInputParts = ({ isModerator , edit , chat , chatId , messagesContainerRef , openDownIcon , sendMessage , sendMessageWithFile , isMessageWithFilePending , updateMessage , setEdit ,  })=>{
     const { 0: newMessage , 1: setNewMessage  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("");
     const { 0: fileList , 1: setFileList  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]);
     const { startTimeout  } = (0,_shared_hooks_useTimeManager__WEBPACK_IMPORTED_MODULE_12__/* .useTimeManager */ .h)();
@@ -1993,7 +2009,7 @@ const ChatInputParts = ({ edit , chat , chatId , messagesContainerRef , openDown
             /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
                 className: (_style_chat_module_scss__WEBPACK_IMPORTED_MODULE_16___default().chat_input_box),
                 children: [
-                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_2__.Tooltip, {
+                    !isModerator && /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_2__.Tooltip, {
                         title: "Maxsus buyurtma berish",
                         children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_2__.Button, {
                             type: "primary",
@@ -2108,6 +2124,92 @@ const SafetyAlert = ()=>{
 
 /***/ }),
 
+/***/ 1639:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Jt": () => (/* binding */ MODERATOR_ID),
+/* harmony export */   "fE": () => (/* binding */ digitalDirections)
+/* harmony export */ });
+/* unused harmony export faqs */
+const faqs = [
+    {
+        question: "Soff.uz nima?",
+        answer: "Soff.uz — bu onlayn raqamli mahsulotlar va xizmatlar bozori bo‘lib, bu yerda siz turli raqamli mahsulotlarni, masalan, audio fayllar, videolar, grafikalar, ta'lim ma'teriallari va boshqa raqamli mahsulotlarni osonlik bilan sotib olishingiz mumkin."
+    },
+    {
+        question: "Soff.uz’dan qanday mahsulotlarni sotib olishim mumkin?",
+        answer: "Soff.uz platformasida quyidagi turdagi mahsulotlarni sotib olishingiz mumkin: Raqamli ta’lim materiallari, Grafikalar, dizaynlar va logotiplar, Audio va video fayllar, Kitoblar, maqolalar va boshqa yozma kontentlar, Veb dizayn va boshqa raqamli xizmatlar. Platformada sotilayotgan barcha mahsulotlar sifatli va foydalanuvchilarga kerakli ma'lumotlarni o‘z ichiga oladi."
+    },
+    {
+        question: "Soff.uz’dan mahsulotlarni qanday sotib olish mumkin?",
+        answer: "Soff.uz’dan mahsulot sotib olish uchun: Platformada ro‘yxatdan o‘tishingiz kerak. Mahsulotni tanlab, unga tegishli sahifaga o‘ting. 'Hoziroq xarid qilish' tugmasini bosing va to‘lovni amalga oshiring. To‘lov tasdiqlangandan so‘ng, mahsulotni darhol yuklab olish imkoniyatiga ega bo‘lasiz."
+    },
+    {
+        question: "To‘lov usullari qanday?",
+        answer: "Soff.uz platformasida quyidagi to‘lov usullari mavjud: Bank kartalari (Visa, MasterCard) Elektron hamyonlar (Payme, Click), Pul o‘tkazmalari orqali to‘lov. Har bir to‘lov usuli xavfsiz va qulay tarzda amalga oshiriladi."
+    },
+    {
+        question: "Sotib olingan mahsulotni qanday yuklab olish mumkin?",
+        answer: "Sotib olingan mahsulotni yuklab olish juda oson. To‘lov tasdiqlanganidan so‘ng, mahsulotning sahifasida 'Yuklab olish' tugmasi paydo bo‘ladi. Ushbu tugmani bosing va mahsulotni o‘zingizning qurilmangizga yuklab oling. Ikkinchi yo'li Xaridor o'z profiliga kirganda Xarid qilingan materiallar bo'limida ham sotib olingan mahsulot qo'shilib borad. Agar mahsulotni yuklab olishda muammo yuzaga kelsa, Soff.uz mijozlarga xizmat ko‘rsatish bo‘limiga murojaat qiling."
+    },
+    {
+        question: "Sotib olingan mahsulotni qanday qaytarib olishim mumkin?",
+        answer: "Soff.uz platformasida sotib olingan raqamli mahsulotlarni qaytarish siyosati platformaning foydalanuvchi shartnomasi asosida belgilanadi. Agar mahsulotda biror muammo yuzaga kelsa, bizning mijozlarga xizmat ko‘rsatish bo‘limiga murojaat qilishingiz mumkin. Mahsulotni qaytarish faqat ba'zi holatlarda amalga oshiriladi, masalan, mahsulot noto‘g‘ri taqdim etilgan bo‘lsa."
+    },
+    {
+        question: "Soff.uz’dan mahsulotni qanday izlashim mumkin?",
+        answer: "Soff.uz’da mahsulotlarni izlash juda oson. Saytning yuqori qismidagi qidiruv paneli orqali kerakli mahsulot yoki xizmat nomini kiritib qidirishingiz mumkin. Shuningdek, kategoriya bo‘yicha ham mahsulotlarni topishingiz mumkin."
+    },
+    {
+        question: "Soff.uz xavfsizmi?",
+        answer: "Ha, Soff.uz foydalanuvchilarining shaxsiy ma'lumotlari va to‘lovlari xavfsiz tarzda himoyalangan. Platformada barcha ma’lumotlar shifrlangan va xavfsiz to‘lov tizimlari orqali amalga oshiriladi."
+    },
+    {
+        question: "Xarid qilishda qanday yordam olishim mumkin?",
+        answer: "Agar mahsulot sotib olish jarayonida yordamga muhtoj bo‘lsangiz yoki mahsulotga oid savollaringiz bo‘lsa, Soff.uz mijozlarga xizmat ko‘rsatish bo‘limiga murojaat qilishingiz mumkin. Bizning yordam markazimizda tez-tez beriladigan savollar va batafsil javoblar mavjud."
+    },
+    {
+        question: "Soff.uz’da yangiliklar va takliflar haqida qanday xabardor bo‘lishim mumkin?",
+        answer: "Soff.uz platformasida yangi mahsulotlar, chegirmalar va maxsus takliflar haqida xabardor bo‘lish uchun Soff.uzning Telegram kanali yoki email xabarnomalaridan foydalanishingiz mumkin."
+    },
+    {
+        question: "Soff.uz yordam markazi bilan qanday bog‘lanishim mumkin?",
+        answer: "Agar Soff.uz bilan bog‘lanishingiz kerak bo‘lsa, bizning Telegram kanali orqali yoki email orqali bizga murojaat qilishingiz mumkin. Shuningdek, saytimizda mavjud Yordam markazi orqali tezkor javoblar olishingiz mumkin."
+    }, 
+];
+const digitalDirections = [
+    {
+        value: "file",
+        label: "Ilmiy ishlar"
+    },
+    {
+        value: "3d",
+        label: "3D moddellar va Vizualizatsiya"
+    },
+    {
+        value: "design",
+        label: "Dizayn shablonlari"
+    },
+    {
+        value: "template",
+        label: "Turli sohalar uchun shablonlar"
+    },
+    {
+        value: "video",
+        label: "Video darsliklar"
+    },
+    {
+        value: "website",
+        label: "Dasturlash xizmatlar"
+    }, 
+];
+const MODERATOR_ID = 164;
+
+
+/***/ }),
+
 /***/ 696:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -2172,4 +2274,4 @@ async function sleep(ms = 1000) {
 
 };
 ;
-//# sourceMappingURL=7057.js.map
+//# sourceMappingURL=9227.js.map

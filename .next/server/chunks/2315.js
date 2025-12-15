@@ -267,7 +267,7 @@ const NetworkStatusComponent = next_dynamic__WEBPACK_IMPORTED_MODULE_8___default
 });
 const PageLayout = ({ children , title , withFooter =true  } = {})=>{
     const { user  } = (0,react_redux__WEBPACK_IMPORTED_MODULE_3__.useSelector)((state)=>state.auth);
-    (0,_store_profile_slice__WEBPACK_IMPORTED_MODULE_7__/* .useGetProfileQuery */ .Mx)("userfetch", {
+    (0,_store_profile_slice__WEBPACK_IMPORTED_MODULE_7__/* .useGetProfileQuery */ .Mx)(`userfetch - ${user?.access}`, {
         skip: !user?.access
     });
     (0,_store_profile_slice__WEBPACK_IMPORTED_MODULE_7__/* .useGetDirectionsQuery */ .P5)();

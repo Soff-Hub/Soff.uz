@@ -58,12 +58,14 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(1853);
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _store_auth_slice__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(3015);
-/* harmony import */ var _store_ecomerce_slice__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(2160);
-/* harmony import */ var _shared_hooks_useAuth__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(1691);
-/* harmony import */ var _shared_utilities_useResponsive__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(6603);
-/* harmony import */ var _shared_hooks_useDebounce__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(1275);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([react_icons_ri__WEBPACK_IMPORTED_MODULE_4__, react_icons_fa__WEBPACK_IMPORTED_MODULE_5__, react_icons_pi__WEBPACK_IMPORTED_MODULE_6__, react_icons_md__WEBPACK_IMPORTED_MODULE_7__, _store_auth_slice__WEBPACK_IMPORTED_MODULE_10__, _store_ecomerce_slice__WEBPACK_IMPORTED_MODULE_11__, _shared_hooks_useAuth__WEBPACK_IMPORTED_MODULE_12__]);
-([react_icons_ri__WEBPACK_IMPORTED_MODULE_4__, react_icons_fa__WEBPACK_IMPORTED_MODULE_5__, react_icons_pi__WEBPACK_IMPORTED_MODULE_6__, react_icons_md__WEBPACK_IMPORTED_MODULE_7__, _store_auth_slice__WEBPACK_IMPORTED_MODULE_10__, _store_ecomerce_slice__WEBPACK_IMPORTED_MODULE_11__, _shared_hooks_useAuth__WEBPACK_IMPORTED_MODULE_12__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+/* harmony import */ var _store_profile_slice__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(9880);
+/* harmony import */ var _store_ecomerce_slice__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(2160);
+/* harmony import */ var _shared_hooks_useAuth__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(1691);
+/* harmony import */ var _shared_utilities_useResponsive__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(6603);
+/* harmony import */ var _shared_hooks_useDebounce__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(1275);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([react_icons_ri__WEBPACK_IMPORTED_MODULE_4__, react_icons_fa__WEBPACK_IMPORTED_MODULE_5__, react_icons_pi__WEBPACK_IMPORTED_MODULE_6__, react_icons_md__WEBPACK_IMPORTED_MODULE_7__, _store_auth_slice__WEBPACK_IMPORTED_MODULE_10__, _store_profile_slice__WEBPACK_IMPORTED_MODULE_11__, _store_ecomerce_slice__WEBPACK_IMPORTED_MODULE_12__, _shared_hooks_useAuth__WEBPACK_IMPORTED_MODULE_13__]);
+([react_icons_ri__WEBPACK_IMPORTED_MODULE_4__, react_icons_fa__WEBPACK_IMPORTED_MODULE_5__, react_icons_pi__WEBPACK_IMPORTED_MODULE_6__, react_icons_md__WEBPACK_IMPORTED_MODULE_7__, _store_auth_slice__WEBPACK_IMPORTED_MODULE_10__, _store_profile_slice__WEBPACK_IMPORTED_MODULE_11__, _store_ecomerce_slice__WEBPACK_IMPORTED_MODULE_12__, _shared_hooks_useAuth__WEBPACK_IMPORTED_MODULE_13__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+
 
 
 
@@ -90,9 +92,9 @@ const disableLinkStyle = {
     pointerEvents: "none"
 };
 function Sidebar({ collapsed , onChangeCollapse  }) {
-    const { logOutAuth  } = (0,_shared_hooks_useAuth__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .Z)();
-    const { size  } = (0,_shared_utilities_useResponsive__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .Z)();
-    const isStyleApplicable = (0,_shared_hooks_useDebounce__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .Z)(!collapsed, 200);
+    const { logOutAuth  } = (0,_shared_hooks_useAuth__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .Z)();
+    const { size  } = (0,_shared_utilities_useResponsive__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .Z)();
+    const isStyleApplicable = (0,_shared_hooks_useDebounce__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Z)(!collapsed, 200);
     const router = (0,next_router__WEBPACK_IMPORTED_MODULE_9__.useRouter)();
     const { user  } = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.useSelector)((state)=>state.profile);
     const dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.useDispatch)();
@@ -107,9 +109,15 @@ function Sidebar({ collapsed , onChangeCollapse  }) {
         };
         const res = logOutAuth(data);
         if (res) {
-            router.push("/auth/login");
             dispatch((0,_store_auth_slice__WEBPACK_IMPORTED_MODULE_10__/* .logOut */ .ni)());
-            dispatch((0,_store_ecomerce_slice__WEBPACK_IMPORTED_MODULE_11__/* .setSavedPrfileData */ .EE)(null));
+            dispatch((0,_store_profile_slice__WEBPACK_IMPORTED_MODULE_11__/* .logout */ .kS)());
+            dispatch((0,_store_ecomerce_slice__WEBPACK_IMPORTED_MODULE_12__/* .setSavedPrfileData */ .EE)(null));
+            // Navigate to login page after logout
+            const currentPath = router.asPath;
+            // Don't redirect if already on login page or auth pages
+            if (!currentPath.includes("/auth/login") && !currentPath.includes("/auth/register") && !currentPath.includes("/auth/reset-password") && !currentPath.includes("/oauth")) {
+                router.push("/auth/login");
+            }
         }
     };
     const items = (0,react__WEBPACK_IMPORTED_MODULE_1__.useMemo)(()=>[

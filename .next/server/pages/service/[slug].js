@@ -2019,7 +2019,7 @@ module.exports = import("yet-another-react-lightbox");;
 var __webpack_require__ = require("../../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [676,1664,5675,5152,5780,3015,7864,2315,6985,6598,3701,5758,6020,2536,3060,2495,3944,8909,3215,681,2998,7732,5138,583], () => (__webpack_exec__(8012)));
+var __webpack_exports__ = __webpack_require__.X(0, [676,1664,5675,5152,5780,3015,8335,2315,6985,6598,3701,5758,6020,2536,3060,2495,3944,8909,3215,681,2998,7732,5138,583], () => (__webpack_exec__(8012)));
 module.exports = __webpack_exports__;
 
 })();

@@ -1471,7 +1471,7 @@ const UserProducts = ({ id , direction  })=>{
                         placeholder: "Mahsulot qidirish..."
                     }),
                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_4__.Select, {
-                        options: _shared_constants__WEBPACK_IMPORTED_MODULE_6__/* .digitalDirections */ .f,
+                        options: _shared_constants__WEBPACK_IMPORTED_MODULE_6__/* .digitalDirections */ .fE,
                         value: type,
                         onChange: handleTypeChange,
                         className: (0,_shared_utilities_cn__WEBPACK_IMPORTED_MODULE_2__.cn)("flex-1", "w-full")
@@ -2626,7 +2626,8 @@ async function fetchJson(url) {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "f": () => (/* binding */ digitalDirections)
+/* harmony export */   "Jt": () => (/* binding */ MODERATOR_ID),
+/* harmony export */   "fE": () => (/* binding */ digitalDirections)
 /* harmony export */ });
 /* unused harmony export faqs */
 const faqs = [
@@ -2701,6 +2702,7 @@ const digitalDirections = [
         label: "Dasturlash xizmatlar"
     }, 
 ];
+const MODERATOR_ID = 164;
 
 
 /***/ }),
@@ -3152,7 +3154,7 @@ module.exports = import("swiper/react");;
 var __webpack_require__ = require("../../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [676,1664,5675,5152,5780,3015,7864,2315,6985,6598,3701,5758,6020,2536,3060,5029,2495,3944,1324,6400,8310,8909,4237,3215,681,2998,1703,7732], () => (__webpack_exec__(1942)));
+var __webpack_exports__ = __webpack_require__.X(0, [676,1664,5675,5152,5780,3015,8335,2315,6985,6598,3701,5758,6020,2536,3060,5029,2495,3944,6400,8310,8909,4237,3215,681,2998,1703,7732,1324], () => (__webpack_exec__(1942)));
 module.exports = __webpack_exports__;
 
 })();
