@@ -14,6 +14,8 @@ import useChats from '../api/useChats';
 import useDebounce from '~/shared/hooks/useDebounce';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
 import useCreateChat from '../api/useCreateChat';
+import { MODERATOR_ID } from '~/shared/constants';
+import { FaHeadset } from 'react-icons/fa';
 
 function BackButton() {
     const router = useRouter();
@@ -39,99 +41,58 @@ function BackButton() {
     );
 }
 
-const STATIC_OPPONENT_ID = 30;
-
 const DEFAULT_STATIC_CHAT_COPY = {
-    opponent_name: 'Zufarbek Abdurakhmonov',
-    opponent_photo_url: '/static/img/ozodbek.png',
-    last_message: { content: '' },
+    opponent_name: 'Moderator',
+    opponent_photo_url: '',
+    last_message: { content: '24/7 Yordam xizmati' },
 };
 
-const ChatSidebar = ({ setChatId, containerHeight }) => {
+const ChatSidebar = ({ setChat, containerHeight, chatId: selectedChatId }) => {
     const [search, setSearch] = useState('');
     const debouncedSearch = useDebounce(search, 300);
-    const router = useRouter();
-    const { mutate: createChat, isPending: isCreatingChat } = useCreateChat();
-    const [persistedStaticChat, setPersistedStaticChat] = useState(null);
-
-    const handleChatId = useCallback(
-        (id) => {
-            setChatId(id);
-            router.replace({
-                pathname: router.pathname,
-                query: { chatId: id },
-            });
-        },
-        [router, setChatId]
-    );
+    const { mutateAsync: createChat, isPending: isCreatingChat } =
+        useCreateChat();
 
     const { chats, isLoading } = useChats(debouncedSearch);
 
     const getOpponentId = useCallback((chat) => {
         if (!chat) return null;
-        return (
-            chat?.opponent?.id ??
-            chat?.opponent_id ??
-            chat?.opponentId ??
-            chat?.opponent?.soff_seller_id ??
-            null
-        );
+        return +chat?.opponent_id;
     }, []);
 
-    const existingStaticChat = useMemo(
-        () => chats?.find((chat) => getOpponentId(chat) === STATIC_OPPONENT_ID),
-        [chats, getOpponentId]
-    );
-
-    useEffect(() => {
-        if (existingStaticChat?.chat_id) {
-            setPersistedStaticChat(existingStaticChat);
-        }
-    }, [existingStaticChat]);
-
-    const resolvedStaticChat = persistedStaticChat ?? existingStaticChat;
-
     const staticChat = useMemo(() => {
-        if (resolvedStaticChat) {
-            return {
-                ...resolvedStaticChat,
-                chat_id:
-                    resolvedStaticChat.chat_id ??
-                    `static-${STATIC_OPPONENT_ID}`,
-                __isStatic: true,
-            };
-        }
+        const existingStaticChat = chats?.find(
+            (chat) => getOpponentId(chat) == MODERATOR_ID
+        );
+        if (existingStaticChat)
+            return { ...existingStaticChat, __isStatic: true };
 
         return {
-            chat_id: `static-${STATIC_OPPONENT_ID}`,
-            unread_count: 0,
-            ...DEFAULT_STATIC_CHAT_COPY,
-            last_message: {
-                content: DEFAULT_STATIC_CHAT_COPY.last_message.content,
-            },
             __isStatic: true,
         };
-    }, [resolvedStaticChat]);
+    }, [chats, getOpponentId]);
 
     const orderedChats = useMemo(() => {
         const dynamicChats =
-            chats?.filter(
-                (chat) => getOpponentId(chat) !== STATIC_OPPONENT_ID
-            ) ?? [];
+            chats?.filter((chat) => getOpponentId(chat) !== MODERATOR_ID) ?? [];
 
         return [staticChat, ...dynamicChats];
     }, [chats, staticChat, getOpponentId]);
 
-    const handleStaticChatClick = useCallback(() => {
-        const activeStaticChatId =
-            resolvedStaticChat?.chat_id ?? existingStaticChat?.chat_id;
-
-        if (activeStaticChatId) {
-            handleChatId(activeStaticChatId);
+    const handleStaticChatClick = async () => {
+        if (staticChat.chat_id) {
+            setChat(staticChat);
             return;
         }
-        createChat(STATIC_OPPONENT_ID);
-    }, [createChat, existingStaticChat, handleChatId, resolvedStaticChat]);
+
+        try {
+            const data = await createChat(MODERATOR_ID);
+            setChat({ chat_id: data.chat_id, opponent_id: MODERATOR_ID });
+            console.log({ data });
+        } catch (error) {
+            console.error('⚠️ Xatolik yuz berdi:', error);
+        }
+    };
 
     return (
         <div
@@ -153,24 +114,58 @@ const ChatSidebar = ({ setChatId, containerHeight }) => {
                     </div>
                 ) : null}
                 {!isLoading &&
-                    orderedChats?.map((chat, index) => {
+                    orderedChats?.map((chat) => {
                         const isStatic = chat?.__isStatic;
-                        const key =
-                            chat?.chat_id ??
-                            (isStatic
-                                ? `static-${STATIC_OPPONENT_ID}`
-                                : `chat-${index}`);
-
+                        const isSelected = selectedChatId == chat?.chat_id;
+                        if (isStatic) {
+                            return (
+                                <div
+                                    key={'static-' + MODERATOR_ID}
+                                    onClick={handleStaticChatClick}
+                                    className={`${styles.sidebar_chat} ${
+                                        styles.moderatorCard
+                                    } ${
+                                        isSelected
+                                            ? styles.selectedModerator
+                                            : ''
+                                    }`}
+                                    aria-disabled={isCreatingChat}>
+                                    <div className={styles.moderatorAvatar}>
+                                        <FaHeadset />
+                                    </div>
+                                    <div className={styles.moderatorInfo}>
+                                        <div
+                                            className={
+                                                styles.moderatorHeaderRow
+                                            }>
+                                            <h4>Support</h4>
+                                            <span
+                                                className={
+                                                    styles.moderatorBadge
+                                                }>
+                                                Aloqa
+                                            </span>
+                                        </div>
+                                        <p className={styles.moderatorSubtext}>
+                                            {truncateTitle(
+                                                chat?.last_message?.content ||
+                                                    'Texnik yordam xizmati',
+                                                40
+                                            )}
+                                        </p>
+                                    </div>
+                                    {isCreatingChat && <Spin size="small" />}
+                                </div>
+                            );
+                        }
                         return (
                             <div
-                                key={key}
-                                onClick={() =>
-                                    isStatic
-                                        ? handleStaticChatClick()
-                                        : handleChatId(chat?.chat_id)
-                                }
-                                className={`${styles.sidebar_chat} `}
-                                aria-disabled={isStatic && isCreatingChat}>
+                                key={chat?.chat_id}
+                                onClick={() => setChat(chat)}
+                                className={`${styles.sidebar_chat} ${
+                                    isSelected ? styles.selectedChat : ''
+                                }`}
+                                aria-disabled={false}>
                                 <img
                                     src={
                                         chat?.opponent_photo_url ||
@@ -189,17 +184,10 @@ const ChatSidebar = ({ setChatId, containerHeight }) => {
                                         </span>
                                     </div>
                                     <div className={styles.box2}>
-                                        <p>
-                                            {isStatic && isCreatingChat && (
-                                                <Spin size="small" />
-                                            )}
-                                        </p>
-                                        {!isStatic &&
-                                            chat?.unread_count > 0 && (
-                                                <span>
-                                                    {chat?.unread_count}
-                                                </span>
-                                            )}
+                                        <p></p>
+                                        {chat?.unread_count > 0 && (
+                                            <span>{chat?.unread_count}</span>
+                                        )}
                                     </div>
                                 </div>
                             </div>

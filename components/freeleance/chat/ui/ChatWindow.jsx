@@ -31,11 +31,17 @@ import { useTimeManager } from '~/shared/hooks/useTimeManager';
 import { FaRegUserCircle } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import ChatDateSeperator from './ChatDateSeperator';
+import { FaHeadset } from 'react-icons/fa';
 
 const { TextArea } = Input;
 const maxSize = 50 * 1024 * 1024;
 
-const ChatWindow = ({ chatId, goBack, containerHeight }) => {
+const ChatWindow = ({
+    chatId,
+    goBack,
+    containerHeight,
+    isModerator = false,
+}) => {
     const [edit, setEdit] = useState(null);
     const { user } = useSelector((state) => state.profile);
     const [openDownIcon, setOpenDownIcon] = useState(false);
@@ -218,6 +224,11 @@ const ChatWindow = ({ chatId, goBack, containerHeight }) => {
         }
     };
 
+    const handleNavigateSellerProfile = () => {
+        if (isModerator) return;
+        router.push(`/seller/${chat?.opponent?.id}`);
+    };
+
     if (!chatId) {
         return (
             <div
@@ -294,22 +305,25 @@ const ChatWindow = ({ chatId, goBack, containerHeight }) => {
                 )}
                 <Avatar
                     size={50}
-                    src={recipient?.photo_url}
-                    icon={<FaRegUserCircle />}
-                    onClick={() => router.push(`/seller/${chat?.opponent?.id}`)}
-                    style={{ cursor: 'pointer' }}
+                    src={isModerator ? null : recipient?.photo_url}
+                    icon={isModerator ? <FaHeadset /> : <FaRegUserCircle />}
+                    onClick={handleNavigateSellerProfile}
+                    style={{
+                        cursor: 'pointer',
+                        backgroundColor: isModerator ? '#1677ff' : undefined,
+                    }}
                 />
                 <div className={styles.user_box}>
                     <div className={styles.user_names}>
                         <h4
-                            onClick={() =>
-                                router.push(`/seller/${chat?.opponent?.id}`)
-                            }
+                            onClick={handleNavigateSellerProfile}
                             style={{ cursor: 'pointer' }}>
                             {chat?.opponent?.name}
                         </h4>
                     </div>
-                    <span>{chat?.opponent?.last_seen}</span>
+                    <span>
+                        {isModerator ? 'Online' : chat?.opponent?.last_seen}
+                    </span>
                 </div>
             </div>
             <SafetyAlert />
@@ -386,6 +400,7 @@ const ChatWindow = ({ chatId, goBack, containerHeight }) => {
                 </InfiniteScroll>
             </div>
             <ChatInputParts
+                isModerator={isModerator}
                 edit={edit}
                 chatId={chatId}
                 chat={chat}
@@ -410,6 +425,7 @@ const InfiniteLoaderComponent = () => (
 );
 
 const ChatInputParts = ({
+    isModerator,
     edit,
     chat,
     chatId,
@@ -562,7 +578,6 @@ const ChatInputParts = ({
         ? newMessage.trim() !== edit.content && newMessage.trim() !== ''
         : (fileList.length && fileList[0]?.status === 'done') ||
           newMessage.trim() !== '';
-
     return (
         <>
             <span
@@ -609,14 +624,16 @@ const ChatInputParts = ({
             </Upload>
 
             <div className={styles.chat_input_box}>
-                <Tooltip title="Maxsus buyurtma berish">
-                    <Button
-                        type="primary"
-                        icon={<ShoppingCartOutlined />}
-                        iconPosition="end"
-                        onClick={() => setOpen(true)}
-                    />
-                </Tooltip>
+                {!isModerator && (
+                    <Tooltip title="Maxsus buyurtma berish">
+                        <Button
+                            type="primary"
+                            icon={<ShoppingCartOutlined />}
+                            iconPosition="end"
+                            onClick={() => setOpen(true)}
+                        />
+                    </Tooltip>
+                )}
                 <Tooltip title="Fayl yuborish">
                     <Button
                         icon={<PaperClipOutlined />}
@@ -627,7 +644,6 @@ const ChatInputParts = ({
                         loading={fileList?.[0]?.status == 'uploading'}
                     />
                 </Tooltip>
-
                 <TextArea
                     value={newMessage}
                     disabled={isMessageWithFilePending}

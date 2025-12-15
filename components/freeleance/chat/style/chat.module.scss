@@ -25,13 +25,100 @@
             align-items: center;
             gap: 12px;
             padding: 6px;
-            border-radius: 8px;
             cursor: pointer;
             transition: all 0.2s ease;
             border-bottom: 1px solid #ddd;
 
             &:hover {
                 background: #f0f6ff;
+            }
+
+            &.selectedChat {
+                border-left: 4px solid #00a44f;
+                background-color: #f0f6ff;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+                border-radius: 0 8px 8px 0;
+            }
+
+            &.moderatorCard {
+                position: relative;
+                background: #f0f7ff;
+                border: 1px solid #b3d9ff;
+                border-radius: 12px;
+                padding: 12px;
+                gap: 14px;
+                margin-bottom: 10px;
+
+                &:hover {
+                    background: #e6f2ff;
+                }
+
+                &.selectedModerator {
+                    border: none;
+                    border-left: 4px solid #1677ff;
+                    border-radius: 0 12px 12px 0;
+                }
+
+                .moderatorAccent {
+                    width: 4px;
+                    align-self: stretch;
+                    background: #1677ff;
+                    border-radius: 12px;
+                }
+
+                .moderatorAvatar {
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 50%;
+                    background: #1677ff;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: #fff;
+                    font-size: 22px;
+                    position: relative;
+                    flex-shrink: 0;
+                }
+
+                .moderatorInfo {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 4px;
+                    flex: 1;
+                    min-width: 0;
+                }
+
+                .moderatorHeaderRow {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+
+                    h4 {
+                        margin: 0;
+                        font-size: 16px;
+                        font-weight: 700;
+                        color: #1f1f1f;
+                    }
+                }
+
+                .moderatorBadge {
+                    background: #1677ff;
+                    color: #fff;
+                    padding: 4px 10px;
+                    border-radius: 999px;
+                    font-size: 11px;
+                    font-weight: 600;
+                    line-height: 1;
+                }
+
+                .moderatorSubtext {
+                    margin: 0;
+                    color: #3c4450;
+                    font-size: 13px;
+                    line-height: 1.3;
+                    opacity: 0.85;
+                    word-break: break-word;
+                }
             }
 
             img {
@@ -99,6 +186,13 @@
         padding: 10px;
 
         .sidebar_chat {
+            &.moderatorCard {
+                .moderatorAvatar {
+                    width: 45px;
+                    height: 45px;
+                }
+            }
+
             img {
                 width: 45px;
                 height: 45px;
@@ -132,6 +226,13 @@
 
         .sidebar_chat {
             gap: 8px;
+
+            &.moderatorCard {
+                .moderatorAvatar {
+                    width: 40px;
+                    height: 40px;
+                }
+            }
 
             img {
                 width: 40px;

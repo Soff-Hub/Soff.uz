@@ -6,17 +6,22 @@ import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import { setShowSearch } from '~/store/fast-dowload/slice';
 import { useContentViewport } from '~/shared/hooks/useContentViewport';
+import { MODERATOR_ID } from '~/shared/constants';
 
 const Chat = () => {
     const { isMobile, isTablet } = useResponsive();
     const router = useRouter();
     const dispatch = useDispatch();
     const { containerHeight } = useContentViewport();
-    const { chatId = null } = router.query;
-    const setChatId = (chatId) => {
+    const { chatId, opponent_id } = router.query;
+    const setChat = (chat) => {
         router.push({
             pathname: router.pathname,
-            query: { ...router.query, chatId },
+            query: {
+                ...router.query,
+                chatId: chat.chat_id,
+                opponent_id: chat.opponent_id,
+            },
         });
     };
 
@@ -37,16 +42,19 @@ const Chat = () => {
     }, [dispatch]);
 
     const isSmallScreen = isMobile || isTablet;
+    const isModerator = MODERATOR_ID == opponent_id;
+    console.log({ isModerator, chatId, MODERATOR_ID });
 
     const Sidebar = (
         <ChatSidebar
             chatId={chatId}
-            setChatId={setChatId}
+            setChat={setChat}
             containerHeight={containerHeight}
         />
     );
     const Window = (
         <ChatWindow
+            isModerator={isModerator}
             key={chatId}
             chatId={chatId}
             goBack={clearChatId}
