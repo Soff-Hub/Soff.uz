@@ -18,7 +18,7 @@ const PhoneNumberModal = ({ open, onCancel, onSubmit, loading }) => {
             centered
             closable={!loading}>
             <Alert
-                description="Buyurtma berishda iltimos, telefon raqamingizni kiriting. Bu buyurtma bajarilish davomida siz bilan bog‘lana olishimiz uchun muhim."
+                description="Buyurtma berishda iltimos, telefon raqamingizni kiriting. Savollar yuzaga kelganda siz bilan bog‘lana olishimiz uchun muhim."
                 type="warning"
                 showIcon
             />
