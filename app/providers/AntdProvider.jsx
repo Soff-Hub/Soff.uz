@@ -1,5 +1,7 @@
 import React from 'react';
-import { ConfigProvider } from 'antd';
+import { ConfigProvider, message } from 'antd';
+
+message.config({ duration: 6 });
 
 const AntdProvider = ({ children }) => {
     return (
