@@ -33,7 +33,7 @@ const PhoneNumberModal = ({ open , onCancel , onSubmit , loading  })=>{
         closable: !loading,
         children: [
             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_2__.Alert, {
-                description: "Buyurtma berishda iltimos, telefon raqamingizni kiriting. Bu buyurtma bajarilish davomida siz bilan bog‘lana olishimiz uchun muhim.",
+                description: "Buyurtma berishda iltimos, telefon raqamingizni kiriting. Savollar yuzaga kelganda siz bilan bog‘lana olishimiz uchun muhim.",
                 type: "warning",
                 showIcon: true
             }),

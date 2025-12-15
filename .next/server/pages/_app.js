@@ -295,6 +295,9 @@ module.exports = {
 
 
 
+antd__WEBPACK_IMPORTED_MODULE_2__.message.config({
+    duration: 6
+});
 const AntdProvider = ({ children  })=>{
     return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_2__.ConfigProvider, {
         theme: {

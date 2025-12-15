@@ -1,5 +1,5 @@
-exports.id = 6908;
-exports.ids = [6908];
+exports.id = 4237;
+exports.ids = [4237];
 exports.modules = {
 
 /***/ 1219:
@@ -242,6 +242,38 @@ __webpack_async_result__();
 
 /***/ }),
 
+/***/ 1275:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Z": () => (/* binding */ useDebounce)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6689);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _useTimeManager__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6598);
+
+
+function useDebounce(value, delay) {
+    const { startTimeout , stopTimeout  } = (0,_useTimeManager__WEBPACK_IMPORTED_MODULE_1__/* .useTimeManager */ .h)();
+    const { 0: debouncedValue , 1: setDebouncedValue  } = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(value);
+    (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(()=>{
+        const handler = startTimeout(()=>{
+            setDebouncedValue(value);
+        }, delay);
+        return ()=>{
+            stopTimeout(handler);
+        };
+    }, [
+        value,
+        delay
+    ]);
+    return debouncedValue;
+}
+
+
+/***/ }),
+
 /***/ 4705:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
@@ -276,4 +308,4 @@ __webpack_async_result__();
 
 };
 ;
-//# sourceMappingURL=6908.js.map
+//# sourceMappingURL=4237.js.map

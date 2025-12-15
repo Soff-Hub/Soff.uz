@@ -2504,6 +2504,145 @@ __webpack_async_result__();
 
 /***/ }),
 
+/***/ 5922:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Z": () => (/* binding */ NextImageCard)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(997);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var next_image__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5675);
+/* harmony import */ var next_image__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(next_image__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6689);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _shared_hooks_useTimeManager__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(6598);
+
+
+
+
+
+
+function NextImageCard({ url , width , height , clasS , payload , detail ,  }) {
+    const { 0: up , 1: setUp  } = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(true);
+    const { startTimeout , stopTimeout  } = (0,_shared_hooks_useTimeManager__WEBPACK_IMPORTED_MODULE_3__/* .useTimeManager */ .h)();
+    const handleUp = ()=>{
+        setUp(false);
+    };
+    (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(()=>{
+        const timing = startTimeout(()=>{
+            setUp(false);
+        }, 3000);
+        return ()=>stopTimeout(timing);
+    }, [
+        up
+    ]);
+    return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+        className: `${(payload?.document?.content_type === "video" || payload?.document?.content_type === "audio") && "video_poster"}`,
+        children: payload?.document?.content_type === "video" ? /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+            children: [
+                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                    className: "video_poster_fon",
+                    children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("i", {
+                        className: "fa-regular fa-circle-play"
+                    })
+                }),
+                url && /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((next_image__WEBPACK_IMPORTED_MODULE_1___default()), {
+                    src: url,
+                    width: width,
+                    height: height,
+                    alt: url,
+                    className: clasS,
+                    objectFit: "contain",
+                    unoptimized: true
+                })
+            ]
+        }) : payload?.document?.content_type === "audio" ? /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+            children: [
+                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                    className: "video_poster_fon",
+                    children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("i", {
+                        className: "fa-solid fa-music"
+                    })
+                }),
+                url && /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((next_image__WEBPACK_IMPORTED_MODULE_1___default()), {
+                    src: url,
+                    width: width,
+                    height: height,
+                    alt: url,
+                    className: clasS,
+                    objectFit: "contain",
+                    unoptimized: true
+                })
+            ]
+        }) : detail ? /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+            onClick: ()=>handleUp(),
+            className: ` ${up && "product_priview"} `,
+            children: [
+                url && /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((next_image__WEBPACK_IMPORTED_MODULE_1___default()), {
+                    src: url,
+                    width: width,
+                    height: height,
+                    alt: url,
+                    className: clasS,
+                    objectFit: "contain",
+                    unoptimized: true
+                }),
+                up && /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                    className: "up_left",
+                    children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("i", {
+                        className: "fa-solid fa-angles-up fa-bounce"
+                    })
+                })
+            ]
+        }) : /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+            children: url && /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((next_image__WEBPACK_IMPORTED_MODULE_1___default()), {
+                src: url,
+                width: width,
+                height: height,
+                alt: url,
+                className: clasS,
+                objectFit: "contain",
+                unoptimized: true
+            })
+        })
+    });
+}
+
+
+/***/ }),
+
+/***/ 1275:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Z": () => (/* binding */ useDebounce)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6689);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _useTimeManager__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6598);
+
+
+function useDebounce(value, delay) {
+    const { startTimeout , stopTimeout  } = (0,_useTimeManager__WEBPACK_IMPORTED_MODULE_1__/* .useTimeManager */ .h)();
+    const { 0: debouncedValue , 1: setDebouncedValue  } = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(value);
+    (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(()=>{
+        const handler = startTimeout(()=>{
+            setDebouncedValue(value);
+        }, delay);
+        return ()=>{
+            stopTimeout(handler);
+        };
+    }, [
+        value,
+        delay
+    ]);
+    return debouncedValue;
+}
+
+
+/***/ }),
+
 /***/ 3735:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -2980,7 +3119,7 @@ module.exports = import("uuid");;
 var __webpack_require__ = require("../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [676,1664,5675,5780,3015,7864,6598,3701,7534,5758,5029,6020,2536,3060,3944,1324,6400,8310,1064,9409,3496,681,2414,4817,5922], () => (__webpack_exec__(4951)));
+var __webpack_exports__ = __webpack_require__.X(0, [676,1664,5675,5780,3015,7864,6598,3701,5758,6020,2536,3060,5029,3944,1324,6400,8310,9409,3801,681,2414,4817], () => (__webpack_exec__(4951)));
 module.exports = __webpack_exports__;
 
 })();

@@ -87,7 +87,7 @@ const Joyride = next_dynamic__WEBPACK_IMPORTED_MODULE_9___default()(null, {
     },
     ssr: false
 });
-const FileProductDetatails = next_dynamic__WEBPACK_IMPORTED_MODULE_9___default()(()=>Promise.all(/* import() */[__webpack_require__.e(6598), __webpack_require__.e(3701), __webpack_require__.e(7534), __webpack_require__.e(5758), __webpack_require__.e(5029), __webpack_require__.e(6020), __webpack_require__.e(2536), __webpack_require__.e(3060), __webpack_require__.e(3944), __webpack_require__.e(8310), __webpack_require__.e(9409), __webpack_require__.e(986), __webpack_require__.e(9708), __webpack_require__.e(5138), __webpack_require__.e(1393), __webpack_require__.e(5917)]).then(__webpack_require__.bind(__webpack_require__, 5917)), {
+const FileProductDetatails = next_dynamic__WEBPACK_IMPORTED_MODULE_9___default()(()=>Promise.all(/* import() */[__webpack_require__.e(6598), __webpack_require__.e(3701), __webpack_require__.e(5758), __webpack_require__.e(6020), __webpack_require__.e(2536), __webpack_require__.e(3060), __webpack_require__.e(5029), __webpack_require__.e(3944), __webpack_require__.e(8310), __webpack_require__.e(9409), __webpack_require__.e(986), __webpack_require__.e(9708), __webpack_require__.e(5138), __webpack_require__.e(1393), __webpack_require__.e(5917)]).then(__webpack_require__.bind(__webpack_require__, 5917)), {
     loadableGenerated: {
         modules: [
             "product/[pid].jsx -> " + "~/components/details-components/file-products-detail/details-page"
@@ -95,7 +95,7 @@ const FileProductDetatails = next_dynamic__WEBPACK_IMPORTED_MODULE_9___default()
     },
     ssr: true
 });
-const ThreeDesignProductDetails = next_dynamic__WEBPACK_IMPORTED_MODULE_9___default()(()=>Promise.all(/* import() */[__webpack_require__.e(6598), __webpack_require__.e(3701), __webpack_require__.e(7534), __webpack_require__.e(5758), __webpack_require__.e(5029), __webpack_require__.e(6020), __webpack_require__.e(2536), __webpack_require__.e(3060), __webpack_require__.e(3944), __webpack_require__.e(8310), __webpack_require__.e(9409), __webpack_require__.e(986), __webpack_require__.e(9708), __webpack_require__.e(5138), __webpack_require__.e(583), __webpack_require__.e(1393), __webpack_require__.e(4162)]).then(__webpack_require__.bind(__webpack_require__, 4162)), {
+const ThreeDesignProductDetails = next_dynamic__WEBPACK_IMPORTED_MODULE_9___default()(()=>Promise.all(/* import() */[__webpack_require__.e(6598), __webpack_require__.e(3701), __webpack_require__.e(5758), __webpack_require__.e(6020), __webpack_require__.e(2536), __webpack_require__.e(3060), __webpack_require__.e(5029), __webpack_require__.e(3944), __webpack_require__.e(8310), __webpack_require__.e(9409), __webpack_require__.e(986), __webpack_require__.e(9708), __webpack_require__.e(5138), __webpack_require__.e(583), __webpack_require__.e(1393), __webpack_require__.e(4162)]).then(__webpack_require__.bind(__webpack_require__, 4162)), {
     loadableGenerated: {
         modules: [
             "product/[pid].jsx -> " + "~/components/details-components/templates-details/details-page"
@@ -103,7 +103,7 @@ const ThreeDesignProductDetails = next_dynamic__WEBPACK_IMPORTED_MODULE_9___defa
     },
     ssr: true
 });
-const VideosProductDetails = next_dynamic__WEBPACK_IMPORTED_MODULE_9___default()(()=>Promise.all(/* import() */[__webpack_require__.e(6598), __webpack_require__.e(3701), __webpack_require__.e(7534), __webpack_require__.e(5758), __webpack_require__.e(5029), __webpack_require__.e(6020), __webpack_require__.e(2536), __webpack_require__.e(3060), __webpack_require__.e(3944), __webpack_require__.e(9409), __webpack_require__.e(9708), __webpack_require__.e(2201)]).then(__webpack_require__.bind(__webpack_require__, 2201)), {
+const VideosProductDetails = next_dynamic__WEBPACK_IMPORTED_MODULE_9___default()(()=>Promise.all(/* import() */[__webpack_require__.e(6598), __webpack_require__.e(3701), __webpack_require__.e(5758), __webpack_require__.e(6020), __webpack_require__.e(2536), __webpack_require__.e(3060), __webpack_require__.e(5029), __webpack_require__.e(3944), __webpack_require__.e(9409), __webpack_require__.e(9708), __webpack_require__.e(2201)]).then(__webpack_require__.bind(__webpack_require__, 2201)), {
     loadableGenerated: {
         modules: [
             "product/[pid].jsx -> " + "~/components/details-components/video-tutorials/details-page"

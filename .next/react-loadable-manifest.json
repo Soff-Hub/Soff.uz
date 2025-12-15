@@ -19,8 +19,9 @@
       "static/chunks/1980-1334b51cf6dce01e.js",
       "static/chunks/7134-1691bde9915a89d4.js",
       "static/chunks/4330-aa7414edf4c7a72e.js",
+      "static/chunks/7372-f345108a43859a1d.js",
       "static/css/500a9f62724930a3.css",
-      "static/chunks/46.9f3037282a3e1a3e.js"
+      "static/chunks/46.addf441bd8569fa5.js"
     ]
   },
   "../components/freeleance/services/service-deatail/ServiceDetail.jsx -> ./ui/FaqSection": {
@@ -34,7 +35,7 @@
     "files": [
       "static/chunks/7772.4f8ae32185a5644c.js",
       "static/css/48ed1cef2e7ae489.css",
-      "static/chunks/3019.c5360183fbd48a13.js"
+      "static/chunks/3019.2bef20b9dbebb835.js"
     ]
   },
   "../components/freeleance/services/service-deatail/ServiceDetail.jsx -> ./ui/sticky-box": {
@@ -49,7 +50,7 @@
     "files": [
       "static/chunks/7772.4f8ae32185a5644c.js",
       "static/css/22ecc03aaedde6a0.css",
-      "static/chunks/3814.4a0e84f10ac60b17.js"
+      "static/chunks/3814.9788dd9e2702c7aa.js"
     ]
   },
   "../features/user-profile/ui/user-short-items.jsx -> ~/entities/portfolio/portfolio-modal": {
@@ -57,7 +58,7 @@
     "files": [
       "static/chunks/7772.4f8ae32185a5644c.js",
       "static/css/22ecc03aaedde6a0.css",
-      "static/chunks/3814.4a0e84f10ac60b17.js"
+      "static/chunks/3814.9788dd9e2702c7aa.js"
     ]
   },
   "../widgets/home/hero/index.jsx -> ./HeroSearchPart": {
@@ -69,7 +70,7 @@
       "static/chunks/136-2aa2117eae4c6d98.js",
       "static/chunks/1203-2eb87a7b0270cb9d.js",
       "static/chunks/4504.969ab0d9173ac052.js",
-      "static/chunks/7818.2107608a50f8367c.js",
+      "static/chunks/7818.b5a8bd15e0fa6828.js",
       "static/css/ace1c2f136f5f2f7.css",
       "static/chunks/3631.5c9e28d79cc7ee1d.js"
     ]
@@ -93,9 +94,9 @@
     "id": 72567,
     "files": [
       "static/chunks/2e3a845b-c02b617f7f663864.js",
-      "static/chunks/3328-d407cdb182bb874c.js",
+      "static/chunks/1602-3a22778626cec790.js",
       "static/css/12b43c8e02e7632e.css",
-      "static/chunks/8961.7c79c7b446fe6f87.js"
+      "static/chunks/8961.63d68909a7a6e07e.js"
     ]
   },
   "../widgets/home/index.jsx -> ./youtube-vid": {
@@ -108,9 +109,7 @@
   "../widgets/layouts/PageLayout.jsx -> ~/components/NetworkStatus": {
     "id": 71537,
     "files": [
-      "static/chunks/7902-2f59197bd841458b.js",
-      "static/chunks/2453-5395169ab582aacd.js",
-      "static/chunks/858.6b57cae63c2b0c9a.js"
+      "static/chunks/1537.6895813b752e7994.js"
     ]
   },
   "../widgets/layouts/PageLayout.jsx -> ~/widgets/footer": {
@@ -121,17 +120,15 @@
     ]
   },
   "../widgets/layouts/PageLayout.jsx -> ~/widgets/header": {
-    "id": 68323,
+    "id": 630,
     "files": [
-      "static/chunks/cb355538-d52c09e65d685e92.js",
-      "static/chunks/ebc70433-d543ed1768f6826d.js",
-      "static/chunks/4866-7eaf50b63000a484.js",
-      "static/chunks/4426-04dcc08561e1cd79.js",
-      "static/chunks/8612-5dbf432c52134b3d.js",
-      "static/chunks/8723-50e172875193ec07.js",
+      "static/chunks/cb355538-75b745aa0106ae35.js",
+      "static/chunks/ebc70433-ea498b40786e9ec2.js",
+      "static/chunks/4866-db612c20f66234a8.js",
+      "static/chunks/770-a359940aa9a0d102.js",
+      "static/chunks/8723-f10073f7155fd842.js",
       "static/chunks/3791-07c8ae8ef2bc4e20.js",
       "static/chunks/6492-baf6d3fa3c3f3759.js",
-      "static/chunks/7902-2f59197bd841458b.js",
       "static/chunks/4060-3317d7a7820a10d9.js",
       "static/chunks/9417-7ce73b806d65509a.js",
       "static/chunks/136-2aa2117eae4c6d98.js",
@@ -140,12 +137,12 @@
       "static/chunks/5704-e5a4adbb1cec0b4d.js",
       "static/chunks/4504.969ab0d9173ac052.js",
       "static/chunks/111.9485c95ea1c2d6b8.js",
-      "static/chunks/3328-d407cdb182bb874c.js",
+      "static/chunks/1602-3a22778626cec790.js",
       "static/css/7a6f1027bcaf6b4d.css",
       "static/chunks/7150-8214926854f25dbd.js",
-      "static/chunks/7818.2107608a50f8367c.js",
+      "static/chunks/7818.b5a8bd15e0fa6828.js",
       "static/css/c8b97cf3468806ec.css",
-      "static/chunks/6241.6aefb8602d969cfe.js"
+      "static/chunks/6935.c8490a9b73d46d35.js"
     ]
   },
   "product/[pid].jsx -> react-joyride": {
@@ -157,43 +154,40 @@
   "product/[pid].jsx -> ~/components/details-components/LastAddedProducts": {
     "id": 39961,
     "files": [
-      "static/chunks/4866-7eaf50b63000a484.js",
-      "static/chunks/4426-04dcc08561e1cd79.js",
+      "static/chunks/4866-db612c20f66234a8.js",
+      "static/chunks/770-a359940aa9a0d102.js",
       "static/chunks/6492-baf6d3fa3c3f3759.js",
-      "static/chunks/3328-d407cdb182bb874c.js",
+      "static/chunks/1602-3a22778626cec790.js",
       "static/css/0e3f4486d4de8ba2.css",
-      "static/chunks/5561.34ec07e5295974bf.js"
+      "static/chunks/5561.8d36496124c356d9.js"
     ]
   },
   "product/[pid].jsx -> ~/components/details-components/SimilarProducts": {
     "id": 23933,
     "files": [
-      "static/chunks/4866-7eaf50b63000a484.js",
-      "static/chunks/4426-04dcc08561e1cd79.js",
+      "static/chunks/4866-db612c20f66234a8.js",
+      "static/chunks/770-a359940aa9a0d102.js",
       "static/chunks/6492-baf6d3fa3c3f3759.js",
-      "static/chunks/3328-d407cdb182bb874c.js",
+      "static/chunks/1602-3a22778626cec790.js",
       "static/css/0e3f4486d4de8ba2.css",
-      "static/chunks/5742.043343c9912573a8.js"
+      "static/chunks/5742.9d08a8eff00d6c44.js"
     ]
   },
   "product/[pid].jsx -> ~/components/details-components/file-products-detail/details-page": {
     "id": 5903,
     "files": [
-      "static/chunks/4866-7eaf50b63000a484.js",
-      "static/chunks/4426-04dcc08561e1cd79.js",
-      "static/chunks/8612-5dbf432c52134b3d.js",
-      "static/chunks/8723-50e172875193ec07.js",
+      "static/chunks/4866-db612c20f66234a8.js",
+      "static/chunks/770-a359940aa9a0d102.js",
+      "static/chunks/8723-f10073f7155fd842.js",
       "static/chunks/9859-260f27300d60178a.js",
-      "static/chunks/7902-2f59197bd841458b.js",
-      "static/chunks/2453-5395169ab582aacd.js",
       "static/chunks/1264-59933c79a4504f66.js",
       "static/chunks/6922-d244bc39ca34f675.js",
       "static/chunks/5959-74f2368f0d00e010.js",
       "static/chunks/4826.8d937a25fbe2261c.js",
-      "static/chunks/3328-d407cdb182bb874c.js",
-      "static/chunks/9599-f8bd9da51d200ac0.js",
-      "static/chunks/414-ead943fd326daac8.js",
-      "static/chunks/5570.eb7a31b3947e7432.js",
+      "static/chunks/1602-3a22778626cec790.js",
+      "static/chunks/9599-8910743e21c6186c.js",
+      "static/chunks/414-1f1f5c1af9a51bfc.js",
+      "static/chunks/8207.b907840b38c0b37e.js",
       "static/css/4f7bc7c7a87ec306.css",
       "static/chunks/8277.96c8c17ab4d559d6.js"
     ]
@@ -201,23 +195,20 @@
   "product/[pid].jsx -> ~/components/details-components/templates-details/details-page": {
     "id": 66230,
     "files": [
-      "static/chunks/4866-7eaf50b63000a484.js",
-      "static/chunks/4426-04dcc08561e1cd79.js",
-      "static/chunks/8612-5dbf432c52134b3d.js",
-      "static/chunks/8723-50e172875193ec07.js",
+      "static/chunks/4866-db612c20f66234a8.js",
+      "static/chunks/770-a359940aa9a0d102.js",
+      "static/chunks/8723-f10073f7155fd842.js",
       "static/chunks/9859-260f27300d60178a.js",
-      "static/chunks/7902-2f59197bd841458b.js",
-      "static/chunks/2453-5395169ab582aacd.js",
       "static/chunks/1264-59933c79a4504f66.js",
       "static/chunks/5580-b1a66d228f3e395c.js",
       "static/chunks/2398-504aba409d0bd651.js",
       "static/chunks/6922-d244bc39ca34f675.js",
       "static/chunks/5959-74f2368f0d00e010.js",
       "static/chunks/4826.8d937a25fbe2261c.js",
-      "static/chunks/3328-d407cdb182bb874c.js",
-      "static/chunks/9599-f8bd9da51d200ac0.js",
-      "static/chunks/414-ead943fd326daac8.js",
-      "static/chunks/5570.eb7a31b3947e7432.js",
+      "static/chunks/1602-3a22778626cec790.js",
+      "static/chunks/9599-8910743e21c6186c.js",
+      "static/chunks/414-1f1f5c1af9a51bfc.js",
+      "static/chunks/8207.b907840b38c0b37e.js",
       "static/css/fca0a6fe6217ea67.css",
       "static/chunks/2021.62311858cbe6d172.js"
     ]
@@ -225,32 +216,29 @@
   "product/[pid].jsx -> ~/components/details-components/video-tutorials/details-page": {
     "id": 49511,
     "files": [
-      "static/chunks/4866-7eaf50b63000a484.js",
-      "static/chunks/4426-04dcc08561e1cd79.js",
-      "static/chunks/8612-5dbf432c52134b3d.js",
-      "static/chunks/8723-50e172875193ec07.js",
+      "static/chunks/4866-db612c20f66234a8.js",
+      "static/chunks/770-a359940aa9a0d102.js",
+      "static/chunks/8723-f10073f7155fd842.js",
       "static/chunks/9859-260f27300d60178a.js",
-      "static/chunks/7902-2f59197bd841458b.js",
-      "static/chunks/2453-5395169ab582aacd.js",
       "static/chunks/1264-59933c79a4504f66.js",
       "static/chunks/6922-d244bc39ca34f675.js",
-      "static/chunks/3328-d407cdb182bb874c.js",
-      "static/chunks/9599-f8bd9da51d200ac0.js",
-      "static/chunks/414-ead943fd326daac8.js",
-      "static/chunks/5186.17e7d30e068936e7.js"
+      "static/chunks/1602-3a22778626cec790.js",
+      "static/chunks/9599-8910743e21c6186c.js",
+      "static/chunks/414-1f1f5c1af9a51bfc.js",
+      "static/chunks/3195.36d28fd95f08043c.js"
     ]
   },
   "product/[pid].jsx -> ~/components/elements/AISoffiaPresentation": {
     "id": 41478,
     "files": [
-      "static/chunks/4866-7eaf50b63000a484.js",
+      "static/chunks/4866-db612c20f66234a8.js",
       "static/chunks/1478.995309b212ec2cb3.js"
     ]
   },
   "product/[pid].jsx -> ~/components/product/ProductVideoBanner": {
     "id": 20451,
     "files": [
-      "static/chunks/cb355538-d52c09e65d685e92.js",
+      "static/chunks/cb355538-75b745aa0106ae35.js",
       "static/css/79c32230e7b149e1.css",
       "static/chunks/451.0141d28dfd3fa2e2.js"
     ]
