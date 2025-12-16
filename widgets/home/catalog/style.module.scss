@@ -3,7 +3,7 @@
 
 .catalogSectionBlock {
     background-color: $mainbg;
-    padding: 40px 0px;
+    padding-top: 40px;
     position: relative;
     z-index: 50;
     .catalogHealine {
@@ -100,8 +100,6 @@
     }
 
     .howItWorksSection {
-        padding: 0px 20px;
-
         h2 {
             text-align: center;
             font-size: 28px;
@@ -280,27 +278,14 @@
 
             /* Blockning o‘zi uchun responsive */
             @media (max-width: 1200px) {
-                width: 85%;
+                width: 100%;
                 padding: 60px;
-                bottom: -250px;
-            }
-
-            @media (max-width: 992px) {
-                width: 90%;
-                padding: 60px;
-                bottom: -200px;
             }
 
             @media (max-width: 768px) {
-                width: 95%;
-                padding: 40px;
+                padding: 20px;
             }
 
-            @media (max-width: 576px) {
-                width: 100%;
-                padding: 20px;
-                bottom: -100px;
-            }
             .backdrop {
                 position: absolute;
                 width: 100%;

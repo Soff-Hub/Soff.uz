@@ -26,7 +26,17 @@ const GrayCard = ({
     return (
         <section className={styles.readyProducts}>
             <div className={styles.block}>
+                <div className={styles.watermarkTopRight}>SOFF</div>
+                <div className={styles.watermarkBottomRight}>SOFF</div>
+                <div className={styles.iconWrapper}>
+                    <div className={styles.iconBox}>
+                        <i className="fa-solid fa-box"></i>
+                    </div>
+                </div>
                 <h1 className={styles.title}>{title}</h1>
+                <p className={styles.subtitle}>
+                    Bizning mutaxassislarimiz sizga yordam berishga tayyor
+                </p>
                 <a
                     onClick={handleOrder}
                     href={link}
@@ -34,8 +44,7 @@ const GrayCard = ({
                     className={styles.catalogSeeAll}>
                     {btn}{' '}
                     <i
-                        style={{ marginLeft: '12px' }}
-                        className="fa-solid fa-arrow-right"></i>
+                        className={`fa-solid fa-arrow-right ${styles.arrowIcon}`}></i>
                 </a>
             </div>
         </section>

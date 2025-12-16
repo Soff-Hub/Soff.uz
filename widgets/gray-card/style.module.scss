@@ -3,16 +3,143 @@
     display: flex;
     justify-content: center;
     .block {
-        // bottom: -100px;
         border-radius: 16px;
-        background: #b5b6b6;
-        width: 85%;
+        background: $color-1st; // Original green color
+        width: 90%;
         display: flex;
         flex-direction: column;
         justify-content: center;
+        align-items: center;
         padding: 90px 30px;
         margin: 0 auto; // markazga qo‘yish uchun
         margin-top: 40px;
+        position: relative;
+        overflow: hidden;
+
+        // SOFF watermarks in background - positioned to match image layout
+        &::before {
+            content: 'SOFF';
+            position: absolute;
+            top: 25px;
+            left: 60px;
+            font-size: 100px;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.3);
+            opacity: 0.7;
+            z-index: 0;
+            user-select: none;
+            pointer-events: none;
+
+            @media (max-width: 768px) {
+                font-size: 60px;
+                top: 20px;
+                left: 30px;
+            }
+
+            @media (max-width: 576px) {
+                font-size: 45px;
+                top: 30px;
+                left: 10px;
+            }
+        }
+
+        &::after {
+            content: 'SOFF';
+            position: absolute;
+            bottom: 50px;
+            right: 50px;
+            font-size: 75px;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.32);
+            opacity: 0.65;
+            z-index: 0;
+            user-select: none;
+            pointer-events: none;
+
+            @media (max-width: 868px) {
+                font-size: 50px;
+                bottom: 35px;
+                right: 30px;
+            }
+
+            @media (max-width: 768px) {
+                display: none;
+            }
+        }
+
+        // Additional watermarks positioned to match image
+        .watermarkTopRight,
+        .watermarkBottomLeft,
+        .watermarkTopCenter,
+        .watermarkBottomRight,
+        .watermarkMiddleLeft,
+        .watermarkMiddleRight {
+            position: absolute;
+            font-weight: bold;
+            z-index: 0;
+            user-select: none;
+            pointer-events: none;
+        }
+
+        .watermarkTopRight {
+            top: -30px;
+            right: -50px;
+            font-size: 120px;
+            line-height: normal;
+            color: rgba(255, 255, 255, 0.28);
+            opacity: 0.6;
+
+            @media (max-width: 768px) {
+                font-size: 90px;
+                top: -25px;
+                right: -50px;
+            }
+
+            @media (max-width: 576px) {
+                font-size: 45px;
+                top: -10px;
+                right: -10px;
+            }
+        }
+
+        .watermarkBottomRight {
+            bottom: -150px;
+            left: -20px;
+            font-size: 250px;
+            color: rgba(255, 255, 255, 0.26);
+            opacity: 0.52;
+
+            @media (max-width: 768px) {
+                font-size: 150px;
+                bottom: -80px;
+                left: -10px;
+            }
+        }
+
+        .iconWrapper {
+            position: relative;
+            z-index: 1;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .iconBox {
+                width: 80px;
+                height: 80px;
+                border-radius: 12px;
+                background: rgba(255, 255, 255, 0.2);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+                i {
+                    font-size: 36px;
+                    color: $textColorWhite;
+                }
+            }
+        }
 
         .title {
             font-size: 36px;
@@ -20,7 +147,9 @@
             font-weight: 500;
             text-align: center;
             color: $textColorWhite;
-            margin-bottom: 20px;
+            margin-bottom: 12px;
+            position: relative;
+            z-index: 1;
 
             @media (max-width: 1200px) {
                 font-size: 48px;
@@ -38,34 +167,37 @@
                 font-size: 20px;
             }
         }
-        .title2 {
-            font-size: 36px;
-            line-height: 1.2;
+        .subtitle {
+            font-size: 20px;
+            line-height: 1.4;
             font-weight: 400;
             text-align: center;
             color: $textColorWhite;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
 
             @media (max-width: 1200px) {
-                font-size: 28px;
-            }
-
-            @media (max-width: 992px) {
-                font-size: 24px;
-            }
-
-            @media (max-width: 768px) {
                 font-size: 18px;
             }
 
-            @media (max-width: 576px) {
+            @media (max-width: 992px) {
+                font-size: 16px;
+            }
+
+            @media (max-width: 768px) {
                 font-size: 14px;
+            }
+
+            @media (max-width: 576px) {
+                font-size: 12px;
             }
         }
 
         .catalogSeeAll {
             background-color: $textColorWhite;
             border-radius: 50px;
-            color: $textColor;
+            color: $color-1st;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -76,9 +208,27 @@
             font-weight: 600;
             padding: 13px 24px;
             transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+            text-decoration: none;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15),
+                0 0 20px rgba(0, 0, 0, 0.08);
+
+            .arrowIcon {
+                color: $color-1st;
+                margin-left: 12px;
+                transition: transform 0.3s ease;
+            }
 
             &:hover {
                 background: darken($textColorWhite, 5%);
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25),
+                    0 0 30px rgba(0, 0, 0, 0.12);
+                transform: translateY(-2px) scale(1.05);
+
+                .arrowIcon {
+                    transform: translateX(4px);
+                }
             }
 
             @media (max-width: 1200px) {
@@ -105,25 +255,11 @@
 
         /* Blockning o‘zi uchun responsive */
         @media (max-width: 1200px) {
-            width: 85%;
-            padding: 50px 30px;
-            bottom: -100px;
-        }
-
-        @media (max-width: 992px) {
-            width: 90%;
-            padding: 50px 30px;
-        }
-
-        @media (max-width: 768px) {
-            width: 95%;
-            padding: 40px 20px;
+            width: 100%;
         }
 
         @media (max-width: 576px) {
-            width: 100%;
-            padding: 20px;
-            bottom: -100px;
+            padding: 40px 16px;
         }
     }
 }
