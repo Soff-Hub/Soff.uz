@@ -41,19 +41,39 @@ function BackButton() {
     );
 }
 
-const DEFAULT_STATIC_CHAT_COPY = {
-    opponent_name: 'Moderator',
-    opponent_photo_url: '',
-    last_message: { content: '24/7 Yordam xizmati' },
-};
-
 const ChatSidebar = ({ setChat, containerHeight, chatId: selectedChatId }) => {
     const [search, setSearch] = useState('');
     const debouncedSearch = useDebounce(search, 300);
     const { mutateAsync: createChat, isPending: isCreatingChat } =
         useCreateChat();
+    const loadMoreRef = useRef(null);
 
-    const { chats, isLoading } = useChats(debouncedSearch);
+    const { chats, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
+        useChats(debouncedSearch);
+
+    const isValidChats = Array.isArray(chats) && chats.length > 0;
+
+    useEffect(() => {
+        if (!loadMoreRef.current && !isValidChats) return;
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (
+                    entries[0].isIntersecting &&
+                    hasNextPage &&
+                    !isFetchingNextPage
+                ) {
+                    fetchNextPage();
+                }
+            },
+            { threshold: 1 }
+        );
+        observer.observe(loadMoreRef.current);
+        return () => {
+            if (loadMoreRef.current) {
+                observer.unobserve(loadMoreRef.current);
+            }
+        };
+    }, [hasNextPage, isFetchingNextPage, fetchNextPage, isValidChats]);
 
     const getOpponentId = useCallback((chat) => {
         if (!chat) return null;
@@ -93,6 +113,111 @@ const ChatSidebar = ({ setChat, containerHeight, chatId: selectedChatId }) => {
         }
     };
 
+    let sidebarContent;
+    if (isLoading && !isValidChats) {
+        sidebarContent = (
+            <div style={{ textAlign: 'center', padding: '20px' }}>
+                <Spin size="large" tip="Qidirilmoqda..." />
+            </div>
+        );
+    } else if (isValidChats) {
+        sidebarContent = (
+            <>
+                {orderedChats.map((chat) => {
+                    const isStatic = chat?.__isStatic;
+                    const isSelected = selectedChatId == chat?.chat_id;
+                    if (isStatic) {
+                        return (
+                            <div
+                                key={'static-' + MODERATOR_ID}
+                                onClick={handleStaticChatClick}
+                                className={`${styles.sidebar_chat} ${
+                                    styles.moderatorCard
+                                } ${
+                                    isSelected ? styles.selectedModerator : ''
+                                }`}
+                                aria-disabled={isCreatingChat}>
+                                <div className={styles.moderatorAvatar}>
+                                    <FaHeadset />
+                                </div>
+                                <div className={styles.moderatorInfo}>
+                                    <div className={styles.moderatorHeaderRow}>
+                                        <h4>Support</h4>
+                                        <span className={styles.moderatorBadge}>
+                                            Aloqa
+                                        </span>
+                                    </div>
+                                    <p className={styles.moderatorSubtext}>
+                                        {truncateTitle(
+                                            chat?.last_message?.content ||
+                                                'Texnik yordam xizmati',
+                                            40
+                                        )}
+                                    </p>
+                                </div>
+                                {isCreatingChat && <Spin size="small" />}
+                            </div>
+                        );
+                    }
+                    return (
+                        <div
+                            key={chat?.chat_id}
+                            onClick={() => setChat(chat)}
+                            className={`${styles.sidebar_chat} ${
+                                isSelected ? styles.selectedChat : ''
+                            }`}
+                            aria-disabled={false}>
+                            <img
+                                src={
+                                    chat?.opponent_photo_url ||
+                                    '/static/img/ozodbek.png'
+                                }
+                                alt="user img"
+                            />
+                            <div className={styles.sidebar_chat_wrapper}>
+                                <div className={styles.box1}>
+                                    <h4>{chat?.opponent_name}</h4>
+                                    <span>
+                                        {truncateTitle(
+                                            chat?.last_message?.content,
+                                            15
+                                        )}
+                                    </span>
+                                </div>
+                                <div className={styles.box2}>
+                                    <p></p>
+                                    {chat?.unread_count > 0 && (
+                                        <span>{chat?.unread_count}</span>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    );
+                })}
+                <div ref={loadMoreRef} style={{ height: 1 }} />
+                {hasNextPage && (
+                    <div
+                        style={{
+                            textAlign: 'center',
+                            padding: '10px',
+                        }}>
+                        <Spin tip="Yuklanmoqda..." />
+                    </div>
+                )}
+            </>
+        );
+    } else {
+        sidebarContent = (
+            <div
+                style={{
+                    textAlign: 'center',
+                    padding: '20px',
+                }}>
+                <Empty description="Chatlar topilmadi" />
+            </div>
+        );
+    }
+
     return (
         <div
             className={styles.chat_sidebar}
@@ -106,93 +231,7 @@ const ChatSidebar = ({ setChat, containerHeight, chatId: selectedChatId }) => {
                     allowClear
                 />
             </div>
-            <div className={styles.sidebar_chats}>
-                {isLoading ? (
-                    <div style={{ textAlign: 'center', padding: '20px' }}>
-                        <Spin size="large" tip="Qidirilmoqda..." />
-                    </div>
-                ) : null}
-                {!isLoading &&
-                    orderedChats?.map((chat) => {
-                        const isStatic = chat?.__isStatic;
-                        const isSelected = selectedChatId == chat?.chat_id;
-                        if (isStatic) {
-                            return (
-                                <div
-                                    key={'static-' + MODERATOR_ID}
-                                    onClick={handleStaticChatClick}
-                                    className={`${styles.sidebar_chat} ${
-                                        styles.moderatorCard
-                                    } ${
-                                        isSelected
-                                            ? styles.selectedModerator
-                                            : ''
-                                    }`}
-                                    aria-disabled={isCreatingChat}>
-                                    <div className={styles.moderatorAvatar}>
-                                        <FaHeadset />
-                                    </div>
-                                    <div className={styles.moderatorInfo}>
-                                        <div
-                                            className={
-                                                styles.moderatorHeaderRow
-                                            }>
-                                            <h4>Support</h4>
-                                            <span
-                                                className={
-                                                    styles.moderatorBadge
-                                                }>
-                                                Aloqa
-                                            </span>
-                                        </div>
-                                        <p className={styles.moderatorSubtext}>
-                                            {truncateTitle(
-                                                chat?.last_message?.content ||
-                                                    'Texnik yordam xizmati',
-                                                40
-                                            )}
-                                        </p>
-                                    </div>
-                                    {isCreatingChat && <Spin size="small" />}
-                                </div>
-                            );
-                        }
-                        return (
-                            <div
-                                key={chat?.chat_id}
-                                onClick={() => setChat(chat)}
-                                className={`${styles.sidebar_chat} ${
-                                    isSelected ? styles.selectedChat : ''
-                                }`}
-                                aria-disabled={false}>
-                                <img
-                                    src={
-                                        chat?.opponent_photo_url ||
-                                        '/static/img/ozodbek.png'
-                                    }
-                                    alt="user img"
-                                />
-                                <div className={styles.sidebar_chat_wrapper}>
-                                    <div className={styles.box1}>
-                                        <h4>{chat?.opponent_name}</h4>
-                                        <span>
-                                            {truncateTitle(
-                                                chat?.last_message?.content,
-                                                15
-                                            )}
-                                        </span>
-                                    </div>
-                                    <div className={styles.box2}>
-                                        <p></p>
-                                        {chat?.unread_count > 0 && (
-                                            <span>{chat?.unread_count}</span>
-                                        )}
-                                    </div>
-                                </div>
-                            </div>
-                        );
-                    })}
-            </div>
+            <div className={styles.sidebar_chats}>{sidebarContent}</div>
         </div>
     );
 };
