@@ -95,7 +95,7 @@ export default function ProductCategoryScreen({
                 />
             </div>
             <div className={styles.catalogSectionBlock}>
-                <div className="container mx-auto px-5">
+                <div className="container mx-auto">
                     <section className={styles.howItWorksSection}>
                         <div className="d-flex justify-content-center my-5">
                             <Image
@@ -105,7 +105,10 @@ export default function ProductCategoryScreen({
                                 alt="starts"
                             />
                         </div>
-                        <h2>
+                        <h2
+                            style={{
+                                marginBottom: '80px',
+                            }}>
                             Tayyor mahsulotlardan foydalanish qanday ishlaydi?
                         </h2>
                         <div className={styles.steps}>

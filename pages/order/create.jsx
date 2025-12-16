@@ -27,32 +27,27 @@ function OrderCreate() {
 
     return (
         <PageContainer>
-            <div className="ps-page--simple">
-                <Meta
-                    title={'Maxsus buyurtma yaratish'}
-                    description={
-                        'Soff.uz’da maxsus buyurtma yarating — o‘z loyihangiz uchun kerakli mutaxassisni toping. Talablaringizni yozing, frilanserlardan takliflarni qabul qiling va eng yaxshisini tanlang.'
-                    }
-                />
-                <div
-                    className="ps-section--shopping ps-shopping-cart"
-                    style={{ paddingTop: '8px', paddingBottom: '8px' }}>
-                    <div className="container" style={{ paddingTop: '0' }}>
-                        <div
-                            className="ps-section__header"
-                            style={{ marginBottom: '4px', paddingBottom: '0' }}>
-                            <h3
-                                style={{
-                                    fontSize: '18px',
-                                    marginBottom: '0',
-                                    fontWeight: '600',
-                                    lineHeight: '1.2',
-                                }}>
-                                Maxsus buyurtma yaratish
-                            </h3>
-                        </div>
-                        <OrderCreateForm />
+            <Meta
+                title={'Maxsus buyurtma yaratish'}
+                description={
+                    'Soff.uz’da maxsus buyurtma yarating — o‘z loyihangiz uchun kerakli mutaxassisni toping. Talablaringizni yozing, frilanserlardan takliflarni qabul qiling va eng yaxshisini tanlang.'
+                }
+            />
+            <div className="page-content">
+                <div className="container">
+                    <div style={{ marginBottom: '10px', paddingBottom: '0' }}>
+                        <h3
+                            style={{
+                                fontSize: '18px',
+                                marginBottom: '0',
+                                fontWeight: '600',
+                                lineHeight: '1.2',
+                                textAlign: 'center',
+                            }}>
+                            Maxsus buyurtma yaratish
+                        </h3>
                     </div>
+                    <OrderCreateForm />
                 </div>
             </div>
         </PageContainer>
@@ -77,32 +72,6 @@ const OrderCreateForm = () => {
     return (
         <div>
             <style jsx>{`
-                .ps-section--shopping.ps-shopping-cart {
-                    padding-top: 15px !important;
-                    padding-bottom: 15px !important;
-                }
-                .ps-section--shopping .container {
-                    padding-top: 0 !important;
-                    max-width: 100% !important;
-                    padding-left: 15px !important;
-                    padding-right: 15px !important;
-                }
-                .ps-section__header {
-                    margin-bottom: 12px !important;
-                    padding-bottom: 0 !important;
-                    margin-top: 0 !important;
-                    padding-top: 0 !important;
-                    text-align: center !important;
-                }
-                .ps-section__header h3 {
-                    font-size: 24px !important;
-                    margin-bottom: 0 !important;
-                    margin-top: 0 !important;
-                    line-height: 1.3 !important;
-                    font-weight: 600 !important;
-                    color: #1a1a1a !important;
-                }
-
                 .create-order-form {
                     max-width: 650px !important;
                     margin: 0 auto !important;
@@ -233,13 +202,6 @@ const OrderCreateForm = () => {
                     }
                 }
                 @media (max-width: 768px) {
-                    .ps-section__header h3 {
-                        font-size: 20px !important;
-                    }
-                    .ps-section__header {
-                        ps-section--shoppingps-shopping-cart
-                        margin-bottom: 10px !important;
-                    }
                     .create-order-form .ant-form-item {
                         margin-bottom: 12px !important;
                     }
