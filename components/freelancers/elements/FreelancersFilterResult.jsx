@@ -57,7 +57,6 @@ function FreelancersFilterResult({ data, collapsed, viewType }) {
                 pathname: router.pathname,
                 query: {
                     ...router.query,
-                    offset: undefined,
                     limit,
                 },
             },
