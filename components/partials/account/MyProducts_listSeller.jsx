@@ -13,6 +13,7 @@ import { cn } from '~/shared/utilities/cn';
 import dayjs from 'dayjs';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
 import SidebarLayout from '~/widgets/sidebar/SidebarLayout';
+import { downloadFile } from '~/shared/utilities/utils';
 
 const { Option } = Select;
 
@@ -38,19 +39,13 @@ export default function PurchasedProducts() {
 
     const handleDownload = useCallback((file, id) => {
         setLoadingId(id);
-        const link = document.createElement('a');
-        link.href = file;
-        link.target = '_blank';
-        link.setAttribute('download', '');
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
+        downloadFile(file);
         startTimeout(() => {
             setLoadingId(null);
         }, 1000);
     }, []);
 
-    const handleDownloadThroughTelegram = async getId => {
+    const handleDownloadThroughTelegram = async (getId) => {
         try {
             const fileSourceValue = await api.get(
                 `seller/return-telegram-link/${getId}/`
@@ -115,7 +110,7 @@ export default function PurchasedProducts() {
                 title: 'Rasm',
                 dataIndex: 'document',
                 key: 'image',
-                render: document =>
+                render: (document) =>
                     document?.poster_url ? (
                         <img
                             src={document?.poster_url}
@@ -131,7 +126,7 @@ export default function PurchasedProducts() {
                 dataIndex: 'document',
                 key: 'name',
 
-                render: document => (
+                render: (document) => (
                     <Link
                         href={`/product/${document?.slug || ''}`}
                         classdocument="cursor-pointer">
@@ -143,19 +138,19 @@ export default function PurchasedProducts() {
                 title: 'Kategoriyasi',
                 dataIndex: 'document',
                 key: 'category',
-                render: document => document?.category?.name || '-',
+                render: (document) => document?.category?.name || '-',
             },
             {
                 title: 'Narxi',
                 dataIndex: 'price',
                 key: 'price',
-                render: p => <span>{formatCurrencyWithSpace(p)} so'm</span>,
+                render: (p) => <span>{formatCurrencyWithSpace(p)} so'm</span>,
             },
             {
                 title: 'Xarid sanasi',
                 dataIndex: 'created_at',
                 key: 'created_at',
-                render: date => (
+                render: (date) => (
                     <span>{dayjs(date).format('YYYY-MM-DD HH:mm')}</span>
                 ),
             },
@@ -190,6 +185,8 @@ export default function PurchasedProducts() {
         },
     });
 
+    console.log({ productsData });
+
     return (
         <Card className="p-4 mb-3">
             <div className="container mt-4">
@@ -206,16 +203,16 @@ export default function PurchasedProducts() {
                             <Input.Search
                                 placeholder="Qidiruv"
                                 value={search}
-                                onChange={e => setSearch(e.target.value)}
+                                onChange={(e) => setSearch(e.target.value)}
                             />
                         </div>
                         <div className="col-12 col-sm-6">
                             <Select
                                 value={category}
                                 className="w-100"
-                                onChange={value => setCategory(value)}
+                                onChange={(value) => setCategory(value)}
                                 allowClear>
-                                {CATEGORY_LIST.map(item => (
+                                {CATEGORY_LIST.map((item) => (
                                     <Option key={item.value} value={item.value}>
                                         {item.title}
                                     </Option>
@@ -236,7 +233,7 @@ export default function PurchasedProducts() {
                         loadingId={loadingId}
                     />
                     {/* Pagination */}
-                    <div className="d-flex justify-content-center mt-2">
+                    <div className="d-flex justify-content-center my-5">
                         <Pagination
                             current={currPage}
                             total={productsData?.count || 0}
@@ -357,7 +354,7 @@ const PurchasedProductsLayout = ({
                     flexDirection: 'column',
                     gap: '16px',
                 }}>
-                {products.map(item => (
+                {products.map((item) => (
                     <div
                         key={item.id}
                         className={cn(
@@ -407,7 +404,9 @@ const PurchasedProductsLayout = ({
                             }>
                             <h3 style={{ marginBottom: '5px' }}>
                                 <Link
-                                    href={`/product/${item.name?.slug || ''}`}
+                                    href={`/product/${
+                                        item.document?.slug || ''
+                                    }`}
                                     className="cursor-pointer">
                                     {item.document?.title || 'Noma’lum'}
                                 </Link>

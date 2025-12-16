@@ -77,7 +77,7 @@ export async function getServerSideProps(context) {
         direction = '',
         sort_by = 'average_rating',
         limit = 20,
-        offset = 0,
+        offset = '0',
         order = '',
     } = query;
 
