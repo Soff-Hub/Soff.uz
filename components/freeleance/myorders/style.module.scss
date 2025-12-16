@@ -1,0 +1,31 @@
+.orderButton {
+    margin-left: auto;
+}
+
+.stickyButtonContainer {
+    height: 0px;
+    position: sticky;
+    z-index: 101;
+    display: flex;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(-100%);
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.stickyButtonContainer.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.stickyButton {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+    background: white !important;
+}
+
+:global(.ant-btn).stickyButton {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+    background: white !important;
+}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Button } from 'antd';
 import useGetCustomBalance from './myorder/api/useGetCustomBalance';
 import TelegramNotification from '~/shared/components/telegram-notlification';
@@ -6,13 +6,19 @@ import MyOrderTabs from './myorder/MyOrderTabs';
 import BreadCrumb from '~/components/elements/BreadCrumb';
 import BalanceWithDrawModal from '~/shared/components/modals/balance-with-draw-modal';
 import { useSafeBack } from '~/shared/hooks/useSafeBack';
+import { useContentViewport } from '~/shared/hooks/useContentViewport';
 import { FaMoneyCheck } from 'react-icons/fa';
 import SidebarLayout from '~/widgets/sidebar/SidebarLayout';
+import styles from './style.module.scss';
 
 const MyOrdersMain = () => {
     const { data } = useGetCustomBalance();
     const safeBack = useSafeBack();
+    const { headerHeight } = useContentViewport();
     const [open, setOpen] = useState(false);
+    const [showStickyButton, setShowStickyButton] = useState(false);
+    const buttonRef = useRef(null);
+    const observerRef = useRef(null);
 
     const breadCrumbItems = [
         {
@@ -26,6 +32,32 @@ const MyOrdersMain = () => {
         },
     ];
 
+    useEffect(() => {
+        if (!buttonRef.current) return;
+
+        // Create intersection observer
+        observerRef.current = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    // Show sticky button when original button is not intersecting (scrolled out of view)
+                    setShowStickyButton(!entry.isIntersecting);
+                });
+            },
+            {
+                threshold: 0,
+                rootMargin: '0px',
+            }
+        );
+
+        observerRef.current.observe(buttonRef.current);
+
+        return () => {
+            if (observerRef.current) {
+                observerRef.current.disconnect();
+            }
+        };
+    }, []);
+
     return (
         <>
             <BreadCrumb
@@ -33,6 +65,19 @@ const MyOrdersMain = () => {
                 layout="fullwidth"
                 fixedToHeader
             />
+            <div
+                className={`${styles.stickyButtonContainer} ${
+                    showStickyButton ? styles.visible : ''
+                }`}
+                style={{ top: `${headerHeight + 15}px` }}>
+                <Button
+                    onClick={() => setOpen(true)}
+                    className={styles.stickyButton}>
+                    <FaMoneyCheck />
+                    Balance -{' '}
+                    {Number(data?.wallet || 0).toLocaleString('en-US')} so'm
+                </Button>
+            </div>
             <div className="container">
                 <div
                     className="navTabsPadding"
@@ -40,16 +85,18 @@ const MyOrdersMain = () => {
                     <TelegramNotification />
                     <div className="order_header">
                         <h1 className="order_title">Mening buyurtmalarim</h1>
-                        <Button
-                            onClick={() => setOpen(true)}
-                            className="order_button">
-                            <FaMoneyCheck />
-                            Balance -{' '}
-                            {Number(data?.wallet || 0).toLocaleString(
-                                'en-US'
-                            )}{' '}
-                            so'm
-                        </Button>
+                        <div ref={buttonRef}>
+                            <Button
+                                onClick={() => setOpen(true)}
+                                className={styles.orderButton}>
+                                <FaMoneyCheck />
+                                Balance -{' '}
+                                {Number(data?.wallet || 0).toLocaleString(
+                                    'en-US'
+                                )}{' '}
+                                so'm
+                            </Button>
+                        </div>
                     </div>
                     <SidebarLayout>
                         <MyOrderTabs />
@@ -76,7 +123,7 @@ const MyOrdersMain = () => {
                             }
 
                             .order_button {
-                                fonsize: 16px;
+                                font-size: 16px;
                             }
 
                             @media (max-width: 576px) {
