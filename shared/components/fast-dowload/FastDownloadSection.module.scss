@@ -10,7 +10,7 @@
 }
 
 .productContainer {
-    padding: 10px;
+    padding-block: 10px;
     background-color: #ffffff;
     border-radius: 0 0 12px 12px;
 
@@ -18,26 +18,17 @@
     align-items: center;
     justify-content: space-between;
     gap: 6px;
-
-    @media (max-width: 768px) {
-        position: fixed;
-        bottom: 0;
-        height: 70px;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 1010;
-        width: 100%;
-        // max-width: 480px;
-        padding: 12px 16px;
-        border-radius: 12px 12px 0 0;
-    }
+    flex-wrap: nowrap;
+    overflow: hidden;
 }
 
 .productInfo {
-    width: 80%;
+    flex: 1;
+    min-width: 0;
     display: flex;
     align-items: center;
     gap: 12px;
+    overflow: hidden;
 }
 
 .productImage {
@@ -46,81 +37,177 @@
     border-radius: 6px;
     object-fit: cover;
     border: 1px solid #ccc;
+    flex-shrink: 0;
+}
+
+.productInfoPart {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    flex: 1;
+    min-width: 0;
+    padding-bottom: 3px;
 }
 
 .productTitle {
     font-size: 16px;
     white-space: nowrap;
-    line-clamp: 1;
     overflow: hidden;
     text-overflow: ellipsis;
     margin: 0;
-    min-width: 100px;
 }
 
 .downloadBtn {
-    padding: 8px 18px;
-    font-size: 14px;
-    background-color: #00a44f;
     white-space: nowrap;
-    color: #fff !important;
-    border: none;
     border-radius: 5px;
     text-align: center;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-
-    &:hover {
-        background-color: #05cc0c;
-    }
 }
 
 .closeBtn {
-    font-size: 20px;
+    font-size: 16px;
+    padding: 8px;
+}
+
+.actionsWrapper {
+    flex-shrink: 0;
+    min-width: 0;
+}
+
+.rateContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 12px;
+    // background: #f5f6f7;
+    border-radius: 8px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.rateComponent {
+    font-size: 18px;
+    flex-shrink: 0;
+
+    :global(.ant-rate-star) {
+        transition: all 0.3s ease;
+    }
+
+    :global(.ant-rate-star:hover) {
+        transform: scale(1.2);
+    }
+
+    :global(.ant-rate-star-first),
+    :global(.ant-rate-star-second) {
+        color: #d9d9d9;
+    }
+
+    :global(.ant-rate-star-full .ant-rate-star-first),
+    :global(.ant-rate-star-full .ant-rate-star-second),
+    :global(.ant-rate-star-half .ant-rate-star-first) {
+        color: #ffa940;
+    }
 }
 
 @media (max-width: 480px) {
-    .productInfo {
-        width: 50%;
+    .productContainer {
+        gap: 4px;
+        padding-block: 8px;
     }
-    .downloadBtn {
-        padding: 6px 14px;
+
+    .productInfo {
+        flex: 1;
+        min-width: 0;
+        gap: 8px;
+    }
+
+    .productImage {
+        width: 45px;
+        height: 45px;
+    }
+
+    .productTitle {
+        font-size: 13px;
+    }
+
+    .rateContainer {
+        padding: 3px;
+    }
+
+    .rateComponent {
         font-size: 12px;
-        width: 100%;
+    }
+
+    .downloadBtn {
+        font-size: 12px;
+        padding: 4px 8px;
     }
 
     .closeBtn {
-        padding: 15px 8px;
-        font-size: 16px;
+        font-size: 14px;
+        padding: 4px;
+        min-width: 28px;
+        height: 28px;
     }
 }
 
 @media (min-width: 481px) and (max-width: 768px) {
-    .productInfo {
-        width: 65%;
+    .productContainer {
+        gap: 5px;
     }
+
+    .productInfo {
+        flex: 1;
+        min-width: 0;
+        gap: 10px;
+    }
+
+    .productImage {
+        width: 45px;
+        height: 45px;
+    }
+
+    .productTitle {
+        font-size: 14px;
+    }
+
+    .rateContainer {
+        padding: 4px;
+    }
+
+    .rateComponent {
+        font-size: 14px;
+    }
+
     .downloadBtn {
-        padding: 7px 16px;
         font-size: 13px;
+        padding: 5px 10px;
     }
 
     .closeBtn {
-        padding: 17px 10px;
-        font-size: 18px;
+        font-size: 15px;
+        padding: 6px;
+        min-width: 32px;
+        height: 32px;
     }
 }
 
-@media (min-width: 769px) {
-    .productInfo {
-        width: 75%;
+@media (min-width: 769px) and (max-width: 1024px) {
+    .rateContainer {
+        padding: 5px 10px;
     }
 
-    .downloadBtn {
-        padding: 10px 22px;
-        font-size: 15px;
+    .rateComponent {
+        font-size: 16px;
+    }
+}
+
+@media (min-width: 1025px) {
+    .rateContainer {
+        padding: 6px 12px;
     }
 
-    .closeBtn {
-        padding: 21px 10px;
+    .rateComponent {
+        font-size: 18px;
     }
 }

@@ -1,14 +1,34 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import { baseURL } from '~/repositories/api';
 import { message } from 'antd';
 import { Rate } from 'antd';
+import useResponsive from '~/shared/utilities/useResponsive';
 
-export default function CommentForm({ documentId, fComment }) {
+export default function CommentForm({
+    documentId,
+    fComment,
+    initialRating = 0,
+    onSuccess,
+    mode = 'default',
+}) {
     const [text, setText] = useState('');
-    const [rating, setRating] = useState(0);
+    const [rating, setRating] = useState(initialRating);
     const [loading, setLoading] = useState(false);
+    const { isMobile, isTablet } = useResponsive();
+    const isModal = mode === 'modal';
+
+    // Responsive font size for Rate component
+    const getRateFontSize = () => {
+        if (isMobile) return 18;
+        if (isTablet) return 22;
+        return 25;
+    };
+
+    useEffect(() => {
+        setRating(initialRating);
+    }, [initialRating]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -39,6 +59,9 @@ export default function CommentForm({ documentId, fComment }) {
             setText('');
             setRating(0); // Rate reset
             message.success('Izoh muvaffaqiyatli yuborildi!');
+            if (onSuccess) {
+                onSuccess();
+            }
         } catch (err) {
             message.error('Izoh yuborilmadi.');
         } finally {
@@ -47,15 +70,22 @@ export default function CommentForm({ documentId, fComment }) {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="mb-5">
-            <div style={{ background: '#fff' }} className="mb-4 p-5 rounded-3">
+        <form onSubmit={handleSubmit} className={isModal ? '' : 'mb-5'}>
+            <div
+                style={{
+                    background: '#fff',
+                    padding: isModal ? 0 : undefined,
+                }}
+                className={isModal ? 'mb-0' : 'mb-4 p-5 rounded-3'}>
                 <textarea
                     style={{
                         borderRadius: '10px',
-                        border: 'none',
+                        border: isModal ? '1px solid #d9d9d9' : 'none',
                         background: '#fff',
+                        width: '100%',
+                        padding: isModal ? '12px' : undefined,
                     }}
-                    className="w-100 fs-4 "
+                    className={isModal ? 'fs-4' : 'w-100 fs-4'}
                     rows="5"
                     placeholder="Izohingizni yozing..."
                     value={text}
@@ -66,7 +96,7 @@ export default function CommentForm({ documentId, fComment }) {
                         <Rate
                             value={rating}
                             onChange={(value) => setRating(value)}
-                            style={{ fontSize: 25 }}
+                            style={{ fontSize: getRateFontSize() }}
                             allowHalf
                         />
                     ) : (
