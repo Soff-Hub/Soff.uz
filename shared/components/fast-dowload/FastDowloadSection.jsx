@@ -14,6 +14,9 @@ import useCart from '~/shared/hooks/useCart';
 import useResponsive from '~/shared/utilities/useResponsive';
 import CommentForm from '~/components/details-components/comment-section/commentForm';
 import FileDownloadLink from '~/components/FileDownloadLink';
+import axios from 'axios';
+import Cookies from 'js-cookie';
+import { baseURL } from '~/repositories/api';
 
 // Default product for testing
 const DEFAULT_PRODUCT = {
@@ -45,7 +48,7 @@ const FastDownloadSection = () => {
 
     // Use default product for testing when API fails or no data
     const displayProduct =
-        product && Object.keys(product).length > 0 ? product : null;
+        product && Object.keys(product).length > 0 ? product : DEFAULT_PRODUCT;
 
     useEffect(() => {
         const carts = JSON.parse(localStorage.getItem('cart')) || [];
@@ -56,8 +59,8 @@ const FastDownloadSection = () => {
     }, [displayProduct]);
 
     // Show component even when loading/error for testing with default product
-    if (isLoading) return null;
-    if (isError || !product || Object.keys(product).length == 0) return null;
+    // if (isLoading) return null;
+    // if (isError || !product || Object.keys(product).length == 0) return null;
 
     const handleDowload = async (id) => {
         try {
@@ -68,6 +71,24 @@ const FastDownloadSection = () => {
             });
         } catch (error) {
             console.error('Download error:', error);
+        }
+    };
+
+    const handleDownloadThroughTelegram = async (id) => {
+        try {
+            const token = Cookies.get('token');
+            if (!token) {
+                throw new Error('Token mavjud emas');
+            }
+            const fileSourceValue = await axios.get(
+                `${baseURL}customer/return-telegram-link/${id}/`,
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            );
+            window.open(fileSourceValue.data.link, '_blank');
+        } catch (error) {
+            console.error('Telegram download error:', error);
         }
     };
 
@@ -146,6 +167,22 @@ const FastDownloadSection = () => {
                             Yuklab olish
                         </Button>
                     </FileDownloadLink>
+                    <Button
+                        type="link"
+                        size="middle"
+                        className={styles.telegramBtn}
+                        onClick={() =>
+                            handleDownloadThroughTelegram(displayProduct?.id)
+                        }>
+                        <img
+                            src="/static/img/telegram.png"
+                            alt="Telegram"
+                            height={20}
+                        />
+                        <span className={styles.telegramBtnText}>
+                            Yuklab olish
+                        </span>
+                    </Button>
                     <Button
                         className={styles.closeBtn}
                         size="middle"
