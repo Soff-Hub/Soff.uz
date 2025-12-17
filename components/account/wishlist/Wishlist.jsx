@@ -15,8 +15,8 @@ import {
 } from '~/components/details-components/details-actions/file-actions';
 import { FiDownload } from 'react-icons/fi';
 import styles from './wishlist.module.scss';
-import { downloadFile } from '~/shared/utilities/utils';
 import { FaArrowLeft, FaBoxOpen } from 'react-icons/fa6';
+import FileDownloadLink from '~/components/FileDownloadLink';
 
 const breadCrumb = [
     {
@@ -27,17 +27,6 @@ const breadCrumb = [
         text: 'Tanlanganlar',
     },
 ];
-
-// Extended file colors and icons to include .docx
-const extendedFileColors = {
-    ...fileColors,
-    '.docx': '#007DFF',
-};
-
-const extendedFileIcons = {
-    ...fileIcons,
-    '.docx': 'fa-file-word',
-};
 
 function Wishlist() {
     const { wishlist, status } = useSelector((state) => state.ecomerce);
@@ -119,13 +108,13 @@ function Wishlist() {
                                                 }
                                                 style={{
                                                     backgroundColor:
-                                                        extendedFileColors[
+                                                        fileColors[
                                                             item.file_type
                                                         ] || '#E22C2F',
                                                 }}>
                                                 <i
                                                     className={`fas ${
-                                                        extendedFileIcons[
+                                                        fileIcons[
                                                             item.file_type
                                                         ] || 'fa-file-pdf'
                                                     }`}></i>
@@ -190,20 +179,23 @@ function Wishlist() {
                                         Savatga qo'shish
                                     </Button>
                                 ) : (
-                                    <Button
-                                        type="default"
-                                        variant="outlined"
-                                        icon={
-                                            <FiDownload
-                                                style={{ fontSize: '18px' }}
-                                            />
-                                        }
-                                        onClick={() =>
-                                            downloadFile(item.file_url)
-                                        }
-                                        className={styles.wishlistAddButton}>
-                                        Yuklab olish
-                                    </Button>
+                                    <FileDownloadLink
+                                        url={item?.file_url}
+                                        filename={item.title}>
+                                        <Button
+                                            type="default"
+                                            variant="outlined"
+                                            icon={
+                                                <FiDownload
+                                                    style={{ fontSize: '18px' }}
+                                                />
+                                            }
+                                            className={
+                                                styles.wishlistAddButton
+                                            }>
+                                            Yuklab olish
+                                        </Button>
+                                    </FileDownloadLink>
                                 )}
                                 <Button
                                     danger

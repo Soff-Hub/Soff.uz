@@ -16,6 +16,7 @@ import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import AuthModal from '~/components/AuthModal';
 
 export const fileColors = {
+    '.docx': '#007DFF',
     '.doc': '#007DFF',
     '.xls': '#509C62',
     '.xlsx': '#509C62',
@@ -30,6 +31,7 @@ export const fileColors = {
 };
 
 export const fileIcons = {
+    '.docx': 'fa-file-word', // Word yangi format
     '.doc': 'fa-file-word', // Word hujjati
     '.xls': 'fa-file-excel', // Excel eski format
     '.xlsx': 'fa-file-excel', // Excel yangi format

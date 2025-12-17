@@ -11,9 +11,9 @@ import { cn } from '~/shared/utilities/cn';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import useCart from '~/shared/hooks/useCart';
-import { downloadFile } from '~/shared/utilities/utils';
 import useResponsive from '~/shared/utilities/useResponsive';
 import CommentForm from '~/components/details-components/comment-section/commentForm';
+import FileDownloadLink from '~/components/FileDownloadLink';
 
 // Default product for testing
 const DEFAULT_PRODUCT = {
@@ -45,7 +45,7 @@ const FastDownloadSection = () => {
 
     // Use default product for testing when API fails or no data
     const displayProduct =
-        product && Object.keys(product).length > 0 ? product : DEFAULT_PRODUCT;
+        product && Object.keys(product).length > 0 ? product : null;
 
     useEffect(() => {
         const carts = JSON.parse(localStorage.getItem('cart')) || [];
@@ -56,8 +56,8 @@ const FastDownloadSection = () => {
     }, [displayProduct]);
 
     // Show component even when loading/error for testing with default product
-    // if (isLoading) return null;
-    // if (isError || !product || Object.keys(product).length == 0) return null;
+    if (isLoading) return null;
+    if (isError || !product || Object.keys(product).length == 0) return null;
 
     const handleDowload = async (id) => {
         try {
@@ -136,17 +136,16 @@ const FastDownloadSection = () => {
                         styles.actionsWrapper
                     )}>
                     {!isMobile && rateBox}
-                    <Button
-                        className={styles.downloadBtn}
-                        type="primary"
-                        href={displayProduct?.url}
-                        target="_blank"
+                    <FileDownloadLink
+                        url={`${displayProduct?.url}`}
+                        filename={displayProduct?.title}
                         onClick={() => {
-                            downloadFile(displayProduct?.url);
                             handleDowload(displayProduct?.id);
                         }}>
-                        Yuklab olish
-                    </Button>
+                        <Button className={styles.downloadBtn} type="primary">
+                            Yuklab olish
+                        </Button>
+                    </FileDownloadLink>
                     <Button
                         className={styles.closeBtn}
                         size="middle"

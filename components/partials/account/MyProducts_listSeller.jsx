@@ -11,9 +11,8 @@ import useResponsive from '~/shared/utilities/useResponsive';
 import { useQuery } from '@tanstack/react-query';
 import { cn } from '~/shared/utilities/cn';
 import dayjs from 'dayjs';
-import { useTimeManager } from '~/shared/hooks/useTimeManager';
 import SidebarLayout from '~/widgets/sidebar/SidebarLayout';
-import { downloadFile } from '~/shared/utilities/utils';
+import FileDownloadLink from '~/components/FileDownloadLink';
 
 const { Option } = Select;
 
@@ -27,23 +26,13 @@ const CATEGORY_LIST = [
 ];
 
 export default function PurchasedProducts() {
-    const { startTimeout } = useTimeManager();
     const [search, setSearch] = useState('');
     const debouncedSearch = useDebounce(search, 500);
     const [category, setCategory] = useState('file');
     const [currPage, setCurrPage] = useState(1);
     const [pageSize, setPageSize] = useState(5);
-    const [loadingId, setLoadingId] = useState(null);
 
     const token = Cookies.get('token');
-
-    const handleDownload = useCallback((file, id) => {
-        setLoadingId(id);
-        downloadFile(file);
-        startTimeout(() => {
-            setLoadingId(null);
-        }, 1000);
-    }, []);
 
     const handleDownloadThroughTelegram = async (getId) => {
         try {
@@ -70,19 +59,18 @@ export default function PurchasedProducts() {
                             height: '100%',
                             width: '350px',
                         }}>
+                        <FileDownloadLink
+                            url={document.file_url}
+                            name={document.title}>
+                            <Button
+                                type="primary"
+                                shape="round"
+                                size="middle"
+                                icon={<DownloadOutlined />}>
+                                Yuklab olish
+                            </Button>
+                        </FileDownloadLink>
                         <Button
-                            loading={loadingId === record.id}
-                            type="primary"
-                            shape="round"
-                            size="middle"
-                            icon={<DownloadOutlined />}
-                            onClick={() =>
-                                handleDownload(document.file_url, record.id)
-                            }>
-                            Yuklab olish
-                        </Button>
-                        <Button
-                            loading={loadingId === record.id}
                             type="link"
                             shape="round"
                             size="middle"
@@ -155,10 +143,10 @@ export default function PurchasedProducts() {
                 ),
             },
         ],
-        [loadingId, handleDownload]
+        []
     );
 
-    const { data: productsData, isLoading: loadingTable } = useQuery({
+    let { data: productsData, isLoading: loadingTable } = useQuery({
         queryKey: [
             'purchased-products',
             currPage,
@@ -183,9 +171,32 @@ export default function PurchasedProducts() {
             );
             return data;
         },
+        enabled: !!token,
     });
 
-    console.log({ productsData });
+    // productsData = {
+    //     ...productsData,
+    //     results: [
+    //         ...productsData?.results,
+    //         {
+    //             id: 9999,
+    //             document: {
+    //                 id: 8888,
+    //                 title: 'Test Product',
+    //                 slug: 'test-product',
+    //                 poster_url:
+    //                     'https://i.ytimg.com/vi/n0KlHOMIyS4/maxresdefault.jpg',
+    //                 file_url:
+    //                     'https://drive.usercontent.google.com/uc?id=1LaTsuBnHHOrlG9cuU20qFasmCkY3x2cb&authuser=0&export=download',
+    //                 category: { name: 'Test Category' },
+    //             },
+    //             price: 50000,
+    //             created_at: '2024-01-01T12:00:00Z',
+    //         },
+    //     ],
+    // };
+
+    // console.log({ productsData });
 
     return (
         <Card className="p-4 mb-3">
@@ -225,12 +236,10 @@ export default function PurchasedProducts() {
                     <PurchasedProductsLayout
                         products={productsData?.results}
                         columns={columns}
-                        loadingTable={loadingTable}
-                        handleDownload={handleDownload}
                         handleDownloadThroughTelegram={
                             handleDownloadThroughTelegram
                         }
-                        loadingId={loadingId}
+                        loadingTable={loadingTable}
                     />
                     {/* Pagination */}
                     <div className="d-flex justify-content-center my-5">
@@ -255,10 +264,8 @@ export default function PurchasedProducts() {
 const PurchasedProductsLayout = ({
     products,
     columns,
-    loadingTable,
-    handleDownload,
     handleDownloadThroughTelegram,
-    loadingId,
+    loadingTable,
 }) => {
     const { isDesktop, isMobile } = useResponsive();
 
@@ -331,7 +338,6 @@ const PurchasedProductsLayout = ({
                     columns={columns}
                     rowKey="id"
                     pagination={false}
-                    loading={loadingTable}
                 />
             </div>
         );
@@ -452,25 +458,21 @@ const PurchasedProductsLayout = ({
                                     gap: '8px',
                                     width: '100%',
                                 }}>
+                                <FileDownloadLink
+                                    url={item.document?.file_url}
+                                    filename={item.document?.title}>
+                                    <Button
+                                        type="primary"
+                                        shape="round"
+                                        size="middle"
+                                        style={{
+                                            width: '100%',
+                                        }}
+                                        icon={<DownloadOutlined />}>
+                                        Yuklab olish
+                                    </Button>
+                                </FileDownloadLink>
                                 <Button
-                                    loading={loadingId === item.id}
-                                    type="primary"
-                                    shape="round"
-                                    size="middle"
-                                    style={{
-                                        width: '100%',
-                                    }}
-                                    icon={<DownloadOutlined />}
-                                    onClick={() =>
-                                        handleDownload(
-                                            item.document?.file_url,
-                                            item.id
-                                        )
-                                    }>
-                                    Yuklab olish
-                                </Button>
-                                <Button
-                                    loading={loadingId === item.id}
                                     type="link"
                                     shape="round"
                                     size="middle"
