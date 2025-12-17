@@ -19,6 +19,7 @@ import { setSavedPrfileData } from '~/store/ecomerce/slice';
 import useAuth from '~/shared/hooks/useAuth';
 import useResponsive from '~/shared/utilities/useResponsive';
 import useDebounce from '~/shared/hooks/useDebounce';
+import { useContentViewport } from '~/shared/hooks/useContentViewport';
 
 const { Sider } = Layout;
 
@@ -28,6 +29,7 @@ const disableLinkStyle = {
 
 function Sidebar({ collapsed, onChangeCollapse }) {
     const { logOutAuth } = useAuth();
+    const { headerHeight } = useContentViewport();
     const { size } = useResponsive();
     const isStyleApplicable = useDebounce(!collapsed, 200);
     const router = useRouter();
@@ -193,6 +195,9 @@ function Sidebar({ collapsed, onChangeCollapse }) {
             collapsible
             collapsed={collapsed}
             className="sidebar-layout"
+            style={{
+                top: headerHeight + 10,
+            }}
             theme="light">
             <div
                 style={{
