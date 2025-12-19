@@ -40,8 +40,8 @@
         "next-progress": "^2.3.1",
         "node-cron": "^3.0.3",
         "react": "18.2.0",
-        "react-dom": "18.2.0",
         "react-confetti": "^6.1.0",
+        "react-dom": "18.2.0",
         "react-icons": "^5.5.0",
         "react-infinite-scroll-component": "^6.1.0",
         "react-joyride": "^2.8.1",
@@ -66,9 +66,11 @@
         "@storybook/nextjs": "^7.6.20",
         "@storybook/react": "^7.6.20",
         "@storybook/test": "^7.6.20",
-        "@types/node": "^24.7.0",
+        "@types/node": "^24.10.4",
+        "@types/react": "^18.3.27",
         "next-compose-plugins": "^2.2.1",
         "npm-run-all": "^4.1.5",
-        "storybook": "^7.6.20"
+        "storybook": "^7.6.20",
+        "typescript": "^5.9.3"
     }
 }

@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import { baseURL } from '~/repositories/api';
-import { message } from 'antd';
-import { Rate } from 'antd';
+import { Button, message, Input, Rate, Form } from 'antd';
 import useResponsive from '~/shared/utilities/useResponsive';
 
+const { TextArea } = Input;
 export default function CommentForm({
     documentId,
     fComment,
@@ -13,8 +13,7 @@ export default function CommentForm({
     onSuccess,
     mode = 'default',
 }) {
-    const [text, setText] = useState('');
-    const [rating, setRating] = useState(initialRating);
+    const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
     const { isMobile, isTablet } = useResponsive();
     const isModal = mode === 'modal';
@@ -27,12 +26,11 @@ export default function CommentForm({
     };
 
     useEffect(() => {
-        setRating(initialRating);
-    }, [initialRating]);
+        form.setFieldsValue({ rating: initialRating });
+    }, [initialRating, form]);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (!text.trim()) return;
+    const handleSubmit = async (values) => {
+        const { commentText: text, rating } = values;
 
         const token = Cookies.get('token');
         if (!token) {
@@ -56,8 +54,8 @@ export default function CommentForm({
                 }
             );
 
-            setText('');
-            setRating(0); // Rate reset
+            form.resetFields();
+            form.setFieldsValue({ rating: 0 });
             message.success('Izoh muvaffaqiyatli yuborildi!');
             if (onSuccess) {
                 onSuccess();
@@ -70,46 +68,60 @@ export default function CommentForm({
     };
 
     return (
-        <form onSubmit={handleSubmit} className={isModal ? '' : 'mb-5'}>
+        <Form
+            form={form}
+            onFinish={handleSubmit}
+            className={isModal ? '' : 'mb-5'}>
             <div
                 style={{
                     background: '#fff',
                     padding: isModal ? 0 : undefined,
                 }}
                 className={isModal ? 'mb-0' : 'mb-4 p-5 rounded-3'}>
-                <textarea
-                    style={{
-                        borderRadius: '10px',
-                        border: isModal ? '1px solid #d9d9d9' : 'none',
-                        background: '#fff',
-                        width: '100%',
-                        padding: isModal ? '12px' : undefined,
-                    }}
-                    className={isModal ? 'fs-4' : 'w-100 fs-4'}
-                    rows="5"
-                    placeholder="Izohingizni yozing..."
-                    value={text}
-                    onChange={(e) => setText(e.target.value)}
-                />
+                <Form.Item
+                    label={null}
+                    name="commentText"
+                    rules={[
+                        { required: true, message: 'Iltimos, izoh yozing!' },
+                    ]}>
+                    <TextArea
+                        style={{
+                            borderRadius: '10px',
+                            border: isModal ? undefined : 'none',
+                            background: '#fff',
+                            width: '100%',
+                            padding: isModal ? '12px' : undefined,
+                        }}
+                        className={isModal ? 'fs-4' : 'w-100 fs-4'}
+                        rows="5"
+                        placeholder="Izohingizni yozing..."
+                    />
+                </Form.Item>
                 <div className="d-flex justify-content-between align-items-center mt-3">
                     {!fComment ? (
-                        <Rate
-                            value={rating}
-                            onChange={(value) => setRating(value)}
-                            style={{ fontSize: getRateFontSize() }}
-                            allowHalf
-                        />
+                        <Form.Item
+                            name="rating"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Iltimos, baho bering!',
+                                },
+                            ]}>
+                            <Rate style={{ fontSize: getRateFontSize() }} />
+                        </Form.Item>
                     ) : (
                         <div></div>
                     )}
-                    <button
-                        type="submit"
-                        className="btn fs-4 rounded-5 py-2 px-5 btn-success"
-                        disabled={loading}>
+                    <Button
+                        htmlType="submit"
+                        type="primary"
+                        variant="primary"
+                        loading={loading}
+                        className="rounded-5">
                         {loading ? 'Yuborilmoqda...' : "Jo'natish"}
-                    </button>
+                    </Button>
                 </div>
             </div>
-        </form>
+        </Form>
     );
 }
