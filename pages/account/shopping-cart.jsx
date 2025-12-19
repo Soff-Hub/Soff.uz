@@ -1,8 +1,8 @@
 import React from 'react';
 import PageContainer from '~/widgets/layouts/PageContainer';
 import { connect } from 'react-redux';
-import Meta from '~/components/shared/headers/Meta';
-import ShoppingCart from '~/components/account/shopping-cart';
+import Meta from '~/shared/ui/meta';
+import ShoppingCart from '~/features/account/ui/shopping-cart';
 
 const ShoppingCartScreen = () => {
     return (

@@ -9,7 +9,7 @@ import { MdOutlinePendingActions } from 'react-icons/md';
 import { useRouter } from 'next/router';
 import { Avatar, Button, message, Tooltip, Badge } from 'antd';
 import { cn } from '~/shared/utilities/cn';
-import { CancelOrderModal } from '~/components/freeleance/myorders/order-detail/ui/modals/CancelOrderModal';
+import { CancelOrderModal } from '~/features/freelancers/myorders/order-detail/ui/modals/CancelOrderModal';
 import { FaRegCheckCircle } from 'react-icons/fa';
 import { FaRegStopCircle } from 'react-icons/fa';
 import { FaRegTimesCircle } from 'react-icons/fa';

@@ -1,10 +1,10 @@
 import React from 'react';
-import AffiliateBenefitsSection from '~/components/elements/affiliate_program/AffiliateBenefitsSection';
-import CreateLinkSection from '~/components/elements/affiliate_program/CreateLinkSection';
-import HeroSection from '~/components/elements/affiliate_program/HeroSection';
-import JoinSoffSection from '~/components/elements/affiliate_program/JoinSoffSection';
-import PromoteOptionsSection from '~/components/elements/affiliate_program/PromoteOptionsSection';
-import ThreeStepsSection from '~/components/elements/affiliate_program/ThreeStepsSection';
+import AffiliateBenefitsSection from '~/features/affiliate/ui/AffiliateBenefitsSection';
+import CreateLinkSection from '~/features/affiliate/ui/CreateLinkSection';
+import HeroSection from '~/features/affiliate/ui/HeroSection';
+import JoinSoffSection from '~/features/affiliate/ui/JoinSoffSection';
+import PromoteOptionsSection from '~/features/affiliate/ui/PromoteOptionsSection';
+import ThreeStepsSection from '~/features/affiliate/ui/ThreeStepsSection';
 import PageLayout from '~/widgets/layouts/PageLayout';
 
 const AffiliateProgram = () => {

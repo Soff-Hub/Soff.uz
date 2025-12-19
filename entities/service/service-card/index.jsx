@@ -3,7 +3,7 @@ import styles from './style.module.scss';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
-import AuthModal from '~/components/AuthModal';
+import AuthModal from '~/features/auth/ui/auth-modal';
 import { useRouter } from 'next/router';
 import { StarFilled } from '@ant-design/icons';
 import { Button } from 'antd';

@@ -1,7 +1,7 @@
 import React from 'react';
-import MyProducts_listSeller from '~/components/partials/account/MyProducts_listSeller';
+import MyProducts_listSeller from '~/features/account/ui/MyProducts_listSeller';
 import PageContainer from '~/widgets/layouts/PageContainer';
-import Meta from '~/components/shared/headers/Meta';
+import Meta from '~/shared/ui/meta';
 
 const SellerProducts = () => {
     return (

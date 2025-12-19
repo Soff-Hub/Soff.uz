@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { calculateAmount } from '~/shared/utilities/ecomerce-helpers';
 import ProductRepository from '~/repositories/ProductRepository';
-import { addPeriodToThousands } from '~/components/partials/account/price-formatter';
+import { addPeriodToThousands } from '~/features/account/ui/price-formatter';
 
 const ModuleCartSummary = ({ source }) => {
     const [percentage, setPercentage] = useState(0);

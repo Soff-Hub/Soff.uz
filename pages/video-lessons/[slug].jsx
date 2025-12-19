@@ -1,6 +1,6 @@
 import React from 'react';
 import PageContainer from '~/widgets/layouts/PageContainer';
-import Meta from '~/components/shared/headers/Meta';
+import Meta from '~/shared/ui/meta';
 import { useRouter } from 'next/router';
 import { baseUrlUseApi } from '~/repositories/useApi';
 import ProductsByCategory from '~/components/partials/category/ProductsByCategory';
@@ -17,8 +17,10 @@ export default function VideoLessons({
     childCategoryData,
     parentCategory,
     childCategory,
+    productsUrl,
     page,
 }) {
+    console.log({ productsUrl });
     const router = useRouter();
     const handlePageChange = (newPage) => {
         router.push({
@@ -110,6 +112,7 @@ export async function getServerSideProps(context) {
             childCategoryData: childCategoryData || null,
             parentCategory,
             childCategory,
+            productsUrl,
             page,
         },
     };

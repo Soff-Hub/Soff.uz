@@ -2,9 +2,9 @@ import React from 'react';
 import { Pagination } from 'antd';
 import { useRouter } from 'next/router';
 import PageContainer from '~/widgets/layouts/PageContainer';
-import Meta from '~/components/shared/headers/Meta';
-import ServicesFilterSection from '~/components/freeleance/services/ServicesFilterSection';
-import ServicesCardSection from '~/components/freeleance/services/ServicesCardSection';
+import Meta from '~/shared/ui/meta';
+import ServicesFilterSection from '~/features/freelancers/services/ServicesFilterSection';
+import ServicesCardSection from '~/features/freelancers/services/ServicesCardSection';
 import { useGetDirectionsQuery } from '~/store/profile/slice';
 
 const getTitleFromDirection = (directions, value) => {

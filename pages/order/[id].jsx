@@ -1,7 +1,7 @@
 import React from 'react';
 import PageLayout from '~/widgets/layouts/PageLayout';
-import OrderDetailMain from '~/components/freeleance/myorders/order-detail/OrderDetailMain';
-import BreadCrumb from '~/components/elements/BreadCrumb';
+import OrderDetailMain from '~/features/freelancers/myorders/order-detail/OrderDetailMain';
+import BreadCrumb from '~/shared/ui/breadcrumb';
 import { useSafeBack } from '~/shared/hooks/useSafeBack';
 
 const OrderDatail = ({ orderData }) => {

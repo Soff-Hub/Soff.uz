@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Modal, Tooltip, Switch } from 'antd';
-import ServiceCheckout from '~/components/freeleance/services/service-deatail/ui/auth/serviceCheckout';
+import ServiceCheckout from '~/features/freelancers/services/service-deatail/ui/auth/serviceCheckout';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import { useRouter } from 'next/router';
-import useGetCustomBalance from '~/components/freeleance/myorders/myorder/api/useGetCustomBalance';
+import useGetCustomBalance from '~/features/freelancers/myorders/myorder/api/useGetCustomBalance';
 import styles from '../styles/orderPaymentPrompt.module.scss';
 
 function OrderPaymentPrompt({ isOpen, onClose, order }) {

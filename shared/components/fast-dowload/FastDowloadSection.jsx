@@ -12,8 +12,8 @@ import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import useCart from '~/shared/hooks/useCart';
 import useResponsive from '~/shared/utilities/useResponsive';
-import CommentForm from '~/components/details-components/comment-section/commentForm';
-import FileDownloadLink from '~/components/FileDownloadLink';
+import CommentForm from '~/features/comments/ui/commentForm';
+import FileDownloadLink from '~/shared/ui/file-download-link';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { baseURL } from '~/repositories/api';
@@ -30,7 +30,7 @@ const DEFAULT_PRODUCT = {
 const FastDownloadSection = () => {
     const queryClient = useQueryClient();
     const { isMobile } = useResponsive();
-    const { user } = useSelector((state) => state.auth);
+    const { user, isLoggedIn } = useSelector((state) => state.auth);
     const { removeAll } = useCart();
     const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
     const [selectedRating, setSelectedRating] = useState(0);
@@ -46,21 +46,21 @@ const FastDownloadSection = () => {
         staleTime: 1000 * 60 * 5,
     });
 
-    // Use default product for testing when API fails or no data
-    const displayProduct =
-        product && Object.keys(product).length > 0 ? product : DEFAULT_PRODUCT;
+    console.log({ product });
 
     useEffect(() => {
         const carts = JSON.parse(localStorage.getItem('cart')) || [];
-        const hasProductincart = carts.includes(displayProduct?.id);
+        const hasProductincart = carts.includes(product?.id);
         if (hasProductincart) {
             removeAll();
         }
-    }, [displayProduct]);
+    }, [product]);
 
-    // Show component even when loading/error for testing with default product
-    // if (isLoading) return null;
-    // if (isError || !product || Object.keys(product).length == 0) return null;
+    if (!isLoggedIn || isLoading) return null;
+    if (isError || !product || Object.keys(product).length == 0) return null;
+
+    const hasRating = product?.user_rating && product.user_rating > 0;
+    const productId = product?.id;
 
     const handleDowload = async (id) => {
         try {
@@ -74,19 +74,20 @@ const FastDownloadSection = () => {
         }
     };
 
-    const handleDownloadThroughTelegram = async (id) => {
+    const handleDownloadThroughTelegram = async () => {
         try {
             const token = Cookies.get('token');
             if (!token) {
                 throw new Error('Token mavjud emas');
             }
             const fileSourceValue = await axios.get(
-                `${baseURL}customer/return-telegram-link/${id}/`,
+                `${baseURL}customer/return-telegram-link/${productId}/`,
                 {
                     headers: { Authorization: `Bearer ${token}` },
                 }
             );
             window.open(fileSourceValue.data.link, '_blank');
+            handleDowload(productId);
         } catch (error) {
             console.error('Telegram download error:', error);
         }
@@ -104,6 +105,14 @@ const FastDownloadSection = () => {
     const handleModalClose = () => {
         setIsCommentModalOpen(false);
         setSelectedRating(0);
+        queryClient.invalidateQueries({
+            queryKey: ['fast-download'],
+            exact: false,
+        });
+        queryClient.invalidateQueries({
+            queryKey: ['purchased-products'],
+            exact: false,
+        });
     };
 
     const rateBox = (
@@ -113,7 +122,6 @@ const FastDownloadSection = () => {
             style={{ cursor: 'pointer' }}>
             <Rate
                 className={styles.rateComponent}
-                allowHalf
                 value={selectedRating}
                 onChange={handleRateChange}
             />
@@ -124,29 +132,29 @@ const FastDownloadSection = () => {
         <div className={styles.wrapper}>
             <div className={`container ${styles.productContainer}`}>
                 <div className={styles.productInfo}>
-                    <Link href={`/product/${displayProduct?.slug}`}>
+                    <Link href={`/product/${product?.slug}`}>
                         <a>
                             <img
-                                src={displayProduct?.poster}
-                                alt={displayProduct?.title}
+                                src={product?.poster}
+                                alt={product?.title}
                                 className={styles.productImage}
                             />
                         </a>
                     </Link>
                     <div className={styles.productInfoPart}>
                         <p className={styles.productTitle}>
-                            <Link href={`/product/${displayProduct?.slug}`}>
-                                <a>
-                                    {displayProduct?.title || 'Mahsulot nomi'}
-                                </a>
+                            <Link href={`/product/${product?.slug}`}>
+                                <a>{product?.title || 'Mahsulot nomi'}</a>
                             </Link>
                         </p>
-                        <div
-                            style={{
-                                width: 'fit-content',
-                            }}>
-                            {isMobile && rateBox}
-                        </div>
+                        {!hasRating && (
+                            <div
+                                style={{
+                                    width: 'fit-content',
+                                }}>
+                                {isMobile && rateBox}
+                            </div>
+                        )}
                     </div>
                 </div>
                 <div
@@ -156,12 +164,12 @@ const FastDownloadSection = () => {
                         'items-center',
                         styles.actionsWrapper
                     )}>
-                    {!isMobile && rateBox}
+                    {!isMobile && !hasRating && rateBox}
                     <FileDownloadLink
-                        url={`${displayProduct?.url}`}
-                        filename={displayProduct?.title}
+                        url={`${product?.url}`}
+                        filename={product?.title}
                         onClick={() => {
-                            handleDowload(displayProduct?.id);
+                            handleDowload(product?.id);
                         }}>
                         <Button className={styles.downloadBtn} type="primary">
                             Yuklab olish
@@ -171,9 +179,7 @@ const FastDownloadSection = () => {
                         type="link"
                         size="middle"
                         className={styles.telegramBtn}
-                        onClick={() =>
-                            handleDownloadThroughTelegram(displayProduct?.id)
-                        }>
+                        onClick={handleDownloadThroughTelegram}>
                         <img
                             src="/static/img/telegram.png"
                             alt="Telegram"
@@ -186,7 +192,7 @@ const FastDownloadSection = () => {
                     <Button
                         className={styles.closeBtn}
                         size="middle"
-                        onClick={() => handleDowload(displayProduct?.id)}>
+                        onClick={() => handleDowload(product?.id)}>
                         <IoMdClose />
                     </Button>
                 </div>
@@ -199,7 +205,7 @@ const FastDownloadSection = () => {
                 width={isMobile ? '100%' : 600}
                 centered>
                 <CommentForm
-                    documentId={displayProduct?.id}
+                    documentId={product?.id}
                     fComment={false}
                     initialRating={selectedRating}
                     onSuccess={handleModalClose}

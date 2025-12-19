@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 import { DownOutlined } from '@ant-design/icons';
 import { Dropdown, Space, Badge, Button, Empty } from 'antd';
 import Link from 'next/link';
-import useOrdersStatus from '~/components/freeleance/myorders/myorder/api/useOrderStatus';
+import useOrdersStatus from '~/features/freelancers/myorders/myorder/api/useOrderStatus';
 import { IoSearch } from 'react-icons/io5';
 import SearchModal from '~/shared/components/modals/search-modal/SearchModal';
 

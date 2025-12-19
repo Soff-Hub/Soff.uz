@@ -18,7 +18,7 @@ const Header = dynamic(() => import('~/widgets/header'), {
 
 const Footer = dynamic(() => import('~/widgets/footer'), { ssr: true });
 const NetworkStatusComponent = dynamic(
-    () => import(`~/components/NetworkStatus`),
+    () => import(`~/shared/ui/network-status`),
     { ssr: false }
 );
 

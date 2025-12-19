@@ -1,7 +1,7 @@
 import React from 'react';
 import PageContainer from '~/widgets/layouts/PageContainer';
 import AboutContent from '~/components/partials/faqs/AboutContent';
-import Meta from '~/components/shared/headers/Meta';
+import Meta from '~/shared/ui/meta';
 
 const AboutUs = () => {
     return (

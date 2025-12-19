@@ -8,7 +8,7 @@ import React, {
 import PageContainer from '~/widgets/layouts/PageContainer';
 import { baseUrl } from '~/repositories/Repository';
 import * as cookie from 'cookie';
-import Meta from '~/components/shared/headers/Meta';
+import Meta from '~/shared/ui/meta';
 import { getOrCreateDeviceId } from '~/shared/utilities/device-id';
 import dynamic from 'next/dynamic';
 
@@ -16,23 +16,23 @@ const video_url = 'https://www.youtube.com/watch?v=oJre9mbRE2U';
 
 // Lazy load ProductVideoBanner
 const ProductVideoBanner = dynamic(
-    () => import('~/components/product/ProductVideoBanner'),
+    () => import('~/entities/product/ui/ProductVideoBanner'),
     { ssr: false }
 );
 
 // Lazy load heavy components
 const LastAddedProducts = dynamic(
-    () => import('~/components/details-components/LastAddedProducts'),
+    () => import('~/features/product-details/ui/last-added-products'),
     { ssr: false }
 );
 
 const SimilarProducts = dynamic(
-    () => import('~/components/details-components/SimilarProducts'),
+    () => import('~/features/product-details/ui/similar-products'),
     { ssr: false }
 );
 
 const AISoffiaPresentation = dynamic(
-    () => import('~/components/elements/AISoffiaPresentation'),
+    () => import('~/widgets/home/ai-soffia'),
     { ssr: false }
 );
 
@@ -44,7 +44,7 @@ const Joyride = dynamic(() => import('react-joyride'), {
 const FileProductDetatails = dynamic(
     () =>
         import(
-            '~/components/details-components/file-products-detail/details-page'
+            '~/features/product-details/ui/file-products/details-page'
         ),
     { ssr: true }
 );
@@ -52,14 +52,14 @@ const FileProductDetatails = dynamic(
 const ThreeDesignProductDetails = dynamic(
     () =>
         import(
-            '~/components/details-components/templates-details/details-page'
+            '~/features/product-details/ui/templates/details-page'
         ),
     { ssr: true }
 );
 
 const VideosProductDetails = dynamic(
     () =>
-        import('~/components/details-components/video-tutorials/details-page'),
+        import('~/features/product-details/ui/video-tutorials/details-page'),
     { ssr: true }
 );
 

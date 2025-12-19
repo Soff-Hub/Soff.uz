@@ -29,7 +29,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
 import { useGetDirectionsQuery } from '~/store/profile/slice';
-import PhoneNumberModal from '~/components/order/PhoneNumberModal';
+import PhoneNumberModal from '~/features/orders/ui/PhoneNumberModal';
 
 const { TextArea } = Input;
 

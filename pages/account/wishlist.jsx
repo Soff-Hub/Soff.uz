@@ -1,7 +1,7 @@
 import React from 'react';
 import PageContainer from '~/widgets/layouts/PageContainer';
-import Meta from '~/components/shared/headers/Meta';
-import Wishlist from '~/components/account/wishlist';
+import Meta from '~/shared/ui/meta';
+import Wishlist from '~/features/account/ui/wishlist';
 
 const WishlistPage = () => {
     return (

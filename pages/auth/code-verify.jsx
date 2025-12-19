@@ -1,8 +1,8 @@
 import React from 'react';
-import Meta from '~/components/shared/headers/Meta';
-import BreadCrumb from '~/components/elements/BreadCrumb';
+import Meta from '~/shared/ui/meta';
+import BreadCrumb from '~/shared/ui/breadcrumb';
 import PageContainer from '~/widgets/layouts/PageContainer';
-import CodeVerifyForm from '~/components/partials/account/auth/CodeVerifyForm';
+import CodeVerifyForm from '~/features/account/ui/auth/CodeVerifyForm';
 
 const CodeVerifyPage = () => {
     const breadCrumb = [

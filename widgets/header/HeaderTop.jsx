@@ -1,5 +1,5 @@
 import React from 'react';
-import MenuCategoriesDropdown from '~/components/shared/menu/MenuCategoriesDropdown';
+import MenuCategoriesDropdown from '~/widgets/header/MenuCategoriesDropdown';
 import useResponsive from '~/shared/utilities/useResponsive';
 import HeaderCatergories from './HeaderCategories';
 

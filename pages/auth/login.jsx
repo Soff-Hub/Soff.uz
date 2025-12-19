@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import Meta from '~/components/shared/headers/Meta';
-import BreadCrumb from '~/components/elements/BreadCrumb';
+import Meta from '~/shared/ui/meta';
+import BreadCrumb from '~/shared/ui/breadcrumb';
 import PageContainer from '~/widgets/layouts/PageContainer';
-import LoginForm from '~/components/partials/account/auth/LoginForm';
+import LoginForm from '~/features/account/ui/auth/LoginForm';
 import { useRouter } from 'next/router';
 import { message } from 'antd';
 

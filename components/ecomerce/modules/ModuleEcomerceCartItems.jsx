@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Result } from 'antd';
-import ProductCart from '~/components/elements/products/ProductCart';
+import ProductCart from '~/entities/product/ui/ProductCart';
 import useCart from '~/shared/hooks/useCart';
-import { addPeriodToThousands } from '~/components/partials/account/price-formatter';
+import { addPeriodToThousands } from '~/features/account/ui/price-formatter';
 import useResponsive from '~/shared/utilities/useResponsive';
 
 const ModuleEcomerceCartItems = ({ cartItems }) => {

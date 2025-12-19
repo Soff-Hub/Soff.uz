@@ -1,6 +1,6 @@
 import React from 'react';
 import PageContainer from '~/widgets/layouts/PageContainer';
-import SiteDonateForm from '~/components/partials/seller/SiteDonateForm';
+import SiteDonateForm from '~/entities/seller/ui/SiteDonateForm';
 
 const Donat = () => {
     return (

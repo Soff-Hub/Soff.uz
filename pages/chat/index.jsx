@@ -1,14 +1,10 @@
 import React from 'react';
-import Chat from '~/components/freeleance/chat/Chat';
+import Chat from '~/features/freelancers/chat/Chat';
 import PageContainer from '~/widgets/layouts/PageContainer';
 
 const ChatPage = () => {
     return (
-        <div
-            style={{
-                overflowY: 'scroll',
-                WebkitOverflowScrolling: 'touch',
-            }}>
+        <div>
             <PageContainer title="Chat" withFooter={false}>
                 <Chat />
             </PageContainer>

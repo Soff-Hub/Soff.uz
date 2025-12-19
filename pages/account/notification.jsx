@@ -1,8 +1,8 @@
 import React from 'react';
-import BreadCrumb from '~/components/elements/BreadCrumb';
+import BreadCrumb from '~/shared/ui/breadcrumb';
 import PageContainer from '~/widgets/layouts/PageContainer';
-import Meta from '~/components/shared/headers/Meta';
-import NotificationList from '~/components/partials/account/NotificationList';
+import Meta from '~/shared/ui/meta';
+import NotificationList from '~/features/account/ui/NotificationList';
 
 const Notification = () => {
     const breadCrumb = [

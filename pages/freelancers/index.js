@@ -1,6 +1,6 @@
 import React from 'react';
-import Freelancers from '~/components/freelancers';
-import Meta from '~/components/shared/headers/Meta';
+import Freelancers from '~/features/freelancers';
+import Meta from '~/shared/ui/meta';
 import fetchJson from '~/shared/api/fetch-json';
 import PageLayout from '~/widgets/layouts/PageLayout';
 

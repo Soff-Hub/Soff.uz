@@ -1,8 +1,8 @@
 import React from 'react';
-import BreadCrumb from '~/components/elements/BreadCrumb';
+import BreadCrumb from '~/shared/ui/breadcrumb';
 import PageContainer from '~/widgets/layouts/PageContainer';
-import CheckoutOne from '~/components/partials/account/Chekout-one';
-import Meta from '~/components/shared/headers/Meta';
+import CheckoutOne from '~/features/account/ui/Chekout-one';
+import Meta from '~/shared/ui/meta';
 
 const CheckoutOnePage = () => {
     const breadCrumb = [

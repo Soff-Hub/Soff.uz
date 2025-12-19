@@ -1,7 +1,7 @@
 import React from 'react';
 import PageLayout from '~/widgets/layouts/PageLayout';
 import Home from '~/widgets/home';
-import Meta from '~/components/shared/headers/Meta';
+import Meta from '~/shared/ui/meta';
 
 const type = 'website';
 const url = 'https://soff.uz';

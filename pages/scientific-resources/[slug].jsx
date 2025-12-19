@@ -1,8 +1,8 @@
 import React from 'react';
 import PageContainer from '~/widgets/layouts/PageContainer';
-import Meta from '~/components/shared/headers/Meta';
+import Meta from '~/shared/ui/meta';
 import ProductsByCategory from '~/components/partials/category/ProductsByCategory';
-import { getTitleFromSlug } from '~/components/elements/ScientificResourcesFilterSection';
+import { getTitleFromSlug } from '~/widgets/home/filters';
 import { useRouter } from 'next/router';
 import { baseUrlUseApi } from '~/repositories/useApi';
 import styles from '~/widgets/home/catalog/style.module.scss';

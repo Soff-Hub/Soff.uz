@@ -1,6 +1,6 @@
 import React from 'react';
 import PageLayout from '~/widgets/layouts/PageLayout';
-import MyOrdersMain from '~/components/freeleance/myorders/MyOrdersMain';
+import MyOrdersMain from '~/features/freelancers/myorders/MyOrdersMain';
 
 const MyOrders = () => {
     return (

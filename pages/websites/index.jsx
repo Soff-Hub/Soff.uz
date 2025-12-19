@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React from 'react';
 import PageContainer from '~/widgets/layouts/PageContainer';
-import Meta from '~/components/shared/headers/Meta';
+import Meta from '~/shared/ui/meta';
 
 export default function WebsitesPage() {
     return (

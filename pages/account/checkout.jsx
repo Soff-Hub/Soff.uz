@@ -1,7 +1,7 @@
 import React from 'react';
-import Checkout from '~/components/partials/account/Checkout';
+import Checkout from '~/features/account/ui/Checkout';
 import PageContainer from '~/widgets/layouts/PageContainer';
-import Meta from '~/components/shared/headers/Meta';
+import Meta from '~/shared/ui/meta';
 
 const CheckoutPage = () => {
     return (

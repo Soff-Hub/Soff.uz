@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { Form, Modal, Button } from 'antd';
 import PageContainer from '~/widgets/layouts/PageContainer';
-import Meta from '~/components/shared/headers/Meta';
+import Meta from '~/shared/ui/meta';
 import useCreateOrder from '~/shared/hooks/useCreateOrder';
 import { useRouter } from 'next/router';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { useSelector } from 'react-redux';
-import PhoneNumberModal from '~/components/order/PhoneNumberModal';
+import PhoneNumberModal from '~/features/orders/ui/PhoneNumberModal';
 // import Editor from '~/components/Editor';
 
 function OrderCreate() {

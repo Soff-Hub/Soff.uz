@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import PageContainer from '~/widgets/layouts/PageContainer';
-import Meta from '~/components/shared/headers/Meta';
+import Meta from '~/shared/ui/meta';
 import { baseUrlUseApi } from '~/repositories/useApi';
 import ProductFilterSection, {
     getTitleFromSlug,
