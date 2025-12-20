@@ -9,7 +9,7 @@ import {
     getDate,
     getStatus,
     getTimeAgo,
-} from '~/shared/utilities/calculateTime';
+} from '~/shared/utilities/dayjs-locale-uz';
 import { setActiveIndex } from '../../../store/seller/slice';
 import { apiForFreelance } from '~/repositories/api';
 import CreateOrderModal from '~/shared/components/modals/CreateOrderModal';

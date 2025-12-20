@@ -1,6 +1,4 @@
 import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
-import 'dayjs/locale/uz-latn';
 import Image from 'next/image';
 import React, { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { cn, useRcn } from '~/shared/utilities/cn';
@@ -22,13 +20,8 @@ import OrderPaymentPrompt from './OrderPaymentPrompt';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
 import { FaLink } from 'react-icons/fa6';
 import styles from '../styles/user-short-info.module.scss';
-import { FaDollarSign, FaChartLine } from 'react-icons/fa'; // example icons
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
-import { GiTakeMyMoney } from 'react-icons/gi';
 import { PiMoneyWavyBold } from 'react-icons/pi';
-
-dayjs.extend(relativeTime);
-dayjs.locale('uz-latn');
 
 const InfoRow = memo(({ icon, label, value }) => (
     <div

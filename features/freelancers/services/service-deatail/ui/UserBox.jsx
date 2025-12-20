@@ -6,23 +6,16 @@ import useCreateChat from '~/features/freelancers/chat/api/useCreateChat';
 import { useSelector } from 'react-redux';
 import AuthModal from '~/features/auth/ui/auth-modal';
 import dayjs from 'dayjs';
-import 'dayjs/locale/uz-latn';
 import Image from 'next/image';
-import { cn } from '~/shared/utilities/cn';
 
 const UserBox = ({ pushUser, priceBox, rating, feedbacks }) => {
     const { mutate } = useCreateChat();
-    const { isLoggedIn } = useSelector(state => state.auth);
+    const { isLoggedIn } = useSelector((state) => state.auth);
     const [open, setOpen] = useState(false);
 
     const { price, id, days, revisions, title, user: seller } = priceBox;
-    const {
-        full_name,
-        last_active,
-        photo_url,
-        status,
-        soff_seller_id,
-    } = seller[0];
+    const { full_name, last_active, photo_url, status, soff_seller_id } =
+        seller[0];
 
     const handleClick = () => {
         if (isLoggedIn) {
@@ -33,9 +26,7 @@ const UserBox = ({ pushUser, priceBox, rating, feedbacks }) => {
     };
 
     const formattedLastActive = last_active
-        ? dayjs(last_active)
-            .locale('uz-latn')
-            .format('DD-MMMM YYYY, HH:mm')
+        ? dayjs(last_active).format('DD-MMMM YYYY, HH:mm')
         : 'Faol emas';
 
     return (
@@ -51,13 +42,24 @@ const UserBox = ({ pushUser, priceBox, rating, feedbacks }) => {
                     />
                     <div>
                         <div>
-                            <h3 style={{ cursor: 'pointer' }} onClick={pushUser}>
+                            <h3
+                                style={{ cursor: 'pointer' }}
+                                onClick={pushUser}>
                                 {full_name || 'No Name'}
                             </h3>
                             {rating >= 1 && (
-                                <div className='d-flex gap-2 align-items-center'>
-                                    <StarFilled style={{ fontSize: "16px", color: "#faad14" }} />
-                                    <span style={{ fontSize: "16px", color: "#faad14" }}>
+                                <div className="d-flex gap-2 align-items-center">
+                                    <StarFilled
+                                        style={{
+                                            fontSize: '16px',
+                                            color: '#faad14',
+                                        }}
+                                    />
+                                    <span
+                                        style={{
+                                            fontSize: '16px',
+                                            color: '#faad14',
+                                        }}>
                                         {Number(rating).toFixed(1)}
                                     </span>
                                     <span>({feedbacks} izoh)</span>

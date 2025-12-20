@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styles from './style.module.scss';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
-import { getRemainingDays } from '~/shared/utilities/calculateTime';
+import { getRemainingDays } from '~/shared/utilities/dayjs-locale-uz';
 import { IoCheckmarkDone } from 'react-icons/io5';
 import { MdErrorOutline } from 'react-icons/md';
 import { RiProgress5Line } from 'react-icons/ri';

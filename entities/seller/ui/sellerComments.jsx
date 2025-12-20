@@ -3,7 +3,7 @@ import { Rate, Skeleton, Pagination } from 'antd';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { api, apiForFreelance } from '~/repositories/api';
-import { getTimeAgo } from '~/shared/utilities/calculateTime';
+import { getTimeAgo } from '~/shared/utilities/dayjs-locale-uz';
 
 export default function SellerComments({ pid }) {
     const router = useRouter();
@@ -29,7 +29,6 @@ export default function SellerComments({ pid }) {
         enabled: !!router.query.pid,
         keepPreviousData: true,
     });
-
 
     return (
         <div className="SellerComments p-5">
@@ -182,7 +181,7 @@ export default function SellerComments({ pid }) {
                             current={productPage}
                             pageSize={10} // backend qaytaradigan default limit
                             total={data?.productComments?.count}
-                            onChange={page => setProductPage(page)}
+                            onChange={(page) => setProductPage(page)}
                         />
                     </div>
                 )}
