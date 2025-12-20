@@ -36,23 +36,31 @@ if (!schedulerLoaded) {
 console.log('🕐 Initializing cache scheduler (runs daily at 3:00 AM)...');
 
 // Schedule to run daily at 3 AM
-const job = cron.schedule('0 3 * * *', async () => {
-    const timestamp = new Date().toISOString();
-    console.log(`[${timestamp}] 🔄 Running scheduled cache clear...`);
-    try {
-        await clearCache();
-        console.log(`[${timestamp}] ✅ Scheduled cache clear completed successfully`);
-    } catch (err) {
-        console.error(`[${timestamp}] ❌ Scheduled cache clear failed:`, err);
+const job = cron.schedule(
+    '0 3 * * *',
+    async () => {
+        const timestamp = new Date().toISOString();
+        console.log(`[${timestamp}] 🔄 Running scheduled cache clear...`);
+        try {
+            await clearCache();
+            console.log(
+                `[${timestamp}] ✅ Scheduled cache clear completed successfully`
+            );
+        } catch (err) {
+            console.error(
+                `[${timestamp}] ❌ Scheduled cache clear failed:`,
+                err
+            );
+        }
+    },
+    {
+        scheduled: true,
+        timezone: 'Asia/Tashkent', // Adjust to your timezone if needed
     }
-}, {
-    scheduled: true,
-    timezone: "Asia/Tashkent" // Adjust to your timezone if needed
-});
+);
 
 console.log('✅ Scheduler initialized');
 console.log('   Next scheduled run: Daily at 3:00 AM');
 
 // Export nothing - this is a side-effect module that initializes the scheduler
 module.exports = {};
-
