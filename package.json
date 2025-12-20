@@ -7,8 +7,9 @@
     "scripts": {
         "dev": "next dev  -p 2025",
         "build": "next build && node scripts/copy-to-standalone.js",
-        "package": "npm run build && node scripts/package-deploy.js",
         "start": "npm-run-all --parallel start:server start:scheduler",
+        "type-check": "tsc --noEmit",
+        "type-check:watch": "tsc --noEmit --watch",
         "start:server": "next start -p 3003",
         "start:scheduler": "node scripts/scheduler.js",
         "build:analyze": "ANALYZE=true npm run build",
