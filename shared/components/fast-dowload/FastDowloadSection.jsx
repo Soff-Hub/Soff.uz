@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import styles from './FastDownloadSection.module.scss';
 import {
@@ -18,16 +18,8 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { baseURL } from '~/repositories/api';
 
-// Default product for testing
-const DEFAULT_PRODUCT = {
-    id: 1,
-    slug: 'test-product',
-    title: 'Test Product - Fast Download',
-    poster: 'https://i.ytimg.com/vi/n0KlHOMIyS4/maxresdefault.jpg',
-    url: 'https://i.ytimg.com/vi/n0KlHOMIyS4/maxresdefault.jpg',
-};
-
 const FastDownloadSection = () => {
+    const fileDownloadRef = useRef(null);
     const queryClient = useQueryClient();
     const { isMobile } = useResponsive();
     const { user, isLoggedIn } = useSelector((state) => state.auth);
@@ -45,19 +37,6 @@ const FastDownloadSection = () => {
         enabled: user?.access ? true : false,
         staleTime: 1000 * 60 * 5,
     });
-
-    console.log({ product });
-
-    useEffect(() => {
-        const carts = JSON.parse(localStorage.getItem('cart')) || [];
-        const hasProductincart = carts.includes(product?.id);
-        if (hasProductincart) {
-            removeAll();
-        }
-    }, [product]);
-
-    if (!isLoggedIn || isLoading) return null;
-    if (isError || !product || Object.keys(product).length == 0) return null;
 
     const hasRating = product?.user_rating && product.user_rating > 0;
     const productId = product?.id;
@@ -115,6 +94,20 @@ const FastDownloadSection = () => {
         });
     };
 
+    useEffect(() => {
+        const carts = JSON.parse(localStorage.getItem('cart')) || [];
+        const hasProductincart = carts.includes(product?.id);
+        if (hasProductincart) {
+            removeAll();
+        }
+        if (fileDownloadRef.current && product?.url) {
+            fileDownloadRef.current.click();
+        }
+    }, [product]);
+
+    if (!isLoggedIn || isLoading) return null;
+    if (isError || !product || Object.keys(product).length == 0) return null;
+
     const rateBox = (
         <div
             className={styles.rateContainer}
@@ -166,6 +159,7 @@ const FastDownloadSection = () => {
                     )}>
                     {!isMobile && !hasRating && rateBox}
                     <FileDownloadLink
+                        ref={fileDownloadRef}
                         url={`${product?.url}`}
                         filename={product?.title}
                         onClick={() => {

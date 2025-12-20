@@ -1,5 +1,5 @@
 // FileDownloadLink.jsx
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { downloadFile } from '~/shared/utilities/utils';
 
 // File extensions that browsers will open instead of download
@@ -48,39 +48,47 @@ function shouldUseAPIDownload(url) {
  * @param {string} props.className - CSS classes for styling
  * @param {React.ReactNode} props.children - Link content
  */
-export default function FileDownloadLink({
-    url,
-    filename,
-    className = '',
-    onClick,
-    children = 'Download',
-    ...props
-}) {
-    if (!url) {
-        return null;
+const FileDownloadLink = forwardRef(
+    (
+        {
+            url,
+            filename,
+            className = '',
+            onClick,
+            children = 'Download',
+            ...props
+        },
+        ref
+    ) => {
+        if (!url) {
+            return null;
+        }
+
+        const useAPI = shouldUseAPIDownload(url);
+        const downloadAttr = !useAPI ? filename || true : undefined;
+
+        const extendedOnClick = (e) => {
+            if (useAPI) {
+                e.preventDefault();
+                downloadFile(url);
+            }
+            if (onClick) {
+                onClick(e);
+            }
+        };
+
+        return (
+            <a
+                ref={ref}
+                href={url}
+                download={downloadAttr}
+                className={className}
+                onClick={extendedOnClick}
+                {...props}>
+                {children}
+            </a>
+        );
     }
+);
 
-    const useAPI = shouldUseAPIDownload(url);
-    const downloadAttr = !useAPI ? filename || true : undefined;
-
-    const extendedOnClick = (e) => {
-        if (useAPI) {
-            e.preventDefault();
-            downloadFile(url);
-        }
-        if (onClick) {
-            onClick(e);
-        }
-    };
-
-    return (
-        <a
-            href={url}
-            download={downloadAttr}
-            className={className}
-            onClick={extendedOnClick}
-            {...props}>
-            {children}
-        </a>
-    );
-}
+export default FileDownloadLink;
