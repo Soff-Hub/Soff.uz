@@ -16,7 +16,7 @@ const video_url = 'https://www.youtube.com/watch?v=oJre9mbRE2U';
 
 // Lazy load ProductVideoBanner
 const ProductVideoBanner = dynamic(
-    () => import('~/entities/product/ui/ProductVideoBanner'),
+    () => import('~/shared/components/product-video-banner'),
     { ssr: false }
 );
 
@@ -31,10 +31,9 @@ const SimilarProducts = dynamic(
     { ssr: false }
 );
 
-const AISoffiaPresentation = dynamic(
-    () => import('~/widgets/home/ai-soffia'),
-    { ssr: false }
-);
+const AISoffiaPresentation = dynamic(() => import('~/widgets/home/ai-soffia'), {
+    ssr: false,
+});
 
 // Conditionally load Joyride only when needed (first visit)
 const Joyride = dynamic(() => import('react-joyride'), {
@@ -42,24 +41,17 @@ const Joyride = dynamic(() => import('react-joyride'), {
 });
 
 const FileProductDetatails = dynamic(
-    () =>
-        import(
-            '~/features/product-details/ui/file-products/details-page'
-        ),
+    () => import('~/features/product-details/ui/file-products/details-page'),
     { ssr: true }
 );
 
 const ThreeDesignProductDetails = dynamic(
-    () =>
-        import(
-            '~/features/product-details/ui/templates/details-page'
-        ),
+    () => import('~/features/product-details/ui/templates/details-page'),
     { ssr: true }
 );
 
 const VideosProductDetails = dynamic(
-    () =>
-        import('~/features/product-details/ui/video-tutorials/details-page'),
+    () => import('~/features/product-details/ui/video-tutorials/details-page'),
     { ssr: true }
 );
 
@@ -195,7 +187,11 @@ export default function ProductDefaultPage({ defaultProducts }) {
         <PageContainer>
             <Meta {...metaProps} />
             <div>
-                <ProductVideoBanner videoUrl={video_url} />
+                <ProductVideoBanner
+                    videoUrl={video_url}
+                    title={`SOFF'da xarid qilishni bilmayapsizmi?`}
+                    subtitle={`Taxminan 1 daqiqalik video: mahsulotni qanday sotib olishni ko'rsatadi.`}
+                />
                 {/* Video helper banner */}
                 <div
                     className="container mb-5"

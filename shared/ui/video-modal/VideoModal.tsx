@@ -1,10 +1,16 @@
-import React, { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { IoClose } from 'react-icons/io5';
 import styles from './VideoModal.module.scss';
 
-function VideoModal({ isOpen, onClose, videoId }) {
-    const modalRef = React.useRef();
+type VideModalProps = {
+    isOpen: boolean;
+    onClose: () => void;
+    videoId?: string;
+};
+
+function VideoModal({ isOpen, onClose, videoId }: VideModalProps) {
+    const modalRef = useRef<HTMLDivElement>(null);
     useEffect(() => {
         if (isOpen) {
             document.body.style.overflow = 'hidden';
@@ -12,8 +18,7 @@ function VideoModal({ isOpen, onClose, videoId }) {
             document.body.style.overflow = '';
         }
 
-        //close modal on escape key press
-        const handleKeyDown = (e) => {
+        const handleKeyDown = (e: KeyboardEvent) => {
             if (e.key === 'Escape') {
                 onClose();
             }
@@ -57,7 +62,6 @@ function VideoModal({ isOpen, onClose, videoId }) {
         </div>
     );
 
-    // Use portal to render modal at document root level
     return typeof document !== 'undefined'
         ? createPortal(modalContent, document.body)
         : null;

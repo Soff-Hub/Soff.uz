@@ -5,7 +5,7 @@ import styles from './style.module.scss';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { useRouter } from 'next/router';
 import { useState, useMemo, useEffect, useRef } from 'react';
-import VideoModal from '~/widgets/home/youtube-vid/VideoModal';
+import VideoModal from '~/shared/ui/video-modal';
 import { MdOndemandVideo } from 'react-icons/md';
 
 const disabledLocations = [

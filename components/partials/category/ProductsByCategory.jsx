@@ -8,8 +8,6 @@ export default function ProductsByCategory({
     page,
     handlePagination,
 }) {
-    console.log({ data });
-
     return (
         <section className="">
             <div className="row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-gap-2 row-gap-md-5 row-gap-lg-3 mb-5">

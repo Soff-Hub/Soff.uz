@@ -7,8 +7,10 @@ import { useRouter } from 'next/router';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { useSelector } from 'react-redux';
 import PhoneNumberModal from '~/features/orders/ui/PhoneNumberModal';
+import ProductVideoBanner from '~/shared/components/product-video-banner';
 // import Editor from '~/components/Editor';
 
+const video_url = 'https://www.youtube.com/watch?v=oJre9mbRE2U';
 function OrderCreate() {
     const router = useRouter();
     const { isLoggedIn, status } = useSelector((state) => state.auth);
@@ -33,6 +35,11 @@ function OrderCreate() {
                     'Soff.uz’da maxsus buyurtma yarating — o‘z loyihangiz uchun kerakli mutaxassisni toping. Talablaringizni yozing, frilanserlardan takliflarni qabul qiling va eng yaxshisini tanlang.'
                 }
             />
+            {/* <ProductVideoBanner
+                videoUrl={video_url}
+                title={`SOFF'da xarid qilishni bilmayapsizmi?`}
+                subtitle={`Taxminan 1 daqiqalik video: mahsulotni qanday sotib olishni ko'rsatadi.`}
+            /> */}
             <div className="page-content">
                 <div className="container">
                     <div style={{ marginBottom: '10px', paddingBottom: '0' }}>
