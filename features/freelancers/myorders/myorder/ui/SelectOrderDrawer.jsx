@@ -420,7 +420,16 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                                     flexShrink: 0,
                                     gap: '12px',
                                 }}>
-                                {!isMobile && (
+                                {isMobile ? (
+                                    <Button
+                                        icon={<IoMdArrowBack />}
+                                        onClick={() => {
+                                            setChatDrawerOpen(false);
+                                            setCurrentChat(null);
+                                        }}>
+                                        Orqaga
+                                    </Button>
+                                ) : (
                                     <h3 style={{ margin: 0 }}>Chat</h3>
                                 )}
 
@@ -429,13 +438,7 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                                         display: 'flex',
                                         gap: '8px',
                                         alignItems: 'center',
-                                        width: isMobile ? '100%' : 'auto',
-                                        justifyContent: isMobile
-                                            ? 'space-between'
-                                            : 'flex-end',
-                                        flexDirection: isMobile
-                                            ? 'row-reverse'
-                                            : 'row',
+                                        marginLeft: 'auto',
                                     }}>
                                     {matchingOffer && !isModerator && (
                                         <Button
@@ -449,16 +452,6 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                                                 setCurrentChat(null);
                                             }}>
                                             Taklifni tanlash
-                                        </Button>
-                                    )}
-                                    {isMobile && (
-                                        <Button
-                                            icon={<IoMdArrowBack />}
-                                            onClick={() => {
-                                                setChatDrawerOpen(false);
-                                                setCurrentChat(null);
-                                            }}>
-                                            Orqaga
                                         </Button>
                                     )}
                                 </div>
@@ -475,6 +468,7 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                                         isModerator={isModerator}
                                         key={currentChat.chatId}
                                         chatId={currentChat.chatId}
+                                        hideCreateOrderButton={true}
                                         goBack={() => {
                                             setChatDrawerOpen(false);
                                             setCurrentChat(null);

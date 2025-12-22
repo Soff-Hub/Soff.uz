@@ -32,6 +32,7 @@ import { FaRegUserCircle } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import ChatDateSeperator from './ChatDateSeperator';
 import { FaHeadset } from 'react-icons/fa';
+import useResponsive from '~/shared/utilities/useResponsive';
 
 const { TextArea } = Input;
 const maxSize = 50 * 1024 * 1024;
@@ -42,16 +43,19 @@ const ChatWindow = ({
     containerHeight,
     isModerator = false,
     isDirector = false,
+    hideCreateOrderButton = false,
 }) => {
     const [edit, setEdit] = useState(null);
     const { user } = useSelector((state) => state.profile);
     const [openDownIcon, setOpenDownIcon] = useState(false);
     const [isDragging, setIsDragging] = useState(false);
+    const [createOrderModalOpen, setCreateOrderModalOpen] = useState(false);
     const dragCounterRef = useRef(0);
     const messagesContainerRef = useRef(null);
     const scrollPositionRef = useRef(0);
     const chatWindowRef = useRef(null);
     const router = useRouter();
+    const { isDesktop } = useResponsive();
 
     const {
         messages,
@@ -68,6 +72,8 @@ const ChatWindow = ({
     } = useChat(chatId);
     const recipient = chat?.opponent;
     const queryClient = useQueryClient();
+
+    console.log({ messages });
 
     // Handle paste image
     useEffect(() => {
@@ -230,6 +236,14 @@ const ChatWindow = ({
         router.push(`/seller/${chat?.opponent?.id}`);
     };
 
+    const handleCreateOrderClick = () => {
+        if (isModerator || isDirector) {
+            router.push('/order/create');
+        } else {
+            setCreateOrderModalOpen(true);
+        }
+    };
+
     if (!chatId) {
         return (
             <div
@@ -312,6 +326,7 @@ const ChatWindow = ({
                     style={{
                         cursor: 'pointer',
                         backgroundColor: isModerator ? '#1677ff' : undefined,
+                        flexShrink: 0,
                     }}
                 />
                 <div className={styles.user_box}>
@@ -328,6 +343,15 @@ const ChatWindow = ({
                             : chat?.opponent?.last_seen}
                     </span>
                 </div>
+                {!hideCreateOrderButton && (
+                    <Button
+                        type="primary"
+                        icon={<ShoppingCartOutlined />}
+                        onClick={handleCreateOrderClick}
+                        style={{ marginLeft: 'auto', flexShrink: 0 }}>
+                        {isDesktop ? 'Buyurtma berish' : 'Buyurtma'}
+                    </Button>
+                )}
             </div>
             <SafetyAlert />
 
@@ -430,6 +454,13 @@ const ChatWindow = ({
                 messagesContainerRef={messagesContainerRef}
                 scrollPositionRef={scrollPositionRef}
                 openDownIcon={openDownIcon}
+            />
+            <CreateOrderModal
+                open={createOrderModalOpen}
+                onClose={() => setCreateOrderModalOpen(false)}
+                id={chat?.opponent?.id}
+                seller={chat?.opponent?.name}
+                sellerInfo={chat?.opponent}
             />
         </div>
     );
@@ -588,8 +619,6 @@ const ChatInputParts = ({
     const fileMapRef = useRef(new Map()); // Store actual files separately
     const queryClient = useQueryClient();
     const fileInputRef = useRef(null);
-    const [open, setOpen] = useState(false);
-    const canOrder = !isModerator && !isDirector;
 
     const scrollToBottom = () => {
         if (messagesContainerRef.current) {
@@ -770,16 +799,6 @@ const ChatInputParts = ({
             </Upload>
 
             <div className={styles.chat_input_box}>
-                {canOrder && (
-                    <Tooltip title="Maxsus buyurtma berish">
-                        <Button
-                            type="primary"
-                            icon={<ShoppingCartOutlined />}
-                            iconPosition="end"
-                            onClick={() => setOpen(true)}
-                        />
-                    </Tooltip>
-                )}
                 <Tooltip title="Fayl yuborish">
                     <Button
                         icon={<PaperClipOutlined />}
@@ -815,13 +834,6 @@ const ChatInputParts = ({
                     )}
                 </Button>
             </div>
-            <CreateOrderModal
-                open={open}
-                onClose={() => setOpen(false)}
-                id={chat?.opponent?.id}
-                seller={chat?.opponent?.name}
-                sellerInfo={chat?.opponent}
-            />
         </>
     );
 };

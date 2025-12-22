@@ -18,10 +18,10 @@ const useGetChats = (search = '', limit = 20) => {
                 params.append('search', encodeURIComponent(search));
             }
 
-            // const { data } = await axios.get(`chats?${params.toString()}`);
+            const { data } = await axios.get(`chats?${params.toString()}`);
             // NOTE: this is for testing purpose only
-            const fetchedData = await fetch(`/api/chats?${params.toString()}`);
-            const data = await fetchedData.json();
+            // const fetchedData = await fetch(`/api/chats?${params.toString()}`);
+            // const data = await fetchedData.json();
             return data;
         },
         getNextPageParam: (lastPage, allPages) => {
