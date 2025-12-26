@@ -3,9 +3,11 @@ import UserShortInfo from './ui/user-short-info';
 import UserTabs from './ui/user-tabs';
 import { cn, useRcn } from '~/shared/utilities/cn';
 import useResponsive from '~/shared/utilities/useResponsive';
+import { useContentViewport } from '~/shared/hooks/useContentViewport';
 
 const UserProfile = ({ seller }) => {
     const { isDesktop } = useResponsive();
+    const { headerHeight } = useContentViewport();
     const gridClass = useRcn({
         mobile: 'grid-cols-1',
         tablet: 'grid-cols-1',
@@ -27,7 +29,7 @@ const UserProfile = ({ seller }) => {
     const sidebarStyle = isDesktop
         ? {
               position: 'sticky',
-              top: '125px',
+              top: headerHeight + 16 + 'px',
           }
         : {};
 

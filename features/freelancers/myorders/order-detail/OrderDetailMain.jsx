@@ -10,17 +10,16 @@ import { FaRegCommentDots } from 'react-icons/fa';
 import useCreateChat from '~/features/freelancers/chat/api/useCreateChat';
 import Link from 'next/link';
 import { Button, Badge } from 'antd';
-import OrderDrawer from './ui/OrderDrawer';
+// import OrderDrawer from './ui/OrderDrawer';
 
 const OrderDetailMain = ({ orderData }) => {
     const router = useRouter();
     const [showStickySeller, setShowStickySeller] = useState(false);
-    const [openDrawer, setOpenDrawer] = useState(false);
+    // const [openDrawer, setOpenDrawer] = useState(false);
     const {
         data: order,
         isError,
         isLoading,
-        refetch,
     } = useGetOrderById(+router.query?.id, orderData, true);
 
     if (isLoading) {
@@ -32,10 +31,6 @@ const OrderDetailMain = ({ orderData }) => {
         return null;
     }
 
-    const handleOrderUpdate = async () => {
-        await refetch();
-    };
-
     const handleShowStickySeller = (value) => {
         setShowStickySeller(value);
     };
@@ -43,21 +38,18 @@ const OrderDetailMain = ({ orderData }) => {
     return (
         <>
             <div className="row navTabsPadding position-relative">
-                <OrderMain
-                    order={order}
-                    handleOrderUpdate={handleOrderUpdate}
-                />
+                <OrderMain order={order} />
                 <OrderStatus
                     order={order}
                     handleShowStickySeller={handleShowStickySeller}
                 />
-                <OrderDrawer
+                {/* <OrderDrawer
                     open={openDrawer}
                     onClose={() => setOpenDrawer(false)}
                     onOpen={() => setOpenDrawer(true)}
                     order={order}
-                />
-                {<StickySeller order={order} isOpen={showStickySeller} />}
+                /> */}
+                <StickySeller order={order} isOpen={showStickySeller} />
             </div>
             {order?.feedback && (
                 <CommentSection id={router.query?.id} type={'order_id'} />

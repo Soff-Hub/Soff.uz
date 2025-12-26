@@ -1,24 +1,7 @@
-import {
-    Breadcrumb,
-    Button,
-    Modal,
-    message,
-    Input,
-    Rate,
-    Alert,
-    Radio,
-    Tooltip,
-    Switch,
-    Card,
-    Skeleton,
-} from 'antd';
-import {
-    DownloadOutlined,
-    SmileOutlined,
-    WarningOutlined,
-    BellOutlined,
-} from '@ant-design/icons';
-import React, { useEffect, useMemo, useState } from 'react';
+import { Breadcrumb, Button, Modal, Alert, Tooltip, Switch } from 'antd';
+import { DownloadOutlined, BellOutlined } from '@ant-design/icons';
+import { GrStatusWarning } from 'react-icons/gr';
+import React, { useEffect, useState } from 'react';
 import styles from '../style/style.module.scss';
 import modalStyles from '~/features/user-profile/styles/orderPaymentPrompt.module.scss';
 import Link from 'next/link';
@@ -27,24 +10,19 @@ import RequirementModal from './modals/RequirementModal';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import ServiceCheckout from '~/features/freelancers/services/service-deatail/ui/auth/serviceCheckout';
 import useGetFile from '../api/useGetFile';
-import useSubmit from '../api/useSubmit';
 import { useQueryClient } from '@tanstack/react-query';
-import ReactConfetti from 'react-confetti';
-// import { useRouter } from 'next/router';
-import OrderCard from '~/entities/order/order-card';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { useDispatch } from 'react-redux';
 import { setShowSearch } from '~/store/fast-dowload/slice';
 import { IoCheckboxOutline } from 'react-icons/io5';
 import TelegramNotification from '~/shared/components/telegram-notlification';
 import useGetCustomBalance from '~/features/freelancers/myorders/myorder/api/useGetCustomBalance';
-import { FiFileText } from 'react-icons/fi';
-import { formatFileSize } from '~/shared/utilities/utils';
 import { downloadFile } from '~/shared/utilities/utils';
-
-function extractName(url) {
-    return url.split('/').pop().split('?')[0];
-}
+import OrderFiles from '~/entities/order/ui/order-card-files';
+import OrderCancelModal from '~/features/order-cancel';
+import OrderCard from '~/widgets/order-card';
+import OrderApproveFilesModal from '~/features/order-approve-files';
+import OrderRejected from '~/entities/order/ui/order-base/OrderRejected';
 
 // TimerComponent to show time remaining until deadline
 const TimerComponent = ({ deadlineDate }) => {
@@ -169,28 +147,25 @@ const TelegramNotificationHeader = (
     </div>
 );
 
-const OrderMain = ({ order, handleOrderUpdate }) => {
+const OrderMain = ({ order }) => {
     const [open, setOpen] = useState(false);
-    const [congratModal, setCongratModal] = useState(false);
+    const [isCancelOrderOpen, setIsCancelOrderOpen] = useState(false);
     const [feedbackOpen, setFeedbackOpen] = useState(false);
-    const [text, setText] = useState('');
     const [res, setRes] = useState('');
     const [isOpen, setIsOpen] = useState(false);
     const [showPayment, setShowPayment] = useState(false);
-    const [rate, setRate] = useState();
+    const [mode, setMode] = useState(true);
     const {
         data: file,
         isFetching: fileIsFetching,
         refetch: refetchFiles,
     } = useGetFile(order?.id);
-    const submit = useSubmit();
     const queryClient = useQueryClient();
     const { isDesktop } = useResponsive();
+    const { data } = useGetCustomBalance();
     const dispatch = useDispatch();
 
     const price = order?.service?.price || order?.budget || 0;
-    const [mode, setMode] = useState(true);
-    const { data } = useGetCustomBalance();
     const balance = Number(data?.wallet || 0);
     const balanceDisabled = balance > 0;
 
@@ -202,19 +177,10 @@ const OrderMain = ({ order, handleOrderUpdate }) => {
         { title: `#${order?.id}` },
     ];
 
-    const { TextArea } = Input;
-
     const onClose = () => {
         setIsOpen(false);
         queryClient.invalidateQueries({ queryKey: ['order'] });
     };
-
-    // useEffect(() => {
-    //     if (query?.isOpen === 'true' && !isOpen) {
-    //         setIsOpen(true);
-    //         push(`/order/${query?.id}`);
-    //     }
-    // }, [query?.isOpen]);
 
     const isFullyPaid = order?.approved_transaction_amount >= price;
     const isPartiallyPaid =
@@ -246,98 +212,8 @@ const OrderMain = ({ order, handleOrderUpdate }) => {
         };
     }, [dispatch]);
 
-    const pendingFiles = useMemo(() => {
-        if (!file || !file?.files?.length) return [];
-        return file?.files?.filter((f) => f.status === 'pending');
-    }, [file]);
+    console.log({ order });
 
-    const completedFiles = useMemo(() => {
-        if (!file || !file?.files?.length) return [];
-        return file?.files?.filter((f) => f.status === 'completed');
-    }, [file]);
-
-    const hasPendingFiles = pendingFiles.length;
-
-    let filesContent = null;
-    if (fileIsFetching) {
-        filesContent = (
-            <div
-                style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '10px',
-                }}>
-                {Array(3)
-                    .fill(null)
-                    .map((_, index) => (
-                        <Skeleton.Button
-                            key={index}
-                            style={{ height: '80px', width: '100%' }}
-                        />
-                    ))}
-            </div>
-        );
-    } else if (hasPendingFiles) {
-        filesContent = pendingFiles.map((f) => (
-            <div key={f.url} className={styles.orderConfirmFile}>
-                <div className={styles.orderConfirmFileInfo}>
-                    <div className={styles.orderConfirmFileIconWrapper}>
-                        <FiFileText className={styles.orderConfirmFileIcon} />
-                    </div>
-                    <div className={styles.orderConfirmFileText}>
-                        <p>{extractName(f.url)}</p>
-                        <p>
-                            {formatFileSize(f?.size)} •{' '}
-                            {dayjs(f?.created_at).format('YYYY-MM-DD HH:mm')}
-                        </p>
-                    </div>
-                </div>
-                <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => downloadFile(f.url)}
-                    className="ml-4 flex-shrink-0">
-                    <DownloadOutlined className="w-4 h-4 mr-2" />
-                    Yuklab olish
-                </Button>
-            </div>
-        ));
-    } else {
-        filesContent = <p>Hozircha yuklangan fayllar mavjud emas.</p>;
-    }
-
-    const completedFilesContent = null;
-    if (completedFiles.length) {
-        completedFilesContent = completedFiles.map((f) => (
-            <div key={f.url} className={styles.orderConfirmFile}>
-                <div className={styles.orderConfirmFileInfo}>
-                    <div className={styles.orderConfirmFileIconWrapper}>
-                        <FiFileText className={styles.orderConfirmFileIcon} />
-                    </div>
-                    <div className={styles.orderConfirmFileText}>
-                        <p>{extractName(f.url)}</p>
-                        <p>
-                            {formatFileSize(f?.size)} •{' '}
-                            {dayjs(f?.created_at).format('YYYY-MM-DD HH:mm')}
-                        </p>
-                    </div>
-                </div>
-                <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => downloadFile(f.url)}
-                    className="ml-4 flex-shrink-0">
-                    <DownloadOutlined className="w-4 h-4 mr-2" />
-                    Yuklab olish
-                </Button>
-            </div>
-        ));
-    }
-
-    // const handleOrderUpdate = (id) => {
-    //     // Bu yerda orders listini qayta yuklash yoki state yangilash
-    //     queryClient.invalidateQueries({ queryKey: ['order', id] });
-    // };
     return (
         <div className="col-lg-9 col-12 rounded-2 my-4">
             <div className={styles.orderDetailMain}>
@@ -446,89 +322,30 @@ const OrderMain = ({ order, handleOrderUpdate }) => {
                 )}
 
                 {order?.order_status_doing?.status == 'order_file_sent' && (
-                    <div className={styles.orderPayCardGrid}>
-                        <h3 className={styles.orderConfirmTitle}>
-                            Ishni qabul qilish
-                        </h3>
-                        <p>
-                            Mutahasis buyurtmani yakunladi va natijani sizga
-                            jo'natdi. Natijani yuklab olib ko'rib chiqing va
-                            tasdiqlang yoki rad eting.
-                        </p>
-                        <Alert
-                            message="Eslatma:"
-                            description="Agar siz 24 soat ichida ishni holatini o'zgartirmasangiz, buyurtma avtomatik ravishda qabul qilinadi va to'lov mutaxassisga o'tkaziladi."
-                            type="warning"
-                            showIcon
-                            style={{
-                                marginBottom: '10px',
-                            }}
-                        />
-                        <h4
-                            className="mb-3"
-                            style={{
-                                fontWeight: '400',
-                                color: '#333',
-                            }}>
-                            Yuklangan fayllar
-                        </h4>
-                        {filesContent}
-                        <div className={styles.orderConfirmFileActions}>
-                            <Button
-                                color="danger"
-                                variant="outlined"
-                                disabled={fileIsFetching}
-                                onClick={() => {
-                                    setRes('rejected');
-                                    setFeedbackOpen(true);
-                                }}>
-                                Kamchilik aniqlandi
-                            </Button>
-                            <Button
-                                type="primary"
-                                variant="contained"
-                                disabled={fileIsFetching}
-                                onClick={() => {
-                                    setRes('complected');
-                                    setFeedbackOpen(true);
-                                }}>
-                                Qabul qilish
-                            </Button>
-                        </div>
-                    </div>
+                    <OrderFiles
+                        isPendingFiles
+                        orderFiles={file?.files}
+                        isOrderFilesFetching={fileIsFetching}
+                        setFeedbackOpen={setFeedbackOpen}
+                        setRes={setRes}
+                    />
                 )}
 
                 {order?.order_status_doing?.status === 'rejected' && (
-                    <Alert
-                        icon={<WarningOutlined />}
-                        message="Fayl qayta ishlov uchun qaytarildi"
-                        description={order?.order_status_doing?.reason}
-                        type="error"
-                        showIcon
-                        className="mb-3"
-                    />
+                    <OrderRejected order={order} />
                 )}
                 <Breadcrumb items={items} className="mb-2" />
                 <OrderCard
                     order={order}
                     infoOnly
-                    detail
-                    onOrderUpdate={handleOrderUpdate}
+                    onCancel={() => setIsCancelOrderOpen(true)}
                 />
                 {order?.order_status_doing?.status === 'completed' && (
-                    <div className=" mt-3">
-                        <div className={styles.orderPayCardGrid}>
-                            <h4
-                                className="mb-3"
-                                style={{
-                                    fontWeight: '400',
-                                    color: '#333',
-                                }}>
-                                Buyurtma fayllari
-                            </h4>
-                            {completedFilesContent}
-                        </div>
-                    </div>
+                    <OrderFiles
+                        isCompletedFiles
+                        orderFiles={file?.files}
+                        isOrderFilesFetching={fileIsFetching}
+                    />
                 )}
 
                 {order?.order_requirement?.length > 0 && (
@@ -591,113 +408,24 @@ const OrderMain = ({ order, handleOrderUpdate }) => {
                 onClose={() => setOpen(false)}
                 orderId={order?.id}
             />
-
-            <Modal
-                title="Natija bo‘yicha fikringiz"
-                open={feedbackOpen}
-                onCancel={() => {
-                    setFeedbackOpen(false);
-                    setRes('');
-                    setText('');
+            <OrderCancelModal
+                isOpen={isCancelOrderOpen}
+                selectedOrder={order}
+                onClose={() => setIsCancelOrderOpen(false)}
+            />
+            <OrderApproveFilesModal
+                order={order}
+                feedbackOpen={feedbackOpen}
+                setFeedbackOpen={setFeedbackOpen}
+                res={res}
+                setRes={setRes}
+                onSuccess={() => {
+                    queryClient.invalidateQueries({
+                        queryKey: ['order'],
+                    });
+                    refetchFiles();
                 }}
-                footer={[
-                    <Button
-                        key="submit"
-                        type="primary"
-                        loading={submit.isPending}
-                        onClick={() => {
-                            if (res === 'rejected' && !text.trim()) {
-                                message.error(
-                                    'Kamchiliklarni yozishingiz kerak'
-                                );
-                                return;
-                            } else if (
-                                res === 'complected' &&
-                                (!text.trim() || !rate)
-                            ) {
-                                message.error(
-                                    'Fikr va bahoni yozishingiz kerak'
-                                );
-                                return;
-                            }
-
-                            const payload = { id: order?.id };
-
-                            payload.status =
-                                res === 'rejected' ? 'rejected' : 'completed';
-
-                            if (res === 'rejected' && text) {
-                                payload.reason = text;
-                            }
-                            if (res === 'complected' && rate) {
-                                payload.rating = rate;
-                            }
-                            if (res === 'complected' && text) {
-                                payload.comment = text;
-                            }
-
-                            submit.mutate(payload, {
-                                onSuccess: () => {
-                                    message.success('Fikringiz yuborildi');
-                                    setFeedbackOpen(false);
-                                    setRes('');
-                                    queryClient.invalidateQueries({
-                                        queryKey: ['order'],
-                                    });
-                                    refetchFiles();
-                                    setText('');
-                                    setRate(undefined);
-                                    if (payload.status == 'completed') {
-                                        setCongratModal(true);
-                                    }
-                                },
-                                onError: () => {
-                                    message.error(
-                                        'Fikr yuborishda xatolik yuz berdi'
-                                    );
-                                },
-                            });
-                        }}>
-                        Yuborish
-                    </Button>,
-                ]}>
-                {res === 'complected' && (
-                    <div className="d-flex flex-column gap-4">
-                        <p className="m-0">
-                            Siz natijani qabul qildingiz. <br />
-                            Endi xizmat haqida oz fikringizni yozib qoldiring va
-                            ishni yakunlang.
-                        </p>
-                        <Rate
-                            allowHalf={false}
-                            value={rate}
-                            onChange={(val) => setRate(val)}
-                        />
-                        <TextArea
-                            placeholder="Xizmat haqida fikrlaringizni yozib qoldiring"
-                            rows={3}
-                            value={text}
-                            onChange={(e) => setText(e.target.value)}
-                        />
-                    </div>
-                )}
-
-                {res === 'rejected' && (
-                    <>
-                        <p>
-                            Kamchiliklarni iloji boricha batafsil yozing. Bu
-                            sotuvchiga tezroq tuzatish kiritishga yordam beradi.
-                        </p>
-                        <TextArea
-                            placeholder="Ishning aniqlangan kamchiliklarini yozing"
-                            rows={3}
-                            value={text}
-                            onChange={(e) => setText(e.target.value)}
-                        />
-                    </>
-                )}
-            </Modal>
-
+            />
             <Modal
                 open={isOpen}
                 onCancel={() => {
@@ -831,51 +559,6 @@ const OrderMain = ({ order, handleOrderUpdate }) => {
                             </div>
                         </div>
                     )}
-                </div>
-            </Modal>
-            {congratModal && (
-                <ReactConfetti recycle={false} numberOfPieces={300} />
-            )}
-            <Modal
-                open={congratModal}
-                centered
-                footer={null}
-                onCancel={() => setCongratModal(false)}
-                bodyStyle={{
-                    textAlign: 'center',
-                    padding: '2rem',
-                    borderRadius: '16px',
-                    background: 'linear-gradient(135deg, #d4f7d4, #ffffff)',
-                }}>
-                <div className="text-center">
-                    <SmileOutlined
-                        style={{ fontSize: '48px', color: '#28a745' }}
-                    />
-                    <h2
-                        style={{
-                            color: '#28a745',
-                            fontSize: '24px',
-                            marginTop: '1rem',
-                        }}>
-                        🎉 Tabriklaymiz! 🎉
-                    </h2>
-                    <p style={{ fontSize: '16px', marginTop: '0.5rem' }}>
-                        Sizning buyurtmangiz <b> muvaffaqiyatli yakunlandi</b>.
-                        Bizning platformamizni tanlaganingiz uchun rahmat 💚
-                    </p>
-
-                    <Button
-                        type="primary"
-                        size="large"
-                        style={{
-                            marginTop: '1.5rem',
-                            backgroundColor: '#28a745',
-                            borderColor: '#28a745',
-                            borderRadius: '8px',
-                        }}
-                        onClick={() => setCongratModal(false)}>
-                        Rahmat 🚀
-                    </Button>
                 </div>
             </Modal>
         </div>

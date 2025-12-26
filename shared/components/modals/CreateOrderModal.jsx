@@ -642,6 +642,9 @@ const CreateOrderModal = ({
                                 style={{ width: '100%', height: '32px' }}
                                 placeholder="Buyurtma tayyor bo‘lish sanasi va soatini tanlang"
                                 size="small"
+                                getPopupContainer={(trigger) =>
+                                    trigger.parentElement
+                                }
                                 disabledDate={(current) =>
                                     current && current < dayjs().startOf('day')
                                 }

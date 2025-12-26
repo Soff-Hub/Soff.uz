@@ -1,17 +1,18 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Modal, Select, message } from 'antd';
-import { useQueryClient } from '@tanstack/react-query';
 import useGetOrders from './api/useGetOrders';
-import useCancelOrder from './api/useCancelOrder';
-import useGetReasons from './api/useGetReasons';
 import SelectOrderDrawer from './ui/SelectOrderDrawer';
-import OrderCard from '~/entities/order/order-card';
 import Loader from '~/shared/components/loader';
 import { useRouter } from 'next/router';
 import { EmptyTab } from './MyOrderTabs';
 import { ClipLoader } from 'react-spinners';
+import OrderCancelModal from '~/features/order-cancel';
+import OrderCard from '~/widgets/order-card';
+import OrderApproveFiles from '~/features/order-approve-files';
+import { useQueryClient } from '@tanstack/react-query';
+import useResponsive from '~/shared/utilities/useResponsive';
 
 export const AllOrdersTable = ({ type }) => {
+    const { isMobile } = useResponsive();
     const queryClient = useQueryClient();
     const router = useRouter();
     const {
@@ -21,12 +22,11 @@ export const AllOrdersTable = ({ type }) => {
         isFetchingNextPage,
         isLoading: ordersLoading,
     } = useGetOrders({ status: type });
-    const { mutate: cancelOrder, isPending: isCancelling } = useCancelOrder();
-    const { data: reasons } = useGetReasons();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState(null);
-    const [reason, setReason] = useState(null);
     const [openDrawer, setOpenDrawer] = useState(false);
+    const [res, setRes] = useState('');
+    const [feedbackOpen, setFeedbackOpen] = useState(false);
     const loadMoreRef = useRef(null);
 
     const { orderId } = router.query;
@@ -39,36 +39,6 @@ export const AllOrdersTable = ({ type }) => {
     const handleCancelClick = (order) => {
         setSelectedOrder(order);
         setIsModalOpen(true);
-    };
-
-    const handleModalOk = () => {
-        if (selectedOrder) {
-            cancelOrder(
-                { id: selectedOrder.id, reason },
-                {
-                    onSuccess: () => {
-                        setIsModalOpen(false);
-                        setReason('');
-                        setSelectedOrder(null);
-                        message.success(
-                            'Buyurtma muvaffaqiyatli bekor qilindi!'
-                        );
-                        queryClient.invalidateQueries({
-                            queryKey: ['ordersStatus'],
-                        });
-                        queryClient.invalidateQueries({
-                            queryKey: ['getCustomBalance'],
-                        });
-                    },
-                }
-            );
-        }
-    };
-
-    const handleModalCancel = () => {
-        setIsModalOpen(false);
-        setReason(null);
-        setSelectedOrder(null);
     };
 
     const orders = useMemo(() => {
@@ -117,9 +87,16 @@ export const AllOrdersTable = ({ type }) => {
                 {orders.map((order) => (
                     <OrderCard
                         key={order.id}
+                        withFiles
+                        withCollapse
+                        withRejectedStatus
                         order={order}
-                        onOpenDrawer={handleOpenDrawer}
+                        onClick={handleOpenDrawer}
                         onCancel={handleCancelClick}
+                        setSelectedOrder={setSelectedOrder}
+                        fileSize={isMobile ? 'small' : 'middle'}
+                        setRes={setRes}
+                        setFeedbackOpen={setFeedbackOpen}
                     />
                 ))}
                 <div ref={loadMoreRef} style={{ height: 1 }} />
@@ -169,42 +146,27 @@ export const AllOrdersTable = ({ type }) => {
     return (
         <>
             <div className="d-flex flex-column gap-3">{ordersContent}</div>
-
-            <Modal
-                title="Buyurtmani bekor qilish"
-                open={isModalOpen}
-                okButtonProps={{
-                    disabled: !reason || isCancelling,
-                }}
-                onOk={handleModalOk}
-                onCancel={handleModalCancel}
-                okText="Bekor qilish"
-                cancelText="Yopish"
-                confirmLoading={isCancelling}>
-                <p>
-                    Haqiqatan ham "{selectedOrder?.title}" buyurtmasini bekor
-                    qilmoqchimisiz?
-                </p>
-                <h5>Sababni tanlang</h5>
-                <Select
-                    className="w-100"
-                    placeholder="Bekor qilish sababini tanlang..."
-                    value={reason}
-                    onChange={(val) => setReason(val)}
-                    options={reasons?.map((reason) => ({
-                        value: reason.id,
-                        label: reason.reason,
-                    }))}
-                />
-            </Modal>
-
+            <OrderCancelModal
+                isOpen={isModalOpen}
+                selectedOrder={selectedOrder}
+                onClose={() => setIsModalOpen(false)}
+            />
             <SelectOrderDrawer
                 open={openDrawer}
                 onClose={() => setOpenDrawer(false)}
                 onOpen={() => setOpenDrawer(true)}
                 order={selectedOrder}
             />
+            <OrderApproveFiles
+                order={selectedOrder}
+                res={res}
+                setRes={setRes}
+                feedbackOpen={feedbackOpen}
+                setFeedbackOpen={setFeedbackOpen}
+                onSuccess={() => {
+                    queryClient.invalidateQueries({ queryKey: ['orders'] });
+                }}
+            />
         </>
     );
 };
-

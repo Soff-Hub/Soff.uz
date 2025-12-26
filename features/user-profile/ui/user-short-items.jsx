@@ -21,7 +21,14 @@ const PortfolioModal = dynamic(
     }
 );
 
-const UserShortItems = ({ type = 'portfolio', id, limit = 4, sectionRef, direction }) => {
+const UserShortItems = ({
+    type = 'portfolio',
+    id,
+    limit = 4,
+    isOrderingClosed,
+    sectionRef,
+    direction,
+}) => {
     const { isDesktop } = useResponsive();
     const router = useRouter();
     const [selected, setSelected] = useState(null);
@@ -156,12 +163,16 @@ const UserShortItems = ({ type = 'portfolio', id, limit = 4, sectionRef, directi
                                 key={item.id}
                                 {...(type === 'portfolio'
                                     ? {
-                                        portfolio: item,
-                                        setPortfolio: handleClick,
-                                    }
+                                          portfolio: item,
+                                          setPortfolio: handleClick,
+                                      }
                                     : {})}
                                 {...(type === 'service'
-                                    ? { service: item, hasFooter: false }
+                                    ? {
+                                          service: item,
+                                          hasFooter: false,
+                                          disabled: isOrderingClosed,
+                                      }
                                     : {})}
                                 {...(type === 'product'
                                     ? { product: item }

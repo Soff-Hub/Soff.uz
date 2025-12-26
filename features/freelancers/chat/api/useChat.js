@@ -6,6 +6,7 @@ import useDeleteMessage from './useDeleteMessage';
 import useSendMessage from './useSendMessage';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
 import { message } from 'antd';
+import dayjs from 'dayjs';
 
 // WebSocket readyState constants (safe for SSR)
 const WS_READY_STATE = {
@@ -495,31 +496,33 @@ const useChat = (chatId) => {
                                 : null;
 
                         if (msgDate !== prevMsgDate) {
-                            const dateObj = new Date(msg.created_at);
-                            const uzbekMonths = [
-                                'Yanvar',
-                                'Fevral',
-                                'Mart',
-                                'Aprel',
-                                'May',
-                                'Iyun',
-                                'Iyul',
-                                'Avgust',
-                                'Sentyabr',
-                                'Oktyabr',
-                                'Noyabr',
-                                'Dekabr',
-                            ];
+                            // const dateObj = new Date(msg.created_at);
+                            // const uzbekMonths = [
+                            //     'Yanvar',
+                            //     'Fevral',
+                            //     'Mart',
+                            //     'Aprel',
+                            //     'May',
+                            //     'Iyun',
+                            //     'Iyul',
+                            //     'Avgust',
+                            //     'Sentyabr',
+                            //     'Oktyabr',
+                            //     'Noyabr',
+                            //     'Dekabr',
+                            // ];
 
-                            const day = dateObj.getDate();
-                            const month = uzbekMonths[dateObj.getMonth()];
-                            const year = dateObj.getFullYear();
-                            const formattedDate = `${month} ${day}, ${year}`;
+                            // const day = dateObj.getDate();
+                            // const month = uzbekMonths[dateObj.getMonth()];
+                            // const year = dateObj.getFullYear();
+                            // const formattedDate = `${month} ${day}, ${year}`;
 
                             acc.push({
                                 id: `date-separator-${msgDate}-${index}`,
                                 type: 'date-separator',
-                                date: formattedDate,
+                                date: dayjs(msg.created_at).format(
+                                    'MMMM D, YYYY'
+                                ),
                             });
                         }
                         acc.push(msg);

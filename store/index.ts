@@ -26,3 +26,6 @@ export const store = configureStore({
             .concat(apiSoffSlice.middleware)
             .concat(apiFreelanceSlice.middleware),
 });
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

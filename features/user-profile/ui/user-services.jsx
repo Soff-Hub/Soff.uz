@@ -7,7 +7,7 @@ import { useFGet } from '~/shared/hooks/useFApi';
 import { cn, useRcn } from '~/shared/utilities/cn';
 import ItemsNotFound from './items-not-found';
 
-const UserServices = () => {
+const UserServices = ({ isOrderingClosed }) => {
     const router = useRouter();
     const { pid } = router.query;
     const { data, isLoading } = useFGet(
@@ -65,9 +65,10 @@ const UserServices = () => {
                 <div className={cn('grid', 'gap-4', gridClass)}>
                     {data?.map((service) => (
                         <ServiceCard
+                            key={service.id}
                             hasFooter={false}
                             service={service}
-                            key={service.id}
+                            disabled={isOrderingClosed}
                         />
                     ))}
                     {isLoading && <ServiceSkeletonGrid />}

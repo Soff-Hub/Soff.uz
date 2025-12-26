@@ -667,7 +667,7 @@ function useCreateOrder() {
                             ]}>
                             <DatePicker
                                 format="MMM DD, YYYY"
-                                placement="bottom"
+                                placement="bottomLeft"
                                 className="form-element"
                                 placeholder="Buyurtma tayyor bo‘lish sanasi va soatini tanlang"
                                 size="large"

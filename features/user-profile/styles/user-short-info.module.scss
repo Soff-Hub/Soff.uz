@@ -67,3 +67,23 @@
     align-items: center;
     justify-content: center;
 }
+
+.alertMiddle {
+    :global(.ant-alert-icon) {
+        font-size: 16px !important;
+        margin-top: 2px !important;
+    }
+
+    :global(.ant-alert-message) {
+        font-size: 14px !important;
+        font-weight: 500 !important;
+        margin-bottom: 4px !important;
+    }
+
+    :global(.ant-alert-description) {
+        font-size: 12px !important;
+        line-height: 1.4 !important;
+    }
+
+    padding: 8px 12px !important;
+}

@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import Image from 'next/image';
 import React, { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { cn, useRcn } from '~/shared/utilities/cn';
-import { Button, Divider, message } from 'antd';
+import { Button, Divider, Alert, message } from 'antd';
 import {
     CheckCircleOutlined,
     CloseCircleOutlined,
@@ -57,8 +57,11 @@ const UserShortInfo = ({ seller }) => {
 
     const isFreelancer = seller?.has_portfolio && seller?.has_service;
     const isOpenToAcceptOrders = seller?.accepting_orders;
-    const isOrderingOpen = isFreelancer && isOpenToAcceptOrders;
-    // const isOrderingOpen = true;
+    const isBlocked = seller?.is_blocked;
+    // NOTE: for testing purposes only
+    // const isBlocked = true;
+    const isLockedForService = !(isFreelancer && isOpenToAcceptOrders);
+    const isOrderingClosed = isLockedForService || isBlocked;
 
     const lastActive = useMemo(
         () =>
@@ -331,7 +334,7 @@ const UserShortInfo = ({ seller }) => {
                     icon={<i className="fa-solid fa-clipboard-list"></i>}
                     label="Xizmatlar uchun ochiq"
                     value={
-                        isOrderingOpen ? (
+                        !isOrderingClosed ? (
                             <CheckCircleOutlined
                                 className={cn('text-primary', 'text-[16px]')}
                             />
@@ -362,11 +365,29 @@ const UserShortInfo = ({ seller }) => {
             </div>
 
             <Divider size="small" style={{ marginBlock: '16px' }} />
+            {isBlocked && (
+                <Alert
+                    className={styles.alertMiddle}
+                    message="Sotuvchi vaqtincha bloklangan"
+                    description="Afsuski, ushbu frilanserning xizmatlari vaqtincha bloklangan. Iltimos, keyinroq qayta urinib ko'ring yoki boshqa frilanserni tanlang."
+                    type="error"
+                    showIcon
+                />
+            )}
+            {isLockedForService && !isBlocked && (
+                <Alert
+                    className={styles.alertMiddle}
+                    message="Xizmatlar uchun ochiq emas"
+                    description="Afsuski, ushbu frilanserning xizmatlari vaqtincha ochiq emas. Iltimos, keyinroq qayta urinib ko'ring yoki boshqa frilanserni tanlang."
+                    type="warning"
+                    showIcon
+                />
+            )}
             <div className={cn(marginClass, flexClass, 'gap-3')}>
                 <Button
                     type="default"
                     className={cn('border-primary', 'text-primary')}
-                    disabled={!isOrderingOpen}
+                    disabled={isOrderingClosed}
                     onClick={handleCreateChat}>
                     <i className="fa-solid fa-comment-dots"></i>
                 </Button>
@@ -374,12 +395,7 @@ const UserShortInfo = ({ seller }) => {
                     type="primary"
                     block
                     onClick={handleCreateOrder}
-                    title={
-                        !isOrderingOpen
-                            ? "Frilanser xizmatlari mavjud emas, shuning uchun buyurtma berib bo'lmaydi."
-                            : ''
-                    }
-                    disabled={!isOrderingOpen}>
+                    disabled={isOrderingClosed}>
                     <i className="fa-solid fa-calendar"></i> Buyurtma berish
                 </Button>
             </div>
@@ -409,12 +425,7 @@ const UserShortInfo = ({ seller }) => {
                     block
                     type="primary"
                     onClick={handleCreateOrder}
-                    title={
-                        !isOrderingOpen
-                            ? "Frilanser xizmatlari mavjud emas, shuning uchun buyurtma berib bo'lmaydi."
-                            : ''
-                    }
-                    disabled={!isOrderingOpen}>
+                    disabled={isOrderingClosed}>
                     <i className="fa-solid fa-calendar"></i> Buyurtma berish
                 </Button>
             </div>

@@ -17,7 +17,7 @@ import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { FaRegCommentDots } from 'react-icons/fa';
 import { LiaHandshake } from 'react-icons/lia';
 import { useRouter } from 'next/router';
-import OrderCard from '~/entities/order/order-card';
+import OrderCard from '~/entities/order/ui/order-base';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import { cn } from '~/shared/utilities/cn';
 import useOffers from '../api/useOffers';

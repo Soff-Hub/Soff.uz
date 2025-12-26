@@ -10,7 +10,7 @@ import { MdOndemandVideo } from 'react-icons/md';
 
 const disabledLocations = [
     '/chat',
-    '/order/',
+    // '/order/',
     '/auth',
     'shopping-cart',
     'search-page',
@@ -39,7 +39,9 @@ const getYouTubeVideoId = (urlOrId) => {
     return null;
 };
 
-const VIDEO_URL = 'https://www.youtube.com/watch?v=oJre9mbRE2U';
+const VIDEO_URL_BUY_PRODUCT = 'https://www.youtube.com/watch?v=oJre9mbRE2U';
+const VIDEO_URL_ORDER_CREATE =
+    'https://youtu.be/qy38WGhOq3Q?si=0y_oSKS1WRiSJ4G5';
 
 export function TelegramLink({ videoUrl }) {
     const { isMobile, isTablet } = useResponsive();
@@ -49,11 +51,17 @@ export function TelegramLink({ videoUrl }) {
     const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
     const [isGroupOpen, setIsGroupOpen] = useState(false);
     // Check both pathname (for route pattern) and asPath (for actual URL)
+    console.log({ location });
     const isProductPage =
         location.includes('/product/') || asPath.includes('/product/');
+    const isOrderCreatePage = location.includes('/order/create');
 
     // Use provided videoUrl or default constant
-    const finalVideoUrl = videoUrl || VIDEO_URL;
+    const finalVideoUrl = isProductPage
+        ? VIDEO_URL_BUY_PRODUCT
+        : isOrderCreatePage
+        ? VIDEO_URL_ORDER_CREATE
+        : videoUrl;
 
     // Extract video ID from URL
     const extractedVideoId = useMemo(
@@ -105,7 +113,7 @@ export function TelegramLink({ videoUrl }) {
     }
 
     // Use FloatButton.Group for product pages with speed dial
-    if (isProductPage && isMobile) {
+    if ((isProductPage || isOrderCreatePage) && isMobile) {
         return (
             <>
                 <div ref={groupRef} className={styles.floatButtonGroup}>
@@ -149,7 +157,9 @@ export function TelegramLink({ videoUrl }) {
                                 <MdOndemandVideo />
                             </div>
                             <span className={styles.buttonText}>
-                                Qanday xarid qilaman?
+                                {isOrderCreatePage
+                                    ? 'Qanday buyurtma beraman?'
+                                    : 'Qanday xarid qilaman?'}
                             </span>
                         </div>
                         <a

@@ -11,7 +11,7 @@ import UserCommentsTabs from './user-comments-tabs';
 import UserShortItems from './user-short-items';
 import useResponsive from '~/shared/utilities/useResponsive';
 
-const UserInfo = ({ seller, commentRef, sectionRef }) => {
+const UserInfo = ({ seller, isOrderingClosed, commentRef, sectionRef }) => {
     const { isMobile } = useResponsive();
     const stats = useMemo(
         () => [
@@ -91,6 +91,7 @@ const UserInfo = ({ seller, commentRef, sectionRef }) => {
             )}
 
             <UserShortItems
+                isOrderingClosed={isOrderingClosed}
                 sectionRef={sectionRef}
                 type="service"
                 id={seller.id}

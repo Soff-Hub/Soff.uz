@@ -14,10 +14,10 @@
         "isolatedModules": true,
         "jsx": "preserve",
         "incremental": true,
-        "baseUrl": "./",
+        "baseUrl": ".",
         "paths": {
-            "~/*": ["./*"],
-            "@/*": ["./*"]
+            "~/*": ["*"],
+            "@/*": ["*"]
         },
         "plugins": [
             {
@@ -30,6 +30,8 @@
         "shared/types/**/*.ts",
         "**/*.ts",
         "**/*.tsx",
+        "**/*.js",
+        "**/*.jsx",
         ".next/types/**/*.ts"
     ],
     "exclude": ["node_modules", ".next", "dist", "out"]

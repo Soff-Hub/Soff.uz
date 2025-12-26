@@ -7,7 +7,6 @@ import {
 } from './FastDowloadApi';
 import { IoMdClose } from 'react-icons/io';
 import { Button, Rate, Modal } from 'antd';
-import { cn } from '~/shared/utilities/cn';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import useCart from '~/shared/hooks/useCart';
@@ -17,6 +16,44 @@ import FileDownloadLink from '~/shared/ui/file-download-link';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { baseURL } from '~/repositories/api';
+import { downloadFile } from '~/shared/utilities/utils';
+
+// Default product for testing
+// const DEFAULT_PRODUCT = {
+//     id: 1,
+//     slug: 'test-product',
+//     title: 'Test Product - Fast Download',
+//     poster: 'https://i.ytimg.com/vi/n0KlHOMIyS4/maxresdefault.jpg',
+//     url: 'https://i.ytimg.com/vi/n0KlHOMIyS4/maxresdefault.jpg',
+// };
+
+const getDownloadedProducts = (product) => {
+    const downloadeds = localStorage.getItem('downloadedProducts');
+    const downloadedProducts = downloadeds ? JSON.parse(downloadeds) : [];
+    const isAlreadyDownloaded = downloadedProducts.includes(product.id);
+    return { downloadedProducts, isAlreadyDownloaded };
+};
+
+const getProductCarts = (product) => {
+    const carts = localStorage.getItem('cart');
+    const productCarts = carts ? JSON.parse(carts) : [];
+    const isAlreadyInCart = productCarts.includes(product.id);
+    return { productCarts, isAlreadyInCart };
+};
+
+const handleDeleteDownloadProduct = (product) => {
+    const { downloadedProducts, isAlreadyDownloaded } =
+        getDownloadedProducts(product);
+    if (isAlreadyDownloaded) {
+        downloadedProducts = downloadedProducts.filter(
+            (id) => id !== product.id
+        );
+        localStorage.setItem(
+            'downloadedProducts',
+            JSON.stringify(downloadedProducts)
+        );
+    }
+};
 
 const FastDownloadSection = () => {
     const fileDownloadRef = useRef(null);
@@ -27,7 +64,7 @@ const FastDownloadSection = () => {
     const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
     const [selectedRating, setSelectedRating] = useState(0);
 
-    const {
+    let {
         data: product,
         isLoading,
         isError,
@@ -41,6 +78,9 @@ const FastDownloadSection = () => {
     const hasRating = product?.user_rating && product.user_rating > 0;
     const productId = product?.id;
 
+    // NOTE: this is for testing purpose only
+    // product = DEFAULT_PRODUCT;
+
     const handleDowload = async (id) => {
         try {
             await fetchProductDowload(id);
@@ -48,6 +88,7 @@ const FastDownloadSection = () => {
                 queryKey: ['fast-download'],
                 exact: false,
             });
+            handleDeleteDownloadProduct(product);
         } catch (error) {
             console.error('Download error:', error);
         }
@@ -95,13 +136,23 @@ const FastDownloadSection = () => {
     };
 
     useEffect(() => {
-        const carts = JSON.parse(localStorage.getItem('cart')) || [];
-        const hasProductincart = carts.includes(product?.id);
-        if (hasProductincart) {
+        if (!product?.id) return;
+
+        const { isAlreadyInCart } = getProductCarts(product);
+        if (isAlreadyInCart) {
             removeAll();
         }
-        if (fileDownloadRef.current && product?.url) {
-            fileDownloadRef.current.click();
+
+        const { isAlreadyDownloaded, downloadedProducts } =
+            getDownloadedProducts(product);
+
+        if (!isAlreadyDownloaded) {
+            const newDownloadedProducts = [...downloadedProducts, product.id];
+            localStorage.setItem(
+                'downloadedProducts',
+                JSON.stringify(newDownloadedProducts)
+            );
+            downloadFile(product.url);
         }
     }, [product]);
 
@@ -150,13 +201,7 @@ const FastDownloadSection = () => {
                         )}
                     </div>
                 </div>
-                <div
-                    className={cn(
-                        'flex',
-                        'gap-3',
-                        'items-center',
-                        styles.actionsWrapper
-                    )}>
+                <div className={styles.actionsWrapper}>
                     {!isMobile && !hasRating && rateBox}
                     <FileDownloadLink
                         ref={fileDownloadRef}

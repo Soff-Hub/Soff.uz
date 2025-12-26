@@ -20,7 +20,7 @@ const isValidSlug = (slug) => {
     );
 };
 
-const ServiceCard = ({ service, hasFooter = true }) => {
+const ServiceCard = ({ service, hasFooter = true, disabled = false }) => {
     const { isLoggedIn } = useSelector((state) => state.auth);
     const [open, setOpen] = useState(false);
     const { push } = useRouter();
@@ -57,7 +57,10 @@ const ServiceCard = ({ service, hasFooter = true }) => {
             <div className={styles.card}>
                 <div className={styles.cardBody}>
                     <Link href={`/service/${service.slug}`}>
-                        <a>
+                        <a
+                            onClick={(e) => {
+                                if (disabled) e.preventDefault();
+                            }}>
                             <h1 className={styles.cardTitle}>
                                 {service?.title}
                             </h1>
@@ -91,6 +94,7 @@ const ServiceCard = ({ service, hasFooter = true }) => {
                     <div className={styles.btns}>
                         <Button
                             type="default"
+                            disabled={disabled}
                             onClick={handleViewDetails}
                             className={styles.secondaryBtn}>
                             Batafsil
@@ -98,6 +102,7 @@ const ServiceCard = ({ service, hasFooter = true }) => {
 
                         <Button
                             type="primary"
+                            disabled={disabled}
                             onClick={handleOrder}
                             className={styles.primaryBtn}>
                             Buyurtma berish

@@ -2,8 +2,18 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { jwtDecode } from 'jwt-decode';
 import Cookies from 'js-cookie';
 
+export interface AuthState {
+    isLoggedIn: boolean;
+    user: any;
+    accountLinks: Array<{ text: string; url: string; icon: string }>;
+    data: any;
+    id: number | null;
+    status: string;
+    error: string | null;
+}
+
 // Boshlang'ich holat
-const initialState = {
+const initialState: AuthState = {
     isLoggedIn: false,
     user: null,
     accountLinks: [
@@ -27,7 +37,7 @@ const initialState = {
 // Asenkron funksiyalarni yaratish
 export const login = createAsyncThunk(
     'auth/login',
-    async ({ user, data }, { rejectWithValue }) => {
+    async ({ user, data }: any, { rejectWithValue }) => {
         try {
             // API chaqiruv
             localStorage.setItem('user', JSON.stringify(user));
@@ -46,7 +56,7 @@ export const login = createAsyncThunk(
                 data: data ? { ...data, password: null } : {},
                 status: 'succeeded',
             };
-        } catch (error) {
+        } catch (error: any) {
             return rejectWithValue(error.message);
         }
     }
@@ -60,7 +70,7 @@ export const logOut = createAsyncThunk(
             localStorage.clear();
             Cookies.remove('token');
             return;
-        } catch (error) {
+        } catch (error: any) {
             return rejectWithValue(error.message);
         }
     }
@@ -70,9 +80,8 @@ export const checkAuthorization = createAsyncThunk(
     'auth/checkAuthorization',
     async (_, { rejectWithValue }) => {
         try {
-            const user = localStorage.getItem('user')
-                ? JSON.parse(localStorage.getItem('user'))
-                : '';
+            let user: any = localStorage.getItem('user');
+            user = user ? JSON.parse(user) : '';
             const token = Cookies.get('token');
             if (!token)
                 Cookies.set('token', user?.access, {
@@ -83,7 +92,7 @@ export const checkAuthorization = createAsyncThunk(
             } else {
                 return { isLoggedIn: false, user: null, status: 'failed' };
             }
-        } catch (error) {
+        } catch (error: any) {
             return rejectWithValue(error.message);
         }
     }
@@ -111,7 +120,7 @@ const authSlice = createSlice({
                 state.user = action.payload.user;
                 state.data = action.payload.data || {};
             })
-            .addCase(login.rejected, (state, action) => {
+            .addCase(login.rejected, (state, action: any) => {
                 state.status = 'failed';
                 state.error = action.payload;
             })
@@ -121,7 +130,7 @@ const authSlice = createSlice({
                 state.data = {};
                 state.status = 'idle';
             })
-            .addCase(checkAuthorization.rejected, (state, action) => {
+            .addCase(checkAuthorization.rejected, (state, action: any) => {
                 state.status = 'failed';
                 state.error = action.payload;
             })

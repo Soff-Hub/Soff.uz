@@ -22,6 +22,8 @@ import React, { useCallback, useMemo } from 'react';
 import { truncateTitle } from '~/shared/utilities/TruncateTitle';
 import AvatarTransitioned from './AvatarTransitioned';
 import { FaRegUserCircle } from 'react-icons/fa';
+import OrderCard from '~/widgets/order-card';
+import useResponsive from '~/shared/utilities/useResponsive';
 
 const { confirm } = Modal;
 
@@ -29,13 +31,21 @@ const ChatMessage = ({
     msg,
     onEdit,
     onDelete,
-    pushUser,
     myImg,
     recipientImg,
+    handleOpenDrawer,
+    setRes,
+    setFeedbackOpen,
 }) => {
+    const { isMobile } = useResponsive();
     const isMyMessage = msg.is_mine;
     const isMessageLoading =
         msg.status === 'sending' || msg.status === 'updating';
+
+    const isOrderMessage =
+        Boolean(msg.order) &&
+        Boolean(msg.order.files) &&
+        msg.order.files?.length > 0;
 
     const handleEdit = useCallback(() => {
         onEdit(msg);
@@ -176,97 +186,145 @@ const ChatMessage = ({
                 isMyMessage ? styles.myRow : styles.otherRow
             }`}>
             {!isMyMessage && (
-                <Avatar
-                    size={32}
-                    src={recipientImg}
-                    icon={<FaRegUserCircle />}
-                />
+                <div
+                    style={{
+                        width: '32px',
+                        height: '32px',
+                    }}>
+                    <Avatar
+                        size={32}
+                        src={recipientImg}
+                        icon={<FaRegUserCircle />}
+                    />
+                </div>
             )}
 
-            <div
-                className={`${styles.chat_message} ${
-                    isMyMessage ? styles.my_message : styles.other_message
-                }`}
-                style={{
-                    wordBreak: 'break-word',
-                    whiteSpace: 'pre-wrap',
-                }}>
-                <span
+            {isOrderMessage ? (
+                <div
                     style={{
-                        display: 'grid',
-                        gridTemplateColumns: '1fr auto',
-                        justifyContent: 'space-between',
-                        alignItems: 'end',
-                        gap: '5px',
-                        width: '100%',
+                        width: isMobile ? '100%' : '70%',
+                        position: 'relative',
                     }}>
-                    {msg.file && (
-                        <div className={styles.chat_file_box}>
-                            <FileTextOutlined
-                                onClick={() =>
-                                    window.open(msg.file.url, '_blank')
-                                }
-                                className={styles.chat_file}
-                            />
-                            <div className={styles.chat_file_info}>
-                                <span className={styles.chat_file_name}>
-                                    {truncateTitle(msg.file.filename, 15)}
-                                </span>
-                                <span className={styles.chat_file_size}>
-                                    {(msg.file.size / (1024 * 1024)).toFixed(2)}{' '}
-                                    MB
-                                </span>
-                            </div>
-                        </div>
-                    )}
-                    {msg.content && (
-                        <span
-                            style={{
-                                gridColumn: '1 / 2',
-                                whiteSpace: 'pre-wrap',
-                                wordWrap: 'break-word',
-                                overflowWrap: 'break-word',
-                                minWidth: 0,
-                            }}>
-                            {msg.content}
-                        </span>
-                    )}
+                    <OrderCard
+                        withFiles
+                        withCollapse
+                        withRejectedStatus
+                        orderSize="small"
+                        fileSize="small"
+                        order={msg.order}
+                        onClick={handleOpenDrawer}
+                        setSelectedOrder={handleOpenDrawer}
+                        setRes={setRes}
+                        setFeedbackOpen={setFeedbackOpen}
+                    />
                     <span
                         style={{
-                            textAlign: 'right',
+                            position: 'absolute',
+                            bottom: '3px',
+                            right: '10px',
                             fontSize: '9.5px',
                             color: isMyMessage ? 'white' : 'black',
                             opacity: 0.7,
                             whiteSpace: 'nowrap',
+                            zIndex: 10,
                         }}>
                         {msg.created_at
                             ? dayjs(msg.created_at).format('HH:mm')
                             : '--:--'}
                         {readStatus}
                     </span>
-                </span>
-                <div
-                    style={{
-                        ...(isMyMessage
-                            ? { left: '-20px' }
-                            : { right: '-20px' }),
-                        position: 'absolute',
-                        top: '4px',
-                        zIndex: 10,
-                    }}
-                    className={styles.moreWrapper}>
-                    <Dropdown
-                        menu={
-                            isMyMessage
-                                ? { items: myMenuItems }
-                                : { items: opponentMenuItems }
-                        }
-                        trigger={['click']}
-                        placement={isMyMessage ? 'bottomRight' : 'bottomLeft'}>
-                        <EllipsisOutlined className={styles.moreIcon} />
-                    </Dropdown>
                 </div>
-            </div>
+            ) : (
+                <div
+                    className={`${styles.chat_message} ${
+                        isMyMessage ? styles.my_message : styles.other_message
+                    }`}
+                    style={{
+                        wordBreak: 'break-word',
+                        whiteSpace: 'pre-wrap',
+                    }}>
+                    <span
+                        style={{
+                            display: 'grid',
+                            gridTemplateColumns: '1fr auto',
+                            justifyContent: 'space-between',
+                            alignItems: 'end',
+                            gap: '5px',
+                            width: '100%',
+                        }}>
+                        {msg.file && (
+                            <div className={styles.chat_file_box}>
+                                <FileTextOutlined
+                                    onClick={() =>
+                                        window.open(msg.file.url, '_blank')
+                                    }
+                                    className={styles.chat_file}
+                                />
+                                <div className={styles.chat_file_info}>
+                                    <span className={styles.chat_file_name}>
+                                        {truncateTitle(msg.file.filename, 15)}
+                                    </span>
+                                    <span className={styles.chat_file_size}>
+                                        {(
+                                            msg.file.size /
+                                            (1024 * 1024)
+                                        ).toFixed(2)}{' '}
+                                        MB
+                                    </span>
+                                </div>
+                            </div>
+                        )}
+                        {msg.content && (
+                            <span
+                                style={{
+                                    gridColumn: '1 / 2',
+                                    whiteSpace: 'pre-wrap',
+                                    wordWrap: 'break-word',
+                                    overflowWrap: 'break-word',
+                                    minWidth: 0,
+                                }}>
+                                {msg.content}
+                            </span>
+                        )}
+                        <span
+                            style={{
+                                textAlign: 'right',
+                                fontSize: '9.5px',
+                                color: isMyMessage ? 'white' : 'black',
+                                opacity: 0.7,
+                                whiteSpace: 'nowrap',
+                            }}>
+                            {msg.created_at
+                                ? dayjs(msg.created_at).format('HH:mm')
+                                : '--:--'}
+                            {readStatus}
+                        </span>
+                    </span>
+                    <div
+                        style={{
+                            ...(isMyMessage
+                                ? { left: '-20px' }
+                                : { right: '-20px' }),
+                            position: 'absolute',
+                            top: '4px',
+                            zIndex: 10,
+                        }}
+                        className={styles.moreWrapper}>
+                        <Dropdown
+                            menu={
+                                isMyMessage
+                                    ? { items: myMenuItems }
+                                    : { items: opponentMenuItems }
+                            }
+                            trigger={['click']}
+                            placement={
+                                isMyMessage ? 'bottomRight' : 'bottomLeft'
+                            }>
+                            <EllipsisOutlined className={styles.moreIcon} />
+                        </Dropdown>
+                    </div>
+                </div>
+            )}
 
             {isMyMessage && <AvatarTransitioned msg={msg} image={myImg} />}
         </div>

@@ -1,4 +1,4 @@
-import { Badge, Tabs } from 'antd';
+import { Tabs } from 'antd';
 import { useRouter } from 'next/router';
 import React, {
     forwardRef,
@@ -14,10 +14,7 @@ import UserInfo from './user-info';
 import UserPortfolios from './user-portfolios';
 import UserServices from './user-services';
 import UserProducts from './user-products';
-import useResponsive from '~/shared/utilities/useResponsive';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
-
-
 
 const UserTabs = ({ seller }) => {
     const router = useRouter();
@@ -26,6 +23,14 @@ const UserTabs = ({ seller }) => {
 
     const commentRef = useRef(null);
     const sectionRef = useRef(null);
+
+    // const isFreelancer = seller?.has_portfolio && seller?.has_service;
+    // const isOpenToAcceptOrders = seller?.accepting_orders;
+    // NOTE: for testing purposes only
+    // const isBlocked = true;
+    // const isLockedForService = !(isFreelancer && isOpenToAcceptOrders);
+    // const isOrderingClosed = isLockedForService || isBlocked;
+    const isBlocked = seller?.is_blocked;
 
     useEffect(() => {
         const { tab } = router.query;
@@ -71,40 +76,46 @@ const UserTabs = ({ seller }) => {
         }
     }, [activeKey]);
 
-
     const items = [
         { key: 'about', label: 'Muallif haqida' },
         {
             key: 'portfolio',
             label: (
                 <span>
-                    Portfolio {seller?.portfolio_count > 0 && `(${seller.portfolio_count})`}
+                    Portfolio{' '}
+                    {seller?.portfolio_count > 0 &&
+                        `(${seller.portfolio_count})`}
                 </span>
-            )
+            ),
         },
         {
             key: 'service',
             label: (
                 <span>
-                    Xizmatlar {seller?.service_count > 0 && `(${seller.service_count})`}
+                    Xizmatlar{' '}
+                    {seller?.service_count > 0 && `(${seller.service_count})`}
                 </span>
-            )
+            ),
         },
         {
             key: 'product',
             label: (
                 <span>
-                    Mahsulotlar {seller?.total_products_count > 0 && `(${seller.total_products_count})`}
+                    Mahsulotlar{' '}
+                    {seller?.total_products_count > 0 &&
+                        `(${seller.total_products_count})`}
                 </span>
-            )
+            ),
         },
         {
             key: 'comments',
             label: (
                 <span>
-                    Izohlar {seller?.total_comments_count > 0 && `(${seller.total_comments_count})`}
+                    Izohlar{' '}
+                    {seller?.total_comments_count > 0 &&
+                        `(${seller.total_comments_count})`}
                 </span>
-            )
+            ),
         },
     ];
 
@@ -113,15 +124,21 @@ const UserTabs = ({ seller }) => {
             case 'portfolio':
                 return <UserPortfolios />;
             case 'service':
-                return <UserServices />;
+                return <UserServices isOrderingClosed={isBlocked} />;
             case 'product':
-                return <UserProducts direction={seller?.most_common_direction} id={seller?.id} />;
+                return (
+                    <UserProducts
+                        direction={seller?.most_common_direction}
+                        id={seller?.id}
+                    />
+                );
             default:
                 return (
                     <UserInfo
                         sectionRef={sectionRef}
                         commentRef={commentRef}
                         seller={seller}
+                        isOrderingClosed={isBlocked}
                     />
                 );
         }

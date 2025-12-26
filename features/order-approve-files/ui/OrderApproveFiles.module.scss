@@ -1,0 +1,35 @@
+.approveContent {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.congratModalBody {
+    text-align: center;
+    padding: 2rem !important;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #d4f7d4, #ffffff);
+}
+
+.congratIcon {
+    font-size: 48px;
+    color: #28a745;
+}
+
+.congratTitle {
+    color: #28a745;
+    font-size: 24px;
+    margin-top: 1rem;
+}
+
+.congratText {
+    font-size: 16px;
+    margin-top: 0.5rem;
+}
+
+.congratButton {
+    margin-top: 1.5rem;
+    background-color: #28a745;
+    border-color: #28a745;
+    border-radius: 8px;
+}

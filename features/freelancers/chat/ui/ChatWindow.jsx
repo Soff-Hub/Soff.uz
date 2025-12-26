@@ -10,6 +10,7 @@ import {
     Upload,
     Spin,
     Card,
+    Alert,
 } from 'antd';
 import {
     ArrowDownOutlined,
@@ -33,9 +34,76 @@ import { useSelector } from 'react-redux';
 import ChatDateSeperator from './ChatDateSeperator';
 import { FaHeadset } from 'react-icons/fa';
 import useResponsive from '~/shared/utilities/useResponsive';
+import OrderApproveFiles from '~/features/order-approve-files';
 
 const { TextArea } = Input;
 const maxSize = 50 * 1024 * 1024;
+
+// const order = {
+//     id: 3689,
+//     created_at: '2025-12-23T09:59:32.899661+00:00',
+//     order_type: 'custom_order',
+//     user_id: 13070,
+//     deadline_date: '2025-12-25T14:59:00',
+//     title: "Taqdimot bo'yicha xizmat kerak.",
+//     budget: 10000,
+//     description:
+//         'Exactly! You’ve nailed the core philosophy of FSD.\r\n\r\nIn FSD, Entities represent the "What" (the data/the object), and Features represent the "How" (the user actions/the business value).\r\n\r\nWhy Action Buttons belong in Features\r\nBusiness Logic: A "Cancel" button isn\'t just a UI element; it needs to call an API, show a loading spinner, handle success/error messages, and maybe refresh the order list. That is a Feature.\r\n\r\nReusability: You might want to use the OrderCard in a "Read-only" history list where buttons aren\'t allowed. By keeping the buttons out of the Entity, the OrderCard remains clean and reusable.\r\n\r\nIndependence: Features should be "plug-and-play." You should be able to remove the order-cancel folder, and the OrderCard entity should still work perfectly.',
+//     language: 'uzb',
+//     category: null,
+//     service: null,
+//     order_status_doing: {
+//         status: 'order_file_sent',
+//         order_accepted_date: '2025-12-23T09:59:50.465390+00:00',
+//         reason: null,
+//     },
+//     user: {
+//         id: 1,
+//         full_name: "Abdumo'min Abdurasulov",
+//         photo_url:
+//             'https://d2co7bxjtnp5o.cloudfront.net/media/users/ChatGPT_Image_Jul_4_2025_09_40_35_PM_wRbcqfd.png',
+//         last_active: '2025-12-24T18:50:46.037936+05:00',
+//         soff_seller_id: 193695,
+//     },
+//     chat_id: null,
+//     reason: [],
+//     order_requirement: null,
+//     feedback: null,
+//     unread_messages_count: 0,
+//     file: null,
+//     files: [
+//         {
+//             url: 'https://freelance.soff.uz/media/order_files/yax2_funksiya.1_xCDbdWt.pptx',
+//             size: null,
+//             created_at: '2025-12-24T06:59:44.523422+00:00',
+//             status: 'pending',
+//         },
+//         {
+//             url: 'https://freelance.soff.uz/media/order_files/soff-story-summary-1765973816177_8OpXxcC.png',
+//             size: null,
+//             created_at: '2025-12-24T06:59:44.523422+00:00',
+//             status: 'pending',
+//         },
+//     ],
+//     offers_count: 0,
+//     approved_transaction_amount: 10000,
+//     offers: [],
+// };
+// const msg = {
+//     order,
+//     files: order.files,
+//     chat_id: 5638,
+//     opponent_id: 193695,
+//     opponent_name: "Abdumo'min Abdurasulov",
+//     opponent_photo_url:
+//         'https://d2co7bxjtnp5o.cloudfront.net/media/users/ChatGPT_Image_Jul_4_2025_09_40_35_PM_wRbcqfd.png',
+//     last_message: {
+//         content: 'asdf',
+//         created_at: '2025-12-24T13:48:51.528743+00:00',
+//     },
+//     created_at: '2025-12-24T13:48:51.528743+00:00',
+//     unread_count: 0,
+// };
 
 const ChatWindow = ({
     chatId,
@@ -50,6 +118,9 @@ const ChatWindow = ({
     const [openDownIcon, setOpenDownIcon] = useState(false);
     const [isDragging, setIsDragging] = useState(false);
     const [createOrderModalOpen, setCreateOrderModalOpen] = useState(false);
+    const [res, setRes] = useState('');
+    const [feedbackOpen, setFeedbackOpen] = useState(false);
+    const [selectedOrder, setSelectedOrder] = useState(null);
     const dragCounterRef = useRef(0);
     const messagesContainerRef = useRef(null);
     const scrollPositionRef = useRef(0);
@@ -73,7 +144,11 @@ const ChatWindow = ({
     const recipient = chat?.opponent;
     const queryClient = useQueryClient();
 
-    console.log({ messages });
+    const isBlocked = chat?.opponent?.is_blocked;
+
+    const handleOpenDrawer = (order) => {
+        setSelectedOrder(order);
+    };
 
     // Handle paste image
     useEffect(() => {
@@ -137,6 +212,7 @@ const ChatWindow = ({
     const handleDragEnter = (e) => {
         e.preventDefault();
         e.stopPropagation();
+        if (disabled) return;
         dragCounterRef.current++;
         if (e.dataTransfer.types.includes('Files')) {
             setIsDragging(true);
@@ -156,11 +232,13 @@ const ChatWindow = ({
     const handleDragOver = (e) => {
         e.preventDefault();
         e.stopPropagation();
+        if (disabled) return;
     };
 
     const handleDrop = async (e) => {
         e.preventDefault();
         e.stopPropagation();
+        if (disabled) return;
         dragCounterRef.current = 0;
         setIsDragging(false);
 
@@ -346,6 +424,7 @@ const ChatWindow = ({
                 {!hideCreateOrderButton && (
                     <Button
                         type="primary"
+                        disabled={isBlocked}
                         icon={<ShoppingCartOutlined />}
                         onClick={handleCreateOrderClick}
                         style={{ marginLeft: 'auto', flexShrink: 0 }}>
@@ -353,8 +432,17 @@ const ChatWindow = ({
                     </Button>
                 )}
             </div>
-            <SafetyAlert />
-
+            {isBlocked ? (
+                <Alert
+                    className={styles.alertMiddle}
+                    message="Sotuvchi vaqtincha bloklangan"
+                    description="Afsuski, ushbu frilanserning xizmatlari vaqtincha bloklangan. Iltimos, keyinroq qayta urinib ko'ring yoki boshqa frilanserni tanlang."
+                    type="error"
+                    showIcon
+                />
+            ) : (
+                <SafetyAlert />
+            )}
             <div
                 onScroll={handlScroll}
                 ref={messagesContainerRef}
@@ -414,6 +502,9 @@ const ChatWindow = ({
                                         msg={msg}
                                         onEdit={setEdit}
                                         onDelete={deleteMessage}
+                                        handleOpenDrawer={handleOpenDrawer}
+                                        setRes={setRes}
+                                        setFeedbackOpen={setFeedbackOpen}
                                     />
                                 )
                             )
@@ -436,6 +527,22 @@ const ChatWindow = ({
                                 image={Empty.PRESENTED_IMAGE_SIMPLE}
                             />
                         )}
+                        {/* <ChatMessage
+                            pushUser={() =>
+                                router.push(
+                                    `seller/${chat?.chat?.opponent?.id}`
+                                )
+                            }
+                            key={msg.id}
+                            recipientImg={recipient?.photo_url}
+                            myImg={user?.image}
+                            msg={msg}
+                            onEdit={setEdit}
+                            onDelete={deleteMessage}
+                            handleOpenDrawer={handleOpenDrawer}
+                            setRes={setRes}
+                            setFeedbackOpen={setFeedbackOpen}
+                        /> */}
                     </div>
                 </InfiniteScroll>
             </div>
@@ -454,6 +561,7 @@ const ChatWindow = ({
                 messagesContainerRef={messagesContainerRef}
                 scrollPositionRef={scrollPositionRef}
                 openDownIcon={openDownIcon}
+                disabled={isBlocked}
             />
             <CreateOrderModal
                 open={createOrderModalOpen}
@@ -461,6 +569,18 @@ const ChatWindow = ({
                 id={chat?.opponent?.id}
                 seller={chat?.opponent?.name}
                 sellerInfo={chat?.opponent}
+            />
+            <OrderApproveFiles
+                order={selectedOrder}
+                res={res}
+                setRes={setRes}
+                feedbackOpen={feedbackOpen}
+                setFeedbackOpen={setFeedbackOpen}
+                onSuccess={() => {
+                    queryClient.invalidateQueries({
+                        queryKey: ['chat-messages', chatId],
+                    });
+                }}
             />
         </div>
     );
@@ -612,6 +732,7 @@ const ChatInputParts = ({
     isMessageWithFilePending,
     updateMessage,
     setEdit,
+    disabled,
 }) => {
     const [newMessage, setNewMessage] = useState('');
     const [fileList, setFileList] = useState([]);
@@ -797,7 +918,6 @@ const ChatInputParts = ({
                     Upload
                 </Button>
             </Upload>
-
             <div className={styles.chat_input_box}>
                 <Tooltip title="Fayl yuborish">
                     <Button
@@ -805,13 +925,13 @@ const ChatInputParts = ({
                         type="primary"
                         shape="circle"
                         onClick={handleClickAttach}
-                        disabled={edit != null}
+                        disabled={disabled || edit != null}
                         loading={fileList?.[0]?.status == 'uploading'}
                     />
                 </Tooltip>
                 <TextArea
                     value={newMessage}
-                    disabled={isMessageWithFilePending}
+                    disabled={disabled || isMessageWithFilePending}
                     onChange={(e) => setNewMessage(e.target.value)}
                     onKeyDown={handleKeyPress}
                     autoSize={{ minRows: 1, maxRows: 6 }}
@@ -822,7 +942,7 @@ const ChatInputParts = ({
                 />
                 <Button
                     type="primary"
-                    disabled={!canSubmit}
+                    disabled={disabled || !canSubmit}
                     onClick={handleSend}>
                     {fileList?.[0]?.status == 'uploading' ? (
                         <Spin
