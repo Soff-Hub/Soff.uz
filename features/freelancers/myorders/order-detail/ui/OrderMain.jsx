@@ -212,8 +212,6 @@ const OrderMain = ({ order }) => {
         };
     }, [dispatch]);
 
-    console.log({ order });
-
     return (
         <div className="col-lg-9 col-12 rounded-2 my-4">
             <div className={styles.orderDetailMain}>

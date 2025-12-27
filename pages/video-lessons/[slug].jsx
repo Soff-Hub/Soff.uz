@@ -20,7 +20,6 @@ export default function VideoLessons({
     productsUrl,
     page,
 }) {
-    console.log({ productsUrl });
     const router = useRouter();
     const handlePageChange = (newPage) => {
         router.push({

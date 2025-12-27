@@ -51,7 +51,6 @@ export function TelegramLink({ videoUrl }) {
     const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
     const [isGroupOpen, setIsGroupOpen] = useState(false);
     // Check both pathname (for route pattern) and asPath (for actual URL)
-    console.log({ location });
     const isProductPage =
         location.includes('/product/') || asPath.includes('/product/');
     const isOrderCreatePage = location.includes('/order/create');

@@ -153,7 +153,6 @@ const ChatSidebar = ({ setChat, containerHeight }) => {
     };
 
     const handleChat = (chat) => {
-        console.log({ chat });
         const isModerator = chat?.opponent_id === MODERATOR_ID;
         const isDirector = chat?.isDirector;
         if (isDirector) {
@@ -165,7 +164,6 @@ const ChatSidebar = ({ setChat, containerHeight }) => {
             return;
         }
         setChat(chat);
-        console.log('Chat tanlandi:', chat);
     };
 
     let sidebarContent;
