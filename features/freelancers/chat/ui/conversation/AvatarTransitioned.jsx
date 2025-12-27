@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { sleep } from '~/shared/utilities/sleep';
 import { Spin, Avatar } from 'antd';
-import { useSelector } from 'react-redux';
 import { FaRegUserCircle } from 'react-icons/fa';
 
 const containerStyle = {

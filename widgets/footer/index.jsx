@@ -146,6 +146,12 @@ const aboutUsPages = [
     { key: '1', link: '/page/about-us', label: 'Biz haqimizda' },
     { key: '3', link: '/page/faq', label: 'Savollar (FAQ)' },
     { key: '4', link: '/page/form', label: 'Talab va takliflar uchun' },
+    { key: '5', link: '/page/privacy-policy', label: 'Maxfiylik siyosati' },
+    {
+        key: '6',
+        link: '/page/user-agreement',
+        label: 'Foydalanish shartnomasi',
+    },
 ];
 
 export default function Footer() {

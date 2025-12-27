@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { setShowSearch } from '~/store/fast-dowload/slice';
 import { useContentViewport } from '~/shared/hooks/useContentViewport';
 import { MODERATOR_ID } from '~/shared/constants';
+import { Col, Row } from 'antd';
 
 const STATIC_OPPONENT_ID = 30;
 
@@ -16,6 +17,7 @@ const Chat = () => {
     const dispatch = useDispatch();
     const { containerHeight } = useContentViewport();
     const { chatId, opponent_id } = router.query;
+
     const setChat = (chat) => {
         router.push({
             pathname: router.pathname,
@@ -67,29 +69,25 @@ const Chat = () => {
     );
 
     return (
-        <div>
-            <div
-                className="row h-100"
-                style={{
-                    position: 'relative',
-                    maxWidth: '1370px',
-                    margin: `${isSmallScreen ? 0 : '10px'} auto 0`,
-                }}>
-                {isSmallScreen ? (
-                    <div className="col-12 p-0 h-100">
-                        {!chatId ? Sidebar : Window}
-                    </div>
-                ) : (
-                    <>
-                        <div className="col-3 p-0">{Sidebar}</div>
-                        <div
-                            className="col-9 p-0"
-                            style={{ position: 'relative' }}>
-                            {Window}
-                        </div>
-                    </>
-                )}
-            </div>
+        <div
+            style={{
+                position: 'relative',
+                height: '100%',
+                maxWidth: '1370px',
+                margin: `${isSmallScreen ? 0 : '10px'} auto 0`,
+            }}>
+            {isSmallScreen ? (
+                <Row>
+                    <Col span={24}>{!chatId ? Sidebar : Window}</Col>
+                </Row>
+            ) : (
+                <Row>
+                    <Col span={6}>{Sidebar}</Col>
+                    <Col span={18} style={{ position: 'relative' }}>
+                        {Window}
+                    </Col>
+                </Row>
+            )}
         </div>
     );
 };

@@ -1,0 +1,91 @@
+@import '/scss/utils/variable';
+@import '/scss/utils/mixin';
+
+.directorEmptyState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.directorAvatar {
+    margin-bottom: 24px;
+}
+
+.directorName {
+    font-size: 20px;
+    font-weight: 600;
+    color: #222;
+    margin: 0 0 32px 0;
+    text-align: center;
+}
+
+.welcomeMessage {
+    background-color: #e6f2ff;
+    border-radius: 12px;
+    padding: 20px 24px;
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+}
+
+.greeting {
+    margin: 0 0 8px 0;
+    font-size: 16px;
+    font-weight: 500;
+    color: $color-1st;
+}
+
+.instruction {
+    margin: 0;
+    font-size: 14px;
+    color: #6c757d;
+    line-height: 1.5;
+}
+
+.moderatorEmptyState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 40px 20px;
+}
+
+.headsetIconContainer {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: #1677ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+    border: 3px solid white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.headsetIcon {
+    font-size: 60px;
+    color: white;
+}
+
+.moderatorTitle {
+    margin: 0 0 16px 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: #222;
+    text-align: center;
+}
+
+.moderatorMessage {
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+    line-height: 1.5;
+    text-align: center;
+    max-width: 400px;
+}

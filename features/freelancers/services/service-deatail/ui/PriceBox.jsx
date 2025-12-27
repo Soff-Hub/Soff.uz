@@ -7,8 +7,9 @@ import { useRouter } from 'next/router';
 import ServiceOrderModal from './ServiceOrderModal';
 import { sleep } from '~/shared/utilities/sleep';
 
-const PriceBox = ({ priceBox,requirements }) => {
-    const { price, days, revisions } = priceBox;
+const PriceBox = ({ priceBox, requirements }) => {
+    const { price, days, revisions, user } = priceBox;
+    const isBlocked = user[0]?.is_blocked;
     const [isOpen, setIsOpen] = useState(false);
     const { isLoggedIn } = useSelector((state) => state.auth);
     const { query, pathname, replace } = useRouter();
@@ -23,7 +24,8 @@ const PriceBox = ({ priceBox,requirements }) => {
     };
 
     useEffect(() => {
-        if (query?.paymodal === 'open' && isLoggedIn) {
+        if (!isLoggedIn || isBlocked) return;
+        if (query?.paymodal === 'open') {
             setIsOpen(true);
             const newQuery = { ...query };
             delete newQuery.paymodal;
@@ -81,7 +83,7 @@ const PriceBox = ({ priceBox,requirements }) => {
                 </div>
             </div>
             <ServiceOrderModal
-            requirements={requirements}
+                requirements={requirements}
                 handleAuthSuccess={handleAuthSuccess}
                 order={priceBox}
                 externalOpenModal={isOpen}>
@@ -93,11 +95,12 @@ const PriceBox = ({ priceBox,requirements }) => {
                                 setAuthOpen,
                             })
                         }
-                        className={styles.btn}>
+                        className={!isBlocked && styles.btn}
+                        disabled={isBlocked}>
                         Buyurtma berish ({formatCurrencyWithSpace(price)} so'm)
                     </Button>
                 )}
-            </ServiceOrderModal >
+            </ServiceOrderModal>
         </div>
     );
 };

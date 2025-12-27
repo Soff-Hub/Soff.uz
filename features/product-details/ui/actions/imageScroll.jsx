@@ -9,6 +9,7 @@ import { InfoCircleOutlined } from '@ant-design/icons';
 import DemoButton from '~/shared/ui/forms/demoBtn';
 import Link from 'next/link';
 import Image from 'next/image';
+import useResponsive from '~/shared/utilities/useResponsive';
 
 const getYouTubeEmbed = (url) => {
     if (!url) return null;
@@ -35,6 +36,7 @@ const ImageCarousel = ({
     isProduct = true,
     slug,
 }) => {
+    const { isDesktop, isTablet } = useResponsive();
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
     const [mainSwiper, setMainSwiper] = useState(null);
     const [activeIndex, setActiveIndex] = useState(0);
@@ -95,6 +97,8 @@ const ImageCarousel = ({
         setShowLeftGradient(!isBeginning);
         setShowRightGradient(!isEnd);
     };
+
+    const dynamicHeight = isDesktop ? '450px' : isTablet ? '350px' : '250px';
 
     return (
         <div className="overflow-hidden w-100">
@@ -190,7 +194,7 @@ const ImageCarousel = ({
                                             item.video_url
                                         )}?modestbranding=1&rel=0&controls=1&showinfo=0`}
                                         style={{
-                                            height: '450px',
+                                            height: dynamicHeight,
                                         }}
                                         title={`video-${index}`}
                                         frameBorder="0"
@@ -202,7 +206,7 @@ const ImageCarousel = ({
                                     className="image-wrapper"
                                     style={{
                                         width: '100%',
-                                        height: '450px',
+                                        height: dynamicHeight,
                                         position: 'relative',
                                         overflow: 'hidden',
                                         backgroundColor: '#f5f5f5',

@@ -368,7 +368,7 @@ const UserShortInfo = ({ seller }) => {
             {isBlocked && (
                 <Alert
                     className={styles.alertMiddle}
-                    message="Sotuvchi vaqtincha bloklangan"
+                    message="Frilanser vaqtincha bloklangan"
                     description="Afsuski, ushbu frilanserning xizmatlari vaqtincha bloklangan. Iltimos, keyinroq qayta urinib ko'ring yoki boshqa frilanserni tanlang."
                     type="error"
                     showIcon

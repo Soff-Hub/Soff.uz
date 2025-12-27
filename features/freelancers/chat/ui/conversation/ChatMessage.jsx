@@ -8,15 +8,8 @@ import {
     FileTextOutlined,
     DownloadOutlined,
 } from '@ant-design/icons';
-import styles from '../style/message.module.scss';
-import {
-    Dropdown,
-    message as AntMessage,
-    Modal,
-    Tooltip,
-    Spin,
-    Avatar,
-} from 'antd';
+import styles from '../../style/message.module.scss';
+import { Dropdown, message as AntMessage, Modal, Tooltip, Avatar } from 'antd';
 import dayjs from 'dayjs';
 import React, { useCallback, useMemo } from 'react';
 import { truncateTitle } from '~/shared/utilities/TruncateTitle';

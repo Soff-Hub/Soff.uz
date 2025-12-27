@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import Head from 'next/head';
 import { useDispatch, useSelector } from 'react-redux';
 import { checkAuthorization } from '~/store/auth/slice';
@@ -22,7 +23,7 @@ const NetworkStatusComponent = dynamic(
     { ssr: false }
 );
 
-const PageLayout = ({ children, title, withFooter = true } = {}) => {
+const PageLayout = ({ children, title, withFooter = true }) => {
     const { user } = useSelector((state) => state.auth);
 
     useGetProfileQuery(`userfetch - ${user?.access}`, {
@@ -89,6 +90,12 @@ const PageLayout = ({ children, title, withFooter = true } = {}) => {
             )}
         </>
     );
+};
+
+PageLayout.prototype = {
+    children: PropTypes.node.isRequired,
+    title: PropTypes.string,
+    withFooter: PropTypes.bool,
 };
 
 export default PageLayout;

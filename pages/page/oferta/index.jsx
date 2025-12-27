@@ -2,26 +2,29 @@ import React from 'react';
 import PageLayout from '~/widgets/layouts/PageLayout';
 import Meta from '~/shared/ui/meta';
 
+const meta = {
+    title: 'Foydalanish qonun-qoidalari - Soff.uz',
+    description:
+        "Soff.uz platformasining foydalanish qonun-qoidalari. Raqamli mahsulotlar va onlayn xizmatlardan foydalanish, sotish va sotib olish bo'yicha barcha muhim ma'lumotlar.",
+    keywords: [
+        { name: 'Foydalanish qonun-qoidalari' },
+        { name: 'Soff.uz shartlari' },
+        { name: 'foydalanuvchi shartlari' },
+        { name: 'platforma shartlari' },
+        { name: 'raqamli mahsulotlar' },
+        { name: 'onlayn xizmatlar' },
+        { name: 'raqamli kontent' },
+        { name: 'sotish va sotib olish' },
+    ],
+    author: 'Soff.uz jamoasi',
+};
+
 export default function Oferta() {
     return (
         <PageLayout>
-            <Meta
-                title="Foydalanish qonun-qoidalari - Soff.uz"
-                description="Soff.uz platformasining foydalanish qonun-qoidalari. Raqamli mahsulotlar va onlayn xizmatlardan foydalanish, sotish va sotib olish bo'yicha barcha muhim ma'lumotlar."
-                keywords={[
-                    { name: 'Foydalanish qonun-qoidalari' },
-                    { name: 'Soff.uz shartlari' },
-                    { name: 'foydalanuvchi shartlari' },
-                    { name: 'platforma shartlari' },
-                    { name: 'raqamli mahsulotlar' },
-                    { name: 'onlayn xizmatlar' },
-                    { name: 'raqamli kontent' },
-                    { name: 'sotish va sotib olish' },
-                ]}
-                author="Soff.uz jamoasi"
-            />
+            <Meta {...meta} />
 
-            <div className="container px-5 mt-5">
+            <div className="container my-5">
                 <h3>Soff.uz platformasidan foydalanish qonun-qoidalari</h3>
                 <h4>1. Umumiy qoidalar</h4>
                 <p>
@@ -152,17 +155,26 @@ export default function Oferta() {
                     ega
                 </p>
                 <p>
-                    5.1.8. Sotuvchi referal havola orqali do’stlarini taklif
-                    qilish va do’stlarining har bir daromadidan 5% miqdorda
+                    5.1.8. Sotuvchi referal havola orqali do'stlarini taklif
+                    qilish va do'stlarining har bir daromadidan 5% miqdorda
                     bonus olish.
                 </p>
+                <p>
+                    5.1.9. Sotuvchi tomonidan soff.uz platformasiga
+                    joylashtirilgan mahsulotlar SOFF'ga tegishli yoki hamkor
+                    platformalarda (ilmiyish.uz, diplomishlari.uz va
+                    boshqalarda) ham avtomatik tarzda joylashtiriladi va
+                    sotiladi hamda ushbu platformalardagi barcha savdolar
+                    Sotuvchining seller.soff.uz dagi profili orqali yagona
+                    hisobda birlashtirilgan holda aks ettiriladi.
+                </p>
                 <h5>
-                    5.2. Sotuvchilar quyidagi majburiyatlarni bajarishlari
+                    5.2. Foydalanuchilar quyidagi majburiyatlarni bajarishlari
                     shart:
                 </h5>
                 <p>
-                    5.2.1. Sotuvchi Platforma tizimida ro’yxatdan o’tish davmida
-                    so’ralgan ma’lumotlarni to’g’ri kiritishi shart;
+                    5.2.1. Foydalanuvchi Platforma tizimida ro’yxatdan o’tish
+                    davmida so’ralgan ma’lumotlarni to’g’ri kiritishi shart;
                 </p>
                 <p>
                     5.2.2. Platforma sotuvchilari o’zaro aloqalar davomida
@@ -215,8 +227,27 @@ export default function Oferta() {
                     platformadan chetlashtirilishi mumkin.
                 </p>
                 <p>
-                    5.2.10. Sotuvchi Platformada ishtirok etib, yuzaga kelgan soliq va byudjet to‘lovlari bo‘yicha javobgarligi yuzasidan O‘zbekiston Respublikasining Soliq kodeksining 352, 386, 387, 393, 395, 396 va 397-moddalarining talablariga asosan mas’ul hisoblanadi.
+                    5.2.10. Sotuvchi Platformada ishtirok etib, yuzaga kelgan
+                    soliq va byudjet to'lovlari bo'yicha javobgarligi yuzasidan
+                    O'zbekiston Respublikasining Soliq kodeksining 352, 386,
+                    387, 393, 395, 396 va 397-moddalarining talablariga asosan
+                    mas'ul hisoblanadi.
                 </p>
+                <p>
+                    5.2.11. Sotuvchi mahsulot yoki xizmat qo'shish hamda pul
+                    mablag'larini yechib olish uchun identifikatsiya jarayonidan
+                    o'tishi shart. Identifikatsiya uchun quyidagi ma'lumotlarni
+                    taqdim etish majburiy: pasport seriyasi va raqami, JShShIR,
+                    tug'ilgan sana, qo'shimcha telefon raqam, pasport nusxasi
+                    rasmi va o'zini o'zi band qiluvchi shaxs guvohnomasi.
+                    Ma'lumotlar platforma ma'muriyati tomonidan ko'rib chiqiladi
+                    va tasdiqlanganidan so'ng sotuvchiga mahsulot va xizmat
+                    qo'shish hamda daromadni kartaga yechib olish imkoniyati
+                    ochiladi.
+                </p>
+                {/* <p>
+                    5.2.12. Sotuvchi o'zining JShShIR (Jismoniy Shaxsning Shaxsiy Identifikatsiya Raqami) ma'lumotini platforma tizimiga kiritishi majburiy. JShShIR kiritilmagan taqdirda, sotuvchining har bir sotuvidan olinadigan daromaddan <strong>12% QQS (Qo'shimcha qiymat solig'i)</strong> ushlab qolinadi. JShShIR kiritilgan sotuvchilar uchun ushbu qo'shimcha soliq tatbiq etilmaydi.
+                </p> */}
                 <h4>6. Javobgarlik</h4>
                 <p>
                     6.1. Platforma ma’muriyati Foydalanuvchining noto’g’ri
@@ -333,7 +364,7 @@ export default function Oferta() {
                 <h4>10. Xaridor va sotuvchilar o‘rtasidagi baholash tizimi</h4>
                 <h5>Baholash va sharhlar:</h5>
                 <p>
-                    - Xaridor xarid qilgan mahsulotiga yulduzli baho (⭐) va
+                    - Xaridor xarid qilgan mahsulotiga yulduzli baho (⭐️) va
                     fikr-mulohaza qoldirish imkoniyatiga ega. Baholar
                     sotuvchilarning ishonchliligini aniqlashda yordam beradi.
                 </p>

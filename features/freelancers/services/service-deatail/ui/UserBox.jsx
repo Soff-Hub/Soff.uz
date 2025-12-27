@@ -17,6 +17,8 @@ const UserBox = ({ pushUser, priceBox, rating, feedbacks }) => {
     const { full_name, last_active, photo_url, status, soff_seller_id } =
         seller[0];
 
+    const isBlocked = seller[0]?.is_blocked;
+
     const handleClick = () => {
         if (isLoggedIn) {
             mutate(soff_seller_id);
@@ -74,7 +76,8 @@ const UserBox = ({ pushUser, priceBox, rating, feedbacks }) => {
                 <Button
                     onClick={handleClick}
                     icon={<MessageOutlined />}
-                    className="w-100">
+                    className="w-100"
+                    disabled={isBlocked}>
                     Xabar yuborish
                 </Button>
             </div>

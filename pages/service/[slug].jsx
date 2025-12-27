@@ -4,6 +4,7 @@ import ServiceDetail from '~/features/freelancers/services/service-deatail/Servi
 import axiosInstance from '~/shared/api/freeleanceApi';
 
 const ServiceDetailPage = ({ data, status }) => {
+    console.log({ data });
     return (
         <PageContainer>
             <ServiceDetail data={data} status={status} />

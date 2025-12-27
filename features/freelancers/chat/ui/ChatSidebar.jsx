@@ -16,46 +16,11 @@ import { useTimeManager } from '~/shared/hooks/useTimeManager';
 import useCreateChat from '../api/useCreateChat';
 import { MODERATOR_ID } from '~/shared/constants';
 import { FaHeadset } from 'react-icons/fa';
-import { FaCheckCircle } from 'react-icons/fa';
 import { FaThumbtack } from 'react-icons/fa';
 import { FaCrown } from 'react-icons/fa';
 
-// // IntersectionObserver uchun ref
-// const loadMoreRef = useRef<HTMLDivElement>(null);
-
-// const STATIC_OPPONENT_ID = 30;
-
-// // Find existing chat with opponent_id 30 from API
-// const existingStaticChat = useMemo(() => {
-//     return chats?.find((chat) => chat.opponent_id === STATIC_OPPONENT_ID);
-// }, [chats]);
-
-// // Static chat - use existing if available, otherwise create placeholder
-// const staticChat: ChatSummary = useMemo(() => {
-//     if (existingStaticChat) {
-//         // If chat already exists, use it with updated name and photo
-//         return {
-//             ...existingStaticChat,
-//             opponent_name: "Zufarbek Abdurakhmonov",
-//             opponent_photo_url: "/static/img/soff-logos/zufarbek.webp",
-//         };
-//     }
-//     // Otherwise, create placeholder static chat
-//     return {
-//         chat_id: 0,
-//         opponent_id: STATIC_OPPONENT_ID,
-//         opponent_name: "Zufarbek Abdurakhmonov",
-//         opponent_photo_url: "/static/img/soff-logos/zufarbek.webp",
-//         last_message: {
-//             content: "Assalomu alaykum",
-//             created_at: new Date().toISOString(),
-//         },
-//         unread_count: 1,
-//     };
-// }, [existingStaticChat]);
-
 const STATIC_OPPONENT_ID = 30;
-const staticOpponentIds = [STATIC_OPPONENT_ID, MODERATOR_ID];
+
 function BackButton() {
     const router = useRouter();
     const backRef = useRef(null);
@@ -82,7 +47,6 @@ function BackButton() {
 }
 
 const ChatSidebar = ({ setChat, containerHeight }) => {
-    const router = useRouter();
     const [search, setSearch] = useState('');
     const debouncedSearch = useDebounce(search, 300);
     const { mutateAsync: createChat, isPending: isCreatingChat } =
@@ -122,6 +86,7 @@ const ChatSidebar = ({ setChat, containerHeight }) => {
             isDirector: true,
         };
     }, [chats, getOpponentId]);
+
     const orderedChats = useMemo(() => {
         const dynamicChats =
             chats?.filter(
@@ -130,7 +95,6 @@ const ChatSidebar = ({ setChat, containerHeight }) => {
 
         return [staticDirectorChat, ...dynamicChats];
     }, [chats, staticDirectorChat, getOpponentId]);
-    console.log({ staticDirectorChat, chats, orderedChats });
 
     const isValidChats = Array.isArray(orderedChats) && orderedChats.length > 0;
 
@@ -188,6 +152,22 @@ const ChatSidebar = ({ setChat, containerHeight }) => {
         }
     };
 
+    const handleChat = (chat) => {
+        console.log({ chat });
+        const isModerator = chat?.opponent_id === MODERATOR_ID;
+        const isDirector = chat?.isDirector;
+        if (isDirector) {
+            handleStaticChatClick(STATIC_OPPONENT_ID);
+            return;
+        }
+        if (isModerator) {
+            handleStaticChatClick(MODERATOR_ID);
+            return;
+        }
+        setChat(chat);
+        console.log('Chat tanlandi:', chat);
+    };
+
     let sidebarContent;
     if (isLoading && !isValidChats) {
         sidebarContent = (
@@ -198,116 +178,14 @@ const ChatSidebar = ({ setChat, containerHeight }) => {
     } else if (isValidChats) {
         sidebarContent = (
             <>
-                {orderedChats.map((chat) => {
-                    const isModerator = chat?.opponent_id === MODERATOR_ID;
-                    const isDirector = chat?.isDirector;
-                    const isSelected =
-                        router.query?.opponent_id == chat?.opponent_id;
-
-                    const handleChat = () => {
-                        if (isDirector) {
-                            handleStaticChatClick(STATIC_OPPONENT_ID);
-                            return;
-                        }
-                        if (isModerator) {
-                            handleStaticChatClick(MODERATOR_ID);
-                            return;
-                        }
-                        setChat(chat);
-                    };
-
-                    if (isModerator) {
-                        return (
-                            <div
-                                key={'static-' + MODERATOR_ID}
-                                onClick={handleChat}
-                                className={`${styles.sidebar_chat} ${
-                                    styles.moderatorCard
-                                } ${
-                                    isSelected ? styles.selectedModerator : ''
-                                }`}
-                                aria-disabled={isCreatingChat}>
-                                <div className={styles.moderatorAvatar}>
-                                    <FaHeadset />
-                                </div>
-                                <div className={styles.moderatorInfo}>
-                                    <div className={styles.moderatorHeaderRow}>
-                                        <h4>{chat?.opponent_name}</h4>
-                                        <span className={styles.moderatorBadge}>
-                                            Support
-                                        </span>
-                                    </div>
-                                    <p className={styles.moderatorSubtext}>
-                                        {truncateTitle(
-                                            chat?.last_message?.content ||
-                                                'Texnik yordam xizmati',
-                                            40
-                                        )}
-                                    </p>
-                                </div>
-                                {isCreatingChat && <Spin size="small" />}
-                            </div>
-                        );
-                    }
-
-                    return (
-                        <div
-                            key={chat?.chat_id}
-                            onClick={handleChat}
-                            className={`${styles.sidebar_chat} ${
-                                isDirector ? styles.directorChatCard : ''
-                            } ${isSelected ? styles.selectedChat : ''}`}
-                            aria-disabled={false}>
-                            <img
-                                src={
-                                    chat?.opponent_photo_url ||
-                                    '/static/img/ozodbek.png'
-                                }
-                                alt="user img"
-                            />
-                            <div className={styles.sidebar_chat_wrapper}>
-                                <div className={styles.box1}>
-                                    <div className={styles.chatOpponentHeader}>
-                                        <h4 className={styles.chatOpponentName}>
-                                            {chat?.opponent_name}
-                                        </h4>
-                                        {isDirector && (
-                                            <div
-                                                className={
-                                                    styles.directorBadge
-                                                }>
-                                                <FaCrown
-                                                    className={
-                                                        styles.directorIcon
-                                                    }
-                                                />
-                                                <span>Takliflar</span>
-                                            </div>
-                                        )}
-                                    </div>
-                                    <span>
-                                        {truncateTitle(
-                                            chat?.last_message?.content,
-                                            15
-                                        )}
-                                    </span>
-                                </div>
-                                <div className={styles.box2}>
-                                    <p></p>
-                                    {chat?.unread_count > 0 && (
-                                        <span>{chat?.unread_count}</span>
-                                    )}
-                                </div>
-                            </div>
-                            {isDirector && (
-                                <FaThumbtack
-                                    className={styles.pinnedIcon}
-                                    title="Topilgan"
-                                />
-                            )}
-                        </div>
-                    );
-                })}
+                {orderedChats.map((chat) => (
+                    <ChatListItem
+                        key={chat.chat_id || chat.opponent_id}
+                        isCreatingChat={isCreatingChat}
+                        chat={chat}
+                        handleChat={handleChat}
+                    />
+                ))}
                 <div ref={loadMoreRef} style={{ height: 1 }} />
                 {hasNextPage && (
                     <div
@@ -346,6 +224,85 @@ const ChatSidebar = ({ setChat, containerHeight }) => {
                 />
             </div>
             <div className={styles.sidebar_chats}>{sidebarContent}</div>
+        </div>
+    );
+};
+
+const ChatListItem = ({ chat, handleChat, isCreatingChat }) => {
+    const router = useRouter();
+    const isModerator = chat?.opponent_id === MODERATOR_ID;
+    const isDirector = chat?.isDirector;
+    const isSelected = router.query?.opponent_id == chat?.opponent_id;
+
+    if (isModerator) {
+        return (
+            <div
+                key={'static-' + MODERATOR_ID}
+                onClick={() => handleChat(chat)}
+                className={`${styles.sidebar_chat} ${styles.moderatorCard} ${
+                    isSelected ? styles.selectedModerator : ''
+                }`}
+                aria-disabled={isCreatingChat}>
+                <div className={styles.moderatorAvatar}>
+                    <FaHeadset />
+                </div>
+                <div className={styles.moderatorInfo}>
+                    <div className={styles.moderatorHeaderRow}>
+                        <h4>{chat?.opponent_name}</h4>
+                        <span className={styles.moderatorBadge}>Support</span>
+                    </div>
+                    <p className={styles.moderatorSubtext}>
+                        {truncateTitle(
+                            chat?.last_message?.content ||
+                                'Texnik yordam xizmati',
+                            40
+                        )}
+                    </p>
+                </div>
+                {isCreatingChat && <Spin size="small" />}
+            </div>
+        );
+    }
+
+    return (
+        <div
+            key={chat?.chat_id}
+            onClick={() => handleChat(chat)}
+            className={`${styles.sidebar_chat} ${
+                isDirector ? styles.directorChatCard : ''
+            } ${isSelected ? styles.selectedChat : ''}`}
+            aria-disabled={false}>
+            <img
+                src={chat?.opponent_photo_url || '/static/img/ozodbek.png'}
+                alt="user img"
+            />
+            <div className={styles.sidebar_chat_wrapper}>
+                <div className={styles.box1}>
+                    <div className={styles.chatOpponentHeader}>
+                        <h4 className={styles.chatOpponentName}>
+                            {chat?.opponent_name}
+                        </h4>
+                        {isDirector && (
+                            <div className={styles.directorBadge}>
+                                <FaCrown className={styles.directorIcon} />
+                                <span>Takliflar</span>
+                            </div>
+                        )}
+                    </div>
+                    <span>
+                        {truncateTitle(chat?.last_message?.content, 15)}
+                    </span>
+                </div>
+                <div className={styles.box2}>
+                    <p></p>
+                    {chat?.unread_count > 0 && (
+                        <span>{chat?.unread_count}</span>
+                    )}
+                </div>
+            </div>
+            {isDirector && (
+                <FaThumbtack className={styles.pinnedIcon} title="Topilgan" />
+            )}
         </div>
     );
 };

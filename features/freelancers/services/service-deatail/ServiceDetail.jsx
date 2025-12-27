@@ -12,6 +12,7 @@ import ServiceCard from '../../../../entities/service/service-card';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { useDispatch } from 'react-redux';
 import { setShowSearch } from '~/store/fast-dowload/slice';
+import { Alert } from 'antd';
 
 // Lazy load below-the-fold components
 const FaqSection = dynamic(() => import('./ui/FaqSection'), {
@@ -42,6 +43,8 @@ const ServiceDetail = ({ data }) => {
         user,
         service_items,
     } = data;
+
+    const isBlocked = user[0]?.is_blocked;
     const { isDesktop, isMobile } = useResponsive();
 
     const pushUser = () => push(`/seller/${data?.user[0]?.soff_seller_id}`);
@@ -112,6 +115,15 @@ const ServiceDetail = ({ data }) => {
                         }}
                         className="w-100">
                         <h1 className={styles.title}>{service?.title}</h1>
+                        {isBlocked && (
+                            <Alert
+                                className={styles.alertMiddle}
+                                message="Frilanser vaqtincha bloklangan"
+                                description="Afsuski, ushbu frilanserning xizmatlari vaqtincha bloklangan. Iltimos, keyinroq qayta urinib ko'ring yoki boshqa frilanserni tanlang."
+                                type="error"
+                                showIcon
+                            />
+                        )}
                         <ImageCarousel images={slider_images} />
                         <ServiceDescription
                             priceBox={priceBox}
@@ -159,7 +171,7 @@ const ServiceDetail = ({ data }) => {
                 </div>
             )}
 
-            {!isDesktop && <StickyBox data={priceBox} />}
+            {!isDesktop && !isBlocked && <StickyBox data={priceBox} />}
         </div>
     );
 };

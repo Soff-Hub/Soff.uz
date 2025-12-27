@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Modal, Tabs, Alert, Input } from 'antd';
 import PostRepository from '~/repositories/PostRepository';
@@ -68,9 +68,9 @@ const FormSubmitButton = ({ hisob, message, className, ...rest }) => (
 );
 
 const CreditCard2 = ({ document, type }) => {
-    const { user } = useSelector(state => state.auth);
-    const ecomerce = useSelector(state => state.ecomerce.cartDataItems);
-    const { affiliateId } = useSelector(state => state.affiliate);
+    const { user } = useSelector((state) => state.auth);
+    const ecomerce = useSelector((state) => state.ecomerce.cartDataItems);
+    const { affiliateId } = useSelector((state) => state.affiliate);
     const { removeAll } = useCart();
     const { startTimeout } = useTimeManager();
     const [numberCardVal, SetNumberCardVal] = useState(null);
@@ -85,9 +85,11 @@ const CreditCard2 = ({ document, type }) => {
     const [buttonOk, setButtonOk] = useState(false);
     const [tab, setTab] = useState(false);
     const [percentage, setPercentage] = useState(0);
+    const inputRef = useRef(null);
+    const cursorRef = useRef(null);
 
     const affiliate_code = affiliateId;
-    const numberTyper = value => {
+    const numberTyper = (value) => {
         SetNumberCardVal(value);
         if (!value == 0) {
             let numberPlaceholder = '';
@@ -247,7 +249,7 @@ const CreditCard2 = ({ document, type }) => {
         if (resData?.status === 201) {
             setTime(120);
             const timerID = setInterval(() => {
-                setTime(prevTime => {
+                setTime((prevTime) => {
                     if (prevTime <= 0) {
                         clearInterval(timerID);
                         setResData(null);
@@ -273,24 +275,58 @@ const CreditCard2 = ({ document, type }) => {
     const [formattedCardNumber, setFormattedCardNumber] = useState('');
     const [numberDate, setNumberDate] = useState('');
 
-    const handleCardNumberChange = e => {
-        const inputValue = e.target.value.replace(/\D/g, ''); // Raqam va probilni olib tashlash
+    // Add this useEffect to restore cursor position after render
+    useEffect(() => {
+        if (inputRef.current && cursorRef.current !== null) {
+            // Ant Design Input exposes the native input via .input
+            const input = inputRef.current.input || inputRef.current;
+            if (input.setSelectionRange) {
+                input.setSelectionRange(cursorRef.current, cursorRef.current);
+            }
+        }
+    }, [formattedCardNumber]);
+
+    const handleCardNumberChange = (e) => {
+        const input = e.target;
+        const value = input.value;
+        const selectionStart = input.selectionStart;
+
+        let digitsBeforeCursor = 0;
+        for (let i = 0; i < selectionStart; i++) {
+            if (/\d/.test(value[i])) {
+                digitsBeforeCursor++;
+            }
+        }
+
+        const inputValue = value.replace(/\D/g, '');
         let formattedValue = '';
 
         if (inputValue.length <= 16) {
             for (let i = 0; i < inputValue.length; i++) {
                 if (i > 0 && i % 4 === 0) {
-                    formattedValue += ' '; // Raqamlarni probil bilan ajratish
+                    formattedValue += ' ';
                 }
                 formattedValue += inputValue[i];
             }
         }
 
+        let newCursorPos = 0;
+        let digitsSeen = 0;
+        for (let i = 0; i < formattedValue.length; i++) {
+            if (digitsSeen === digitsBeforeCursor) break;
+            if (/\d/.test(formattedValue[i])) {
+                digitsSeen++;
+            }
+            newCursorPos++;
+        }
+
+        cursorRef.current = newCursorPos;
+
         numberTyper(inputValue);
         setFormattedCardNumber(formattedValue);
     };
 
-    const handleCardNumberDate = e => {
+    const handleCardNumberDate = (e) => {
         const inputValue = e.target.value.replace(/\D/g, ''); // Raqam va probilni olib tashlash
         let formattedValue = '';
 
@@ -306,7 +342,7 @@ const CreditCard2 = ({ document, type }) => {
         setNumberDate(formattedValue);
     };
 
-    const onChange = key => {
+    const onChange = (key) => {
         setTab(key);
     };
 
@@ -331,6 +367,7 @@ const CreditCard2 = ({ document, type }) => {
                             <p className="cardNumber">Karta raqam</p>
                             <label htmlFor="ccn" style={{ width: '100%' }}>
                                 <Input
+                                    ref={inputRef}
                                     required
                                     prefix={
                                         <FaRegCreditCard
@@ -414,7 +451,7 @@ const CreditCard2 = ({ document, type }) => {
                                 {resData?.data?.phone_number}
                             </p>
                             <input
-                                onChange={e => setCode(e.target.value)}
+                                onChange={(e) => setCode(e.target.value)}
                                 type="tel"
                                 placeholder="000000"
                                 maxLength={6}

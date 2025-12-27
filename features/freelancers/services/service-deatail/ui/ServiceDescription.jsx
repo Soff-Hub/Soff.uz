@@ -13,13 +13,15 @@ import { sleep } from '~/shared/utilities/sleep';
 import ServiceOrderModal from './ServiceOrderModal';
 
 const ServiceDescription = ({ description = {}, priceBox = {} }) => {
-    const { price, days, revisions, title, category } = priceBox;
+    const { price, days, revisions, title, category, user } = priceBox;
     const {
         requirements = '',
         file = '',
         serviceItems = [],
         description: descText = '',
     } = description;
+
+    const isBlocked = user[0]?.is_blocked;
 
     const { isLoggedIn } = useSelector((state) => state.auth);
     const hiddenClass = useRcn({
@@ -138,7 +140,8 @@ const ServiceDescription = ({ description = {}, priceBox = {} }) => {
                     {({ setAuthOpen, setModalOpen }) => (
                         <div className={styles.btnWrapper}>
                             <Button
-                                className={styles.btn}
+                                className={!isBlocked && styles.btn}
+                                disabled={isBlocked}
                                 onClick={() =>
                                     handleOrderClick({
                                         setAuthOpen,
