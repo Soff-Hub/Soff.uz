@@ -258,7 +258,6 @@ export default function ProductDefaultPage({ defaultProducts }) {
 export async function getServerSideProps({ query, req, res }) {
     const { pid } = query;
 
-    // Early return if pid is missing
     if (!pid) {
         return { notFound: true };
     }
@@ -267,7 +266,6 @@ export async function getServerSideProps({ query, req, res }) {
     const token = cookies.token;
     const deviceId = getOrCreateDeviceId({ req, res });
 
-    // Prepare headers once
     const headers = {
         'X-Device-ID': deviceId,
         ...(token && { Authorization: `Bearer ${token}` }),
@@ -280,7 +278,6 @@ export async function getServerSideProps({ query, req, res }) {
             headers,
         });
 
-        // Handle specific status codes
         if (request.status === 404) {
             return { notFound: true };
         }
@@ -310,7 +307,6 @@ export async function getServerSideProps({ query, req, res }) {
             defaultProducts = await request.json();
         }
     } catch (error) {
-        // Final fallback - try without auth
         try {
             const fallbackRequest = await fetch(
                 `${baseUrl}customer/documents/${pid}/`,

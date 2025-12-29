@@ -1,9 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import ProductRepository from '~/repositories/ProductRepository';
-import {
-    setCartDataItems,
-    setCartItemDataItems,
-} from '~/store/ecomerce/slice';
+import { setCartDataItems, setCartItemDataItems } from '~/store/ecomerce/slice';
+
 export default function useCart() {
     const dispatch = useDispatch();
     const cartItems = useSelector((state) => state.ecomerce.cartDataItems);
@@ -16,9 +14,7 @@ export default function useCart() {
                     dispatch(setCartDataItems(resp.data.data));
                 }
             }
-
         },
-
 
         setCartOneItem: async (newItem) => {
             const resp = await ProductRepository.postCartData([newItem]);
@@ -35,9 +31,9 @@ export default function useCart() {
         },
 
         removeAll: () => {
-            dispatch(setCartDataItems([]))
+            dispatch(setCartDataItems([]));
         },
 
-        removeItems: () => { },
+        removeItems: () => {},
     };
 }

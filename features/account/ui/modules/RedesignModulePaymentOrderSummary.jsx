@@ -26,6 +26,7 @@ const RedesignModulePaymentOrderSummary = ({ ecomerce }) => {
         tablet: 'max-h-[300px]',
         desktop: 'h-auto',
     });
+
     let amount = calculateAmount(ecomerce.cartDataItems);
 
     async function getPercentage() {
@@ -85,7 +86,7 @@ const RedesignModulePaymentOrderSummary = ({ ecomerce }) => {
                     produtsHeightClass
                 )}>
                 {ecomerce.cartDataItems && ecomerce.cartDataItems.length > 0 ? (
-                    ecomerce.cartDataItems.map(item => (
+                    ecomerce.cartDataItems.map((item) => (
                         <div
                             key={item.id}
                             className={cn(
@@ -138,7 +139,7 @@ const RedesignModulePaymentOrderSummary = ({ ecomerce }) => {
                                     'min-w-[90px]'
                                 )}>
                                 <button
-                                    onClick={e => handleRemoveItem(e, item)}
+                                    onClick={(e) => handleRemoveItem(e, item)}
                                     className={cn(
                                         'transition',
                                         'border',
@@ -243,4 +244,4 @@ const RedesignModulePaymentOrderSummary = ({ ecomerce }) => {
     );
 };
 
-export default connect(state => state)(RedesignModulePaymentOrderSummary);
+export default connect((state) => state)(RedesignModulePaymentOrderSummary);

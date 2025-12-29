@@ -69,10 +69,13 @@ const FastDownloadSection = () => {
         isLoading,
         isError,
     } = useQuery({
-        queryKey: ['fast-download'],
+        queryKey: ['fast-download', user?.access],
         queryFn: fetchFastDownloadProduct,
         enabled: user?.access ? true : false,
-        staleTime: 1000 * 60 * 5,
+        staleTime: 0,
+        cacheTime: 0,
+        refetchOnMount: true,
+        refetchOnWindowFocus: true,
     });
 
     const hasRating = product?.user_rating && product.user_rating > 0;
@@ -101,7 +104,7 @@ const FastDownloadSection = () => {
                 throw new Error('Token mavjud emas');
             }
             const fileSourceValue = await axios.get(
-                `${baseURL}customer/return-telegram-link/${productId}/`,
+                `${baseURL}seller/return-telegram-link/${productId}/`,
                 {
                     headers: { Authorization: `Bearer ${token}` },
                 }
@@ -139,9 +142,7 @@ const FastDownloadSection = () => {
         if (!product?.id) return;
 
         const { isAlreadyInCart } = getProductCarts(product);
-        if (isAlreadyInCart) {
-            removeAll();
-        }
+        if (isAlreadyInCart) removeAll();
 
         const { isAlreadyDownloaded, downloadedProducts } =
             getDownloadedProducts(product);
