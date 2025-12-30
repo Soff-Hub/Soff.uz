@@ -42,14 +42,37 @@ export default function UserAgreement() {
                     foydalanish uchun mo'ljallangan maxsus sahifa.
                 </p>
                 <p>
+                    <strong>"SOFF-STUDY" MCHJ</strong> — "SOFF-STUDY"
+                    mas'uliyati cheklangan jamiyati (STIR: 309460545). Yuridik
+                    manzili: O'zbekiston Respublikasi, Toshkent shahri,
+                    Chilonzor tumani, Novza mahallasi, E kvartal, 8/1.
+                </p>
+                <p>
                     <strong>Raqamli mahsulot</strong> — Platformada sotilayotgan
-                    elektron formatdagi materiallar: biznes rejalar,
-                    tadqiqotlar, referatlar, prezentatsiyalar, qo'llanmalar,
-                    shablonlar va boshqa raqamli kontentlar.
+                    elektron formatdagi materiallar va kontentlar, jumladan:
+                    ilmiy ishlar (biznes rejalar, kurs ishlari, diplom ishlari,
+                    referatlar, tadqiqotlar, taqdimotlar), 3D modellar va
+                    interier dizaynlar, dizayn shablonlari (veb-dizayn,
+                    animatsiya, brending, illyustratsiya, mahsulot dizayni), veb
+                    saytlar, tayyor shablonlar (biznes, marketing, moliyaviy,
+                    ta'lim, yuridik shablonlar), video darsliklar va boshqa
+                    raqamli kontentlar. Raqamli mahsulotlar elektron fayl
+                    sifatida yuklab olinadi va foydalanuvchi tomonidan shaxsiy
+                    yoki tijorat maqsadlarida ishlatilishi mumkin.
                 </p>
                 <p>
                     <strong>Onlayn xizmat</strong> — Platformaning "Biznes
-                    xizmatlar" bo'limida taklif etiladigan masofaviy xizmatlar.
+                    xizmatlar" bo'limida taklif etiladigan masofaviy xizmatlar,
+                    jumladan: ilmiy va akademik xizmatlar (ilmiy maqolalar
+                    yozish, tadqiqotlar o'tkazish, referatlar tayyorlash, kurs
+                    va diplom ishlarini yozish), dizayn xizmatlari (logo dizayn,
+                    veb-dizayn, grafik dizayn, brending), 3D modellar yaratish
+                    va interier dizayn xizmatlari, dasturlash xizmatlari
+                    (veb-saytlar yaratish, mobil ilovalar ishlab chiqish,
+                    dasturiy ta'minot yozish) va boshqa masofaviy professional
+                    xizmatlar. Onlayn xizmatlar Sotuvchi tomonidan masofadan
+                    turib amalga oshiriladi va Foydalanuvchi bilan oldindan
+                    kelishilgan shartlar va muddatlar asosida taqdim etiladi.
                 </p>
                 <p>
                     <strong>Foydalanuvchi (Xaridor)</strong> — Platformadan
@@ -266,8 +289,7 @@ export default function UserAgreement() {
                 <p>
                     — Mahsulotni yuklab olishda texnik muammo yuzaga kelganda;
                 </p>
-                <p>— Mahsulot tavsifga mos kelmaganda;</p>
-                <p>— Mahsulot foydalanishga yaroqsiz bo'lganda.</p>
+
                 <p>
                     7.3. Pulni qaytarish so'rovi Platforma ma'muriyati tomonidan
                     3 ish kuni ichida ko'rib chiqiladi.
@@ -374,11 +396,18 @@ export default function UserAgreement() {
                     yo'llar bilan ko'rib chiqiladi:
                 </p>
                 <p>
-                    — Elektron pochta: <strong>info@soff.uz</strong>
+                    — Elektron pochta: <strong>support@soff.uz</strong>
                 </p>
                 <p>
                     — Telegram: <strong>@soff_uz</strong>
                 </p>
+                <p>
+                    — Veb-sayt: <strong>https://soff.uz</strong>
+                </p>
+                <p>
+                    — Telefon raqami: <strong>+998 (91) 008 67 89</strong>
+                </p>
+
                 <p>
                     13.2. Nizoli vaziyatlar muzokaralar yo'li bilan hal
                     qilinadi.
@@ -398,8 +427,8 @@ export default function UserAgreement() {
                     o'zgartirishlar kiritish huquqini o'zida saqlab qoladi.
                 </p>
                 <p>
-                    14.3. O'zgartirishlar Platformada e'lon qilingan paytdan
-                    boshlab kuchga kiradi.
+                    14.3. O'zgartirishlar Platformaga kiritilgan paytdan boshlab
+                    kuchga kiradi.
                 </p>
                 <p>
                     14.4. Platformadan foydalanishni davom ettirgan holda,

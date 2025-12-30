@@ -225,36 +225,28 @@ export default function PrivacyPolicy() {
                 <p>— Identifikatsiya ma'lumotlarini yangilash;</p>
                 <p>— Rozilikni istalgan vaqtda qaytarib olish.</p>
 
-                <h4>11. Bolalarning shaxsiy ma'lumotlari</h4>
+                <h4>11. Siyosatga o'zgartirishlar kiritish</h4>
                 <p>
-                    11.1. Platforma 18 yoshdan kichik shaxslardan shaxsiy
-                    ma'lumotlarni ataylab yig'maydi. Agar bunday ma'lumotlar
-                    tasodifan yig'ilganligi aniqlansa, ular darhol o'chirib
-                    tashlanadi.
-                </p>
-
-                <h4>12. Siyosatga o'zgartirishlar kiritish</h4>
-                <p>
-                    12.1. Platforma ushbu Siyosatga istalgan vaqtda
+                    11.1. Platforma ushbu Siyosatga istalgan vaqtda
                     o'zgartirishlar kiritish huquqini o'zida saqlab qoladi.
                 </p>
                 <p>
-                    12.2. O'zgartirishlar Platformada e'lon qilingan paytdan
-                    boshlab kuchga kiradi.
+                    11.2. O'zgartirishlar Platformaga kiritilgan paytdan boshlab
+                    kuchga kiradi.
                 </p>
                 <p>
-                    12.3. Platformadan foydalanishni davom ettirgan holda,
+                    11.3. Platformadan foydalanishni davom ettirgan holda,
                     Foydalanuvchi va/yoki Sotuvchi Siyosatga kiritilgan
                     o'zgartirishlarga roziligini tasdiqlaydi.
                 </p>
 
-                <h4>13. Aloqa ma'lumotlari</h4>
+                <h4>12. Aloqa ma'lumotlari</h4>
                 <p>
-                    13.1. Shaxsiy ma'lumotlaringizga oid savollar yoki murojaat
+                    12.1. Shaxsiy ma'lumotlaringizga oid savollar yoki murojaat
                     uchun quyidagi manzilga murojaat qilishingiz mumkin:
                 </p>
                 <p>
-                    — Elektron pochta: <strong>info@soff.uz</strong>
+                    — Elektron pochta: <strong>support@soff.uz</strong>
                 </p>
                 <p>
                     — Telegram: <strong>@soff_uz</strong>
@@ -262,14 +254,17 @@ export default function PrivacyPolicy() {
                 <p>
                     — Veb-sayt: <strong>https://soff.uz</strong>
                 </p>
-
-                <h4>14. Yakuniy qoidalar</h4>
                 <p>
-                    14.1. Ushbu Siyosat O'zbekiston Respublikasi qonunchiligiga
+                    — Telefon raqami: <strong>+998 (91) 008 67 89</strong>
+                </p>
+
+                <h4>13. Yakuniy qoidalar</h4>
+                <p>
+                    13.1. Ushbu Siyosat O'zbekiston Respublikasi qonunchiligiga
                     muvofiq tartibga solinadi.
                 </p>
                 <p>
-                    14.2. Siyosat bilan bog'liq nizolar muzokaralar yo'li bilan
+                    13.2. Siyosat bilan bog'liq nizolar muzokaralar yo'li bilan
                     hal qilinadi, kelishuv erishilmagan taqdirda esa O'zbekiston
                     Respublikasi sudlariga murojaat qilinadi.
                 </p>
