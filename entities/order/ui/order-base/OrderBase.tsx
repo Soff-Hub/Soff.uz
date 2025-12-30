@@ -39,6 +39,7 @@ interface OrderBaseProps extends BaseOrderProps {
     filesSlot?: (props: {
         order: BaseOrderProps['order'];
         isCompleted: boolean;
+        isCancelled: boolean;
     }) => ReactNode; // <--- Slot for your Feature: OrderFiles
 }
 
@@ -223,6 +224,7 @@ const OrderBase = (props: OrderBaseProps) => {
                     filesSlot({
                         order,
                         isCompleted,
+                        isCancelled,
                     })
                 ) : null}
             </div>

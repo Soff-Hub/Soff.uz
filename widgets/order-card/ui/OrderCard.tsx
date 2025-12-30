@@ -77,10 +77,10 @@ function OrderCard(props: OrderCardProps) {
             }}
             filesSlot={
                 props.withFiles &&
-                (({ order, isCompleted }) => {
+                (({ order, isCompleted, isCancelled }) => {
                     const hasOrderFiles =
                         Array.isArray(order?.files) && order.files.length > 0;
-                    if (!hasOrderFiles) {
+                    if (!hasOrderFiles || isCancelled) {
                         return null;
                     }
 
