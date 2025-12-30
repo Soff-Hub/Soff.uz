@@ -1,23 +1,18 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { useSelector } from 'react-redux';
-import useWebSocket from 'react-use-websocket';
 import useGetChatById from './useGetChatById';
 import useDeleteMessage from './useDeleteMessage';
 import useSendMessage from './useSendMessage';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
 import { message } from 'antd';
 import dayjs from 'dayjs';
-
-// WebSocket readyState constants (safe for SSR)
-const WS_READY_STATE = {
-    CONNECTING: 0,
-    OPEN: 1,
-    CLOSING: 2,
-    CLOSED: 3,
-};
+import { WS_READY_STATE } from '../constants/socket-state';
+import useChatSocket from './useChatSocket';
+// import useMessageState from '../model/useMessageState';
 
 const useChat = (chatId) => {
     const [messages, setMessages] = useState([]);
+    // const { } = useMessageState();
     const [chat, setChat] = useState();
     const { startTimeout, stopTimeout } = useTimeManager();
     const { mutateAsync: deleteMsg } = useDeleteMessage();
@@ -33,56 +28,20 @@ const useChat = (chatId) => {
         refetch: refetchMessages,
     } = useGetChatById(chatId);
     const unreadTimeoutRef = useRef(null);
-    const pendingMessageTimeoutsRef = useRef(new Map()); // tempId -> timeoutId
+    const pendingMessageTimeoutsRef = useRef(new Map());
 
-    // Track last message received time for connection health monitoring
     const lastMessageTimeRef = useRef(Date.now());
     const healthCheckIntervalRef = useRef(null);
-    const forceReconnectKeyRef = useRef(0); // Used to force reconnect by changing URL
-    const [reconnectKey, setReconnectKey] = useState(0);
     const forceReconnectRef = useRef(null);
 
-    // Build WebSocket URL - add reconnect key to force new connection when needed
-    const wsUrl =
-        chatId && user?.access
-            ? `${process.env.NEXT_PUBLIC_WS_FREELEANCE_URL}chat/${chatId}/?token=${user.access}&_reconnect=${reconnectKey}`
-            : null;
-
-    // Use react-use-websocket for connection management
     const {
-        sendMessage: sendWsMessage,
+        sendWsMessage,
         lastMessage,
         readyState,
         getWebSocket,
-    } = useWebSocket(wsUrl, {
-        onOpen: () => {
-            console.log('✅ WebSocket opened, reconnectKey:', reconnectKey);
-        },
-        onClose: (event) => {
-            console.log(
-                '🔴 WebSocket closed, reconnectKey:',
-                reconnectKey,
-                'code:',
-                event.code
-            );
-        },
-        onError: (error) => {
-            console.error('❌ Chat WebSocket error:', error, { chatId });
-        },
-        shouldReconnect: (closeEvent) => {
-            // Reconnect unless it's a clean close (code 1000) or no chatId/user
-            return !!chatId && !!user?.access && closeEvent?.code !== 1000;
-        },
-        reconnectAttempts: 5,
-        reconnectInterval: (attemptNumber) => {
-            // Exponential backoff: 1s, 2s, 4s, 8s, 16s
-            return Math.min(1000 * Math.pow(2, attemptNumber), 16000);
-        },
-        share: false, // Don't share connections - each chat gets its own unique connection
-    });
-
-    // Derive connection state from readyState
-    const isConnected = readyState === WS_READY_STATE.OPEN;
+        isConnected,
+        forceReconnect,
+    } = useChatSocket({ chatId, user });
 
     // Track pending messages to match with server responses
     const pendingMessagesRef = useRef(new Map()); // content -> tempId
@@ -608,20 +567,6 @@ const useChat = (chatId) => {
             }
         };
     }, [isConnected, messages, sendUnreadMessages, startTimeout, stopTimeout]);
-
-    // Function to force reconnect by changing URL
-    const forceReconnect = useCallback(() => {
-        const newKey = forceReconnectKeyRef.current + 1;
-        forceReconnectKeyRef.current = newKey;
-        console.log(
-            '🔄 Forcing reconnect, changing key from',
-            reconnectKey,
-            'to',
-            newKey
-        );
-        setReconnectKey(newKey);
-        lastMessageTimeRef.current = Date.now();
-    }, [reconnectKey]);
 
     // Store forceReconnect in ref so it's always accessible in intervals
     forceReconnectRef.current = forceReconnect;

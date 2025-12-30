@@ -4,6 +4,8 @@ import timezone from 'dayjs/plugin/timezone';
 import duration from 'dayjs/plugin/duration';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
+import isToday from 'dayjs/plugin/isToday';
+import isYesterday from 'dayjs/plugin/isYesterday';
 
 // Lotincha oy va hafta kunlari
 const locale = {
@@ -57,6 +59,8 @@ dayjs.extend(timezone);
 dayjs.extend(duration);
 dayjs.extend(relativeTime);
 dayjs.extend(localizedFormat);
+dayjs.extend(isToday);
+dayjs.extend(isYesterday);
 
 // Set default timezone to Asia/Tashkent
 dayjs.tz.setDefault('Asia/Tashkent');
