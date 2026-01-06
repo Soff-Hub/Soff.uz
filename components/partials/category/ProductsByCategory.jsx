@@ -1,13 +1,50 @@
-import React from 'react';
-import { Pagination } from 'antd';
+import React, { memo } from 'react';
+import { Pagination, Skeleton } from 'antd';
 import Link from 'next/link';
 import ProductCard from '~/entities/product/product-card';
+
+const ProductSkeleton = memo(({ limit = 10 }) => {
+    return (
+        <div className="px-2 py-6 mt-4">
+            <div className="row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-gap-4">
+                {Array.from({ length: limit }).map((_, i) => (
+                    <div key={i} className="col d-flex flex-column">
+                        <Skeleton.Image
+                            active
+                            style={{
+                                width: '100%',
+                                height: 180,
+                                borderRadius: '12px',
+                            }}
+                        />
+                        <Skeleton
+                            active
+                            paragraph={{
+                                rows: 3,
+                                width: ['100%', '100%', '100%'],
+                            }}
+                            title={false}
+                            className="mt-4"
+                        />
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+});
+
+ProductSkeleton.displayName = 'ProductSkeleton';
 
 export default function ProductsByCategory({
     data = [],
     page,
     handlePagination,
+    isLoading = false,
 }) {
+    // Show skeleton while loading
+    if (isLoading) {
+        return <ProductSkeleton limit={10} />;
+    }
     return (
         <section className="">
             <div className="row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-gap-2 row-gap-md-5 row-gap-lg-3 mb-5">

@@ -15,6 +15,11 @@ import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import { useDisableWindowScroll } from '~/shared/hooks/useDisableWindowScroll';
 import { LuSettings2 } from 'react-icons/lu';
 import { useQuery } from '@tanstack/react-query';
+import {
+    getFilterQueryParams,
+    buildCategoryPath,
+    getCategoryFromRouter,
+} from '~/shared/utilities/filterHelpers';
 
 export const getTitleFromSlug = (array, slug) => {
     let title = null;
@@ -45,28 +50,54 @@ const ProductFilterSection = ({ child, parent, path, isFile, title }) => {
     const parentRef = useRef(null);
     const childRef = useRef(null);
     const { isMobile } = useResponsive();
-    const { query, push } = useRouter();
+    const router = useRouter();
+    const { query, push } = router;
     const { search: querySearch, parentCategory, childCategory } = query;
     const debouncedSearch = useDebounce(search, 500);
 
     const handleParent = (slug, id) => {
-        const newQuery = clearEmptyQueries(query);
-        push({
-            pathname: `${path}${slug}`,
-            query: {
-                ...newQuery,
-                parentCategory: slug,
-                parentCategoryId: id,
+        // Get filter-only query params (preserves price_from, price_to, search, page, etc.)
+        const filterQuery = getFilterQueryParams(query);
+
+        // Build new path with parent category (SSG structure)
+        const newPathname = buildCategoryPath(path, slug);
+
+        // Navigate with preserved filters (shallow: true prevents getStaticProps from running)
+        push(
+            {
+                pathname: newPathname,
+                query: filterQuery,
             },
-        });
+            undefined,
+            { shallow: true }
+        );
     };
 
     const handleChild = (slug, id) => {
-        const newQuery = clearEmptyQueries(query);
-        push({
-            pathname: `${path}${slug}`,
-            query: { ...newQuery, childCategory: slug, childCategoryId: id },
-        });
+        // Get current parent category from router
+        const currentParent =
+            parentCategory || getCategoryFromRouter(router).parentCategory;
+
+        if (!currentParent) {
+            console.warn('Parent category not found for child navigation');
+            return;
+        }
+
+        // Get filter-only query params
+        const filterQuery = getFilterQueryParams(query);
+
+        // Build new path with parent and child category (SSG structure)
+        const newPathname = buildCategoryPath(path, currentParent, slug);
+
+        // Navigate with preserved filters (shallow: true prevents getStaticProps from running)
+        push(
+            {
+                pathname: newPathname,
+                query: filterQuery,
+            },
+            undefined,
+            { shallow: true }
+        );
     };
 
     const scrollLeft = (ref) => {
@@ -93,11 +124,16 @@ const ProductFilterSection = ({ child, parent, path, isFile, title }) => {
 
     useEffect(() => {
         if (debouncedSearch === undefined) return;
-        delete query.similar_documents;
-        push({
-            pathname: query.pathname,
-            query: { ...query, search: debouncedSearch },
-        });
+        const newQuery = { ...query };
+        delete newQuery.similar_documents;
+        push(
+            {
+                pathname: router.pathname,
+                query: { ...newQuery, search: debouncedSearch },
+            },
+            undefined,
+            { shallow: true }
+        ); // shallow: true prevents getStaticProps from running
     }, [debouncedSearch]);
 
     useDisableWindowScroll(drawerOpen);
@@ -248,7 +284,8 @@ const ProductFilterForm = ({ open, onClose, path, isFile, parent, child }) => {
     const [pageRange, setPageRange] = useState([0, 100]);
     const isEnableChanged = useRef(false);
     const { isMobile } = useResponsive();
-    const { query, push } = useRouter();
+    const router = useRouter();
+    const { query, push } = router;
 
     const isChildOptionsEnabled =
         open &&
@@ -293,12 +330,19 @@ const ProductFilterForm = ({ open, onClose, path, isFile, parent, child }) => {
 
     useEffect(() => {
         if (open) {
+            // Get categories from query (Next.js extracts dynamic route params into query)
+            // Fallback to getCategoryFromRouter for edge cases
+            const { parentCategory: pathParent, childCategory: pathChild } =
+                getCategoryFromRouter(router);
+            const currentParent = query.parentCategory || pathParent;
+            const currentChild = query.childCategory || pathChild;
+
             setSelectedCategory({
-                slug: query.parentCategory,
+                slug: currentParent,
                 id: query.parentCategoryId,
             });
             setSelectedSubCategory({
-                slug: query.childCategory,
+                slug: currentChild,
                 id: query.childCategoryId,
             });
             setFileTypes(
@@ -320,30 +364,56 @@ const ProductFilterForm = ({ open, onClose, path, isFile, parent, child }) => {
     }, [open]);
 
     const handleSaveOnClose = () => {
-        const filters = {
-            parentCategory: selectedCategory.slug,
-            childCategory: selectedSubCategory.slug,
-            content_extensions: fileTypes,
-            price_from: priceRange[0],
-            price_to: priceRange[1],
-            from_page: pageRange[0],
-            to_page: pageRange[1],
+        // Build filter-only query params (categories go in path, not query)
+        const filterQuery = {
+            ...getFilterQueryParams(query),
+            content_extensions: fileTypes.length > 0 ? fileTypes : undefined,
+            price_from: priceRange[0] > 0 ? priceRange[0] : undefined,
+            price_to: priceRange[1] < 500000 ? priceRange[1] : undefined,
+            from_page: pageRange[0] > 0 ? pageRange[0] : undefined,
+            to_page: pageRange[1] < 100 ? pageRange[1] : undefined,
         };
-        const newQuery = clearEmptyQueries({ ...query, ...filters });
-        push({
-            pathname: `${path}${
-                selectedSubCategory.slug || selectedCategory.slug || 'all'
-            }`,
-            query: newQuery,
+
+        // Remove undefined values
+        Object.keys(filterQuery).forEach((key) => {
+            if (
+                filterQuery[key] === undefined ||
+                filterQuery[key] === null ||
+                filterQuery[key] === ''
+            ) {
+                delete filterQuery[key];
+            }
         });
+
+        // Build category path (SSG structure)
+        const categoryPath = buildCategoryPath(
+            path,
+            selectedCategory?.slug || null,
+            selectedSubCategory?.slug || null
+        );
+
+        push(
+            {
+                pathname: categoryPath,
+                query: filterQuery,
+            },
+            undefined,
+            { shallow: true }
+        ); // shallow: true prevents getStaticProps from running
         onClose();
     };
 
     const handleClear = () => {
-        push({
-            pathname: `${path}all`,
-            query: {},
-        });
+        // Navigate to base path (no categories, no filters)
+        const cleanPath = path.endsWith('/') ? path.slice(0, -1) : path;
+        push(
+            {
+                pathname: cleanPath,
+                query: {},
+            },
+            undefined,
+            { shallow: true }
+        ); // shallow: true prevents getStaticProps from running
         onClose();
     };
 

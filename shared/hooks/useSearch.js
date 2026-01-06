@@ -65,7 +65,7 @@ function useSearch() {
             const json = await res.json();
             return json;
         },
-        enabled: type === 'mahsulotlar',
+        enabled: type === 'mahsulotlar' && debouncedSearch.length > 0,
         retry: 1,
     });
 

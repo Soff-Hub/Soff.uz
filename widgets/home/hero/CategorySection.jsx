@@ -2,7 +2,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import styles from './style.module.scss';
 
-
 const readyProducts = [
     {
         href: '/scientific-resources/all',
@@ -11,7 +10,7 @@ const readyProducts = [
         label: 'Ilmiy ishlar',
     },
     {
-        href: '/3d-models-and-interior-designs/all',
+        href: '/3d-models-and-interior-designs',
         img: '/static/img/HomePage/3d2.webp',
         alt: '3D Modellar',
         label: '3D Modellar',
