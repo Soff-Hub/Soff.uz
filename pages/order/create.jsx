@@ -37,8 +37,8 @@ function OrderCreate() {
             />
             <ProductVideoBanner
                 videoUrl={video_url}
-                title={`SOFF'da xarid qilishni bilmayapsizmi?`}
-                subtitle={`Taxminan 1 daqiqalik video: mahsulotni qanday sotib olishni ko'rsatadi.`}
+                title={`SOFF'da buyurtma berishni bilmayapsizmi?`}
+                subtitle={`Buyurtma berish bo‘yicha video qo‘llanma.`}
             />
             <div className="page-content">
                 <div className="container">
