@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import { useState, useMemo, useEffect, useRef } from 'react';
 import VideoModal from '~/shared/ui/video-modal';
 import { MdOndemandVideo } from 'react-icons/md';
+import { getYouTubeVideoId } from '~/shared/utilities/youtube-helpers';
 
 const disabledLocations = [
     '/chat',
@@ -15,29 +16,6 @@ const disabledLocations = [
     'shopping-cart',
     'search-page',
 ];
-
-// Helper function to extract YouTube video ID from URL
-const getYouTubeVideoId = (urlOrId) => {
-    if (!urlOrId) return null;
-
-    if (/^[a-zA-Z0-9_-]{11}$/.test(urlOrId)) {
-        return urlOrId;
-    }
-
-    const patterns = [
-        /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/,
-        /youtube\.com\/.*[?&]v=([^&\n?#]+)/,
-    ];
-
-    for (const pattern of patterns) {
-        const match = urlOrId.match(pattern);
-        if (match && match[1]) {
-            return match[1];
-        }
-    }
-
-    return null;
-};
 
 const VIDEO_URL_BUY_PRODUCT = 'https://www.youtube.com/watch?v=oJre9mbRE2U';
 const VIDEO_URL_ORDER_CREATE =

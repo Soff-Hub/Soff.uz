@@ -1,19 +1,8 @@
 import React, { memo, useMemo } from 'react';
 import { Modal, Descriptions, Tag } from 'antd';
-import styles from './style.module.scss';
 import useResponsive from '~/shared/utilities/useResponsive';
-
-const getYouTubeEmbed = (url) => {
-    if (!url) return null;
-    try {
-        const videoId =
-            url.split('v=')[1]?.split('&')[0] ||
-            url.split('youtu.be/')[1]?.split('?')[0];
-        return `https://www.youtube.com/embed/${videoId}`;
-    } catch {
-        return null;
-    }
-};
+import { getYouTubeEmbed } from '~/shared/utilities/youtube-helpers';
+import styles from './style.module.scss';
 
 const PortfolioModal = ({ open, onClose, portfolio }) => {
     const { isMobile } = useResponsive();

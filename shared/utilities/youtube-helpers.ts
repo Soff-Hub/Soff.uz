@@ -21,3 +21,21 @@ export const getYouTubeVideoId = (urlOrId?: string) => {
 
     return null;
 };
+
+export const getYouTubeEmbed = (url: string) => {
+    if (!url) return null;
+    try {
+        const videoId =
+            url.split('v=')[1]?.split('&')[0] ||
+            url.split('youtu.be/')[1]?.split('?')[0];
+        return `https://www.youtube.com/embed/${videoId}`;
+    } catch {
+        return null;
+    }
+};
+
+export const getYouTubeThumbnail = (url: string) => {
+    const match = url?.match(/(?:v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+    const id = match ? match[1] : null;
+    return id ? `https://img.youtube.com/vi/${id}/maxresdefault.jpg` : null;
+};

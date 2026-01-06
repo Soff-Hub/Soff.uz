@@ -26,14 +26,16 @@ const NetworkStatusComponent = dynamic(
 
 const PageLayout = ({ children, title, withFooter = true }) => {
     const { user } = useSelector((state) => state.auth);
+    const dispatch = useDispatch();
+    const Router = useRouter();
+
+    const hasTitle = Boolean(title);
+    const isValideUser = Boolean(user);
 
     useGetProfileQuery(`userfetch - ${user?.access}`, {
         skip: !user?.access,
     });
     useGetDirectionsQuery();
-
-    const dispatch = useDispatch();
-    const Router = useRouter();
 
     async function handleLogin(googleData) {
         Router.push(`/oauth/?token=${googleData}&returnUrl=${Router.asPath}`);
@@ -49,11 +51,11 @@ const PageLayout = ({ children, title, withFooter = true }) => {
 
     return (
         <ViewportContextProvider>
-            {title ? (
+            {hasTitle && (
                 <Head>
                     <title>{title}</title>
                 </Head>
-            ) : null}
+            )}
 
             <div
                 style={{
@@ -72,10 +74,10 @@ const PageLayout = ({ children, title, withFooter = true }) => {
                     {children}
                 </main>
 
-                {withFooter ? <Footer /> : null}
+                {withFooter && <Footer />}
             </div>
 
-            {!user && (
+            {!isValideUser && (
                 <div style={{ height: 0, overflow: 'hidden' }}>
                     <GoogleLogin
                         onSuccess={(credentialResponse) => {
