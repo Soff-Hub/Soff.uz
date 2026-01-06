@@ -65,33 +65,12 @@ const PortfolioDetailModal = ({ open, onClose, portfolio }) => {
                 <div className={styles.galleryBox}>
                     {galleryImages.length > 0 ? (
                         galleryImages.map((img, idx) => (
-                            <div
+                            <img
                                 key={idx}
-                                style={{
-                                    width: '100%',
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                }}>
-                                <Image
-                                    src={
-                                        img?.image ||
-                                        '/static/img/orqafon1.avif'
-                                    }
-                                    alt={`Image ${idx + 1}`}
-                                    width={800}
-                                    height={450}
-                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 800px"
-                                    style={{
-                                        objectFit: 'contain',
-                                        maxWidth: '100%',
-                                        height: 'auto',
-                                        borderRadius: '8px',
-                                    }}
-                                    loading={idx === 0 ? 'eager' : 'lazy'}
-                                    className="rounded"
-                                />
-                            </div>
+                                src={img?.image || '/static/img/orqafon1.avif'}
+                                alt={`Image ${idx + 1}`}
+                                className={styles.image}
+                            />
                         ))
                     ) : (
                         <p className="text-gray-500 text-center mt-4">
