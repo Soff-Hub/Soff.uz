@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { FaPlay, FaQuestionCircle } from 'react-icons/fa';
 import VideoModal from '~/shared/ui/video-modal';
-import { useContentViewport } from '~/shared/hooks/useContentViewport';
+import { useViewportContext } from '~/shared/hooks/useViewportContext';
 import { getYouTubeVideoId } from '~/shared/utilities/extract-video-id';
 import styles from './ProductVideoBanner.module.scss';
 import buttonStyles from '~/shared/styles/playButton.module.scss';
@@ -18,7 +18,7 @@ function ProductVideoBanner({
     subtitle,
 }: ProductVideoBannerProps) {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const { headerHeight } = useContentViewport();
+    const { headerHeight } = useViewportContext();
 
     const extractedVideoId = useMemo(
         () => getYouTubeVideoId(videoUrl),

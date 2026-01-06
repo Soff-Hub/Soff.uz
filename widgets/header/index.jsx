@@ -9,8 +9,10 @@ import NavbarSearch from './navbar-search';
 import NavbarMenu from '~/widgets/navbar-menu';
 import FastDownloadSection from '~/shared/components/fast-dowload/FastDowloadSection';
 import { initSearchHistory } from '~/store/search/slice';
+import { useViewportContext } from '~/shared/hooks/useViewportContext';
 
 const Header = () => {
+    const { headerRef } = useViewportContext();
     const { isMobile } = useResponsive();
     const dispatch = useDispatch();
     const { showFastDownload } = useSelector((state) => state.ui);
@@ -24,7 +26,7 @@ const Header = () => {
     }, []);
 
     return (
-        <header className="site-header">
+        <header className="site-header" ref={headerRef}>
             <div className={`header-bottom top-0 bg-white`}>
                 <div className="container">
                     <HeaderTop />
@@ -43,4 +45,3 @@ const Header = () => {
 };
 
 export default Header;
-//

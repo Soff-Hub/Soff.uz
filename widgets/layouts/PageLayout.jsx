@@ -11,6 +11,7 @@ import {
 } from '~/store/profile/slice';
 import dynamic from 'next/dynamic';
 import HeaderLoader from '~/widgets/header/HeaderLoader';
+import { ViewportContextProvider } from '~/shared/contexts/ViewportContext';
 
 const Header = dynamic(() => import('~/widgets/header'), {
     ssr: false,
@@ -47,7 +48,7 @@ const PageLayout = ({ children, title, withFooter = true }) => {
     }, []);
 
     return (
-        <>
+        <ViewportContextProvider>
             {title ? (
                 <Head>
                     <title>{title}</title>
@@ -88,7 +89,7 @@ const PageLayout = ({ children, title, withFooter = true }) => {
                     />
                 </div>
             )}
-        </>
+        </ViewportContextProvider>
     );
 };
 
