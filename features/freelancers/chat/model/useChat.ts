@@ -98,7 +98,6 @@ export const useChat = (chatId?: string) => {
                     m.status === 'sending' &&
                     m.content?.trim() === msg.content?.trim()
                 ) {
-                    console.log({ m }, 'is deleting pending message');
                     pending.cleanupPendingRefs(m.content, m.id);
                     messageState.removeMessage(m);
                 }

@@ -35,7 +35,6 @@ const UserTabs = ({ seller }) => {
     useEffect(() => {
         const { tab } = router.query;
         if (!tab) {
-            console.log('no tab found, setting to about');
             router.replace(
                 {
                     pathname: router.pathname,
