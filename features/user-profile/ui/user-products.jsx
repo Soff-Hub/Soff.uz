@@ -1,4 +1,5 @@
-import React, { memo, useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useRouter } from 'next/router';
 import { cn, useRcn } from '~/shared/utilities/cn';
 import { useSellerProducts } from '../api/useSellerProducts';
 import { Skeleton, Select, Pagination, Input } from 'antd';
@@ -9,10 +10,13 @@ import useResponsive from '~/shared/utilities/useResponsive';
 import useDebounce from '~/shared/hooks/useDebounce';
 
 const UserProducts = ({ id, direction }) => {
-    const [page, setPage] = useState(1);
-    const [type, setType] = useState(direction || 'file');
-    const [search, setSearch] = useState('');
-    const debounceSearch = useDebounce(search, 700);
+    const router = useRouter();
+    const page = parseInt(router.query.page || '1', 10);
+    const type = router.query.type || direction || 'file';
+    const searchQuery = router.query.search || '';
+    const [searchInput, setSearchInput] = useState(searchQuery);
+    const debounceSearch = useDebounce(searchInput, 700);
+
     const { data, isLoading, isFetching } = useSellerProducts(
         id,
         page,
@@ -37,37 +41,68 @@ const UserProducts = ({ id, direction }) => {
         desktop: 'flex-row',
     });
 
-    const handleTypeChange = useCallback((value) => {
-        setType(value);
-        setPage(1);
-    }, []);
+    const handleTypeChange = useCallback(
+        (value) => {
+            router.replace(
+                {
+                    pathname: router.pathname,
+                    query: {
+                        ...router.query,
+                        type: value,
+                        page: '1',
+                    },
+                },
+                undefined,
+                { shallow: true }
+            );
+        },
+        [router]
+    );
 
-    const handlePageChange = useCallback((p) => {
-        setPage(p);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, []);
+    const handlePageChange = useCallback(
+        (p) => {
+            router.replace(
+                {
+                    pathname: router.pathname,
+                    query: {
+                        ...router.query,
+                        page: p.toString(),
+                    },
+                },
+                undefined,
+                { shallow: true }
+            );
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        },
+        [router]
+    );
 
     const renderedProducts = useMemo(() => {
         return products.map((p) => <ProductCard product={p} key={p.id} />);
     }, [products]);
 
-    const PaginationComponent = useMemo(
-        () => (
-            <Pagination
-                current={page}
-                total={total}
-                pageSize={36}
-                onChange={handlePageChange}
-                showSizeChanger={false}
-                hideOnSinglePage
-            />
-        ),
-        [page, total]
-    );
-
+    // Sync searchInput with query param on mount/query change
     useEffect(() => {
-        setPage(1);
-    }, [debounceSearch]);
+        setSearchInput(searchQuery);
+    }, [searchQuery]);
+
+    // Update query params when debounced search changes
+    useEffect(() => {
+        if (debounceSearch !== searchQuery) {
+            router.replace(
+                {
+                    pathname: router.pathname,
+                    query: {
+                        ...router.query,
+                        search: debounceSearch,
+                        page: '1',
+                    },
+                },
+                undefined,
+                { shallow: true }
+            );
+        }
+    }, [debounceSearch, searchQuery, router]);
 
     return (
         <div
@@ -90,8 +125,8 @@ const UserProducts = ({ id, direction }) => {
                 )}>
                 <Input.Search
                     className={cn('flex-1')}
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
+                    value={searchInput}
+                    onChange={(e) => setSearchInput(e.target.value)}
                     placeholder="Mahsulot qidirish..."
                 />
                 <Select
@@ -136,48 +171,49 @@ const UserProducts = ({ id, direction }) => {
 
             {total > 1 ? (
                 <div className={cn('flex', 'justify-center')}>
-                    {PaginationComponent}
+                    <Pagination
+                        current={page}
+                        total={total}
+                        pageSize={36}
+                        onChange={handlePageChange}
+                        showSizeChanger={false}
+                        hideOnSinglePage
+                    />
                 </div>
             ) : null}
         </div>
     );
 };
 
-export default memo(UserProducts);
+export default UserProducts;
 
-const ProductSkeletonGrid = memo(() => {
-    const skeletonItems = useMemo(
-        () =>
-            Array.from({ length: 8 }).map((_, i) => (
-                <div
-                    key={i}
-                    className={cn(
-                        'bg-white',
-                        'rounded-xl',
-                        'shadow-sm',
-                        'p-3',
-                        'w-full',
-                        'flex',
-                        'flex-col'
-                    )}>
-                    <Skeleton.Image
-                        active
-                        style={{
-                            width: '100%',
-                            height: 160,
-                            borderRadius: 12,
-                            marginBottom: 8,
-                        }}
-                    />
-                    <Skeleton
-                        active
-                        title={false}
-                        paragraph={{ rows: 2, width: ['80%', '60%'] }}
-                    />
-                </div>
-            )),
-        []
-    );
-
-    return <>{skeletonItems}</>;
-});
+const ProductSkeletonGrid = () => {
+    return Array.from({ length: 8 }).map((_, i) => (
+        <div
+            key={i}
+            className={cn(
+                'bg-white',
+                'rounded-xl',
+                'shadow-sm',
+                'p-3',
+                'w-full',
+                'flex',
+                'flex-col'
+            )}>
+            <Skeleton.Image
+                active
+                style={{
+                    width: '100%',
+                    height: 160,
+                    borderRadius: 12,
+                    marginBottom: 8,
+                }}
+            />
+            <Skeleton
+                active
+                title={false}
+                paragraph={{ rows: 2, width: ['80%', '60%'] }}
+            />
+        </div>
+    ));
+};
