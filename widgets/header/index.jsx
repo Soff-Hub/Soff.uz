@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import HeaderTop from './HeaderTop';
 import HeaderLogo from './HeaderLogo';
 import HeaderActions from './HeaderActions';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { initLocalCart } from '~/store/ecomerce/slice';
 import useResponsive from '~/shared/utilities/useResponsive';
 import NavbarSearch from './navbar-search';
@@ -15,10 +15,9 @@ const Header = () => {
     const { headerRef } = useViewportContext();
     const { isMobile } = useResponsive();
     const dispatch = useDispatch();
-    const { showFastDownload } = useSelector((state) => state.ui);
 
     useEffect(() => {
-        const initFunctions = async () => {
+        const initFunctions = () => {
             dispatch(initLocalCart());
             dispatch(initSearchHistory());
         };
@@ -38,7 +37,7 @@ const Header = () => {
                     </div>
                 </div>
                 {isMobile ? <NavbarSearch /> : <NavbarMenu />}
-                {showFastDownload ? <FastDownloadSection /> : null}
+                <FastDownloadSection />
             </div>
         </header>
     );

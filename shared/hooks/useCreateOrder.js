@@ -24,7 +24,6 @@ import useResponsive from '../utilities/useResponsive';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Thumbs } from 'swiper/modules';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
-import { setShowSearch } from '~/store/fast-dowload/slice';
 import { useGetDirectionsQuery } from '~/store/profile/slice';
 import { useTimeManager } from './useTimeManager';
 
@@ -145,14 +144,6 @@ function useCreateOrder() {
     const onfirstRender = useRef(true);
     const [phoneModalOpen, setPhoneModalOpen] = useState(false);
     const [pendingOrderData, setPendingOrderData] = useState(null);
-
-    useEffect(() => {
-        dispatch(setShowSearch(false));
-
-        return () => {
-            dispatch(setShowSearch(true));
-        };
-    }, [dispatch]);
 
     const { data: categories } = useFGet(
         direction,

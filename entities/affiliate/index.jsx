@@ -6,15 +6,14 @@ import { setAffiliateId } from '~/store/affiliate/slice';
 const AffiliateListener = () => {
     const router = useRouter();
     const dispatch = useDispatch();
+    const { affiliate } = router.query;
+    const isRouterReady = router.isReady;
 
     useEffect(() => {
-        if (router.isReady) {
-            const affiliateId = router.query.affiliate;
-            if (affiliateId) {
-                dispatch(setAffiliateId(affiliateId));
-            }
+        if (affiliate && isRouterReady) {
+            dispatch(setAffiliateId(affiliate));
         }
-    }, [router.isReady, router.query.affiliate, dispatch]);
+    }, [isRouterReady, affiliate]);
 
     return null;
 };
