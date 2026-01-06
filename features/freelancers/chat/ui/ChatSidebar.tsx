@@ -5,7 +5,6 @@ import React, {
     useRef,
     useEffect,
 } from 'react';
-import styles from '../style/chat.module.scss';
 import { Button, Empty, Input, Spin } from 'antd';
 import { truncateTitle } from '~/shared/utilities/TruncateTitle';
 import { useRouter } from 'next/router';
@@ -18,6 +17,7 @@ import { FaHeadset } from 'react-icons/fa';
 import { FaThumbtack } from 'react-icons/fa';
 import { FaCrown } from 'react-icons/fa';
 import { useViewportContext } from '~/shared/hooks/useViewportContext';
+import styles from '../style/chat.module.scss';
 
 function BackButton() {
     const router = useRouter();
@@ -66,12 +66,6 @@ const ChatSidebar: React.FC<ChatSidebarProps> = ({ setChat }) => {
         return +chat?.opponent_id;
     }, []);
 
-    /**
-     * Static moderator chat:
-     * - Always shown at the top
-     * - If a real moderator chat exists, we use that data
-     * - Otherwise we create a placeholder and let the click handler create the chat
-     */
     const staticModeratorChat = useMemo(() => {
         const existingModeratorChat = chats?.find(
             (chat) => getOpponentId(chat) === MODERATOR_ID
@@ -84,7 +78,6 @@ const ChatSidebar: React.FC<ChatSidebarProps> = ({ setChat }) => {
                 isModerator: true,
             };
 
-        // Placeholder static moderator chat
         return {
             chat_id: 0,
             opponent_id: MODERATOR_ID,
@@ -257,7 +250,14 @@ const ChatListItem: React.FC<ChatListItemProps> = ({
                         )}
                     </p>
                 </div>
+                <div className={styles.box2}>
+                    <p></p>
+                    {chat?.unread_count > 0 && (
+                        <span>{chat?.unread_count}</span>
+                    )}
+                </div>
                 {isCreatingChat && <Spin size="small" />}
+                <FaThumbtack className={styles.pinnedIcon} title="Topilgan" />
             </div>
         );
     }

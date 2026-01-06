@@ -174,44 +174,27 @@ const MyOrderTabs = () => {
     };
 
     return (
-        <ConfigProvider
-            theme={{
-                token: {
-                    colorPrimary: '#00a44f',
-                },
-                components: {
-                    Tabs: {
-                        itemSelectedColor: '#00a44f',
-                        itemActiveColor: '#00a44f',
-                        inkBarColor: '#00a44f',
-                    },
-                },
-            }}>
-            <div
-                style={{
-                    minHeight: '60vh',
-                }}>
-                <Tabs
-                    type="card"
-                    activeKey={activeKey}
-                    onChange={handleOrderTabChange}
-                    className="order-tabs"
-                    items={items}
-                    tabPosition="top"
-                    renderTabBar={(tabBarProps, DefaultTabBar) => (
-                        <div
-                            style={{
-                                overflowX: 'auto',
-                                whiteSpace: 'nowrap',
-                            }}>
-                            <DefaultTabBar {...tabBarProps} />
-                        </div>
-                    )}
-                />
-            </div>
-        </ConfigProvider>
+        <Tabs
+            type="card"
+            activeKey={activeKey}
+            onChange={handleOrderTabChange}
+            className="order-tabs"
+            items={items}
+            tabPosition="top"
+            style={{
+                minHeight: '60vh',
+            }}
+            renderTabBar={(tabBarProps, DefaultTabBar) => (
+                <div
+                    style={{
+                        overflowX: 'auto',
+                        whiteSpace: 'nowrap',
+                    }}>
+                    <DefaultTabBar {...tabBarProps} />
+                </div>
+            )}
+        />
     );
 };
 
 export default MyOrderTabs;
-

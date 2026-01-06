@@ -7,6 +7,7 @@ type ChatWindowProps = {
     isDirector: boolean;
     hideCreateOrderButton?: boolean;
     children?: React.ReactNode;
+    fullHeight?: boolean;
 };
 
 const ChatWindow: React.FC<ChatWindowProps> = (props) => {

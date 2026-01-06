@@ -178,6 +178,7 @@ const OrderPendingFiles: React.FC<PendingFilesCase> = ({
 
 const OrderCompletedFiles: React.FC<CompletedFilesCase> = ({
     orderFiles,
+    withCollapse,
     isOrderFilesFetching,
     size = 'large',
 }) => {
@@ -199,6 +200,7 @@ const OrderCompletedFiles: React.FC<CompletedFilesCase> = ({
                     display: 'flex',
                     flexDirection: 'column',
                     gap: sizeStyles.spacing,
+                    marginTop: '10px',
                 }}>
                 {Array(3)
                     .fill(null)
@@ -214,19 +216,22 @@ const OrderCompletedFiles: React.FC<CompletedFilesCase> = ({
             </div>
         );
     } else if (hasCompletedFiles) {
-        if (completedFiles.length) {
-            completedFilesContent = completedFiles.map((f) => (
-                <OrderFile key={f.url} file={f} size={size} />
-            ));
-        }
+        completedFilesContent = (
+            <div style={{ marginTop: '10px' }}>
+                {completedFiles.map((f) => (
+                    <OrderFile key={f.url} file={f} size={size} />
+                ))}
+            </div>
+        );
     }
 
     return (
         <div className={styles.orderPayCardGrid}>
-            {!hasCompletedFiles ? (
+            {hasCompletedFiles && withCollapse ? (
                 wrapWithCollapse(completedFilesContent, {
                     text: 'Buyurtma fayllari',
                     size,
+                    isDefaultOpen: true,
                 })
             ) : (
                 <>
@@ -234,7 +239,6 @@ const OrderCompletedFiles: React.FC<CompletedFilesCase> = ({
                         className={styles.orderConfirmTitle}
                         style={{
                             fontSize: sizeStyles.titleFontSize,
-                            marginBottom: '8px',
                         }}>
                         Buyurtma fayllari
                     </h3>
@@ -275,7 +279,9 @@ const wrapWithCollapse = (
                 header={
                     <h3
                         className={styles.orderConfirmTitle}
-                        style={{ fontSize: sizeStyles.titleFontSize }}>
+                        style={{
+                            fontSize: sizeStyles.titleFontSize,
+                        }}>
                         {text}
                     </h3>
                 }

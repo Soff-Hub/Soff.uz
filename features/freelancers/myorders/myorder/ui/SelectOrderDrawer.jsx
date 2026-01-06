@@ -31,7 +31,7 @@ import OfferCard from './OfferCard';
 import ChatWindow from '~/features/freelancers/chat/ui/ChatWindow';
 import { useQueryClient } from '@tanstack/react-query';
 import axiosInstance from '~/shared/api/freeleanceApi';
-import useGetChatById from '~/features/freelancers/chat/api/useGetChatById';
+import { useGetChatById } from '~/features/freelancers/chat/api/useGetChatById';
 import { MODERATOR_ID } from '~/shared/constants';
 import { FaHeadset } from 'react-icons/fa';
 import { IoMdArrowBack } from 'react-icons/io';
@@ -469,6 +469,7 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                                         key={currentChat.chatId}
                                         chatId={currentChat.chatId}
                                         hideCreateOrderButton={true}
+                                        fullHeight={true}
                                         goBack={() => {
                                             setChatDrawerOpen(false);
                                             setCurrentChat(null);
