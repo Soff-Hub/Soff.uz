@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useConversation } from './Conversation';
 import styles from '../../style/chat.module.scss';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -35,6 +35,48 @@ function ChatMessages({}: ChatMessagesProps) {
     } = useConversation();
 
     const recipient = chat?.opponent;
+    const prevMessagesLengthRef = useRef(0);
+    const lastMessageRef = useRef<any>(null);
+
+    // ✅ Auto-scroll when new messages arrive
+    useEffect(() => {
+        const currentMessagesLength = messages.reduce(
+            (total, group) => total + group.messages.length,
+            0
+        );
+
+        // Get the last message
+        const lastGroup = messages[messages.length - 1];
+        const lastMsg = lastGroup?.messages[lastGroup.messages.length - 1];
+
+        // Check if a new message was added (not from initial load)
+        if (
+            currentMessagesLength > prevMessagesLengthRef.current &&
+            lastMsg &&
+            lastMsg.id !== lastMessageRef.current?.id
+        ) {
+            // Only scroll if it's an opponent message or if user is near bottom
+            const isOpponentMessage = !lastMsg.is_mine;
+            const container = messagesContainerRef.current;
+
+            if (container) {
+                // Check if user is near bottom (within 100px)
+                const isNearBottom = container.scrollTop < 100;
+
+                if (isOpponentMessage || isNearBottom) {
+                    setTimeout(() => {
+                        if (messagesContainerRef.current) {
+                            messagesContainerRef.current.scrollTop = 0;
+                        }
+                    }, 100);
+                }
+            }
+
+            lastMessageRef.current = lastMsg;
+        }
+
+        prevMessagesLengthRef.current = currentMessagesLength;
+    }, [messages, messagesContainerRef]);
 
     return (
         <div
@@ -53,7 +95,13 @@ function ChatMessages({}: ChatMessagesProps) {
             }}
             className={`${styles.chat_messages} p-3`}>
             <InfiniteScroll
-                dataLength={messages.length}
+                dataLength={
+                    // ✅ Calculate total messages across all groups
+                    messages.reduce(
+                        (total, group) => total + group.messages.length,
+                        0
+                    )
+                }
                 next={handleFetchNext}
                 hasMore={Boolean(hasNextPage)}
                 loader={<InfiniteLoaderComponent />}
@@ -77,26 +125,34 @@ function ChatMessages({}: ChatMessagesProps) {
                             <Spin />
                         </div>
                     ) : messages?.length ? (
-                        messages.map((msg) =>
-                            msg.type === 'date-separator' ? (
+                        // ✅ Render grouped messages: each group has dateFormatted and messages array
+                        messages.map((group, groupIndex) => (
+                            <div
+                                key={group.date}
+                                style={{
+                                    position: 'relative',
+                                    width: '100%',
+                                    isolation: 'isolate', // Create new stacking context for each group
+                                }}>
                                 <ChatDateSeperator
-                                    chatDate={msg}
-                                    key={msg.id}
+                                    chatDate={{ date: group.dateFormatted }}
+                                    isFirst={groupIndex === 0}
                                 />
-                            ) : (
-                                <ChatMessage
-                                    key={msg.id}
-                                    recipientImg={recipient?.photo_url}
-                                    myImg={user?.image}
-                                    msg={msg}
-                                    onEdit={setEdit}
-                                    onDelete={deleteMessage}
-                                    handleOpenDrawer={handleOpenDrawer}
-                                    setRes={setRes}
-                                    setFeedbackOpen={setFeedbackOpen}
-                                />
-                            )
-                        )
+                                {group.messages.map((msg) => (
+                                    <ChatMessage
+                                        key={msg.id}
+                                        recipientImg={recipient?.photo_url}
+                                        myImg={user?.image}
+                                        msg={msg}
+                                        onEdit={setEdit}
+                                        onDelete={deleteMessage}
+                                        handleOpenDrawer={handleOpenDrawer}
+                                        setRes={setRes}
+                                        setFeedbackOpen={setFeedbackOpen}
+                                    />
+                                ))}
+                            </div>
+                        ))
                     ) : isDirector ? (
                         <DirectorEmptyState
                             name={

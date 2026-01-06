@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
-import useChat from '../../api/useChat';
+import { useChat } from '../../model/useChat';
 import {
     FetchNextPageOptions,
     InfiniteQueryObserverResult,
@@ -16,19 +16,19 @@ import Header from './ChatHeader';
 import Messages from './ChatMessages';
 import Input from './ChatInput';
 import Modals from './ChatModals';
-import { useContentViewport } from '~/shared/hooks/useContentViewport';
+import { useViewportContext } from '~/shared/hooks/useViewportContext';
 
 type ConversationProps = {
-    chatId: string;
+    chatId?: string;
     goBack: () => void;
     isModerator: boolean;
     isDirector: boolean;
-    hideCreateOrderButton: boolean;
+    hideCreateOrderButton?: boolean;
     children?: React.ReactNode;
 };
 
 type ConversationContextType = {
-    chatId: string;
+    chatId?: string;
     goBack: () => void;
     isModerator: boolean;
     isDirector: boolean;
@@ -48,7 +48,11 @@ type ConversationContextType = {
     chatWindowRef: React.MutableRefObject<null>;
     scrollPositionRef: React.MutableRefObject<number>;
     chat: any;
-    messages: any[];
+    messages: Array<{
+        date: string;
+        dateFormatted: string;
+        messages: any[];
+    }>; // ✅ Grouped messages by date
     sendMessage: (content: any) => Promise<void>;
     sendMessageWithFile: (data: any, options: any) => Promise<void>;
     updateMessage: (content: any, message_id: any) => Promise<void>;
@@ -93,7 +97,7 @@ function Conversation({
     children,
 }: ConversationProps) {
     const router = useRouter();
-    const { containerHeight } = useContentViewport();
+    const { containerHeight } = useViewportContext();
     const [edit, setEdit] = useState(null);
     const [openDownIcon, setOpenDownIcon] = useState(false);
     const [createOrderModalOpen, setCreateOrderModalOpen] = useState(false);

@@ -2,7 +2,7 @@ import { Button } from 'antd';
 import styles from './style.module.scss';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import { MessageOutlined } from '@ant-design/icons';
-import useCreateChat from '~/features/freelancers/chat/api/useCreateChat';
+import { useCreateChat } from '~/features/freelancers/chat/api/useCreateChat';
 import { useSelector } from 'react-redux';
 import { sleep } from '~/shared/utilities/sleep';
 import ServiceOrderModal from '../ServiceOrderModal';

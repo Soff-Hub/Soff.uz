@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import styles from '../style/style.module.scss';
 import { Button, Steps, Tooltip, Badge } from 'antd';
 import { FaRegCommentDots } from 'react-icons/fa';
-import useCreateChat from '~/features/freelancers/chat/api/useCreateChat';
+import { useCreateChat } from '~/features/freelancers/chat/api/useCreateChat';
 import Link from 'next/link';
 
 const OrderStatus = ({ order, handleShowStickySeller }) => {

@@ -6,7 +6,7 @@ import MyOrderTabs from './myorder/MyOrderTabs';
 import BreadCrumb from '~/shared/ui/breadcrumb';
 import BalanceWithDrawModal from '~/shared/components/modals/balance-with-draw-modal';
 import { useSafeBack } from '~/shared/hooks/useSafeBack';
-import { useContentViewport } from '~/shared/hooks/useContentViewport';
+import { useViewportContext } from '~/shared/hooks/useViewportContext';
 import { FaMoneyCheck } from 'react-icons/fa';
 import SidebarLayout from '~/widgets/sidebar/SidebarLayout';
 import styles from './style.module.scss';
@@ -14,7 +14,7 @@ import styles from './style.module.scss';
 const MyOrdersMain = () => {
     const { data } = useGetCustomBalance();
     const safeBack = useSafeBack();
-    const { headerHeight } = useContentViewport();
+    const { headerHeight } = useViewportContext();
     const [open, setOpen] = useState(false);
     const [showStickyButton, setShowStickyButton] = useState(false);
     const buttonRef = useRef(null);

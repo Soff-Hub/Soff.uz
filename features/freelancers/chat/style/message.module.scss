@@ -4,11 +4,26 @@
     gap: 8px;
     margin-bottom: 8px;
 
+    &.messageEnter {
+        animation: messageSlideIn 100ms ease-in-out;
+    }
+
     .avatar {
         width: 32px;
         height: 32px;
         border-radius: 50%;
         object-fit: cover;
+    }
+}
+
+@keyframes messageSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
     }
 }
 
@@ -61,11 +76,45 @@
     background-color: #00a44f;
     color: white;
     align-self: flex-end;
+    position: relative;
+    border-bottom-right-radius: 0px;
+
+    // ✅ Small, subtle tail at bottom-right corner (Telegram-style)
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        right: -5px;
+        width: 5px;
+        height: 5px;
+        background-color: #00a44f;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        // Small triangle tail
+        clip-path: polygon(0 0, 0 100%, 100% 100%);
+    }
 }
 
 .other_message {
     background-color: #e6e6e6;
     align-self: flex-start;
+    position: relative;
+    border-bottom-left-radius: 0px;
+
+    // ✅ Small, subtle tail at bottom-left corner (Telegram-style)
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: -4px;
+        width: 5px;
+        height: 5px;
+        background-color: #e6e6e6;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+        // Small triangle tail (mirrored for left side)
+        clip-path: polygon(100% 0, 100% 100%, 0 100%);
+    }
 }
 
 .chat_file_box {

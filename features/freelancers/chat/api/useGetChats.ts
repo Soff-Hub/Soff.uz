@@ -1,12 +1,21 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '~/app/store/hooks';
 import axiosInstance from '~/shared/api/freeleanceApi';
 
-const useGetChats = (search = '', limit = 20) => {
-    const { user } = useSelector((state) => state.auth);
+type ChatResponse = {
+    total: number;
+    page: number;
+    limit: number;
+    has_next_page: boolean;
+    has_previous_page: boolean;
+    results: any[];
+};
+
+export const useGetChats = (search = '', limit = 20) => {
+    const { user } = useAppSelector((state) => state.auth);
     const axios = axiosInstance(user?.access);
 
-    return useInfiniteQuery({
+    return useInfiniteQuery<ChatResponse>({
         queryKey: ['chats', search, limit, user?.access],
         queryFn: async ({ pageParam = 1 }) => {
             const params = new URLSearchParams({
@@ -28,15 +37,10 @@ const useGetChats = (search = '', limit = 20) => {
             if (!lastPage) return undefined;
             return lastPage?.has_next_page ? allPages.length + 1 : undefined;
         },
-        initialPageParam: 1,
         refetchOnWindowFocus: true,
         refetchOnMount: 'always',
         retry: 1,
         staleTime: 0,
         enabled: !!user?.access,
-        // Keep previous data while fetching new data to prevent undefined state
-        placeholderData: (previousData) => previousData,
     });
 };
-
-export default useGetChats;

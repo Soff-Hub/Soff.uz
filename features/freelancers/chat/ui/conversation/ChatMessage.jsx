@@ -1,3 +1,10 @@
+import React, {
+    useCallback,
+    useMemo,
+    useEffect,
+    useRef,
+    useState,
+} from 'react';
 import {
     EllipsisOutlined,
     DeleteOutlined,
@@ -11,12 +18,12 @@ import {
 import styles from '../../style/message.module.scss';
 import { Dropdown, message as AntMessage, Modal, Tooltip, Avatar } from 'antd';
 import dayjs from 'dayjs';
-import React, { useCallback, useMemo } from 'react';
 import { truncateTitle } from '~/shared/utilities/TruncateTitle';
 import AvatarTransitioned from './AvatarTransitioned';
 import { FaRegUserCircle } from 'react-icons/fa';
 import OrderCard from '~/widgets/order-card';
 import useResponsive from '~/shared/utilities/useResponsive';
+import { f_base_url } from '~/shared/api/base-url';
 
 const { confirm } = Modal;
 
@@ -39,6 +46,24 @@ const ChatMessage = ({
         Boolean(msg.order) &&
         Boolean(msg.order.files) &&
         msg.order.files?.length > 0;
+
+    // ✅ Track if this message should animate
+    const [shouldAnimate, setShouldAnimate] = useState(true);
+    const hasAnimatedRef = useRef(false);
+    const messageRef = useRef(null);
+
+    // ✅ Trigger animation on mount
+    useEffect(() => {
+        if (!hasAnimatedRef.current && messageRef.current) {
+            hasAnimatedRef.current = true;
+            // Remove animation class after animation completes
+            const timer = setTimeout(() => {
+                setShouldAnimate(false);
+            }, 300); // Match animation duration
+
+            return () => clearTimeout(timer);
+        }
+    }, []);
 
     const handleEdit = useCallback(() => {
         onEdit(msg);
@@ -109,13 +134,13 @@ const ChatMessage = ({
     ]);
 
     const opponentMenuItems = useMemo(() => {
-        if (msg.file) {
+        if (msg.file && fileUrl) {
             return [
                 {
                     key: 'dowload',
                     label: 'Yuklab olish',
                     icon: <DownloadOutlined />,
-                    onClick: () => window.open(msg.file.url, '_blank'),
+                    onClick: () => window.open(fileUrl, '_blank'),
                 },
             ];
         } else {
@@ -128,7 +153,25 @@ const ChatMessage = ({
                 },
             ];
         }
-    }, [msg.content, handleCopy]);
+    }, [msg.content, msg.file, fileUrl, handleCopy]);
+
+    const fileUrl = useMemo(() => {
+        if (!msg.file?.url) return null;
+        // If URL is already absolute, return as is
+        if (
+            msg.file.url.startsWith('http://') ||
+            msg.file.url.startsWith('https://') ||
+            msg.file.url.startsWith('blob:')
+        ) {
+            return msg.file.url;
+        }
+        // If URL starts with /, prefix with base API URL
+        if (msg.file.url.startsWith('/')) {
+            return `${f_base_url}/api/v1${msg.file.url}`;
+        }
+        // Otherwise, assume it's relative to API base
+        return `${f_base_url}/api/v1/${msg.file.url}`;
+    }, [msg.file?.url]);
 
     const readStatus = useMemo(() => {
         if (!isMyMessage) return null;
@@ -175,9 +218,10 @@ const ChatMessage = ({
     return (
         <div
             key={msg.id}
+            ref={messageRef}
             className={`${styles.messageRow} ${
                 isMyMessage ? styles.myRow : styles.otherRow
-            }`}>
+            } ${shouldAnimate ? styles.messageEnter : ''}`}>
             {!isMyMessage && (
                 <div
                     style={{
@@ -248,21 +292,27 @@ const ChatMessage = ({
                         {msg.file && (
                             <div className={styles.chat_file_box}>
                                 <FileTextOutlined
-                                    onClick={() =>
-                                        window.open(msg.file.url, '_blank')
-                                    }
+                                    onClick={() => {
+                                        if (fileUrl) {
+                                            window.open(fileUrl, '_blank');
+                                        }
+                                    }}
                                     className={styles.chat_file}
+                                    style={{
+                                        cursor: fileUrl ? 'pointer' : 'default',
+                                    }}
                                 />
                                 <div className={styles.chat_file_info}>
                                     <span className={styles.chat_file_name}>
                                         {truncateTitle(msg.file.filename, 15)}
                                     </span>
                                     <span className={styles.chat_file_size}>
-                                        {(
-                                            msg.file.size /
-                                            (1024 * 1024)
-                                        ).toFixed(2)}{' '}
-                                        MB
+                                        {msg.file.size
+                                            ? (
+                                                  msg.file.size /
+                                                  (1024 * 1024)
+                                              ).toFixed(2) + ' MB'
+                                            : '—'}
                                     </span>
                                 </div>
                             </div>

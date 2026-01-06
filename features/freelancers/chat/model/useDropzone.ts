@@ -3,7 +3,7 @@ import { message } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
 
 type UseDropzoneProps = {
-    chatId: string;
+    chatId?: string;
     maxSize: number;
     edit: any;
     isBlocked: boolean;

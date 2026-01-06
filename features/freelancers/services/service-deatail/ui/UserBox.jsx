@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styles from '../styles/detail.module.scss';
 import { Button } from 'antd';
 import { MessageOutlined, StarFilled } from '@ant-design/icons';
-import useCreateChat from '~/features/freelancers/chat/api/useCreateChat';
+import { useCreateChat } from '~/features/freelancers/chat/api/useCreateChat';
 import { useSelector } from 'react-redux';
 import AuthModal from '~/features/auth/ui/auth-modal';
 import dayjs from 'dayjs';

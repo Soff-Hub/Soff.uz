@@ -3,7 +3,7 @@ import { Button, Modal } from 'antd';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import useCreateChat from '~/features/freelancers/chat/api/useCreateChat';
+import { useCreateChat } from '~/features/freelancers/chat/api/useCreateChat';
 import CalculateTimeDifference from '~/features/account/ui/DateFormatter';
 import {
     getDate,

@@ -9,7 +9,7 @@ const containerStyle = {
     height: '32px',
     borderRadius: '50%',
     overflow: 'hidden',
-};
+} as const;
 
 const commonTransition = {
     position: 'absolute',
@@ -19,9 +19,14 @@ const commonTransition = {
     borderRadius: '50%',
     objectFit: 'cover',
     transition: 'opacity 0.3s ease',
+} as const;
+
+type AvatarTransitionedProps = {
+    msg: { status: string };
+    image: string;
 };
 
-function AvatarTransitioned({ msg, image }) {
+function AvatarTransitioned({ msg, image }: AvatarTransitionedProps) {
     const isLoading = msg.status === 'sending' || msg.status === 'updating';
     const [showSpinner, setShowSpinner] = useState(false);
     const spinnerContainerStyle = {
@@ -67,7 +72,7 @@ function AvatarTransitioned({ msg, image }) {
                 size={32}
                 src={image}
                 icon={<FaRegUserCircle />}
-                className={imgStyle}
+                style={imgStyle}
             />
         </div>
     );

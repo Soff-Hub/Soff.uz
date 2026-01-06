@@ -7,7 +7,7 @@ import Loader from '~/shared/components/loader';
 import CommentSection from '../../services/service-deatail/ui/CommentSection';
 import styles from './style/style.module.scss';
 import { FaRegCommentDots } from 'react-icons/fa';
-import useCreateChat from '~/features/freelancers/chat/api/useCreateChat';
+import { useCreateChat } from '~/features/freelancers/chat/api/useCreateChat';
 import Link from 'next/link';
 import { Button, Badge } from 'antd';
 // import OrderDrawer from './ui/OrderDrawer';

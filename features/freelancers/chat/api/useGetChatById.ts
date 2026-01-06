@@ -1,9 +1,9 @@
-import { useSelector } from 'react-redux';
 import axiosInstance from '../../../../shared/api/freeleanceApi';
 import { useInfiniteQuery } from '@tanstack/react-query';
+import { useAppSelector } from '~/app/store/hooks';
 
-const useGetChatById = (id) => {
-    const { user } = useSelector((state) => state.auth);
+export const useGetChatById = (id?: string) => {
+    const { user } = useAppSelector((state) => state.auth);
     const axios = axiosInstance(user?.access);
 
     return useInfiniteQuery({
@@ -23,5 +23,3 @@ const useGetChatById = (id) => {
         refetchOnMount: 'always',
     });
 };
-
-export default useGetChatById;

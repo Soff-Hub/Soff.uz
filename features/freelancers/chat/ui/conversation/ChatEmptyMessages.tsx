@@ -26,7 +26,9 @@ export const DirectorEmptyState: React.FC<DirectorEmptyStateProps> = ({
             <div className={styles.welcomeMessage}>
                 <p className={styles.greeting}>Assalomu alaykum</p>
                 <p className={styles.instruction}>
-                    Takliflar va so'rovlar uchun xabar yuboring
+                    Talab va takliflaringiz bo‘yicha xabaringizni shu yerda
+                    yuborishingiz mumkin. Murojaatingiz albatta ko‘rib
+                    chiqiladi.
                 </p>
             </div>
         </div>

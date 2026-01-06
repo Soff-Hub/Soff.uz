@@ -13,7 +13,7 @@ import {
 import AuthModal from '~/features/auth/ui/auth-modal';
 import CreateOrderModal from '~/shared/components/modals/CreateOrderModal';
 import { useSelector } from 'react-redux';
-import useCreateChat from '~/features/freelancers/chat/api/useCreateChat';
+import { useCreateChat } from '~/features/freelancers/chat/api/useCreateChat';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { useRouter } from 'next/router';
 import OrderPaymentPrompt from './OrderPaymentPrompt';

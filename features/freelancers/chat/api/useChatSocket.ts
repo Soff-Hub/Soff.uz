@@ -1,13 +1,13 @@
-import React, { useCallback, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import useWebSocket from 'react-use-websocket';
 import { WS_READY_STATE } from '../constants/socket-state';
 
 type useChatSocketProps = {
-    chatId: string;
+    chatId?: string;
     user: any;
 };
 
-function useChatSocket({ chatId, user }: useChatSocketProps) {
+export function useChatSocket({ chatId, user }: useChatSocketProps) {
     const forceReconnectKeyRef = useRef(0);
     const [reconnectKey, setReconnectKey] = useState(0);
     const wsUrl =
@@ -63,5 +63,3 @@ function useChatSocket({ chatId, user }: useChatSocketProps) {
         forceReconnect,
     };
 }
-
-export default useChatSocket;

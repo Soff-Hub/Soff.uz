@@ -40,9 +40,9 @@ function ChatDropOverlay({}: ChatDropOverlayProps) {
                         marginBottom: '16px',
                     }}
                 />
-                <h3 style={{ margin: 0, color: '#1890ff' }}>Rasmni yuklash</h3>
+                <h3 style={{ margin: 0, color: '#1890ff' }}>Faylni yuklash</h3>
                 <p style={{ margin: '8px 0 0 0', color: '#666' }}>
-                    Rasmni bu yerga tashlang
+                    Faylni bu yerga tashlang
                 </p>
             </Card>
         </div>

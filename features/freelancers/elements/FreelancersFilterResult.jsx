@@ -5,7 +5,7 @@ import SearchSellerCard from '~/entities/seller/search-seller-card';
 import FreelancerHorizontalCard from './FreelancerHorizontalCard';
 import AuthModal from '~/features/auth/ui/auth-modal';
 import { useSelector } from 'react-redux';
-import useCreateChat from '~/features/freelancers/chat/api/useCreateChat';
+import { useCreateChat } from '~/features/freelancers/chat/api/useCreateChat';
 import styles from '../styles/freelancers.module.scss';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
 import useResponsive from '~/shared/utilities/useResponsive';

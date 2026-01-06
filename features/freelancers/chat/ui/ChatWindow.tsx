@@ -1,16 +1,15 @@
-import { memo } from 'react';
-import Conversation from './conversation';
+import Conversation from './conversation/Conversation';
 
 type ChatWindowProps = {
-    chatId: string;
+    chatId?: string;
     goBack: () => void;
     isModerator: boolean;
     isDirector: boolean;
-    hideCreateOrderButton: boolean;
+    hideCreateOrderButton?: boolean;
     children?: React.ReactNode;
 };
 
-const ChatWindow = (props: ChatWindowProps) => {
+const ChatWindow: React.FC<ChatWindowProps> = (props) => {
     return (
         <Conversation {...props}>
             <Conversation.Header />
@@ -22,4 +21,4 @@ const ChatWindow = (props: ChatWindowProps) => {
     );
 };
 
-export default memo(ChatWindow);
+export default ChatWindow;

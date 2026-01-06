@@ -9,22 +9,21 @@ type MessageGroupType = {
 };
 
 type useMessageStateProps = {
-    defaultMessages: MessageType[];
+    defaultMessages?: MessageType[];
 };
 
 const getDateKey = (message: MessageType): string => {
-    if (!message.created_at) return 'Yangi';
     return dayjs(message.created_at).format('YYYY-MM-DD');
 };
 
 const getFormattedDate = (dateKey: string): string => {
-    if (!dateKey || !dayjs(dateKey).isValid()) return 'Yangi';
+    if (!dateKey || !dayjs(dateKey).isValid()) return '';
     if (dayjs(dateKey).isToday()) return 'Bugun';
     if (dayjs(dateKey).isYesterday()) return 'Kecha';
     return dayjs(dateKey).format('MMMM D, YYYY');
 };
 
-const groupMessages = (
+export const groupMessages = (
     messages: MessageType[]
 ): Map<string, MessageGroupType> => {
     const sortedMessages = messages
@@ -54,18 +53,39 @@ const groupMessages = (
     }, new Map());
 };
 
-function useMessageState({ defaultMessages }: useMessageStateProps) {
+export function useMessageState({ defaultMessages }: useMessageStateProps) {
     const [messages, setMessages] = useState<Map<string, MessageGroupType>>(
         new Map()
     );
 
     const groupedMessages = useMemo(
         () =>
-            Array.from(messages.values()).sort((a, b) =>
-                b.date.localeCompare(a.date)
-            ),
+            Array.from(messages.values())
+                .map((group) => ({
+                    ...group,
+                    messages: [...group.messages].sort(
+                        (a, b) =>
+                            new Date(a.created_at || 0).getTime() -
+                            new Date(b.created_at || 0).getTime()
+                    ),
+                }))
+                .filter((group) => group.messages.length > 0)
+                .sort((a, b) => a.date.localeCompare(b.date)),
         [messages]
     );
+
+    // Helper: Get flat array of all messages
+    const flatMessages = useMemo(() => {
+        const all: MessageType[] = [];
+        messages.forEach((group) => {
+            all.push(...group.messages);
+        });
+        return all.sort(
+            (a, b) =>
+                new Date(a.created_at || 0).getTime() -
+                new Date(b.created_at || 0).getTime()
+        );
+    }, [messages]);
 
     const addMessage = useCallback((message: MessageType) => {
         const dateKey = getDateKey(message);
@@ -154,12 +174,14 @@ function useMessageState({ defaultMessages }: useMessageStateProps) {
     );
 
     useEffect(() => {
-        setMessages(groupMessages(defaultMessages));
+        if (defaultMessages && defaultMessages.length)
+            setMessages(groupMessages(defaultMessages));
     }, [defaultMessages]);
 
     return {
         groupedMessages,
-        messages,
+        flatMessages,
+        messages, // Map for internal operations
         setMessages,
         addMessage,
         updateMessage,
@@ -167,5 +189,3 @@ function useMessageState({ defaultMessages }: useMessageStateProps) {
         createTempMessage,
     };
 }
-
-export default useMessageState;
