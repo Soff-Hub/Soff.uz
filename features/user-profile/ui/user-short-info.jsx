@@ -11,7 +11,7 @@ import {
     ShoppingOutlined,
 } from '@ant-design/icons';
 import AuthModal from '~/features/auth/ui/auth-modal';
-import CreateOrderModal from '~/shared/components/modals/CreateOrderModal';
+import CreateOrderModal from '~/shared/components/modals/create-order-modal/CreateOrderModal';
 import { useSelector } from 'react-redux';
 import { useCreateChat } from '~/features/freelancers/chat/api/useCreateChat';
 import useResponsive from '~/shared/utilities/useResponsive';

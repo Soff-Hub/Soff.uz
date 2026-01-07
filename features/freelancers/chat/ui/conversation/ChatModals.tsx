@@ -1,6 +1,6 @@
 import React from 'react';
 import OrderApproveFiles from '~/features/order-approve-files';
-import CreateOrderModal from '~/shared/components/modals/CreateOrderModal';
+import CreateOrderModal from '~/shared/components/modals/create-order-modal/CreateOrderModal';
 import { useConversation } from './Conversation';
 import { useQueryClient } from '@tanstack/react-query';
 

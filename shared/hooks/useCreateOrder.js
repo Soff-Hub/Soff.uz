@@ -11,11 +11,11 @@ import {
     Upload,
 } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useFGet, useFPost } from '~/shared/hooks/useFApi';
 import dayjs from 'dayjs';
 import { useRouter } from 'next/router';
-import { Info } from '~/shared/components/modals/CreateOrderModal';
+import { Info } from '~/shared/components/modals/create-order-modal/CreateOrderModal';
 import {
     inputInfoToCreateOrder,
     titleDescription,
@@ -125,23 +125,33 @@ const deadline_content = (
 
 const { TextArea } = Input;
 
-function useCreateOrder() {
+function useCreateOrder({
+    id,
+    size = 'large',
+    defaultDirection,
+    directOrderOnSuccess,
+    directOrderOnClose,
+} = {}) {
     const [form] = Form.useForm();
+    const direction = Form.useWatch('direction', form);
     const budget = Form.useWatch('budget', form);
     const categoryId = Form.useWatch('category_id', form);
     const { isDesktop } = useResponsive();
-    const [direction, setDirection] = useState(null);
     const [files, setFiles] = useState(null);
     const { user } = useSelector((state) => state.auth);
-    const { push, query, replace, pathname } = useRouter();
+    const {
+        push,
+        query,
+        replace,
+        pathname,
+        isReady: isRouterReady,
+    } = useRouter();
     const [confirmOpen, setConfirmOpen] = useState(false);
     const { data: directions } = useGetDirectionsQuery();
     const [showLeftGradient, setShowLeftGradient] = useState(false);
     const [showRightGradient, setShowRightGradient] = useState(true);
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
-    const dispatch = useDispatch();
     const { startTimeout } = useTimeManager();
-    const onfirstRender = useRef(true);
     const [phoneModalOpen, setPhoneModalOpen] = useState(false);
     const [pendingOrderData, setPendingOrderData] = useState(null);
 
@@ -165,46 +175,20 @@ function useCreateOrder() {
     const minPrice = priceList ? priceList[0]?.amount : 2000;
 
     useEffect(() => {
-        form.setFieldValue('direction', direction);
-        if (onfirstRender.current) return;
-        replace(
-            {
-                pathname: pathname,
-                query: { ...query, direction: direction },
-            },
-            undefined,
-            { shallow: true }
-        );
-    }, [direction]);
-
-    useEffect(() => {
-        if (onfirstRender.current) {
-            onfirstRender.current = false;
-
-            // if (!query?.direction) {
-            //     replace(
-            //         {
-            //             pathname: pathname,
-            //             query: { ...query, direction: 'scientific_work' },
-            //         },
-            //         undefined,
-            //         { shallow: true }
-            //     );
-            // }
-
-            if (query?.direction) {
-                setDirection(query?.direction);
-            }
+        const direction =
+            query.direction || defaultDirection || 'scientific_work';
+        if (!query.direction && isRouterReady) {
+            replace(
+                {
+                    pathname: pathname,
+                    query: { ...query, direction: direction },
+                },
+                undefined,
+                { shallow: true }
+            );
         }
-    }, [query?.direction]);
-
-    const handleOpenConfirm = () => {
-        setConfirmOpen(true);
-    };
-
-    const handleCloseConfirm = () => {
-        setConfirmOpen(false);
-    };
+        form.setFieldValue('direction', direction);
+    }, [isRouterReady, defaultDirection]);
 
     const { mutate: createOrder, isPending } = useFPost({
         url: 'order/custom-order',
@@ -248,6 +232,60 @@ function useCreateOrder() {
         },
     });
 
+    const { mutate: createDirectOrder, isPending: isDirectOrderPending } =
+        useFPost({
+            url: 'order/direct-order',
+            token: user?.access,
+            onSuccess: (data) => {
+                message.success('Buyurtma muvaffaqiyatli yuborildi!');
+                if (directOrderOnSuccess) {
+                    directOrderOnSuccess({
+                        id: data?.id,
+                        price: form.getFieldValue('budget'),
+                        title: form.getFieldValue('title'),
+                    });
+                } else {
+                    push(`/order/${data?.id}`);
+                }
+                form.resetFields();
+                directOrderOnClose();
+                setConfirmOpen(false);
+            },
+            onError: (err) => {
+                setConfirmOpen(false);
+
+                const errorData = err?.response?.data;
+                const errorDetail =
+                    errorData?.detail || errorData?.message || err.message;
+                if (errorDetail.includes('telefon raqam')) {
+                    const values = form.getFieldsValue();
+                    const order = {
+                        direction: direction,
+                        category_id: values.category_id,
+                        title: form.getFieldValue('title'),
+                        description: values.description,
+                        language: values.language,
+                        budget: values.budget,
+                        deadline_date: `${dayjs(values.deadline_date).format(
+                            'YYYY-MM-DD'
+                        )} ${dayjs(values.deadline_time).format('HH:mm')}`,
+                    };
+                    setPendingOrderData({ order, files });
+                    setPhoneModalOpen(true);
+                }
+                const errorMsg = errorDetail || "Noma'lum xato yuz berdi";
+                message.error(errorMsg);
+            },
+        });
+
+    const handleOpenConfirm = () => {
+        setConfirmOpen(true);
+    };
+
+    const handleCloseConfirm = () => {
+        setConfirmOpen(false);
+    };
+
     const handleThumbProgress = (swiper) => {
         const progress = swiper.progress;
         const isBeginning = swiper.isBeginning;
@@ -271,39 +309,47 @@ function useCreateOrder() {
             )} ${dayjs(values.deadline_time).format('HH:mm')}`,
         };
 
-        const fd = new FormData();
+        if (id) order.seller_id = id;
+
+        const formData = new FormData();
 
         for (const [key, value] of Object.entries(order)) {
-            fd.append(key, value);
+            formData.append(key, value);
         }
 
         if (files && files.length > 0) {
-            fd.append('file', files[0].originFileObj);
+            formData.append('file', files[0].originFileObj);
         }
 
-        createOrder(fd);
+        if (id) {
+            createDirectOrder(formData);
+        } else {
+            createOrder(formData);
+        }
     };
 
     const handlePhoneSubmit = (phoneNumber) => {
         if (!pendingOrderData) return;
 
-        const fd = new FormData();
+        const formData = new FormData();
 
-        // Use pending order data
         for (const [key, value] of Object.entries(pendingOrderData.order)) {
-            fd.append(key, value);
+            formData.append(key, value);
         }
 
-        // Add phone number
-        fd.append('contact_phonenumber', phoneNumber);
+        formData.append('contact_phonenumber', phoneNumber);
 
-        // Add file if exists
         if (pendingOrderData.files && pendingOrderData.files.length > 0) {
-            fd.append('file', pendingOrderData.files[0].originFileObj);
+            formData.append('file', pendingOrderData.files[0].originFileObj);
         }
 
         setPhoneModalOpen(false);
-        createOrder(fd);
+
+        if (id) {
+            createDirectOrder(formData);
+        } else {
+            createOrder(formData);
+        }
     };
 
     const handlePhoneModalCancel = () => {
@@ -312,10 +358,16 @@ function useCreateOrder() {
     };
 
     const handleDirectionChange = (val) => {
-        setDirection(val);
+        replace(
+            {
+                pathname: pathname,
+                query: { ...query, direction: val },
+            },
+            undefined,
+            { shallow: true }
+        );
         form.resetFields(['category_id']);
         form.setFieldValue('title', '');
-        // form.setFieldValue('direction', direction);
     };
 
     const formItems = [
@@ -334,7 +386,7 @@ function useCreateOrder() {
                     <Select
                         onChange={handleDirectionChange}
                         className="form-element"
-                        size="large"
+                        size={size}
                         options={directions}
                         placeholder="Yo'nalishni tanlang"
                     />
@@ -373,7 +425,7 @@ function useCreateOrder() {
                         placeholder={inputInfoToCreateOrder[
                             'category'
                         ].placeholder(directions)}
-                        size="large"
+                        size={size}
                         options={categories?.map((cat) => ({
                             label: cat?.title,
                             value: cat?.id,
@@ -485,7 +537,7 @@ function useCreateOrder() {
                     <Select
                         className="form-element"
                         placeholder={inputInfoToCreateOrder['lang'].placeholder}
-                        size="large"
+                        size={size}
                         options={[
                             { label: "O'zbekcha", value: 'uzb' },
                             { label: 'Ruscha', value: 'rus' },
@@ -520,7 +572,7 @@ function useCreateOrder() {
                         style={{ width: '100%' }} // height'ni olib tashlang, CSS'dan keladi
                         className="form-element"
                         placeholder={inputInfoToCreateOrder.price.placeholder}
-                        size="large"
+                        size={size}
                         formatter={(value) =>
                             value
                                 ? `${value}`.replace(
@@ -661,7 +713,7 @@ function useCreateOrder() {
                                 placement="bottomLeft"
                                 className="form-element"
                                 placeholder="Buyurtma tayyor bo‘lish sanasi va soatini tanlang"
-                                size="large"
+                                size={size}
                                 disabledDate={(current) =>
                                     current && current < dayjs().startOf('day')
                                 }
@@ -669,12 +721,12 @@ function useCreateOrder() {
                         </Form.Item>
                         <Form.Item
                             name="deadline_time"
-                            size="large"
+                            size={size}
                             rules={[{ required: true, message: '' }]}>
                             <TimePicker
                                 format="HH:mm"
                                 placeholder="Soat"
-                                size="large"
+                                size={size}
                                 className="ant-picker-time-panel-column form-element"
                                 disabledDate={(current) =>
                                     current && current < dayjs().startOf('day')
@@ -701,6 +753,7 @@ function useCreateOrder() {
         formItemsContent,
         budget,
         isPending,
+        isDirectOrderPending,
         confirmOpen,
         handleConfirm,
         handleOpenConfirm,
@@ -737,6 +790,7 @@ const withPopover = (item, isDesktop, position) => {
         <div key={item.id}>{item.content}</div>
     );
 };
+
 const definePosition = (index, length) => {
     if (typeof window !== 'undefined') {
         const screenWidth = window.innerWidth;
@@ -762,6 +816,6 @@ const definePosition = (index, length) => {
     // 1400px va undan katta - o'ng tomonda
     if (index === 0) return 'rightTop';
     if (index === length - 1) return 'rightBottom';
-    return 'right';
+    return 'rightTop';
 };
 export default useCreateOrder;

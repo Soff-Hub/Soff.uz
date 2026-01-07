@@ -8,16 +8,15 @@ const MenuCategoriesDropdown = () => {
     return (
         <div className="menu--product-categories">
             <Link href={'https://seller.soff.uz/'} target="_blank">
-                <a>
-                    <p
-                        className={`${styles.navLinkFreelance} my-0`}
-                        style={{
-                            color: '#00a44f',
-                            fontWeight: '500',
-                            marginRight: isMobile ? 0 : '5px',
-                        }}>
-                        Sotuvchi bo'lish
-                    </p>
+                <a
+                    target="_blank"
+                    className={`${styles.navLinkFreelance} my-0`}
+                    style={{
+                        color: '#00a44f',
+                        fontWeight: '500',
+                        marginRight: isMobile ? 0 : '5px',
+                    }}>
+                    Sotuvchi bo'lish
                 </a>
             </Link>
         </div>
