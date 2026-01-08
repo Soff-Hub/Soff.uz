@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import dynamic from 'next/dynamic';
 import ImageCarousel from './ui/ImageCarousel';
 import styles from './styles/detail.module.scss';
@@ -10,8 +10,6 @@ import { useRouter } from 'next/router';
 import Meta from '~/shared/ui/meta';
 import ServiceCard from '../../../../entities/service/service-card';
 import useResponsive from '~/shared/utilities/useResponsive';
-import { useDispatch } from 'react-redux';
-import { setShowSearch } from '~/store/fast-dowload/slice';
 import { Alert } from 'antd';
 
 // Lazy load below-the-fold components
@@ -33,7 +31,6 @@ const StickyBox = dynamic(() => import('./ui/sticky-box'), {
 
 const ServiceDetail = ({ data }) => {
     const { push } = useRouter();
-    const dispatch = useDispatch();
     const {
         service,
         seller_portfolio,
@@ -88,14 +85,6 @@ const ServiceDetail = ({ data }) => {
             ])
             .flatMap((i) => i),
     ].filter(Boolean);
-
-    useEffect(() => {
-        dispatch(setShowSearch(false));
-
-        return () => {
-            dispatch(setShowSearch(true));
-        };
-    }, [dispatch]);
 
     return (
         <div className="container my-5 navTabsPadding">

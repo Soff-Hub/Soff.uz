@@ -1,33 +1,19 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Thumbs } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/thumbs';
 import ImageLightBox from './image-lightbox';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import DemoButton from '~/shared/ui/forms/demoBtn';
 import Link from 'next/link';
 import Image from 'next/image';
 import useResponsive from '~/shared/utilities/useResponsive';
-
-const getYouTubeEmbed = (url) => {
-    if (!url) return null;
-    try {
-        const videoId =
-            url.split('v=')[1]?.split('&')[0] ||
-            url.split('youtu.be/')[1]?.split('?')[0];
-        return `https://www.youtube.com/embed/${videoId}`;
-    } catch {
-        return null;
-    }
-};
-
-function getYouTubeThumbnail(url) {
-    const match = url.match(/(?:v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
-    const id = match ? match[1] : null;
-    return id ? `https://img.youtube.com/vi/${id}/maxresdefault.jpg` : null;
-}
+import {
+    getYouTubeEmbed,
+    getYouTubeThumbnail,
+} from '~/shared/utilities/youtube-helpers';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/thumbs';
 
 const ImageCarousel = ({
     images,

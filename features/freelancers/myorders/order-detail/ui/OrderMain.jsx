@@ -1,6 +1,5 @@
-import { Breadcrumb, Button, Modal, Alert, Tooltip, Switch } from 'antd';
+import { Breadcrumb, Button, Modal, Tooltip, Switch } from 'antd';
 import { DownloadOutlined, BellOutlined } from '@ant-design/icons';
-import { GrStatusWarning } from 'react-icons/gr';
 import React, { useEffect, useState } from 'react';
 import styles from '../style/style.module.scss';
 import modalStyles from '~/features/user-profile/styles/orderPaymentPrompt.module.scss';
@@ -12,8 +11,6 @@ import ServiceCheckout from '~/features/freelancers/services/service-deatail/ui/
 import useGetFile from '../api/useGetFile';
 import { useQueryClient } from '@tanstack/react-query';
 import useResponsive from '~/shared/utilities/useResponsive';
-import { useDispatch } from 'react-redux';
-import { setShowSearch } from '~/store/fast-dowload/slice';
 import { IoCheckboxOutline } from 'react-icons/io5';
 import TelegramNotification from '~/shared/components/telegram-notlification';
 import useGetCustomBalance from '~/features/freelancers/myorders/myorder/api/useGetCustomBalance';
@@ -163,7 +160,6 @@ const OrderMain = ({ order }) => {
     const queryClient = useQueryClient();
     const { isDesktop } = useResponsive();
     const { data } = useGetCustomBalance();
-    const dispatch = useDispatch();
 
     const price = order?.service?.price || order?.budget || 0;
     const balance = Number(data?.wallet || 0);
@@ -203,14 +199,6 @@ const OrderMain = ({ order }) => {
             setIsOpen(true);
         }
     }, [setIsOpen, order]);
-
-    useEffect(() => {
-        dispatch(setShowSearch(false));
-
-        return () => {
-            dispatch(setShowSearch(true));
-        };
-    }, [dispatch]);
 
     return (
         <div className="col-lg-9 col-12 rounded-2 my-4">

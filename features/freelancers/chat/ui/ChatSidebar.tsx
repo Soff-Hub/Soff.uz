@@ -5,7 +5,6 @@ import React, {
     useRef,
     useEffect,
 } from 'react';
-import styles from '../style/chat.module.scss';
 import { Button, Empty, Input, Spin } from 'antd';
 import { truncateTitle } from '~/shared/utilities/TruncateTitle';
 import { useRouter } from 'next/router';
@@ -18,8 +17,7 @@ import { FaHeadset } from 'react-icons/fa';
 import { FaThumbtack } from 'react-icons/fa';
 import { FaCrown } from 'react-icons/fa';
 import { useViewportContext } from '~/shared/hooks/useViewportContext';
-
-const STATIC_OPPONENT_ID = 30;
+import styles from '../style/chat.module.scss';
 
 function BackButton() {
     const router = useRouter();
@@ -68,40 +66,38 @@ const ChatSidebar: React.FC<ChatSidebarProps> = ({ setChat }) => {
         return +chat?.opponent_id;
     }, []);
 
-    const staticDirectorChat = useMemo(() => {
-        const existingStaticChat = chats?.find(
-            (chat) => getOpponentId(chat) === STATIC_OPPONENT_ID
+    const staticModeratorChat = useMemo(() => {
+        const existingModeratorChat = chats?.find(
+            (chat) => getOpponentId(chat) === MODERATOR_ID
         );
-        if (existingStaticChat)
+
+        if (existingModeratorChat)
             return {
-                ...(existingStaticChat as any),
-                opponent_name: 'Zufarbek Abdurakhmonov',
-                opponent_photo_url: '/static/img/zufarbek.webp',
-                isDirector: true,
+                opponent_name: 'Texnik yordam',
+                ...(existingModeratorChat as any),
+                isModerator: true,
             };
-        // Otherwise, create placeholder static chat
+
         return {
             chat_id: 0,
-            opponent_id: STATIC_OPPONENT_ID,
-            opponent_name: 'Zufarbek Abdurakhmonov',
-            opponent_photo_url: '/static/img/zufarbek.webp',
+            opponent_id: MODERATOR_ID,
+            opponent_name: 'Texnik yordam',
+            opponent_photo_url: null,
             last_message: {
                 content: 'Assalomu alaykum',
                 created_at: new Date().toISOString(),
             },
-            unread_count: 1,
-            isDirector: true,
+            unread_count: 0,
+            isModerator: true,
         };
     }, [chats, getOpponentId]);
 
     const orderedChats = useMemo(() => {
         const dynamicChats =
-            chats?.filter(
-                (chat) => getOpponentId(chat) !== STATIC_OPPONENT_ID
-            ) ?? [];
+            chats?.filter((chat) => getOpponentId(chat) !== MODERATOR_ID) ?? [];
 
-        return [staticDirectorChat, ...dynamicChats];
-    }, [chats, staticDirectorChat, getOpponentId]);
+        return [staticModeratorChat, ...dynamicChats];
+    }, [chats, staticModeratorChat, getOpponentId]);
 
     const isValidChats = Array.isArray(orderedChats) && orderedChats.length > 0;
 
@@ -127,30 +123,16 @@ const ChatSidebar: React.FC<ChatSidebarProps> = ({ setChat }) => {
         };
     }, [hasNextPage, isFetchingNextPage, fetchNextPage, isValidChats]);
 
-    const handleStaticChatClick = async (id: number) => {
-        if (id === STATIC_OPPONENT_ID) {
-            if (staticDirectorChat.chat_id) {
-                setChat(staticDirectorChat);
-                return;
-            }
-        }
-
-        if (id === MODERATOR_ID) {
-            const moderatorChat = chats?.find(
-                (chat) => getOpponentId(chat) === MODERATOR_ID
-            );
-            if (moderatorChat) {
-                setChat({
-                    ...(moderatorChat as any),
-                    isModerator: true,
-                });
-                return;
-            }
+    const handleStaticChatClick = async () => {
+        // If moderator chat already exists (or we have enriched data), just open it
+        if (staticModeratorChat.chat_id) {
+            setChat(staticModeratorChat);
+            return;
         }
 
         try {
-            const data = await createChat(id);
-            setChat({ chat_id: data.chat_id, opponent_id: id });
+            const data = await createChat(MODERATOR_ID);
+            setChat({ chat_id: data.chat_id, opponent_id: MODERATOR_ID });
         } catch (error) {
             console.error('⚠️ Xatolik yuz berdi:', error);
         }
@@ -158,13 +140,8 @@ const ChatSidebar: React.FC<ChatSidebarProps> = ({ setChat }) => {
 
     const handleChat = (chat: any) => {
         const isModerator = chat?.opponent_id === MODERATOR_ID;
-        const isDirector = chat?.isDirector;
-        if (isDirector) {
-            handleStaticChatClick(STATIC_OPPONENT_ID);
-            return;
-        }
         if (isModerator) {
-            handleStaticChatClick(MODERATOR_ID);
+            handleStaticChatClick();
             return;
         }
         setChat(chat);
@@ -273,7 +250,14 @@ const ChatListItem: React.FC<ChatListItemProps> = ({
                         )}
                     </p>
                 </div>
+                <div className={styles.box2}>
+                    <p></p>
+                    {chat?.unread_count > 0 && (
+                        <span>{chat?.unread_count}</span>
+                    )}
+                </div>
                 {isCreatingChat && <Spin size="small" />}
+                <FaThumbtack className={styles.pinnedIcon} title="Topilgan" />
             </div>
         );
     }

@@ -146,12 +146,7 @@ const aboutUsPages = [
     { key: '1', link: '/page/about-us', label: 'Biz haqimizda' },
     { key: '3', link: '/page/faq', label: 'Savollar (FAQ)' },
     { key: '4', link: '/page/form', label: 'Talab va takliflar uchun' },
-    { key: '5', link: '/page/privacy-policy', label: 'Maxfiylik siyosati' },
-    {
-        key: '6',
-        link: '/page/user-agreement',
-        label: 'Foydalanish shartnomasi',
-    },
+    { key: '5', link: '/page/oferta', label: 'Oferta' },
 ];
 
 export default function Footer() {
@@ -160,39 +155,29 @@ export default function Footer() {
 
     return (
         <footer className={styles.mainblock}>
-            <div className="container">
+            <div className={'container'}>
                 <div className={styles.footerContent}>
                     <div className={styles.footerLogoSection}>
                         <img
                             src={`/static/img/soff_green.png`}
                             alt="soff logo"
-                            style={{ width: '200px', height: 'auto' }}
+                            className={styles.footerLogo}
                         />
                         <a
                             href={footerMenu.soff.path}
-                            className={styles.footerMainTitle}
-                            style={{
-                                fontSize: '20px',
-                                marginTop: '24px',
-                                marginBottom: 0,
-                            }}>
+                            className={`${styles.footerMainTitle} ${styles.footerSubtitle}`}>
                             Tayyor mahsulotlar va xizmatlar bir joyda
                         </a>
 
-                        <div
-                            style={{
-                                display: 'flex',
-                                gap: '16px',
-                                alignItems: 'center',
-                                marginTop: '16px',
-                            }}>
+                        <div className={styles.socialIconsContainer}>
                             {footerMenu.social.items.map((item, index) => (
                                 <div
                                     key={item.url}
-                                    style={{
-                                        width: index === 1 ? '42px' : '40px',
-                                    }}
-                                    className={styles.socialIcon}>
+                                    className={`${styles.socialIcon} ${
+                                        index === 1
+                                            ? styles.socialIconLarge
+                                            : ''
+                                    }`}>
                                     <a
                                         href={item.url}
                                         target="_blank"
@@ -203,8 +188,8 @@ export default function Footer() {
                             ))}
                         </div>
                         {/* Xizmatlar (Aloqa) */}
-                        <div className="mt-5">
-                            <h5 className="fw-semibold fs-2 text-white">
+                        <div className={styles.sectionMargin}>
+                            <h5 className={styles.sectionTitle}>
                                 {footerMenu.services.title}
                             </h5>
                             <ul>
@@ -214,14 +199,14 @@ export default function Footer() {
                                             <Link href={link.link}>
                                                 <a
                                                     target="_blank"
-                                                    className="fs-4"
+                                                    className={styles.linkText}
                                                     rel="noopener noreferrer">
                                                     {link.name}
                                                 </a>
                                             </Link>
                                         </li>
                                     ) : (
-                                        <li key={i} className="fs-4">
+                                        <li key={i} className={styles.linkText}>
                                             {link.name}
                                         </li>
                                     )
@@ -231,7 +216,7 @@ export default function Footer() {
                     </div>
                     <div className={styles.footerLinksSection}>
                         <div>
-                            <h5 className="fw-semibold fs-2 text-white">
+                            <h5 className={styles.sectionTitle}>
                                 Tayyor mahsulotlar
                             </h5>
                             <ul>
@@ -239,7 +224,7 @@ export default function Footer() {
                                     <li key={link.key}>
                                         <Link href={link.link}>
                                             <a
-                                                className="fs-4"
+                                                className={styles.linkText}
                                                 rel="noopener noreferrer">
                                                 {link.label}
                                             </a>
@@ -249,7 +234,7 @@ export default function Footer() {
                             </ul>
                         </div>
                         <div>
-                            <h5 className="fw-semibold fs-2 text-white">
+                            <h5 className={styles.sectionTitle}>
                                 Xizmat turlari
                             </h5>
                             <ul>
@@ -258,7 +243,7 @@ export default function Footer() {
                                         <Link
                                             href={`/orders?direction=${link.value}`}>
                                             <a
-                                                className="fs-4"
+                                                className={styles.linkText}
                                                 rel="noopener noreferrer">
                                                 {link.label}
                                             </a>
@@ -268,7 +253,7 @@ export default function Footer() {
                             </ul>
                         </div>
                         <div>
-                            <h5 className="fw-semibold fs-2 text-white">
+                            <h5 className={styles.sectionTitle}>
                                 Asosiy sahifalar
                             </h5>
                             <ul>
@@ -276,7 +261,7 @@ export default function Footer() {
                                     <li key={link.key}>
                                         <Link href={link.link}>
                                             <a
-                                                className="fs-4"
+                                                className={styles.linkText}
                                                 rel="noopener noreferrer">
                                                 {link.label}
                                             </a>
@@ -286,7 +271,7 @@ export default function Footer() {
                             </ul>
                         </div>
                         <div>
-                            <h5 className="fw-semibold fs-2 text-white">
+                            <h5 className={styles.sectionTitle}>
                                 Biz haqimizda
                             </h5>
                             <ul>
@@ -294,7 +279,7 @@ export default function Footer() {
                                     <li key={link.value}>
                                         <Link href={`${link.link}`}>
                                             <a
-                                                className="fs-4"
+                                                className={styles.linkText}
                                                 rel="noopener noreferrer">
                                                 {link.label}
                                             </a>
@@ -305,14 +290,23 @@ export default function Footer() {
                         </div>
                     </div>
                 </div>
-                <div className="d-flex gap-4 justify-content-between mt-5 border-top pt-4 flex-wrap">
-                    <span>
-                        © {currentYear} Soff.uz — Barcha huquqlar himoyalangan.
-                    </span>
-
+                <div className={styles.footerBottom}>
                     <Link href="/page/oferta">
-                        <a>® Terms | Privacy</a>
+                        <a>
+                            © {currentYear} Soff.uz — Barcha huquqlar
+                            himoyalangan.{' '}
+                        </a>
                     </Link>
+
+                    <div className={styles.footerLinks}>
+                        <Link href="/page/privacy-policy">
+                            <a>Maxfiylik siyosati</a>
+                        </Link>
+                        <div className={styles.divider}></div>
+                        <Link href="/page/user-agreement">
+                            <a>Foydalanish shartnomasi</a>
+                        </Link>
+                    </div>
                 </div>
             </div>
         </footer>

@@ -23,6 +23,7 @@ type ConversationProps = {
     goBack: () => void;
     isModerator: boolean;
     isDirector: boolean;
+    fullHeight?: boolean;
     hideCreateOrderButton?: boolean;
     children?: React.ReactNode;
 };
@@ -94,6 +95,7 @@ function Conversation({
     isModerator = false,
     isDirector = false,
     hideCreateOrderButton = false,
+    fullHeight = false,
     children,
 }: ConversationProps) {
     const router = useRouter();
@@ -250,7 +252,10 @@ function Conversation({
                 onDrop={handleDrop}
                 style={{
                     position: 'relative',
-                    height: containerHeight ? `${containerHeight}px` : '100%',
+                    height:
+                        containerHeight && !fullHeight
+                            ? `${containerHeight}px`
+                            : '100%',
                 }}>
                 {children}
             </div>

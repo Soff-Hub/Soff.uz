@@ -46,14 +46,11 @@ export const login = createAsyncThunk(
             });
             // Store data in localStorage for backward compatibility, but not in Redux state
             if (data) {
-                localStorage.setItem(
-                    'data',
-                    JSON.stringify({ ...data, password: null })
-                );
+                localStorage.setItem('data', JSON.stringify(data));
             }
             return {
                 user,
-                data: data ? { ...data, password: null } : {},
+                data: data ? data : {},
                 status: 'succeeded',
             };
         } catch (error: any) {

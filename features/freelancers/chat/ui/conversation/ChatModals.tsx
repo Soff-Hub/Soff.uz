@@ -1,6 +1,6 @@
 import React from 'react';
 import OrderApproveFiles from '~/features/order-approve-files';
-import CreateOrderModal from '~/shared/components/modals/CreateOrderModal';
+import CreateOrderModal from '~/shared/components/modals/create-order-modal/CreateOrderModal';
 import { useConversation } from './Conversation';
 import { useQueryClient } from '@tanstack/react-query';
 
@@ -19,6 +19,14 @@ function ChatModals({}: ChatModalsProps) {
         feedbackOpen,
         setFeedbackOpen,
     } = useConversation();
+
+    const sellerInfo = {
+        id: chat?.opponent?.id,
+        image: chat?.opponent?.photo_url,
+        name: chat?.opponent?.name,
+        position: chat?.opponent?.position?.title,
+    };
+
     return (
         <>
             <CreateOrderModal
@@ -26,8 +34,8 @@ function ChatModals({}: ChatModalsProps) {
                 onClose={() => setCreateOrderModalOpen(false)}
                 id={chat?.opponent?.id}
                 seller={chat?.opponent?.name}
-                sellerInfo={chat?.opponent}
-                defaultDirection={undefined}
+                sellerInfo={sellerInfo}
+                defaultDirection={chat?.opponent?.position?.direction}
                 onSuccess={undefined}
             />
             <OrderApproveFiles

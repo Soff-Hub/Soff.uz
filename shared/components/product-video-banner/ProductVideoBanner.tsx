@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { FaPlay, FaQuestionCircle } from 'react-icons/fa';
 import VideoModal from '~/shared/ui/video-modal';
 import { useViewportContext } from '~/shared/hooks/useViewportContext';
-import { getYouTubeVideoId } from '~/shared/utilities/extract-video-id';
+import { getYouTubeVideoId } from '~/shared/utilities/youtube-helpers';
 import styles from './ProductVideoBanner.module.scss';
 import buttonStyles from '~/shared/styles/playButton.module.scss';
 

@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { FaPlay } from 'react-icons/fa';
 import styles from '~/shared/styles/playButton.module.scss';
 import VideoModal from '~/shared/ui/video-modal';
-import { getYouTubeVideoId } from '~/shared/utilities/extract-video-id';
+import { getYouTubeVideoId } from '~/shared/utilities/youtube-helpers';
 
 type YoutubeVidProps = {
     videoId?: string;

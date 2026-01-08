@@ -1,6 +1,6 @@
+import React from 'react';
 import { Skeleton } from 'antd';
 import { useRouter } from 'next/router';
-import React, { memo, useMemo } from 'react';
 import ServiceCard from '~/entities/service/service-card';
 import { SELLER_SERVICES } from '~/shared/api/end-points';
 import { useFGet } from '~/shared/hooks/useFApi';
@@ -78,20 +78,14 @@ const UserServices = ({ isOrderingClosed }) => {
     );
 };
 
-export default memo(UserServices);
+export default UserServices;
 
-const ServiceSkeletonGrid = memo(() => {
-    const skeletonItems = useMemo(
-        () =>
-            Array.from({ length: 6 }).map((_, i) => (
-                <Skeleton.Image
-                    key={i}
-                    active
-                    style={{ width: '100%', height: 200, borderRadius: '12px' }}
-                />
-            )),
-        []
-    );
-
-    return <>{skeletonItems}</>;
-});
+const ServiceSkeletonGrid = () => {
+    return Array.from({ length: 6 }).map((_, i) => (
+        <Skeleton.Image
+            key={i}
+            active
+            style={{ width: '100%', height: 200, borderRadius: '12px' }}
+        />
+    ));
+};

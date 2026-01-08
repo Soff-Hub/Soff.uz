@@ -26,6 +26,7 @@
 
     .footerLogo {
         width: 200px;
+        height: auto;
 
         @media (max-width: 1200px) {
             width: 180px;
@@ -40,6 +41,19 @@
         }
     }
 
+    .footerSubtitle {
+        font-size: 20px;
+        margin-top: 24px;
+        margin-bottom: 0;
+    }
+
+    .socialIconsContainer {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+        margin-top: 16px;
+    }
+
     .footerContent {
         display: grid;
         grid-template-columns: repeat(5, 1fr);
@@ -52,6 +66,10 @@
             width: 40px;
             aspect-ratio: 1/1;
             display: flex;
+
+            &.socialIconLarge {
+                width: 42px;
+            }
 
             img {
                 object-fit: contain;
@@ -188,5 +206,51 @@
                 grid-template-columns: repeat(1, 1fr);
             }
         }
+    }
+
+    .sectionTitle {
+        color: #fff;
+        font-weight: 600;
+
+        font-size: calc(1.325rem + 0.9vw);
+
+        @media (min-width: 1200px) {
+            font-size: 2rem;
+        }
+    }
+
+    .linkText {
+        font-size: calc(1.275rem + 0.3vw);
+
+        @media (min-width: 1200px) {
+            font-size: 1.5rem;
+        }
+    }
+
+    .sectionMargin {
+        margin-top: 3rem; // 48px
+    }
+
+    .footerBottom {
+        display: flex;
+        gap: 1.5rem; // 24px
+        justify-content: space-between;
+        margin-top: 3rem; // 48px
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding-top: 1.5rem; // 24px
+        flex-wrap: wrap;
+    }
+
+    .footerLinks {
+        display: flex;
+        gap: 1rem; // 16px
+    }
+
+    .divider {
+        margin: auto;
+        height: 95%;
+        width: 2px;
+        background-color: #ffffff;
+        opacity: 0.5;
     }
 }

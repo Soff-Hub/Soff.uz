@@ -1,10 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import ChatSidebar from './ui/ChatSidebar';
 import ChatWindow from './ui/ChatWindow';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { useRouter } from 'next/router';
-import { useDispatch } from 'react-redux';
-import { setShowSearch } from '~/store/fast-dowload/slice';
 import { MODERATOR_ID } from '~/shared/constants';
 import { Col, Row } from 'antd';
 
@@ -13,7 +11,6 @@ const STATIC_OPPONENT_ID = 30;
 const Chat = () => {
     const { isMobile, isTablet } = useResponsive();
     const router = useRouter();
-    const dispatch = useDispatch();
     const { chatId, opponent_id } = router.query;
 
     const setChat = (chat: any) => {
@@ -34,14 +31,6 @@ const Chat = () => {
             query: { ...restQuery },
         });
     };
-
-    useEffect(() => {
-        dispatch(setShowSearch(false));
-
-        return () => {
-            dispatch(setShowSearch(true));
-        };
-    }, [dispatch]);
 
     const isSmallScreen = isMobile || isTablet;
     const isModerator = MODERATOR_ID === Number(opponent_id);

@@ -1,4 +1,4 @@
-import React, { memo, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { cn } from '~/shared/utilities/cn';
 import {
     CheckCircleOutlined,
@@ -13,6 +13,7 @@ import useResponsive from '~/shared/utilities/useResponsive';
 
 const UserInfo = ({ seller, isOrderingClosed, commentRef, sectionRef }) => {
     const { isMobile } = useResponsive();
+
     const stats = useMemo(
         () => [
             {
@@ -118,9 +119,9 @@ const UserInfo = ({ seller, isOrderingClosed, commentRef, sectionRef }) => {
     );
 };
 
-export default memo(UserInfo);
+export default UserInfo;
 
-const StatCard = memo(({ stat, className }) => {
+const StatCard = ({ stat, className }) => {
     return (
         <div
             className={cn(
@@ -145,6 +146,6 @@ const StatCard = memo(({ stat, className }) => {
             </div>
         </div>
     );
-});
+};
 
 StatCard.displayName = 'StatCard';

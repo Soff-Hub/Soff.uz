@@ -47,6 +47,10 @@
     flex: 1;
     min-width: 0;
     padding-bottom: 3px;
+
+    @media (max-width: 480px) {
+        gap: 0px;
+    }
 }
 
 .productTitle {

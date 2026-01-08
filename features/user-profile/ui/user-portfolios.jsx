@@ -1,6 +1,6 @@
+import React, { useCallback, useState } from 'react';
 import { Skeleton } from 'antd';
 import { useRouter } from 'next/router';
-import React, { memo, useCallback, useMemo, useState } from 'react';
 import PortfolioCard from '~/entities/portfolio/portfolio-card';
 import { SELLER_PORTFOLIOS } from '~/shared/api/end-points';
 import { useFGet } from '~/shared/hooks/useFApi';
@@ -86,20 +86,14 @@ const UserPortfolios = () => {
     );
 };
 
-export default memo(UserPortfolios);
+export default UserPortfolios;
 
-const PortfolioSkeletonGrid = memo(() => {
-    const skeletonItems = useMemo(
-        () =>
-            Array.from({ length: 6 }).map((_, i) => (
-                <Skeleton.Image
-                    key={i}
-                    active
-                    style={{ width: '100%', height: 200, borderRadius: '12px' }}
-                />
-            )),
-        []
-    );
-
-    return <>{skeletonItems}</>;
-});
+const PortfolioSkeletonGrid = () => {
+    return Array.from({ length: 6 }).map((_, i) => (
+        <Skeleton.Image
+            key={i}
+            active
+            style={{ width: '100%', height: 200, borderRadius: '12px' }}
+        />
+    ));
+};

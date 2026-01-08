@@ -6,7 +6,6 @@ import ProductRepository from '~/repositories/ProductRepository';
 import { addPeriodToThousands } from '../price-formatter';
 import { Skeleton } from 'antd';
 import useCart from '~/shared/hooks/useCart';
-import { setShowSearch } from '~/store/fast-dowload/slice';
 import { cn, useRcn } from '~/shared/utilities/cn';
 import { fileColors } from '~/features/product-details/ui/actions/file-actions';
 
@@ -49,13 +48,6 @@ const RedesignModulePaymentOrderSummary = ({ ecomerce }) => {
     useEffect(() => {
         getPercentage();
     }, []);
-
-    useEffect(() => {
-        dispatch(setShowSearch(false));
-        return () => {
-            dispatch(setShowSearch(true));
-        };
-    }, [dispatch]);
 
     return (
         <div
