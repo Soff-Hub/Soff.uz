@@ -8,6 +8,7 @@ import ProductFilterSection, {
 } from '~/components/elements/product-filter-section/ProductFilterSection';
 import ProductsByCategory from '~/components/partials/category/ProductsByCategory';
 import { useFilteredProducts } from '~/shared/hooks/useFilteredProducts';
+import { fetchJsonSafely } from '~/shared/api/fetch-json';
 
 const type = '3d';
 const defaultTitle = '3D moddellar va Interier dizaynlar';
@@ -21,11 +22,10 @@ export default function ParentChildCategoryPage({
 }) {
     const router = useRouter();
 
-    // Use custom hook for client-side filtering (use childCategory as it's more specific)
     const { productsData: filteredData, isLoading } = useFilteredProducts({
         direction: type,
-        category: childCategory, // Use child category (more specific)
-        defaultData: productsData, // SSG data as default
+        category: childCategory,
+        defaultData: productsData,
         filterKeys: ['search', 'price_from', 'price_to'],
     });
 
@@ -39,7 +39,7 @@ export default function ParentChildCategoryPage({
             },
             undefined,
             { shallow: true }
-        ); // shallow: true prevents getStaticProps from running
+        );
     };
 
     const title = getTitleFromSlug(fourChildData?.results, parentCategory);
@@ -78,22 +78,9 @@ export default function ParentChildCategoryPage({
     );
 }
 
-// Generate paths for ALL parent + child combinations
 export async function getStaticPaths() {
-    const fetchJson = async (url) => {
-        try {
-            const res = await fetch(url);
-            if (!res.ok) return null;
-            return res.json();
-        } catch (error) {
-            console.error('Fetch error:', error);
-            return null;
-        }
-    };
-
-    // 1. Fetch all parent categories
     const fourChildUrl = `${baseUrlUseApi}customer/four-child?direction=${type}`;
-    const fourChildData = await fetchJson(fourChildUrl);
+    const fourChildData = await fetchJsonSafely(fourChildUrl);
 
     if (!fourChildData?.results || fourChildData.results.length === 0) {
         return {
@@ -102,21 +89,18 @@ export async function getStaticPaths() {
         };
     }
 
-    // 2. For each parent, fetch its children and generate paths
     const paths = [];
 
     for (const parent of fourChildData.results) {
         const parentSlug = parent.slug;
 
-        // Fetch children for this parent
         const childCategoryUrl = `${baseUrlUseApi}customer/four-child?direction=${type}&parent__slug=${parentSlug}`;
-        const childCategoryData = await fetchJson(childCategoryUrl);
+        const childCategoryData = await fetchJsonSafely(childCategoryUrl);
 
         if (
             childCategoryData?.results &&
             childCategoryData.results.length > 0
         ) {
-            // Generate path for each child category
             for (const child of childCategoryData.results) {
                 paths.push({
                     params: {
@@ -130,15 +114,14 @@ export async function getStaticPaths() {
 
     return {
         paths,
-        fallback: false, // All combinations are known
+        fallback: false,
     };
 }
 
-// Fetch data for a specific parent + child combination
 export async function getStaticProps({ params }) {
-    const { parentCategory, childCategory } = params;
+    const { parentCategory = '', childCategory = '' } = params;
 
-    const fetchJson = async (url) => {
+    const fetchJsonSafely = async (url) => {
         try {
             const res = await fetch(url);
             if (!res.ok) {
@@ -155,7 +138,7 @@ export async function getStaticProps({ params }) {
         direction: type,
         page: '1',
         page_size: '50',
-        category: childCategory, // Use child category (more specific)
+        category: childCategory,
     });
 
     const productsUrl = `${baseUrlUseApi}customer/products/?${queryParams.toString()}`;
@@ -163,9 +146,9 @@ export async function getStaticProps({ params }) {
     const childCategoryUrl = `${baseUrlUseApi}customer/four-child?direction=${type}&parent__slug=${parentCategory}`;
 
     const [productsData, fourChildData, childCategoryData] = await Promise.all([
-        fetchJson(productsUrl),
-        fetchJson(fourChildUrl),
-        fetchJson(childCategoryUrl),
+        fetchJsonSafely(productsUrl),
+        fetchJsonSafely(fourChildUrl),
+        fetchJsonSafely(childCategoryUrl),
     ]);
 
     if (!productsData) {
@@ -176,12 +159,12 @@ export async function getStaticProps({ params }) {
 
     return {
         props: {
-            productsData: productsData || null,
-            fourChildData: fourChildData || null,
-            childCategoryData: childCategoryData || null,
-            parentCategory: parentCategory || '',
-            childCategory: childCategory || '',
+            productsData,
+            fourChildData,
+            childCategoryData,
+            parentCategory,
+            childCategory,
         },
-        revalidate: 300, // ISR: revalidate every 5 minutes
+        revalidate: 300,
     };
 }

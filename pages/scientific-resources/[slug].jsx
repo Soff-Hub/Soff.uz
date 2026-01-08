@@ -9,6 +9,7 @@ import styles from '~/widgets/home/catalog/style.module.scss';
 import Image from 'next/image';
 import ProductFilterSection from '~/components/elements/product-filter-section/ProductFilterSection';
 import GrayCard from '~/widgets/gray-card';
+import { fetchJsonSafely } from '~/shared/api/fetch-json';
 
 const metaProps = {
     image: 'https://soff.uz/static/img/ilmiy-ishlar-2.png',
@@ -203,29 +204,21 @@ export async function getServerSideProps(context) {
     if (Number(from_page)) queryParams.append('from_page', from_page);
     if (Number(to_page) < 100) queryParams.append('to_page', to_page);
 
-    const fetchJson = async (url) => {
-        const res = await fetch(url);
-        if (!res.ok) {
-            return null;
-        }
-        return res.json();
-    };
-
     const productsUrl = `${baseUrlUseApi}customer/products/?${queryParams.toString()}`;
     const fourChildUrl = `${baseUrlUseApi}customer/four-child?direction=${type}`;
     const childCategoryUrl = `${baseUrlUseApi}customer/four-child?direction=${type}&parent__slug=${parentCategory}`;
 
     const [productsData, fourChildData, childCategoryData] = await Promise.all([
-        fetchJson(productsUrl),
-        fetchJson(fourChildUrl),
-        fetchJson(childCategoryUrl),
+        fetchJsonSafely(productsUrl),
+        fetchJsonSafely(fourChildUrl),
+        fetchJsonSafely(childCategoryUrl),
     ]);
 
     return {
         props: {
-            productsData: productsData || null,
-            fourChildData: fourChildData || null,
-            childCategoryData: childCategoryData || null,
+            productsData: productsData,
+            fourChildData: fourChildData,
+            childCategoryData: childCategoryData,
             parentCategory,
             childCategory,
             page,

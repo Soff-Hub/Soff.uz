@@ -1,4 +1,3 @@
-// import Meta from '~/components/shared/meta';
 import Meta from '~/shared/ui/meta';
 import UserProfile from '~/features/user-profile';
 import { d_base_url } from '~/shared/api/base-url';
@@ -40,7 +39,6 @@ export async function getServerSideProps(context) {
             },
         };
     } catch (error) {
-        // i should redirect to 404 page
         return {
             notFound: true,
         };

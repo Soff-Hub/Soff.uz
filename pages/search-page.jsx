@@ -16,6 +16,7 @@ import { useQuery } from '@tanstack/react-query';
 import { api } from '~/repositories/api';
 import { baseUrlUseApi } from '~/repositories/useApi';
 import { getOrCreateDeviceId } from '~/shared/utilities/device-id';
+import fetchJson from '~/shared/api/fetch-json';
 
 const Search_Results = ({
     keyword,
@@ -290,8 +291,6 @@ const Search_Results = ({
                 </div>
             </nav>
 
-            {/* Search Results */}
-
             <div className="container ">
                 <Tabs
                     className="order_tabs"
@@ -338,16 +337,6 @@ export async function getServerSideProps(context) {
         limit,
         offset,
     });
-
-    const fetchJson = async (url) => {
-        try {
-            const res = await fetch(url);
-            if (!res.ok) throw new Error('Failed to fetch');
-            return await res.json();
-        } catch (err) {
-            return { error: err.message };
-        }
-    };
 
     // ✅ Yangi filterlar qo‘shildi
     const searchUrl = `${baseUrlUseApi}customer/same-google-search/?limit=50${

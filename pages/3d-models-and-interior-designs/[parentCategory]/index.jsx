@@ -8,6 +8,7 @@ import ProductFilterSection, {
 } from '~/components/elements/product-filter-section/ProductFilterSection';
 import ProductsByCategory from '~/components/partials/category/ProductsByCategory';
 import { useFilteredProducts } from '~/shared/hooks/useFilteredProducts';
+import { fetchJsonSafely } from '~/shared/api/fetch-json';
 
 const type = '3d';
 const defaultTitle = '3D moddellar va Interier dizaynlar';
@@ -20,11 +21,10 @@ export default function ParentCategoryPage({
 }) {
     const router = useRouter();
 
-    // Use custom hook for client-side filtering
     const { productsData: filteredData, isLoading } = useFilteredProducts({
         direction: type,
         category: parentCategory,
-        defaultData: productsData, // SSG data as default
+        defaultData: productsData,
         filterKeys: ['search', 'price_from', 'price_to'],
     });
 
@@ -38,7 +38,7 @@ export default function ParentCategoryPage({
             },
             undefined,
             { shallow: true }
-        ); // shallow: true prevents getStaticProps from running
+        );
     };
 
     const title = getTitleFromSlug(fourChildData?.results, parentCategory);
@@ -71,21 +71,9 @@ export default function ParentCategoryPage({
     );
 }
 
-// Generate paths for ALL parent categories
 export async function getStaticPaths() {
-    const fetchJson = async (url) => {
-        try {
-            const res = await fetch(url);
-            if (!res.ok) return null;
-            return res.json();
-        } catch (error) {
-            console.error('Fetch error:', error);
-            return null;
-        }
-    };
-
     const fourChildUrl = `${baseUrlUseApi}customer/four-child?direction=${type}`;
-    const fourChildData = await fetchJson(fourChildUrl);
+    const fourChildData = await fetchJsonSafely(fourChildUrl);
 
     if (!fourChildData?.results || fourChildData.results.length === 0) {
         return {
@@ -94,7 +82,6 @@ export async function getStaticPaths() {
         };
     }
 
-    // Generate path for each parent category
     const paths = fourChildData.results.map((parent) => ({
         params: {
             parentCategory: parent.slug,
@@ -103,15 +90,14 @@ export async function getStaticPaths() {
 
     return {
         paths,
-        fallback: false, // All parent categories are known
+        fallback: false,
     };
 }
 
-// Fetch data for a specific parent category
 export async function getStaticProps({ params }) {
-    const { parentCategory } = params;
+    const { parentCategory = '' } = params;
 
-    const fetchJson = async (url) => {
+    const fetchJsonSafely = async (url) => {
         try {
             const res = await fetch(url);
             if (!res.ok) {
@@ -128,7 +114,7 @@ export async function getStaticProps({ params }) {
         direction: type,
         page: '1',
         page_size: '50',
-        category: parentCategory, // Use parent category
+        category: parentCategory,
     });
 
     const productsUrl = `${baseUrlUseApi}customer/products/?${queryParams.toString()}`;
@@ -136,9 +122,9 @@ export async function getStaticProps({ params }) {
     const childCategoryUrl = `${baseUrlUseApi}customer/four-child?direction=${type}&parent__slug=${parentCategory}`;
 
     const [productsData, fourChildData, childCategoryData] = await Promise.all([
-        fetchJson(productsUrl),
-        fetchJson(fourChildUrl),
-        fetchJson(childCategoryUrl),
+        fetchJsonSafely(productsUrl),
+        fetchJsonSafely(fourChildUrl),
+        fetchJsonSafely(childCategoryUrl),
     ]);
 
     if (!productsData) {
@@ -149,11 +135,11 @@ export async function getStaticProps({ params }) {
 
     return {
         props: {
-            productsData: productsData || null,
-            fourChildData: fourChildData || null,
-            childCategoryData: childCategoryData || null,
-            parentCategory: parentCategory || '',
+            productsData,
+            fourChildData,
+            childCategoryData,
+            parentCategory,
         },
-        revalidate: 300, // ISR: revalidate every 5 minutes
+        revalidate: 300,
     };
 }

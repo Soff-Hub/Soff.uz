@@ -6,6 +6,7 @@ import { baseUrlUseApi } from '~/repositories/useApi';
 import ProductFilterSection from '~/components/elements/product-filter-section/ProductFilterSection';
 import ProductsByCategory from '~/components/partials/category/ProductsByCategory';
 import { useFilteredProducts } from '~/shared/hooks/useFilteredProducts';
+import { fetchJsonSafely } from '~/shared/api/fetch-json';
 
 const type = '3d';
 const defaultTitle = '3D moddellar va Interier dizaynlar';
@@ -71,19 +72,6 @@ export default function ThreeDModelsAndInteriorDesigns({
 }
 
 export async function getStaticProps() {
-    const fetchJson = async (url) => {
-        try {
-            const res = await fetch(url);
-            if (!res.ok) {
-                return null;
-            }
-            return res.json();
-        } catch (error) {
-            console.error('Fetch error:', error);
-            return null;
-        }
-    };
-
     const queryParams = new URLSearchParams({
         direction: type,
         page: '1',
@@ -94,8 +82,8 @@ export async function getStaticProps() {
     const fourChildUrl = `${baseUrlUseApi}customer/four-child?direction=${type}`;
 
     const [productsData, fourChildData] = await Promise.all([
-        fetchJson(productsUrl),
-        fetchJson(fourChildUrl),
+        fetchJsonSafely(productsUrl),
+        fetchJsonSafely(fourChildUrl),
     ]);
 
     if (!productsData) {

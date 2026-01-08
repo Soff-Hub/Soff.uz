@@ -6,6 +6,7 @@ import Meta from '~/shared/ui/meta';
 import ServicesFilterSection from '~/features/freelancers/services/ServicesFilterSection';
 import ServicesCardSection from '~/features/freelancers/services/ServicesCardSection';
 import { useGetDirectionsQuery } from '~/store/profile/slice';
+import { fetchJsonSafely } from '~/shared/api/fetch-json';
 
 const getTitleFromDirection = (directions, value) => {
     const direction = directions.find((dir) => dir.value === value);
@@ -108,16 +109,6 @@ export async function getServerSideProps(context) {
         offset = 0,
     } = query;
 
-    const fetchJson = async (url) => {
-        try {
-            const res = await fetch(url);
-            if (!res.ok) return null;
-            return await res.json();
-        } catch {
-            return null;
-        }
-    };
-
     const servicesQuery = new URLSearchParams({
         ...(category_id && { category_id }),
         ...(search && { search }),
@@ -135,9 +126,13 @@ export async function getServerSideProps(context) {
         : null;
 
     const [servicesData, parentCategory, childCategory] = await Promise.all([
-        fetchJson(servicesUrl),
-        parentCategoryUrl ? fetchJson(parentCategoryUrl) : Promise.resolve([]),
-        childCategoryUrl ? fetchJson(childCategoryUrl) : Promise.resolve([]),
+        fetchJsonSafely(servicesUrl),
+        parentCategoryUrl
+            ? fetchJsonSafely(parentCategoryUrl)
+            : Promise.resolve([]),
+        childCategoryUrl
+            ? fetchJsonSafely(childCategoryUrl)
+            : Promise.resolve([]),
     ]);
 
     return {

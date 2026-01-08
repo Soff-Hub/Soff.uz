@@ -7,6 +7,7 @@ import ProductsByCategory from '~/components/partials/category/ProductsByCategor
 import ProductFilterSection, {
     getTitleFromSlug,
 } from '~/components/elements/product-filter-section/ProductFilterSection';
+import { fetchJsonSafely } from '~/shared/api/fetch-json';
 
 const type = 'template';
 const defaultTitle = 'Tayyor shablonlar';
@@ -72,14 +73,6 @@ export async function getServerSideProps(context) {
         price_to = '',
     } = context.query;
 
-    const fetchJson = async (url) => {
-        const res = await fetch(url);
-        if (!res.ok) {
-            return null;
-        }
-        return res.json();
-    };
-
     const categoryParam = childCategory ? childCategory : parentCategory;
 
     const queryParams = new URLSearchParams({
@@ -97,9 +90,9 @@ export async function getServerSideProps(context) {
     const childCategoryUrl = `${baseUrlUseApi}customer/four-child?direction=${type}&parent__slug=${parentCategory}`;
 
     const [productsData, fourChildData, childCategoryData] = await Promise.all([
-        fetchJson(productsUrl),
-        fetchJson(fourChildUrl),
-        fetchJson(childCategoryUrl),
+        fetchJsonSafely(productsUrl),
+        fetchJsonSafely(fourChildUrl),
+        fetchJsonSafely(childCategoryUrl),
     ]);
 
     return {
