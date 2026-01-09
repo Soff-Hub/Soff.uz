@@ -1,0 +1,54 @@
+.container {
+    position: relative;
+    overflow: hidden;
+    background: #fafafa;
+}
+
+.contentWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    padding: 40px 20px;
+    width: 100%;
+    max-width: 600px;
+}
+
+.message {
+    text-align: center;
+    max-width: 500px;
+}
+
+.messageText {
+    font-size: 16px;
+    font-weight: 400;
+    color: #666;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.valueCard {
+    display: inline-block;
+    font-size: 18px;
+    font-weight: 700;
+    color: #1890ff;
+    background: rgba(24, 144, 255, 0.1);
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: 1px solid rgba(24, 144, 255, 0.2);
+    margin: 0 4px;
+    line-height: 1.2;
+}
+
+.valueCardGreen {
+    display: inline-block;
+    font-size: 18px;
+    font-weight: 700;
+    color: #52c41a;
+    background: rgba(82, 196, 26, 0.1);
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: 1px solid rgba(82, 196, 26, 0.2);
+    margin: 0 4px;
+    line-height: 1.2;
+}
