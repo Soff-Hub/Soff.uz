@@ -366,6 +366,28 @@ const PurchasedProductsLayout = ({
                                         />
                                         <span>Telegram orqali olish</span>
                                     </Button>
+                                    {/* <Button
+                                        type="link"
+                                        className={styles.soliqBtn}
+                                        onClick={() => {
+                                            // TODO: Replace with actual check URL from item data when available
+                                            const soliqCheckUrl =
+                                                item.soliq_check_url ||
+                                                'https://ofd.soliq.uz/epi?t=EZ000000001005&r=39&c=20260107170554&s=299506026004';
+                                            window.open(
+                                                soliqCheckUrl,
+                                                '_blank'
+                                            );
+                                        }}
+                                        size="middle"
+                                        block>
+                                        <img
+                                            src="/static/img/soliq.webp"
+                                            alt="Soliq"
+                                            height={20}
+                                        />
+                                        <span>Soliq cheki</span>
+                                    </Button> */}
                                 </div>
                             </div>
                         </div>
