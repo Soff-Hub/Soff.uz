@@ -51,30 +51,31 @@ const ProductFilterSection = ({ child, parent, path, isFile, title }) => {
     const childRef = useRef(null);
     const { isMobile } = useResponsive();
     const router = useRouter();
-    const { query, push } = router;
-    const { search: querySearch, parentCategory, childCategory } = query;
+    const { query, asPath, push } = router;
+    const { search: querySearch } = query;
     const debouncedSearch = useDebounce(search, 500);
 
-    const handleParent = (slug, id) => {
-        // Get filter-only query params (preserves price_from, price_to, search, page, etc.)
+    const { parentCategory, childCategory } = useMemo(() => {
+        if (!asPath) return {};
+        const pathOnly = asPath.split('?')[0];
+        const segments = pathOnly.split('/').filter(Boolean);
+        const parentCategory = segments[1];
+        const childCategory = segments[2];
+        return { parentCategory, childCategory };
+    }, [asPath]);
+
+    const handleParent = (slug) => {
         const filterQuery = getFilterQueryParams(query);
 
-        // Build new path with parent category (SSG structure)
         const newPathname = buildCategoryPath(path, slug);
 
-        // Navigate with preserved filters (shallow: true prevents getStaticProps from running)
-        push(
-            {
-                pathname: newPathname,
-                query: filterQuery,
-            },
-            undefined,
-            { shallow: true }
-        );
+        push({
+            pathname: newPathname,
+            query: filterQuery,
+        });
     };
 
-    const handleChild = (slug, id) => {
-        // Get current parent category from router
+    const handleChild = (slug) => {
         const currentParent =
             parentCategory || getCategoryFromRouter(router).parentCategory;
 
@@ -83,21 +84,14 @@ const ProductFilterSection = ({ child, parent, path, isFile, title }) => {
             return;
         }
 
-        // Get filter-only query params
         const filterQuery = getFilterQueryParams(query);
 
-        // Build new path with parent and child category (SSG structure)
         const newPathname = buildCategoryPath(path, currentParent, slug);
 
-        // Navigate with preserved filters (shallow: true prevents getStaticProps from running)
-        push(
-            {
-                pathname: newPathname,
-                query: filterQuery,
-            },
-            undefined,
-            { shallow: true }
-        );
+        push({
+            pathname: newPathname,
+            query: filterQuery,
+        });
     };
 
     const scrollLeft = (ref) => {
@@ -133,7 +127,7 @@ const ProductFilterSection = ({ child, parent, path, isFile, title }) => {
             },
             undefined,
             { shallow: true }
-        ); // shallow: true prevents getStaticProps from running
+        );
     }, [debouncedSearch]);
 
     useDisableWindowScroll(drawerOpen);
@@ -285,12 +279,21 @@ const ProductFilterForm = ({ open, onClose, path, isFile, parent, child }) => {
     const isEnableChanged = useRef(false);
     const { isMobile } = useResponsive();
     const router = useRouter();
-    const { query, push } = router;
+    const { query, asPath, push } = router;
+
+    const { parentCategory, childCategory } = useMemo(() => {
+        if (!asPath) return {};
+        const pathOnly = asPath.split('?')[0];
+        const segments = pathOnly.split('/').filter(Boolean);
+        const parentCategory = segments[1];
+        const childCategory = segments[2];
+        return { parentCategory, childCategory };
+    }, [asPath]);
 
     const isChildOptionsEnabled =
         open &&
         ((Boolean(selectedCategory?.slug) &&
-            selectedCategory?.slug !== query.parentCategory) ||
+            selectedCategory?.slug !== parentCategory) ||
             isEnableChanged.current);
 
     const { data: childData, isFetchingChildData } = useQuery({
@@ -330,20 +333,18 @@ const ProductFilterForm = ({ open, onClose, path, isFile, parent, child }) => {
 
     useEffect(() => {
         if (open) {
-            // Get categories from query (Next.js extracts dynamic route params into query)
-            // Fallback to getCategoryFromRouter for edge cases
             const { parentCategory: pathParent, childCategory: pathChild } =
                 getCategoryFromRouter(router);
-            const currentParent = query.parentCategory || pathParent;
-            const currentChild = query.childCategory || pathChild;
+            const currentParent = parentCategory || pathParent;
+            const currentChild = childCategory || pathChild;
 
             setSelectedCategory({
                 slug: currentParent,
-                id: query.parentCategoryId,
+                id: parentCategory,
             });
             setSelectedSubCategory({
                 slug: currentChild,
-                id: query.childCategoryId,
+                id: childCategory,
             });
             setFileTypes(
                 query.content_extensions
@@ -364,7 +365,6 @@ const ProductFilterForm = ({ open, onClose, path, isFile, parent, child }) => {
     }, [open]);
 
     const handleSaveOnClose = () => {
-        // Build filter-only query params (categories go in path, not query)
         const filterQuery = {
             ...getFilterQueryParams(query),
             content_extensions: fileTypes.length > 0 ? fileTypes : undefined,
@@ -374,7 +374,6 @@ const ProductFilterForm = ({ open, onClose, path, isFile, parent, child }) => {
             to_page: pageRange[1] < 100 ? pageRange[1] : undefined,
         };
 
-        // Remove undefined values
         Object.keys(filterQuery).forEach((key) => {
             if (
                 filterQuery[key] === undefined ||
@@ -385,7 +384,6 @@ const ProductFilterForm = ({ open, onClose, path, isFile, parent, child }) => {
             }
         });
 
-        // Build category path (SSG structure)
         const categoryPath = buildCategoryPath(
             path,
             selectedCategory?.slug || null,
@@ -399,12 +397,11 @@ const ProductFilterForm = ({ open, onClose, path, isFile, parent, child }) => {
             },
             undefined,
             { shallow: true }
-        ); // shallow: true prevents getStaticProps from running
+        );
         onClose();
     };
 
     const handleClear = () => {
-        // Navigate to base path (no categories, no filters)
         const cleanPath = path.endsWith('/') ? path.slice(0, -1) : path;
         push(
             {
@@ -413,7 +410,7 @@ const ProductFilterForm = ({ open, onClose, path, isFile, parent, child }) => {
             },
             undefined,
             { shallow: true }
-        ); // shallow: true prevents getStaticProps from running
+        );
         onClose();
     };
 
@@ -452,7 +449,7 @@ const ProductFilterForm = ({ open, onClose, path, isFile, parent, child }) => {
                     placeholder="Kategoriya tanlang"
                     style={{ width: '100%' }}
                     allowClear
-                    defaultValue={query.parentCategory || undefined}
+                    defaultValue={parentCategory || undefined}
                     onChange={(val, valObj) => {
                         if (!val) {
                             setSelectedCategory(undefined);
@@ -477,7 +474,7 @@ const ProductFilterForm = ({ open, onClose, path, isFile, parent, child }) => {
                         placeholder="Sub kategoriyani tanlang"
                         style={{ width: '100%' }}
                         allowClear
-                        defaultValue={query.childCategory || undefined}
+                        defaultValue={childCategory || undefined}
                         onChange={(val, valObj) => {
                             if (!val) {
                                 setSelectedSubCategory(undefined);
@@ -570,4 +567,5 @@ const ProductFilterForm = ({ open, onClose, path, isFile, parent, child }) => {
         </Drawer>
     );
 };
+
 export default ProductFilterSection;

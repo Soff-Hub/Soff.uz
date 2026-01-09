@@ -1,5 +1,5 @@
-import { useRouter } from 'next/router';
 import React from 'react';
+import { useRouter } from 'next/router';
 import PageContainer from '~/widgets/layouts/PageContainer';
 import Meta from '~/shared/ui/meta';
 import { baseUrlUseApi } from '~/repositories/useApi';
@@ -94,9 +94,9 @@ export async function getStaticProps() {
 
     return {
         props: {
-            productsData: productsData || null,
-            fourChildData: fourChildData || null,
+            productsData,
+            fourChildData,
         },
-        revalidate: 300, // ISR: revalidate every 5 minutes
+        revalidate: 300,
     };
 }

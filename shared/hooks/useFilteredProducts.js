@@ -1,111 +1,61 @@
-import { useQuery } from '@tanstack/react-query';
-import { useRouter } from 'next/router';
 import { useMemo } from 'react';
+import { useRouter } from 'next/router';
 import { baseUrlUseApi } from '~/repositories/useApi';
+import { useQuery } from '@tanstack/react-query';
 
-export function useFilteredProducts({
-    direction,
-    category,
-    defaultData,
-    filterKeys = ['search', 'price_from', 'price_to'],
-    customQueryBuilder = null,
-}) {
-    const router = useRouter();
+export function useFilteredProducts({ direction, defaultData }) {
+    const { query, isReady, asPath } = useRouter();
+    const { page, price_from, price_to } = query;
 
-    // Check if any filters are active
-    const hasActiveFilters = useMemo(() => {
-        return filterKeys.some((key) => {
-            const value = router.query[key];
-            return value !== null && value !== undefined && value !== '';
-        });
-    }, [filterKeys, router.query]);
+    const { parentCategory, childCategory } = useMemo(() => {
+        if (!asPath) return {};
+        const pathOnly = asPath.split('?')[0];
+        const segments = pathOnly.split('/').filter(Boolean);
+        const parentCategory = segments[1];
+        const childCategory = segments[2];
+        return { parentCategory, childCategory };
+    }, [asPath]);
 
-    // Also check for scientific-resources specific filters
-    const hasScientificFilters = useMemo(() => {
-        return !!(
-            router.query.content_extensions ||
-            (router.query.from_page && Number(router.query.from_page) > 0) ||
-            (router.query.to_page && Number(router.query.to_page) < 100)
-        );
-    }, [router.query]);
+    const category = parentCategory || childCategory;
 
-    const hasPagination = Number(router.query.page) > 1;
-
-    // Always fetch when category is provided (category changes should trigger fetch)
-    // Also fetch if filters or pagination are active
-    const shouldFetch =
-        !!category || hasActiveFilters || hasScientificFilters || hasPagination;
-
-    // Build query params
-    const queryParams = useMemo(() => {
+    const queryParamsString = useMemo(() => {
         const params = new URLSearchParams({
             direction,
-            page: (router.query.page || 1).toString(),
+            page: (page || 1).toString(),
             page_size: '50',
         });
 
-        // Always include category (from SSG)
-        if (category) {
-            params.append('category', category);
-        }
+        if (category) params.append('category', category);
+        if (price_from) params.append('price_from', price_from);
+        if (price_to) params.append('price_to', price_to);
 
-        // Use custom query builder if provided, otherwise use default
-        if (customQueryBuilder) {
-            customQueryBuilder(params, router.query);
-        } else {
-            // Default filter handling
-            filterKeys.forEach((key) => {
-                const value = router.query[key];
-                if (value) {
-                    // Handle arrays (like content_extensions)
-                    if (Array.isArray(value)) {
-                        value.forEach((v) => params.append(key, v));
-                    } else {
-                        params.append(key, value);
-                    }
-                }
-            });
+        return params.toString();
+    }, [direction, page, category, price_from, price_to]);
+    console.log(queryParamsString);
+    console.log(parentCategory, childCategory);
 
-            // Handle scientific-resources filters
-            if (router.query.content_extensions) {
-                const exts = Array.isArray(router.query.content_extensions)
-                    ? router.query.content_extensions
-                    : [router.query.content_extensions];
-                exts.forEach((ext) => params.append('content_extensions', ext));
-            }
+    const initialTimestamp = useMemo(() => Date.now(), []);
 
-            if (router.query.from_page && Number(router.query.from_page)) {
-                params.append('from_page', router.query.from_page);
-            }
-
-            if (router.query.to_page && Number(router.query.to_page) < 100) {
-                params.append('to_page', router.query.to_page);
-            }
-        }
-
-        return params;
-    }, [direction, category, filterKeys, router.query, customQueryBuilder]);
-
-    // Fetch filtered data
-    const { data, isLoading, error } = useQuery({
-        queryKey: ['filtered-products', direction, queryParams.toString()],
+    const { data, isFetching, error } = useQuery({
+        queryKey: [category, queryParamsString],
         queryFn: async () => {
             const res = await fetch(
-                `${baseUrlUseApi}customer/products/?${queryParams.toString()}`
+                `${baseUrlUseApi}customer/products/?${queryParamsString}`
             );
-            if (!res.ok) {
-                throw new Error('Failed to fetch products');
-            }
+            if (!res.ok) throw new Error('Failed to fetch');
             return res.json();
         },
-        enabled: shouldFetch,
-        staleTime: 30000, // Cache for 30 seconds
-        keepPreviousData: true,
+        enabled: isReady,
+        initialData: defaultData,
+        initialDataUpdatedAt: initialTimestamp,
+        staleTime: 30000,
+        refetchOnWindowFocus: false,
+        refetchOnMount: false,
     });
 
     return {
-        productsData: shouldFetch ? data : defaultData,
-        isLoading: shouldFetch ? isLoading : false,
-        error: shouldFetch ? error : null,
+        productsData: data,
+        isLoading: isFetching,
+        error,
     };
 }

@@ -24,9 +24,7 @@ export default function ParentChildCategoryPage({
 
     const { productsData: filteredData, isLoading } = useFilteredProducts({
         direction: type,
-        category: childCategory,
         defaultData: productsData,
-        filterKeys: ['search', 'price_from', 'price_to'],
     });
 
     const page = parseInt(router.query.page) || 1;
@@ -120,19 +118,6 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
     const { parentCategory = '', childCategory = '' } = params;
-
-    const fetchJsonSafely = async (url) => {
-        try {
-            const res = await fetch(url);
-            if (!res.ok) {
-                return null;
-            }
-            return res.json();
-        } catch (error) {
-            console.error('Fetch error:', error);
-            return null;
-        }
-    };
 
     const queryParams = new URLSearchParams({
         direction: type,

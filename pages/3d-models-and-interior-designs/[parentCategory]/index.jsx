@@ -23,9 +23,7 @@ export default function ParentCategoryPage({
 
     const { productsData: filteredData, isLoading } = useFilteredProducts({
         direction: type,
-        category: parentCategory,
         defaultData: productsData,
-        filterKeys: ['search', 'price_from', 'price_to'],
     });
 
     const page = parseInt(router.query.page) || 1;
@@ -94,21 +92,8 @@ export async function getStaticPaths() {
     };
 }
 
-export async function getStaticProps({ params }) {
+export async function getStaticProps({ params, query }) {
     const { parentCategory = '' } = params;
-
-    const fetchJsonSafely = async (url) => {
-        try {
-            const res = await fetch(url);
-            if (!res.ok) {
-                return null;
-            }
-            return res.json();
-        } catch (error) {
-            console.error('Fetch error:', error);
-            return null;
-        }
-    };
 
     const queryParams = new URLSearchParams({
         direction: type,
