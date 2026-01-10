@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import useDebounce from './useDebounce';
 import axiosInstance from '../api/freeleanceApi';
 import { useQuery } from '@tanstack/react-query';
@@ -34,6 +34,7 @@ const staticOptions = {
 function useSearch() {
     const router = useRouter();
     const [search, setSearch] = useState('');
+    const [isNavigating, setIsNavigating] = useState(false);
     const [type, setType] = useState('mahsulotlar');
     const debouncedSearch = useDebounce(search, 500);
     const { addSearchHistoryItem } = useHistorySearch();
@@ -155,39 +156,33 @@ function useSearch() {
         retry: 1,
     });
 
-    const handleSearch = async () => {
-        if (type === 'mahsulotlar') {
-            await router.push(
-                `/search-page/?keyword=${search}&tab=1&type=file`
-            );
-            addSearchHistoryItem({ value: search, type: 'mahsulotlar' });
-        } else if (type === 'xizmatlar') {
-            await router.push(`/search-page/?keyword=${search}&tab=2&type=all`);
-            addSearchHistoryItem({ value: search, type: 'xizmatlar' });
-        } else if (type === 'mutaxasislar') {
-            await router.push(`/search-page/?keyword=${search}&tab=3&type=all`);
-            addSearchHistoryItem({ value: search, type: 'mutaxasislar' });
-        }
-    };
-
     const handleClickOption = async (optionValue) => {
-        setSearch(optionValue);
+        try {
+            setIsNavigating(true);
+            setSearch(optionValue);
 
-        if (type === 'mahsulotlar') {
-            await router.push(
-                `/search-page/?keyword=${optionValue}&tab=1&type=file`
-            );
-        } else if (type === 'xizmatlar') {
-            await router.push(
-                `/search-page/?keyword=${optionValue}&tab=2&type=all`
-            );
-        } else if (type === 'mutaxasislar') {
-            await router.push(
-                `/search-page/?keyword=${optionValue}&tab=3&type=all`
-            );
+            if (type === 'mahsulotlar') {
+                await router.push(
+                    `/search-page/?keyword=${optionValue}&tab=1&type=file`
+                );
+            } else if (type === 'xizmatlar') {
+                await router.push(
+                    `/search-page/?keyword=${optionValue}&tab=2&type=all`
+                );
+            } else if (type === 'mutaxasislar') {
+                await router.push(
+                    `/search-page/?keyword=${optionValue}&tab=3&type=all`
+                );
+            }
+            addSearchHistoryItem({ value: optionValue, type });
+        } catch (error) {
+            console.error('Error navigating to search page:', error);
+        } finally {
+            setIsNavigating(false);
         }
-        addSearchHistoryItem({ value: optionValue, type });
     };
+
+    const handleSearch = async () => await handleClickOption(search);
 
     const options = useMemo(() => {
         if (type === 'mahsulotlar') {
@@ -241,6 +236,8 @@ function useSearch() {
         type,
         setType,
         debouncedSearch,
+        isNavigating,
+        setIsNavigating,
         isLoading: productsLoading || servicesLoading || specialistsLoading,
         handleSearch,
         handleClickOption,

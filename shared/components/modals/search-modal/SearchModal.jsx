@@ -21,6 +21,8 @@ function SearchModal({ onClose, open, defaultType = 'mahsulotlar' }) {
         handleClickOption,
         options,
         isLoading,
+        isNavigating,
+        setIsNavigating,
     } = useSearch();
     const [isSearchFocused, setIsSearchFocused] = useState(false);
 
@@ -44,6 +46,7 @@ function SearchModal({ onClose, open, defaultType = 'mahsulotlar' }) {
             <div className={searchStyle.searchBoxMobile}>
                 <Select
                     value={type}
+                    disabled={isNavigating}
                     onChange={(val) => setType(val)}
                     className={searchStyle.select}>
                     <Option value="mahsulotlar">Mahsulotlar</Option>
@@ -53,6 +56,7 @@ function SearchModal({ onClose, open, defaultType = 'mahsulotlar' }) {
 
                 <Input
                     ref={searchRef}
+                    disabled={isNavigating}
                     classNames={{
                         prefix: searchStyle.inputIconPrefix,
                     }}
@@ -90,6 +94,7 @@ function SearchModal({ onClose, open, defaultType = 'mahsulotlar' }) {
                 <div className="d-flex w-100">
                     <Select
                         value={type}
+                        disabled={isNavigating}
                         onChange={(val) => setType(val)}
                         className={searchStyle.select}
                         bordered={false}>
@@ -100,6 +105,7 @@ function SearchModal({ onClose, open, defaultType = 'mahsulotlar' }) {
 
                     <Input
                         ref={searchRef}
+                        disabled={isNavigating}
                         className={searchStyle.input}
                         placeholder={'izlash...'}
                         onFocus={() => setIsSearchFocused(true)}
@@ -141,6 +147,8 @@ function SearchModal({ onClose, open, defaultType = 'mahsulotlar' }) {
                         handleClickOption={handleClickOption}
                         options={options}
                         isLoading={isLoading}
+                        isNavigating={isNavigating}
+                        setIsNavigating={setIsNavigating}
                     />
                 </div>
             </div>
