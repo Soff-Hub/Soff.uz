@@ -99,7 +99,6 @@ export default function ProductDefaultPage({ defaultProducts }) {
     const similarRef = useRef();
     const lastProductsRef = useRef();
 
-    // Memoize expensive computations
     const contentType = useMemo(
         () => defaultProducts?.document?.content_type,
         [defaultProducts?.document?.content_type]
@@ -115,7 +114,6 @@ export default function ProductDefaultPage({ defaultProducts }) {
         [contentType]
     );
 
-    // Check if Joyride should run (only on first visit)
     useEffect(() => {
         if (typeof window === 'undefined') return;
 
@@ -123,7 +121,6 @@ export default function ProductDefaultPage({ defaultProducts }) {
             'product-tour-completed'
         );
         if (!hasSeenProductTour) {
-            // Delay Joyride to prevent blocking initial render
             const timer = setTimeout(() => {
                 setShowJoyride(true);
             }, 2000);
@@ -131,7 +128,6 @@ export default function ProductDefaultPage({ defaultProducts }) {
         }
     }, []);
 
-    // Memoize Meta props to prevent unnecessary re-renders
     const metaProps = useMemo(() => {
         const removeHTMLTags = (html) => html.replace(/<[^>]+>/g, '');
 
@@ -150,7 +146,7 @@ export default function ProductDefaultPage({ defaultProducts }) {
             ...(defaultProducts?.tag || []),
             { name: defaultProducts?.seller?.first_name },
             { name: defaultProducts?.seller?.last_name },
-        ].filter((kw) => kw.name); // Remove undefined/null keywords
+        ].filter((kw) => kw.name);
 
         return {
             title,
@@ -170,7 +166,6 @@ export default function ProductDefaultPage({ defaultProducts }) {
         };
     }, [defaultProducts]);
 
-    // Memoize container class name
     const containerClassName = useMemo(
         () => `ps-page--product ${defaultProducts?.price === 0 ? '' : 'pt-2'}`,
         [defaultProducts?.price]

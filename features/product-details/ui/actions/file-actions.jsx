@@ -437,6 +437,7 @@ function FileActions({ product }) {
                                 type="text"
                                 variant="solid"
                                 className="border-2 border-success text-success button_hover"
+                                aria-label="Wishlistga qo'shish"
                                 icon={
                                     wishlist?.some(
                                         (item) =>
