@@ -1,0 +1,35 @@
+{
+  "welcome": "Welcome",
+  "title": "Digital products and online services marketplace – Soff.uz",
+  "description": "Soff.uz - Intellectual property marketplace, Sell and buy intellectual products.",
+  "navigation": {
+    "home": "Home",
+    "products": "Products",
+    "services": "Services",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "success": "Success",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "search": "Search",
+    "filter": "Filter"
+  },
+  "auth": {
+    "login": "Login",
+    "logout": "Logout",
+    "register": "Register",
+    "email": "Email",
+    "password": "Password"
+  },
+  "messages": {
+    "tokenNotFound": "Token not found. Please log in.",
+    "commentSuccess": "Comment sent successfully!",
+    "commentError": "Failed to send comment."
+  }
+}

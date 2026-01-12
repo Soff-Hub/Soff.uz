@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { appWithTranslation } from 'next-i18next';
 import '~/scss/style.scss';
 import '~/scss/electronic.scss';
 import '~/widgets/navbar-menu/popover-override.css';
@@ -132,4 +133,4 @@ function App({ Component, pageProps }) {
     );
 }
 
-export default App;
+export default appWithTranslation(App);

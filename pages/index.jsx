@@ -2,6 +2,7 @@ import React from 'react';
 import PageLayout from '~/widgets/layouts/PageLayout';
 import Home from '~/widgets/home';
 import Meta from '~/shared/ui/meta';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const type = 'website';
 const url = 'https://soff.uz';
@@ -39,4 +40,12 @@ export default function NewHomePage() {
             <Home />
         </PageLayout>
     );
+}
+
+export async function getServerSideProps({ locale }) {
+    return {
+        props: {
+            ...(await serverSideTranslations(locale, ['common'])),
+        },
+    };
 }

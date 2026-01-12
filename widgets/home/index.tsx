@@ -7,6 +7,7 @@ import Statistics from './statistics';
 import Title from './title';
 import TwoCard from './two-card';
 import dynamic from 'next/dynamic';
+import { useTranslation } from 'next-i18next';
 
 const Bests = dynamic(() => import('./bests'), { ssr: false });
 const LastProducts = dynamic(() => import('./last-products'), { ssr: false });
@@ -14,6 +15,10 @@ const Faqs = dynamic(() => import('./faqs'), { ssr: false });
 const YoutubeVid = dynamic(() => import('./youtube-vid'), { ssr: false });
 
 const Home = () => {
+    const { t } = useTranslation('common');
+
+    console.log(t('welcome'));
+
     return (
         <div>
             <div className="bg-white ">

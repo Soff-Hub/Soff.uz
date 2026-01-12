@@ -1,0 +1,35 @@
+{
+  "welcome": "Xush kelibsiz",
+  "title": "Raqamli mahsulotlar va onlayn xizmatlar bozori – Soff.uz",
+  "description": "Soff.uz - Intellektual mulk marketi, Intellektual mahsulotlarini soting va xarid qiling.",
+  "navigation": {
+    "home": "Bosh sahifa",
+    "products": "Mahsulotlar",
+    "services": "Xizmatlar",
+    "about": "Biz haqimizda",
+    "contact": "Aloqa"
+  },
+  "common": {
+    "loading": "Yuklanmoqda...",
+    "error": "Xatolik yuz berdi",
+    "success": "Muvaffaqiyatli",
+    "save": "Saqlash",
+    "cancel": "Bekor qilish",
+    "delete": "O'chirish",
+    "edit": "Tahrirlash",
+    "search": "Qidirish",
+    "filter": "Filtrlash"
+  },
+  "auth": {
+    "login": "Kirish",
+    "logout": "Chiqish",
+    "register": "Ro'yxatdan o'tish",
+    "email": "Email",
+    "password": "Parol"
+  },
+  "messages": {
+    "tokenNotFound": "Token topilmadi. Iltimos, tizimga kiring.",
+    "commentSuccess": "Izoh muvaffaqiyatli yuborildi!",
+    "commentError": "Izoh yuborilmadi."
+  }
+}
