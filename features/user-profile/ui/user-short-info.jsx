@@ -369,7 +369,7 @@ const UserShortInfo = ({ seller }) => {
                 <Alert
                     className={styles.alertMiddle}
                     message="Frilanser vaqtincha bloklangan"
-                    description="Afsuski, ushbu frilanserning xizmatlari vaqtincha bloklangan. Iltimos, keyinroq qayta urinib ko'ring yoki boshqa frilanserni tanlang."
+                    description="Afsuski, ushbu frilanserning xizmatlari vaqtincha bloklangan. Boshqa frilanser xizmatlaridan foydalanishingiz mumkin."
                     type="error"
                     showIcon
                 />
@@ -378,7 +378,7 @@ const UserShortInfo = ({ seller }) => {
                 <Alert
                     className={styles.alertMiddle}
                     message="Xizmatlar uchun ochiq emas"
-                    description="Afsuski, ushbu frilanserning xizmatlari vaqtincha ochiq emas. Iltimos, keyinroq qayta urinib ko'ring yoki boshqa frilanserni tanlang."
+                    description="Afsuski, ushbu frilanserning xizmatlari vaqtincha ochiq emas. Boshqa frilanser xizmatlaridan foydalanishingiz mumkin."
                     type="warning"
                     showIcon
                 />

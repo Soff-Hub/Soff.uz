@@ -1,16 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import ServiceIsUnavailable from '../seller-profile/ServiceIsUnavailable';
 import { useQuery } from '@tanstack/react-query';
-import { useSelector } from 'react-redux';
 import { api } from '~/repositories/api';
 import { Pagination } from 'antd'; // 🔹 Antd Pagination import qildik
 import ProductCard from '~/entities/product/product-card';
 
 export default function ScientificResources({ data, setCategoryValue, pid }) {
     const [page, setPage] = useState(1);
-    const { user } = useSelector(state => state.auth);
 
-    // ✅ API dan data olish
     const { data: produts, isLoading } = useQuery({
         queryKey: ['keySellerProducts', page],
         queryFn: async ({ queryKey }) => {
@@ -20,12 +17,10 @@ export default function ScientificResources({ data, setCategoryValue, pid }) {
             );
             return response.data;
         },
-        keepPreviousData: true, // pagination scrollda eski datani saqlaydi
+        keepPreviousData: true,
     });
 
-
-    // 🔹 Page o‘zgartirish handler
-    const handlePageChange = page => {
+    const handlePageChange = (page) => {
         setPage(page);
     };
 
@@ -48,10 +43,10 @@ export default function ScientificResources({ data, setCategoryValue, pid }) {
                     <div className="d-flex justify-content-center mt-4">
                         <Pagination
                             current={page}
-                            pageSize={produts?.results?.length || 10} // backend page size
-                            total={produts?.count || 0} // umumiy soni
+                            pageSize={produts?.results?.length || 10}
+                            total={produts?.count || 0}
                             onChange={handlePageChange}
-                            showSizeChanger={false} // page size o‘zgartirmaslik uchun
+                            showSizeChanger={false}
                         />
                     </div>
                 </div>

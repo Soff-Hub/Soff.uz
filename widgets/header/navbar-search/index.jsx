@@ -29,7 +29,12 @@ const NavbarSearch = () => {
         <div className="container">
             <div className={styles.searchBox}>
                 <div className="d-flex w-100">
+                    <label htmlFor="search-type" style={{ display: 'none' }}>
+                        Turi
+                    </label>
                     <Select
+                        id="search-type"
+                        aria-label="Turi"
                         value={type}
                         onChange={(val) => setType(val)}
                         className={styles.select}

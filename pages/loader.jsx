@@ -3,7 +3,7 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { PacmanLoader } from 'react-spinners';
-import { begin, login } from '~/store/auth/slice';
+import { login } from '~/store/auth/slice';
 import { isReturnUrlEmpty } from '~/shared/utilities/return-url';
 
 const Loader = () => {
@@ -35,7 +35,6 @@ const Loader = () => {
             };
 
             dispatch(login({ user: data, data: data }));
-            dispatch(begin({ id: firstId }));
         }
 
         if (googleRedirectOnSuccess) {

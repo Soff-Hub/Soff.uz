@@ -14,13 +14,12 @@ import useResponsive from '~/shared/utilities/useResponsive';
 import { useFPost } from '~/shared/hooks/useFApi';
 import { useSelector } from 'react-redux';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
-import { FaRegCommentDots } from 'react-icons/fa';
 import { LiaHandshake } from 'react-icons/lia';
 import { useRouter } from 'next/router';
 import OrderCard from '~/entities/order/ui/order-base';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import { cn } from '~/shared/utilities/cn';
-import useOffers from '../api/useOffers';
+import useOffers, { clearOfferDelayFlag } from '../api/useOffers';
 import ServiceCheckout from '~/features/freelancers/services/service-deatail/ui/auth/serviceCheckout';
 import useGetCustomBalance from '~/features/freelancers/myorders/myorder/api/useGetCustomBalance';
 import styles from '../style/select-order-drawer.module.scss';
@@ -33,8 +32,29 @@ import { useQueryClient } from '@tanstack/react-query';
 import axiosInstance from '~/shared/api/freeleanceApi';
 import { useGetChatById } from '~/features/freelancers/chat/api/useGetChatById';
 import { MODERATOR_ID } from '~/shared/constants';
-import { FaHeadset } from 'react-icons/fa';
 import { IoMdArrowBack } from 'react-icons/io';
+import OffersFilter from './OffersFilter';
+import ModeratorChatCard from './ModeratorChatCard';
+import dynamic from 'next/dynamic';
+
+// Dynamically import OffersWaitingLoader to reduce initial bundle size
+const OffersWaitingLoader = dynamic(() => import('./OffersWaitingLoader'), {
+    ssr: false,
+    loading: () => (
+        <div
+            className={cn(
+                'flex',
+                'flex-col',
+                'justify-center',
+                'items-center',
+                'w-full',
+                'h-[500px]',
+                'flex-1'
+            )}>
+            <Spin size="large" />
+        </div>
+    ),
+});
 
 const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
     const [selectedOffer, setSelectedOffer] = useState(null);
@@ -44,7 +64,8 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
     const [currentChat, setCurrentChat] = useState(null);
     const { isDesktop, isMobile, isTablet, size } = useResponsive();
     const { push } = useRouter();
-    const { offers, setOffers, isConnected } = useOffers(order?.id, open);
+    const { offers, setOffers, isConnected, bufferedCount, remainingSeconds } =
+        useOffers(order?.id, open);
     const price = order?.service?.price || order?.budget || 0;
     const [mode, setMode] = useState(true);
     const { data } = useGetCustomBalance();
@@ -53,6 +74,15 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
     const loadMoreRef = useRef(null);
     const queryClient = useQueryClient();
     const axios = axiosInstance(user?.access);
+
+    // Filter state
+    const [filters, setFilters] = useState({
+        min_rating: null,
+        has_category_experience: null,
+        sort_by: null,
+        sort_order: null,
+    });
+    const [filterAccordionOpen, setFilterAccordionOpen] = useState(false);
 
     // Get chat data to find matching offer
     const { data: chatData } = useGetChatById(currentChat?.opponentId);
@@ -117,7 +147,11 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
         fetchNextPage,
         hasNextPage,
         isFetchingNextPage,
-    } = useGetOffers({ orderId: order?.id, enabled: isFullyPaid && open });
+    } = useGetOffers({
+        orderId: order?.id,
+        enabled: isFullyPaid && open,
+        filters,
+    });
 
     useEffect(() => {
         if (!open || !loadMoreRef.current) return;
@@ -152,6 +186,12 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
     useEffect(() => {
         setMode(Number(data?.wallet || 0) > 0);
     }, [data?.wallet]);
+
+    useEffect(() => {
+        if (open) {
+            setOffers([]);
+        }
+    }, [filters, open]);
 
     useEffect(() => {
         if (open) {
@@ -196,6 +236,9 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                       )} so'm qaytarildi`
                     : `Frilanser tanlandi!`
             );
+            if (order?.id) {
+                clearOfferDelayFlag(order.id);
+            }
             setSelectedOffer(null);
             push(`/order/${order?.id}`);
             onClose();
@@ -239,29 +282,10 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
     if (isFullyPaid) {
         orderDrawerContent = (
             <>
-                {/* Moderator Chat Card */}
-                <div className={styles.moderatorCard}>
-                    <div className={styles.moderatorIconWrapper}>
-                        <FaHeadset className={styles.moderatorIcon} />
-                    </div>
-                    <div className={styles.moderatorContent}>
-                        <h3 className={styles.moderatorTitle}>
-                            Moderator bilan bog'lanish
-                        </h3>
-                        <p className={styles.moderatorDescription}>
-                            Savol yoki muammo yuzasidan moderatorlarimizga
-                            murojaat qilishingiz mumkin.
-                        </p>
-                    </div>
-                    <Button
-                        type="primary"
-                        size="middle"
-                        icon={<FaRegCommentDots />}
-                        onClick={() => handleCreateChat(MODERATOR_ID)}
-                        className={styles.moderatorButton}>
-                        Chat ochish
-                    </Button>
-                </div>
+                <ModeratorChatCard
+                    onCreateChat={() => handleCreateChat(MODERATOR_ID)}
+                    isMobile={isMobile}
+                />
                 <Tag
                     className="w-100 my-4 fs-4 text-wrap"
                     style={{
@@ -272,6 +296,20 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                     icon={<ExclamationCircleOutlined />}>
                     Ishni boshlash uchun frilanser tanlashingiz kerak
                 </Tag>
+
+                <OffersFilter
+                    filters={filters}
+                    setFilters={setFilters}
+                    isMobile={isMobile}
+                    filterAccordionOpen={filterAccordionOpen}
+                    setFilterAccordionOpen={setFilterAccordionOpen}
+                    disabled={
+                        bufferedCount > 0 ||
+                        (remainingSeconds !== null &&
+                            remainingSeconds > 0 &&
+                            offers?.length === 0)
+                    }
+                />
 
                 <div className={cn('w-full')}>
                     {offers?.length > 0 ? (
@@ -298,27 +336,10 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                             )}
                         </>
                     ) : (
-                        <div
-                            className={cn(
-                                'flex',
-                                'flex-col',
-                                'justify-center',
-                                'items-center',
-                                'w-full',
-                                'h-[500px]',
-                                'flex-1'
-                            )}>
-                            <Spin size="large" />
-                            <p
-                                className={cn(
-                                    'mt-4',
-                                    'text-base',
-                                    'text-secondary'
-                                )}>
-                                Frilanserlar taklif yubormoqda. Iltimos biroz
-                                kuting...
-                            </p>
-                        </div>
+                        <OffersWaitingLoader
+                            bufferedCount={bufferedCount}
+                            remainingSeconds={remainingSeconds}
+                        />
                     )}
                 </div>
             </>
@@ -355,6 +376,14 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
     const handleCloseDrawer = () => {
         setChatDrawerOpen(false);
         setCurrentChat(null);
+        setFilters({
+            min_rating: null,
+            has_category_experience: null,
+            sort_by: null,
+            sort_order: null,
+        });
+        setFilterAccordionOpen(false);
+        setOffers([]);
         onClose();
     };
 

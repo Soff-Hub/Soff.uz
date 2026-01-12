@@ -136,10 +136,10 @@ const mainPages = [
     },
     { key: '6', link: 'https://seller.soff.uz', label: 'Frilanserlar uchun' },
     { key: '7', link: '/affiliate_program', label: 'Hamkorlikda ishlash' },
-    // { key: '4', link: '/freelance', label: 'Frilanserlar' },
+    { key: '4', link: '/freelancers', label: 'Frilanserlar' },
     { key: '8', link: '/soffia', label: 'Soffia Bot' },
     { key: '9', link: '/page/oferta', label: 'Foydalanish shartlari' },
-    { key: '10', link: '/page/video-list', lable: "Video qo'llanmalar" },
+    { key: '10', link: '/page/video-list', label: "Video qo'llanmalar" },
 ];
 
 const aboutUsPages = [
@@ -200,6 +200,7 @@ export default function Footer() {
                                                 <a
                                                     target="_blank"
                                                     className={styles.linkText}
+                                                    aria-label={link.name}
                                                     rel="noopener noreferrer">
                                                     {link.name}
                                                 </a>
@@ -225,6 +226,7 @@ export default function Footer() {
                                         <Link href={link.link}>
                                             <a
                                                 className={styles.linkText}
+                                                aria-label={link.label}
                                                 rel="noopener noreferrer">
                                                 {link.label}
                                             </a>
@@ -244,6 +246,7 @@ export default function Footer() {
                                             href={`/orders?direction=${link.value}`}>
                                             <a
                                                 className={styles.linkText}
+                                                aria-label={link.label}
                                                 rel="noopener noreferrer">
                                                 {link.label}
                                             </a>
@@ -262,6 +265,7 @@ export default function Footer() {
                                         <Link href={link.link}>
                                             <a
                                                 className={styles.linkText}
+                                                aria-label={link.label}
                                                 rel="noopener noreferrer">
                                                 {link.label}
                                             </a>
@@ -280,6 +284,7 @@ export default function Footer() {
                                         <Link href={`${link.link}`}>
                                             <a
                                                 className={styles.linkText}
+                                                aria-label={link.label}
                                                 rel="noopener noreferrer">
                                                 {link.label}
                                             </a>
@@ -300,11 +305,15 @@ export default function Footer() {
 
                     <div className={styles.footerLinks}>
                         <Link href="/page/privacy-policy">
-                            <a>Maxfiylik siyosati</a>
+                            <a aria-label="Maxfiylik siyosati">
+                                Maxfiylik siyosati
+                            </a>
                         </Link>
                         <div className={styles.divider}></div>
                         <Link href="/page/user-agreement">
-                            <a>Foydalanish shartnomasi</a>
+                            <a aria-label="Foydalanish shartnomasi">
+                                Foydalanish shartnomasi
+                            </a>
                         </Link>
                     </div>
                 </div>

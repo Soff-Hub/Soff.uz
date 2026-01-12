@@ -35,11 +35,9 @@ const MyOrdersMain = () => {
     useEffect(() => {
         if (!buttonRef.current) return;
 
-        // Create intersection observer
         observerRef.current = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
-                    // Show sticky button when original button is not intersecting (scrolled out of view)
                     setShowStickyButton(!entry.isIntersecting);
                 });
             },

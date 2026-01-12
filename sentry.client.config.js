@@ -4,36 +4,31 @@ if (process.env.NODE_ENV === 'production') {
     Sentry.init({
         dsn: 'https://4d5519b45e78b5e17178ae4017329685@o4510499805134848.ingest.de.sentry.io/4510499809001552',
 
-        // Add optional integrations for additional features
         integrations: [
-            // Only enable replay in production and only for errors
-            ...(process.env.NODE_ENV === 'production'
-                ? [
-                      Sentry.replayIntegration({
-                          sessionSampleRate: 0, // Don't record normal sessions
-                          errorSampleRate: 1.0, // Only record when errors occur
-                      }),
-                  ]
-                : []),
+            Sentry.replayIntegration({
+                maskAllText: true,
+                maskAllInputs: true,
+                // Only record sessions where an error actually happens
+                // 1.0 means 100% of errors, 0.1 means 10% of errors
+                errorSampleRate: 0.1,
+                sessionSampleRate: 0,
+            }),
         ],
 
-        // Define how likely traces are sampled. Adjust this value in production, or use tracesSampler for greater control.
-        tracesSampleRate: 1,
-        // Enable logs to be sent to Sentry
-        enableLogs: true,
+        // --- PERFORMANCE FIXES ---
 
-        // Define how likely Replay events are sampled.
-        // This sets the sample rate to be 10%. You may want this to be 100% while
-        // in development and sample at a lower rate in production
-        replaysSessionSampleRate: 0, // Disable session replay
+        // Change from 1.0 to 0.1 (Samples 10% of traffic)
+        // 1.0 is far too heavy for a high-traffic production site
+        tracesSampleRate: 0.1,
 
-        // Define how likely Replay events are sampled when an error occurs.
-        replaysOnErrorSampleRate: 1.0, // Only record on errors
+        // Turn off debug logs in production to save CPU/Memory
+        enableLogs: false,
 
-        // Enable sending user PII (Personally Identifiable Information)
-        // https://docs.sentry.io/platforms/javascript/guides/nextjs/configuration/options/#sendDefaultPii
-        sendDefaultPii: true,
+        // Disable this unless you specifically need it; it adds overhead
+        sendDefaultPii: false,
+
+        // Keeps your bundle smaller by not including Replay code if not needed
+        replaysSessionSampleRate: 0,
+        replaysOnErrorSampleRate: 0.1,
     });
-} else {
-    console.log('🔕 Sentry is disabled in development mode');
 }
