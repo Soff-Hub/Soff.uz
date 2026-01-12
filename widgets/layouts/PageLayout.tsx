@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
-import { useDispatch, useSelector } from 'react-redux';
 import { checkAuthorization } from '~/store/auth/slice';
 import { useRouter } from 'next/router';
 import { GoogleLogin } from '@react-oauth/google';
@@ -12,6 +11,7 @@ import {
 import dynamic from 'next/dynamic';
 import HeaderLoader from '~/widgets/header/HeaderLoader';
 import { ViewportContextProvider } from '~/shared/contexts/ViewportContext';
+import { useAppDispatch, useAppSelector } from '~/app/store/hooks';
 
 const Header = dynamic(() => import('~/widgets/header'), {
     ssr: false,
@@ -24,10 +24,30 @@ const NetworkStatusComponent = dynamic(
     { ssr: false }
 );
 
-const PageLayout = ({ children, title, withFooter = true }) => {
-    const { user } = useSelector((state) => state.auth);
-    const dispatch = useDispatch();
-    const Router = useRouter();
+type PageLayoutProps = {
+    children: React.ReactNode;
+    title?: string;
+    withFooter?: boolean;
+};
+
+const wrapperStyle: React.CSSProperties = {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100vh',
+    // @ts-ignore
+    height: '100dvh',
+    // @ts-ignore
+    height: '-webkit-fill-available',
+};
+
+const PageLayout: FC<PageLayoutProps> = ({
+    children,
+    title,
+    withFooter = true,
+}) => {
+    const { user } = useAppSelector((state) => state.auth);
+    const dispatch = useAppDispatch();
+    const router = useRouter();
 
     const hasTitle = Boolean(title);
     const isValideUser = Boolean(user);
@@ -35,17 +55,19 @@ const PageLayout = ({ children, title, withFooter = true }) => {
     useGetProfileQuery(`userfetch - ${user?.access}`, {
         skip: !user?.access,
     });
-    useGetDirectionsQuery();
+    useGetDirectionsQuery('directions-fetch');
 
-    async function handleLogin(googleData) {
-        Router.push(`/oauth/?token=${googleData}&returnUrl=${Router.asPath}`);
+    async function handleLogin(googleData?: string) {
+        if (!googleData) return;
+        await router.push(
+            `/oauth/?token=${googleData}&returnUrl=${router.asPath}`
+        );
     }
 
-    const defaultRoutePage = () => {
-        dispatch(checkAuthorization());
-    };
-
     useEffect(() => {
+        const defaultRoutePage = () => {
+            dispatch(checkAuthorization());
+        };
         defaultRoutePage();
     }, []);
 
@@ -57,14 +79,7 @@ const PageLayout = ({ children, title, withFooter = true }) => {
                 </Head>
             )}
 
-            <div
-                style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: '100vh',
-                    height: '100dvh',
-                    height: '-webkit-fill-available',
-                }}>
+            <div style={wrapperStyle}>
                 <Header />
                 <NetworkStatusComponent />
                 <main
@@ -83,22 +98,13 @@ const PageLayout = ({ children, title, withFooter = true }) => {
                         onSuccess={(credentialResponse) => {
                             handleLogin(credentialResponse?.credential);
                         }}
-                        intermediate_iframe_close_callback={(e) =>
-                            e.preventDefault()
-                        }
                         useOneTap
-                        prompt="select_account"
+                        prompt_parent_id="select_account"
                     />
                 </div>
             )}
         </ViewportContextProvider>
     );
-};
-
-PageLayout.prototype = {
-    children: PropTypes.node.isRequired,
-    title: PropTypes.string,
-    withFooter: PropTypes.bool,
 };
 
 export default PageLayout;

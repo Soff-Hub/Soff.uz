@@ -3,7 +3,16 @@ import { useRouter } from 'next/router';
 import { baseUrlUseApi } from '~/repositories/useApi';
 import { useQuery } from '@tanstack/react-query';
 
-export function useFilteredProducts({ direction, defaultData }) {
+type UseFilteredProductsProps = {
+    direction: string;
+    defaultData: any;
+    fourChildData: any;
+};
+
+export function useFilteredProducts({
+    direction,
+    defaultData,
+}: UseFilteredProductsProps) {
     const { query, isReady, asPath } = useRouter();
     const { page, price_from, price_to } = query;
 
@@ -26,8 +35,8 @@ export function useFilteredProducts({ direction, defaultData }) {
         });
 
         if (category) params.append('category', category);
-        if (price_from) params.append('price_from', price_from);
-        if (price_to) params.append('price_to', price_to);
+        if (price_from) params.append('price_from', String(price_from));
+        if (price_to) params.append('price_to', String(price_to));
 
         return params.toString();
     }, [direction, page, category, price_from, price_to]);

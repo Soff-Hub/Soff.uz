@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { RefObject, useEffect, useMemo, useRef, useState } from 'react';
 import styles from './ProductFilter.module.scss';
 import {
     SearchOutlined,
@@ -21,7 +21,15 @@ import {
     getCategoryFromRouter,
 } from '~/shared/utilities/filterHelpers';
 
-export const getTitleFromSlug = (array, slug) => {
+type ProductFilterSectionProps = {
+    path: string;
+    child?: any[];
+    parent?: any[];
+    isFile?: boolean;
+    title?: string;
+};
+
+export const getTitleFromSlug = (array: any[], slug: string) => {
     let title = null;
 
     if (array && slug) {
@@ -32,7 +40,7 @@ export const getTitleFromSlug = (array, slug) => {
     return title;
 };
 
-export const clearEmptyQueries = (obj) => {
+export const clearEmptyQueries = (obj: any) => {
     const newObj = { ...obj };
     Object.keys(newObj).forEach((key) => {
         if (!String(newObj[key])) {
@@ -42,18 +50,24 @@ export const clearEmptyQueries = (obj) => {
     return newObj;
 };
 
-const ProductFilterSection = ({ child, parent, path, isFile, title }) => {
+const ProductFilterSection = ({
+    child,
+    parent,
+    path,
+    isFile,
+    title,
+}: ProductFilterSectionProps) => {
     const [showParentArrow, setShowParentArrow] = useState(false);
     const [showChildArrow, setShowChildArrow] = useState(false);
-    const [search, setSearch] = useState(undefined);
+    const [search, setSearch] = useState('');
     const [drawerOpen, setDrawerOpen] = useState(false);
-    const parentRef = useRef(null);
-    const childRef = useRef(null);
+    const parentRef = useRef<HTMLDivElement>(null);
+    const childRef = useRef<HTMLDivElement>(null);
     const { isMobile } = useResponsive();
+    const debouncedSearch = useDebounce(search, 500);
     const router = useRouter();
     const { query, asPath, push } = router;
     const { search: querySearch } = query;
-    const debouncedSearch = useDebounce(search, 500);
 
     const { parentCategory, childCategory } = useMemo(() => {
         if (!asPath) return {};
@@ -64,7 +78,7 @@ const ProductFilterSection = ({ child, parent, path, isFile, title }) => {
         return { parentCategory, childCategory };
     }, [asPath]);
 
-    const handleParent = (slug) => {
+    const handleParent = (slug: string) => {
         const filterQuery = getFilterQueryParams(query);
 
         const newPathname = buildCategoryPath(path, slug);
@@ -75,7 +89,7 @@ const ProductFilterSection = ({ child, parent, path, isFile, title }) => {
         });
     };
 
-    const handleChild = (slug) => {
+    const handleChild = (slug: string) => {
         const currentParent =
             parentCategory || getCategoryFromRouter(router).parentCategory;
 
@@ -86,7 +100,11 @@ const ProductFilterSection = ({ child, parent, path, isFile, title }) => {
 
         const filterQuery = getFilterQueryParams(query);
 
-        const newPathname = buildCategoryPath(path, currentParent, slug);
+        const newPathname = buildCategoryPath(
+            path,
+            String(currentParent),
+            slug
+        );
 
         push({
             pathname: newPathname,
@@ -94,11 +112,13 @@ const ProductFilterSection = ({ child, parent, path, isFile, title }) => {
         });
     };
 
-    const scrollLeft = (ref) => {
+    const scrollLeft = (ref: RefObject<HTMLDivElement>) => {
+        if (!ref.current) return;
         ref.current.scrollBy({ left: -200, behavior: 'smooth' });
     };
 
-    const scrollRight = (ref) => {
+    const scrollRight = (ref: RefObject<HTMLDivElement>) => {
+        if (!ref.current) return;
         ref.current.scrollBy({ left: 200, behavior: 'smooth' });
     };
 
@@ -185,7 +205,7 @@ const ProductFilterSection = ({ child, parent, path, isFile, title }) => {
                     {parent?.map((cat) => (
                         <span
                             key={cat.id}
-                            onClick={() => handleParent(cat.slug, cat.id)}
+                            onClick={() => handleParent(cat.slug)}
                             className={`${styles.parentCat} ${
                                 (parentCategory === cat.slug ||
                                     query.slug === cat.slug) &&
@@ -221,7 +241,7 @@ const ProductFilterSection = ({ child, parent, path, isFile, title }) => {
                         {child.map((cat) => (
                             <span
                                 key={cat.slug}
-                                onClick={() => handleChild(cat?.slug, cat?.id)}
+                                onClick={() => handleChild(cat?.slug)}
                                 className={`${styles.childCat} ${
                                     (childCategory === cat.slug ||
                                         query.slug === cat.slug) &&
@@ -264,16 +284,26 @@ const ProductFilterSection = ({ child, parent, path, isFile, title }) => {
     );
 };
 
-const ProductFilterForm = ({ open, onClose, path, isFile, parent, child }) => {
-    const [selectedCategory, setSelectedCategory] = useState({
-        slug: null,
-        id: null,
-    });
-    const [selectedSubCategory, setSelectedSubCategory] = useState({
-        slug: null,
-        id: null,
-    });
-    const [fileTypes, setFileTypes] = useState([]);
+type ProductFilterFormProps = {
+    open: boolean;
+    onClose: () => void;
+} & ProductFilterSectionProps;
+
+const ProductFilterForm = ({
+    open,
+    onClose,
+    path,
+    isFile,
+    parent,
+    child,
+}: ProductFilterFormProps) => {
+    const [selectedCategory, setSelectedCategory] = useState<
+        string | string[] | null
+    >(null);
+    const [selectedSubCategory, setSelectedSubCategory] = useState<
+        string | string[] | null
+    >(null);
+    const [fileTypes, setFileTypes] = useState<string[]>([]);
     const [priceRange, setPriceRange] = useState([0, 500000]);
     const [pageRange, setPageRange] = useState([0, 100]);
     const isEnableChanged = useRef(false);
@@ -292,15 +322,14 @@ const ProductFilterForm = ({ open, onClose, path, isFile, parent, child }) => {
 
     const isChildOptionsEnabled =
         open &&
-        ((Boolean(selectedCategory?.slug) &&
-            selectedCategory?.slug !== parentCategory) ||
+        ((Boolean(selectedCategory) && selectedCategory !== parentCategory) ||
             isEnableChanged.current);
 
-    const { data: childData, isFetchingChildData } = useQuery({
-        queryKey: ['child-categories', selectedCategory?.slug],
+    const { data: childData, isFetching: isFetchingChildData } = useQuery({
+        queryKey: ['child-categories', selectedCategory],
         queryFn: async () => {
             const res = await fetch(
-                `${baseUrlUseApi}customer/four-child?direction=file&parent__slug=${selectedCategory?.slug}`
+                `${baseUrlUseApi}customer/four-child?direction=file&parent__slug=${selectedCategory}`
             );
             isEnableChanged.current = true;
             return await res.json();
@@ -318,7 +347,7 @@ const ProductFilterForm = ({ open, onClose, path, isFile, parent, child }) => {
 
     const childOptions = useMemo(() => {
         if (childData?.results && childData.results.length) {
-            return childData.results.map((item) => ({
+            return childData.results.map((item: any) => ({
                 label: item.name,
                 value: item.slug,
                 id: item.id,
@@ -338,14 +367,8 @@ const ProductFilterForm = ({ open, onClose, path, isFile, parent, child }) => {
             const currentParent = parentCategory || pathParent;
             const currentChild = childCategory || pathChild;
 
-            setSelectedCategory({
-                slug: currentParent,
-                id: parentCategory,
-            });
-            setSelectedSubCategory({
-                slug: currentChild,
-                id: childCategory,
-            });
+            setSelectedCategory(currentParent);
+            setSelectedSubCategory(currentChild);
             setFileTypes(
                 query.content_extensions
                     ? Array.isArray(query.content_extensions)
@@ -386,8 +409,8 @@ const ProductFilterForm = ({ open, onClose, path, isFile, parent, child }) => {
 
         const categoryPath = buildCategoryPath(
             path,
-            selectedCategory?.slug || null,
-            selectedSubCategory?.slug || null
+            String(selectedCategory),
+            String(selectedSubCategory)
         );
 
         push(
@@ -450,15 +473,8 @@ const ProductFilterForm = ({ open, onClose, path, isFile, parent, child }) => {
                     style={{ width: '100%' }}
                     allowClear
                     defaultValue={parentCategory || undefined}
-                    onChange={(val, valObj) => {
-                        if (!val) {
-                            setSelectedCategory(undefined);
-                        } else {
-                            setSelectedCategory({
-                                slug: val,
-                                id: valObj.id,
-                            });
-                        }
+                    onChange={(val) => {
+                        setSelectedCategory(val);
                     }}
                     options={parentOptions}
                     getPopupContainer={(triggerNode) => triggerNode.parentNode}
@@ -466,7 +482,7 @@ const ProductFilterForm = ({ open, onClose, path, isFile, parent, child }) => {
             </div>
 
             {/* Sub kategoriya Select */}
-            {selectedCategory?.slug && (
+            {selectedCategory && (
                 <div style={{ marginBottom: 24 }}>
                     <h4>Sub kategoriya</h4>
                     <Select
@@ -475,15 +491,8 @@ const ProductFilterForm = ({ open, onClose, path, isFile, parent, child }) => {
                         style={{ width: '100%' }}
                         allowClear
                         defaultValue={childCategory || undefined}
-                        onChange={(val, valObj) => {
-                            if (!val) {
-                                setSelectedSubCategory(undefined);
-                            } else {
-                                setSelectedSubCategory({
-                                    slug: val,
-                                    id: valObj.id,
-                                });
-                            }
+                        onChange={(val) => {
+                            setSelectedSubCategory(val);
                         }}
                         options={childOptions}
                         getPopupContainer={(triggerNode) =>

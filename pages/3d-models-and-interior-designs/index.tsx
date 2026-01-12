@@ -11,22 +11,37 @@ import { fetchJsonSafely } from '~/shared/api/fetch-json';
 const type = '3d';
 const defaultTitle = '3D moddellar va Interier dizaynlar';
 
+const meta = {
+    title: '3D Modellar va Interyer Dizaynlari',
+    image: 'https://soff.uz/static/img/3D-moddellar-va-Interier-dizaynlar-2.png',
+    description:
+        'Bu sahifa dizaynerlar, arxitektorlar va 3D model mutaxassislari uchun. Bu yerda 3D modellar, interyer dizaynlari va vizualizatsiyalarni topish mumkin.',
+    keywords: ['3D', '3D modellar', 'Interyer dizaynlari'].map((name) => ({
+        name,
+    })),
+    author: 'Soff.uz',
+};
+
+type ThreeDModelsAndInteriorDesignsProps = {
+    productsData: any;
+    fourChildData: any;
+};
+
 export default function ThreeDModelsAndInteriorDesigns({
     productsData,
     fourChildData,
-}) {
+}: ThreeDModelsAndInteriorDesignsProps) {
     const router = useRouter();
 
     const { productsData: filteredData, isLoading } = useFilteredProducts({
         direction: type,
-        category: null,
         defaultData: productsData,
-        filterKeys: ['search', 'price_from', 'price_to'],
+        fourChildData: fourChildData,
     });
 
-    const page = parseInt(router.query.page) || 1;
+    const page = router.query.page || 1;
 
-    const handlePageChange = (newPage) => {
+    const handlePageChange = (newPage: number) => {
         router.push(
             {
                 pathname: router.pathname,
@@ -39,17 +54,7 @@ export default function ThreeDModelsAndInteriorDesigns({
 
     return (
         <PageContainer>
-            <Meta
-                title="3D Modellar va Interyer Dizaynlari"
-                image="https://soff.uz/static/img/3D-moddellar-va-Interier-dizaynlar-2.png"
-                description="Bu sahifa dizaynerlar, arxitektorlar va 3D model mutaxassislari uchun. Bu yerda 3D modellar, interyer dizaynlari va vizualizatsiyalarni topish mumkin."
-                keywords={[
-                    { name: '3D' },
-                    { name: '3D modellar' },
-                    { name: 'Interyer dizaynlari' },
-                ]}
-                author="Soff.uz"
-            />
+            <Meta {...meta} />
 
             <ProductFilterSection
                 title={defaultTitle}
@@ -61,7 +66,7 @@ export default function ThreeDModelsAndInteriorDesigns({
                 <ProductsByCategory
                     data={filteredData}
                     page={page}
-                    handlePagination={(number) => {
+                    handlePagination={(number: number) => {
                         handlePageChange(number);
                     }}
                     isLoading={isLoading}
