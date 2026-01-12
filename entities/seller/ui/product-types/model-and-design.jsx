@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import ServiceIsUnavailable from '../seller-profile/ServiceIsUnavailable';
-import { useSelector } from 'react-redux';
 import { useQuery } from '@tanstack/react-query';
 import { api } from '~/repositories/api';
 import { Pagination } from 'antd';
@@ -8,9 +7,7 @@ import ProductCard from '~/entities/product/product-card';
 
 export default function ModelAndDesign({ pid }) {
     const [page, setPage] = useState(1);
-    const { user } = useSelector(state => state.auth);
 
-    // ✅ API dan data olish
     const { data: models, isLoading } = useQuery({
         queryKey: ['keyModelProducts', page],
         queryFn: async ({ queryKey }) => {
@@ -20,12 +17,10 @@ export default function ModelAndDesign({ pid }) {
             );
             return response.data;
         },
-        keepPreviousData: true, // pagination scrollda eski datani saqlaydi
+        keepPreviousData: true,
     });
 
-
-    // 🔹 Pagination handler
-    const handlePageChange = page => {
+    const handlePageChange = (page) => {
         setPage(page);
     };
 

@@ -9,7 +9,6 @@ import { StarFilled } from '@ant-design/icons';
 import { Button } from 'antd';
 import Image from 'next/image';
 
-// Helper function to validate slug
 const isValidSlug = (slug) => {
     return (
         slug &&
@@ -46,7 +45,6 @@ const ServiceCard = ({ service, hasFooter = true, disabled = false }) => {
         push(`/service/${service.slug}`);
     }, [service?.slug]);
 
-    // Don't render if service or slug is invalid
     if (!service || !isValidSlug(service?.slug)) {
         console.warn('ServiceCard: Invalid service data or slug', service);
         return null;
