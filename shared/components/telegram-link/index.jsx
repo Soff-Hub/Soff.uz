@@ -138,6 +138,7 @@ export function TelegramLink({ videoUrl }) {
                     }`}
                     style={{
                         pointerEvents: isGroupOpen ? 'auto' : 'none',
+                        zIndex: isGroupOpen ? 1 : -1,
                     }}>
                     {(isOrderCreatePage || isProductPage) && (
                         <div
@@ -172,9 +173,13 @@ export function TelegramLink({ videoUrl }) {
                         role="button"
                         tabIndex={0}
                         style={{
-                            opacity: !isLoggedIn ? 0.5 : 1,
-                            cursor: !isLoggedIn ? 'not-allowed' : 'pointer',
-                            pointerEvents: !isLoggedIn ? 'none' : 'auto',
+                            opacity: !isLoggedIn || !isGroupOpen ? 0.5 : 1,
+                            cursor:
+                                !isLoggedIn || !isGroupOpen
+                                    ? 'not-allowed'
+                                    : 'pointer',
+                            pointerEvents:
+                                !isLoggedIn || !isGroupOpen ? 'none' : 'auto',
                         }}
                         onKeyPress={(e) => {
                             if (
