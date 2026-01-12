@@ -54,13 +54,13 @@ export default function Document() {
                     href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
                 />
 
-                {process.env.NODE_ENV === 'production' && (
+                {/* {process.env.NODE_ENV === 'production' && (
                     <script
                         defer
                         src="https://www.googletagmanager.com/gtag/js?id=G-H60GJQ0WF2"></script>
-                )}
+                )} */}
 
-                {process.env.NODE_ENV === 'production' && (
+                {/* {process.env.NODE_ENV === 'production' && (
                     <script
                         defer
                         dangerouslySetInnerHTML={{
@@ -71,9 +71,9 @@ export default function Document() {
                         gtag('config', 'G-H60GJQ0WF2');
                     `,
                         }}></script>
-                )}
+                )} */}
 
-                {process.env.NODE_ENV === 'production' && (
+                {/* {process.env.NODE_ENV === 'production' && (
                     <script
                         defer
                         dangerouslySetInnerHTML={{
@@ -92,8 +92,8 @@ export default function Document() {
                         });
                     `,
                         }}></script>
-                )}
-                {process.env.NODE_ENV === 'production' && (
+                )} */}
+                {/* {process.env.NODE_ENV === 'production' && (
                     <script
                         defer
                         dangerouslySetInnerHTML={{
@@ -110,10 +110,10 @@ export default function Document() {
                         fbq('track', 'PageView');
                         `,
                         }}></script>
-                )}
-                <script
+                )} */}
+                {/* <script
                     src="https://telegram.org/js/telegram-web-app.js"
-                    defer></script>
+                    defer></script> */}
                 <noscript>
                     <div>
                         <img
@@ -132,7 +132,7 @@ export default function Document() {
                     />
                 </noscript>
 
-                <script>window.yaContextCb=window.yaContextCb||[]</script>
+                {/* <script>window.yaContextCb=window.yaContextCb||[]</script> */}
             </Head>
             <body>
                 <Main />

@@ -11,6 +11,7 @@ import { useTelegram } from '~/shared/hooks/useTelegram';
 import { TelegramLink } from '~/shared/components/telegram-link';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
 import '~/shared/utilities/dayjs-locale-uz';
+import Script from 'next/script';
 
 function App({ Component, pageProps }) {
     const { tg } = useTelegram();
@@ -94,6 +95,7 @@ function App({ Component, pageProps }) {
                 />
 
                 <link rel="alternate" href="https://soff.uz/" hrefLang="uz" />
+
                 <script
                     defer
                     type="application/ld+json"
@@ -118,6 +120,65 @@ function App({ Component, pageProps }) {
                         }),
                     }}></script>
             </Head>
+            {process.env.NODE_ENV === 'production' && (
+                <>
+                    <Script
+                        src="https://www.googletagmanager.com/gtag/js?id=G-H60GJQ0WF2"
+                        strategy="afterInteractive"
+                        // onLoad={() =>
+                        //     console.log('✅ Google Analytics loader loaded')
+                        // }
+                        // onError={(e) => console.error('❌ GA loader error:', e)}
+                    />
+                    <Script
+                        src="/scripts/google-analytics-init.js"
+                        strategy="afterInteractive"
+                        // onLoad={() => {
+                        //     console.log('✅ Google Analytics init loaded');
+                        //     console.log('gtag:', typeof gtag);
+                        //     console.log('dataLayer:', typeof dataLayer);
+                        // }}
+                        // onError={(e) => console.error('❌ GA init error:', e)}
+                    />
+                    <Script
+                        src="/scripts/yandex-metrika-init.js"
+                        strategy="afterInteractive"
+                        // onLoad={() => {
+                        //     console.log('✅ Yandex Metrika loaded');
+                        //     console.log('ym:', typeof ym);
+                        // }}
+                        // onError={(e) =>
+                        //     console.error('❌ Yandex Metrika error:', e)
+                        // }
+                    />
+                    <Script
+                        src="/scripts/facebook-pixel-init.js"
+                        strategy="afterInteractive"
+                        // onLoad={() => {
+                        //     console.log('✅ Facebook Pixel loaded');
+                        //     console.log('fbq:', typeof fbq);
+                        // }}
+                        // onError={(e) =>
+                        //     console.error('❌ Facebook Pixel error:', e)
+                        // }
+                    />
+                    <Script
+                        src="/scripts/yandex-context-init.js"
+                        strategy="afterInteractive"
+                        // onLoad={() => {
+                        //     console.log('✅ Yandex Context loaded');
+                        //     console.log('yaContextCb:', window.yaContextCb);
+                        // }}
+                        // onError={(e) =>
+                        //     console.error('❌ Yandex Context error:', e)
+                        // }
+                    />
+                </>
+            )}
+            <Script
+                src="https://telegram.org/js/telegram-web-app.js"
+                strategy="afterInteractive"
+            />
             <NextProgress
                 height="4px"
                 delay={300}
