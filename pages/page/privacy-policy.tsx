@@ -20,30 +20,35 @@ export default function PrivacyPolicy() {
                 <p>{t('content.section1.p2')}</p>
 
                 <h4>{t('content.section2.title')}</h4>
-                <p
-                    dangerouslySetInnerHTML={{
-                        __html: t('content.section2.p1'),
-                    }}
+                <Trans
+                    parent={'p'}
+                    t={t}
+                    i18nKey="content.section2.p1"
+                    components={{ strong: <strong /> }}
                 />
-                <p
-                    dangerouslySetInnerHTML={{
-                        __html: t('content.section2.p2'),
-                    }}
+                <Trans
+                    parent={'p'}
+                    t={t}
+                    i18nKey="content.section2.p2"
+                    components={{ strong: <strong /> }}
                 />
-                <p
-                    dangerouslySetInnerHTML={{
-                        __html: t('content.section2.p3'),
-                    }}
+                <Trans
+                    parent={'p'}
+                    t={t}
+                    i18nKey="content.section2.p3"
+                    components={{ strong: <strong /> }}
                 />
-                <p
-                    dangerouslySetInnerHTML={{
-                        __html: t('content.section2.p4'),
-                    }}
+                <Trans
+                    parent={'p'}
+                    t={t}
+                    i18nKey="content.section2.p4"
+                    components={{ strong: <strong /> }}
                 />
-                <p
-                    dangerouslySetInnerHTML={{
-                        __html: t('content.section2.p5'),
-                    }}
+                <Trans
+                    parent={'p'}
+                    t={t}
+                    i18nKey="content.section2.p5"
+                    components={{ strong: <strong /> }}
                 />
 
                 <h4>{t('content.section3.title')}</h4>
