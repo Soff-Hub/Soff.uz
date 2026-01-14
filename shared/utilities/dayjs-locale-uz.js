@@ -66,7 +66,7 @@ dayjs.extend(isYesterday);
 dayjs.tz.setDefault('Asia/Tashkent');
 
 export function getTimeAgo(dateString) {
-    return dayjs(dateString, 'YYYY-MM-DD HH:mm').fromNow();
+    return dayjs(dateString).fromNow();
 }
 
 export const getDate = (date) => {

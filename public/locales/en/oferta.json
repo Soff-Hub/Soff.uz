@@ -1,0 +1,168 @@
+{
+    "meta": {
+        "title": "Terms of Use - Soff.uz",
+        "description": "Terms of use of the Soff.uz platform. All important information about using, selling and buying digital products and online services.",
+        "keywords": {
+            "termsOfUse": "Terms of Use",
+            "soffUzTerms": "Soff.uz terms",
+            "userTerms": "user terms",
+            "platformTerms": "platform terms",
+            "digitalProducts": "digital products",
+            "onlineServices": "online services",
+            "digitalContent": "digital content",
+            "sellingAndBuying": "selling and buying"
+        },
+        "author": "Soff.uz team"
+    },
+    "content": {
+        "title": "Terms of Use of Soff.uz Platform",
+        "section1": {
+            "title": "1. General Terms",
+            "p1": "1.1. By visiting the Soff.uz platform, you agree to the terms and conditions set forth below.",
+            "p2": "1.2. Services, business plans, information, manuals, abstracts, presentations and others provided on the Soff.uz platform (hereinafter referred to as \"Platform\") are conditionally called <strong>products</strong>. They are only information intended for use and study.",
+            "p3": "1.3. Services provided in the \"Business Services\" section of the Platform are regulated on the basis of agreements concluded and mutually confirmed between the parties."
+        },
+        "section2": {
+            "title": "2. User Registration",
+            "p1": "To purchase, use and perform other actions with products available on the Platform, it is necessary to register as a \"User\" on the Platform. During registration, the user is responsible for the accuracy and correctness of all information."
+        },
+        "section3": {
+            "title": "3. Seller Registration",
+            "p1": "To earn income by selling your products on the Platform and perform other actions, it is necessary to register as a \"Seller\" on the Platform. During registration, the seller is responsible for the accuracy and correctness of all information."
+        },
+        "section4": {
+            "title": "4. User Rights and Obligations",
+            "subsection41": {
+                "title": "4.1. Users have the following rights:",
+                "p1": "4.1.1. Free registration in the Platform system;",
+                "p2": "4.1.2. Use of services provided by the Platform;",
+                "p3": "4.1.3. Free use of purchased products (use of products for commercial purposes and profit is prohibited);",
+                "p4": "4.1.4. Receive notifications about purchased products via email (e-mail) or phone number entered by the user during registration (if condition 4.2.4 is met) or by accessing the \"Purchased\" page in their personal profile;",
+                "p5": "4.1.5. The user has the right to get a refund if they have contacted the platform administration about refunding the payment made in case of problems during the download of the purchased product;",
+                "p6": "4.1.6. The right to contact the Platform administration."
+            },
+            "subsection42": {
+                "title": "4.2. Users must fulfill the following obligations:",
+                "p1": "4.2.1. The user must enter the requested information correctly when registering in the Platform system;",
+                "p2": "4.2.2. Platform users are prohibited from using rude, offensive and disrespectful phrases during mutual communication and sending messages containing other information prohibited by the current legislation of the Republic of Uzbekistan.",
+                "p3": "4.2.4. It is mandatory to enter a valid, working email address (e-mail) or phone number during the registration process;",
+                "p4": "4.2.5. The user must fully comply with the requirements specified in the Platform's terms of use."
+            }
+        },
+        "section5": {
+            "title": "5. Seller Rights and Obligations",
+            "subsection51": {
+                "title": "5.1. Sellers have the following rights:",
+                "p1": "5.1.1. Free registration in the Platform system;",
+                "p2": "5.1.2. Add their products to services provided by the Platform;",
+                "p3": "5.1.3. They are allowed to share their products for free or for commercial purposes and profit on the platform (if condition 5.1.6 is met);",
+                "p4": "5.1.4. Receive notifications about each sold product via email (e-mail) entered by the user during registration (if condition 4.2.4 is met) or by accessing the \"Orders\" page in their personal profile;",
+                "p5": "5.1.5. Withdraw the amount received after deducting the Platform's share (18% of the sold product) from the total of the seller's sold products to their cards (if condition 5.2.5 is met), while the Platform reserves the right to increase its service prices or commission percentage over time according to its needs.",
+                "p6": "5.1.6. The seller can only sell products that belong to them or are placed with the author's permission.",
+                "p7": "5.1.7. The right to contact the Platform administration",
+                "p8": "5.1.8. The seller can invite friends through a referral link and receive a bonus of 5% from each friend's income.",
+                "p9": "5.1.9. Products placed on the soff.uz platform by the seller are also automatically placed and sold on SOFF-owned or partner platforms (ilmiyish.uz, diplomishlari.uz and others), and all sales on these platforms are reflected in a unified account through the seller's profile on seller.soff.uz."
+            },
+            "subsection52": {
+                "title": "5.2. Sellers must fulfill the following obligations:",
+                "p1": "5.2.1. The user must enter the requested information correctly when registering in the Platform system;",
+                "p2": "5.2.2. Platform sellers are prohibited from using rude, offensive and disrespectful phrases during mutual communication and sending messages containing other information prohibited by the current legislation of the Republic of Uzbekistan.",
+                "p3": "5.2.3. It is mandatory to enter a valid, working email address (e-mail) or phone number during the registration process;",
+                "p4": "5.2.4. The amount of the seller's accumulated amount must not be less than 35,000 soums when withdrawing to their card.",
+                "p5": "5.2.5. The seller must fully comply with the requirements specified in the Platform's terms of use",
+                "p6": "5.2.6. The seller is responsible for the quality, validity and originality of each product they upload. If the buyer or other persons express dissatisfaction or copyright is violated, all responsibility remains with the Seller. The Platform is not responsible for errors or overlooked cases even if products have been moderated.",
+                "p7": "5.2.7. The seller must allow the Platform administration to take 18% of each product sold on the platform.",
+                "p8": "5.2.8. If it is found that the seller has invited themselves through a referral link, a warning is given by the Platform administration and this referral link is removed from the list.",
+                "p9": "5.2.9. The seller has the right to attract customers to Soff.uz through their social networks, messengers or other external platforms and make sales there. This is good and supported. However, it is prohibited for the seller to direct customers to external platforms (Telegram, WhatsApp, Instagram and others) through the platform's chat system or other services, as well as to continue sales outside Soff.uz. Sellers who violate this rule may be removed from the platform.",
+                "p10": "5.2.10. The seller is responsible for tax and budget payments arising from participation on the Platform in accordance with the requirements of Articles 352, 386, 387, 393, 395, 396 and 397 of the Tax Code of the Republic of Uzbekistan.",
+                "p11": "5.2.11. The seller must go through an identification process to add products or services and withdraw funds. The following information is mandatory for identification: passport series and number, PINFL, date of birth, additional phone number, passport copy photo and self-employment certificate. The information is reviewed by the Platform administration and after confirmation, the seller is given the opportunity to add products and services and withdraw income to the card."
+            }
+        },
+        "section6": {
+            "title": "6. Liability",
+            "p1": "6.1. The Platform administration is not responsible for damage, loss or expenses arising during the purchase process due to the user entering incorrect information and performing actions.",
+            "p2": "6.2. The product purchased by the user is placed in their personal account on the Platform and a notification is sent to their email address. Regardless of whether the provided product is downloaded or not by the user, the product is considered purchased by the user and delivered in the Platform system, and the amount paid is not refunded. Therefore, enter a valid, working email address (Email) during registration and check your email after successfully completing the payment.",
+            "p3": "6.3. The user and seller are fully responsible for the accuracy of information entered during registration on the Platform.",
+            "p4": "6.4. The Platform administration is not responsible for damage arising during the payment process."
+        },
+        "section7": {
+            "title": "7. User Personal Data Privacy",
+            "p1": "The privacy of users' personal data is very important to us.",
+            "p2": "We collect and store the following information to determine statistical indicators:",
+            "p3": "– IP address used by users to access the Site;",
+            "p4": "– Browser and operating system type used by the user to access the Platform;",
+            "p5": "– Platform access dates;",
+            "p6": "– Pages and links viewed by the user;",
+            "p7": "We do not use these addresses to identify the user, except for attacks on the Site."
+        },
+        "section8": {
+            "title": "8. Seller Personal Data Privacy",
+            "p1": "The privacy of the seller's personal data is very important to us.",
+            "p2": "We collect and store the following information to determine statistical indicators:",
+            "p3": "– IP address used by the seller to access the Platform;",
+            "p4": "– Browser and operating system type used by the seller to access the Platform;",
+            "p5": "– Platform access dates;",
+            "p6": "– Pages and links viewed by the seller;",
+            "p7": "We do not use these addresses to identify the user, except for attacks on the Site."
+        },
+        "section9": {
+            "title": "9. Copyright and Intellectual Property Protection",
+            "subsection91": {
+                "title": "Product Authorship:",
+                "p1": "- The seller can only sell products that belong to them or are placed with the author's permission.",
+                "p2": "- If plagiarism or unauthorized use is detected, the product is removed from the platform (or can be transferred to the real author's profile on Soff.uz at their request), and in repeated cases, the seller's account may be blocked."
+            },
+            "subsection92": {
+                "title": "Copyright Violation Complaint System:",
+                "p1": "- If a person finds that a product belonging to them has been placed by another seller, they have the opportunity to file a complaint. The complaint section is available on the product detail page.",
+                "p2": "- The period for reviewing complaints is 3 business days."
+            }
+        },
+        "section10": {
+            "title": "10. Buyer Protection (Refund Policy)",
+            "subsection101": {
+                "title": "Product Complaint",
+                "p1": "- If the product is not as the buyer wanted, the buyer has the right to leave their comments in the product's comments section or file a complaint with the Platform administration in serious cases. The complaint section is available on the product detail page.",
+                "p2": "- If the seller has placed the product incorrectly or delivered it in poor quality, i.e., it is found to be unusable, the Platform administration has the right to remove this product."
+            }
+        },
+        "section10b": {
+            "title": "10. Rating System Between Buyers and Sellers",
+            "subsection10b1": {
+                "title": "Ratings and Reviews:",
+                "p1": "- The buyer has the opportunity to leave a star rating (⭐️) and feedback on the product they purchased. Ratings help determine the reliability of sellers."
+            },
+            "subsection10b2": {
+                "title": "Seller Ratings:",
+                "p1": "- Sellers with low ratings are monitored and, if necessary, removed from the platform."
+            }
+        },
+        "section11": {
+            "title": "11. Terms Between Platform and Seller",
+            "subsection111": {
+                "title": "Right to Remove Products:",
+                "p1": "- Soff.uz has the right to remove suspicious or illegal products at any time.",
+                "p2": "- If the seller repeatedly violates the rules, they are removed from the platform."
+            },
+            "subsection112": {
+                "title": "Clear Rules on Payment Systems:",
+                "p1": "- The Platform works only through official payment systems (for example, Click, PayMe and others).",
+                "p2": "- Receiving money by hand or other unofficial methods is strictly prohibited."
+            }
+        },
+        "section12": {
+            "title": "12. Legal Protection of Soff.uz",
+            "subsection121": {
+                "title": "Legal Liability:",
+                "p1": "- The Platform is not directly responsible for disputes between sellers and buyers, but has the right to review complaints.",
+                "p2": "- Service provision is guaranteed in accordance with the legislation of the Republic of Uzbekistan."
+            }
+        },
+        "section13": {
+            "title": "13. Updating Rules and Terms",
+            "p1": "- Soff.uz has the right to change or update the rules on the platform at any time.",
+            "p2": "- Any news or changes announced on the official Telegram channel (<strong>t.me/soff_uz</strong>) are considered official.",
+            "p3": "- Notifications delivered to users through personal profile have official force."
+        }
+    }
+}
